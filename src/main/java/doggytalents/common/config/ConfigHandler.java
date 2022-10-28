@@ -4,6 +4,7 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Talent;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
@@ -95,6 +96,15 @@ public class ConfigHandler {
 
             builder.pop();
         }
+
+        public static<T> T getConfig(ConfigValue<T> config) {
+                if (CONFIG_CLIENT_SPEC.isLoaded()) {
+                        return config.get();
+                }
+                return config.getDefault();
+        }
+
+        
     }
 
     public static class ServerConfig {
@@ -149,6 +159,15 @@ public class ConfigHandler {
                     .define("eat_food_on_floor", true);
 
             builder.pop();
+
+            
+        }
+
+        public static<T> T getConfig(ConfigValue<T> config) {
+                if (CONFIG_SERVER_SPEC.isLoaded()) {
+                        return config.get();
+                }
+                return config.getDefault();
         }
     }
 
@@ -172,7 +191,14 @@ public class ConfigHandler {
                 return true;
             }
 
-            return booleanValue.get();
+            return TalentConfig.getConfig(booleanValue);
+        }
+
+        public static<T> T getConfig(ConfigValue<T> config) {
+                if (CONFIG_TALENT_SPEC.isLoaded()) {
+                        return config.get();
+                }
+                return config.getDefault();
         }
     }
 }

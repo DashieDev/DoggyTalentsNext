@@ -403,8 +403,8 @@ public class Dog extends AbstractDog {
         
 
         if (!this.level.isClientSide) {
-        
-            if (!ConfigHandler.SERVER.DISABLE_HUNGER.get()) {
+            
+            if (! ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_HUNGER)) {
                 this.prevHungerTick = this.hungerTick;
 
                 if (!this.isVehicle() && !this.isInSittingPose()) {
@@ -451,7 +451,7 @@ public class Dog extends AbstractDog {
             }
         }
 
-        if (ConfigHandler.CLIENT.DIRE_PARTICLES.get() && this.level.isClientSide && this.getDogLevel().isDireDog()) {
+        if (ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DIRE_PARTICLES) && this.level.isClientSide && this.getDogLevel().isDireDog()) {
             for (int i = 0; i < 2; i++) {
                 this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2D);
             }
@@ -1048,7 +1048,7 @@ public class Dog extends AbstractDog {
                 return false;
             } else if (entitydog.isInSittingPose()) {
                 return false;
-            } else if (ConfigHandler.SERVER.DOG_GENDER.get() && !this.getGender().canMateWith(entitydog.getGender())) {
+            } else if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) && !this.getGender().canMateWith(entitydog.getGender())) {
                 return false;
             } else {
                 return this.isInLove() && entitydog.isInLove();
@@ -1066,7 +1066,7 @@ public class Dog extends AbstractDog {
             child.setTame(true);
         }
 
-        if (partner instanceof Dog && ConfigHandler.SERVER.PUPS_GET_PARENT_LEVELS.get()) {
+        if (partner instanceof Dog && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PUPS_GET_PARENT_LEVELS)) {
             child.setLevel(this.getDogLevel().combine(((Dog) partner).getDogLevel()));
         }
 
@@ -2254,7 +2254,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public MutableComponent getTranslationKey(Function<EnumGender, String> function) {
-        return Component.translatable(function.apply(ConfigHandler.SERVER.DOG_GENDER.get() ? this.getGender() : EnumGender.UNISEX));
+        return Component.translatable(function.apply(ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) ? this.getGender() : EnumGender.UNISEX));
     }
 
     @Override

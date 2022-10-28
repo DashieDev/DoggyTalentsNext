@@ -292,7 +292,7 @@ public class DogInfoScreen extends Screen {
         this.font.draw(stack, I18n.get("doggui.owner") + " " + tamedString, this.width - 160, topY - 90, 0xFFFFFF);
         this.font.draw(stack, I18n.get("doggui.age") + " " + ageString, this.width - 160, topY - 80, 0xFFFFFF);
         this.font.draw(stack, I18n.get("doggui.armor") + " " + armorValue, this.width - 160, topY - 70, 0xFFFFFF);
-        if (ConfigHandler.SERVER.DOG_GENDER.get()) {
+        if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER)) {
             this.font.draw(stack, I18n.get("doggui.gender") + " "+ I18n.get(this.dog.getGender().getUnlocalisedName()), this.width - 160, topY - 60, 0xFFFFFF);
         }
 

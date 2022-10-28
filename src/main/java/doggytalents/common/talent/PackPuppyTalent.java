@@ -140,7 +140,7 @@ public class PackPuppyTalent extends TalentInstance {
 
     @Override
     public boolean hasRenderer() {
-        return ConfigHandler.CLIENT.RENDER_CHEST.get();
+        return ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_CHEST);
     }
 
     public static boolean hasInventory(AbstractDog dogIn) {

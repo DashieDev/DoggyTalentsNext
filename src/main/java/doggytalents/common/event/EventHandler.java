@@ -76,7 +76,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void playerLoggedIn(final PlayerLoggedInEvent event) {
-        if (ConfigHandler.SERVER.STARTING_ITEMS.get()) {
+        if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.STARTING_ITEMS)) {
 
             Player player = event.getEntity();
 

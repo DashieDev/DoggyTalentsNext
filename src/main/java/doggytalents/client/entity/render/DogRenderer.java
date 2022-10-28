@@ -46,7 +46,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
             double d0 = this.entityRenderDispatcher.distanceToSqr(entityIn);
             if (d0 <= 64 * 64) {
                 String tip = entityIn.getMode().getTip();
-                String label = String.format(ConfigHandler.SERVER.DOG_GENDER.get() ? "%s(%d)%s" : "%s(%d)",
+                String label = String.format(ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) ? "%s(%d)%s" : "%s(%d)",
                         Component.translatable(tip).getString(),
                         Mth.ceil(entityIn.getDogHunger()),
                         Component.translatable(entityIn.getGender().getUnlocalisedTip()).getString());
