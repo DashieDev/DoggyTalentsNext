@@ -20,6 +20,17 @@ For more informations, consult the [wiki](https://github.com/percivalalb/DoggyTa
 
 -----------------
 
+#### A Note From DashieDev
+ * This project purpose is to continue the developement of the beloved mod **DoggyTalents**, which the current author
+ **ProPercivalalb** no longer have the time to work on as he emailed me in a commit. I will respectfully comply to
+ any request to remove this repository by **ProPercivalalb**.
+ * **I DO NOT OWN THE IDEAS** , the original ideas belongs to **RaustBlackDragon** back in 2013, and most of the code is still
+ belongs to **ProPercivalalb** 's DoggyTalents2 repository, while i was copying it over, i make some big changes which involves
+ upgrading the mod to Minecraft newest version at that time, which is **1.19.2**. 
+ * **EVERYTHING ELSE ASIDE, HAVE FUN WITH THE MOD! <3 <3 <3**
+
+-----------------
+
 ### Installation
 
 ##### Client
