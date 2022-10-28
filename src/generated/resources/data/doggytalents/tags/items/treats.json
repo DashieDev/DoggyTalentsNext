@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "doggytalents:training_treat",
+    "doggytalents:super_treat",
+    "doggytalents:master_treat",
+    "doggytalents:dire_treat"
+  ]
+}

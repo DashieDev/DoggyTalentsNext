@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="${fml_version_range}"
+license="GNU GPLv3"
+issueTrackerURL="https://github.com/percivalalb/DoggyTalents/issues"
+displayURL="https://minecraft.curseforge.com/projects/doggy-talents/"
+logoFile="dt_background.png"
+[[mods]] #mandatory
+    modId="doggytalents"
+    version="1.0"
+    updateJSONURL=""
+    displayName="Doggy Talents Next"
+    credits="dashiedev,percivalalb,RaustBlackDragon,NovaViper"
+    authors="dashiedev,percivalalb"
+    description='''
+    The next generation of the beloved-by-many DoggyTalents.
+    Turning your wolves into fun, playful, skillful dogs. 
+    '''
+[[dependencies.doggytalents]] #optional
+    modId="forge"
+    mandatory=true
+    versionRange="${forge_version_range}" #mandatory
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.doggytalents]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
