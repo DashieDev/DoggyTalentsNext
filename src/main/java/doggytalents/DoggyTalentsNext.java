@@ -54,7 +54,8 @@ public class DoggyTalentsNext {
             .networkProtocolVersion(Constants.PROTOCOL_VERSION::toString)
             .simpleChannel();
             
-
+    
+    //TODO AUTOMATION CURSEFORGE !!!
     public DoggyTalentsNext() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 

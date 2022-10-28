@@ -1,33 +1,35 @@
+# Doggy Talents Next 
+
 ===========
 
 **Doggy Talents Next** - the next generation of the beloved mod **Doggy Talents** 
 
 
-* Enhances the experience of having dogs as companions throughtout the game 
-* Improvements to the Dogs A.I which make them more reliable and refined than vanilla Wolves/Dogs
-* Train your dogs with Talents!
-* Provide your dogs some style and make him stands out with the Accessory System
-* Reduce the fear of losing your beloved dogs with a Tracking System and a Revival System.
+* 🦴 Enhancements to the experience of having dogs as companions throughout the game 
+* 🦴 Improvements to the Dogs A.I which make them more reliable and refined than vanilla Wolves/Dogs
+* 🦴 Train your dogs with Talents!
+* 🦴 Provide your dogs some style and make him stands out with the Accessory System
+* 🦴 Reduce the fear of losing your beloved dogs with a Tracking System and a Revival System.
 
 
 A Big Thanks to everyone that has contributed. This includes but is not limited to...
- * **ProPercivalalb** for continuing the developement until 1.18.2
- * **RaustBlackDragon** for creating the original mod and ideas back in 2013
- * **NovaViper** for coding help and maintaining order in the DoggyTalents Project until 1.18.2
- * **SimonMeskens** for some of the textures
+ * ❤️**ProPercivalalb** for continuing the developement until 1.18.2
+ * ❤️**RaustBlackDragon** for creating the original mod and ideas back in 2013
+ * ❤️**NovaViper** for coding help and maintaining order in the DoggyTalents Project until 1.18.2
+ * ❤️**SimonMeskens** for some of the textures
 
-For more informations, consult the [wiki](https://github.com/percivalalb/DoggyTalents/wiki)!
+For more informations, please consult the [wiki](https://github.com/percivalalb/DoggyTalents/wiki)
 
 -----------------
 
 #### A Note From DashieDev
  * This project purpose is to continue the developement of the beloved mod **DoggyTalents**, which the current author
- **ProPercivalalb** no longer have the time to work on as he emailed me in a commit. I will respectfully comply to
+ **ProPercivalalb** no longer have the time to work on as he emailed me in a pull request, which is [here](https://github.com/percivalalb/DoggyTalents/pull/402#issuecomment-1152874076). I will respectfully comply to
  any request to remove this repository by **ProPercivalalb**.
- * **I DO NOT OWN THE IDEAS** , the original ideas belongs to **RaustBlackDragon** back in 2013, and most of the code is still
+ * **I DO NOT OWN THE CORE IDEAS** , the original ideas belongs to **RaustBlackDragon** back in 2013, and most of the code is still
  belongs to **ProPercivalalb** 's DoggyTalents2 repository, while i was copying it over, i make some big changes which involves
  upgrading the mod to Minecraft newest version at that time, which is **1.19.2**. 
- * **EVERYTHING ELSE ASIDE, HAVE FUN WITH THE MOD! <3 <3 <3**
+ * **EVERYTHING ELSE ASIDE, HAVE FUN WITH THE MOD! ❤️🐶🦴⛏️🎹❤️**
 
 -----------------
 
