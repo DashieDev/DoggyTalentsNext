@@ -1,0 +1,34 @@
+﻿Doggy Talents Next - Changelog
+
+Update List Key
+(+) A new feature
+(-) A removed feature
+(#) A changed feature
+(*) A bug fix
+(/) Other
+
+v1.0beta - 28th October 2022
++ Initial upgrade:
+  + Update to 1.19.2
+  # Modify the mechanic to allows switching Navigation and MoveControl, this allows Dog to navigate on different landscape
+  + Make Dog practically swim underwater with SwimmerDog Talent
+  + Make Dog practically ridable underwater
+  # Modify Swimming Mechanic Talent: 
+    + The Dog will stop swimming and float as usual when low on air supply
+    + The Dog will stop swimming and float as usual when near land, this allows the Dog to smoothly transform 
+    between walking and swimming
+    / TODO FIX : Upon transition, the Dog may jump up higher than usual. 
+  # Modify Hunger Mechanic:
+    + When a Dog is hungry (isLowHunger() -> true) he will come near his owner, whine (ask for food) and tit his head while
+    stay there for a few seconds, his movement speed will also drastically drecease.
+    + When a Dog is zero hunger, depending on the difficulty, certain things may happen :
+      + PEACEFUL : Nothing happens
+      + EASY : He will gradually take damage, but stops at 1 HP
+      + NORMAL : He will take damage faster than the preceeding
+      + HARD : He will quickly take damage and may starve to death.
+  # Modifying Attacking Mechanic :
+  / Two files are involved : DogLeapAtTargetGoal, Dog::getMaxFallDistance and DogMeleeAttackGoal
+    + Ajust Dog leaping threashold to make the attack as acurrate as possible while
+    still make the Dog sometimes leap. Make the Dog think before jumping to execute the jump as safe as possible. 
+    + Adjust the Dog attack goal to efficently attack with safety in mind
+
