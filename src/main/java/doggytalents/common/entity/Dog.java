@@ -2343,12 +2343,12 @@ public class Dog extends AbstractDog {
 
     public void updateLowHunger () {
         if (this.isLowHunger) {
-            if (this.getDogHunger() > 20) {
+            if (this.getDogHunger() > 10) {
                 this.isLowHunger = false;
                 this.hungerLowToHigh();
             }
         } else {
-            if (this.getDogHunger() <= 20) {
+            if (this.getDogHunger() <= 10) {
                 this.isLowHunger = true;
                 this.hungerHighToLow();
             }
