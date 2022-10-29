@@ -2,7 +2,9 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
+import doggytalents.client.block.model.DogBedItemOverride;
 import doggytalents.common.entity.Dog;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,7 +16,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
 
 public class DogMeleeAttackGoal extends Goal {
-   protected final PathfinderMob dog;
+   protected final Dog dog;
    private final double speedModifier;
    private final boolean followingTargetEvenIfNotSeen;
    // private double pathedTargetX;
@@ -27,7 +29,7 @@ public class DogMeleeAttackGoal extends Goal {
    private static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
    private int failedPathFindingPenalty = 0;
 
-   public DogMeleeAttackGoal(PathfinderMob p_25552_, double p_25553_, boolean p_25554_) {
+   public DogMeleeAttackGoal(Dog p_25552_, double p_25553_, boolean p_25554_) {
       this.dog = p_25552_;
       this.speedModifier = p_25553_;
       this.followingTargetEvenIfNotSeen = p_25554_;
@@ -122,7 +124,7 @@ public class DogMeleeAttackGoal extends Goal {
                //    || livingentity.distanceToSqr(this.pathedTargetX, this.pathedTargetY, this.pathedTargetZ) >= 1.0D 
                //    || this.dog.getRandom().nextFloat() < 0.05F
                //    )
-            ) {
+         ) {
             this.ticksUntilPathRecalc = 10;
 
             // this.pathedTargetX = livingentity.getX();
@@ -133,8 +135,16 @@ public class DogMeleeAttackGoal extends Goal {
 
          } 
          --this.ticksUntilPathRecalc;
+         --this.ticksUntilNextAttack;
          //if dog arrived to destination and the entity is not there, recalc immediately!
-         if (!this.checkAndPerformAttack(livingentity, d0)) this.ticksUntilPathRecalc = 0;
+         var target_block = this.dog.getNavigation().getTargetPos();
+         if (target_block!= null 
+         && target_block.equals(dog.blockPosition())
+         && !target_block.equals(livingentity.blockPosition())
+         ) {
+            this.ticksUntilPathRecalc = 0;
+         }
+         this.checkAndPerformAttack(livingentity, d0);
       }
    }
 
@@ -142,6 +152,7 @@ public class DogMeleeAttackGoal extends Goal {
       double d0 = this.getAttackReachSqr(p_25557_);
       if (p_25558_ <= d0 && this.ticksUntilNextAttack <= 0) {
          this.resetAttackCooldown();
+         
          this.dog.swing(InteractionHand.MAIN_HAND);
          this.dog.doHurtTarget(p_25557_);
          return true;
@@ -151,10 +162,6 @@ public class DogMeleeAttackGoal extends Goal {
 
    protected void resetAttackCooldown() {
       this.ticksUntilNextAttack = this.adjustedTickDelay(20);
-   }
-
-   protected boolean isTimeToAttack() {
-      return this.ticksUntilNextAttack <= 0;
    }
 
    protected int getTicksUntilNextAttack() {

@@ -6,7 +6,7 @@ displayURL="https://minecraft.curseforge.com/projects/doggy-talents/"
 logoFile="dt_background.png"
 [[mods]] #mandatory
     modId="doggytalents"
-    version="1.0.0"
+    version="${file.jarVersion}"
     updateJSONURL="https://raw.githubusercontent.com/DashieDev/DoggyTalentsNext/master/check_for_update/update.json"
     displayName="Doggy Talents Next"
     credits="dashiedev,percivalalb,RaustBlackDragon,NovaViper"
