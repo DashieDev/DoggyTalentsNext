@@ -31,3 +31,8 @@ v1.0beta - 28th October 2022
     + Ajust Dog leaping threashold to make the attack as acurrate as possible while
     still make the Dog sometimes leap. Make the Dog think before jumping to execute the jump as safe as possible. 
     + Adjust the Dog attack goal to efficently attack with safety in mind
+
+v1.0.1beta - 28th October 2022
+*Dog can only attack one time, and require recalc every tick.
+*Remove debug codes
++Improves the dog attacking moves, making it more smooth, make the dog no longer pause.

@@ -2,7 +2,7 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
-import doggytalents.ChopinLogger;
+
 import doggytalents.client.block.model.DogBedItemOverride;
 import doggytalents.common.entity.Dog;
 import net.minecraft.network.chat.Component;
@@ -159,10 +159,8 @@ public class DogMeleeAttackGoal extends Goal {
 
          if (n.isDone() && dog_bp.equals(target_bp) && !this.canReachTarget(e, d0)) {
             dog.getMoveControl().setWantedPosition(e.getX(), e.getY(), e.getZ(), this.speedModifier);
-            ChopinLogger.l("move1!");
          }
          if(n.isDone() && !this.canReachTarget(e, d0)) {
-            ChopinLogger.l("done?!");
             this.ticksUntilPathRecalc = 0;
          }
          this.checkAndPerformAttack(e, d0);
