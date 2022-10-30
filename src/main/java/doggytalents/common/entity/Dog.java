@@ -485,16 +485,7 @@ public class Dog extends AbstractDog {
                 }
 
                 return InteractionResult.SUCCESS;
-            } else if (stack.getItem() == Items.STONE_AXE) {
-                //Debug
-                if (player.isShiftKeyDown()) {
-                    this.resetNavigation();
-                    this.resetMoveControl();
-                } else {
-                    this.setNavigation(new DogWaterBoundNavigation(this, this.level));
-                    this.setMoveControl(new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true));
-                }
-            } 
+            }
         } else { // Not tamed
             if (stack.getItem() == Items.BONE || stack.getItem() == DoggyItems.TRAINING_TREAT.get()) {
 
