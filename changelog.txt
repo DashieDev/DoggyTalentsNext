@@ -36,3 +36,6 @@ v1.0.1beta - 28th October 2022
 *Dog can only attack one time, and require recalc every tick.
 *Remove debug codes
 +Improves the dog attacking moves, making it more smooth, make the dog no longer pause.
+
+v1.0.2beta - 31th October 2022
+*CRITICAL BUG FIX: referencing potential null pointer before checking if it is null in DogMeleeAttackGoal
