@@ -55,7 +55,7 @@ public class DoggyTalentsNext {
             .simpleChannel();
             
     
-    //TODO AUTOMATION CURSEFORGE !!!
+    //TODO AUTOMATION CURSEFORGE !!! //TODO : CHange mod.toml update link !!!!!!
     public DoggyTalentsNext() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
