@@ -58,7 +58,7 @@ public class DogHungryGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return this.looktime <= 60; // Look time : 3s
+        return this.looktime <= 60 && this.dog.isLowHunger(); // Look time : 3s
     }
 
     @Override
