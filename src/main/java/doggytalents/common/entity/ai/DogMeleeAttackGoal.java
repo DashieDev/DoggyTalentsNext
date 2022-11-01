@@ -37,6 +37,8 @@ public class DogMeleeAttackGoal extends Goal {
       this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
    }
 
+   //TODO Make tiny dog also leap with caution of their size
+   //TODO Also resolve Piano dogs do a tiny amount of pause
    public boolean canUse() {
       // long i = this.dog.level.getGameTime();
       // if (i - this.lastCanUseCheck < 20L) {
