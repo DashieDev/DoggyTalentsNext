@@ -31,6 +31,7 @@
    "item.doggytalents.whistle.4": "Còi Chăn cừu",
    "item.doggytalents.whistle.5": "Còi chiến thuật",
    "item.doggytalents.whistle.6": "Còi Gầm Thét",
+   "item.doggytalents.whistle.7": "Còi kêu cún lại bằng tên",
    "item.doggytalents.treat_bag": "Túi đựng Xương",
    "item.doggytalents.chew_stick": "Xương Nhai",
    "item.doggytalents.cape": "Khăn choàng Tartan",
@@ -166,6 +167,10 @@
    "dog.mode.docile.bowl": "Khoảng cách đến Tô Đồ ăn: %d",
    "dog.mode.docile.distance": "Tô Đồ ăn hiện ở quá xa: %d",
 
+   "dog.msg.low_hunger.0" : "%s: Woof, woof, wooooof? Woof, wooooof. (Chúng ta ăn gì đi nào, em đói rồi! )",
+   "dog.msg.low_hunger.1" : "%s: Woof woooof (Đồ ăn)",
+   "dog.msg.low_hunger.2" : "%s: Woof woof woooof wooof? (Mình ăn bây giờ được chưa?)",
+
    "dog.gender.female": "Nữ",
    "dog.gender.female.indicator": "(F)",
    "dog.gender.female.pronoun": "cún",
@@ -193,6 +198,9 @@
    "dogcommand.stay": "Ngồi!",
    "dogcommand.ok": "Ok!",
    "dogcommand.heel": "Lại đây!",
+
+   "doggytalents.screen.whistler.heel_by_name.show_uuid" : "Hiện UUID",
+   "doggytalents.screen.whistler.heel_by_name.hide_uuid" : "Ẩn UUID",
 
    "doggui.prevpage": "Trang trước",
    "doggui.nextpage": "Trang sau",
