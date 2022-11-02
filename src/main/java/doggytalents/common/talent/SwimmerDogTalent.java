@@ -76,7 +76,7 @@ public class SwimmerDogTalent extends TalentInstance {
 
     @Override
     public InteractionResult canBeRiddenInWater(AbstractDog dogIn) {
-        return this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        return this.level() >= 2 ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 
     @Override
