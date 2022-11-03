@@ -43,3 +43,13 @@ v1.0.2beta - 31th October 2022
 v1.0.3beta - 1th November 2022 
 *Fix Super User Command Bug that caused Super users to get kicked out of server
 #Make hunger dog a.i also check continueToUse based on if the dog is still hungry or not
+
+v1.1.0beta - 1th November 2022
+#Make owner can ride SwimerDog at level 2+
++Add Heel By Name feature to the Whistler :
+  +Right click and will open up a gui for user to type the name of the dog and the dog will teleport
+  to the user even when sitting
+#Adjust starve hurting interval
++Dog now teleport with consideration about whether the owner is sprinting or not
+when he is, the dog will not teleport to the block which would potentially obstruct
+the owner sprinting.
