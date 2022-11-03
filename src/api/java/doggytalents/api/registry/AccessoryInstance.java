@@ -43,7 +43,7 @@ public class AccessoryInstance {
     public <T extends AccessoryType> boolean ofType(T accessoryTypeIn) {
         return accessoryTypeIn == this.accessory.getType();
     }
-    //TODO !!!!!!!!!!!!
+    //TODO may recheck in the future, but it is actually good for now
 
     public AccessoryInstance copy() {
         return new AccessoryInstance(this.accessory);
