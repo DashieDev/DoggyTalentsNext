@@ -186,8 +186,8 @@ public class DogUtil {
      * @param pos Block to consider
      */
     public static boolean hasLineOfSightToOwnerAtPos(Dog dog, BlockPos pos) {
-        Vec3 pos1 = new Vec3(pos.getX() + 0.5, pos.getY() + dog.getOwner().getEyeHeight(), pos.getZ() + 0.5);
-        Vec3 pos2 = new Vec3(dog.getOwner().getX(), 
+        var pos1 = new Vec3(pos.getX() + 0.5, pos.getY() + dog.getOwner().getEyeHeight(), pos.getZ() + 0.5);
+        var pos2 = new Vec3(dog.getOwner().getX(), 
             dog.getOwner().getY() + dog.getOwner().getEyeHeight(), dog.getOwner().getZ());
         if (pos1.distanceTo(pos2) > 128.0D) {
             return false;
@@ -200,15 +200,15 @@ public class DogUtil {
 
     //TODO will check is Safe Block according to the IDogAlteration
     public static boolean isTeleportSafeBlock(Dog dog, BlockPos pos, boolean teleportToLeaves) {
-        BlockPathTypes pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
+        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
         if (pathnodetype != BlockPathTypes.WALKABLE) {
             return false;
         } else {
-            BlockState blockstate = dog.level.getBlockState(pos.below());
+            var blockstate = dog.level.getBlockState(pos.below());
             if (!teleportToLeaves && blockstate.getBlock() instanceof LeavesBlock) {
                 return false;
             } else {
-                BlockPos blockpos = pos.subtract(dog.blockPosition());
+                var blockpos = pos.subtract(dog.blockPosition());
                 return dog.level.noCollision(dog, dog.getBoundingBox().move(blockpos));
             }
         }
