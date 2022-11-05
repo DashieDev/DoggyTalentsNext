@@ -3,6 +3,7 @@ package doggytalents.common.item;
 import doggytalents.DoggySounds;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.EnumMode;
+import doggytalents.client.screen.HeelByNameScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DoggyBeamEntity;
@@ -50,7 +51,7 @@ public class WhistleItem extends Item {
                 }
 
                 int mode = stack.getTag().getInt("mode");
-                stack.getTag().putInt("mode", (mode + 1) % 7);
+                stack.getTag().putInt("mode", (mode + 1) % 8);
             }
 
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
@@ -233,6 +234,9 @@ public class WhistleItem extends Item {
                     }
                 }
 
+                return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+            } else if (mode == 7 && !dogsList.isEmpty() && player.level.isClientSide)  { //Debug chopin
+                HeelByNameScreen.open();
                 return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
             }
 

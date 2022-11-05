@@ -31,6 +31,7 @@
    "item.doggytalents.whistle.4": "Shepherds Whistle",
    "item.doggytalents.whistle.5": "Tactical Whistle",
    "item.doggytalents.whistle.6": "Roaring Whistle",
+   "item.doggytalents.whistle.7": "Heel By Name Whistle",
    "item.doggytalents.treat_bag": "Treat Bag",
    "item.doggytalents.chew_stick": "Chew Stick",
    "item.doggytalents.cape": "Tartan Cape",
@@ -197,6 +198,10 @@
    "dogcommand.stay": "Stay!",
    "dogcommand.ok": "Okay!",
    "dogcommand.heel": "Heel!",
+   "dogcommand.heel_by_name": "%s, Heel!",
+
+   "doggytalents.screen.whistler.heel_by_name.show_uuid" : "Show UUID",
+   "doggytalents.screen.whistler.heel_by_name.hide_uuid" : "Hide UUID",
 
    "doggui.prevpage": "Previous Page",
    "doggui.nextpage": "Next Page",

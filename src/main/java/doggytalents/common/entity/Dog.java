@@ -485,16 +485,7 @@ public class Dog extends AbstractDog {
                 }
 
                 return InteractionResult.SUCCESS;
-            } else if (stack.getItem() == Items.STONE_AXE) {
-                //Debug
-                if (player.isShiftKeyDown()) {
-                    this.resetNavigation();
-                    this.resetMoveControl();
-                } else {
-                    this.setNavigation(new DogWaterBoundNavigation(this, this.level));
-                    this.setMoveControl(new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true));
-                }
-            } 
+            }
         } else { // Not tamed
             if (stack.getItem() == Items.BONE || stack.getItem() == DoggyItems.TRAINING_TREAT.get()) {
 
@@ -2140,7 +2131,7 @@ public class Dog extends AbstractDog {
                     downward = -l*Mth.sin(this.getXRot() * ((float)Math.PI / 180F));
                     forward = l*Mth.cos(this.getXRot() * ((float)Math.PI / 180F));
                 } 
- 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
                 // If moving backwards half  the speed
                 if (forward <= 0.0F) {
                    forward *= 0.5F;
@@ -2362,15 +2353,15 @@ public class Dog extends AbstractDog {
         boolean hurt_last_health = false;
         switch (this.level.getDifficulty()) {
             case EASY: {
-                hurt_interval = 100;
+                hurt_interval = 125;
                 break;
             }
             case NORMAL: {
-                hurt_interval = 75;
+                hurt_interval = 100;
                 break;
             }
             case HARD: {
-                hurt_interval = 50;
+                hurt_interval = 75;
                 hurt_last_health = true;
                 break;
             }

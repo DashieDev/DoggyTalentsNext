@@ -3,6 +3,7 @@ package doggytalents.common.entity.ai;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -18,8 +19,11 @@ public class DogFollowOwnerGoal extends Goal {
     private final Dog dog;
     private final Level world;
     private final double followSpeed;
-    private final float stopDist; // If closer than stopDist stop moving towards owner
-    private final float startDist; // If further than startDist moving towards owner
+
+    // If closer than stopDist stop moving towards owner
+    private final float stopDist; 
+     // If further than startDist moving towards owner
+    private final float startDist;
 
     private LivingEntity owner;
     private int timeToRecalcPath;
@@ -94,9 +98,9 @@ public class DogFollowOwnerGoal extends Goal {
         this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
         if (--this.timeToRecalcPath <= 0) {
             this.timeToRecalcPath = 10;
-            if (!this.dog.isLeashed() && !this.dog.isPassenger()) { // Is not leashed and is not a passenger
-                if (this.dog.distanceToSqr(this.owner) >= 144.0D) { // Further than 12 blocks away teleport
-                    EntityUtil.tryToTeleportNearEntity(this.dog, this.dog.getNavigation(), this.owner, 4);
+            if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
+                if (this.dog.distanceToSqr(this.owner) >= 144.0D) {
+                    DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                 } else {
                     this.dog.getNavigation().moveTo(this.owner, this.followSpeed);
                 }

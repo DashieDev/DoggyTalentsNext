@@ -16,6 +16,9 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+
+import doggytalents.common.entity.Dog;
+
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;

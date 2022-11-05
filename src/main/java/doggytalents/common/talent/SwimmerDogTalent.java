@@ -74,6 +74,9 @@ public class SwimmerDogTalent extends TalentInstance {
         }
     }
 
+    //TODO : When Swimming underwater and low on air, before applying float goal,
+    //find a pos that can float to safety and then apply
+    //also allow user to ride the dog under level 5!
     @Override
     public InteractionResult canBeRiddenInWater(AbstractDog dogIn) {
         return this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;

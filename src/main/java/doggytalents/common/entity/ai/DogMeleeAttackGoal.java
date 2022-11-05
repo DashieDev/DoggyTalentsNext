@@ -37,6 +37,8 @@ public class DogMeleeAttackGoal extends Goal {
       this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
    }
 
+   //TODO Make tiny dog also leap with caution of their size
+   //TODO Also resolve Piano dogs do a tiny amount of pause
    public boolean canUse() {
       // long i = this.dog.level.getGameTime();
       // if (i - this.lastCanUseCheck < 20L) {
@@ -115,59 +117,42 @@ public class DogMeleeAttackGoal extends Goal {
    public void tick() {
       
       var e = this.dog.getTarget();
+      if (e == null) return;
       var n = this.dog.getNavigation();
       var dog_bp = this.dog.blockPosition();
       var target_bp = e.blockPosition();
 
-      
-      if (e != null) {
-
-         this.dog.getLookControl().setLookAt(e, 30.0F, 30.0F);
-         double d0 = this.dog.distanceToSqr(e.getX(), e.getY(), e.getZ());
-         if ((this.followingTargetEvenIfNotSeen
-               || this.dog.getSensing().hasLineOfSight(e))
-               && this.ticksUntilPathRecalc <= 0
-         // && (
-         // this.pathedTargetX == 0.0D
-         // && this.pathedTargetY == 0.0D
-         // && this.pathedTargetZ == 0.0D
-         // || livingentity.distanceToSqr(this.pathedTargetX, this.pathedTargetY,
-         // this.pathedTargetZ) >= 1.0D
-         // || this.dog.getRandom().nextFloat() < 0.05F
-         // )
-         ) {
-            this.ticksUntilPathRecalc = 10;
-
-            // this.pathedTargetX = livingentity.getX();
-            // this.pathedTargetY = livingentity.getY();
-            // this.pathedTargetZ = livingentity.getZ();
-
-            n.moveTo(e, this.speedModifier);
-
-         }
-         --this.ticksUntilPathRecalc;
-         --this.ticksUntilNextAttack;
-         // if dog arrived to destination and the entity is not there, recalc
-         // immediately!
-         // var target_block = this.dog.getNavigation().getTargetPos();
-         // if (target_block != null
-         //       && target_block.equals(dog.blockPosition())
-         //       && !target_block.equals(livingentity.blockPosition())) {
-         //    this.ticksUntilPathRecalc = 0;
-         //    ChopinLogger.l("reset");
-         // }
-
-         if (n.isDone() && dog_bp.equals(target_bp) && !this.canReachTarget(e, d0)) {
-            dog.getMoveControl().setWantedPosition(e.getX(), e.getY(), e.getZ(), this.speedModifier);
-            ChopinLogger.l("move1!");
-         }
-         if(n.isDone() && !this.canReachTarget(e, d0)) {
-            ChopinLogger.l("done?!");
-            this.ticksUntilPathRecalc = 0;
-         }
-         this.checkAndPerformAttack(e, d0);
-         //ChopinLogger.l("" + this.ticksUntilNextAttack);
+      this.dog.getLookControl().setLookAt(e, 30.0F, 30.0F);
+      double d0 = this.dog.distanceToSqr(e.getX(), e.getY(), e.getZ());
+      if ((this.followingTargetEvenIfNotSeen
+            || this.dog.getSensing().hasLineOfSight(e))
+            && this.ticksUntilPathRecalc <= 0
+      ) {
+         this.ticksUntilPathRecalc = 10;
+         n.moveTo(e, this.speedModifier);
       }
+      --this.ticksUntilPathRecalc;
+      --this.ticksUntilNextAttack;
+      // if dog arrived to destination and the entity is not there, recalc
+      // immediately!
+      // var target_block = this.dog.getNavigation().getTargetPos();
+      // if (target_block != null
+      //       && target_block.equals(dog.blockPosition())
+      //       && !target_block.equals(livingentity.blockPosition())) {
+      //    this.ticksUntilPathRecalc = 0;
+      //    ChopinLogger.l("reset");
+      // }
+
+      if (n.isDone() && dog_bp.equals(target_bp) && !this.canReachTarget(e, d0)) {
+         dog.getMoveControl().setWantedPosition(e.getX(), e.getY(), e.getZ(), this.speedModifier);
+         ChopinLogger.l("move1!");
+      }
+      if(n.isDone() && !this.canReachTarget(e, d0)) {
+         ChopinLogger.l("done?!");
+         this.ticksUntilPathRecalc = 0;
+      }
+      this.checkAndPerformAttack(e, d0);
+      //ChopinLogger.l("" + this.ticksUntilNextAttack);
    }
 
    protected boolean checkAndPerformAttack(LivingEntity target, double distanceToTargetSqr) {

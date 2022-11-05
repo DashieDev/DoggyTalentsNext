@@ -156,9 +156,9 @@ public class FindWaterGoal extends Goal {
     }
 
     /**
-     * Returning {@link BlockType#FIRE} indicates the entity is actively in danger
-     * Returning {@link BlockType#WATER} indicates the entity is on fire but not in source
-     * Returning {@link BlockType#SAFE} indicates the entity is fine
+     * <p>Returning {@link BlockType#FIRE} indicates the entity is actively in danger</p>
+     * <p>Returning {@link BlockType#WATER} indicates the entity is on fire but not in source</p>
+     * <p>Returning {@link BlockType#SAFE} indicates the entity is fine</p>
      *
      * @param posIn
      * @return
