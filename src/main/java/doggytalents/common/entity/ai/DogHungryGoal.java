@@ -1,14 +1,12 @@
 package doggytalents.common.entity.ai;
 
-import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.util.EntityUtil;
+import doggytalents.common.util.DogUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -30,9 +28,9 @@ public class DogHungryGoal extends Goal {
 
     private int looktime;
 
-    public DogHungryGoal(Dog dogIn, double speedIn, float minDistIn) {
-        this.dog = dogIn;
-        this.world = dogIn.level;
+    public DogHungryGoal(Dog dog, double speedIn, float minDistIn) {
+        this.dog = dog;
+        this.world = dog.level;
         this.followSpeed = speedIn;
         this.stopDist = 3;
         this.looktime = 0;
@@ -96,7 +94,7 @@ public class DogHungryGoal extends Goal {
                 this.timeToRecalcPath = 10;
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) { // Is not leashed and is not a passenger
                     if (this.dog.distanceToSqr(this.owner) >= 144.0D) { // Further than 12 blocks away teleport
-                        EntityUtil.tryToTeleportNearEntity(this.dog, this.dog.getNavigation(), this.owner, 4);
+                        DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                     } else {
                         this.dog.getNavigation().moveTo(this.owner, this.followSpeed);
                     }
