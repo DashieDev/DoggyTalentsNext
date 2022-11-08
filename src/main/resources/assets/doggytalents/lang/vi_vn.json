@@ -171,6 +171,10 @@
    "dog.msg.low_hunger.1" : "%s: Woof woooof (Đồ ăn)",
    "dog.msg.low_hunger.2" : "%s: Woof woof woooof wooof? (Mình ăn bây giờ được chưa?)",
 
+   "dog.msg.low_health.0" : "%s: Woof wooooof wooooooooof. (Con cảm thấy không ổn cho lắm.)",
+   "dog.msg.low_health.1" : "%s: Woof woof woof wooof (Con cần giúp đỡ....)",
+   "dog.msg.low_health.2" : "%s: Woof woof wooof? (Mình có nên rút không?)",
+
    "dog.gender.female": "Nữ",
    "dog.gender.female.indicator": "(F)",
    "dog.gender.female.pronoun": "cún",
