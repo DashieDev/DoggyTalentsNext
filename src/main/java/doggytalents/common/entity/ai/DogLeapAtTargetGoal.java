@@ -21,7 +21,7 @@ public class DogLeapAtTargetGoal extends Goal {
    private final float START_LEAPING_AT_DIS_SQR = 2;
    private final float DONT_LEAP_AT_DIS_SQR = 1;
 
-   //TODO Dog jumps in lava! while target after lava line
+   //TODO Dog cannot attack while this goal is run (because MOVE is set as a MutexFlag)
    public DogLeapAtTargetGoal(Dog p_25492_, float p_25493_) {
       this.dog = p_25492_;
       this.yd = p_25493_;

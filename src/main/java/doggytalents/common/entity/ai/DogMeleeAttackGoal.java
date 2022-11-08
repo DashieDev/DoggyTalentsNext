@@ -145,6 +145,7 @@ public class DogMeleeAttackGoal extends Goal {
 
    }
 
+   //TODO check if dog still jump in lava while at low height above the ground block under the lava
    protected boolean checkAndPerformAttack(LivingEntity target, double distanceToTargetSqr) {
       if (this.canReachTarget(target, distanceToTargetSqr) && this.ticksUntilNextAttack <= 0) {
          this.resetAttackCooldown();
