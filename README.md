@@ -1,6 +1,7 @@
 # Doggy Talents Next 
+[![Curseforge](http://cf.way2muchnoise.eu/full_doggy-talents-next_downloads.svg)](https://minecraft.curseforge.com/projects/doggy-talents-next) [![Curseforge](http://cf.way2muchnoise.eu/versions/For%20MC_doggy-talents-next_all.svg)](https://minecraft.curseforge.com/projects/doggy-talents-next)
 
-===========
+
 
 **Doggy Talents Next** - the next generation of the beloved mod **Doggy Talents** 
 
