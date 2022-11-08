@@ -69,8 +69,8 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
             
             if (this.owner == null) return false;
 
-            if (!this.dog.isMode(EnumMode.GUARD_MINOR))
-                return false;
+            //if (!this.dog.isMode(EnumMode.GUARD_MINOR))
+                //return false;
 
             return true;
         }
