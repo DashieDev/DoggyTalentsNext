@@ -9,11 +9,11 @@ import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
-public class MoveToBlockGoal extends Goal {
+public class DogMoveToBlockGoal extends Goal {
 
     protected final Dog dog;
 
-    public MoveToBlockGoal(Dog dogIn) {
+    public DogMoveToBlockGoal(Dog dogIn) {
         this.dog = dogIn;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
@@ -54,4 +54,5 @@ public class MoveToBlockGoal extends Goal {
         this.dog.getNavigation().moveTo((target.getX()) + 0.5D, target.getY() + 1, (target.getZ()) + 0.5D, 1.0D);
     }
 
+    
 }
