@@ -1,5 +1,5 @@
 # Doggy Talents Next 
-[![Curseforge](http://cf.way2muchnoise.eu/full_doggy-talents-next_downloads.svg)](https://minecraft.curseforge.com/projects/doggy-talents-next) [![Curseforge](http://cf.way2muchnoise.eu/versions/For%20MC_doggy-talents-next_all.svg)](https://minecraft.curseforge.com/projects/doggy-talents-next)
+[![Curseforge](http://cf.way2muchnoise.eu/full_doggy-talents-next_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/doggy-talents-next) [![Curseforge](http://cf.way2muchnoise.eu/versions/For%20MC_doggy-talents-next_all.svg)](https://www.curseforge.com/minecraft/mc-mods/doggy-talents-next)
 
 
 
@@ -27,6 +27,7 @@ For more informations, please consult the [wiki](https://github.com/percivalalb/
  * This project purpose is to continue the developement of the beloved mod **DoggyTalents**, which the current author
  **ProPercivalalb** no longer have the time to work on as he emailed me in a pull request, which is [here](https://github.com/percivalalb/DoggyTalents/pull/402#issuecomment-1152874076). I will respectfully comply to
  any request to remove this repository by **ProPercivalalb**.
+ * My vision for the mod is to make the dogs Harmonize with the player throughout the game, like two hands on the piano, when the two sound come together, it produce a harmony, which is pleasant to the ear, the Player and the Dogs is like the two hands, the dog should be able to be an accompaniment to the player well while not be overpowered in the context, although when on-demand, the Dog can have those abilities, but he should work to get it, and you, the Player, should help training him to achieve the abilities.
  * **I DO NOT OWN THE CORE IDEAS** , the original ideas belongs to **RaustBlackDragon** back in 2013, and most of the code is still
  belongs to **ProPercivalalb** 's DoggyTalents2 repository, while i was copying it over, i make some big changes which involves
  upgrading the mod to Minecraft newest version at that time, which is **1.19.2**. 
