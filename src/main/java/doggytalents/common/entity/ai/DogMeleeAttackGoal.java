@@ -113,7 +113,10 @@ public class DogMeleeAttackGoal extends Goal {
       return true;
    }
 
-   // TODO dog pause occasionally
+   //TODO : Global problem : 
+   //due to the dog move control inaccuracy, the dog may be failed to land on a safe platform because
+   //of the "safe" area is only an 1-block edge which stick out a cliff or something. This is a part of
+   //a bigger problem, the inaccuracy of the moveControl.
    public void tick() {
       
       var e = this.dog.getTarget();
