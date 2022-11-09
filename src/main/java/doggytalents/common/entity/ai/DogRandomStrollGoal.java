@@ -1,6 +1,5 @@
 package doggytalents.common.entity.ai;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.network.chat.Component;
@@ -37,7 +36,6 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
         super.tick();
         
         if (this.ownerMayBeMining()) {
-            ChopinLogger.lwn(this.dog, "He is mining :)) ");
             this.tickCountStopMiningCautious = this.dog.tickCount + 600; // keep checking for 30 seconds
         }
 
@@ -45,9 +43,6 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
             if (this.pathObstructOwnerMining()) {
                 this.stop();
             }
-            ChopinLogger.lwn(this.dog, "miner cautious");
-        } else { 
-            ChopinLogger.lwn(this.dog, "no miner cautious");
         }
     }
 
@@ -82,11 +77,6 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
                 DogUtil.posWillCollideWithOwnerMovingForward(dog, p.getNodePos(i));
 
             if (flag) {
-                this.dog.getOwner().sendSystemMessage(Component.literal(
-                    this.dog.getName().getString()
-                     + " : i was going to go to this pos,"
-                     + p.getNodePos(i)
-                     + " but it is not good!")); //debug chopin
                 return true;
             }
 

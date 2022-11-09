@@ -2,7 +2,6 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
@@ -37,7 +36,7 @@ public class DogLowHealthGoal extends Goal {
         this.dog = dogIn;
         this.world = dogIn.level;
         this.followSpeed = speedIn;
-        this.stopDist = 3;
+        this.stopDist = 1.5f;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
@@ -70,7 +69,6 @@ public class DogLowHealthGoal extends Goal {
         this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.whine = true;
         DogUtil.searchAndTeleportToOwner(dog, 4);
-        ChopinLogger.l("Low Health started!");
     }
 
     @Override
