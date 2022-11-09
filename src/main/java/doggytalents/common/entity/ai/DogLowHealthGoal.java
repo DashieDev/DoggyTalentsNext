@@ -63,6 +63,7 @@ public class DogLowHealthGoal extends Goal {
         return this.isDogLowHealth();
     }
 
+    
     @Override
     public void start() {
         this.timeToRecalcPath = 0;
@@ -92,6 +93,8 @@ public class DogLowHealthGoal extends Goal {
         this.dog.setBegging(false);
     }
 
+    //TODO : Group the msg when dog msg owner about him being hurt based on how the dog was previously hurt, 
+    //and make the dog choose accordingly
     @Override
     public void tick() {
         if (this.dog.distanceToSqr(this.owner) > stopDist) {
