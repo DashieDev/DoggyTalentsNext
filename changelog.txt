@@ -54,7 +54,7 @@ v1.1.0beta - 3th November 2022
 when he is, the dog will not teleport to the block which would potentially obstruct
 the owner sprinting.
 
-v1.2.0beta - 3th November 2022
+v1.2.0beta - 9th November 2022
 + Make dog don't go in front of owner when he is mining (useful in strip-mining because he might hit lava)
 + Make dog teleport to and then follow the owner while health is lower than 6.0 (❤️❤️❤️), and also beg for
 assistance.
