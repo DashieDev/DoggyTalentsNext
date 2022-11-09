@@ -37,7 +37,7 @@ public class DogLowHealthGoal extends Goal {
         this.dog = dogIn;
         this.world = dogIn.level;
         this.followSpeed = speedIn;
-        this.stopDist = 3;
+        this.stopDist = 1.5;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
