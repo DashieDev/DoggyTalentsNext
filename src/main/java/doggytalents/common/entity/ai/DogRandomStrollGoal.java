@@ -21,6 +21,17 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
         super(dog, speedModifier);
         this.dog = dog;
     }
+
+    @Override
+    public boolean canUse() {
+
+        if (this.ownerMayBeMining()) {
+            this.tickCountStopMiningCautious = this.dog.tickCount + 600; // keep checking for 30 seconds
+        }
+
+
+        return super.canUse();
+    }
     
     //  TODO : Make this more user friendly, maybe make this into a talent or mode
     //
@@ -38,10 +49,7 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
     public void tick() {
         super.tick();
         
-        if (this.ownerMayBeMining()) {
-            this.tickCountStopMiningCautious = this.dog.tickCount + 600; // keep checking for 30 seconds
-        }
-
+        
         if (this.dog.tickCount < this.tickCountStopMiningCautious) {
             if (this.pathObstructOwnerMining()) {
                 this.stop();
@@ -82,11 +90,11 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
                 DogUtil.posWillCollideWithOwnerMovingForward(dog, p.getNodePos(i));
 
             if (flag) {
-                this.dog.getOwner().sendSystemMessage(Component.literal(
-                    this.dog.getName().getString()
-                     + " : i was going to go to this pos,"
-                     + p.getNodePos(i)
-                     + " but it is not good!")); //debug chopin
+                // this.dog.getOwner().sendSystemMessage(Component.literal(
+                //     this.dog.getName().getString()
+                //      + " : i was going to go to this pos,"
+                //      + p.getNodePos(i)
+                //      + " but it is not good!")); //debug chopin
                 return true;
             }
 
