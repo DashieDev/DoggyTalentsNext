@@ -39,9 +39,8 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
     //Because this reason here.., and it is also kinda annoying to see dogs going in 
     //front of owner when mining.
     //
-    //  If Owner is Holding a Pickaxe or a Shovel, go into Mining Cautious Mode, 
-    //when Owner no longer holding the item, continue the mode for a certain amount of 
-    //time.
+    //  If Owner Swing with a DiggerItem in hand, go into Mining Cautious Mode, 
+    //retains the mode for 30 seconds when the owner stops swining. 
     //
     //  In the mode, upon moving towards a random block (even when out of reach)
     //the dog will actively checks the path if 
