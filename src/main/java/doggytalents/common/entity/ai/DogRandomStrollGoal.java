@@ -39,7 +39,6 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
         super.tick();
         
         if (this.ownerMayBeMining()) {
-            ChopinLogger.lwn(this.dog, "He is mining :)) ");
             this.tickCountStopMiningCautious = this.dog.tickCount + 600; // keep checking for 30 seconds
         }
 
@@ -47,9 +46,6 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
             if (this.pathObstructOwnerMining()) {
                 this.stop();
             }
-            ChopinLogger.lwn(this.dog, "miner cautious");
-        } else { 
-            ChopinLogger.lwn(this.dog, "no miner cautious");
         }
     }
 
