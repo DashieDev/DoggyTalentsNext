@@ -64,7 +64,7 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
         var owner = this.dog.getOwner();
         if (owner == null) return false;
         return
-            owner.swinging 
+            owner.swinging  // Idea from Sophisticated Wolves by NightKosh
             && owner.getMainHandItem().getItem() instanceof DiggerItem;
             
     }
@@ -77,11 +77,11 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
 
         var n = this.dog.getNavigation(); 
         var p = n.getPath();
-        if (p == null) return false;
+        if (p == null || p.getNodeCount() <= 0) return false;
         
         //Iterate through the next 5 blocks of the path and check if obstruct owner.
         int i0 = p.getNextNodeIndex();
-        int i_end = Mth.clamp(i0+5, i0, p.getNodeCount()-1);
+        int i_end = Mth.clamp(i0+5, i0, p.getNodeCount());
         for (int i = i0; i < i_end; ++i) {
 
             boolean flag = 

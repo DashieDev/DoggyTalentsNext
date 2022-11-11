@@ -110,7 +110,6 @@ public class SwimmerDogTalent extends TalentInstance {
     
     public static class SwimmerDogGoal extends Goal {
 
-        //TODO fix dog cannot leave water
         private Dog dog;
         //private boolean isGettingAir = false;
         private SmoothSwimmingMoveControl moveControl;
