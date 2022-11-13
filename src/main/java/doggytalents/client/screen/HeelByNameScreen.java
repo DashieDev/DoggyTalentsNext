@@ -3,6 +3,8 @@ package doggytalents.client.screen;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.antlr.v4.parse.ANTLRParser.parserRule_return;
+
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -34,8 +36,13 @@ public class HeelByNameScreen extends Screen {
    private int hightlightDogName;
    private boolean showUuid = false;
    private String value = "";
-   private String posstring = "_";
-   private String curposString = "";
+   private boolean heelAndSit = false;
+   
+   private final int HLC_HEEL_NO_SIT = 0xFF10F9; 
+   private final int HLC_HEEL_AND_SIT = 0xff6f00; 
+
+   private int hightlightTextColor = HLC_HEEL_NO_SIT;
+
    
     private final int MAX_BUFFER_SIZE = 64;
 
@@ -93,7 +100,7 @@ public class HeelByNameScreen extends Screen {
         int texty = half_height - 100 + 2;
         for (int i = 0; i < this.dogNameFilterList.size(); ++i) {
             int color = 0xffffffff;
-            if (i == this.hightlightDogName) color = 0xFF10F9;
+            if (i == this.hightlightDogName) color = this.hightlightTextColor;
             String text = this.dogNameFilterList.get(i) + (
                 this.showUuid ? 
                 " ( " + this.minecraft.level.getEntity(this.dogIdFilterList.get(i)).getStringUUID() + " ) " :
@@ -125,9 +132,22 @@ public class HeelByNameScreen extends Screen {
             this.minecraft.setScreen(null);
         } else if (keyCode == 259) {
             this.popCharInText();
+        } else if (keyCode == 340) {
+            this.hightlightTextColor = HLC_HEEL_AND_SIT;
+            this.heelAndSit = true;
         }
         
         return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == 340) {
+            this.hightlightTextColor = HLC_HEEL_NO_SIT;
+            this.heelAndSit = false;
+        }
+
+        return super.keyReleased(keyCode, scanCode, modifiers);
     }
 
     @Override
@@ -190,7 +210,7 @@ public class HeelByNameScreen extends Screen {
 
 
     private void requestHeel(int id) {
-        PacketHandler.send(PacketDistributor.SERVER.noArg(), new HeelByNameData(id));
+        PacketHandler.send(PacketDistributor.SERVER.noArg(), new HeelByNameData(id, this.heelAndSit));
     }
 
 }
