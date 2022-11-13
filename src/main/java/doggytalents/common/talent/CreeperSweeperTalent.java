@@ -25,21 +25,24 @@ public class CreeperSweeperTalent extends TalentInstance {
     }
 
     @Override
-    public void tick(AbstractDog dogIn) {
+    public void tick(AbstractDog dog) {
         if (this.level() > 0) {
-            int timeLeft = this.cooldown - dogIn.tickCount;
+            int timeLeft = this.cooldown - dog.tickCount;
 
-            if (timeLeft <= 0 && !dogIn.isInSittingPose()) {
-                List<Creeper> list = dogIn.level.getEntitiesOfClass(Creeper.class, dogIn.getBoundingBox().inflate(this.level() * 5,this.level() * 2, this.level() * 5));
+            if (timeLeft <= 0 && (
+                !dog.isInSittingPose() 
+                
+            )) {
+                List<Creeper> list = dog.level.getEntitiesOfClass(Creeper.class, dog.getBoundingBox().inflate(this.level() * 5,this.level() * 2, this.level() * 5));
 
                 if (!list.isEmpty()) {
-                    dogIn.playSound(SoundEvents.WOLF_GROWL, dogIn.getSoundVolume(), (dogIn.getRandom().nextFloat() - dogIn.getRandom().nextFloat()) * 0.2F + 1.0F);
-                    this.cooldown = dogIn.tickCount + 60 + dogIn.getRandom().nextInt(40);
+                    dog.playSound(SoundEvents.WOLF_GROWL, dog.getSoundVolume(), (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F);
+                    this.cooldown = dog.tickCount + 60 + dog.getRandom().nextInt(40);
                 }
             }
 
-            if (dogIn.getTarget() instanceof Creeper) {
-                Creeper creeper = (Creeper) dogIn.getTarget();
+            if (dog.getTarget() instanceof Creeper) {
+                Creeper creeper = (Creeper) dog.getTarget();
                 creeper.setSwellDir(-1);
             }
         }
