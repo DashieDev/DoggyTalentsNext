@@ -1,0 +1,118 @@
+Dog Tag System : label the dog with tag
+Heel By Tag
+Add distance for the dog.
+MedDog also heel other dog when low health
+[SOLVED] [FOUNDATION_IMPLEMENTED] [TALENT] WaterStorage Doggo
+[SOLVED] [FOUNDATION_IMPLEMENTED] [TALENT] Farmer doggos
+[I_KNOW_WHY] Fix doggo dismounting from head tp-ing back to water source where previously swim in it with doggo in head
+[SOLVED] Add Death Counts
+[SOLVED] Add Health bar in main GUI
+[SOLVED] [PARTIALLY_IMPLEMENTED] Make doggo can collect XP
+Remove Collar Shear
+[COMMAND] Add list command to list all dogs
+[COMMAND] Add tpd command to teleport dogs
+[COMMAND] Make locate command output proper coordinates in cheats
+[GUI] Redesign Dog Main Menu GUI
+[DATA_ENTRY] Add dog list database/entry
+[BUG] Fix all unfixed reported bugs
+Dog Armor
+Fix Patrol Mode, made it more practical
+Add dynamic follow range
+Make dog can hold totem of undying
+[TALENT] [HARD] Make dog go get other dog
+[TALENT] Make dog explode, oom haha (while not causing any harm to allies)
+[TALENT] [MEDIUM_HARD] Implements Ranged Attbacker
+[EASTER_EGG] [HARD] Make dog chasing their tail while listening to Chopin Op 64 No 1
+[TALENT] [HARD] Make dog fly
+[TALENT] make tactical dog attack from a longer distance
+[TALENT] Miner doggos
+Make dog dynamically pausing attack on target if another target is more danger to either owner or dog
+Make so that u can ride ur dog in lava
+And make the dog hellhound treat lava like water or land
+A proper training system which make interacting with the dog more fun
+Make if you utilize the Rescue Dog talent too much, the dog gonna get the effect Healing Exhaustion which will
+    temporary make the dog unables to heal you and himselft, and regen hunger mroe slowly
+    and the effects only being removed when you rest in the bed
+Copy the world from the main minecraft which holds the a.i-no-longer-working dog to a debug enviroment and debug the dog
+
+
+
+
+=========================OLD================================
+
+
+[SOLVED] [MAINSTREAM] [BUG] Make so that owner doesnt take fall damage when riding a dog to an extent
+[SOLVED] [MAINSTREAM] fix roaring gale
+[SOLVED] [PARTIALLY_IMPLEMENTED] Implement Stattrack and its GUI
+[SOLVED] [PARTIALLY_IMPLEMENTED] Make doggo can collect XP
+[SOLVED] [NOT_IMPLEMENTED] [ADVANCEMENTS] implement advancements
+[PARTIALLY_SOLVED] [COMMITED] fix heeling command
+[SOLVED] Add Death Counts
+[SOLVED] Add Health bar in main GUI
+[SOLVED] [F*CK] disable dog l**shing (optionally)
+[SOLVED] [FOUNDATION_IMPLEMENTED] [TALENT] WaterStorage Doggo
+[SOLVED] [FOUNDATION_IMPLEMENTED] [TALENT] Farmer doggos
+[I_KNOW_WHY] Fix doggo dismounting from head tp-ing back to water source where previously swim in it with doggo in head
+[I_KNOW_WHY] Fix dog push_back
+[CONFIRMATION] [SOLVED] untame confirmation
+[SOLVED] [WITH_CATCHES] Make Enchantments work on Armor
+[GUI] Add Armor and Acessories GUI
+[COMMAND] Add list command to list all dogs
+[COMMAND] Add tpd command to teleport dogs
+[COMMAND] Make locate command output proper coordinates in cheats
+[GUI] Redesign Dog Main Menu GUI
+[DATA_ENTRY] Add dog list database/entry
+[BUG] Fix all unfixed reported bugs
+[SOLVED] [MAINSTREAM] Stop Berserker Mode Attacking Creeper and make attacking Creepers work exlucsively on the respective Talent
+[DONE] Add negative effects when the dog Hunger reaches 0
+Fix Patrol Mode, made it more practical
+Add dynamic follow range
+[TALENT] [HARD] Make dog dive, which made SwimmerDoggo more practical
+Make dog can hold totem of undying
+[TALENT] [HARD] Make dog go get other dog
+[TALENT] Make dog explode, oom haha (while not causing any harm to allies)
+[TALENT] [MEDIUM_HARD] Implements Ranged Attbacker
+[EASTER_EGG] [HARD] Make dog chasing their tail while listening to Chopin Op 64 No 1
+[TALENT] [HARD] Make dog fly
+[TALENT] make tactical dog attack from a longer distance
+[TALENT] Miner doggos
+Make dog dynamically pausing attack on target if another target is more danger to either owner or dog
+Dog berrybush ??? 
+[TALENT] Crafting Table Dog XD
+Add Dog Count tracker
+Add Offense Blacklist/Whitelists
+[OK] Learn about the render of the mouth items
+Add 3-item dog hotbar containter
+Make so that u can ride ur dog in lava
+And make the dog hellhound treat lava like water or land
+A proper training system which make interacting with the dog more fun
+Make if you utilize the Rescue Dog talent too much, the dog gonna get the effect Healing Exhaustion which will
+    temporary make the dog unables to heal you and himselft, and regen hunger mroe slowly
+    and the effects only being removed when you rest in the bed
+If dog hunger reaches 0 the dog will occasionally take damage
+Make dog more vulnerable as a target to enermy. (maybe and somehow and moderately and confingurably)
+Make dog cares about other dogs
+Resolve the dog bed claming interference (dog locking the bed when seat)
+[SOLVED] [MAINSTREAM] Make only the owner of the dog can access the dog's inventory
+[SOLVED] [MAINSTREAM] fix the inventory button hightlight check
+update wiki
+Copy the world from the main minecraft which holds the a.i-no-longer-working dog to a debug enviroment and debug the dog
+Make the getNavigation or getMovementController check from the alterations 
+    (talents) (each of them will have an instance of MovementController for diff purpose) 
+    and return the one who meets the requirements
+Find dog through sound Liszt Totentanz
+
+Whistler 2 mode : 
+    Stop : Stop attacking entity 
+    Heel Specific : Make a certain dog heel
+
+When joining world, head dog dismount still keep in sitting pose no maatter what even when dropped into water
+
+[SOLVED] [BASIC_JAVA] DogEntity -> is class default fields got init ? 
+talent task goal custom
+
+The Water Storage needs some fixes
+
+Make dog flee on low health
+
+Make dog flee from creeper
