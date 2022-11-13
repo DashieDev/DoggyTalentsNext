@@ -206,6 +206,9 @@
 
    "doggytalents.screen.whistler.heel_by_name.show_uuid" : "Show UUID",
    "doggytalents.screen.whistler.heel_by_name.hide_uuid" : "Hide UUID",
+   "doggytalents.screen.whistler.heel_by_name.help_title" : "Heel By Name Help",
+   "doggytalents.screen.whistler.heel_by_name.help" : "Use the Up and Down arrow to select the dog's name you want to heel, you can also type to search for your dog's name. Press enter to finish the command. Additionally, pressing Enter while holding the Shift key will make the dog Heel then Sit. Esc to cancel.",
+   "doggytalents.screen.whistler.heel_by_name.no_dog_found" : "No dogs were found in this area.", 
 
    "doggui.prevpage": "Previous Page",
    "doggui.nextpage": "Next Page",

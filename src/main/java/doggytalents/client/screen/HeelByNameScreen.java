@@ -18,7 +18,9 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.Rect2i;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.PacketDistributor;
@@ -81,7 +83,22 @@ public class HeelByNameScreen extends Screen {
                 +"_uuid"));
             this.showUuid = !this.showUuid;
         });
+
+        Button help = new Button(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
+            @Override
+            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+                List<Component> list = new ArrayList<>();
+                list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
+                    .withStyle(Style.EMPTY.withBold(true)));
+                String str = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
+                list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
+
+                HeelByNameScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+            }
+        };
+        
         this.addRenderableWidget(showUuid);
+        this.addRenderableWidget(help);
     }
 
  
@@ -98,6 +115,12 @@ public class HeelByNameScreen extends Screen {
         int offset = 0;
         int textx = half_width - 100 + 2;
         int texty = half_height - 100 + 2;
+        if (this.dogNameFilterList.size() <= 0) {
+            this.font.draw(stack, 
+                I18n.get("doggytalents.screen.whistler.heel_by_name.no_dog_found"), 
+                textx, texty + offset, 0xf50a0a);
+        }
+
         for (int i = 0; i < this.dogNameFilterList.size(); ++i) {
             int color = 0xffffffff;
             if (i == this.hightlightDogName) color = this.hightlightTextColor;
