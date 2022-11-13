@@ -26,22 +26,23 @@ import net.minecraftforge.network.NetworkEvent.Context;
     @Override
     public void encode(HeelByNameData data, FriendlyByteBuf buf) {
         buf.writeInt(data.entityId);
+        buf.writeBoolean(data.heelAndSit);
     }
 
     @Override
     public HeelByNameData decode(FriendlyByteBuf buf) {
-        return new HeelByNameData(buf.readInt());
+        return new HeelByNameData(buf.readInt(), buf.readBoolean());
     }
 
 
     @Override
     public void handleDog(Dog dog, HeelByNameData data, Supplier<Context> ctx) {
         var owner = ctx.get().getSender();
-        dog.setOrderedToSit(false);
+        dog.setOrderedToSit(data.heelAndSit);
         DogUtil.searchAndTeleportToOwner(dog, 2);
         if (ConfigHandler.WHISTLE_SOUNDS)
         owner.level.playSound(null, owner.blockPosition(), DoggySounds.WHISTLE_LONG.get(), SoundSource.PLAYERS, 0.6F + owner.level.random.nextFloat() * 0.1F, 0.4F + owner.level.random.nextFloat() * 0.2F);
-;       owner.sendSystemMessage(Component.translatable("dogcommand.heel_by_name", dog.getName().getString()));
+        owner.sendSystemMessage(Component.translatable("dogcommand.heel_by_name", dog.getName().getString()));
     }
     
 
