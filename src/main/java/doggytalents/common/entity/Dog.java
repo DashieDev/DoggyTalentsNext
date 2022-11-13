@@ -980,7 +980,7 @@ public class Dog extends AbstractDog {
      * see setHealth(20.0f) is always called if the dog is tamed, so the result is that 
      * the dog health will always reset to 20.0f whether the owner :
      * <p>+ Quit the game and come back in singleplayer</p> 
-     * <p>+ Leave the chunk and then come back</p> 
+     * <p>+ Unload the chunk and then come back</p> 
      * <p>+ Anything that involves reloading a dog in memory</p> 
      * <p>This is default behaviour and it is actually a hidden feature to help you
      * heals a large amount of dogs easier, as you can just leave that chunk and come back later
