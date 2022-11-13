@@ -31,7 +31,7 @@ public class CreeperSweeperTalent extends TalentInstance {
 
             if (timeLeft <= 0 && (
                 !dog.isInSittingPose() 
-                
+                || dog.isPassenger()
             )) {
                 List<Creeper> list = dog.level.getEntitiesOfClass(Creeper.class, dog.getBoundingBox().inflate(this.level() * 5,this.level() * 2, this.level() * 5));
 
