@@ -110,7 +110,7 @@ public class SwimmerDogTalent extends TalentInstance {
         return InteractionResult.SUCCESS;
     }
 
-    
+    //TODO Maybe incoproate this into tick()
     public static class SwimmerDogGoal extends Goal {
 
         //TODO Something's not right, need to re look at the dog goal enable pattern while riding
