@@ -2,7 +2,8 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
-
+import doggytalents.ChopinLogger;
+import doggytalents.api.feature.EnumMode;
 import doggytalents.client.block.model.DogBedItemOverride;
 import doggytalents.common.entity.Dog;
 import net.minecraft.network.chat.Component;
@@ -40,6 +41,8 @@ public class DogMeleeAttackGoal extends Goal {
       // return false;
       // } else {
       // this.lastCanUseCheck = i;
+      if (this.dog.getMode() == EnumMode.DOCILE) return false;
+
       LivingEntity livingentity = this.dog.getTarget();
       if (livingentity == null) {
          return false;
@@ -71,6 +74,8 @@ public class DogMeleeAttackGoal extends Goal {
    // }
 
    public boolean canContinueToUse() {
+      if (this.dog.getMode() == EnumMode.DOCILE) return false;
+
       LivingEntity livingentity = this.dog.getTarget();
 
       if (livingentity == null) {
@@ -145,7 +150,7 @@ public class DogMeleeAttackGoal extends Goal {
 
    }
 
-   //TODO check if dog still jump in lava while at low height above the ground block under the lava
+   //TODO make dog be able to attack in the air
    protected boolean checkAndPerformAttack(LivingEntity target, double distanceToTargetSqr) {
       if (this.canReachTarget(target, distanceToTargetSqr) && this.ticksUntilNextAttack <= 0) {
          this.resetAttackCooldown();
