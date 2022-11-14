@@ -2293,12 +2293,13 @@ public class Dog extends AbstractDog {
 
     @Override
     public void resetNavigation() {
-        this.navigation = this.defaultNavigation;
+        this.setNavigation(this.defaultNavigation);
     }
 
     @Override
     public void resetMoveControl() {
-        this.moveControl = this.defaultMoveControl;
+        this.setMoveControl(this.defaultMoveControl);
+        
     }
 
 
