@@ -37,17 +37,14 @@ Make if you utilize the Rescue Dog talent too much, the dog gonna get the effect
 Copy the world from the main minecraft which holds the a.i-no-longer-working dog to a debug enviroment and debug the dog
 
 Make Dog get item for you at home
-
 Make dog have personality and mood
-
-BUG Swimmer Dog talent : unable to make dog swim again after left the water
-
+? BUG Swimmer Dog talent : unable to make dog swim again after left the water
 Redefine hellhound. Make dog fire resistance to some degree in level under 5
 Also 5 -> 10 may be in the future
-
 Implemenet remove in IDogAlterations
-
-RescueDog : heel dog and wolf ?
+RescueDog : heel dog and wolf ? Done
+Whislte GUI
+DoggyTalents Update Check
 
 
 =========================OLD================================
