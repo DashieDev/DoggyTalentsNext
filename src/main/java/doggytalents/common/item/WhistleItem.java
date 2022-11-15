@@ -4,12 +4,14 @@ import doggytalents.DoggySounds;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.client.screen.HeelByNameScreen;
+import doggytalents.client.screen.WhistleScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DoggyBeamEntity;
 import doggytalents.common.talent.RoaringGaleTalent;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.Util;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -29,11 +31,47 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.fml.I18NParser;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class WhistleItem extends Item {
+
+    public static enum WhistleMode {
+        STAND(0),
+        HEEL(1),
+        STAY(2),
+        OKAY(3),
+        SHELPERD(4),
+        TACTICAL(5),
+        ROAR(6),
+        HEEL_BY_NAME(7);
+        
+        public static final WhistleMode[] VALUES = 
+            Arrays.stream(WhistleMode.values())
+            .sorted(
+                Comparator.comparingInt(WhistleMode::getIndex)
+            ).toArray(size -> {
+                return new WhistleMode[size];
+            });
+
+        private int id;
+
+        private WhistleMode (int id) {
+            this.id = id;
+        }
+
+        public int getIndex() {
+            return this.id;
+        }
+
+        public String getTitle() {
+            return I18n.get("item.doggytalents.whistle." + this.getIndex());
+        }
+    }
 
     public WhistleItem(Properties properties) {
         super(properties);
@@ -44,29 +82,25 @@ public class WhistleItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (player.isShiftKeyDown()) {
-            if (!world.isClientSide) {
-                if (!stack.hasTag()) {
-                    stack.setTag(new CompoundTag());
-                    stack.getTag().putByte("mode", (byte)0);
-                }
-
-                int mode = stack.getTag().getInt("mode");
-                stack.getTag().putInt("mode", (mode + 1) % 8);
+            if (world.isClientSide) {
+                WhistleScreen.open();
             }
 
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
         }
         else {
-            byte mode = 0;
+            byte id_mode = 0;
 
             if (stack.hasTag() && stack.getTag().contains("mode", Tag.TAG_ANY_NUMERIC)) {
-                mode = stack.getTag().getByte("mode");
+                id_mode = stack.getTag().getByte("mode");
             }
 
             List<Dog> dogsList = world.getEntitiesOfClass(Dog.class, player.getBoundingBox().inflate(100D, 50D, 100D), dog -> dog.isOwnedBy(player));
             boolean successful = false;
 
-            if (mode == 0) { // Stand
+            var mode = WhistleMode.VALUES[id_mode];
+
+            if (mode == WhistleMode.STAND) { // Stand
                 if (!world.isClientSide) {
                     for (Dog dog : dogsList) {
                         dog.setOrderedToSit(false);
@@ -88,7 +122,7 @@ public class WhistleItem extends Item {
 
                 return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
             }
-            else if (mode == 1) { // Heel
+            else if (mode == WhistleMode.HEEL) { // Heel
                 if (!world.isClientSide) {
                     for (Dog dog : dogsList) {
                         if (!dog.isInSittingPose() && dog.getMode() != EnumMode.WANDERING) {
@@ -109,7 +143,7 @@ public class WhistleItem extends Item {
 
                 return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
             }
-            else if (mode == 2) { // Stay
+            else if (mode == WhistleMode.STAY) { // Stay
                 if (!world.isClientSide) {
                     for (Dog dog : dogsList) {
                         dog.setOrderedToSit(true);
@@ -131,7 +165,7 @@ public class WhistleItem extends Item {
 
                 return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
             }
-            else if (mode == 3) { // Ok
+            else if (mode == WhistleMode.OKAY) { // Ok
                 if (!world.isClientSide) {
                     for (Dog dog : dogsList) {
                         if (dog.getMaxHealth() / 2 >= dog.getHealth()) {
@@ -157,7 +191,7 @@ public class WhistleItem extends Item {
                     return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
                 }
             }
-            else if (mode == 4) {
+            else if (mode == WhistleMode.SHELPERD) {
                 if (!world.isClientSide) {
                     if (ConfigHandler.WHISTLE_SOUNDS)
                     world.playSound(null, player.blockPosition(), DoggySounds.WHISTLE_SHORT.get(), SoundSource.PLAYERS, 0.6F + world.random.nextFloat() * 0.1F, 0.8F + world.random.nextFloat() * 0.2F);
@@ -166,7 +200,7 @@ public class WhistleItem extends Item {
                 }
 
                 return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
-            } else if (mode == 5) {
+            } else if (mode == WhistleMode.TACTICAL) {
                 if (!world.isClientSide) {
                     if (ConfigHandler.WHISTLE_SOUNDS)
                     world.playSound((Player)null, player.blockPosition(), SoundEvents.ARROW_SHOOT, SoundSource.NEUTRAL, 0.5F, 0.4F / (world.random.nextFloat() * 0.4F + 0.8F));
@@ -177,7 +211,7 @@ public class WhistleItem extends Item {
                 }
 
                 return new InteractionResultHolder<>(InteractionResult.CONSUME, player.getItemInHand(hand));
-            } else if (mode == 6) {
+            } else if (mode == WhistleMode.ROAR) {
                 if (!world.isClientSide) {
                     List<Dog> roarDogs = dogsList.stream().filter(dog -> dog.getDogLevel(DoggyTalents.ROARING_GALE) > 0).collect(Collectors.toList());
                     if (roarDogs.isEmpty()) {
@@ -235,7 +269,7 @@ public class WhistleItem extends Item {
                 }
 
                 return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
-            } else if (mode == 7 && !dogsList.isEmpty() && player.level.isClientSide)  {
+            } else if (mode == WhistleMode.HEEL_BY_NAME && !dogsList.isEmpty() && player.level.isClientSide)  { 
                 HeelByNameScreen.open();
                 return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
             }
