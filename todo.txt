@@ -46,6 +46,11 @@ RescueDog : heel dog and wolf ? Done
 Whislte GUI
 DoggyTalents Update Check
 
+Make dog heal a certain amount of health when full hunger like player
+But occasionally recieve an effect where he cannot heal and need rest.
+
+Maybe consider building a Talent Bridge or Bus so that Talents can communicate better with each other.
+
 
 =========================OLD================================
 
