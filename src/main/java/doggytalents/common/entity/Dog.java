@@ -14,7 +14,6 @@ import doggytalents.api.registry.*;
 import doggytalents.client.screen.DogInfoScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.ai.BreedGoal;
-import doggytalents.common.entity.ai.DogMoveToBlockGoal;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
@@ -202,6 +201,7 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(3, new DogHungryGoal(this, 1.0f, 2.0f));
         this.goalSelector.addGoal(4, new DogLowHealthGoal(this, 1.0f, 2.0f));
         this.goalSelector.addGoal(4, new DogLeapAtTargetGoal(this, 0.4F));
+        this.goalSelector.addGoal(5, new DogEatFromChestDogGoal(this, 1.0));
         this.goalSelector.addGoal(5, new DogMeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(5, new DogMoveToBlockGoal(this));
         this.goalSelector.addGoal(5, new DogWanderGoal(this, 1.0D));
