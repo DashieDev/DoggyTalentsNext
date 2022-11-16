@@ -118,7 +118,7 @@ public class FindWaterGoal extends Goal {
             }
 
             if (targetPos != null) {
-                this.navigator.moveTo(targetPos.getX(), targetPos.getY(), targetPos.getZ(), 1.2D);
+                this.navigator.moveTo(targetPos.getX(), targetPos.getY(), targetPos.getZ(), 1.5D);
             }
         }
     }
