@@ -96,3 +96,6 @@ prevents path updates. This has been fixed by properly reseting the old moveCont
     in radius 
 + Dogs now eats from nearby ChestDog who are storing food when hunger is lower than 50.
     + They will also move to the ChestDog and eat only when in radius.
+
+v1.3.1beta - 17th November 2022
+*CRITICAL BUG FIX : NPE on DogAteFromChestDogGoal
