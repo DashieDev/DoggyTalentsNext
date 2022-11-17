@@ -204,7 +204,10 @@
    "dogcommand.heel": "Heel!",
    "dogcommand.heel_by_name": "%s, Heel!",
 
-   "doggytalents.screen.whistler.heel_by_name.show_uuid" : "Show UUID",
+   "doggytalents.screen.whistler.screen.help_title" : "Whistle Mode Select",
+   "doggytalents.screen.whistler.screen.help" : "Use the Up and Down arrow to select the mode you want to set the Whistle to, you can also type to search for the mode. Press enter to finish the command. Additionally, you can quick select a mode by pressing its corresponding number key shown before the name in Orange. Esc to cancel.", 
+
+   "doggytalents.screen.whistler.heel_by_name.show_uuid" : "Show UUID", 
    "doggytalents.screen.whistler.heel_by_name.hide_uuid" : "Hide UUID",
    "doggytalents.screen.whistler.heel_by_name.help_title" : "Heel By Name Help",
    "doggytalents.screen.whistler.heel_by_name.help" : "Use the Up and Down arrow to select the dog you want to heel, you can also type to search for your dog's name. Press enter to finish the command. Additionally, pressing Enter while holding the Shift key will make the dog Heel then Sit. Esc to cancel.",
