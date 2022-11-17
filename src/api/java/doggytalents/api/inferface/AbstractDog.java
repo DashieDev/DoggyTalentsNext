@@ -107,7 +107,32 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         this.navigation = p;
     }
 
+    //TODO try to replicate the bug and check if moveControl.haveWantedPosition using debug magic
     public void setMoveControl(MoveControl m) {
+        /*
+         * Force the MoveControl To Reset :
+         * this will set the dog's wanted Position to his current Position
+         * which will cause the moveControl to halt movement and reset in the 
+         * next tick(). 
+         * And then immediately update the moveControl by calling tick() so 
+         * that everything is resolved before anything else.
+         */
+        this.moveControl.setWantedPosition(
+            this.getX(), 
+            this.getY(), 
+            this.getZ(), 1.0
+        );
+        this.moveControl.tick();
+
+        //Also reset jump just to be sure.
+        this.setJumping(false);
+
+        //Also reset accelerations just to be sure.
+        this.setSpeed(0.0F);
+        this.setXxa(0.0F);
+        this.setYya(0.0F);
+        this.setZza(0.0F);
+
         this.moveControl = m;
     }
 
