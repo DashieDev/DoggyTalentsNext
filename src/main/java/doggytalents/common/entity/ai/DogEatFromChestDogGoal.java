@@ -152,7 +152,7 @@ public class DogEatFromChestDogGoal extends Goal {
                     }
                     return false;
                 }
-            ).getLeft() != null;
+            ) != null;
     }
 
     private void checkAndEatFromChestDog() {
