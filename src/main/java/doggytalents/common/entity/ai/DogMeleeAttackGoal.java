@@ -40,6 +40,7 @@ public class DogMeleeAttackGoal extends Goal {
 
    //TODO Make tiny dog also leap with caution of their size
    //TODO Also resolve Piano dogs do a tiny amount of pause
+   //TODO Also check based on mode.wantToAttack() not just DOCILE
    public boolean canUse() {
       // long i = this.dog.level.getGameTime();
       // if (i - this.lastCanUseCheck < 20L) {
