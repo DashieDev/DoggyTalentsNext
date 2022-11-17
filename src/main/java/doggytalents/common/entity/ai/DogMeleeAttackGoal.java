@@ -2,7 +2,6 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.client.block.model.DogBedItemOverride;
 import doggytalents.common.entity.Dog;
