@@ -58,3 +58,41 @@ v1.2.0beta - 9th November 2022
 + Make dog don't go in front of owner when he is mining (useful in strip-mining because he might hit lava)
 + Make dog teleport to and then follow the owner while health is lower than 6.0 (❤️❤️❤️), and also beg for
 assistance.
+
+v1.3.0beta - 17th November 2022
+/Make the Mining Cautious Logic make more sense : 
+    / @Credit idea thanks to Sophisticated Wolves from NightKosh
+    The dog only go into the mode when owner did a swing with DiggerItem in hand 
+    and remains in the mode for 30 seconds more when the owner 
+    no longer swinging with DiggerItem in hand.
+/Heel by name:
+    + Add the option to make the dog sit upon heel completion. Can be achieved by Shift+Enter 
+    finishing the command.
+/Creeper Sweeper Talent:
+    + Make them also growl when a creeper is nearby while sitting on player's head. this
+    allow utilization of the feature to better alert creeper.
+/Whistle Mode Picking Interface:
+    - remove the old Shift+Click Cycling style, the method has proven itself to be relatively
+    annoying and unintuitive, by allowing a great chance of accidental mode switch and trigger.
+    + Instead the user will be presented with a Screen for them to choose the mode, they can quickly
+    pick the mode through the screen via either searching then pressing enter, using the up and arrow 
+    key to choose the mode then pressing enter or pressing the corresponding number key. This minimize
+    accidental switch because the player doesn't change the mode immediately when shift+click.
++ Add Dog Eating Effect : Eating now makes sound and particles.
++ Increase FindWaterGoal speed to 1.5 for practical reasons.
+*BUG FIX : fix SwimmerDog occasionally become uninterative with a bouncing effect upon switching back to land
+this bug is created by the MoveControl for Swimming is not properly reset upon transition, this make the 
+dog's yya occasionally goes larger than 0.2 on land which cause the dog to always move up
+while being canceled by gravity, which cause a side effect that the dog is never on land, which 
+prevents path updates. This has been fixed by properly reseting the old moveControl before setting new one.
+/Rescue Dog Talent :
+    / Limit the heal radius and check if the dog can see the heal target.
+    + Rescue Dogs now also heals other Dogs and Wolves of the same owner, with each heal session costs 20
+    Hunger.
+    + Rescue Dogs now move to the target (Owner or dogs and wolves of the same owner) when low on health
+    (health <= 8.0) and then heals when in radius. 
+    + Rescues Dogs also check if they can afford to heal the target (hunger - healCost >= 10)
+    before actually moving to them. If they can't then the dog will not proceed to go and heal the target.
+    in radius 
++ Dogs now eats from nearby ChestDog who are storing food when hunger is lower than 50.
+    + They will also move to the ChestDog and eat only when in radius.
