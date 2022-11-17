@@ -8,7 +8,6 @@ import javax.swing.AbstractAction;
 
 import org.spongepowered.asm.mixin.Overwrite;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
@@ -136,7 +135,6 @@ public class RescueDogTalent extends TalentInstance {
         dog.setDogHunger(
             dog.getDogHunger() - this.healCost(dog, e)
         );
-        ChopinLogger.lwn(dog, "Target Health before heal : " + e.getHealth());
         e.heal(
             this.healAmount(dog, e)
         );
@@ -150,7 +148,6 @@ public class RescueDogTalent extends TalentInstance {
             );
         }
         this.healCooldown = dog.getRandom().nextInt(6) * 20; // Between 5 seconds
-        ChopinLogger.l("cooldown : " + this.healCooldown);
     } 
 
     private boolean isTargetLowHealth(AbstractDog dog, LivingEntity e) {
@@ -245,7 +242,6 @@ public class RescueDogTalent extends TalentInstance {
             if (target == null) return false;
             if (!this.talentInst.isTargetLowHealth(dog, target)) return false;
             if (!this.talentInst.canAffordToHealTarget(dog, target)) return false;            
-            ChopinLogger.lwn(this.dog, "Let's go!");
             return true;
         }
 
@@ -275,7 +271,6 @@ public class RescueDogTalent extends TalentInstance {
                         // if (this.dog.distanceToSqr(this.target) >= 144.0D) {
                         //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                         // } else {
-                            ChopinLogger.lwn(this.dog,"Trying to heal now!");
                             this.dog.getNavigation().moveTo(this.target, 1);
                         //}
                     }

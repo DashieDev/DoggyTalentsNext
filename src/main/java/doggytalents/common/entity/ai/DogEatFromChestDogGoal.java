@@ -1,7 +1,6 @@
 package doggytalents.common.entity.ai;
 
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.inferface.IThrowableItem;
@@ -106,7 +105,6 @@ public class DogEatFromChestDogGoal extends Goal {
                     d -> validChestDog(d)
                 );
             this.chooseChestDog();
-            ChopinLogger.l("Scanned for ChestDogs");
         }
     }
 
