@@ -130,3 +130,5 @@ The Water Storage needs some fixes
 Make dog flee on low health
 
 Make dog flee from creeper
+
+make FlameDog attempt to rescue dog in lava or FloatDog attempt to rescue falling dogs.
