@@ -64,9 +64,9 @@ public class WhistleScreen extends Screen{
             @Override
             public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
                 List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
+                list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
-                String str = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
+                String str = I18n.get("doggytalents.screen.whistler.screen.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
                 WhistleScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
