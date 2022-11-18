@@ -49,7 +49,11 @@ DoggyTalents Update Check
 Make dog heal a certain amount of health when full hunger like player
 But occasionally recieve an effect where he cannot heal and need rest.
 
-Maybe consider building a Talent Bridge or Bus so that Talents can communicate better with each other.
+Maybe consider building a Talent Bus so that Talents can communicate better with each other.
+When a dog is hungry he will emit an event on the bus telling that he is hungry 
+And the ChestDog With food nearby will listen to the event, and if there is meat,
+they will respond to the bus telling that they have the meat making them a eligable target
+And the dog will acknowleage and move to the ChestDog.
 
 
 =========================OLD================================
