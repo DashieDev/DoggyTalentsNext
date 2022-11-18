@@ -24,9 +24,9 @@ public class DogUtil {
 
     /**
      * Dog teleport with considerations from owner and always success when there is available block :
-     * <p>1. Chose the best block according to {@link DogUtil#chooseSafePosNearOwner} .</p>
-     * <p>2. Set dog fall distance to 0</p>
-     * <p>3. Teleport</p>
+     * <p><b>1.</b> Chose the best block according to {@link DogUtil#chooseSafePosNearOwner} .</p>
+     * <p><b>2.</b> Set dog fall distance to 0</p>
+     * <p><b>3.</b> Teleport</p>
      * 
      * @param dog The Dog who will teleport
      * @param radius Radius of the area to search for block to teleport
