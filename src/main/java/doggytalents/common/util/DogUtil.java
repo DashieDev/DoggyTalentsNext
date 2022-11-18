@@ -225,6 +225,9 @@ public class DogUtil {
      * If Angle(u, v) < 90 this function will return the squared distance between A and d
      * else this function will return -1.
      * 
+     * <p>NOTE : Every parameter here accept Vec3, but all have to have exactly one component being zeroed
+     * and it should be the same component across, like all Zs zero or else the function wont 
+     * work</p>
      * 
      * @author DashieDev
      * @param A 
