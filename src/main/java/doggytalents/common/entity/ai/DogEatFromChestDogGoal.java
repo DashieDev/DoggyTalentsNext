@@ -162,7 +162,7 @@ public class DogEatFromChestDogGoal extends Goal {
             this.dog.distanceToSqr(this.chestDog) <= 5
             && this.dog.hasLineOfSight(this.chestDog)
         ) {
-            PackPuppyItemHandler inventory = 
+            PackPuppyItemHandler inventory =
                 this.chestDog.getTalent(DoggyTalents.PACK_PUPPY)
                 .map(
                     (inst) -> inst.cast(PackPuppyTalent.class)
