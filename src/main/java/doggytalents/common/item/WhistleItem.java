@@ -270,6 +270,7 @@ public class WhistleItem extends Item {
 
                 return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
             } else if (mode == WhistleMode.HEEL_BY_NAME && !dogsList.isEmpty() && player.level.isClientSide())  { 
+                //TODO Radius define
                 HeelByNameScreen.open();
                 return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
             }
