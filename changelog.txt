@@ -99,3 +99,6 @@ prevents path updates. This has been fixed by properly reseting the old moveCont
 
 v1.3.1beta - 17th November 2022
 *CRITICAL BUG FIX : NPE on DogAteFromChestDogGoal
+
+v1.3.2beta - 17th November 2022
+*HOTFIX : Dog Bed crashing game.
