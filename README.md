@@ -24,8 +24,7 @@ For more informations, please consult the [wiki](https://github.com/percivalalb/
 
 #### A Note From DashieDev
  * This project purpose is to continue the developement of the beloved mod **DoggyTalents**, which the current author
- **ProPercivalalb** no longer have the time to work on as he emailed me in a pull request, which is [here](https://github.com/percivalalb/DoggyTalents/pull/402#issuecomment-1152874076). I will respectfully comply to
- any request to remove this repository by **ProPercivalalb**.
+ **ProPercivalalb** no longer have the time to work on as he emailed me in a pull request, which is [here](https://github.com/percivalalb/DoggyTalents/pull/402#issuecomment-1152874076).
  * **I DO NOT OWN THE CORE IDEAS** , the original ideas belongs to **RaustBlackDragon** back in 2013, and most of the code is still
  belongs to **ProPercivalalb** 's DoggyTalents2 repository, while i was copying it over, i make some big changes which involves
  upgrading the mod to Minecraft newest version at that time, which is **1.19.2**. 
