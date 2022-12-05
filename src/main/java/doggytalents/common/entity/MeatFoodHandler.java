@@ -31,7 +31,7 @@ public class MeatFoodHandler implements IDogFoodHandler {
             if (!dog.level.isClientSide) {
                 int heal = stack.getItem().getFoodProperties().getNutrition() * 5;
 
-                dog.setDogHunger(dog.getDogHunger() + heal);
+                dog.addHunger(heal);
                 dog.consumeItemFromStack(entityIn, stack);
 
                 if (dog.level instanceof ServerLevel) {
