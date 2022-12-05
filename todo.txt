@@ -54,6 +54,8 @@ When a dog is hungry he will emit an event on the bus telling that he is hungry
 And the ChestDog With food nearby will listen to the event, and if there is meat,
 they will respond to the bus telling that they have the meat making them a eligable target
 And the dog will acknowleage and move to the ChestDog.
+Make dog tail angle = 1.72 - lostHealth*(ratio) where ratio = HALF_PI/maxHealth and will
+recalc when there is change, the check interval is 1 per tick 
 
 
 =========================OLD================================
