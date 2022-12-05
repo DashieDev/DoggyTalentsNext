@@ -140,7 +140,9 @@ public class Dog extends AbstractDog {
     protected final MoveControl defaultMoveControl;
 
     private int hungerTick;
-    private int prevHungerTick;      
+    private int prevHungerTick;  
+    private int hungerSaturation; // Extra Hunger to prevent real hunger from decreasing when saturated
+    private int hungerSaturationHealingTick;   
     private int healingTick;  
     private int prevHealingTick;
 
@@ -419,13 +421,28 @@ public class Dog extends AbstractDog {
                 }
 
                 if (this.hungerTick > 400) {
-                    this.setDogHunger(this.getDogHunger() - 1);
+                    if (this.hungerSaturation > 0) {
+                        --this.hungerSaturation;
+                    } else {
+                        this.setDogHunger(this.getDogHunger() - 1);
+                    }
+                    
                     this.hungerTick -= 400;
                 }
                 if (this.isZeroHunger)
                     this.handleZeroHunger();
             }
 
+            if (hungerSaturation > 0) {
+                if (this.getHealth() < this.getMaxHealth()) {
+                    if (--this.hungerSaturationHealingTick <= 0) {
+                        this.hungerSaturationHealingTick = 10;
+                        this.heal(1.0f);
+                        hungerSaturation -= 3; // -3 saturation per health healed
+                    }
+                }
+            }
+            
             this.prevHealingTick = this.healingTick;
             this.healingTick += 8;
 
@@ -1747,7 +1764,13 @@ public class Dog extends AbstractDog {
 
     @Override
     public void addHunger(float add) {
-        this.setDogHunger(this.getDogHunger() + add);
+        var h0 = this.getDogHunger();
+        var h1 = h0 + add;
+        var h2 = (int) (h1 - this.getMaxHunger());
+        if (h2 > 0) {
+            this.hungerSaturation = h2;
+        }
+        this.setDogHunger(h0 + add);
     }
 
     @Override
