@@ -2,7 +2,7 @@ API!!!!!!!!!!!!!!!!!!!!
 Dog Tag System : label the dog with tag
 Heel By Tag
 Add distance for the dog.
-MedDog also heel other dog when low health
+[SOLVED] [] MedDog also heel other dog when low health
 [SOLVED] [FOUNDATION_IMPLEMENTED] [TALENT] WaterStorage Doggo
 [SOLVED] [FOUNDATION_IMPLEMENTED] [TALENT] Farmer doggos
 [I_KNOW_WHY] Fix doggo dismounting from head tp-ing back to water source where previously swim in it with doggo in head
