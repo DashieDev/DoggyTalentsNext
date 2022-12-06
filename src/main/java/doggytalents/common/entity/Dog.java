@@ -152,6 +152,9 @@ public class Dog extends AbstractDog {
     private boolean isShaking;
     private float timeWolfIsShaking;
     private float prevTimeWolfIsShaking;
+    
+    private float radPerHealthDecrease;
+    private float maxHealth0;
 
     protected boolean dogJumping;
     protected float jumpPower;
@@ -291,7 +294,10 @@ public class Dog extends AbstractDog {
     }
 
     public float getTailRotation() {
-        return this.isTame() ? (0.55F - (this.getMaxHealth() - this.getHealth()) * 0.02F) * (float)Math.PI : ((float)Math.PI / 5F);
+        return 
+            this.isTame() ? 
+            (1.73f) - this.radPerHealthDecrease*(this.getMaxHealth() - this.getHealth()) 
+            : ((float)Math.PI / 5F);
     }
 
     @Override
@@ -329,6 +335,11 @@ public class Dog extends AbstractDog {
                 this.headRotationCourse += (1.0F - this.headRotationCourse) * 0.4F;
             } else {
                 this.headRotationCourse += (0.0F - this.headRotationCourse) * 0.4F;
+            }
+
+            if (this.getMaxHealth() != this.maxHealth0) {
+                this.maxHealth0 = this.getMaxHealth();
+                this.radPerHealthDecrease = Mth.HALF_PI / this.maxHealth0;
             }
 
             boolean inWater = this.isInWater();
