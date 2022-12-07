@@ -2,7 +2,6 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.client.block.model.DogBedItemOverride;
 import doggytalents.common.entity.Dog;
@@ -27,14 +26,15 @@ public class DogMeleeAttackGoal extends Goal {
    private int ticksUntilPathRecalc = 10;
    private int ticksUntilNextAttack;
    private final int attackInterval = 20;
+   private int awayFromOwnerDistance;
    private long lastCanUseCheck;
-   private static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
    private int failedPathFindingPenalty = 0;
 
-   public DogMeleeAttackGoal(Dog p_25552_, double p_25553_, boolean p_25554_) {
+   public DogMeleeAttackGoal(Dog p_25552_, double p_25553_, boolean p_25554_, int awayFromOwnerDistance) {
       this.dog = p_25552_;
       this.speedModifier = p_25553_;
       this.followingTargetEvenIfNotSeen = p_25554_;
+      this.awayFromOwnerDistance = awayFromOwnerDistance;
       this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
    }
 
@@ -48,6 +48,13 @@ public class DogMeleeAttackGoal extends Goal {
       // } else {
       // this.lastCanUseCheck = i;
       if (this.dog.getMode() == EnumMode.DOCILE) return false;
+
+      if (this.dog.fallDistance > 7) return false;
+
+      if (this.dog.getOwner() != null) {
+         if (this.dog.distanceToSqr(this.dog.getOwner()) > this.awayFromOwnerDistance*this.awayFromOwnerDistance) 
+            return false;
+      }
 
       LivingEntity livingentity = this.dog.getTarget();
       if (livingentity == null) {
@@ -82,6 +89,13 @@ public class DogMeleeAttackGoal extends Goal {
    public boolean canContinueToUse() {
       if (this.dog.getMode() == EnumMode.DOCILE) return false;
 
+      if (this.dog.fallDistance > 7) return false;
+
+      if (this.dog.getOwner() != null) {
+         if (this.dog.distanceToSqr(this.dog.getOwner()) > this.awayFromOwnerDistance*this.awayFromOwnerDistance) 
+            return false;
+      }
+      
       LivingEntity livingentity = this.dog.getTarget();
 
       if (livingentity == null) {
@@ -154,10 +168,8 @@ public class DogMeleeAttackGoal extends Goal {
 
       if (n.isDone() && dog_bp.equals(target_bp) && !this.canReachTarget(e, d0)) {
          dog.getMoveControl().setWantedPosition(e.getX(), e.getY(), e.getZ(), this.speedModifier);
-         ChopinLogger.l("move1!");
       }
       if(n.isDone() && !this.canReachTarget(e, d0)) {
-         ChopinLogger.l("done?!");
          this.ticksUntilPathRecalc = 0;
       }
       this.checkAndPerformAttack(e, d0);
