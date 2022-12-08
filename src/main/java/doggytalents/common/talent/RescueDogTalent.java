@@ -82,17 +82,13 @@ public class RescueDogTalent extends TalentInstance {
         // }
     }
 
-    //TODO need tuned ?
+    //TODO Decrease the healCost due to healing is more difficult now.
     public int healCost(AbstractDog dog, LivingEntity target) {
-        byte cost;
-        if (target instanceof Player) {
-            cost = 50; //Under level 5 for player 
-
-            if (this.level() >= 5) {
-                cost = 30; //Over level 5 for player
-            }
+        int cost;
+        if (this.level() >= 5) {
+            cost = 10;
         } else {
-            cost = 20; //For wolf or dog of the same owner
+            cost = 20;
         }
 
         
