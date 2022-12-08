@@ -121,3 +121,6 @@ v1.4.0 - 8th Decemeber 2022
 / Added timeout in dog attack, he will discard the target if staying in a spot for too long without reach.
 / Dog now consider nearest skeleton away from the Owner instead of himself.
 / Dog now be able to deal damage mid-air
+
+v1.4.1 - 8th December 2022
+*HOTFIX : Path reach check now regards Y coordinates.
