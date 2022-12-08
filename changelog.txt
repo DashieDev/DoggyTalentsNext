@@ -100,5 +100,24 @@ prevents path updates. This has been fixed by properly reseting the old moveCont
 v1.3.1beta - 17th November 2022
 *CRITICAL BUG FIX : NPE on DogAteFromChestDogGoal
 
-v1.3.2beta - 17th November 2022
+v1.3.2 - 17th November 2022
 *HOTFIX : Dog Bed crashing game.
+
+v1.4.0 - 8th Decemeber 2022
++ Added Saturation Effect for dogs
+    + When "adding" hunger to dog, if there is "excess" hunger then that
+    will be added to the saturation hunger instead
+    Saturation Hunger :
+    When larger than Zero
+    +every hunger the dog lost will count against it
+    instead of the real hunger value.
+    + If health < maxHealth : The dog will heal 1 health each 0.5s interval
+    with the cost of 3 saturation hunger per health.
+    NOTICE : The dog hunger value still caps at
+    the real max value.
+/ Dog Tail angle now depends on the ratio between the dog's health and his max health. (ACTUALLY)
+/ When dog attacks an entity, if far away from owner more than 20 blocks, teleport
+/ Dog now check if he can reach the target before begin attacking
+/ Added timeout in dog attack, he will discard the target if staying in a spot for too long without reach.
+/ Dog now consider nearest skeleton away from the Owner instead of himself.
+/ Dog now be able to deal damage mid-air
