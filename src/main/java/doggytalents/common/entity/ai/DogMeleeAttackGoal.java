@@ -4,7 +4,6 @@ import java.util.EnumSet;
 
 import org.jetbrains.annotations.NotNull;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.client.block.model.DogBedItemOverride;
 import doggytalents.common.entity.Dog;
@@ -41,10 +40,10 @@ public class DogMeleeAttackGoal extends Goal {
    private final float LEAP_YD = 0.4F;
    
 
-   public DogMeleeAttackGoal(Dog p_25552_, double p_25553_, boolean p_25554_, int awayFromOwnerDistance, int timeOutTick) {
-      this.dog = p_25552_;
-      this.speedModifier = p_25553_;
-      this.followingTargetEvenIfNotSeen = p_25554_;
+   public DogMeleeAttackGoal(Dog dog, double speedModifier, boolean followingTargetIfNotSeen, int awayFromOwnerDistance, int timeOutTick) {
+      this.dog = dog;
+      this.speedModifier = speedModifier;
+      this.followingTargetEvenIfNotSeen = followingTargetIfNotSeen;
       this.awayFromOwnerDistance = awayFromOwnerDistance;
       this.timeOutTick = timeOutTick;
       this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
@@ -213,8 +212,6 @@ public class DogMeleeAttackGoal extends Goal {
     */
    protected void checkAndLeapAtTarget(LivingEntity target) {
       if (!this.canLeapAtTarget(target)) return;
-
-      ChopinLogger.l("Bounce");
 
       Vec3 vec3 = this.dog.getDeltaMovement();
       Vec3 vec31 = new Vec3(target.getX() - this.dog.getX(), 0.0D, target.getZ() - this.dog.getZ());
