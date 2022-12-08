@@ -2,9 +2,12 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
+import doggytalents.ChopinLogger;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.client.block.model.DogBedItemOverride;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.DogUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySelector;
@@ -20,21 +23,21 @@ public class DogMeleeAttackGoal extends Goal {
    protected final Dog dog;
    private final double speedModifier;
    private final boolean followingTargetEvenIfNotSeen;
-   // private double pathedTargetX;
-   // private double pathedTargetY;
-   // private double pathedTargetZ;
    private int ticksUntilPathRecalc = 10;
    private int ticksUntilNextAttack;
-   private final int attackInterval = 20;
    private int awayFromOwnerDistance;
-   private long lastCanUseCheck;
-   private int failedPathFindingPenalty = 0;
 
-   public DogMeleeAttackGoal(Dog p_25552_, double p_25553_, boolean p_25554_, int awayFromOwnerDistance) {
+   private int timeOutTick;
+   private int waitingTick;
+   private BlockPos.MutableBlockPos dogPos0;
+   
+
+   public DogMeleeAttackGoal(Dog p_25552_, double p_25553_, boolean p_25554_, int awayFromOwnerDistance, int timeOutTick) {
       this.dog = p_25552_;
       this.speedModifier = p_25553_;
       this.followingTargetEvenIfNotSeen = p_25554_;
       this.awayFromOwnerDistance = awayFromOwnerDistance;
+      this.timeOutTick = timeOutTick;
       this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
    }
 
@@ -42,11 +45,7 @@ public class DogMeleeAttackGoal extends Goal {
    //TODO Also resolve Piano dogs do a tiny amount of pause
    //TODO Also check based on mode.wantToAttack() not just DOCILE
    public boolean canUse() {
-      // long i = this.dog.level.getGameTime();
-      // if (i - this.lastCanUseCheck < 20L) {
-      // return false;
-      // } else {
-      // this.lastCanUseCheck = i;
+
       if (this.dog.getMode() == EnumMode.DOCILE) return false;
 
       if (this.dog.fallDistance > 7) return false;
@@ -56,37 +55,55 @@ public class DogMeleeAttackGoal extends Goal {
             return false;
       }
 
-      LivingEntity livingentity = this.dog.getTarget();
-      if (livingentity == null) {
+      LivingEntity target = this.dog.getTarget();
+      if (target == null) {
          return false;
-      } else if (!livingentity.isAlive()) {
+      } else if (!target.isAlive()) {
          return false;
-      } else {
-         return true;
       }
-      // else {
 
-      // // this.path = this.dog.getNavigation().createPath(livingentity, 0);
-      // // if (this.path != null) {
-      // // return true;
-      // // } else {
-      // ChopinLogger.l("here!");
-      // ChopinLogger.l("this.getAttackReachSqr(livingentity) : " +
-      // this.getAttackReachSqr(livingentity));
-      // ChopinLogger.l("this.dog.distanceToSqr(livingentity.getX(),
-      // livingentity.getY(), livingentity.getZ() : " +
-      // this.dog.distanceToSqr(livingentity.getX(), livingentity.getY(),
-      // livingentity.getZ()));
+      if (dog.tickCount % 5 != 0) return false;
+      
+      /*
+       * Only begin attacking if the dog can ACTUALLY reach the entity
+       * 
+       * Although in vanilla TargetGoal there is already an option to require that
+       * the entity must be in reach, which COINCIDENTALLY determined using 
+       * the exact same procedure. But in order to enable that, the 
+       * Goal (ex. OwnerAttack or OwnerBeingAttack) may have to be REIMPLEMENTED, DECOUPLED,
+       * and any parent class code (still the child of TargetGoal)
+       * must be physically copied over cause almost every of them have the super 
+       * constructor to TargetGoal mustSee parameter fixed to false, or 
+       * to a parent class which the preceding condition applies. That produce a bunch of
+       * BOILERPLATES which we don't want. And also the vanilla code also for some reason, 
+       * cache the result of the entity after the code executed so every other entities
+       * checked before the tickUntilCodeReExecution runs out would also give the same result.
+       * Which means that the dog may consider a non-reachable nearest target to be reached
+       * right after he check the other actually reachable target.
+       * 
+       * The code below, which is the procedure to determine if the dog can reach 
+       * (which is relatively expensive)
+       * is only executed when the dog actually have a target to attack, instead of all the time
+       * when finding targets, hence its potiental efficency gain. Also the dog should only 
+       * attack entities that is in reach regardless of any conditions. Otherwise, the result is kinda
+       * stoopid. Also when target is not qualified, it will set it to null so that the target goal can 
+       * refind targets.
+       *  
+       */
+      var p = dog.getNavigation().createPath(target, 1);
+      if (p == null) return false;
 
-      // return this.getAttackReachSqr(livingentity) >=
-      // this.dog.distanceToSqr(livingentity.getX(), livingentity.getY(),
-      // livingentity.getZ());
-      // //}
-      // }
+      if (!DogUtil.canPathReachTargetBlock(dog, p, target.blockPosition() )) { 
+         this.dog.setTarget(null);
+         return false;
+      } 
+      
+      return true;
+      
    }
-   // }
 
    public boolean canContinueToUse() {
+
       if (this.dog.getMode() == EnumMode.DOCILE) return false;
 
       if (this.dog.fallDistance > 7) return false;
@@ -95,6 +112,8 @@ public class DogMeleeAttackGoal extends Goal {
          if (this.dog.distanceToSqr(this.dog.getOwner()) > this.awayFromOwnerDistance*this.awayFromOwnerDistance) 
             return false;
       }
+
+      if (this.waitingTick > this.timeOutTick) return false;
       
       LivingEntity livingentity = this.dog.getTarget();
 
@@ -117,6 +136,8 @@ public class DogMeleeAttackGoal extends Goal {
       this.dog.setAggressive(true);
       this.ticksUntilPathRecalc = 0;
       this.ticksUntilNextAttack = 0;
+      this.waitingTick = 0;
+      this.dogPos0 = this.dog.blockPosition().mutable();
    }
 
    public void stop() {
@@ -145,6 +166,13 @@ public class DogMeleeAttackGoal extends Goal {
       var dog_bp = this.dog.blockPosition();
       var target_bp = e.blockPosition();
 
+      if (dog_bp.equals(this.dogPos0)) {
+         ++this.waitingTick;
+      } else {
+         this.waitingTick = 0;
+         this.dogPos0.set(dog_bp.getX(), dog_bp.getY(), dog_bp.getZ());
+      }
+
       this.dog.getLookControl().setLookAt(e, 30.0F, 30.0F);
       double d0 = this.dog.distanceToSqr(e.getX(), e.getY(), e.getZ());
       if ((this.followingTargetEvenIfNotSeen
@@ -156,15 +184,6 @@ public class DogMeleeAttackGoal extends Goal {
       }
       --this.ticksUntilPathRecalc;
       --this.ticksUntilNextAttack;
-      // if dog arrived to destination and the entity is not there, recalc
-      // immediately!
-      // var target_block = this.dog.getNavigation().getTargetPos();
-      // if (target_block != null
-      //       && target_block.equals(dog.blockPosition())
-      //       && !target_block.equals(livingentity.blockPosition())) {
-      //    this.ticksUntilPathRecalc = 0;
-      //    ChopinLogger.l("reset");
-      // }
 
       if (n.isDone() && dog_bp.equals(target_bp) && !this.canReachTarget(e, d0)) {
          dog.getMoveControl().setWantedPosition(e.getX(), e.getY(), e.getZ(), this.speedModifier);
@@ -173,7 +192,7 @@ public class DogMeleeAttackGoal extends Goal {
          this.ticksUntilPathRecalc = 0;
       }
       this.checkAndPerformAttack(e, d0);
-      //ChopinLogger.l("" + this.ticksUntilNextAttack);
+
    }
 
    //TODO make dog be able to attack in the air

@@ -2,6 +2,8 @@ package doggytalents.common.util;
 
 import java.util.ArrayList;
 
+import org.jetbrains.annotations.NotNull;
+
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -9,6 +11,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -241,6 +244,24 @@ public class DogUtil {
         if (dot_u_v < 0) return -1;
         var dis_sqr = u.lengthSqr() - (dot_u_v*dot_u_v);
         return dis_sqr;
+    }
+
+    /**
+     * This check if the dog can get to the target via the given path.
+     * 
+     * @param dog The Dog
+     * @param path The Path the Dog is following
+     * @param pos The target the Dog wants to go to
+     * @return
+     * 
+     */
+    public static boolean canPathReachTargetBlock(Dog dog, @NotNull Path path, BlockPos pos) {
+        var endNode = path.getEndNode();
+        if (endNode == null) return false;
+        var dx = endNode.x - pos.getX();
+        var dz = endNode.z - pos.getZ();
+        var d_sqr = dx*dx + dz*dz;
+        return d_sqr <= 1;
     }
 
 
