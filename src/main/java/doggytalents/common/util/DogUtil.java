@@ -261,7 +261,8 @@ public class DogUtil {
         var dx = endNode.x - pos.getX();
         var dz = endNode.z - pos.getZ();
         var d_sqr = dx*dx + dz*dz;
-        return d_sqr <= 1;
+        var dy = Math.abs(endNode.y - pos.getY());
+        return d_sqr <= 1 && dy <= 3;
     }
 
 
