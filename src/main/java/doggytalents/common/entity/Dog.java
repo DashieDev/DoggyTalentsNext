@@ -14,14 +14,13 @@ import doggytalents.api.registry.*;
 import doggytalents.client.screen.DogInfoScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.ai.BreedGoal;
-import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.stats.StatsTracker;
+import doggytalents.common.network.packet.ParticlePackets.CritEmitterPacket;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.util.*;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -870,8 +869,7 @@ public class Dog extends AbstractDog {
             this.statsTracker.increaseDamageDealt(damage);
 
             if (critModifiers != null) {
-                // TODO Might want to make into a packet
-                DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().particleEngine.createTrackingEmitter(target, ParticleTypes.CRIT));
+                CritEmitterPacket.sendCritEmitterPacketToNearClients(target);    
             }
         }
 
