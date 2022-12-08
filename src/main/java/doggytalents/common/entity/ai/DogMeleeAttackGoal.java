@@ -2,6 +2,8 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
+import org.jetbrains.annotations.NotNull;
+
 import doggytalents.ChopinLogger;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.client.block.model.DogBedItemOverride;
@@ -18,6 +20,8 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.phys.Vec3;
 
 public class DogMeleeAttackGoal extends Goal {
    protected final Dog dog;
@@ -30,6 +34,11 @@ public class DogMeleeAttackGoal extends Goal {
    private int timeOutTick;
    private int waitingTick;
    private BlockPos.MutableBlockPos dogPos0;
+
+   //Tuning : START_DIS must be as low as possible to increase the attacking accuracy, while still keeping it noticable. 
+   private final float START_LEAPING_AT_DIS_SQR = 2;
+   private final float DONT_LEAP_AT_DIS_SQR = 1;
+   private final float LEAP_YD = 0.4F;
    
 
    public DogMeleeAttackGoal(Dog p_25552_, double p_25553_, boolean p_25554_, int awayFromOwnerDistance, int timeOutTick) {
@@ -193,6 +202,62 @@ public class DogMeleeAttackGoal extends Goal {
       }
       this.checkAndPerformAttack(e, d0);
 
+      this.checkAndLeapAtTarget(e);
+
+   }
+
+   /*
+    * Integrated DogLeapAtTargetGoal to here to allow dog to attack mid air
+    * One of the reasons is to avoid weird scenario as where the dog repeatedly jump
+    * at an entity while causing no harm for a long period despite even touching it.
+    */
+   protected void checkAndLeapAtTarget(LivingEntity target) {
+      if (!this.canLeapAtTarget(target)) return;
+
+      ChopinLogger.l("Bounce");
+
+      Vec3 vec3 = this.dog.getDeltaMovement();
+      Vec3 vec31 = new Vec3(target.getX() - this.dog.getX(), 0.0D, target.getZ() - this.dog.getZ());
+      if (vec31.lengthSqr() > 1.0E-7D) {
+         vec31 = vec31.normalize().scale(0.4D).add(vec3.scale(0.2D));
+      }
+
+      this.dog.setDeltaMovement(vec31.x, (double)this.LEAP_YD, vec31.z);
+   }
+
+   protected boolean canLeapAtTarget(@NotNull LivingEntity target) {
+
+      if (this.dog.isVehicle()) return false;
+
+      if (!this.dog.isOnGround()) return false;
+
+      if (!target.isOnGround()) return false;
+
+      double d0 = this.dog.distanceToSqr(target);
+
+      if (!(d0 >= DONT_LEAP_AT_DIS_SQR && d0 <= START_LEAPING_AT_DIS_SQR)) return false;
+               
+      if (this.dog.getRandom().nextInt(reducedTickDelay(5)) != 0) return false;
+               
+      var tpos = target.blockPosition();
+               
+      if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level, tpos.mutable()) !=BlockPathTypes.WALKABLE) {
+         return false;
+      }
+               
+      var v0 = new Vec3(target.getX() - this.dog.getX(), 0.0D, target.getZ() - this.dog.getZ()).normalize();
+      var bp1 = dog.blockPosition();
+
+      var v1 = new Vec3(bp1.getX(), bp1.getY(), bp1.getZ());
+      for (int i = 1; i <=2; ++i) {
+         v1 = v1.add(v0);
+         if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level, new BlockPos(v1).mutable()) !=BlockPathTypes.WALKABLE)  {
+            return false;
+         }
+      }
+      
+      return true;   
+      
    }
 
    //TODO make dog be able to attack in the air
