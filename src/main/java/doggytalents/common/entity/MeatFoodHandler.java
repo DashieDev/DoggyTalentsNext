@@ -41,6 +41,9 @@ public class MeatFoodHandler implements IDogFoodHandler {
                     var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
                     var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
 
+                    //TODO Maybe send the particle to the client through packets...
+                    //Because there is seems to be a problem with the stack on the client 
+                    //as it is occasionally missing texture...
                     ((ServerLevel) dog.level).sendParticles(
                         new ItemParticleOption(ParticleTypes.ITEM, stack), 
                         dog.getX() + dx1, dog.getY() + dog.getEyeHeight(), dog.getZ() + dz1, 
