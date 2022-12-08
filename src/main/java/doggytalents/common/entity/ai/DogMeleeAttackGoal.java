@@ -246,7 +246,7 @@ public class DogMeleeAttackGoal extends Goal {
       var bp1 = dog.blockPosition();
 
       var v1 = new Vec3(bp1.getX(), bp1.getY(), bp1.getZ());
-      for (int i = 1; i <=2; ++i) {
+      for (int i = 1; i <=3; ++i) {
          v1 = v1.add(v0);
          if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level, new BlockPos(v1).mutable()) !=BlockPathTypes.WALKABLE)  {
             return false;
