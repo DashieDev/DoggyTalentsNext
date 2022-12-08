@@ -4,6 +4,8 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.common.network.packet.*;
 import doggytalents.common.network.packet.data.*;
 import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.packet.data.ParticleData.*;
+import doggytalents.common.network.packet.ParticlePackets.*;
 
 public final class PacketHandler {
 
@@ -23,6 +25,7 @@ public final class PacketHandler {
         registerPacket(new DogTexturePacket(), DogTextureData.class);
         registerPacket(new HeelByNamePacket(), HeelByNameData.class);
         registerPacket(new WhistleRequestModePacket(), WhistleRequestModeData.class);
+        registerPacket(new CritEmitterPacket(), CritEmitterData.class); 
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
