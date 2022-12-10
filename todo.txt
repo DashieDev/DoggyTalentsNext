@@ -138,3 +138,19 @@ Make dog flee on low health
 Make dog flee from creeper
 
 make FlameDog attempt to rescue dog in lava or FloatDog attempt to rescue falling dogs.
+
+//TODO : Talent Actions
+        /*
+         * first register a goal here called TalentActionGoal
+         * which have a fixed priority and LOOK/MOVE/JUMP lock 
+         * that when run, set a field
+         * of the dog called TalentActionReady to true
+         * then add another goalSelector to the dog called
+         * the talentActionSelector and call its tick() in aiStep()
+         * only when TalentActionReady Maybe another Mechanic that allows
+         * more practical priority group like LOW MEDIUM HIGH
+         * Dog can only execute 1 action at a time and will queue the other action
+         * Right now the easy way is to have all of the goal at the same priority 
+         * at each group ... 
+         * Mutual Exclusive on Talents
+         */
