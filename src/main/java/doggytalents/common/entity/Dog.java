@@ -200,6 +200,7 @@ public class Dog extends AbstractDog {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new DogFloatGoal(this));
         this.goalSelector.addGoal(1, new FindWaterGoal(this));
+        //this.goalSelector.addGoal(1, new DogPushAvoidGoal(this));
         //this.goalSelector.addGoal(1, new PatrolAreaGoal(this));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(3, new DogHungryGoal(this, 1.0f, 2.0f));
@@ -400,6 +401,7 @@ public class Dog extends AbstractDog {
                     }
                 }
             }
+
         }
 
         this.alterations.forEach((alter) -> alter.tick(this));
@@ -476,6 +478,11 @@ public class Dog extends AbstractDog {
 
                 this.healingTick = 0;
             }
+
+            // if (DogUtil.mayGetPushedIntoHazard(this)) {
+            //     var v0 = this.getDeltaMovement();
+            //     this.setDeltaMovement(-v0.x, v0.y, -v0.z);
+            // }
         }
 
         if (ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DIRE_PARTICLES) && this.level.isClientSide && this.getDogLevel().isDireDog()) {
@@ -2244,9 +2251,16 @@ public class Dog extends AbstractDog {
                     this.fallDistance = 0.0F;
                 }
              } else {
-                 this.maxUpStep = 0.5F; // Default
-                 this.flyingSpeed = 0.02F; // Default
-                 super.travel(positionIn);
+                if (DogUtil.mayGetPushedIntoHazard(this, positionIn)) {
+                    var v0 = positionIn;
+                    super.travel(positionIn.normalize().scale(-1.5));
+                } else {
+                    this.maxUpStep = 0.5F; // Default
+                    this.flyingSpeed = 0.02F; // Default
+                    super.travel(positionIn);
+                }
+
+                 
              }
 
             this.addMovementStat(this.getX() - this.xo, this.getY() - this.yo, this.getZ() - this.zo);
