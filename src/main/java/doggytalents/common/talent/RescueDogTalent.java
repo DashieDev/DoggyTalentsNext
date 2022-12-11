@@ -118,7 +118,7 @@ public class RescueDogTalent extends TalentInstance {
                 bonus = 0.5f;
             }
 
-        return Mth.floor(this.level() * 1.5D) + bonus;
+        return Mth.floor(this.level() * 1.5D) + bonus*2;
     }
 
     @Override
