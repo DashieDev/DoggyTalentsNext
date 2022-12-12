@@ -145,7 +145,7 @@ public class RescueDogTalent extends TalentInstance {
                 0.1
             );
         }
-        this.healCooldown = dog.getRandom().nextInt(6) * 20; // Between 5 seconds
+        this.healCooldown = dog.getRandom().nextInt(3) * 20; // Between 2 seconds
         ChopinLogger.l("cooldown : " + this.healCooldown);
     } 
 
