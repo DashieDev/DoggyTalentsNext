@@ -106,7 +106,6 @@ public class DogEatFromChestDogGoal extends Goal {
                     d -> validChestDog(d)
                 );
             this.chooseChestDog();
-            ChopinLogger.l("Scanned for ChestDogs");
         }
     }
 
