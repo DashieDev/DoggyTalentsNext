@@ -10,8 +10,10 @@ import com.google.common.base.Function;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.IDog;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.control.LookControl;
@@ -21,6 +23,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -141,4 +144,51 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public abstract void resetMoveControl();
 
     public abstract boolean canSwimUnderwater();
+
+    //Start : Re-adjust armor behaviour
+    //All dog start hurting Amrmor in armorItems regradless of anything.
+    @Override
+    protected void hurtArmor(DamageSource p_36251_, float p_36252_) {
+        if (!(p_36252_ <= 0.0F)) {
+            p_36252_ /= 4.0F;
+            if (p_36252_ < 1.0F) {
+                p_36252_ = 1.0F;
+            }
+
+            int j = 0;
+            for(var i : this.getArmorSlots()) {
+                ItemStack itemstack = i;
+                if ((!p_36251_.isFire() || !itemstack.getItem().isFireResistant()) && itemstack.getItem() instanceof ArmorItem) {
+                    final var slot = EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, j);
+                    itemstack.hurtAndBreak((int)p_36252_, this, (p_35997_) -> {
+                        p_35997_.broadcastBreakEvent(slot);
+                    });
+                }
+                ++j;
+            }
+
+        }
+    }
+
+    @Override
+    protected void hurtHelmet(DamageSource p_150103_, float p_150104_) {
+        if (!(p_150104_ <= 0.0F)) {
+            p_150104_ /= 4.0F;
+            if (p_150104_ < 1.0F) {
+                p_150104_ = 1.0F;
+            }
+
+
+            var i = this.getItemBySlot(EquipmentSlot.HEAD);
+
+            ItemStack itemstack = i;
+            if ((!p_150103_.isFire() || !itemstack.getItem().isFireResistant()) && itemstack.getItem() instanceof ArmorItem) {
+                itemstack.hurtAndBreak((int)p_150104_, this, (p_35997_) -> {
+                    p_35997_.broadcastBreakEvent(EquipmentSlot.HEAD);
+                });
+            }
+
+        }
+    }
+    //End : Re-adjust armor behaviour
 }

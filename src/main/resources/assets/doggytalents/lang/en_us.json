@@ -55,6 +55,7 @@
    "container.doggytalents.treat_bag": "Treat Bag",
    "container.doggytalents.dog_inventories.link" : "Dog Inventories",
    "container.doggytalents.dog_inventories" : "Dog Inventories",
+   "container.doggytalents.dog_armor" : "Dog Armor",
 
    "itemGroup.doggytalents": "Doggy Talents",
    "itemGroup.doggytalents.dogbed": "Dog Bed Variants",
@@ -90,6 +91,7 @@
    "talent.doggytalents.puppy_eyes": "Puppy Eyes",
    "talent.doggytalents.swimmer_dog": "Swimmer Dog",
    "talent.doggytalents.doggy_torch": "Doggy Torch",
+   "talent.doggytalents.doggy_armor": "Doggy Armor",
 
    "talent.doggytalents.bed_finder.description": "While a dog with this skill is on your head, your bed will be highlighted in a black outline. To get the dog on you head, right click on them with a bone in hand. The range at which it can do this is equal to 200 blocks per level, but becomes infinite at level 5.",
    "talent.doggytalents.black_pelt.description": "Improves critical hit rate 1/2 a heart for every level plus an extra heart when you master it",
