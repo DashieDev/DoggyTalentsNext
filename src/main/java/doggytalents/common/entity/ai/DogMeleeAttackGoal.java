@@ -198,8 +198,7 @@ public class DogMeleeAttackGoal extends Goal {
       if(n.isDone() && !this.canReachTarget(e, d0)) {
          this.ticksUntilPathRecalc = 0;
       }
-
-      this.checkAndPerformAttack(e, d0);
+      if (this.checkAndPerformAttack(e, d0)) this.waitingTick = 0;
 
       this.checkAndLeapAtTarget(e);
 
