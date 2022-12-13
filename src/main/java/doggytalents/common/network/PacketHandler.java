@@ -26,6 +26,7 @@ public final class PacketHandler {
         registerPacket(new HeelByNamePacket(), HeelByNameData.class);
         registerPacket(new WhistleRequestModePacket(), WhistleRequestModeData.class);
         registerPacket(new CritEmitterPacket(), CritEmitterData.class); 
+        registerPacket(new DogEatingParticlePacket(), DogEatingParticleData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
