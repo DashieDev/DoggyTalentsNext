@@ -55,6 +55,7 @@
    "container.doggytalents.treat_bag": "Túi đựng Xương",
    "container.doggytalents.dog_inventories.link" : "Túi đồ Cún",
    "container.doggytalents.dog_inventories" : "Túi đồ Cún",
+   "container.doggytalents.dog_armor" : "Giáp Cún",
 
    "itemGroup.doggytalents": "Doggy Talents",
    "itemGroup.doggytalents.dogbed": "Loại Giường Cún",
@@ -90,6 +91,7 @@
    "talent.doggytalents.puppy_eyes": "Cún Dễ thương",
    "talent.doggytalents.swimmer_dog": "Cún Bơi lội",
    "talent.doggytalents.doggy_torch": "Cún Đặt đuốc",
+   "talent.doggytalents.doggy_armor": "Giáp Cún",
 
    "talent.doggytalents.bed_finder.description": "Khi một chú cún với kĩ năng này trên đầu bạn, giường bạn sẽ được tô lên bằng một khung màu đen. Để đưa chú cún lên đầu bạn, nhấp Chuột Phải vào nó với cục xương thường trên tay. Cự li chú cún có thể làm được điều này bằng 200 khối trên 1 cấp, nhưng trở thành vô cực tại cấp 5.",
    "talent.doggytalents.black_pelt.description": "Tăng sát thương lên 1/2 tim với mỗi cấp, và thêm 3/2 tim khi đạt cấp tối đa",

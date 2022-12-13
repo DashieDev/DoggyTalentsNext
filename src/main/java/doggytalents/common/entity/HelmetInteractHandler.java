@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class HelmetInteractHandler implements IDogItem {
 
-    private static final Map<Item, RegistryObject<? extends Accessory>> MAPPING = new ImmutableMap.Builder<Item, RegistryObject<? extends Accessory>>()
+    public static final Map<Item, RegistryObject<? extends Accessory>> MAPPING = new ImmutableMap.Builder<Item, RegistryObject<? extends Accessory>>()
         .put(Items.IRON_HELMET,      DoggyAccessories.IRON_HELMET)
         .put(Items.DIAMOND_HELMET,   DoggyAccessories.DIAMOND_HELMET)
         .put(Items.GOLDEN_HELMET,    DoggyAccessories.GOLDEN_HELMET)

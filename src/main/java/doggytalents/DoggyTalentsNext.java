@@ -116,7 +116,7 @@ public class DoggyTalentsNext {
         FoodHandler.registerHandler(new MeatFoodHandler());
 
         FoodHandler.registerDynPredicate(HappyEaterTalent.INNER_DYN_PRED);
-        InteractHandler.registerHandler(new HelmetInteractHandler());
+        //InteractHandler.registerHandler(new HelmetInteractHandler());
         ConfigHandler.initTalentConfig();
         DogRespawnCommand.registerSerilizers();
         Dog.initDataParameters();

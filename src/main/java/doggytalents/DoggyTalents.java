@@ -4,6 +4,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.talent.*;
+import doggytalents.common.talent.talentclass.LowCostTalent;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 
@@ -36,6 +37,7 @@ public class DoggyTalents {
     public static final RegistryObject<Talent> SWIMMER_DOG = registerInst("swimmer_dog", SwimmerDogTalent::new);
     public static final RegistryObject<Talent> WOLF_MOUNT = registerInst("wolf_mount", WolfMountTalent::new);
     public static final RegistryObject<Talent> DOGGY_TORCH = registerInst("doggy_torch", DoggyTorchTalent::new);
+    public static final RegistryObject<LowCostTalent> DOGGY_ARMOR = register("doggy_armor", () -> new LowCostTalent(DoggyArmorTalent::new));
 
     private static <T extends Talent> RegistryObject<Talent> registerInst(final String name, final BiFunction<Talent, Integer, TalentInstance> sup) {
         return register(name, () -> new Talent(sup));
