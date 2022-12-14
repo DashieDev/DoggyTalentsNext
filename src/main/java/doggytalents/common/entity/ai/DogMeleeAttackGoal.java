@@ -101,7 +101,7 @@ public class DogMeleeAttackGoal extends Goal {
       var p = dog.getNavigation().createPath(target, 1);
       if (p == null) return false;
 
-      if (!DogUtil.canPathReachTargetBlock(dog, p, target.blockPosition() )) { 
+      if (!DogUtil.canPathReachTargetBlock(dog, p, target.blockPosition(), dog.getMaxFallDistance() )) { 
          this.dog.setTarget(null);
          return false;
       } 
@@ -193,7 +193,7 @@ public class DogMeleeAttackGoal extends Goal {
       --this.ticksUntilPathRecalc;
       --this.ticksUntilNextAttack;
 
-      if (n.isDone() && dog_bp.equals(target_bp) && !this.canReachTarget(e, d0)) {
+      if (n.isDone() && dog_bp.distSqr(target_bp) <= 2.25 && !this.canReachTarget(e, d0)) {
          dog.getMoveControl().setWantedPosition(e.getX(), e.getY(), e.getZ(), this.speedModifier);
       }
       if(n.isDone() && !this.canReachTarget(e, d0)) {
