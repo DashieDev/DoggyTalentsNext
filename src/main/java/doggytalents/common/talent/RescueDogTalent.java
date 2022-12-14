@@ -44,7 +44,7 @@ public class RescueDogTalent extends TalentInstance {
         if (!(dog instanceof Dog)) return;
         if (!dog.hasData(RESCUE_DOG_AI)) {
             var rescueDogGoal = new MoveToHealTargetGoal((Dog)dog, this);
-            dog.goalSelector.addGoal(5, rescueDogGoal);
+            dog.goalSelector.addGoal(((Dog) dog).TALENT_GOAL_PRIORITY, rescueDogGoal);
             dog.setData(RESCUE_DOG_AI, rescueDogGoal);
         }
     }

@@ -7,6 +7,7 @@ import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.entity.Dog;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -38,7 +39,12 @@ public class ShepherdDogTalent extends TalentInstance {
     public void init(AbstractDog dogIn) {
         if (!dogIn.hasData(SHEPHERD_AI)) {
             EntityAIShepherdDog shepherdAI = new EntityAIShepherdDog(dogIn, 1.0D, 8F, entity -> !(entity instanceof TamableAnimal));
-            dogIn.goalSelector.addGoal(7, shepherdAI);
+            if (dogIn instanceof Dog) {
+                dogIn.goalSelector.addGoal(((Dog)dogIn).TALENT_GOAL_PRIORITY , shepherdAI);
+            } else {
+                dogIn.goalSelector.addGoal(7 , shepherdAI);
+            }
+            
             dogIn.setData(SHEPHERD_AI, shepherdAI);
         }
     }

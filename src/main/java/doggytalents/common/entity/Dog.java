@@ -169,7 +169,7 @@ public class Dog extends AbstractDog {
 
     protected BlockPos targetBlock;
 
-    
+    public int TALENT_GOAL_PRIORITY = 5;
 
     public Dog(EntityType<? extends Dog> type, Level worldIn) {
         super(type, worldIn);
@@ -200,24 +200,38 @@ public class Dog extends AbstractDog {
 
     @Override
     protected void registerGoals() {
+        int p = 1;
         this.goalSelector.addGoal(1, new DogFloatGoal(this));
         this.goalSelector.addGoal(1, new FindWaterGoal(this));
         //this.goalSelector.addGoal(1, new PatrolAreaGoal(this));
-        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(3, new DogHungryGoal(this, 1.0f, 2.0f));
-        this.goalSelector.addGoal(4, new DogLowHealthGoal(this, 1.0f, 2.0f));
+        ++p;
+        this.goalSelector.addGoal(p, new DogGoAwayFromFireGoal(this));
+        ++p;
+        this.goalSelector.addGoal(p, new SitWhenOrderedToGoal(this));
+        ++p;
+        this.goalSelector.addGoal(p, new DogHungryGoal(this, 1.0f, 2.0f));
+        ++p;
+        this.goalSelector.addGoal(p, new DogLowHealthGoal(this, 1.0f, 2.0f));
         //this.goalSelector.addGoal(4, new DogLeapAtTargetGoal(this, 0.4F));
-        this.goalSelector.addGoal(5, new DogEatFromChestDogGoal(this, 1.0));
-        this.goalSelector.addGoal(5, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
-        this.goalSelector.addGoal(5, new DogMoveToBlockGoal(this));
-        this.goalSelector.addGoal(5, new DogWanderGoal(this, 1.0D));
-        this.goalSelector.addGoal(6, new FetchGoal(this, 1.0D, 32.0F));
-        this.goalSelector.addGoal(6, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
-        this.goalSelector.addGoal(7, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(8, new DogRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(9, new DogBegGoal(this, 8.0F));
-        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
+        ++p;
+        this.TALENT_GOAL_PRIORITY = p;
+        this.goalSelector.addGoal(p, new DogEatFromChestDogGoal(this, 1.0));
+        this.goalSelector.addGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
+        this.goalSelector.addGoal(p, new DogMoveToBlockGoal(this));
+        this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
+        ++p;
+        this.goalSelector.addGoal(p, new FetchGoal(this, 1.0D, 32.0F));
+        this.goalSelector.addGoal(p, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
+        ++p;
+        this.goalSelector.addGoal(p, new BreedGoal(this, 1.0D));
+        ++p;
+        this.goalSelector.addGoal(p, new DogRandomStrollGoal(this, 1.0D));
+        ++p;
+        this.goalSelector.addGoal(p, new DogBegGoal(this, 8.0F));
+        ++p;
+        this.goalSelector.addGoal(p, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(p, new RandomLookAroundGoal(this));
+        
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
