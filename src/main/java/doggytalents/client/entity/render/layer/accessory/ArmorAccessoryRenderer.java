@@ -10,6 +10,7 @@ import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.entity.model.DogArmorModel;
 import doggytalents.client.entity.model.DogModel;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.HelmetInteractHandler;
@@ -31,11 +32,11 @@ import net.minecraft.world.item.ItemStack;
 
 public class ArmorAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
 
-    private DogModel model;
+    private DogArmorModel model;
 
     public ArmorAccessoryRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);
-        this.model = new DogModel(ctx.bakeLayer(ClientSetup.DOG_ARMOR));
+        this.model = new DogArmorModel(ctx.bakeLayer(ClientSetup.DOG_ARMOR));
     }
 
     @Override
@@ -66,6 +67,18 @@ public class ArmorAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
             var itemStack = dog.getItemBySlot(EquipmentSlot.CHEST);
             this.model.body.visible = true;
             this.model.mane.visible = true;
+            this.model.tail.visible = true;
+            this.renderArmorCutout(this.model, HelmetInteractHandler.MAPPING.get(itemStack.getItem()).get().getModelTexture(), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
+        }
+
+        this.model.setVisible(false);
+
+        if (dog.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof ArmorItem) {
+            var itemStack = dog.getItemBySlot(EquipmentSlot.LEGS);
+            this.model.leggingFrontLeft.visible = true;
+            this.model.leggingFrontRight.visible = true;
+            this.model.leggingHindLeft.visible = true;
+            this.model.leggingHindRight.visible = true;
             this.renderArmorCutout(this.model, HelmetInteractHandler.MAPPING.get(itemStack.getItem()).get().getModelTexture(), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
         }
 
@@ -73,10 +86,10 @@ public class ArmorAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
 
         if (dog.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof ArmorItem) {
             var itemStack = dog.getItemBySlot(EquipmentSlot.FEET);
-            this.model.legBackLeft.visible = true;
-            this.model.legBackRight.visible = true;
-            this.model.legFrontLeft.visible = true;
-            this.model.legFrontRight.visible = true;
+            this.model.bootFrontLeft.visible = true;
+            this.model.bootFrontRight.visible = true;
+            this.model.bootHindLeft.visible = true;
+            this.model.bootHindRight.visible = true;
             this.renderArmorCutout(this.model, HelmetInteractHandler.MAPPING.get(itemStack.getItem()).get().getModelTexture(), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
         }
 

@@ -3,6 +3,7 @@ package doggytalents.client;
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTileEntityTypes;
+import doggytalents.client.entity.model.DogArmorModel;
 import doggytalents.client.entity.model.DogBackpackModel;
 import doggytalents.client.entity.model.DogModel;
 import doggytalents.client.entity.model.DogRescueModel;
@@ -48,7 +49,7 @@ public class ClientSetup {
 
     public static void setupEntityRenderers(final EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(DOG, DogModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_ARMOR, DogModel::createArmorLayer);
+        event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createArmorLayer);
         event.registerLayerDefinition(DOG_BACKPACK, DogBackpackModel::createChestLayer);
         event.registerLayerDefinition(DOG_RESCUE_BOX, DogRescueModel::createRescueBoxLayer);
         // TODO: RenderingRegistry.registerEntityRenderingHandler(DoggyEntityTypes.DOG_BEAM.get(), manager -> new DoggyBeamRenderer<>(manager, event.getMinecraftSupplier().get().getItemRenderer()));

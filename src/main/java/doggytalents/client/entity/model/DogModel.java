@@ -103,9 +103,7 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
         return createBodyLayerInternal(CubeDeformation.NONE);
     }
 
-    public static LayerDefinition createArmorLayer() {
-        return createBodyLayerInternal(new CubeDeformation(0.4F, 0.4F, 0.4F));
-    }
+    
 
     private static LayerDefinition createBodyLayerInternal(CubeDeformation scale) {
         MeshDefinition var0 = new MeshDefinition();
