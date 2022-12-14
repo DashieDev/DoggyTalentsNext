@@ -139,6 +139,8 @@ Make dog flee from creeper
 
 make FlameDog attempt to rescue dog in lava or FloatDog attempt to rescue falling dogs.
 
+make a way that you can clear effects from dogs quickly.
+
 //TODO : Talent Actions
         /*
          * first register a goal here called TalentActionGoal
