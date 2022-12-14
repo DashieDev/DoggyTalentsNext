@@ -7,6 +7,7 @@ import doggytalents.common.network.IPacket;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogData;
 import doggytalents.common.network.packet.data.DogEatingParticleData;
+import doggytalents.common.network.packet.data.DogStartShakingLavaData;
 import doggytalents.common.network.packet.data.ParticleData.CritEmitterData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -124,5 +125,44 @@ public class ParticlePackets {
             PacketHandler.send(PacketDistributor.NEAR.with(() -> tarp), new DogEatingParticleData(dog.getId(), food));
         }
         
+    }
+
+    public static class DogStartShakingLavaPacket implements IPacket<DogStartShakingLavaData>  {
+        @Override
+        public void encode(DogStartShakingLavaData data, FriendlyByteBuf buf) {
+            buf.writeInt(data.dogId);          
+        }
+
+        @Override
+        public DogStartShakingLavaData decode(FriendlyByteBuf buf) {
+            int dogId = buf.readInt();    
+            return new DogStartShakingLavaData(dogId);
+        }
+
+        @Override
+        public void handle(DogStartShakingLavaData data, Supplier<Context> ctx) {
+            
+            ctx.get().enqueueWork(() -> {
+
+                if (ctx.get().getDirection().getReceptionSide().isClient()) { 
+                    Minecraft mc = Minecraft.getInstance();
+                    Entity e = mc.level.getEntity(data.dogId);
+                    if (e instanceof Dog) {
+                        Dog d = (Dog) e;
+                        d.startShakingLava();
+                    }
+                }
+
+            });
+
+            ctx.get().setPacketHandled(true);
+        }
+
+        public static void sendDogStartShakingLavaPacketToNearByClients(AbstractDog dog) {
+            final int RADIUS = 64;
+            PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(dog.getX(), dog.getY(), dog.getZ(), RADIUS, dog.level.dimension());
+            PacketHandler.send(PacketDistributor.NEAR.with(() -> tarp), new DogStartShakingLavaData(dog.getId()));
+        }
+
     }
 }
