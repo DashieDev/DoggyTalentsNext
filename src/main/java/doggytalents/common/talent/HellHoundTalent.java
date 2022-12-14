@@ -29,7 +29,7 @@ public class HellHoundTalent extends TalentInstance {
     private Dog dog;
 
     private final int SEARCH_RANGE = 3;
-    private int tickUntilSearch = 25;
+    private int tickUntilSearch = 0;
 
     public HellHoundTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -98,19 +98,25 @@ public class HellHoundTalent extends TalentInstance {
         }
         if (this.dog != null) {
             if (this.dog.isShakingLava()) {
-                if (--tickUntilSearch <= 0) {
-                    tickUntilSearch = 25;
-                    var targets = 
-                        this.dog.level.getEntitiesOfClass(
-                            LivingEntity.class, 
-                            this.dog.getBoundingBox().inflate(SEARCH_RANGE, 2, SEARCH_RANGE)
-                        );
-                    for (var x : targets) {
-                        if (x instanceof Enemy) {
-                            x.setSecondsOnFire(2);
-                        }
+                if (this.dog.getTimeDogIsShaking() > 0.8) {
+                    if (--this.tickUntilSearch <= 0) {
+                        this.tickUntilSearch = 10;
+                        this.fireSpreadToEnermies();
                     }
                 }
+            }
+        }
+    }
+
+    private void fireSpreadToEnermies() {
+        var targets = 
+            this.dog.level.getEntitiesOfClass(
+                LivingEntity.class, 
+                this.dog.getBoundingBox().inflate(SEARCH_RANGE, 2, SEARCH_RANGE)
+            );
+        for (var x : targets) {
+            if (x instanceof Enemy) {
+                x.setSecondsOnFire(5);
             }
         }
     }
