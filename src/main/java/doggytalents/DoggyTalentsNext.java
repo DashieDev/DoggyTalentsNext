@@ -91,6 +91,9 @@ public class DoggyTalentsNext {
         forgeEventBus.register(new EventHandler());
         forgeEventBus.register(new BackwardsComp());
 
+        //debug
+        forgeEventBus.register(new ChopinLogger());
+
         // Client Events
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
             modEventBus.addListener(this::clientSetup);

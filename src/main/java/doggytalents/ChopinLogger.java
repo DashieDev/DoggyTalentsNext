@@ -6,6 +6,9 @@ import org.apache.logging.log4j.Logger;
 import doggytalents.common.entity.Dog;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ChopinLogger {
     private static final Logger LOGGER = LogManager.getLogger("chopin");
@@ -22,5 +25,23 @@ public class ChopinLogger {
         }
         Dog d = (Dog) e;
         ChopinLogger.LOGGER.info("<dog : " + d.getName().getString() + "> " + s);
+    }
+
+    //For debugging purpose only
+    @SubscribeEvent
+    public void onWolfOrDogDeath(LivingDeathEvent ev) {
+        var e = ev.getEntity();
+        if (
+            e instanceof Dog
+            || e instanceof Wolf
+        ) {
+            ev.setCanceled(true);
+            e.setHealth(e.getMaxHealth());
+            if (e instanceof Dog) {
+                ChopinLogger.lwn(e, "💩");
+            } else {
+                ChopinLogger.l("💩");
+            }
+        }
     }
 }
