@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import javax.swing.AbstractAction;
-
-import org.spongepowered.asm.mixin.Overwrite;
-
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
@@ -144,7 +140,6 @@ public class RescueDogTalent extends TalentInstance {
             );
         }
         this.healCooldown = dog.getRandom().nextInt(3) * 20; // Between 2 seconds
-        ChopinLogger.l("cooldown : " + this.healCooldown);
     } 
 
     private boolean isTargetLowHealth(AbstractDog dog, LivingEntity e) {

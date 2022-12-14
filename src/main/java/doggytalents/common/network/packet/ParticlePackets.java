@@ -1,6 +1,5 @@
 package doggytalents.common.network.packet;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.IPacket;
@@ -86,7 +85,6 @@ public class ParticlePackets {
                         var a1 = dog.getYRot();
                         var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
                         var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
-                        ChopinLogger.l("Dog vector : " + dx1 + " " + dz1);
 
                         for(int i = 0; i < 15; ++i) {
                             double d1 = mc.level.getRandom().nextGaussian() * (double)0.5;

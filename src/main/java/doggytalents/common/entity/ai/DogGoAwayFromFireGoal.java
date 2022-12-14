@@ -2,7 +2,6 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
@@ -42,8 +41,6 @@ public class DogGoAwayFromFireGoal extends Goal {
 
         this.safePos = this.searchForSafePos();
 
-        ChopinLogger.l("danger! will move to " + this.safePos);
-
         if (this.safePos == null) return false;
 
         
@@ -70,7 +67,6 @@ public class DogGoAwayFromFireGoal extends Goal {
 
     @Override
     public void tick() {
-        //TODO Barely work
         var dog_bp = dog.blockPosition();
         var n = dog.getNavigation();
 
