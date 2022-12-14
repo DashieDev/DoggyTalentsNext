@@ -17,13 +17,16 @@ import doggytalents.common.entity.ai.BreedGoal;
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.stats.StatsTracker;
+import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.ParticlePackets.CritEmitterPacket;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.util.*;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -153,6 +156,9 @@ public class Dog extends AbstractDog {
     private boolean isShaking;
     private float timeWolfIsShaking;
     private float prevTimeWolfIsShaking;
+
+    private boolean wasInLava = false;
+    private boolean shakeFire = false;
     
     private float radPerHealthDecrease;
     private float maxHealth0;
@@ -374,6 +380,9 @@ public class Dog extends AbstractDog {
                 }
             } else if ((this.wetSource != null || this.isShaking) && this.isShaking) {
                 if (this.timeWolfIsShaking == 0.0F) {
+                    if (this.shakeFire) {
+                        this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                    } else
                     this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 }
 
@@ -400,6 +409,15 @@ public class Dog extends AbstractDog {
                     for (int j = 0; j < i; ++j) {
                         float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
                         float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+                        if (this.shakeFire) {
+                            byte r = (byte) this.getRandom().nextInt(3);
+                            if (r==0)
+                                this.level.addParticle(ParticleTypes.LAVA, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                            else if (r==1)
+                                this.level.addParticle(ParticleTypes.FLAME, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                            else if (r==2)
+                                this.level.addParticle(ParticleTypes.SMOKE, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                        } else
                         this.level.addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                     }
                 }
@@ -428,6 +446,17 @@ public class Dog extends AbstractDog {
         if (!this.level.isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.isOnGround()) {
             this.startShaking();
             this.level.broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_START_SHAKING);
+        }
+
+        if (!this.level.isClientSide && this.fireImmune()) {
+            if (this.isInLava()) {
+                this.wasInLava = true;
+            }
+            if (this.wasInLava == true && !this.isInLava() && !this.isShaking && !this.isPathFinding() && this.isOnGround()) {
+                this.startShakingLava();
+                ParticlePackets.DogStartShakingLavaPacket.sendDogStartShakingLavaPacketToNearByClients(this);
+                this.wasInLava = false;
+            }
         }
         
 
@@ -1198,14 +1227,27 @@ public class Dog extends AbstractDog {
 
     private void startShaking() {
         this.isShaking = true;
+        this.shakeFire = false;
         this.timeWolfIsShaking = 0.0F;
         this.prevTimeWolfIsShaking = 0.0F;
     }
 
     private void finishShaking() {
         this.isShaking = false;
+        this.shakeFire = false;
         this.timeWolfIsShaking = 0.0F;
         this.prevTimeWolfIsShaking = 0.0F;
+    }
+
+    public void startShakingLava() {
+        this.isShaking = true;
+        this.shakeFire = true;
+        this.timeWolfIsShaking = 0.0F;
+        this.prevTimeWolfIsShaking = 0.0F;
+    }
+
+    public boolean isShakingLava() {
+        return this.isShaking && this.shakeFire;
     }
 
     @Override
