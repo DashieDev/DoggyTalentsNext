@@ -2,6 +2,8 @@ package doggytalents.common.util;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.NotNull;
 
 import doggytalents.common.entity.Dog;
@@ -252,17 +254,19 @@ public class DogUtil {
      * @param dog The Dog
      * @param path The Path the Dog is following
      * @param pos The target the Dog wants to go to
+     * @param dY The maximum amount of blocks can the y coords between the target and the actual path destination diffrentiate
+     * while still being eligible
      * @return
      * 
      */
-    public static boolean canPathReachTargetBlock(Dog dog, @NotNull Path path, BlockPos pos) {
+    public static boolean canPathReachTargetBlock(Dog dog, @Nonnull Path path, BlockPos pos, int dY) {
         var endNode = path.getEndNode();
         if (endNode == null) return false;
         var dx = endNode.x - pos.getX();
         var dz = endNode.z - pos.getZ();
         var d_sqr = dx*dx + dz*dz;
         var dy = Math.abs(endNode.y - pos.getY());
-        return d_sqr <= 1 && dy <= 3;
+        return d_sqr <= 1 && dy <= dY;
     }
 
 
