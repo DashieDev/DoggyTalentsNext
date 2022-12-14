@@ -380,10 +380,7 @@ public class Dog extends AbstractDog {
                 }
             } else if ((this.wetSource != null || this.isShaking) && this.isShaking) {
                 if (this.timeWolfIsShaking == 0.0F) {
-                    if (this.shakeFire) {
-                        this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-                    } else
-                    this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                    if (!this.shakeFire) this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 }
 
                 this.prevTimeWolfIsShaking = this.timeWolfIsShaking;
@@ -420,6 +417,10 @@ public class Dog extends AbstractDog {
                         } else
                         this.level.addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                     }
+                }
+
+                if (this.timeWolfIsShaking > 0.8) {
+                    if (this.shakeFire) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 }
             }
 
@@ -2495,5 +2496,8 @@ public class Dog extends AbstractDog {
         this.goalSelector.setControlFlag(Goal.Flag.LOOK, flag);
     }
 
+    public float getTimeDogIsShaking() {
+        return this.timeWolfIsShaking;
+    }
     
 }
