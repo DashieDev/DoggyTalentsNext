@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Inventory;
 
 public class DogArmorScreen extends AbstractContainerScreen<DogArmorContainer> {
@@ -36,8 +37,36 @@ public class DogArmorScreen extends AbstractContainerScreen<DogArmorContainer> {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
         this.blit(stack, x, y, 0, 0, this.imageWidth, this.imageHeight);
-        InventoryScreen.renderEntityInInventory(x + 60, y + 60, 30, x + 60 - mouseX,
-            y + 60 - mouseY, this.container.getDog());
+        InventoryScreen.renderEntityInInventory(x + 85, y + 62, 30, x + 85 - mouseX,
+            y + 65 - mouseY, this.container.getDog());
+        renderArmorBar(stack, x + 90, y + 5);
+
+    
+    }
+
+    public void renderArmorBar(PoseStack stack, int x, int y) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, GUI_ICONS_LOCATION);
+
+        var i3 = this.menu.getDog().getArmorValue();
+        
+        for(int k3 = 0; k3 < 10; ++k3) {
+            if (i3 > 0) {
+               int l3 = x + k3 * 8;
+               if (k3 * 2 + 1 < i3) {
+                  this.blit(stack, l3, y, 34, 9, 9, 9);
+               }
+
+               if (k3 * 2 + 1 == i3) {
+                  this.blit(stack, l3, y, 25, 9, 9, 9);
+               }
+
+               if (k3 * 2 + 1 > i3) {
+                  this.blit(stack, l3, y, 16, 9, 9, 9);
+               }
+            }
+         }
     }
     
 }

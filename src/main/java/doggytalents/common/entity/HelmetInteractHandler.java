@@ -39,6 +39,12 @@ public class HelmetInteractHandler implements IDogItem {
         .put(Items.LEATHER_HELMET,   DoggyAccessories.LEATHER_HELMET)
         .put(Items.LEATHER_BOOTS,   DoggyAccessories.LEATHER_BOOTS)
         .put(Items.LEATHER_CHESTPLATE,   DoggyAccessories.LEATHER_BODY_PIECE)
+        .put(Items.LEATHER_LEGGINGS, DoggyAccessories.IRON_BODY_PIECE)
+        .put(Items.IRON_LEGGINGS,  DoggyAccessories.IRON_BODY_PIECE)
+        .put(Items.DIAMOND_LEGGINGS, DoggyAccessories.DIAMOND_BODY_PIECE)
+        .put(Items.GOLDEN_LEGGINGS, DoggyAccessories.GOLDEN_BODY_PIECE)
+        .put(Items.CHAINMAIL_LEGGINGS, DoggyAccessories.CHAINMAIL_BODY_PIECE)
+        .put(Items.NETHERITE_LEGGINGS, DoggyAccessories.NETHERITE_BODY_PIECE)
        .build();
 
     @Override

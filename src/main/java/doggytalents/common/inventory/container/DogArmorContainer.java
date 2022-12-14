@@ -5,6 +5,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.items.SlotItemHandler;
 
 import com.google.errorprone.annotations.Var;
+import com.mojang.datafixers.util.Pair;
 
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyTalents;
@@ -31,7 +32,15 @@ public class DogArmorContainer extends AbstractContainerMenu {
     private Level world;
     private Player player;
     private Dog dog;
-    private static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, /*EquipmentSlot.LEGS,*/ EquipmentSlot.FEET};
+
+    public static final ResourceLocation BLOCK_ATLAS = new ResourceLocation("textures/atlas/blocks.png");
+    public static final ResourceLocation EMPTY_ARMOR_SLOT_HELMET = new ResourceLocation("item/empty_armor_slot_helmet");
+    public static final ResourceLocation EMPTY_ARMOR_SLOT_CHESTPLATE = new ResourceLocation("item/empty_armor_slot_chestplate");
+    public static final ResourceLocation EMPTY_ARMOR_SLOT_LEGGINGS = new ResourceLocation("item/empty_armor_slot_leggings");
+    public static final ResourceLocation EMPTY_ARMOR_SLOT_BOOTS = new ResourceLocation("item/empty_armor_slot_boots");
+    public static final ResourceLocation EMPTY_ARMOR_SLOT_SHIELD = new ResourceLocation("item/empty_armor_slot_shield");
+    static final ResourceLocation[] TEXTURE_EMPTY_SLOTS = new ResourceLocation[]{EMPTY_ARMOR_SLOT_BOOTS, EMPTY_ARMOR_SLOT_LEGGINGS, EMPTY_ARMOR_SLOT_CHESTPLATE, EMPTY_ARMOR_SLOT_HELMET};
+    private static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
     //Server method
     public DogArmorContainer(int windowId, Inventory playerInventory, Dog dog) {
@@ -45,10 +54,11 @@ public class DogArmorContainer extends AbstractContainerMenu {
             .orElse(null);
         
         if (dogArmors == null) return;
-
-        for (int i = 0; i < 3; ++i) {  
+        
+        //TODO 3 -> 4
+        for (int i = 0; i < 2; ++i) {  
             final EquipmentSlot equipmentslot = SLOT_IDS[i];
-            this.addSlot(new SlotItemHandler(dogArmors, i, 8, 17 + i * 18) {
+            this.addSlot(new SlotItemHandler(dogArmors, i, 17, 27 + i * 18) {
                 public void set(ItemStack p_219985_) {
                     var itemstack = this.getItem();
                         dog.setItemSlot(equipmentslot, p_219985_);
@@ -62,6 +72,41 @@ public class DogArmorContainer extends AbstractContainerMenu {
     
                 public boolean mayPlace(ItemStack p_39746_) {
                    return p_39746_.canEquip(equipmentslot, dog);
+                }
+
+                @Override
+                public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, TEXTURE_EMPTY_SLOTS[equipmentslot.getIndex()]);
+                }
+    
+             });
+        }
+
+        for (int i = 2; i < 4; ++i) {  
+            final EquipmentSlot equipmentslot = SLOT_IDS[i];
+            this.addSlot(new SlotItemHandler(dogArmors, i, 138, 27 + (i-2) * 18) {
+
+                @Override
+                public void set(ItemStack p_219985_) {
+                    var itemstack = this.getItem();
+                        dog.setItemSlot(equipmentslot, p_219985_);
+                        super.set(p_219985_);
+                        dog.onEquipItem(equipmentslot, itemstack, p_219985_);
+                }
+                
+                @Override
+                public int getMaxStackSize() {
+                   return 1;
+                }
+                
+                @Override
+                public boolean mayPlace(ItemStack p_39746_) {
+                   return p_39746_.canEquip(equipmentslot, dog);
+                }
+
+                @Override
+                public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, TEXTURE_EMPTY_SLOTS[equipmentslot.getIndex()]);
                 }
     
              });
@@ -89,12 +134,12 @@ public class DogArmorContainer extends AbstractContainerMenu {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
 
-            if (index < 4) { // TODO will change when dog have 4 armor
-                if (!moveItemStackTo(itemstack1, 4, this.slots.size(), true)) {
+            if (index < 5) { // TODO will change when dog have 4 armor
+                if (!moveItemStackTo(itemstack1, 5, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
             }
-            else if (!moveItemStackTo(itemstack1, 0, 3, false)) {
+            else if (!moveItemStackTo(itemstack1, 0, 4, false)) {
                 return ItemStack.EMPTY;
             }
 
