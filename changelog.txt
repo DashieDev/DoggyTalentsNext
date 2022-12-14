@@ -124,3 +124,25 @@ v1.4.0 - 8th Decemeber 2022
 
 v1.4.1 - 8th December 2022
 *HOTFIX : Path reach check now regards Y coordinates.
+
+v1.5.0 - 15th December 2022
+/ When feeding from ChestDogs, dogs who are on Low Health continue to eat while hunger < max hunger
+/ Reduced RescueDogs heal cooldown to 2 seconds
++ Added New Armor System
+  + This system works in form of a Talent. In order to get your dog armor, you have to train
+  your dog "Doggy Armor", unlike other levels the max level for this talent is 3.
+  + You then right click the dog with any ArmorItems in hand and a GUI will open letting
+  you place or remove any vanilla armor on dog anytime.
+  + The dog will actually equip the armor, in other words, the armors is now fully
+  functional, which means that Enchantments is supported.
+  + If the dog have "Doggy Armor" leveled up to 3, he will automatically pick up surrounding
+  xPs to repair any armors with the Mending Enchantment.
+* BUG FIX : Missing texture when dog is eating.
+/ Improved dog's DogGoAwayFromFire AI and DogFindWater AI.
++ Idle dogs now try to resists pushes that cause them to move somewhere questionable.
+/ Improvements to Level 5 HellHound Dogs :
+  + They no longer afraid of fire and will treat it like water and fire like open spot.
+  + They now swims faster in lava
+  + Everytime they exit lava, they will shake like wolves usually do after exiting Water.
+  + But instead of water particles, they will shake out Lava/Fire particles and 
+  + Every enermies within a 3 blocks radius will be set on fire for 5 second minimum.
