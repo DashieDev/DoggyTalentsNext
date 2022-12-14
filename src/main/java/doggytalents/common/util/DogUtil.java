@@ -269,6 +269,78 @@ public class DogUtil {
         return d_sqr <= 1 && dy <= dY;
     }
 
+    /**
+     * This check if the dog is going to be pushed into a questionable block
+     * 
+     * @param dog
+     */
+    public static boolean mayGetPushedIntoHazard(Dog dog, Vec3 pushVec) {
+        //final var DISTANCE_HAZARD_CHECK = 0.5f;
+
+        if (!dog.isOnGround()) return false;
+
+        var dog_v0 = pushVec;
+        var dog_v01 = new Vec3(dog_v0.x, 0, dog_v0.z);
+        if (dog_v01.x == 0.0 && dog_v01.z == 0.0) return false;
+        //var dog_v1 = dog_v01.normalize().scale(DISTANCE_HAZARD_CHECK);
+        var dog_v1 = dog_v01;
+        var dog_p0 = dog.position();
+        Vec3 dog_p01 = new Vec3(
+            dog_p0.x + dog_v1.x,
+            dog_p0.y,
+            dog_p0.z + dog_v1.z
+        );
+        var dog_b1 = new BlockPos(dog_p01);
+
+        var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(
+            dog.level, 
+            dog_b1.mutable()
+        );
+
+        if (
+            //TODO GetDanger based on IDogAlterations
+            blockType.getDanger() != null
+        ) {
+            // ChopinLogger.lwn(
+            //         dog,
+            //         "About to get pushed to : " 
+            //         + dog_b1 + " from " + dog_p0
+            // );
+            return true;
+        }
+        
+        if (blockType == BlockPathTypes.OPEN) {
+            boolean noWalkable = true;
+            for (int i = 1; i <= dog.getMaxFallDistance(); ++i) {
+                if (WalkNodeEvaluator.getBlockPathTypeStatic(
+                    dog.level, 
+                    dog_b1.below(i).mutable()
+                ) == BlockPathTypes.WALKABLE) {
+                    noWalkable = false;
+                    break;
+                }
+            }
+
+            if (noWalkable) {
+                // ChopinLogger.lwn(
+                //     dog,
+                //     "About to get pushed to : " 
+                //     + dog_b1 + " from " + dog_p0
+                // );
+                return true;
+            }
+        }
+        
+        // ChopinLogger.lwn(
+        //             dog,
+        //             "About to get safely pushed to : " 
+        //             + dog_b1 + " from " + dog_p0
+        //     );
+        
+        return false;
+
+    }
+
 
     public static boolean isSafeBlock() {
         return false;
