@@ -38,6 +38,7 @@ import net.minecraft.network.syncher.SynchedEntityData.DataItem;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -73,6 +74,7 @@ import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -2426,4 +2428,15 @@ public class Dog extends AbstractDog {
             this.hungerDamageTick = 0;
         }
     }
+
+    @Override
+    protected void updateControlFlags() {
+        boolean flag = !(this.getControllingPassenger() instanceof ServerPlayer);
+        boolean flag1 = !(this.getVehicle() instanceof Boat);
+        this.goalSelector.setControlFlag(Goal.Flag.MOVE, flag);
+        this.goalSelector.setControlFlag(Goal.Flag.JUMP, flag && flag1);
+        this.goalSelector.setControlFlag(Goal.Flag.LOOK, flag);
+    }
+
+    
 }
