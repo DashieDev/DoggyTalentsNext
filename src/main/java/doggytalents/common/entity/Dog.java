@@ -201,8 +201,8 @@ public class Dog extends AbstractDog {
     @Override
     protected void registerGoals() {
         int p = 1;
-        this.goalSelector.addGoal(1, new DogFloatGoal(this));
-        this.goalSelector.addGoal(1, new FindWaterGoal(this));
+        this.goalSelector.addGoal(p, new DogFloatGoal(this));
+        this.goalSelector.addGoal(p, new DogFindWaterGoal(this));
         //this.goalSelector.addGoal(1, new PatrolAreaGoal(this));
         ++p;
         this.goalSelector.addGoal(p, new DogGoAwayFromFireGoal(this));
