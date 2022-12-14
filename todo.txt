@@ -57,6 +57,8 @@ And the dog will acknowleage and move to the ChestDog.
 Make dog tail angle = 1.72 - lostHealth*(ratio) where ratio = HALF_PI/maxHealth and will
 recalc when there is change, the check interval is 1 per tick 
 
+Jump to reach flying target goal ... maybe intergrate into DogMeeleAttackGoal.
+
 
 =========================OLD================================
 
