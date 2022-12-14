@@ -36,15 +36,6 @@ public class MeatFoodHandler implements IDogFoodHandler {
                 dog.consumeItemFromStack(entityIn, stack);
 
                 if (dog.level instanceof ServerLevel) {
-
-                    //TODO tune and may recheck
-                    var a1 = dog.getYRot();
-                    var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
-                    var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
-
-                    //TODO Maybe send the particle to the client through packets...
-                    //Because there is seems to be a problem with the stack on the client 
-                    //as it is occasionally missing texture...
                     ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(dog, stack);
                 }
                 dog.playSound(
