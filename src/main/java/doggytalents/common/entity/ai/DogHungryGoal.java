@@ -14,7 +14,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import java.util.EnumSet;
 
 
-//TODO When Hungry, Move to Owner, and then whine and tit head and look at owner for 3-5 sec
+//DONE When Hungry, Move to Owner, and then whine and tit head and look at owner for 3-5 sec
 public class DogHungryGoal extends Goal {
     
     private final Dog dog;
