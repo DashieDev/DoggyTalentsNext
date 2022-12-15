@@ -9,6 +9,8 @@ import doggytalents.common.talent.PackPuppyTalent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -16,6 +18,7 @@ import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 
 import java.util.List;
 
@@ -24,8 +27,15 @@ public class DogInventoryButton extends Button {
     private Screen parent;
     private int baseX;
 
+    private final Tooltip TOOLTIP_ACTIVE = 
+        Tooltip.create(Component.translatable("container.doggytalents.dog_inventories.link"));
+    
+    private final Tooltip TOOLTIP_NO_ACTIVE = 
+        Tooltip.create(Component.translatable("container.doggytalents.dog_inventories.link")
+            .withStyle(ChatFormatting.RED));
+
     public DogInventoryButton(int x, int y, Screen parentIn, OnPress onPress) {
-        super(x, y, 13, 10, Component.literal(""), onPress);
+        super(x, y, 13, 10, Component.literal(""), onPress, (c) -> Component.literal(""));
         this.baseX = x;
         this.parent = parentIn;
     }
@@ -34,17 +44,17 @@ public class DogInventoryButton extends Button {
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
 
         if (this.parent instanceof CreativeModeInventoryScreen) {
-            int tabIndex = ((CreativeModeInventoryScreen) this.parent).getSelectedTab();
-            this.visible = tabIndex == CreativeModeTab.TAB_INVENTORY.getId();
+            var cscreen = ((CreativeModeInventoryScreen) this.parent);
+            this.visible = cscreen.isInventoryOpen();
             this.active = this.visible;
         }
 
         if (this.parent instanceof InventoryScreen) {
             RecipeBookComponent recipeBook = ((InventoryScreen) this.parent).getRecipeBookComponent();
             if (recipeBook.isVisible()) {
-                this.x = this.baseX + 77;
+                this.setX(this.baseX + 77);
             } else {
-                this.x = this.baseX;
+                this.setY(this.baseX);
             }
         }
 
@@ -54,6 +64,11 @@ public class DogInventoryButton extends Button {
                 (dog) -> dog.canInteract(mc.player) && PackPuppyTalent.hasInventory(dog)
             );
             this.active = !dogs.isEmpty();
+            if (this.active) {
+                this.setTooltip(TOOLTIP_ACTIVE);
+            } else {
+                this.setTooltip(TOOLTIP_NO_ACTIVE);
+            }
         }
 
         super.render(stack, mouseX, mouseY, partialTicks);
@@ -69,18 +84,7 @@ public class DogInventoryButton extends Button {
        RenderSystem.enableBlend();
        RenderSystem.defaultBlendFunc();
        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-       this.blit(stack, this.x, this.y, 0, 36 + i * 10, this.width, this.height);
+       this.blit(stack, this.getX(), this.getY(), 0, 36 + i * 10, this.width, this.height);
        this.renderBg(stack, mc, mouseX, mouseY);
-    }
-
-    @Override
-    public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
-        if (this.active) {
-            Component msg = Component.translatable("container.doggytalents.dog_inventories.link");
-            this.parent.renderTooltip(stack, msg, mouseX, mouseY);
-        } else {
-            Component msg = Component.translatable("container.doggytalents.dog_inventories.link").withStyle(ChatFormatting.RED);
-            this.parent.renderTooltip(stack, msg, mouseX, mouseY);
-        }
     }
 }

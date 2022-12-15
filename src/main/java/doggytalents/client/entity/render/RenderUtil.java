@@ -2,7 +2,6 @@ package doggytalents.client.entity.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.GameRenderer;
@@ -33,7 +32,7 @@ public class RenderUtil {
         stack.translate(0.0D, yOffset, 0.0D);
         stack.mulPose(entityRenderDispatcher.cameraOrientation());
         stack.scale(-scale, -scale, scale);
-        Matrix4f matrix4f = stack.last().pose();
+        var matrix4f = stack.last().pose();
         float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
         int j = (int) (f1 * 255.0F) << 24;
         Font fontrenderer = renderer.getFont();

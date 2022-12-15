@@ -19,7 +19,8 @@ public class DoggySounds {
     public static final RegistryObject<SoundEvent> WHISTLE_LONG = register("whistle_long");
 
     private static RegistryObject<SoundEvent> register(final String name) {
-        return register(name, SoundEvent::new);
+        //TODO 1.19.3 ??
+        return register(name, () -> SoundEvent.createVariableRangeEvent(Util.getResource(name)));
     }
 
     private static <T extends SoundEvent> RegistryObject<T> register(final String name, final Function<ResourceLocation, T> factory) {

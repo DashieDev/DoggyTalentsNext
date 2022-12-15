@@ -9,6 +9,7 @@ import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.DogBedBlock;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.Util;
 import net.minecraft.client.particle.TerrainParticle;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.*;
@@ -16,8 +17,11 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.resources.model.ModelState;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -38,6 +42,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Function;
 
 @OnlyIn(Dist.CLIENT)
 public class DogBedModel implements BakedModel {
@@ -133,7 +138,37 @@ private BlockModel model;
         newModel.textureMap.put("casing", casingTexture);
         newModel.textureMap.put("particle", casingTexture);
 
-        return newModel.bake(this.modelLoader, newModel, Material::sprite, getModelRotation(facing), createResourceVariant(casingResource, beddingResource, facing), true);
+        var newModelBaked = (new ModelBaker() {
+
+            @Override
+            public @Nullable BakedModel bake(ResourceLocation location, ModelState state,
+                    Function<Material, TextureAtlasSprite> sprites) {
+                return newModel.bake(this, newModel, Material::sprite, 
+                    getModelRotation(facing), 
+                    createResourceVariant(casingResource, beddingResource, facing), 
+                    true
+                );
+            }
+
+            @Override
+            public Function<Material, TextureAtlasSprite> getModelTextureGetter() {
+                return Material::sprite;
+            }
+
+            @Override
+            public UnbakedModel getModel(ResourceLocation p_252194_) {
+                return newModel;
+            }
+
+            @Override
+            @javax.annotation.Nullable
+            public BakedModel bake(ResourceLocation p_250776_, ModelState p_251280_) {
+                return this.bake(p_250776_, p_251280_, getModelTextureGetter());
+            }
+            
+        }).bake(null, null, null);
+
+        return newModelBaked;
     }
 
     private ResourceLocation createResourceVariant(@Nonnull ICasingMaterial casingResource, @Nonnull IBeddingMaterial beddingResource, @Nonnull Direction facing) {
@@ -143,7 +178,7 @@ private BlockModel model;
         String casingKey = beddingResource != null
                 ? DoggyTalentsAPI.CASING_MATERIAL.get().getKey(casingResource).toString().replace(':', '.')
                 : "doggytalents.dogbed.casing.missing";
-        return new ModelResourceLocation(Constants.MOD_ID, "block/dog_bed#bedding=" + beddingKey + ",casing=" + casingKey + ",facing=" + facing.getName());
+        return new ModelResourceLocation(Util.getResource("block/dog_bed"),"#bedding=" + beddingKey + ",casing=" + casingKey + ",facing=" + facing.getName());
     }
 
     private Either<Material, String> findCasingTexture(@Nullable ICasingMaterial resource) {

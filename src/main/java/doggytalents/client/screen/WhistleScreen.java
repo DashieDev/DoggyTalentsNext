@@ -18,6 +18,7 @@ import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.resources.language.I18n;
@@ -58,20 +59,29 @@ public class WhistleScreen extends Screen{
     @Override
     public void init() {
         super.init();
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
+        //this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 
-        Button help = new Button(3, 3, 20, 20, Component.literal("?"), b -> {} ) {
-            @Override
-            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
-                List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
-                    .withStyle(Style.EMPTY.withBold(true)));
-                String str = I18n.get("doggytalents.screen.whistler.screen.help");
-                list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
-                WhistleScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
-            }
-        };
+        //TODO 1.19.3 ??
+        // Button s = new Button(3, 3, 20, 20, Component.literal("?"), b -> {} ) {
+        //     @Override
+        //     public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+        //         List<Component> list = new ArrayList<>();
+        //         list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
+        //             .withStyle(Style.EMPTY.withBold(true)));
+        //         String str = I18n.get("doggytalents.screen.whistler.screen.help");
+        //         list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
+
+        //         WhistleScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+        //     }
+        // };
+
+        Button help = new Button.Builder(Component.literal("?"), b -> {})
+            .pos(3, 3)
+            .size(20, 20).build();
+
+        help.setTooltip(Tooltip.create(Component.translatable("doggytalents.screen.whistler.screen.help")));
+        
         
         this.addRenderableWidget(help);
     }
@@ -193,7 +203,7 @@ public class WhistleScreen extends Screen{
     @Override
     public void removed() {
         super.removed();
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
+        //this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
     }
 
     @Override

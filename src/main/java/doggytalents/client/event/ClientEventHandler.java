@@ -11,7 +11,6 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -20,11 +19,15 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.resources.model.ModelState;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -38,32 +41,103 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
+import java.util.function.Function;
+
+import org.jetbrains.annotations.Nullable;
 
 public class ClientEventHandler {
 
     public static void onModelBakeEvent(final ModelEvent.BakingCompleted event) {
-        var modelRegistry = event.getModels();
+        // var modelRegistry = event.getModels();
+
+        // try {
+        //     ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(DoggyBlocks.DOG_BED.get());
+        //     ResourceLocation unbakedModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+
+        //     BlockModel model = (BlockModel) event.getModelBakery().getModel(unbakedModelLoc);
+        //     BakedModel c1 = (new ModelBaker() {
+
+        //         @Override
+        //         public @Nullable BakedModel bake(ResourceLocation location, ModelState state,
+        //                 Function<Material, TextureAtlasSprite> sprites) {
+        //             return model.bake(
+        //                 this, model, Material::sprite, 
+        //                 BlockModelRotation.X180_Y180, unbakedModelLoc, true
+        //             );
+        //         }
+
+        //         @Override
+        //         public Function<Material, TextureAtlasSprite> getModelTextureGetter() {
+        //             return Material::sprite;
+        //         }
+
+        //         @Override
+        //         public UnbakedModel getModel(ResourceLocation p_252194_) {
+        //             return model;
+        //         }
+
+        //         @Override
+        //         @javax.annotation.Nullable
+        //         public BakedModel bake(ResourceLocation p_250776_, ModelState p_251280_) {
+        //             return this.bake(p_250776_, p_251280_, getModelTextureGetter());
+        //         }
+                
+        //     }).bake(unbakedModelLoc, BlockModelRotation.X180_Y180, Material::sprite);
+        //     BakedModel customModel = new DogBedModel(event.getModelBakery(), model, c1);
+
+        //     // Replace all valid block states
+        //     DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {
+        //         modelRegistry.put(BlockModelShaper.stateToModelLocation(state), customModel);
+        //     });
+
+        //     // Replace inventory model
+        //     modelRegistry.put(new ModelResourceLocation(resourceLocation, "inventory"), customModel);
+
+        // }
+        // catch(Exception e) {
+        //     DoggyTalentsNext.LOGGER.warn("Could not get base Dog Bed model. Reverting to default textures...");
+        //     e.printStackTrace();
+        // }
+    }
+
+    public static void registerModelForBaking(final ModelEvent.RegisterAdditional event) {
 
         try {
             ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(DoggyBlocks.DOG_BED.get());
             ResourceLocation unbakedModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
-
-            BlockModel model = (BlockModel) event.getModelBakery().getModel(unbakedModelLoc);
-            BakedModel customModel = new DogBedModel(event.getModelBakery(), model, model.bake(event.getModelBakery(), model, Material::sprite, BlockModelRotation.X180_Y180, unbakedModelLoc, true));
-
-            // Replace all valid block states
-            DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {
-                modelRegistry.put(BlockModelShaper.stateToModelLocation(state), customModel);
-            });
-
-            // Replace inventory model
-            modelRegistry.put(new ModelResourceLocation(resourceLocation, "inventory"), customModel);
-
+            event.register(unbakedModelLoc);
+            
         }
         catch(Exception e) {
             DoggyTalentsNext.LOGGER.warn("Could not get base Dog Bed model. Reverting to default textures...");
             e.printStackTrace();
         }
+    }
+
+    public static void modifyBakedModels(final ModelEvent.ModifyBakingResult event) {
+        try {
+            var modelRegistry = event.getModels();
+
+            ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(DoggyBlocks.DOG_BED.get());
+            ResourceLocation bakedModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+
+            var model = modelRegistry.get(bakedModelLoc);
+
+            // Replace all valid block states
+            DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {
+                modelRegistry.put(BlockModelShaper.stateToModelLocation(state), model);
+            });
+
+            // Replace inventory model
+            modelRegistry.put(new ModelResourceLocation(resourceLocation, "inventory"), model);
+            
+        }
+        catch(Exception e) {
+            DoggyTalentsNext.LOGGER.warn("Error modifying baking result. Reverting to default textures...");
+            e.printStackTrace();
+        }
+        
+
     }
 
     @SubscribeEvent
@@ -111,7 +185,7 @@ public class ClientEventHandler {
             DogInventoryButton btn = null;
 
             //TODO just create a static variable in this class
-            for (Widget widget : screen.renderables) {
+            for (var widget : screen.renderables) {
                 if (widget instanceof DogInventoryButton) {
                     btn = (DogInventoryButton) widget;
                     break;
@@ -134,7 +208,7 @@ public class ClientEventHandler {
                 }
 
                 //event.getPoseStack().translate(-guiLeft, -guiTop, 0);
-                btn.renderToolTip(event.getPoseStack(), event.getMouseX(), event.getMouseY());
+                //TODO?// btn.renderToolTip(event.getPoseStack(), event.getMouseX(), event.getMouseY());
                 //event.getPoseStack().translate(guiLeft, guiTop, 0);
             }
         }

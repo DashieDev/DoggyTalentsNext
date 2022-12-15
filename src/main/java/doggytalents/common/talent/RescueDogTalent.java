@@ -233,7 +233,7 @@ public class RescueDogTalent extends TalentInstance {
             this.target = this.talentInst.selectHealTarget(this.dog);
             if (target == null) return false;
             if (!this.talentInst.isTargetLowHealth(dog, target)) return false;
-            if (!this.talentInst.canAffordToHealTarget(dog, target)) return false;            
+            if (!this.talentInst.canAffordToHealTarget(dog, target)) return false;
             return true;
         }
 
