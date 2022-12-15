@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -62,9 +63,7 @@ public class DoggyItemGroups {
 
         Consumer<CreativeModeTab.Builder> DOGBED_BUILDER = builder ->
             builder.title(Component.translatable("itemGroup.doggytalents.dogbed"))
-            .icon(() -> {
-                return new ItemStack(DoggyItems.TRAINING_TREAT.get());
-            })
+            .icon(DogBedUtil::createRandomBed)
             .displayItems((a, b, c) -> {
                 for (var beddingId : DoggyTalentsAPI.BEDDING_MATERIAL.get().getValues()) {
                     for (var casingId : DoggyTalentsAPI.CASING_MATERIAL.get().getValues()) {
@@ -73,6 +72,10 @@ public class DoggyItemGroups {
                 }
             });
 
-        DOG_BED = ev.registerCreativeModeTab(Util.getResource("tabdogbed"), DOGBED_BUILDER);
+        DOG_BED = ev.registerCreativeModeTab(
+            Util.getResource("tabdogbed"),
+            List.of(), List.of(GENERAL), 
+            DOGBED_BUILDER
+        );
     }
 }
