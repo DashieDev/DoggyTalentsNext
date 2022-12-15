@@ -84,6 +84,8 @@ public class DoggyTalentsNext {
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
         modEventBus.addListener(Capabilities::registerCaps);
 
+        modEventBus.addListener(DoggyItemGroups::onCreativeTabRegister);
+
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
         forgeEventBus.addListener(this::registerCommands);
@@ -100,6 +102,8 @@ public class DoggyTalentsNext {
             modEventBus.addListener(DoggyBlocks::registerBlockColours);
             modEventBus.addListener(DoggyItems::registerItemColours);
             modEventBus.addListener(ClientEventHandler::onModelBakeEvent);
+            modEventBus.addListener(ClientEventHandler::registerModelForBaking);
+            modEventBus.addListener(ClientEventHandler::modifyBakedModels);
             modEventBus.addListener(ClientSetup::setupTileEntityRenderers);
             modEventBus.addListener(ClientSetup::setupEntityRenderers);
             modEventBus.addListener(ClientSetup::addClientReloadListeners);
@@ -149,21 +153,24 @@ public class DoggyTalentsNext {
 
     private void gatherData(final GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
+        var packOutput = gen.getPackOutput();
+        var lookup = event.getLookupProvider();
 
         if (event.includeClient()) {
-            DTBlockstateProvider blockstates = new DTBlockstateProvider(gen, event.getExistingFileHelper());
+            DTBlockstateProvider blockstates = new DTBlockstateProvider(packOutput, event.getExistingFileHelper());
             gen.addProvider(true, blockstates);
-            gen.addProvider(true, new DTItemModelProvider(gen, blockstates.getExistingHelper()));
+            gen.addProvider(true, new DTItemModelProvider(packOutput, blockstates.getExistingHelper()));
         }
 
         if (event.includeServer()) {
             // gen.addProvider(new DTBlockTagsProvider(gen));
-            gen.addProvider(true, new DTAdvancementProvider(gen));
-            DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(gen, event.getExistingFileHelper());
+            gen.addProvider(true, new DTAdvancementProvider(packOutput, lookup, event.getExistingFileHelper()));
+            
+            DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(packOutput, lookup, event.getExistingFileHelper());
             gen.addProvider(true, blockTagProvider);
-            gen.addProvider(true, new DTItemTagsProvider(gen, blockTagProvider, event.getExistingFileHelper()));
-            gen.addProvider(true, new DTRecipeProvider(gen));
-            gen.addProvider(true, new DTLootTableProvider(gen));
+            gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider, event.getExistingFileHelper()));
+            gen.addProvider(true, new DTRecipeProvider(packOutput));
+            gen.addProvider(true, new DTLootTableProvider(packOutput));
         }
     }
 }

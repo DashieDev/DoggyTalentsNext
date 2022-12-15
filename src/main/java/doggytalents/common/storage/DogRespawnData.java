@@ -71,7 +71,7 @@ public class DogRespawnData implements IDogData {
 
     @Nullable
     public Dog respawn(ServerLevel worldIn, Player playerIn, BlockPos pos) {
-        Dog dog = DoggyEntityTypes.DOG.get().spawn(worldIn, (CompoundTag) null, (Component) null, playerIn, pos, MobSpawnType.TRIGGERED, true, false);
+        Dog dog = DoggyEntityTypes.DOG.get().spawn(worldIn, null, playerIn, pos, MobSpawnType.TRIGGERED, true, false);
 
         // Failed for some reason
         if (dog == null) {

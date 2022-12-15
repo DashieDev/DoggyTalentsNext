@@ -7,6 +7,8 @@ import doggytalents.common.item.*;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.client.color.item.ItemColors;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -55,7 +57,7 @@ public class DoggyItems {
     //public static final RegistryObject<Item> PATROL = registerWith("patrol_item", PatrolItem::new, 1);
 
     private static Item.Properties createInitialProp() {
-        return new Item.Properties().tab(DoggyItemGroups.GENERAL);
+        return new Item.Properties();
     }
 
     private static RegistryObject<Item> registerThrowBone(final String name) {

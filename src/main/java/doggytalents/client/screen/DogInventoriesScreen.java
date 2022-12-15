@@ -114,9 +114,9 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
        InputConstants.Key mouseKey = InputConstants.getKey(keyCode, scanCode);
        if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
            if (this.player.getAbilities().instabuild) {
-               this.minecraft.setScreen(new CreativeModeInventoryScreen(this.player));
+                this.minecraft.setScreen(new CreativeModeInventoryScreen(this.minecraft.player, this.minecraft.player.connection.enabledFeatures(), this.minecraft.options.operatorItemsTab().get()));
            } else {
-               this.minecraft.setScreen(new InventoryScreen(this.player));
+                this.minecraft.setScreen(new InventoryScreen(this.player));
            }
            return true;
        }

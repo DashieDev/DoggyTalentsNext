@@ -18,7 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
@@ -75,7 +75,8 @@ public class DogInfoScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
+        //TODO 1.19.3 ????
+        //this.minecraft.keyboardHandler.se(true);
         int topX = this.width / 2;
         int topY = this.height / 2;
 
@@ -95,76 +96,139 @@ public class DogInfoScreen extends Screen {
 
 
         if (this.dog.isOwnedBy(this.player)) {
-            Button obeyBtn = new Button(this.width - 64, topY + 77, 42, 20, Component.literal(String.valueOf(this.dog.willObeyOthers())), (btn) -> {
-                btn.setMessage(Component.literal(String.valueOf(!this.dog.willObeyOthers())));
-                PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogObeyData(this.dog.getId(), !this.dog.willObeyOthers()));
-            });
+
+            Button obeyBtn = new Button.Builder(
+                Component.literal(String.valueOf(this.dog.willObeyOthers())),
+                (btn) -> {
+                    btn.setMessage(Component.literal(String.valueOf(!this.dog.willObeyOthers())));
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogObeyData(this.dog.getId(), !this.dog.willObeyOthers()));
+                }    
+            )
+                .pos(this.width - 64, topY + 77)
+                .size(42, 20).build();
+
+
 
             this.addRenderableWidget(obeyBtn);
         }
 
-        Button attackPlayerBtn = new Button(this.width - 64, topY - 5, 42, 20, Component.literal(String.valueOf(this.dog.canPlayersAttack())), button -> {
-            button.setMessage(Component.literal(String.valueOf(!this.dog.canPlayersAttack())));
-            PacketHandler.send(PacketDistributor.SERVER.noArg(), new FriendlyFireData(this.dog.getId(), !this.dog.canPlayersAttack()));
-        });
+        Button attackPlayerBtn = new Button.Builder(
+                Component.literal(String.valueOf(this.dog.canPlayersAttack())),
+                (btn) -> {
+                    btn.setMessage(Component.literal(String.valueOf(!this.dog.willObeyOthers())));
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogObeyData(this.dog.getId(), !this.dog.willObeyOthers()));
+                }    
+            )
+                .pos(this.width - 64, topY - 5)
+                .size(42, 20).build();
 
         this.addRenderableWidget(attackPlayerBtn);
 
-        //if (ConfigHandler.CLIENT.USE_DT_TEXTURES.get()) {
-            Button addBtn = new Button(this.width - 42, topY + 30, 20, 20, Component.literal("+"), (btn) -> {
-                this.textureIndex += 1;
-                this.textureIndex %= this.customSkinList.size();
-                ResourceLocation rl = this.customSkinList.get(this.textureIndex);
+            Button addBtn = new Button.Builder(
+                Component.literal("+"),
+                (btn) -> {
+                    this.textureIndex += 1;
+                    this.textureIndex %= this.customSkinList.size();
+                    ResourceLocation rl = this.customSkinList.get(this.textureIndex);
+    
+                    this.setDogTexture(rl);
+                } 
+            )
+                .pos(this.width - 42, topY + 30)
+                .size(20, 20).build();
 
-                this.setDogTexture(rl);
-            });
-            Button lessBtn = new Button(this.width - 64, topY + 30, 20, 20, Component.literal("-"), (btn) -> {
-                this.textureIndex += this.customSkinList.size() - 1;
-                this.textureIndex %= this.customSkinList.size();
-                ResourceLocation rl = this.customSkinList.get(this.textureIndex);
-                this.setDogTexture(rl);
-            });
+            Button lessBtn = new Button.Builder(
+                Component.literal("-"),
+                (btn) -> {
+                    this.textureIndex += this.customSkinList.size() - 1;
+                    this.textureIndex %= this.customSkinList.size();
+                    ResourceLocation rl = this.customSkinList.get(this.textureIndex);
+                    this.setDogTexture(rl);
+                }
+            )
+                .pos(this.width - 64, topY + 30)
+                .size(20, 20).build();
 
             this.addRenderableWidget(addBtn);
             this.addRenderableWidget(lessBtn);
         //}
 
+        
+        //TODO 1.19.3 ???
+        // Button modeBtn = new Button(topX + 40, topY + 25, 60, 20, Component.translatable(this.dog.getMode().getUnlocalisedName()), button -> {
+        //     EnumMode mode = DogInfoScreen.this.dog.getMode().nextMode();
 
-        Button modeBtn = new Button(topX + 40, topY + 25, 60, 20, Component.translatable(this.dog.getMode().getUnlocalisedName()), button -> {
-            EnumMode mode = DogInfoScreen.this.dog.getMode().nextMode();
+        //     if (mode == EnumMode.WANDERING && !DogInfoScreen.this.dog.getBowlPos().isPresent()) {
+        //         button.setMessage(Component.translatable(mode.getUnlocalisedName()).withStyle(ChatFormatting.RED));
+        //     } else {
+        //         button.setMessage(Component.translatable(mode.getUnlocalisedName()));
+        //     }
 
-            if (mode == EnumMode.WANDERING && !DogInfoScreen.this.dog.getBowlPos().isPresent()) {
-                button.setMessage(Component.translatable(mode.getUnlocalisedName()).withStyle(ChatFormatting.RED));
-            } else {
-                button.setMessage(Component.translatable(mode.getUnlocalisedName()));
-            }
-
-            PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(DogInfoScreen.this.dog.getId(), mode));
-        }) {
-            @Override
-            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
-                List<Component> list = new ArrayList<>();
-                String str = I18n.get(dog.getMode().getUnlocalisedInfo());
-                list.addAll(ScreenUtil.splitInto(str, 150, DogInfoScreen.this.font));
-                if (DogInfoScreen.this.dog.getMode() == EnumMode.WANDERING) {
+        //     PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(DogInfoScreen.this.dog.getId(), mode));
+        // }) {
+        //     @Override
+        //     public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+        //         List<Component> list = new ArrayList<>();
+        //         String str = I18n.get(dog.getMode().getUnlocalisedInfo());
+        //         list.addAll(ScreenUtil.splitInto(str, 150, DogInfoScreen.this.font));
+        //         if (DogInfoScreen.this.dog.getMode() == EnumMode.WANDERING) {
 
 
-                    if (DogInfoScreen.this.dog.getBowlPos().isPresent()) {
-                        double distance = DogInfoScreen.this.dog.blockPosition().distSqr(DogInfoScreen.this.dog.getBowlPos().get());
+        //             if (DogInfoScreen.this.dog.getBowlPos().isPresent()) {
+        //                 double distance = DogInfoScreen.this.dog.blockPosition().distSqr(DogInfoScreen.this.dog.getBowlPos().get());
 
-                        if (distance > 256D) {
-                            list.add(Component.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(ChatFormatting.RED));
-                        } else {
-                            list.add(Component.translatable("dog.mode.docile.bowl", (int) Math.sqrt(distance)).withStyle(ChatFormatting.GREEN));
-                        }
+        //                 if (distance > 256D) {
+        //                     list.add(Component.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(ChatFormatting.RED));
+        //                 } else {
+        //                     list.add(Component.translatable("dog.mode.docile.bowl", (int) Math.sqrt(distance)).withStyle(ChatFormatting.GREEN));
+        //                 }
+        //             } else {
+        //                 list.add(Component.translatable("dog.mode.docile.nobowl").withStyle(ChatFormatting.RED));
+        //             }
+        //         }
+
+        //         DogInfoScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+        //     }
+        // };
+
+        Button modeBtn = new Button.Builder(
+                Component.translatable(this.dog.getMode().getUnlocalisedName()),
+                button -> {
+                    EnumMode mode = DogInfoScreen.this.dog.getMode().nextMode();
+        
+                    if (mode == EnumMode.WANDERING && !DogInfoScreen.this.dog.getBowlPos().isPresent()) {
+                        button.setMessage(Component.translatable(mode.getUnlocalisedName()).withStyle(ChatFormatting.RED));
                     } else {
-                        list.add(Component.translatable("dog.mode.docile.nobowl").withStyle(ChatFormatting.RED));
+                        button.setMessage(Component.translatable(mode.getUnlocalisedName()));
                     }
+        
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(DogInfoScreen.this.dog.getId(), mode));
                 }
+            )
+                .pos(topX + 40, topY + 25)
+                .size(60, 20).build();
 
-                DogInfoScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+        //TODO 1.19.2 TEMP
+        var c1 = Component.literal(I18n.get(dog.getMode().getUnlocalisedInfo()) + "  ");
+
+        if (DogInfoScreen.this.dog.getMode() == EnumMode.WANDERING) {
+
+
+            if (DogInfoScreen.this.dog.getBowlPos().isPresent()) {
+                double distance = DogInfoScreen.this.dog.blockPosition().distSqr(DogInfoScreen.this.dog.getBowlPos().get());
+
+                if (distance > 256D) {
+                    c1.append(Component.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(ChatFormatting.RED));
+                } else {
+                    c1.append(Component.translatable("dog.mode.docile.bowl", (int) Math.sqrt(distance)).withStyle(ChatFormatting.GREEN));
+                }
+            } else {
+                c1.append(Component.translatable("dog.mode.docile.nobowl").withStyle(ChatFormatting.RED));
             }
-        };
+        }
+        //END TEMP
+
+        
 
         this.addRenderableWidget(modeBtn);
 
@@ -176,30 +240,30 @@ public class DogInfoScreen extends Screen {
 
 
         if (perPage < size) {
-            this.leftBtn = new Button(25, perPage * 21 + 10, 20, 20, Component.literal("<"), (btn) -> {
+            this.leftBtn = new Button.Builder(Component.literal("<"), (btn) -> {
                 this.currentPage = Math.max(0, this.currentPage - 1);
                 btn.active = this.currentPage > 0;
                 this.rightBtn.active = true;
                 this.recalculatePage(perPage);
-            }) {
-                @Override
-                public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
-                    DogInfoScreen.this.renderTooltip(stack, Component.translatable("doggui.prevpage").withStyle(ChatFormatting.ITALIC), mouseX, mouseY);
-                }
-            };
+            }).pos(25, perPage * 21 + 10)
+            .size(20, 20).build();
+
+            this.leftBtn.setTooltip(Tooltip.create( Component.translatable("doggui.prevpage").withStyle(ChatFormatting.ITALIC)));
             this.leftBtn.active = false;
 
-            this.rightBtn = new Button(48, perPage * 21 + 10, 20, 20, Component.literal(">"), (btn) -> {
-                this.currentPage = Math.min(this.maxPages - 1, this.currentPage + 1);
-                btn.active = this.currentPage < this.maxPages - 1;
-                this.leftBtn.active = true;
-                this.recalculatePage(perPage);
-            }) {
-                @Override
-                public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
-                    DogInfoScreen.this.renderTooltip(stack, Component.translatable("doggui.nextpage").withStyle(ChatFormatting.ITALIC), mouseX, mouseY);
+            this.rightBtn = new Button.Builder(
+                Component.literal(">"),
+                (btn) -> {
+                    this.currentPage = Math.min(this.maxPages - 1, this.currentPage + 1);
+                    btn.active = this.currentPage < this.maxPages - 1;
+                    this.leftBtn.active = true;
+                    this.recalculatePage(perPage);
                 }
-            };
+            )
+                .pos(48, perPage * 21 + 10)
+                .size(20, 20).build();
+
+            this.rightBtn.setTooltip(Tooltip.create(Component.translatable("doggui.nextpage").withStyle(ChatFormatting.ITALIC)));    
 
             this.addRenderableWidget(this.leftBtn);
             this.addRenderableWidget(this.rightBtn);
@@ -237,23 +301,37 @@ public class DogInfoScreen extends Screen {
                     PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogTalentData(DogInfoScreen.this.dog.getId(), talent));
                 }
 
-            }) {
-                @Override
-                public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
-                    List<Component> list = new ArrayList<>();
+            }) 
+            
+            
+            {
+                //TODO 1.19.3 ??? 
+                // @Override
+                // public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+                //     List<Component> list = new ArrayList<>();
 
-                    list.add(Component.translatable(talent.getTranslationKey()).withStyle(ChatFormatting.GREEN));
-                    if (this.active) {
-                        list.add(Component.literal("Level: " + DogInfoScreen.this.dog.getDogLevel(talent)));
-                        list.add(Component.literal("--------------------------------").withStyle(ChatFormatting.GRAY));
-                        list.addAll(ScreenUtil.splitInto(I18n.get(talent.getInfoTranslationKey()), 200, DogInfoScreen.this.font));
-                    } else {
-                        list.add(Component.literal("Talent disabled").withStyle(ChatFormatting.RED));
-                    }
+                //     list.add(Component.translatable(talent.getTranslationKey()).withStyle(ChatFormatting.GREEN));
+                //     if (this.active) {
+                //         list.add(Component.literal("Level: " + DogInfoScreen.this.dog.getDogLevel(talent)));
+                //         list.add(Component.literal("--------------------------------").withStyle(ChatFormatting.GRAY));
+                //         list.addAll(ScreenUtil.splitInto(I18n.get(talent.getInfoTranslationKey()), 200, DogInfoScreen.this.font));
+                //     } else {
+                //         list.add(Component.literal("Talent disabled").withStyle(ChatFormatting.RED));
+                //     }
 
-                    DogInfoScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
-                }
+                //     DogInfoScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                // }
             };
+            //TODO 1.19.3 TEMP 
+            var c1 = Component.literal("");
+            
+            c1.append(Component.literal("Level: " + DogInfoScreen.this.dog.getDogLevel(talent) + " - "));
+            
+            c1.append(Component.literal(I18n.get(talent.getInfoTranslationKey())));
+
+            button.setTooltip(Tooltip.create(c1));
+            //END TEMP
+
             button.active = ConfigHandler.TALENT.getFlag(talent);
 
             this.talentWidgets.add(button);
@@ -319,19 +397,19 @@ public class DogInfoScreen extends Screen {
         this.renderables.forEach(widget -> {
             if (widget instanceof TalentButton) {
                 TalentButton talBut = (TalentButton)widget;
-                this.font.draw(stack, I18n.get(talBut.talent.getTranslationKey()), talBut.x + 25, talBut.y + 7, 0xFFFFFF);
+                this.font.draw(stack, I18n.get(talBut.talent.getTranslationKey()), talBut.getX()+ 25, talBut.getY() + 7, 0xFFFFFF);
             }
         });
 
         super.render(stack, mouseX, mouseY, partialTicks);
         //RenderHelper.disableStandardItemLighting(); // 1.14 enableGUIStandardItemLighting
 
-        for (Widget widget : this.renderables) {
-            if (widget instanceof AbstractWidget w && w.isHoveredOrFocused()) {
-               w.renderToolTip(stack, mouseX, mouseY);
-               break;
-            }
-         }
+        // for (var widget : this.renderables) {
+        //     if (widget instanceof AbstractWidget w && w.isHoveredOrFocused()) {
+        //        w.renderToolTip(stack, mouseX, mouseY);
+        //        break;
+        //     }
+        //  }
 
        // RenderHelper.enableStandardItemLighting();
     }
@@ -339,7 +417,7 @@ public class DogInfoScreen extends Screen {
     @Override
     public void removed() {
         super.removed();
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
+        //this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
     }
 
     @Override
@@ -351,7 +429,7 @@ public class DogInfoScreen extends Screen {
 
         protected Talent talent;
         private TalentButton(int x, int y, int widthIn, int heightIn, Component buttonText, Talent talent, Consumer<TalentButton> onPress) {
-            super(x, y, widthIn, heightIn, buttonText, button -> onPress.accept((TalentButton) button));
+            super(x, y, widthIn, heightIn, buttonText, button -> onPress.accept((TalentButton) button), (c) -> Component.literal(""));
             this.talent = talent;
         }
 
