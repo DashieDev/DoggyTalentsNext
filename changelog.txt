@@ -146,3 +146,6 @@ v1.5.0 - 15th December 2022
   + Everytime they exit lava, they will shake like wolves usually do after exiting Water.
   + But instead of water particles, they will shake out Lava/Fire particles and 
   + Every enermies within a 3 blocks radius will be set on fire for 5 second minimum.
+
+v1.5.0 - 16th December 2022
++ Update to 1.19.3
