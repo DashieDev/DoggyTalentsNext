@@ -2,7 +2,6 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
@@ -36,7 +35,6 @@ public class DogFindWaterGoal extends Goal {
         if (--this.tickUntilSearch <= 0) {
             this.tickUntilSearch = 5;
             this.waterPos = this.searchForWaterPos();
-            ChopinLogger.l("in water pos" + this.waterPos);
         }
         if (this.waterPos == null) return false;
 
