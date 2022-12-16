@@ -1,6 +1,7 @@
 package doggytalents.common.util;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 
@@ -341,6 +342,30 @@ public class DogUtil {
 
     }
 
+    /**
+     * move to a position if can reach it, otherwise execute orElse
+     * 
+     * @param dog The dog
+     * @param pos The pos
+     * @param speedModifier speed modifier
+     * @param dY The maximum amount of blocks can the y coords between the target and the actual path destination diffrentiate
+     * while still being eligible
+     * @param orElse function to execute when can't reach
+     */
+    public static void moveToIfReachOrElse(Dog dog, BlockPos pos, double speedModifier, 
+        int dY, Consumer<Dog> orElse) {
+        var p = dog.getNavigation().createPath(pos, 1);
+        if (p == null) {
+            orElse.accept(dog);
+            return;
+        }
+
+        if (DogUtil.canPathReachTargetBlock(dog, p, pos, dY)) {
+            dog.getNavigation().moveTo(p, speedModifier);
+        } else {
+            orElse.accept(dog);
+        }
+    }
 
     public static boolean isSafeBlock() {
         return false;
