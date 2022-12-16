@@ -149,3 +149,8 @@ v1.5.0 - 15th December 2022
 
 v1.5.0 - 16th December 2022
 + Update to 1.19.3
+
+v1.5.1 - 16th December 2022
+/ Improved Dog Find Water when on fire AI
+  + dog now searches through inflating "shells" instead of iterating like normal nested loops
+  which means the dog have a higher chance of nailing the nearest water source.
