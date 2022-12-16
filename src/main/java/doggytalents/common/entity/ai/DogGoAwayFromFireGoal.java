@@ -69,12 +69,12 @@ public class DogGoAwayFromFireGoal extends Goal {
     public void tick() {
         var dog_bp = dog.blockPosition();
         var n = dog.getNavigation();
-
-        if (n.isDone() && dog_bp.distSqr(safePos) <= 1 ) {
-            dog.getMoveControl().setWantedPosition(this.safePos.getX() + 0.5, this.safePos.getY(), this.safePos.getZ() + 0.5, 1.0);
-        }
-
+        
         if (this.isSafePos(safePos)) {
+            if (n.isDone() && dog_bp.distSqr(safePos) <= 1 ) {
+                dog.getMoveControl().setWantedPosition(this.safePos.getX() + 0.5, this.safePos.getY(), this.safePos.getZ() + 0.5, 1.0);
+            }
+
             if (--this.tickUntilPathRecalc <= 0) {
                 this.tickUntilPathRecalc = 5;
                 this.dog.getNavigation().moveTo(
