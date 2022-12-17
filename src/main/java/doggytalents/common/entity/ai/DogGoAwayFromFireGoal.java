@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public class DogGoAwayFromFireGoal extends Goal {
     private final int SEARCH_RANGE = 4;
@@ -34,8 +35,8 @@ public class DogGoAwayFromFireGoal extends Goal {
 
         boolean dangerSpot = false;
         if (--tickUntilSearch <= 0) {
-            tickUntilSearch = 5;
-            dangerSpot = this.isDogInDangerSpot();
+            tickUntilSearch = 3;
+            dangerSpot = isDogInDangerSpot(this.dog.position());
         }
         if (!dangerSpot) return false;
 
@@ -50,7 +51,7 @@ public class DogGoAwayFromFireGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return isDogInDangerSpot() && this.safePos != null;
+        return isDogInDangerSpot(this.dog.position()) && this.safePos != null;
     }
 
     @Override
@@ -69,8 +70,10 @@ public class DogGoAwayFromFireGoal extends Goal {
     public void tick() {
         var dog_bp = dog.blockPosition();
         var n = dog.getNavigation();
+
+        if (safePos == null) return;
         
-        if (this.isSafePos(safePos)) {
+        if (!isDogInDangerSpot(Vec3.atBottomCenterOf(safePos))) {
             if (n.isDone() && dog_bp.distSqr(safePos) <= 1 ) {
                 dog.getMoveControl().setWantedPosition(this.safePos.getX() + 0.5, this.safePos.getY(), this.safePos.getZ() + 0.5, 1.0);
             }
@@ -92,15 +95,15 @@ public class DogGoAwayFromFireGoal extends Goal {
         this.safePos = null;
     }
 
-    private boolean isDogInDangerSpot() {
-        AABB bb = dog.getBoundingBox();
-        int minX = Mth.floor(bb.minX);
-        int minY = Mth.floor(bb.minY);
-        int minZ = Mth.floor(bb.minZ);
+    private boolean isDogInDangerSpot(Vec3 pos) {
+        var half_bbw = 0.5*dog.getBbWidth();
+        int minX = Mth.floor(pos.x - half_bbw);
+        int minY = Mth.floor(pos.y - half_bbw);
+        int minZ = Mth.floor(pos.z - half_bbw);
 
-        int maxX = Mth.ceil(bb.maxX);
-        int maxY = Mth.ceil(bb.maxY);
-        int maxZ = Mth.ceil(bb.maxZ);
+        int maxX = Mth.ceil(pos.x + half_bbw);
+        int maxY = Mth.ceil(pos.y + half_bbw);
+        int maxZ = Mth.ceil(pos.z + half_bbw);
 
         for (BlockPos x : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
             var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, x.mutable());
@@ -143,6 +146,15 @@ public class DogGoAwayFromFireGoal extends Goal {
         }
 
         return false;
+    }
+
+    //NOTE : Any goal with this need to be careful that 
+    //canContinueToUse doesn't always get checked before tick(), 
+    //so any nullable object that is checked via canContinueToUse
+    //Should be re check at tick()
+    @Override
+    public boolean requiresUpdateEveryTick() {
+        return true;
     }
     
 }
