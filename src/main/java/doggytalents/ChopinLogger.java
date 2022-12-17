@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import doggytalents.common.entity.Dog;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Wolf;
@@ -25,6 +26,11 @@ public class ChopinLogger {
         }
         Dog d = (Dog) e;
         ChopinLogger.LOGGER.info("<dog : " + d.getName().getString() + "> " + s);
+    }
+
+    public static void sendToOwner(Dog d, String s) {
+        if (d.getOwner() == null) return;
+        d.getOwner().sendSystemMessage(Component.literal("<" + d.getName().getString() + "> : " + s));
     }
 
     //For debugging purpose only
