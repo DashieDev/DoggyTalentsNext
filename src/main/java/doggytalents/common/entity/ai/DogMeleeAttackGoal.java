@@ -67,6 +67,7 @@ public class DogMeleeAttackGoal extends Goal {
       if (target == null) {
          return false;
       } else if (!target.isAlive()) {
+         this.dog.setTarget(null); // Disacrd dead target no matter what
          return false;
       }
 
@@ -150,10 +151,13 @@ public class DogMeleeAttackGoal extends Goal {
 
    public void stop() {
       LivingEntity livingentity = this.dog.getTarget();
-      if (!EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(livingentity)) {
-         this.dog.setTarget((LivingEntity) null);
-      }
-
+      
+      //The goal now runs continuously from when the dog start attacking to when 
+      //the dog stop attacking for practical reasons, (used to be impractically
+      //interupted by LeapAtTargetGoal, but now that goal is integrated in)
+      //That's why dog now always discard the target when stop attacking.
+      this.dog.setTarget((LivingEntity) null); 
+      
       this.dog.setAggressive(false);
       this.dog.getNavigation().stop();
    }
