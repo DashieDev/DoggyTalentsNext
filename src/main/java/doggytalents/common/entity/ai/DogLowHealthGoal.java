@@ -100,7 +100,9 @@ public class DogLowHealthGoal extends Goal {
         if (this.dog.distanceToSqr(this.owner) > stopDist) {
             this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
             if (--this.timeToRecalcPath <= 0) {
-                this.timeToRecalcPath = 10;
+                //The dog always stays close to the owner, and tp when a little bit further
+                //So the path is not that long, so interval = 3 is ok
+                this.timeToRecalcPath = 3;
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) { // Is not leashed and is not a passenger
                     if (this.dog.distanceToSqr(this.owner) >= 144.0D) { // Further than 12 blocks away teleport
                         DogUtil.guessAndTryToTeleportToOwner(dog, 4);
