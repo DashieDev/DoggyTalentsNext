@@ -121,17 +121,6 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
             if (--this.tickUntilSearch <= 0) {
                 this.tickUntilSearch = 10;
                 this.findDanger();
-                
-                if (this.nearestDanger != null) {
-                    if (--this.tickUntilGrowl <= 0) {
-                        this.tickUntilGrowl = 30;
-                        dog.playSound(
-                            SoundEvents.WOLF_GROWL, 
-                            dog.getSoundVolume(), 
-                            (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
-                        );
-                    }
-                } 
             }
 
             if (this.nearestDanger != null) {
