@@ -56,7 +56,7 @@ public class DogMeleeAttackGoal extends Goal {
       if (this.dog.fallDistance > 7) return false;
 
       if (this.dog.getOwner() != null) {
-         if (this.dog.distanceToSqr(this.dog.getOwner()) > this.awayFromOwnerDistance*this.awayFromOwnerDistance) 
+         if (this.dog.distanceToSqr(this.dog.getOwner()) > this.getMaxDistanceAwayFromOwner()) 
             return false;
       }
 
@@ -115,7 +115,7 @@ public class DogMeleeAttackGoal extends Goal {
       if (this.dog.fallDistance > 7) return false;
 
       if (this.dog.getOwner() != null) {
-         if (this.dog.distanceToSqr(this.dog.getOwner()) > this.awayFromOwnerDistance*this.awayFromOwnerDistance) 
+         if (this.dog.distanceToSqr(this.dog.getOwner()) > this.getMaxDistanceAwayFromOwner()) 
             return false;
       }
 
@@ -290,5 +290,9 @@ public class DogMeleeAttackGoal extends Goal {
 
    protected double getAttackReachSqr(LivingEntity target) {
       return (double) (this.dog.getBbWidth() * 2.0F * this.dog.getBbWidth() * 2.0F + target.getBbWidth());
+   }
+
+   protected double getMaxDistanceAwayFromOwner() {
+      return this.awayFromOwnerDistance*this.awayFromOwnerDistance;
    }
 }
