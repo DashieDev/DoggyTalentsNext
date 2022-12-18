@@ -121,15 +121,22 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
 
             if (--this.tickUntilSearch <= 0) {
                 this.tickUntilSearch = 10;
+                boolean wasSafe = this.nearestDanger == null;
                 this.findDanger();
+                if (this.nearestDanger != null && wasSafe ) {
+                    this.tickUntilGrowl = 0;
+                }
             }
 
             if (this.nearestDanger != null) {
                 if (--this.tickUntilGrowl <= 0) {
-                    this.tickUntilGrowl = 30;
+                    this.tickUntilGrowl = 25;
                     dog.playSound(
                         SoundEvents.WOLF_GROWL, 
-                        dog.getSoundVolume(), 
+                        // Scream for owner in case he can't hear him because 
+                        // he is listening to some intense RACHMANINOV
+                        1, 
+                        
                         (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
                     );
                 }
