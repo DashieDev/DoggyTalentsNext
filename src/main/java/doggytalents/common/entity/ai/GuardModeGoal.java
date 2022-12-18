@@ -25,6 +25,12 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
     private final Dog dog;
     private LivingEntity owner;
 
+    //Guard Mode Job is to make sure everything in this radius around the owner is safe
+    //If there is an enermy in this radius, the dog will attack the enermy until it either
+    //leaves the radius or dies.
+    private static final int GUARD_DISTANCE_SQR = 25;
+    private static final int GUARD_DISTANCE = 5;
+
     public GuardModeGoal(Dog dogIn) {
         super(dogIn, Monster.class, 3, false, false, (e) -> {
             if (dogIn.isMode(EnumMode.GUARD_FLAT)) {
@@ -70,7 +76,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
         private int tickUntilGrowl = 0;
         private int tickUntilPathRecalc = 0;
 
-        private final int SEARCH_RADIUS = 4;
+        private final int SEARCH_RADIUS = GUARD_DISTANCE;
 
         public Minor(Dog dog) {
             this.dog = dog;
@@ -105,12 +111,13 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
         public void tick() { 
             if (this.nearestDanger != null)
             this.dog.getLookControl().setLookAt(this.nearestDanger, 10.0F, this.dog.getMaxHeadXRot());
-            if (dog.distanceToSqr(this.dog.getOwner()) > 1.5 && --this.tickUntilPathRecalc <= 0) {
+            if (dog.distanceToSqr(this.dog.getOwner()) > 2 && --this.tickUntilPathRecalc <= 0) {
                 //The dog always stays close to the owner, and tp when a little bit further
                 //So the path is not that long, so interval = 3 is ok
                 this.tickUntilPathRecalc = 3;
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
-                    if (this.dog.distanceToSqr(this.owner) >= 25) {
+                    //Outside guard radius -> tp 
+                    if (this.dog.distanceToSqr(this.owner) > GUARD_DISTANCE_SQR) {
                         DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                     } else {
                         this.dog.getNavigation().moveTo(this.owner, 1.5);
@@ -188,9 +195,14 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
             this.owner = this.dog.getOwner();
         
             if (this.owner == null) return false;
-    
-
-            if (this.dog.getTarget() != null) return false;
+            
+            var target = this.dog.getTarget();
+            if (target != null) {
+                // If target is in guard distance, then let the dog attack until target is no longer in.
+                if (target.distanceToSqr(this.owner) <= GUARD_DISTANCE_SQR) {
+                    return false;
+                }
+            }
 
             return true;
         }
@@ -203,12 +215,13 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
         @Override
         public void tick() { 
             //this.dog.getLookControl().setLookAt(this.dog.getOwner(), 10.0F, this.dog.getMaxHeadXRot());
-            if (dog.distanceToSqr(this.dog.getOwner()) > 1.5 && --this.tickUntilPathRecalc <= 0) {
+            if (dog.distanceToSqr(this.dog.getOwner()) > 2 && --this.tickUntilPathRecalc <= 0) {
                 //The dog always stays close to the owner, and tp when a little bit further
-                //So the path is not that long, so interval = 3 is ok
+                //So the path is not that long, so interval = 3 is okw
                 this.tickUntilPathRecalc = 3;
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
-                    if (this.dog.distanceToSqr(this.owner) >= 25) {
+                    //Outside guard radius -> tp 
+                    if (this.dog.distanceToSqr(this.owner) > GUARD_DISTANCE_SQR) {
                         DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                     } else {
                         this.dog.getNavigation().moveTo(this.owner, 1.5);
