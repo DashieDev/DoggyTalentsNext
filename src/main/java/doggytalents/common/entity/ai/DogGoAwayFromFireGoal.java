@@ -51,7 +51,7 @@ public class DogGoAwayFromFireGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return isDogInDangerSpot(this.dog.position()) && this.safePos != null;
+        return !isSafePos(this.dog.blockPosition()) && this.safePos != null;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class DogGoAwayFromFireGoal extends Goal {
 
         if (safePos == null) return;
         
-        if (!isDogInDangerSpot(Vec3.atBottomCenterOf(safePos))) {
+        if (isSafePos(safePos)) {
             if (n.isDone() && dog_bp.distSqr(safePos) <= 1 ) {
                 dog.getMoveControl().setWantedPosition(this.safePos.getX() + 0.5, this.safePos.getY(), this.safePos.getZ() + 0.5, 1.0);
             }
@@ -133,6 +133,8 @@ public class DogGoAwayFromFireGoal extends Goal {
         var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
 
         if (blockType == BlockPathTypes.WALKABLE) {
+            if (dog.blockPosition().distSqr(pos) <= 2.25) return true;
+
             //Due to the search radius is meant to be small, the path
             //that need to be calc each time is not big
             //, therefore, the pathfinding becomes relatively light.
