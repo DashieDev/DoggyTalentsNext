@@ -223,13 +223,14 @@ public class Dog extends AbstractDog {
         ++p;
         this.TALENT_GOAL_PRIORITY = p;
         this.goalSelector.addGoal(p, new DogEatFromChestDogGoal(this, 1.0));
-        this.goalSelector.addGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
-        this.goalSelector.addGoal(p, new DogMoveToBlockGoal(this));
-        this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
-        ++p;
+        ++p; //Prioritize Talent Action
         //All mutex by nature
         this.goalSelector.addGoal(p, new GuardModeGoal.Minor(this));
         this.goalSelector.addGoal(p, new GuardModeGoal.Major(this));
+        ++p; 
+        this.goalSelector.addGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
+        this.goalSelector.addGoal(p, new DogMoveToBlockGoal(this));
+        this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
         ++p;
         this.goalSelector.addGoal(p, new FetchGoal(this, 1.0D, 32.0F));
         this.goalSelector.addGoal(p, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
