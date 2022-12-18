@@ -109,9 +109,10 @@ public class DogFollowOwnerGoal extends Goal {
     }
 
     public float getMinStartDistanceSq() {
-        if (this.dog.isMode(EnumMode.GUARD)) {
-            return 4F;
-        }
+        // Guard.Major Mode Goal now override this.
+        // if (this.dog.isMode(EnumMode.GUARD)) {
+        //     return 4F;
+        // }
 
         return this.startDist * this.startDist;
     }

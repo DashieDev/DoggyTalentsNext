@@ -228,6 +228,10 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogMoveToBlockGoal(this));
         this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
         ++p;
+        //All mutex by nature
+        this.goalSelector.addGoal(p, new GuardModeGoal.Minor(this));
+        this.goalSelector.addGoal(p, new GuardModeGoal.Major(this));
+        ++p;
         this.goalSelector.addGoal(p, new FetchGoal(this, 1.0D, 32.0F));
         this.goalSelector.addGoal(p, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
         ++p;
@@ -244,8 +248,8 @@ public class Dog extends AbstractDog {
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
         this.targetSelector.addGoal(5, new DogNearestToOwnerAttackableTargetGoal<>(this, AbstractSkeleton.class, false));
-        this.targetSelector.addGoal(6, new BerserkerModeGoal<>(this, Monster.class, false));
-        this.targetSelector.addGoal(6, new GuardModeGoal(this, false));
+        this.targetSelector.addGoal(6, new BerserkerModeGoal(this));
+        this.targetSelector.addGoal(6, new GuardModeGoal(this));
         //this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5D)); //Stooopid...
     }
 
