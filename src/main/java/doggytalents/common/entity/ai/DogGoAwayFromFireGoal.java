@@ -80,10 +80,10 @@ public class DogGoAwayFromFireGoal extends Goal {
 
             if (--this.tickUntilPathRecalc <= 0) {
                 this.tickUntilPathRecalc = 5;
-                this.dog.getNavigation().moveTo(
-                    safePos.getX(), safePos.getY(), safePos.getZ(),
-                    1.5
-                );
+                DogUtil.moveToIfReachOrElse(dog, safePos, 1.5, 
+                    dog.getMaxFallDistance(), dog1 -> {
+                        this.safePos = null;
+                    });
             }
         } else {
             this.safePos = this.searchForSafePos();
