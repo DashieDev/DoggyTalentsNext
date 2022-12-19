@@ -118,6 +118,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
                 this.tickUntilPathRecalc = 3;
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
                     //Outside guard radius -> tp 
+                    //TODO Swimmer dog won't be able to tp when guard underwater.
                     if (this.dog.distanceToSqr(this.owner) > GUARD_DISTANCE_SQR) {
                         DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                     } else {
