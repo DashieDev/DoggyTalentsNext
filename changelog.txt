@@ -174,3 +174,21 @@ v1.6.0 - 19th December 2022
   + 12 blocks away: Attempts to teleport to owner, however, dog keeps pathfind to the owner.
   + 20 blocks away: Dog stops and explicitly search for tp-able pos around the owner and tp if there is
   with 0.5s interval
+
+v1.7.0 - 20th December 2022
+*HOTFIX 🔥🔥🔥 "Literally" : Hell Hound Level < 5 even when not fireproof yet stil
+consider lava as water like level 5.
+/ Dogs with Hell Hound 5 or SwimmerDogTalent any level will teleport to Lava or Water
+respectively.
+/ Dogs now teleport to leaves, as i see there is no reason for them not to, this allow 
+them to better follow you when you are exploring on top of trees, as some biome are quite 
+covered by trees.
++ Added Water Holder Talent:
+  + Notice the dog's fur, it loves absorbing water. And the dog loves shaking it dry. 
+  This talent allows your dog to store water. When you, your other wolves or dogs is on 
+  fire, he will run to each and shake his fur, reduce the burning time or completely 
+  extinguish you. The higher the level, the more water the dog can store, 
+  so as the burning time the dog can reduce! You can either use a water bucket 
+  on the dog to refil or the dog will automatically absorb water when in contact with 
+  rain or water source. You can check the amount of water left by using any bucket 
+  on the dog while holding shift.
