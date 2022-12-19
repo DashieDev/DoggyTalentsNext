@@ -1,6 +1,5 @@
 package doggytalents.common.entity.ai;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
