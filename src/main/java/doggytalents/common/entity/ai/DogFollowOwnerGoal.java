@@ -1,5 +1,6 @@
 package doggytalents.common.entity.ai;
 
+import doggytalents.ChopinLogger;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
@@ -27,6 +28,7 @@ public class DogFollowOwnerGoal extends Goal {
 
     private LivingEntity owner;
     private int timeToRecalcPath;
+    private int tickTillSearchForTp = 0;
     private float oldWaterCost;
 
     public DogFollowOwnerGoal(Dog dogIn, double speedIn, float minDistIn, float maxDistIn) {
@@ -98,13 +100,13 @@ public class DogFollowOwnerGoal extends Goal {
         this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
         if (--this.timeToRecalcPath <= 0) {
             this.timeToRecalcPath = 10;
-            if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
-                if (this.dog.distanceToSqr(this.owner) >= 144.0D) {
-                    DogUtil.guessAndTryToTeleportToOwner(dog, 4);
-                } else {
-                    this.dog.getNavigation().moveTo(this.owner, this.followSpeed);
-                }
-            }
+            DogUtil.moveToOrTeleportIfFarAwayIfReachOrElse(
+                dog, owner, this.followSpeed,
+                144, 
+                true, --this.tickTillSearchForTp <= 0, 
+                400,
+                dog.getMaxFallDistance());
+            if (this.tickTillSearchForTp <= 0) this.tickTillSearchForTp = 10;
         }
     }
 
