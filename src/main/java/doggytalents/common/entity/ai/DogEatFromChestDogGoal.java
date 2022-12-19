@@ -92,6 +92,8 @@ public class DogEatFromChestDogGoal extends Goal {
                 }
             }
         } else {
+            //TODO maintain some space ??
+            //this.dog.getNavigation().stop();
             this.checkAndEatFromChestDog();
         }
     }
