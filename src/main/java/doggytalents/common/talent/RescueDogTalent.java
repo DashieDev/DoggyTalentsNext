@@ -231,8 +231,9 @@ public class RescueDogTalent extends TalentInstance {
             if (this.dog.getMode() != EnumMode.DOCILE) return false;
             this.target = this.talentInst.selectHealTarget(this.dog);
             if (target == null) return false;
-            if (!this.talentInst.isTargetLowHealth(dog, target)) return false;
-            if (!this.talentInst.canAffordToHealTarget(dog, target)) return false;
+
+            if (!this.stillValidTarget()) return false;
+            
             return true;
         }
 
@@ -241,8 +242,6 @@ public class RescueDogTalent extends TalentInstance {
             if (this.dog.isInSittingPose()) return false;
             if (this.dog.getMode() != EnumMode.DOCILE) return false;
             if (target == null) return false;
-            if (!this.talentInst.isTargetLowHealth(dog, target)) return false;
-            if (!this.talentInst.canAffordToHealTarget(dog, target)) return false; 
             if (!this.stillValidTarget()) return false;
 
             return true;
@@ -267,12 +266,17 @@ public class RescueDogTalent extends TalentInstance {
                     }
                 }
             } else {
+                //TODO maintain some space ??
+                //this.dog.getNavigation().stop();
                 if (this.talentInst.canHealTarget(dog, target))
                     this.talentInst.heal(dog, target);
             }
         }
 
         private boolean stillValidTarget() {
+            if (!this.talentInst.isTargetLowHealth(dog, target)) return false;
+            if (!this.talentInst.canAffordToHealTarget(dog, target)) return false;            
+            
             return (
                 this.target.isAlive()
             );
