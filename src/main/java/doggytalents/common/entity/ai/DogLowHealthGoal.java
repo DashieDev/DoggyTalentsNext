@@ -29,6 +29,7 @@ public class DogLowHealthGoal extends Goal {
 
     private LivingEntity owner;
     private int timeToRecalcPath;
+    private int tickTillSearchForTp = 0;
     private float oldWaterCost;
 
     private boolean whine = false;
@@ -103,13 +104,13 @@ public class DogLowHealthGoal extends Goal {
                 //The dog always stays close to the owner, and tp when a little bit further
                 //So the path is not that long, so interval = 3 is ok
                 this.timeToRecalcPath = 3;
-                if (!this.dog.isLeashed() && !this.dog.isPassenger()) { // Is not leashed and is not a passenger
-                    if (this.dog.distanceToSqr(this.owner) >= 25.0D) { // Further than 5 blocks away teleport
-                        DogUtil.guessAndTryToTeleportToOwner(dog, 4);
-                    } else {
-                        this.dog.getNavigation().moveTo(this.owner, this.followSpeed);
-                    }
-                }
+                DogUtil.moveToOrTeleportIfFarAwayIfReachOrElse(
+                    dog, owner, this.followSpeed,
+                    25, false, 
+                    --this.tickTillSearchForTp <= 0,
+                     400, 
+                    dog.getMaxFallDistance());
+                if (this.tickTillSearchForTp <= 0) this.tickTillSearchForTp = 10;
             }
         }  else {
             if (this.whine) {

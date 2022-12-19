@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -364,6 +365,42 @@ public class DogUtil {
             dog.getNavigation().moveTo(p, speedModifier);
         } else {
             orElse.accept(dog);
+        }
+    }
+    
+    /**
+     * Move to a position. If too far away, teleport, 
+     * else if cannot reach, execute orElse. 
+     * 
+     * @param dog The dog
+     * @param entity The entity to move to
+     * @param speedModifier speed modifier
+     * @param distanceToTeleportSqr when the dog is further or equal to this away, teleport
+     * @param continueToMoveWhenTryTp if enable, the dog will continue to path find to owner at this point.
+     * @param forceTeleport Option to enable force teleport, which make the dog explicitly search for position
+     * dog finally stop pathfinding at this point.
+     * @param distanceToForceTeleportSqr Distance to make the dog force teleport
+     * @param dY The maximum amount of blocks can the y coords between the target and the actual path destination diffrentiate
+     * while still being eligible
+     */
+    public static void moveToOrTeleportIfFarAwayIfReachOrElse(Dog dog, LivingEntity entity, double speedModifier,
+        double distanceToTeleportSqr, boolean continueToMoveWhenTryTp, boolean forceTeleport, 
+        double distanceToForceTeleportSqr, int dY) {
+        var owner = dog.getOwner();
+        var distance = dog.distanceToSqr(owner);
+        if (!dog.isLeashed() && !dog.isPassenger()) {
+            if (distance >= distanceToForceTeleportSqr) {
+                if (forceTeleport) DogUtil.searchAndTeleportToOwner(dog, 4);
+            } else {
+                if (distance >= distanceToTeleportSqr) {
+                    DogUtil.guessAndTryToTeleportToOwner(dog, 4);
+                    if (continueToMoveWhenTryTp) {
+                        dog.getNavigation().moveTo(entity, speedModifier);
+                    }
+                } else {
+                    dog.getNavigation().moveTo(entity, speedModifier);
+                }
+            }
         }
     }
 
