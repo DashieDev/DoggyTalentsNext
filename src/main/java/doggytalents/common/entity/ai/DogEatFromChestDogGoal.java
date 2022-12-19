@@ -102,7 +102,7 @@ public class DogEatFromChestDogGoal extends Goal {
             this.chestDogs = 
                 this.dog.level.getEntitiesOfClass(
                     Dog.class, 
-                    dog.getBoundingBox().inflate(SEARCH_RADIUS), 
+                    dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS), 
                     d -> validChestDog(d)
                 );
             this.chooseChestDog();
