@@ -157,3 +157,23 @@ v1.5.1 - 16th December 2022
 
 v1.5.2 - 18th December 2022
 + Fixed dog occasionally spin in a circle forever while searching to escape fire danger.
+
+v1.6.0 - 19th December 2022
+/ Refined Dog Avoid Fire Goal.
+/ Dogs now tp to owner on request by Heel By Name even if he is riding a boat or minecart
+/ Smoother Low Health AI
+/ Redefine Guard Mode :
+  + Dogs in this mode should make sure that the radius (GUARD_DISTANCE = 5)
+    around the owner is clear of enermy, if there
+    is enermy in the radius, the dog will attack it
+    until it either leaves the area or dies.
++ Added variants to the Beserker Mode and Guard Mode as a safer alternative:
+  + GUARD_FLAT/BESERER_MINOR : Dog won't attack Piglins (includes Zombified) or Endermans in this mode
+  + GUARD_MINOR : Dog won't do any attack but
+    growl to warn the owner if danger is
+    in the radius. The dog will
+    groul at Max Volume.
+/ Changed dog default follow behaviour :
+  + 12 blocks away: Attempts to teleport to owner, however, dog keeps pathfind to the owner.
+  + 20 blocks away: Dog stops and explicitly search for tp-able pos around the owner and tp if there is
+  with 0.5s interval
