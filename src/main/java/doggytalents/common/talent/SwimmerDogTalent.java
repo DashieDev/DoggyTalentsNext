@@ -110,6 +110,15 @@ public class SwimmerDogTalent extends TalentInstance {
         return InteractionResult.SUCCESS;
     }
 
+    @Override
+    public InteractionResult isBlockWalkable(AbstractDog dog, BlockPathTypes type) {
+        //This allows the owner to help the dog to reach the surface.
+        if (type == BlockPathTypes.WATER) {
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.PASS;
+    }
+
     //TODO Maybe incoproate this into tick()
     public static class SwimmerDogGoal extends Goal {
 

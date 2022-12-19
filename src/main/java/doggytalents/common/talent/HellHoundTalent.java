@@ -6,6 +6,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -131,5 +132,21 @@ public class HellHoundTalent extends TalentInstance {
 
     private void removeSwimAttributes(AbstractDog dog) {
         dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.get(), FIRE_SWIM_BOOST_ID);
+    }
+
+    @Override
+    public InteractionResult isBlockWalkable(AbstractDog dog, BlockPathTypes type) {
+        if (level < 5) return InteractionResult.PASS;
+        if (type == BlockPathTypes.DAMAGE_FIRE) {
+            return InteractionResult.SUCCESS;
+        }
+        //Won't push owner due to A.I check
+        if (type == BlockPathTypes.DANGER_FIRE) {
+            return InteractionResult.SUCCESS;
+        }
+        if (type == BlockPathTypes.LAVA) {
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.PASS;
     }
 }
