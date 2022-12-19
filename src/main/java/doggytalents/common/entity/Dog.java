@@ -450,8 +450,7 @@ public class Dog extends AbstractDog {
     public void aiStep() {
         super.aiStep();
         if (!this.level.isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.isOnGround()) {
-            this.startShaking();
-            this.level.broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_START_SHAKING);
+            this.startShakingAndBroadcast(false);
         }
 
         if (!this.level.isClientSide && this.fireImmune()) {
@@ -459,8 +458,7 @@ public class Dog extends AbstractDog {
                 this.wasInLava = true;
             }
             if (this.wasInLava == true && !this.isInLava() && !this.isShaking && !this.isPathFinding() && this.isOnGround()) {
-                this.startShakingLava();
-                ParticlePackets.DogStartShakingLavaPacket.sendDogStartShakingLavaPacketToNearByClients(this);
+                this.startShakingAndBroadcast(true);
                 this.wasInLava = false;
             }
         }
@@ -1232,10 +1230,29 @@ public class Dog extends AbstractDog {
     }
 
     private void startShaking() {
+        if (this.isShaking) return; // don't shake if already shaking
         this.isShaking = true;
         this.shakeFire = false;
         this.timeWolfIsShaking = 0.0F;
         this.prevTimeWolfIsShaking = 0.0F;
+    }
+
+    /**
+     * Force the dog to shake, only if the dog is not already shaking
+     * and broadcast to clients
+     * 
+     * @param shakeFire
+     */
+    public void startShakingAndBroadcast(boolean shakeFire) {
+        if (this.isShaking) return; //Already shaking
+        if (this.level.isClientSide) return;
+        if (shakeFire) {
+            this.startShakingLava();
+            ParticlePackets.DogStartShakingLavaPacket.sendDogStartShakingLavaPacketToNearByClients(this);
+            return;
+        }
+        this.startShaking();
+        this.level.broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_START_SHAKING);
     }
 
     private void finishShaking() {
@@ -1246,6 +1263,7 @@ public class Dog extends AbstractDog {
     }
 
     public void startShakingLava() {
+        if (this.isShaking) return;
         this.isShaking = true;
         this.shakeFire = true;
         this.timeWolfIsShaking = 0.0F;
