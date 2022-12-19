@@ -138,7 +138,7 @@ public class DogUtil {
                 ) 
 
                 // safe?
-                && isTeleportSafeBlock(dog, pos, false) 
+                && isTeleportSafeBlock(dog, pos) 
 
                 // Can see owner at that pos
                 // && hasLineOfSightToOwnerAtPos(dog, pos)
@@ -205,19 +205,23 @@ public class DogUtil {
     }
 
 
-    //TODO will check is Safe Block according to the IDogAlteration
-    public static boolean isTeleportSafeBlock(Dog dog, BlockPos pos, boolean teleportToLeaves) {
+    //check is Walakable Block according to the IDogAlteration
+    //Allow dog to teleportToLeaves, there is no reason to not to consider the existance of the push a.i
+    //And height danger exist everywhere not just leaves
+    public static boolean isTeleportSafeBlock(Dog dog, BlockPos pos) {
         var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
-        if (pathnodetype != BlockPathTypes.WALKABLE) {
+        boolean alterationWalkable = false;
+        for (var x : dog.getAlterations()) {
+            if (x.isBlockWalkable(dog, pathnodetype).shouldSwing()) {
+                alterationWalkable = true;
+                break;
+            }
+        }
+        if (pathnodetype != BlockPathTypes.WALKABLE && !alterationWalkable) {
             return false;
         } else {
-            var blockstate = dog.level.getBlockState(pos.below());
-            if (!teleportToLeaves && blockstate.getBlock() instanceof LeavesBlock) {
-                return false;
-            } else {
-                var blockpos = pos.subtract(dog.blockPosition());
-                return dog.level.noCollision(dog, dog.getBoundingBox().move(blockpos));
-            }
+            var blockpos = pos.subtract(dog.blockPosition());
+            return dog.level.noCollision(dog, dog.getBoundingBox().move(blockpos));
         }
     }
 
