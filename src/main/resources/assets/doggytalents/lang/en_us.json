@@ -92,6 +92,7 @@
    "talent.doggytalents.swimmer_dog": "Swimmer Dog",
    "talent.doggytalents.doggy_torch": "Doggy Torch",
    "talent.doggytalents.doggy_armor": "Doggy Armor",
+   "talent.doggytalents.water_holder": "Water Holder",
 
    "talent.doggytalents.bed_finder.description": "While a dog with this skill is on your head, your bed will be highlighted in a black outline. To get the dog on you head, right click on them with a bone in hand. The range at which it can do this is equal to 200 blocks per level, but becomes infinite at level 5.",
    "talent.doggytalents.black_pelt.description": "Improves critical hit rate 1/2 a heart for every level plus an extra heart when you master it",
@@ -115,11 +116,13 @@
    "talent.doggytalents.swimmer_dog.description": "Allows you to ride your dog in water and it to breath longer underwater. Maxing it allows the rider to see easily underwater.",
    "talent.doggytalents.doggy_torch.description": "Allows your dog put torch when light level is down, at the cost of one torch of his inventory. To give it torches you can drop some nearby and it will pick it up. At level 5 he doesnt need torches in his inventory anymore.",
    "talent.doggytalents.doggy_armor.description": "Allows you dog to wear armors. To begin, right click a dog with this talent with any armor items in hand and a gui will show up letting you put any armors on dogs. On level 3, dog will automatically collect XP to repair armors which have the Mending Enchantment.",
+   "talent.doggytalents.water_holder.description": "Notice the dog's fur, it loves absorbing water. And the dog loves shaking it dry. This talent allows your dog to store water. When you, your other wolves or dogs is on fire, he will run to each and shake his fur, reduce the burning time or completely extinguish you. The higher the level, the more water the dog can store, so as the burning time the dog can reduce! You can either use a water bucket on the dog to refil or the dog will automatically absorb water when in contact with rain or water source. You can check the amount of water left by using any bucket on the dog while holding shift.",
 
    "talent.doggytalents.roaring_gale.cooldown": "Roaring gale is on cooldown.",
    "talent.doggytalents.roaring_gale.level": "Put some points in roaring gale to use!",
    "talent.doggytalents.roaring_gale.miss": "Roar and a miss...",
    "talent.doggytalents.wolf_mount.exhausted": "%s: Woooff, woof, woof woofff (Food Please)",
+   "talent.doggytalents.water_holder.amount": "Current amount of water in the dog's fur",
    "talent.doggytalents.puppy_eyes.msg.1.line.1": "Villager: Cute dog! Take good care of %s.",
    "talent.doggytalents.puppy_eyes.msg.1.line.2": "Here, %s can have some pork.",
    "talent.doggytalents.puppy_eyes.msg.2.line.1": "Villager: Awww, who's a good %s?",
