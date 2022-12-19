@@ -2400,6 +2400,9 @@ public class Dog extends AbstractDog {
         
     }
 
+    public List<IDogAlteration> getAlterations() {
+        return this.alterations;
+    }
 
     @Override
     public boolean canSwimUnderwater() {
