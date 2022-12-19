@@ -158,7 +158,7 @@ public class RescueDogTalent extends TalentInstance {
     }
 
     private List<LivingEntity> getEntitiesToHeal(AbstractDog dog) {
-        return dog.level.getEntitiesOfClass(LivingEntity.class, dog.getBoundingBox().inflate(SEARCH_RADIUS), 
+        return dog.level.getEntitiesOfClass(LivingEntity.class, dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS), 
             e -> 
             
                 //Low health entities
@@ -209,7 +209,6 @@ public class RescueDogTalent extends TalentInstance {
     }
 
 
-    //TODO Option to disable Wolf and Dog healing and also add particles
     public static class MoveToHealTargetGoal extends Goal {
 
         private Dog dog;
