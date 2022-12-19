@@ -1,8 +1,10 @@
 package doggytalents.common.talent;
 
+import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.entity.Dog;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -33,7 +35,7 @@ public class CreeperSweeperTalent extends TalentInstance {
                 !dog.isInSittingPose() 
                 || dog.isPassenger()
             )) {
-                List<Creeper> list = dog.level.getEntitiesOfClass(Creeper.class, dog.getBoundingBox().inflate(this.level() * 5,this.level() * 2, this.level() * 5));
+                List<Creeper> list = dog.level.getEntitiesOfClass(Creeper.class, dog.getBoundingBox().inflate(this.getSearchRange(dog), this.level() * 2, this.getSearchRange(dog)));
 
                 if (!list.isEmpty()) {
                     dog.playSound(SoundEvents.WOLF_GROWL, dog.getSoundVolume(), (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F);
@@ -46,6 +48,15 @@ public class CreeperSweeperTalent extends TalentInstance {
                 creeper.setSwellDir(-1);
             }
         }
+    }
+
+    private int getSearchRange(AbstractDog dog) {
+        if ((dog instanceof Dog d)) {
+            if (d.isMode(EnumMode.GUARD, EnumMode.GUARD_FLAT, EnumMode.GUARD_MINOR)) {
+                return Math.min(this.level()*5, 8);
+            }
+        }
+        return this.level()*5;
     }
 
     @Override

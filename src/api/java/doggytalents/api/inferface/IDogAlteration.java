@@ -2,6 +2,7 @@ package doggytalents.api.inferface;
 
 import doggytalents.api.enu.WetSource;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -187,6 +188,21 @@ public interface IDogAlteration {
     }
 
     default InteractionResult isPotionApplicable(AbstractDog dogIn, MobEffectInstance effectIn) {
+        return InteractionResult.PASS;
+    }
+
+    /**
+     * Return success when the block can substitute walakable.
+     * For example: 
+     * FlameDog 5 : LAVA = WALKABLE
+     * SwimmerDog 5 : WATER = WALKABLE
+     * since both instances can breathe indefinitly under each substance.
+     * 
+     * @param dog
+     * @param pos
+     * @return
+     */
+    default InteractionResult isBlockWalkable(AbstractDog dog, BlockPathTypes type) {
         return InteractionResult.PASS;
     }
 
