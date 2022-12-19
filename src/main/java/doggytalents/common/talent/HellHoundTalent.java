@@ -37,6 +37,7 @@ public class HellHoundTalent extends TalentInstance {
 
     @Override
     public void init(AbstractDog dog) {
+        if (this.level() < 5) return; //HOTFIX!🔥🔥🔥
         this.oldLavaCost = dog.getPathfindingMalus(BlockPathTypes.LAVA);
         this.oldFireCost = dog.getPathfindingMalus(BlockPathTypes.DAMAGE_FIRE);
         this.oldDangerFireCost = dog.getPathfindingMalus(BlockPathTypes.DANGER_FIRE);
@@ -54,6 +55,7 @@ public class HellHoundTalent extends TalentInstance {
     //CompoundTag data... So this is kinda needed...
     @Override
     public void remove(AbstractDog dog) {
+        if (this.level() < 5) return;
         dog.setPathfindingMalus(BlockPathTypes.LAVA, this.oldLavaCost);
         dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, this.oldFireCost);
         dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, this.oldDangerFireCost);
