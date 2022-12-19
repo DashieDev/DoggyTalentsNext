@@ -24,6 +24,7 @@ public class DogHungryGoal extends Goal {
 
     private LivingEntity owner;
     private int timeToRecalcPath;
+    private int tickTillSearchForTp = 0;
     private float oldWaterCost;
 
     private int looktime;
@@ -92,13 +93,13 @@ public class DogHungryGoal extends Goal {
             this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
             if (--this.timeToRecalcPath <= 0) {
                 this.timeToRecalcPath = 10;
-                if (!this.dog.isLeashed() && !this.dog.isPassenger()) { // Is not leashed and is not a passenger
-                    if (this.dog.distanceToSqr(this.owner) >= 144.0D) { // Further than 12 blocks away teleport
-                        DogUtil.guessAndTryToTeleportToOwner(dog, 4);
-                    } else {
-                        this.dog.getNavigation().moveTo(this.owner, this.followSpeed);
-                    }
-                }
+                DogUtil.moveToOrTeleportIfFarAwayIfReachOrElse(
+                dog, owner, this.followSpeed,
+                144, 
+                true, --this.tickTillSearchForTp <= 0, 
+                400,
+                dog.getMaxFallDistance());
+            if (this.tickTillSearchForTp <= 0) this.tickTillSearchForTp = 10;
             }
         }  else {
             this.dog.setBegging(true);
