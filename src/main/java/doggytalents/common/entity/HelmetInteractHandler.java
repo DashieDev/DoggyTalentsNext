@@ -8,6 +8,7 @@ import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public class HelmetInteractHandler implements IDogItem {
 
-    public static final Map<Item, RegistryObject<? extends Accessory>> MAPPING = new ImmutableMap.Builder<Item, RegistryObject<? extends Accessory>>()
+    private static final Map<Item, RegistryObject<? extends Accessory>> MAPPING = new ImmutableMap.Builder<Item, RegistryObject<? extends Accessory>>()
         .put(Items.IRON_HELMET,      DoggyAccessories.IRON_HELMET)
         .put(Items.DIAMOND_HELMET,   DoggyAccessories.DIAMOND_HELMET)
         .put(Items.GOLDEN_HELMET,    DoggyAccessories.GOLDEN_HELMET)
@@ -46,6 +47,24 @@ public class HelmetInteractHandler implements IDogItem {
         .put(Items.CHAINMAIL_LEGGINGS, DoggyAccessories.CHAINMAIL_BODY_PIECE)
         .put(Items.NETHERITE_LEGGINGS, DoggyAccessories.NETHERITE_BODY_PIECE)
        .build();
+
+    public static RegistryObject<? extends Accessory> getMappedResource(Item item) {
+        var x = MAPPING.get(item);
+        if (x != null) return x;
+        var slot = LivingEntity.getEquipmentSlotForItem(new ItemStack(item));
+        switch (slot) {
+            case CHEST:
+                return DoggyAccessories.IRON_BODY_PIECE; 
+            case FEET:
+                return DoggyAccessories.IRON_BOOTS;
+            case HEAD:
+                return DoggyAccessories.IRON_HELMET;
+            case LEGS:
+                return DoggyAccessories.IRON_BODY_PIECE;
+            default:
+                return DoggyAccessories.IRON_BODY_PIECE;
+        }
+    }
 
     @Override
     public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
