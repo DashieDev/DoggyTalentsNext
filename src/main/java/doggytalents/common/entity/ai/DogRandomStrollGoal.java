@@ -47,6 +47,9 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
     public void tick() {
         super.tick();
         
+        if (this.ownerMayBeMining()) {
+            this.tickCountStopMiningCautious = this.dog.tickCount + 600; // keep checking for 30 seconds
+        }
         
         if (this.dog.tickCount < this.tickCountStopMiningCautious) {
             if (this.pathObstructOwnerMining()) {
