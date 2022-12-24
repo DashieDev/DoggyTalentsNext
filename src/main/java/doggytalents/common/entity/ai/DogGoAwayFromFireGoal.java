@@ -97,18 +97,18 @@ public class DogGoAwayFromFireGoal extends Goal {
 
     private boolean isDogInDangerSpot(Vec3 pos) {
         var half_bbw = 0.5*dog.getBbWidth();
-        int minX = Mth.floor(pos.x - half_bbw);
-        int minY = Mth.floor(pos.y - half_bbw);
-        int minZ = Mth.floor(pos.z - half_bbw);
+        int minX = Mth.floor(pos.x - half_bbw)-1;
+        int minY = Mth.floor(pos.y);
+        int minZ = Mth.floor(pos.z - half_bbw)-1;
 
-        int maxX = Mth.ceil(pos.x + half_bbw);
-        int maxY = Mth.ceil(pos.y + half_bbw);
-        int maxZ = Mth.ceil(pos.z + half_bbw);
+        int maxX = Mth.ceil(pos.x + half_bbw)+1;
+        int maxY = Mth.ceil(pos.y)+1;
+        int maxZ = Mth.ceil(pos.z + half_bbw)+1;
 
         for (BlockPos x : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
-            var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, x.mutable());
+            var isBurning = WalkNodeEvaluator.isBurningBlock(dog.level.getBlockState(x));
 
-            if (blockType.getDanger() == BlockPathTypes.DANGER_FIRE) {
+            if (isBurning) {
                 return true;
             }
         }
@@ -120,8 +120,8 @@ public class DogGoAwayFromFireGoal extends Goal {
         BlockPos b0 = this.dog.blockPosition();
 
         for (BlockPos x : BlockPos.betweenClosed(
-            b0.offset(-this.SEARCH_RANGE, -4, -this.SEARCH_RANGE), 
-            b0.offset(this.SEARCH_RANGE, 4, this.SEARCH_RANGE))
+            b0.offset(-this.SEARCH_RANGE, -2, -this.SEARCH_RANGE), 
+            b0.offset(this.SEARCH_RANGE, 2, this.SEARCH_RANGE))
         ) {
             if (this.isSafePos(x)) return x;
         }
