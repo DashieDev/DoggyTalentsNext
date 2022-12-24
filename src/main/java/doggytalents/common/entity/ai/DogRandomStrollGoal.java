@@ -48,6 +48,9 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
     public void tick() {
         super.tick();
         
+        if (this.ownerMayBeMining()) {
+            this.tickCountStopMiningCautious = this.dog.tickCount + 600; // keep checking for 30 seconds
+        }
         
         if (this.dog.tickCount < this.tickCountStopMiningCautious) {
             if (this.pathObstructOwnerMining()) {
@@ -89,11 +92,11 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
                 DogUtil.posWillCollideWithOwnerMovingForward(dog, p.getNodePos(i));
 
             if (flag) {
-                // this.dog.getOwner().sendSystemMessage(Component.literal(
+                // ChopinLogger.sendToOwner(this.dog, 
                 //     this.dog.getName().getString()
                 //      + " : i was going to go to this pos,"
                 //      + p.getNodePos(i)
-                //      + " but it is not good!")); //debug chopin
+                //      + " but it is not good!"); //debug chopin
                 return true;
             }
 
