@@ -12,6 +12,7 @@ import doggytalents.common.Capabilities;
 import doggytalents.common.command.DogRespawnCommand;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.data.*;
+import doggytalents.common.entity.BoostingFoodHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.HelmetInteractHandler;
 import doggytalents.common.entity.MeatFoodHandler;
@@ -120,6 +121,7 @@ public class DoggyTalentsNext {
         PacketHandler.init();
         //TODO CriteriaTriggers.register(criterion)
         FoodHandler.registerHandler(new MeatFoodHandler());
+        FoodHandler.registerHandler(new BoostingFoodHandler());
 
         FoodHandler.registerDynPredicate(HappyEaterTalent.INNER_DYN_PRED);
         //InteractHandler.registerHandler(new HelmetInteractHandler());
