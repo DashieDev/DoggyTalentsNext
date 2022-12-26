@@ -50,9 +50,13 @@ public class RescueDogTalent extends TalentInstance {
             return;
         }
 
+        if (!(dog instanceof Dog)) return;
+
+        var d = (Dog) dog;
+
         if (this.healCooldown > 0 ) {
             --this.healCooldown;
-        } else if (!dog.isInSittingPose() && (dog.getMode() == EnumMode.DOCILE) ) {
+        } else if (!dog.isInSittingPose() && (d.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) ) {
             if (this.nextSearchTick <= dog.tickCount) {
                 this.searchCoolDown = 10;
                 this.nextSearchTick = dog.tickCount + this.searchCoolDown;
@@ -228,7 +232,7 @@ public class RescueDogTalent extends TalentInstance {
         @Override
         public boolean canUse() {
             if (this.dog.isInSittingPose()) return false;
-            if (this.dog.getMode() != EnumMode.DOCILE) return false;
+            if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) return false;
             this.target = this.talentInst.selectHealTarget(this.dog);
             if (target == null) return false;
 
@@ -240,11 +244,16 @@ public class RescueDogTalent extends TalentInstance {
         @Override
         public boolean canContinueToUse() {
             if (this.dog.isInSittingPose()) return false;
-            if (this.dog.getMode() != EnumMode.DOCILE) return false;
+            if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) return false;
             if (target == null) return false;
             if (!this.stillValidTarget()) return false;
 
             return true;
+        }
+
+        @Override
+        public void start() {
+            this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
         }
         
 
@@ -261,7 +270,7 @@ public class RescueDogTalent extends TalentInstance {
                         // if (this.dog.distanceToSqr(this.target) >= 144.0D) {
                         //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                         // } else {
-                            this.dog.getNavigation().moveTo(this.target, 1);
+                            this.dog.getNavigation().moveTo(this.target, dog.getUrgentSpeedModifier());
                         //}
                     }
                 }

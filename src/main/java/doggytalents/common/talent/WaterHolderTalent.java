@@ -97,7 +97,11 @@ public class WaterHolderTalent extends TalentInstance {
             return;
         }
 
-        if (!dog.isInSittingPose() && (dog.getMode() == EnumMode.DOCILE) && --this.ticktillSearch <= 0) {
+        if (!(dog instanceof Dog)) return;
+
+        var d = (Dog) dog;
+
+        if (!dog.isInSittingPose() && (d.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) && --this.ticktillSearch <= 0) {
             this.ticktillSearch = 10;
             this.targets = this.searchForOnFireEntity(dog);
         }
@@ -304,7 +308,7 @@ public class WaterHolderTalent extends TalentInstance {
 
     //TODO There is seems like a pattern emerging from this
     //And the RescueDogTalent, maybe consider coupling it
-    //together...
+    //together... Or composition is enough already.
     public static class MoveToExtinguishGoal extends Goal {
 
         private Dog dog;
@@ -325,7 +329,7 @@ public class WaterHolderTalent extends TalentInstance {
         @Override
         public boolean canUse() {
             if (this.dog.isInSittingPose()) return false;
-            if (this.dog.getMode() != EnumMode.DOCILE) return false;
+            if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) return false;
             this.target = this.talentInst.selectOnFireTarget(this.dog);
             if (target == null) return false;
             if (!this.stillValidTarget()) return false;       
@@ -335,13 +339,17 @@ public class WaterHolderTalent extends TalentInstance {
         @Override
         public boolean canContinueToUse() {
             if (this.dog.isInSittingPose()) return false;
-            if (this.dog.getMode() != EnumMode.DOCILE) return false;
+            if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) return false;
             if (target == null) return false;
             if (!this.stillValidTarget()) return false;
 
             return true;
         }
-        
+
+        @Override
+        public void start() {
+            this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
+        }
 
         @Override
         public void tick() {
