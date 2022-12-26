@@ -10,6 +10,7 @@ import com.google.common.base.Function;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.IDog;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -75,8 +76,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
 
     public void consumeItemFromStack(@Nullable Entity entity, ItemStack stack) {
         if (entity instanceof Player) {
-            // Review: super.usePlayerItem((Player) entity, stack);
-            stack.shrink(1);
+            super.usePlayerItem((Player) entity, InteractionHand.MAIN_HAND, stack);
         } else {
             stack.shrink(1);
         }
