@@ -2527,5 +2527,13 @@ public class Dog extends AbstractDog {
     public float getTimeDogIsShaking() {
         return this.timeWolfIsShaking;
     }
+
+    public float getUrgentSpeedModifier() {
+        if (this.getAttributeValue(Attributes.MOVEMENT_SPEED) <= 0.3) {
+            return 1.5f;
+        } else {
+            return 1.0f;
+        }
+    }
     
 }
