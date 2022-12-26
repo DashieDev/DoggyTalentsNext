@@ -64,6 +64,7 @@ public class DogGoAwayFromFireGoal extends Goal {
             );
             if (this.safePos != null) {
                 var p = dog.getNavigation().createPath(this.safePos, 1);
+                //TODO Have to reach ??????
                 boolean flag = p == null ? false :
                     DogUtil.canPathReachTargetBlock(dog, p, this.safePos, dog.getMaxFallDistance());
                 if (!flag) this.safePos = null;
@@ -87,7 +88,8 @@ public class DogGoAwayFromFireGoal extends Goal {
         
         var n = this.dog.getNavigation();
 
-
+        //TODO Have to reach ??????
+        //The path is cached, so it is not matter if this is called twice.
         boolean flag =
             DogUtil.moveToIfReachOrElse(dog, safePos, dog.getUrgentSpeedModifier(), 
                     dog.getMaxFallDistance(), dog1 -> {
@@ -122,6 +124,7 @@ public class DogGoAwayFromFireGoal extends Goal {
 
             if (--this.tickUntilPathRecalc <= 0) {
                 this.tickUntilPathRecalc = 5;
+                //TODO Have to reach ??????
                 DogUtil.moveToIfReachOrElse(dog, safePos, dog.getUrgentSpeedModifier(), 
                     dog.getMaxFallDistance(), dog1 -> {
                         this.safePos = null;
