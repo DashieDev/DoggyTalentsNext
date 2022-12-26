@@ -356,19 +356,22 @@ public class DogUtil {
      * @param dY The maximum amount of blocks can the y coords between the target and the actual path destination diffrentiate
      * while still being eligible
      * @param orElse function to execute when can't reach
+     * @return true if dog can reach.
      */
-    public static void moveToIfReachOrElse(Dog dog, BlockPos pos, double speedModifier, 
+    public static boolean moveToIfReachOrElse(Dog dog, BlockPos pos, double speedModifier, 
         int dY, Consumer<Dog> orElse) {
         var p = dog.getNavigation().createPath(pos, 1);
         if (p == null) {
             orElse.accept(dog);
-            return;
+            return false;
         }
 
         if (DogUtil.canPathReachTargetBlock(dog, p, pos, dY)) {
             dog.getNavigation().moveTo(p, speedModifier);
+            return true;
         } else {
             orElse.accept(dog);
+            return false;
         }
     }
     
