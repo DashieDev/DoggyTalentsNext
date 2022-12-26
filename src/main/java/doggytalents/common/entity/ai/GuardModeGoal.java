@@ -151,6 +151,12 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
         }
 
         protected void findDanger() {
+            if (dog.getDogLevel(DoggyTalents.RESCUE_DOG) > 0) {
+                //Rescue Dog don't find alert owner.
+                //This allows her to guard the owner's or other
+                //guard dogs' HEALTH instead
+                return;
+            }
             this.nearestDanger = this.dog.level
                 .getNearestEntity(
                     Monster.class,
