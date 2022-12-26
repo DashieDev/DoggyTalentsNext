@@ -192,3 +192,15 @@ covered by trees.
   on the dog to refil or the dog will automatically absorb water when in contact with 
   rain or water source. You can check the amount of water left by using any bucket 
   on the dog while holding shift.
+
+v1.7.1 - 26th December 2022
++ Dog Armor Renderer now defaults to iron texture when cannot find texture.
+* BUG FIX : when dog is one block higher than the bed (not on the bed)
+he will lie down.
+/ Dog Go Away From Fire AI is now heavily optimized to balance between
+performance and effectiveness.
++ Dogs now can eat (Enchanted or Normal) Golden Apple
++ WaterHolderDogs and RescueDogs now continues to do their talent specific actions 
+in GUARD_MINOR mode
++ RecuesDogs now become silent in Guard Minor, this allows them to focus on guarding
+the owner or other guard dogs' health instead without interfering with Creeper Detection.
