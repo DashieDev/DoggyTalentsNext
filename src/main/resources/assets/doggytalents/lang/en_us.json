@@ -172,7 +172,7 @@
    "dog.mode.berserker.description": "In this mode your dog will follow you and if any mob draws near, they will attack it without warning",
    "dog.mode.berserker_minor.description": "Berserker Minor - In this mode your dog will behave the same as in Berserker Mode, but they won't attack Piglins or Endermans",
    "dog.mode.docile.description": "In this mode your dog will follow you but not attack anything. They are ready for you to throw the bone",
-   "dog.mode.patrol.description": "In this mode your dog will patrol between 2-4 points (set using a command emblem) and attack monsters that try come into view",
+   "dog.mode.patrol.description": "*WIP*",
    "dog.mode.guard.description": "Dogs follow closely and attack any monsters that come close.",
    "dog.mode.guard_flat.description": "Guard Flat - Dogs behave the same as in Guard Mode but will not attack Piglins or Endermans.",
    "dog.mode.guard_minor.description": "Guard Minor - Dogs follow closely and if any monsters come close, he will growl to warn you. If the dog have Creeper Sweeper Talent, he will only detect creepers.",
