@@ -2,17 +2,13 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
-import com.google.common.collect.ImmutableSet;
-
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
@@ -30,21 +26,14 @@ public class DogGoAwayFromFireGoal extends Goal {
     //ex : The pathfinding - eventhough the dog barely do any pathfind, it stills cost 
     //the dog's time for some reasons, perhaps there is some caching going on.
     //Maybe a ring search is better for this, or a ring search with spread alg seems ok.
+    //Yeah, i don't trust minecraft's pathfinding performance after this...
     private int failedSearchPenalty;
-
-    private PathFinder pathFinder;
-    private PathNavigationRegion region;
-
 
     private BlockPos safePos;
 
     public DogGoAwayFromFireGoal(Dog dog) {
         this.dog = dog;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
-
-        var nodeEvaluator = new WalkNodeEvaluator();
-        nodeEvaluator.setCanPassDoors(true);
-        this.pathFinder = new PathFinder(nodeEvaluator, 32);
     }
 
     @Override
@@ -64,16 +53,23 @@ public class DogGoAwayFromFireGoal extends Goal {
         }
         if (dangerSpot == -1) return false;
 
-        //This goal has no effect when dog is in lava by the way.
-        if (dog.isInLava()) return false;
+        // //This goal has no effect when dog is in lava by the way.
+        // if (dog.isInLava()) return false;
 
         this.safePos = null;
 
         if (this.failedSearchPenalty <= 0) {
             this.safePos = this.searchForSafePos(
-                dangerSpot == 0 ? DEFAULT_SEARCH_RANGE : LAVA_SEARCH_RANGE
+                dangerSpot == 0 ? DEFAULT_SEARCH_RANGE : LAVA_SEARCH_RANGE, 2
             );
-            if (this.safePos == null) this.failedSearchPenalty = 15;
+            if (this.safePos != null) {
+                var p = dog.getNavigation().createPath(this.safePos, 1);
+                boolean flag = p == null ? false :
+                    DogUtil.canPathReachTargetBlock(dog, p, this.safePos, dog.getMaxFallDistance());
+                if (!flag) this.safePos = null;
+            }
+            
+            if (this.safePos == null) this.failedSearchPenalty = 10;
         }
             
         if (this.safePos == null) return false;
@@ -89,10 +85,24 @@ public class DogGoAwayFromFireGoal extends Goal {
     @Override
     public void start() {
         
-        this.dog.getNavigation().moveTo(
-            safePos.getX(), safePos.getY(), safePos.getZ(),
-            1.5
-        );
+        var n = this.dog.getNavigation();
+
+
+        boolean flag =
+            DogUtil.moveToIfReachOrElse(dog, safePos, dog.getUrgentSpeedModifier(), 
+                    dog.getMaxFallDistance(), dog1 -> {
+                        this.safePos = null;
+                    });
+        if (!flag) return;
+
+        var p = n.getPath();
+
+        if (p != null && p.getNodeCount() >= 2) {
+            var s = p.getNode(1).asBlockPos();
+            dog.getMoveControl().setWantedPosition(s.getX() + 0.5, s.getY(), s.getZ() + 0.5, 1.0);
+        }
+
+        
 
         this.tickUntilPathRecalc = 10;
         
@@ -112,13 +122,13 @@ public class DogGoAwayFromFireGoal extends Goal {
 
             if (--this.tickUntilPathRecalc <= 0) {
                 this.tickUntilPathRecalc = 5;
-                DogUtil.moveToIfReachOrElse(dog, safePos, 1.5, 
+                DogUtil.moveToIfReachOrElse(dog, safePos, dog.getUrgentSpeedModifier(), 
                     dog.getMaxFallDistance(), dog1 -> {
                         this.safePos = null;
                     });
             }
         } else {
-            this.safePos = this.searchForSafePos(LAVA_SEARCH_RANGE);
+            this.safePos = this.searchForSafePos(LAVA_SEARCH_RANGE, 2);
         }
     }
 
@@ -128,12 +138,12 @@ public class DogGoAwayFromFireGoal extends Goal {
     }
 
     /**
-     * 1 means lava
-     * 0 means fire
-     * -1 means safe
+     * 1 means lava,
+     * 0 means fire,
+     * -1 means safe,
      * 
      * @param pos
-     * @return
+     * @return the preceeding (not param)
      */
     private byte isDogInDangerSpot(Vec3 pos) {
         var half_bbw = 0.5*dog.getBbWidth();
@@ -162,21 +172,104 @@ public class DogGoAwayFromFireGoal extends Goal {
         return ret;
     }
 
-    private BlockPos searchForSafePos(int searchRange) {
-        BlockPos b0 = this.dog.blockPosition();
+    private BlockPos searchForSafePos(int searchRangeXZ, int searchRangeY) {
+        // BlockPos b0 = this.dog.blockPosition();
 
-        BlockPos bMin = b0.offset(-searchRange, -2, -searchRange);
-        BlockPos bMax = b0.offset(searchRange, 2, searchRange);
+        // BlockPos bMin = b0.offset(-searchRange, -2, -searchRange);
+        // BlockPos bMax = b0.offset(searchRange, 2, searchRange);
 
-        this.region = new PathNavigationRegion(this.dog.level, bMin, bMax);
+        // this.region = new PathNavigationRegion(this.dog.level, bMin, bMax);
 
-        for (BlockPos x : BlockPos.betweenClosed(
-            bMin, 
-            bMax)
-        ) {
+        // for (BlockPos x : BlockPos.betweenClosed(
+        //     bMin, 
+        //     bMax)
+        // ) {
             
-            if (this.isSafePos(x)) return x;
+        //     if (this.isSafePos(x)) return x;
+        // }
+
+        // return null;
+
+        //Ring Search is THE BEST!!!
+
+        var b0 = this.dog.blockPosition();
+        var b0m = b0.mutable();
+        
+        int inflate = 1; // this is to prevent dog from repeating himself
+        while (inflate <= searchRangeXZ) {
+            final int minX = b0.getX() - inflate;
+            final int maxX = b0.getX() + inflate;
+            final int minZ = b0.getZ() - inflate;
+            final int maxZ = b0.getZ() + inflate;
+
+            b0m.setX(minX);
+            b0m.setZ(minZ);
+            //ChopinLogger.l("blockpos" + b0);
+
+            if (inflate <= 0) {
+                //Maybe treat the center block as an optional return
+                //If nothing else outside satisfies this, then return this.
+                for (int j = -searchRangeY; j <= searchRangeY; ++j) {
+                    b0m.setY(b0.getY() + j);
+                    if (this.isSafePos(b0m)) {
+                        return b0m.immutable();
+                    }
+                }
+                ++inflate;
+                continue;
+            }
+
+            for (int i = minX; i <= maxX; ++i) {
+                b0m.setX(i);
+                //ChopinLogger.l("" + b0m);
+                for (int j = -searchRangeY; j <= searchRangeY; ++j) {
+                    b0m.setY(b0.getY() + j);
+                    if (this.isSafePos(b0m)) {
+                        return b0m.immutable();
+                    }
+                }
+            }
+
+            //b0m: maxX, minZ
+            for (int i = minZ + 1; i <= maxZ; ++i) {
+                b0m.setZ(i);
+                //ChopinLogger.l("" + b0m);
+                for (int j = -searchRangeY; j <= searchRangeY; ++j) {
+                    b0m.setY(b0.getY() + j);
+                    if (this.isSafePos(b0m)) {
+                        return b0m.immutable();
+                    }
+                }
+            }
+
+            //b0m: maxX, maxZ
+            for (int i = maxX-1; i >= minX; --i) {
+                b0m.setX(i);
+                //ChopinLogger.l("" + b0m);
+                for (int j = -searchRangeY; j <= searchRangeY; ++j) {
+                    b0m.setY(b0.getY() + j);
+                    if (this.isSafePos(b0m)) {
+                        return b0m.immutable();
+                    }
+                }
+            }
+
+            //b0m: minX, maxZ
+            for (int i = maxZ - 1; i >= minZ + 1; --i) {
+                b0m.setZ(i);
+                //ChopinLogger.l("" + b0m);
+                for (int j = -searchRangeY; j <= searchRangeY; ++j) {
+                    b0m.setY(b0.getY() + j);
+                    if (this.isSafePos(b0m)) {
+                        return b0m.immutable();
+                    }
+                }
+            }
+            ++inflate;
+            //ChopinLogger.l("inflate!" + inflate);
         }
+
+        //Ring Search is THE BEST!!!
 
         return null;
     }
@@ -185,19 +278,7 @@ public class DogGoAwayFromFireGoal extends Goal {
         var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
 
         if (blockType == BlockPathTypes.WALKABLE) {
-            if (dog.blockPosition().distSqr(pos) <= 2.25) return true;
-
-            //Due to the search radius is meant to be small, the path
-            //that need to be calc each time is not big
-            //, therefore, the pathfinding becomes relatively light.
-            //Used 
-            var path = this.pathFinder.findPath(region, dog, ImmutableSet.of(pos), 4, 1, 1);
-            if (path == null) return false;
-            boolean flag = 
-                DogUtil.canPathReachTargetBlock(dog, path, pos, 0);
-            if (flag) {
-                return true;
-            }
+            return true;
         }
 
         return false;
