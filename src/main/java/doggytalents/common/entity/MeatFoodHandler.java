@@ -1,5 +1,7 @@
 package doggytalents.common.entity;
 
+import javax.annotation.Nullable;
+
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
@@ -16,12 +18,15 @@ import net.minecraft.world.item.Items;
 public class MeatFoodHandler implements IDogFoodHandler {
 
     @Override
-    public boolean isFood(ItemStack stackIn) {
-        return stackIn.isEdible() && stackIn.getItem().getFoodProperties().isMeat() && stackIn.getItem() != Items.ROTTEN_FLESH;
+    public boolean isFood(ItemStack stack) {
+        var props = stack.getItem().getFoodProperties();
+
+        if (props == null) return false;
+        return stack.isEdible() && props.isMeat() && stack.getItem() != Items.ROTTEN_FLESH;
     }
 
     @Override
-    public boolean canConsume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
+    public boolean canConsume(AbstractDog dogIn, ItemStack stackIn, @Nullable Entity entityIn) {
         return this.isFood(stackIn);
     }
 
@@ -30,13 +35,20 @@ public class MeatFoodHandler implements IDogFoodHandler {
 
         if (dog.getDogHunger() < dog.getMaxHunger()) {
             if (!dog.level.isClientSide) {
-                int heal = stack.getItem().getFoodProperties().getNutrition() * 5;
+                var item = stack.getItem();
+
+                var props = item.getFoodProperties();
+
+                if (props == null) return InteractionResult.FAIL;
+                
+                int heal = props.getNutrition() * 5;
 
                 dog.addHunger(heal);
                 dog.consumeItemFromStack(entityIn, stack);
 
                 if (dog.level instanceof ServerLevel) {
-                    ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(dog, stack);
+                    ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(
+                        dog, new ItemStack(item));
                 }
                 dog.playSound(
                     SoundEvents.GENERIC_EAT, 

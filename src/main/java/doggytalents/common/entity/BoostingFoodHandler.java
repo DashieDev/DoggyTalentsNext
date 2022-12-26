@@ -30,19 +30,27 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
     @Override
     public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
         if (!dog.level.isClientSide) {
-            int heal = stack.getItem().getFoodProperties().getNutrition() * 5;
+            
+            var item = stack.getItem();
+
+            var props = item.getFoodProperties();
+            
+            if (props == null) return InteractionResult.FAIL;
+
+            int heal = props.getNutrition() * 5;
 
             dog.addHunger(heal);
             dog.consumeItemFromStack(entityIn, stack);
 
-            for(var pair : stack.getFoodProperties(dog).getEffects()) {
+            for(var pair : props.getEffects()) {
                 if (pair.getFirst() != null && dog.getRandom().nextFloat() < pair.getSecond()) {
                    dog.addEffect(new MobEffectInstance(pair.getFirst()));
                 }
              }
 
             if (dog.level instanceof ServerLevel) {
-                ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(dog, stack);
+                ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(
+                    dog, new ItemStack(item));
             }
             dog.playSound(
                 SoundEvents.GENERIC_EAT, 
