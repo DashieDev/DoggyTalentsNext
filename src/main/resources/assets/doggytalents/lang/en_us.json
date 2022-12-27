@@ -272,8 +272,9 @@
    "argument.doggytalents.uuid.section.invalid": "%s contains one or more invalid characters",
    "commands.dogrespawn.uuid.success": "Summoned %s from the dead",
    "commands.dogrespawn.uuid.failure": "Failed to rise %s from the dead",
-   "command.dogrespawn.imprecise": "Too many dogs (%d) for this owner under this name, use `byuuid` for %s",
-
+   "command.dogrespawn.imprecise": "\"%s\" is ambiguous. Consider providing the dog's UUID as an extra argument.",
+   "command.dogrespawn.bad_uuid_str": "Bad UUID string provided.",
+   "command.dogrespawn.notfound": "No dogs under the identifier \"%s\" were found.",
    "dogbed.bedding.null": "Bedding material not set",
    "dogbed.casing.null": "Casing material not set",
    "dogbed.bedding.missing": "Missing: %s",

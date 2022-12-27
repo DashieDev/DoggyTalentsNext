@@ -24,6 +24,7 @@ import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.commands.EffectCommands;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -37,48 +38,73 @@ import java.util.stream.Collectors;
 
 import static net.minecraft.commands.Commands.literal;
 
-public class DogRespawnCommand {
+public class DoggyCommands {
 
     
     public static final DeferredRegister<ArgumentTypeInfo<?,?>> ARG_TYPE = DeferredRegister.create(ForgeRegistries.Keys.COMMAND_ARGUMENT_TYPES, Constants.MOD_ID);
     public static final RegistryObject<SingletonArgumentInfo<UUIDArgument>> SUUID = ARG_TYPE.register("doggy_uuid", () -> SingletonArgumentInfo.contextFree(UUIDArgument::uuid));
 
 
-    public static final DynamicCommandExceptionType COLOR_INVALID = new DynamicCommandExceptionType((arg) -> {
-        return Component.translatable("command.dogrespawn.invalid", arg);
+    public static final DynamicCommandExceptionType NOTFOUND_EXCEPTION = new DynamicCommandExceptionType((arg) -> {
+        return Component.translatable("command.dogrespawn.notfound", arg);
     });
 
     public static final DynamicCommandExceptionType SPAWN_EXCEPTION = new DynamicCommandExceptionType((arg) -> {
         return Component.translatable("command.dogrespawn.exception", arg);
     });
 
-    public static final Dynamic2CommandExceptionType TOO_MANY_OPTIONS = new Dynamic2CommandExceptionType((arg1, arg2) -> {
-        return Component.translatable("command.dogrespawn.imprecise", arg1, arg2);
+    public static final DynamicCommandExceptionType AMBIGUOUS_NAME_EXCEPTION = new DynamicCommandExceptionType((name) -> {
+        return Component.translatable("command.dogrespawn.imprecise", name);
+    });
+
+    public static final DynamicCommandExceptionType BAD_UUID_STRING = new DynamicCommandExceptionType((name) -> {
+        return Component.translatable("command.dogrespawn.bad_uuid_str", name);
     });
 
     public static void register(final CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 literal("dog")
                     .requires(s -> s.hasPermission(2))
-                    .then(Commands.literal("locate")
+                    .then(
+                        Commands.literal("locate")
                         // .then(Commands.literal("byuuid")
                         //   .then(Commands.argument("dogOwner", UUIDArgument.uuid()).suggests(DogRespawnCommand.getOwnerIdSuggestionsLocate())
                         //   .then(Commands.argument("dogUuid", UUIDArgument.uuid()).suggests(DogRespawnCommand.getDogIdSuggestionsLocate())
                         //   .executes(c -> locate(c)))))
-                        .then(Commands.literal("byname")
-                           .then(Commands.argument("ownerName", StringArgumentType.string()).suggests(DogRespawnCommand.getOwnerNameSuggestionsLocate())
-                           .then(Commands.argument("dogName", StringArgumentType.string()).suggests(DogRespawnCommand.getDogNameSuggestionsLocate())
-                           .executes(c -> locate2(c))))))
-                    .then(Commands.literal("revive")
+                        .then(
+                            Commands.literal("byname")
+                           .then(
+                                Commands.argument("ownerName", StringArgumentType.string())
+                                .suggests(DoggyCommands.getOwnerNameSuggestionsLocate())
+                                .then(
+                                    Commands.argument("dogName", StringArgumentType.string())
+                                    .suggests(DoggyCommands.getDogNameSuggestionsLocate())
+                                    .executes(c -> locate2(c))
+                                    .then(
+                                        Commands.argument("dogUUID", StringArgumentType.string())
+                                        .suggests(DoggyCommands.getDogIdSuggestionsLocate())
+                                        .executes(c -> locate(c))
+                        )))))
+                    .then(
+                        Commands.literal("revive")
                     //   .then(Commands.literal("byuuid")
                     //     .then(Commands.argument("dogOwner", UUIDArgument.uuid()).suggests(DogRespawnCommand.getOwnerIdSuggestionsRevive())
                     //     .then(Commands.argument("dogUuid", UUIDArgument.uuid()).suggests(DogRespawnCommand.getDogIdSuggestionsRevive())
                     //     .executes(c -> respawn(c)))))
-                      .then(Commands.literal("byname")
-                        .then(Commands.argument("ownerName", StringArgumentType.string()).suggests(DogRespawnCommand.getOwnerNameSuggestionsRevive())
-                         .then(Commands.argument("dogName", StringArgumentType.string()).suggests(DogRespawnCommand.getDogNameSuggestionsRevive())
-                         .executes(c -> respawn2(c))))))
-        );
+                        .then(
+                            Commands.literal("byname")
+                            .then(
+                                Commands.argument("ownerName", StringArgumentType.string())
+                                .suggests(DoggyCommands.getOwnerNameSuggestionsRevive())
+                                .then(
+                                    Commands.argument("dogName", StringArgumentType.string())
+                                    .suggests(DoggyCommands.getDogNameSuggestionsRevive())
+                                    .executes(c -> respawn2(c))
+                                    .then(
+                                        Commands.argument("dogUUID", StringArgumentType.string())
+                                        .suggests(DoggyCommands.getDogIdSuggestionsRevive())
+                                        .executes(c -> respawn(c)))
+                        )))));                
 
     }
 
@@ -121,13 +147,19 @@ public class DogRespawnCommand {
 
     private static <S extends SharedSuggestionProvider> CompletableFuture<Suggestions> getDogIdSuggestions(Collection<? extends IDogData> possibilities, final CommandContext<S> context, final SuggestionsBuilder builder) {
         if (context.getSource() instanceof CommandSourceStack) {
-            UUID ownerId = context.getArgument("dogOwner", UUID.class);
-            if (ownerId == null) {
+            String dogName = context.getArgument("dogName", String.class);
+            if (dogName == null) {
+                return Suggestions.empty();
+            }
+
+            String ownerName = context.getArgument("ownerName", String.class);
+            if (ownerName == null) {
                 return Suggestions.empty();
             }
 
             return SharedSuggestionProvider.suggest(possibilities.stream()
-                     .filter(data -> ownerId.equals(data.getOwnerId()))
+                     .filter(data -> dogName.equals(data.getDogName()))
+                     .filter(data -> ownerName.equals(data.getOwnerName()))
                      .map(IDogData::getDogId)
                      .map(Object::toString)
                      .collect(Collectors.toSet()),
@@ -199,15 +231,25 @@ public class DogRespawnCommand {
         source.getPlayerOrException(); // Check source is a player
         ServerLevel world = source.getLevel();
 
-        UUID ownerUuid = ctx.getArgument("dogOwner", UUID.class);
+        String uuidStr = ctx.getArgument("dogUUID", String.class);
 
-        UUID uuid = ctx.getArgument("dogUuid", UUID.class);
+        UUID uuid = null;
+
+        try {
+            uuid = UUID.fromString(uuidStr);
+        } catch (Exception e) {
+            
+        }
+
+        if (uuid == null) {
+            throw BAD_UUID_STRING.create("null");
+        }
 
         DogRespawnStorage respawnStorage = DogRespawnStorage.get(world);
         DogRespawnData respawnData = respawnStorage.getData(uuid);
 
         if (respawnData == null) {
-            throw COLOR_INVALID.create(uuid.toString());
+            throw NOTFOUND_EXCEPTION.create(uuid.toString());
         }
 
         return respawn(respawnStorage, respawnData, source);
@@ -225,7 +267,7 @@ public class DogRespawnCommand {
         List<DogRespawnData> respawnData = respawnStorage.getDogs(ownerName).filter((data) -> data.getDogName().equalsIgnoreCase(dogName)).collect(Collectors.toList());
 
         if (respawnData.isEmpty()) {
-            throw COLOR_INVALID.create(dogName);
+            throw NOTFOUND_EXCEPTION.create(dogName);
         }
 
         if (respawnData.size() > 1) {
@@ -233,7 +275,7 @@ public class DogRespawnCommand {
             for (DogRespawnData data : respawnData) {
                 joiner.add(Objects.toString(data.getDogId()));
             }
-            throw TOO_MANY_OPTIONS.create(joiner.toString(), respawnData.size());
+            throw AMBIGUOUS_NAME_EXCEPTION.create(dogName); //TODO!
         }
 
         return respawn(respawnStorage, respawnData.get(0), source);
@@ -257,15 +299,25 @@ public class DogRespawnCommand {
         source.getPlayerOrException(); // Check source is a player
         ServerLevel world = source.getLevel();
 
-        UUID ownerUuid = ctx.getArgument("dogOwner", UUID.class);
+        String uuidStr = ctx.getArgument("dogUUID", String.class);
 
-        UUID uuid = ctx.getArgument("dogUuid", UUID.class);
+        UUID uuid = null;
+
+        try {
+            uuid = UUID.fromString(uuidStr);
+        } catch (Exception e) {
+
+        }
+
+        if (uuid == null) {
+            throw BAD_UUID_STRING.create("null");
+        }
 
         DogLocationStorage locationStorage = DogLocationStorage.get(world);
         DogLocationData locationData = locationStorage.getData(uuid);
 
         if (locationData == null) {
-            throw COLOR_INVALID.create(uuid.toString());
+            throw NOTFOUND_EXCEPTION.create(uuid.toString());
         }
 
         return locate(locationStorage, locationData, source);
@@ -281,10 +333,10 @@ public class DogRespawnCommand {
         String dogName = ctx.getArgument("dogName", String.class);
         DogLocationStorage locationStorage = DogLocationStorage.get(world);
         List<DogLocationData> locationData = locationStorage.getAll().stream()
-                .filter(data -> ownerName.equals(data.getOwnerName())).filter((data) -> data.getDogName().equalsIgnoreCase(dogName)).collect(Collectors.toList());
+                .filter(data -> ownerName.equals(data.getOwnerName())).filter((data) -> data.getDogName().equals(dogName)).collect(Collectors.toList());
 
         if (locationData.isEmpty()) {
-            throw COLOR_INVALID.create(dogName);
+            throw NOTFOUND_EXCEPTION.create(dogName);
         }
 
         if (locationData.size() > 1) {
@@ -292,7 +344,7 @@ public class DogRespawnCommand {
             for (DogLocationData data : locationData) {
                 joiner.add(Objects.toString(data.getDogId()));
             }
-            throw TOO_MANY_OPTIONS.create(joiner.toString(), locationData.size());
+            throw AMBIGUOUS_NAME_EXCEPTION.create(dogName);
         }
 
         return locate(locationStorage, locationData.get(0), source);
