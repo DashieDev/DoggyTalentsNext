@@ -9,7 +9,7 @@ import doggytalents.client.entity.render.world.BedFinderRenderer;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.Capabilities;
 //import doggytalents.common.addon.AddonManager;
-import doggytalents.common.command.DogRespawnCommand;
+import doggytalents.common.command.DoggyCommands;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.data.*;
 import doggytalents.common.entity.BoostingFoodHandler;
@@ -126,7 +126,7 @@ public class DoggyTalentsNext {
         FoodHandler.registerDynPredicate(HappyEaterTalent.INNER_DYN_PRED);
         //InteractHandler.registerHandler(new HelmetInteractHandler());
         ConfigHandler.initTalentConfig();
-        DogRespawnCommand.registerSerilizers();
+        DoggyCommands.registerSerilizers();
         Dog.initDataParameters();
     }
 
@@ -135,7 +135,7 @@ public class DoggyTalentsNext {
     }
 
     public void registerCommands(final RegisterCommandsEvent event) {
-        DogRespawnCommand.register(event.getDispatcher());
+        DoggyCommands.register(event.getDispatcher());
     }
 
     @OnlyIn(Dist.CLIENT)

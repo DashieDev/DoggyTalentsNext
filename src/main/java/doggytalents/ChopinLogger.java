@@ -34,8 +34,10 @@ public class ChopinLogger {
     }
 
     //For debugging purpose only
+    private static boolean IS_DEBUG_ALLOW_DEATH = false;
     @SubscribeEvent
     public void onWolfOrDogDeath(LivingDeathEvent ev) {
+        if (IS_DEBUG_ALLOW_DEATH) return;
         var e = ev.getEntity();
         if (
             e instanceof Dog
