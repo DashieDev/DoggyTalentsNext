@@ -41,7 +41,7 @@ public class DogRespawnData implements IDogData {
     @Override
     public String getDogName() {
         Component name = NBTUtil.getTextComponent(this.data, "CustomName");
-        return name == null ? "" : name.getString();
+        return name == null ? "noname" : name.getString();
     }
 
     @Override
