@@ -1203,6 +1203,18 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public void onRemovedFromWorld() {
+        if (this.level instanceof ServerLevel serverLevel && this.isAlive()) {
+            //Force location update when the dog is about to get untracked from world.
+            //To be sure, only update existing data and when the dog is still living.
+            var data = DogLocationStorage.get(serverLevel).getData(this);
+            
+            if (data != null) data.update(this);
+        }
+        super.onRemovedFromWorld();
+    }
+
+    @Override
     public void remove(Entity.RemovalReason removalReason) {
         super.remove(removalReason);
 
