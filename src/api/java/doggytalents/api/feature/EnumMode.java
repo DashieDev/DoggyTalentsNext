@@ -7,6 +7,7 @@ import doggytalents.api.inferface.AbstractDog;
 
 public enum EnumMode {
 
+    INCAPACITATED(-1, "incapacitated"),
     DOCILE(0, "docile"),
     WANDERING(1, "wandering"),
     AGGRESIVE(2, "aggressive"),
@@ -24,9 +25,13 @@ public enum EnumMode {
     private String unlocalisedName;
     private String unlocalisedInfo;
 
-    public static final EnumMode[] VALUES = Arrays.stream(EnumMode.values()).sorted(Comparator.comparingInt(EnumMode::getIndex)).toArray(size -> {
-        return new EnumMode[size];
-    });
+    public static final EnumMode[] VALUES = 
+        Arrays.stream(EnumMode.values())
+        .filter(x ->x.getIndex() >= 0)
+        .sorted(Comparator.comparingInt(EnumMode::getIndex))
+        .toArray(size -> {
+            return new EnumMode[size];
+        });
 
     private EnumMode(int index, String name) {
         this(index, name, "dog.mode." + name, "dog.mode." + name + ".indicator", "dog.mode." + name + ".description");

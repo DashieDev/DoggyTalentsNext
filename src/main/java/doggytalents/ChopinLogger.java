@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ChopinLogger {
@@ -33,12 +34,14 @@ public class ChopinLogger {
         d.getOwner().sendSystemMessage(Component.literal("<" + d.getName().getString() + "> : " + s));
     }
 
+    public static boolean NO_INCAPACITATED = false;
+
     //For debugging purpose only
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public void onWolfOrDogDeath(LivingDeathEvent ev) {
         var e = ev.getEntity();
         if (
-            e instanceof Dog
+            (e instanceof Dog && NO_INCAPACITATED)
             || e instanceof Wolf
         ) {
             ev.setCanceled(true);

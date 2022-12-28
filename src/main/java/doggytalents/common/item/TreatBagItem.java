@@ -109,6 +109,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
 
     @Override
     public boolean canConsume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
+        if (dogIn.isDefeated()) return false;
         return entityIn instanceof LivingEntity ? dogIn.canInteract((LivingEntity) entityIn) : false;
     }
 

@@ -13,7 +13,9 @@ import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.api.registry.*;
 import doggytalents.client.screen.DogInfoScreen;
 import doggytalents.common.config.ConfigHandler;
+import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.BreedGoal;
+import doggytalents.common.entity.accessory.IncapacitatedLayer;
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.stats.StatsTracker;
@@ -83,6 +85,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -170,6 +173,8 @@ public class Dog extends AbstractDog {
     protected boolean isLowHunger;
     protected boolean isZeroHunger;
     protected int hungerDamageTick;
+
+    protected int incapacitatedMutiplier = 1;
 
     private static final UUID HUNGER_MOVEMENT = UUID.fromString("50671f49-1dfd-4397-242b-78bb6b178115");
 
@@ -260,6 +265,9 @@ public class Dog extends AbstractDog {
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (this.isDefeated()) {
+            return SoundEvents.WOLF_WHINE;
+        }
         if (this.random.nextInt(3) == 0) {
             return this.isTame() && this.getHealth() < 10.0F ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
         } else {
@@ -463,8 +471,8 @@ public class Dog extends AbstractDog {
             }
         }
         
-
-        if (!this.level.isClientSide) {
+        //Hunger And Healing tick.
+        if (!this.level.isClientSide && !this.isDefeated()) {
             
             if (! ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_HUNGER)) {
                 this.prevHungerTick = this.hungerTick;
@@ -547,12 +555,90 @@ public class Dog extends AbstractDog {
         }
 
         this.alterations.forEach((alter) -> alter.livingTick(this));
+
+        if (!this.level.isClientSide && this.isDefeated()) {
+            this.incapacitatedTick();
+        }
+
+        if (this.level.isClientSide && this.isDefeated()) {
+            this.incapacitatedClientTick();
+        }
+    }
+
+    public void incapacitatedClientTick() {
+        for (var i : this.getAccessories()) {
+            if (i.getAccessory() instanceof IncapacitatedLayer iL) {
+                if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
+                iL.tickClient(this);
+            }
+        }
+    }
+
+    /**
+     * When dogs enter Incapacitated Mode, hunger now acts as incapacitated units
+     * When "hunger" reaches Zero, it will reset and the dog will exit I Mode
+     * 
+     */
+    public void incapacitatedTick() {
+        // 3 days max 60 min = 72 000 ticks
+
+        if (this.level.getBlockState(this.blockPosition()).getBlock() == Blocks.AIR) {
+            this.addHunger(0.001f*this.getIncapacitatedMutiplier());
+        }
+        if (this.level.getBlockState(this.blockPosition()).getBlock() == DoggyBlocks.DOG_BED.get()) {
+            this.addHunger(0.002f*this.getIncapacitatedMutiplier());
+            if (!this.isInSittingPose())
+                this.setInSittingPose(true);
+            if (this.getOwner() != null && this.distanceToSqr(this.getOwner()) <= 16) {
+                this.addHunger(0.01f*this.getIncapacitatedMutiplier());
+                if (this.level instanceof ServerLevel && this.tickCount % 10 == 0) {
+                    ((ServerLevel) this.level).sendParticles(
+                        ParticleTypes.HEART, 
+                        this.getX(), this.getY(), this.getZ(), 
+                        1, 
+                        this.getBbWidth(), 0.8f, this.getBbWidth(), 
+                        0.1
+                    );
+                }
+            }
+        }
+        
+        if (this.getDogHunger() >= this.getMaxIncapacitatedHunger()) {
+            this.setHealth(20);
+            this.setMode(EnumMode.DOCILE);
+            this.setDogHunger(this.getMaxHunger());
+            this.setOrderedToSit(true);
+            var toRemove = new ArrayList<AccessoryInstance>();
+            for (var i : this.getAccessories()) {
+                if (i.getAccessory() instanceof IncapacitatedLayer) {
+                    toRemove.add(i);
+                }
+            }
+            for (var i : toRemove) {
+                this.getAccessories().remove(i);
+            }
+            this.markDataParameterDirty(ACCESSORIES.get());
+
+            if (this.level instanceof ServerLevel sL) {
+                sL.sendParticles(
+                    ParticleTypes.HEART, 
+                    this.getX(), this.getY(), this.getZ(), 
+                    24, 
+                    this.getBbWidth(), 0.8f, this.getBbWidth(), 
+                    0.1
+                );
+            }
+        }
+            
     }
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
+
+        if (this.isDefeated()) 
+            return this.interactIncapacitated(stack, player, hand);
 
         if (this.isTame()) {
             if (stack.getItem() == Items.STICK && this.canInteract(player)) {
@@ -614,6 +700,52 @@ public class Dog extends AbstractDog {
         }
 
         return actionresulttype;
+    }
+
+    protected InteractionResult interactIncapacitated(ItemStack stack, Player player, InteractionHand hand) {
+        if (stack.getItem() == Items.TOTEM_OF_UNDYING) {
+            if (!this.level.isClientSide) {
+                if (!player.getAbilities().instabuild) {
+                    stack.shrink(1);
+                }
+
+                var defeatedDogs = DogUtil.getOtherIncapacitatedDogNearby(this);
+                
+                for (var d : defeatedDogs) {
+                    d.setDogHunger(this.getMaxIncapacitatedHunger());
+
+                    d.removeAllEffects();
+                    d.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
+                    d.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
+                    d.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
+                    d.level.broadcastEntityEvent(d, (byte)35);
+                }
+            }
+            return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.CAKE && this.getIncapacitatedMutiplier() < 5) {
+
+            if (this.level instanceof ServerLevel) {
+                ParticlePackets.DogEatingParticlePacket
+                    .sendDogEatingParticlePacketToNearby(this, new ItemStack(Items.CAKE));
+            }
+            this.consumeItemFromStack(player, stack);
+            this.playSound(
+                SoundEvents.GENERIC_EAT, 
+                this.getSoundVolume(), 
+                (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F
+            );
+
+            this.setIncapacitatedMutiplier(this.getIncapacitatedMutiplier()*5);
+        } else if (stack.getItem() == Items.BONE && !this.isPassenger() && !player.isVehicle()) {
+            if (this.getOwner() == player) {
+                this.startRiding(player);
+            }
+            return InteractionResult.SUCCESS;
+        } else if (this.isPassenger()) {
+            this.stopRiding();
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.FAIL;
     }
 
     @Override
@@ -856,6 +988,14 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (this.isDefeated()) {
+            //Reset the dog incapacitated healing time
+            //The dog is already weak, hurting the dog makes,
+            //the dog being weak for longer...
+            this.setDogHunger(0); 
+            return false;
+        }
+
         for (IDogAlteration alter : this.alterations) {
             InteractionResultHolder<Float> result = alter.attackEntityFrom(this, source, amount);
 
@@ -1682,6 +1822,7 @@ public class Dog extends AbstractDog {
      */
     @Override
     public boolean canInteract(LivingEntity livingEntity) {
+        if (this.isDefeated()) return false;
         return this.willObeyOthers() || this.isOwnedBy(livingEntity);
     }
 
@@ -2393,6 +2534,14 @@ public class Dog extends AbstractDog {
         //     return true;
         // }
 
+        if (this.isDefeated()) {
+            BlockState blockBelow = this.level.getBlockState(this.blockPosition());
+            boolean onBed = blockBelow.is(DoggyBlocks.DOG_BED.get()) || blockBelow.is(BlockTags.BEDS);
+            if (onBed) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -2517,11 +2666,12 @@ public class Dog extends AbstractDog {
 
     @Override
     protected void updateControlFlags() {
-        boolean flag = !(this.getControllingPassenger() instanceof ServerPlayer);
-        boolean flag1 = !(this.getVehicle() instanceof Boat);
-        this.goalSelector.setControlFlag(Goal.Flag.MOVE, flag);
-        this.goalSelector.setControlFlag(Goal.Flag.JUMP, flag && flag1);
-        this.goalSelector.setControlFlag(Goal.Flag.LOOK, flag);
+        boolean notIncapacitated = !this.isDefeated();
+        boolean notControlledByPlayer = !(this.getControllingPassenger() instanceof ServerPlayer);
+        boolean notRidingBoat = !(this.getVehicle() instanceof Boat);
+        this.goalSelector.setControlFlag(Goal.Flag.MOVE, notControlledByPlayer && notIncapacitated);
+        this.goalSelector.setControlFlag(Goal.Flag.JUMP, notControlledByPlayer && notRidingBoat);
+        this.goalSelector.setControlFlag(Goal.Flag.LOOK, notControlledByPlayer);
     }
 
     public float getTimeDogIsShaking() {
@@ -2535,5 +2685,17 @@ public class Dog extends AbstractDog {
             return 1.0f;
         }
     }
-    
+
+    public int getMaxIncapacitatedHunger() {
+        return 64;
+    }
+
+    public int getIncapacitatedMutiplier() {
+        return this.incapacitatedMutiplier;
+    }
+
+    public void setIncapacitatedMutiplier(int m) {
+        this.incapacitatedMutiplier = m;
+    }
+
 }
