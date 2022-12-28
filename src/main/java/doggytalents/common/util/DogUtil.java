@@ -1,6 +1,7 @@
 package doggytalents.common.util;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
@@ -409,6 +410,15 @@ public class DogUtil {
                 }
             }
         }
+    }
+
+    public static List<Dog> getOtherIncapacitatedDogNearby(Dog dog) {
+        int SEARCH_RADIUS = 12;
+        var l = dog.level.getEntitiesOfClass(
+            Dog.class, 
+            dog.getBoundingBox().inflate(SEARCH_RADIUS, 2, SEARCH_RADIUS),
+            d -> d.isDefeated());
+        return l;
     }
 
     public static boolean isSafeBlock() {
