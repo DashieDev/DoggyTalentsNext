@@ -1,6 +1,7 @@
 package doggytalents.client.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.model.DogModel;
@@ -33,34 +34,39 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
     }
 
     @Override
-    public void render(Dog entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-        if (entityIn.isDogWet()) {
-            float f = entityIn.getShadingWhileWet(partialTicks);
+    public void render(Dog dog, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+        if (dog.isDogWet()) {
+            float f = dog.getShadingWhileWet(partialTicks);
             this.model.setColor(f, f, f);
         }
 
-        super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+        super.render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
-        if (this.shouldShowName(entityIn)) {
+        if (this.shouldShowName(dog)) {
 
-            double d0 = this.entityRenderDispatcher.distanceToSqr(entityIn);
+            double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
             if (d0 <= 64 * 64) {
-                String tip = entityIn.getMode().getTip();
+                String tip = dog.getMode().getTip();
+                var hunger = Mth.ceil(
+                    (dog.isDefeated()?
+                    -(dog.getMaxIncapacitatedHunger() - dog.getDogHunger()) :
+                    dog.getDogHunger())
+                );
                 String label = String.format(ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) ? "%s(%d)%s" : "%s(%d)",
                         Component.translatable(tip).getString(),
-                        Mth.ceil(entityIn.getDogHunger()),
-                        Component.translatable(entityIn.getGender().getUnlocalisedTip()).getString());
+                        hunger,
+                        Component.translatable(dog.getGender().getUnlocalisedTip()).getString());
 
-                RenderUtil.renderLabelWithScale(entityIn, this, this.entityRenderDispatcher, label, matrixStackIn, bufferIn, packedLightIn, 0.01F, 0.12F);
+                RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, label, matrixStackIn, bufferIn, packedLightIn, 0.01F, 0.12F);
 
                 if (d0 <= 5 * 5 && this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()) {
-                    RenderUtil.renderLabelWithScale(entityIn, this, this.entityRenderDispatcher, entityIn.getOwnersName().orElseGet(() -> this.getNameUnknown(entityIn)), matrixStackIn, bufferIn, packedLightIn, 0.01F, -0.25F);
+                    RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, dog.getOwnersName().orElseGet(() -> this.getNameUnknown(dog)), matrixStackIn, bufferIn, packedLightIn, 0.01F, -0.25F);
                 }
             }
         }
 
 
-        if (entityIn.isDogWet()) {
+        if (dog.isDogWet()) {
             this.model.setColor(1.0F, 1.0F, 1.0F);
         }
     }
