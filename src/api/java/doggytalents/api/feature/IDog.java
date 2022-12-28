@@ -55,6 +55,9 @@ public interface IDog {
     public void addHunger(float add);
     public void setDogHunger(float hunger);
 
+    //Incapacitated
+    public boolean isDefeated();
+
     public boolean addAccessory(AccessoryInstance inst);
     public List<AccessoryInstance> getAccessories();
     public List<AccessoryInstance> removeAccessories();

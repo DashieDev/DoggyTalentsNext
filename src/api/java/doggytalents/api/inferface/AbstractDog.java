@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.google.common.base.Function;
 
 import doggytalents.api.feature.EnumGender;
+import doggytalents.api.feature.EnumMode;
 import doggytalents.api.feature.IDog;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -191,4 +192,8 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         }
     }
     //End : Re-adjust armor behaviour
+
+    public boolean isDefeated() {
+        return this.getMode() == EnumMode.INCAPACITATED;
+    }
 }

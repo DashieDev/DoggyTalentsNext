@@ -51,6 +51,20 @@ public class DoggyAccessories {
     public static final RegistryObject<LeatherArmourAccessory> LEATHER_BODY_PIECE = register("leather_body_piece", () -> new LeatherArmourAccessory(DoggyAccessoryTypes.CLOTHING, () -> Items.LEATHER_CHESTPLATE).setModelTexture(Resources.LEATHER_BODY_PIECE));
     public static final RegistryObject<LeatherArmourAccessory> LEATHER_BOOTS = register("leather_boots", () -> new LeatherArmourAccessory(DoggyAccessoryTypes.FEET, () -> Items.LEATHER_BOOTS).setModelTexture(Resources.LEATHER_BOOTS));
 
+    public static final RegistryObject<Accessory> INCAPACITATED_BLOOD = 
+        register("incapacitated_blood", 
+        () -> new IncapacitatedLayer.BLOOD() 
+            .setModelTexture(Resources.INCAPACITATED_BLOOD)
+            .setRenderer("IncapacitatedRenderer")
+        );
+    public static final RegistryObject<Accessory> INCAPACITATED_BURN = 
+        register("incapacitated_burn", 
+        () -> new IncapacitatedLayer.BURN()
+            .setModelTexture(Resources.INCAPACITATED_BURN)
+            .setRenderer("IncapacitatedRenderer")
+        );
+    public static final RegistryObject<Accessory> INCAPACITATED_POISON = register("incapacitated_poison", () -> new IncapacitatedLayer().setModelTexture(Resources.INCAPACITATED_POISON).setRenderer("IncapacitatedRenderer"));
+
     private static RegistryObject<Helmet> registerHelmet(final String name, final Supplier<? extends ItemLike> itemIn, ResourceLocation modelLocation) {
         return ACCESSORIES.register(name, () -> new Helmet(itemIn).setModelTexture(modelLocation));
     }
