@@ -198,7 +198,7 @@
    "dog.gender.unisex.subject": "they",
    "dog.gender.unisex.title": "unisex",
 
-   "dog.msg.low_hunger.0" : "%s: Woof, woof, wooooof? Woof, wooooof. (Can we get something to eat, i'm starving !)",
+   "dog.msg.low_hunger.0" : "%s: Woof, woof, wooooof? Woof, wooooof. (Can we get something to eat? i'm starving !)",
    "dog.msg.low_hunger.1" : "%s: Woof woooof (Food pls)",
    "dog.msg.low_hunger.2" : "%s: Woof woof woooof wooof? (Shall we eat now?)",
 
