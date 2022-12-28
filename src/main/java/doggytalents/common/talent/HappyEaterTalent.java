@@ -37,6 +37,8 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
 
     @Override
     public boolean canConsume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
+        if (dogIn.isDefeated()) return false;
+        
         if (this.level() >= 3) {
 
             Item item = stackIn.getItem();

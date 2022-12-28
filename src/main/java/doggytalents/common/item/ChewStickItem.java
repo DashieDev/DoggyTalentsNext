@@ -25,8 +25,8 @@ public class ChewStickItem extends Item implements IDogFoodHandler {
     }
 
     @Override
-    public boolean canConsume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
-        return true;
+    public boolean canConsume(AbstractDog dog, ItemStack stackIn, Entity entityIn) {
+        return !dog.isDefeated();
     }
 
     @Override

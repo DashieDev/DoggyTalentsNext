@@ -153,6 +153,7 @@
    "dog.mode.guard": "Guard",
    "dog.mode.guard_flat": "G. Flat",
    "dog.mode.guard_minor": "G. Minor",
+   "dog.mode.incapacitated": "Incapacitated",
 
    "dog.mode.wandering.indicator": "(W)",
    "dog.mode.tactical.indicator": "(T)",
@@ -177,7 +178,7 @@
    "dog.mode.guard_flat.description": "Guard Flat - Dogs behave the same as in Guard Mode but will not attack Piglins or Endermans.",
    "dog.mode.guard_minor.description": "Guard Minor - Dogs follow closely and if any monsters come close, he will growl to warn you. If the dog have Creeper Sweeper Talent, he will only detect creepers.",
 
-   "dog.mode.incapacitated.help": "%s is incapacitated and requires a cake to revive %s.",
+   "dog.mode.incapacitated.msg.partition1": "%sis now %s!",
    "dog.mode.docile.nobowl": "No food bowl currently set.",
    "dog.mode.docile.bowl": "Bowl distance: %d",
    "dog.mode.docile.distance": "Bowl to far away: %d",

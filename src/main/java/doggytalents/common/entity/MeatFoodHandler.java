@@ -26,8 +26,8 @@ public class MeatFoodHandler implements IDogFoodHandler {
     }
 
     @Override
-    public boolean canConsume(AbstractDog dogIn, ItemStack stackIn, @Nullable Entity entityIn) {
-        return this.isFood(stackIn);
+    public boolean canConsume(AbstractDog dog, ItemStack stackIn, @Nullable Entity entityIn) {
+        return this.isFood(stackIn) && !dog.isDefeated();
     }
 
     @Override
