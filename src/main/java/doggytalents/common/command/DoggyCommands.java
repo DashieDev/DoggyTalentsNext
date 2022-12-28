@@ -84,6 +84,10 @@ public class DoggyCommands {
                                         Commands.argument("dogUUID", StringArgumentType.string())
                                         .suggests(DoggyCommands.getDogIdSuggestionsLocate())
                                         .executes(c -> locate(c))
+                                        .then(
+                                            Commands.literal("tp")
+                                            .executes(c -> locateAndTP(c))
+                                        )
                         )))))
                     .then(
                         Commands.literal("revive")
@@ -104,6 +108,7 @@ public class DoggyCommands {
                                         Commands.argument("dogUUID", StringArgumentType.string())
                                         .suggests(DoggyCommands.getDogIdSuggestionsRevive())
                                         .executes(c -> respawn(c)))
+                                        
                         )))));                
 
     }
@@ -363,5 +368,41 @@ public class DoggyCommands {
         }
         return 1;
 
+    }
+
+    private static int locateAndTP(final CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        CommandSourceStack source = ctx.getSource();
+        source.getPlayerOrException(); // Check source is a player
+        ServerLevel world = source.getLevel();
+
+        String uuidStr = ctx.getArgument("dogUUID", String.class);
+
+        UUID uuid = null;
+
+        try {
+            uuid = UUID.fromString(uuidStr);
+        } catch (Exception e) {
+
+        }
+
+        if (uuid == null) {
+            throw BAD_UUID_STRING.create("null");
+        }
+
+        DogLocationStorage locationStorage = DogLocationStorage.get(world);
+        DogLocationData locationData = locationStorage.getData(uuid);
+
+        if (locationData == null) {
+            throw NOTFOUND_EXCEPTION.create(uuid.toString());
+        }
+
+        var player = source.getPlayer();
+        if (player == null) return 0;
+
+        DogLocationStorage.tryToLoadDogFromUnloadedPos(world, player, locationData);
+
+
+
+        return 1;
     }
 }

@@ -5,12 +5,17 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.NBTUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.Ticket;
+import net.minecraft.server.level.TicketType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
@@ -167,6 +172,15 @@ public class DogLocationStorage extends SavedData {
         compound.put("locationData", list);
 
         return compound;
+    }
+
+    public static void tryToLoadDogFromUnloadedPos(ServerLevel level, ServerPlayer owner, DogLocationData data) {
+
+        var b0 = new BlockPos(data.getPos());
+
+        ChunkPos chunkpos = new ChunkPos(b0);
+        if (level.hasChunk(b0.getX(), b0.getZ())) return;
+        level.getChunkSource().addRegionTicket(TicketType.POST_TELEPORT, chunkpos, 3, owner.getId(), true);
     }
 
 }
