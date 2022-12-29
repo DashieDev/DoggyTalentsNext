@@ -1,6 +1,7 @@
 package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
+import java.util.Optional;
 
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
@@ -33,7 +34,13 @@ public class PatrolModeGoal extends Goal {
     }
 
     @Override
-    public void tick() { 
+    public void start() {
+        //Reset BowlPos, force the dog to find new bowl
+        this.dog.setBowlPos(this.dog.level.dimension(), Optional.empty());
+    }
+
+    @Override
+    public void tick() {
         
     }
 

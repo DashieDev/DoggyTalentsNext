@@ -1,6 +1,7 @@
 package doggytalents.common.block.tileentity;
 
 import doggytalents.DoggyTileEntityTypes;
+import doggytalents.api.feature.EnumMode;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.inventory.container.FoodBowlContainer;
@@ -44,9 +45,13 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
         }
     };
     private final LazyOptional<ItemStackHandler> itemStackHandler = LazyOptional.of(() -> this.inventory);
+    
+    private boolean isPatrolAnchor;
 
+    private int patrolDistance;
 
     public int timeoutCounter;
+    
 
     public FoodBowlTileEntity(BlockPos pos, BlockState blockState) {
         super(DoggyTileEntityTypes.FOOD_BOWL.get(), pos, blockState);
@@ -56,12 +61,16 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
     public void load(CompoundTag compound) {
         super.load(compound);
         this.inventory.deserializeNBT(compound);
+        this.setPatrolAnchor(compound.getBoolean("isPatrolAnchor"));
+        this.setPatrolDistance(compound.getInt("patrolDistance"));
     }
 
     @Override
     public void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
         compound.merge(this.inventory.serializeNBT());
+        compound.putBoolean("isPatrolAnchor", this.isPatrolAnchor());
+        compound.putInt("patrolDistance", this.getPatrolDistance());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
@@ -78,7 +87,12 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
             //TODO make dog bowl remember who placed and only their dogs can attach to the bowl
             UUID placerId = bowl.getPlacerId();
             if (placerId != null && placerId.equals(dog.getOwnerUUID()) && !dog.getBowlPos().isPresent()) {
-                dog.setBowlPos(bowl.worldPosition);
+                if (dog.getMode() == EnumMode.PATROL) {
+                    if (bowl.isPatrolAnchor()) dog.setBowlPos(bowl.worldPosition);
+                } else {
+                    dog.setBowlPos(bowl.worldPosition);
+                }
+                
             }
 
             if (dog.getDogHunger() < dog.getMaxHunger() / 2) {
@@ -91,6 +105,22 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
 
     public ItemStackHandler getInventory() {
         return this.inventory;
+    }
+
+    public boolean isPatrolAnchor() {
+        return this.isPatrolAnchor;
+    }
+
+    public void setPatrolAnchor(boolean patrol) {
+        this.isPatrolAnchor = patrol;
+    }
+
+    public int getPatrolDistance() {
+        return this.patrolDistance;
+    }
+
+    public void setPatrolDistance(int distance) {
+        this.patrolDistance = distance;
     }
 
     @Nonnull

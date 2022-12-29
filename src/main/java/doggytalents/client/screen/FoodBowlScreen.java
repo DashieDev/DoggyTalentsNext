@@ -17,6 +17,13 @@ public class FoodBowlScreen extends AbstractContainerScreen<FoodBowlContainer> {
     }
 
     @Override
+    protected void init() {
+        super.init();
+        
+        
+    }
+
+    @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(stack);
         super.render(stack, mouseX, mouseY, partialTicks);
