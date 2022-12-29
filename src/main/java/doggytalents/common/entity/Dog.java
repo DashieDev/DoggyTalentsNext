@@ -227,6 +227,7 @@ public class Dog extends AbstractDog {
         //All mutex by nature
         this.goalSelector.addGoal(p, new GuardModeGoal.Minor(this));
         this.goalSelector.addGoal(p, new GuardModeGoal.Major(this));
+        this.goalSelector.addGoal(p, new PatrolModeGoal(this));
         ++p; 
         this.goalSelector.addGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
         this.goalSelector.addGoal(p, new DogMoveToBlockGoal(this));
