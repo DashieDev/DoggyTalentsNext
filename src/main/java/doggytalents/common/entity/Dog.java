@@ -590,8 +590,8 @@ public class Dog extends AbstractDog {
             this.addHunger(0.002f*this.getIncapacitatedMutiplier());
             if (!this.isInSittingPose())
                 this.setInSittingPose(true);
-            if (this.getOwner() != null && this.distanceToSqr(this.getOwner()) <= 16) {
-                this.addHunger(0.01f*this.getIncapacitatedMutiplier());
+            if (this.getOwner() != null && this.distanceToSqr(this.getOwner()) <= 100) {
+                this.addHunger(0.02f*this.getIncapacitatedMutiplier());
                 if (this.level instanceof ServerLevel && this.tickCount % 10 == 0) {
                     ((ServerLevel) this.level).sendParticles(
                         ParticleTypes.HEART, 
@@ -723,7 +723,7 @@ public class Dog extends AbstractDog {
                 }
             }
             return InteractionResult.SUCCESS;
-        } else if (stack.getItem() == Items.CAKE && this.getIncapacitatedMutiplier() < 5) {
+        } else if (stack.getItem() == Items.CAKE && this.getIncapacitatedMutiplier() < 2) {
 
             if (this.level instanceof ServerLevel) {
                 ParticlePackets.DogEatingParticlePacket
@@ -736,7 +736,7 @@ public class Dog extends AbstractDog {
                 (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F
             );
 
-            this.setIncapacitatedMutiplier(this.getIncapacitatedMutiplier()*5);
+            this.setIncapacitatedMutiplier(this.getIncapacitatedMutiplier()*2);
         } else if (stack.getItem() == Items.BONE && !this.isPassenger() && !player.isVehicle()) {
             if (this.getOwner() == player) {
                 this.startRiding(player);
