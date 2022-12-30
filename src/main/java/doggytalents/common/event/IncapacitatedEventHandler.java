@@ -24,7 +24,7 @@ public class IncapacitatedEventHandler {
         if (!ServerConfig.getConfig(ConfigHandler.SERVER.IMMORTAL_DOGS)) return;
         var e = ev.getEntity();
         //Can't save dog if dog is out of world
-        if (ev.getSource() == DamageSource.OUT_OF_WORLD) return;
+        if (ev.getSource().isBypassInvul()) return;
         if (e instanceof Dog d) { //TODO check based on var
             ev.setCanceled(true);
             d.setHealth(1);
