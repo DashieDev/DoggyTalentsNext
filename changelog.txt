@@ -223,3 +223,6 @@ v1.8.0 - 30th December 2022
   It now have been re-introduced. Which some notable improvements.
   + More info in the wiki.
 
+v1.8.1 - 30th December 2022
+* HOTFIX : if Incapacitated Dogs fall into the void, they will not die, but perhaps being deleted...   
+
