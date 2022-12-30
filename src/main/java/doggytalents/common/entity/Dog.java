@@ -989,7 +989,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (this.isDefeated()) {
+        if (this.isDefeated() && !source.isBypassInvul()) {
             //Reset the dog incapacitated healing time
             //The dog is already weak, hurting the dog makes,
             //the dog being weak for longer...
@@ -1665,7 +1665,7 @@ public class Dog extends AbstractDog {
             this.setGender(EnumGender.bySaveName(compound.getString("dogGender")));
 
             if (compound.contains("mode", Tag.TAG_STRING)) {
-                this.setMode(EnumMode.bySaveName(compound.getString("mode")));
+            this.setMode(EnumMode.bySaveName(compound.getString("mode")));
             } else {
                 // Read old mode id
                 BackwardsComp.readMode(compound, this::setMode);
