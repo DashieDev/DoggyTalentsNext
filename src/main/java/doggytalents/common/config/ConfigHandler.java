@@ -91,7 +91,7 @@ public class ConfigHandler {
                     .define("render_wings", false);
             RENDER_INCAPACITATED_TEXTURE = builder
                     .comment("When enabled, Dogs will show injured texture while incapacitated.")
-                    .comment("WARNING! A notable amount of blood and gore will be involved. Consider disabling if you cannot handle.")
+                    .comment("WARNING! A notable amount of graphic visuals will be involved. Consider disabling if you cannot handle.")
                     .translation("doggytalents.config.client.render_incapacitated_overlay")
                     .define("render_incapacitated_overlay", true);
 
