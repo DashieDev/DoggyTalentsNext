@@ -34,7 +34,6 @@ public class ChopinLogger {
         d.getOwner().sendSystemMessage(Component.literal("<" + d.getName().getString() + "> : " + s));
     }
 
-    public static boolean NO_INCAPACITATED = false;
 
     //For debugging purpose only
     private static boolean IS_DEBUG_ALLOW_DEATH = false;
@@ -44,7 +43,7 @@ public class ChopinLogger {
         if (IS_DEBUG_ALLOW_DEATH) return;
         var e = ev.getEntity();
         if (
-            (e instanceof Dog && NO_INCAPACITATED)
+            (e instanceof Dog && !IS_DEBUG_ALLOW_DEATH)
             || e instanceof Wolf
         ) {
             ev.setCanceled(true);
