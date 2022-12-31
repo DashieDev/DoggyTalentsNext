@@ -54,9 +54,9 @@ For more informations, please consult the [wiki](https://github.com/percivalalb/
  - **Q:** Which Minecraft versions are supported?  
    **A:** It is normally be the last two major releases, currently `1.16.x` and `1.17.x`. -->
  - **Q:** Are dogs no longer immortal?  
-   **A:** Unlike the previous versions, **dogs can die**. Fortunately, they can be revived. Visit the [Behaviour wiki](https://github.com/percivalalb/DoggyTalents/wiki/Behavior#immortality-only-mc-112-and-older-versions-for-mc-115) for more info.
+   **A:** Unlike the old versions, dog is not immortal by default, you can link them to a bed and they will respawn there. However, if you want immortal dogs, you can still enable the feature in your world. Visit [Immortal Dogs](https://github.com/DashieDev/DoggyTalentsNext/wiki/Immortal-Dogs) for more info.
  - **Q:** I have a wolf, how to get started?  
-   **A:** Use a **Training Treat** to turn him into a **DoggyTalents Dog**. Visit the [Getting Started wiki](https://github.com/percivalalb/DoggyTalents/wiki/Getting-Started) for more info.
+   **A:** Use a **Training Treat** to turn him into a **DoggyTalents Dog**. Visit the [Getting Started wiki](https://github.com/DashieDev/DoggyTalentsNext/wiki/Getting-Started) for more info.
 
 -----------------
 
