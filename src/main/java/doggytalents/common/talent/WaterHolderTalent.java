@@ -364,7 +364,7 @@ public class WaterHolderTalent extends TalentInstance {
                         // if (this.dog.distanceToSqr(this.target) >= 144.0D) {
                         //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                         // } else {
-                            this.dog.getNavigation().moveTo(this.target, 1);
+                            this.dog.getNavigation().moveTo(this.target, this.dog.getUrgentSpeedModifier());
                         //}
                     }
                 }
