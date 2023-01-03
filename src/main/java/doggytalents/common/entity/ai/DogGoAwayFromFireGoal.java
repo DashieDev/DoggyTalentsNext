@@ -120,6 +120,8 @@ public class DogGoAwayFromFireGoal extends Goal {
         if (isSafePos(safePos)) {
             if (n.isDone() && dog_bp.distSqr(safePos) <= 1 ) {
                 dog.getMoveControl().setWantedPosition(this.safePos.getX() + 0.5, this.safePos.getY(), this.safePos.getZ() + 0.5, 1.0);
+                //Prevent dog from locking into the safePos
+                safePos = null;
             }
 
             if (--this.tickUntilPathRecalc <= 0) {
