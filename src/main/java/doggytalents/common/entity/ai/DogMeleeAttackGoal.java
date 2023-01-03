@@ -5,7 +5,6 @@ import java.util.EnumSet;
 import org.jetbrains.annotations.NotNull;
 
 import doggytalents.api.feature.EnumMode;
-import doggytalents.client.block.model.DogBedItemOverride;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
@@ -199,8 +198,14 @@ public class DogMeleeAttackGoal extends Goal {
       }
       --this.ticksUntilPathRecalc;
       --this.ticksUntilNextAttack;
-
-      if (n.isDone() && dog_bp.distSqr(target_bp) <= 2.25 && !this.canReachTarget(e, d0)) {
+      
+      if (  
+         n.isDone() 
+         && dog_bp.distSqr(target_bp) <= 2.25 
+         && !this.canReachTarget(e, d0) 
+         //Make sure target is still in safe area 
+         && this.isTargetInSafeArea(dog, e)
+      ) {
          dog.getMoveControl().setWantedPosition(e.getX(), e.getY(), e.getZ(), this.speedModifier);
       }
       if(n.isDone() && !this.canReachTarget(e, d0)) {
@@ -274,6 +279,17 @@ public class DogMeleeAttackGoal extends Goal {
          return true;
       }
       return false;
+   }
+
+   protected boolean isTargetInSafeArea(Dog dog, LivingEntity target) {
+      var type = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, target.blockPosition().mutable());
+      for (var x : dog.getAlterations()) {
+         if (x.isBlockWalkable(dog, type).shouldSwing()) {
+            type = BlockPathTypes.WALKABLE;
+            break;
+         }
+      }
+      return type == BlockPathTypes.WALKABLE;
    }
 
    protected boolean canReachTarget (LivingEntity target,  double distanceToTargetSqr) {
