@@ -22,6 +22,9 @@ import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
+/**
+ * @author DashieDev
+ */
 public class DogMeleeAttackGoal extends Goal {
    protected final Dog dog;
    private final double speedModifier;
