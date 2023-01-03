@@ -8,6 +8,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.ai.goal.Goal;
 
+/**
+ * @author DashieDev
+ */
 public class DogFindWaterGoal extends Goal {
     private final int SEARCH_RANGE = 12;
 

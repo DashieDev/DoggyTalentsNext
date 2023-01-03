@@ -31,6 +31,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
+/**
+ * @author DashieDev
+ */
 public class WaterHolderTalent extends TalentInstance {
 
     private static DataKey<MoveToExtinguishGoal> WATER_HOLDER_DOG_AI = DataKey.make();

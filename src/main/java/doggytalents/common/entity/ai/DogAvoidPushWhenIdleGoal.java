@@ -8,6 +8,9 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
+/**
+ * @author DashieDev
+ */
 public class DogAvoidPushWhenIdleGoal extends Goal {
 
     private final float DISTANCE_HAZARD_CHECK = 0.5f;

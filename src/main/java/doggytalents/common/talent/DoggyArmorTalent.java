@@ -22,6 +22,9 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.MendingEnchantment;
 import net.minecraft.world.level.Level;
 
+/**
+ * @author DashieDev
+ */
 public class DoggyArmorTalent extends TalentInstance {
 
     protected DogArmorItemHandler armors;
