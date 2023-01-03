@@ -68,6 +68,9 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
        this.target = this.dog.level.getNearestEntity(this.targetType, this.targetConditions, this.dog, this.owner.getX(), this.owner.getEyeY(), this.owner.getZ(), this.getTargetSearchArea(this.getFollowDistance()));
     }
 
+    /**
+     * @author DashieDev
+     */
     public static class Minor extends Goal {
 
         private final Dog dog;
@@ -183,6 +186,9 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
 
     }
 
+    /**
+     * @author DashieDev
+     */
     public static class Major extends Goal {
 
         private final Dog dog;

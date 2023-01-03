@@ -212,7 +212,9 @@ public class RescueDogTalent extends TalentInstance {
 
     }
 
-
+    /**
+     * @author DashieDev
+     */
     public static class MoveToHealTargetGoal extends Goal {
 
         private Dog dog;

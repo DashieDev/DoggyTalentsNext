@@ -18,6 +18,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
+/**
+ * @author DashieDev
+ */
 public class DogLowHealthGoal extends Goal {
 
     private static final float LOW_HEALTH = 6;
