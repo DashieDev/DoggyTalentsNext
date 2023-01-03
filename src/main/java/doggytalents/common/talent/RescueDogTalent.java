@@ -173,8 +173,10 @@ public class RescueDogTalent extends TalentInstance {
                     
                     //is dog of the same owner
                     || ( 
-                        e instanceof AbstractDog
-                        && ((AbstractDog)e).getOwner() == dog.getOwner()
+                        e instanceof AbstractDog d
+                        && d.getOwner() == dog.getOwner()
+                        //dog is not defeated.
+                        && !d.isDefeated()
                     )
 
                     //is wolf of the same owner
