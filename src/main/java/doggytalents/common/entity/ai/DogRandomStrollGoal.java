@@ -11,6 +11,9 @@ import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
 
+/**
+ * @author DashieDev
+ */
 public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
 
     private Dog dog;

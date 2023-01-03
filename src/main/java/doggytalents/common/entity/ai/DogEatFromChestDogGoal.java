@@ -21,6 +21,9 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import java.util.EnumSet;
 import java.util.List;
 
+/**
+ * @author DashieDev
+ */
 public class DogEatFromChestDogGoal extends Goal {
 
     private Dog dog;

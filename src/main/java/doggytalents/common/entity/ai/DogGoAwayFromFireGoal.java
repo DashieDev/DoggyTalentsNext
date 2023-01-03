@@ -12,6 +12,9 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
+/**
+ * @author DashieDev
+ */
 public class DogGoAwayFromFireGoal extends Goal {
     private final int LAVA_SEARCH_RANGE = 4;
     private final int DEFAULT_SEARCH_RANGE = 2;

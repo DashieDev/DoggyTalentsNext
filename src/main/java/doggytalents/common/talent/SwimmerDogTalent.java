@@ -116,6 +116,9 @@ public class SwimmerDogTalent extends TalentInstance {
         return InteractionResult.PASS;
     }
 
+    /**
+     * @author DashieDev
+     */
     //TODO Maybe incoproate this into tick()
     public static class SwimmerDogGoal extends Goal {
 
