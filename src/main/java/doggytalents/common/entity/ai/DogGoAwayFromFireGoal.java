@@ -2,8 +2,10 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
+import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -195,86 +197,89 @@ public class DogGoAwayFromFireGoal extends Goal {
 
         //Ring Search is THE BEST!!!
 
-        var b0 = this.dog.blockPosition();
-        var b0m = b0.mutable();
+        // var b0 = this.dog.blockPosition();
+        // var b0m = b0.mutable();
         
-        int inflate = 1; // this is to prevent dog from repeating himself
-        while (inflate <= searchRangeXZ) {
-            final int minX = b0.getX() - inflate;
-            final int maxX = b0.getX() + inflate;
-            final int minZ = b0.getZ() - inflate;
-            final int maxZ = b0.getZ() + inflate;
+        // int inflate = 1; // this is to prevent dog from repeating himself
+        // while (inflate <= searchRangeXZ) {
+        //     final int minX = b0.getX() - inflate;
+        //     final int maxX = b0.getX() + inflate;
+        //     final int minZ = b0.getZ() - inflate;
+        //     final int maxZ = b0.getZ() + inflate;
 
-            b0m.setX(minX);
-            b0m.setZ(minZ);
-            //ChopinLogger.l("blockpos" + b0);
+        //     b0m.setX(minX);
+        //     b0m.setZ(minZ);
+        //     //ChopinLogger.l("blockpos" + b0);
 
-            if (inflate <= 0) {
-                //Maybe treat the center block as an optional return
-                //If nothing else outside satisfies this, then return this.
-                for (int j = -searchRangeY; j <= searchRangeY; ++j) {
-                    b0m.setY(b0.getY() + j);
-                    if (this.isSafePos(b0m)) {
-                        return b0m.immutable();
-                    }
-                }
-                ++inflate;
-                continue;
-            }
+        //     if (inflate <= 0) {
+        //         //Maybe treat the center block as an optional return
+        //         //If nothing else outside satisfies this, then return this.
+        //         for (int j = -searchRangeY; j <= searchRangeY; ++j) {
+        //             b0m.setY(b0.getY() + j);
+        //             if (this.isSafePos(b0m)) {
+        //                 return b0m.immutable();
+        //             }
+        //         }
+        //         ++inflate;
+        //         continue;
+        //     }
 
-            for (int i = minX; i <= maxX; ++i) {
-                b0m.setX(i);
-                //ChopinLogger.l("" + b0m);
-                for (int j = -searchRangeY; j <= searchRangeY; ++j) {
-                    b0m.setY(b0.getY() + j);
-                    if (this.isSafePos(b0m)) {
-                        return b0m.immutable();
-                    }
-                }
-            }
+        //     for (int i = minX; i <= maxX; ++i) {
+        //         b0m.setX(i);
+        //         //ChopinLogger.l("" + b0m);
+        //         for (int j = -searchRangeY; j <= searchRangeY; ++j) {
+        //             b0m.setY(b0.getY() + j);
+        //             if (this.isSafePos(b0m)) {
+        //                 return b0m.immutable();
+        //             }
+        //         }
+        //     }
 
-            //b0m: maxX, minZ
-            for (int i = minZ + 1; i <= maxZ; ++i) {
-                b0m.setZ(i);
-                //ChopinLogger.l("" + b0m);
-                for (int j = -searchRangeY; j <= searchRangeY; ++j) {
-                    b0m.setY(b0.getY() + j);
-                    if (this.isSafePos(b0m)) {
-                        return b0m.immutable();
-                    }
-                }
-            }
+        //     //b0m: maxX, minZ
+        //     for (int i = minZ + 1; i <= maxZ; ++i) {
+        //         b0m.setZ(i);
+        //         //ChopinLogger.l("" + b0m);
+        //         for (int j = -searchRangeY; j <= searchRangeY; ++j) {
+        //             b0m.setY(b0.getY() + j);
+        //             if (this.isSafePos(b0m)) {
+        //                 return b0m.immutable();
+        //             }
+        //         }
+        //     }
 
-            //b0m: maxX, maxZ
-            for (int i = maxX-1; i >= minX; --i) {
-                b0m.setX(i);
-                //ChopinLogger.l("" + b0m);
-                for (int j = -searchRangeY; j <= searchRangeY; ++j) {
-                    b0m.setY(b0.getY() + j);
-                    if (this.isSafePos(b0m)) {
-                        return b0m.immutable();
-                    }
-                }
-            }
+        //     //b0m: maxX, maxZ
+        //     for (int i = maxX-1; i >= minX; --i) {
+        //         b0m.setX(i);
+        //         //ChopinLogger.l("" + b0m);
+        //         for (int j = -searchRangeY; j <= searchRangeY; ++j) {
+        //             b0m.setY(b0.getY() + j);
+        //             if (this.isSafePos(b0m)) {
+        //                 return b0m.immutable();
+        //             }
+        //         }
+        //     }
 
-            //b0m: minX, maxZ
-            for (int i = maxZ - 1; i >= minZ + 1; --i) {
-                b0m.setZ(i);
-                //ChopinLogger.l("" + b0m);
-                for (int j = -searchRangeY; j <= searchRangeY; ++j) {
-                    b0m.setY(b0.getY() + j);
-                    if (this.isSafePos(b0m)) {
-                        return b0m.immutable();
-                    }
-                }
-            }
-            ++inflate;
-            //ChopinLogger.l("inflate!" + inflate);
-        }
+        //     //b0m: minX, maxZ
+        //     for (int i = maxZ - 1; i >= minZ + 1; --i) {
+        //         b0m.setZ(i);
+        //         //ChopinLogger.l("" + b0m);
+        //         for (int j = -searchRangeY; j <= searchRangeY; ++j) {
+        //             b0m.setY(b0.getY() + j);
+        //             if (this.isSafePos(b0m)) {
+        //                 return b0m.immutable();
+        //             }
+        //         }
+        //     }
+        //     ++inflate;
+        //     //ChopinLogger.l("inflate!" + inflate);
+        // }
 
-        //Ring Search is THE BEST!!!
+        // //Ring Search is THE BEST!!!
 
-        return null;
+        // return null;
+        
+        var x = CachedSearchUtil.ringSearchSafePosUsingPool(dog, dog.blockPosition(), searchRangeXZ, searchRangeY);
+        return x;
     }
 
     private boolean isSafePos(BlockPos pos) {
