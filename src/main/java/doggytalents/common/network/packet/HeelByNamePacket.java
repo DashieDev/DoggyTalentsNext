@@ -40,7 +40,7 @@ import net.minecraftforge.network.NetworkEvent.Context;
         var owner = ctx.get().getSender();
         dog.setOrderedToSit(data.heelAndSit);
         if (dog.isPassenger()) dog.stopRiding();
-        DogUtil.searchAndTeleportToOwner(dog, 2);
+        DogUtil.dynamicSearchAndTeleportToOwnwer(dog, 2);
         if (ConfigHandler.WHISTLE_SOUNDS)
         owner.level.playSound(null, owner.blockPosition(), DoggySounds.WHISTLE_LONG.get(), SoundSource.PLAYERS, 0.6F + owner.level.random.nextFloat() * 0.1F, 0.4F + owner.level.random.nextFloat() * 0.2F);
         owner.sendSystemMessage(Component.translatable("dogcommand.heel_by_name", dog.getName().getString()));
