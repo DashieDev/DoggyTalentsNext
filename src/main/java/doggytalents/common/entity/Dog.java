@@ -127,7 +127,7 @@ public class Dog extends AbstractDog {
     
     //Chopin LsStr
     private static final Cache<EntityDataAccessor<String>> CHOPIN_STR = Cache.make(() -> (EntityDataAccessor<String>) SynchedEntityData.defineId(Dog.class, DoggySerializers.STRING_CHOPIN_SER.get()));
-    private static final Cache<EntityDataAccessor<List<AccessoryInstance>>> CHOPIN_LS = Cache.make(() -> (EntityDataAccessor<List<AccessoryInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get()));
+    private static final Cache<EntityDataAccessor<List<String>>> CHOPIN_LS = Cache.make(() -> (EntityDataAccessor<List<String>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.STRLS_CHOPIN_SER.get()));
     
     private static final Cache<EntityDataAccessor<List<AccessoryInstance>>> ACCESSORIES =  Cache.make(() -> (EntityDataAccessor<List<AccessoryInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<List<TalentInstance>>> TALENTS = Cache.make(() -> (EntityDataAccessor<List<TalentInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.TALENT_SERIALIZER.get()));
@@ -658,6 +658,7 @@ public class Dog extends AbstractDog {
 
         if (!this.level.isClientSide) {
             this.markAccessoriesDirty();
+            this.markDataParameterDirty(CHOPIN_LS.get(), true);
         }
 
         if (this.isDefeated()) 
@@ -1671,7 +1672,13 @@ public class Dog extends AbstractDog {
             BackwardsComp.readAccessories(compound, accessories);
         }
 
-        this.entityData.set(CHOPIN_LS.get(), new ArrayList<AccessoryInstance>(accessories));
+        var newStrings = new ArrayList<String>();
+
+        newStrings.add("ChopinPresto");
+        newStrings.add("Rachmaninoff");
+        newStrings.add("Prelude");
+
+        this.entityData.set(CHOPIN_LS.get(), List.copyOf(newStrings));
         this.entityData.set(ACCESSORIES.get(), new ArrayList<AccessoryInstance>(accessories)); // Mark dirty so data is synced to client
 
         // Does what notifyDataManagerChange would have done but this way only does it once
@@ -1867,7 +1874,11 @@ public class Dog extends AbstractDog {
 
     @Override
     public List<AccessoryInstance> getAccessories() {
-        return new ArrayList<AccessoryInstance>(this.entityData.get(CHOPIN_LS.get()));
+        return this.entityData.get(ACCESSORIES.get());
+    }
+
+    public List<String> getChopinLs() {
+        return this.entityData.get(CHOPIN_LS.get());
     }
 
     @Override
@@ -1892,7 +1903,7 @@ public class Dog extends AbstractDog {
         accessories.add(accessoryInst);
 
         this.markDataParameterDirty(ACCESSORIES.get());
-        this.entityData.set(CHOPIN_LS.get(), accessories);
+        this.entityData.set(ACCESSORIES.get(), accessories);
 
         return true;
     }
