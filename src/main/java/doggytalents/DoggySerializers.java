@@ -24,6 +24,10 @@ public class DoggySerializers {
     public static final RegistryObject<EntityDataSerializer> DOG_LEVEL_SERIALIZER = register2("dog_level", DogLevelSerializer::new);
     public static final RegistryObject<EntityDataSerializer> BED_LOC_SERIALIZER = register2("dog_bed_location", BedLocationsSerializer::new);
 
+    //Chopin debug
+    public static final RegistryObject<EntityDataSerializer> STRING_CHOPIN_SER = register2("chopin_string", ChopinTestStringSerializer::new);
+    public static final RegistryObject<EntityDataSerializer> STRLS_CHOPIN_SER = register2("chopin_string_ls", ChopinListSerializer::new);
+
     private static <X extends EntityDataSerializer<?>> RegistryObject<EntityDataSerializer> register2(final String name, final Supplier<X> factory) {
         return register(name, () -> factory.get());
     }

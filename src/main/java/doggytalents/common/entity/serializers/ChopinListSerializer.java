@@ -1,16 +1,17 @@
 package doggytalents.common.entity.serializers;
 
-import doggytalents.ChopinLogger;
-import doggytalents.api.DoggyTalentsAPI;
-import doggytalents.api.registry.Accessory;
-import doggytalents.api.registry.AccessoryInstance;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.syncher.EntityDataSerializer;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccessorySerializer implements EntityDataSerializer<List<AccessoryInstance>> {
+import doggytalents.DoggyAccessories;
+import doggytalents.DoggyRegistries;
+import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.common.util.Util;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.syncher.EntityDataSerializer;
+
+public class ChopinListSerializer implements EntityDataSerializer<List<AccessoryInstance>>  {
 
     @Override
     public void write(FriendlyByteBuf buf, List<AccessoryInstance> value) {
@@ -28,7 +29,7 @@ public class AccessorySerializer implements EntityDataSerializer<List<AccessoryI
         List<AccessoryInstance> newInst = new ArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
-            Accessory type = buf.readRegistryIdUnsafe(DoggyTalentsAPI.ACCESSORIES.get());
+            var type = buf.readRegistryIdUnsafe(DoggyTalentsAPI.ACCESSORIES.get());
             newInst.add(type.createInstance(buf));
         }
 
@@ -45,5 +46,5 @@ public class AccessorySerializer implements EntityDataSerializer<List<AccessoryI
 
         return newInst;
     }
-
+    
 }

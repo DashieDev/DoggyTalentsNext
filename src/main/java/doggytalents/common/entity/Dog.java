@@ -118,13 +118,19 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<ItemStack> BONE_VARIANT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.ITEM_STACK);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
-    private static final Cache<EntityDataAccessor<List<AccessoryInstance>>> ACCESSORIES =  Cache.make(() -> (EntityDataAccessor<List<AccessoryInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<List<TalentInstance>>> TALENTS = Cache.make(() -> (EntityDataAccessor<List<TalentInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.TALENT_SERIALIZER.get()));
+    
     private static final Cache<EntityDataAccessor<DogLevel>> DOG_LEVEL = Cache.make(() -> (EntityDataAccessor<DogLevel>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<EnumGender>> GENDER = Cache.make(() -> (EntityDataAccessor<EnumGender>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<EnumMode>> MODE = Cache.make(() -> (EntityDataAccessor<EnumMode>) SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BED_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BOWL_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get()));
+    
+    //Chopin LsStr
+    private static final Cache<EntityDataAccessor<String>> CHOPIN_STR = Cache.make(() -> (EntityDataAccessor<String>) SynchedEntityData.defineId(Dog.class, DoggySerializers.STRING_CHOPIN_SER.get()));
+    private static final Cache<EntityDataAccessor<List<AccessoryInstance>>> CHOPIN_LS = Cache.make(() -> (EntityDataAccessor<List<AccessoryInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get()));
+    
+    private static final Cache<EntityDataAccessor<List<AccessoryInstance>>> ACCESSORIES =  Cache.make(() -> (EntityDataAccessor<List<AccessoryInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get()));
+    private static final Cache<EntityDataAccessor<List<TalentInstance>>> TALENTS = Cache.make(() -> (EntityDataAccessor<List<TalentInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.TALENT_SERIALIZER.get()));
 
     public static final void initDataParameters() {
         ACCESSORIES.get();
@@ -134,6 +140,9 @@ public class Dog extends AbstractDog {
         MODE.get();
         DOG_BED_LOCATION.get();
         DOG_BOWL_LOCATION.get();
+
+        CHOPIN_LS.get();
+        CHOPIN_STR.get(); 
     }
 
     // Cached values
@@ -190,6 +199,7 @@ public class Dog extends AbstractDog {
 
         this.defaultNavigation = this.navigation;
         this.defaultMoveControl = this.moveControl;
+        this.markAccessoriesDirty();
     }
 
     @Override
@@ -208,6 +218,10 @@ public class Dog extends AbstractDog {
         this.entityData.define(BONE_VARIANT, ItemStack.EMPTY);
         this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
         this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+    
+        this.entityData.define(CHOPIN_STR.get(), "Chopin Hello!");
+        this.entityData.define(CHOPIN_LS.get(), List.of());
+        
     }
 
     @Override
@@ -636,7 +650,15 @@ public class Dog extends AbstractDog {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
 
+        ChopinLogger.l("" + this.entityData.get(CHOPIN_STR.get()));
+
+        ChopinLogger.l("" + this.entityData.get(CHOPIN_LS.get()));
+        
         ItemStack stack = player.getItemInHand(hand);
+
+        if (!this.level.isClientSide) {
+            this.markAccessoriesDirty();
+        }
 
         if (this.isDefeated()) 
             return this.interactIncapacitated(stack, player, hand);
@@ -1629,10 +1651,13 @@ public class Dog extends AbstractDog {
             BackwardsComp.readTalentMapping(compound, talentMap);
         }
 
-        this.markDataParameterDirty(TALENTS.get(), false); // Mark dirty so data is synced to client
+        this.markDataParameterDirty(TALENTS.get(), true); // Mark dirty so data is synced to client
 
         List<AccessoryInstance> accessories = this.getAccessories();
-        accessories.clear();
+        //accessories.clear();
+
+        
+        this.entityData.set(CHOPIN_STR.get(), "Staccato");
 
         if (compound.contains("accessories", Tag.TAG_LIST)) {
             ListTag accessoryList = compound.getList("accessories", Tag.TAG_COMPOUND);
@@ -1646,7 +1671,8 @@ public class Dog extends AbstractDog {
             BackwardsComp.readAccessories(compound, accessories);
         }
 
-        this.markDataParameterDirty(ACCESSORIES.get(), false); // Mark dirty so data is synced to client
+        this.entityData.set(CHOPIN_LS.get(), new ArrayList<AccessoryInstance>(accessories));
+        this.entityData.set(ACCESSORIES.get(), new ArrayList<AccessoryInstance>(accessories)); // Mark dirty so data is synced to client
 
         // Does what notifyDataManagerChange would have done but this way only does it once
         this.recalculateAlterationsCache();
@@ -1776,7 +1802,7 @@ public class Dog extends AbstractDog {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (TALENTS.get().equals(key) || ACCESSORIES.get().equals(key)) {
+        if (TALENTS.get().equals(key) || ACCESSORIES.get().equals(key) || CHOPIN_LS.get().equals(key)) {
             this.recalculateAlterationsCache();
 
             for (IDogAlteration inst : this.alterations) {
@@ -1792,7 +1818,7 @@ public class Dog extends AbstractDog {
             this.spendablePoints.markForRefresh();
         }
 
-        if (ACCESSORIES.get().equals(key)) {
+        if (ACCESSORIES.get().equals(key) || CHOPIN_LS.get().equals(key)) {
             // If client sort accessories
             if (this.level.isClientSide) {
                 // Does not recall this notifyDataManagerChange as list object is
@@ -1841,7 +1867,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public List<AccessoryInstance> getAccessories() {
-        return this.entityData.get(ACCESSORIES.get());
+        return new ArrayList<AccessoryInstance>(this.entityData.get(CHOPIN_LS.get()));
     }
 
     @Override
@@ -1866,6 +1892,7 @@ public class Dog extends AbstractDog {
         accessories.add(accessoryInst);
 
         this.markDataParameterDirty(ACCESSORIES.get());
+        this.entityData.set(CHOPIN_LS.get(), accessories);
 
         return true;
     }
