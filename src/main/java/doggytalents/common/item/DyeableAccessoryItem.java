@@ -24,14 +24,4 @@ public class DyeableAccessoryItem extends AccessoryItem implements IDyeableArmor
         return this.accessory.get().create(this.getColor(stack));
     }
 
-
-    //TODO 1.19.3 ?? 
-    // @Override
-    // public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-    //     if (this.allowedIn(group)) {
-    //         ItemStack stack = new ItemStack(this);
-    //         this.setColor(stack, this.getDefaultColor(stack));
-    //         items.add(stack);
-    //     }
-    // }
 }
