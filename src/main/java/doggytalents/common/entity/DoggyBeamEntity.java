@@ -67,11 +67,10 @@ public class DoggyBeamEntity extends ThrowableProjectile implements IEntityAddit
         }
     }
 
-    //TODO ? 1.19.3
-    // @Override
-    // public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    //     return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
-    // }
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
+    }
 
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
