@@ -223,3 +223,19 @@ v1.8.0 - 30th December 2022
 v1.8.1 - 30th December 2022
 * HOTFIX : if Incapacitated Dogs fall into the void, they will not die, but perhaps being deleted...   
 
+v1.8.2 - 7th January 2023
++ HAPPY NEW YEAR !!!! 🎆🎉🎆🎉🦴🐶
+* CRITICAL BUG FIX : Accesories and Talents now properly in sync with the client.
+* BUG FIX : Upon a target is in lava but still close, a dog sometimes tries to "reach out" to it,
+Which cause a small chance of the dog slipping in lava.
+/ RescueDogs now don't heal Incapacitated Dogs, cause it only waste hunger.
+/ OPTIMIZED DOG EXPLICIT SAFE BLOCK SEARCH
+  + The procedure of the dog explicitly finding the safe position nearby a block
+  have been heavily optimized using Dynamic Programming, yet still, as tested,
+  retains the accuracy.
+/RescueDogs healing bonus chance is now :
+  + 20% : 3 ❤️
+  + 25% : 2 ❤️
+  + 30% : 1 ❤️
+  + rest : No
+/FireFighterDogs extinguish turn is now Unlimited when max level.
