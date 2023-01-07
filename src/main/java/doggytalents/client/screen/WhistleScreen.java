@@ -8,6 +8,8 @@ import org.antlr.v4.parse.ANTLRParser.parserRule_return;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.ChopinLogger;
+import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem;
 import doggytalents.common.item.WhistleItem.WhistleMode;
@@ -62,26 +64,20 @@ public class WhistleScreen extends Screen{
         //this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 
 
-        //TODO 1.19.3 ??
-        // Button s = new Button(3, 3, 20, 20, Component.literal("?"), b -> {} ) {
-        //     @Override
-        //     public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
-        //         List<Component> list = new ArrayList<>();
-        //         list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
-        //             .withStyle(Style.EMPTY.withBold(true)));
-        //         String str = I18n.get("doggytalents.screen.whistler.screen.help");
-        //         list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
+        Button help = new CustomButton(3, 3, 20, 20, Component.literal("?"), b -> {} ) {
+            @Override
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (!this.isHoveredOrFocused()) return;
+                List<Component> list = new ArrayList<>();
+                list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
+                    .withStyle(Style.EMPTY.withBold(true)));
+                String str = I18n.get("doggytalents.screen.whistler.screen.help");
+                list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
-        //         WhistleScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
-        //     }
-        // };
-
-        Button help = new Button.Builder(Component.literal("?"), b -> {})
-            .pos(3, 3)
-            .size(20, 20).build();
-
-        help.setTooltip(Tooltip.create(Component.translatable("doggytalents.screen.whistler.screen.help")));
-        
+                WhistleScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+            }
+        };
         
         this.addRenderableWidget(help);
     }

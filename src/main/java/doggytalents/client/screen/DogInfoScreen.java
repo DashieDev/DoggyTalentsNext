@@ -8,6 +8,7 @@ import doggytalents.api.feature.DogLevel.Type;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.registry.Talent;
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
@@ -154,79 +155,80 @@ public class DogInfoScreen extends Screen {
         //}
 
         
-        //TODO 1.19.3 ???
-        // Button modeBtn = new Button(topX + 40, topY + 25, 60, 20, Component.translatable(this.dog.getMode().getUnlocalisedName()), button -> {
-        //     EnumMode mode = DogInfoScreen.this.dog.getMode().nextMode();
+        Button modeBtn = new CustomButton(topX + 40, topY + 25, 60, 20, Component.translatable(this.dog.getMode().getUnlocalisedName()), button -> {
+            EnumMode mode = DogInfoScreen.this.dog.getMode().nextMode();
 
-        //     if (mode == EnumMode.WANDERING && !DogInfoScreen.this.dog.getBowlPos().isPresent()) {
-        //         button.setMessage(Component.translatable(mode.getUnlocalisedName()).withStyle(ChatFormatting.RED));
-        //     } else {
-        //         button.setMessage(Component.translatable(mode.getUnlocalisedName()));
-        //     }
+            if (mode == EnumMode.WANDERING && !DogInfoScreen.this.dog.getBowlPos().isPresent()) {
+                button.setMessage(Component.translatable(mode.getUnlocalisedName()).withStyle(ChatFormatting.RED));
+            } else {
+                button.setMessage(Component.translatable(mode.getUnlocalisedName()));
+            }
 
-        //     PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(DogInfoScreen.this.dog.getId(), mode));
-        // }) {
-        //     @Override
-        //     public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
-        //         List<Component> list = new ArrayList<>();
-        //         String str = I18n.get(dog.getMode().getUnlocalisedInfo());
-        //         list.addAll(ScreenUtil.splitInto(str, 150, DogInfoScreen.this.font));
-        //         if (DogInfoScreen.this.dog.getMode() == EnumMode.WANDERING) {
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(DogInfoScreen.this.dog.getId(), mode));
+        }) {
+            @Override
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (!this.isHoveredOrFocused()) return;
+                List<Component> list = new ArrayList<>();
+                String str = I18n.get(dog.getMode().getUnlocalisedInfo());
+                list.addAll(ScreenUtil.splitInto(str, 150, DogInfoScreen.this.font));
+                if (DogInfoScreen.this.dog.getMode() == EnumMode.WANDERING) {
 
 
-        //             if (DogInfoScreen.this.dog.getBowlPos().isPresent()) {
-        //                 double distance = DogInfoScreen.this.dog.blockPosition().distSqr(DogInfoScreen.this.dog.getBowlPos().get());
+                    if (DogInfoScreen.this.dog.getBowlPos().isPresent()) {
+                        double distance = DogInfoScreen.this.dog.blockPosition().distSqr(DogInfoScreen.this.dog.getBowlPos().get());
 
-        //                 if (distance > 256D) {
-        //                     list.add(Component.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(ChatFormatting.RED));
-        //                 } else {
-        //                     list.add(Component.translatable("dog.mode.docile.bowl", (int) Math.sqrt(distance)).withStyle(ChatFormatting.GREEN));
-        //                 }
-        //             } else {
-        //                 list.add(Component.translatable("dog.mode.docile.nobowl").withStyle(ChatFormatting.RED));
-        //             }
-        //         }
-
-        //         DogInfoScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
-        //     }
-        // };
-
-        Button modeBtn = new Button.Builder(
-                Component.translatable(this.dog.getMode().getUnlocalisedName()),
-                button -> {
-                    EnumMode mode = DogInfoScreen.this.dog.getMode().nextMode();
-        
-                    if (mode == EnumMode.WANDERING && !DogInfoScreen.this.dog.getBowlPos().isPresent()) {
-                        button.setMessage(Component.translatable(mode.getUnlocalisedName()).withStyle(ChatFormatting.RED));
+                        if (distance > 256D) {
+                            list.add(Component.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(ChatFormatting.RED));
+                        } else {
+                            list.add(Component.translatable("dog.mode.docile.bowl", (int) Math.sqrt(distance)).withStyle(ChatFormatting.GREEN));
+                        }
                     } else {
-                        button.setMessage(Component.translatable(mode.getUnlocalisedName()));
+                        list.add(Component.translatable("dog.mode.docile.nobowl").withStyle(ChatFormatting.RED));
                     }
-        
-                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(DogInfoScreen.this.dog.getId(), mode));
                 }
-            )
-                .pos(topX + 40, topY + 25)
-                .size(60, 20).build();
+
+                DogInfoScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+            }
+        };
+
+        // Button modeBtn = new Button.Builder(
+        //         Component.translatable(this.dog.getMode().getUnlocalisedName()),
+        //         button -> {
+        //             EnumMode mode = DogInfoScreen.this.dog.getMode().nextMode();
+        
+        //             if (mode == EnumMode.WANDERING && !DogInfoScreen.this.dog.getBowlPos().isPresent()) {
+        //                 button.setMessage(Component.translatable(mode.getUnlocalisedName()).withStyle(ChatFormatting.RED));
+        //             } else {
+        //                 button.setMessage(Component.translatable(mode.getUnlocalisedName()));
+        //             }
+        
+        //             PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(DogInfoScreen.this.dog.getId(), mode));
+        //         }
+        //     )
+        //         .pos(topX + 40, topY + 25)
+        //         .size(60, 20).build();
 
         //TODO 1.19.2 TEMP
-        var c1 = Component.literal(I18n.get(dog.getMode().getUnlocalisedInfo()) + "  ");
+        // var c1 = Component.literal(I18n.get(dog.getMode().getUnlocalisedInfo()) + "  ");
 
-        if (DogInfoScreen.this.dog.getMode() == EnumMode.WANDERING) {
+        // if (DogInfoScreen.this.dog.getMode() == EnumMode.WANDERING) {
 
 
-            if (DogInfoScreen.this.dog.getBowlPos().isPresent()) {
-                double distance = DogInfoScreen.this.dog.blockPosition().distSqr(DogInfoScreen.this.dog.getBowlPos().get());
+        //     if (DogInfoScreen.this.dog.getBowlPos().isPresent()) {
+        //         double distance = DogInfoScreen.this.dog.blockPosition().distSqr(DogInfoScreen.this.dog.getBowlPos().get());
 
-                if (distance > 256D) {
-                    c1.append(Component.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(ChatFormatting.RED));
-                } else {
-                    c1.append(Component.translatable("dog.mode.docile.bowl", (int) Math.sqrt(distance)).withStyle(ChatFormatting.GREEN));
-                }
-            } else {
-                c1.append(Component.translatable("dog.mode.docile.nobowl").withStyle(ChatFormatting.RED));
-            }
-        }
-        //END TEMP
+        //         if (distance > 256D) {
+        //             c1.append(Component.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(ChatFormatting.RED));
+        //         } else {
+        //             c1.append(Component.translatable("dog.mode.docile.bowl", (int) Math.sqrt(distance)).withStyle(ChatFormatting.GREEN));
+        //         }
+        //     } else {
+        //         c1.append(Component.translatable("dog.mode.docile.nobowl").withStyle(ChatFormatting.RED));
+        //     }
+        // }
+        // //END TEMP
 
         
 
@@ -305,32 +307,24 @@ public class DogInfoScreen extends Screen {
             
             
             {
-                //TODO 1.19.3 ??? 
-                // @Override
-                // public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
-                //     List<Component> list = new ArrayList<>();
+                @Override
+                public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                    super.render(stack, mouseX, mouseY, pTicks);
+                    if (!this.isHoveredOrFocused()) return;
+                    List<Component> list = new ArrayList<>();
 
-                //     list.add(Component.translatable(talent.getTranslationKey()).withStyle(ChatFormatting.GREEN));
-                //     if (this.active) {
-                //         list.add(Component.literal("Level: " + DogInfoScreen.this.dog.getDogLevel(talent)));
-                //         list.add(Component.literal("--------------------------------").withStyle(ChatFormatting.GRAY));
-                //         list.addAll(ScreenUtil.splitInto(I18n.get(talent.getInfoTranslationKey()), 200, DogInfoScreen.this.font));
-                //     } else {
-                //         list.add(Component.literal("Talent disabled").withStyle(ChatFormatting.RED));
-                //     }
+                    list.add(Component.translatable(talent.getTranslationKey()).withStyle(ChatFormatting.GREEN));
+                    if (this.active) {
+                        list.add(Component.literal("Level: " + DogInfoScreen.this.dog.getDogLevel(talent)));
+                        list.add(Component.literal("--------------------------------").withStyle(ChatFormatting.GRAY));
+                        list.addAll(ScreenUtil.splitInto(I18n.get(talent.getInfoTranslationKey()), 200, DogInfoScreen.this.font));
+                    } else {
+                        list.add(Component.literal("Talent disabled").withStyle(ChatFormatting.RED));
+                    }
 
-                //     DogInfoScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
-                // }
+                    DogInfoScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                }
             };
-            //TODO 1.19.3 TEMP 
-            var c1 = Component.literal("");
-            
-            c1.append(Component.literal("Level: " + DogInfoScreen.this.dog.getDogLevel(talent) + " - "));
-            
-            c1.append(Component.literal(I18n.get(talent.getInfoTranslationKey())));
-
-            button.setTooltip(Tooltip.create(c1));
-            //END TEMP
 
             button.active = ConfigHandler.TALENT.getFlag(talent);
 
