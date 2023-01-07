@@ -2,7 +2,7 @@ package doggytalents.common.talent;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
+import java.util.function.Predicate;
 
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.feature.EnumMode;
@@ -21,7 +21,7 @@ import net.minecraft.world.entity.player.Player;
 
 public class RescueDogTalent extends TalentInstance {
 
-    private List<LivingEntity> healTargets = new ArrayList<LivingEntity>();
+    private final ArrayList<LivingEntity> healTargets = new ArrayList<LivingEntity>();
     private final int SEARCH_RADIUS = 12; //const ?? maybe can improve thru talents
     private int searchCoolDown;
     private int nextSearchTick = 0;
@@ -61,7 +61,7 @@ public class RescueDogTalent extends TalentInstance {
                 this.searchCoolDown = 10;
                 this.nextSearchTick = dog.tickCount + this.searchCoolDown;
     
-                this.healTargets = this.getEntitiesToHeal(dog);
+                this.refreshTargetsToHeal(dog);
             }
         }
 
@@ -91,8 +91,6 @@ public class RescueDogTalent extends TalentInstance {
             cost = 20;
         }
 
-        
-
         return cost;
     }
 
@@ -104,18 +102,18 @@ public class RescueDogTalent extends TalentInstance {
         float chance = dog.getRandom().nextFloat();
 
         /*
-         * 10% : 3 Hearts
-         * 20% : 1 Hearts
-         * 30% : 0.5 Hearts
-         * 40% : No
+         * 20% : 3 Hearts
+         * 25% : 2 Hearts
+         * 30% : 1 Hearts
+         * 25% : No
          */
-        if (this.level() >= 3 )
-            if (chance > 0.9) {
+        if ( this.level() >= 3 )
+            if (chance > 0.8) {
                 bonus = 3;
-            } else if (chance > 0.7) {
+            } else if (chance > 0.55) {
+                bonus = 2;
+            } else if (chance > 0.25) {
                 bonus = 1;
-            } else if (chance > 0.4) {
-                bonus = 0.5f;
             }
 
         return Mth.floor(this.level() * 1.5D) + bonus*2;
@@ -161,34 +159,44 @@ public class RescueDogTalent extends TalentInstance {
         );
     }
 
-    private List<LivingEntity> getEntitiesToHeal(AbstractDog dog) {
-        return dog.level.getEntitiesOfClass(LivingEntity.class, dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS), 
-            e -> 
-            
-                //Low health entities
-                (this.isTargetLowHealth(dog, e)) && (
+    private void refreshTargetsToHeal(AbstractDog dog) {
+        this.healTargets.clear();
+        Predicate<LivingEntity> lowHealthAndInWitness =
+            e -> this.isTargetLowHealth(dog, e) 
+                && (dog.hasLineOfSight(e));
+        
+        //Get owner 
+        var owner = dog.getOwner();
+        if (owner != null && lowHealthAndInWitness.test(owner)) {
+            this.healTargets.add(owner);
+        }
+        
+        //Get Dogs of the same owner
+        var dogs = dog.level.getEntitiesOfClass(
+            AbstractDog.class,    
+            dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
+            d -> (
+                    d.getOwner() == dog.getOwner()
+                    && lowHealthAndInWitness.test(d)
+                )
+            );
+        if (!dogs.isEmpty()) {
+            this.healTargets.addAll(dogs);
+        }
 
-                    // is Dog's Owner
-                    (dog.getOwner() == e) 
-                    
-                    //is dog of the same owner
-                    || ( 
-                        e instanceof AbstractDog d
-                        && d.getOwner() == dog.getOwner()
-                        //dog is not defeated.
-                        && !d.isDefeated()
-                    )
+        //Get Wolves of the same owner
+        var wolves = dog.level.getEntitiesOfClass(
+            Wolf.class,    
+            dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
+            w -> (
+                    w.getOwner() == dog.getOwner()
+                    && lowHealthAndInWitness.test(w)
+                )
+            );
+        if (!wolves.isEmpty()) {
+            this.healTargets.addAll(wolves);
+        }
 
-                    //is wolf of the same owner
-                    || ( 
-                        e instanceof Wolf
-                        && ((Wolf)e).getOwner() == dog.getOwner()
-                    )
-
-                //can see target
-                ) && (dog.hasLineOfSight(e))
-
-        );
     }
 
     private LivingEntity selectHealTarget(AbstractDog dog) {
