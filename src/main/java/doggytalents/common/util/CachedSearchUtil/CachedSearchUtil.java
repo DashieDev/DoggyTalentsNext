@@ -207,7 +207,7 @@ public class CachedSearchUtil {
         return count;
     }
 
-    public static BlockPos getRandomSafePosUsingPool(Dog dog, BlockPos targetPos, int realRadiusXZ, int realRadiusY) {
+    public static BlockPos getRandomSafePosUsingPool(Dog dog, BlockPos targetPos, boolean exludeInfrontOfOwner, int realRadiusXZ, int realRadiusY) {
         // ChopinLogger.l("Begining search: unit: nanoseconds");
         // long startTime = System.nanoTime();
         int poolXZ = realRadiusXZ+1;
@@ -219,7 +219,7 @@ public class CachedSearchUtil {
         populatePoolRaw(dog, targetPos, poolXZ, poolY);
         // long stopTime1 = System.nanoTime();
         //     ChopinLogger.l("populate collision in : " + (stopTime1-startTime1) + " nanoseconds");
-        populateCollideOwner(dog, poolXZ, poolY);
+        if (exludeInfrontOfOwner) populateCollideOwner(dog, poolXZ, poolY);
         populateBlockCollision(dog, poolXZ, poolY);
         populateDangerPos(dog, poolXZ, poolY);
         populateWalkablePos(dog, poolXZ, poolY);

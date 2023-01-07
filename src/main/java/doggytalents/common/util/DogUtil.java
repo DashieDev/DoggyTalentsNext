@@ -63,7 +63,11 @@ public class DogUtil {
      */
     public static boolean dynamicSearchAndTeleportToOwnwer(Dog dog, int radius) {
     
-        var target = CachedSearchUtil.getRandomSafePosUsingPool(dog, dog.getOwner().blockPosition(), radius, 1);
+        var target = CachedSearchUtil.getRandomSafePosUsingPool(
+            dog, dog.getOwner().blockPosition(),
+            dog.getOwner().isSprinting(),
+            radius, 1
+        );
    
         if (target == null) {
             return false;
