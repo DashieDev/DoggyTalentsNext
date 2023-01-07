@@ -639,12 +639,12 @@ public class Dog extends AbstractDog {
 
         ItemStack stack = player.getItemInHand(hand);
 
-        if (!this.level.isClientSide && stack.getItem() == Items.STONE_AXE) {
-            long startTime = System.nanoTime();
-            CachedSearchUtil.getRandomSafePosUsingPool(this, this.blockPosition(), 4, 2);
-            long stopTime = System.nanoTime();
-            ChopinLogger.l("get random pos " + (stopTime-startTime) + " nanoseconds." );
-        }
+        // if (!this.level.isClientSide && stack.getItem() == Items.STONE_AXE) {
+        //     long startTime = System.nanoTime();
+        //     CachedSearchUtil.getRandomSafePosUsingPool(this, this.blockPosition(), 4, 2);
+        //     long stopTime = System.nanoTime();
+        //     ChopinLogger.l("get random pos " + (stopTime-startTime) + " nanoseconds." );
+        // }
 
         if (this.isDefeated()) 
             return this.interactIncapacitated(stack, player, hand);
