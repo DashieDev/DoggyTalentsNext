@@ -3,6 +3,7 @@ package doggytalents.common.talent;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.function.Predicate;
 
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.feature.EnumMode;
@@ -39,7 +40,7 @@ public class WaterHolderTalent extends TalentInstance {
     private static DataKey<MoveToExtinguishGoal> WATER_HOLDER_DOG_AI = DataKey.make();
 
     private static int EFFECT_RANGE = 5;
-    private static int SEARCH_RANGE = 12;
+    private static int SEARCH_RADIUS = 12;
 
     private int waterUnitLeft;
 
@@ -49,7 +50,7 @@ public class WaterHolderTalent extends TalentInstance {
     private int tickScheduledForExtinguish = 0;
     private boolean scheduledExtinguish = false;
 
-    private List<LivingEntity> targets = new ArrayList<LivingEntity>();
+    private final ArrayList<LivingEntity> targets = new ArrayList<LivingEntity>();
 
     public WaterHolderTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -106,7 +107,7 @@ public class WaterHolderTalent extends TalentInstance {
 
         if (!dog.isInSittingPose() && (d.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) && --this.ticktillSearch <= 0) {
             this.ticktillSearch = 10;
-            this.targets = this.searchForOnFireEntity(dog);
+            this.refreshOnFireTargets(dog);
         }
         if (scheduledExtinguish && dog.tickCount >= this.tickScheduledForExtinguish) {
             this.extinguishNearby(dog);
@@ -127,12 +128,21 @@ public class WaterHolderTalent extends TalentInstance {
                 if (player.isShiftKeyDown()) {
                     var c1 = Component.translatable("talent.doggytalents.water_holder.amount");
                     c1.append(Component.literal(": "));
-                    c1.append(Component.literal("" +this.getWaterUnitleft())
+                    if (this.level < this.talent.getMaxLevel()) {
+                        c1.append(Component.literal("" +this.getWaterUnitleft())
                         .withStyle(
                             Style.EMPTY.withBold(true)
                             .withColor(0x03a5fc)
                         ));
-                    c1.append(Component.literal("/" + this.getMaxWaterHold()));
+                        c1.append(Component.literal("/" + this.getMaxWaterHold()));
+                    } else {
+                        c1.append(Component.translatable("talent.doggytalents.water_holder.amount.unlim")
+                        .withStyle(
+                            Style.EMPTY.withBold(true)
+                            .withColor(0x03a5fc)
+                        ));
+                    }
+                    
                     player.sendSystemMessage(c1);
                     return InteractionResult.SUCCESS;
                 }
@@ -250,32 +260,44 @@ public class WaterHolderTalent extends TalentInstance {
         );
     } 
 
-    private List<LivingEntity> searchForOnFireEntity(AbstractDog dog) {
-        return dog.level.getEntitiesOfClass(LivingEntity.class, dog.getBoundingBox().inflate(SEARCH_RANGE, 4, SEARCH_RANGE), 
-            e -> 
-            
-                //Low health entities
-                (e.isOnFire()) && (
+    private void refreshOnFireTargets(AbstractDog dog) {
+        this.targets.clear();
+        Predicate<LivingEntity> onFireAndWitness =
+            e -> e.isOnFire()
+                && (dog.hasLineOfSight(e));
+        
+        //Get owner 
+        var owner = dog.getOwner();
+        if (owner != null && onFireAndWitness.test(owner)) {
+            this.targets.add(owner);
+        }
+        
+        //Get Dogs of the same owner
+        var dogs = dog.level.getEntitiesOfClass(
+            AbstractDog.class,    
+            dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
+            d -> (
+                    d.getOwner() == dog.getOwner()
+                    && onFireAndWitness.test(d)
+                )
+            );
+        if (!dogs.isEmpty()) {
+            this.targets.addAll(dogs);
+        }
 
-                    // is Dog's Owner
-                    (dog.getOwner() == e) 
-                    
-                    //is dog of the same owner
-                    || ( 
-                        e instanceof AbstractDog
-                        && ((AbstractDog)e).getOwner() == dog.getOwner()
-                    )
+        //Get Wolves of the same owner
+        var wolves = dog.level.getEntitiesOfClass(
+            Wolf.class,    
+            dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
+            w -> (
+                    w.getOwner() == dog.getOwner()
+                    && onFireAndWitness.test(w)
+                )
+            );
+        if (!wolves.isEmpty()) {
+            this.targets.addAll(wolves);
+        }
 
-                    //is wolf of the same owner
-                    || ( 
-                        e instanceof Wolf
-                        && ((Wolf)e).getOwner() == dog.getOwner()
-                    )
-
-                //can see target
-                ) && (dog.hasLineOfSight(e))
-
-        );
     }
 
     private LivingEntity selectOnFireTarget(AbstractDog dog) {
@@ -306,7 +328,7 @@ public class WaterHolderTalent extends TalentInstance {
     }
 
     private boolean canAffordToExtinguish(AbstractDog dog) {
-        return this.getWaterUnitleft() > 0;
+        return this.getWaterUnitleft() > 0 || this.level() >= this.talent.getMaxLevel();
     }
 
     //TODO There is seems like a pattern emerging from this
