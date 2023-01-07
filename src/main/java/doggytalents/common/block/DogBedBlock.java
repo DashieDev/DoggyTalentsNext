@@ -261,16 +261,6 @@ public class DogBedBlock extends BaseEntityBlock {
         }
     }
 
-    //TODO 1.19.3
-    // @Override
-    // public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-    //     for (IBeddingMaterial beddingId : DoggyTalentsAPI.BEDDING_MATERIAL.get().getValues()) {
-    //         for (ICasingMaterial casingId : DoggyTalentsAPI.CASING_MATERIAL.get().getValues()) {
-    //             items.add(DogBedUtil.createItemStack(casingId, beddingId));
-    //         }
-    //     }
-    // }
-
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
         DogBedTileEntity dogBedTileEntity = WorldUtil.getTileEntity(world, pos, DogBedTileEntity.class);
