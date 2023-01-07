@@ -9,6 +9,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.ChopinLogger;
+import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.HeelByNameData;
@@ -77,29 +78,30 @@ public class HeelByNameScreen extends Screen {
         //this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         this.rect = new Rect2i(0, 0,500, 500);
         
-        //TODO 1.19.3 ?? 
-        // Button showUuid = new Button(3, 3, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
-        //     btn.setMessage(Component.translatable("doggytalents.screen.whistler.heel_by_name."
-        //         + (this.showUuid? "show" : "hide")
-        //         +"_uuid"));
-        //     this.showUuid = !this.showUuid;
-        // });
+        Button showUuid = new CustomButton(3, 3, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
+            btn.setMessage(Component.translatable("doggytalents.screen.whistler.heel_by_name."
+                + (this.showUuid? "show" : "hide")
+                +"_uuid"));
+            this.showUuid = !this.showUuid;
+        });
 
-        // Button help = new Button(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
-        //     @Override
-        //     public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
-        //         List<Component> list = new ArrayList<>();
-        //         list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
-        //             .withStyle(Style.EMPTY.withBold(true)));
-        //         String str = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
-        //         list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
+        Button help = new CustomButton(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
+            @Override
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (!this.isHoveredOrFocused()) return;
+                List<Component> list = new ArrayList<>();
+                list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
+                    .withStyle(Style.EMPTY.withBold(true)));
+                String str = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
+                list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
 
-        //         HeelByNameScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
-        //     }
-        // };
+                HeelByNameScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+            }
+        };
         
-        // this.addRenderableWidget(showUuid);
-        // this.addRenderableWidget(help);
+        this.addRenderableWidget(showUuid);
+        this.addRenderableWidget(help);
     }
 
  
