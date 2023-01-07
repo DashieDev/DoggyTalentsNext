@@ -123,6 +123,8 @@
    "talent.doggytalents.roaring_gale.miss": "Roar and a miss...",
    "talent.doggytalents.wolf_mount.exhausted": "%s: Woooff, woof, woof woofff (Food Please)",
    "talent.doggytalents.water_holder.amount": "Current amount of water in the dog's fur",
+   "talent.doggytalents.water_holder.amount.unlim": "Unlimited",
+
    "talent.doggytalents.puppy_eyes.msg.1.line.1": "Villager: Cute dog! Take good care of %s.",
    "talent.doggytalents.puppy_eyes.msg.1.line.2": "Here, %s can have some pork.",
    "talent.doggytalents.puppy_eyes.msg.2.line.1": "Villager: Awww, who's a good %s?",
@@ -203,7 +205,7 @@
    "dog.msg.low_hunger.1" : "%s: Woof woooof (Food pls)",
    "dog.msg.low_hunger.2" : "%s: Woof woof woooof wooof? (Shall we eat now?)",
 
-   "dog.msg.low_health.0" : "%s: Woof wooooof wooooooooof. (I don't feel so good.)",
+   "dog.msg.low_health.0" : "%s: Woof wooooof wooooooooof. (I don't feel so good.)@",
    "dog.msg.low_health.1" : "%s: Woof woof woof wooof (I may need some help here....)",
    "dog.msg.low_health.2" : "%s: Woof woof wooof? (Should we run?)",
 
