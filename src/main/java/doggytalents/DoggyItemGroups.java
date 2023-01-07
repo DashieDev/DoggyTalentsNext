@@ -15,6 +15,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static doggytalents.DoggyItems.*;
+import static doggytalents.DoggyBlocks.*;
 
 public class DoggyItemGroups {
 
@@ -57,6 +58,8 @@ public class DoggyItemGroups {
                 b.accept(TINY_BONE.get());
                 b.accept(BIG_BONE.get());
                 b.accept(OWNER_CHANGE.get());
+                b.accept(DOG_BATH.get());
+                b.accept(FOOD_BOWL.get());
             });
 
         GENERAL = ev.registerCreativeModeTab(Util.getResource("tabgeneral"), GENERAL_BUILDER);
