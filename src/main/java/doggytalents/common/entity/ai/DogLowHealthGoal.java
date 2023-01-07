@@ -74,7 +74,6 @@ public class DogLowHealthGoal extends Goal {
         this.whine = true;
 
         DogUtil.dynamicSearchAndTeleportToOwnwer(dog, 4);
-        ChopinLogger.l("Low Health started!");
     }
 
     @Override

@@ -16,8 +16,6 @@ import static doggytalents.common.util.CachedSearchUtil.PoolValues.*;
 
 import java.util.ArrayList;
 
-import doggytalents.ChopinLogger;
-
 public class CachedSearchUtil {
 
     public static void resetPool(Dog dog, int radiusXZ, int radiusY) {
@@ -232,11 +230,6 @@ public class CachedSearchUtil {
         var a1 = owner.getYHeadRot();
         var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
         var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
-        ChopinLogger.outputToFile(
-            "name = " + dog.getName().getString() + "\n"
-            + "0, 0, 0 = " + bMin + "\n"
-            + "OwnerLookVec = " + dx1 + ", " + dz1 + "\n"
-            + dumpPool(dog, poolXZ, poolY) + "\n\n"); 
         int maxXZ = poolXZ*2-1;
         int maxY = poolY*2-1;
         var safePosList = new ArrayList<BlockPos>(); 

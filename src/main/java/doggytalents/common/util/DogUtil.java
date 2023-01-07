@@ -8,7 +8,6 @@ import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NotNull;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import net.minecraft.core.BlockPos;
