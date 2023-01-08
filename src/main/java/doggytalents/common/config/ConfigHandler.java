@@ -58,6 +58,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RENDER_SADDLE;
         public ForgeConfigSpec.BooleanValue RENDER_WINGS;
         public ForgeConfigSpec.BooleanValue RENDER_INCAPACITATED_TEXTURE;
+        public ForgeConfigSpec.BooleanValue RENDER_HEALTH_IN_NAME;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -94,6 +95,11 @@ public class ConfigHandler {
                     .comment("WARNING! A notable amount of graphic visuals will be involved. Consider disabling if you cannot handle.")
                     .translation("doggytalents.config.client.render_incapacitated_overlay")
                     .define("render_incapacitated_overlay", true);
+            RENDER_HEALTH_IN_NAME = builder
+                .comment("When sneaking, a part of the dog's name will be rendered with a certain color")
+                .comment("and the length of the part is based on the health percentage the dog has left")
+                .translation("doggytalents.config.client.render_health_in_name")
+                .define("render_health_in_name", true);
 
             builder.pop();
         }
