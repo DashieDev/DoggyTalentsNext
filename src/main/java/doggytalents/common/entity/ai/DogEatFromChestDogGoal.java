@@ -22,6 +22,9 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import java.util.EnumSet;
 import java.util.List;
 
+/**
+ * @author DashieDev
+ */
 public class DogEatFromChestDogGoal extends Goal {
 
     private Dog dog;
@@ -57,6 +60,7 @@ public class DogEatFromChestDogGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         if (this.chestDog == null) return false;
+        if (this.chestDog.distanceToSqr(this.dog) > 144) return false;
         return this.dog.getDogHunger() <= 80 || (this.dog.getHealth() <= 6 && this.dog.getDogHunger() < this.dog.getMaxHunger() );
     }
 

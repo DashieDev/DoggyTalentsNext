@@ -1,13 +1,16 @@
 package doggytalents.common.util;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NotNull;
 
+import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -41,6 +44,31 @@ public class DogUtil {
      */
     public static boolean searchAndTeleportToOwner(Dog dog, int radius) {
         var target = chooseSafePosNearOwner(dog, radius);
+        
+        teleportInternal(dog, target);
+        
+        return true;
+    }
+
+    /**
+     * This is a search for Tp Pos procedure which is heavily optimized using Dynamic Programming
+     * This is going to use lazy search by first getting every single block type on its own without
+     * regards to surroundings and store the result into a pool, and every further calculation 
+     * (like Danger block, Collide with owner, Collide with block ...) will be calculated only
+     * in that pool without further getChunk, which take a lot of time somehow. 
+     * 
+     * @param dog The Dog who will teleport
+     * @param radius Radius of the area to search for block to teleport
+     * @return true if teleport is success.
+     */
+    public static boolean dynamicSearchAndTeleportToOwnwer(Dog dog, int radius) {
+    
+        var target = CachedSearchUtil.getRandomSafePosUsingPool(
+            dog, dog.getOwner().blockPosition(),
+            dog.getOwner().isSprinting(),
+            radius, 1
+        );
+   
         if (target == null) {
             return false;
         }
@@ -86,7 +114,6 @@ public class DogUtil {
         BlockPos finaltp = safeblockposes.get(EntityUtil.getRandomNumber(dog, 0, safeblockposes.size() - 1));
         return finaltp;
     }
-
 
     /**
      * Dog will pick randomly 10 block around the owner per call to this function 
@@ -397,7 +424,7 @@ public class DogUtil {
         var distance = dog.distanceToSqr(owner);
         if (!dog.isLeashed() && !dog.isPassenger()) {
             if (distance >= distanceToForceTeleportSqr) {
-                if (forceTeleport) DogUtil.searchAndTeleportToOwner(dog, 4);
+                if (forceTeleport) DogUtil.dynamicSearchAndTeleportToOwnwer(dog, 4);
             } else {
                 if (distance >= distanceToTeleportSqr) {
                     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
@@ -409,6 +436,15 @@ public class DogUtil {
                 }
             }
         }
+    }
+
+    public static List<Dog> getOtherIncapacitatedDogNearby(Dog dog) {
+        int SEARCH_RADIUS = 12;
+        var l = dog.level.getEntitiesOfClass(
+            Dog.class, 
+            dog.getBoundingBox().inflate(SEARCH_RADIUS, 2, SEARCH_RADIUS),
+            d -> d.isDefeated());
+        return l;
     }
 
     public static boolean isSafeBlock() {

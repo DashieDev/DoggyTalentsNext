@@ -123,6 +123,8 @@
    "talent.doggytalents.roaring_gale.miss": "Roar and a miss...",
    "talent.doggytalents.wolf_mount.exhausted": "%s: Woooff, woof, woof woofff (Food Please)",
    "talent.doggytalents.water_holder.amount": "Current amount of water in the dog's fur",
+   "talent.doggytalents.water_holder.amount.unlim": "Unlimited",
+
    "talent.doggytalents.puppy_eyes.msg.1.line.1": "Villager: Cute dog! Take good care of %s.",
    "talent.doggytalents.puppy_eyes.msg.1.line.2": "Here, %s can have some pork.",
    "talent.doggytalents.puppy_eyes.msg.2.line.1": "Villager: Awww, who's a good %s?",
@@ -153,6 +155,7 @@
    "dog.mode.guard": "Guard",
    "dog.mode.guard_flat": "G. Flat",
    "dog.mode.guard_minor": "G. Minor",
+   "dog.mode.incapacitated": "Incapacitated",
 
    "dog.mode.wandering.indicator": "(W)",
    "dog.mode.tactical.indicator": "(T)",
@@ -177,7 +180,7 @@
    "dog.mode.guard_flat.description": "Guard Flat - Dogs behave the same as in Guard Mode but will not attack Piglins or Endermans.",
    "dog.mode.guard_minor.description": "Guard Minor - Dogs follow closely and if any monsters come close, he will growl to warn you. If the dog have Creeper Sweeper Talent, he will only detect creepers.",
 
-   "dog.mode.incapacitated.help": "%s is incapacitated and requires a cake to revive %s.",
+   "dog.mode.incapacitated.msg.partition1": "%sis now %s!",
    "dog.mode.docile.nobowl": "No food bowl currently set.",
    "dog.mode.docile.bowl": "Bowl distance: %d",
    "dog.mode.docile.distance": "Bowl to far away: %d",
@@ -198,11 +201,11 @@
    "dog.gender.unisex.subject": "they",
    "dog.gender.unisex.title": "unisex",
 
-   "dog.msg.low_hunger.0" : "%s: Woof, woof, wooooof? Woof, wooooof. (Can we get something to eat, i'm starving !)",
+   "dog.msg.low_hunger.0" : "%s: Woof, woof, wooooof? Woof, wooooof. (Can we get something to eat? i'm starving !)",
    "dog.msg.low_hunger.1" : "%s: Woof woooof (Food pls)",
    "dog.msg.low_hunger.2" : "%s: Woof woof woooof wooof? (Shall we eat now?)",
 
-   "dog.msg.low_health.0" : "%s: Woof wooooof wooooooooof. (I don't feel so good.)",
+   "dog.msg.low_health.0" : "%s: Woof wooooof wooooooooof. (I don't feel so good.)@",
    "dog.msg.low_health.1" : "%s: Woof woof woof wooof (I may need some help here....)",
    "dog.msg.low_health.2" : "%s: Woof woof wooof? (Should we run?)",
 

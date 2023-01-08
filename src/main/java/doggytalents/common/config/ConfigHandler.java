@@ -57,7 +57,8 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RENDER_ARMOUR;
         public ForgeConfigSpec.BooleanValue RENDER_SADDLE;
         public ForgeConfigSpec.BooleanValue RENDER_WINGS;
-        public ForgeConfigSpec.BooleanValue RENDER_BLOOD;
+        public ForgeConfigSpec.BooleanValue RENDER_INCAPACITATED_TEXTURE;
+        public ForgeConfigSpec.BooleanValue RENDER_HEALTH_IN_NAME;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -89,10 +90,16 @@ public class ConfigHandler {
                     .comment("When enabled, Dogs will have wings when at level 5 pillow paw.")
                     .translation("doggytalents.config.client.render_wings")
                     .define("render_wings", false);
-            RENDER_BLOOD = builder
-                    .comment("When enabled, Dogs will show blood texture while incapacitated.")
+            RENDER_INCAPACITATED_TEXTURE = builder
+                    .comment("When enabled, Dogs will show injured texture while incapacitated.")
+                    .comment("WARNING! A notable amount of graphic visuals will be involved. Consider disabling if you cannot handle.")
                     .translation("doggytalents.config.client.render_incapacitated_overlay")
                     .define("render_incapacitated_overlay", true);
+            RENDER_HEALTH_IN_NAME = builder
+                .comment("When sneaking, a part of the dog's name will be rendered with a certain color")
+                .comment("and the length of the part is based on the health percentage the dog has left")
+                .translation("doggytalents.config.client.render_health_in_name")
+                .define("render_health_in_name", true);
 
             builder.pop();
         }
@@ -116,6 +123,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.IntValue TIME_TO_MATURE;
         public ForgeConfigSpec.BooleanValue DOG_WHINE_WHEN_HUNGER_LOW;
         public ForgeConfigSpec.BooleanValue EAT_FOOD_ON_FLOOR;
+        public ForgeConfigSpec.BooleanValue IMMORTAL_DOGS;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -157,6 +165,12 @@ public class ConfigHandler {
                     .comment("When enabled dogs will path and eat editable items in the world.")
                     .translation("doggytalents.config.eat_food_on_floor")
                     .define("eat_food_on_floor", true);
+            IMMORTAL_DOGS = builder
+                .comment("When enabled dogs cannot be killed by any mean (except void damage, in that case you can still respawn your dog using his linked bed or commands).")
+                .comment("Instead, when his health reaches Zero, he will go into Incapacitated Mode.")
+                .comment("WARNING: A notable amount of graphic visuals is involved, consider disabling Rendering Incapacitated Texture if you cannot handle.")
+                .translation("doggytalents.config.immortal_dogs")
+                .define("immortal_dogs", false);
 
             builder.pop();
 

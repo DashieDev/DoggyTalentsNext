@@ -18,6 +18,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
+/**
+ * @author DashieDev
+ */
 public class DogLowHealthGoal extends Goal {
 
     private static final float LOW_HEALTH = 6;
@@ -71,7 +74,7 @@ public class DogLowHealthGoal extends Goal {
         this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
         this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.whine = true;
-        DogUtil.searchAndTeleportToOwner(dog, 4);
+        DogUtil.dynamicSearchAndTeleportToOwnwer(dog, 4);
         ChopinLogger.l("Low Health started!");
     }
 

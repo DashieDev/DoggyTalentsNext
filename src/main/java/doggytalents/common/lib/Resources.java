@@ -56,6 +56,10 @@ public class Resources {
     public static final ResourceLocation LEATHER_BODY_PIECE = getEntity("dog", "armor/leather_body");
     public static final ResourceLocation NETHERITE_BODY_PIECE = getEntity("dog", "armor/netherite_body");
 
+    public static final ResourceLocation INCAPACITATED_BLOOD = getEntity("dog", "doggy_hurt/blood");
+    public static final ResourceLocation INCAPACITATED_BURN = getEntity("dog", "doggy_hurt/burn");
+    public static final ResourceLocation INCAPACITATED_POISON = getEntity("dog", "doggy_hurt/poison");
+
     public static ResourceLocation getEntity(String type, String textureFileName) {
         return Util.getResource("textures/entity/" + type + "/" + textureFileName + ".png");
     }

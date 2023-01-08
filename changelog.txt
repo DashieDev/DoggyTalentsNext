@@ -204,3 +204,22 @@ performance and effectiveness.
 in GUARD_MINOR mode
 + RecuesDogs now become silent in Guard Minor, this allows them to focus on guarding
 the owner or other guard dogs' health instead without interfering with Creeper Detection.
+
+v1.8.0 - 30th December 2022
+/ Dogs will now only eat from ChestDogs of the same owner
+/ Improved Dog Commands :
+  + Respawn and Locate commands now accept an additional optional argument, which is the dog
+  UUID, which can be fetched via Intellisense based on the preceeding dogName argument.
+  This make it easier when two dogs who have the same name need to be respawned.
+* BUG FIX : 
+  / Bug : Upon using the tp command to tp the dog too far away, the location data failed to Update
+  and you lose track of your beloved friend.
+  + Dog location is now forced to update whenever a dog is about to be untracked.
++ INCAPACITATED MODE/ IMMORTAL DOGS :
+  + This is one of the feature that is a huge part of Classic Doggy Talents. 
+  It now have been re-introduced. Which some notable improvements.
+  + More info in the wiki.
+
+v1.8.1 - 30th December 2022
+* HOTFIX : if Incapacitated Dogs fall into the void, they will not die, but perhaps being deleted...   
+
