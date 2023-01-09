@@ -57,7 +57,7 @@ public class DTRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.RADIO_COLLAR.get(), 1).pattern("XX").pattern("YX").define('X', Items.IRON_INGOT).define('Y', Items.REDSTONE).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.RADAR.get(), 1).requires(Items.MAP, 1).requires(Items.REDSTONE, 1).requires(DoggyItems.RADIO_COLLAR.get(), 1).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
 
-        ShapedRecipeBuilder.shaped(DoggyItems.CONDUCTING_BONE.get(), 1).pattern(" B ").pattern("RBR").pattern("PEP").define('P', Items.SHULKER_SHELL).define('E', Items.END_CRYSTAL).define('B', Items.BONE).define('R', Items.NETHERITE_INGOT).unlockedBy("has_shulker_shell", has(Items.SHULKER_SHELL)).save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.CONDUCTING_BONE.get(), 1).pattern(" B ").pattern("RBR").pattern("PEP").define('P', Items.SHULKER_SHELL).define('E', Items.END_CRYSTAL).define('B', Items.BONE).define('R', Items.NETHERITE_INGOT).unlockedBy("has_shulker_shell", has(Items.SHULKER_SHELL)).save(consumer);
 
         SpecialRecipeBuilder.special(DoggyRecipeSerializers.DOG_BED.get()).save(consumer, Util.getResourcePath("dog_bed"));
     }

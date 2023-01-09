@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "doggytalents:master_treat"
@@ -18,7 +19,7 @@
     }
   ],
   "result": {
-    "item": "doggytalents:breeding_bone",
-    "count": 2
+    "count": 2,
+    "item": "doggytalents:breeding_bone"
   }
 }

@@ -1,15 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "SSS",
-    "S S",
-    "SSS"
-  ],
+  "category": "misc",
   "key": {
     "S": {
       "item": "minecraft:string"
     }
   },
+  "pattern": [
+    "SSS",
+    "S S",
+    "SSS"
+  ],
   "result": {
     "item": "doggytalents:wool_collar"
   }

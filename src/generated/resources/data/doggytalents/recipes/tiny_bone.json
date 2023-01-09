@@ -1,9 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "BI",
-    "IB"
-  ],
+  "category": "misc",
   "key": {
     "B": {
       "item": "minecraft:bone"
@@ -12,6 +9,10 @@
       "item": "minecraft:iron_ingot"
     }
   },
+  "pattern": [
+    "BI",
+    "IB"
+  ],
   "result": {
     "item": "doggytalents:tiny_bone"
   }

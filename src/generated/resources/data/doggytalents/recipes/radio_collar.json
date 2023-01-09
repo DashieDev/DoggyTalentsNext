@@ -1,9 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "YX"
-  ],
+  "category": "equipment",
   "key": {
     "X": {
       "item": "minecraft:iron_ingot"
@@ -12,6 +9,10 @@
       "item": "minecraft:redstone"
     }
   },
+  "pattern": [
+    "XX",
+    "YX"
+  ],
   "result": {
     "item": "doggytalents:radio_collar"
   }

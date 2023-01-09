@@ -60,6 +60,7 @@ public class DoggyItemGroups {
                 b.accept(OWNER_CHANGE.get());
                 b.accept(DOG_BATH.get());
                 b.accept(FOOD_BOWL.get());
+                b.accept(CONDUCTING_BONE.get());
             });
 
         GENERAL = ev.registerCreativeModeTab(Util.getResource("tabgeneral"), GENERAL_BUILDER);
