@@ -5,6 +5,7 @@ import doggytalents.DoggyItems;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.talent.HunterDogTalent;
+import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -15,13 +16,29 @@ import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.TickEvent.Phase;
+import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EventHandler {
+
+    @SubscribeEvent
+    public void onServerTickEnd(final ServerTickEvent event) {
+
+        if (event.phase != Phase.END || !event.haveTime()) return;
+
+        DogAsyncTaskManager.tick();
+    }
+
+    @SubscribeEvent
+    public void onServerStop(final ServerStoppingEvent event) {
+        DogAsyncTaskManager.forceStop();
+    }
 
     @SubscribeEvent
     public void rightClickEntity(final PlayerInteractEvent.EntityInteract event) {
