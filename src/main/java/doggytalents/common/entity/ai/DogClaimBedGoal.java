@@ -9,28 +9,28 @@ import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
-public class DogMoveToBlockGoal extends Goal {
+public class DogClaimBedGoal extends Goal {
 
     protected final Dog dog;
 
-    public DogMoveToBlockGoal(Dog dogIn) {
+    public DogClaimBedGoal(Dog dogIn) {
         this.dog = dogIn;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
 
     @Override
     public boolean canUse() {
-        return this.dog.getTargetBlock() != null && !this.dog.isOrderedToSit();
+        return this.dog.getTargetBed() != null && !this.dog.isOrderedToSit();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return this.dog.isPathFinding() && !this.dog.getTargetBlock().closerToCenterThan(this.dog.position(), 0.5);
+        return this.dog.isPathFinding() && !this.dog.getTargetBed().closerToCenterThan(this.dog.position(), 0.5);
     }
 
     @Override
     public void stop() {
-        BlockPos target = this.dog.getTargetBlock();
+        BlockPos target = this.dog.getTargetBed();
 
         DogBedTileEntity dogBedTileEntity = WorldUtil.getTileEntity(dog.level, target, DogBedTileEntity.class);
 
@@ -50,7 +50,7 @@ public class DogMoveToBlockGoal extends Goal {
 
     @Override
     public void start() {
-        BlockPos target = this.dog.getTargetBlock();
+        BlockPos target = this.dog.getTargetBed();
         this.dog.getNavigation().moveTo((target.getX()) + 0.5D, target.getY() + 1, (target.getZ()) + 0.5D, 1.0D);
     }
 

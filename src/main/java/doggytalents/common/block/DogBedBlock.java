@@ -178,24 +178,24 @@ public class DogBedBlock extends BaseEntityBlock {
                     worldIn.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
                     return InteractionResult.SUCCESS;
                 } else if (player.isShiftKeyDown() && dogBedTileEntity.getOwnerUUID() == null) {
-                    List<Dog> dogs = worldIn.getEntities(DoggyEntityTypes.DOG.get(), new AABB(pos).inflate(10D), (dog) -> dog.isAlive() && dog.isOwnedBy(player));
+                    List<Dog> dogs = worldIn.getEntities(DoggyEntityTypes.DOG.get(), new AABB(pos).inflate(10D), (dog) -> dog.isAlive() && dog.isOwnedBy(player) && !dog.isOrderedToSit());
                     Collections.sort(dogs, new EntityUtil.Sorter(new Vec3(pos.getX(), pos.getY(), pos.getZ())));
 
-                    Dog closestStanding = null;
-                    Dog closestSitting = null;
-                    for (Dog dog : dogs) {
-                        if (closestSitting != null && closestSitting != null) {
-                            break;
-                        }
+                    // Dog closestStanding = null;
+                    // Dog closestSitting = null;
+                    // for (Dog dog : dogs) {
+                    //     if (closestSitting != null && closestSitting != null) {
+                    //         break;
+                    //     }
 
-                        if (closestSitting == null && dog.isInSittingPose()) {
-                            closestSitting = dog;
-                        } else if (closestStanding == null && !dog.isInSittingPose()) {
-                            closestStanding = dog;
-                        }
-                    }
+                    //     if (closestSitting == null && dog.isInSittingPose()) {
+                    //         closestSitting = dog;
+                    //     } else if (closestStanding == null && !dog.isInSittingPose()) {
+                    //         closestStanding = dog;
+                    //     }
+                    // }
 
-                    Dog closests = closestStanding != null ? closestStanding : closestSitting;
+                    Dog closests = dogs.isEmpty() ? null : dogs.get(0);
                     if (closests != null) {
                         closests.setTargetBlock(pos);
                     }
