@@ -2,6 +2,7 @@ package doggytalents.common.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
@@ -10,10 +11,18 @@ import org.jetbrains.annotations.NotNull;
 
 import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.storage.DogLocationData;
+import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
+import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
+import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToBedPromise;
+import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToOwnerPromise;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -279,6 +288,16 @@ public class DogUtil {
         }
     }
 
+    public static boolean isTeleportSafeBlockMidAir(Dog dog, BlockPos pos) {
+        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
+        if (pathnodetype != BlockPathTypes.OPEN) {
+            return false;
+        } else {
+            var blockpos = pos.subtract(dog.blockPosition());
+            return dog.level.noCollision(dog, dog.getBoundingBox().move(blockpos));
+        }
+    }
+
 
     /**
      * <p>Let the context be in a 2d Cartesian system</p>
@@ -472,6 +491,41 @@ public class DogUtil {
             dog.getBoundingBox().inflate(SEARCH_RADIUS, 2, SEARCH_RADIUS),
             d -> d.isDefeated());
         return l;
+    }
+
+    public static void attemptToTeleportDogNearbyOrSendPromise(@Nonnull UUID dogUUID, @Nonnull ServerPlayer owner) {
+        if (owner.level instanceof ServerLevel sLevel) {
+            var e = sLevel.getEntity(dogUUID);
+            if (e != null && e instanceof Dog d) {
+                dynamicSearchAndTeleportToOwnwer(d, 4);
+            } else {
+                DogLocationStorage storage = DogLocationStorage.get(sLevel);
+                DogLocationData data = storage.getData(dogUUID);
+                if (data == null) return;
+                var pos = new BlockPos(data.getPos());
+
+                DogAsyncTaskManager.addPromiseWithOwner(
+                    new DogDistantTeleportToOwnerPromise(dogUUID, owner, pos),
+                    owner
+                );
+            }
+        }
+    }
+
+    public static void attemptToTeleportDogToBedOrSendPromise(@Nonnull Dog dog) {
+        var bedPos = dog.getBedPos();
+        if (!bedPos.isPresent()) return;
+        var chunkpos = new ChunkPos(bedPos.get());
+        if (dog.level.hasChunk(chunkpos.x, chunkpos.z)) {
+            if (isTeleportSafeBlockMidAir(dog, bedPos.get().above())) {
+                teleportInternal(dog, bedPos.get().above());
+            }
+        } else if (dog.getOwner() != null && dog.getOwner() instanceof ServerPlayer sP) {
+            DogAsyncTaskManager.addPromiseWithOwner(
+                new DogDistantTeleportToBedPromise(dog),
+                sP
+            );
+        }
     }
 
     public static boolean isSafeBlock() {
