@@ -42,6 +42,7 @@
    "item.doggytalents.big_bone": "Big Bone",
    "item.doggytalents.owner_change": "Change Dog Owner",
    "item.doggytalents.guard_suit" : "Guard Suit",
+   "item.doggytalents.conducting_bone": "Conducting Bone",
 
    "item.doggytalents.cape_coloured.tooltip": "Color: %s",
    "item.doggytalents.wool_collar.tooltip": "Color: %s",
@@ -230,6 +231,9 @@
    "doggytalents.screen.whistler.heel_by_name.help_title" : "Heel By Name Help",
    "doggytalents.screen.whistler.heel_by_name.help" : "Use the Up and Down arrow to select the dog you want to heel, you can also type to search for your dog's name. Press enter to finish the command. Additionally, pressing Enter while holding the Shift key will make the dog Heel then Sit. Esc to cancel.",
    "doggytalents.screen.whistler.heel_by_name.no_dog_found" : "No dogs were found in this area.", 
+   "doggytalents.screen.conducting_bone.help" : "Use the Up and Down arrow to select the dog you want to teleport, you can also type to search for your dog's name. Press enter to finish the command. Esc to cancel.",
+   "doggytalents.screen.conducting_bone.help_title" : "Conducting Bone Menu Help",
+   "doggytalents.screen.conducting_bone.no_dog_found" : "No dog found in this dimension.",
 
    "doggui.prevpage": "Previous Page",
    "doggui.nextpage": "Next Page",
@@ -261,7 +265,7 @@
    "dogradar.notindim": "**** Signals coming from %s too ****",
    "dogradar.errornoradio": "**** Remember to put radio collar on your dog ****",
    "dogradar.errornull": "**** No dogs found in %s! ****",
-   "dogradar.errorown": "**** You do not own %s! Please ensure you have permission to interact with %d! ****",
+   "dogradar.errorown": "**** You do not own %s! Please ensure that you have permission to interact with %d! ****",
 
    "title.doggytalents.config": "Doggy Talents Configurations",
    "modgui.config.doggysettings": "Dog Behavior Settings",
