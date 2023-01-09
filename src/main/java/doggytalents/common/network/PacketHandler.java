@@ -28,6 +28,9 @@ public final class PacketHandler {
         registerPacket(new CritEmitterPacket(), CritEmitterData.class); 
         registerPacket(new DogEatingParticlePacket(), DogEatingParticleData.class);
         registerPacket(new DogStartShakingLavaPacket(), DogStartShakingLavaData.class);
+        registerPacket(new ConductingBonePackets.RequestDogsPacket(), ConductingBoneData.RequestDogsData.class);
+        registerPacket(new ConductingBonePackets.ResponseDogsPackets(), ConductingBoneData.ResponseDogsData.class);
+        registerPacket(new ConductingBonePackets.RequestDistantTeleportDogPacket(), ConductingBoneData.RequestDistantTeleportDogData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
