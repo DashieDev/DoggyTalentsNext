@@ -42,6 +42,7 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> SPOTTED_COLLAR = registerAccessory("spotted_collar", DoggyAccessories.SPOTTED_COLLAR);
     public static final RegistryObject<AccessoryItem> MULTICOLOURED_COLLAR = registerAccessory("multicoloured_collar", DoggyAccessories.MULTICOLORED_COLLAR);
     public static final RegistryObject<Item> RADAR = registerWith("radar", RadarItem::new, 1);
+    public static final RegistryObject<Item> CONDUCTING_BONE = registerWithFireResistant("conducting_bone", ConductingBoneItem::new, 1);
     public static final RegistryObject<Item> CREATIVE_RADAR = registerWith("creative_radar", RadarItem::new, 1);
     public static final RegistryObject<Item> WHISTLE = registerWith("whistle", WhistleItem::new, 1);
     public static final RegistryObject<Item> TREAT_BAG = registerWith("treat_bag", TreatBagItem::new, 1);
@@ -94,6 +95,10 @@ public class DoggyItems {
 
     private static <T extends Item> RegistryObject<T> registerWith(final String name, Function<Item.Properties, T> itemConstructor, int maxStackSize) {
         return register(name, () -> itemConstructor.apply(createInitialProp().stacksTo(maxStackSize)));
+    }
+    
+    private static <T extends Item> RegistryObject<T> registerWithFireResistant(final String name, Function<Item.Properties, T> itemConstructor, int maxStackSize) {
+        return register(name, () -> itemConstructor.apply(createInitialProp().stacksTo(maxStackSize).fireResistant()));
     }
 
     private static <T extends Item> RegistryObject<T> register(final String name, Function<Item.Properties, T> itemConstructor) {
