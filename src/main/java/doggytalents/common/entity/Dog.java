@@ -236,7 +236,7 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new GuardModeGoal.Major(this));
         ++p; 
         this.goalSelector.addGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
-        this.goalSelector.addGoal(p, new DogMoveToBlockGoal(this));
+        this.goalSelector.addGoal(p, new DogClaimBedGoal(this));
         this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
         ++p;
         this.goalSelector.addGoal(p, new FetchGoal(this, 1.0D, 32.0F));
@@ -2575,7 +2575,7 @@ public class Dog extends AbstractDog {
         this.targetBlock = pos;
     }
 
-    public BlockPos getTargetBlock() {
+    public BlockPos getTargetBed() {
         return this.targetBlock;
     }
 
