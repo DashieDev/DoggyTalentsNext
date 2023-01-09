@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X ",
-    "XYX",
-    " X "
-  ],
+  "category": "equipment",
   "key": {
     "X": {
       "item": "minecraft:bone"
@@ -13,6 +9,11 @@
       "item": "minecraft:slime_ball"
     }
   },
+  "pattern": [
+    " X ",
+    "XYX",
+    " X "
+  ],
   "result": {
     "item": "doggytalents:throw_bone"
   }

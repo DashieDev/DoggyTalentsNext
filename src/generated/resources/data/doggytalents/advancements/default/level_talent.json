@@ -1,0 +1,38 @@
+{
+  "parent": "doggytalents:default/tame_dog",
+  "criteria": {
+    "level_talent": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:cobblestone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.dog.level_talent.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:wooden_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.dog.level_talent.title"
+    }
+  },
+  "requirements": [
+    [
+      "level_talent"
+    ]
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "criteria": {
+    "tame_dog": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "doggytalents:dog"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.dog.root.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "doggytalents:training_treat"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.dog.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "tame_dog"
+    ]
+  ]
+}

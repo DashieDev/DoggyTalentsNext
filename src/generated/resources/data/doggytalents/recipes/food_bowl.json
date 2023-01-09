@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XYX",
-    "XXX"
-  ],
+  "category": "building",
   "key": {
     "X": {
       "item": "minecraft:iron_ingot"
@@ -13,6 +9,11 @@
       "item": "minecraft:bone"
     }
   },
+  "pattern": [
+    "XXX",
+    "XYX",
+    "XXX"
+  ],
   "result": {
     "item": "doggytalents:food_bowl"
   }
