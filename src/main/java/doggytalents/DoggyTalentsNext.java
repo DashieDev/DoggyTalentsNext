@@ -8,6 +8,7 @@ import doggytalents.client.data.DTItemModelProvider;
 import doggytalents.client.entity.render.world.BedFinderRenderer;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.Capabilities;
+import doggytalents.common.chunk.GarbageChunkCollector;
 //import doggytalents.common.addon.AddonManager;
 import doggytalents.common.command.DoggyCommands;
 import doggytalents.common.config.ConfigHandler;
@@ -125,6 +126,9 @@ public class DoggyTalentsNext {
         ConfigHandler.initTalentConfig();
         DoggyCommands.registerSerilizers();
         Dog.initDataParameters();
+        event.enqueueWork(() -> {
+            GarbageChunkCollector.init();
+        });
     }
 
     public void serverStarting(final ServerStartingEvent event) {
