@@ -77,6 +77,33 @@ public class DogUtil {
         return true;
     }
 
+    /**
+     * This is a search for Tp Pos procedure which is heavily optimized using Dynamic Programming
+     * This is going to use lazy search by first getting every single block type on its own without
+     * regards to surroundings and store the result into a pool, and every further calculation 
+     * (like Danger block, Collide with owner, Collide with block ...) will be calculated only
+     * in that pool without further getChunk, which take a lot of time somehow. 
+     * 
+     * @param dog The Dog who will teleport
+     * @param radius Radius of the area to search for block to teleport
+     * @return true if teleport is success.
+     */
+    public static boolean dynamicSearchAndTeleportToBlockPos(Dog dog, BlockPos pos, int radius) {
+    
+        var target = CachedSearchUtil.getRandomSafePosUsingPool(
+            dog, pos,
+            false,
+            radius, 1
+        );
+   
+        if (target == null) {
+            return false;
+        }
+        teleportInternal(dog, target);
+        
+        return true;
+    }
+
 
     /**
      * This function will search for all of the eligible position into a list,
