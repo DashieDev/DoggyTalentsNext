@@ -54,7 +54,7 @@ public class DogInventoryButton extends Button {
             if (recipeBook.isVisible()) {
                 this.setX(this.baseX + 77);
             } else {
-                this.setY(this.baseX);
+                this.setX(this.baseX);
             }
         }
 
