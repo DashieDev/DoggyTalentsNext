@@ -76,7 +76,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     }
 
     public void consumeItemFromStack(@Nullable Entity entity, ItemStack stack) {
-        if (entity instanceof Player) {
+        if (entity != null || entity instanceof Player) {
             super.usePlayerItem((Player) entity, InteractionHand.MAIN_HAND, stack);
         } else {
             stack.shrink(1);
