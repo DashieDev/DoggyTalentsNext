@@ -47,6 +47,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class ClientEventHandler {
 
+    DogInventoryButton activeInventoryButton;
+
     public static void registerModelForBaking(final ModelEvent.RegisterAdditional event) {
 
         try {
@@ -121,49 +123,48 @@ public class ClientEventHandler {
             int x = guiLeft + (creative ? 36 : sizeX / 2 - 10);
             int y = guiTop + (creative ? 7 : 48);
 
-            event.addListener(new DogInventoryButton(x, y, screen, (btn) -> {
+            this.activeInventoryButton = new DogInventoryButton(x, y, screen, (btn) -> {
                 PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
                 btn.active = false;
-            }));
+            });
+
+            event.addListener(this.activeInventoryButton);
         }
     }
 
-    @SubscribeEvent
-    public void onScreenDrawForeground(final ScreenEvent.Render event) {
-        Screen screen = event.getScreen();
-        if (screen instanceof InventoryScreen || screen instanceof CreativeModeInventoryScreen) {
-            boolean creative = screen instanceof CreativeModeInventoryScreen;
-            DogInventoryButton btn = null;
+    // No need more
+    // @SubscribeEvent
+    // public void onScreenDrawForeground(final ScreenEvent.Render event) {
+    //     Screen screen = event.getScreen();
+    //     if (screen instanceof InventoryScreen || screen instanceof CreativeModeInventoryScreen) {
+    //         boolean creative = screen instanceof CreativeModeInventoryScreen;
+    //         var btn = this.activeInventoryButton;
 
-            //TODO just create a static variable in this class
-            for (var widget : screen.renderables) {
-                if (widget instanceof DogInventoryButton) {
-                    btn = (DogInventoryButton) widget;
-                    break;
-                }
-            }
+    //         if (btn == null) return;
+    //         //To Remove
 
-            if (btn.visible && btn.isHoveredOrFocused()) {
-                Minecraft mc = Minecraft.getInstance();
-                int width = mc.getWindow().getGuiScaledWidth();
-                int height = mc.getWindow().getGuiScaledHeight();
-                int sizeX = creative ? 195 : 176;
-                int sizeY = creative ? 136 : 166;
-                int guiLeft = (width - sizeX) / 2;
-                int guiTop = (height - sizeY) / 2;
-                if (!creative) {
-                    RecipeBookComponent recipeBook = ((InventoryScreen) screen).getRecipeBookComponent();
-                    if (recipeBook.isVisible()) {
-                        guiLeft += 76;
-                    }
-                }
+    //         if (btn.visible && btn.isHoveredOrFocused()) {
+    //             Minecraft mc = Minecraft.getInstance();
+    //             int width = mc.getWindow().getGuiScaledWidth();
+    //             int height = mc.getWindow().getGuiScaledHeight();
+    //             int sizeX = creative ? 195 : 176;
+    //             int sizeY = creative ? 136 : 166;
+    //             int guiLeft = (width - sizeX) / 2;
+    //             int guiTop = (height - sizeY) / 2;
+    //             if (!creative) {
+    //                 RecipeBookComponent recipeBook = ((InventoryScreen) screen).getRecipeBookComponent();
+    //                 if (recipeBook.isVisible()) {
+    //                     guiLeft += 76;
+    //                 }
+    //             }
 
-                //event.getPoseStack().translate(-guiLeft, -guiTop, 0);
-                //TODO?// btn.renderToolTip(event.getPoseStack(), event.getMouseX(), event.getMouseY());
-                //event.getPoseStack().translate(guiLeft, guiTop, 0);
-            }
-        }
-    }
+    //             //event.getPoseStack().translate(-guiLeft, -guiTop, 0);
+    //             //btn.renderToolTip(event.getPoseStack(), event.getMouseX(), event.getMouseY());
+    //             //btn.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
+    //             //event.getPoseStack().translate(guiLeft, guiTop, 0);
+    //         }
+    //     }
+    // }
 
 // TODO Implement patrol item
 //    @SubscribeEvent
