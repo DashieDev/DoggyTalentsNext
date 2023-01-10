@@ -16,16 +16,25 @@ public class BerserkerModeGoal extends NearestAttackableTargetGoal<Monster> {
 
     private final Dog dog;
 
-    public BerserkerModeGoal(Dog dogIn) {
-        super(dogIn, Monster.class, false , (e) -> {
-            if (dogIn.isMode(EnumMode.BERSERKER_MINOR)) {
-                if (e instanceof AbstractPiglin) return false;
+    public BerserkerModeGoal(Dog dog) {
+        super(dog, Monster.class, false , (e) -> {
+            if (dog.isMode(EnumMode.BERSERKER_MINOR)) {
                 if (e instanceof ZombifiedPiglin) return false;
+                if (e instanceof AbstractPiglin) {
+                    var owner = dog.getOwner();
+                    if (owner != null) {
+                        for (var stack : owner.getArmorSlots()) {
+                            if (stack.makesPiglinsNeutral(owner)) {
+                                return false;
+                            }
+                        }
+                    }
+                }
                 if (e instanceof EnderMan) return false;
             }
             return true;
         });
-        this.dog = dogIn;
+        this.dog = dog;
     }
 
     @Override
