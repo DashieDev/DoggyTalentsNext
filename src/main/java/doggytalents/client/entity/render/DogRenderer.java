@@ -2,7 +2,6 @@ package doggytalents.client.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.ChopinLogger;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.model.DogModel;

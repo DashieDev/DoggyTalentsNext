@@ -2,7 +2,6 @@ package doggytalents.common.util.doggyasynctask;
 
 import java.util.ArrayList;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.util.doggyasynctask.promise.AbstractPromise;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
