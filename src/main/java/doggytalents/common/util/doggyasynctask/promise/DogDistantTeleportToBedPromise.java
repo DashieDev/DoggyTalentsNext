@@ -1,6 +1,5 @@
 package doggytalents.common.util.doggyasynctask.promise;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyBlocks;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
@@ -58,15 +57,9 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
             this.setState(State.REJECTED);
             return;
         }
-        ChopinLogger.l("hasChunk before ? : " 
-            + this.level.hasChunk(chunkpos.x, chunkpos.z)
-        );
 
         this.setBedChunk(true);
 
-        ChopinLogger.l("Does hasChunk return true immediately after forced? : " 
-            + this.level.hasChunk(chunkpos.x, chunkpos.z)
-        );
     }
 
     @Override

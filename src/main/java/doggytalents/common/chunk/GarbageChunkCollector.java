@@ -1,6 +1,5 @@
 package doggytalents.common.chunk;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.lib.Constants;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.world.ForgeChunkManager;
@@ -27,6 +26,5 @@ public class GarbageChunkCollector implements LoadingValidationCallback {
             helper.removeAllTickets(c.getKey());
             ++count;
         }
-        ChopinLogger.l("Garbage Collected : " + count + " chunks upon startup.");
     }
 }

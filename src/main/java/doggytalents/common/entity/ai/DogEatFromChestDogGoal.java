@@ -178,8 +178,7 @@ public class DogEatFromChestDogGoal extends Goal {
             ).orElse(null);
         
         if (inventory == null) return false;
-        ChopinLogger.lwn(this.dog, "checking valid : " + this.chestDog.getName().getString());
-
+        
         return
             InventoryUtil.findStack(
                 inventory, 

@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.storage.DogLocationStorage;
@@ -123,9 +122,6 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
     //this method also check if can start, if not, then set it to rejected.
     @Override
     public void start() {
-        ChopinLogger.l("this level should have no forced chunk, and this is the result : " 
-            +   ForgeChunkManager.hasForcedChunks(level)
-        );
         
         if (this.level == null) {
             this.rejectedMsg = "CLIENTLEVEL";
@@ -162,15 +158,8 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
             return;
         }
 
-        ChopinLogger.l("hasChunk before ? : " 
-            + this.level.hasChunk(chunkpos.x, chunkpos.z)
-        );
-
         this.setDogChunk(true);
 
-        ChopinLogger.l("Does hasChunk return true immediately after forced? : " 
-            + this.level.hasChunk(chunkpos.x, chunkpos.z)
-        );
     }
 
     //No Ressurect
