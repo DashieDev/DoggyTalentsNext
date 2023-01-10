@@ -32,7 +32,7 @@ public enum EnumGender {
         this.unlocalisedTip = this.unlocalisedName + ".indicator";
         this.unlocalisedPronoun = this.unlocalisedName + ".pronoun";
         this.unlocalisedSubject = this.unlocalisedName + ".subject";
-        this.unlocalisedPossessiveAdj = this.unlocalisedName + ".prossessive_adjective";
+        this.unlocalisedPossessiveAdj = this.unlocalisedName + ".possessive_adjective";
         this.unlocalisedTitle = this.unlocalisedName + ".title";
     }
 
