@@ -36,6 +36,10 @@ public class DogEatFromChestDogGoal extends Goal {
     private final float stopDist;
 
     private List<Dog> chestDogs;
+    //There is some caching going on here, 
+    //Due to this::chestDog only set to null when the chestDog no longer valid.
+    //dog will remember the dog that he ate from,
+    //And the next time he is hungry, he will check that dog first. Good good.
     private Dog chestDog = null;
     private int tickTillNextChestDogSearch = 0;
     private final int SEARCH_RADIUS = 12; //TODO
@@ -43,7 +47,7 @@ public class DogEatFromChestDogGoal extends Goal {
     public DogEatFromChestDogGoal(Dog dog, double speedModifier) {
         this.dog = dog;
         this.speedModifier = speedModifier;
-        this.stopDist = 3;
+        this.stopDist = 1.5f;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
@@ -52,7 +56,7 @@ public class DogEatFromChestDogGoal extends Goal {
         if (this.dog.getDogHunger() >= 50) {
             return false;
         }
-        this.findChestDog();
+        this.inspectNearbyChestDogsForFood();
         if (this.chestDog == null) return false;
         return true;
     }
@@ -60,7 +64,6 @@ public class DogEatFromChestDogGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         if (this.chestDog == null) return false;
-        if (this.chestDog.distanceToSqr(this.dog) > SEARCH_RADIUS*SEARCH_RADIUS) return false;
         return this.dog.getDogHunger() <= 80 || (this.dog.getHealth() <= 6 && this.dog.getDogHunger() < this.dog.getMaxHunger() );
     }
 
@@ -80,21 +83,23 @@ public class DogEatFromChestDogGoal extends Goal {
 
     @Override
     public void tick() {
-        if (this.dog.distanceToSqr(this.chestDog) > stopDist) {
+        if (this.dog.distanceToSqr(this.chestDog) > stopDist*stopDist) {
             this.dog.getLookControl().setLookAt(this.chestDog, 10.0F, this.dog.getMaxHeadXRot());
             if (--this.timeToRecalcPath <= 0) {
                 this.timeToRecalcPath = 10;
+                if (this.chestDog == null) return;
                 if (!this.validChestDog(this.chestDog)) {
-                    this.chestDog = null; return;
-                }
-                if (this.chestDog.distanceToSqr(this.dog) > SEARCH_RADIUS*SEARCH_RADIUS) {
                     this.chestDog = null; return;
                 }
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
                     // if (this.dog.distanceToSqr(this.owner) >= 144.0D) {
                     //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                     // } else {
-                    this.dog.getNavigation().moveTo(this.chestDog, this.speedModifier);
+                    DogUtil.moveToIfReachOrElse(dog, 
+                        this.chestDog.blockPosition(), speedModifier, 
+                        1, (d) -> {
+                            this.chestDog = null;
+                        });
                     //}
                 }
             }
@@ -105,20 +110,24 @@ public class DogEatFromChestDogGoal extends Goal {
         }
     }
 
-    private void findChestDog() {
+    private void inspectNearbyChestDogsForFood() {
         if (--this.tickTillNextChestDogSearch <= 0) {
             this.tickTillNextChestDogSearch = 10;
-            this.chestDogs = 
-                this.dog.level.getEntitiesOfClass(
-                    Dog.class, 
-                    dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS), 
-                    d -> validChestDog(d)
-                );
-            this.chooseChestDog();
+            
+            if (this.chestDog == null) {
+                this.fetchChestDogs();
+                //this.chooseNearestChestDog();
+                this.chooseRandomChestDog();
+            }
+            
+            if (!this.validChestDog(this.chestDog)) {
+                this.chestDog = null;
+            }
         }
     }
 
-    private void chooseChestDog() {
+    private void chooseNearestChestDog() {
+        
         if (this.chestDogs == null) return;
         if (this.chestDogs.isEmpty()) return;
 
@@ -136,11 +145,33 @@ public class DogEatFromChestDogGoal extends Goal {
         this.chestDog = target;
     }
 
+    private void chooseRandomChestDog() {
+        if (this.chestDogs == null) return;
+        if (this.chestDogs.isEmpty()) return;
+
+        int rIndx = this.dog.getRandom().nextInt(this.chestDogs.size());
+        this.chestDog = this.chestDogs.get(rIndx);
+    }
+
+    private void fetchChestDogs() {
+        this.chestDogs = 
+        this.dog.level.getEntitiesOfClass(
+            Dog.class, 
+            dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS), 
+            d -> isChestDog(d)
+        );
+    }
+
+    private boolean isChestDog(Dog chestDog) {
+        return chestDog.getDogLevel(DoggyTalents.PACK_PUPPY) > 0;
+    }
+
     private boolean validChestDog(Dog chestDog) {
         if (chestDog == null) return false;
-        if (chestDog.getDogLevel(DoggyTalents.PACK_PUPPY) <= 0) return false;
+        if (!isChestDog(chestDog)) return false;
         if (chestDog.getOwner() == null) return false;
         if (chestDog.getOwner() != this.dog.getOwner()) return false;
+        if (chestDog.distanceToSqr(this.dog) > SEARCH_RADIUS*SEARCH_RADIUS) return false;
         
         PackPuppyItemHandler inventory = 
             chestDog.getTalent(DoggyTalents.PACK_PUPPY)
@@ -150,6 +181,7 @@ public class DogEatFromChestDogGoal extends Goal {
             ).orElse(null);
         
         if (inventory == null) return false;
+        ChopinLogger.lwn(this.dog, "checking valid : " + this.chestDog.getName().getString());
 
         return
             InventoryUtil.findStack(
