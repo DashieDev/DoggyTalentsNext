@@ -18,6 +18,7 @@ public enum EnumGender {
     private String unlocalisedName;
     private String unlocalisedPronoun;
     private String unlocalisedSubject;
+    private String unlocalisedPossessiveAdj;
     private String unlocalisedTitle;
 
     public static final EnumGender[] VALUES = Arrays.stream(EnumGender.values()).sorted(Comparator.comparingInt(EnumGender::getIndex)).toArray(size -> {
@@ -31,6 +32,7 @@ public enum EnumGender {
         this.unlocalisedTip = this.unlocalisedName + ".indicator";
         this.unlocalisedPronoun = this.unlocalisedName + ".pronoun";
         this.unlocalisedSubject = this.unlocalisedName + ".subject";
+        this.unlocalisedPossessiveAdj = this.unlocalisedName + ".prossessive_adjective";
         this.unlocalisedTitle = this.unlocalisedName + ".title";
     }
 
@@ -60,6 +62,10 @@ public enum EnumGender {
 
     public String getUnlocalisedTitle() {
         return this.unlocalisedTitle;
+    }
+
+    public String getUnlocalisedPossessiveAdj() {
+        return this.unlocalisedPossessiveAdj;
     }
 
     public boolean canMateWith(EnumGender gender) {
