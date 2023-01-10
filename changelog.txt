@@ -251,3 +251,6 @@ percentage of health the dog has left.
 / Only standing dogs is allowed to claim bed, this make getting mutiple dogs claiming their beds easier.
 / G Flat and B Minor dogs behavior changes :
   / The dog won't attack piglins ONLY IF the owner is wearing any gold armor piece. 
+
+1.9.1 - 10th January 2023
++ HOTFIX: Hellhound 5 dog considering MagmaBlock open area and suffocate upon teleportation.
