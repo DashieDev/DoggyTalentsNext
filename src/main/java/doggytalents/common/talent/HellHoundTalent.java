@@ -135,11 +135,13 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult isBlockWalkable(AbstractDog dog, BlockPathTypes type) {
+    public InteractionResult isBlockTypeWalkable(AbstractDog dog, BlockPathTypes type) {
         if (level < 5) return InteractionResult.PASS;
-        if (type == BlockPathTypes.DAMAGE_FIRE) {
-            return InteractionResult.SUCCESS;
-        }
+        // CAUTION : MAGMA_BLOCK also returns DAMAGE_FIRE instead of BLOCKED
+        // so the dog may suffocate.
+        // if (type == BlockPathTypes.DAMAGE_FIRE) {
+        //     return InteractionResult.SUCCESS;
+        // }
         //Won't push owner due to A.I check
         if (type == BlockPathTypes.DANGER_FIRE) {
             return InteractionResult.SUCCESS;

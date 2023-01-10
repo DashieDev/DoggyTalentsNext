@@ -192,7 +192,7 @@ public interface IDogAlteration {
     }
 
     /**
-     * Return success when the block can substitute walakable.
+     * Return success when the block type can substitute walakable.
      * For example: 
      * FlameDog 5 : LAVA = WALKABLE
      * SwimmerDog 5 : WATER = WALKABLE
@@ -202,7 +202,7 @@ public interface IDogAlteration {
      * @param pos
      * @return
      */
-    default InteractionResult isBlockWalkable(AbstractDog dog, BlockPathTypes type) {
+    default InteractionResult isBlockTypeWalkable(AbstractDog dog, BlockPathTypes type) {
         return InteractionResult.PASS;
     }
 

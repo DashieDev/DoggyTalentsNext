@@ -374,7 +374,7 @@ public class CachedSearchUtil {
      */
     public static byte inferType(Dog dog, BlockPathTypes type) {
         for (var x : dog.getAlterations()) {
-            if (x.isBlockWalkable(dog, type).shouldSwing()) {
+            if (x.isBlockTypeWalkable(dog, type).shouldSwing()) {
                 return OK;
             }
         }
