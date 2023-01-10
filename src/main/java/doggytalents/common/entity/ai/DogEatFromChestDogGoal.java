@@ -60,7 +60,7 @@ public class DogEatFromChestDogGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         if (this.chestDog == null) return false;
-        if (this.chestDog.distanceToSqr(this.dog) > 144) return false;
+        if (this.chestDog.distanceToSqr(this.dog) > SEARCH_RADIUS*SEARCH_RADIUS) return false;
         return this.dog.getDogHunger() <= 80 || (this.dog.getHealth() <= 6 && this.dog.getDogHunger() < this.dog.getMaxHunger() );
     }
 
@@ -85,6 +85,9 @@ public class DogEatFromChestDogGoal extends Goal {
             if (--this.timeToRecalcPath <= 0) {
                 this.timeToRecalcPath = 10;
                 if (!this.validChestDog(this.chestDog)) {
+                    this.chestDog = null; return;
+                }
+                if (this.chestDog.distanceToSqr(this.dog) > SEARCH_RADIUS*SEARCH_RADIUS) {
                     this.chestDog = null; return;
                 }
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
