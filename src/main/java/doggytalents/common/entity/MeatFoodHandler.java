@@ -31,7 +31,7 @@ public class MeatFoodHandler implements IDogFoodHandler {
     }
 
     @Override
-    public InteractionResult consume(AbstractDog dog, ItemStack stack, Entity entityIn) {
+    public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
 
         if (dog.getDogHunger() < dog.getMaxHunger()) {
             if (!dog.level.isClientSide) {
