@@ -9,7 +9,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.ConductingBoneData;
