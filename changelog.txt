@@ -239,3 +239,15 @@ Which cause a small chance of the dog slipping in lava.
   + 30% : 1 ❤️
   + rest : No
 /FireFighterDogs extinguish turn is now Unlimited when max level.
+
+v1.9.0 - 10th January 2023
++ Added CONDUCTING BONE :
+  + This expensive baton is used to summon dogs from everywhere in the world and
+  send the dog back to his bed no matter where it is. More info at the wiki.
+/ Optimized Dog Eat From ChestDogs logic, dog only start going if within reach and not far away.
++ New way to manage your dogs health (Configurable) : When sneaking, every dog's name will be rendered
+with a certain part highlighted a certain color, the color and the length of the part is based on the
+percentage of health the dog has left.
+/ Only standing dogs is allowed to claim bed, this make getting mutiple dogs claiming their beds easier.
+/ G Flat and B Minor dogs behavior changes :
+  / The dog won't attack piglins ONLY IF the owner is wearing any gold armor piece. 
