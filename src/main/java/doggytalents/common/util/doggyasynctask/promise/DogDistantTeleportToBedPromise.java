@@ -101,9 +101,12 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
     public void onFulfilled() {
         var owner = this.dog.getOwner();
         if (owner != null) {
-            owner.sendSystemMessage(Component.literal(
-                dog.getName().getString() + " has now laying in bed."
-            ));
+            owner.sendSystemMessage(
+                Component.translatable(
+                    "item.doggytalents.conducting_bone.fulfilled.tp_bed", 
+                    this.dog.getName().getString(), this.dog.getGenderPossessiveAdj()
+                )
+            );
         }
     }
 
@@ -111,12 +114,15 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
     public void onRejected() {
         var owner = this.dog.getOwner();
         if (owner != null) {
-            owner.sendSystemMessage(Component.literal(
-                "Failed to teleport dog to bed. Reason : "
-            ).append(Component.literal(this.rejectedMsg).withStyle(
-                Style.EMPTY.withBold(true)
-                .withColor(ChatFormatting.RED)
-            )));
+            owner.sendSystemMessage(
+                Component.translatable(
+                    "item.doggytalents.conducting_bone.rejected",
+                    Component.literal(this.rejectedMsg).withStyle(
+                        Style.EMPTY.withBold(true)
+                        .withColor(ChatFormatting.RED)
+                    )
+                )
+            );
         }
     }
 
