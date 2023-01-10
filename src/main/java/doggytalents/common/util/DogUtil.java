@@ -274,7 +274,7 @@ public class DogUtil {
         var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
         boolean alterationWalkable = false;
         for (var x : dog.getAlterations()) {
-            if (x.isBlockWalkable(dog, pathnodetype).shouldSwing()) {
+            if (x.isBlockTypeWalkable(dog, pathnodetype).shouldSwing()) {
                 alterationWalkable = true;
                 break;
             }
