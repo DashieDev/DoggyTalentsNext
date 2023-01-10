@@ -93,6 +93,10 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         return this.getTranslationKey(EnumGender::getUnlocalisedSubject);
     }
 
+    public Component getGenderPossessiveAdj() {
+        return this.getTranslationKey(EnumGender::getUnlocalisedPossessiveAdj);
+    }
+
     public Component getGenderTitle() {
         return this.getTranslationKey(EnumGender::getUnlocalisedTitle);
     }
