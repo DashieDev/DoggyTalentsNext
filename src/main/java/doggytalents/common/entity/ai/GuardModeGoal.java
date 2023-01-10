@@ -19,6 +19,7 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
+import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.phys.AABB;
 
 public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
@@ -32,16 +33,25 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
     private static final int GUARD_DISTANCE_SQR = 25;
     private static final int GUARD_DISTANCE = 5;
 
-    public GuardModeGoal(Dog dogIn) {
-        super(dogIn, Monster.class, 3, false, false, (e) -> {
-            if (dogIn.isMode(EnumMode.GUARD_FLAT)) {
-                if (e instanceof AbstractPiglin) return false;
+    public GuardModeGoal(Dog dog) {
+        super(dog, Monster.class, 3, false, false, (e) -> {
+            if (dog.isMode(EnumMode.GUARD_FLAT)) {
+                if (e instanceof AbstractPiglin) {
+                    var owner = dog.getOwner();
+                    if (owner != null) {
+                        for (var stack : owner.getArmorSlots()) {
+                            if (stack.makesPiglinsNeutral(owner)) {
+                                return false;
+                            }
+                        }
+                    }
+                }
                 if (e instanceof ZombifiedPiglin) return false;
                 if (e instanceof EnderMan) return false;
             }
             return true;
         });
-        this.dog = dogIn;
+        this.dog = dog;
     }
 
     @Override
