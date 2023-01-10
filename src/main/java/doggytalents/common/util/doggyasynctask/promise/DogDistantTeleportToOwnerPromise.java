@@ -89,9 +89,10 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
     public void onFulfilled() {
         if (this.owner != null && this.teleportedDog != null)
             this.owner.sendSystemMessage(
-                Component.literal("Teleported " 
-                + this.teleportedDog.getName().getString()
-                + " to owner! ")
+                Component.translatable(
+                    "item.doggytalents.conducting_bone.fulfilled.tp_self", 
+                    this.teleportedDog.getName().getString()  
+                )
             );
         if (this.teleportedDog != null)
         this.level.sendParticles(
@@ -108,13 +109,14 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
     public void onRejected() {
         if (this.owner != null)
             this.owner.sendSystemMessage(
-                Component.literal("Failed to conduct! Error code: ").append(
+                Component.translatable(
+                    "item.doggytalents.conducting_bone.rejected",
                     Component.literal(this.rejectedMsg).withStyle(
                         Style.EMPTY.withBold(true)
                         .withColor(ChatFormatting.RED)
                     )
                 )
-            );        
+            );     
     }
 
     //this method also check if can start, if not, then set it to rejected.
