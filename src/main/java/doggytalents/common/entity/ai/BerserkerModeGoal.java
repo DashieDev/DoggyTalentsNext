@@ -12,12 +12,13 @@ import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 
-public class BerserkerModeGoal extends NearestAttackableTargetGoal<Monster> {
+public class BerserkerModeGoal extends NearestAttackableTargetGoal<Mob> {
 
     private final Dog dog;
 
     public BerserkerModeGoal(Dog dog) {
-        super(dog, Monster.class, false , (e) -> {
+        super(dog, Mob.class, false , (e) -> {
+            if (!(e instanceof Enemy)) return false;
             if (dog.isMode(EnumMode.BERSERKER_MINOR)) {
                 if (e instanceof ZombifiedPiglin) return false;
                 if (e instanceof AbstractPiglin) {
