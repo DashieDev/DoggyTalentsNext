@@ -9,6 +9,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -21,7 +22,7 @@ import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.phys.AABB;
 
-public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
+public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
 
     private final Dog dog;
     private LivingEntity owner;
@@ -33,7 +34,8 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Monster> {
     private static final int GUARD_DISTANCE = 5;
 
     public GuardModeGoal(Dog dog) {
-        super(dog, Monster.class, 3, false, false, (e) -> {
+        super(dog, Mob.class, 3, false, false, (e) -> {
+            if (!(e instanceof Enemy)) return false;
             if (dog.isMode(EnumMode.GUARD_FLAT)) {
                 if (e instanceof AbstractPiglin) {
                     var owner = dog.getOwner();
