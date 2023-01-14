@@ -12,6 +12,7 @@ import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.api.registry.*;
 import doggytalents.client.screen.DogInfoScreen;
+import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.BreedGoal;
@@ -644,6 +645,10 @@ public class Dog extends AbstractDog {
         //     long stopTime = System.nanoTime();
         //     ChopinLogger.l("get random pos " + (stopTime-startTime) + " nanoseconds." );
         // }
+
+        if (this.level.isClientSide && stack.getItem() == Items.STONE_AXE) {
+            DogNewInfoScreen.open(this);
+        }
 
         if (this.isDefeated()) 
             return this.interactIncapacitated(stack, player, hand);
