@@ -1,0 +1,90 @@
+package doggytalents.client.screen.DogNewInfoScreen.store;
+
+import java.util.Map;
+
+import com.google.common.collect.Maps;
+
+import doggytalents.ChopinLogger;
+import net.minecraft.client.gui.screens.Screen;
+
+public class Store {
+    
+    private static Store INSTANCE;
+
+    private Screen screen;
+
+    private final Map<Class<? extends AbstractSlice>, StoreValue> applicationStates
+        = Maps.newConcurrentMap();
+
+    private Store() {
+        this.registerSlices();
+    }
+
+    private <T extends AbstractSlice> void registerSlice(Class<T> slice) {
+        try {   
+            var worker = slice.getConstructor().newInstance();
+            var storeValue = new StoreValue(worker, worker.getInitalState());
+            this.applicationStates.computeIfAbsent(slice, $ -> storeValue);
+        } catch (Exception e) {
+            ChopinLogger.l("Failed to register : " + slice.getName()); 
+        }
+    }
+
+    private void registerSlices() {
+        registerSlice(ActiveTabSlice.class);
+    }
+
+    private void init(Screen screen) {
+        for (var x : this.applicationStates.entrySet()) {
+            var initState = x.getValue().worker.getInitalState();
+            x.getValue().state = initState;
+        }
+        this.screen = screen;
+    }
+
+    public <T extends AbstractSlice> void dispatch(Class<T> slice, AbstractUIAction action) {
+        var storeValue = this.applicationStates.get(slice);
+        if (storeValue == null) return;
+        storeValue.state = storeValue.worker.reducer(slice, action);
+        ChopinLogger.l("Dispatched action: [" + action.type  + "] to ["
+            + slice.getSimpleName() + "] with payload [" + action.payload +"]."); 
+        this.screen.init(
+            this.screen.getMinecraft(), 
+            this.screen.width, 
+            this.screen.height
+        );
+    }
+
+    public <T extends Object, S extends AbstractSlice> T getStateOrDefault(
+        Class<S> slice, Class<T> cast, T defaultState) {
+        var storeValue = this.applicationStates.get(slice);
+        if (storeValue == null) return defaultState;
+        if (cast.isInstance(storeValue.state)) {
+            return cast.cast(storeValue.state);
+        }
+        return defaultState;
+    }
+
+    public static Store get(Screen screen) {
+        if (INSTANCE == null) {
+            INSTANCE = new Store();
+            INSTANCE.init(screen);
+        }
+        return INSTANCE;
+    }
+
+    public static void finish() {
+        INSTANCE = null;
+    }
+
+    private static class StoreValue {
+        public AbstractSlice worker;
+        public Object state;
+
+        public StoreValue(AbstractSlice worker, Object state) {
+            this.worker = worker;
+            this.state = state;
+        }
+    }
+
+}

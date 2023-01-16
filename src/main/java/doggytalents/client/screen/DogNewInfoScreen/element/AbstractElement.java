@@ -8,17 +8,14 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
-import net.minecraft.client.gui.components.events.AbstractContainerEventHandler;
 import net.minecraft.client.gui.components.events.ContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
 
-public class AbstractElement extends GuiComponent implements Widget, ContainerEventHandler, NarratableEntry {
+public abstract class AbstractElement extends GuiComponent implements Widget, ContainerEventHandler, NarratableEntry {
 
     @Nullable
     private GuiEventListener focused;
@@ -27,26 +24,28 @@ public class AbstractElement extends GuiComponent implements Widget, ContainerEv
     private final @Nullable AbstractElement parent;
     private final ArrayList<GuiEventListener> child = new ArrayList<>();
     private final Screen screen;
-    private int relativeX;
-    private int relativeY;
-    private int sizeX;
-    private int sizeY;
 
-    public AbstractElement(AbstractElement parent, int rX, int rY, int sizeX, int sizeY, Screen screen) {
+    private ElementPosition position;
+    private ElementSize size;
+    private int backgroundColor;
+
+    public AbstractElement(AbstractElement parent, Screen screen) {
         if (this == parent) {
             this.parent = null;
         } else {
             this.parent = parent;
         }
-        this.relativeX = rX;
-        this.relativeY = rY;
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
+
+        this.position = ElementPosition.getDefault(this);
         this.screen = screen;
     }
 
     @Override
     public void updateNarration(NarrationElementOutput p_169152_) {
+    }
+
+    public AbstractElement init() {
+        return this;
     }
 
     @Override
@@ -61,6 +60,12 @@ public class AbstractElement extends GuiComponent implements Widget, ContainerEv
 
     @Override
     public final void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+        if (this.backgroundColor != 0) {
+            int aX = this.getRealX();
+            int aY = this.getRealY();
+            AbstractElement.fill(stack, aX, aY, aX + this.getSizeX(), 
+                aY + this.getSizeY(), this.backgroundColor);
+        }
         this.renderElement(stack, mouseX, mouseY, partialTicks);
         for (var c : this.child) {
             if (c instanceof Widget wid)
@@ -71,7 +76,42 @@ public class AbstractElement extends GuiComponent implements Widget, ContainerEv
     /**
      * Never call render() here!!!
      */
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {}
+    public abstract void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks);
+
+    public AbstractElement setPosition(ElementPosition.PosType type, int left, int top) {
+        this.position = new ElementPosition(this, left, top, type);
+        return this;
+    }
+    
+    public AbstractElement setSize(int width, int height) {
+        this.size = new ElementSize(this, width, height);
+        return this;
+    }
+
+    public AbstractElement setSize(float ratioX, float ratioY) {
+        this.size = new ElementSize(this, ratioX, ratioY);
+        return this;
+    }
+
+    public AbstractElement setSize(int width, float ratioY) {
+        this.size = new ElementSize(this, width, ratioY);
+        return this;
+    }
+
+    public AbstractElement setSize(float ratioX, int height) {
+        this.size = new ElementSize(this, ratioX, height);
+        return this;
+    }
+
+    public AbstractElement setSize(int size) {
+        this.size = new ElementSize(parent, size);
+        return this;
+    }
+    
+    public AbstractElement setBackgroundColor(int color) {
+        this.backgroundColor = color;
+        return this;
+    }
 
     public boolean addChildren(GuiEventListener element) {
         
@@ -106,40 +146,56 @@ public class AbstractElement extends GuiComponent implements Widget, ContainerEv
         return this.parent;
     }
 
-    public int getRelativeX() {
-        return this.relativeX;
+    public ElementPosition getPosition() {
+        return this.position;
     }
 
-    public int getRelativeY() {
-        return this.relativeY;
+    public ElementSize getSize() {
+        return this.size;
     }
+
+    // public int getRelativeX() {
+    //     return this.relativeX;
+    // }
+
+    // public int getRelativeY() {
+    //     return this.relativeY;
+    // }
+
+    // public int getRealX() {
+    //     var realX = this.relativeX;
+    //     var p = this.getParent();
+    //     while(p != null) {
+    //         realX += p.getRelativeX();
+    //         p = p.getParent();
+    //     }
+    //     return realX;
+    // }
+
+    // public int getRealY() {
+    //     var realY = this.relativeY;
+    //     var p = this.getParent();
+    //     while(p != null) {
+    //         realY += p.getRelativeY();
+    //         p = p.getParent();
+    //     }
+    //     return realY;
+    // }
 
     public int getRealX() {
-        var realX = this.relativeX;
-        var p = this.getParent();
-        while(p != null) {
-            realX += p.getRelativeX();
-            p = p.getParent();
-        }
-        return realX;
+        return this.position.getRealX();
     }
 
     public int getRealY() {
-        var realY = this.relativeY;
-        var p = this.getParent();
-        while(p != null) {
-            realY += p.getRelativeY();
-            p = p.getParent();
-        }
-        return realY;
+        return this.position.getRealY();
     }
 
     public int getSizeX() {
-        return this.sizeX;
+        return this.size.getWidth();
     }
 
     public int getSizeY() {
-        return this.sizeY;
+        return this.size.getHeight();
     }
 
     public Screen getScreen() {

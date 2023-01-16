@@ -2,10 +2,12 @@ package doggytalents.client.screen.DogNewInfoScreen.element;
 
 import java.util.ArrayList;
 
-import doggytalents.ChopinLogger;
+import com.mojang.blaze3d.vertex.PoseStack;
+
+import doggytalents.client.screen.DogNewInfoScreen.store.AbstractUIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.ActiveTabSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.client.screen.DogNewInfoScreen.widget.NavBarButton;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -15,24 +17,29 @@ public class DogInfoNavBarElement extends AbstractElement {
 
     private static final int BUTTON_SPACING = 10;
 
-    public DogInfoNavBarElement(AbstractElement parent, int rX, int rY, int sizeX, int sizeY, Screen screen) {
-        super(parent, rX, rY, sizeX, sizeY, screen);
-        this.addNavButtons();  
+    public DogInfoNavBarElement(AbstractElement parent, Screen screen) {
+        super(parent, screen);
     } 
 
-    public void addNavButtons() {
+    @Override
+    public AbstractElement init() {
         
         var tabsVal = ActiveTabSlice.Tab.values();
         var bLs = new ArrayList<NavBarButton>();
         var mc = Minecraft.getInstance();
-        if (mc == null) return;
+        if (mc == null) return this;
         var font = mc.font;
         int totalButtonWidth = 0;
         
         for (var tab : tabsVal) {
             int buttonWidth = font.width(tab.title);
             var title = Component.literal(tab.title);
-            if (tab == ActiveTabSlice.activeTab) {
+            var activeTab = 
+                Store.get(getScreen())
+                .getStateOrDefault(
+                    ActiveTabSlice.class,
+                    ActiveTabSlice.Tab.class, ActiveTabSlice.Tab.HOME);
+            if (tab == activeTab) {
                 title.withStyle(
                     Style.EMPTY
                     .withColor(0xa206c9)
@@ -42,11 +49,11 @@ public class DogInfoNavBarElement extends AbstractElement {
                 0, this.getRealY(), 
                 title, 
                 b -> { 
-                    ActiveTabSlice.activeTab = tab; 
-                    ChopinLogger.l("clicked : " + tab.title); 
-                    var s = this.getScreen();
-                    //Refresh and re render.
-                    s.init(mc, s.width, s.height);
+                    Store.get(getScreen())
+                    .dispatch(
+                        ActiveTabSlice.class, 
+                        new AbstractUIAction("ChangeTab", tab)
+                    );
                 }, 
                 font
             );
@@ -61,6 +68,11 @@ public class DogInfoNavBarElement extends AbstractElement {
             this.addChildren(b);
             pX += b.getWidth() + BUTTON_SPACING;
         }
+        return this;
+    }
+
+    @Override
+    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
     }
 
 

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.common.entity.Dog;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.util.Mth;
@@ -14,10 +15,13 @@ import net.minecraft.world.effect.MobEffects;
 public class DogStatusViewBoxElement extends AbstractElement {
 
     private Dog dog;
+    private Font font;
 
-    public DogStatusViewBoxElement(AbstractElement parent, int rX, int rY, int size, Screen screen, Dog dog) {
-        super(parent, rX, rY, size, size, screen);
+    public DogStatusViewBoxElement(AbstractElement parent, Screen screen, Dog dog) {
+        super(parent, screen);
         this.dog = dog;
+        var mc = this.getScreen().getMinecraft();
+        this.font = mc.font;
     }
 
     @Override
@@ -26,9 +30,12 @@ public class DogStatusViewBoxElement extends AbstractElement {
         int e_mX = this.getRealX() + this.getSizeX()/2; 
         int e_mY = this.getRealY() + this.getSizeY()/2; 
 
-        InventoryScreen.renderEntityInInventory(e_mX, e_mY + 24, 50, 
+        InventoryScreen.renderEntityInInventory(e_mX, e_mY + 32, 50, 
             e_mX - mouseX, e_mY - mouseY, this.dog);
-        this.renderHealthBar(stack, dog, e_mX - 38, this.getRealY() + this.getSizeY() - 10);
+        this.renderHealthBar(stack, dog, e_mX - 41, this.getRealY() + this.getSizeY() - 10);
+
+        var points = this.dog.getSpendablePoints();
+        this.font.draw(stack, "Pts: " + points, this.getRealX(), this.getRealY(), 0xffffffff);
     }
 
     public void renderHealthBar(PoseStack stack, Dog dog, int aX, int aY) {
