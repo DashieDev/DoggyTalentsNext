@@ -185,7 +185,7 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
         //if (this.level.hasChunk(chunkpos.x, chunkpos.z)) return;
         ForgeChunkManager.forceChunk(
             this.level, Constants.MOD_ID, 
-            dogUUID,
+            dogUUID, // maybe the owner instead.
             chunkpos.x, chunkpos.z, 
             loaded, true);
         this.dogChunkForced = loaded;

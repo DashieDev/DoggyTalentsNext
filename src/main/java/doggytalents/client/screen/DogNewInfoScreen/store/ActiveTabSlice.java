@@ -8,11 +8,11 @@ public class ActiveTabSlice implements AbstractSlice {
     }
 
     @Override
-    public Object reducer(Object oldData, AbstractUIAction action) {
+    public Object reducer(Object oldData, UIAction action) {
         if (action.payload instanceof Tab) {
             return action.payload;
         }
-        return Tab.HOME;
+        return oldData;
     }
 
     public enum Tab {

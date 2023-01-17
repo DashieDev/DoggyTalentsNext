@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.client.screen.DogNewInfoScreen.store.AbstractUIAction;
+import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.ActiveTabSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.client.screen.DogNewInfoScreen.widget.NavBarButton;
@@ -52,7 +52,7 @@ public class DogInfoNavBarElement extends AbstractElement {
                     Store.get(getScreen())
                     .dispatch(
                         ActiveTabSlice.class, 
-                        new AbstractUIAction("ChangeTab", tab)
+                        new UIAction("ChangeTab", tab)
                     );
                 }, 
                 font

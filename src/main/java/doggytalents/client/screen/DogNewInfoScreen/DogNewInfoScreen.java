@@ -13,6 +13,7 @@ import doggytalents.client.screen.DogNewInfoScreen.element.view.AccessoriesView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.TalentView;
+import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.ActiveTabSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.common.entity.Dog;
@@ -44,12 +45,12 @@ public class DogNewInfoScreen extends Screen {
         int mX = this.width/2;
         int mY = this.height/2;
         var navBar = new DogInfoNavBarElement(null, this)
-            .setPosition(PosType.ABSOLUTE, mX, this.height - 12)
+            .setPosition(PosType.FIXED, mX, this.height - 12)
             .setSize(200, 10)
             .init();
         this.addRenderableWidget(navBar);
         var upperView = new DivElement(null, this)
-            .setPosition(PosType.ABSOLUTE, 0, 0)
+            .setPosition(PosType.FIXED, 0, 0)
             .setSize(this.width, this.height - 20);
         this.addRenderableWidget(upperView);
         var selectedTab = Store.get(this).getStateOrDefault(
@@ -74,7 +75,7 @@ public class DogNewInfoScreen extends Screen {
 
         upperView.addChildren(
             view
-            .setPosition(PosType.RELATIVE, 0, 0)
+            .setPosition(PosType.ABSOLUTE, 0, 0)
             .setSize(1f, 1f)
             .setBackgroundColor(0xff32a852)
             .init()
@@ -106,6 +107,14 @@ public class DogNewInfoScreen extends Screen {
     public void onClose() {
         super.onClose();
         Store.finish();
+    }
+
+    @Override
+    public void resize(Minecraft p_96575_, int width, int height) {
+        Store.get(this).dispatchAll(
+            new UIAction("resize", new Object()),
+            width, height
+        );
     }
     
 }

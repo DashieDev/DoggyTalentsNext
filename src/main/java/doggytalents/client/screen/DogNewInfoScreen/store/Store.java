@@ -32,6 +32,8 @@ public class Store {
 
     private void registerSlices() {
         registerSlice(ActiveTabSlice.class);
+        registerSlice(TalentListSlice.class);
+        registerSlice(TalentListPageCounterSlice.class);
     }
 
     private void init(Screen screen) {
@@ -42,18 +44,49 @@ public class Store {
         this.screen = screen;
     }
 
-    public <T extends AbstractSlice> void dispatch(Class<T> slice, AbstractUIAction action) {
+    /**
+     * A "dispatch" only happens with user interactions.
+     * @param <T>
+     * @param slice
+     * @param action
+     */
+    public <T extends AbstractSlice> void dispatch(Class<T> slice, UIAction action, 
+        int widthAfter, int heightAfter) {
         var storeValue = this.applicationStates.get(slice);
         if (storeValue == null) return;
-        storeValue.state = storeValue.worker.reducer(slice, action);
+        storeValue.state = storeValue.worker.reducer(storeValue.state, action);
         ChopinLogger.l("Dispatched action: [" + action.type  + "] to ["
             + slice.getSimpleName() + "] with payload [" + action.payload +"]."); 
         this.screen.init(
             this.screen.getMinecraft(), 
-            this.screen.width, 
-            this.screen.height
+            widthAfter, 
+            heightAfter
         );
     }
+
+    public <T extends AbstractSlice> void dispatch(Class<T> slice, UIAction action) {
+        dispatch(slice, action, this.screen.width, this.screen.height);
+    }
+
+    public <T extends AbstractSlice> void dispatchAll(UIAction action, 
+        int widthAfter, int heightAfter) {
+        for (var entry : this.applicationStates.entrySet()) {
+            var storeValue = entry.getValue();
+            if (storeValue == null) return;
+            storeValue.state = storeValue.worker.reducer(storeValue.state, action);
+        }
+        ChopinLogger.l("Dispatched action: [" + action.type  + "] to all slices with payload [" + action.payload +"]."); 
+        
+        this.screen.init(
+            this.screen.getMinecraft(), 
+            widthAfter, 
+            heightAfter
+        );
+    }
+
+    public <T extends AbstractSlice> void dispatchAll(UIAction action) {
+        dispatchAll(action, this.screen.width, this.screen.height);
+    } 
 
     public <T extends Object, S extends AbstractSlice> T getStateOrDefault(
         Class<S> slice, Class<T> cast, T defaultState) {

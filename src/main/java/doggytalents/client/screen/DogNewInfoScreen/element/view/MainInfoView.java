@@ -25,19 +25,19 @@ public class MainInfoView extends AbstractElement {
         int mY = this.getScreen().height/2;
         this.addChildren(
             new DogStatusViewBoxElement(this, this.getScreen(), this.dog)
-            .setPosition(PosType.ABSOLUTE, mX - 105 - 10, mY - 105/2)
+            .setPosition(PosType.FIXED, mX - 105 - 10, mY - 105/2)
             .setSize(105)
             .setBackgroundColor(0xffe39c02)
         );
         this.addChildren(
             new DogDescriptionViewBoxElement(this, this.getScreen(), this.dog)
-            .setPosition(PosType.ABSOLUTE, mX + 10, mY - 105/2)
+            .setPosition(PosType.FIXED, mX + 10, mY - 105/2)
             .setSize(105)
             .setBackgroundColor(0xff00ffae)
         );
         this.addChildren(
             new MainButtonToolboxRowElement(this, this.getScreen())
-            .setPosition(PosType.ABSOLUTE, mX - 50, mY+65)
+            .setPosition(PosType.FIXED, mX - 50, mY+65)
             .setSize(100, 20)
             .setBackgroundColor(0xff36888a)
             .init()

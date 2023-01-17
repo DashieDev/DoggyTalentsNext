@@ -68,7 +68,7 @@ public class ElementSize {
 
     public static enum SizeType {
         ABSOLUTE,
-        RELATIVE
+        RELATIVE,
     }
 
     public static ElementSize getDefault(AbstractElement element) {
