@@ -297,6 +297,7 @@ public class RescueDogTalent extends TalentInstance {
         private boolean stillValidTarget() {
             if (!this.talentInst.isTargetLowHealth(dog, target)) return false;
             if (!this.talentInst.canAffordToHealTarget(dog, target)) return false;            
+            if (dog.isDefeated()) return false;
             
             return (
                 this.target.isAlive()
