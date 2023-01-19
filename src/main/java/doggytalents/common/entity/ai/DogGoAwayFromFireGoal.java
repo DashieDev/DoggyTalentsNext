@@ -93,6 +93,8 @@ public class DogGoAwayFromFireGoal extends Goal {
         
         var n = this.dog.getNavigation();
 
+        if (this.safePos == null) return;
+
         //TODO Have to reach ??????
         //The path is cached, so it is not matter if this is called twice.
         boolean flag =
@@ -127,6 +129,7 @@ public class DogGoAwayFromFireGoal extends Goal {
                 dog.getMoveControl().setWantedPosition(this.safePos.getX() + 0.5, this.safePos.getY(), this.safePos.getZ() + 0.5, 1.0);
                 //Prevent dog from locking into the safePos
                 safePos = null;
+                return;
             }
 
             if (--this.tickUntilPathRecalc <= 0) {
