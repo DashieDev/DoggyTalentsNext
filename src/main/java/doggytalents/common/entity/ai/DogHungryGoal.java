@@ -106,7 +106,7 @@ public class DogHungryGoal extends Goal {
         }  else {
             this.dog.setBegging(true);
             if (this.looktime == 0) {
-                this.dog.getOwner().sendSystemMessage(Component.translatable("dog.msg.low_hunger." + this.dog.getRandom().nextInt(3), this.dog.getName()));
+                this.owner.sendSystemMessage(Component.translatable("dog.msg.low_hunger." + this.dog.getRandom().nextInt(3), this.dog.getName()));
                 this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
             }
             this.dog.getLookControl().setLookAt(this.owner);

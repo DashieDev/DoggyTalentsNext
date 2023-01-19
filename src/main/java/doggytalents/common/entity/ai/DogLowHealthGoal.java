@@ -114,7 +114,7 @@ public class DogLowHealthGoal extends Goal {
         }  else {
             if (this.whine) {
                 this.whine = false;
-                this.dog.getOwner().sendSystemMessage(Component.translatable("dog.msg.low_health." + this.dog.getRandom().nextInt(3), this.dog.getName()));
+                this.owner.sendSystemMessage(Component.translatable("dog.msg.low_health." + this.dog.getRandom().nextInt(3), this.dog.getName()));
                 this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
             }
             this.dog.getLookControl().setLookAt(this.owner);
