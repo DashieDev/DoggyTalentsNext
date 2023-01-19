@@ -15,6 +15,7 @@ import doggytalents.client.screen.DogInfoScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.BreedGoal;
+import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.accessory.IncapacitatedLayer;
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
@@ -146,6 +147,8 @@ public class Dog extends AbstractDog {
 
     protected final PathNavigation defaultNavigation;
     protected final MoveControl defaultMoveControl;
+    
+    protected TriggerableAction activeAction;
 
     private int hungerTick;
     private int prevHungerTick;  
@@ -238,6 +241,7 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogClaimBedGoal(this));
         this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
         ++p;
+        //Dog greet owner goal here
         this.goalSelector.addGoal(p, new FetchGoal(this, 1.0D, 32.0F));
         this.goalSelector.addGoal(p, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
         ++p;
@@ -564,6 +568,27 @@ public class Dog extends AbstractDog {
         if (this.level.isClientSide && this.isDefeated()) {
             this.incapacitatedClientTick();
         }
+    }
+
+    public TriggerableAction getTriggerableAction() {
+        return this.activeAction;
+    }
+
+    public void triggerAction(TriggerableAction action) {
+        if (action == null) {
+            this.activeAction.stop();
+            this.activeAction = null;
+            return;
+        }
+        if (this.activeAction != null && !this.activeAction.isTrivial()) {
+            return;
+        }
+        if (this.activeAction == action) {
+            return;
+        }
+        this.activeAction.stop();
+        this.activeAction = action;
+        this.activeAction.start();
     }
 
     public void incapacitatedClientTick() {
