@@ -226,12 +226,7 @@ public class CachedSearchUtil {
         
         var b0 = targetPos;
         var bMin = b0.offset(-poolXZ, -poolY, -poolXZ);
-        var owner = dog.getOwner();
         
-        //get owner look vector
-        var a1 = owner.getYHeadRot();
-        var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
-        var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
         // ChopinLogger.outputToFile(
         //     "name = " + dog.getName().getString() + "\n"
         //     + "0, 0, 0 = " + bMin + "\n"
