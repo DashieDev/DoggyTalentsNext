@@ -224,12 +224,7 @@ public class CachedSearchUtil {
         
         var b0 = targetPos;
         var bMin = b0.offset(-poolXZ, -poolY, -poolXZ);
-        var owner = dog.getOwner();
-        
-        //get owner look vector
-        var a1 = owner.getYHeadRot();
-        var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
-        var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
+
         int maxXZ = poolXZ*2-1;
         int maxY = poolY*2-1;
         var safePosList = new ArrayList<BlockPos>(); 
