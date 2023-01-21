@@ -100,7 +100,7 @@ public class DogFollowOwnerGoal extends Goal {
         if (--this.timeToRecalcPath <= 0) {
             this.timeToRecalcPath = 10;
             DogUtil.moveToOwnerOrTeleportIfFarAway(
-                dog, owner, this.followSpeed,
+                dog, this.followSpeed,
                 144, 
                 true, --this.tickTillSearchForTp <= 0, 
                 400,

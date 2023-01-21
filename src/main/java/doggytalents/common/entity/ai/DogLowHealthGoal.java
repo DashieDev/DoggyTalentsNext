@@ -108,7 +108,7 @@ public class DogLowHealthGoal extends Goal {
                 //So the path is not that long, so interval = 3 is ok
                 this.timeToRecalcPath = 3;
                 DogUtil.moveToOwnerOrTeleportIfFarAway(
-                    dog, owner, this.followSpeed,
+                    dog, this.followSpeed,
                     25, false, 
                     --this.tickTillSearchForTp <= 0,
                      400, 
