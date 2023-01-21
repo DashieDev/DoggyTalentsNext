@@ -462,10 +462,11 @@ public class DogUtil {
      * @param dY The maximum amount of blocks can the y coords between the target and the actual path destination diffrentiate
      * while still being eligible
      */
-    public static void moveToOrTeleportIfFarAwayIfReachOrElse(Dog dog, LivingEntity entity, double speedModifier,
+    public static void moveToOwnerOrTeleportIfFarAway(Dog dog, double speedModifier,
         double distanceToTeleportSqr, boolean continueToMoveWhenTryTp, boolean forceTeleport, 
         double distanceToForceTeleportSqr, int dY) {
         var owner = dog.getOwner();
+        if (owner == null) return;
         var distance = dog.distanceToSqr(owner);
         if (!dog.isLeashed() && !dog.isPassenger()) {
             if (distance >= distanceToForceTeleportSqr) {
@@ -474,10 +475,10 @@ public class DogUtil {
                 if (distance >= distanceToTeleportSqr) {
                     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                     if (continueToMoveWhenTryTp) {
-                        dog.getNavigation().moveTo(entity, speedModifier);
+                        dog.getNavigation().moveTo(owner, speedModifier);
                     }
                 } else {
-                    dog.getNavigation().moveTo(entity, speedModifier);
+                    dog.getNavigation().moveTo(owner, speedModifier);
                 }
             }
         }
