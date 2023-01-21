@@ -99,7 +99,7 @@ public class DogFollowOwnerGoal extends Goal {
         this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
         if (--this.timeToRecalcPath <= 0) {
             this.timeToRecalcPath = 10;
-            DogUtil.moveToOrTeleportIfFarAwayIfReachOrElse(
+            DogUtil.moveToOwnerOrTeleportIfFarAway(
                 dog, owner, this.followSpeed,
                 144, 
                 true, --this.tickTillSearchForTp <= 0, 
