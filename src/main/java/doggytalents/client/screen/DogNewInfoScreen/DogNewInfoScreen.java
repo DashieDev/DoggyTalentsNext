@@ -12,7 +12,7 @@ import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.PosTy
 import doggytalents.client.screen.DogNewInfoScreen.element.view.AccessoriesView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView;
-import doggytalents.client.screen.DogNewInfoScreen.element.view.TalentView;
+import doggytalents.client.screen.DogNewInfoScreen.element.view.TalentView.TalentView;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.ActiveTabSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
@@ -77,7 +77,7 @@ public class DogNewInfoScreen extends Screen {
             view
             .setPosition(PosType.ABSOLUTE, 0, 0)
             .setSize(1f, 1f)
-            .setBackgroundColor(0xff32a852)
+            //.setBackgroundColor(0xff32a852)
             .init()
         );
         

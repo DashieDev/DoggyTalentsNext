@@ -29,7 +29,7 @@ public class MainButtonToolboxRowElement extends AbstractElement {
         );
         totalWidth += editInfoButton.getWidth() + BUTTON_SPACING;
         var changeSkinButton = new Button(0, this.getRealY(), 70, this.getSizeY(),
-            Component.literal("Change Skin"), (b) -> {ChopinLogger.l("clicked editSkin");}
+            Component.literal("Personalization"), (b) -> {ChopinLogger.l("clicked editSkin");}
         );
         totalWidth += changeSkinButton.getWidth();
 

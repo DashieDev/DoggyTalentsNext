@@ -1,4 +1,4 @@
-package doggytalents.client.screen.DogNewInfoScreen.element;
+package doggytalents.client.screen.DogNewInfoScreen.element.view.TalentView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
+import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.client.screen.DogNewInfoScreen.store.TalentListPageCounterSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.TalentListSlice;
@@ -19,35 +20,35 @@ public class TalentButtonEntryElement extends AbstractElement {
 
     Dog dog;
     TalentListData talentList;
+    int pageIndex;
+
     static final int BUTTON_HEIGHT = 20;
     static final int BUTTON_SPACING = 2;
     static final int PADDING_TOP = 0;
     static final int PADDING_LEFT = 0;
 
-    public TalentButtonEntryElement(AbstractElement parent, Screen screen, Dog dog) {
+    public TalentButtonEntryElement(AbstractElement parent, Screen screen, 
+        Dog dog, int pageIndex, TalentListData talentList) {
         super(parent, screen);
         this.dog = dog;
+        this.pageIndex = pageIndex;
+        this.talentList = talentList;
     }
 
     @Override
     public AbstractElement init() {
-        this.talentList = Store.get(getScreen())
-            .getStateOrDefault(
-                TalentListSlice.class, 
-                TalentListData.class, 
-                new TalentListData(List.of())
-            );
-        int buttonsUntilFull = Mth.floor(
-            (this.getSizeY() - PADDING_TOP) / (BUTTON_SPACING + BUTTON_HEIGHT)
-        );
+        int buttonsUntilFull = this.calculateButtonCanFilled(this.getSizeY());
         var talentButtons = new ArrayList<TalentListEntryButton>();
-        for (var talent : this.talentList.talents) {
+        int startTalentIndex = buttonsUntilFull*(pageIndex-1);
+        for (int i = startTalentIndex; i < this.talentList.talents.size(); ++i) {
+            var talent = this.talentList.talents.get(i);
             talentButtons.add(
                 new TalentListEntryButton(0, 0, 
-                    this.getSizeX(), BUTTON_HEIGHT, talent)
+                    this.getSizeX(), BUTTON_HEIGHT, talent, 
+                    getScreen(), dog.getDogLevel(talent))
             );
             --buttonsUntilFull;
-            if (buttonsUntilFull == 0) break;
+            if (buttonsUntilFull <= 0) break;
         }
         int startX = this.getRealX() + PADDING_LEFT;
         int pY = this.getRealY() + PADDING_TOP;
@@ -64,6 +65,20 @@ public class TalentButtonEntryElement extends AbstractElement {
     @Override
     public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
         
+    }
+
+    public int calculateButtonCanFilled(int height) {
+        return Mth.floor( Math.max(
+            (height - PADDING_TOP) / (BUTTON_SPACING + BUTTON_HEIGHT), 0
+        ));
+    }
+
+    public int calculateMaxPage(int talentSize) {
+        return this.calculateMaxPageInternal(talentSize, calculateButtonCanFilled(this.getSizeY()));
+    }
+
+    private int calculateMaxPageInternal(int talentSize, int buttonInOnePage) {
+        return Mth.ceil(((float)talentSize)/((float)buttonInOnePage));
     }
     
 }

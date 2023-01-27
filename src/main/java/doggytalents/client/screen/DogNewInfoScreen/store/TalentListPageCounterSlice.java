@@ -4,18 +4,28 @@ public class TalentListPageCounterSlice implements AbstractSlice {
 
     @Override
     public Object getInitalState() {
-        return 0;
+        return 1;
     }
 
     @Override
     public Object reducer(Object oldData, UIAction action) {
-        if ("resize".equals(action.type)) {
-            return 0;
-        }
-        if (action.payload instanceof Integer) {
+        switch (action.type) {
+            case "resize" : return 1;
+            case "talent_list_page.increment" : {
+                if (oldData instanceof Integer i) {
+                    return i + 1;
+                } else return 1;
+            }
+            case "talent_list_page.decrement" : {
+                if (oldData instanceof Integer i) {
+                    return i - 1;
+                } else return 1;
+            }
+        } 
+        if (action.payload instanceof Integer ) {
             return action.payload;
         }
-        return 0;
+        return 1;
     }
     
 }

@@ -34,6 +34,7 @@ public class Store {
         registerSlice(ActiveTabSlice.class);
         registerSlice(TalentListSlice.class);
         registerSlice(TalentListPageCounterSlice.class);
+        registerSlice(ActiveTalentDescSlice.class);
     }
 
     private void init(Screen screen) {

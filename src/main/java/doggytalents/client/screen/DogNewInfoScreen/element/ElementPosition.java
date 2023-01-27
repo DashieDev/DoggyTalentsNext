@@ -119,6 +119,10 @@ public class ElementPosition {
     public ChildDirection getChildDirection() {
         return this.dir;
     }
+
+    public void setChildDirection(ChildDirection dir) {
+        this.dir = dir;
+    }
     
     public static enum PosType {
         RELATIVE,
