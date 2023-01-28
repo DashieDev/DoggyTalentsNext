@@ -8,9 +8,9 @@ import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.PosType;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
-import doggytalents.client.screen.DogNewInfoScreen.store.TalentListPageCounterSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.TalentListSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.TalentListSlice.TalentListData;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListPageCounterSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice.TalentListData;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.gui.screens.Screen;
 

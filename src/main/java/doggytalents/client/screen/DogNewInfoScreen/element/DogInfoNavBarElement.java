@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
-import doggytalents.client.screen.DogNewInfoScreen.store.ActiveTabSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.client.screen.DogNewInfoScreen.widget.NavBarButton;
 import net.minecraft.client.Minecraft;

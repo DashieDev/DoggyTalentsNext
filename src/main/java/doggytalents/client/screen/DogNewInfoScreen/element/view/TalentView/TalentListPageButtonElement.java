@@ -4,8 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
-import doggytalents.client.screen.DogNewInfoScreen.store.TalentListPageCounterSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListPageCounterSlice;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;

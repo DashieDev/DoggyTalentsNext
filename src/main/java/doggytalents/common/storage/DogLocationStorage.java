@@ -160,7 +160,7 @@ public class DogLocationStorage extends SavedData {
             DogLocationData locationData = entry.getValue();
             NBTUtil.putUniqueId(locationCompound, "uuid", entry.getKey());
             locationData.write(locationCompound);
-
+            
             list.add(locationCompound);
         }
 

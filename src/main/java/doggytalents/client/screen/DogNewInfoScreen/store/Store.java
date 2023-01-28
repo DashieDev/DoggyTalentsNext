@@ -5,12 +5,18 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import doggytalents.ChopinLogger;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.AbstractSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListPageCounterSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice;
 import net.minecraft.client.gui.screens.Screen;
 
 public class Store {
     
     private static Store INSTANCE;
 
+    //Re-render listener.
     private Screen screen;
 
     private final Map<Class<? extends AbstractSlice>, StoreValue> applicationStates
@@ -103,6 +109,8 @@ public class Store {
         if (INSTANCE == null) {
             INSTANCE = new Store();
             INSTANCE.init(screen);
+        } else if (screen != INSTANCE.screen) {
+            INSTANCE.screen = screen;
         }
         return INSTANCE;
     }

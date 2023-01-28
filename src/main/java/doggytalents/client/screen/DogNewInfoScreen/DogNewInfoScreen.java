@@ -14,7 +14,7 @@ import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.TalentView.TalentView;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
-import doggytalents.client.screen.DogNewInfoScreen.store.ActiveTabSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;

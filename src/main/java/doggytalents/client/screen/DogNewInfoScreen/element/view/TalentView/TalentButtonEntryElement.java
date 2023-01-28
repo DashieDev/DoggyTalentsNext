@@ -6,11 +6,11 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListPageCounterSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice.TalentListData;
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
-import doggytalents.client.screen.DogNewInfoScreen.store.TalentListPageCounterSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.TalentListSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.TalentListSlice.TalentListData;
 import doggytalents.client.screen.DogNewInfoScreen.widget.TalentListEntryButton;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.gui.screens.Screen;
@@ -45,7 +45,7 @@ public class TalentButtonEntryElement extends AbstractElement {
             talentButtons.add(
                 new TalentListEntryButton(0, 0, 
                     this.getSizeX(), BUTTON_HEIGHT, talent, 
-                    getScreen(), dog.getDogLevel(talent))
+                    getScreen(), dog)
             );
             --buttonsUntilFull;
             if (buttonsUntilFull <= 0) break;

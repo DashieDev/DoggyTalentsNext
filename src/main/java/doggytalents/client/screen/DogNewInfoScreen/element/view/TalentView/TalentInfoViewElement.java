@@ -6,14 +6,19 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.registry.Talent;
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
-import doggytalents.client.screen.DogNewInfoScreen.store.ActiveTalentDescSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
+import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.network.PacketHandler;
+import doggytalents.common.network.packet.data.DogTalentData;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraftforge.network.PacketDistributor;
 
 public class TalentInfoViewElement extends AbstractElement {
 
@@ -42,7 +47,68 @@ public class TalentInfoViewElement extends AbstractElement {
             new ActiveTalentDescSlice(null)).activeTalent;
         this.talent = talent;
 
+        if (this.talent == null) {
+            return this;
+        }
+
+        this.addTrainButton(dog);
+
+        
+
         return this;
+    }
+
+    private void addTrainButton(Dog dog) {
+        int dogLevel = dog.getDogLevel(talent);
+        var trainButton = new Button(0, 0, 
+            50, 20, Component.literal("Train"), 
+            b -> {
+                //send training packet and dispatch here.
+                requestTrainAndDispatch();
+            }
+        ) {
+            @Override
+            public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                // TODO Auto-generated method stub
+                super.renderButton(stack, mouseX, mouseY, pTicks);
+                int tX = this.x;
+                int tY = this.y - LINE_SPACING - font.lineHeight;
+                // var costStr = dogLevel < talent.getMaxLevel() ?
+                //     "Cost : " + talent.getLevelCost(dogLevel + 1)
+                //     : "Max Level Reached.";
+                int dogLevel = dog.getDogLevel(talent);
+                String costStr;
+                int costStrColor;
+                if (dogLevel >= talent.getMaxLevel()) {
+                    costStr = "Max level!";
+                    costStrColor = 0xffF4FF00;
+                } else {
+                    costStr = "Cost : " + talent.getLevelCost(dogLevel + 1);
+                    costStrColor = 0xffffffff;
+                }
+                font.draw(stack, costStr, tX, tY, costStrColor);
+                this.active = 
+                    dogLevel < talent.getMaxLevel()
+                    && dog.canSpendPoints(talent.getLevelCost(dogLevel + 1));
+            }
+        };
+        trainButton.active = 
+            dogLevel < talent.getMaxLevel()
+            && dog.canSpendPoints(talent.getLevelCost(dogLevel + 1));
+        int trainButtonX = this.getRealX() + this.getSizeX() - trainButton.getWidth() - 35;
+        int trainButtonY = this.getRealY() + this.getSizeY() - trainButton.getHeight() - 20;
+
+        trainButton.x = trainButtonX;
+        trainButton.y = trainButtonY;
+
+        this.addChildren(trainButton);
+    }
+
+    private void requestTrainAndDispatch() {
+        int level = dog.getDogLevel(talent);
+        if (level < talent.getMaxLevel() && dog.canSpendPoints(talent.getLevelCost(level + 1))) {
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogTalentData(dog.getId(), talent));
+        }
     }
 
     @Override
@@ -65,7 +131,7 @@ public class TalentInfoViewElement extends AbstractElement {
             .withStyle(
                 Style.EMPTY
                 .withBold(true)
-                .withColor(0xffdd05fa)
+                .withColor(0xffF4FF00)
             );
         font.draw(stack, title, pX, pY, 0xffffffff);
         pY += 2*LINE_SPACING + this.font.lineHeight;
@@ -75,6 +141,8 @@ public class TalentInfoViewElement extends AbstractElement {
             font.draw(stack, line, pX, pY, 0xffffffff);
             pY += font.lineHeight + LINE_SPACING;
         }
+
+
         
     }
     

@@ -4,9 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Talent;
-import doggytalents.client.screen.DogNewInfoScreen.store.ActiveTalentDescSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -31,16 +31,16 @@ public class TalentListEntryButton extends AbstractButton {
     Font font;
     Talent talent;
     Screen screen;
-    int dogTalentLevel;
+    Dog dog;
 
     public TalentListEntryButton(int x, int y, int width, int height, 
-        Talent talent, Screen screen, int dogTalentLevel) {
+        Talent talent, Screen screen, Dog dog) {
         super(x, y, width, height, Component.translatable(talent.getTranslationKey()));
         //TODO Auto-generated constructor stub
         this.font = Minecraft.getInstance().font;
         this.talent = talent;
         this.screen = screen;
-        this.dogTalentLevel = dogTalentLevel;
+        this.dog = dog;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class TalentListEntryButton extends AbstractButton {
             cl = this.isHovered ? DEFAULT_INVALID_HLCOLOR : DEFAULT_INVALID_COLOR;
         } else {
             talentMaxLvl = this.talent.getMaxLevel();
-            talentLvlPercent = ((float)this.dogTalentLevel)/((float)talentMaxLvl);
+            talentLvlPercent = ((float)this.dog.getDogLevel(talent))/((float)talentMaxLvl);
             if (talentLvlPercent >= 1) {
                 lvlcl = this.isHovered ? DEFAULT_MAXLEVEL_HLCOLOR : DEFAULT_MAXLEVEL_COLOR;
             }
