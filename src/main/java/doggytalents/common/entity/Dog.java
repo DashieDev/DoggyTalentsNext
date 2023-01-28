@@ -437,19 +437,6 @@ public class Dog extends AbstractDog {
                     if (this.shakeFire) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 }
             }
-
-            // On server side
-            if (!this.level.isClientSide) {
-
-                // Every 2 seconds
-                if (this.tickCount % 40 == 0) {
-                    DogLocationStorage.get(this.level).getOrCreateData(this).update(this);
-
-                    if (this.getOwner() != null) {
-                        this.setOwnersName(this.getOwner().getName());
-                    }
-                }
-            }
         }
 
         this.alterations.forEach((alter) -> alter.tick(this));

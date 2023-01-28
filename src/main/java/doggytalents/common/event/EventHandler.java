@@ -4,9 +4,11 @@ import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.talent.HunterDogTalent;
 import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -16,11 +18,14 @@ import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.event.level.ChunkEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,6 +38,36 @@ public class EventHandler {
         if (event.phase != Phase.END || !event.haveTime()) return;
 
         DogAsyncTaskManager.tick();
+
+        var levels = event.getServer().getAllLevels();
+        for (var level : levels) {
+            updateDogLocation(level);
+        }
+
+    }
+
+    public void updateDogLocation(ServerLevel sLevel) {
+
+        var activeDogs = sLevel.getEntities(
+            EntityTypeTest.forClass(Dog.class), 
+            d -> d.isAlive()
+        );
+
+        if (activeDogs.isEmpty()) return;
+
+        var storage = DogLocationStorage.get(sLevel);
+
+        for (var dog : activeDogs) {
+            var data = storage.getOrCreateData(dog);
+            if (data != null) {
+                data.update(dog);
+                var owner = dog.getOwner();
+                if (owner != null) {
+                    dog.setOwnersName(owner.getName());
+                }
+            }
+        }
+
     }
 
     @SubscribeEvent
