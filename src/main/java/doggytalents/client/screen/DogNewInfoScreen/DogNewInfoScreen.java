@@ -9,9 +9,9 @@ import doggytalents.client.screen.DogNewInfoScreen.element.DogInfoNavBarElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.DivElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.PosType;
-import doggytalents.client.screen.DogNewInfoScreen.element.view.AccessoriesView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView;
+import doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.StyleView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.TalentView.TalentView;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice;
@@ -60,7 +60,7 @@ public class DogNewInfoScreen extends Screen {
         AbstractElement view;
         switch (selectedTab) {
             case ACCESSORIES:
-                view = new AccessoriesView(upperView, this, dog);
+                view = new StyleView(upperView, this, dog);
                 break;
             case STATS:
                 view = new StatsView(upperView, this, dog);

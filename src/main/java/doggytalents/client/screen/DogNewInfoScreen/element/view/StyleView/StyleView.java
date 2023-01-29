@@ -1,4 +1,4 @@
-package doggytalents.client.screen.DogNewInfoScreen.element.view;
+package doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -6,13 +6,14 @@ import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.gui.screens.Screen;
 
-public class AccessoriesView extends AbstractElement {
+public class StyleView extends AbstractElement {
 
     Dog dog;
 
-    public AccessoriesView(AbstractElement parent, Screen screen, Dog dog) {
+    public StyleView(AbstractElement parent, Screen screen, Dog dog) {
         super(parent, screen);
         this.dog = dog;
+        
     }
 
     @Override

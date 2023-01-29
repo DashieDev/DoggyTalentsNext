@@ -64,7 +64,7 @@ public class TalentInfoViewElement extends AbstractElement {
             50, 20, Component.literal("Train"), 
             b -> {
                 //send training packet and dispatch here.
-                requestTrainAndDispatch();
+                requestTrain();
             }
         ) {
             @Override
@@ -104,7 +104,7 @@ public class TalentInfoViewElement extends AbstractElement {
         this.addChildren(trainButton);
     }
 
-    private void requestTrainAndDispatch() {
+    private void requestTrain() {
         int level = dog.getDogLevel(talent);
         if (level < talent.getMaxLevel() && dog.canSpendPoints(talent.getLevelCost(level + 1))) {
             PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogTalentData(dog.getId(), talent));
@@ -123,6 +123,7 @@ public class TalentInfoViewElement extends AbstractElement {
             return;
         }
 
+        //Title and description
         int startX = this.getRealX() + PADDING_LEFT;
         int startY = this.getRealY() + PADDING_TOP;
         int pX = startX;
@@ -142,7 +143,34 @@ public class TalentInfoViewElement extends AbstractElement {
             pY += font.lineHeight + LINE_SPACING;
         }
 
+        //Point left:
+        startX = this.getRealX() + PADDING_LEFT;
+        pY = this.getRealY() + this.getSizeY() - 45;
+        var currentLevelStr = Component.literal(
+            "Point left :  "
+        );
+        var currentLevelStr1 = Component.literal(
+            "" + this.dog.getSpendablePoints()
+        );
+        font.draw(stack, currentLevelStr, startX, pY, 0xffffffff);
+        pY += font.lineHeight + LINE_SPACING;
+        font.draw(stack, currentLevelStr1, startX, pY, 0xffffffff);
 
+        //Current level:
+        startX = this.getRealX() + 80;
+        pY = this.getRealY() + this.getSizeY() - 45;
+        currentLevelStr = Component.literal(
+            "Current level :  "
+        );
+        currentLevelStr1 = Component.literal(
+            this.dog.getDogLevel(talent) 
+            + "/" + this.talent.getMaxLevel()
+        );
+        font.draw(stack, currentLevelStr, startX, pY, 0xffffffff);
+        pY += font.lineHeight + LINE_SPACING;
+        font.draw(stack, currentLevelStr1, startX, pY, 0xffffffff);
+
+        
         
     }
     

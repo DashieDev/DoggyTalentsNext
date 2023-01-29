@@ -12,15 +12,20 @@ import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListPageCou
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice.TalentListData;
 import doggytalents.common.entity.Dog;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public class talentListPanel extends AbstractElement {
 
     Dog dog;
+    Font font;
 
     public talentListPanel(AbstractElement parent, Screen screen, Dog dog) {
         super(parent, screen);
         this.dog = dog;
+        var mc = this.getScreen().getMinecraft();
+        this.font = mc.font;
         //TODO Auto-generated constructor stub
     }
 
@@ -60,8 +65,11 @@ public class talentListPanel extends AbstractElement {
 
     @Override
     public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-        // TODO Auto-generated method stub
-        
+        // int mX = this.getSizeX()/2;
+        // var c1 = Component.literal("Pts: " + this.dog.getSpendablePoints());
+        // int tX = this.getRealX() + mX - font.width(c1)/2;
+        // int tY = this.getRealY() + this.getSizeY() -15;
+        // font.draw(stack, c1, tX, tY, 0xffffffff);
     }
     
 }

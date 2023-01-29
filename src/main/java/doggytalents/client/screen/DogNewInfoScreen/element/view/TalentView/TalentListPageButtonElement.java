@@ -6,6 +6,7 @@ import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListPageCounterSlice;
+import doggytalents.client.screen.DogNewInfoScreen.widget.TextOnlyButton;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -34,18 +35,18 @@ public class TalentListPageButtonElement extends AbstractElement {
     public AbstractElement init() {
         int mX = this.getSizeX()/2;
         int mY = this.getSizeY()/2;
-        var nextButton = new Button(0, 0, BUTTON_SIZE, BUTTON_SIZE, 
+        var nextButton = new TextOnlyButton(0, 0, BUTTON_SIZE, BUTTON_SIZE, 
             Component.literal(">"), b -> {
                 Store.get(getScreen()).dispatch(TalentListPageCounterSlice.class, 
                 new UIAction("talent_list_page.increment", null));
-            }
+            }, font
         ); 
         nextButton.active = curPage < maxPage;
-        var backButton = new Button(0, 0, BUTTON_SIZE, BUTTON_SIZE, 
+        var backButton = new TextOnlyButton(0, 0, BUTTON_SIZE, BUTTON_SIZE, 
             Component.literal("<"), b -> {
                 Store.get(getScreen()).dispatch(TalentListPageCounterSlice.class, 
                 new UIAction("talent_list_page.decrement", null));
-            }
+            }, font
         ); 
         backButton.active = 1 < curPage;
         
