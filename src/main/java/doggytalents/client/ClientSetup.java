@@ -16,6 +16,7 @@ import doggytalents.client.entity.render.layer.RescueDogRenderer;
 import doggytalents.client.entity.render.layer.accessory.ArmorAccessoryRenderer;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
 import doggytalents.client.entity.render.layer.accessory.IncapacitatedRenderer;
+import doggytalents.client.screen.DogAccessoriesScreen;
 import doggytalents.client.screen.DogArmorScreen;
 import doggytalents.client.screen.DogInventoriesScreen;
 import doggytalents.client.screen.FoodBowlScreen;
@@ -46,6 +47,7 @@ public class ClientSetup {
         MenuScreens.register(DoggyContainerTypes.TREAT_BAG.get(), TreatBagScreen::new);
         MenuScreens.register(DoggyContainerTypes.DOG_INVENTORIES.get(), DogInventoriesScreen::new);
         MenuScreens.register(DoggyContainerTypes.DOG_ARMOR.get(), DogArmorScreen::new);
+        MenuScreens.register(DoggyContainerTypes.DOG_ACCESSORIES.get(), DogAccessoriesScreen::new);
     }
 
     public static void setupEntityRenderers(final EntityRenderersEvent.RegisterLayerDefinitions event) {

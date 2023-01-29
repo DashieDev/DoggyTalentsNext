@@ -13,6 +13,7 @@ import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.api.registry.*;
 import doggytalents.client.screen.DogInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
+import doggytalents.common.Screens;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.BreedGoal;
@@ -651,6 +652,10 @@ public class Dog extends AbstractDog {
 
         if (this.level.isClientSide && stack.getItem() == Items.STONE_AXE) {
             DogNewInfoScreen.open(this);
+        }
+
+        if (!this.level.isClientSide && stack.getItem() == Items.STONE_PICKAXE) {
+            Screens.openAccessoriesScreen((ServerPlayer)this.getOwner(), this);
         }
 
         if (this.isDefeated()) 
@@ -1876,8 +1881,8 @@ public class Dog extends AbstractDog {
 
         if (filtered.size() >= type.numberToPutOn()) {
             return false;
-        }
 
+        }
         accessories.add(accessoryInst);
 
         this.markDataParameterDirty(ACCESSORIES.get());

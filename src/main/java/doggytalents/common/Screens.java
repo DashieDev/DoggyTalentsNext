@@ -4,6 +4,7 @@ import doggytalents.DoggyItems;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.block.tileentity.FoodBowlTileEntity;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.inventory.container.DogAccessoriesContainer;
 import doggytalents.common.inventory.container.DogArmorContainer;
 import doggytalents.common.inventory.container.DogInventoriesContainer;
 import doggytalents.common.inventory.container.PackPuppyContainer;
@@ -104,6 +105,25 @@ public class Screens {
         }
     }
 
+    public static class DogAccessoriesContainerProvider implements MenuProvider {
+
+        private Dog dog;
+
+        public DogAccessoriesContainerProvider(Dog dog) {
+            this.dog = dog;
+        }
+
+        @Override
+        public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
+            return new DogAccessoriesContainer(windowId, inventory, dog);
+        }
+
+        @Override
+        public Component getDisplayName() {
+            return Component.translatable("container.doggytalents.dog_accessories");
+        }
+    }
+
     public static void openPackPuppyScreen(ServerPlayer player, AbstractDog dogIn) {
         if (dogIn.isAlive()) {
             NetworkHooks.openScreen(player, new PackPuppyContainerProvider(dogIn), (buf) -> {
@@ -141,6 +161,16 @@ public class Screens {
             NetworkHooks.openScreen(player, new DogArmorContainerProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
             });
+        }
+    }
+
+    public static void openAccessoriesScreen(ServerPlayer player, Dog dogIn) {
+        if (dogIn.isAlive()) {
+            NetworkHooks.openScreen(player, 
+                new DogAccessoriesContainerProvider(dogIn), (buf) -> {
+                    buf.writeInt(dogIn.getId());
+                }
+            );
         }
     }
 

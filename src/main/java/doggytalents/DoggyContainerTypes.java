@@ -1,6 +1,7 @@
 package doggytalents;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.inventory.container.DogAccessoriesContainer;
 import doggytalents.common.inventory.container.DogArmorContainer;
 import doggytalents.common.inventory.container.DogInventoriesContainer;
 import doggytalents.common.inventory.container.FoodBowlContainer;
@@ -57,6 +58,13 @@ public class DoggyContainerTypes {
         var e = inv.player.level.getEntity(dogId);
         if (!(e instanceof Dog)) return null;
         return new DogArmorContainer(windowId, inv, (Dog) e);
+    });
+
+    public static final RegistryObject<MenuType<DogAccessoriesContainer>> DOG_ACCESSORIES = register("dog_accessories_container", (windowId, inv, data) -> {
+        int dogId = data.readInt();
+        var e = inv.player.level.getEntity(dogId);
+        if (!(e instanceof Dog)) return null;
+        return new DogAccessoriesContainer(windowId, inv, (Dog) e);
     });
 
     private static <X extends AbstractContainerMenu, T extends MenuType<X>> RegistryObject<MenuType<X>> register(final String name, final IContainerFactory<X> factory) {
