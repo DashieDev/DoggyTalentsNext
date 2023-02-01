@@ -256,9 +256,13 @@ percentage of health the dog has left.
   / The dog won't attack piglins ONLY IF the owner is wearing any gold armor piece. 
 
 1.9.1 - 10th January 2023
-+ HOTFIX: Hellhound 5 dog considering MagmaBlock open area and suffocate upon teleportation.
+* HOTFIX: Hellhound 5 dog considering MagmaBlock open area and suffocate upon teleportation.
 
 1.9.2 - 19th January 2023
-+ HOTFIX: NPE on Dog Go Away from Fire A.I
+* HOTFIX: NPE on Dog Go Away from Fire A.I
 + Rescue dog now stops going to target when incapacitated.
 + B/Bm/G/Gb mode dog now fight every enermy!
+
+1.9.3 - 2th February 2023
+* HOTFIX : ChestDog + TorchDog level < 5 placing torch cause the whole 
+world to crash and is unable to join until the bug is resolved.
