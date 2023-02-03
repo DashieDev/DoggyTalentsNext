@@ -30,6 +30,7 @@ public class DogHungryGoal extends Goal {
     private float oldWaterCost;
 
     private int looktime;
+    private int remindtime;
 
     public DogHungryGoal(Dog dog, double speedIn, float minDistIn) {
         this.dog = dog;
@@ -42,8 +43,16 @@ public class DogHungryGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        if (remindtime > 0) {
+            if (!this.dog.isLowHunger()) {
+                remindtime = 0;
+            } else {
+                --remindtime;
+            }
+        }
+
         LivingEntity owner = this.dog.getOwner();
-        if (owner == null || this.looktime >= 60) {
+        if (owner == null || this.remindtime > 0) {
             return false;
         } else if (!this.dog.isLowHunger()) {
             return false;
@@ -87,6 +96,7 @@ public class DogHungryGoal extends Goal {
         this.dog.getNavigation().stop();
         this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
         this.dog.setBegging(false);
+        this.remindtime = 200 + dog.getRandom().nextInt(40) * 20;
     }
 
     @Override
