@@ -65,21 +65,6 @@ public class RescueDogTalent extends TalentInstance {
             }
         }
 
-        
-
-        // if (this.level() > 0) {
-        //     LivingEntity owner = dog.getOwner();
-
-        //     //TODO add particles and check how far away dog is
-        //     if (owner != null && owner.getHealth() <= 6) {
-        //         int healCost = this.healCost(this.level());
-
-        //         if (dog.getDogHunger() >= healCost) {
-        //             owner.heal(Mth.floor(this.level() * 1.5D));
-        //             dog.setDogHunger(dog.getDogHunger() - healCost);
-        //         }
-        //     }
-        // }
     }
 
     //TODO Decrease the healCost due to healing is more difficult now.
@@ -167,6 +152,8 @@ public class RescueDogTalent extends TalentInstance {
         
         //Get owner 
         var owner = dog.getOwner();
+
+        //Check owner first
         if (owner != null && lowHealthAndInWitness.test(owner)) {
             this.healTargets.add(owner);
         }
@@ -176,7 +163,7 @@ public class RescueDogTalent extends TalentInstance {
             AbstractDog.class,    
             dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
             d -> (
-                    d.getOwner() == dog.getOwner()
+                    d.getOwner() == owner
                     && lowHealthAndInWitness.test(d)
                 )
             );
@@ -189,7 +176,7 @@ public class RescueDogTalent extends TalentInstance {
             Wolf.class,    
             dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
             w -> (
-                    w.getOwner() == dog.getOwner()
+                    w.getOwner() == owner
                     && lowHealthAndInWitness.test(w)
                 )
             );
@@ -204,9 +191,11 @@ public class RescueDogTalent extends TalentInstance {
 
         var target = this.healTargets.get(0); 
         double mindistanceSqr = target.distanceToSqr(dog);
+
+        var owner = dog.getOwner();
         
         for (var i : this.healTargets) {
-            if (dog.getOwner() == i) return i;
+            if (owner == i) return i;
             else {
                 var d = i.distanceToSqr(dog);
                 if (d < mindistanceSqr) {

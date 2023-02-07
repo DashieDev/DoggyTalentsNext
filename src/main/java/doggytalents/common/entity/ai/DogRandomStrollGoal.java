@@ -83,7 +83,11 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
 
         var n = this.dog.getNavigation(); 
         var p = n.getPath();
+
         if (p == null || p.getNodeCount() <= 0) return false;
+
+        var owner = dog.getOwner();
+        if (owner == null) return false;
         
         //Iterate through the next 5 blocks of the path and check if obstruct owner.
         int i0 = p.getNextNodeIndex();
@@ -91,7 +95,7 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
         for (int i = i0; i < i_end; ++i) {
 
             boolean flag = 
-                DogUtil.posWillCollideWithOwnerMovingForward(dog, p.getNodePos(i));
+                DogUtil.posWillCollideWithOwnerMovingForward(dog, owner, p.getNodePos(i));
 
             if (flag) {
                 return true;

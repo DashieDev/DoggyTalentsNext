@@ -126,14 +126,14 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
         public void tick() { 
             if (this.nearestDanger != null)
             this.dog.getLookControl().setLookAt(this.nearestDanger, 10.0F, this.dog.getMaxHeadXRot());
-            if (dog.distanceToSqr(this.dog.getOwner()) > 2 && --this.tickUntilPathRecalc <= 0) {
+            if (dog.distanceToSqr(owner) > 2 && --this.tickUntilPathRecalc <= 0) {
                 //The dog always stays close to the owner, and tp when a little bit further
                 //So the path is not that long, so interval = 3 is ok
                 this.tickUntilPathRecalc = 3;
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
                     //Outside guard radius -> tp 
                     if (this.dog.distanceToSqr(this.owner) > GUARD_DISTANCE_SQR) {
-                        DogUtil.guessAndTryToTeleportToOwner(dog, 4);
+                        DogUtil.guessAndTryToTeleportToOwner(dog, owner, 4);
                     } else {
                         this.dog.getNavigation().moveTo(this.owner, 1.5);
                     }
@@ -237,15 +237,15 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
 
         @Override
         public void tick() { 
-            //this.dog.getLookControl().setLookAt(this.dog.getOwner(), 10.0F, this.dog.getMaxHeadXRot());
-            if (dog.distanceToSqr(this.dog.getOwner()) > 2 && --this.tickUntilPathRecalc <= 0) {
+            
+            if (dog.distanceToSqr(owner) > 2 && --this.tickUntilPathRecalc <= 0) {
                 //The dog always stays close to the owner, and tp when a little bit further
                 //So the path is not that long, so interval = 3 is okw
                 this.tickUntilPathRecalc = 3;
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
                     //Outside guard radius -> tp 
                     if (this.dog.distanceToSqr(this.owner) > GUARD_DISTANCE_SQR) {
-                        DogUtil.guessAndTryToTeleportToOwner(dog, 4);
+                        DogUtil.guessAndTryToTeleportToOwner(dog, owner, 4);
                     } else {
                         this.dog.getNavigation().moveTo(this.owner, 1.5);
                     }
