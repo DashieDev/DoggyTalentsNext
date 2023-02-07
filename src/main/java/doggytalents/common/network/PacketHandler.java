@@ -34,6 +34,7 @@ public final class PacketHandler {
         registerPacket(new ChangeAccessoryPacket(), ChangeAccessoriesData.class);
         registerPacket(new StatsSyncPackets.Request(), StatsSyncData.Request.class);
         registerPacket(new StatsSyncPackets.Response(), StatsSyncData.Response.class);
+        registerPacket(new DogDismountPacket(), DogDismountData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
