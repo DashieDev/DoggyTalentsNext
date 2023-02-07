@@ -233,6 +233,7 @@ public class WaterHolderTalent extends TalentInstance {
     }
 
     private List<LivingEntity> getNearbyOnFire(AbstractDog dog) {
+        var owner = dog.getOwner();
         return dog.level.getEntitiesOfClass(LivingEntity.class, dog.getBoundingBox().inflate(EFFECT_RANGE, 4, EFFECT_RANGE), 
             e -> 
             
@@ -240,18 +241,18 @@ public class WaterHolderTalent extends TalentInstance {
                 (e.isOnFire()) && (
 
                     // is Dog's Owner
-                    (dog.getOwner() == e) 
+                    (owner == e) 
                     
                     //is dog of the same owner
                     || ( 
                         e instanceof AbstractDog
-                        && ((AbstractDog)e).getOwner() == dog.getOwner()
+                        && ((AbstractDog)e).getOwner() == owner
                     )
 
                     //is wolf of the same owner
                     || ( 
                         e instanceof Wolf
-                        && ((Wolf)e).getOwner() == dog.getOwner()
+                        && ((Wolf)e).getOwner() == owner
                     )
 
                 //can see target
@@ -268,6 +269,8 @@ public class WaterHolderTalent extends TalentInstance {
         
         //Get owner 
         var owner = dog.getOwner();
+
+        //Check owner first
         if (owner != null && onFireAndWitness.test(owner)) {
             this.targets.add(owner);
         }
@@ -277,7 +280,7 @@ public class WaterHolderTalent extends TalentInstance {
             AbstractDog.class,    
             dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
             d -> (
-                    d.getOwner() == dog.getOwner()
+                    d.getOwner() == owner
                     && onFireAndWitness.test(d)
                 )
             );
@@ -290,7 +293,7 @@ public class WaterHolderTalent extends TalentInstance {
             Wolf.class,    
             dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
             w -> (
-                    w.getOwner() == dog.getOwner()
+                    w.getOwner() == owner
                     && onFireAndWitness.test(w)
                 )
             );
@@ -306,8 +309,10 @@ public class WaterHolderTalent extends TalentInstance {
         var target = this.targets.get(0); 
         double mindistanceSqr = target.distanceToSqr(dog);
         
+        var owner = dog.getOwner();
+
         for (var i : this.targets) {
-            if (dog.getOwner() == i) return i;
+            if (owner == i) return i;
             else {
                 var d = i.distanceToSqr(dog);
                 if (d < mindistanceSqr) {
