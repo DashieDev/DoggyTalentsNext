@@ -998,6 +998,16 @@ public class Dog extends AbstractDog {
             //The dog is already weak, hurting the dog makes,
             //the dog being weak for longer...
             this.setDogHunger(0); 
+
+            //Invalidate dog as a target for whatever killed him.
+            var e = source.getEntity();
+            if (e instanceof Mob mob) {
+                var target = mob.getTarget();
+                if (target == this) {
+                    mob.setTarget(null);
+                }
+            }
+
             return false;
         }
 
@@ -1090,6 +1100,11 @@ public class Dog extends AbstractDog {
         }
 
         return super.isDamageSourceBlocked(source);
+    }
+
+    @Override
+    public boolean canBeSeenAsEnemy() {
+        return !this.isDefeated() && super.canBeSeenAsEnemy();
     }
 
     @Override
