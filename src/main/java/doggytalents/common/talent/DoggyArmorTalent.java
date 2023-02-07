@@ -67,8 +67,9 @@ public class DoggyArmorTalent extends TalentInstance {
         if (playerIn.getMainHandItem().getItem() instanceof ArmorItem) {
             if (!(dogIn instanceof Dog)) return InteractionResult.PASS;
             if (!worldIn.isClientSide) {
-                if (dogIn.getOwner() instanceof ServerPlayer) {
-                    Screens.openArmorScreen((ServerPlayer) dogIn.getOwner(), (Dog) dogIn);
+                var owner = dogIn.getOwner();
+                if (owner instanceof ServerPlayer sOwner) {
+                    Screens.openArmorScreen(sOwner, (Dog) dogIn);
                 }
             }
             return InteractionResult.SUCCESS;

@@ -34,30 +34,28 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Items to utilize when dealing with various doggy stuffs
- * NOTE: Functions here will not check if the thing involved is null or not
- * ex: dog.getOwner(), that must be already done outside of here.
  * @author DashieDev
  */
 public class DogUtil {
 
 
-    /**
-     * Dog teleport with considerations from owner and always success when there is available block :
-     * <p><b>1.</b> Chose the best block according to {@link DogUtil#chooseSafePosNearOwner} .</p>
-     * <p><b>2.</b> Set dog fall distance to 0</p>
-     * <p><b>3.</b> Teleport</p>
-     * 
-     * @param dog The Dog who will teleport
-     * @param radius Radius of the area to search for block to teleport
-     * @return true if teleport is success.
-     */
-    public static boolean searchAndTeleportToOwner(Dog dog, int radius) {
-        var target = chooseSafePosNearOwner(dog, radius);
+    // /**
+    //  * Dog teleport with considerations from owner and always success when there is available block :
+    //  * <p><b>1.</b> Chose the best block according to {@link DogUtil#chooseSafePosNearOwner} .</p>
+    //  * <p><b>2.</b> Set dog fall distance to 0</p>
+    //  * <p><b>3.</b> Teleport</p>
+    //  * 
+    //  * @param dog The Dog who will teleport
+    //  * @param radius Radius of the area to search for block to teleport
+    //  * @return true if teleport is success.
+    //  */
+    // public static boolean searchAndTeleportToOwner(Dog dog, int radius) {
+    //     var target = chooseSafePosNearOwner(dog, radius);
         
-        teleportInternal(dog, target);
+    //     teleportInternal(dog, target);
         
-        return true;
-    }
+    //     return true;
+    // }
 
     /**
      * This is a search for Tp Pos procedure which is heavily optimized using Dynamic Programming
@@ -70,13 +68,15 @@ public class DogUtil {
      * @param radius Radius of the area to search for block to teleport
      * @return true if teleport is success.
      */
-    public static boolean dynamicSearchAndTeleportToOwnwer(Dog dog, int radius) {
-    
+    public static boolean dynamicSearchAndTeleportToOwnwer(Dog dog, LivingEntity owner, int radius) {
+        
         var target = CachedSearchUtil.getRandomSafePosUsingPool(
-            dog, dog.getOwner().blockPosition(),
-            dog.getOwner().isSprinting(),
+            dog, owner.blockPosition(),
+            owner.isSprinting(),
             radius, 1
         );
+
+        ChopinLogger.sendToOwner(dog, "Yo !");
    
         if (target == null) {
             return false;
@@ -114,42 +114,42 @@ public class DogUtil {
     }
 
 
-    /**
-     * This function will search for all of the eligible position into a list,
-     * then pick a random item and return;
-     * 
-     * @param dog The Dog
-     * @param radius Radius of the area to search for best pos
-     * @return the best block or null if no block is found.
-     */
-    public static BlockPos chooseSafePosNearOwner(Dog dog, int radius) {
+    // /**
+    //  * This function will search for all of the eligible position into a list,
+    //  * then pick a random item and return;
+    //  * 
+    //  * @param dog The Dog
+    //  * @param radius Radius of the area to search for best pos
+    //  * @return the best block or null if no block is found.
+    //  */
+    // public static BlockPos chooseSafePosNearOwner(Dog dog, LivingEntity owner, int radius) {
 
-        var owner_b0 = dog.getOwner().blockPosition();
+    //     var owner_b0 = dog.getOwner().blockPosition();
 
-        // Get BlockPos Arround the owner
-        var blockposes = BlockPos.betweenClosed(
-                owner_b0.offset(-radius, -1, -radius),
-                owner_b0.offset(radius, 1, radius));
+    //     // Get BlockPos Arround the owner
+    //     var blockposes = BlockPos.betweenClosed(
+    //             owner_b0.offset(-radius, -1, -radius),
+    //             owner_b0.offset(radius, 1, radius));
 
-        // Filter out the safe pos
-        var safeblockposes = new ArrayList<BlockPos>();
-        for (var i : blockposes) {
+    //     // Filter out the safe pos
+    //     var safeblockposes = new ArrayList<BlockPos>();
+    //     for (var i : blockposes) {
 
-            if (wantToTeleportToThePosition(dog, i)) {
-                safeblockposes.add(new BlockPos(i.getX(), i.getY(), i.getZ()));
-            }         
+    //         if (wantToTeleportToThePosition(dog, owner, i)) {
+    //             safeblockposes.add(new BlockPos(i.getX(), i.getY(), i.getZ()));
+    //         }         
 
-        }
+    //     }
 
-        // If no safe pos then return null
-        if (safeblockposes.size() <= 0) {
-            return null;
-        }
+    //     // If no safe pos then return null
+    //     if (safeblockposes.size() <= 0) {
+    //         return null;
+    //     }
 
-        //Pick a random block from the final list and teleport
-        BlockPos finaltp = safeblockposes.get(EntityUtil.getRandomNumber(dog, 0, safeblockposes.size() - 1));
-        return finaltp;
-    }
+    //     //Pick a random block from the final list and teleport
+    //     BlockPos finaltp = safeblockposes.get(EntityUtil.getRandomNumber(dog, 0, safeblockposes.size() - 1));
+    //     return finaltp;
+    // }
 
     /**
      * Dog will pick randomly 10 block around the owner per call to this function 
@@ -160,8 +160,8 @@ public class DogUtil {
      * @param radius Radius of the area to guess
      * @return true if success
      */
-    public static boolean guessAndTryToTeleportToOwner(Dog dog, int radius) {
-        var owner_b0 = dog.getOwner().blockPosition();
+    public static boolean guessAndTryToTeleportToOwner(Dog dog, LivingEntity owner, int radius) {
+        var owner_b0 = owner.blockPosition();
 
         for (int i = 0; i < 10; ++i) {
             int randX = owner_b0.getX() + EntityUtil.getRandomNumber(dog, -radius, radius);
@@ -169,7 +169,7 @@ public class DogUtil {
             int randZ = owner_b0.getZ() + EntityUtil.getRandomNumber(dog, -radius, radius);
             var b0 = new BlockPos(randX, randY, randZ);
 
-            if (wantToTeleportToThePosition(dog, b0)) {
+            if (wantToTeleportToThePosition(dog, owner, b0)) {
                 teleportInternal(dog, b0);
                 return true;
             }
@@ -191,8 +191,8 @@ public class DogUtil {
      * @param dog The dog
      * @param pos The position
      */
-    public static boolean wantToTeleportToThePosition(Dog dog, BlockPos pos) {
-        var owner_b0 = dog.getOwner().blockPosition();
+    public static boolean wantToTeleportToThePosition(Dog dog, LivingEntity owner, BlockPos pos) {
+        var owner_b0 = owner.blockPosition();
         boolean flag = 
                 // Not too close to owner
                 !(
@@ -208,8 +208,8 @@ public class DogUtil {
 
                 // if Owner is sprinting then don't obstruct the owner sprint path
                 && !(
-                    dog.getOwner().isSprinting()
-                    && posWillCollideWithOwnerMovingForward(dog, pos)
+                    owner.isSprinting()
+                    && posWillCollideWithOwnerMovingForward(dog, owner, pos)
                 ); 
         return flag;
     }
@@ -224,17 +224,17 @@ public class DogUtil {
      * @param dog The dog who is teleporting
      * @param pos The position to check
      */
-    public static boolean posWillCollideWithOwnerMovingForward(Dog dog, BlockPos pos) {
+    public static boolean posWillCollideWithOwnerMovingForward(Dog dog, LivingEntity owner, BlockPos pos) {
         final var DISTANCE_AWAY = 1.5;
 
-        var ownerPos = dog.getOwner().position();
+        var ownerPos = owner.position();
 
         //get owner position and target position
         var ownerPos2d = new Vec3(ownerPos.x(), 0, ownerPos.z()); 
         var targetPos2d = new Vec3(pos.getX() + 0.5, 0, pos.getZ() + 0.5);
         
         //get owner look vector
-        var a1 = dog.getOwner().getYHeadRot();
+        var a1 = owner.getYHeadRot();
         var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
         var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
         var ownerLookUnitVector = new Vec3(dx1, 0, dz1);
@@ -255,10 +255,10 @@ public class DogUtil {
      * @param dog The Dog
      * @param pos Block to consider
      */
-    public static boolean hasLineOfSightToOwnerAtPos(Dog dog, BlockPos pos) {
-        var pos1 = new Vec3(pos.getX() + 0.5, pos.getY() + dog.getOwner().getEyeHeight(), pos.getZ() + 0.5);
-        var pos2 = new Vec3(dog.getOwner().getX(), 
-            dog.getOwner().getY() + dog.getOwner().getEyeHeight(), dog.getOwner().getZ());
+    public static boolean hasLineOfSightToOwnerAtPos(Dog dog, LivingEntity owner, BlockPos pos) {
+        var pos1 = new Vec3(pos.getX() + 0.5, pos.getY() + owner.getEyeHeight(), pos.getZ() + 0.5);
+        var pos2 = new Vec3(owner.getX(), 
+            owner.getY() + owner.getEyeHeight(), owner.getZ());
         if (pos1.distanceTo(pos2) > 128.0D) {
             return false;
         } else {
@@ -463,18 +463,17 @@ public class DogUtil {
      * @param dY The maximum amount of blocks can the y coords between the target and the actual path destination diffrentiate
      * while still being eligible
      */
-    public static void moveToOwnerOrTeleportIfFarAway(Dog dog, double speedModifier,
+    public static void moveToOwnerOrTeleportIfFarAway(Dog dog, LivingEntity owner, double speedModifier,
         double distanceToTeleportSqr, boolean continueToMoveWhenTryTp, boolean forceTeleport, 
         double distanceToForceTeleportSqr, int dY) {
-        var owner = dog.getOwner();
         if (owner == null) return;
         var distance = dog.distanceToSqr(owner);
         if (!dog.isLeashed() && !dog.isPassenger()) {
             if (distance >= distanceToForceTeleportSqr) {
-                if (forceTeleport) DogUtil.dynamicSearchAndTeleportToOwnwer(dog, 4);
+                if (forceTeleport) DogUtil.dynamicSearchAndTeleportToOwnwer(dog, owner, 4);
             } else {
                 if (distance >= distanceToTeleportSqr) {
-                    DogUtil.guessAndTryToTeleportToOwner(dog, 4);
+                    DogUtil.guessAndTryToTeleportToOwner(dog, owner, 4);
                     if (continueToMoveWhenTryTp) {
                         dog.getNavigation().moveTo(owner, speedModifier);
                     }
@@ -498,7 +497,7 @@ public class DogUtil {
         if (owner.level instanceof ServerLevel sLevel) {
             var e = sLevel.getEntity(dogUUID);
             if (e != null && e instanceof Dog d) {
-                dynamicSearchAndTeleportToOwnwer(d, 4);
+                dynamicSearchAndTeleportToOwnwer(d, owner, 4);
             } else {
                 DogLocationStorage storage = DogLocationStorage.get(sLevel);
                 DogLocationData data = storage.getData(dogUUID);
@@ -517,11 +516,12 @@ public class DogUtil {
         var bedPos = dog.getBedPos();
         if (!bedPos.isPresent()) return;
         var chunkpos = new ChunkPos(bedPos.get());
+        var owner = dog.getOwner();
         if (dog.level.hasChunk(chunkpos.x, chunkpos.z)) {
             if (isTeleportSafeBlockMidAir(dog, bedPos.get().above())) {
                 teleportInternal(dog, bedPos.get().above());
             }
-        } else if (dog.getOwner() != null && dog.getOwner() instanceof ServerPlayer sP) {
+        } else if (owner != null && owner instanceof ServerPlayer sP) {
             DogAsyncTaskManager.addPromiseWithOwner(
                 new DogDistantTeleportToBedPromise(dog),
                 sP

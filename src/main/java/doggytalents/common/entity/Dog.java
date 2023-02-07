@@ -445,8 +445,10 @@ public class Dog extends AbstractDog {
                 if (this.tickCount % 40 == 0) {
                     DogLocationStorage.get(this.level).getOrCreateData(this).update(this);
 
-                    if (this.getOwner() != null) {
-                        this.setOwnersName(this.getOwner().getName());
+
+                    var owner = this.getOwner();
+                    if (owner != null) {
+                        this.setOwnersName(owner.getName());
                     }
                 }
             }
@@ -583,6 +585,8 @@ public class Dog extends AbstractDog {
     public void incapacitatedTick() {
         // 3 days max 60 min = 72 000 ticks
 
+        var owner = this.getOwner();
+
         if (this.level.getBlockState(this.blockPosition()).getBlock() == Blocks.AIR) {
             this.addHunger(0.001f*this.getIncapacitatedMutiplier());
         }
@@ -590,7 +594,7 @@ public class Dog extends AbstractDog {
             this.addHunger(0.002f*this.getIncapacitatedMutiplier());
             if (!this.isInSittingPose())
                 this.setInSittingPose(true);
-            if (this.getOwner() != null && this.distanceToSqr(this.getOwner()) <= 100) {
+            if (owner != null && this.distanceToSqr(owner) <= 100) {
                 this.addHunger(0.02f*this.getIncapacitatedMutiplier());
                 if (this.level instanceof ServerLevel && this.tickCount % 10 == 0) {
                     ((ServerLevel) this.level).sendParticles(
