@@ -212,7 +212,7 @@
    "dog.msg.low_hunger.1" : "%s: Woof woooof (Food pls)",
    "dog.msg.low_hunger.2" : "%s: Woof woof woooof wooof? (Shall we eat now?)",
 
-   "dog.msg.low_health.0" : "%s: Woof wooooof wooooooooof. (I don't feel so good.)@",
+   "dog.msg.low_health.0" : "%s: Woof wooooof wooooooooof. (I don't feel so good.)",
    "dog.msg.low_health.1" : "%s: Woof woof woof wooof (I may need some help here....)",
    "dog.msg.low_health.2" : "%s: Woof woof wooof? (Should we run?)",
 
