@@ -92,6 +92,9 @@ public enum EnumMode {
     }
 
     public static EnumMode byIndex(int i) {
+        if (i == -1) {
+            return EnumMode.INCAPACITATED;
+        }
         if (i < 0 || i >= VALUES.length) {
             i = EnumMode.DOCILE.getIndex();
         }
