@@ -59,9 +59,11 @@ public class DogMeleeAttackGoal extends Goal {
       if (this.dog.getMode() == EnumMode.DOCILE) return false;
 
       if (this.dog.fallDistance > 7) return false;
+      
+      var owner = this.dog.getOwner();
 
-      if (this.dog.getOwner() != null) {
-         if (this.dog.distanceToSqr(this.dog.getOwner()) > this.getMaxDistanceAwayFromOwner()) 
+      if (owner != null) {
+         if (this.dog.distanceToSqr(owner) > this.getMaxDistanceAwayFromOwner()) 
             return false;
       }
 
@@ -119,8 +121,10 @@ public class DogMeleeAttackGoal extends Goal {
 
       if (this.dog.fallDistance > 7) return false;
 
-      if (this.dog.getOwner() != null) {
-         if (this.dog.distanceToSqr(this.dog.getOwner()) > this.getMaxDistanceAwayFromOwner()) 
+      var owner = this.dog.getOwner();
+
+      if (owner != null) {
+         if (this.dog.distanceToSqr(owner) > this.getMaxDistanceAwayFromOwner()) 
             return false;
       }
 

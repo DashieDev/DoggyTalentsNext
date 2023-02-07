@@ -169,8 +169,9 @@ public class DogEatFromChestDogGoal extends Goal {
     private boolean validChestDog(Dog chestDog) {
         if (chestDog == null) return false;
         if (!isChestDog(chestDog)) return false;
-        if (chestDog.getOwner() == null) return false;
-        if (chestDog.getOwner() != this.dog.getOwner()) return false;
+        var chestDogOwner = chestDog.getOwner();
+        if (chestDogOwner == null) return false;
+        if (chestDogOwner != this.dog.getOwner()) return false;
         if (chestDog.distanceToSqr(this.dog) > SEARCH_RADIUS*SEARCH_RADIUS) return false;
         
         PackPuppyItemHandler inventory = 
@@ -188,7 +189,7 @@ public class DogEatFromChestDogGoal extends Goal {
                 inventory, 
                 (stack) -> {
                     var foodHandler = 
-                        FoodHandler.getMatch(chestDog, stack, chestDog.getOwner());
+                        FoodHandler.getMatch(chestDog, stack, null);
 
                     if (foodHandler.isPresent()) {
                         return true;
@@ -216,10 +217,10 @@ public class DogEatFromChestDogGoal extends Goal {
 
                 ItemStack stack = inventory.getStackInSlot(i);
                 var foodHandler = 
-                    FoodHandler.getMatch(dog, stack, dog.getOwner());
+                    FoodHandler.getMatch(dog, stack, null);
 
                 if (foodHandler.isPresent()) {
-                    foodHandler.get().consume(dog, stack, dog.getOwner());
+                    foodHandler.get().consume(dog, stack, null);
                     return;
                 }
             }

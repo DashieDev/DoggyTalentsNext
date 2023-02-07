@@ -8,7 +8,6 @@ import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
@@ -74,7 +73,7 @@ public class DogLowHealthGoal extends Goal {
         this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
         this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.whine = true;
-        DogUtil.dynamicSearchAndTeleportToOwnwer(dog, 4);
+        DogUtil.dynamicSearchAndTeleportToOwnwer(dog, owner, 4);
         ChopinLogger.l("Low Health started!");
     }
 
@@ -108,7 +107,7 @@ public class DogLowHealthGoal extends Goal {
                 //So the path is not that long, so interval = 3 is ok
                 this.timeToRecalcPath = 3;
                 DogUtil.moveToOwnerOrTeleportIfFarAway(
-                    dog, this.followSpeed,
+                    dog, owner, this.followSpeed,
                     25, false, 
                     --this.tickTillSearchForTp <= 0,
                      400, 
