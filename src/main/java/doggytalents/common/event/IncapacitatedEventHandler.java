@@ -10,7 +10,6 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ServerConfig;
 import doggytalents.common.entity.Dog;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.damagesource.DamageSource;
@@ -37,9 +36,8 @@ public class IncapacitatedEventHandler {
             d.setIncapacitatedMutiplier(1);
             var owner = d.getOwner();
             if (owner != null) {
-                var deathMsg = (String) ev.getSource().getLocalizedDeathMessage(d).getString();
-                var msg = Component.literal(deathMsg);
-                var genderStr = I18n.get(d.getGender().getUnlocalisedSubject());
+                var msg = ev.getSource().getLocalizedDeathMessage(d).copy();
+                var genderStr = Component.translatable(d.getGender().getUnlocalisedSubject()).getString();
                 var msg005 = ". "
                     + genderStr.substring(0, 1).toUpperCase()
                     + genderStr.substring(1)

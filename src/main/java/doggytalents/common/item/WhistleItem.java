@@ -11,7 +11,6 @@ import doggytalents.common.entity.DoggyBeamEntity;
 import doggytalents.common.talent.RoaringGaleTalent;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.Util;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -68,8 +67,8 @@ public class WhistleItem extends Item {
             return this.id;
         }
 
-        public String getTitle() {
-            return I18n.get("item.doggytalents.whistle." + this.getIndex());
+        public String getUnlocalisedTitle() {
+            return "item.doggytalents.whistle." + this.getIndex();
         }
     }
 

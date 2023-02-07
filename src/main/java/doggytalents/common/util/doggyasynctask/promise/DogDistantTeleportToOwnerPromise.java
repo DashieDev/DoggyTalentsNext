@@ -10,7 +10,6 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.multiplayer.chat.report.ReportEnvironment.Server;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;

@@ -101,7 +101,7 @@ public class WhistleScreen extends Screen{
                     .withBold(true)
                     .withColor(0xff6f00)
             );
-            var title = Component.literal(this.modeFilterList.get(i).getTitle());
+            var title = Component.translatable(this.modeFilterList.get(i).getUnlocalisedTitle());
             title.withStyle(
                 Style.EMPTY
                 .withBold(false)
@@ -169,7 +169,7 @@ public class WhistleScreen extends Screen{
             }
         } else {
             for (var i : WhistleMode.VALUES) {
-                String text = i.getTitle();
+                String text = I18n.get(i.getUnlocalisedTitle());
                 if (text.length() < this.value.length()) continue; 
                 if (text.contains(this.value)) {
                     this.modeFilterList.add(i);
