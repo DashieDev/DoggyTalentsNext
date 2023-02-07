@@ -24,7 +24,7 @@ import doggytalents.common.network.packet.ParticlePackets.CritEmitterPacket;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.util.*;
-import net.minecraft.client.particle.Particle;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
