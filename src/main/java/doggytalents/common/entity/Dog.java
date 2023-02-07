@@ -24,8 +24,10 @@ import doggytalents.common.entity.accessory.IncapacitatedLayer;
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.stats.StatsTracker;
+import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.ParticlePackets.CritEmitterPacket;
+import doggytalents.common.network.packet.data.DogDismountData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.util.*;
@@ -104,6 +106,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
@@ -851,7 +854,7 @@ public class Dog extends AbstractDog {
 
             return InteractionResult.SUCCESS;
         } else if (this.isPassenger()) {
-            this.stopRiding();
+            if(!this.level.isClientSide) this.stopRiding();
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
@@ -870,6 +873,23 @@ public class Dog extends AbstractDog {
         }
 
         return super.rideableUnderWater();
+    }
+
+    @Override
+    public void stopRiding() {
+        if (!this.level.isClientSide) { 
+            var e0 = this.getVehicle();
+            super.stopRiding();
+            var e1 = this.getVehicle();
+            if (e0 != e1) {
+                PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> this), 
+                    new DogDismountData(this.getId())
+                );
+            }
+        } else {
+            super.stopRiding();
+        }
+        
     }
 
     @Override
@@ -1154,6 +1174,7 @@ public class Dog extends AbstractDog {
             if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
                 amount = (amount + 1.0F) / 2.0F;
             }
+
 
             return super.hurt(source, amount);
         }
@@ -1661,6 +1682,50 @@ public class Dog extends AbstractDog {
 
         this.alterations.forEach((alter) -> alter.onWrite(this, compound));
     }
+
+    //BEGIN : Temporary avoiding dog sometimes as experinced,
+    //SEEMS TO failed to dismount player upon quiting game, and somehow
+    //it SEEMS THAT player data doesn't save passengers, 
+    //causing dog to be discarded. This cause no harm but with the cost of dog
+    //will not be saved AS A PASSENGER if the dog is 
+    //a passanger and being loaded as no vehicle
+    //upon next load, but currently there is no implementation of dog
+    //riding another entity other than his owner, and in that instance,
+    //the dog already is getting dismounted before game quit...
+    
+    @Override
+    public boolean saveAsPassenger(CompoundTag tag) {
+        return false;
+    }
+
+    @Override
+    public boolean save(CompoundTag tag) {
+        var removalReason = this.getRemovalReason();
+        if (removalReason != null && removalReason.shouldSave()) {
+            return false;
+        } else {
+            String s = this.getEncodeId();
+            if (s == null) {
+                return false;
+            } else {
+                tag.putString("id", s);
+                this.saveWithoutId(tag);
+                return true;
+            }
+        }
+    }
+
+    @Override
+    public boolean shouldBeSaved() {
+        var removalReason = this.getRemovalReason();
+        if (removalReason != null && !removalReason.shouldSave()) {
+           return false;
+        } else {
+           return !this.isVehicle() || !this.hasExactlyOnePlayerPassenger();
+        }
+    }
+
+    //END
 
     @Override
     public void load(CompoundTag compound) {
