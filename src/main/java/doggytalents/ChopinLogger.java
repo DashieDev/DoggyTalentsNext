@@ -55,7 +55,7 @@ public class ChopinLogger {
     }
 
 
-    //For debugging purpose only
+    //For debugging purpose only, should be final to be editable
     private static boolean IS_DEBUG_ALLOW_DEATH = false;
     
     @SubscribeEvent(priority = EventPriority.HIGH)
@@ -66,6 +66,7 @@ public class ChopinLogger {
             (e instanceof Dog && !IS_DEBUG_ALLOW_DEATH)
             || e instanceof Wolf
         ) {
+            if (ev.getSource().isBypassInvul()) return;
             ev.setCanceled(true);
             e.setHealth(e.getMaxHealth());
             if (e instanceof Dog) {
