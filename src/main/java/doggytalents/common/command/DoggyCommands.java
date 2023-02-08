@@ -34,6 +34,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static net.minecraft.commands.Commands.literal;
@@ -49,7 +50,7 @@ public class DoggyCommands {
         return Component.translatable("command.dogrespawn.notfound", arg);
     });
 
-    public static final DynamicCommandExceptionType SPAWN_EXCEPTION = new DynamicCommandExceptionType((arg) -> {
+    public static final DynamicCommandExceptionType RESPAWN_EXCEPTION = new DynamicCommandExceptionType((arg) -> {
         return Component.translatable("command.dogrespawn.exception", arg);
     });
 
@@ -67,10 +68,15 @@ public class DoggyCommands {
                     .requires(s -> s.hasPermission(2))
                     .then(
                         Commands.literal("locate")
-                        // .then(Commands.literal("byuuid")
-                        //   .then(Commands.argument("dogOwner", UUIDArgument.uuid()).suggests(DogRespawnCommand.getOwnerIdSuggestionsLocate())
-                        //   .then(Commands.argument("dogUuid", UUIDArgument.uuid()).suggests(DogRespawnCommand.getDogIdSuggestionsLocate())
-                        //   .executes(c -> locate(c)))))
+                        .then(
+                            Commands.literal("byuuid")
+                            .then(
+                                Commands.argument("ownerName", StringArgumentType.string())
+                                .suggests(DoggyCommands.getOwnerNameSuggestionsLocate())
+                                .then(
+                                    Commands.argument("dogUUID", StringArgumentType.string())
+                                    .suggests(DoggyCommands.getDogIdSuggestionsLocate())
+                                    .executes(c -> locate(c)))))
                         .then(
                             Commands.literal("byname")
                            .then(
@@ -83,14 +89,18 @@ public class DoggyCommands {
                                     .then(
                                         Commands.argument("dogUUID", StringArgumentType.string())
                                         .suggests(DoggyCommands.getDogIdSuggestionsLocate())
-                                        .executes(c -> locate(c))
-                        )))))
+                                        .executes(c -> locate(c)))))))
                     .then(
                         Commands.literal("revive")
-                    //   .then(Commands.literal("byuuid")
-                    //     .then(Commands.argument("dogOwner", UUIDArgument.uuid()).suggests(DogRespawnCommand.getOwnerIdSuggestionsRevive())
-                    //     .then(Commands.argument("dogUuid", UUIDArgument.uuid()).suggests(DogRespawnCommand.getDogIdSuggestionsRevive())
-                    //     .executes(c -> respawn(c)))))
+                        .then(
+                            Commands.literal("byuuid")
+                            .then(
+                                Commands.argument("ownerName", StringArgumentType.string())
+                                .suggests(DoggyCommands.getOwnerNameSuggestionsRevive())
+                                .then(
+                                    Commands.argument("dogUUID", StringArgumentType.string())
+                                        .suggests(DoggyCommands.getDogIdSuggestionsRevive())
+                                        .executes(c -> respawn(c)))))
                         .then(
                             Commands.literal("byname")
                             .then(
@@ -103,8 +113,7 @@ public class DoggyCommands {
                                     .then(
                                         Commands.argument("dogUUID", StringArgumentType.string())
                                         .suggests(DoggyCommands.getDogIdSuggestionsRevive())
-                                        .executes(c -> respawn(c)))
-                        )))));                
+                                        .executes(c -> respawn(c))))))));                
 
     }
 
@@ -147,19 +156,39 @@ public class DoggyCommands {
 
     private static <S extends SharedSuggestionProvider> CompletableFuture<Suggestions> getDogIdSuggestions(Collection<? extends IDogData> possibilities, final CommandContext<S> context, final SuggestionsBuilder builder) {
         if (context.getSource() instanceof CommandSourceStack) {
-            String dogName = context.getArgument("dogName", String.class);
-            if (dogName == null) {
-                return Suggestions.empty();
+            //dogName is an optional argument
+            //if dogName is set then this will dump all of the uuid having that ambiguous name
+            //from the ownerName
+            //if dogName is null then this will dump all of the dog of ownerName instead.
+            String dogName = null;
+            String ownerName = context.getArgument("ownerName", String.class);
+
+            try {
+                dogName = context.getArgument("dogName", String.class);
+            } catch (IllegalArgumentException exception) {
+
             }
 
-            String ownerName = context.getArgument("ownerName", String.class);
             if (ownerName == null) {
                 return Suggestions.empty();
             }
 
+            Predicate<IDogData> filter;
+
+            final String dogName2 = dogName;
+
+            if (dogName2 == null) {
+                filter = data -> ownerName.equals(data.getOwnerName());
+            } else {
+                filter = data -> (
+                    dogName2.equals(data.getDogName())
+                    && ownerName.equals(data.getOwnerName())
+                );
+                    
+            }
+
             return SharedSuggestionProvider.suggest(possibilities.stream()
-                     .filter(data -> dogName.equals(data.getDogName()))
-                     .filter(data -> ownerName.equals(data.getOwnerName()))
+                     .filter(filter)
                      .map(IDogData::getDogId)
                      .map(Object::toString)
                      .collect(Collectors.toSet()),
