@@ -49,6 +49,11 @@ public class FoodHandler {
     }
 
     public static Optional<IDogFoodHandler> getMatch(@Nullable AbstractDog dogIn, ItemStack stackIn, @Nullable Entity entityIn) {
+        
+        //TODO temporary place here
+        //This function and interfaces here still need some explicit constraints
+        if (dogIn == null) return Optional.empty();
+        
         for (IDogFoodHandler handler : dogIn.getFoodHandlers()) {
             if (handler.canConsume(dogIn, stackIn, entityIn)) {
                 return Optional.of(handler);

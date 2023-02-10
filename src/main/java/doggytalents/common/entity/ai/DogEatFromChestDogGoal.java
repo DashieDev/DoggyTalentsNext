@@ -6,6 +6,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.inventory.PackPuppyItemHandler;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.util.DogUtil;
@@ -39,10 +40,15 @@ public class DogEatFromChestDogGoal extends Goal {
     //There is some caching going on here, 
     //Due to this::chestDog only set to null when the chestDog no longer valid.
     //dog will remember the dog that he ate from,
-    //And the next time he is hungry, he will check that dog first. Good good.
+    //And the next time he is hungry, he will check that dog first.
+    //Also the owner would probably have one dog has the food storage, so 
+    //The chance of CACHE HIT is way greater than CACHE MISS.
+    //Good good.
     private Dog chestDog = null;
     private int tickTillNextChestDogSearch = 0;
     private final int SEARCH_RADIUS = 12; //TODO
+
+    private static final MeatFoodHandler FOOD_VALIDATOR = new MeatFoodHandler();
 
     public DogEatFromChestDogGoal(Dog dog, double speedModifier) {
         this.dog = dog;
@@ -188,10 +194,10 @@ public class DogEatFromChestDogGoal extends Goal {
             InventoryUtil.findStack(
                 inventory, 
                 (stack) -> {
-                    var foodHandler = 
-                        FoodHandler.getMatch(chestDog, stack, null);
+                    boolean willEat = 
+                        FOOD_VALIDATOR.canConsume(chestDog, stack, null);
 
-                    if (foodHandler.isPresent()) {
+                    if (willEat) {
                         return true;
                     }
                     return false;
@@ -216,11 +222,11 @@ public class DogEatFromChestDogGoal extends Goal {
             for (int i = 0; i < inventory.getSlots(); i++) {
 
                 ItemStack stack = inventory.getStackInSlot(i);
-                var foodHandler = 
-                    FoodHandler.getMatch(dog, stack, null);
+                boolean willEat = 
+                    FOOD_VALIDATOR.canConsume(chestDog, stack, null);
 
-                if (foodHandler.isPresent()) {
-                    foodHandler.get().consume(dog, stack, null);
+                if (willEat) {
+                    FOOD_VALIDATOR.consume(dog, stack, null);
                     return;
                 }
             }
