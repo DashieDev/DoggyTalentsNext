@@ -12,6 +12,8 @@ import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.api.registry.*;
 import doggytalents.client.screen.DogInfoScreen;
+import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
+import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.BreedGoal;
@@ -645,10 +647,22 @@ public class Dog extends AbstractDog {
             return this.interactIncapacitated(stack, player, hand);
 
         if (this.isTame()) {
-            if (stack.getItem() == Items.STICK && this.canInteract(player)) {
+            if (stack.getItem() == Items.STICK) {
 
                 if (this.level.isClientSide) {
-                    DogInfoScreen.open(this);
+                    boolean useLegacyDogGui = 
+                        ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.USE_LEGACY_DOGGUI); 
+                    if (this.canInteract(player)) {
+                        if (!useLegacyDogGui) {
+                            DogNewInfoScreen.open(this);
+                        } else {
+                            DogInfoScreen.open(this);
+                        }
+                    } else {
+                        if (!useLegacyDogGui) {
+                            DogCannotInteractWithScreen.open(this);
+                        }
+                    }
                 }
 
                 return InteractionResult.SUCCESS;
@@ -744,6 +758,18 @@ public class Dog extends AbstractDog {
             if (this.getOwner() == player) {
                 this.startRiding(player);
             }
+            return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.STICK) {
+
+            if (this.level.isClientSide) {
+                boolean useLegacyDogGui = 
+                    ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.USE_LEGACY_DOGGUI); 
+
+                if (!useLegacyDogGui) {
+                    DogCannotInteractWithScreen.open(this);
+                }
+            }
+
             return InteractionResult.SUCCESS;
         } else if (this.isPassenger()) {
             this.stopRiding();
@@ -2727,6 +2753,10 @@ public class Dog extends AbstractDog {
 
     public void setIncapacitatedMutiplier(int m) {
         this.incapacitatedMutiplier = m;
+    }
+
+    public StatsTracker getStatTracker() {
+        return this.statsTracker;
     }
 
 }

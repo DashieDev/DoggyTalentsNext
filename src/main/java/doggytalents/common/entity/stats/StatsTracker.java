@@ -1,16 +1,20 @@
 package doggytalents.common.entity.stats;
 
 import com.google.common.collect.Maps;
+
+import doggytalents.ChopinLogger;
 import doggytalents.common.util.Cache;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
@@ -85,6 +89,10 @@ public class StatsTracker {
         return total;
     }
 
+    public Map<EntityType<?>, Integer> getAllKillCount() {
+        return Collections.unmodifiableMap(ENTITY_KILLS);
+    }
+
     public int getTotalKillCount() {
         return this.killCount.get();
     }
@@ -123,5 +131,92 @@ public class StatsTracker {
 
     public void increaseDistanceRidden(int distance) {
         this.distanceRidden += distance;
+    }
+
+    
+
+    public float getDamageDealt() {
+        return damageDealt;
+    }
+
+    public int getDistanceOnWater() {
+        return distanceOnWater;
+    }
+
+    public int getDistanceInWater() {
+        return distanceInWater;
+    }
+
+    public int getDistanceSprint() {
+        return distanceSprinting;
+    }
+
+    public int getDistanceSneaking() {
+        return distanceSneaking;
+    }
+
+    public int getDistanceWalk() {
+        return distanceWalking;
+    }
+
+    public int getDistanceRidden() {
+        return distanceRidden;
+    }
+
+    public void serializeToBuf(FriendlyByteBuf buf) {
+
+        buf.writeFloat(damageDealt);
+
+        buf.writeInt(distanceOnWater);
+        buf.writeInt(distanceInWater);
+        buf.writeInt(distanceSprinting);
+        buf.writeInt(distanceSneaking);
+        buf.writeInt(distanceWalking);
+        buf.writeInt(distanceRidden);
+
+
+        int mapSize = this.ENTITY_KILLS.size();
+        buf.writeInt(mapSize);
+        for (var entry : this.ENTITY_KILLS.entrySet()) {
+            var typeId = ForgeRegistries.ENTITY_TYPES.getKey(entry.getKey());
+            var killCount = entry.getValue();
+            buf.writeResourceLocation(typeId);
+            buf.writeInt(killCount);
+        }
+
+        ChopinLogger.l("write refCnt :" + buf.refCnt());
+    }
+
+    public void deserializeFromBuf(FriendlyByteBuf buf) {
+
+        this.damageDealt = buf.readFloat();
+        this.distanceOnWater = buf.readInt();
+        this.distanceInWater = buf.readInt();
+        this.distanceSprinting = buf.readInt();
+        this.distanceSneaking = buf.readInt();
+        this.distanceWalking = buf.readInt();
+        this.distanceRidden = buf.readInt();
+
+        this.ENTITY_KILLS.clear();
+        int mapSize = buf.readInt();
+        for (int i = 0; i < mapSize; ++i) {
+            var typeId = buf.readResourceLocation();
+            var killCount = buf.readInt();
+            var type = ForgeRegistries.ENTITY_TYPES.getValue(typeId);
+            this.ENTITY_KILLS.put(type, killCount);
+        }
+
+        ChopinLogger.l("read refCnt :" + buf.refCnt());
+    }
+
+    public void shallowCopyFrom(StatsTracker stats) {
+        this.ENTITY_KILLS = stats.ENTITY_KILLS;
+        this.damageDealt = stats.damageDealt;
+        this.distanceOnWater = stats.distanceOnWater;
+        this.distanceInWater = stats.distanceInWater;
+        this.distanceSprinting = stats.distanceSprinting;
+        this.distanceSneaking = stats.distanceSneaking;
+        this.distanceWalking = stats.distanceWalking;
+        this.distanceRidden = stats.distanceRidden;
     }
 }
