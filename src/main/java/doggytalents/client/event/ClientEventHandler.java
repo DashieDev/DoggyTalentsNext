@@ -7,6 +7,7 @@ import doggytalents.DoggyBlocks;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.screen.widget.DogInventoryButton;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
@@ -82,6 +83,8 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onScreenInit(final ScreenEvent.Init.Post event) {
+        if (!ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV)) 
+            return;
         Screen screen = event.getScreen();
         if (screen instanceof InventoryScreen || screen instanceof CreativeModeInventoryScreen) {
             boolean creative = screen instanceof CreativeModeInventoryScreen;
@@ -108,6 +111,9 @@ public class ClientEventHandler {
         Screen screen = event.getScreen();
         if (screen instanceof InventoryScreen || screen instanceof CreativeModeInventoryScreen) {
             boolean creative = screen instanceof CreativeModeInventoryScreen;
+
+            if (!ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV)) 
+                return;
             DogInventoryButton btn = null;
 
             //TODO just create a static variable in this class
