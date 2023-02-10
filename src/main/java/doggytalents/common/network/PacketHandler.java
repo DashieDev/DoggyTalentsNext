@@ -31,6 +31,9 @@ public final class PacketHandler {
         registerPacket(new ConductingBonePackets.RequestDogsPacket(), ConductingBoneData.RequestDogsData.class);
         registerPacket(new ConductingBonePackets.ResponseDogsPackets(), ConductingBoneData.ResponseDogsData.class);
         registerPacket(new ConductingBonePackets.RequestDistantTeleportDogPacket(), ConductingBoneData.RequestDistantTeleportDogData.class);
+        registerPacket(new ChangeAccessoryPacket(), ChangeAccessoriesData.class);
+        registerPacket(new StatsSyncPackets.Request(), StatsSyncData.Request.class);
+        registerPacket(new StatsSyncPackets.Response(), StatsSyncData.Response.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
