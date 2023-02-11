@@ -259,20 +259,17 @@ public class CachedSearchUtil {
         populatePoolRaw(dog, targetPos, poolXZ, poolY);
         populateDangerPos(dog, poolXZ, poolY);
         populateWalkablePos(dog, poolXZ, poolY);
-        dumpPool(dog, poolXZ, poolY);
         var b0 = targetPos;
         var bMin = b0.offset(-poolXZ, -poolY, -poolXZ);
-        int maxXZ = poolXZ*2-1;
-        int maxY = poolY*2-1;
-        int cXZ = poolXZ;
-        int cY = poolY;
+        int mXZ = poolXZ;
+        int mY = poolY;
         
         int inflate = 1; // this is to prevent dog from repeating himself
         while (inflate <= realRadiusXZ) {
-            final int minX = cXZ - inflate;
-            final int maxX = cXZ + inflate;
-            final int minZ = cXZ - inflate;
-            final int maxZ = cXZ + inflate;
+            final int minX = mXZ - inflate;
+            final int maxX = mXZ + inflate;
+            final int minZ = mXZ - inflate;
+            final int maxZ = mXZ + inflate;
 
             //ChopinLogger.l("blockpos" + b0);
 
@@ -280,7 +277,7 @@ public class CachedSearchUtil {
                 //Maybe treat the center block as an optional return
                 //If nothing else outside satisfies this, then return this.
                 for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-                    int x = cXZ, y = cY + j, z =  cXZ;
+                    int x = mXZ, y = mY + j, z =  mXZ;
                     if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
                         var pos = bMin.offset(x, y, z);
                         return pos;
@@ -290,9 +287,11 @@ public class CachedSearchUtil {
                 continue;
             }
 
+            int x = minX, y = 0, z = minZ;
+
             for (int i = minX; i <= maxX; ++i) {
                 for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-                    int x = cXZ + i, y = cY + j, z = cXZ + i;
+                    x = i; y = mY + j;
                     if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
                         var pos = bMin.offset(x, y, z);
                         return pos;
@@ -303,7 +302,7 @@ public class CachedSearchUtil {
             //b0m: maxX, minZ
             for (int i = minZ + 1; i <= maxZ; ++i) {
                 for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-                    int x = cXZ + i, y = cY + j, z = cXZ + i;
+                    y = mY + j; z = i;
                     if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
                         var pos = bMin.offset(x, y, z);
                         return pos;
@@ -314,7 +313,7 @@ public class CachedSearchUtil {
             //b0m: maxX, maxZ
             for (int i = maxX-1; i >= minX; --i) {
                 for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-                    int x = cXZ + i, y = cY + j, z = cXZ + i;
+                    x = i; y = mY + j;
                     if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
                         var pos = bMin.offset(x, y, z);
                         return pos;
@@ -325,7 +324,7 @@ public class CachedSearchUtil {
             //b0m: minX, maxZ
             for (int i = maxZ - 1; i >= minZ + 1; --i) {
                 for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-                    int x = cXZ + i, y = cY + j, z = cXZ + i;
+                    y = mY + j; z = i;
                     if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
                         var pos = bMin.offset(x, y, z);
                         return pos;
