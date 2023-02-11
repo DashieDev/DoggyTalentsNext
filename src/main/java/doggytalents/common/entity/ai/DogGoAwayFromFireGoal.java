@@ -104,9 +104,17 @@ public class DogGoAwayFromFireGoal extends Goal {
 
         var p = n.getPath();
 
-        if (p != null && p.getNodeCount() >= 2) {
-            var s = p.getNode(1).asBlockPos();
-            dog.getMoveControl().setWantedPosition(s.getX() + 0.5, s.getY(), s.getZ() + 0.5, 1.0);
+        if (p != null) {
+            int nodeCount = p.getNodeCount();
+            BlockPos node = null;
+            if (nodeCount >= 2) {
+                node = p.getNode(1).asBlockPos();
+            } else if (nodeCount >= 1) {
+                node = p.getTarget();
+            }
+            
+            if (node != null)
+            dog.getMoveControl().setWantedPosition(node.getX() + 0.5, node.getY(), node.getZ() + 0.5, 1.0);
         }
 
         
@@ -282,7 +290,6 @@ public class DogGoAwayFromFireGoal extends Goal {
         // //Ring Search is THE BEST!!!
 
         // return null;
-        
         var x = CachedSearchUtil.ringSearchSafePosUsingPool(dog, dog.blockPosition(), searchRangeXZ, searchRangeY);
         return x;
     }
