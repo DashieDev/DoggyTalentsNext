@@ -40,8 +40,10 @@ public class WhistleScreen extends Screen{
 
    private int hightlightTextColor = HLC_SELECTED;
 
-   
     private final int MAX_BUFFER_SIZE = 64;
+
+    private int mouseX0;
+    private int mouseY0;
 
     public WhistleScreen() {
         super(Component.translatable("doggytalents.screen.whistler.title"));
@@ -85,6 +87,12 @@ public class WhistleScreen extends Screen{
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
 
+        if (this.mouseX0 != mouseX || this.mouseY0 != mouseY) {
+            this.onMouseMoved(mouseX, mouseY);
+            this.mouseX0 = mouseX;
+            this.mouseY0 = mouseY;
+        }
+
         int half_width = this.width >> 1;
         int half_height = this.height >> 1; 
       
@@ -124,6 +132,38 @@ public class WhistleScreen extends Screen{
          
     }
 
+    private int getHoveredIndex(double x, double y, int entry_size) {
+        int mX = this.width/2;
+        int mY = this.height/2;
+        if (Math.abs(x - mX) > 100) return -1;
+        if (Math.abs(y - mY) > 100) return -1;
+        int baseY = mY - 100;
+        int indx = ( Mth.floor(y - baseY) )/10;
+        if (indx >= entry_size) return -1;
+        return indx;
+    }
+
+    private void onMouseMoved(double x, double y) {
+        int newIndx = getHoveredIndex(x, y, this.modeFilterList.size());
+        if (newIndx < 0) return;
+        this.selectedId = newIndx;
+    }
+
+    @Override
+    public boolean mouseClicked(double x, double y, int p_94697_) {
+        boolean ret = super.mouseClicked(x, y, p_94697_);
+        int mX = this.width/2;
+        int mY = this.height/2;
+        if (Math.abs(x - mX) > 100) return ret;
+        if (Math.abs(y - mY) > 100) return ret;
+        int indx = getHoveredIndex(x, y, this.modeFilterList.size());
+        if (indx >= 0) {
+            this.requestMode(this.modeFilterList.get(indx).getIndex());
+            Minecraft.getInstance().setScreen(null);
+        }
+        return ret;
+    }
+
     @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
         InputConstants.Key mouseKey = InputConstants.getKey(keyCode, scanCode);
@@ -150,7 +190,7 @@ public class WhistleScreen extends Screen{
         if (0 <= number && number <= 9) {
             if (number < this.modeFilterList.size()) {
                 this.requestMode(this.modeFilterList.get(number).getIndex());
-                this.minecraft.setScreen(null);
+                Minecraft.getInstance().setScreen(null);
             }
         }
 
