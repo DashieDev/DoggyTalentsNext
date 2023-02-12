@@ -257,92 +257,92 @@ public class CachedSearchUtil {
         return safePosList.get(index);
     }
 
-    public static BlockPos ringSearchSafePosUsingPool(Dog dog, BlockPos targetPos, int realRadiusXZ, int realRadiusY) {
-        int poolXZ = realRadiusXZ+1;
-        int poolY = realRadiusY+1;
-        if (poolXZ > CachedSearchPool.MAX_RADIUS_XZ || poolXZ < 0) return null;
-        if (poolY > CachedSearchPool.MAX_RADIUS_Y || poolY < 0) return null;
-        resetPool(dog, poolXZ, poolY);
-        populatePoolRaw(dog, targetPos, poolXZ, poolY);
-        populateDangerPos(dog, poolXZ, poolY);
-        populateWalkablePos(dog, poolXZ, poolY);
-        var b0 = targetPos;
-        var bMin = b0.offset(-poolXZ, -poolY, -poolXZ);
-        int mXZ = poolXZ;
-        int mY = poolY;
+    // public static BlockPos ringSearchSafePosUsingPool(Dog dog, BlockPos targetPos, int realRadiusXZ, int realRadiusY) {
+    //     int poolXZ = realRadiusXZ+1;
+    //     int poolY = realRadiusY+1;
+    //     if (poolXZ > CachedSearchPool.MAX_RADIUS_XZ || poolXZ < 0) return null;
+    //     if (poolY > CachedSearchPool.MAX_RADIUS_Y || poolY < 0) return null;
+    //     resetPool(dog, poolXZ, poolY);
+    //     populatePoolRaw(dog, targetPos, poolXZ, poolY);
+    //     populateDangerPos(dog, poolXZ, poolY);
+    //     populateWalkablePos(dog, poolXZ, poolY);
+    //     var b0 = targetPos;
+    //     var bMin = b0.offset(-poolXZ, -poolY, -poolXZ);
+    //     int mXZ = poolXZ;
+    //     int mY = poolY;
         
-        int inflate = 1; // this is to prevent dog from repeating himself
-        while (inflate <= realRadiusXZ) {
-            final int minX = mXZ - inflate;
-            final int maxX = mXZ + inflate;
-            final int minZ = mXZ - inflate;
-            final int maxZ = mXZ + inflate;
+    //     int inflate = 1; // this is to prevent dog from repeating himself
+    //     while (inflate <= realRadiusXZ) {
+    //         final int minX = mXZ - inflate;
+    //         final int maxX = mXZ + inflate;
+    //         final int minZ = mXZ - inflate;
+    //         final int maxZ = mXZ + inflate;
 
-            //ChopinLogger.l("blockpos" + b0);
+    //         //ChopinLogger.l("blockpos" + b0);
 
-            if (inflate <= 0) {
-                //Maybe treat the center block as an optional return
-                //If nothing else outside satisfies this, then return this.
-                for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-                    int x = mXZ, y = mY + j, z =  mXZ;
-                    if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
-                        var pos = bMin.offset(x, y, z);
-                        return pos;
-                    }
-                }
-                ++inflate;
-                continue;
-            }
+    //         if (inflate <= 0) {
+    //             //Maybe treat the center block as an optional return
+    //             //If nothing else outside satisfies this, then return this.
+    //             for (int j = -realRadiusY; j <= realRadiusY; ++j) {
+    //                 int x = mXZ, y = mY + j, z =  mXZ;
+    //                 if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
+    //                     var pos = bMin.offset(x, y, z);
+    //                     return pos;
+    //                 }
+    //             }
+    //             ++inflate;
+    //             continue;
+    //         }
 
-            int x = minX, y = 0, z = minZ;
+    //         int x = minX, y = 0, z = minZ;
 
-            for (int i = minX; i <= maxX; ++i) {
-                for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-                    x = i; y = mY + j;
-                    if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
-                        var pos = bMin.offset(x, y, z);
-                        return pos;
-                    }
-                }
-            }
+    //         for (int i = minX; i <= maxX; ++i) {
+    //             for (int j = -realRadiusY; j <= realRadiusY; ++j) {
+    //                 x = i; y = mY + j;
+    //                 if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
+    //                     var pos = bMin.offset(x, y, z);
+    //                     return pos;
+    //                 }
+    //             }
+    //         }
 
-            //b0m: maxX, minZ
-            for (int i = minZ + 1; i <= maxZ; ++i) {
-                for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-                    y = mY + j; z = i;
-                    if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
-                        var pos = bMin.offset(x, y, z);
-                        return pos;
-                    }
-                }
-            }
+    //         //b0m: maxX, minZ
+    //         for (int i = minZ + 1; i <= maxZ; ++i) {
+    //             for (int j = -realRadiusY; j <= realRadiusY; ++j) {
+    //                 y = mY + j; z = i;
+    //                 if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
+    //                     var pos = bMin.offset(x, y, z);
+    //                     return pos;
+    //                 }
+    //             }
+    //         }
 
-            //b0m: maxX, maxZ
-            for (int i = maxX-1; i >= minX; --i) {
-                for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-                    x = i; y = mY + j;
-                    if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
-                        var pos = bMin.offset(x, y, z);
-                        return pos;
-                    }
-                }
-            }
+    //         //b0m: maxX, maxZ
+    //         for (int i = maxX-1; i >= minX; --i) {
+    //             for (int j = -realRadiusY; j <= realRadiusY; ++j) {
+    //                 x = i; y = mY + j;
+    //                 if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
+    //                     var pos = bMin.offset(x, y, z);
+    //                     return pos;
+    //                 }
+    //             }
+    //         }
 
-            //b0m: minX, maxZ
-            for (int i = maxZ - 1; i >= minZ + 1; --i) {
-                for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-                    y = mY + j; z = i;
-                    if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
-                        var pos = bMin.offset(x, y, z);
-                        return pos;
-                    }
-                }
-            }
-            ++inflate;
-            //ChopinLogger.l("inflate!" + inflate);
-        }
-        return null;
-    }
+    //         //b0m: minX, maxZ
+    //         for (int i = maxZ - 1; i >= minZ + 1; --i) {
+    //             for (int j = -realRadiusY; j <= realRadiusY; ++j) {
+    //                 y = mY + j; z = i;
+    //                 if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
+    //                     var pos = bMin.offset(x, y, z);
+    //                     return pos;
+    //                 }
+    //             }
+    //         }
+    //         ++inflate;
+    //         //ChopinLogger.l("inflate!" + inflate);
+    //     }
+    //     return null;
+    // }
 
     public static String dumpPool(Dog dog, int radiusXZ, int radiusY) {
         int maxXZ = radiusXZ * 2;
