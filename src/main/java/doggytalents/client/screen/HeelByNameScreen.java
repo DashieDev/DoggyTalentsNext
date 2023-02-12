@@ -44,6 +44,9 @@ public class HeelByNameScreen extends Screen {
 
    private int hightlightTextColor = HLC_HEEL_NO_SIT;
 
+    private int mouseX0;
+    private int mouseY0;
+
    
     private final int MAX_BUFFER_SIZE = 64;
 
@@ -104,6 +107,12 @@ public class HeelByNameScreen extends Screen {
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
 
+        if (this.mouseX0 != mouseX || this.mouseY0 != mouseY) {
+            this.onMouseMoved(mouseX, mouseY);
+            this.mouseX0 = mouseX;
+            this.mouseY0 = mouseY;
+        }
+
         int half_width = this.width >> 1;
         int half_height = this.height >> 1; 
       
@@ -138,6 +147,38 @@ public class HeelByNameScreen extends Screen {
         
         this.font.draw(stack, this.value + "_", txtorgx, txtorgy,  0xffffffff);
          
+    }
+
+    private int getHoveredIndex(double x, double y, int entry_size) {
+        int mX = this.width/2;
+        int mY = this.height/2;
+        if (Math.abs(x - mX) > 100) return -1;
+        if (Math.abs(y - mY) > 100) return -1;
+        int baseY = mY - 100;
+        int indx = ( Mth.floor(y - baseY) )/10;
+        if (indx >= entry_size) return -1;
+        return indx;
+    }
+
+    private void onMouseMoved(double x, double y) {
+        int newIndx = getHoveredIndex(x, y, this.dogIdFilterList.size());
+        if (newIndx < 0) return;
+        this.hightlightDogName = newIndx;
+    }
+
+    @Override
+    public boolean mouseClicked(double x, double y, int p_94697_) {
+        boolean ret = super.mouseClicked(x, y, p_94697_);
+        int mX = this.width/2;
+        int mY = this.height/2;
+        if (Math.abs(x - mX) > 100) return ret;
+        if (Math.abs(y - mY) > 100) return ret;
+        int indx = getHoveredIndex(x, y, this.dogIdFilterList.size());
+        if (indx >= 0) {
+            this.requestHeel(this.dogIdFilterList.get(indx));
+            Minecraft.getInstance().setScreen(null);
+        }
+        return ret;
     }
 
     @Override
