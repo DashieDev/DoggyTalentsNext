@@ -60,7 +60,6 @@ public class ChopinLogger {
     
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onWolfOrDogDeath(LivingDeathEvent ev) {
-        if (IS_DEBUG_ALLOW_DEATH) return;
         var e = ev.getEntity();
         if (
             (e instanceof Dog && !IS_DEBUG_ALLOW_DEATH)
