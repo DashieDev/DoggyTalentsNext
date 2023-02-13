@@ -146,12 +146,6 @@ public class DogGreetOwnerAction extends TriggerableAction {
         return this.greetTime < MAY_CANCEL_GREET_TIME;
     }
     
-    @Override
-    public boolean shouldPersistAfterSit() {
-        return false;
-    }
-
-    
     private BlockPos getRandomPosAroundOwner(LivingEntity owner) {
         var owner_b0 = owner.blockPosition();
         var r = owner.getRandom();

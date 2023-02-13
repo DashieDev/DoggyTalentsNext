@@ -35,7 +35,7 @@ public abstract class TriggerableAction {
     }
 
     public boolean shouldPersistAfterSit() {
-        return true;
+        return false;
     }
 
     public final boolean canPause() {
