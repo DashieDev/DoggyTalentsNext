@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogOwnerDistanceManager;
+import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -67,16 +68,20 @@ public class DogGreetOwnerAction extends TriggerableAction {
             return;
         }
 
-        var n = this.dog.getNavigation();
+        var d0 = this.dog.distanceToSqr(this.owner);
         this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
-        if (this.dog.distanceToSqr(this.owner) > START_GREET_DISTANCE_SQR) {
+        if (d0 > START_GREET_DISTANCE_SQR) {
             
             if (--this.tickTillPathRecalc <= 0) {
-                this.tickTillPathRecalc = 10;
-                n.moveTo(this.owner, this.dog.getUrgentSpeedModifier());
+                this.tickTillPathRecalc = 20;
+                DogUtil.moveToOwnerOrTeleportIfFarAway(
+                    dog, owner, this.dog.getUrgentSpeedModifier(),
+                    400, 
+                    false, false, 
+                    400,
+                    dog.getMaxFallDistance());
             }
             
-
         } else {
             if (this.tellOwner) {
                 this.tellOwner = false;
