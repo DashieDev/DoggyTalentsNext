@@ -76,6 +76,7 @@ public class DogPlayTagAction extends TriggerableAction {
         this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
         if (--this.tickTillPathRecalc <= 0) {
             this.tickTillPathRecalc = RUN_AWAY_PATH_INTERVAL;
+            if (d0 > 256) this.tickTillPathRecalc += 5;
             n.moveTo(owner, 1);
         }
         if (  
