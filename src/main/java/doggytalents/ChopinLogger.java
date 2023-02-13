@@ -56,7 +56,7 @@ public class ChopinLogger {
 
 
     //For debugging purpose only, should be final to be editable
-    private static final boolean IS_DEBUG_ALLOW_DEATH = true;
+    private static final boolean IS_DEBUG_ALLOW_DEATH = false;
     
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onWolfOrDogDeath(LivingDeathEvent ev) {
