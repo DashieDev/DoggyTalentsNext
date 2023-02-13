@@ -15,6 +15,8 @@ import doggytalents.client.screen.DogInfoScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.BreedGoal;
+import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
+import doggytalents.common.entity.ai.triggerable.DogTriggerableGoal;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.accessory.IncapacitatedLayer;
 import doggytalents.common.entity.ai.*;
@@ -56,6 +58,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -81,6 +84,7 @@ import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -144,10 +148,13 @@ public class Dog extends AbstractDog {
     public final Map<Integer, Object> objects = new HashMap<>();
 
     public final StatsTracker statsTracker = new StatsTracker();
+    public final DogOwnerDistanceManager dogOwnerDistanceManager 
+        = new DogOwnerDistanceManager(this);
 
     protected final PathNavigation defaultNavigation;
     protected final MoveControl defaultMoveControl;
     
+    protected TriggerableAction stashedAction;
     protected TriggerableAction activeAction;
 
     private int hungerTick;
@@ -223,7 +230,7 @@ public class Dog extends AbstractDog {
         ++p;
         this.goalSelector.addGoal(p, new DogGoAwayFromFireGoal(this));
         ++p;
-        this.goalSelector.addGoal(p, new SitWhenOrderedToGoal(this));
+        this.goalSelector.addGoal(p, new DogSitWhenOrderedGoal(this));
         ++p;
         this.goalSelector.addGoal(p, new DogHungryGoal(this, 1.0f, 2.0f));
         ++p;
@@ -232,6 +239,7 @@ public class Dog extends AbstractDog {
         ++p;
         this.TALENT_GOAL_PRIORITY = p;
         this.goalSelector.addGoal(p, new DogEatFromChestDogGoal(this, 1.0));
+        this.goalSelector.addGoal(p, new DogTriggerableGoal(this, false));
         ++p; //Prioritize Talent Action
         //All mutex by nature
         this.goalSelector.addGoal(p, new GuardModeGoal.Minor(this));
@@ -242,6 +250,7 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
         ++p;
         //Dog greet owner goal here
+        this.goalSelector.addGoal(p, new DogTriggerableGoal(this, true));
         this.goalSelector.addGoal(p, new FetchGoal(this, 1.0D, 32.0F));
         this.goalSelector.addGoal(p, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
         ++p;
@@ -539,6 +548,8 @@ public class Dog extends AbstractDog {
 
                 this.healingTick = 0;
             }
+
+            this.dogOwnerDistanceManager.tick();
         }
 
         if (ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DIRE_PARTICLES) && this.level.isClientSide && this.getDogLevel().isDireDog()) {
@@ -575,20 +586,52 @@ public class Dog extends AbstractDog {
     }
 
     public void triggerAction(TriggerableAction action) {
-        if (action == null) {
-            this.activeAction.stop();
-            this.activeAction = null;
-            return;
-        }
-        if (this.activeAction != null && !this.activeAction.isTrivial()) {
-            return;
-        }
         if (this.activeAction == action) {
             return;
         }
-        this.activeAction.stop();
+        //Trigger Action cancel.
+        //If dog have stashed action then will push the action back instead.
+        if (action == null) {
+            if (activeAction != null) this.activeAction.onStop();
+            this.activeAction = null;
+            if (this.stashedAction != null) {
+                this.activeAction = this.stashedAction;
+                this.stashedAction = null;
+            }
+            return;
+        }
+        //Replacement only happens if 
+        //new action is Trivial and old action is not.
+        if (this.activeAction != null) {
+            if (this.activeAction.isTrivial()) return;
+            else if (!action.isTrivial()) return;
+        }
+        //Only set action dog is not sitting or action can override sit.
+        if (!action.canOverrideSit() && this.isOrderedToSit()) return;
+        this.setOrderedToSit(false);
+        //Check And Stash existing action.
+        if (activeAction != null) {
+            if (this.activeAction.canPause()) {
+                if (this.stashedAction != null) {
+                    this.stashedAction.onStop();
+                }
+                this.stashedAction = this.activeAction;
+            } else {
+                this.activeAction.onStop();
+            }
+        }
+        //Set.
         this.activeAction = action;
-        this.activeAction.start();
+    }
+
+    public TriggerableAction getStashedTriggerableAction() {
+        return this.stashedAction;
+    }
+
+    public void setStashedTriggerableAction(TriggerableAction action) {
+        if (action == this.stashedAction) return;
+        if (this.stashedAction != null) this.stashedAction.onStop();
+        this.stashedAction = action;
     }
 
     public void incapacitatedClientTick() {
@@ -1027,6 +1070,19 @@ public class Dog extends AbstractDog {
             //the dog being weak for longer...
             this.setDogHunger(0); 
             return false;
+        }
+        if (source.isProjectile()) {
+            if (
+                source instanceof IndirectEntityDamageSource iSource
+                && iSource.getDirectEntity() instanceof Snowball
+            ) {
+                var owner = this.getOwner();
+                if (iSource.getEntity() == owner) {
+                    if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PLAY_TAG_WITH_DOG)) 
+                        this.triggerAction(new DogPlayTagAction(this, owner));
+                }
+                return false;
+            } 
         }
 
         for (IDogAlteration alter : this.alterations) {
@@ -1553,6 +1609,7 @@ public class Dog extends AbstractDog {
         }
 
         this.statsTracker.writeAdditional(compound);
+        this.dogOwnerDistanceManager.save(compound);
 
         this.alterations.forEach((alter) -> alter.onWrite(this, compound));
     }
@@ -1792,6 +1849,12 @@ public class Dog extends AbstractDog {
             this.statsTracker.readAdditional(compound);
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load stats tracker: " + e.getMessage());
+            e.printStackTrace();
+        }
+        try {
+            this.dogOwnerDistanceManager.load(compound);
+        } catch (Exception e) {
+            DoggyTalentsNext.LOGGER.error("Failed to load owner distance manager: " + e.getMessage());
             e.printStackTrace();
         }
         this.alterations.forEach((alter) -> {

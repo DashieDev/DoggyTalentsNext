@@ -124,6 +124,9 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue DOG_WHINE_WHEN_HUNGER_LOW;
         public ForgeConfigSpec.BooleanValue EAT_FOOD_ON_FLOOR;
         public ForgeConfigSpec.BooleanValue IMMORTAL_DOGS;
+        public ForgeConfigSpec.BooleanValue PLAY_TAG_WITH_DOG;
+        public ForgeConfigSpec.BooleanValue DOG_GREET_OWNER;
+        public ForgeConfigSpec.IntValue DOG_GREET_OWNER_LIMIT;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -162,15 +165,32 @@ public class ConfigHandler {
                     .translation("doggytalents.config.whine_when_hungry")
                     .define("whine_when_hungry", true);
             EAT_FOOD_ON_FLOOR = builder
-                    .comment("When enabled dogs will path and eat editable items in the world.")
+                    .comment("When enabled, dogs will path and eat editable items in the world.")
                     .translation("doggytalents.config.eat_food_on_floor")
                     .define("eat_food_on_floor", true);
             IMMORTAL_DOGS = builder
-                .comment("When enabled dogs cannot be killed by any mean (except void damage, in that case you can still respawn your dog using his linked bed or commands).")
+                .comment("When enabled, dogs cannot be killed by any mean (except void damage, in that case you can still respawn your dog using his linked bed or commands).")
                 .comment("Instead, when his health reaches Zero, he will go into Incapacitated Mode.")
                 .comment("WARNING: A notable amount of graphic visuals is involved, consider disabling Rendering Incapacitated Texture if you cannot handle.")
                 .translation("doggytalents.config.immortal_dogs")
                 .define("immortal_dogs", false);
+            PLAY_TAG_WITH_DOG = builder
+                .comment("If dog can play tag with you. To make them play, throw a snowball at them.")
+                .translation("doggytalents.config.play_tag_with_dog")
+                .define("play_tag_with_dog", true);
+            DOG_GREET_OWNER = builder
+                .comment("When enabled, dogs will start to miss you when you leave them for too long.")
+                .comment("and when you come back, they will rush to you and greet you with love!")
+                .translation("doggytalents.dog_greet_owner")
+                .define("dog_greet_owner", true);
+            DOG_GREET_OWNER_LIMIT = builder
+                .comment("Specify how many dogs can greet you when you approach more than one missing dog.")
+                .comment("The remaning dog will remain in their position.")
+                .comment("To disable the limit, set this to any non-positive integer.")
+                .comment("Although this will cause all of your dogs to stand up and greet.")
+                .comment("YOU HAVE BEEN WARNED!")
+                .translation("doggytalents.dog_greet_owner_limit")
+                .defineInRange("dog_greet_owner_limit", 5, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
             builder.pop();
 

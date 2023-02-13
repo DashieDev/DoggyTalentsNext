@@ -216,6 +216,16 @@
    "dog.msg.low_health.1" : "%s: Woof woof woof wooof (I may need some help here....)",
    "dog.msg.low_health.2" : "%s: Woof woof wooof? (Should we run?)",
 
+   "dog.msg.greet_owner.0": "%s: Wooooooof woof woooooof? (Where have you been?)",
+   "dog.msg.greet_owner.1": "%s: Woof Woof Wooof Wooof woof wooooooooooof! (You don't know how much i've been waiting for you!)",
+   "dog.msg.greet_owner.2": "%s: Woof woof wooooof! (I missed you!)",
+   "dog.msg.greet_owner.3": "%s: Woof woof woof wooof! (Glad you were okay!)",
+   "dog.msg.greet_owner.4": "%s: Woof wooof! Woooof! (You're back! Hooray!)",
+
+   "dog.msg.play_tag.gotcha": "%s: Woof woof!!! (Gotcha!!!)",
+   "dog.msg.play_tag.dog_win": "You have lost %s in tag! What a speedy doggo!",
+   "dog.msg.play_tag.you_win": "You have won %s in tag!",
+
    "entity.doggytalents.dog": "Dog",
    "entity.doggytalents.dog.unknown_owner": "Owner Unknown",
    "entity.doggytalents.dog.untamed": "Untamed",

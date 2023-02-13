@@ -4,13 +4,15 @@ import doggytalents.common.entity.Dog;
 
 public abstract class TriggerableAction {
     
-    private Dog dog;
-    private boolean running;
+    protected Dog dog;
+    private ActionState state = ActionState.PENDING;
     private final boolean isTrivial;
+    private final boolean canPause;
 
-    public TriggerableAction(Dog dog, boolean trivial) {
+    public TriggerableAction(Dog dog, boolean trivial, boolean canPause) {
         this.dog = dog;
         this.isTrivial = trivial;
+        this.canPause = canPause;
     }
     
     public abstract void onStart();
@@ -19,23 +21,39 @@ public abstract class TriggerableAction {
 
     public abstract void onStop();
 
-    public boolean isRunning() {
-        return this.running;
-    } 
-
-    //TODO Use this on the Promise too
-    public final void start() {
-        this.running = true;
-        this.onStart();
-    }
-
-    public final void stop() {
-        this.running = false;
-        this.onStop();
-    }
-
-    public boolean isTrivial() {
+    //Only a non trivial action can override a trivial action.
+    public final boolean isTrivial() {
         return this.isTrivial;
+    }
+
+    public boolean canPreventSit() {
+        return false;
+    }
+
+    public boolean canOverrideSit() {
+        return false;
+    }
+
+    public boolean shouldPersistAfterSit() {
+        return true;
+    }
+
+    public final boolean canPause() {
+        return this.canPause;
+    }
+
+    public ActionState getState() {
+        return this.state;
+    }
+
+    public void setState(ActionState state) {
+        this.state = state;
+    }
+
+    public static enum ActionState {
+        PENDING,
+        RUNNING,
+        FINISHED
     }
 
 }
