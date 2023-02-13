@@ -36,6 +36,8 @@ public class DogMeleeAttackGoal extends Goal {
    private int waitingTick;
    private BlockPos.MutableBlockPos dogPos0;
 
+   private int detectReachPenalty = 0;
+
    //Tuning : START_DIS must be as low as possible to increase the attacking accuracy, while still keeping it noticable. 
    private final float START_LEAPING_AT_DIS_SQR = 2;
    private final float DONT_LEAP_AT_DIS_SQR = 1;
@@ -72,7 +74,11 @@ public class DogMeleeAttackGoal extends Goal {
          return false;
       }
 
-      if (dog.tickCount % 5 != 0) return false;
+      if (--this.detectReachPenalty > 0) return false;
+      
+      this.detectReachPenalty = 5;
+      
+      if (!this.isTargetInSafeArea(dog, target)) return false;
       
       /*
        * Only begin attacking if the dog can ACTUALLY reach the entity
@@ -101,10 +107,13 @@ public class DogMeleeAttackGoal extends Goal {
        *  
        */
       var p = dog.getNavigation().createPath(target, 1);
+      double d0 = dog.distanceToSqr(target);
+      
       if (p == null) return false;
 
       if (!DogUtil.canPathReachTargetBlock(dog, p, target.blockPosition(), dog.getMaxFallDistance() )) { 
          this.dog.setTarget(null);
+         this.detectReachPenalty += (d0 > 256 ? 10 : 5);
          return false;
       } 
       
@@ -136,6 +145,8 @@ public class DogMeleeAttackGoal extends Goal {
       } else if (!this.followingTargetEvenIfNotSeen) {
          return !this.dog.getNavigation().isDone();
       } else if (!this.dog.isWithinRestriction(livingentity.blockPosition())) {
+         return false;
+      } else if (!this.isTargetInSafeArea(dog, livingentity)) {
          return false;
       } else {
          return !(livingentity instanceof Player)
