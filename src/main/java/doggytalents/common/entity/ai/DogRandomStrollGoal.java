@@ -84,7 +84,7 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
 
         var n = this.dog.getNavigation(); 
         var p = n.getPath();
-        if (p == null) return false;
+        if (p == null || p.getNodeCount() <= 0) return false;
 
         var owner = dog.getOwner();
         if (owner == null) return false;
