@@ -11,6 +11,7 @@ import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveSkinSlice;
 import doggytalents.client.screen.DogNewInfoScreen.widget.TextOnlyButton;
+import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogTextureData;
@@ -81,7 +82,7 @@ public class SkinButtonElement extends AbstractElement {
             }, this.font);
             nextSkinButton.active = activeSkinId < this.locList.size() - 1;
 
-        applyButton = new Button(
+        applyButton = new CustomButton(
             this.getRealX() + this.getSizeX() - 30 - 30,
             this.getRealY() + mY - 10, 40, 20,
             Component.literal("Apply"),

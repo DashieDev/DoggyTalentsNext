@@ -49,8 +49,8 @@ public class StyleTabEntryElement extends AbstractElement {
         int startX = this.getRealX() + PADDING_LEFT;
         int pY = this.getRealY() + PADDING_TOP;
         for (var b : tabButtons) {
-            b.x = startX;
-            b.y = pY;
+            b.setX(startX);
+            b.setY(pY);
             pY += b.getHeight() + BUTTON_SPACING;
             this.addChildren(b);
         }

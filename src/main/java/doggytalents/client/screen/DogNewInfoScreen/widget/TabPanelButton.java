@@ -44,12 +44,6 @@ public class TabPanelButton extends AbstractButton {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
     public void onPress() {
         Store.get(screen).dispatch(slice, 
             new UIAction(UIActionTypes.CHANGE_PANEL_TAB, stateValue)
@@ -61,16 +55,22 @@ public class TabPanelButton extends AbstractButton {
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
         int sel_cl = this.isHovered ? DEFAULT_SEL_HLCOLOR : DEFAULT_SEL_COLOR;
         
-        fill(stack, this.x, this.y, this.x+this.width, this.y+this.height,
+        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height,
             this.selected ? sel_cl : cl);
         
         //draw text
-        int mX = this.x + this.width/2;
-        int mY = this.y + this.height/2;
+        int mX = this.getX() + this.width/2;
+        int mY = this.getY() + this.height/2;
         var msg = this.getMessage();
         int tX = mX - font.width(msg)/2;
         int tY = mY - font.lineHeight/2;
         //TODO if the name is too long, draw it cut off with a ..
         font.draw(stack, msg, tX, tY, 0xffffffff);
+    }
+
+    @Override
+    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
+        // TODO Auto-generated method stub
+        
     }
 }
