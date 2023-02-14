@@ -81,8 +81,6 @@ public class DogMeleeAttackGoal extends Goal {
       
       this.detectReachPenalty = 5;
       
-      if (!this.isTargetInSafeArea(dog, target)) return false;
-      
       /*
        * Only begin attacking if the dog can ACTUALLY reach the entity
        * 
@@ -148,8 +146,6 @@ public class DogMeleeAttackGoal extends Goal {
       } else if (!this.followingTargetEvenIfNotSeen) {
          return !this.dog.getNavigation().isDone();
       } else if (!this.dog.isWithinRestriction(livingentity.blockPosition())) {
-         return false;
-      } else if (!this.isTargetInSafeArea(dog, livingentity)) {
          return false;
       } else {
          return !(livingentity instanceof Player)
