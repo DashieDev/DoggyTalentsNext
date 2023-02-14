@@ -38,20 +38,19 @@ public class NavBarButton extends AbstractButton {
 
     public void renderButton(PoseStack stack, int mouseX, int mouseY, float pticks) {
         // No HightLight
-        if (this.isHoveredOrFocused()) {
+        if (this.isHovered) {
             var s = this.getMessage().copy();
             s.withStyle(s.getStyle().withUnderlined(true).withBold(true));
-            this.font.draw(stack, s, this.x-4, this.y, 0xffffffff);
+            this.font.draw(stack, s, this.getX()-4, this.getY(), 0xffffffff);
 
         } else {
-            this.font.draw(stack, this.getMessage(), this.x, this.y, 0xffffffff);
+            this.font.draw(stack, this.getMessage(), this.getX(), this.getY(), 0xffffffff);
 
         }
 
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
-        return; // TODO
+    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
     }
 }

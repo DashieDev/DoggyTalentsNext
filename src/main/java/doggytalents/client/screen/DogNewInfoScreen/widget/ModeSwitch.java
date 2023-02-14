@@ -72,7 +72,7 @@ public class ModeSwitch extends AbstractWidget {
         if (!this.visible) return;
 
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
-        fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, cl);
+        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
 
         this.updateHover(mouseX, mouseY);
 
@@ -80,7 +80,7 @@ public class ModeSwitch extends AbstractWidget {
         hoveredRight = false;
 
         if (this.isHovered) {
-            if (mouseX - this.x < this.width/2) {
+            if (mouseX - this.getX() < this.width/2) {
                 hoveredLeft = true;
                 hoveredRight = false;
             } else {
@@ -89,14 +89,14 @@ public class ModeSwitch extends AbstractWidget {
             }
         }
 
-        int mX = this.x + this.width/2;
-        int mY = this.y + this.height/2;
+        int mX = this.getX() + this.width/2;
+        int mY = this.getY() + this.height/2;
 
         var back_c1 = Component.literal("<");
         back_c1.withStyle(
             Style.EMPTY.withBold(hoveredLeft)
         );
-        int back_tX = this.x + PADDING_HORIZONTAL;
+        int back_tX = this.getX() + PADDING_HORIZONTAL;
         int back_tY = mY - font.lineHeight/2;
         this.font.draw(stack, back_c1, back_tX, back_tY, hoveredLeft ? 0xffffffff : 0xa5ffffff);
 
@@ -104,7 +104,7 @@ public class ModeSwitch extends AbstractWidget {
         next_c1.withStyle(
             Style.EMPTY.withBold(hoveredRight)
         );
-        int next_tX = this.x + this.width - PADDING_HORIZONTAL - font.width(next_c1);
+        int next_tX = this.getX() + this.width - PADDING_HORIZONTAL - font.width(next_c1);
         int next_tY = mY - font.lineHeight/2;
         this.font.draw(stack, next_c1, next_tX, next_tY, hoveredRight ? 0xffffffff : 0xa5ffffff);
 
@@ -128,7 +128,7 @@ public class ModeSwitch extends AbstractWidget {
 
     private void updateHover(int mouseX, int mouseY) {
         boolean isHovered0 = this.isHovered;
-        this.isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+        this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
         if (isHovered0 != this.isHovered) {
             this.stillHovered = this.isHovered;
             if (this.isHovered) {
@@ -171,7 +171,8 @@ public class ModeSwitch extends AbstractWidget {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
+    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
+        // TODO Auto-generated method stub
         
     }
     

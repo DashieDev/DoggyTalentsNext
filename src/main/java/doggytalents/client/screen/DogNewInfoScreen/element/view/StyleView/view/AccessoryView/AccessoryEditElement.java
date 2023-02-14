@@ -62,8 +62,8 @@ public class AccessoryEditElement extends AbstractElement {
         int startY = this.getRealY() + mY - AccessoryHolder.WIDGET_SIZE/2;
         int pX = this.getRealX() + mX - accessoryHolderTotalsSize/2;
         for (var holder : this.accessoryHolders) {
-            holder.x = pX;
-            holder.y = startY;
+            holder.setX(pX);
+            holder.setY(startY);
             this.addChildren(holder);
             pX += AccessoryHolder.WIDGET_SIZE + BUTTON_SPACING;
         }

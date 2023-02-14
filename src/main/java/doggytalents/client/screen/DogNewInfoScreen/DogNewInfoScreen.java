@@ -134,15 +134,15 @@ public class DogNewInfoScreen extends Screen {
 
         final int CHANGE_TAB_BUTTON_MARGIN = 15;
         
-        this.lefTabButton.x = CHANGE_TAB_BUTTON_MARGIN;
+        this.lefTabButton.setX(CHANGE_TAB_BUTTON_MARGIN);
         this.lefTabButton.setWidth(30);
         this.lefTabButton.setHeight(100);
-        this.lefTabButton.y = mY - 50;
+        this.lefTabButton.setY(mY - 50);
 
-        this.rightTabButton.x = this.width - 30 - CHANGE_TAB_BUTTON_MARGIN;
+        this.rightTabButton.setX(this.width - 30 - CHANGE_TAB_BUTTON_MARGIN);
         this.rightTabButton.setWidth(30);
         this.rightTabButton.setHeight(100);
-        this.rightTabButton.y = mY - 50;
+        this.rightTabButton.setY(mY - 50);
 
         this.addRenderableWidget(this.lefTabButton);
         this.addRenderableWidget(this.rightTabButton);

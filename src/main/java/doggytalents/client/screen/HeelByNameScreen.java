@@ -91,7 +91,7 @@ public class HeelByNameScreen extends Screen {
             @Override
             public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
                 super.render(stack, mouseX, mouseY, pTicks);
-                if (!this.isHoveredOrFocused()) return;
+                if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));

@@ -169,7 +169,7 @@ public class DogInfoScreen extends Screen {
             @Override
             public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
                 super.render(stack, mouseX, mouseY, pTicks);
-                if (!this.isHoveredOrFocused()) return;
+                if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 String str = I18n.get(dog.getMode().getUnlocalisedInfo());
                 list.addAll(ScreenUtil.splitInto(str, 150, DogInfoScreen.this.font));
@@ -310,7 +310,7 @@ public class DogInfoScreen extends Screen {
                 @Override
                 public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
                     super.render(stack, mouseX, mouseY, pTicks);
-                    if (!this.isHoveredOrFocused()) return;
+                    if (!this.isHovered) return;
                     List<Component> list = new ArrayList<>();
 
                     list.add(Component.translatable(talent.getTranslationKey()).withStyle(ChatFormatting.GREEN));

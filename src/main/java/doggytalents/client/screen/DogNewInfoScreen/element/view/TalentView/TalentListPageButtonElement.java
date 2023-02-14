@@ -53,11 +53,11 @@ public class TalentListPageButtonElement extends AbstractElement {
         
         int aX = mX - BUTTON_MIDDLE_SPACING/2 - backButton.getWidth();
         int aY = mY - backButton.getHeight()/2;
-        backButton.x = this.getRealX() + aX;
-        backButton.y = this.getRealY() + aY;
+        backButton.setX(this.getRealX() + aX);
+        backButton.setY(this.getRealY() + aY);
         aX = mX + BUTTON_MIDDLE_SPACING/2;
-        nextButton.x = this.getRealX() + aX;
-        nextButton.y = this.getRealY() + aY;
+        nextButton.setX(this.getRealX() + aX);
+        nextButton.setY(this.getRealY() + aY);
         this.addChildren(backButton);
         this.addChildren(nextButton);
         

@@ -23,13 +23,7 @@ public class FlatButton extends AbstractButton {
         this.font = Minecraft.getInstance().font;
         this.onPress = onPress;
     }
-
-    @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
-        // TODO Auto-generated method stub
-        
-    }
-
+    
     @Override
     public void onPress() {
         this.onPress.onPress(this);
@@ -42,11 +36,11 @@ public class FlatButton extends AbstractButton {
 
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
         
-        fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, cl);
+        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
         
         //draw text
-        int mX = this.x + this.width/2;
-        int mY = this.y + this.height/2;
+        int mX = this.getX() + this.width/2;
+        int mY = this.getY() + this.height/2;
         var msg = this.getMessage();
         int tX = mX - font.width(msg)/2;
         int tY = mY - font.lineHeight/2;
@@ -56,6 +50,12 @@ public class FlatButton extends AbstractButton {
 
     public interface OnPress {
         void onPress(FlatButton p_93751_);
+    }
+
+    @Override
+    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

@@ -8,14 +8,14 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.ContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 
-public abstract class AbstractElement extends GuiComponent implements Widget, ContainerEventHandler, NarratableEntry {
+public abstract class AbstractElement extends GuiComponent implements Renderable, ContainerEventHandler, NarratableEntry {
 
     @Nullable
     private GuiEventListener focused;
@@ -68,7 +68,7 @@ public abstract class AbstractElement extends GuiComponent implements Widget, Co
         }
         this.renderElement(stack, mouseX, mouseY, partialTicks);
         for (var c : this.child) {
-            if (c instanceof Widget wid)
+            if (c instanceof Renderable wid)
             wid.render(stack, mouseX, mouseY, partialTicks);
         }
     }

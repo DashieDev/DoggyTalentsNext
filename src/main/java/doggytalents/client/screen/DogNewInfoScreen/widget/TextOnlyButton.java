@@ -31,9 +31,9 @@ public class TextOnlyButton extends AbstractButton {
         int mX = this.width/2;
         int mY = this.height/2;
         var txt = this.getMessage();
-        int tX = this.x + mX - font.width(txt)/2;
-        int tY = this.y + mY - font.lineHeight/2;
-        if (this.isHoveredOrFocused()) {
+        int tX = this.getX() + mX - font.width(txt)/2;
+        int tY = this.getY() + mY - font.lineHeight/2;
+        if (this.isHovered) {
             var txt1 = txt.copy();
             txt1.withStyle(txt1.getStyle().withUnderlined(true).withBold(true));
             this.font.draw(stack, txt1, tX, tY, 0xffffffff);
@@ -47,9 +47,11 @@ public class TextOnlyButton extends AbstractButton {
         void onPress(TextOnlyButton p_93751_);
     }
 
-    @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
 
+    @Override
+    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
+        // TODO Auto-generated method stub
+        
     }
     
 }

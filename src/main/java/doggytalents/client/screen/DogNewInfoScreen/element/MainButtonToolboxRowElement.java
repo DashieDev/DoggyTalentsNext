@@ -50,8 +50,8 @@ public class MainButtonToolboxRowElement extends AbstractElement {
             public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
                 super.render(stack, mouseX, mouseY, pTicks);
 
-                int mX = this.x + this.width/2;
-                int mY = this.y + this.height/2;
+                int mX = this.getX() + this.width/2;
+                int mY = this.getY() + this.height/2;
 
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
@@ -66,9 +66,9 @@ public class MainButtonToolboxRowElement extends AbstractElement {
 
         int mX = this.getRealX() + this.getSizeX()/2;
         int pX = mX - totalWidth/2;
-        modeButton.x = pX;
+        modeButton.setX(pX);
         pX += modeButton.getWidth() + BUTTON_SPACING;
-        editInfoButton.x = pX;
+        editInfoButton.setX(pX);
 
         this.addChildren(modeButton);
         this.addChildren(editInfoButton);

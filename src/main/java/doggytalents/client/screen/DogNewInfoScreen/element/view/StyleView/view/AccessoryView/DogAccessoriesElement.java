@@ -67,8 +67,8 @@ public class DogAccessoriesElement extends AbstractElement {
             int startX = accessoriesDiv.getRealX() + mX - AccessoryHolder.WIDGET_SIZE/2;
             int pY = accessoriesDiv.getRealY() + mY - accessoryHolderTotalsSize/2;
             for (var holder : this.accessoryHolders) {
-                holder.x = startX;
-                holder.y = pY;
+                holder.setX(startX);
+                holder.setY(pY);
                 accessoriesDiv.addChildren(holder);
                 pY += AccessoryHolder.WIDGET_SIZE + BUTTON_SPACING;
             }
