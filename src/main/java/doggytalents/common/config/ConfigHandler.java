@@ -94,7 +94,6 @@ public class ConfigHandler {
                     .define("render_wings", false);
             RENDER_INCAPACITATED_TEXTURE = builder
                     .comment("When enabled, Dogs will show injured texture while incapacitated.")
-                    .comment("WARNING! A notable amount of graphic visuals will be involved. Consider disabling if you cannot handle.")
                     .translation("doggytalents.config.client.render_incapacitated_overlay")
                     .define("render_incapacitated_overlay", true);
             RENDER_HEALTH_IN_NAME = builder
@@ -181,13 +180,12 @@ public class ConfigHandler {
                     .translation("doggytalents.config.eat_food_on_floor")
                     .define("eat_food_on_floor", true);
             IMMORTAL_DOGS = builder
-                .comment("When enabled, dogs cannot be killed by any mean (except void damage, in that case you can still respawn your dog using his linked bed or commands).")
+                .comment("When enabled, dogs cannot be killed by any mean (except creative-mode-bypass damage, in that case you can still respawn your dog using his linked bed or commands).")
                 .comment("Instead, when his health reaches Zero, he will go into Incapacitated Mode.")
-                .comment("WARNING: A notable amount of graphic visuals is involved, consider disabling Rendering Incapacitated Texture if you cannot handle.")
                 .translation("doggytalents.config.immortal_dogs")
-                .define("immortal_dogs", false);
+                .define("immortal_dogs", true);
             PLAY_TAG_WITH_DOG = builder
-                .comment("If dog can play tag with you. To make them play, throw a snowball at them.")
+                .comment("When enabled, dog can play tag with you. To make them play, throw a snowball at them.")
                 .translation("doggytalents.config.play_tag_with_dog")
                 .define("play_tag_with_dog", true);
             DOG_GREET_OWNER = builder
@@ -200,7 +198,7 @@ public class ConfigHandler {
                 .comment("The remaning dog will remain in their position.")
                 .comment("To disable the limit, set this to any non-positive integer.")
                 .comment("Although this will cause all of your dogs to stand up and greet.")
-                .comment("YOU HAVE BEEN WARNED!")
+                .comment("YOU HAVE BEEN WARNED! :)")
                 .translation("doggytalents.dog_greet_owner_limit")
                 .defineInRange("dog_greet_owner_limit", 5, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
