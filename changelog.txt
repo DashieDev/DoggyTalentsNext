@@ -264,5 +264,39 @@ percentage of health the dog has left.
 + B/Bm/G/Gb mode dog now fight every enermy!
 
 1.9.3 - 2th February 2023
-* HOTFIX : ChestDog + TorchDog level < 5 placing torch cause the whole 
+* HOTFIX : ChestDog + TorchDog level < 5 placing torch cause the whole
 world to crash and is unable to join until the bug is resolved.
+
+1.10.0 - 14th February 2023
++ Re-design and added a brand new Dog Gui:
+  + The doggytalents UI have not been updated for a long time,
+  + and the most recent one is not much different than the 
+  + Very OG UI that DoggyTalents born with in 2013. 
+  + This re-design aims to provide a whole new look and feel for the
+  + UI. The UI will have a modern vibe with simplicity and intuitivity.
+  + Users can now intuitively add and remove Accessories without using
+  + the collar shear, which renders it useless and ready for removal
+  + after another in development method/item which aids for ownership change
+  + ,"de-training" and "un-taming".
++ All of the quick-select screen like Conducting Bone/Heel by name screen... are now
+clickable.
+* Hungy dogs will now occasionally remind owner when they're hungry, and won't be locked until
+  / world restart again
+* Fixed all bugs related to Immortal Dogs on dedicated server and made it mainstream and the prefered
+way.
+* Fixed potential getOwner null bugs.
+* Attacker now stops attacking incapacitated dogs and treat them as not a valid target
++ Re-added byuuid branch in dog commands.
+/ Dogs now only eat MEAT food from chestDog and avoid eating Golden Apple.
+/ Improved fire avoid goal.
++ (Configurable) Dogs now greet owner when he approaches after he leaving him for too long.
+There is a limit to how many dogs and greet the owner at once, and the rest will not greet
+to avoid the dogs being too annoying. The default limit is 5 but you can disable it or change It
+via config.
++ (Configurable) Now you can play tag with your dogs! Notice that this is just a fun game when
+you are occasionally doing nothing in the game like waiting for your friend or, smelting something,
+and never intended as a challenge, so go easy on your bud.
+/ Incapacitated Dogs now whine less when half-recovered.
+
+1.10.1 - 14th February 2023
+*HOTFIX: Fixed Dog attack efficency lost. 
