@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import doggytalents.ChopinLogger;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.AbstractSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveSkinSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice;
@@ -37,7 +36,6 @@ public class Store {
             var storeValue = new StoreValue(worker, worker.getInitalState());
             this.applicationStates.computeIfAbsent(slice, $ -> storeValue);
         } catch (Exception e) {
-            ChopinLogger.l("Failed to register : " + slice.getName()); 
         }
     }
 

@@ -6,7 +6,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.element.MainButtonToolboxRowElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.DogInfoNavBarElement;
-import doggytalents.ChopinLogger;
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.DivElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.PosType;
@@ -194,7 +193,6 @@ public class DogNewInfoScreen extends Screen {
             //TODO Maybe AbstractElement::canFocus() in the future.
             return;
         } 
-        ChopinLogger.l("set focus : " + guiEventListener);
         super.setFocused(guiEventListener);
     }
 

@@ -4,7 +4,6 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.ChopinLogger;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice.MainTab;
 import doggytalents.client.screen.DogNewInfoScreen.widget.ModeSwitch;

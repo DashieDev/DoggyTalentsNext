@@ -82,8 +82,6 @@ public class DogLowHealthGoal extends Goal {
             //Ensure this function never get called too many times.
             DogUtil.dynamicSearchAndTeleportToOwnwer(dog, owner, 4);
         }
-
-        ChopinLogger.l("Low Health started!");
     }
 
     @Override
