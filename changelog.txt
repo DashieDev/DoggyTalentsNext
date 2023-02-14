@@ -297,3 +297,6 @@ via config.
 you are occasionally doing nothing in the game like waiting for your friend or, smelting something,
 and never intended as a challenge, so go easy on your bud.
 / Incapacitated Dogs now whine less when half-recovered.
+
+1.10.1 - 14th February 2023
+*HOTFIX: Fixed Dog attack efficency lost. 
