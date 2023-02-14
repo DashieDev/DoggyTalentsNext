@@ -1,6 +1,5 @@
 package doggytalents.common.entity.ai.triggerable;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -84,7 +83,6 @@ public class DogPlayTagAction extends TriggerableAction {
             && dog_b0.distSqr(owner_b0) <= 4
             && !this.canReachTarget(owner, d0) 
         ) {
-            ChopinLogger.l("move!");
             dog.getMoveControl().setWantedPosition(owner.getX(), owner.getY(), owner.getZ(), 1);
         }
         if(n.isDone() && !this.canReachTarget(owner, d0)) {

@@ -2,7 +2,6 @@ package doggytalents.common.entity.stats;
 
 import com.google.common.collect.Maps;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.util.Cache;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.nbt.CompoundTag;
@@ -183,8 +182,6 @@ public class StatsTracker {
             buf.writeResourceLocation(typeId);
             buf.writeInt(killCount);
         }
-
-        ChopinLogger.l("write refCnt :" + buf.refCnt());
     }
 
     public void deserializeFromBuf(FriendlyByteBuf buf) {
@@ -205,8 +202,6 @@ public class StatsTracker {
             var type = ForgeRegistries.ENTITY_TYPES.getValue(typeId);
             this.ENTITY_KILLS.put(type, killCount);
         }
-
-        ChopinLogger.l("read refCnt :" + buf.refCnt());
     }
 
     public void shallowCopyFrom(StatsTracker stats) {

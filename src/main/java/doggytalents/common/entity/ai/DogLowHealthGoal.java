@@ -72,7 +72,6 @@ public class DogLowHealthGoal extends Goal {
         this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.whine = true;
         DogUtil.dynamicSearchAndTeleportToOwnwer(dog, owner, 4);
-        ChopinLogger.l("Low Health started!");
     }
 
     @Override

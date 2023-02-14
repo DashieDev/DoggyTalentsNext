@@ -74,8 +74,6 @@ public class DogUtil {
             owner.isSprinting(),
             radius, 1
         );
-
-        ChopinLogger.sendToOwner(dog, "Yo !");
    
         if (target == null) {
             return false;

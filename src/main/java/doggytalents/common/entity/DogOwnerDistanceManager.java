@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.Maps;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.ai.triggerable.DogGreetOwnerAction;
 import net.minecraft.nbt.CompoundTag;
@@ -50,7 +49,6 @@ public class DogOwnerDistanceManager {
             long dtime = gtime - lastWithOwnerTime;
             if (dtime >= START_MISSING_OWNER_TIME) {
                 this.willGreet = true;
-                ChopinLogger.l("will greet owner when he come closer");
                 this.lastOwnerLeftInteval = dtime;
             }
             this.lastWithOwnerTime = gtime;
@@ -85,14 +83,12 @@ public class DogOwnerDistanceManager {
             this.willGreet = tg0.getBoolean("willGreet");
         } else {
             this.lastWithOwnerTime = this.dog.level.getDayTime();
-            ChopinLogger.l(this.dog.level.getDayTime() + " initial value. ");
             this.willGreet = false;
         }
     }
 
     public void triggerGreetingAction(Dog dog, @Nonnull LivingEntity owner, long ownerLeftInterval) {
         this.willGreet = false;
-        ChopinLogger.l("Action triggering");
         boolean greetOwnerEnabled = 
             ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GREET_OWNER);
         int greetOwnerLimit = 

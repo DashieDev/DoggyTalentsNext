@@ -8,7 +8,6 @@ import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
@@ -69,7 +68,6 @@ public class AccessoryHolder extends AbstractWidget {
 
     @Override
     public void onClick(double x, double y) {
-        ChopinLogger.l("clicked items!");
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
             new ChangeAccessoriesData(this.dog.getId(), add, inventorySlotId));
     }
