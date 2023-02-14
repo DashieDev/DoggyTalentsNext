@@ -32,6 +32,7 @@ public class DogLowHealthGoal extends Goal {
     private LivingEntity owner;
     private int timeToRecalcPath;
     private int tickTillSearchForTp = 0;
+    private int tickTillInitTeleport = 0;
     private float oldWaterCost;
 
     private boolean whine = false;
@@ -46,6 +47,10 @@ public class DogLowHealthGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        if (this.tickTillInitTeleport > 0) {
+            --this.tickTillInitTeleport;
+        }
+
         LivingEntity owner = this.dog.getOwner();
         if (owner == null) {
             return false;
@@ -73,7 +78,11 @@ public class DogLowHealthGoal extends Goal {
         this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
         this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.whine = true;
-        DogUtil.dynamicSearchAndTeleportToOwnwer(dog, owner, 4);
+        if (this.tickTillInitTeleport <= 0) {
+            this.tickTillInitTeleport = 10;
+            //Ensure this function never get called too many times.
+            DogUtil.dynamicSearchAndTeleportToOwnwer(dog, owner, 4);
+        }
         ChopinLogger.l("Low Health started!");
     }
 
