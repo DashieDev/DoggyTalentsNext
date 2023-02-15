@@ -73,7 +73,7 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
     }
 
     private Component createDescEntry(String descName, String descVal, int valColor) {
-        var c0 = Component.literal(descName + ": ");
+        var c0 = Component.literal(descName + " ");
         var c1 = Component.literal(descVal)
             .withStyle(
                 Style.EMPTY
