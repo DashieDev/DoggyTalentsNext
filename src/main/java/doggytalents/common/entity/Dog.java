@@ -455,7 +455,7 @@ public class Dog extends AbstractDog {
                 }
 
                 if (this.timeWolfIsShaking > 0.8) {
-                    if (this.shakeFire) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                    if (this.shakeFire && random.nextInt(6) == 0) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 }
             }
 
