@@ -300,3 +300,6 @@ and never intended as a challenge, so go easy on your bud.
 
 1.10.1 - 14th February 2023
 *HOTFIX: Fixed Dog attack efficency lost. 
+
+1.10.2 - 16th February 2023
+*Fixed dogs improperly dismount in water.
