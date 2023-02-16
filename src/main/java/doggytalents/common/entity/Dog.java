@@ -562,7 +562,7 @@ public class Dog extends AbstractDog {
             this.dogOwnerDistanceManager.tick();
         }
 
-        if (ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DIRE_PARTICLES) && this.level.isClientSide && this.getDogLevel().isDireDog()) {
+        if (this.level.isClientSide && this.getDogLevel().isDireDog() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DIRE_PARTICLES)) {
             for (int i = 0; i < 2; i++) {
                 this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2D);
             }
