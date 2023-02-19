@@ -214,13 +214,14 @@ public class WaterHolderTalent extends TalentInstance {
             e.getBbWidth(), 0.8f, e.getBbWidth(), 
             0.1 //TODO Tune
         );
-        var bp = e.blockPosition().mutable();
+        var e_b0 = e.blockPosition();
+        var e_b0m = e_b0.mutable();
 
         for (int i = -1; i <= 1; ++i) {
             for(int j = -1; j <= 1; ++j) {
-                bp.setX(bp.getX() + i); bp.setZ(bp.getZ()+j);
-                if (e.level.getBlockState(bp).getBlock() == Blocks.FIRE ) {
-                    e.level.setBlockAndUpdate(bp, Blocks.AIR.defaultBlockState());
+                e_b0m.setX(e_b0.getX() + i); e_b0m.setZ(e_b0.getZ()+j);
+                if (e.level.getBlockState(e_b0m).getBlock() == Blocks.FIRE ) {
+                    e.level.setBlockAndUpdate(e_b0m, Blocks.AIR.defaultBlockState());
                 }
             }
         }
