@@ -1127,19 +1127,6 @@ public class Dog extends AbstractDog {
 
             return false;
         }
-        if (source.isProjectile()) {
-            if (
-                source instanceof IndirectEntityDamageSource iSource
-                && iSource.getDirectEntity() instanceof Snowball
-            ) {
-                var owner = this.getOwner();
-                if (iSource.getEntity() == owner) {
-                    if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PLAY_TAG_WITH_DOG)) 
-                        this.triggerAction(new DogPlayTagAction(this, owner));
-                }
-                return false;
-            } 
-        }
 
         for (IDogAlteration alter : this.alterations) {
             InteractionResultHolder<Float> result = alter.attackEntityFrom(this, source, amount);
