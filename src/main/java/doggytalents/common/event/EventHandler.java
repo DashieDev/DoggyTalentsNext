@@ -4,6 +4,7 @@ import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.talent.HunterDogTalent;
 import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
 import net.minecraft.nbt.CompoundTag;
@@ -14,11 +15,16 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
@@ -117,5 +123,29 @@ public class EventHandler {
     @SubscribeEvent
     public void onLootDrop(final LootingLevelEvent event) {
         HunterDogTalent.onLootDrop(event);
+    }
+
+    @SubscribeEvent
+    public void onArrowHit(final ProjectileImpactEvent event) {
+        var hitResult = event.getRayTraceResult();
+        if (!(hitResult instanceof EntityHitResult)) return;
+
+        var entityHitResult = (EntityHitResult) hitResult;
+        var entity = entityHitResult.getEntity();
+        if (!(entity instanceof Dog)) return;
+        var dog = (Dog) entity;
+
+        var projectile = event.getProjectile();
+        var projectileOnwer = projectile.getOwner();
+        var dogOwner = dog.getOwner();
+        if (dogOwner != projectileOnwer) return;
+        
+        if (projectile instanceof Snowball) {
+            if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PLAY_TAG_WITH_DOG)) 
+                dog.triggerAction(new DogPlayTagAction(dog, dogOwner));
+            return;
+        }
+        
+        event.setCanceled(true);
     }
 }
