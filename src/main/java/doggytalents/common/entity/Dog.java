@@ -818,7 +818,8 @@ public class Dog extends AbstractDog {
                     d.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
                     d.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
                     d.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
-                    d.level.broadcastEntityEvent(d, (byte)35);
+                    //Earraper.
+                    //d.level.broadcastEntityEvent(d, (byte)35);
                 }
             }
             return InteractionResult.SUCCESS;
