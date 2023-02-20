@@ -126,7 +126,7 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void onArrowHit(final ProjectileImpactEvent event) {
+    public void onProjectileHit(final ProjectileImpactEvent event) {
         var hitResult = event.getRayTraceResult();
         if (!(hitResult instanceof EntityHitResult)) return;
 
@@ -137,6 +137,7 @@ public class EventHandler {
 
         var projectile = event.getProjectile();
         var projectileOnwer = projectile.getOwner();
+        if (projectileOnwer == null) return;
         var dogOwner = dog.getOwner();
         if (dogOwner != projectileOnwer) return;
         
