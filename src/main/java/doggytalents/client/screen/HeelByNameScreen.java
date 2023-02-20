@@ -1,9 +1,10 @@
 package doggytalents.client.screen;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-
-import org.antlr.v4.parse.ANTLRParser.parserRule_return;
+import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -44,8 +45,8 @@ public class HeelByNameScreen extends Screen {
 
    private int hightlightTextColor = HLC_HEEL_NO_SIT;
 
-    private int mouseX0;
-    private int mouseY0;
+    private int mouseX0 = -1;
+    private int mouseY0 = -1;
 
    
     private final int MAX_BUFFER_SIZE = 64;
@@ -60,6 +61,7 @@ public class HeelByNameScreen extends Screen {
         this.hightlightDogName = 0;
 
         List<Dog> dogsList = Minecraft.getInstance().level.getEntitiesOfClass(Dog.class, this.player.getBoundingBox().inflate(100D, 50D, 100D), d -> d.isOwnedBy(player));
+        dogsList = FrequentHeelStore.get(this).sortDogList(dogsList);
         for (Dog d : dogsList) {
             this.dogNameList.add(d.getName().getString());
             this.dogNameFilterList.add(d.getName().getString());
@@ -107,14 +109,25 @@ public class HeelByNameScreen extends Screen {
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
 
-        if (this.mouseX0 != mouseX || this.mouseY0 != mouseY) {
-            this.onMouseMoved(mouseX, mouseY);
-            this.mouseX0 = mouseX;
-            this.mouseY0 = mouseY;
-        }
-
         int half_width = this.width >> 1;
         int half_height = this.height >> 1; 
+        
+        if (this.mouseX0 != mouseX || this.mouseY0 != mouseY) {
+            if (this.mouseX0 < 0 || this.mouseY0 < 0) {
+                int dx = Math.abs(mouseX - half_width);
+                int dy = Math.abs(mouseY - half_height);
+                if (dx > 10 || dy > 10) {
+                    this.onMouseMoved(mouseX, mouseY);
+                    this.mouseX0 = mouseX;
+                    this.mouseY0 = mouseY;
+                }
+            } else {
+                this.onMouseMoved(mouseX, mouseY);
+                this.mouseX0 = mouseX;
+                this.mouseY0 = mouseY;
+            }
+            
+        }
       
         Gui.fill(stack, half_width - 100, half_height - 100, half_width + 100, half_height + 100, Integer.MIN_VALUE);
         Gui.fill(stack, half_width - 100, half_height + 105, half_width + 100, half_height + 117, Integer.MIN_VALUE);
@@ -132,11 +145,18 @@ public class HeelByNameScreen extends Screen {
         for (int i = 0; i < this.dogNameFilterList.size(); ++i) {
             int color = 0xffffffff;
             if (i == this.hightlightDogName) color = this.hightlightTextColor;
-            String text = this.dogNameFilterList.get(i) + (
-                this.showUuid ? 
-                " ( " + this.minecraft.level.getEntity(this.dogIdFilterList.get(i)).getStringUUID() + " ) " :
-                ""
-            );
+            String text = this.dogNameFilterList.get(i);
+            if (this.showUuid) {
+                var dog = this.minecraft.level.getEntity(this.dogIdFilterList.get(i));
+                if (dog != null) {
+                    var uuid = dog.getStringUUID();
+                    if (uuid != null) {
+                        text = this.dogNameFilterList.get(i) + (
+                            " ( " + uuid + " ) "
+                        );
+                    }
+                }
+            }
             this.font.draw(stack, text, textx, texty + offset, color);
             offset+=10;
             if (offset > 190) break;
@@ -271,9 +291,58 @@ public class HeelByNameScreen extends Screen {
         return false;
     }
 
-
     private void requestHeel(int id) {
+        FrequentHeelStore.get(this).pushDogToFrequentStack(id);
         PacketHandler.send(PacketDistributor.SERVER.noArg(), new HeelByNameData(id, this.heelAndSit));
+    }
+
+    private static class FrequentHeelStore {
+
+        private static FrequentHeelStore INSTANCE;
+
+        private ArrayList<String> dogFrequentStack = new ArrayList<String>();
+        private Screen screen;
+        private ToIntFunction<Dog> GET_FREQ_COUNT = d -> this.getFrequentWeightFor(d);
+
+        private FrequentHeelStore(Screen screen) {
+            this.screen = screen;
+        }
+
+        public void pushDogToFrequentStack(int id) {
+            var dog = screen.getMinecraft().level.getEntity(id);
+            if (dog == null) return;
+            var uuid_str = dog.getStringUUID();
+            if (uuid_str == null) return;
+            if (dogFrequentStack.contains(uuid_str)) {
+                dogFrequentStack.remove(uuid_str);
+            }
+            dogFrequentStack.add(uuid_str);
+        }
+
+        public int getFrequentWeightFor(Dog dog) {
+            var uuid_str = dog.getStringUUID();
+            if (uuid_str == null) return 0;
+            int indx = dogFrequentStack.indexOf(uuid_str);
+            return Math.max(0, indx);
+        }
+
+        public List<Dog> sortDogList(List<Dog> dogList) {
+            return
+                dogList.stream()
+                .sorted(Comparator.comparingInt(GET_FREQ_COUNT).reversed())
+                .collect(Collectors.toList());
+        }
+    
+        public static FrequentHeelStore get(Screen screen) {
+            if (INSTANCE == null) {
+                INSTANCE = new FrequentHeelStore(screen);
+            }
+            if (INSTANCE.screen != screen) {
+                INSTANCE.screen = screen;
+            }
+            return INSTANCE;
+        }
+
     }
 
 }
