@@ -821,6 +821,7 @@ public class Dog extends AbstractDog {
                     //Earraper.
                     //d.level.broadcastEntityEvent(d, (byte)35);
                 }
+                this.level.broadcastEntityEvent(this, (byte)35);
             }
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.CAKE && this.getIncapacitatedMutiplier() < 2) {
