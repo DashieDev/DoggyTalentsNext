@@ -66,7 +66,8 @@ public class DogOwnerDistanceManager {
     private boolean canStartGreeting(Dog dog, LivingEntity owner) {
         return 
             this.willGreet
-            && dog.distanceToSqr(owner) <= OWNER_START_GREET_DISTANCE_SQR;
+            && dog.distanceToSqr(owner) <= OWNER_START_GREET_DISTANCE_SQR
+            && !dog.isBusy();
     }
 
     public void save(CompoundTag tag) {
