@@ -119,6 +119,18 @@ import java.util.stream.Collectors;
 public class Dog extends AbstractDog {
 
     private static final EntityDataAccessor<Optional<Component>> LAST_KNOWN_NAME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.OPTIONAL_COMPONENT);
+    
+    /**
+     *     Bit number      Decimal Val         Flag
+     *     0               1                   BEGGING
+     *     1               2                   OBEY_OTHER
+     *     2               4                   FRIENDLY_FIRE
+     *     3               8                   FORCE_SIT
+     *     4               16                  <Reserved>            
+     *     5               32                  <Reserved>
+     *     6               64                  <Reserved>
+     *     7               128                 REGARD_TEAM_PLAYERS
+     */
     private static final EntityDataAccessor<Byte> DOG_FLAGS = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.BYTE);
 
     private static final EntityDataAccessor<Float> HUNGER_INT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.FLOAT);
@@ -617,7 +629,10 @@ public class Dog extends AbstractDog {
             else if (!action.isTrivial()) return;
         }
         //Only set action dog is not sitting or action can override sit.
-        if (!action.canOverrideSit() && this.isOrderedToSit()) return;
+        if (this.isOrderedToSit()) {
+            if (this.forceSit()) return;
+            if (!action.canOverrideSit()) return;
+        }
         this.setOrderedToSit(false);
         //Check And Stash existing action.
         if (activeAction != null) {
@@ -1631,6 +1646,8 @@ public class Dog extends AbstractDog {
         compound.putString("customSkinHash", this.getSkinHash());
         compound.putBoolean("willObey", this.willObeyOthers());
         compound.putBoolean("friendlyFire", this.canPlayersAttack());
+        compound.putBoolean("regardTeamPlayers", this.regardTeamPlayers());
+        compound.putBoolean("forceSit", this.forceSit());
         compound.putInt("dogSize", this.getDogSize());
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
         compound.putInt("level_dire", this.getDogLevel().getLevel(Type.DIRE));
@@ -1878,6 +1895,8 @@ public class Dog extends AbstractDog {
             this.setOwnersName(NBTUtil.getTextComponent(compound, "lastKnownOwnerName"));
             this.setWillObeyOthers(compound.getBoolean("willObey"));
             this.setCanPlayersAttack(compound.getBoolean("friendlyFire"));
+            this.setRegardTeamPlayers(compound.getBoolean("regardTeamPlayers"));
+            this.setForceSit(compound.getBoolean("forceSit"));
             if (compound.contains("dogSize", Tag.TAG_ANY_NUMERIC)) {
                 this.setDogSize(compound.getInt("dogSize"));
             }
@@ -2330,11 +2349,11 @@ public class Dog extends AbstractDog {
         return this.getDogFlag(4);
     }
 
-    public void set8Flag(boolean collar) {
-        this.setDogFlag(8, collar);
+    public void setForceSit(boolean val) {
+        this.setDogFlag(8, val);
     }
 
-    public boolean get8Flag() {
+    public boolean forceSit() {
         return this.getDogFlag(8);
     }
 
@@ -2360,6 +2379,14 @@ public class Dog extends AbstractDog {
 
     public boolean get64Flag() {
         return this.getDogFlag(64);
+    }
+
+    public void setRegardTeamPlayers(boolean val) {
+        this.setDogFlag(128, val);
+    }
+
+    public boolean regardTeamPlayers() {
+        return this.getDogFlag(128);
     }
 
     public List<TalentInstance> getTalentMap() {
