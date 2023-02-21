@@ -468,6 +468,7 @@ public class DogUtil {
         if (!dog.isLeashed() && !dog.isPassenger()) {
             if (distance >= distanceToForceTeleportSqr) {
                 if (forceTeleport) DogUtil.dynamicSearchAndTeleportToOwnwer(dog, owner, 4);
+                else DogUtil.guessAndTryToTeleportToOwner(dog, owner, 4);
             } else {
                 if (distance >= distanceToTeleportSqr) {
                     DogUtil.guessAndTryToTeleportToOwner(dog, owner, 4);
