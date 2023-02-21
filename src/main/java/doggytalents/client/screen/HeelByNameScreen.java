@@ -11,6 +11,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.item.WhistleItem;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.HeelByNameData;
 import net.minecraft.SharedConstants;
@@ -23,6 +24,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.PacketDistributor;
 
@@ -40,6 +42,7 @@ public class HeelByNameScreen extends Screen {
    private boolean showUuid = false;
    private String value = "";
    private boolean heelAndSit = false;
+   private boolean softHeel = false;
    
    private final int HLC_HEEL_NO_SIT = 0xFF10F9; 
    private final int HLC_HEEL_AND_SIT = 0xff6f00; 
@@ -52,7 +55,7 @@ public class HeelByNameScreen extends Screen {
    
     private final int MAX_BUFFER_SIZE = 64;
 
-    public HeelByNameScreen(Player player) {
+    public HeelByNameScreen(Player player, boolean softHeel) {
         super(Component.translatable("doggytalents.screen.whistler.heel_by_name"));
         this.player = player;   
         this.dogNameList = new ArrayList<String>(4);
@@ -60,6 +63,7 @@ public class HeelByNameScreen extends Screen {
         this.dogIdFilterList = new ArrayList<Integer>(4);
         this.dogNameFilterList = new ArrayList<String>(4);
         this.hightlightDogName = 0;
+        this.softHeel = softHeel;
 
         List<Dog> dogsList = Minecraft.getInstance().level.getEntitiesOfClass(Dog.class, this.player.getBoundingBox().inflate(100D, 50D, 100D), d -> d.isOwnedBy(player));
         dogsList = FrequentHeelStore.get(this).sortDogList(dogsList);
@@ -73,7 +77,14 @@ public class HeelByNameScreen extends Screen {
 
     public static void open() { 
         Minecraft mc = Minecraft.getInstance();
-        mc.setScreen(new HeelByNameScreen(mc.player));
+        var stack = mc.player.getItemInHand(InteractionHand.MAIN_HAND);
+        if (stack == null) return;
+        if (!(stack.getItem() instanceof WhistleItem)) return;
+        boolean softHeel = false;
+        if (stack.hasTag()) {
+            softHeel = stack.getTag().getBoolean("soft_heel");
+        }
+        mc.setScreen(new HeelByNameScreen(mc.player, softHeel) );
     }
 
     @Override
@@ -103,14 +114,35 @@ public class HeelByNameScreen extends Screen {
                 HeelByNameScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
             }
         };
+
+        Button softHeel = new Button(3, 52 + this.font.lineHeight + 2, 60, 20, 
+            Component.literal("" + this.softHeel), b -> {
+                this.softHeel = !this.softHeel;
+                b.setMessage(Component.literal("" + this.softHeel));
+        }) {
+            @Override
+            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+                List<Component> list = new ArrayList<>();
+                list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.soft_heel")
+                    .withStyle(Style.EMPTY.withBold(true)));
+                String str = I18n.get("doggytalents.screen.whistler.heel_by_name.soft_heel.help");
+                list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
+
+                HeelByNameScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+            }
+        };
         
         this.addRenderableWidget(showUuid);
         this.addRenderableWidget(help);
+        this.addRenderableWidget(softHeel);
     }
 
  
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+
+        var soft_heel = I18n.get("doggytalents.screen.whistler.heel_by_name.soft_heel");
+        this.font.draw(stack, soft_heel, 3, 52, 0xffffffff);
 
         int half_width = this.width >> 1;
         int half_height = this.height >> 1; 
@@ -297,7 +329,7 @@ public class HeelByNameScreen extends Screen {
 
     private void requestHeel(int id) {
         FrequentHeelStore.get(this).pushDogToFrequentStack(id);
-        PacketHandler.send(PacketDistributor.SERVER.noArg(), new HeelByNameData(id, this.heelAndSit));
+        PacketHandler.send(PacketDistributor.SERVER.noArg(), new HeelByNameData(id, this.heelAndSit, this.softHeel));
     }
 
     private static class FrequentHeelStore {
