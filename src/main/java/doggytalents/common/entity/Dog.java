@@ -649,8 +649,27 @@ public class Dog extends AbstractDog {
         this.activeAction = action;
     }
 
+    public boolean isBusy() {
+        if (this.isInSittingPose() && this.forceSit()) return true;
+        return this.activeAction != null;
+    }
+
+    public boolean readyForTrivialAction() {
+        if (this.isInSittingPose() && this.forceSit()) return false;
+        if (this.activeAction == null) return true;
+        return !this.activeAction.isTrivial();
+    }
+
     public TriggerableAction getStashedTriggerableAction() {
         return this.stashedAction;
+    }
+
+    public void clearTriggerableAction() {
+        if (this.stashedAction != null) {
+            this.stashedAction.onStop();
+            this.stashedAction = null;
+        }
+        this.triggerAction(null);
     }
 
     public void setStashedTriggerableAction(TriggerableAction action) {
