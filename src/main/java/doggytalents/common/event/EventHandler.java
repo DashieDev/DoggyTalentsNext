@@ -142,7 +142,10 @@ public class EventHandler {
         if (dogOwner != projectileOnwer) return;
         
         if (projectile instanceof Snowball) {
-            if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PLAY_TAG_WITH_DOG)) 
+            if (
+                ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PLAY_TAG_WITH_DOG)
+                && !dog.isBusy()
+            ) 
                 dog.triggerAction(new DogPlayTagAction(dog, dogOwner));
             return;
         }
