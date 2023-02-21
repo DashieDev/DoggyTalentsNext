@@ -138,6 +138,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue PLAY_TAG_WITH_DOG;
         public ForgeConfigSpec.BooleanValue DOG_GREET_OWNER;
         public ForgeConfigSpec.IntValue DOG_GREET_OWNER_LIMIT;
+        public ForgeConfigSpec.BooleanValue MAX_CREEPER_SWEEPER_DONT_GROWL;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -201,7 +202,14 @@ public class ConfigHandler {
                 .comment("YOU HAVE BEEN WARNED! :)")
                 .translation("doggytalents.dog_greet_owner_limit")
                 .defineInRange("dog_greet_owner_limit", 5, Integer.MIN_VALUE, Integer.MAX_VALUE);
-
+            MAX_CREEPER_SWEEPER_DONT_GROWL = builder
+                .comment("Option to disable dogs who mastered creeper sweeper and ")
+                .comment("and are able to tackle creepers. This is helpful if players intend")
+                .comment("their creeper sweeper master dogs to focus on fighting creeper instead of")
+                .comment("warning, which may causes a bunch of false positive due to the range")
+                .comment("is so wide that it includes creepers which are not in danger zone or not reachable.")
+                .translation("doggytalents.max_creeper_sweeper_dont_growl")
+                .define("max_creeper_sweeper_dont_growl", true);
             builder.pop();
 
             

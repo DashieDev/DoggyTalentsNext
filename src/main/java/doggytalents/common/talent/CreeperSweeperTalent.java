@@ -4,6 +4,7 @@ import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
@@ -29,6 +30,16 @@ public class CreeperSweeperTalent extends TalentInstance {
     @Override
     public void tick(AbstractDog dog) {
         if (this.level() > 0) {
+
+            if (dog.getTarget() instanceof Creeper creeper) {
+                creeper.setSwellDir(-1);
+            }
+
+            if (
+                this.level() >= this.talent.getMaxLevel()
+                && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.MAX_CREEPER_SWEEPER_DONT_GROWL)
+            ) return;
+
             int timeLeft = this.cooldown - dog.tickCount;
 
             if (timeLeft <= 0 && (
@@ -43,10 +54,6 @@ public class CreeperSweeperTalent extends TalentInstance {
                 }
             }
 
-            if (dog.getTarget() instanceof Creeper) {
-                Creeper creeper = (Creeper) dog.getTarget();
-                creeper.setSwellDir(-1);
-            }
         }
     }
 
