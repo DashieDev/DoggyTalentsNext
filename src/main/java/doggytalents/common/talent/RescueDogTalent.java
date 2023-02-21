@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.function.Predicate;
 
+import javax.annotation.Nonnull;
+
+import doggytalents.ChopinLogger;
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -23,10 +27,9 @@ public class RescueDogTalent extends TalentInstance {
 
     private final ArrayList<LivingEntity> healTargets = new ArrayList<LivingEntity>();
     private final int SEARCH_RADIUS = 12; //const ?? maybe can improve thru talents
-    private int searchCoolDown;
-    private int nextSearchTick = 0;
+    private int tickTillSearch = 0;
 
-    private static DataKey<MoveToHealTargetGoal> RESCUE_DOG_AI = DataKey.make();
+    //private static DataKey<MoveToHealTargetGoal> RESCUE_DOG_AI = DataKey.make();
 
     private int healCooldown = 0;
 
@@ -36,35 +39,46 @@ public class RescueDogTalent extends TalentInstance {
 
     @Override
     public void init(AbstractDog dog) {
-        if (!(dog instanceof Dog)) return;
-        if (!dog.hasData(RESCUE_DOG_AI)) {
-            var rescueDogGoal = new MoveToHealTargetGoal((Dog)dog, this);
-            dog.goalSelector.addGoal(((Dog) dog).TALENT_GOAL_PRIORITY, rescueDogGoal);
-            dog.setData(RESCUE_DOG_AI, rescueDogGoal);
-        }
+        // if (!(dog instanceof Dog)) return;
+        // if (!dog.hasData(RESCUE_DOG_AI)) {
+        //     var rescueDogGoal = new MoveToHealTargetGoal((Dog)dog, this);
+        //     dog.goalSelector.addGoal(((Dog) dog).TALENT_GOAL_PRIORITY, rescueDogGoal);
+        //     dog.setData(RESCUE_DOG_AI, rescueDogGoal);
+        // }
     }
 
     @Override
-    public void livingTick(AbstractDog dog) {
-        if (dog.level.isClientSide) {
+    public void livingTick(AbstractDog abstractDog) {
+        if (abstractDog.level.isClientSide) {
             return;
         }
 
-        if (!(dog instanceof Dog)) return;
+        if (!(abstractDog instanceof Dog)) return;
 
-        var d = (Dog) dog;
+        var dog = (Dog) abstractDog;
 
         if (this.healCooldown > 0 ) {
-            --this.healCooldown;
-        } else if (!dog.isInSittingPose() && (d.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) ) {
-            if (this.nextSearchTick <= dog.tickCount) {
-                this.searchCoolDown = 10;
-                this.nextSearchTick = dog.tickCount + this.searchCoolDown;
-    
-                this.refreshTargetsToHeal(dog);
+            --this.healCooldown; return;
+        }
+        
+        if (
+            dog.readyForTrivialAction() 
+            && (dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) 
+            && --this.tickTillSearch <= 0
+        ) {
+            this.tickTillSearch = 10;
+            this.refreshTargetsToHeal(dog);
+            var target = this.selectHealTarget(dog);
+            if (target != null && this.stillValidTarget(dog, target)) {
+                this.triggerRescueAction(dog, target);
             }
         }
 
+    }
+
+    private void triggerRescueAction(Dog dog, @Nonnull LivingEntity target) {
+        dog.triggerAction(new RescueAction(dog, this, target));
+        ChopinLogger.l("triggered rescue action for " + target);
     }
 
     //TODO Decrease the healCost due to healing is more difficult now.
@@ -152,9 +166,10 @@ public class RescueDogTalent extends TalentInstance {
         
         //Get owner 
         var owner = dog.getOwner();
+        if (owner == null) return;
 
         //Check owner first
-        if (owner != null && lowHealthAndInWitness.test(owner)) {
+        if (lowHealthAndInWitness.test(owner)) {
             this.healTargets.add(owner);
         }
         
@@ -184,6 +199,20 @@ public class RescueDogTalent extends TalentInstance {
             this.healTargets.addAll(wolves);
         }
 
+        if (dog instanceof Dog ddog && ddog.regardTeamPlayers()) {
+            var teamPlayers = dog.level.getEntitiesOfClass(
+                Player.class,    
+                dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
+                p -> (
+                        p.isAlliedTo(owner)
+                        && lowHealthAndInWitness.test(p)
+                    )
+                );
+            if (!teamPlayers.isEmpty()) {
+                this.healTargets.addAll(teamPlayers);
+            }
+        }
+
     }
 
     private LivingEntity selectHealTarget(AbstractDog dog) {
@@ -211,75 +240,56 @@ public class RescueDogTalent extends TalentInstance {
 
     }
 
-    /**
-     * @author DashieDev
-     */
-    public static class MoveToHealTargetGoal extends Goal {
+    private boolean stillValidTarget(Dog dog, LivingEntity target) {
+        if (!target.isAlive()) return false;
+        if (!this.isTargetLowHealth(dog, target)) return false;
+        if (!this.canAffordToHealTarget(dog, target)) return false;
+        if (dog.distanceToSqr(target) > 400) return false;         
+        if (target instanceof Dog d && d.isDefeated()) return false;
+        
+        return true;
+    }
 
-        private Dog dog;
+    public static class RescueAction extends TriggerableAction {
+
         private RescueDogTalent talentInst;
-        private LivingEntity target;
+        private @Nonnull LivingEntity target;
 
         private int ticksUntilPathRecalc = 0;
 
         private final int stopDist = 2;    
 
-        public MoveToHealTargetGoal(Dog dog, RescueDogTalent talentInst) {
-            this.dog = dog;
+        public RescueAction(Dog dog, RescueDogTalent talentInst, @Nonnull LivingEntity target) {
+            super(dog, true, false);
             this.talentInst = talentInst;
-            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+            this.target = target;
         }
 
         @Override
-        public boolean canUse() {
-            if (this.dog.isInSittingPose()) return false;
-            if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) return false;
-            this.target = this.talentInst.selectHealTarget(this.dog);
-            if (target == null) return false;
-
-            if (!this.stillValidTarget()) return false;
-            
-            return true;
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            if (this.dog.isInSittingPose()) return false;
-            if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) return false;
-            if (target == null) return false;
-
-            return true;
-        }
-
-        @Override
-        public void start() {
+        public void onStart() {
             this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
+            ticksUntilPathRecalc = 0;
         }
-        
 
         @Override
         public void tick() {
-
-            if (target == null) return;
-
-            if (!this.stillValidTarget()) {
-                target = null;
-                return;
+            if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) {
+                this.setState(ActionState.FINISHED); return;
             }
-            
+
+            if (!this.talentInst.stillValidTarget(dog, target)) {
+                this.setState(ActionState.FINISHED); return;
+            }
+
             if (this.dog.distanceToSqr(this.target) > stopDist*stopDist) {
 
                 this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
                 if (--this.ticksUntilPathRecalc <= 0) {
                     this.ticksUntilPathRecalc = 10;
                     if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
-                        //TODO ?
-                        // if (this.dog.distanceToSqr(this.target) >= 144.0D) {
-                        //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
-                        // } else {
-                            if (dog.distanceToSqr(target) > 400) return;
-                            this.dog.getNavigation().moveTo(this.target, dog.getUrgentSpeedModifier());
-                        //}
+                        //A Valid target is not that far away and is checked above.
+                        //if (dog.distanceToSqr(target) > 400) return;
+                        this.dog.getNavigation().moveTo(this.target, dog.getUrgentSpeedModifier());
                     }
                 }
             } else {
@@ -290,17 +300,106 @@ public class RescueDogTalent extends TalentInstance {
             }
         }
 
-        private boolean stillValidTarget() {
-            if (!this.target.isAlive()) return false;
-            if (!this.talentInst.isTargetLowHealth(dog, target)) return false;
-            if (!this.talentInst.canAffordToHealTarget(dog, target)) return false;
-            if (dog.distanceToSqr(target) > 400) return false;         
-            if (target instanceof Dog d && d.isDefeated()) return false;
-            
-            return true;
+        @Override
+        public void onStop() {
         }
 
-
+        @Override
+        public boolean canOverrideSit() {
+            return true;
+        }
+        
     }
+
+    // /**
+    //  * @author DashieDev
+    //  */
+    // public static class MoveToHealTargetGoal extends Goal {
+
+    //     private Dog dog;
+    //     private RescueDogTalent talentInst;
+    //     private LivingEntity target;
+
+    //     private int ticksUntilPathRecalc = 0;
+
+    //     private final int stopDist = 2;    
+
+    //     public MoveToHealTargetGoal(Dog dog, RescueDogTalent talentInst) {
+    //         this.dog = dog;
+    //         this.talentInst = talentInst;
+    //         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+    //     }
+
+    //     @Override
+    //     public boolean canUse() {
+    //         if (this.dog.isInSittingPose()) return false;
+    //         if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) return false;
+    //         this.target = this.talentInst.selectHealTarget(this.dog);
+    //         if (target == null) return false;
+    //         if (!this.stillValidTarget()) return false;
+
+    //         return true;
+    //     }
+
+    //     @Override
+    //     public boolean canContinueToUse() {
+    //         if (this.dog.isInSittingPose()) return false;
+    //         if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) return false;
+    //         if (target == null) return false;
+
+    //         return true;
+    //     }
+
+    //     @Override
+    //     public void start() {
+    //         this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
+    //     }
+        
+
+    //     @Override
+    //     public void tick() {
+
+    //         if (target == null) return;
+
+    //         if (!this.stillValidTarget()) {
+    //             target = null;
+    //             return;
+    //         }
+            
+    //         if (this.dog.distanceToSqr(this.target) > stopDist*stopDist) {
+
+    //             this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
+    //             if (--this.ticksUntilPathRecalc <= 0) {
+    //                 this.ticksUntilPathRecalc = 10;
+    //                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
+    //                     //TODO ?
+    //                     // if (this.dog.distanceToSqr(this.target) >= 144.0D) {
+    //                     //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
+    //                     // } else {
+    //                         if (dog.distanceToSqr(target) > 400) return;
+    //                         this.dog.getNavigation().moveTo(this.target, dog.getUrgentSpeedModifier());
+    //                     //}
+    //                 }
+    //             }
+    //         } else {
+    //             //TODO maintain some space ??
+    //             //this.dog.getNavigation().stop();
+    //             if (this.talentInst.canHealTarget(dog, target))
+    //                 this.talentInst.heal(dog, target);
+    //         }
+    //     }
+
+    //     private boolean stillValidTarget() {
+    //         if (!this.target.isAlive()) return false;
+    //         if (!this.talentInst.isTargetLowHealth(dog, target)) return false;
+    //         if (!this.talentInst.canAffordToHealTarget(dog, target)) return false;
+    //         if (dog.distanceToSqr(target) > 400) return false;         
+    //         if (target instanceof Dog d && d.isDefeated()) return false;
+            
+    //         return true;
+    //     }
+
+
+    // }
 
 }
