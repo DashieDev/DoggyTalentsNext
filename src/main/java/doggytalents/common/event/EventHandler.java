@@ -150,6 +150,7 @@ public class EventHandler {
             return;
         }
         
-        event.setCanceled(true);
+        if (!dog.canPlayersAttack())
+            event.setCanceled(true);
     }
 }
