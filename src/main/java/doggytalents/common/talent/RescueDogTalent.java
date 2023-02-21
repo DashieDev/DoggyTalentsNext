@@ -237,6 +237,7 @@ public class RescueDogTalent extends TalentInstance {
             this.target = this.talentInst.selectHealTarget(this.dog);
             if (target == null) return false;
             if (!this.stillValidTarget()) return false;
+            
             return true;
         }
 
@@ -245,7 +246,6 @@ public class RescueDogTalent extends TalentInstance {
             if (this.dog.isInSittingPose()) return false;
             if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) return false;
             if (target == null) return false;
-            if (!this.stillValidTarget()) return false;
 
             return true;
         }
@@ -258,6 +258,13 @@ public class RescueDogTalent extends TalentInstance {
 
         @Override
         public void tick() {
+
+            if (target == null) return;
+
+            if (!this.stillValidTarget()) {
+                target = null;
+                return;
+            }
             
             if (this.dog.distanceToSqr(this.target) > stopDist*stopDist) {
 
@@ -269,6 +276,7 @@ public class RescueDogTalent extends TalentInstance {
                         // if (this.dog.distanceToSqr(this.target) >= 144.0D) {
                         //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                         // } else {
+                            if (dog.distanceToSqr(target) > 400) return;
                             this.dog.getNavigation().moveTo(this.target, dog.getUrgentSpeedModifier());
                         //}
                     }
@@ -282,13 +290,13 @@ public class RescueDogTalent extends TalentInstance {
         }
 
         private boolean stillValidTarget() {
+            if (!this.target.isAlive()) return false;
             if (!this.talentInst.isTargetLowHealth(dog, target)) return false;
-            if (!this.talentInst.canAffordToHealTarget(dog, target)) return false;            
+            if (!this.talentInst.canAffordToHealTarget(dog, target)) return false;
+            if (dog.distanceToSqr(target) > 400) return false;         
             if (target instanceof Dog d && d.isDefeated()) return false;
             
-            return (
-                this.target.isAlive()
-            );
+            return true;
         }
 
 

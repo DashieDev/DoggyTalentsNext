@@ -363,7 +363,8 @@ public class WaterHolderTalent extends TalentInstance {
             if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) return false;
             this.target = this.talentInst.selectOnFireTarget(this.dog);
             if (target == null) return false;
-            if (!this.stillValidTarget()) return false;       
+            if (!this.stillValidTarget()) return false;
+
             return true;
         }
 
@@ -372,7 +373,6 @@ public class WaterHolderTalent extends TalentInstance {
             if (this.dog.isInSittingPose()) return false;
             if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) return false;
             if (target == null) return false;
-            if (!this.stillValidTarget()) return false;
 
             return true;
         }
@@ -384,6 +384,12 @@ public class WaterHolderTalent extends TalentInstance {
 
         @Override
         public void tick() {
+
+            if (target == null) return;
+            if (!this.stillValidTarget()) {
+                target = null;
+                return;
+            }
             
             if (this.dog.distanceToSqr(this.target) > stopDist*stopDist) {
 
@@ -395,6 +401,7 @@ public class WaterHolderTalent extends TalentInstance {
                         // if (this.dog.distanceToSqr(this.target) >= 144.0D) {
                         //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
                         // } else {
+                            if (dog.distanceToSqr(target) > 400) return;
                             this.dog.getNavigation().moveTo(this.target, this.dog.getUrgentSpeedModifier());
                         //}
                     }
@@ -407,13 +414,13 @@ public class WaterHolderTalent extends TalentInstance {
         }
 
         private boolean stillValidTarget() {
+            if (!this.target.isAlive()) return false;
+            if (target.getRemainingFireTicks() < 30) return false;
             if (!this.talentInst.canAffordToExtinguish(dog)) return false;
             if (this.target.isInLava()) return false;
+            if (dog.distanceToSqr(target) > 400) return false;
 
-            return (
-                this.target.isAlive()
-                && target.getRemainingFireTicks() >= 30
-            );
+            return true;
         }
 
 
