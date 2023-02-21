@@ -1,13 +1,19 @@
 package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.view;
 
+import java.util.List;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
+import doggytalents.client.screen.DogNewInfoScreen.store.ToolTipOverlayManager;
 import doggytalents.client.screen.DogNewInfoScreen.widget.FlatButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
+import doggytalents.common.network.packet.data.DogForceSitData;
 import doggytalents.common.network.packet.data.DogNameData;
 import doggytalents.common.network.packet.data.DogObeyData;
+import doggytalents.common.network.packet.data.DogRegardTeamPlayersData;
 import doggytalents.common.network.packet.data.FriendlyFireData;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
@@ -65,10 +71,10 @@ public class EditInfoView extends AbstractElement {
 
         //<Text> Friendly fire?: </Text>
         var friendlyFireButton = new FlatButton(
-            startX + 90, pY, 
+            startX + 130, pY, 
             40, 20, Component.literal("" + this.dog.canPlayersAttack()), 
             b -> {
-                Boolean newVal = !dog.canPlayersAttack();
+                boolean newVal = !dog.canPlayersAttack();
                 b.setMessage(Component.literal("" + newVal));
                 this.requestFriendlyFire(newVal);
             }
@@ -78,7 +84,7 @@ public class EditInfoView extends AbstractElement {
         pY += 20 + LINE_SPACING;
         //<Text> Obey Others?: </Text>
         var obeyOthersButton = new FlatButton(
-            startX + 90, pY, 
+            startX + 130, pY, 
             40, 20, Component.literal("" + this.dog.willObeyOthers()), 
             b -> {
                 Boolean newVal = !this.dog.willObeyOthers();
@@ -87,6 +93,48 @@ public class EditInfoView extends AbstractElement {
             }     
         );
         this.addChildren(obeyOthersButton);
+        
+        pY += 20 + LINE_SPACING;
+        //<Text> Regard Team Players?: </Text>
+        var regardTeamPlayersButton = new FlatButton(
+            startX + 130, pY, 
+            40, 20, Component.literal("" + this.dog.regardTeamPlayers()), 
+            b -> {
+                Boolean newVal = !this.dog.regardTeamPlayers();
+                b.setMessage(Component.literal("" + newVal));
+                this.requestRegardTeamPlayers(newVal);
+            }     
+        ) {
+            @Override
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (this.isHovered) {
+                    ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.regard_team_players.help"), 150, font));
+                }
+            }
+        };
+        this.addChildren(regardTeamPlayersButton);
+
+        pY += 20 + LINE_SPACING;
+        //<Text> Regard Team Players?: </Text>
+        var forceSit = new FlatButton(
+            startX + 130, pY, 
+            40, 20, Component.literal("" + this.dog.forceSit()), 
+            b -> {
+                Boolean newVal = !this.dog.forceSit();
+                b.setMessage(Component.literal("" + newVal));
+                this.requestForceSit(newVal);
+            }     
+        ) {
+            @Override
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (this.isHovered) {
+                    ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.force_sit.help"), 150, font));
+                }
+            }
+        };
+        this.addChildren(forceSit);
 
 
         return this;
@@ -114,7 +162,15 @@ public class EditInfoView extends AbstractElement {
         font.draw(stack, I18n.get("doggui.obeyothers"), startX, pY + 6, 0xffffffff);
         //<Checkbox/>
 
+        pY += 20 + LINE_SPACING;
 
+        font.draw(stack, I18n.get("doggui.regard_team_players"), startX, pY + 6, 0xffffffff);
+        //<Checkbox/>
+
+        pY += 20 + LINE_SPACING;
+
+        font.draw(stack, I18n.get("doggui.force_sit"), startX, pY + 6, 0xffffffff);
+        //<Checkbox/>
 
 
     }
@@ -157,6 +213,18 @@ public class EditInfoView extends AbstractElement {
         PacketHandler
             .send(PacketDistributor.SERVER.noArg(), 
             new DogObeyData(this.dog.getId(), val));
+    }
+
+    private void requestRegardTeamPlayers(boolean val) {
+        PacketHandler
+            .send(PacketDistributor.SERVER.noArg(), 
+            new DogRegardTeamPlayersData(this.dog.getId(), val));
+    }
+
+    private void requestForceSit(boolean val) {
+        PacketHandler
+            .send(PacketDistributor.SERVER.noArg(), 
+            new DogForceSitData(this.dog.getId(), val));
     }
 
 }
