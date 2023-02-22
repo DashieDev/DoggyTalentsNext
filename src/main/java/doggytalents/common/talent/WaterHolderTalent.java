@@ -7,7 +7,6 @@ import java.util.function.Predicate;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -131,7 +130,6 @@ public class WaterHolderTalent extends TalentInstance {
 
     public void triggerExtinguishAction(Dog dog, LivingEntity target) {
         dog.triggerAction(new ExtinguishAction(dog, this, target));
-        ChopinLogger.l("triggered extinguish action for " + target);
     }
 
     @Override
