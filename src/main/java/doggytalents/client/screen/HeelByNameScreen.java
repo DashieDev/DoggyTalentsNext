@@ -3,6 +3,7 @@ package doggytalents.client.screen;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
@@ -334,11 +335,11 @@ public class HeelByNameScreen extends Screen {
         PacketHandler.send(PacketDistributor.SERVER.noArg(), new HeelByNameData(id, this.heelAndSit, this.softHeel));
     }
 
-    public static class FrequentHeelStore {
+    private static class FrequentHeelStore {
 
         private static FrequentHeelStore INSTANCE;
 
-        private ArrayList<String> dogFrequentStack = new ArrayList<String>();
+        private ArrayList<UUID> dogFrequentStack = new ArrayList<UUID>();
         private Screen screen;
         private ToIntFunction<Dog> GET_FREQ_COUNT = d -> this.getFrequentWeightFor(d);
         private static final int STORE_CAP = 32; 
@@ -352,12 +353,17 @@ public class HeelByNameScreen extends Screen {
             if (dog == null) return;
             var uuid_str = dog.getStringUUID();
             if (uuid_str == null) return;
-            int indx = dogFrequentStack.indexOf(uuid_str);
+            UUID uuid = null;
+            try {
+                uuid = UUID.fromString(uuid_str);
+            } catch (Exception e) {}
+            if (uuid == null) return;
+            int indx = dogFrequentStack.indexOf(uuid);
             if (indx > 0) {
                 if (indx >= dogFrequentStack.size() - 1) return;
-                dogFrequentStack.remove(uuid_str);
+                dogFrequentStack.remove(uuid);
             }
-            dogFrequentStack.add(uuid_str);
+            dogFrequentStack.add(uuid);
             if (dogFrequentStack.size() > STORE_CAP) {
                 dogFrequentStack.remove(0);
             }
@@ -366,7 +372,12 @@ public class HeelByNameScreen extends Screen {
         public int getFrequentWeightFor(Dog dog) {
             var uuid_str = dog.getStringUUID();
             if (uuid_str == null) return 0;
-            int indx = dogFrequentStack.indexOf(uuid_str);
+            UUID uuid = null;
+            try {
+                uuid = UUID.fromString(uuid_str);
+            } catch (Exception e) {}
+            if (uuid == null) return 0;
+            int indx = dogFrequentStack.indexOf(uuid);
             return Math.max(0, indx + 1);
         }
 
@@ -385,10 +396,6 @@ public class HeelByNameScreen extends Screen {
                 INSTANCE.screen = screen;
             }
             return INSTANCE;
-        }
-
-        public static void finish() {
-            INSTANCE = null;
         }
 
     }
