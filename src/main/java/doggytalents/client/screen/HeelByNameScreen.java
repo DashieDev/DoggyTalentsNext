@@ -341,6 +341,7 @@ public class HeelByNameScreen extends Screen {
         private ArrayList<String> dogFrequentStack = new ArrayList<String>();
         private Screen screen;
         private ToIntFunction<Dog> GET_FREQ_COUNT = d -> this.getFrequentWeightFor(d);
+        private static final int STORE_CAP = 32; 
 
         private FrequentHeelStore(Screen screen) {
             this.screen = screen;
@@ -357,6 +358,9 @@ public class HeelByNameScreen extends Screen {
                 dogFrequentStack.remove(uuid_str);
             }
             dogFrequentStack.add(uuid_str);
+            if (dogFrequentStack.size() > STORE_CAP) {
+                dogFrequentStack.remove(0);
+            }
         }
 
         public int getFrequentWeightFor(Dog dog) {
