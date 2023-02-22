@@ -334,7 +334,7 @@ public class HeelByNameScreen extends Screen {
         PacketHandler.send(PacketDistributor.SERVER.noArg(), new HeelByNameData(id, this.heelAndSit, this.softHeel));
     }
 
-    private static class FrequentHeelStore {
+    public static class FrequentHeelStore {
 
         private static FrequentHeelStore INSTANCE;
 
@@ -351,7 +351,9 @@ public class HeelByNameScreen extends Screen {
             if (dog == null) return;
             var uuid_str = dog.getStringUUID();
             if (uuid_str == null) return;
-            if (dogFrequentStack.contains(uuid_str)) {
+            int indx = dogFrequentStack.indexOf(uuid_str);
+            if (indx > 0) {
+                if (indx >= dogFrequentStack.size() - 1) return;
                 dogFrequentStack.remove(uuid_str);
             }
             dogFrequentStack.add(uuid_str);
@@ -361,7 +363,7 @@ public class HeelByNameScreen extends Screen {
             var uuid_str = dog.getStringUUID();
             if (uuid_str == null) return 0;
             int indx = dogFrequentStack.indexOf(uuid_str);
-            return Math.max(0, indx);
+            return Math.max(0, indx + 1);
         }
 
         public List<Dog> sortDogList(List<Dog> dogList) {
@@ -379,6 +381,10 @@ public class HeelByNameScreen extends Screen {
                 INSTANCE.screen = screen;
             }
             return INSTANCE;
+        }
+
+        public static void finish() {
+            INSTANCE = null;
         }
 
     }
