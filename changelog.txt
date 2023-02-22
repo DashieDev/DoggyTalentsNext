@@ -301,7 +301,7 @@ and never intended as a challenge, so go easy on your bud.
 1.10.2 - 16th February 2023
 *Fixed dogs improperly dismount in water.
 
-1.10.3 - 22th Feburary 2023
+1.10.3 - 22th February 2023
 + Happy Birthday Chopin! 🎉
 / Arrows now go straight through dog instead of bouncing off.
 / Numerious updates to the Heel By Name feature :
@@ -316,3 +316,6 @@ and never intended as a challenge, so go easy on your bud.
 (with Regards Team Player enabled), and will stand up to carry the action when sit (unless Force Sit).
 / Tweaks to New Dog GUI.
 / (Configurable) Creeper Sweeper dogs don't growl when level being maxed, instead focus on attacking.
+
+1.10.4 - 22th February 2023
++ Tweak Heel By Name UI.
