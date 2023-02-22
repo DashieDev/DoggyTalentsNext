@@ -116,13 +116,15 @@ public class HeelByNameScreen extends Screen {
             }
         };
 
-        Button softHeel = new Button(3, 52 + this.font.lineHeight + 2, 60, 20, 
+        Button softHeel = new CustomButton(3, 52 + this.font.lineHeight + 2, 60, 20, 
             Component.literal("" + this.softHeel), b -> {
                 this.softHeel = !this.softHeel;
                 b.setMessage(Component.literal("" + this.softHeel));
         }) {
             @Override
-            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.soft_heel")
                     .withStyle(Style.EMPTY.withBold(true)));
