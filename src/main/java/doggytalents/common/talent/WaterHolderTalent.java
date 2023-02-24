@@ -131,7 +131,6 @@ public class WaterHolderTalent extends TalentInstance {
 
     public void triggerExtinguishAction(Dog dog, LivingEntity target) {
         dog.triggerAction(new ExtinguishAction(dog, this, target));
-        ChopinLogger.l("triggered extinguish action for " + target);
     }
 
     @Override

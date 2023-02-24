@@ -619,6 +619,7 @@ public class Dog extends AbstractDog {
             if (this.stashedAction != null) {
                 this.activeAction = this.stashedAction;
                 this.stashedAction = null;
+                ChopinLogger.lwn(this, "retrieved stashed action : " + this.activeAction);
             }
             return;
         }
@@ -641,12 +642,14 @@ public class Dog extends AbstractDog {
                     this.stashedAction.onStop();
                 }
                 this.stashedAction = this.activeAction;
+                ChopinLogger.lwn(this,"Stashed action : " + this.stashedAction);
             } else {
                 this.activeAction.onStop();
             }
         }
         //Set.
         this.activeAction = action;
+        ChopinLogger.lwn(this, "triggered action : " + action);
     }
 
     public boolean isBusy() {

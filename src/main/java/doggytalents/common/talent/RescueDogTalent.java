@@ -78,7 +78,6 @@ public class RescueDogTalent extends TalentInstance {
 
     private void triggerRescueAction(Dog dog, @Nonnull LivingEntity target) {
         dog.triggerAction(new RescueAction(dog, this, target));
-        ChopinLogger.l("triggered rescue action for " + target);
     }
 
     //TODO Decrease the healCost due to healing is more difficult now.
