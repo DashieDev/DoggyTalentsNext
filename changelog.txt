@@ -319,3 +319,10 @@ and never intended as a challenge, so go easy on your bud.
 
 1.10.4 - 22th February 2023
 + Tweak Heel By Name UI.
+
+1.10.5 - 24th February 2023
+/ Code refactoring.
+/ Properly implement triggerableAction API now, dogs now can stashes trivial action for
+non trivial action.
++ Added To Bed Whistle :
+  + Command every dog to move to bed if nearby (< 20 blocks)
