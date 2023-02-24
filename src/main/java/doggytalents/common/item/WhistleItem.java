@@ -97,6 +97,7 @@ public class WhistleItem extends Item {
             List<Dog> dogsList = world.getEntitiesOfClass(Dog.class, player.getBoundingBox().inflate(100D, 50D, 100D), dog -> dog.isOwnedBy(player));
             boolean successful = false;
 
+            if (id_mode >= WhistleMode.VALUES.length) id_mode = 0;
             var mode = WhistleMode.VALUES[id_mode];
 
             if (mode == WhistleMode.STAND) { // Stand
