@@ -260,7 +260,7 @@ public class RescueDogTalent extends TalentInstance {
         private final int stopDist = 2;    
 
         public RescueAction(Dog dog, RescueDogTalent talentInst, @Nonnull LivingEntity target) {
-            super(dog, true, false);
+            super(dog, false, true);
             this.talentInst = talentInst;
             this.target = target;
         }

@@ -393,7 +393,7 @@ public class WaterHolderTalent extends TalentInstance {
         private final int stopDist = 2;
 
         public ExtinguishAction(Dog dog, WaterHolderTalent talentInst, @NonNull LivingEntity target) {
-            super(dog, true, false);
+            super(dog, false, true);
             this.talentInst = talentInst;
             this.target = target;
         }
