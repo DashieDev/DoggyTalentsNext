@@ -2,6 +2,7 @@ package doggytalents.common.entity.ai.triggerable;
 
 import javax.annotation.Nonnull;
 
+import doggytalents.ChopinLogger;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
@@ -24,7 +25,7 @@ public class DogMoveToBedAction extends TriggerableAction {
 
     @Override
     public void onStart() {
-        this.timeOut = 200;
+        this.timeOut = 400;
         this.dog.getNavigation().moveTo(
             (targetBedPos.getX()) + 0.5D, 
             targetBedPos.getY() + 1, 
@@ -41,13 +42,14 @@ public class DogMoveToBedAction extends TriggerableAction {
             return;
         }
 
-        this.bedReached =
-            dog.getNavigation().isDone()
-            || targetBedPos.closerToCenterThan(this.dog.position(), 0.5);
+        this.bedReached = dog.blockPosition().equals(this.targetBedPos);
 
         if (bedReached) {
             if (claimBed) claimBed();
             this.dog.setOrderedToSit(true);
+            this.setState(ActionState.FINISHED);
+            return;
+        } else if (dog.getNavigation().isDone()) {
             this.setState(ActionState.FINISHED);
             return;
         }
