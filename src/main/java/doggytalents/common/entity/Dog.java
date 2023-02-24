@@ -623,10 +623,10 @@ public class Dog extends AbstractDog {
             return;
         }
         //Replacement only happens if 
-        //new action is Trivial and old action is not.
+        //old action is Trivial and new action is not.
         if (this.activeAction != null) {
-            if (this.activeAction.isTrivial()) return;
-            else if (!action.isTrivial()) return;
+            if (!this.activeAction.isTrivial()) return;
+            else if (action.isTrivial()) return;
         }
         //Only set action dog is not sitting or action can override sit.
         if (this.isOrderedToSit()) {
@@ -657,7 +657,7 @@ public class Dog extends AbstractDog {
     public boolean readyForTrivialAction() {
         if (this.isInSittingPose() && this.forceSit()) return false;
         if (this.activeAction == null) return true;
-        return !this.activeAction.isTrivial();
+        return this.activeAction.isTrivial();
     }
 
     public TriggerableAction getStashedTriggerableAction() {

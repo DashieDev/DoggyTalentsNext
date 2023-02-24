@@ -11,9 +11,8 @@ public class DogSoftHeelAction extends TriggerableAction {
     private int timeOut;
 
     public DogSoftHeelAction(Dog dog, LivingEntity owner) {
-        super(dog, true, false);
+        super(dog, false, false);
         this.owner = owner;
-        //TODO Auto-generated constructor stub
     }
 
     @Override
