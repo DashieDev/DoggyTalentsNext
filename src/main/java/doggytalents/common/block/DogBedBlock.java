@@ -7,6 +7,7 @@ import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.triggerable.DogMoveToBedAction;
 import doggytalents.common.storage.DogRespawnData;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.util.DogBedUtil;
@@ -195,9 +196,9 @@ public class DogBedBlock extends BaseEntityBlock {
                     //     }
                     // }
 
-                    Dog closests = dogs.isEmpty() ? null : dogs.get(0);
-                    if (closests != null) {
-                        closests.setTargetBlock(pos);
+                    Dog closest = dogs.isEmpty() ? null : dogs.get(0);
+                    if (closest != null && closest.readyForNonTrivialAction()) {
+                        closest.triggerAction(new DogMoveToBedAction(closest, pos, true));
                     }
                 } else if (dogBedTileEntity.getOwnerUUID() != null) {
                     DogRespawnData storage = DogRespawnStorage.get(worldIn).remove(dogBedTileEntity.getOwnerUUID());
