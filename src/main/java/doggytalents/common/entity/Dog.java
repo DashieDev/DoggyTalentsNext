@@ -206,10 +206,6 @@ public class Dog extends AbstractDog {
 
     private static final UUID HUNGER_MOVEMENT = UUID.fromString("50671f49-1dfd-4397-242b-78bb6b178115");
 
-    protected BlockPos targetBlock;
-
-    public int TALENT_GOAL_PRIORITY = 5;
-
     public Dog(EntityType<? extends Dog> type, Level worldIn) {
         super(type, worldIn);
         this.setTame(false);
@@ -254,7 +250,6 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogLowHealthGoal(this, 1.0f, 2.0f));
         //this.goalSelector.addGoal(4, new DogLeapAtTargetGoal(this, 0.4F));
         ++p;
-        this.TALENT_GOAL_PRIORITY = p;
         this.goalSelector.addGoal(p, new DogEatFromChestDogGoal(this, 1.0));
         this.goalSelector.addGoal(p, new DogTriggerableGoal(this, false));
         ++p; //Prioritize Talent Action
@@ -263,7 +258,6 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new GuardModeGoal.Major(this));
         ++p; 
         this.goalSelector.addGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
-        this.goalSelector.addGoal(p, new DogClaimBedGoal(this));
         this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
         ++p;
         //Dog greet owner goal here
@@ -2808,14 +2802,6 @@ public class Dog extends AbstractDog {
     @Override
     public List<IDogFoodHandler> getFoodHandlers() {
         return this.foodHandlers;
-    }
-
-    public void setTargetBlock(BlockPos pos) {
-        this.targetBlock = pos;
-    }
-
-    public BlockPos getTargetBed() {
-        return this.targetBlock;
     }
 
     @Override
