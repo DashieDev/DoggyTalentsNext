@@ -53,17 +53,16 @@ public class DogTriggerableGoal extends Goal {
     @Override
     public void stop() {
         //Stashed Action on trivial action manager.
-        if (this.trivial) {
+        if (!this.trivial) {
             var stashed_action = dog.getStashedTriggerableAction();
-            if (stashed_action != null && stashed_action.canPause()) {
-            } else {
-                dog.setStashedTriggerableAction(null);
+            if (stashed_action != null) {
+                if (!stashed_action.canPause()) dog.setStashedTriggerableAction(null);
             }
         }
         var action = dog.getTriggerableAction();
-        if (action != null && action.isTrivial() == trivial && action.canPause()) {
-        } else {
-            dog.triggerAction(null);
+        if (action != null) {
+            if (action.isTrivial() != trivial) return;
+            if (!action.canPause()) dog.triggerAction(null);
         }
         
     }

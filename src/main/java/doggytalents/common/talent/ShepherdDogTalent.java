@@ -157,7 +157,7 @@ public class ShepherdDogTalent extends TalentInstance {
         private int tickTillLook;
 
         public ShepherdAction(Dog dog, @Nonnull ServerPlayer owner, ShepherdDogTalent talentInst) {
-            super(dog, true, false);
+            super(dog, false, true);
             this.talentInst = talentInst;
             this.owner = owner; 
         }
