@@ -8,6 +8,7 @@ import doggytalents.client.screen.WhistleScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DoggyBeamEntity;
+import doggytalents.common.entity.ai.triggerable.DogMoveToBedAction;
 import doggytalents.common.talent.RoaringGaleTalent;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.Util;
@@ -30,6 +31,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.I18NParser;
 
 import java.util.Arrays;
@@ -47,7 +49,8 @@ public class WhistleItem extends Item {
         SHELPERD(4),
         TACTICAL(5),
         ROAR(6),
-        HEEL_BY_NAME(7);
+        HEEL_BY_NAME(7),
+        TO_BED(8);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -272,6 +275,22 @@ public class WhistleItem extends Item {
             } else if (mode == WhistleMode.HEEL_BY_NAME && !dogsList.isEmpty() && player.level.isClientSide())  { 
                 //TODO Radius define
                 HeelByNameScreen.open();
+                return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+            } else if (mode == WhistleMode.TO_BED && !dogsList.isEmpty()) {
+                if (player.level.isClientSide) {
+                    return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+                }
+                for (var dog : dogsList) {
+                    if (!dog.readyForNonTrivialAction()) continue;
+                    var bedPos = dog.getBedPos(player.level.dimension()).orElse(null);
+                    if (bedPos == null) continue;
+                    if (dog.blockPosition().equals(bedPos) && dog.isInSittingPose()) continue;
+                    if (dog.distanceToSqr(Vec3.atBottomCenterOf(bedPos)) < 400) {
+                        dog.triggerAction(new DogMoveToBedAction(dog, bedPos, false));
+                    }
+                }
+                if (ConfigHandler.WHISTLE_SOUNDS)
+                    world.playSound(null, player.blockPosition(), DoggySounds.WHISTLE_SHORT.get(), SoundSource.PLAYERS, 0.6F + world.random.nextFloat() * 0.1F, 0.8F + world.random.nextFloat() * 0.2F);
                 return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
             }
 

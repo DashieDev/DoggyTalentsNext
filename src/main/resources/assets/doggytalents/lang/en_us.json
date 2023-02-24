@@ -1,6 +1,6 @@
 {
    "block.doggytalents.dog_bed": "Dog Bed",
-   "block.doggytalents.dog_bed.set_owner_help": "Shift click with your dog nearby and they will come and make the bed their own. If the unimaginable happens and they do die right click the bed to revive them.",
+   "block.doggytalents.dog_bed.set_owner_help": "Shift click with your dog nearby with BOTH of your hands emptied and they will come and make the bed their own. If the unimaginable happens and they do die right click the bed to revive them.",
    "block.doggytalents.dog_bed.owner": "This bed is owned by %s.",
    "block.doggytalents.food_bowl": "Food Bowl",
    "block.doggytalents.dog_bath": "Dog Bath",
@@ -33,6 +33,7 @@
    "item.doggytalents.whistle.5": "Tactical Whistle",
    "item.doggytalents.whistle.6": "Roaring Whistle",
    "item.doggytalents.whistle.7": "Heel By Name Whistle",
+   "item.doggytalents.whistle.8": "To Bed Whistle",
    "item.doggytalents.treat_bag": "Treat Bag",
    "item.doggytalents.chew_stick": "Chew Stick",
    "item.doggytalents.cape": "Tartan Cape",
