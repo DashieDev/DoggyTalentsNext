@@ -1,6 +1,5 @@
 package doggytalents.common.talent;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.DataKey;
@@ -82,13 +81,11 @@ public class ShepherdDogTalent extends TalentInstance {
         ) {
             this.tickTillSearch = 10;
             this.refreshShepherdTargets(dog, SEARCH_RANGE);
-            ChopinLogger.l("searching for livestocks");
             if (!this.targets.isEmpty() 
                 && EntityUtil.isHolding(owner, DoggyItems.WHISTLE.get(), 
                     (nbt) -> nbt.contains("mode") 
                             && nbt.getInt("mode") == 4)
             ) {
-                ChopinLogger.l("Triggering shepherd action.");
                 this.triggerShepherdAction(dog, owner);
             }
         }

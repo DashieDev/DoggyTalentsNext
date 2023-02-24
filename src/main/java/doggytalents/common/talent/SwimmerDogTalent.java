@@ -2,7 +2,6 @@ package doggytalents.common.talent;
 import java.util.EnumSet;
 import java.util.UUID;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.inferface.AbstractDog;
@@ -103,7 +102,6 @@ public class SwimmerDogTalent extends TalentInstance {
             || dog.isLowAirSupply()
             || isNearLand(dog)
         ) {
-            ChopinLogger.lwn(dog, "stop swimming");
             this.swimming = false;
             stopSwimming(dog);
         }
@@ -115,7 +113,6 @@ public class SwimmerDogTalent extends TalentInstance {
             && readyToBeginSwimming(dog)
             && !isNearLand(dog)
         ) {
-            ChopinLogger.lwn(dog, "start swimming");
             this.swimming = true;
             this.startSwimming(dog);
         }
