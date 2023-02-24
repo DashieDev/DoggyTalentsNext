@@ -62,7 +62,7 @@ public class RescueDogTalent extends TalentInstance {
         }
         
         if (
-            dog.readyForTrivialAction() 
+            dog.readyForNonTrivialAction() 
             && (dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) 
             && --this.tickTillSearch <= 0
         ) {
