@@ -45,7 +45,7 @@ import net.minecraftforge.network.NetworkEvent.Context;
         dog.clearTriggerableAction();
         
         if (data.softHeel) {
-            if (dog.readyForTrivialAction())
+            if (dog.readyForNonTrivialAction())
             dog.triggerAction(new DogSoftHeelAction(dog, owner));
         } else {
             dog.setOrderedToSit(data.heelAndSit);

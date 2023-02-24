@@ -656,7 +656,7 @@ public class Dog extends AbstractDog {
         return this.activeAction != null;
     }
 
-    public boolean readyForTrivialAction() {
+    public boolean readyForNonTrivialAction() {
         if (this.isInSittingPose() && this.forceSit()) return false;
         if (this.activeAction == null) return true;
         return this.activeAction.isTrivial();
