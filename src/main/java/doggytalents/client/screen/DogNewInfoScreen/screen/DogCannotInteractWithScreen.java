@@ -61,7 +61,7 @@ public class DogCannotInteractWithScreen extends Screen {
             );
             help = I18n.get(
                 "doggui.invalid_dog.no_permission.subtitle",
-                dog.getGenderPossessiveAdj()
+                dog.getGenderPronoun()
             );
         }
         var dog_title = I18n.get(
