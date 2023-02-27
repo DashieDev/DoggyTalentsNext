@@ -182,7 +182,7 @@ public class ShepherdDogTalent extends TalentInstance {
             }
 
             boolean update = --this.tickTillPathRecalc <= 0;
-            if (update) this.tickTillPathRecalc = 10;
+            if (update) this.tickTillPathRecalc = 20;
 
             if (update) {
                 talentInst.refreshShepherdTargets(dog, SEARCH_RANGE_EXT);
