@@ -117,7 +117,7 @@ public class ShepherdDogTalent extends TalentInstance {
         if (!animal.isAlive()) return false;
         if (animal.isInvisible()) return false;
         if (animal instanceof TamableAnimal) return false; 
-        if (animal.distanceTo(dog) > VALID_FOLLOWING_DISTANCE) return false;
+        if (animal.distanceToSqr(dog) > VALID_FOLLOWING_DISTANCE) return false;
         return animal.hasLineOfSight(dog);
     }
 
@@ -202,19 +202,19 @@ public class ShepherdDogTalent extends TalentInstance {
         }
 
         private void herdTargets() {
-            boolean teleport = this.owner.distanceTo(talentInst.targets.get(0)) > 16;
+            boolean teleport = this.owner.distanceToSqr(talentInst.targets.get(0)) > 256;
 
             for (Animal target : talentInst.targets) {
-                double distanceAway = target.distanceTo(this.owner);
+                double distanceAway = target.distanceToSqr(this.owner);
                 target.getLookControl().setLookAt(this.owner, 10.0F, target.getMaxHeadXRot());
                 if (teleport) {
                     if (!target.isLeashed() && !target.isPassenger()) {
                         EntityUtil.tryToTeleportNearEntity(target, target.getNavigation(), this.owner, 4);
                     }
                 }
-                else if (distanceAway >= 5) {
+                else if (distanceAway >= 25) {
                     if (!target.getNavigation().moveTo(this.owner, 1.2D)) {
-                        if (!target.isLeashed() && !target.isPassenger() && distanceAway >= 20) {
+                        if (!target.isLeashed() && !target.isPassenger() && distanceAway >= 400) {
                             EntityUtil.tryToTeleportNearEntity(target, target.getNavigation(), this.owner, 4);
                         }
                     }
@@ -228,7 +228,7 @@ public class ShepherdDogTalent extends TalentInstance {
 
             this.moveInTheMiddleOfHerdingGroup(teleport);
 
-            if (this.dog.distanceTo(this.owner) > 40) {
+            if (this.dog.distanceToSqr(this.owner) > 1600) {
                 DogUtil.guessAndTryToTeleportToOwner(dog, owner, 2);
             }
 
