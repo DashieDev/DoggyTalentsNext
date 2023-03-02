@@ -1,6 +1,9 @@
 package doggytalents.common.item;
 
+import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.IThrowableItem;
+import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.triggerable.DogFetchAction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -17,6 +20,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Supplier;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author ProPercivalalb
@@ -69,6 +74,7 @@ public class ThrowableItem extends Item implements IThrowableItem {
             entityitem.setPickUpDelay(20);
             this.setHeadingFromThrower(entityitem, playerIn, playerIn.getXRot(), playerIn.getYRot(), 0.0F, 1.2F, 1.0F);
             worldIn.addFreshEntity(entityitem);
+            triggerNearbyDogs(playerIn, entityitem);
         }
 
         if (!playerIn.getAbilities().instabuild)
@@ -77,6 +83,22 @@ public class ThrowableItem extends Item implements IThrowableItem {
         playerIn.awardStat(Stats.ITEM_USED.get(this));
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, itemStackIn);
 
+    }
+
+    private void triggerNearbyDogs(@Nonnull Player player, @Nonnull ItemEntity entityitem) {
+        final int RADIUS = 5;
+        var dogs = 
+            player.level.getEntitiesOfClass(
+                Dog.class, 
+                player.getBoundingBox().inflate(RADIUS, 3, RADIUS),
+                d -> d.canInteract(player)
+                    && !d.isBusy()
+                    && !d.hasBone()
+                    && d.getMode() == EnumMode.DOCILE
+            );
+        for (var dog : dogs) {
+            dog.triggerAction(new DogFetchAction(dog, player, entityitem));
+        }
     }
 
     public void setThrowableHeading(ItemEntity entityItem, double x, double y, double z, float velocity, float inaccuracy) {
