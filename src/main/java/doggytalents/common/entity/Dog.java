@@ -263,7 +263,7 @@ public class Dog extends AbstractDog {
         ++p;
         //Dog greet owner goal here
         this.goalSelector.addGoal(p, new DogTriggerableGoal(this, true));
-        this.goalSelector.addGoal(p, new FetchGoal(this, 1.0D, 32.0F));
+        //this.goalSelector.addGoal(p, new FetchGoal(this, 1.0D, 32.0F));
         this.goalSelector.addGoal(p, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
         ++p;
         this.goalSelector.addGoal(p, new BreedGoal(this, 1.0D));
