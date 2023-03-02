@@ -105,15 +105,17 @@ public class ElementPosition {
             if (guiEvLis instanceof AbstractElement e && e.getPosition().type == PosType.RELATIVE) {
                 if (dir == ChildDirection.COL) {
                     this.originAbsoluteY +=
-                        e.getPosition().originAbsoluteY 
                         + e.getSizeY();
                 } else {
                     this.originAbsoluteX +=
-                        e.getPosition().originAbsoluteX
                         + e.getSizeX();
                 }
             }
         }
+    }
+
+    public PosType getType() {
+        return this.type;
     }
 
     public ChildDirection getChildDirection() {
