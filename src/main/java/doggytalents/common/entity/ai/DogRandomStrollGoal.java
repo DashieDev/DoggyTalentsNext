@@ -18,22 +18,10 @@ import net.minecraft.world.item.ShovelItem;
 public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
 
     private Dog dog;
-    private int tickCountStopMiningCautious;
 
     public DogRandomStrollGoal(Dog dog, double speedModifier) {
         super(dog, speedModifier);
         this.dog = dog;
-    }
-
-    @Override
-    public boolean canUse() {
-
-        if (this.ownerMayBeMining()) {
-            this.tickCountStopMiningCautious = this.dog.tickCount + 600; // keep checking for 30 seconds
-        }
-
-
-        return super.canUse();
     }
     
     //  TODO : Make this more user friendly, maybe make this into a talent or mode
@@ -51,11 +39,7 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
     public void tick() {
         super.tick();
         
-        if (this.ownerMayBeMining()) {
-            this.tickCountStopMiningCautious = this.dog.tickCount + 600; // keep checking for 30 seconds
-        }
-        
-        if (this.dog.tickCount < this.tickCountStopMiningCautious) {
+        if (this.dog.isMiningCautious()) {
             if (this.pathObstructOwnerMining()) {
                 this.stop();
             }
@@ -67,14 +51,6 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
     //And lead any other dogs which is close too .... 
     //TODO CHANGE : make the logic make more sense and efficent
     //Check if owner is swinging with a digger item in hand.
-    private boolean ownerMayBeMining() {
-        var owner = this.dog.getOwner();
-        if (owner == null) return false;
-        return
-            owner.swinging 
-            && owner.getMainHandItem().getItem() instanceof DiggerItem;
-            
-    }
 
     /**
      * Check if the forward nodes in dog's path is obstructing owner mining,
@@ -98,11 +74,11 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
                 DogUtil.posWillCollideWithOwnerMovingForward(dog, owner, p.getNodePos(i));
 
             if (flag) {
-                // ChopinLogger.sendToOwner(this.dog, 
-                //     this.dog.getName().getString()
-                //      + " : i was going to go to this pos,"
-                //      + p.getNodePos(i)
-                //      + " but it is not good!"); //debug chopin
+                ChopinLogger.sendToOwner(this.dog, 
+                    this.dog.getName().getString()
+                     + " : i was going to go to this pos,"
+                     + p.getNodePos(i)
+                     + " but it is not good!"); //debug chopin
                 return true;
             }
 

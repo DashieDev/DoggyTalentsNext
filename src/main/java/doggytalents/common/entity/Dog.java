@@ -166,6 +166,8 @@ public class Dog extends AbstractDog {
     public final StatsTracker statsTracker = new StatsTracker();
     public final DogOwnerDistanceManager dogOwnerDistanceManager 
         = new DogOwnerDistanceManager(this);
+    public final DogMiningCautiousManager dogMiningCautiousManager
+        = new DogMiningCautiousManager(this);
 
     protected final PathNavigation defaultNavigation;
     protected final MoveControl defaultMoveControl;
@@ -565,6 +567,7 @@ public class Dog extends AbstractDog {
             }
 
             this.dogOwnerDistanceManager.tick();
+            this.dogMiningCautiousManager.tick();
         }
 
         if (this.level.isClientSide && this.getDogLevel().isDireDog() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DIRE_PARTICLES)) {
@@ -2944,6 +2947,10 @@ public class Dog extends AbstractDog {
 
     public StatsTracker getStatTracker() {
         return this.statsTracker;
+    }
+
+    public boolean isMiningCautious() {
+        return this.dogMiningCautiousManager.isMiningCautious();
     }
 
 }
