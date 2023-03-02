@@ -71,7 +71,7 @@ public class DogUtil {
         
         var target = CachedSearchUtil.getRandomSafePosUsingPool(
             dog, owner.blockPosition(),
-            owner.isSprinting(),
+            owner.isSprinting() || dog.isMiningCautious(),
             radius, 1
         );
    
@@ -203,9 +203,8 @@ public class DogUtil {
                 // Can see owner at that pos
                 // && hasLineOfSightToOwnerAtPos(dog, pos)
 
-                // if Owner is sprinting then don't obstruct the owner sprint path
                 && !(
-                    owner.isSprinting()
+                    (owner.isSprinting() || dog.isMiningCautious())
                     && posWillCollideWithOwnerMovingForward(dog, owner, pos)
                 ); 
         return flag;
