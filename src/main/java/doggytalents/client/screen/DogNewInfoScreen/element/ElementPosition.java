@@ -11,6 +11,7 @@ public class ElementPosition {
     private int originAbsoluteY;
     private ChildDirection dir = ChildDirection.ROW;
     private PosType type = PosType.FIXED;
+    private int scrollYOffset;
 
     public ElementPosition(@Nonnull AbstractElement element, int x, int y, PosType type) {
         this.element = element;
@@ -66,6 +67,10 @@ public class ElementPosition {
             this.originAbsoluteY + this.y : 
             this.y;
 
+        if (this.type == PosType.SCROLL_ABSOLUTE) {
+            realY -= this.scrollYOffset;
+        }
+
         var p = this.element.getParent();
 
         while(p != null) {
@@ -77,6 +82,9 @@ public class ElementPosition {
             realY += (pPos.type == PosType.RELATIVE) ?
                 pPos.originAbsoluteY + pPos.y
                 : pPos.y;
+            if (pPos.type == PosType.SCROLL_ABSOLUTE) {
+                realY -= pPos.scrollYOffset;
+            }
             p = p.getParent();
         }
         return realY;
@@ -125,11 +133,20 @@ public class ElementPosition {
     public void setChildDirection(ChildDirection dir) {
         this.dir = dir;
     }
+
+    public void setScrollYOffset(int off) {
+        this.scrollYOffset = off;
+    }
+
+    public int getScrollYOffset() {
+        return this.scrollYOffset;
+    }
     
     public static enum PosType {
         RELATIVE,
         ABSOLUTE,
-        FIXED
+        FIXED,
+        SCROLL_ABSOLUTE
     }
 
     public static enum ChildDirection {
