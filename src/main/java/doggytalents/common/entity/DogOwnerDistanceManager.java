@@ -33,6 +33,7 @@ public class DogOwnerDistanceManager {
 
     public DogOwnerDistanceManager(Dog dog) {
         this.dog = dog;
+        this.lastWithOwnerTime = dog.level.getDayTime();
     }
 
     public void tick() {
