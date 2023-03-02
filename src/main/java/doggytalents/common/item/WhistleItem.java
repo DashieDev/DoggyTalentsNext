@@ -8,6 +8,7 @@ import doggytalents.client.screen.WhistleScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DoggyBeamEntity;
+import doggytalents.common.entity.ai.triggerable.DogGoBehindOwnerAction;
 import doggytalents.common.entity.ai.triggerable.DogMoveToBedAction;
 import doggytalents.common.talent.RoaringGaleTalent;
 import doggytalents.common.util.EntityUtil;
@@ -50,7 +51,8 @@ public class WhistleItem extends Item {
         TACTICAL(5),
         ROAR(6),
         HEEL_BY_NAME(7),
-        TO_BED(8);
+        TO_BED(8),
+        GO_BEHIND(9);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -291,6 +293,21 @@ public class WhistleItem extends Item {
                 if (ConfigHandler.WHISTLE_SOUNDS)
                     world.playSound(null, player.blockPosition(), DoggySounds.WHISTLE_SHORT.get(), SoundSource.PLAYERS, 0.6F + world.random.nextFloat() * 0.1F, 0.8F + world.random.nextFloat() * 0.2F);
                 return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+            } else if (mode == WhistleMode.GO_BEHIND && !dogsList.isEmpty()) {
+                if (player.level.isClientSide) {
+                    return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+                }
+                for (var dog : dogsList) {
+                    var owner = dog.getOwner();
+                    if (owner == null) continue;
+                    dog.setTarget(null);
+                    dog.clearTriggerableAction();
+                    dog.triggerAction(new DogGoBehindOwnerAction(dog, owner));
+                }
+                if (ConfigHandler.WHISTLE_SOUNDS)
+                    world.playSound(null, player.blockPosition(), DoggySounds.WHISTLE_SHORT.get(), SoundSource.PLAYERS, 0.6F + world.random.nextFloat() * 0.1F, 0.8F + world.random.nextFloat() * 0.2F);
+                return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+            
             }
 
             //world.playSound(null, player.getPosition(), DoggySounds.WHISTLE_LONG, SoundCategory.PLAYERS, 0.8F, 0.8F + world.rand.nextFloat() * 0.2F);
