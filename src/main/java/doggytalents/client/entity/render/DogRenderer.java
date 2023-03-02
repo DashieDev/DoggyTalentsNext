@@ -53,7 +53,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
                 String tip = dog.getMode().getTip();
                 var hunger = Mth.ceil(
                     (dog.isDefeated()?
-                    -(dog.getMaxIncapacitatedHunger() - dog.getDogHunger()) :
+                    (dog.getDogHunger() - dog.getMaxIncapacitatedHunger()) :
                     dog.getDogHunger())
                 );
 
@@ -63,9 +63,13 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
                 //         I18n.get(dog.getGender().getUnlocalisedTip())
                 // );
 
+                boolean flag1 = 
+                    this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
+                    && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
+
                 var label = Component.translatable(tip);
                 var hunger_c1 = Component.literal("(" + hunger + ")");
-                if (dog.getDogHunger() <= 10) {
+                if (dog.getDogHunger() <= 10 && flag1) {
                     hunger_c1.withStyle(Style.EMPTY.withColor(0xff3636));
                 }
                 label.append(hunger_c1);
@@ -128,7 +132,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
            float f2 = (float)(-font.width(text) / 2);
            boolean flag1 = 
                 this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
-                && ConfigHandler.CLIENT.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
+                && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
            if (flag1) {
                 int noCharsInName = text.getString().length();
                 float healthPercentage = dog.getHealth()/dog.getMaxHealth();
