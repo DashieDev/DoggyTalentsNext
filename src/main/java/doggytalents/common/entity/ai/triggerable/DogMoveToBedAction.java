@@ -41,14 +41,13 @@ public class DogMoveToBedAction extends TriggerableAction {
             return;
         }
 
-        this.bedReached = dog.blockPosition().equals(this.targetBedPos);
+        this.bedReached = dog.blockPosition().distSqr(this.targetBedPos) <= 1.5;
 
-        if (bedReached) {
-            if (claimBed) claimBed();
-            this.dog.setOrderedToSit(true);
-            this.setState(ActionState.FINISHED);
-            return;
-        } else if (dog.getNavigation().isDone()) {
+        if (dog.getNavigation().isDone()) {
+            if (bedReached) {
+                if (claimBed) claimBed();
+                this.dog.setOrderedToSit(true);
+            }
             this.setState(ActionState.FINISHED);
             return;
         }
