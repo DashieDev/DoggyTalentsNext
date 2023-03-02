@@ -14,7 +14,12 @@ public class DogTriggerableGoal extends Goal {
     public DogTriggerableGoal(Dog dog, boolean trivial) {
         this.dog = dog;
         this.trivial = trivial;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
+        //Temporary leave out Jump flag for now
+        //Because most goal which lock only the Jump flag
+        //is intended to be able to augment other goals.
+        //An action just need to lock flag MOVE and LOOK btw
+        //Like DogFollowOwner and most Action-like Goals.
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
     @Override
