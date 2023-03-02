@@ -37,6 +37,7 @@ public abstract class AbstractElement extends GuiComponent implements Renderable
         }
 
         this.position = ElementPosition.getDefault(this);
+        this.size = ElementSize.getDefault(this);
         this.screen = screen;
     }
 
@@ -59,7 +60,7 @@ public abstract class AbstractElement extends GuiComponent implements Renderable
     }
 
     @Override
-    public final void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
         if (this.backgroundColor != 0) {
             int aX = this.getRealX();
             int aY = this.getRealY();
@@ -142,7 +143,7 @@ public abstract class AbstractElement extends GuiComponent implements Renderable
         return true;
     }
 
-    public AbstractElement getParent() {
+    public @Nullable AbstractElement getParent() {
         return this.parent;
     }
 
@@ -202,7 +203,9 @@ public abstract class AbstractElement extends GuiComponent implements Renderable
         return this.screen;
     }
 
-
+    public boolean isMouseOver(double x, double y) {
+        return x >= (double)this.getRealX() && y >= (double)this.getRealY() && x < (double)(this.getRealX() + this.getSizeX()) && y < (double)(this.getRealY() + this.getSizeY());
+    }
 
     @Override
     public final boolean isDragging() {
