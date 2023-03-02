@@ -26,6 +26,7 @@ public class StatsSyncPackets {
                 Supplier<Context> ctx) {
             var tracker = dogIn.getStatTracker();
             var sender = ctx.get().getSender();
+            if (!dogIn.canInteract(sender)) return;
             PacketHandler.send(
                 PacketDistributor.PLAYER.with(() -> sender), 
                 new StatsSyncData.Response(dogIn.getId(), tracker)
