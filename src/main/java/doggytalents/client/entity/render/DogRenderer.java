@@ -9,6 +9,7 @@ import doggytalents.client.entity.render.layer.BoneLayer;
 import doggytalents.client.entity.render.layer.LayerFactory;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -56,11 +57,21 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
                     dog.getDogHunger())
                 );
 
-                String label = String.format(ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) ? "%s(%d)%s" : "%s(%d)",
-                        I18n.get(tip),
-                        hunger,
-                        I18n.get(dog.getGender().getUnlocalisedTip())
-                );
+                // String labelstr = String.format(ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) ? "%s(%d)%s" : "%s(%d)",
+                //         I18n.get(tip),
+                //         hunger,
+                //         I18n.get(dog.getGender().getUnlocalisedTip())
+                // );
+
+                var label = Component.translatable(tip);
+                var hunger_c1 = Component.literal("(" + hunger + ")");
+                if (dog.getDogHunger() <= 10) {
+                    hunger_c1.withStyle(Style.EMPTY.withColor(0xff3636));
+                }
+                label.append(hunger_c1);
+                if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER)) {
+                    label.append(Component.translatable(dog.getGender().getUnlocalisedTip()));
+                }
 
                 RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, label, matrixStackIn, bufferIn, packedLightIn, 0.01F, 0.12F);
 
