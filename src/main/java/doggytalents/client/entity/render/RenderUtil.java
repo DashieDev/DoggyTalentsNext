@@ -17,7 +17,7 @@ import net.minecraft.world.entity.Entity;
 public class RenderUtil {
 
     public static <T extends Entity> void renderLabelWithScale(T entity, EntityRenderer<T> renderer, EntityRenderDispatcher entityRenderDispatcher, Component text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yChange) {
-        RenderUtil.renderLabelWithScale(entity, renderer, entityRenderDispatcher, text.getString(), stack, buffer, packedLightIn, scale, yChange);
+        renderLabelWithScale(!entity.isDiscrete(), renderer, entityRenderDispatcher, text, stack, buffer, packedLightIn, scale, yChange + entity.getBbHeight() + 0.5F);
     }
 
     public static <T extends Entity> void renderLabelWithScale(T entity, EntityRenderer<T> renderer, EntityRenderDispatcher entityRenderDispatcher, String text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yChange) {
