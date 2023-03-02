@@ -6,6 +6,7 @@ import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.DivElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.MainButtonToolboxRowElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.PosType;
+import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.view.DebugView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.view.EditInfoView;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice;
@@ -35,6 +36,9 @@ public class MainInfoView extends AbstractElement {
         
         switch (tab) {
             case EDIT_INFO:
+                setupPanelView(tab);
+                break;
+            case DEBUG:
                 setupPanelView(tab);
                 break;
             default:
@@ -97,6 +101,9 @@ public class MainInfoView extends AbstractElement {
 
         AbstractElement rightView;
         switch (tab) {
+            case DEBUG:
+                rightView = new DebugView(editInfoViewBoxDiv, getScreen(), dog);
+                break;
             default:
                 rightView = new EditInfoView(editInfoViewBoxDiv, getScreen(), dog, font);
                 break;
