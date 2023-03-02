@@ -105,7 +105,17 @@ public abstract class AbstractElement extends GuiComponent implements Widget, Co
     }
 
     public AbstractElement setSize(int size) {
-        this.size = new ElementSize(parent, size);
+        this.size = new ElementSize(this, size);
+        return this;
+    }
+
+    public AbstractElement setSizeDynamicX(int sizeY) {
+        this.size = ElementSize.createDynamicX(this, sizeY);
+        return this;
+    }
+
+    public AbstractElement setSizeDynamicY(int sizeX) {
+        this.size = ElementSize.createDynamicY(this, sizeX);
         return this;
     }
     
@@ -126,6 +136,10 @@ public abstract class AbstractElement extends GuiComponent implements Widget, Co
         //Should not exist in every parents to prevents loops.
         if (this.checkChildrenExistedInParents(element)) {
             this.child.add(element);
+            var pos = this.getSize();
+            if (pos.isDynamic()) {
+                pos.updateSize();
+            }
             return true;
         } else {
             return false;
