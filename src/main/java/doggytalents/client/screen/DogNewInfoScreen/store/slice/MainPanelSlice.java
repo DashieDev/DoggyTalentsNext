@@ -29,7 +29,8 @@ public class MainPanelSlice implements AbstractSlice {
     }
 
     public static enum MainTab {
-        MAIN("doggui.common.go_back"), EDIT_INFO("doggui.home.edit_info");
+        MAIN("doggui.common.go_back"), EDIT_INFO("doggui.home.edit_info"),
+        DEBUG("doggui.common.debug");
 
         public final String unLocalisedTitle;
 
