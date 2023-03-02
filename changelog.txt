@@ -326,3 +326,19 @@ and never intended as a challenge, so go easy on your bud.
 non trivial action.
 + Added To Bed Whistle :
   + Command every dog to move to bed if nearby (< 20 blocks)
+
+1.10.6 - 3th March 2023
++ Added several GUI component for future usage:
+  + ScrollView : a fixed viewport that renders its chidlren in a scrollable container.
+  + Dynamic Size : size defined by childrens
+  / Fixed Relative positioning.
+/ Only owner or canInteract() can access stats serverside.
++ When player shift, he can see every low hunger dogs' hunger digit rendered in red.
+this allow easier identification of who's to feed. (This feature is tied with the render
+health color in name and configurable in the same manner)
+* Dog nows always checks if the owner is mining, and will enter mining cautious mode
+any time you swing with a digger item in hand. Also they will not teleport in front of you.
+* Dog playing tag no longer occasionally tp back to owner when entering water.
+* Dog no longer "greet" owner when freshly trained.
+* Fix small dog unable to claim bed sometimes.
+ 
