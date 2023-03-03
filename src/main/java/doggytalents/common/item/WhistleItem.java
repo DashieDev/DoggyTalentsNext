@@ -1,5 +1,6 @@
 package doggytalents.common.item;
 
+import doggytalents.DoggyItems;
 import doggytalents.DoggySounds;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.EnumMode;
@@ -297,17 +298,23 @@ public class WhistleItem extends Item {
                 if (player.level.isClientSide) {
                     return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
                 }
+                boolean noDogs = true;
                 for (var dog : dogsList) {
+                    if (!dog.getMode().shouldFollowOwner()) continue;
                     var owner = dog.getOwner();
                     if (owner == null) continue;
+                    if (dog.distanceToSqr(owner) > 400) continue;
                     dog.setTarget(null);
                     dog.clearTriggerableAction();
                     dog.triggerAction(new DogGoBehindOwnerAction(dog, owner));
+                    noDogs = false;
+                }
+                if (!noDogs) {
+                    player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
                 }
                 if (ConfigHandler.WHISTLE_SOUNDS)
                     world.playSound(null, player.blockPosition(), DoggySounds.WHISTLE_SHORT.get(), SoundSource.PLAYERS, 0.6F + world.random.nextFloat() * 0.1F, 0.8F + world.random.nextFloat() * 0.2F);
                 return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
-            
             }
 
             //world.playSound(null, player.getPosition(), DoggySounds.WHISTLE_LONG, SoundCategory.PLAYERS, 0.8F, 0.8F + world.rand.nextFloat() * 0.2F);
