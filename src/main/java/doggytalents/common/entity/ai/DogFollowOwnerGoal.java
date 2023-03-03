@@ -44,7 +44,7 @@ public class DogFollowOwnerGoal extends Goal {
         LivingEntity owner = this.dog.getOwner();
         if (owner == null) {
             return false;
-        } else if (this.dog.getMode() == EnumMode.PATROL) {
+        } else if (!this.dog.getMode().shouldFollowOwner()) {
             return false;
         } else if (owner.isSpectator()) {
             return false;

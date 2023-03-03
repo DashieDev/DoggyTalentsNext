@@ -55,7 +55,7 @@ public class DogMeleeAttackGoal extends Goal {
 
    public boolean canUse() {
 
-      if (this.dog.getMode() == EnumMode.DOCILE) return false;
+      if (!this.dog.getMode().shouldAttack()) return false;
 
       if (this.dog.fallDistance > 7) return false;
       
@@ -121,7 +121,7 @@ public class DogMeleeAttackGoal extends Goal {
 
    public boolean canContinueToUse() {
 
-      if (this.dog.getMode() == EnumMode.DOCILE) return false;
+      if (!this.dog.getMode().shouldAttack()) return false;
 
       if (this.dog.fallDistance > 7) return false;
 
