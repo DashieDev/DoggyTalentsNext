@@ -27,6 +27,7 @@ public class DogGoBehindOwnerAction extends TriggerableAction {
         if (this.targetPos == null) {
             this.setState(ActionState.FINISHED); return;
         }
+        this.dog.getNavigation().stop();
         this.dog.getNavigation().moveTo(
             this.targetPos.getX(), this.targetPos.getY(),
             this.targetPos.getZ(),
@@ -53,12 +54,19 @@ public class DogGoBehindOwnerAction extends TriggerableAction {
     }
 
     private void getBehindOwnerPos() {
-        var a1 = owner.getYHeadRot();
-        var dx1 = Mth.sin(a1*Mth.DEG_TO_RAD);
-        var dz1 = -Mth.cos(a1*Mth.DEG_TO_RAD);
-        var offset = new Vec3i(Mth.ceil(3*dx1), 0, Mth.ceil(3*dz1));
-        var owner_b0 = owner.blockPosition();
-        this.targetPos = owner_b0.offset(offset);
+        float a1 = owner.getYHeadRot();
+        float dx1 = Mth.sin(a1*Mth.DEG_TO_RAD);
+        float dz1 = -Mth.cos(a1*Mth.DEG_TO_RAD);
+        var offset = new Vec3(3*dx1, 0, 3*dz1);
+        var owner_pos0 = owner.position();
+        var targetPos_precise = owner_pos0.add(offset);
+        this.targetPos = new BlockPos(targetPos_precise);
+        if (!this.dog.level.getBlockState(targetPos).isAir()) {
+            this.targetPos = this.targetPos.above();
+            if (!this.dog.level.getBlockState(targetPos).isAir()) {
+                this.targetPos = null;
+            }
+        }
     }
     
 }
