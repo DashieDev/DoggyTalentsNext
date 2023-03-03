@@ -7,19 +7,21 @@ import doggytalents.api.inferface.AbstractDog;
 
 public enum EnumMode {
 
-    INCAPACITATED(-1, "incapacitated"),
-    DOCILE(0, "docile"),
-    WANDERING(1, "wandering"),
+    INCAPACITATED(-1, "incapacitated", false, false),
+    DOCILE(0, "docile", true, false),
+    WANDERING(1, "wandering", false, false),
     AGGRESIVE(2, "aggressive"),
     BERSERKER(3, "berserker"),
     BERSERKER_MINOR(4, "berserker_minor"),
     TACTICAL(5, "tactical"),
-    PATROL(6, "patrol"),
+    PATROL(6, "patrol", false, true),
     GUARD(7, "guard"),
     GUARD_FLAT(8, "guard_flat"),
     GUARD_MINOR(9, "guard_minor");
 
     private int index;
+    private boolean shouldFollowOwner = true;
+    private boolean shouldAttack = true;
     private String saveName;
     private String unlocalisedTip;
     private String unlocalisedName;
@@ -34,15 +36,22 @@ public enum EnumMode {
         });
 
     private EnumMode(int index, String name) {
-        this(index, name, "dog.mode." + name, "dog.mode." + name + ".indicator", "dog.mode." + name + ".description");
+        this(index, name, true, true);
+    }
+    
+    
+    private EnumMode(int index, String name, boolean shouldFollowOwner, boolean shouldAttack) {
+        this(index, name, "dog.mode." + name, "dog.mode." + name + ".indicator", "dog.mode." + name + ".description", shouldFollowOwner, shouldAttack);
     }
 
-    private EnumMode(int index, String mode, String unlocalisedName, String tip, String info) {
+    private EnumMode(int index, String mode, String unlocalisedName, String tip, String info, boolean shouldFollowOwner, boolean shouldAttack) {
         this.index = index;
         this.saveName = mode;
         this.unlocalisedName = unlocalisedName;
         this.unlocalisedTip = tip;
         this.unlocalisedInfo = info;
+        this.shouldFollowOwner = shouldFollowOwner;
+        this.shouldAttack = shouldAttack;
     }
 
     public int getIndex() {
@@ -89,6 +98,14 @@ public enum EnumMode {
             i = 0;
         }
         return VALUES[i];
+    }
+
+    public boolean shouldFollowOwner() {
+        return shouldFollowOwner;
+    }
+
+    public boolean shouldAttack() {
+        return shouldAttack;
     }
 
     public static EnumMode byIndex(int i) {
