@@ -345,3 +345,11 @@ any time you swing with a digger item in hand. Also they will not teleport in fr
 * Dog no longer "greet" owner when freshly trained.
 * Fix small dog unable to claim bed sometimes.
  
+1.10.7 - 3th March 2023
+/ Dog Go Behind Whistle :
+  * HOTFIX : Only dog which are 20 blocks or less away from the owner and shouldFollowOwner 
+  may respond to that.
+  * HOTFIX : Also add a 1 second cooldown on usage.
+  * HOTFIX : Fixed Improper pathfind, causing dog to sometimes go infront of owner instead.
+  + Improve accuracy.
+
