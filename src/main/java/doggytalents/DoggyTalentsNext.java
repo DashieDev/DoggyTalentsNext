@@ -5,6 +5,7 @@ import doggytalents.api.feature.InteractHandler;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.data.DTBlockstateProvider;
 import doggytalents.client.data.DTItemModelProvider;
+import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.render.world.BedFinderRenderer;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.Capabilities;
@@ -110,6 +111,7 @@ public class DoggyTalentsNext {
             modEventBus.addListener(ClientSetup::registerOverlay);
             forgeEventBus.register(new ClientEventHandler());
             forgeEventBus.addListener(BedFinderRenderer::onWorldRenderLast);
+            DogModelRegistry.init();
         });
 
         ConfigHandler.init(modEventBus);

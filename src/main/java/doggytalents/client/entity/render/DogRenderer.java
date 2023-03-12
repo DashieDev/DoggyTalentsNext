@@ -5,12 +5,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.ChopinLogger;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
-import doggytalents.client.entity.model.DogModel;
+import doggytalents.client.entity.model.DogModelRegistry;
+import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.model.dog.IwankoModel;
 import doggytalents.client.entity.render.layer.BoneLayer;
 import doggytalents.client.entity.render.layer.LayerFactory;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.ChatFormatting;
+import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -23,14 +26,20 @@ import net.minecraft.util.Mth;
 
 public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
 
+    private DogModel defaultModel;
+
     public DogRenderer(EntityRendererProvider.Context ctx) {
-        super(ctx, new DogModel(ctx.bakeLayer(ClientSetup.DOG)), 0.5F);
+        super(ctx, null, 0.5F);
 //        this.addLayer(new DogTalentLayer(this, ctx));
 //        this.addLayer(new DogAccessoryLayer(this, ctx));
+        DogModelRegistry.resolve(ctx);
+        this.model = DogModelRegistry.getDogModelHolder("default").getValue();
+        this.defaultModel = this.model;
         this.addLayer(new BoneLayer(this, ctx.getItemInHandRenderer()));
         for (LayerFactory<Dog, DogModel<Dog>> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
         }
+        ChopinLogger.l("creation of dog renderer.");
     }
 
     @Override
@@ -40,6 +49,13 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
 
     @Override
     public void render(Dog dog, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+        
+        if (dog.getClientSkin().useCustomModel()) {
+            this.model = dog.getClientSkin().getCustomModel().getValue();
+        } else {
+            this.model = this.defaultModel;
+        }
+        
         if (dog.isDogWet()) {
             float f = dog.getShadingWhileWet(partialTicks);
             this.model.setColor(f, f, f);

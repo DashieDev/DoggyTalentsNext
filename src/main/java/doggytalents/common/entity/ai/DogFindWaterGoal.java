@@ -75,7 +75,8 @@ public class DogFindWaterGoal extends Goal {
                     dog, waterPos, dog.getUrgentSpeedModifier(), dog.getMaxFallDistance(), 
                     dog1 -> {
                         this.waterPos = null;
-                    }    
+                    }
+                    
                 );
             }
         } else {

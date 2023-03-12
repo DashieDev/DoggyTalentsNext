@@ -1,4 +1,4 @@
-package doggytalents.client.entity.model;
+package doggytalents.client.entity.model.dog;
 
 import com.google.common.collect.ImmutableList;
 import doggytalents.api.inferface.AbstractDog;
@@ -103,6 +103,9 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
         return createBodyLayerInternal(CubeDeformation.NONE);
     }
 
+    public boolean isX64Model() {
+        return false;
+    }
     
 
     private static LayerDefinition createBodyLayerInternal(CubeDeformation scale) {

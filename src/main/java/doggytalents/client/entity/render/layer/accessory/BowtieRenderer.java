@@ -1,27 +1,25 @@
-package doggytalents.client.entity.render.layer;
+package doggytalents.client.entity.render.layer.accessory;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import doggytalents.DoggyTalents;
-import doggytalents.api.registry.TalentInstance;
+
 import doggytalents.client.ClientSetup;
-import doggytalents.client.entity.model.DogRescueModel;
+import doggytalents.client.entity.model.BowTieModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.accessory.BowTie;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
-import java.util.Optional;
+public class BowtieRenderer extends RenderLayer<Dog, DogModel<Dog>>  {
 
-public class RescueDogRenderer extends RenderLayer<Dog, DogModel<Dog>> {
+    private BowTieModel model;
 
-    private DogRescueModel model;
-
-    public RescueDogRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
+    public BowtieRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);
-        this.model = new DogRescueModel(ctx.bakeLayer(ClientSetup.DOG_RESCUE_BOX));
+        this.model = new BowTieModel(ctx.bakeLayer(ClientSetup.DOG_BOWTIE));
     }
 
     @Override
@@ -30,14 +28,15 @@ public class RescueDogRenderer extends RenderLayer<Dog, DogModel<Dog>> {
             return;
         }
 
-        Optional<TalentInstance> inst = dog.getTalent(DoggyTalents.RESCUE_DOG);
-        if (inst.isPresent() && inst.get().level() >= 5) {
+        for (var accessoryInst : dog.getAccessories()) {
+            if (!(accessoryInst.getAccessory() instanceof BowTie)) continue;
             this.getParentModel().copyPropertiesTo(this.model);
             this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
             this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
-            RenderLayer.renderColoredCutoutModel(this.model, Resources.TALENT_RESCUE, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F);
+            RenderLayer.renderColoredCutoutModel(this.model, Resources.BOW_TIE, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F);
         }
 
     }
+    
 }

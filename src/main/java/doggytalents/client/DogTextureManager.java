@@ -4,7 +4,11 @@ import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import doggytalents.ChopinLogger;
 import doggytalents.DoggyTalentsNext;
+import doggytalents.client.entity.model.DogModelRegistry;
+import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.texture.DogTextureServer;
@@ -17,6 +21,7 @@ import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.SkinManager;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
@@ -32,6 +37,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class DogTextureManager extends SimplePreparableReloadListener<DogTextureManager.Preparations> {
 
@@ -41,9 +47,9 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
     private final Map<String, SkinRequest> hashToSkinRequest = Maps.newConcurrentMap();
 
-    protected final Map<String, ResourceLocation> skinHashToLoc = Maps.newHashMap();
-    protected final Map<ResourceLocation, String> locToSkinHash = Maps.newHashMap();
-    protected final List<ResourceLocation> customSkinLoc = new ArrayList<>(20);
+    protected final Map<String, DogSkin> skinHashToLoc = Maps.newHashMap();
+    protected final Map<DogSkin, String> locToSkinHash = Maps.newHashMap();
+    protected final List<DogSkin> customSkinLoc = new ArrayList<>(20);
 
     public SkinRequest getRequestStatus(String hash) {
         return this.hashToSkinRequest.getOrDefault(hash, SkinRequest.UNREQUESTED);
@@ -61,20 +67,20 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         this.hashToSkinRequest.put(hash, SkinRequest.REQUESTED);
     }
 
-    public List<ResourceLocation> getAll() {
+    public List<DogSkin> getAll() {
         return Collections.unmodifiableList(this.customSkinLoc);
     }
 
-    public ResourceLocation getLocFromHashOrGet(String hash, Function<? super String, ? extends ResourceLocation> mappingFunction) {
+    public DogSkin getLocFromHashOrGet(String hash, Function<? super String, DogSkin> mappingFunction) {
         return this.skinHashToLoc.computeIfAbsent(hash, mappingFunction);
     }
 
-    public String getTextureHash(ResourceLocation loc) {
+    public String getTextureHash(DogSkin loc) {
         return this.locToSkinHash.getOrDefault(loc, "MISSING_MAPPING");
     }
 
-    public ResourceLocation getTextureLoc(String loc) {
-        return this.skinHashToLoc.getOrDefault(loc, null); // TODO return missing not null
+    public DogSkin getSkinFromHash(String loc) {
+        return this.skinHashToLoc.getOrDefault(loc, DogSkin.MISSING); // TODO return missing not null
     }
 
 
@@ -107,8 +113,8 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
     public ResourceLocation getTexture(Dog dog) {
         if (dog.hasCustomSkin()) {
-            String hash = dog.getSkinHash();
-            return DogTextureManager.INSTANCE.getLocFromHashOrGet(hash, this::getCached);
+            var skin = dog.getClientSkin();
+            return skin.getPath();
         }
 
         return Resources.ENTITY_WOLF;
@@ -155,16 +161,16 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         return hash;
     }
 
-    public ResourceLocation getCached(String hash) {
+    public DogSkin getCached(String hash) {
         if (!ConfigHandler.DISPLAY_OTHER_DOG_SKINS) {
-            return Resources.ENTITY_WOLF;
+            return DogSkin.CLASSICAL;
         }
 
         ResourceLocation loc = DogTextureServer.INSTANCE.getResourceLocation(hash);
 
         AbstractTexture texture = getOrLoadTexture(getClientFolder(), hash);
         if (texture != null) {
-            return loc;
+            return new DogSkin(loc);
         }
 
         if (!this.getRequestStatus(hash).requested()) {
@@ -173,7 +179,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             PacketHandler.send(PacketDistributor.SERVER.noArg(), new RequestSkinData(hash));
         }
 
-        return Resources.ENTITY_WOLF;
+        return DogSkin.CLASSICAL;
     }
 
     private synchronized void loadDogSkinResource(DogTextureManager.Preparations prep, Resource resource, ResourceLocation rl) {
@@ -186,9 +192,31 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                 DoggyTalentsNext.LOGGER.warn("The loaded resource packs contained a duplicate custom dog skin ({} & {})", rl, this.skinHashToLoc.get(hash));
             } else {
                 DoggyTalentsNext.LOGGER.info("Found custom dog skin at {} with hash {}", rl, hash);
-                prep.skinHashToLoc.put(hash, rl);
-                prep.locToSkinHash.put(rl, hash);
-                prep.customSkinLoc.add(rl);
+                var dogSkin =new DogSkin(rl);
+                prep.skinHashToLoc.put(hash, dogSkin);
+                prep.locToSkinHash.put(dogSkin, hash);
+                prep.customSkinLoc.add(dogSkin);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(inputstream);
+        }
+    }
+
+    private synchronized void loadDogSkinResourceWithMetadata(DogTextureManager.Preparations prep, Resource resource, DogSkin dogSkin) {
+        InputStream inputstream = null;
+        try {
+            inputstream = resource.open();
+            String hash = DogTextureServer.INSTANCE.getHash(IOUtils.toByteArray(inputstream));
+
+            if (prep.skinHashToLoc.containsKey(hash)) {
+                DoggyTalentsNext.LOGGER.warn("The loaded resource packs contained a duplicate custom dog skin ({} & {})", dogSkin, this.skinHashToLoc.get(hash));
+            } else {
+                DoggyTalentsNext.LOGGER.info("Found custom dog skin at {} with hash {}", dogSkin, hash);
+                prep.skinHashToLoc.put(hash, dogSkin);
+                prep.locToSkinHash.put(dogSkin, hash);
+                prep.customSkinLoc.add(dogSkin);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -219,8 +247,9 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
         for (Entry<String, JsonElement> entry : jsonobject.entrySet()) {
             String hash = entry.getKey();
+            //TODO DOGSKIN
             ResourceLocation texture = new ResourceLocation(GsonHelper.convertToString(entry.getValue(), hash));
-            ResourceLocation previous = prep.skinHashToLoc.put(hash, texture);
+            var previous = prep.skinHashToLoc.put(hash, new DogSkin(texture));
 
             if (previous != null) {
 
@@ -239,6 +268,16 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
         profiler.startTick();
 
+        if (this.getSkinFromSkinJsonAllPack(resourceManager, prep)) {
+            profiler.pop();
+            profiler.endTick();
+            return prep;
+        }
+        DoggyTalentsNext.LOGGER.warn("Could not parse or get resource from skin.json. Will be searching at textures/entity/dog/custom instead.");
+        prep.skinHashToLoc.clear();
+        prep.locToSkinHash.clear();
+        prep.customSkinLoc.clear();
+        
         var resources = resourceManager.listResources("textures/entity/dog/custom", (fileName) -> {
             return true;
             //return fileName.getPath().endsWith(".png");
@@ -270,6 +309,52 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         return prep;
     }
 
+    public boolean getSkinFromSkinJsonAllPack(ResourceManager resMan, DogTextureManager.Preparations prep) {
+        final var SKIN_JSON_RES = Util.getResource("textures/entity/dog/skin.json");
+        var jsonSkinPacks = resMan.listPacks()
+            .filter(pack -> pack.hasResource(PackType.CLIENT_RESOURCES, SKIN_JSON_RES))
+            .collect(Collectors.toList());
+        for (var jsonSkinPack : jsonSkinPacks) {
+            InputStream istream = null;
+            try {
+                istream = jsonSkinPack.getResource(PackType.CLIENT_RESOURCES, SKIN_JSON_RES);
+                var jsonElement = GSON.fromJson(new InputStreamReader(istream, StandardCharsets.UTF_8), JsonElement.class);
+                var jsonObject = jsonElement.getAsJsonObject();
+                getSkinFromSkinJson(resMan, prep, jsonObject);
+            } catch(Exception e) {
+                e.printStackTrace();
+            } finally {
+                IOUtils.closeQuietly(istream);
+            }
+        }
+        prep.customSkinLoc.add(0, DogSkin.CLASSICAL);
+        return true;
+    }
+
+    public void getSkinFromSkinJson(ResourceManager resMan, DogTextureManager.Preparations prep, JsonObject jsonObject) {
+        var skinEntries = jsonObject.get("dog_skins").getAsJsonArray();
+        for (var skinEntry : skinEntries) {
+            var skinObject = skinEntry.getAsJsonObject();
+            var name = skinObject.get("skin_name").getAsString();
+            var id = skinObject.get("skin_id").getAsString();
+            var use_model = skinObject.get("use_model").getAsString();
+            ChopinLogger.l("Found : " + name + " " + id + " " + use_model);
+            var text_rl = Util.getResource("textures/entity/dog/custom/" + id + ".png");
+            DogSkin skin;
+            if (use_model == null || use_model.equals("default") || use_model.equals("")) {
+                skin = new DogSkin(text_rl).setName(name);
+            } else {
+                var dogModel = DogModelRegistry.getDogModelHolder(use_model);
+                if (dogModel == null)  skin = new DogSkin(text_rl).setName(name);
+                else skin = new DogSkin(text_rl, dogModel).setName(name);
+            }
+
+            var res = resMan.getResource(text_rl);
+            if (res.isPresent())
+            loadDogSkinResourceWithMetadata(prep, res.get(), skin);
+        }
+    }
+
     @Override
     protected void apply(DogTextureManager.Preparations prep, ResourceManager resourceManager, ProfilerFiller profiler) {
         prep.apply(this);
@@ -282,9 +367,9 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
     protected static class Preparations {
 
-        private final Map<String, ResourceLocation> skinHashToLoc = new HashMap<>();
-        private final Map<ResourceLocation, String> locToSkinHash = new HashMap<>();
-        private final List<ResourceLocation> customSkinLoc = new ArrayList<>(20);
+        private final Map<String, DogSkin> skinHashToLoc = new HashMap<>();
+        private final Map<DogSkin, String> locToSkinHash = new HashMap<>();
+        private final List<DogSkin> customSkinLoc = new ArrayList<>(20);
 
         public void apply(DogTextureManager dogTextureManager) {
             dogTextureManager.skinHashToLoc.clear();

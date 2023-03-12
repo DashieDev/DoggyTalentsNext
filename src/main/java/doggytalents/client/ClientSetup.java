@@ -3,10 +3,13 @@ package doggytalents.client;
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTileEntityTypes;
+import doggytalents.client.entity.model.BowTieModel;
 import doggytalents.client.entity.model.DogArmorModel;
 import doggytalents.client.entity.model.DogBackpackModel;
-import doggytalents.client.entity.model.DogModel;
 import doggytalents.client.entity.model.DogRescueModel;
+import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.model.dog.IwankoModel;
+import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.client.entity.render.CollarRenderManager;
 import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.entity.render.DogRenderer;
@@ -14,6 +17,7 @@ import doggytalents.client.entity.render.DoggyBeamRenderer;
 import doggytalents.client.entity.render.layer.PackPuppyRenderer;
 import doggytalents.client.entity.render.layer.RescueDogRenderer;
 import doggytalents.client.entity.render.layer.accessory.ArmorAccessoryRenderer;
+import doggytalents.client.entity.render.layer.accessory.BowtieRenderer;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
 import doggytalents.client.entity.render.layer.accessory.IncapacitatedRenderer;
 import doggytalents.client.screen.DogArmorScreen;
@@ -35,11 +39,15 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientSetup {
 
     public static final ModelLayerLocation DOG = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "main");
+    public static final ModelLayerLocation DOG_IWANKO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_iwanko"), "main");
+    public static final ModelLayerLocation DOG_LUCARIO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_lucario"), "main");
+    
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_BACKPACK = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_backpack"), "main");
     public static final ModelLayerLocation DOG_RESCUE_BOX = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_rescue_box"), "main");
     public static final ModelLayerLocation DOG_BEAM = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "main");
-
+    public static final ModelLayerLocation DOG_BOWTIE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_bowtie"), "main");
+    
     public static void setupScreenManagers(final FMLClientSetupEvent event) {
         MenuScreens.register(DoggyContainerTypes.FOOD_BOWL.get(), FoodBowlScreen::new);
         MenuScreens.register(DoggyContainerTypes.PACK_PUPPY.get(), PackPuppyScreen::new);
@@ -50,9 +58,13 @@ public class ClientSetup {
 
     public static void setupEntityRenderers(final EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(DOG, DogModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_IWANKO, IwankoModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_LUCARIO, LucarioModel::createBodyLayer);
+
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createArmorLayer);
         event.registerLayerDefinition(DOG_BACKPACK, DogBackpackModel::createChestLayer);
         event.registerLayerDefinition(DOG_RESCUE_BOX, DogRescueModel::createRescueBoxLayer);
+        event.registerLayerDefinition(DOG_BOWTIE, BowTieModel::createBowtieLayer);
         // TODO: RenderingRegistry.registerEntityRenderingHandler(DoggyEntityTypes.DOG_BEAM.get(), manager -> new DoggyBeamRenderer<>(manager, event.getMinecraftSupplier().get().getItemRenderer()));
     }
 
@@ -69,6 +81,8 @@ public class ClientSetup {
         CollarRenderManager.registerLayer(ArmorAccessoryRenderer::new);
         CollarRenderManager.registerLayer(PackPuppyRenderer::new);
         CollarRenderManager.registerLayer(RescueDogRenderer::new);
+        CollarRenderManager.registerLayer(BowtieRenderer::new);
+        
     }
 
     public static void registerOverlay(RegisterGuiOverlaysEvent e) {

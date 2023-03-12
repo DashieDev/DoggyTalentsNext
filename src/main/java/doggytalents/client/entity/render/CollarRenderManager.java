@@ -1,6 +1,6 @@
 package doggytalents.client.entity.render;
 
-import doggytalents.client.entity.model.DogModel;
+import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.layer.LayerFactory;
 import doggytalents.common.entity.Dog;
 

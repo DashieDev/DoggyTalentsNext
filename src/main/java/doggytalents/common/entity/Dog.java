@@ -11,6 +11,8 @@ import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.api.registry.*;
+import doggytalents.client.DogTextureManager;
+import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.DogInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
@@ -122,7 +124,7 @@ public class Dog extends AbstractDog {
     /**
      *     Bit number      Decimal Val         Flag
      *     0               1                   BEGGING
-     *     1               2                   OBEY_OTHER
+     *     1               2                   OBEY_OTHIER
      *     2               4                   FRIENDLY_FIRE
      *     3               8                   FORCE_SIT
      *     4               16                  <Reserved>            
@@ -162,6 +164,8 @@ public class Dog extends AbstractDog {
     private final List<IDogAlteration> alterations = new ArrayList<>(4);
     private final List<IDogFoodHandler> foodHandlers = new ArrayList<>(4);
     public final Map<Integer, Object> objects = new HashMap<>();
+
+    private DogSkin clientSkin = DogSkin.CLASSICAL;
 
     public final StatsTracker statsTracker = new StatsTracker();
     public final DogOwnerDistanceManager dogOwnerDistanceManager 
@@ -507,7 +511,7 @@ public class Dog extends AbstractDog {
             
             if (! ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_HUNGER)) {
                 this.prevHungerTick = this.hungerTick;
-
+                
                 if (!this.isVehicle() && !this.isInSittingPose()) {
                     this.hungerTick += 1;
                 }
@@ -2038,6 +2042,14 @@ public class Dog extends AbstractDog {
         if (SIZE.equals(key)) {
             this.refreshDimensions();
         }
+
+        if (CUSTOM_SKIN.equals(key)) {
+            this.clientSkin = DogTextureManager.INSTANCE.getLocFromHashOrGet(
+                this.entityData.get(CUSTOM_SKIN), DogTextureManager.INSTANCE::getCached);
+            if (this.clientSkin == null) {
+                this.clientSkin = DogSkin.CLASSICAL;
+            }
+        }
     }
 
     public void recalculateAlterationsCache() {
@@ -2951,6 +2963,11 @@ public class Dog extends AbstractDog {
 
     public boolean isMiningCautious() {
         return this.dogMiningCautiousManager.isMiningCautious();
+    }
+
+    //Client
+    public DogSkin getClientSkin() {
+        return this.clientSkin;
     }
 
 }

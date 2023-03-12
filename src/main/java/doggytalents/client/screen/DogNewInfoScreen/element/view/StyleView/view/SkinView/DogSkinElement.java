@@ -5,12 +5,14 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveSkinSlice;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
@@ -20,13 +22,15 @@ import net.minecraft.resources.ResourceLocation;
 public class DogSkinElement extends AbstractElement {
 
     Dog dog;
-    List<ResourceLocation> locList;
+    List<DogSkin> locList;
     int activeSkinId;
+    Font font;
 
-    public DogSkinElement(AbstractElement parent, Screen screen, Dog dog, List<ResourceLocation> locList) {
+    public DogSkinElement(AbstractElement parent, Screen screen, Dog dog, List<DogSkin> locList) {
         super(parent, screen);
         this.dog = dog;
         this.locList = locList;
+        this.font = Minecraft.getInstance().font;
     }
 
     @Override
@@ -52,8 +56,15 @@ public class DogSkinElement extends AbstractElement {
             dog.setSkinHash(manifestHash);
             DogStatusViewBoxElement.renderDogInside(stack, dog, e_mX, e_mY + 36, 64, 
                 e_mX - mouseX, e_mY - mouseY);
+            {
+                var c1 = Component.literal(dog.getClientSkin().getName());
+                c1.withStyle(Style.EMPTY.withBold(true));
+                int nameX = this.getRealX() + mX - font.width(c1)/2;
+                int nameY = this.getRealY() + 3;
+                font.draw(stack, c1, nameX, nameY, 0xffffffff);
+            }
+            //TODO : Directly setClientSkin
             dog.setSkinHash(oldHash);
-
             if (
                 (oldHash.equals("") && this.activeSkinId == 0) 
                 || manifestHash.equals(oldHash)

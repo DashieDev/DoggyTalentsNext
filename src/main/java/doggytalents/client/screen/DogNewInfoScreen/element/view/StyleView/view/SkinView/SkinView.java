@@ -5,6 +5,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.PosType;
@@ -16,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 public class SkinView extends AbstractElement {
 
     Dog dog;
-    List<ResourceLocation> textureList;
+    List<DogSkin> textureList;
     
     public SkinView(AbstractElement parent, Screen screen, Dog dog) {
         super(parent, screen);

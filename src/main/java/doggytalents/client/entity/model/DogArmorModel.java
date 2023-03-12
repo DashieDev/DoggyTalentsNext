@@ -3,6 +3,7 @@ package doggytalents.client.entity.model;
 import net.minecraft.client.model.geom.ModelPart;
 import com.google.common.collect.ImmutableList;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.client.entity.model.dog.DogModel;
 import net.minecraft.client.model.ColorableAgeableListModel;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;

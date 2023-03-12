@@ -37,7 +37,7 @@ public class DogRescueModel extends ListModel<Dog>{
     }
 
     @Override
-    public void prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void  prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
         if (dogIn.isInSittingPose()) {
             if (dogIn.isLying()) {
                 this.rescueBox.setPos(-1F, 20F, -2F);

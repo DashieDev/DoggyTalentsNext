@@ -68,7 +68,7 @@ public class DogLowHealthGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return this.isDogLowHealth();
+        return this.isDogLowHealth() && !owner.isSpectator();
     }
 
     
