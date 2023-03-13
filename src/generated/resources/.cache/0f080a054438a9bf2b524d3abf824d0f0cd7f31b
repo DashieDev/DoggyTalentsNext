@@ -1,5 +1,6 @@
-// 1.19.2	2023-01-09T23:51:16.8891202	DoggyTalents Item Models
+// 1.19.2	2023-03-12T17:17:50.5239094	DoggyTalents Item Models
 4a6f8b08ed41dcd97836306e18c3d5ca66b180c4 assets/doggytalents/models/item/big_bone.json
+3d9d5eecd0fd643f244fcbff0e632a1c69fe532f assets/doggytalents/models/item/bowtie.json
 e16db99d3f12eb93982beacb24a089aeea4a0139 assets/doggytalents/models/item/breeding_bone.json
 8930778c93f214896857d7fb0e6cb986b84365b8 assets/doggytalents/models/item/cape.json
 f4680c4abb5ae1f964c3a9d18c72867eda849841 assets/doggytalents/models/item/cape_coloured.json
@@ -18,6 +19,7 @@ bbbddd194d8bce956f46ef7e0e9c24bef18cf451 assets/doggytalents/models/item/guard_s
 c78372cc5d3fb956867a2378707fdf0de6287dd0 assets/doggytalents/models/item/master_treat.json
 2898b9dfb81537fc36b6033c98081737b04b1f80 assets/doggytalents/models/item/multicoloured_collar.json
 6041d97228881f499cd30fd5c12f75635ac7d565 assets/doggytalents/models/item/owner_change.json
+bc4344cde9b92b3d303523e9d15fe95482b486c4 assets/doggytalents/models/item/pianist_suit.json
 04168bd8a19365ad74e249c9e4443fddfb535b5e assets/doggytalents/models/item/radar.json
 6154f41cf2303fc6636ee83009cc983c95970804 assets/doggytalents/models/item/radio_collar.json
 37e58be2f484f704505648796db525c00a615a1f assets/doggytalents/models/item/spotted_collar.json

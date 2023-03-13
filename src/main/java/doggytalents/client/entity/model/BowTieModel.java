@@ -17,8 +17,7 @@ public class BowTieModel extends ListModel<Dog> {
 
     public BowTieModel(ModelPart part) {
         
-        this.bowTie = part
-            .getChild("bowtie");
+        this.bowTie = part.getChild("bowtie");
 
     }
 

@@ -17,7 +17,7 @@ public class DogModelRegistry {
     private static Map<String, DogModelHolder<? extends AbstractDog>> MODEL_MAP;
 
     public static <T extends AbstractDog> void register(String name, Function<EntityRendererProvider.Context, DogModel<T>>  getter) {
-        MODEL_MAP.putIfAbsent(name, new DogModelHolder(getter));
+        MODEL_MAP.putIfAbsent(name, new DogModelHolder<T>(getter));
     }
 
     public static DogModelHolder getDogModelHolder(String name) {

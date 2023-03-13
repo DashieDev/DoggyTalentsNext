@@ -2792,14 +2792,18 @@ public class Dog extends AbstractDog {
         if (ownerSleeping) {
             return true;
         }
+        
 
         // The dog blockPos is still the same as the bed pos when the dog is sitting on it :v
         // Disable it for now.
-        // BlockState blockBelow = this.level.getBlockState(this.blockPosition().below());
-        // boolean onBed = blockBelow.is(DoggyBlocks.DOG_BED.get()) || blockBelow.is(BlockTags.BEDS);
-        // if (onBed) {
-        //     return true;
-        // }
+        {
+            BlockState blockBelow = this.level.getBlockState(this.blockPosition());
+            boolean onBed = blockBelow.is(DoggyBlocks.DOG_BED.get()) || blockBelow.is(BlockTags.BEDS);
+            if (onBed) {
+                return true;
+            }
+        }
+        
 
         if (this.isDefeated()) {
             BlockState blockBelow = this.level.getBlockState(this.blockPosition());

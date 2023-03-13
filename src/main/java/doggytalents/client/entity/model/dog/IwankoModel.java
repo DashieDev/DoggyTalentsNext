@@ -83,9 +83,9 @@ public class IwankoModel extends DogModel<Dog> {
                 this.head.setPos(-1, 19.5F, -7);
                 this.body.setPos(0, 20, 2);
                 this.body.xRot = (float)Math.PI / 2F;
-                this.mane.setPos(-1, 20, -2);
+                this.mane.setPos(0.0F, 23.0F, -0.5F);
                 this.mane.xRot = this.body.xRot;
-                this.tail.setPos(-1, 18, 8);
+                this.tail.setPos(-1.0F, 19.5F, 9.2f);
                 this.legBackRight.setPos(-4.5F, 23, 7);
                 this.legBackRight.xRot = -(float)Math.PI / 2F;
                 this.legBackLeft.setPos(2.5F, 23, 7);
