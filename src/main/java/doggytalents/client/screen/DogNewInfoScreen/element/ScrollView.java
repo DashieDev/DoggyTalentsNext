@@ -107,6 +107,12 @@ public class ScrollView extends AbstractElement {
         return this.container;
     }
 
+    @Override
+    public boolean mouseClicked(double x, double y, int p_94697_) {                                                                                                                                                                                                             
+        if (!this.isMouseOver(x, y)) return false;
+        return super.mouseClicked(x, y, p_94697_);
+    }
+
     private static class ScrollContentContainer extends AbstractElement {
         
         public ScrollContentContainer(AbstractElement parent, Screen screen) {
