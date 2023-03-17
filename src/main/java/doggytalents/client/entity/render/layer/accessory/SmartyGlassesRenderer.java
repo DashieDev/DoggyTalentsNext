@@ -33,10 +33,19 @@ public class SmartyGlassesRenderer extends RenderLayer<Dog, DogModel<Dog>> {
             dogModel.copyPropertiesTo(this.model);
             this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
             this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-            this.model.glasses.xRot = dogModel.head.xRot;
-            this.model.glasses.yRot = dogModel.head.yRot;
-            this.model.glasses.zRot = dogModel.head.zRot;
-            this.model.realGlasses.zRot = dogModel.realHead.zRot;
+
+            this.model.pHead.xRot = dogModel.head.xRot;
+            this.model.pHead.yRot = dogModel.head.yRot;
+            this.model.pHead.zRot = dogModel.head.zRot;
+            
+            this.model.glasses.xRot = dogModel.realHead.xRot;
+            this.model.glasses.yRot = dogModel.realHead.yRot;
+            this.model.glasses.zRot = dogModel.realHead.zRot;
+
+            float pHeadX = dogModel.head.x;
+            float pHeadY = dogModel.head.y;
+            float pHeadZ = dogModel.head.z;
+            this.model.pHead.setPos(pHeadX, pHeadY, pHeadZ);
 
             RenderLayer.renderColoredCutoutModel(this.model, Resources.SMARTY_GLASSES, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F);
         }

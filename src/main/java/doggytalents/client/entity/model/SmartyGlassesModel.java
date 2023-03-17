@@ -14,12 +14,12 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class SmartyGlassesModel extends ListModel<Dog> {
 
+    public ModelPart pHead;
     public ModelPart glasses;
-    public ModelPart realGlasses;
 
 	public SmartyGlassesModel(ModelPart root) {
-		this.glasses = root.getChild("glasses");
-        this.realGlasses = glasses.getChild("real_glasses");
+		this.pHead = root.getChild("glasses");
+        this.glasses = pHead.getChild("real_glasses");
 	}
 
 	public static LayerDefinition createGlassesLayer() {
@@ -27,7 +27,7 @@ public class SmartyGlassesModel extends ListModel<Dog> {
 		PartDefinition partdefinition = meshdefinition.getRoot();
         PartDefinition glasses = partdefinition.addOrReplaceChild("glasses", CubeListBuilder.create(), PartPose.offset(-1.0F, 13.5F, -6.75F));
 
-		PartDefinition real_glasses = glasses.addOrReplaceChild("real_glasses", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -0.75F, -2.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F))
+		glasses.addOrReplaceChild("real_glasses", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -0.75F, -2.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F))
 		.texOffs(0, 0).addBox(-1.5F, -0.5F, -2.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F))
 		.texOffs(0, 0).addBox(-1.0F, -0.5F, -2.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F))
 		.texOffs(0, 0).addBox(-0.5F, -0.5F, -2.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F))
@@ -78,25 +78,12 @@ public class SmartyGlassesModel extends ListModel<Dog> {
 
     @Override
     public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.glasses);
+        return ImmutableList.of(this.pHead);
     }
 
     @Override
     public void  prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        if (dogIn.isInSittingPose()) {
-            if (dogIn.isLying()) {
-                this.glasses.setPos(-1.0F, 19.5F, -5.75F); // y + 6   x + 1
-                //this.glasses.xRot = (float) (Math.PI / 2);
-            }
-            else  {
-                this.glasses.setPos(-1.0F, 13.5F, -6.75F); // y + 2
-                //this.glasses.xRot = (float) (Math.PI * 2 / 5);
-            }
-        }
-        else {
-            this.glasses.setPos(-1.0F, 13.5F, -6.75F);
-            //this.glasses.xRot = 0;
-        }
+        
     }
 
     @Override

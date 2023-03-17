@@ -30,9 +30,19 @@ public class BowtieRenderer extends RenderLayer<Dog, DogModel<Dog>>  {
 
         for (var accessoryInst : dog.getAccessories()) {
             if (!(accessoryInst.getAccessory() instanceof BowTie)) continue;
-            this.getParentModel().copyPropertiesTo(this.model);
+            var dogModel = this.getParentModel();
+            dogModel.copyPropertiesTo(this.model);
             this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
             this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+
+            this.model.pMane.xRot = dogModel.mane.xRot;
+            this.model.pMane.yRot = dogModel.mane.yRot;
+            this.model.pMane.zRot = dogModel.mane.zRot;
+
+            float pManeX = dogModel.mane.x;
+            float pManeY = dogModel.mane.y;
+            float pManeZ = dogModel.mane.z;
+            this.model.pMane.setPos(pManeX, pManeY, pManeZ);
 
             RenderLayer.renderColoredCutoutModel(this.model, Resources.BOW_TIE, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F);
         }

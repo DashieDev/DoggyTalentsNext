@@ -10,6 +10,11 @@ import net.minecraft.util.Mth;
 
 public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T> {
 
+    public static final float[] MANE_LYING_OFF = {0f, 6f, 1f};
+    public static final float[] MANE_SITTING_OFF = {0f, 2f, 0f};
+    public static final float[] TAIL_LYING_OFF = {0, 6f, 0};
+    public static final float[] TAIL_SITTING_OFF = {0, 9f, -2f};
+
     public ModelPart head;
     public ModelPart realHead; //
     public ModelPart body;
@@ -169,7 +174,11 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
                 this.head.setPos(-1, 19.5F, -7);
                 this.body.setPos(0, 20, 2);
                 this.body.xRot = (float)Math.PI / 2F;
-                this.mane.setPos(-1, 20, -2);
+                this.mane.setPos(
+                    -1f + MANE_LYING_OFF[0],
+                    14f + MANE_LYING_OFF[1], 
+                    -3f + MANE_LYING_OFF[2]
+                );
                 this.mane.xRot = this.body.xRot;
                 this.tail.setPos(-1, 18, 8);
                 this.legBackRight.setPos(-4.5F, 23, 7);
@@ -180,54 +189,18 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
                 this.legFrontRight.xRot = -(float)Math.PI / 2F;
                 this.legFrontLeft.setPos(2.5F, 23, -4);
                 this.legFrontLeft.xRot = -(float)Math.PI / 2F;
-
-//                this.body.setRotationPoint(0.0F, 14.0F, 0.0F);
-//                this.body.rotateAngleX = ((float)Math.PI / 2F);
-//                this.mane.setRotationPoint(-1.0F, 19.0F, -3.0F);
-//                this.mane.rotateAngleX = this.body.rotateAngleX;
-//                this.head.setRotationPoint(-1.0F, 17.0F, -7.0F);
-//
-//                this.tail.setRotationPoint(-0.5F, 17.0F, 8.0F); // +4.0D
-//                this.legBackRight.setRotationPoint(-4.5F, 20.0F, 7.0F);
-//                this.legBackLeft.setRotationPoint(2.5F, 20.0F, 7.0F);
-//                this.legFrontRight.setRotationPoint(-3.0F, 22.0F, -3.0F);
-//                this.legFrontLeft.setRotationPoint(1.0F, 22.0F, -3.0F);
-//
-//                this.legBackRight.rotateAngleX = -(float)Math.PI / 2.6F;
-//                this.legBackLeft.rotateAngleX = -(float)Math.PI / 2.6F;
-//
-//                this.legFrontRight.rotateAngleX = -(float)Math.PI / 2;
-//                this.legFrontRight.rotateAngleY = (float)Math.PI / 10;
-//                this.legFrontLeft.rotateAngleX = -(float)Math.PI / 2;
-//                this.legFrontLeft.rotateAngleY = -(float)Math.PI / 10;
-            } else if (dog.isLying() && false) {
-                this.body.setPos(0.0F, 19.0F, 2.0F);
-                this.body.xRot = ((float)Math.PI / 2F);
-                this.mane.setPos(-1.0F, 19.0F, -3.0F);
-                this.mane.xRot = this.body.xRot;
-                this.head.setPos(-1.0F, 17.0F, -7.0F);
-
-                this.tail.setPos(-0.5F, 17.0F, 8.0F); // +4.0D
-                this.legBackRight.setPos(-4.5F, 20.0F, 7.0F);
-                this.legBackLeft.setPos(2.5F, 20.0F, 7.0F);
-                this.legFrontRight.setPos(-3.0F, 22.0F, -3.0F);
-                this.legFrontLeft.setPos(1.0F, 22.0F, -3.0F);
-
-                this.legBackRight.xRot = -(float)Math.PI / 2.6F;
-                this.legBackLeft.xRot = -(float)Math.PI / 2.6F;
-
-                this.legFrontRight.xRot = -(float)Math.PI / 2;
-                this.legFrontRight.yRot = (float)Math.PI / 10;
-                this.legFrontLeft.xRot = -(float)Math.PI / 2;
-                this.legFrontLeft.yRot = -(float)Math.PI / 10;
-            } else {
+            }  else {
                 this.head.setPos(-1.0F, 13.5F, -7.0F);
-                this.mane.setPos(-1.0F, 16.0F, -3.0F);
+                this.mane.setPos(
+                    -1f + MANE_SITTING_OFF[0],
+                    14f + MANE_SITTING_OFF[1], 
+                    -3f + MANE_SITTING_OFF[2]
+                );
                 this.mane.xRot = ((float)Math.PI * 2F / 5F);
                 this.mane.yRot = 0.0F;
                 this.body.setPos(0.0F, 18.0F, 0.0F);
                 this.body.xRot = ((float)Math.PI / 4F);
-                this.tail.setPos(-0.5F, 21.0F, 6.0F);
+                this.tail.setPos(-1F, 21.0F, 6.0F);
                 this.legBackRight.setPos(-2.5F, 22.0F, 2.0F);
                 this.legBackRight.xRot = ((float)Math.PI * 3F / 2F);
                 this.legBackLeft.setPos(0.5F, 22.0F, 2.0F);
@@ -247,7 +220,7 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
             this.body.xRot = ((float)Math.PI / 2F);
             this.mane.setPos(-1.0F, 14.0F, -3.0F);
             this.mane.xRot = this.body.xRot;
-            this.tail.setPos(-0.5F, 12.0F, 8.0F);
+            this.tail.setPos(-1.0F, 12.0F, 8.0F);
             this.legBackRight.setPos(-2.5F, 16.0F, 7.0F);
             this.legBackLeft.setPos(0.5F, 16.0F, 7.0F);
             this.legFrontRight.setPos(-2.5F, 16.0F, -4.0F);
@@ -268,6 +241,30 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
         this.realTail.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
         this.realTail2.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
         this.realTail3.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
+
+        /*
+         * else if (dog.isLying() && false) {
+                this.body.setPos(0.0F, 19.0F, 2.0F);
+                this.body.xRot = ((float)Math.PI / 2F);
+                this.mane.setPos(-1.0F, 19.0F, -3.0F);
+                this.mane.xRot = this.body.xRot;
+                this.head.setPos(-1.0F, 17.0F, -7.0F);
+
+                this.tail.setPos(-0.5F, 17.0F, 8.0F); // +4.0D
+                this.legBackRight.setPos(-4.5F, 20.0F, 7.0F);
+                this.legBackLeft.setPos(2.5F, 20.0F, 7.0F);
+                this.legFrontRight.setPos(-3.0F, 22.0F, -3.0F);
+                this.legFrontLeft.setPos(1.0F, 22.0F, -3.0F);
+
+                this.legBackRight.xRot = -(float)Math.PI / 2.6F;
+                this.legBackLeft.xRot = -(float)Math.PI / 2.6F;
+
+                this.legFrontRight.xRot = -(float)Math.PI / 2;
+                this.legFrontRight.yRot = (float)Math.PI / 10;
+                this.legFrontLeft.xRot = -(float)Math.PI / 2;
+                this.legFrontLeft.yRot = -(float)Math.PI / 10;
+            }
+         */
 
     }
 

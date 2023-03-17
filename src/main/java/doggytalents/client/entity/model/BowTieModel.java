@@ -1,6 +1,8 @@
 package doggytalents.client.entity.model;
 
 import com.google.common.collect.ImmutableList;
+
+import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -13,11 +15,13 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class BowTieModel extends ListModel<Dog> {
 
+    public ModelPart pMane;
     public ModelPart bowTie;
 
     public BowTieModel(ModelPart part) {
         
-        this.bowTie = part.getChild("bowtie");
+        this.pMane = part.getChild("upper_body");
+        this.bowTie = pMane.getChild("bowtie");
 
     }
 
@@ -25,13 +29,12 @@ public class BowTieModel extends ListModel<Dog> {
         MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		// PartDefinition mane = partdefinition.addOrReplaceChild("mane", CubeListBuilder.create(), PartPose.offset(-1.0F, 14.0F, 2.0F));
-
-		// PartDefinition mane_rotation = mane.addOrReplaceChild("mane_rotation", CubeListBuilder.create(), PartPose.offsetAndRotation(1.0F, 2.5F, -2.5F, 1.5708F, 0.0F, 0.0F));
-
-		PartDefinition bowtie = partdefinition.addOrReplaceChild("bowtie", CubeListBuilder.create().texOffs(3, 1).addBox(-0.5F, -7.5F, -6.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+        var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
+        
+        //1 2.5 -2.5
+		upper_body.addOrReplaceChild("bowtie", CubeListBuilder.create().texOffs(3, 1).addBox(-0.5F, -7.5F, -6.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 		.texOffs(1, 1).addBox(-1.5F, -8.25F, -7.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(1, 1).addBox(0.5F, -8.25F, -7.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, 12.5F, -1.5F));
+		.texOffs(1, 1).addBox(0.5F, -8.25F, -7.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(1.0F, 4F, 3F));
 
 		return LayerDefinition.create(meshdefinition, 16, 16);
     }
@@ -39,25 +42,12 @@ public class BowTieModel extends ListModel<Dog> {
     
     @Override
     public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.bowTie);
+        return ImmutableList.of(this.pMane);
     }
 
     @Override
     public void  prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        if (dogIn.isInSittingPose()) {
-            if (dogIn.isLying()) {
-                //this.bowTie.setPos(-1F, 20F, -2F);
-                this.bowTie.xRot = (float) (Math.PI / 2);
-            }
-            else  {
-                this.bowTie.setPos(-0.0F, 11.5F, 0F);
-                this.bowTie.xRot = (float) (Math.PI / 2);
-            }
-        }
-        else {
-            this.bowTie.setPos(-0.0F, 11.5F, 1F);
-            this.bowTie.xRot = (float) (Math.PI / 2);
-        }
+        this.bowTie.setPos(1f, 4f, 3f);
     }
 
     @Override
