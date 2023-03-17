@@ -2,6 +2,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.vi
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.ChopinLogger;
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.DivElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.ScrollView;
@@ -10,6 +11,7 @@ import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.PosTy
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -26,18 +28,39 @@ public class DebugView extends AbstractElement {
     public AbstractElement init() {
         
         var scrollTest = new ScrollView(this, getScreen());
-        scrollTest.setPosition(PosType.ABSOLUTE, 0, 0);
+        scrollTest.setPosition(PosType.ABSOLUTE, 0, 30);
         scrollTest.getPosition().setChildDirection(ChildDirection.COL);
-        scrollTest.setSize(1f, 1f);
+        scrollTest.setSize(1f, 0.6f);
         scrollTest.init();
 
         this.addChildren(scrollTest);
 
         scrollTest.addScrollChildren(
-            new DivElement(scrollTest.getContainer(), getScreen())
+            (new DivElement(scrollTest.getContainer(), getScreen()) {
+                
+                private Button testButt;
+                
+                @Override
+                public AbstractElement init() {
+                    testButt = new Button(0, 0, 40, 20, 
+                        Component.literal("test"), b -> {
+                            ChopinLogger.l("Clicked test!");
+                        });
+                    this.addChildren(testButt);
+                    return super.init();
+                }
+
+                @Override
+                public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+                    this.testButt.x = this.getRealX() + 10;
+                    this.testButt.y = this.getRealY() + 10;               
+                    super.renderElement(stack, mouseX, mouseY, partialTicks);
+                }
+            })
                 .setPosition(PosType.RELATIVE, 0, 0)
                 .setSize(1f, 40)
                 .setBackgroundColor(0xff5687a6)
+                .init()
         );
 
         scrollTest.addScrollChildren(
