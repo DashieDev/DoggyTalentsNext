@@ -483,6 +483,8 @@ public class Dog extends AbstractDog {
             }
         }
 
+        this.setMaxUpStep(this.isVehicle() ? 1f : 0.6f);
+
         this.alterations.forEach((alter) -> alter.tick(this));
     }
 
@@ -2591,11 +2593,11 @@ public class Dog extends AbstractDog {
         return !this.isVehicle() && super.isPushable();
     }
 
-    @Override
-    public boolean isControlledByLocalInstance() {
-        // Super calls canBeSteered so controlling passenger can be guaranteed to be LivingEntity
-        return super.isControlledByLocalInstance() && this.canInteract((LivingEntity) this.getControllingPassenger());
-    }
+    // @Override
+    // public boolean isControlledByLocalInstance() {
+    //     // Super calls canBeSteered so controlling passenger can be guaranteed to be LivingEntity
+    //     return super.isControlledByLocalInstance() && this.canInteract((LivingEntity) this.getControllingPassenger());
+    // }
 
     public boolean isDogJumping() {
         return this.dogJumping;
@@ -2625,103 +2627,213 @@ public class Dog extends AbstractDog {
 
     @Override
     public void travel(Vec3 positionIn) {
-        if (this.isAlive()) {
-            if (this.isVehicle()) {
-                LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
+        super.travel(positionIn);
+        this.addMovementStat(this.getX() - this.xo, this.getY() - this.yo, this.getZ() - this.zo);
+    }
 
-                // Face the dog in the direction of the controlling passenger
-                this.setYRot(livingentity.getYRot());
-                this.yRotO = this.getYRot();
-                this.setXRot(livingentity.getXRot() * 0.5F);
-                this.setRot(this.getYRot(), this.getXRot());
-                this.yBodyRot = this.getYRot();
-                this.yHeadRot = this.yBodyRot;
+    // @Override
+    // public void travel(Vec3 positionIn) {
+    //     if (this.isAlive()) {
+    //         if (this.isVehicle()) {
+    //             LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
 
-                this.maxUpStep = 1.0F;
+    //             // Face the dog in the direction of the controlling passenger
+    //             this.setYRot(livingentity.getYRot());
+    //             this.yRotO = this.getYRot();
+    //             this.setXRot(livingentity.getXRot() * 0.5F);
+    //             this.setRot(this.getYRot(), this.getXRot());
+    //             this.yBodyRot = this.getYRot();
+    //             this.yHeadRot = this.yBodyRot;
 
-                float straf = livingentity.xxa * 0.7F;
-                float forward = livingentity.zza;
-                double downward = positionIn.y; 
+    //             this.maxUpStep = 1.0F;
+
+    //             float straf = livingentity.xxa * 0.7F;
+    //             float forward = livingentity.zza;
+    //             double downward = positionIn.y; 
                 
-                if (this.isInWater() && forward > 0 && this.canSwimUnderwater() ) {
-                    float l = forward;
-                    downward = -l*Mth.sin(this.getXRot() * ((float)Math.PI / 180F));
-                    forward = l*Mth.cos(this.getXRot() * ((float)Math.PI / 180F));
-                } 
+    //             if (this.isInWater() && forward > 0 && this.canSwimUnderwater() ) {
+    //                 float l = forward;
+    //                 downward = -l*Mth.sin(this.getXRot() * ((float)Math.PI / 180F));
+    //                 forward = l*Mth.cos(this.getXRot() * ((float)Math.PI / 180F));
+    //             } 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-                // If moving backwards half  the speed
-                if (forward <= 0.0F) {
-                   forward *= 0.5F;
-                } 
+    //             // If moving backwards half  the speed
+    //             if (forward <= 0.0F) {
+    //                forward *= 0.5F;
+    //             } 
 
-                if (this.jumpPower > 0.0F && !this.isDogJumping() && this.isOnGround()) {
+    //             if (this.jumpPower > 0.0F && !this.isDogJumping() && this.isOnGround()) {
 
-                    // Calculate jump value based of jump strength, power this jump and jump boosts
-                    double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER.get()).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
-                    if (this.hasEffect(MobEffects.JUMP)) {
-                        jumpValue += (this.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.1F;
-                    }
+    //                 // Calculate jump value based of jump strength, power this jump and jump boosts
+    //                 double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER.get()).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
+    //                 if (this.hasEffect(MobEffects.JUMP)) {
+    //                     jumpValue += (this.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.1F;
+    //                 }
 
-                    // Apply jump
-                    Vec3 vec3d = this.getDeltaMovement();
-                    this.setDeltaMovement(vec3d.x, jumpValue, vec3d.z);
-                    this.setDogJumping(true);
-                    this.hasImpulse = true;
+    //                 // Apply jump
+    //                 Vec3 vec3d = this.getDeltaMovement();
+    //                 this.setDeltaMovement(vec3d.x, jumpValue, vec3d.z);
+    //                 this.setDogJumping(true);
+    //                 this.hasImpulse = true;
 
-                    // If moving forward, propel further in the direction
-                    if (forward > 0.0F) {
-                        final float amount = 0.4F; // TODO Allow people to change this value
-                        float compX = Mth.sin(this.getYRot() * ((float)Math.PI / 180F));
-                        float compZ = Mth.cos(this.getYRot() * ((float)Math.PI / 180F));
-                        this.setDeltaMovement(this.getDeltaMovement().add(-amount * compX * this.jumpPower, 0.0D, amount * compZ * this.jumpPower));
-                        //this.playJumpSound();
-                    }
+    //                 // If moving forward, propel further in the direction
+    //                 if (forward > 0.0F) {
+    //                     final float amount = 0.4F; // TODO Allow people to change this value
+    //                     float compX = Mth.sin(this.getYRot() * ((float)Math.PI / 180F));
+    //                     float compZ = Mth.cos(this.getYRot() * ((float)Math.PI / 180F));
+    //                     this.setDeltaMovement(this.getDeltaMovement().add(-amount * compX * this.jumpPower, 0.0D, amount * compZ * this.jumpPower));
+    //                     //this.playJumpSound();
+    //                 }
 
-                    // Mark as unable jump until reset
-                    this.jumpPower = 0.0F;
-                }
+    //                 // Mark as unable jump until reset
+    //                 this.jumpPower = 0.0F;
+    //             }
 
-                this.flyingSpeed = this.getSpeed() * 0.1F;
-                if (this.isControlledByLocalInstance()) {
-                    // Set the move speed and move the dog in the direction of the controlling entity
-                    this.setSpeed((float)this.getAttribute(Attributes.MOVEMENT_SPEED).getValue() * 0.5F);
-                    super.travel(new Vec3(straf, downward, forward));
-                    this.lerpSteps = 0;
-                } else if (livingentity instanceof Player) {
-                    // A player is riding and can not control then
-                    this.setDeltaMovement(Vec3.ZERO);
-                }
+    //             // Flying Speed is now being dynamically gotten.
+    //             // with the exact same logic
+    //             //this.flyingSpeed = this.getSpeed() * 0.1F;
+    //             if (this.isControlledByLocalInstance()) {
+    //                 // Set the move speed and move the dog in the direction of the controlling entity
+    //                 this.setSpeed((float)this.getAttribute(Attributes.MOVEMENT_SPEED).getValue() * 0.5F);
+    //                 super.travel(new Vec3(straf, downward, forward));
+    //                 this.lerpSteps = 0;
+    //             } else if (livingentity instanceof Player) {
+    //                 // A player is riding and can not control then
+    //                 this.setDeltaMovement(Vec3.ZERO);
+    //             }
 
-                // Once the entity reaches the ground again allow it to jump again
-                if (this.isOnGround()) {
-                    this.jumpPower = 0.0F;
-                    this.setDogJumping(false);
-                }
+    //             // Once the entity reaches the ground again allow it to jump again
+    //             if (this.isOnGround()) {
+    //                 this.jumpPower = 0.0F;
+    //                 this.setDogJumping(false);
+    //             }
 
-                //
-                this.animationSpeedOld = this.animationSpeed;
-                double changeX = this.getX() - this.xo;
-                double changeY = this.getZ() - this.zo;
-                float f4 = Mth.sqrt((float) (changeX * changeX + changeY * changeY)) * 4.0F;
+    //             double changeX = this.getX() - this.xo;
+    //             double changeY = this.getZ() - this.zo;
+    //             float f4 = Mth.sqrt((float) (changeX * changeX + changeY * changeY)) * 4.0F;
 
-                if (f4 > 1.0F) {
-                   f4 = 1.0F;
-                }
+    //             if (f4 > 1.0F) {
+    //                f4 = 1.0F;
+    //             }
 
-                this.animationSpeed += (f4 - this.animationSpeed) * 0.4F;
-                this.animationPosition += this.animationSpeed;
+    //             // // Same logic
+    //             // this.animationSpeedOld = this.animationSpeed;
+    //             // this.animationSpeed += (f4 - this.animationSpeed) * 0.4F;
+    //             // this.animationPosition += this.animationSpeed;
+    //             this.walkAnimation.update(f4, 0.4f);
 
-                if (this.onClimbable()) {
-                    this.fallDistance = 0.0F;
-                }
-             } else {
-                 this.maxUpStep = 0.5F; // Default
-                 this.flyingSpeed = 0.02F; // Default
-                 super.travel(positionIn);
-             }
+    //             if (this.onClimbable()) {
+    //                 this.fallDistance = 0.0F;
+    //             }
+    //          } else {
+    //              this.maxUpStep = 0.5F; // Default
+    //              // Flying Speed is now being dynamically gotten.
+    //             // with the exact same logic
+    //              //this.flyingSpeed = 0.02F; // Default
+    //              super.travel(positionIn);
+    //          }
 
-            this.addMovementStat(this.getX() - this.xo, this.getY() - this.yo, this.getZ() - this.zo);
+            
+    //     }
+    // }
+
+    @Override
+    protected void tickRidden(LivingEntity rider, Vec3 rideVec) {
+
+        // Face the dog in the direction of the controlling passenger
+        this.setYRot(rider.getYRot());
+        this.yRotO = this.getYRot();
+        this.setXRot(rider.getXRot() * 0.5F);
+        this.setRot(this.getYRot(), this.getXRot());
+        this.yBodyRot = this.getYRot();
+        this.yHeadRot = this.yBodyRot;
+        
+        checkAndJumpWhenBeingRidden(rider);
+
+        if (this.onClimbable()) {
+            this.fallDistance = 0.0F;
         }
+
+        // TODO 1.19.4 ???? 
+        // double changeX = this.getX() - this.xo;
+        // double changeY = this.getZ() - this.zo;
+        // float f4 = Mth.sqrt((float) (changeX * changeX + changeY * changeY)) * 4.0F;
+
+        // if (f4 > 1.0F) {
+        //     f4 = 1.0F;
+        // }
+
+        // // // Same logic
+        // // this.animationSpeedOld = this.animationSpeed;
+        // // this.animationSpeed += (f4 - this.animationSpeed) * 0.4F;
+        // // this.animationPosition += this.animationSpeed;
+        // this.walkAnimation.update(f4, 0.4f);
+
+        this.addMovementStat(this.getX() - this.xo, this.getY() - this.yo, this.getZ() - this.zo);
+    }
+
+    private void checkAndJumpWhenBeingRidden(LivingEntity rider) {
+        float forward = rider.zza;
+
+        if (this.jumpPower > 0.0F && !this.isDogJumping() && this.isOnGround()) {
+
+            // Calculate jump value based of jump strength, power this jump and jump boosts
+            double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER.get()).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
+            if (this.hasEffect(MobEffects.JUMP)) {
+                jumpValue += (this.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.1F;
+            }
+
+            // Apply jump
+            Vec3 vec3d = this.getDeltaMovement();
+            this.setDeltaMovement(vec3d.x, jumpValue, vec3d.z);
+            this.setDogJumping(true);
+            this.hasImpulse = true;
+
+            // If moving forward, propel further in the direction
+            if (forward > 0.0F) {
+                final float amount = 0.4F; // TODO Allow people to change this value
+                float compX = Mth.sin(this.getYRot() * ((float)Math.PI / 180F));
+                float compZ = Mth.cos(this.getYRot() * ((float)Math.PI / 180F));
+                this.setDeltaMovement(this.getDeltaMovement().add(-amount * compX * this.jumpPower, 0.0D, amount * compZ * this.jumpPower));
+                //this.playJumpSound();
+            }
+
+            // Mark as unable jump until reset
+            this.jumpPower = 0.0F;
+        }
+
+        // Once the entity reaches the ground again allow it to jump again
+        if (this.isOnGround()) {
+            this.jumpPower = 0.0F;
+            this.setDogJumping(false);
+        } else {
+            this.jumpPower = 0.0f;
+        }
+    }
+
+    @Override
+    protected Vec3 getRiddenInput(LivingEntity rider, Vec3 rideVec) {
+        float straf = rider.xxa * 0.7F;
+        float forward = rider.zza;
+        double downward = rideVec.y; 
+        
+        if (this.isInWater() && forward > 0 && this.canSwimUnderwater() ) {
+            float l = forward;
+            downward = -l*Mth.sin(this.getXRot() * ((float)Math.PI / 180F));
+            forward = l*Mth.cos(this.getXRot() * ((float)Math.PI / 180F));
+        } 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        // If moving backwards half  the speed
+        if (forward <= 0.0F) {
+            forward *= 0.5F;
+        }
+        
+        return new Vec3(straf, downward, forward);
+    }
+
+    @Override
+    protected float getRiddenSpeed(LivingEntity rider) {
+        return (float) this.getAttribute(Attributes.MOVEMENT_SPEED).getValue() * 0.5f;
     }
 
     public void addMovementStat(double xD, double yD, double zD) {
