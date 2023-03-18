@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import doggytalents.common.entity.Dog;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Wolf;
@@ -65,7 +66,7 @@ public class ChopinLogger {
             (e instanceof Dog && !IS_DEBUG_ALLOW_DEATH)
             || e instanceof Wolf
         ) {
-            if (ev.getSource().isBypassInvul()) return;
+            if (ev.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
             ev.setCanceled(true);
             e.setHealth(e.getMaxHealth());
             if (e instanceof Dog) {

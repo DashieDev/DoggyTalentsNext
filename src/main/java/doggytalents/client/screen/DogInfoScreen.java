@@ -85,7 +85,7 @@ public class DogInfoScreen extends Screen {
         nameTextField.setResponder(text ->  {
             PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogNameData(DogInfoScreen.this.dog.getId(), text));
         });
-        nameTextField.setFocus(false);
+        nameTextField.setFocused(false);
         nameTextField.setMaxLength(32);
 
         if (this.dog.hasCustomName()) {

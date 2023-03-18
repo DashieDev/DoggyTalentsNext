@@ -15,6 +15,7 @@ import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
@@ -256,14 +257,14 @@ public class ShepherdDogTalent extends TalentInstance {
             double tpPosZ = avgPosVec.z + d_avgPosZ_ownerZ / size * (2 + talentInst.targets.size() / 16);
 
             if (teleport) {
-                EntityUtil.tryToTeleportNearEntity(this.dog, this.dog.getNavigation(), new BlockPos(tpPosX, this.dog.getY(), tpPosZ), 1);
+                EntityUtil.tryToTeleportNearEntity(this.dog, this.dog.getNavigation(), new BlockPos(Mth.floor(tpPosX), Mth.floor(this.dog.getY()), Mth.floor(tpPosZ)), 1);
             }
 
             this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
             if (!this.dog.getNavigation().moveTo(tpPosX, this.owner.getBoundingBox().minY, tpPosZ, 1)) {
                 if (this.dog.distanceToSqr(tpPosX, this.owner.getBoundingBox().minY, tpPosZ) > 144D) {
                     if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
-                        EntityUtil.tryToTeleportNearEntity(this.dog, this.dog.getNavigation(), new BlockPos(tpPosX, this.dog.getY(), tpPosZ), 4);
+                        EntityUtil.tryToTeleportNearEntity(this.dog, this.dog.getNavigation(), new BlockPos(Mth.floor(tpPosX), Mth.floor(this.dog.getY()), Mth.floor(tpPosZ)), 4);
                     }
                 }
             }

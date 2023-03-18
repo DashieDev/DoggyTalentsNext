@@ -175,7 +175,7 @@ public class DoggyTalentsNext {
             
             DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(packOutput, lookup, event.getExistingFileHelper());
             gen.addProvider(true, blockTagProvider);
-            gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider, event.getExistingFileHelper()));
+            gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider.contentsGetter(), event.getExistingFileHelper()));
             gen.addProvider(true, new DTRecipeProvider(packOutput));
             gen.addProvider(true, new DTLootTableProvider(packOutput));
         }

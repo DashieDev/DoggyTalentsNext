@@ -56,13 +56,13 @@ import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -897,18 +897,18 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean rideableUnderWater() {
+    public boolean dismountsUnderwater() {
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.canBeRiddenInWater(this);
 
             if (result.shouldSwing()) {
-                return true;
-            } else if (result == InteractionResult.FAIL) {
                 return false;
+            } else if (result == InteractionResult.FAIL) {
+                return true;
             }
         }
 
-        return super.rideableUnderWater();
+        return super.dismountsUnderwater();
     }
 
     @Override
@@ -966,14 +966,14 @@ public class Dog extends AbstractDog {
         if (i > 0) {
             if (this.isVehicle()) {
                 for(Entity e : this.getPassengers()) {
-                   e.hurt(DamageSource.FALL, i);
+                   e.hurt(this.damageSources().fall(), i);
                 }
             }
 
             // Sound selection is copied from Entity#getFallDamageSound()
            this.playSound(i > 4 ? this.getFallSounds().big() : this.getFallSounds().small(), 1.0F, 1.0F);
            this.playBlockFallSound();
-           this.hurt(DamageSource.FALL, (float)i);
+           this.hurt(this.damageSources().fall(), (float)i);
            return true;
         } else {
            return false;
@@ -1153,7 +1153,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (this.isDefeated() && !source.isBypassInvul()) {
+        if (this.isDefeated() && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             //Reset the dog incapacitated healing time
             //The dog is already weak, hurting the dog makes,
             //the dog being weak for longer...
@@ -1229,7 +1229,7 @@ public class Dog extends AbstractDog {
             critModifiers.forEach(attackDamageInst::removeModifier);
         }
 
-        boolean flag = target.hurt(DamageSource.mobAttack(this), damage);
+        boolean flag = target.hurt(this.damageSources().mobAttack(this), damage);
         if (flag) {
             this.doEnchantDamageEffects(this, target);
             this.statsTracker.increaseDamageDealt(damage);
@@ -2579,9 +2579,9 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public Entity getControllingPassenger() {
+    public LivingEntity getControllingPassenger() {
         // Gets the first passenger which is the controlling passenger
-        return this.getPassengers().isEmpty() ? null : (Entity) this.getPassengers().get(0);
+        return this.getPassengers().isEmpty() ? null : (LivingEntity) this.getPassengers().get(0);
     }
 
     // @Override
@@ -2908,7 +2908,8 @@ public class Dog extends AbstractDog {
         // var food beg
         if (hurt_interval >= 0 && ++this.hungerDamageTick >= hurt_interval
                 && (hurt_last_health || this.getHealth() > 1f)) {
-            this.hurt(DamageSource.STARVE, 0.5f);
+            this.hurt(this.damageSources().starve(), 0.5f);
+            
             this.hungerDamageTick = 0;
         }
     }

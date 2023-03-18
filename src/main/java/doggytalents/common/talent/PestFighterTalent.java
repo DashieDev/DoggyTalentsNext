@@ -33,7 +33,7 @@ public class PestFighterTalent extends TalentInstance {
             );
             for (Silverfish silverfish : list) {
                 if (dogIn.getRandom().nextInt(10) == 0) {
-                    silverfish.hurt(DamageSource.GENERIC, damage);
+                    silverfish.hurt(silverfish.damageSources().generic(), damage);
                 }
             }
         }

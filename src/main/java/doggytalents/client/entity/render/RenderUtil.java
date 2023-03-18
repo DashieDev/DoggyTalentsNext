@@ -37,9 +37,9 @@ public class RenderUtil {
         int j = (int) (f1 * 255.0F) << 24;
         Font fontrenderer = renderer.getFont();
         float f2 = -fontrenderer.width(text) / 2F;
-        fontrenderer.drawInBatch(text, f2, 0, 553648127, false, matrix4f, buffer, flag, j, packedLightIn);
+        fontrenderer.drawInBatch(text, f2, 0, 553648127, false, matrix4f, buffer, flag ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL, j, packedLightIn);
         if (flag) {
-            fontrenderer.drawInBatch(text, f2, 0, -1, false, matrix4f, buffer, false, 0, packedLightIn);
+            fontrenderer.drawInBatch(text, f2, 0, -1, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLightIn);
         }
 
         stack.popPose();

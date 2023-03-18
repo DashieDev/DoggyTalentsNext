@@ -29,8 +29,8 @@ public class FlatButton extends AbstractButton {
         this.onPress.onPress(this);
     }
 
-    @Override
-    public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    @Override //TODO 1.19.4 ?? 
+    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
 
         if (!this.active) return;
 

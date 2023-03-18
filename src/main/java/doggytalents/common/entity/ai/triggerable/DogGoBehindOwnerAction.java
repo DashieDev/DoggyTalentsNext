@@ -60,7 +60,11 @@ public class DogGoBehindOwnerAction extends TriggerableAction {
         var offset = new Vec3(3*dx1, 0, 3*dz1);
         var owner_pos0 = owner.position();
         var targetPos_precise = owner_pos0.add(offset);
-        this.targetPos = new BlockPos(targetPos_precise);
+        this.targetPos = new BlockPos(
+            Mth.floor(targetPos_precise.x), 
+            Mth.floor(targetPos_precise.y), 
+            Mth.floor(targetPos_precise.z)
+        );
         if (!this.dog.level.getBlockState(targetPos).isAir()) {
             this.targetPos = this.targetPos.above();
             if (!this.dog.level.getBlockState(targetPos).isAir()) {

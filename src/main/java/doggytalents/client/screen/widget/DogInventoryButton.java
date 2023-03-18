@@ -8,6 +8,7 @@ import doggytalents.common.lib.Resources;
 import doggytalents.common.talent.PackPuppyTalent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarratableEntry;
@@ -75,16 +76,30 @@ public class DogInventoryButton extends Button {
     }
 
     @Override
-    public void renderButton(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
         RenderSystem.setShaderTexture(0, Resources.SMALL_WIDGETS);
        Minecraft mc = Minecraft.getInstance();
-       int i = this.getYImage(this.isHoveredOrFocused());
+       int i = this.getTextureY();
        RenderSystem.enableBlend();
        RenderSystem.defaultBlendFunc();
        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
        this.blit(stack, this.getX(), this.getY(), 0, 36 + i * 10, this.width, this.height);
-       this.renderBg(stack, mc, mouseX, mouseY);
+       //TODO : 1.19.4 ???
+       //this.renderBg(stack, mc, mouseX, mouseY);
+
     }
+    
+    private int getTextureY() {
+        int i = 1;
+        if (!this.active) {
+           i = 0;
+        } else if (this.isHoveredOrFocused()) {
+           i = 2;
+        }
+  
+        return 46 + i * 20;
+    }
+
 }

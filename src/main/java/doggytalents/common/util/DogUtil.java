@@ -368,7 +368,7 @@ public class DogUtil {
             dog_p0.y,
             dog_p0.z + dog_v1.z
         );
-        var dog_b1 = new BlockPos(dog_p01);
+        var dog_b1 = new BlockPos(Mth.floor(dog_p01.x), Mth.floor(dog_p01.y), Mth.floor(dog_p01.z));
 
         var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(
             dog.level, 
@@ -502,8 +502,10 @@ public class DogUtil {
                 DogLocationStorage storage = DogLocationStorage.get(sLevel);
                 DogLocationData data = storage.getData(dogUUID);
                 if (data == null) return;
-                var pos = new BlockPos(data.getPos());
-
+                var dataPos = data.getPos();
+                if (dataPos == null) return;
+                var pos = new BlockPos(Mth.floor(dataPos.x), Mth.floor(dataPos.y), Mth.floor(dataPos.z));
+                
                 DogAsyncTaskManager.addPromiseWithOwner(
                     new DogDistantTeleportToOwnerPromise(dogUUID, owner, pos),
                     owner

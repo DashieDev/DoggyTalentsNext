@@ -11,6 +11,7 @@ import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.feature.IDog;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -163,7 +164,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
             int j = 0;
             for(var i : this.getArmorSlots()) {
                 ItemStack itemstack = i;
-                if ((!p_36251_.isFire() || !itemstack.getItem().isFireResistant()) && itemstack.getItem() instanceof ArmorItem) {
+                if ((!p_36251_.is(DamageTypeTags.IS_FIRE) || !itemstack.getItem().isFireResistant()) && itemstack.getItem() instanceof ArmorItem) {
                     final var slot = EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, j);
                     itemstack.hurtAndBreak((int)p_36252_, this, (p_35997_) -> {
                         p_35997_.broadcastBreakEvent(slot);
@@ -187,7 +188,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
             var i = this.getItemBySlot(EquipmentSlot.HEAD);
 
             ItemStack itemstack = i;
-            if ((!p_150103_.isFire() || !itemstack.getItem().isFireResistant()) && itemstack.getItem() instanceof ArmorItem) {
+            if ((!p_150103_.is(DamageTypeTags.IS_FIRE) || !itemstack.getItem().isFireResistant()) && itemstack.getItem() instanceof ArmorItem) {
                 itemstack.hurtAndBreak((int)p_150104_, this, (p_35997_) -> {
                     p_35997_.broadcastBreakEvent(EquipmentSlot.HEAD);
                 });

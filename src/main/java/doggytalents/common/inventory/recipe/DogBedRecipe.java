@@ -6,6 +6,7 @@ import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.util.DogBedUtil;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -61,14 +62,6 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv) {
-        IBeddingMaterial beddingId = DogBedUtil.getBeddingFromStack(DoggyTalentsAPI.BEDDING_MATERIAL.get(), inv.getItem(1));
-        ICasingMaterial casingId = DogBedUtil.getCasingFromStack(DoggyTalentsAPI.CASING_MATERIAL.get(), inv.getItem(0));
-
-        return DogBedUtil.createItemStack(casingId, beddingId);
-    }
-
-    @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
         NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack>withSize(inv.getContainerSize(), ItemStack.EMPTY);
 
@@ -99,5 +92,13 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
     @Override
     public int getRecipeHeight() {
         return 3;
+    }
+
+    @Override
+    public ItemStack assemble(CraftingContainer inv, RegistryAccess p_267165_) {
+        IBeddingMaterial beddingId = DogBedUtil.getBeddingFromStack(DoggyTalentsAPI.BEDDING_MATERIAL.get(), inv.getItem(1));
+        ICasingMaterial casingId = DogBedUtil.getCasingFromStack(DoggyTalentsAPI.CASING_MATERIAL.get(), inv.getItem(0));
+
+        return DogBedUtil.createItemStack(casingId, beddingId);
     }
 }
