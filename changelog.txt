@@ -353,3 +353,5 @@ any time you swing with a digger item in hand. Also they will not teleport in fr
   * HOTFIX : Fixed Improper pathfind, causing dog to sometimes go infront of owner instead.
   + Improve accuracy.
 
+1.10.7(1.19.4 only) - 19th March 2023
++ Update to 1.19.4
