@@ -55,7 +55,7 @@ public class AccessoryHolder extends AbstractWidget {
             fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, bkg_col);
         }
         
-        this.itemRenderer.renderGuiItem(itemStack, this.getX()+1, this.getY()+1);
+        this.itemRenderer.renderGuiItem(stack, itemStack, this.getX()+1, this.getY()+1);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, Resources.STYLE_ADD_REMOVE);
@@ -88,6 +88,10 @@ public class AccessoryHolder extends AbstractWidget {
     protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public void renderWidget(PoseStack p_268228_, int p_268034_, int p_268009_, float p_268085_) {
     }
     
 }

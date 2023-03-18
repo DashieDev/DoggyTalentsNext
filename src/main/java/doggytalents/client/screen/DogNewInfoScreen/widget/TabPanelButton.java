@@ -51,7 +51,7 @@ public class TabPanelButton extends AbstractButton {
     }
 
     @Override
-    public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
         int sel_cl = this.isHovered ? DEFAULT_SEL_HLCOLOR : DEFAULT_SEL_COLOR;
         

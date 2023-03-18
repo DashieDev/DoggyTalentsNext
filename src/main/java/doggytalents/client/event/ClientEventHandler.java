@@ -209,7 +209,7 @@ public class ClientEventHandler {
         RenderSystem.lineWidth(2.0F);
 
 
-        RenderSystem.disableTexture();
+        //RenderSystem.disableTexture();
         Vec3 vec3d = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
         double d0 = vec3d.x();
         double d1 = vec3d.y();
@@ -221,7 +221,7 @@ public class ClientEventHandler {
         Tesselator.getInstance().end();
         RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 0.3F);
         RenderSystem.depthMask(true);
-        RenderSystem.enableTexture();
+        //RenderSystem.enableTexture();
         RenderSystem.disableBlend();
         //RenderSystem.enableAlphaTest();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

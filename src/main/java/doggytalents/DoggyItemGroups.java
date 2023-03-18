@@ -28,7 +28,7 @@ public class DoggyItemGroups {
             .icon(() -> {
                 return new ItemStack(DoggyItems.TRAINING_TREAT.get());
             })
-            .displayItems((a, b, c) -> {
+            .displayItems((a, b) -> {
                 b.accept(THROW_BONE.get());
                 b.accept(THROW_BONE_WET.get());
                 b.accept(THROW_STICK.get());
@@ -68,7 +68,7 @@ public class DoggyItemGroups {
         Consumer<CreativeModeTab.Builder> DOGBED_BUILDER = builder ->
             builder.title(Component.translatable("itemGroup.doggytalents.dogbed"))
             .icon(DogBedUtil::createRandomBed)
-            .displayItems((a, b, c) -> {
+            .displayItems((a, b) -> {
                 for (var beddingId : DoggyTalentsAPI.BEDDING_MATERIAL.get().getValues()) {
                     for (var casingId : DoggyTalentsAPI.CASING_MATERIAL.get().getValues()) {
                         b.accept(DogBedUtil.createItemStack(casingId, beddingId));

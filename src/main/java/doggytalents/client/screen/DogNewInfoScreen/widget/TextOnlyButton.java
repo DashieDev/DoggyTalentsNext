@@ -25,7 +25,8 @@ public class TextOnlyButton extends AbstractButton {
         this.onPress.onPress(this);
     }
 
-    public void renderButton(PoseStack stack, int mouseX, int mouseY, float pticks) {
+    @Override
+    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pticks) {
         // No HightLight
         if (!this.active) return;
         int mX = this.width/2;

@@ -11,6 +11,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -159,9 +160,9 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
                 newTxt.append(restTxt);
                 text = newTxt;
            }
-           font.drawInBatch(text, f2, (float)i, 553648127, false, matrix4f, buffer, flag, j, packedLight);
+           font.drawInBatch(text, f2, (float)i, 553648127, false, matrix4f, buffer, flag ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL, j, packedLight);
            if (flag) {
-              font.drawInBatch(text, f2, (float)i, -1, false, matrix4f, buffer, false, 0, packedLight);
+              font.drawInBatch(text, f2, (float)i, -1, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight);
            }
   
            stack.popPose();

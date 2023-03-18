@@ -248,7 +248,7 @@ public class WhistleItem extends Item {
                                 for (LivingEntity mob : list) {
                                     if (mob instanceof Enemy) {
                                         hit = true;
-                                        mob.hurt(DamageSource.GENERIC, damage);
+                                        mob.hurt(mob.damageSources().generic(), damage);
                                         mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, effectDuration, 127, false, false));
                                         mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, effectDuration, 1, false, false));
                                         mob.push(Mth.sin(mob.getYRot() * (float) Math.PI / 180.0F) * knockback * 0.5F, 0.1D, -Mth.cos(mob.getYRot() * (float) Math.PI / 180.0F) * knockback * 0.5F);

@@ -175,5 +175,9 @@ public class ModeSwitch extends AbstractWidget {
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public void renderWidget(PoseStack p_268228_, int p_268034_, int p_268009_, float p_268085_) {
+    }
     
 }

@@ -35,8 +35,9 @@ public class NavBarButton extends AbstractButton {
             ActiveTabSlice.UIActionCreator(dog, tab)
         );
     }
-
-    public void renderButton(PoseStack stack, int mouseX, int mouseY, float pticks) {
+    
+    @Override
+    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pticks) {
         // No HightLight
         if (this.isHovered) {
             var s = this.getMessage().copy();
