@@ -5,7 +5,12 @@
             "skin_name" : "Iwanko (RockRuff)",
             "skin_id" : "iwanko",
             "use_model" : "iwanko"
-        }, 
+        },
+        {
+            "skin_name" : "Akita Inu",
+            "skin_id" : "akita_inu",
+            "use_model" : "default"
+        },
         {
             "skin_name" : "German Shepherd",
             "skin_id" : "german_shepherd",

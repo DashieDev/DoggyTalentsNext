@@ -109,7 +109,7 @@ public class IwankoModel extends DogModel<Dog> {
                 this.head.setPos(-1.0F, 13.5F, -7.0F);
                 this.mane.setPos(
                     -1f + MANE_SITTING_OFF[0],
-                    14f + MANE_SITTING_OFF[1], 
+                    14f + MANE_SITTING_OFF[1],
                     -3f + MANE_SITTING_OFF[2]
                 );
                 this.mane.xRot = ((float)Math.PI * 2F / 5F);
