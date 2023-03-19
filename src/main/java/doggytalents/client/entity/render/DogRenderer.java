@@ -1,6 +1,7 @@
 package doggytalents.client.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 
 import doggytalents.ChopinLogger;
 import doggytalents.client.ClientSetup;
@@ -183,5 +184,23 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
   
            stack.popPose();
         }
+     }
+
+     @Override
+     protected void setupRotations(Dog dog, PoseStack stack, float p_115319_, float p_115320_,
+             float p_115321_) {
+        if (!dog.isDeadOrDying() && dog.isDefeated() && dog.clientIncapacitatedTickCount >= 10) {
+            //float f = ((float)dog.deathTime + p_115321_ - 1.0F) / 20.0F * 1.6F;
+            // f = Mth.sqrt(f);
+            // if (f > 1.0F) {`1
+            //     f = 1.0F;
+            // }
+            //ChopinLogger.l("pticks" + p_115321_);
+            double progress = Math.min(10, (float)(dog.clientIncapacitatedTickCount-10) + p_115321_)/10d;
+            stack.translate(0.5*progress, 0.17*progress, 0*progress);
+            stack.mulPose(Vector3f.ZP.rotationDegrees(Mth.ceil(90*progress)));
+            return;
+        } 
+        super.setupRotations(dog, stack, p_115319_, p_115320_, p_115321_);
      }
 }

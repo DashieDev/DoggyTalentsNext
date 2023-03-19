@@ -394,9 +394,17 @@ public class Dog extends AbstractDog {
         return this.getVehicle() instanceof Player ? 0.5D : 0.0D;
     }
 
+    public int clientIncapacitatedTickCount = 0;
+
     @Override
     public void tick() {
         super.tick();
+
+        if (this.isDefeated()) {
+            ++ clientIncapacitatedTickCount;
+        } else {
+            clientIncapacitatedTickCount = 0;
+        }
 
         if (this.isAlive()) {
             this.headRotationCourseOld = this.headRotationCourse;
@@ -682,6 +690,7 @@ public class Dog extends AbstractDog {
     }
 
     public void incapacitatedClientTick() {
+
         for (var i : this.getAccessories()) {
             if (i.getAccessory() instanceof IncapacitatedLayer iL) {
                 if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
