@@ -25,7 +25,7 @@ public class SmartyGlassesModel extends ListModel<Dog> {
 	public static LayerDefinition createGlassesLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
-        PartDefinition glasses = partdefinition.addOrReplaceChild("glasses", CubeListBuilder.create(), PartPose.offset(-1.0F, 13.5F, -6.75F));
+        PartDefinition glasses = partdefinition.addOrReplaceChild("glasses", CubeListBuilder.create(), PartPose.offset(-1.0F, 13.5F, -7F));
 
 		glasses.addOrReplaceChild("real_glasses", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -0.75F, -2.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F))
 		.texOffs(0, 0).addBox(-1.5F, -0.5F, -2.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F))

@@ -52,6 +52,7 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> PIANIST_SUIT = registerAccessory("pianist_suit", DoggyAccessories.PIANIST_SUIT);
     public static final RegistryObject<AccessoryItem> BOWTIE = registerAccessory("bowtie", DoggyAccessories.BOWTIE);
     public static final RegistryObject<AccessoryItem> SMARTY_GLASSES = registerAccessory("smarty_glasses", DoggyAccessories.SMARTY_GLASSES);
+    public static final RegistryObject<AccessoryItem> WIG = registerAccessory("wig", DoggyAccessories.WIG);
     public static final RegistryObject<AccessoryItem> LEATHER_JACKET = registerAccessory("leather_jacket", DoggyAccessories.LEATHER_JACKET_CLOTHING);
     public static final RegistryObject<Item> TINY_BONE = registerSizeBone("tiny_bone", SizeBoneItem.Type.TINY);
     public static final RegistryObject<Item> BIG_BONE = registerSizeBone("big_bone", SizeBoneItem.Type.BIG);
