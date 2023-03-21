@@ -11,7 +11,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.DogArmorModel;
-import doggytalents.client.entity.model.DogModel;
+import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.HelmetInteractHandler;
 import doggytalents.common.entity.accessory.ArmourAccessory;
