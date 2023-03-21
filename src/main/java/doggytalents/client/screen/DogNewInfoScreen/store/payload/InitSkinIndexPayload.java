@@ -14,8 +14,7 @@ public class InitSkinIndexPayload extends ChangeTabPayload implements InitSkinIn
     public InitSkinIndexPayload(Tab tab, Dog dog) {
         super(tab);
         this.dog = dog;
-        var textureRl = DogTextureManager.INSTANCE.getTexture(dog);
-        index = Math.max(0, ActiveSkinSlice.locList.indexOf(textureRl)); 
+        index = Math.max(0, ActiveSkinSlice.locList.indexOf(dog.getClientSkin())); 
     }
 
     @Override

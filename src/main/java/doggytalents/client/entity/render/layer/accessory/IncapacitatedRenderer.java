@@ -7,7 +7,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.entity.model.DogModel;
+import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.Dog;
@@ -39,8 +39,14 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         for (AccessoryInstance accessoryInst : dog.getAccessories()) {
             if (accessoryInst.usesRenderer(this.getClass())) {
                 if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
+                var dogModel = this.getParentModel();
+                boolean isX64Model = dogModel.isX64Model();
+                var texture_rl = isX64Model ?
+                    accessoryInst.getModelTextureX64(dog)
+                    : accessoryInst.getModelTexture(dog);
+                if (texture_rl == null) return;
                 var alpha = (float) (dog.getMaxIncapacitatedHunger()-dog.getDogHunger())/dog.getMaxIncapacitatedHunger();
-                renderTranslucentModel(this.getParentModel(), accessoryInst.getModelTexture(dog), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
+                renderTranslucentModel(this.getParentModel(), texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
             }
         }
     }

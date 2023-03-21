@@ -9,6 +9,7 @@ import doggytalents.api.feature.EnumMode;
 import doggytalents.api.registry.Talent;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.screen.widget.CustomButton;
+import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
@@ -49,7 +50,7 @@ public class DogInfoScreen extends Screen {
     private Button leftBtn, rightBtn;
 
     private List<Talent> talentList;
-    private List<ResourceLocation> customSkinList;
+    private List<DogSkin> customSkinList;
 
     public int textureIndex;
 
@@ -64,7 +65,7 @@ public class DogInfoScreen extends Screen {
                 .collect(Collectors.toList());
 
         this.customSkinList = DogTextureManager.INSTANCE.getAll();
-        this.textureIndex = this.customSkinList.indexOf(DogTextureManager.INSTANCE.getTextureLoc(dog.getSkinHash()));
+        this.textureIndex = this.customSkinList.indexOf(DogTextureManager.INSTANCE.getSkinFromHash(dog.getSkinHash()));
         this.textureIndex = this.textureIndex >= 0 ? this.textureIndex : 0;
     }
 
@@ -272,16 +273,16 @@ public class DogInfoScreen extends Screen {
         }
     }
 
-    private void setDogTexture(ResourceLocation rl) {
+    private void setDogTexture(DogSkin dogSkin) {
         if (ConfigHandler.SEND_SKIN) {
             try {
-                byte[] data = DogTextureManager.INSTANCE.getResourceBytes(rl);
+                byte[] data = DogTextureManager.INSTANCE.getResourceBytes(dogSkin.getPath());
                 PacketHandler.send(PacketDistributor.SERVER.noArg(), new SendSkinData(this.dog.getId(), data));
             } catch (IOException e) {
-                DoggyTalentsNext.LOGGER.error("Was unable to get resource data for {}, {}", rl, e);
+                DoggyTalentsNext.LOGGER.error("Was unable to get resource data for {}, {}", dogSkin, e);
             }
         } else {
-            PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogTextureData(this.dog.getId(), DogTextureManager.INSTANCE.getTextureHash(rl)));
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogTextureData(this.dog.getId(), DogTextureManager.INSTANCE.getTextureHash(dogSkin)));
         }
     }
 
