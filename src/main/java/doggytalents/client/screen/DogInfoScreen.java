@@ -8,6 +8,7 @@ import doggytalents.api.feature.DogLevel.Type;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.registry.Talent;
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
@@ -48,7 +49,7 @@ public class DogInfoScreen extends Screen {
     private Button leftBtn, rightBtn;
 
     private List<Talent> talentList;
-    private List<ResourceLocation> customSkinList;
+    private List<DogSkin> customSkinList;
 
     public int textureIndex;
 
@@ -63,7 +64,7 @@ public class DogInfoScreen extends Screen {
                 .collect(Collectors.toList());
 
         this.customSkinList = DogTextureManager.INSTANCE.getAll();
-        this.textureIndex = this.customSkinList.indexOf(DogTextureManager.INSTANCE.getTextureLoc(dog.getSkinHash()));
+        this.textureIndex = this.customSkinList.indexOf(DogTextureManager.INSTANCE.getSkinFromHash(dog.getSkinHash()));
         this.textureIndex = this.textureIndex >= 0 ? this.textureIndex : 0;
     }
 
@@ -114,14 +115,14 @@ public class DogInfoScreen extends Screen {
             Button addBtn = new Button(this.width - 42, topY + 30, 20, 20, Component.literal("+"), (btn) -> {
                 this.textureIndex += 1;
                 this.textureIndex %= this.customSkinList.size();
-                ResourceLocation rl = this.customSkinList.get(this.textureIndex);
+                DogSkin rl = this.customSkinList.get(this.textureIndex);
 
                 this.setDogTexture(rl);
             });
             Button lessBtn = new Button(this.width - 64, topY + 30, 20, 20, Component.literal("-"), (btn) -> {
                 this.textureIndex += this.customSkinList.size() - 1;
                 this.textureIndex %= this.customSkinList.size();
-                ResourceLocation rl = this.customSkinList.get(this.textureIndex);
+                DogSkin rl = this.customSkinList.get(this.textureIndex);
                 this.setDogTexture(rl);
             });
 
@@ -206,16 +207,16 @@ public class DogInfoScreen extends Screen {
         }
     }
 
-    private void setDogTexture(ResourceLocation rl) {
+    private void setDogTexture(DogSkin dogSkin) {
         if (ConfigHandler.SEND_SKIN) {
             try {
-                byte[] data = DogTextureManager.INSTANCE.getResourceBytes(rl);
+                byte[] data = DogTextureManager.INSTANCE.getResourceBytes(dogSkin.getPath());
                 PacketHandler.send(PacketDistributor.SERVER.noArg(), new SendSkinData(this.dog.getId(), data));
             } catch (IOException e) {
-                DoggyTalentsNext.LOGGER.error("Was unable to get resource data for {}, {}", rl, e);
+                DoggyTalentsNext.LOGGER.error("Was unable to get resource data for {}, {}", dogSkin, e);
             }
         } else {
-            PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogTextureData(this.dog.getId(), DogTextureManager.INSTANCE.getTextureHash(rl)));
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogTextureData(this.dog.getId(), DogTextureManager.INSTANCE.getTextureHash(dogSkin)));
         }
     }
 
