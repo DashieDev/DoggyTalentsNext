@@ -3,6 +3,7 @@ package doggytalents.client.entity.model;
 import net.minecraft.client.model.geom.ModelPart;
 import com.google.common.collect.ImmutableList;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.client.entity.model.dog.DogModel;
 import net.minecraft.client.model.ColorableAgeableListModel;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -47,21 +48,24 @@ public class DogArmorModel<T extends AbstractDog> extends DogModel<T> {
         PartDefinition var1 = var0.getRoot();
         float var2 = 13.5F;
         PartDefinition var3 = var1.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(-1.0F, 13.5F, -7.0F));
-        var3.addOrReplaceChild("real_head", CubeListBuilder.create()
+        var real_head = var3.addOrReplaceChild("real_head", CubeListBuilder.create()
                 // Head
                 .texOffs(0, 0).addBox(-2.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, scale)
-                // Ears Normal
-                .texOffs(16, 14).addBox(-2.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
-                .texOffs(16, 14).addBox(2.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
                 // Nose
                 .texOffs(0, 10).addBox(-0.5F, 0.0F, -5.0F, 3.0F, 3.0F, 4.0F, scale)
-                // Ears Boni
-                .texOffs(52, 0).addBox(-3.0F, -3.0F, -1.5F, 1, 5, 3, scale)
-                .texOffs(52, 0).addBox(4.0F, -3.0F, -1.5F, 1, 5, 3, scale)
-                // Ears Small
-                .texOffs(18, 0).addBox(-2.8F, -3.5F, -1.0F, 2, 1, 2, scale)
-                .texOffs(18, 0).addBox(2.8F, -3.5F, -1.0F, 2, 1, 2, scale)
-        , PartPose.ZERO);
+                , PartPose.ZERO);
+        var ear_normal = real_head.addOrReplaceChild("ear_normal", CubeListBuilder.create()
+            .texOffs(16, 14).addBox(-2.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
+            .texOffs(16, 14).addBox(2.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
+        ,PartPose.ZERO);
+        var ear_boni = real_head.addOrReplaceChild("ear_boni", CubeListBuilder.create()
+            .texOffs(52, 0).addBox(-3.0F, -3.0F, -1.5F, 1, 5, 3, scale)
+            .texOffs(52, 0).addBox(4.0F, -3.0F, -1.5F, 1, 5, 3, scale)
+        ,PartPose.ZERO);
+        var ear_small = real_head.addOrReplaceChild("ear_small", CubeListBuilder.create()
+            .texOffs(18, 0).addBox(-2.8F, -3.5F, -1.0F, 2, 1, 2, scale)
+            .texOffs(18, 0).addBox(2.8F, -3.5F, -1.0F, 2, 1, 2, scale)
+        ,PartPose.ZERO);
         var1.addOrReplaceChild("body", CubeListBuilder.create()
                 .texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, scale)
         , PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5707964F, 0.0F, 0.0F));

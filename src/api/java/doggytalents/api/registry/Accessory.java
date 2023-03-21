@@ -91,15 +91,26 @@ public class Accessory {
     // }
 
     private ResourceLocation modelTexture;
+    private ResourceLocation modelTextureX64;
 
     public <T extends Accessory> T setModelTexture(ResourceLocation modelTextureIn) {
         this.modelTexture = modelTextureIn;
         return (T) this;
     }
 
+    public <T extends Accessory> T setModelTextureX64(ResourceLocation modelTextureIn) {
+        this.modelTextureX64 = modelTextureIn;
+        return (T) this;
+    }
+
     @Nullable
     public ResourceLocation getModelTexture() {
         return this.modelTexture;
+    }
+
+    @Nullable
+    public ResourceLocation getModelTextureX64() {
+        return this.modelTextureX64;
     }
 
     private String renderer;

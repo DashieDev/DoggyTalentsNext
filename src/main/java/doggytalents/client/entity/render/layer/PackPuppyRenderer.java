@@ -5,7 +5,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.DogBackpackModel;
-import doggytalents.client.entity.model.DogModel;
+import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.renderer.MultiBufferSource;

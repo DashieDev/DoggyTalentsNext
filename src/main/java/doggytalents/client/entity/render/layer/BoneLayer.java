@@ -3,7 +3,7 @@ package doggytalents.client.entity.render.layer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import doggytalents.api.inferface.IThrowableItem;
-import doggytalents.client.entity.model.DogModel;
+import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
