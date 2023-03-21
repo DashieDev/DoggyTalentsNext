@@ -3,6 +3,7 @@ package doggytalents.client.screen.DogNewInfoScreen.store.slice;
 import java.util.List;
 
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.payload.InitSkinIndexPayload;
@@ -12,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ActiveSkinSlice implements AbstractSlice {
 
-    public static List<ResourceLocation> locList;
+    public static List<DogSkin> locList;
 
     public int activeSkinId;
 

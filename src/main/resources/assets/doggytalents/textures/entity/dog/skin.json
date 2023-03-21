@@ -1,0 +1,45 @@
+{
+    "dog_skins" : [
+        
+        {
+            "skin_name" : "German Shepherd",
+            "skin_id" : "german_shepherd",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Pug",
+            "skin_id" : "pug",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "English Bulldog",
+            "skin_id" : "english_bulldog",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Rottweiler",
+            "skin_id" : "rottweiler",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Siberian Husky",
+            "skin_id" : "siberian_husky",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Fox",
+            "skin_id" : "fox",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Arctic Dog",
+            "skin_id" : "arctic_dog",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Pug",
+            "skin_id" : "doggytex5",
+            "use_model" : "default"
+        }
+    ]
+}
