@@ -5,6 +5,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
@@ -27,11 +28,11 @@ public class SkinButtonElement extends AbstractElement {
 
     Dog dog;
     Font font;
-    List<ResourceLocation> locList;
+    List<DogSkin> locList;
     Button applyButton;
     int activeSkinId;
 
-    public SkinButtonElement(AbstractElement parent, Screen screen, Dog dog, List<ResourceLocation> locList) {
+    public SkinButtonElement(AbstractElement parent, Screen screen, Dog dog, List<DogSkin> locList) {
         super(parent, screen);
         this.dog = dog;
         var mc = Minecraft.getInstance();
