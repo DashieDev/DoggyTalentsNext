@@ -49,6 +49,31 @@ public class DTRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(DoggyItems.CAPE.get(), 1).pattern("S S").pattern("LWL").pattern("WLW").define('L', Items.LEATHER).define('S', Items.STRING).define('W', ItemTags.WOOL).unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.CAPE_COLOURED.get(), 1).pattern("S S").pattern("LLL").pattern("LLL").define('L', Items.LEATHER).define('S', Items.STRING).unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.GUARD_SUIT.get(), 1).pattern("S S").pattern("BWB").pattern("BWB").define('S', Items.STRING).define('W', Blocks.WHITE_WOOL).define('B', Blocks.BLACK_WOOL).unlockedBy("has_string", has(Items.STRING)).save(consumer);
+        ShapedRecipeBuilder.shaped(DoggyItems.PIANIST_SUIT.get(), 1)
+            .pattern("GWG")
+            .pattern("GDG")
+            .pattern("BWB")
+            .define('G', Blocks.GRAY_WOOL)
+            .define('D', DoggyItems.CAPE_COLOURED.get())
+            .define('W', Blocks.WHITE_WOOL)
+            .define('B', Blocks.BLACK_WOOL)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(DoggyItems.BOWTIE.get(), 1)
+            .pattern("W W")
+            .pattern("WSW")
+            .define('W', Blocks.WHITE_WOOL)
+            .define('S', Items.STRING)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(DoggyItems.WIG.get(), 1)
+            .pattern(" W ")
+            .pattern("WCW")
+            .pattern(" W ")
+            .define('W', Blocks.WHITE_WOOL)
+            .define('C', DoggyItems.WOOL_COLLAR.get())
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.LEATHER_JACKET.get(), 1).pattern("L L").pattern("LWL").pattern("LWL").define('L', Items.LEATHER).define('W', ItemTags.WOOL).unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.SPOTTED_COLLAR.get(), 1).pattern("BWB").pattern("WCW").pattern("BSB").define('C', DoggyItems.WOOL_COLLAR.get()).define('B', Items.BLACK_DYE).define('W', Items.WHITE_DYE).define('S', Items.STRING).unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get())).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.SPOTTED_COLLAR.get(), 1).pattern("WBW").pattern("BCB").pattern("WSW").define('C', DoggyItems.WOOL_COLLAR.get()).define('B', Items.BLACK_DYE).define('W', Items.WHITE_DYE).define('S', Items.STRING).unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get())).save(consumer, Util.getResource("spotted_collar_alt"));
