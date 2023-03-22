@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:black_wool"
+    },
+    "D": {
+      "item": "doggytalents:cape_coloured"
+    },
+    "G": {
+      "item": "minecraft:gray_wool"
+    },
+    "W": {
+      "item": "minecraft:white_wool"
+    }
+  },
+  "pattern": [
+    "GWG",
+    "GDG",
+    "BWB"
+  ],
+  "result": {
+    "item": "doggytalents:pianist_suit"
+  }
+}
