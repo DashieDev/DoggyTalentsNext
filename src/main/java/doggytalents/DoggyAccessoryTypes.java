@@ -12,6 +12,7 @@ public class DoggyAccessoryTypes {
     public static final DeferredRegister<AccessoryType> ACCESSORY_TYPES = DeferredRegister.create(DoggyRegistries.Keys.ACCESSORY_TYPE_REGISTRY, Constants.MOD_ID);
 
     public static final RegistryObject<AccessoryType> COLLAR = register("collar");
+    public static final RegistryObject<AccessoryType> BOWTIE = register("bowtie");
     public static final RegistryObject<AccessoryType> CLOTHING = register("clothing");
     public static final RegistryObject<AccessoryType> GLASSES = register("glasses");
     public static final RegistryObject<AccessoryType> BAND = register("band");
