@@ -2,6 +2,16 @@
     "dog_skins" : [
         
         {
+            "skin_name" : "Iwanko (RockRuff)",
+            "skin_id" : "iwanko",
+            "use_model" : "iwanko"
+        },
+        {
+            "skin_name" : "Akita Inu",
+            "skin_id" : "akita_inu",
+            "use_model" : "default"
+        },
+        {
             "skin_name" : "German Shepherd",
             "skin_id" : "german_shepherd",
             "use_model" : "default"
@@ -40,6 +50,16 @@
             "skin_name" : "Pug",
             "skin_id" : "doggytex5",
             "use_model" : "default"
+        },
+        {
+            "skin_name" : "Lucario",
+            "skin_id" : "lucario",
+            "use_model" : "lucario"
+        },
+        {
+            "skin_name" : "Death",
+            "skin_id" : "death",
+            "use_model" : "death"
         }
     ]
 }
