@@ -16,17 +16,22 @@ public class DoggyAccessories {
 
     public static final DeferredRegister<Accessory> ACCESSORIES = DeferredRegister.create(DoggyRegistries.Keys.ACCESSORIES_REGISTRY, Constants.MOD_ID);
 
-    public static final RegistryObject<DyeableAccessory> DYEABLE_COLLAR = register("dyeable_collar", () -> new DyeableAccessory(DoggyAccessoryTypes.COLLAR, DoggyItems.WOOL_COLLAR).setModelTexture(Resources.COLLAR_DEFAULT).setRenderer("DefaultAccessoryRenderer"));
-    public static final RegistryObject<Collar> GOLDEN_COLLAR = register("golden_collar", () -> new Collar(DoggyItems.CREATIVE_COLLAR).setModelTexture(Resources.COLLAR_GOLDEN).setRenderer("DefaultAccessoryRenderer"));
-    public static final RegistryObject<Collar> SPOTTED_COLLAR = register("spotted_collar", () -> new Collar(DoggyItems.SPOTTED_COLLAR).setModelTexture(Resources.COLLAR_SPOTTED).setRenderer("DefaultAccessoryRenderer"));
-    public static final RegistryObject<Collar> MULTICOLORED_COLLAR = register("multicolored_collar", () -> new Collar(DoggyItems.MULTICOLOURED_COLLAR).setModelTexture(Resources.COLLAR_MULTICOLORED).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<DyeableAccessory> DYEABLE_COLLAR = register("dyeable_collar", () -> new DyeableAccessory(DoggyAccessoryTypes.COLLAR, DoggyItems.WOOL_COLLAR).setModelTexture(Resources.COLLAR_DEFAULT).setModelTextureX64(Resources.COLLAR_DEFAULT_X64).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<Collar> GOLDEN_COLLAR = register("golden_collar", () -> new Collar(DoggyItems.CREATIVE_COLLAR).setModelTexture(Resources.COLLAR_GOLDEN).setModelTextureX64(Resources.COLLAR_GOLDEN_X64).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<Collar> SPOTTED_COLLAR = register("spotted_collar", () -> new Collar(DoggyItems.SPOTTED_COLLAR).setModelTexture(Resources.COLLAR_SPOTTED).setModelTextureX64(Resources.COLLAR_SPOTTED_X64).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<Collar> MULTICOLORED_COLLAR = register("multicolored_collar", () -> new Collar(DoggyItems.MULTICOLOURED_COLLAR).setModelTexture(Resources.COLLAR_MULTICOLORED).setModelTextureX64(Resources.COLLAR_MULTICOLORED_X64).setRenderer("DefaultAccessoryRenderer"));
 
-    public static final RegistryObject<Clothing> GUARD_SUIT = register("guard_suit", () -> new Clothing(DoggyItems.GUARD_SUIT).setModelTexture(Resources.GUARD_SUIT).setRenderer("DefaultAccessoryRenderer"));
-    public static final RegistryObject<Clothing> LEATHER_JACKET_CLOTHING = register("leather_jacket_clothing", () -> new Clothing(DoggyItems.LEATHER_JACKET).setModelTexture(Resources.CLOTHING_LEATHER_JACKET).setRenderer("DefaultAccessoryRenderer"));
-    public static final RegistryObject<Glasses> SUNGLASSES = register("sunglasses", () -> new Glasses(DoggyItems.SUNGLASSES).setModelTexture(Resources.GLASSES_SUNGLASSES).setRenderer("DefaultAccessoryRenderer"));
-    public static final RegistryObject<Clothing> CAPE = register("cape", () -> new Clothing(DoggyItems.CAPE).setModelTexture(Resources.CAPE).setRenderer("DefaultAccessoryRenderer"));
-    public static final RegistryObject<DyeableAccessory> DYEABLE_CAPE = register("dyeable_cape", () -> new DyeableAccessory(DoggyAccessoryTypes.CLOTHING, DoggyItems.CAPE_COLOURED).setModelTexture(Resources.DYEABLE_CAPE).setRenderer("DefaultAccessoryRenderer"));
-    public static final RegistryObject<Band> RADIO_BAND = register("radio_band", () -> new Band(DoggyItems.RADIO_COLLAR).setModelTexture(Resources.RADIO_BAND).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<Clothing> GUARD_SUIT = register("guard_suit", () -> new Clothing(DoggyItems.GUARD_SUIT).setModelTexture(Resources.GUARD_SUIT).setModelTextureX64(Resources.GUARD_SUIT_X64).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<Clothing> LEATHER_JACKET_CLOTHING = register("leather_jacket_clothing", () -> new Clothing(DoggyItems.LEATHER_JACKET).setModelTexture(Resources.CLOTHING_LEATHER_JACKET).setModelTextureX64(Resources.CLOTHING_LEATHER_JACKET_X64).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<Glasses> SUNGLASSES = register("sunglasses", () -> new Glasses(DoggyItems.SUNGLASSES).setModelTexture(Resources.GLASSES_SUNGLASSES).setModelTextureX64(Resources.GLASSES_SUNGLASSES_X64).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<Clothing> CAPE = register("cape", () -> new Clothing(DoggyItems.CAPE).setModelTexture(Resources.CAPE).setModelTextureX64(Resources.CAPE_X64).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<DyeableAccessory> DYEABLE_CAPE = register("dyeable_cape", () -> new DyeableAccessory(DoggyAccessoryTypes.CLOTHING, DoggyItems.CAPE_COLOURED).setModelTexture(Resources.DYEABLE_CAPE).setModelTextureX64(Resources.DYEABLE_CAPE_X64).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<Clothing> PIANIST_SUIT = register("pianist_suit", () -> new Clothing(DoggyItems.PIANIST_SUIT).setModelTexture(Resources.PIANIST_SUIT).setModelTextureX64(Resources.PIANIST_SUIT_X64).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<Clothing> DEATH_HOOD = register("death_hood", () -> new Clothing(DoggyItems.DEATH_HOOD).setModelTexture(Resources.DEATH_HOOD).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<BowTie> BOWTIE = register("bowtie", () -> new BowTie(DoggyItems.BOWTIE).setModelTexture(Resources.BOW_TIE).setRenderer("BowtieRenderer"));
+    public static final RegistryObject<SmartyGlasses> SMARTY_GLASSES = register("smarty_glasses", () -> new SmartyGlasses(DoggyItems.SMARTY_GLASSES).setModelTexture(Resources.SMARTY_GLASSES).setRenderer("SmartyGlassesRenderer"));
+    public static final RegistryObject<Wig> WIG = register("wig", () -> new Wig(DoggyItems.WIG).setModelTexture(Resources.WIG).setRenderer("WigRenderer"));
+    public static final RegistryObject<Band> RADIO_BAND = register("radio_band", () -> new Band(DoggyItems.RADIO_COLLAR).setModelTexture(Resources.RADIO_BAND).setModelTextureX64(Resources.RADIO_BAND_X64).setRenderer("DefaultAccessoryRenderer"));
 
     public static final RegistryObject<Helmet> IRON_HELMET = registerHelmet("iron_helmet", () -> Items.IRON_HELMET, Resources.IRON_HELMET);
     public static final RegistryObject<Helmet> DIAMOND_HELMET = registerHelmet("diamond_helmet", () -> Items.DIAMOND_HELMET, Resources.DIAMOND_HELMET);
@@ -55,15 +60,22 @@ public class DoggyAccessories {
         register("incapacitated_blood", 
         () -> new IncapacitatedLayer.BLOOD() 
             .setModelTexture(Resources.INCAPACITATED_BLOOD)
+            .setModelTextureX64(Resources.INCAPACITATED_BLOOD_X64)
             .setRenderer("IncapacitatedRenderer")
         );
     public static final RegistryObject<Accessory> INCAPACITATED_BURN = 
         register("incapacitated_burn", 
         () -> new IncapacitatedLayer.BURN()
             .setModelTexture(Resources.INCAPACITATED_BURN)
+            .setModelTextureX64(Resources.INCAPACITATED_BURN_X64)
             .setRenderer("IncapacitatedRenderer")
         );
-    public static final RegistryObject<Accessory> INCAPACITATED_POISON = register("incapacitated_poison", () -> new IncapacitatedLayer().setModelTexture(Resources.INCAPACITATED_POISON).setRenderer("IncapacitatedRenderer"));
+    public static final RegistryObject<Accessory> INCAPACITATED_POISON = 
+        register("incapacitated_poison",
+         () -> new IncapacitatedLayer()
+         .setModelTexture(Resources.INCAPACITATED_POISON)
+         .setModelTextureX64(Resources.INCAPACITATED_POISON_X64)
+         .setRenderer("IncapacitatedRenderer"));
 
     private static RegistryObject<Helmet> registerHelmet(final String name, final Supplier<? extends ItemLike> itemIn, ResourceLocation modelLocation) {
         return ACCESSORIES.register(name, () -> new Helmet(itemIn).setModelTexture(modelLocation));
