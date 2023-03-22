@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "doggytalents:wool_collar"
+    },
+    "W": {
+      "item": "minecraft:white_wool"
+    }
+  },
+  "pattern": [
+    " W ",
+    "WCW",
+    " W "
+  ],
+  "result": {
+    "item": "doggytalents:wig"
+  }
+}
