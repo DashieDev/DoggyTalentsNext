@@ -34,6 +34,18 @@ public class Resources {
     public static final ResourceLocation CAPE = getEntity("dog", "doggy_cape");
     public static final ResourceLocation DYEABLE_CAPE = getEntity("dog", "doggy_cape1");
     public static final ResourceLocation RADIO_BAND = getEntity("dog", "doggy_radio_collar");
+    
+    public static final ResourceLocation COLLAR_DEFAULT_X64 = getEntity("dog", "x64/doggy_collar_x64");
+    public static final ResourceLocation COLLAR_GOLDEN_X64 = getEntity("dog", "x64/doggy_collar_0_x64");
+    public static final ResourceLocation COLLAR_SPOTTED_X64 = getEntity("dog", "x64/doggy_collar_1_x64");
+    public static final ResourceLocation COLLAR_MULTICOLORED_X64 = getEntity("dog", "x64/doggy_collar_2_x64");
+    public static final ResourceLocation CLOTHING_LEATHER_JACKET_X64 = getEntity("dog", "x64/doggy_leather_jacket_x64");
+    public static final ResourceLocation GUARD_SUIT_X64 = getEntity("dog", "x64/doggy_guard_suit_x64");
+    public static final ResourceLocation GLASSES_SUNGLASSES_X64 = getEntity("dog", "x64/doggy_sunglasses_x64");
+    public static final ResourceLocation CAPE_X64 = getEntity("dog", "x64/doggy_cape_x64");
+    public static final ResourceLocation DYEABLE_CAPE_X64 = getEntity("dog", "x64/doggy_cape1_x64");
+    public static final ResourceLocation RADIO_BAND_X64 = getEntity("dog", "x64/doggy_radio_collar_x64");
+
     public static final ResourceLocation TALENT_RESCUE = getEntity("dog/talents", "rescue");
     public static final ResourceLocation TALENT_CHEST = getEntity("dog", "doggy_chest");
     public static final ResourceLocation IRON_HELMET = getEntity("dog", "armor/iron_helmet");
@@ -61,6 +73,11 @@ public class Resources {
     public static final ResourceLocation INCAPACITATED_BLOOD = getEntity("dog", "doggy_hurt/blood");
     public static final ResourceLocation INCAPACITATED_BURN = getEntity("dog", "doggy_hurt/burn");
     public static final ResourceLocation INCAPACITATED_POISON = getEntity("dog", "doggy_hurt/poison");
+
+    public static final ResourceLocation INCAPACITATED_BLOOD_X64 = getEntity("dog", "doggy_hurt/x64/blood_x64");
+    public static final ResourceLocation INCAPACITATED_BURN_X64 = getEntity("dog", "doggy_hurt/x64/burn_x64");
+    public static final ResourceLocation INCAPACITATED_POISON_X64 = getEntity("dog", "doggy_hurt/x64/poison_x64");
+
 
     public static ResourceLocation getEntity(String type, String textureFileName) {
         return Util.getResource("textures/entity/" + type + "/" + textureFileName + ".png");
