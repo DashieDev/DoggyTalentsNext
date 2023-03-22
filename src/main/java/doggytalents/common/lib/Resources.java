@@ -30,9 +30,10 @@ public class Resources {
     public static final ResourceLocation CLOTHING_LEATHER_JACKET = getEntity("dog", "doggy_leather_jacket");
     public static final ResourceLocation GUARD_SUIT = getEntity("dog", "doggy_guard_suit");
     public static final ResourceLocation GLASSES_SUNGLASSES = getEntity("dog", "doggy_sunglasses");
-    public static final ResourceLocation BOW_TIE = getEntity("dog", "doggy_bowtie");
     public static final ResourceLocation CAPE = getEntity("dog", "doggy_cape");
     public static final ResourceLocation DYEABLE_CAPE = getEntity("dog", "doggy_cape1");
+    public static final ResourceLocation PIANIST_SUIT = getEntity("dog", "pianist_suit");
+    public static final ResourceLocation DEATH_HOOD = getEntity("dog", "death_hood");
     public static final ResourceLocation RADIO_BAND = getEntity("dog", "doggy_radio_collar");
     
     public static final ResourceLocation COLLAR_DEFAULT_X64 = getEntity("dog", "x64/doggy_collar_x64");
@@ -44,10 +45,17 @@ public class Resources {
     public static final ResourceLocation GLASSES_SUNGLASSES_X64 = getEntity("dog", "x64/doggy_sunglasses_x64");
     public static final ResourceLocation CAPE_X64 = getEntity("dog", "x64/doggy_cape_x64");
     public static final ResourceLocation DYEABLE_CAPE_X64 = getEntity("dog", "x64/doggy_cape1_x64");
+    public static final ResourceLocation PIANIST_SUIT_X64 = getEntity("dog", "x64/pianist_suit_x64");
+    public static final ResourceLocation DEATH_HOOD_X64 = getEntity("dog", "x64/death_hood_x64");
     public static final ResourceLocation RADIO_BAND_X64 = getEntity("dog", "x64/doggy_radio_collar_x64");
 
     public static final ResourceLocation TALENT_RESCUE = getEntity("dog/talents", "rescue");
     public static final ResourceLocation TALENT_CHEST = getEntity("dog", "doggy_chest");
+    public static final ResourceLocation BOW_TIE = getEntity("dog", "doggy_bowtie");
+    public static final ResourceLocation DYABLE_BOW_TIE = getEntity("dog", "bowtie_coloured");
+    public static final ResourceLocation SMARTY_GLASSES = getEntity("dog", "smarty_glasses");
+    public static final ResourceLocation WIG = getEntity("dog", "wig");
+
     public static final ResourceLocation IRON_HELMET = getEntity("dog", "armor/iron_helmet");
     public static final ResourceLocation DIAMOND_HELMET = getEntity("dog", "armor/diamond_helmet");
     public static final ResourceLocation GOLDEN_HELMET = getEntity("dog", "armor/golden_helmet");

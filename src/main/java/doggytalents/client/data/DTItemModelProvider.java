@@ -56,7 +56,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.OWNER_CHANGE);
         generated(DoggyItems.RADIO_COLLAR);
         generated(DoggyItems.SPOTTED_COLLAR);
-        generated(DoggyItems.SUNGLASSES);
+        generated(DoggyItems.SUNGLASSES);       
         generated(DoggyItems.THROW_BONE);
         generated(DoggyItems.THROW_BONE_WET);
         generated(DoggyItems.THROW_STICK);
@@ -64,6 +64,11 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.TREAT_BAG);
         generated(DoggyItems.WHISTLE);
         generated(DoggyItems.WOOL_COLLAR);
+        generated(DoggyItems.BOWTIE);
+        generated(DoggyItems.PIANIST_SUIT);
+        generated(DoggyItems.SMARTY_GLASSES);
+        generated(DoggyItems.WIG);
+        generated(DoggyItems.DEATH_HOOD);
 
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);
