@@ -99,7 +99,7 @@ public class DogInventoryButton extends Button {
            i = 2;
         }
   
-        return 46 + i * 20;
+        return i;
     }
 
 }
