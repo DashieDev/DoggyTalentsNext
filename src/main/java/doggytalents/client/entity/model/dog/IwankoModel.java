@@ -98,7 +98,7 @@ public class IwankoModel extends DogModel<Dog> {
                 this.tail.setPos(
                     -1.0F + TAIL_LYING_OFF[0],
                     13.5F + TAIL_LYING_OFF[1],
-                    8.5f + TAIL_LYING_OFF[2]
+                    8f + TAIL_LYING_OFF[2]
                 );
                 this.legBackRight.setPos(-4.5F, 23, 7);
                 this.legBackRight.xRot = -(float)Math.PI / 2F;
@@ -122,8 +122,8 @@ public class IwankoModel extends DogModel<Dog> {
                 this.body.xRot = ((float)Math.PI / 4F);
                 this.tail.setPos(
                     -1.0F + TAIL_SITTING_OFF[0],
-                    13.5F + TAIL_SITTING_OFF[1],
-                    8.5f + TAIL_SITTING_OFF[2]
+                    13.5F + TAIL_SITTING_OFF[1] - 1,
+                    8f + TAIL_SITTING_OFF[2] - 0.5f
                 );
                 this.legBackRight.setPos(-2.5F, 22.0F, 2.0F);
                 this.legBackRight.xRot = ((float)Math.PI * 3F / 2F);
@@ -144,7 +144,7 @@ public class IwankoModel extends DogModel<Dog> {
             this.body.xRot = ((float)Math.PI / 2F);
             this.mane.setPos(-1f, 14f, -3f);
             this.mane.xRot = this.body.xRot;
-            this.tail.setPos(-1.0F, 13.5F, 8.5f);
+            this.tail.setPos(-1.0F, 13.5F, 8f);
             this.legBackRight.setPos(-2.5F, 16.0F, 7.0F);
             this.legBackLeft.setPos(0.5F, 16.0F, 7.0F);
             this.legFrontRight.setPos(-2.5F, 16.0F, -4.0F);
