@@ -31,6 +31,8 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
     public ModelPart earBoni;
     public ModelPart earSmall;
 
+    //TODO Micro test.
+
     public DogModel(ModelPart box) {
         this.head = box.getChild("head");
         this.realHead = this.head.getChild("real_head");

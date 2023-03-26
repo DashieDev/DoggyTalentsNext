@@ -8,7 +8,9 @@ import com.google.gson.JsonObject;
 import doggytalents.ChopinLogger;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.client.entity.model.DogModelRegistry;
+import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.skin.DogSkin;
+import doggytalents.client.entity.skin.DoggyJemParser;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.texture.DogTextureServer;
@@ -266,7 +268,10 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
         DogModelRegistry.init();
 
+        
         //TODO parse and load model files from resource here.
+        getJemModelFromModelJsonAllPack(resourceManager, prep);
+        
 
         if (this.getSkinFromSkinJsonAllPack(resourceManager, prep)) {
             profiler.pop();
@@ -309,6 +314,26 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         return prep;
     }
 
+    public synchronized void getJemModelFromModelJsonAllPack(ResourceManager resMan, DogTextureManager.Preparations prep) {
+        final var MODEL_JSON_RES = Util.getResource("textures/entity/dog/model.json");
+        var modelSkinPacks = resMan.listPacks()
+            .filter(pack -> pack.hasResource(PackType.CLIENT_RESOURCES, MODEL_JSON_RES))
+            .collect(Collectors.toList());
+        for (var modelSkinPack : modelSkinPacks) {
+            InputStream istream = null;
+            try {
+                istream = modelSkinPack.getResource(PackType.CLIENT_RESOURCES, MODEL_JSON_RES);
+                var jsonElement = GSON.fromJson(new InputStreamReader(istream, StandardCharsets.UTF_8), JsonElement.class);
+                var jsonObject = jsonElement.getAsJsonObject();
+                getModelFromModelJson(resMan, prep, jsonObject);
+            } catch(Exception e) {
+                e.printStackTrace();
+            } finally {
+                IOUtils.closeQuietly(istream);
+            }
+        }
+    }
+
     public synchronized boolean getSkinFromSkinJsonAllPack(ResourceManager resMan, DogTextureManager.Preparations prep) {
         final var SKIN_JSON_RES = Util.getResource("textures/entity/dog/skin.json");
         var jsonSkinPacks = resMan.listPacks()
@@ -329,6 +354,33 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         }
         prep.customSkinLoc.add(0, DogSkin.CLASSICAL);
         return true;
+    }
+
+    public void getModelFromModelJson(ResourceManager resMan, DogTextureManager.Preparations prep, JsonObject jsonObject) {
+        var modelEntries = jsonObject.get("models").getAsJsonArray();
+        for (var modelEntry : modelEntries) {
+            var model_id = modelEntry.getAsString();
+            var model_rl = Util.getResource("textures/entity/dog/jem/" + model_id + ".jem");
+            var resOptional = resMan.getResource(model_rl);
+            if (!resOptional.isPresent()) continue;
+            var res = resOptional.get();
+            InputStream istream = null;
+            try {
+                istream = res.open();
+                var jsonElement = GSON.fromJson(new InputStreamReader(istream, StandardCharsets.UTF_8), JsonElement.class);
+                var jsonObject2 = jsonElement.getAsJsonObject();
+                var layDef = DoggyJemParser.parseJem(jsonObject2);
+                if (layDef != null) {
+                    DogModelRegistry.register(model_id, ctx -> new DogModel<Dog>(layDef.bakeRoot()));
+                    ChopinLogger.l("found and registered : " + model_id);
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
+            } finally {
+                IOUtils.closeQuietly(istream);
+            }
+            
+        }
     }
 
     public void getSkinFromSkinJson(ResourceManager resMan, DogTextureManager.Preparations prep, JsonObject jsonObject) {

@@ -15,10 +15,10 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 public class DogModelRegistry {
     
-    private static Map<String, DogModelHolder<? extends AbstractDog>> MODEL_MAP;
+    private static Map<String, DogModelHolder<? extends AbstractDog>> MODEL_MAP = Maps.newConcurrentMap();
 
     public static <T extends AbstractDog> void register(String name, Function<EntityRendererProvider.Context, DogModel<T>>  getter) {
-        MODEL_MAP.putIfAbsent(name, new DogModelHolder<T>(getter));
+        MODEL_MAP.put(name, new DogModelHolder<T>(getter));
     }
 
     public static DogModelHolder getDogModelHolder(String name) {
@@ -30,9 +30,8 @@ public class DogModelRegistry {
     }
 
     public static void init() {
-        MODEL_MAP = Maps.newConcurrentMap();
         register("default", ctx -> new DogModel(ctx.bakeLayer(ClientSetup.DOG)));
-        register("iwanko", ctx -> new IwankoModel(ctx.bakeLayer(ClientSetup.DOG_IWANKO)));
+        //register("iwanko", ctx -> new IwankoModel(ctx.bakeLayer(ClientSetup.DOG_IWANKO)));
         register("lucario", ctx -> new LucarioModel(ctx.bakeLayer(ClientSetup.DOG_LUCARIO)));
         register("death", ctx -> new DeathModel(ctx.bakeLayer(ClientSetup.DOG_DEATH)));
     }
