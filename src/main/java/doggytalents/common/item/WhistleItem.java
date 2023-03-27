@@ -282,7 +282,9 @@ public class WhistleItem extends Item {
                 if (player.level.isClientSide) {
                     return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
                 }
+                boolean noDogs = true;
                 for (var dog : dogsList) {
+                    noDogs = false;
                     if (!dog.readyForNonTrivialAction()) continue;
                     var bedPos = dog.getBedPos(player.level.dimension()).orElse(null);
                     if (bedPos == null) continue;
@@ -290,6 +292,9 @@ public class WhistleItem extends Item {
                     if (dog.distanceToSqr(Vec3.atBottomCenterOf(bedPos)) < 400) {
                         dog.triggerAction(new DogMoveToBedAction(dog, bedPos, false));
                     }
+                }
+                if (!noDogs) {
+                    player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
                 }
                 if (ConfigHandler.WHISTLE_SOUNDS)
                     world.playSound(null, player.blockPosition(), DoggySounds.WHISTLE_SHORT.get(), SoundSource.PLAYERS, 0.6F + world.random.nextFloat() * 0.1F, 0.8F + world.random.nextFloat() * 0.2F);
