@@ -113,6 +113,17 @@ public class Accessory {
         return this.modelTextureX64;
     }
 
+    private boolean renderTranslucent = false;
+
+    public boolean renderTranslucent() {
+        return renderTranslucent;
+    }
+
+    public <T extends Accessory> T setRenderTranslucent(boolean translucent) {
+        this.renderTranslucent = translucent;
+        return (T) this;
+    }
+
     private String renderer;
 
     public <T extends Accessory> T setRenderer(String rendererIn) {
