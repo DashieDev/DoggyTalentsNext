@@ -81,11 +81,12 @@ public class Resources {
     public static final ResourceLocation INCAPACITATED_BLOOD = getEntity("dog", "doggy_hurt/blood");
     public static final ResourceLocation INCAPACITATED_BURN = getEntity("dog", "doggy_hurt/burn");
     public static final ResourceLocation INCAPACITATED_POISON = getEntity("dog", "doggy_hurt/poison");
+    public static final ResourceLocation INCAPACITATED_LESS_GRAPHIC = getEntity("dog", "doggy_hurt/less_graphic");
 
     public static final ResourceLocation INCAPACITATED_BLOOD_X64 = getEntity("dog", "doggy_hurt/x64/blood_x64");
     public static final ResourceLocation INCAPACITATED_BURN_X64 = getEntity("dog", "doggy_hurt/x64/burn_x64");
     public static final ResourceLocation INCAPACITATED_POISON_X64 = getEntity("dog", "doggy_hurt/x64/poison_x64");
-
+    public static final ResourceLocation INCAPACITATED_LESS_GRAPHIC_X64 = getEntity("dog", "doggy_hurt/x64/less_graphic_x64");
 
     public static ResourceLocation getEntity(String type, String textureFileName) {
         return Util.getResource("textures/entity/" + type + "/" + textureFileName + ".png");
