@@ -688,6 +688,9 @@ public class Dog extends AbstractDog {
         for (var i : this.getAccessories()) {
             if (i.getAccessory() instanceof IncapacitatedLayer iL) {
                 if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
+                boolean isLowGraphic = 
+                    ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
+                if (isLowGraphic) return;
                 iL.tickClient(this);
             }
         }
