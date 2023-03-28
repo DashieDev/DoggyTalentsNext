@@ -11,6 +11,7 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.lib.Resources;
 import net.minecraft.Util;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -44,6 +45,13 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
                 var texture_rl = isX64Model ?
                     accessoryInst.getModelTextureX64(dog)
                     : accessoryInst.getModelTexture(dog);
+                boolean isLowGraphic = 
+                    ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
+                if (isLowGraphic) {
+                    texture_rl = isX64Model ?
+                    Resources.INCAPACITATED_LESS_GRAPHIC_X64
+                    : Resources.INCAPACITATED_LESS_GRAPHIC;
+                }
                 if (texture_rl == null) return;
                 var alpha = (float) (dog.getMaxIncapacitatedHunger()-dog.getDogHunger())/dog.getMaxIncapacitatedHunger();
                 renderTranslucentModel(this.getParentModel(), texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
