@@ -61,6 +61,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RENDER_HEALTH_IN_NAME;
         public ForgeConfigSpec.BooleanValue USE_LEGACY_DOGGUI;
         public ForgeConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
+        public ForgeConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -111,6 +112,11 @@ public class ConfigHandler {
                 .comment("GUI in Talents > Pack Puppy.")
                 .translation("doggytalents.config.client.dog_inv_button_in_inv")
                 .define("dog_inv_button_in_inv", true);
+            RENDER_INCAP_TXT_LESS_GRAPHIC = builder
+                .comment("If the defeault incapacitated texture proof too much graphic.")
+                .comment("You can substitute this friendlier texture instead.")
+                .translation("doggytalents.config.client.render_incap_txt_less_graphic")
+                .define("render_incap_txt_less_graphic", true);
 
             builder.pop();
         }
