@@ -3,13 +3,16 @@ package doggytalents.common.entity.accessory;
 import java.util.function.Supplier;
 
 import doggytalents.DoggyAccessoryTypes;
+import doggytalents.api.inferface.IAccessoryHasModel;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.client.entity.render.AccessoryModelManager.Entry;
+import doggytalents.client.entity.render.layer.accessory.modelrenderentry.AccessoryModelRenderEntries;
 import doggytalents.common.item.DyeableAccessoryItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
-public class Wig extends DyeableAccessory {
+public class Wig extends DyeableAccessory implements IAccessoryHasModel {
 
     public Wig(Supplier<? extends ItemLike> itemIn) {
         super(DoggyAccessoryTypes.HEAD, itemIn);
@@ -32,5 +35,10 @@ public class Wig extends DyeableAccessory {
             return 0xff24211d;
         }
 
+    }
+
+    @Override
+    public Entry getRenderEntry() {
+        return AccessoryModelRenderEntries.WIG;
     }
 }
