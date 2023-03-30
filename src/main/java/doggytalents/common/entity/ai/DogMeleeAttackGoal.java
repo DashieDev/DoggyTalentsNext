@@ -218,8 +218,7 @@ public class DogMeleeAttackGoal extends Goal {
       ) {
          dog.getMoveControl().setWantedPosition(e.getX(), e.getY(), e.getZ(), this.speedModifier);
       }
-
-      if(n.isDone() && !this.canReachTarget(e, d0)) {
+      if(n.isDone() && dog.tickCount % 2 != 0 && !this.canReachTarget(e, d0)) {
          this.ticksUntilPathRecalc = 0;
       }
       if (this.checkAndPerformAttack(e, d0)) this.waitingTick = 0;
