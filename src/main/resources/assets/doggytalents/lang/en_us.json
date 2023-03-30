@@ -47,6 +47,12 @@
    "item.doggytalents.guard_suit" : "Guard Suit",
    "item.doggytalents.conducting_bone": "Conducting Bone",
 
+   "item.doggytalents.pianist_suit": "P ianist Suit",
+   "item.doggytalents.death_hood": "Death Hood",
+   "item.doggytalents.bowtie": "Bowtie",
+   "item.doggytalents.smarty_glasses": "Smarty Glasses",
+   "item.doggytalents.wig": "Wig",
+
    "item.doggytalents.cape_coloured.tooltip": "Color: %s",
    "item.doggytalents.wool_collar.tooltip": "Color: %s",
    "item.doggytalents.creative_collar.tooltip": "Gives Unlimited points to spend",
