@@ -1,9 +1,11 @@
 package doggytalents;
 
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.common.block.DogBedBlock;
 import doggytalents.common.util.DogBedUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
@@ -29,38 +31,15 @@ public class DoggyItemGroups {
                 return new ItemStack(DoggyItems.TRAINING_TREAT.get());
             })
             .displayItems((a, b, c) -> {
-                b.accept(THROW_BONE.get());
-                b.accept(THROW_BONE_WET.get());
-                b.accept(THROW_STICK.get());
-                b.accept(THROW_STICK_WET.get());
-                b.accept(TRAINING_TREAT.get());
-                b.accept(SUPER_TREAT.get());
-                b.accept(MASTER_TREAT.get());
-                b.accept(DIRE_TREAT.get());
-                b.accept(BREEDING_BONE.get());
-                b.accept(COLLAR_SHEARS.get());
-                b.accept(DOGGY_CHARM.get());
-                b.accept(RADIO_COLLAR.get());
-                b.accept(WOOL_COLLAR.get());
-                b.accept(CREATIVE_COLLAR.get());
-                b.accept(SPOTTED_COLLAR.get());
-                b.accept(MULTICOLOURED_COLLAR.get());
-                b.accept(RADAR.get());
-                b.accept(CREATIVE_RADAR.get());
-                b.accept(WHISTLE.get());
-                b.accept(TREAT_BAG.get());
-                b.accept(CHEW_STICK.get());
-                b.accept(CAPE.get());
-                b.accept(CAPE_COLOURED.get());
-                b.accept(SUNGLASSES.get());
-                b.accept(GUARD_SUIT.get());
-                b.accept(LEATHER_JACKET.get());
-                b.accept(TINY_BONE.get());
-                b.accept(BIG_BONE.get());
-                b.accept(OWNER_CHANGE.get());
-                b.accept(DOG_BATH.get());
-                b.accept(FOOD_BOWL.get());
-                b.accept(CONDUCTING_BONE.get());
+                var allDTItemsIter = DoggyItems.ITEMS.getEntries();
+                for (var val : allDTItemsIter) {
+                    if (val.get() instanceof BlockItem blockItem) {
+                        if (blockItem.getBlock() instanceof DogBedBlock) {
+                            continue;
+                        }
+                    } 
+                    b.accept(val.get());
+                }
             });
 
         GENERAL = ev.registerCreativeModeTab(Util.getResource("tabgeneral"), GENERAL_BUILDER);
