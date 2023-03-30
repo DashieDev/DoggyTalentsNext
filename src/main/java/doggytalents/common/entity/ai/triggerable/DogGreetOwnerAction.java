@@ -97,7 +97,7 @@ public class DogGreetOwnerAction extends TriggerableAction {
     private void doGreet() {
         ++greetTime;
         var n = this.dog.getNavigation();
-        if (n.isDone()) {
+        if (n.isDone() && dog.tickCount % 2 != 0) {
             this.rbAroundOwner = this.getRandomPosAroundOwner(owner);
             n.moveTo(
                 this.rbAroundOwner.getX(),
