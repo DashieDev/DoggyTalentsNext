@@ -85,7 +85,7 @@ public class DogPlayTagAction extends TriggerableAction {
         ) {
             dog.getMoveControl().setWantedPosition(owner.getX(), owner.getY(), owner.getZ(), 1);
         }
-        if(n.isDone() && !this.canReachTarget(owner, d0)) {
+        if(n.isDone() && dog.tickCount % 2 != 0 && !this.canReachTarget(owner, d0)) {
             this.tickTillPathRecalc = 0;
         }
         if (checkAndTag(dog, owner)) {
@@ -119,7 +119,7 @@ public class DogPlayTagAction extends TriggerableAction {
                 this.tickTillLook = RUN_AWAY_LOOKBACK_INTERVAL;
             }
        }
-       if (n.isDone()) {
+       if (n.isDone() && dog.tickCount % 2 != 0) {
             var b0 = getRandomPosAwayFromOwner(dog, owner);
             n.moveTo(b0.getX(), b0.getY(), b0.getZ(), 1);
        }
