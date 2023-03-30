@@ -13,18 +13,18 @@ import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
+import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.CollarRenderManager;
 import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.client.entity.render.DoggyBeamRenderer;
 import doggytalents.client.entity.render.layer.PackPuppyRenderer;
 import doggytalents.client.entity.render.layer.RescueDogRenderer;
+import doggytalents.client.entity.render.layer.accessory.AccessoryModelRenderer;
 import doggytalents.client.entity.render.layer.accessory.ArmorAccessoryRenderer;
-import doggytalents.client.entity.render.layer.accessory.BowtieRenderer;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
 import doggytalents.client.entity.render.layer.accessory.IncapacitatedRenderer;
-import doggytalents.client.entity.render.layer.accessory.SmartyGlassesRenderer;
-import doggytalents.client.entity.render.layer.accessory.WigRenderer;
+import doggytalents.client.entity.render.layer.accessory.modelrenderentry.AccessoryModelRenderEntries;
 import doggytalents.client.screen.DogArmorScreen;
 import doggytalents.client.screen.DogInventoriesScreen;
 import doggytalents.client.screen.FoodBowlScreen;
@@ -94,9 +94,9 @@ public class ClientSetup {
         CollarRenderManager.registerLayer(ArmorAccessoryRenderer::new);
         CollarRenderManager.registerLayer(PackPuppyRenderer::new);
         CollarRenderManager.registerLayer(RescueDogRenderer::new);
-        CollarRenderManager.registerLayer(BowtieRenderer::new);
-        CollarRenderManager.registerLayer(SmartyGlassesRenderer::new);
-        CollarRenderManager.registerLayer(WigRenderer::new);
+        CollarRenderManager.registerLayer(AccessoryModelRenderer::new);
+
+        AccessoryModelRenderEntries.init();
         
     }
 
