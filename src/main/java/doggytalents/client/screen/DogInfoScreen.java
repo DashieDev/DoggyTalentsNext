@@ -131,9 +131,9 @@ public class DogInfoScreen extends Screen {
                 (btn) -> {
                     this.textureIndex += 1;
                     this.textureIndex %= this.customSkinList.size();
-                    ResourceLocation rl = this.customSkinList.get(this.textureIndex);
+                    var skin = this.customSkinList.get(this.textureIndex);
     
-                    this.setDogTexture(rl);
+                    this.setDogTexture(skin);
                 } 
             )
                 .pos(this.width - 42, topY + 30)
@@ -144,7 +144,7 @@ public class DogInfoScreen extends Screen {
                 (btn) -> {
                     this.textureIndex += this.customSkinList.size() - 1;
                     this.textureIndex %= this.customSkinList.size();
-                    ResourceLocation rl = this.customSkinList.get(this.textureIndex);
+                    var rl = this.customSkinList.get(this.textureIndex);
                     this.setDogTexture(rl);
                 }
             )

@@ -8,6 +8,7 @@ import doggytalents.client.screen.DogNewInfoScreen.element.DivElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.ScrollView;
 import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.PosType;
+import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -38,11 +39,11 @@ public class DebugView extends AbstractElement {
         scrollTest.addScrollChildren(
             (new DivElement(scrollTest.getContainer(), getScreen()) {
                 
-                private Button testButt;
+                private CustomButton testButt;
                 
                 @Override
                 public AbstractElement init() {
-                    testButt = new Button(0, 0, 40, 20, 
+                    testButt = new CustomButton(0, 0, 40, 20, 
                         Component.literal("test"), b -> {
                             ChopinLogger.l("Clicked test!");
                         });
@@ -52,8 +53,8 @@ public class DebugView extends AbstractElement {
 
                 @Override
                 public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-                    this.testButt.x = this.getRealX() + 10;
-                    this.testButt.y = this.getRealY() + 10;               
+                    this.testButt.setX(this.getRealX() + 10);
+                    this.testButt.setY(this.getRealY() + 10);               
                     super.renderElement(stack, mouseX, mouseY, partialTicks);
                 }
             })
