@@ -128,7 +128,7 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
                 // Head
                 .texOffs(0, 0).addBox(-2.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, scale)
                 // Nose
-                .texOffs(0, 10).addBox(-0.5F, 0.0F, -5.0F, 3.0F, 3.0F, 4.0F, scale)
+                .texOffs(0, 10).addBox(-0.5F, -0.001F, -5.0F, 3.0F, 3.0F, 4.0F, scale)
                 , PartPose.ZERO);
         var ear_normal = real_head.addOrReplaceChild("ear_normal", CubeListBuilder.create()
             .texOffs(16, 14).addBox(-2.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
