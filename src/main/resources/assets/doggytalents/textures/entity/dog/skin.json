@@ -1,14 +1,18 @@
 {
     "dog_skins" : [
-        
+        {
+            "skin_name" : "Akita Inu",
+            "skin_id" : "akita_inu",
+            "use_model" : "default"
+        },
         {
             "skin_name" : "Iwanko (RockRuff)",
             "skin_id" : "iwanko",
             "use_model" : "iwanko"
         },
         {
-            "skin_name" : "Akita Inu",
-            "skin_id" : "akita_inu",
+            "skin_name" : "Grey Wolf",
+            "skin_id" : "grey_wolf",
             "use_model" : "default"
         },
         {
@@ -17,18 +21,30 @@
             "use_model" : "default"
         },
         {
+            "skin_name" : "German Shepherd #2",
+            "skin_id" : "german_shepherd_2",
+            "use_model" : "default"
+        },
+        {
             "skin_name" : "Pug",
             "skin_id" : "pug",
-            "use_model" : "default"
+            "use_model" : "default",
+            "ear_id" : 2
         },
         {
             "skin_name" : "English Bulldog",
             "skin_id" : "english_bulldog",
-            "use_model" : "default"
+            "use_model" : "default",
+            "ear_id" : 2
         },
         {
             "skin_name" : "Rottweiler",
             "skin_id" : "rottweiler",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Border Collie",
+            "skin_id" : "border_collie",
             "use_model" : "default"
         },
         {
@@ -39,17 +55,14 @@
         {
             "skin_name" : "Fox",
             "skin_id" : "fox",
-            "use_model" : "default"
+            "use_model" : "default",
+            "tail_id" : 2
         },
         {
             "skin_name" : "Arctic Dog",
             "skin_id" : "arctic_dog",
-            "use_model" : "default"
-        },
-        {
-            "skin_name" : "Pug",
-            "skin_id" : "doggytex5",
-            "use_model" : "default"
+            "use_model" : "default",
+            "tail_id" : 2
         },
         {
             "skin_name" : "Lucario",
@@ -60,6 +73,51 @@
             "skin_name" : "Death",
             "skin_id" : "death",
             "use_model" : "death"
+        },
+        {
+            "skin_name" : "Racoon",
+            "skin_id" : "racoon",
+            "use_model" : "default",
+            "tail_id" : 2
+        },
+        {
+            "skin_name" : "Noname #1",
+            "skin_id" : "noname_1",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Noname #2",
+            "skin_id" : "noname_2",
+            "use_model" : "default",
+            "ear_id" : 1
+        },
+        {
+            "skin_name" : "Noname #3",
+            "skin_id" : "noname_3",
+            "use_model" : "default",
+            "ear_id" : 1
+        },
+        {
+            "skin_name" : "Noname #4",
+            "skin_id" : "noname_4",
+            "use_model" : "default",
+            "ear_id" : 2
+        },
+        {
+            "skin_name" : "Noname #5",
+            "skin_id" : "noname_5",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Noname #6",
+            "skin_id" : "noname_6",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Noname #7",
+            "skin_id" : "noname_7",
+            "use_model" : "default"
         }
+        
     ]
 }
