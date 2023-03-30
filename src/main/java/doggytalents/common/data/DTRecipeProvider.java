@@ -74,6 +74,18 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', DoggyItems.WOOL_COLLAR.get())
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
+        ShapelessRecipeBuilder.shapeless(DoggyItems.SMARTY_GLASSES.get(), 1)
+            .requires(DoggyItems.SUNGLASSES.get())
+            .requires(Items.REDSTONE)
+            .unlockedBy("has_redstone", has(Items.REDSTONE))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(DoggyItems.DEATH_HOOD.get(), 1)
+            .requires(DoggyItems.CAPE_COLOURED.get())
+            .requires(Items.SOUL_TORCH)
+            .requires(Items.NETHER_WART)
+            .unlockedBy("has_soul_torch", has(Items.SOUL_TORCH))
+            .save(consumer);
+        
         ShapedRecipeBuilder.shaped(DoggyItems.LEATHER_JACKET.get(), 1).pattern("L L").pattern("LWL").pattern("LWL").define('L', Items.LEATHER).define('W', ItemTags.WOOL).unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.SPOTTED_COLLAR.get(), 1).pattern("BWB").pattern("WCW").pattern("BSB").define('C', DoggyItems.WOOL_COLLAR.get()).define('B', Items.BLACK_DYE).define('W', Items.WHITE_DYE).define('S', Items.STRING).unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get())).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.SPOTTED_COLLAR.get(), 1).pattern("WBW").pattern("BCB").pattern("WSW").define('C', DoggyItems.WOOL_COLLAR.get()).define('B', Items.BLACK_DYE).define('W', Items.WHITE_DYE).define('S', Items.STRING).unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get())).save(consumer, Util.getResource("spotted_collar_alt"));
