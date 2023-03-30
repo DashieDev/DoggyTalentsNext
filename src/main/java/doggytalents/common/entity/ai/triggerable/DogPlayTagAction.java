@@ -39,6 +39,7 @@ public class DogPlayTagAction extends TriggerableAction {
     @Override
     public void onStart() {
         this.timeLeft = TIME_LIMIT_PER_TURN;
+        this.cooldownChase = 10;
     }
 
     @Override
