@@ -49,7 +49,7 @@ public class DTRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SPOTTED_COLLAR.get(), 1).pattern("BWB").pattern("WCW").pattern("BSB").define('C', DoggyItems.WOOL_COLLAR.get()).define('B', Items.BLACK_DYE).define('W', Items.WHITE_DYE).define('S', Items.STRING).unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get())).save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SPOTTED_COLLAR.get(), 1).pattern("WBW").pattern("BCB").pattern("WSW").define('C', DoggyItems.WOOL_COLLAR.get()).define('B', Items.BLACK_DYE).define('W', Items.WHITE_DYE).define('S', Items.STRING).unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get())).save(consumer, Util.getResource("spotted_collar_alt"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.MULTICOLOURED_COLLAR.get(), 1).requires(DoggyItems.WOOL_COLLAR.get()).requires(Items.STRING).requires(Items.BLUE_DYE).requires(Items.LIME_DYE).requires(Items.YELLOW_DYE).requires(Items.ORANGE_DYE).requires(Items.RED_DYE).requires(Items.PURPLE_DYE).unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(DoggyItems.PIANIST_SUIT.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.PIANIST_SUIT.get(), 1)
             .pattern("GWG")
             .pattern("GDG")
             .pattern("BWB")
@@ -59,14 +59,14 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Blocks.BLACK_WOOL)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
-        ShapedRecipeBuilder.shaped(DoggyItems.BOWTIE.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BOWTIE.get(), 1)
             .pattern("W W")
             .pattern("WSW")
             .define('W', Blocks.WHITE_WOOL)
             .define('S', Items.STRING)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
-        ShapedRecipeBuilder.shaped(DoggyItems.WIG.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.WIG.get(), 1)
             .pattern(" W ")
             .pattern("WCW")
             .pattern(" W ")
@@ -74,12 +74,12 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', DoggyItems.WOOL_COLLAR.get())
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
-        ShapelessRecipeBuilder.shapeless(DoggyItems.SMARTY_GLASSES.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.SMARTY_GLASSES.get(), 1)
             .requires(DoggyItems.SUNGLASSES.get())
             .requires(Items.REDSTONE)
             .unlockedBy("has_redstone", has(Items.REDSTONE))
             .save(consumer);
-        ShapelessRecipeBuilder.shapeless(DoggyItems.DEATH_HOOD.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DEATH_HOOD.get(), 1)
             .requires(DoggyItems.CAPE_COLOURED.get())
             .requires(Items.SOUL_TORCH)
             .requires(Items.NETHER_WART)

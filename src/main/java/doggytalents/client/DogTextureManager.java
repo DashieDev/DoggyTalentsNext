@@ -312,12 +312,13 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     public synchronized boolean getSkinFromSkinJsonAllPack(ResourceManager resMan, DogTextureManager.Preparations prep) {
         final var SKIN_JSON_RES = Util.getResource("textures/entity/dog/skin.json");
         var jsonSkinPacks = resMan.listPacks()
-            .filter(pack -> pack.hasResource(PackType.CLIENT_RESOURCES, SKIN_JSON_RES))
             .collect(Collectors.toList());
         for (var jsonSkinPack : jsonSkinPacks) {
             InputStream istream = null;
             try {
-                istream = jsonSkinPack.getResource(PackType.CLIENT_RESOURCES, SKIN_JSON_RES);
+                var packRes = jsonSkinPack.getResource(PackType.CLIENT_RESOURCES, SKIN_JSON_RES);
+                if (packRes == null) continue;
+                istream = packRes.get();
                 var jsonElement = GSON.fromJson(new InputStreamReader(istream, StandardCharsets.UTF_8), JsonElement.class);
                 var jsonObject = jsonElement.getAsJsonObject();
                 getSkinFromSkinJson(resMan, prep, jsonObject);
