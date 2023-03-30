@@ -5,10 +5,13 @@ import java.util.function.Supplier;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.inferface.IAccessoryHasModel;
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.api.registry.AccessoryType;
+import doggytalents.client.entity.render.AccessoryModelManager.Entry;
+import doggytalents.client.entity.render.layer.accessory.modelrenderentry.AccessoryModelRenderEntries;
 import doggytalents.common.util.ColourCache;
 import doggytalents.common.util.Util;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +26,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 
-public class BowTie extends DyeableAccessory {
+public class BowTie extends DyeableAccessory implements IAccessoryHasModel {
 
     public BowTie(Supplier<? extends ItemLike> itemIn) {
         super(DoggyAccessoryTypes.BOWTIE, itemIn);
@@ -32,6 +35,11 @@ public class BowTie extends DyeableAccessory {
     @Override
     public byte getRenderLayer() {
         return AccessoryInstance.RENDER_TOP;
+    }
+
+    @Override
+    public Entry getRenderEntry() {
+        return AccessoryModelRenderEntries.BOWTIE;
     }
 
 }
