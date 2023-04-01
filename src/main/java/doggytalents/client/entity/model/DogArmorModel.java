@@ -30,12 +30,6 @@ public class DogArmorModel<T extends AbstractDog> extends DogModel<T> {
         bootHindLeft = this.legBackLeft.getChild("left_hind_boots");
         bootFrontRight = this.legFrontRight.getChild("right_front_boots");
         bootFrontLeft = this.legFrontLeft.getChild("left_front_boots");
-        this.legBackRight.visible = true;
-        this.legBackLeft.visible = true;
-        this.legFrontRight.visible = true;
-        this.legFrontLeft.visible = true;
-
-
     }
     
     public static LayerDefinition createArmorLayer() {
@@ -66,37 +60,31 @@ public class DogArmorModel<T extends AbstractDog> extends DogModel<T> {
             .texOffs(18, 0).addBox(-2.8F, -3.5F, -1.0F, 2, 1, 2, scale)
             .texOffs(18, 0).addBox(2.8F, -3.5F, -1.0F, 2, 1, 2, scale)
         ,PartPose.ZERO);
-        var1.addOrReplaceChild("body", CubeListBuilder.create()
+        var body = var1.addOrReplaceChild("body", CubeListBuilder.create()
                 .texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, scale)
         , PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5707964F, 0.0F, 0.0F));
-        
+
         var1.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-3.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, scale), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
         
-        CubeListBuilder var4 = CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, scale);
+        CubeListBuilder var4 = CubeListBuilder.create();
 
         var leg1 = var1.addOrReplaceChild("right_hind_leg", var4, PartPose.offset(-2.5F, 16.0F, 7.0F));
-        
-        leg1.addOrReplaceChild("right_hind_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(3.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(-3.0F, 0.0F, 0.0F));
-
-		leg1.addOrReplaceChild("right_hind_boots", CubeListBuilder.create().texOffs(34, 20).addBox(3.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(-3.0F, 0.0F, 0.0F));
-        
         var leg2 = var1.addOrReplaceChild("left_hind_leg", var4, PartPose.offset(0.5F, 16.0F, 7.0F));
-        
-        leg2.addOrReplaceChild("left_hind_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(0.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 0.0F));
-
-		leg2.addOrReplaceChild("left_hind_boots", CubeListBuilder.create().texOffs(34, 20).addBox(0.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(0.0F, 0.0F, 0.0F));       
-
         var leg3 = var1.addOrReplaceChild("right_front_leg", var4, PartPose.offset(-2.5F, 16.0F, -4.0F));
-        
-		leg3.addOrReplaceChild("right_front_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(3.0F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(-3.0F, 0.0F, 11.0F));
-
-		leg3.addOrReplaceChild("right_front_boots", CubeListBuilder.create().texOffs(34, 20).addBox(3.0F, 6.0F, -12.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(-3.0F, 0.0F, 11.0F));
-
         var leg4 = var1.addOrReplaceChild("left_front_leg", var4, PartPose.offset(0.5F, 16.0F, -4.0F));
         
-		leg4.addOrReplaceChild("left_front_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(0.0F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 11.0F));
+        leg1.addOrReplaceChild("right_hind_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(3.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(-3.0F, 0.0F, 0.0F));
+		leg1.addOrReplaceChild("right_hind_boots", CubeListBuilder.create().texOffs(34, 20).addBox(3.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(-3.0F, 0.0F, 0.0F));
+        
+        leg2.addOrReplaceChild("left_hind_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(0.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		leg2.addOrReplaceChild("left_hind_boots", CubeListBuilder.create().texOffs(34, 20).addBox(0.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(0.0F, 0.0F, 0.0F));       
 
+		leg3.addOrReplaceChild("right_front_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(3.0F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(-3.0F, 0.0F, 11.0F));
+		leg3.addOrReplaceChild("right_front_boots", CubeListBuilder.create().texOffs(34, 20).addBox(3.0F, 6.0F, -12.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(-3.0F, 0.0F, 11.0F));
+
+		leg4.addOrReplaceChild("left_front_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(0.0F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 11.0F));
 		leg4.addOrReplaceChild("left_front_boots", CubeListBuilder.create().texOffs(34, 20).addBox(0.0F, 6.0F, -12.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(0.0F, 0.0F, 11.0F));
+
 
         PartDefinition var5 = var1.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 12.0F, 8.0F, 0.62831855F, 0.0F, 0.0F));
         
