@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.DoggyItems;
 import doggytalents.client.entity.render.RenderUtil;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.item.RadarItem;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.RadarData.RequestPosUpdateData;
 import net.minecraft.client.Camera;
@@ -173,9 +174,9 @@ public class RadarLocateRenderer {
         var item_main = player.getItemInHand(InteractionHand.MAIN_HAND);
         var item_off = player.getItemInHand(InteractionHand.OFF_HAND);
         ItemStack radar = null;
-        if (item_main.getItem() == DoggyItems.RADAR.get()) 
+        if (item_main.getItem() instanceof RadarItem) 
             radar = item_main;
-        else if (item_off.getItem() == DoggyItems.RADAR.get())
+        else if (item_off.getItem() instanceof RadarItem)
             radar = item_off;
         if (radar == null) return Optional.empty();
         if (!radar.hasTag()) return Optional.empty();
