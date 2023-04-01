@@ -37,6 +37,11 @@ public final class PacketHandler {
         registerPacket(new DogDismountPacket(), DogDismountData.class);
         registerPacket(new DogRegardTeamPlayersPacket(), DogRegardTeamPlayersData.class);
         registerPacket(new DogForceSitPacket(), DogForceSitData.class);
+        registerPacket(new RadarPackets.RequestDogsPacket(), RadarData.RequestDogsData.class);
+        registerPacket(new RadarPackets.ResponseDogsPackets(), RadarData.ResponseDogsData.class);
+        registerPacket(new RadarPackets.StartLocatingPacket(), RadarData.StartLocatingData.class);
+        registerPacket(new RadarPackets.RequestPosUpdatePacket(), RadarData.RequestPosUpdateData.class);
+        registerPacket(new RadarPackets.ResponsePosUpdatePacket(), RadarData.ResponsePosUpdateData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
