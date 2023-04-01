@@ -42,6 +42,8 @@ public class RadarLocateRenderer {
         if (event.getStage() != Stage.AFTER_PARTICLES) 
             return;
         if (!locating) return;
+        var player = Minecraft.getInstance().player;
+        if (player != null && player.isSpectator()) return;
         Vec3 dog_pos = null;
         if (cachedDog.get() != null) {
             double d0 = Mth.lerp((double)event.getPartialTick(), cachedDog.get().xOld, cachedDog.get().getX());
