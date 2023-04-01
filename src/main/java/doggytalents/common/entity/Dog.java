@@ -2048,7 +2048,7 @@ public class Dog extends AbstractDog {
             this.refreshDimensions();
         }
 
-        if (CUSTOM_SKIN.equals(key)) {
+        if (this.level.isClientSide && CUSTOM_SKIN.equals(key)) {
             this.setClientSkin(
                 DogTextureManager.INSTANCE
                     .getLocFromHashOrGet(
