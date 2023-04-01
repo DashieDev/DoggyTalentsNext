@@ -1,4 +1,4 @@
-package doggytalents.api.inferface;
+package doggytalents.client.entity.render.layer.accessory.modelrenderentry;
 
 import doggytalents.client.entity.render.AccessoryModelManager;
 
