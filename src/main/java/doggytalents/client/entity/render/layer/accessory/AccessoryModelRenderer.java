@@ -8,6 +8,7 @@ import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.BowTieModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
+import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.accessory.BowTie;
 import doggytalents.common.lib.Resources;
