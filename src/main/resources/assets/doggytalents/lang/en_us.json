@@ -62,6 +62,10 @@
    "item.doggytalents.conducting_bone.fulfilled.tp_self": "Teleported %s to owner!",
    "item.doggytalents.conducting_bone.fulfilled.tp_bed": "%s is now laying in %s bed.",
    "item.doggytalents.conducting_bone.rejected": "Failed to conduct! Error code : %s",
+   "item.doggytalents.radar.status" : "Radar: Locating - \"%s\"",
+   "item.doggytalents.radar.locate.line1" : "%s is",
+   "item.doggytalents.radar.locate.line2.far" : "%d blocks away.",
+   "item.doggytalents.radar.locate.line2.close" : "Here.",
 
    "container.doggytalents.pack_puppy": "Pack Puppy",
    "container.doggytalents.food_bowl": "Food Bowl",
@@ -261,6 +265,9 @@
    "doggytalents.screen.conducting_bone.help" : "Use the Up and Down arrow to select the dog you want to teleport, you can also type to search for your dog's name. Press enter to finish the command. Esc to cancel.",
    "doggytalents.screen.conducting_bone.help_title" : "Conducting Bone Menu Help",
    "doggytalents.screen.conducting_bone.no_dog_found" : "No dog found in this dimension.",
+   "doggytalents.screen.radar.help" : "Use the Up and Down arrow to select the dog you want to track, you can also type to search for your dog's name. Press enter to begin tracking. Esc to cancel.",
+   "doggytalents.screen.radar.help_title" : "Radar Menu Help",
+   "doggytalents.screen.radar.no_dog_found" : "No dog found in this dimension.",
 
    "doggui.common.apply" : "Apply",
    "doggui.common.go_back" : "Go back",
