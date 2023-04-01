@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.skin.DogSkin;
@@ -338,7 +337,6 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             var name = skinObject.get("skin_name").getAsString();
             var id = skinObject.get("skin_id").getAsString();
             var use_model = skinObject.get("use_model").getAsString();
-            ChopinLogger.l("Found : " + name + " " + id + " " + use_model);
             var text_rl = Util.getResource("textures/entity/dog/custom/" + id + ".png");
             DogSkin skin;
             if (use_model == null || use_model.equals("default") || use_model.equals("")) {

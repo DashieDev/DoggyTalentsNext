@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
@@ -28,7 +27,6 @@ public class AccessoryModelManager {
     public static void resolve(EntityRendererProvider.Context ctx) {
         for (var x : entryArraySyncedView) {
             x.initModel(ctx);
-            ChopinLogger.l("Resolved : " + x);
         }
     }
 
