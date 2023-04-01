@@ -6,6 +6,7 @@ import doggytalents.client.ClientSetup;
 import doggytalents.client.data.DTBlockstateProvider;
 import doggytalents.client.data.DTItemModelProvider;
 import doggytalents.client.entity.render.world.BedFinderRenderer;
+import doggytalents.client.entity.render.world.RadarLocateRenderer;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.Capabilities;
 import doggytalents.common.chunk.GarbageChunkCollector;
@@ -108,6 +109,8 @@ public class DoggyTalentsNext {
             modEventBus.addListener(ClientSetup::registerOverlay);
             forgeEventBus.register(new ClientEventHandler());
             forgeEventBus.addListener(BedFinderRenderer::onWorldRenderLast);
+            forgeEventBus.addListener(RadarLocateRenderer::onWorldRenderLast);
+            forgeEventBus.addListener(RadarLocateRenderer::tickUpdate);
         });
 
         ConfigHandler.init(modEventBus);

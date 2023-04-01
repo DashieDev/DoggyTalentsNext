@@ -1,11 +1,13 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyItems;
+import doggytalents.client.screen.RadarScreen;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
 import net.minecraft.Util;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -39,57 +41,69 @@ public class RadarItem extends Item {
 
         if (!worldIn.isClientSide) {
             if (playerIn.isShiftKeyDown()) {
-                DogLocationStorage locationManager = DogLocationStorage.get(worldIn);
-                for (UUID uuid : locationManager.getAllUUID()) {
-                    playerIn.sendSystemMessage(Component.literal(locationManager.getData(uuid).toString()));
+                if (playerIn.getAbilities().instabuild) {
+                    DogLocationStorage locationManager = DogLocationStorage.get(worldIn);
+                    for (UUID uuid : locationManager.getAllUUID()) {
+                        playerIn.sendSystemMessage(Component.literal(locationManager.getData(uuid).toString()));
+                    }
                 }
                 return new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
             }
 
-            ResourceKey<Level> dimCurr = playerIn.level.dimension();
+        //     ResourceKey<Level> dimCurr = playerIn.level.dimension();
 
-            playerIn.sendSystemMessage(Component.literal(""));
+        //     playerIn.sendSystemMessage(Component.literal(""));
 
-            DogLocationStorage locationManager = DogLocationStorage.get(worldIn);
-            List<DogLocationData> ownDogs = locationManager.getDogs(playerIn, dimCurr).collect(Collectors.toList());
+        //     DogLocationStorage locationManager = DogLocationStorage.get(worldIn);
+        //     List<DogLocationData> ownDogs = locationManager.getDogs(playerIn, dimCurr).collect(Collectors.toList());
 
-            if (ownDogs.isEmpty()) {
-                playerIn.sendSystemMessage(Component.translatable("dogradar.errornull", dimCurr.location()));
-            } else {
-                boolean flag = false;
+        //     if (ownDogs.isEmpty()) {
+        //         playerIn.sendSystemMessage(Component.translatable("dogradar.errornull", dimCurr.location()));
+        //     } else {
+        //         boolean flag = false;
 
-                for (DogLocationData loc : ownDogs) {
-                    if (loc.shouldDisplay(worldIn, playerIn, handIn)) {
-                        flag = true;
+        //         for (DogLocationData loc : ownDogs) {
+        //             if (loc.shouldDisplay(worldIn, playerIn, handIn)) {
+        //                 flag = true;
 
-                        String translateStr = RadarItem.getDirectionTranslationKey(loc, playerIn);
-                        int distance = Mth.ceil(loc.getPos() != null ? loc.getPos().distanceTo(playerIn.position()) : -1);
+        //                 String translateStr = RadarItem.getDirectionTranslationKey(loc, playerIn);
+        //                 int distance = Mth.ceil(loc.getPos() != null ? loc.getPos().distanceTo(playerIn.position()) : -1);
 
-                        playerIn.sendSystemMessage(Component.translatable(translateStr, loc.getName(worldIn), distance));
-                    }
-                }
+        //                 playerIn.sendSystemMessage(Component.translatable(translateStr, loc.getName(worldIn), distance));
+        //             }
+        //         }
 
-                if (!flag) {
-                    playerIn.sendSystemMessage(Component.translatable("dogradar.errornoradio"));
-                }
+        //         if (!flag) {
+        //             playerIn.sendSystemMessage(Component.translatable("dogradar.errornoradio"));
+        //         }
+        //     }
+
+        //     List<ResourceKey<Level>> otherDogs = new ArrayList<>();
+        //     List<ResourceKey<Level>> noDogs = new ArrayList<>();
+        //     for (ResourceKey<Level> worldkey : worldIn.getServer().levelKeys()) {
+        //         if (worldkey.equals(worldIn.dimension()))  continue;
+        //         ownDogs = locationManager.getDogs(playerIn, worldkey).collect(Collectors.toList()); // Check if radio collar is on
+
+        //         (ownDogs.size() > 0 ? otherDogs : noDogs).add(worldkey);
+        //     }
+
+        //     if (otherDogs.size() > 0) {
+        //         playerIn.sendSystemMessage(Component.translatable("dogradar.notindim", otherDogs.stream().map(ResourceKey::location).map(Objects::toString).collect(Collectors.joining(", "))));
+        //     }
+
+        //     if (noDogs.size() > 0 && stack.getItem() == DoggyItems.CREATIVE_RADAR.get()) {
+        //         playerIn.sendSystemMessage(Component.translatable("dogradar.errornull", noDogs.stream().map(ResourceKey::location).map(Objects::toString).collect(Collectors.joining(", "))));
+        //     }
+        // }
+            if (stack.getItem() instanceof RadarItem && stack.hasTag()) {
+                stack.setTag(null);
             }
-
-            List<ResourceKey<Level>> otherDogs = new ArrayList<>();
-            List<ResourceKey<Level>> noDogs = new ArrayList<>();
-            for (ResourceKey<Level> worldkey : worldIn.getServer().levelKeys()) {
-                if (worldkey.equals(worldIn.dimension()))  continue;
-                ownDogs = locationManager.getDogs(playerIn, worldkey).collect(Collectors.toList()); // Check if radio collar is on
-
-                (ownDogs.size() > 0 ? otherDogs : noDogs).add(worldkey);
-            }
-
-            if (otherDogs.size() > 0) {
-                playerIn.sendSystemMessage(Component.translatable("dogradar.notindim", otherDogs.stream().map(ResourceKey::location).map(Objects::toString).collect(Collectors.joining(", "))));
-            }
-
-            if (noDogs.size() > 0 && stack.getItem() == DoggyItems.CREATIVE_RADAR.get()) {
-                playerIn.sendSystemMessage(Component.translatable("dogradar.errornull", noDogs.stream().map(ResourceKey::location).map(Objects::toString).collect(Collectors.joining(", "))));
-            }
+        } else {
+            if (playerIn.isShiftKeyDown()) 
+                return
+                    new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
+            if (!stack.hasTag())
+                RadarScreen.open();
         }
         return new InteractionResultHolder<ItemStack>(InteractionResult.FAIL, stack);
     }
@@ -120,5 +134,19 @@ public class RadarItem extends Item {
         } else {
             return "dogradar.north";
         }
+    }
+
+    @Override
+    public Component getName(ItemStack stack) {
+        if (stack.hasTag()) {
+            var tag = stack.getTag();
+            if (tag != null && tag.contains("name", Tag.TAG_STRING)) {
+                return Component.translatable("item.doggytalents.radar.status", tag.getString("name"))
+                    .withStyle(
+                        Style.EMPTY.withColor(0xff00ff5e)
+                    );
+            }
+        }
+        return Component.translatable(this.getDescriptionId(stack));
     }
 }
