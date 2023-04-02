@@ -12,6 +12,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.ChopinLogger;
+import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.ConductingBoneData;
@@ -75,19 +76,20 @@ public class RadarScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         this.rect = new Rect2i(0, 0,500, 500);
         
-        Button showUuid = new Button(3, 3, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
+        Button showUuid = new CustomButton(3, 3, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
             btn.setMessage(Component.translatable("doggytalents.screen.whistler.heel_by_name."
                 + (this.showUuid? "show" : "hide")
                 +"_uuid"));
             this.showUuid = !this.showUuid;
         });
 
-        Button help = new Button(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
+        Button help = new CustomButton(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.radar.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
@@ -261,7 +263,6 @@ public class RadarScreen extends Screen {
     @Override
     public void removed() {
         super.removed();
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
     }
 
     @Override
