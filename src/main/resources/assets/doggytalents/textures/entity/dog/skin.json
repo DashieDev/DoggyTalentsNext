@@ -117,6 +117,11 @@
             "skin_name" : "Noname #7",
             "skin_id" : "noname_7",
             "use_model" : "default"
+        },
+        {
+            "skin_name" : "Noname #8",
+            "skin_id" : "noname_8",
+            "use_model" : "default"
         }
         
     ]
