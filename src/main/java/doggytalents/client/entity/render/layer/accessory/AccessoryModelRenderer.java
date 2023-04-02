@@ -3,8 +3,6 @@ package doggytalents.client.entity.render.layer.accessory;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.ChopinLogger;
-import doggytalents.api.inferface.IAccessoryHasModel;
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.BowTieModel;
@@ -22,7 +20,6 @@ public class AccessoryModelRenderer extends RenderLayer<Dog, DogModel<Dog>>  {
 
     public AccessoryModelRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);
-        ChopinLogger.l("resolving accessory models");
         AccessoryModelManager.resolve(ctx);
     }
 
