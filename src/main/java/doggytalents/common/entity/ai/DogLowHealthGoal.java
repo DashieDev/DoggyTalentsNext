@@ -112,9 +112,7 @@ public class DogLowHealthGoal extends Goal {
         if (this.dog.distanceToSqr(this.owner) > stopDist*stopDist) {
             this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
             if (--this.timeToRecalcPath <= 0) {
-                //The dog always stays close to the owner, and tp when a little bit further
-                //So the path is not that long, so interval = 3 is ok
-                this.timeToRecalcPath = 3;
+                this.timeToRecalcPath = 5;
                 DogUtil.moveToOwnerOrTeleportIfFarAway(
                     dog, owner, this.followSpeed,
                     25, false, 
