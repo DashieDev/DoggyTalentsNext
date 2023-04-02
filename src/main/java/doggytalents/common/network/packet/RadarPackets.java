@@ -27,6 +27,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent.Context;
@@ -63,7 +64,7 @@ public class RadarPackets {
                         dogLoc -> Triple.of(
                             dogLoc.getDogId(), 
                             dogLoc.getDogName(), 
-                            new BlockPos(dogLoc.getPos())
+                            new BlockPos(Mth.floor(dogLoc.getPos().x), Mth.floor(dogLoc.getPos().y), Mth.floor(dogLoc.getPos().z))
                         )
                     )
                     .collect(Collectors.toList());
@@ -212,7 +213,7 @@ public class RadarPackets {
 
                 var correct_pos = entry.getPos();
                 if (correct_pos == null) return;
-                var correct_blockpos = new BlockPos(correct_pos);
+                var correct_blockpos = new BlockPos(Mth.floor(correct_pos.x), Mth.floor(correct_pos.y), Mth.floor(correct_pos.z));
 
                 if (correct_blockpos.distSqr(data.pos) < 4) return;
 
