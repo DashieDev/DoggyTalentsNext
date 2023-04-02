@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
-import doggytalents.ChopinLogger;
 import doggytalents.client.entity.render.world.RadarLocateRenderer;
 import doggytalents.client.screen.ConductingBoneScreen;
 import doggytalents.client.screen.RadarScreen;
@@ -195,8 +194,6 @@ public class RadarPackets {
             ctx.get().enqueueWork(() -> {
                 LogicalSide side = ctx.get().getDirection().getReceptionSide();
                 if (!side.isServer()) return;
-
-                ChopinLogger.l("Recieved correction request");
 
                 var sender = ctx.get().getSender();
                 var storage = 
