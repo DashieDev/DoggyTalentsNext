@@ -353,3 +353,33 @@ any time you swing with a digger item in hand. Also they will not teleport in fr
   * HOTFIX : Fixed Improper pathfind, causing dog to sometimes go infront of owner instead.
   + Improve accuracy.
 
+1.11.0 - 1th April 2023
+/ Added cooldown to the toBed whistle
++ Revamped Skin System :
+  + This skin system allows skins to have its own models and metadata.
+  + DogRender can switch between different models when rendering different dog with different skins
+  + This allows for future JEM and animation intergration.
+  + For accessories added support for 64x64 texture, allowing more flexiblity.
++ Accessories can now be rendered Translucent if on demand.
++ Added Low Graphics textures for incapacitated dogs:
+  + If users is vulnerable to blood or gore, they can choose to render this texture instead
+  of all of the others, this texture looks and feels much friendlier than the rest.
++ Added More Accessories ! 🎉
+  + Smarty Glasses : Want your dog to look like a scientist? This one certainly make him more like it🧑‍🔬
+  + Pianist Suit : A nice and formal suit for pianists!
+  + Bowtie : Finally, dogs can now wear bowties!
+  + Death Hood : Want to make your dog looking more... deadly ?💀
+  + Wig : Oh yeah, check out my hair style!
+* Fixed dog snout glitching under his chin.
++ Name all of the skins
+* Fixed armor boots rendering enchanted while it is not.
++ Overhaul Radar Mechanic :
+  +Users will be presented with a screen
+  to pick dogs to locate, after they selected
+  the dog, the locating dog data is then being
+  written into the item nbt tag of the stack,
+  Right click again to clear.
+
+  If user is holding a Radar with the tag,
+  there will be a text rendered in the direction of where the dog is telling
+  user how far away.
