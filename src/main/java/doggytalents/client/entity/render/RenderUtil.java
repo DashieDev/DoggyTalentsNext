@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -82,7 +83,7 @@ public class RenderUtil {
     }
 
     public static void drawSeeThroughText(Font font, PoseStack stack, Component component, float tX, float tY) {
-        font.drawInBatch(component, tX, tY, 0xffffffff, false, stack.last().pose(), Minecraft.getInstance().renderBuffers().bufferSource(), true, 0, 15728880);
+        font.drawInBatch(component, tX, tY, 0xffffffff, false, stack.last().pose(), Minecraft.getInstance().renderBuffers().bufferSource(), DisplayMode.SEE_THROUGH, 0, 15728880);
     }
 
     public static int rgbToInt(int[] rgb) {
