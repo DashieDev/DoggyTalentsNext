@@ -127,9 +127,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
             if (this.nearestDanger != null)
             this.dog.getLookControl().setLookAt(this.nearestDanger, 10.0F, this.dog.getMaxHeadXRot());
             if (dog.distanceToSqr(owner) > 2 && --this.tickUntilPathRecalc <= 0) {
-                //The dog always stays close to the owner, and tp when a little bit further
-                //So the path is not that long, so interval = 3 is ok
-                this.tickUntilPathRecalc = 3;
+                this.tickUntilPathRecalc = 5;
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
                     //Outside guard radius -> tp 
                     if (this.dog.distanceToSqr(this.owner) > GUARD_DISTANCE_SQR) {
@@ -239,9 +237,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
         public void tick() { 
             
             if (dog.distanceToSqr(owner) > 2 && --this.tickUntilPathRecalc <= 0) {
-                //The dog always stays close to the owner, and tp when a little bit further
-                //So the path is not that long, so interval = 3 is okw
-                this.tickUntilPathRecalc = 3;
+                this.tickUntilPathRecalc = 5;
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
                     //Outside guard radius -> tp 
                     if (this.dog.distanceToSqr(this.owner) > GUARD_DISTANCE_SQR) {
