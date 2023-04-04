@@ -173,15 +173,19 @@ public class DogNewInfoScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (this.getFocused() instanceof EditBox) {
+            return super.keyPressed(keyCode, scanCode, modifiers);
+        }
 
-        if (!(this.getFocused() instanceof EditBox)) {
-            if (keyCode == 263) {
-                this.lefTabButton.playDownSound(Minecraft.getInstance().getSoundManager());
-                this.lefTabButton.onClick(0, 0);
-            } else if (keyCode == 262) {
-                this.rightTabButton.playDownSound(Minecraft.getInstance().getSoundManager());
-                this.rightTabButton.onClick(0, 0);
-            }
+        var mc = Minecraft.getInstance();
+        var options = mc.options;
+        
+        if (keyCode == options.keyLeft.getKey().getValue()) {
+            this.lefTabButton.playDownSound(mc.getSoundManager());
+            this.lefTabButton.onClick(0, 0);
+        } else if (keyCode == options.keyRight.getKey().getValue()) {
+            this.rightTabButton.playDownSound(mc.getSoundManager());
+            this.rightTabButton.onClick(0, 0);
         }
 
         return super.keyPressed(keyCode, scanCode, modifiers);
