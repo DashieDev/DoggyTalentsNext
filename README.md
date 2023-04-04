@@ -14,6 +14,7 @@
 
 
 A Big Thanks to everyone that has contributed. This includes but is not limited to...
+ * ❤️**MashXP** my friend, for helping as a designer.
  * ❤️**ProPercivalalb** for the outstanding work of re-coding and perfecting the mod from the old and relatively buggy version and for continuing the developement until 1.18.2
  * ❤️**RaustBlackDragon** for creating the original mod and ideas back in 2013
  * ❤️**NovaViper** for coding help and maintaining order in the DoggyTalents Project until 1.18.2
