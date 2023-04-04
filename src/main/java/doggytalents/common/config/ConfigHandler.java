@@ -116,7 +116,7 @@ public class ConfigHandler {
                 .comment("If the defeault incapacitated texture proof too much graphic.")
                 .comment("You can substitute this friendlier texture instead.")
                 .translation("doggytalents.config.client.render_incap_txt_less_graphic")
-                .define("render_incap_txt_less_graphic", true);
+                .define("render_incap_txt_less_graphic", false);
 
             builder.pop();
         }
