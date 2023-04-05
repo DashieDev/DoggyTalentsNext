@@ -691,7 +691,8 @@ public class Dog extends AbstractDog {
     }
 
     /**
-     * When dogs enter Incapacitated Mode, hunger now acts as incapacitated units
+     * When dogs enter Incapacitated Mode, hunger now acts as incapacitated units.
+     * 
      * When "hunger" reaches Zero, it will reset and the dog will exit I Mode
      * 
      */
@@ -699,55 +700,67 @@ public class Dog extends AbstractDog {
         // 3 days max 60 min = 72 000 ticks
 
         var owner = this.getOwner();
+        var dog_b0_state = this.level.getBlockState(this.blockPosition());
+        var dog_b0_block = dog_b0_state.getBlock();
 
-        if (this.level.getBlockState(this.blockPosition()).getBlock() == Blocks.AIR) {
-            this.addHunger(0.001f*this.getIncapacitatedMutiplier());
+        if (this.getDogHunger() >= this.getMaxIncapacitatedHunger()) {
+            incapacitatedExit();
+            return;
         }
-        if (this.level.getBlockState(this.blockPosition()).getBlock() == DoggyBlocks.DOG_BED.get()) {
-            this.addHunger(0.002f*this.getIncapacitatedMutiplier());
+
+        if (dog_b0_block == Blocks.AIR) {
+            this.addHunger(0.001f*this.getIncapacitatedMutiplier());
+        } else if (dog_b0_block == DoggyBlocks.DOG_BED.get()) {
             if (!this.isInSittingPose())
                 this.setInSittingPose(true);
-            if (owner != null && this.distanceToSqr(owner) <= 100) {
-                this.addHunger(0.02f*this.getIncapacitatedMutiplier());
-                if (this.level instanceof ServerLevel && this.tickCount % 10 == 0) {
-                    ((ServerLevel) this.level).sendParticles(
-                        ParticleTypes.HEART, 
-                        this.getX(), this.getY(), this.getZ(), 
-                        1, 
-                        this.getBbWidth(), 0.8f, this.getBbWidth(), 
-                        0.1
-                    );
-                }
-            }
+            incapacitatedHealWithBed(owner);
         }
+    }
         
-        if (this.getDogHunger() >= this.getMaxIncapacitatedHunger()) {
-            this.setHealth(20);
-            this.setMode(EnumMode.DOCILE);
-            this.setDogHunger(this.getMaxHunger());
-            this.setOrderedToSit(true);
-            var toRemove = new ArrayList<AccessoryInstance>();
-            for (var i : this.getAccessories()) {
-                if (i.getAccessory() instanceof IncapacitatedLayer) {
-                    toRemove.add(i);
-                }
-            }
-            for (var i : toRemove) {
-                this.getAccessories().remove(i);
-            }
-            this.markDataParameterDirty(ACCESSORIES.get());
 
-            if (this.level instanceof ServerLevel sL) {
-                sL.sendParticles(
-                    ParticleTypes.HEART, 
-                    this.getX(), this.getY(), this.getZ(), 
-                    24, 
-                    this.getBbWidth(), 0.8f, this.getBbWidth(), 
-                    0.1
-                );
+    private void incapacitatedExit() {
+        this.setHealth(20);
+        this.setMode(EnumMode.DOCILE);
+        this.setDogHunger(this.getMaxHunger());
+        this.setOrderedToSit(true);
+        var toRemove = new ArrayList<AccessoryInstance>();
+        for (var i : this.getAccessories()) {
+            if (i.getAccessory() instanceof IncapacitatedLayer) {
+                toRemove.add(i);
             }
         }
-            
+        for (var i : toRemove) {
+            this.getAccessories().remove(i);
+        }
+        this.markDataParameterDirty(ACCESSORIES.get());
+
+        if (this.level instanceof ServerLevel sL) {
+            sL.sendParticles(
+                ParticleTypes.HEART, 
+                this.getX(), this.getY(), this.getZ(), 
+                24, 
+                this.getBbWidth(), 0.8f, this.getBbWidth(), 
+                0.1
+            );
+        }
+    }
+
+    private void incapacitatedHealWithBed(LivingEntity owner) {
+        this.addHunger(0.002f*this.getIncapacitatedMutiplier());
+
+        if (owner == null) return;
+        if (this.distanceToSqr(owner) > 100) return;
+        this.addHunger(0.02f*this.getIncapacitatedMutiplier());
+
+        if (!(this.level instanceof ServerLevel)) return;
+        if (this.tickCount % 10 != 0) return;
+        ((ServerLevel) this.level).sendParticles(
+            ParticleTypes.HEART, 
+            this.getX(), this.getY(), this.getZ(), 
+            1, 
+            this.getBbWidth(), 0.8f, this.getBbWidth(), 
+            0.1
+        );
     }
 
     @Override
