@@ -19,8 +19,8 @@ public class ScrollView extends AbstractElement {
     private static final int SCROLL_BAR_THICK = 3;
     private static final int SCROLL_BAR_HANDLE_CLR = 0xffd7d9d7;
     private static final int SCROLL_BAR_REST_CLR = 0x90d7d9d7;
-    
-    //TODO turn this into proper millis!
+
+    long millis0;
     long scrollBarAppearDuration = 0;
 
     ScrollContentContainer container;
@@ -46,8 +46,14 @@ public class ScrollView extends AbstractElement {
             this.getRealY() + this.getSizeY());
         super.render(stack, mouseX, mouseY, partialTicks);
 
-        if (scrollBarAppearDuration > 0) {
-            --scrollBarAppearDuration;
+        long millis = System.currentTimeMillis();
+        long millis_elapsed = millis - millis0;
+        if (
+            scrollBarAppearDuration > 0
+            && millis_elapsed > 0
+        ) {
+            scrollBarAppearDuration -= millis_elapsed;
+            millis0 = millis;
             drawScrollBar(stack, mouseX, mouseY, partialTicks);
         }
         GuiComponent.disableScissor();
@@ -75,7 +81,8 @@ public class ScrollView extends AbstractElement {
     //dir : -1.0 = down; 1.0 = up
     @Override
     public boolean mouseScrolled(double x, double y, double dir) {
-        scrollBarAppearDuration = 150;
+        scrollBarAppearDuration = 1500;
+        millis0 = System.currentTimeMillis();
         container.setOffset(Mth.ceil(container.getOffset() + (-dir) * SCROLL_SPEED));
         int maxOff = getMaxOffset();
         if (container.getOffset() < 0) 
