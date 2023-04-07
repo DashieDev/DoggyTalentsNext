@@ -57,8 +57,8 @@ public class AccessoryEditElement extends AbstractElement {
             this.accessoryHolders.add(accessoryHolder);
         }
 
-        int accessoryHolderTotalsSize = 5 * AccessoryHolder.WIDGET_SIZE 
-            + 4 * BUTTON_SPACING;
+        int accessoryHolderTotalsSize = 
+            5 * AccessoryHolder.WIDGET_SIZE + 4 * BUTTON_SPACING;
         int startY = this.getRealY() + mY - AccessoryHolder.WIDGET_SIZE/2;
         int pX = this.getRealX() + mX - accessoryHolderTotalsSize/2;
         for (var holder : this.accessoryHolders) {
@@ -98,18 +98,16 @@ public class AccessoryEditElement extends AbstractElement {
         int tillStart = startIndex;
         for (int i = 0; i < items.size(); ++i) {
             var item = items.get(i);
-            
-            if (item != null && this.eligibleAccessory(item)) {
-                if (holderIndx >= this.accessoryHolders.size()) {
-                    this.nextPage.active = true;
-                    break;
-                }
-                if (--tillStart < 0) {
-                    var holder = this.accessoryHolders.get(holderIndx);
-                    holder.setStack(item);
-                    holder.setInventorySlotId(i);
-                    ++holderIndx;
-                }
+            if (item == null || this.eligibleAccessory(item)) continue;
+            if (holderIndx >= this.accessoryHolders.size()) {
+                this.nextPage.active = true;
+                break;
+            }
+            if (--tillStart < 0) {
+                var holder = this.accessoryHolders.get(holderIndx);
+                holder.setStack(item);
+                holder.setInventorySlotId(i);
+                ++holderIndx;
             }
         }
         if (holderIndx <= 0) {
