@@ -53,7 +53,8 @@ public abstract class TriggerableAction {
     public static enum ActionState {
         PENDING,
         RUNNING,
-        FINISHED
+        FINISHED,
+        PAUSED
     }
 
 }
