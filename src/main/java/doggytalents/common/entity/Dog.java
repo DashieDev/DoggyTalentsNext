@@ -300,10 +300,10 @@ public class Dog extends AbstractDog {
     @Override
     protected SoundEvent getAmbientSound() {
         if (this.isDefeated()) {
-            if (this.getDogHunger() > 32) {
-                return this.random.nextInt(2) == 0 ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
-            }
-            return SoundEvents.WOLF_WHINE;
+            // if (this.getDogHunger() > 32) {
+            //     return this.random.nextInt(2) == 0 ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
+            // }
+            return this.random.nextInt(2) == 0 ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
         }
         if (this.random.nextInt(3) == 0) {
             return this.isTame() && this.getHealth() < 10.0F ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
