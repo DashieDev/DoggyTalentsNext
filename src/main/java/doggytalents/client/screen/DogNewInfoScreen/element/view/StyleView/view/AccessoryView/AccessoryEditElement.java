@@ -98,7 +98,7 @@ public class AccessoryEditElement extends AbstractElement {
         int tillStart = startIndex;
         for (int i = 0; i < items.size(); ++i) {
             var item = items.get(i);
-            if (item == null || this.eligibleAccessory(item)) continue;
+            if (item == null || !this.eligibleAccessory(item)) continue;
             if (holderIndx >= this.accessoryHolders.size()) {
                 this.nextPage.active = true;
                 break;
