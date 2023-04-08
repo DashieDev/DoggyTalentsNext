@@ -383,3 +383,11 @@ any time you swing with a digger item in hand. Also they will not teleport in fr
   If user is holding a Radar with the tag,
   there will be a text rendered in the direction of where the dog is telling
   user how far away.
+
+1.11.1 - 8th April 2023
++ Dog Gui navbars now can be controlled by using whatever key you use for going left or right.
+* Fixed removal of accessories from the dog sometimes removed the wrong accessory:
+  / which is caused by the client sorting the actual synced data for rendering
+* Fixed radar causes shaders to not render anything when activated.
++ Defeated Dogs now whine less
++ Fixed dogs sometimes refused to sit even when doing a goal which allows cancelation through sitting.
