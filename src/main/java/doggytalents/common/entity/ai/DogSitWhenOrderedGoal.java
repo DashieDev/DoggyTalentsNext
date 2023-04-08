@@ -15,7 +15,7 @@ public class DogSitWhenOrderedGoal extends SitWhenOrderedToGoal {
     @Override
     public boolean canUse() {
         var action = dog.getTriggerableAction();
-        if (action != null && action.canPreventSit()) {
+        if (action != null && action.canPreventSit() && !dog.forceSit()) {
             return false;
         }
         return super.canUse();
@@ -37,7 +37,7 @@ public class DogSitWhenOrderedGoal extends SitWhenOrderedToGoal {
     @Override
     public boolean canContinueToUse() {
         var action = dog.getTriggerableAction();
-        if (action != null && action.canPreventSit()) {
+        if (action != null && action.canPreventSit() && !dog.forceSit()) {
             return false;
         }
         return super.canContinueToUse();
