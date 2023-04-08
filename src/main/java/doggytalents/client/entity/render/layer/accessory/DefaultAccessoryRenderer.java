@@ -30,7 +30,7 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
             return;
         }
 
-        for (AccessoryInstance accessoryInst : dog.getAccessories()) {
+        for (AccessoryInstance accessoryInst : dog.getClientSortedAccessories()) {
             if (accessoryInst.usesRenderer(this.getClass())) {
                 var dogModel = this.getParentModel();
                 boolean isX64Model = dogModel.isX64Model();
