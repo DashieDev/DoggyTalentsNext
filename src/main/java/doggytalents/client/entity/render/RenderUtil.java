@@ -82,10 +82,6 @@ public class RenderUtil {
         BufferUploader.drawWithShader(bufferbuilder.end());
     }
 
-    public static void drawSeeThroughText(Font font, PoseStack stack, Component component, float tX, float tY) {
-        font.drawInBatch(component, tX, tY, 0xffffffff, false, stack.last().pose(), Minecraft.getInstance().renderBuffers().bufferSource(), DisplayMode.SEE_THROUGH, 0, 15728880);
-    }
-
     public static int rgbToInt(int[] rgb) {
         return rgb[0] << 16 | rgb[1] << 8 | rgb[2];
     }
