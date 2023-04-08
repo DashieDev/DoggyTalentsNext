@@ -1,6 +1,7 @@
 package doggytalents.common.entity.ai;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 
 public class DogSitWhenOrderedGoal extends SitWhenOrderedToGoal {
@@ -15,7 +16,12 @@ public class DogSitWhenOrderedGoal extends SitWhenOrderedToGoal {
     @Override
     public boolean canUse() {
         var action = dog.getTriggerableAction();
-        if (action != null && action.canPreventSit() && !dog.forceSit()) {
+        if (
+            action != null 
+            && action.canPreventSit() 
+            && action.getState() == ActionState.RUNNING
+            && !dog.forceSit()
+        ) {
             return false;
         }
         return super.canUse();
