@@ -44,6 +44,11 @@ public class DogTriggerableGoal extends Goal {
                 //Allow checks on start.
                 action.onStart();
                 break;
+            case PAUSED :
+                action.setState(ActionState.RUNNING);
+                //action.onResume()
+                action.tick();
+                break;
             case RUNNING :
                 action.tick();
                 break;
@@ -62,12 +67,14 @@ public class DogTriggerableGoal extends Goal {
             var stashed_action = dog.getStashedTriggerableAction();
             if (stashed_action != null) {
                 if (!stashed_action.canPause()) dog.setStashedTriggerableAction(null);
+                stashed_action.setState(ActionState.PAUSED);
             }
         }
         var action = dog.getTriggerableAction();
         if (action != null) {
             if (action.isTrivial() != trivial) return;
             if (!action.canPause()) dog.triggerAction(null);
+            action.setState(ActionState.PAUSED);
         }
         
     }

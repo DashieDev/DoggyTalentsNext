@@ -22,6 +22,7 @@ import doggytalents.common.entity.ai.BreedGoal;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.ai.triggerable.DogTriggerableGoal;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
+import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import doggytalents.common.entity.accessory.IncapacitatedLayer;
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
@@ -643,6 +644,7 @@ public class Dog extends AbstractDog {
                 if (this.stashedAction != null) {
                     this.stashedAction.onStop();
                 }
+                this.activeAction.setState(ActionState.PAUSED);
                 this.stashedAction = this.activeAction;
             } else {
                 this.activeAction.onStop();
