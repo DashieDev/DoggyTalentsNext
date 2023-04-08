@@ -167,7 +167,9 @@ public class Dog extends AbstractDog {
     public final Map<Integer, Object> objects = new HashMap<>();
 
     private DogSkin clientSkin = DogSkin.CLASSICAL;
-
+    private ArrayList<AccessoryInstance> clientAccessories
+        = new ArrayList<AccessoryInstance>();
+        
     public final StatsTracker statsTracker = new StatsTracker();
     public final DogOwnerDistanceManager dogOwnerDistanceManager 
         = new DogOwnerDistanceManager(this);
@@ -2045,7 +2047,9 @@ public class Dog extends AbstractDog {
             if (this.level.isClientSide) {
                 // Does not recall this notifyDataManagerChange as list object is
                 // still the same, maybe in future MC versions this will change so need to watch out
-                this.getAccessories().sort(AccessoryInstance.RENDER_SORTER);
+                this.clientAccessories = new ArrayList<>(this.getAccessories());
+                this.clientAccessories.sort(AccessoryInstance.RENDER_SORTER);
+                //this.getAccessories().sort(AccessoryInstance.RENDER_SORTER);
             }
         }
 
@@ -3098,6 +3102,11 @@ public class Dog extends AbstractDog {
         } else {
             this.clientSkin = skin;
         }
+    }
+
+    //Client
+    public List<AccessoryInstance> getClientSortedAccessories() {
+        return this.clientAccessories;
     }
 
 }
