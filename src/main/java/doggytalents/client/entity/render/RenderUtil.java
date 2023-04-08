@@ -83,7 +83,9 @@ public class RenderUtil {
     }
 
     public static void drawSeeThroughText(Font font, PoseStack stack, Component component, float tX, float tY) {
-        font.drawInBatch(component, tX, tY, 0xffffffff, false, stack.last().pose(), Minecraft.getInstance().renderBuffers().bufferSource(), true, 0, 15728880);
+        var bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+        font.drawInBatch(component, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, true, 0, 15728880);
+        bufferSource.endBatch();
     }
 
     public static int rgbToInt(int[] rgb) {
