@@ -391,3 +391,8 @@ any time you swing with a digger item in hand. Also they will not teleport in fr
 * Fixed radar causes shaders to not render anything when activated.
 + Defeated Dogs now whine less
 + Fixed dogs sometimes refused to sit even when doing a goal which allows cancelation through sitting.
+
+1.11.2 - 11th April 2023
+* Fixed stupid🤡 inversion that cause non accessories to be listed instead of accessories in the
+Style>Accessories view.
++ Radar text now can actually be seen through, although the code to make it work is ... questionable.
