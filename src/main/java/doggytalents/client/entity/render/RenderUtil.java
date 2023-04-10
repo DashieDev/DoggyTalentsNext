@@ -80,13 +80,7 @@ public class RenderUtil {
         bufferbuilder.vertex(minX, yMin, zLevel).uv(textureXMin, textureYMin).endVertex();
         BufferUploader.drawWithShader(bufferbuilder.end());
     }
-
-    public static void drawSeeThroughText(Font font, PoseStack stack, Component component, float tX, float tY) {
-        var bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        font.drawInBatch(component, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, true, 0, 15728880);
-        bufferSource.endBatch();
-    }
-
+    
     public static int rgbToInt(int[] rgb) {
         return rgb[0] << 16 | rgb[1] << 8 | rgb[2];
     }

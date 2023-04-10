@@ -10,15 +10,19 @@ import doggytalents.DoggyItems;
 import doggytalents.client.entity.render.RenderUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.RadarItem;
+import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.RadarData.RequestPosUpdateData;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.font.FontManager;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -32,6 +36,8 @@ import net.minecraftforge.network.PacketDistributor;
 
 public class RadarLocateRenderer {
 
+    private static ResourceLocation DEFAULT_0 = new ResourceLocation("default/0");
+
     private static boolean locating;
     private static UUID locatingUUID;
     private static String locatingName;
@@ -40,7 +46,7 @@ public class RadarLocateRenderer {
     private static WeakReference<Dog> cachedDog = new WeakReference<Dog>(null);
     
     public static void onWorldRenderLast(RenderLevelStageEvent event) {
-        if (event.getStage() != Stage.AFTER_PARTICLES) 
+        if (event.getStage() != Stage.AFTER_TRANSLUCENT_BLOCKS) 
             return;
         if (!locating) return;
         var player = Minecraft.getInstance().player;
@@ -67,7 +73,7 @@ public class RadarLocateRenderer {
         drawFloatingDistanceText(locatingName, event.getPoseStack(), d_dog_camera, off_txt, camera);
     }
 
-    private static void drawFloatingDistanceText(String name, PoseStack stack, double distance, Vec3 off_from_player, Camera camera) {
+    public static void drawFloatingDistanceText(String name, PoseStack stack, double distance, Vec3 off_from_player, Camera camera) {
         stack.pushPose();
         stack.translate(off_from_player.x(), off_from_player.y(), off_from_player.z());
         stack.mulPose(camera.rotation());
@@ -102,12 +108,18 @@ public class RadarLocateRenderer {
             );
         }
 
+        var bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+
+        //TODO For some reason, this line is required for the below lines to work...
+        bufferSource.getBuffer(RenderType.text(Resources.SMALL_WIDGETS));
+
         float tX = (float)(-font.width(line1) / 2);
         float tY = 0;
-        RenderUtil.drawSeeThroughText(font, stack, line1, tX, tY);
+        font.drawInBatch(line1, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, true, 0, 15728880);
         tX = (float)(-font.width(line2) / 2);
         tY += font.lineHeight + 3;
-        RenderUtil.drawSeeThroughText(font, stack, line2, tX, tY);
+        font.drawInBatch(line2, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, true, 0, 15728880);;
+        bufferSource.endLastBatch();
 
         stack.popPose();
     }
