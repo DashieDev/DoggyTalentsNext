@@ -3060,6 +3060,12 @@ public class Dog extends AbstractDog {
         this.goalSelector.setControlFlag(Goal.Flag.LOOK, notControlledByPlayer);
     }
 
+    @Override
+    protected boolean isImmobile() {
+        if (this.isDefeated()) return true;
+        return super.isImmobile();
+    }
+
     public float getTimeDogIsShaking() {
         return this.timeWolfIsShaking;
     }
