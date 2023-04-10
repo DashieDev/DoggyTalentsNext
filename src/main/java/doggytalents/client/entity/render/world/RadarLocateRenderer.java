@@ -15,6 +15,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.RadarData.RequestPosUpdateData;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.font.FontManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -115,10 +116,10 @@ public class RadarLocateRenderer {
 
         float tX = (float)(-font.width(line1) / 2);
         float tY = 0;
-        font.drawInBatch(line1, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, true, 0, 15728880);
+        font.drawInBatch(line1, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, DisplayMode.SEE_THROUGH, 0, 15728880);
         tX = (float)(-font.width(line2) / 2);
         tY += font.lineHeight + 3;
-        font.drawInBatch(line2, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, true, 0, 15728880);;
+        font.drawInBatch(line2, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, DisplayMode.SEE_THROUGH, 0, 15728880);;
         bufferSource.endLastBatch();
 
         stack.popPose();
