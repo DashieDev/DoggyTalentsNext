@@ -103,7 +103,7 @@ public class DogEatFromChestDogGoal extends Goal {
                     // } else {
                     DogUtil.moveToIfReachOrElse(dog, 
                         this.chestDog.blockPosition(), speedModifier, 
-                        1, (d) -> {
+                        1, 1, (d) -> {
                             this.chestDog = null;
                         });
                     //}

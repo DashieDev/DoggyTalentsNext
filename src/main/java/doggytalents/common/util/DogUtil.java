@@ -337,14 +337,14 @@ public class DogUtil {
      * @return
      * 
      */
-    public static boolean canPathReachTargetBlock(Dog dog, @Nonnull Path path, BlockPos pos, int dY) {
+    public static boolean canPathReachTargetBlock(Dog dog, @Nonnull Path path, BlockPos pos, int maxDY_up, int maxDY_down) {
         var endNode = path.getEndNode();
         if (endNode == null) return false;
         var dx = endNode.x - pos.getX();
         var dz = endNode.z - pos.getZ();
         var d_sqr = dx*dx + dz*dz;
-        var dy = Math.abs(endNode.y - pos.getY());
-        return d_sqr <= 1 && dy <= dY;
+        var dy = pos.getY() - endNode.y;
+        return d_sqr <= 1 && ( -maxDY_down <= dy && dy <= maxDY_up);
     }
 
     /**
@@ -431,14 +431,14 @@ public class DogUtil {
      * @return true if dog can reach.
      */
     public static boolean moveToIfReachOrElse(Dog dog, BlockPos pos, double speedModifier, 
-        int dY, Consumer<Dog> orElse) {
+        int maxDY_up, int maxDY_down, Consumer<Dog> orElse) {
         var p = dog.getNavigation().createPath(pos, 1);
         if (p == null) {
             orElse.accept(dog);
             return false;
         }
 
-        if (DogUtil.canPathReachTargetBlock(dog, p, pos, dY)) {
+        if (DogUtil.canPathReachTargetBlock(dog, p, pos, maxDY_up, maxDY_down)) {
             dog.getNavigation().moveTo(p, speedModifier);
             return true;
         } else {
