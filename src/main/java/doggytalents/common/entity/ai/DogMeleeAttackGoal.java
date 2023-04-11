@@ -109,7 +109,7 @@ public class DogMeleeAttackGoal extends Goal {
       
       if (p == null) return false;
 
-      if (!DogUtil.canPathReachTargetBlock(dog, p, target.blockPosition(), dog.getMaxFallDistance() )) { 
+      if (!DogUtil.canPathReachTargetBlock(dog, p, target.blockPosition(), 1, dog.getMaxFallDistance())) { 
          this.dog.setTarget(null);
          this.detectReachPenalty += (d0 > 256 ? 10 : 5);
          return false;
