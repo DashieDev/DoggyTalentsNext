@@ -72,7 +72,7 @@ public class DogFindWaterGoal extends Goal {
             if (--this.tickUntilPathRecalc <= 0) {
                 this.tickUntilPathRecalc = 10;
                 DogUtil.moveToIfReachOrElse(
-                    dog, waterPos, dog.getUrgentSpeedModifier(), dog.getMaxFallDistance(), 
+                    dog, waterPos, dog.getUrgentSpeedModifier(), 1, dog.getMaxFallDistance(), 
                     dog1 -> {
                         this.waterPos = null;
                     }    
