@@ -27,7 +27,7 @@ public class StoreConnectedScreen extends Screen {
     @Override
     public void resize(Minecraft p_96575_, int width, int height) {
         Store.get(this).dispatchAll(
-            new UIAction(UIActionTypes.RESIZE, new Object()),
+            new UIAction(CommonUIActionTypes.RESIZE, new Object()),
             width, height
         );
     }

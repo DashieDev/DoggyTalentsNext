@@ -5,6 +5,7 @@ import doggytalents.client.screen.DogNewInfoScreen.store.payload.ChangeTabPayloa
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Tab;
 import doggytalents.client.screen.framework.AbstractSlice;
 import doggytalents.client.screen.framework.UIAction;
+import doggytalents.client.screen.framework.CommonUIActionTypes;
 
 public class MainPanelSlice implements AbstractSlice {
 
@@ -16,7 +17,7 @@ public class MainPanelSlice implements AbstractSlice {
 
     @Override
     public Object reducer(Object oldData, UIAction action) {
-        if (action.type == UIActionTypes.CHANGE_TAB) {
+        if (action.type == CommonUIActionTypes.CHANGE_TAB) {
             if (action.payload instanceof ChangeTabPayload tabPayload) {
                 if (tabPayload.getTab() == Tab.HOME) {
                     return MainTab.MAIN;
