@@ -22,6 +22,7 @@ import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.*;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Tab;
 import doggytalents.client.screen.framework.AbstractSlice;
+import doggytalents.client.screen.framework.CommonUIActionTypes;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.StoreConnectedScreen;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
@@ -48,13 +49,13 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         
         this.rightTabButton = new TextOnlyButton(0, 0, 0, 0, Component.literal(">"), b -> {
             Store.get(this).dispatch(ActiveTabSlice.class, 
-                new UIAction(UIActionTypes.CHANGE_TAB_NEXT, null)
+                new UIAction(CommonUIActionTypes.CHANGE_TAB_NEXT, null)
             );
         }, Minecraft.getInstance().font);
 
         this.lefTabButton = new TextOnlyButton(0, 0, 0, 0, Component.literal("<"), b -> {
             Store.get(this).dispatch(ActiveTabSlice.class, 
-                new UIAction(UIActionTypes.CHANGE_TAB_PREV, null)
+                new UIAction(CommonUIActionTypes.CHANGE_TAB_PREV, null)
             );
         }, Minecraft.getInstance().font);
 

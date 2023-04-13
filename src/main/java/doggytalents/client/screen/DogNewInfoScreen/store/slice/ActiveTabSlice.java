@@ -4,6 +4,7 @@ import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.payload.ChangeTabPayload;
 import doggytalents.client.screen.DogNewInfoScreen.store.payload.InitSkinIndexPayload;
 import doggytalents.client.screen.framework.AbstractSlice;
+import doggytalents.client.screen.framework.CommonUIActionTypes;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
@@ -19,11 +20,11 @@ public class ActiveTabSlice implements AbstractSlice {
 
     @Override
     public Object reducer(Object oldData, UIAction action) {
-        if (action.type == UIActionTypes.CHANGE_TAB) {
+        if (action.type == CommonUIActionTypes.CHANGE_TAB) {
             if (action.payload instanceof ChangeTabPayload tabPayload) {
                 return tabPayload.getTab();
             }
-        } else if (action.type == UIActionTypes.CHANGE_TAB_NEXT) {
+        } else if (action.type == CommonUIActionTypes.CHANGE_TAB_NEXT) {
             if (oldData instanceof Tab tab) {
                 switch (tab) {
                     case HOME:
@@ -38,7 +39,7 @@ public class ActiveTabSlice implements AbstractSlice {
                         return Tab.HOME;
                 }
             }
-        } else if (action.type == UIActionTypes.CHANGE_TAB_PREV) {
+        } else if (action.type == CommonUIActionTypes.CHANGE_TAB_PREV) {
             if (oldData instanceof Tab tab) {
                 switch (tab) {
                     case HOME:
@@ -68,7 +69,7 @@ public class ActiveTabSlice implements AbstractSlice {
             payload = setupSkins(dog);
         }
 
-        return new UIAction(UIActionTypes.CHANGE_TAB, payload);
+        return new UIAction(CommonUIActionTypes.CHANGE_TAB, payload);
     }
 
     private static void setupStats(Dog dog) {
