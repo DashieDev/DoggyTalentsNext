@@ -1,12 +1,12 @@
-package doggytalents.client.screen.DogNewInfoScreen.element;
+package doggytalents.client.screen.framework.element;
 
 import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.ChildDirection;
-import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.PosType;
+import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
+import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.Mth;
