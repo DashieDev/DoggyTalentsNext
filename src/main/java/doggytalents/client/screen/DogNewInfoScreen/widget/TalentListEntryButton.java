@@ -4,10 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Talent;
-import doggytalents.client.screen.DogNewInfoScreen.store.Store;
-import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
+import doggytalents.client.screen.framework.Store;
+import doggytalents.client.screen.framework.UIAction;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;

@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
-import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice.MainTab;
-import doggytalents.client.screen.DogNewInfoScreen.widget.TabPanelButton;
+import doggytalents.client.screen.framework.Store;
+import doggytalents.client.screen.framework.widget.TabPanelButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
