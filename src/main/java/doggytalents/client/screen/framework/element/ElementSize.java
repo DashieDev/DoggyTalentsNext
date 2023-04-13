@@ -1,6 +1,6 @@
-package doggytalents.client.screen.DogNewInfoScreen.element;
+package doggytalents.client.screen.framework.element;
 
-import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.PosType;
+import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import net.minecraft.util.Mth;
 
 public class ElementSize {

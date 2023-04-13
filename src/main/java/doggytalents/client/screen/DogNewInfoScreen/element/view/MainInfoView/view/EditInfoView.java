@@ -5,8 +5,8 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.ScreenUtil;
-import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
+import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
