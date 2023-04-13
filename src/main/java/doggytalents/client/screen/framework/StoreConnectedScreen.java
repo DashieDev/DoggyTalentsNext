@@ -1,5 +1,7 @@
 package doggytalents.client.screen.framework;
 
+import java.util.List;
+
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -24,5 +26,7 @@ public class StoreConnectedScreen extends Screen {
             width, height
         );
     }
+
+    public List<Class<? extends AbstractSlice>> getSlices() { return List.of(); }
 
 }
