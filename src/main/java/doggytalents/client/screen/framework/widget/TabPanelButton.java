@@ -1,14 +1,14 @@
-package doggytalents.client.screen.DogNewInfoScreen.widget;
+package doggytalents.client.screen.framework.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Talent;
-import doggytalents.client.screen.DogNewInfoScreen.store.Store;
-import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.AbstractSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
+import doggytalents.client.screen.framework.AbstractSlice;
+import doggytalents.client.screen.framework.Store;
+import doggytalents.client.screen.framework.UIAction;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
