@@ -5,14 +5,6 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import doggytalents.ChopinLogger;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveSkinSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.StatsViewPanelSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.StyleViewPanelSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListPageCounterSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice;
 import net.minecraft.client.gui.screens.Screen;
 
 public class Store {
@@ -20,13 +12,15 @@ public class Store {
     private static Store INSTANCE;
 
     //Re-render listener.
-    private Screen screen;
+    private final Screen screen;
 
     private final Map<Class<? extends AbstractSlice>, StoreValue> applicationStates
         = Maps.newConcurrentMap();
 
-    private Store() {
+    private Store(Screen screen) {
+        this.screen = screen;
         this.registerSlices();
+        this.init();
     }
 
     private <T extends AbstractSlice> void registerSlice(Class<T> slice) {
@@ -40,22 +34,18 @@ public class Store {
     }
 
     private void registerSlices() {
-        registerSlice(ActiveTabSlice.class);
-        registerSlice(TalentListSlice.class);
-        registerSlice(TalentListPageCounterSlice.class);
-        registerSlice(ActiveTalentDescSlice.class);
-        registerSlice(StyleViewPanelSlice.class);
-        registerSlice(ActiveSkinSlice.class);
-        registerSlice(StatsViewPanelSlice.class);
-        registerSlice(MainPanelSlice.class);
+        if (!(this.screen instanceof StoreConnectedScreen)) return;
+        var storeScr = (StoreConnectedScreen) this.screen;
+        for (var slice : storeScr.getSlices()) {
+            registerSlice(slice);
+        }
     }
 
-    private void init(Screen screen) {
+    private void init() {
         for (var x : this.applicationStates.entrySet()) {
             var initState = x.getValue().worker.getInitalState();
             x.getValue().state = initState;
         }
-        this.screen = screen;
     }
 
     /**
@@ -114,10 +104,9 @@ public class Store {
 
     public static Store get(Screen screen) {
         if (INSTANCE == null) {
-            INSTANCE = new Store();
-            INSTANCE.init(screen);
+            INSTANCE = new Store(screen);
         } else if (screen != INSTANCE.screen) {
-            INSTANCE.screen = screen;
+            INSTANCE = new Store(screen);
         }
         return INSTANCE;
     }
