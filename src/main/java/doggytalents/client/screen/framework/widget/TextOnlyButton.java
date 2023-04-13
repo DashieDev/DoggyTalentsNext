@@ -1,4 +1,4 @@
-package doggytalents.client.screen.DogNewInfoScreen.widget;
+package doggytalents.client.screen.framework.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 

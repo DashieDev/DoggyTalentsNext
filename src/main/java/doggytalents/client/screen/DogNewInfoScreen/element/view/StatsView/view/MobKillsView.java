@@ -3,7 +3,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView.view;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
-import doggytalents.client.screen.DogNewInfoScreen.widget.TextOnlyButton;
+import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.stats.StatsTracker;
 import net.minecraft.client.gui.Font;

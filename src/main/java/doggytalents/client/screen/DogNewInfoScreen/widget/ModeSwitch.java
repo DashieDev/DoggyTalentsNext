@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.client.screen.DogInfoScreen;
 import doggytalents.client.screen.ScreenUtil;
-import doggytalents.client.screen.DogNewInfoScreen.store.ToolTipOverlayManager;
+import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogModeData;
