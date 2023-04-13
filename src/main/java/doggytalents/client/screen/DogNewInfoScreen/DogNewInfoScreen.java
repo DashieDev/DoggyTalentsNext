@@ -1,5 +1,7 @@
 package doggytalents.client.screen.DogNewInfoScreen;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -17,8 +19,9 @@ import doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView.StatsV
 import doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.StyleView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.TalentView.TalentView;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.*;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Tab;
+import doggytalents.client.screen.framework.AbstractSlice;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.StoreConnectedScreen;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
@@ -213,6 +216,20 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    @Override
+    public List<Class<? extends AbstractSlice>> getSlices() {
+        return List.of(
+            ActiveTabSlice.class,
+            TalentListSlice.class,
+            TalentListPageCounterSlice.class,
+            ActiveTalentDescSlice.class,
+            StyleViewPanelSlice.class,
+            ActiveSkinSlice.class,
+            StatsViewPanelSlice.class,
+            MainPanelSlice.class
+        );
     }
 
 }
