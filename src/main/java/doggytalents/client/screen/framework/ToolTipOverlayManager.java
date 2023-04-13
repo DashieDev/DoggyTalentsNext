@@ -1,4 +1,4 @@
-package doggytalents.client.screen.DogNewInfoScreen.store;
+package doggytalents.client.screen.framework;
 
 import java.util.List;
 

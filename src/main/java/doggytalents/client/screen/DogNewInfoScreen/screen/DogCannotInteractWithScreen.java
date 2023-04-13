@@ -3,7 +3,7 @@ package doggytalents.client.screen.DogNewInfoScreen.screen;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
-import doggytalents.client.screen.DogNewInfoScreen.store.Store;
+import doggytalents.client.screen.framework.Store;
 import doggytalents.common.entity.Dog;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
