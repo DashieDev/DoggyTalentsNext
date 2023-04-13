@@ -7,6 +7,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.client.screen.framework.AbstractSlice;
+import doggytalents.client.screen.framework.CommonUIActionTypes;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.common.entity.Dog;
@@ -52,7 +53,7 @@ public class TabPanelButton extends AbstractButton {
     @Override
     public void onPress() {
         Store.get(screen).dispatch(slice, 
-            new UIAction(UIActionTypes.CHANGE_PANEL_TAB, stateValue)
+            new UIAction(CommonUIActionTypes.CHANGE_PANEL_TAB, stateValue)
         );
     }
 
