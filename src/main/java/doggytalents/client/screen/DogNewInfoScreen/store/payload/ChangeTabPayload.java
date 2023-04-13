@@ -1,7 +1,7 @@
 package doggytalents.client.screen.DogNewInfoScreen.store.payload;
 
+import doggytalents.client.screen.DogNewInfoScreen.store.payload.interfaces.TabChange;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Tab;
-import doggytalents.client.screen.framework.payload.interfaces.TabChange;
 
 public class ChangeTabPayload implements TabChange {
 
