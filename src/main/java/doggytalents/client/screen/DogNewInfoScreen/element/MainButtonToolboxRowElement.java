@@ -8,6 +8,7 @@ import doggytalents.ChopinLogger;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice.MainTab;
 import doggytalents.client.screen.DogNewInfoScreen.widget.ModeSwitch;
+import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.TabPanelButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
