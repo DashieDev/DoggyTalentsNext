@@ -1,15 +1,13 @@
-package doggytalents.client.screen.DogNewInfoScreen.store;
+package doggytalents.client.screen.framework;
 
 import java.util.Map;
 
 import com.google.common.collect.Maps;
 
 import doggytalents.ChopinLogger;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.AbstractSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveSkinSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.slice.CleanableSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.StatsViewPanelSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.StyleViewPanelSlice;

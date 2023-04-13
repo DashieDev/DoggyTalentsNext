@@ -1,9 +1,10 @@
 package doggytalents.client.screen.DogNewInfoScreen.store.slice;
 
-import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.payload.ChangeTabPayload;
 import doggytalents.client.screen.DogNewInfoScreen.store.payload.InitSkinIndexPayload;
+import doggytalents.client.screen.framework.AbstractSlice;
+import doggytalents.client.screen.framework.UIAction;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.StatsSyncData;

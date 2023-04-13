@@ -8,9 +8,9 @@ import doggytalents.client.screen.DogNewInfoScreen.element.MainButtonToolboxRowE
 import doggytalents.client.screen.DogNewInfoScreen.element.ElementPosition.PosType;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.view.DebugView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.view.EditInfoView;
-import doggytalents.client.screen.DogNewInfoScreen.store.Store;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice.MainTab;
+import doggytalents.client.screen.framework.Store;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

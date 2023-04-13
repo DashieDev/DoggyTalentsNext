@@ -16,13 +16,14 @@ import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.Mai
 import doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView.StatsView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.StyleView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.TalentView.TalentView;
-import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Tab;
-import doggytalents.client.screen.DogNewInfoScreen.widget.TextOnlyButton;
-import doggytalents.client.screen.DogNewInfoScreen.store.Store;
-import doggytalents.client.screen.DogNewInfoScreen.store.ToolTipOverlayManager;
+import doggytalents.client.screen.framework.Store;
+import doggytalents.client.screen.framework.StoreConnectedScreen;
+import doggytalents.client.screen.framework.ToolTipOverlayManager;
+import doggytalents.client.screen.framework.UIAction;
+import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -31,7 +32,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-public class DogNewInfoScreen extends Screen {
+public class DogNewInfoScreen extends StoreConnectedScreen {
 
     private Dog dog;
 
@@ -214,18 +215,4 @@ public class DogNewInfoScreen extends Screen {
         return false;
     }
 
-    @Override
-    public void removed() {
-        super.removed();
-        Store.finish();
-    }
-
-    @Override
-    public void resize(Minecraft p_96575_, int width, int height) {
-        Store.get(this).dispatchAll(
-            new UIAction(UIActionTypes.RESIZE, new Object()),
-            width, height
-        );
-    }
-    
 }
