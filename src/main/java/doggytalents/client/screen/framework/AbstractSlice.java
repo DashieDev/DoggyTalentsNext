@@ -1,6 +1,4 @@
-package doggytalents.client.screen.DogNewInfoScreen.store.slice;
-
-import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
+package doggytalents.client.screen.framework;
 
 public abstract interface AbstractSlice {
     

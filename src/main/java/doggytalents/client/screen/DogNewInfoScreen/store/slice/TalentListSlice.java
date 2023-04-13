@@ -6,7 +6,8 @@ import java.util.stream.Collectors;
 
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Talent;
-import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
+import doggytalents.client.screen.framework.AbstractSlice;
+import doggytalents.client.screen.framework.UIAction;
 import net.minecraft.client.resources.language.I18n;
 
 public class TalentListSlice implements AbstractSlice {

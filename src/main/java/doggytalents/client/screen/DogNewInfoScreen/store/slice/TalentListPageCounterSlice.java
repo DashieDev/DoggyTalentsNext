@@ -1,7 +1,8 @@
 package doggytalents.client.screen.DogNewInfoScreen.store.slice;
 
-import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
+import doggytalents.client.screen.framework.AbstractSlice;
+import doggytalents.client.screen.framework.UIAction;
 
 public class TalentListPageCounterSlice implements AbstractSlice {
 

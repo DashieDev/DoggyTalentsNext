@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.client.screen.DogNewInfoScreen.store.UIAction;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice;
-import doggytalents.client.screen.DogNewInfoScreen.store.Store;
-import doggytalents.client.screen.DogNewInfoScreen.widget.NavBarButton;
+import doggytalents.client.screen.framework.Store;
+import doggytalents.client.screen.framework.UIAction;
+import doggytalents.client.screen.framework.widget.NavBarButton;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
