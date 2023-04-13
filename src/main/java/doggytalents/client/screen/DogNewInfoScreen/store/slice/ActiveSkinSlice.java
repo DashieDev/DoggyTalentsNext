@@ -6,10 +6,10 @@ import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.payload.InitSkinIndexPayload;
+import doggytalents.client.screen.DogNewInfoScreen.store.payload.interfaces.TabChange;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Tab;
 import doggytalents.client.screen.framework.AbstractSlice;
 import doggytalents.client.screen.framework.UIAction;
-import doggytalents.client.screen.framework.payload.interfaces.TabChange;
 import doggytalents.client.screen.framework.CommonUIActionTypes;
 import net.minecraft.resources.ResourceLocation;
 
