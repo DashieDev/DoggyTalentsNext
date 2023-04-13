@@ -197,23 +197,6 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     }
 
     @Override
-    public void setFocused(@Nullable GuiEventListener guiEventListener) {
-        if (guiEventListener instanceof AbstractElement) {
-            //TODO Maybe AbstractElement::canFocus() in the future.
-            return;
-        } 
-        ChopinLogger.l("set focus : " + guiEventListener);
-        super.setFocused(guiEventListener);
-    }
-
-    @Override
-    public boolean mouseClicked(double p_94695_, double p_94696_, int p_94697_) {
-        //invalidate focus every click. Prefer focus to be null if the click is outside of any bound.
-        this.setFocused(null);
-        return super.mouseClicked(p_94695_, p_94696_, p_94697_);
-    }
-
-    @Override
     public boolean isPauseScreen() {
         return false;
     }
