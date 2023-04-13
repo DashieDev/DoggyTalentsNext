@@ -6,10 +6,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.skin.DogSkin;
-import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveSkinSlice;
 import doggytalents.client.screen.framework.Store;
+import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

@@ -7,11 +7,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Talent;
-import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
+import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
