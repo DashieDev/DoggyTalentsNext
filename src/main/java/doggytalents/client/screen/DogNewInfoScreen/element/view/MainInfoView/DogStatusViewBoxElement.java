@@ -5,7 +5,7 @@ import java.util.Random;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
+import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;

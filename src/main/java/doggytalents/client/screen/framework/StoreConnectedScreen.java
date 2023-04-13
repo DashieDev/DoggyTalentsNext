@@ -5,8 +5,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import doggytalents.ChopinLogger;
-import doggytalents.client.screen.DogNewInfoScreen.element.AbstractElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
+import doggytalents.client.screen.framework.element.AbstractElement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;

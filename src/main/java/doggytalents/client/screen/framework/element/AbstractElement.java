@@ -1,4 +1,4 @@
-package doggytalents.client.screen.DogNewInfoScreen.element;
+package doggytalents.client.screen.framework.element;
 
 import java.util.ArrayList;
 import java.util.List;
