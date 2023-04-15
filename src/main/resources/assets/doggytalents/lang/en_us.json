@@ -273,6 +273,9 @@
    "doggytalents.screen.radar.help_title" : "Radar Menu Help",
    "doggytalents.screen.radar.no_dog_found" : "No dog found in this dimension.",
 
+   "amnesia_bone_gui.navbar.general" : "General",
+   "amnesia_bone_gui.navbar.talents" : "Talents",
+
    "doggui.common.apply" : "Apply",
    "doggui.common.go_back" : "Go back",
    "doggui.common.debug" : "Debug",

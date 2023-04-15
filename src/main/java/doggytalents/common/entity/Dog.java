@@ -14,6 +14,7 @@ import doggytalents.api.registry.*;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.DogInfoScreen;
+import doggytalents.client.screen.AmnesiaBoneScreen.AmneisaBoneScreen;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.common.config.ConfigHandler;
@@ -775,12 +776,9 @@ public class Dog extends AbstractDog {
 
         ItemStack stack = player.getItemInHand(hand);
 
-        // if (!this.level.isClientSide && stack.getItem() == Items.STONE_AXE) {
-        //     long startTime = System.nanoTime();
-        //     CachedSearchUtil.getRandomSafePosUsingPool(this, this.blockPosition(), 4, 2);
-        //     long stopTime = System.nanoTime();
-        //     ChopinLogger.l("get random pos " + (stopTime-startTime) + " nanoseconds." );
-        // }
+        if (this.level.isClientSide && stack.getItem() == Items.STONE_AXE) {
+            AmneisaBoneScreen.open(this);
+        }
 
         if (this.isDefeated()) 
             return this.interactIncapacitated(stack, player, hand);
