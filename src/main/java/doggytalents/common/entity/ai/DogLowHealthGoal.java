@@ -33,6 +33,7 @@ public class DogLowHealthGoal extends Goal {
     private int timeToRecalcPath;
     private int tickTillSearchForTp = 0;
     private int tickTillInitTeleport = 0;
+    private int tickTillInitWhine = 0;
     private float oldWaterCost;
 
     private boolean whine = false;
@@ -49,6 +50,10 @@ public class DogLowHealthGoal extends Goal {
     public boolean canUse() {
         if (this.tickTillInitTeleport > 0) {
             --this.tickTillInitTeleport;
+        }
+
+        if (this.tickTillInitWhine > 0) {
+            --this.tickTillInitWhine;
         }
 
         LivingEntity owner = this.dog.getOwner();
@@ -109,6 +114,11 @@ public class DogLowHealthGoal extends Goal {
     //and make the dog choose accordingly
     @Override
     public void tick() {
+
+        if (this.tickTillInitWhine > 0) {
+            --this.tickTillInitWhine;
+        }
+
         if (this.dog.distanceToSqr(this.owner) > stopDist*stopDist) {
             this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
             if (--this.timeToRecalcPath <= 0) {
@@ -122,13 +132,12 @@ public class DogLowHealthGoal extends Goal {
                 if (this.tickTillSearchForTp <= 0) this.tickTillSearchForTp = 10;
             }
         }  else {
-            if (this.whine) {
+            if (this.whine && this.tickTillInitWhine <= 0) {
                 this.whine = false;
                 this.owner.sendSystemMessage(Component.translatable("dog.msg.low_health." + this.dog.getRandom().nextInt(3), this.dog.getName()));
                 this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
             }
             this.dog.getLookControl().setLookAt(this.owner);
-            
         }
     }
 
