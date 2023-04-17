@@ -15,7 +15,7 @@ public class ActiveTabSlice implements AbstractSlice {
 
     @Override
     public Object getInitalState() {
-        return Tab.HOME;
+        return new Object();
     }
 
     @Override
