@@ -61,11 +61,15 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
 
     }
 
-    public static void open(Dog dog) {
+    public static void open(Dog dog) { open(dog, ActiveTabSlice.Tab.HOME); }
+    
+    public static void open(Dog dog, ActiveTabSlice.Tab initTab) {
         var mc = Minecraft.getInstance();
         var screen = new DogNewInfoScreen(dog);
         mc.setScreen(screen);
-        Store.get(screen);
+        Store.get(screen).dispatchAll(
+            ActiveTabSlice.UIActionCreator(dog, initTab)
+        );
     }
 
     @Override
@@ -85,8 +89,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         this.addRenderableWidget(upperView);
         var selectedTab = Store.get(this).getStateOrDefault(
             ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
-            ActiveTabSlice.Tab.HOME
+            null
         );
+        if (selectedTab == null) return;
         AbstractElement view;
         switch (selectedTab) {
             case STYLE:
