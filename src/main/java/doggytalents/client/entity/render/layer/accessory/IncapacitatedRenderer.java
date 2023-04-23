@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
@@ -25,9 +26,11 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
 
+    private DogModel<Dog> defaultModel;
 
     public IncapacitatedRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);
+        this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
     }
 
     @Override
@@ -41,20 +44,21 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
             if (accessoryInst.usesRenderer(this.getClass())) {
                 if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
                 var dogModel = this.getParentModel();
-                boolean isX64Model = dogModel.isX64Model();
-                var texture_rl = isX64Model ?
-                    accessoryInst.getModelTextureX64(dog)
-                    : accessoryInst.getModelTexture(dog);
+                if (dogModel.useDefaultModelForAccessories()) {
+                    dogModel.copyPropertiesTo(defaultModel);
+                    defaultModel.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
+                    defaultModel.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+                    dogModel = defaultModel;
+                }
+                var texture_rl =accessoryInst.getModelTexture(dog);
                 boolean isLowGraphic = 
                     ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
                 if (isLowGraphic) {
-                    texture_rl = isX64Model ?
-                    Resources.INCAPACITATED_LESS_GRAPHIC_X64
-                    : Resources.INCAPACITATED_LESS_GRAPHIC;
+                    texture_rl = Resources.INCAPACITATED_LESS_GRAPHIC;
                 }
                 if (texture_rl == null) return;
                 var alpha = (float) (dog.getMaxIncapacitatedHunger()-dog.getDogHunger())/dog.getMaxIncapacitatedHunger();
-                renderTranslucentModel(this.getParentModel(), texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
+                renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
             }
         }
     }
