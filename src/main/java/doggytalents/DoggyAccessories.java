@@ -32,6 +32,7 @@ public class DoggyAccessories {
     public static final RegistryObject<SmartyGlasses> SMARTY_GLASSES = register("smarty_glasses", () -> new SmartyGlasses(DoggyItems.SMARTY_GLASSES).setModelTexture(Resources.SMARTY_GLASSES).setRenderer("SmartyGlassesRenderer"));
     public static final RegistryObject<Wig> WIG = register("wig", () -> new Wig(DoggyItems.WIG).setModelTexture(Resources.WIG).setRenderer("WigRenderer"));
     public static final RegistryObject<Band> RADIO_BAND = register("radio_band", () -> new Band(DoggyItems.RADIO_COLLAR).setModelTexture(Resources.RADIO_BAND).setRenderer("DefaultAccessoryRenderer"));
+    public static final RegistryObject<Clothing> CONAN_SUIT = register("conan_suit", () -> new Clothing(DoggyItems.CONAN_SUIT).setModelTexture(Resources.CONAN_SUIT).setHasHindLegDiffTex(true).setRenderer("DefaultAccessoryRenderer"));
 
     public static final RegistryObject<Helmet> IRON_HELMET = registerHelmet("iron_helmet", () -> Items.IRON_HELMET, Resources.IRON_HELMET);
     public static final RegistryObject<Helmet> DIAMOND_HELMET = registerHelmet("diamond_helmet", () -> Items.DIAMOND_HELMET, Resources.DIAMOND_HELMET);
