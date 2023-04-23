@@ -91,26 +91,15 @@ public class Accessory {
     // }
 
     private ResourceLocation modelTexture;
-    private ResourceLocation modelTextureX64;
 
     public <T extends Accessory> T setModelTexture(ResourceLocation modelTextureIn) {
         this.modelTexture = modelTextureIn;
         return (T) this;
     }
 
-    public <T extends Accessory> T setModelTextureX64(ResourceLocation modelTextureIn) {
-        this.modelTextureX64 = modelTextureIn;
-        return (T) this;
-    }
-
     @Nullable
     public ResourceLocation getModelTexture() {
         return this.modelTexture;
-    }
-
-    @Nullable
-    public ResourceLocation getModelTextureX64() {
-        return this.modelTextureX64;
     }
 
     private boolean renderTranslucent = false;
@@ -121,6 +110,17 @@ public class Accessory {
 
     public <T extends Accessory> T setRenderTranslucent(boolean translucent) {
         this.renderTranslucent = translucent;
+        return (T) this;
+    }
+
+    private boolean hasHindLegDiffTex = false;
+
+    public boolean hasHindLegDiffTex() {
+        return hasHindLegDiffTex;
+    }
+
+    public <T extends Accessory> T setHasHindLegDiffTex(boolean val) {
+        this.hasHindLegDiffTex = val;
         return (T) this;
     }
 
