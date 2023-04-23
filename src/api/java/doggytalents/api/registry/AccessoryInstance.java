@@ -101,10 +101,6 @@ public class AccessoryInstance {
         return this.getAccessory().getModelTexture();
     }
 
-    public ResourceLocation getModelTextureX64(AbstractDog dog) {
-        return this.getAccessory().getModelTextureX64();
-    }
-
     public boolean usesRenderer(Class layer) {
         return this.getAccessory().usesRenderer(layer);
     }

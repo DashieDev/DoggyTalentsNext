@@ -114,10 +114,9 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
         return createBodyLayerInternal(CubeDeformation.NONE);
     }
 
-    public boolean isX64Model() {
+    public boolean useDefaultModelForAccessories() {
         return false;
     }
-    
 
     private static LayerDefinition createBodyLayerInternal(CubeDeformation scale) {
         MeshDefinition var0 = new MeshDefinition();
