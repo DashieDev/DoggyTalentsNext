@@ -30,20 +30,20 @@ public class WigModel extends ListModel<Dog> {
 
         var pwig = head.addOrReplaceChild("pwig", CubeListBuilder.create(), PartPose.ZERO);
 
-        pwig.addOrReplaceChild("wi", CubeListBuilder.create().texOffs(0, 0).addBox(2.75F, -12.25F, -9.35F, 1.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(2.75F, -8.75F, -9.1F, 1.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(3.0F, -11.3F, -9.1F, 1.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(3.0F, -9.3F, -9.1F, 1.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(3.0F, -10.3F, -9.1F, 1.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-4.0F, -12.25F, -9.35F, 2.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-4.5F, -11.3F, -9.1F, 1.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-4.5F, -9.3F, -9.1F, 1.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-3.75F, -8.75F, -9.1F, 1.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-2.75F, -9.3F, -9.1F, 0.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-4.85F, -10.3F, -9.1F, 1.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-3.5F, -13.0F, -9.6F, 7.0F, -1.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-2.25F, -14.5F, -9.1F, 5.0F, -1.0F, 3.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-3.0F, -12.75F, -9.35F, 6.0F, -2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.9F, 11.05F, 7.0F));
+        pwig.addOrReplaceChild("wi", CubeListBuilder.create().texOffs(0, 0).addBox(2.75F, -12.25F, -9.35F, 1.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(2.75F, -8.75F, -9.1F, 1.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(3.0F, -11.3F, -9.1F, 1.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(3.0F, -9.3F, -9.1F, 1.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(3.0F, -10.3F, -9.1F, 1.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(-4.0F, -12.25F, -9.35F, 2.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(-4.5F, -11.3F, -9.1F, 1.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(-4.5F, -9.3F, -9.1F, 1.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(-3.75F, -8.75F, -9.1F, 1.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(-2.75F, -9.3F, -9.1F, 0.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(-4.85F, -10.3F, -9.1F, 1.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(-3.5F, -13.0F, -9.6F, 7.0F, -1.0F, 4.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(-2.25F, -14.5F, -9.1F, 5.0F, -1.0F, 3.0F, CubeDeformation.NONE)
+		.texOffs(0, 0).addBox(-3.0F, -12.75F, -9.35F, 6.0F, -2.0F, 4.0F, CubeDeformation.NONE), PartPose.offset(0.9F, 11.05F, 7.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
