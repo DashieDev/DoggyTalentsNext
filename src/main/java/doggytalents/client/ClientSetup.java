@@ -6,6 +6,7 @@ import doggytalents.DoggyTileEntityTypes;
 import doggytalents.client.entity.model.BowTieModel;
 import doggytalents.client.entity.model.DogArmorModel;
 import doggytalents.client.entity.model.DogBackpackModel;
+import doggytalents.client.entity.model.DogFrontLegsSeperate;
 import doggytalents.client.entity.model.DogRescueModel;
 import doggytalents.client.entity.model.SmartyGlassesModel;
 import doggytalents.client.entity.model.WigModel;
@@ -50,6 +51,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_DEATH = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_death"), "main");    
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
+    public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
     public static final ModelLayerLocation DOG_BACKPACK = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_backpack"), "main");
     public static final ModelLayerLocation DOG_RESCUE_BOX = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_rescue_box"), "main");
     public static final ModelLayerLocation DOG_BEAM = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "main");
@@ -73,6 +75,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_DEATH, DeathModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createArmorLayer);
+        event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
         event.registerLayerDefinition(DOG_BACKPACK, DogBackpackModel::createChestLayer);
         event.registerLayerDefinition(DOG_RESCUE_BOX, DogRescueModel::createRescueBoxLayer);
         event.registerLayerDefinition(DOG_BOWTIE, BowTieModel::createBowtieLayer);

@@ -75,7 +75,7 @@ public class IwankoModel extends DogModel<Dog> {
 	}
 
     @Override
-    public boolean isX64Model() {
+    public boolean useDefaultModelForAccessories() {
         return true;
     }
     
