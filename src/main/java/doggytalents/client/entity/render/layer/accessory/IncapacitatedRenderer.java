@@ -42,9 +42,10 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
 
         if (!dog.isDefeated()) return;
 
+        if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
+
         for (AccessoryInstance accessoryInst : dog.getAccessories()) {
             if (accessoryInst.usesRenderer(this.getClass())) {
-                if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
                 var dogModel = this.getParentModel();
                 if (dogModel.useDefaultModelForAccessories()) {
                     dogModel.copyPropertiesTo(defaultModel);
