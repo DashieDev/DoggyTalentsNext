@@ -52,6 +52,8 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> GUARD_SUIT = registerAccessory("guard_suit", DoggyAccessories.GUARD_SUIT);
     public static final RegistryObject<AccessoryItem> PIANIST_SUIT = registerAccessory("pianist_suit", DoggyAccessories.PIANIST_SUIT);
     public static final RegistryObject<AccessoryItem> CONAN_SUIT = registerAccessory("conan_suit", DoggyAccessories.CONAN_SUIT);
+    public static final RegistryObject<AccessoryItem> BEASTARS_UNIFORM_MALE = registerAccessory("beastars_uniform_male", DoggyAccessories.BEASTARS_UNIFORM_MALE);
+    public static final RegistryObject<AccessoryItem> BEASTARS_UNIFORM_FEMALE = registerAccessory("beastars_uniform_female", DoggyAccessories.BEASTARS_UNIFORM_FEMALE);
     public static final RegistryObject<AccessoryItem> DEATH_HOOD = registerAccessory("death_hood", DoggyAccessories.DEATH_HOOD);
     public static final RegistryObject<DyeableAccessoryItem> BOWTIE = registerAccessoryDyed("bowtie", DoggyAccessories.BOWTIE);
     public static final RegistryObject<AccessoryItem> SMARTY_GLASSES = registerAccessory("smarty_glasses", DoggyAccessories.SMARTY_GLASSES);
