@@ -40,6 +40,8 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
             return;
         }
 
+        if (!dog.isDefeated()) return;
+
         for (AccessoryInstance accessoryInst : dog.getAccessories()) {
             if (accessoryInst.usesRenderer(this.getClass())) {
                 if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
