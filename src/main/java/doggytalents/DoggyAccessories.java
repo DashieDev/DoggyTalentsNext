@@ -34,6 +34,8 @@ public class DoggyAccessories {
     public static final RegistryObject<Wig> WIG = register("wig", () -> new Wig(DoggyItems.WIG).setModelTexture(Resources.WIG).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<Band> RADIO_BAND = register("radio_band", () -> new Band(DoggyItems.RADIO_COLLAR).setModelTexture(Resources.RADIO_BAND).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
     public static final RegistryObject<Clothing> CONAN_SUIT = register("conan_suit", () -> new Clothing(DoggyItems.CONAN_SUIT).setModelTexture(Resources.CONAN_SUIT).setHasHindLegDiffTex(true).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
+    public static final RegistryObject<Clothing> BEASTARS_UNIFORM_MALE = register("beastars_uniform_male", () -> new BeastarsUniformMale(DoggyItems.BEASTARS_UNIFORM_MALE).setModelTexture(Resources.BEASTARS_UNIFORM_MALE).setHasHindLegDiffTex(true).setAccessoryRenderType(AccessoryRenderType.OVERLAY_AND_MODEL).setRenderTranslucent(true));
+    public static final RegistryObject<Clothing> BEASTARS_UNIFORM_FEMALE = register("beastars_uniform_female", () -> new BeastarsUniformFemale(DoggyItems.BEASTARS_UNIFORM_FEMALE).setModelTexture(Resources.BEASTARS_UNIFORM_FEMALE).setHasHindLegDiffTex(true).setAccessoryRenderType(AccessoryRenderType.OVERLAY_AND_MODEL).setRenderTranslucent(true));
 
     public static final RegistryObject<Helmet> IRON_HELMET = registerHelmet("iron_helmet", () -> Items.IRON_HELMET, Resources.IRON_HELMET);
     public static final RegistryObject<Helmet> DIAMOND_HELMET = registerHelmet("diamond_helmet", () -> Items.DIAMOND_HELMET, Resources.DIAMOND_HELMET);
