@@ -4,7 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import doggytalents.api.inferface.IColoredObject;
+import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.api.registry.Accessory.AccessoryRenderType;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.DogFrontLegsSeperate;
 import doggytalents.client.entity.model.DogModelRegistry;
@@ -40,13 +42,12 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         }
 
         for (AccessoryInstance accessoryInst : dog.getClientSortedAccessories()) {
-            if (accessoryInst.usesRenderer(this.getClass())) {
-                var accessory = accessoryInst.getAccessory();                
-                if (accessory.hasHindLegDiffTex()) {
-                    this.renderHindLegDifferentAccessory(poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, accessoryInst);
-                } else {
-                    this.renderNormalAccessory(poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, accessoryInst);
-                }
+            var accessory = accessoryInst.getAccessory();
+            if (!isOverlay(accessory)) continue;               
+            if (accessory.hasHindLegDiffTex()) {
+                this.renderHindLegDifferentAccessory(poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, accessoryInst);
+            } else {
+                this.renderNormalAccessory(poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, accessoryInst);
             }
         }
     }
@@ -142,6 +143,13 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
             else
                 RenderLayer.renderColoredCutoutModel(hindLegDiffTextModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F);
         }
+    }
+
+    public boolean isOverlay(Accessory accessory) {
+        var type = accessory.getAccessoryRenderType();
+        return
+            type == AccessoryRenderType.OVERLAY
+            || type == AccessoryRenderType.OVERLAY_AND_MODEL;
     }
 
     public static <T extends LivingEntity> void renderTranslucentModel(EntityModel<T> p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, T p_117382_, float p_117383_, float p_117384_, float p_117385_, float opascity) {
