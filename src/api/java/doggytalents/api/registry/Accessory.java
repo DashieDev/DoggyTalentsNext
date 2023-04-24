@@ -124,14 +124,16 @@ public class Accessory {
         return (T) this;
     }
 
-    private String renderer;
-
-    public <T extends Accessory> T setRenderer(String rendererIn) {
-        this.renderer = rendererIn;
+    public static enum AccessoryRenderType { OVERLAY, MODEL, OVERLAY_AND_MODEL, INCAPACITATED }
+    private AccessoryRenderType accessoryRenderType = AccessoryRenderType.OVERLAY;
+    
+    public <T extends Accessory> T setAccessoryRenderType(AccessoryRenderType type) {
+        this.accessoryRenderType = type;
         return (T) this;
     }
 
-    public boolean usesRenderer(Class layer) {
-        return Objects.equals(this.renderer, layer.getSimpleName());
+    public AccessoryRenderType getAccessoryRenderType() {
+        return this.accessoryRenderType;
     }
+
 }
