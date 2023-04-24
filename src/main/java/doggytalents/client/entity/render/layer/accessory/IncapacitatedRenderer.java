@@ -5,6 +5,7 @@ import java.util.function.BiFunction;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import doggytalents.DoggyAccessoryTypes;
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.DogModelRegistry;
@@ -45,24 +46,25 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
 
         for (AccessoryInstance accessoryInst : dog.getAccessories()) {
-            if (accessoryInst.usesRenderer(this.getClass())) {
-                var dogModel = this.getParentModel();
-                if (dogModel.useDefaultModelForAccessories()) {
-                    dogModel.copyPropertiesTo(defaultModel);
-                    defaultModel.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-                    defaultModel.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                    dogModel = defaultModel;
-                }
-                var texture_rl =accessoryInst.getModelTexture(dog);
-                boolean isLowGraphic = 
-                    ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
-                if (isLowGraphic) {
-                    texture_rl = Resources.INCAPACITATED_LESS_GRAPHIC;
-                }
-                if (texture_rl == null) return;
-                var alpha = (float) (dog.getMaxIncapacitatedHunger()-dog.getDogHunger())/dog.getMaxIncapacitatedHunger();
-                renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
+            var accessory = accessoryInst.getAccessory();
+            if (accessory.getType() != DoggyAccessoryTypes.INCAPACITATED.get()) continue;
+            var dogModel = this.getParentModel();
+            if (dogModel.useDefaultModelForAccessories()) {
+                dogModel.copyPropertiesTo(defaultModel);
+                defaultModel.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
+                defaultModel.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+                dogModel = defaultModel;
             }
+            var texture_rl =accessoryInst.getModelTexture(dog);
+            boolean isLowGraphic = 
+                ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
+            if (isLowGraphic) {
+                texture_rl = Resources.INCAPACITATED_LESS_GRAPHIC;
+            }
+            //TODO
+            if (texture_rl == null) return;
+            var alpha = (float) (dog.getMaxIncapacitatedHunger()-dog.getDogHunger())/dog.getMaxIncapacitatedHunger();
+            renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
         }
     }
 
