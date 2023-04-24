@@ -16,6 +16,21 @@
             "use_model" : "default"
         },
         {
+            "skin_name" : "Legoshi",
+            "skin_id" : "legoshi",
+            "use_model" : "legoshi"
+        },
+        {
+            "skin_name" : "Jack",
+            "skin_id" : "jack",
+            "use_model" : "jack"
+        },
+        {
+            "skin_name" : "Juno",
+            "skin_id" : "juno",
+            "use_model" : "juno"
+        },
+        {
             "skin_name" : "German Shepherd",
             "skin_id" : "german_shepherd",
             "use_model" : "default"

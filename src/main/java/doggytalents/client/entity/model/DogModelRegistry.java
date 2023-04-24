@@ -10,6 +10,9 @@ import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
+import doggytalents.client.entity.model.dog.JackModel;
+import doggytalents.client.entity.model.dog.JunoModel;
+import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -36,6 +39,9 @@ public class DogModelRegistry {
         register("iwanko", ctx -> new IwankoModel(ctx.bakeLayer(ClientSetup.DOG_IWANKO)));
         register("lucario", ctx -> new LucarioModel(ctx.bakeLayer(ClientSetup.DOG_LUCARIO)));
         register("death", ctx -> new DeathModel(ctx.bakeLayer(ClientSetup.DOG_DEATH)));
+        register("legoshi", ctx -> new LegoshiModel(ctx.bakeLayer(ClientSetup.DOG_LEGOSHI)));
+        register("jack", ctx -> new JackModel(ctx.bakeLayer(ClientSetup.DOG_JACK)));
+        register("juno", ctx -> new JunoModel(ctx.bakeLayer(ClientSetup.DOG_JUNO)));
     }
 
     public static class DogModelHolder<T extends AbstractDog> {
