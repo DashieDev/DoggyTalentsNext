@@ -9,7 +9,7 @@ public class AccessoryModelRenderEntries {
     public static Entry SMARTY_GLASSES = new SmartyGlassesRenderEntry();
     public static Entry WIG = new WigRenderEntry();
 
-    public static void init() {
+    public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
         AccessoryModelManager.register(SMARTY_GLASSES);
         AccessoryModelManager.register(WIG);

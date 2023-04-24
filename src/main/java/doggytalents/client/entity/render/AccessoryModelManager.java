@@ -14,6 +14,7 @@ import net.minecraft.client.model.ListModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 
 public class AccessoryModelManager {
 
@@ -32,6 +33,13 @@ public class AccessoryModelManager {
         }
     }
 
+    public static void registerLayerDef(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        for (var x : entryArraySyncedView) {
+            x.registerLayerDef(event);
+            ChopinLogger.l("Registered layer def : " + x);
+        }
+    }
+
     public interface Entry {
         
         public void initModel(EntityRendererProvider.Context ctx);
@@ -40,7 +48,7 @@ public class AccessoryModelManager {
             PoseStack poseStack, MultiBufferSource buffer, int packedLight, 
             Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, 
         float ageInTicks, float netHeadYaw, float headPitch, AccessoryInstance inst);
-
+        public void registerLayerDef(final EntityRenderersEvent.RegisterLayerDefinitions event);
     }
 
 
