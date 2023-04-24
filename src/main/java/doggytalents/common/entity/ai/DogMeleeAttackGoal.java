@@ -266,13 +266,11 @@ public class DogMeleeAttackGoal extends Goal {
          return false;
       }
                
-      var v0 = new Vec3(target.getX() - this.dog.getX(), 0.0D, target.getZ() - this.dog.getZ()).normalize();
-      var bp1 = dog.blockPosition();
-
-      var v1 = new Vec3(bp1.getX(), bp1.getY(), bp1.getZ());
+      var v_offset = new Vec3(target.getX() - this.dog.getX(), 0.0D, target.getZ() - this.dog.getZ()).normalize();
+      var v_dog = dog.position();
       for (int i = 1; i <=3; ++i) {
-         v1 = v1.add(v0);
-         if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level, new BlockPos(Mth.floor(v1.x), Mth.floor(v1.y), Mth.floor(v1.z)).mutable()) !=BlockPathTypes.WALKABLE)  {
+         v_dog = v_dog.add(v_offset);
+         if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level, new BlockPos(v_dog).mutable()) !=BlockPathTypes.WALKABLE)  {
             return false;
          }
       }
