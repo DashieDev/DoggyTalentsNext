@@ -55,10 +55,6 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_BACKPACK = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_backpack"), "main");
     public static final ModelLayerLocation DOG_RESCUE_BOX = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_rescue_box"), "main");
     public static final ModelLayerLocation DOG_BEAM = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "main");
-    public static final ModelLayerLocation DOG_BOWTIE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_bowtie"), "main");
-    public static final ModelLayerLocation DOG_SMARTY_GLASSES = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_smarty_glasses"), "main");
-    public static final ModelLayerLocation DOG_WIG = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_wig"), "main");
-    
 
     public static void setupScreenManagers(final FMLClientSetupEvent event) {
         MenuScreens.register(DoggyContainerTypes.FOOD_BOWL.get(), FoodBowlScreen::new);
@@ -78,9 +74,9 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
         event.registerLayerDefinition(DOG_BACKPACK, DogBackpackModel::createChestLayer);
         event.registerLayerDefinition(DOG_RESCUE_BOX, DogRescueModel::createRescueBoxLayer);
-        event.registerLayerDefinition(DOG_BOWTIE, BowTieModel::createBowtieLayer);
-        event.registerLayerDefinition(DOG_SMARTY_GLASSES, SmartyGlassesModel::createGlassesLayer);
-        event.registerLayerDefinition(DOG_WIG, WigModel::createWigLayerDefinition);
+        
+        AccessoryModelRenderEntries.registerEntries();
+        AccessoryModelManager.registerLayerDef(event);
         // TODO: RenderingRegistry.registerEntityRenderingHandler(DoggyEntityTypes.DOG_BEAM.get(), manager -> new DoggyBeamRenderer<>(manager, event.getMinecraftSupplier().get().getItemRenderer()));
     }
 
@@ -98,8 +94,6 @@ public class ClientSetup {
         CollarRenderManager.registerLayer(PackPuppyRenderer::new);
         CollarRenderManager.registerLayer(RescueDogRenderer::new);
         CollarRenderManager.registerLayer(AccessoryModelRenderer::new);
-
-        AccessoryModelRenderEntries.init();
         
     }
 
