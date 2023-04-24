@@ -61,8 +61,7 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
             if (isLowGraphic) {
                 texture_rl = Resources.INCAPACITATED_LESS_GRAPHIC;
             }
-            //TODO
-            if (texture_rl == null) return;
+            if (texture_rl == null) continue;
             var alpha = (float) (dog.getMaxIncapacitatedHunger()-dog.getDogHunger())/dog.getMaxIncapacitatedHunger();
             renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
         }
