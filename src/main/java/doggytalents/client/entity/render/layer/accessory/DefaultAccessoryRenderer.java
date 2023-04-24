@@ -41,47 +41,49 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
 
         for (AccessoryInstance accessoryInst : dog.getClientSortedAccessories()) {
             if (accessoryInst.usesRenderer(this.getClass())) {
-                var accessory = accessoryInst.getAccessory();
-                
+                var accessory = accessoryInst.getAccessory();                
                 if (accessory.hasHindLegDiffTex()) {
                     this.renderHindLegDifferentAccessory(poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, accessoryInst);
-                    return;
-                }
-
-                var parentModel = this.getParentModel();
-
-                DogModel<Dog> dogModel;
-                if (parentModel.useDefaultModelForAccessories()) {
-                    dogModel = this.defaultModel;
                 } else {
-                    dogModel = parentModel;
+                    this.renderNormalAccessory(poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, accessoryInst);
                 }
-                if (dogModel != parentModel) {
-                    this.getParentModel().copyPropertiesTo(dogModel);
-                    dogModel.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-                    dogModel.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                }
-                var texture_rl = accessoryInst.getModelTexture(dog);
-                boolean isTranslucent = accessoryInst.getAccessory().renderTranslucent();
-                if (texture_rl == null) return;
-                boolean tailVisible0 = dogModel.tail.visible;
-                if (dog.getClientSkin().useCustomModel())
-                    dogModel.tail.visible = false;
-                if (accessoryInst instanceof IColoredObject coloredObject) {
-                    float[] color = coloredObject.getColor();
-                    if (isTranslucent) 
-                        renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, color[0], color[1], color[2], 1);
-                    else 
-                        RenderLayer.renderColoredCutoutModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, color[0], color[1], color[2]);
-                } else {
-                    if (isTranslucent)
-                        renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, 1);
-                    else
-                        RenderLayer.renderColoredCutoutModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F);
-                }
-                dogModel.tail.visible = tailVisible0;
             }
         }
+    }
+
+    private void renderNormalAccessory(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, AccessoryInstance accessoryInst) {
+        var parentModel = this.getParentModel();
+
+        DogModel<Dog> dogModel;
+        if (parentModel.useDefaultModelForAccessories()) {
+            dogModel = this.defaultModel;
+        } else {
+            dogModel = parentModel;
+        }
+        if (dogModel != parentModel) {
+            this.getParentModel().copyPropertiesTo(dogModel);
+            dogModel.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
+            dogModel.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        }
+        var texture_rl = accessoryInst.getModelTexture(dog);
+        boolean isTranslucent = accessoryInst.getAccessory().renderTranslucent();
+        if (texture_rl == null) return;
+        boolean tailVisible0 = dogModel.tail.visible;
+        if (dog.getClientSkin().useCustomModel())
+            dogModel.tail.visible = false;
+        if (accessoryInst instanceof IColoredObject coloredObject) {
+            float[] color = coloredObject.getColor();
+            if (isTranslucent) 
+                renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, color[0], color[1], color[2], 1);
+            else 
+                RenderLayer.renderColoredCutoutModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, color[0], color[1], color[2]);
+        } else {
+            if (isTranslucent)
+                renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, 1);
+            else
+                RenderLayer.renderColoredCutoutModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F);
+        }
+        dogModel.tail.visible = tailVisible0;
     }
 
     private void renderHindLegDifferentAccessory(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, AccessoryInstance accessoryInst) {
