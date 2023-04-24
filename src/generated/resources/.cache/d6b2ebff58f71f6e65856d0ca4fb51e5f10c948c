@@ -1,4 +1,6 @@
-// 1.19.2	2023-03-31T01:37:04.9329597	DoggyTalents Recipes
+// 1.19.2	2023-04-25T01:10:08.7401406	DoggyTalents Recipes
+f82ebd7e7f86556c2c4017ce9dfb40d17c7f3213 data/doggytalents/advancements/recipes/doggytalents/beastars_uniform_female.json
+cb852065027b8daa626b5722d85d47f858ba3190 data/doggytalents/advancements/recipes/doggytalents/beastars_uniform_male.json
 d3f9a69cd01f3d7652aebdc18f0475c8de2fd345 data/doggytalents/advancements/recipes/doggytalents/big_bone.json
 e8f877fd5d28372776731d7c45b8fc2882d8bb84 data/doggytalents/advancements/recipes/doggytalents/bowtie.json
 a86fe38efcf3f51a50dc5528329de11201e124e5 data/doggytalents/advancements/recipes/doggytalents/breeding_bone.json
@@ -6,6 +8,7 @@ a86fe38efcf3f51a50dc5528329de11201e124e5 data/doggytalents/advancements/recipes/
 573f426ab5a2434b93dbbb302fcf3473e26adec9 data/doggytalents/advancements/recipes/doggytalents/cape_coloured.json
 38d2c9bf15338c8739eb69d328348f1ac0b76538 data/doggytalents/advancements/recipes/doggytalents/chew_stick.json
 5b11e27f25ec257da77feaa83cd17e4ed0ee82ef data/doggytalents/advancements/recipes/doggytalents/collar_shears.json
+066e0148ce6427a0d1ce2bcbcbff1b50fd971b20 data/doggytalents/advancements/recipes/doggytalents/conan_suit.json
 5aa49438e18053fa227ac588e4f2333ce6b74be1 data/doggytalents/advancements/recipes/doggytalents/conducting_bone.json
 2b12f04077c48665e7b4c6024f9287a924520392 data/doggytalents/advancements/recipes/doggytalents/death_hood.json
 66ff3ad3da37d059acf40a268baf5547e2a1c9c1 data/doggytalents/advancements/recipes/doggytalents/dire_treat.json
@@ -33,6 +36,8 @@ d7363ca69aeb8ee71447e7569d320b0f0c04ef55 data/doggytalents/advancements/recipes/
 6aa0e02ba8a819715828b665535fff16f66ec07e data/doggytalents/advancements/recipes/doggytalents/whistle.json
 0369d14535d0d97316e54067058c39730dc906b1 data/doggytalents/advancements/recipes/doggytalents/wig.json
 69527c82f8178f682ae6224f1493f7fd4abb6439 data/doggytalents/advancements/recipes/doggytalents/wool_collar.json
+8d882c23392f7d7d794bb7f7024cab0283f26576 data/doggytalents/recipes/beastars_uniform_female.json
+c6a9f9194686f6b5a1c0caac62d085fb12b5cbb0 data/doggytalents/recipes/beastars_uniform_male.json
 37fd32f404451f6a183e84b9b19923fd78d1bb5b data/doggytalents/recipes/big_bone.json
 be9e93a351193dc618f559949d4895470c34f4de data/doggytalents/recipes/bowtie.json
 5d8cdb8afbaee7470cfd9afd2d3d1e1f98cb7c58 data/doggytalents/recipes/breeding_bone.json
@@ -40,6 +45,7 @@ be9e93a351193dc618f559949d4895470c34f4de data/doggytalents/recipes/bowtie.json
 00e1f4c6767c20e332bc60704820c684352c7ed1 data/doggytalents/recipes/cape_coloured.json
 ec7aef147a90358334497e722e1ce9030b2b2210 data/doggytalents/recipes/chew_stick.json
 b0c8b22e09f140768581b39f17497046c0a81ff9 data/doggytalents/recipes/collar_shears.json
+1d3ac99f827fa2994f843e5b7533d8c91a9b0bd4 data/doggytalents/recipes/conan_suit.json
 63f97ef68d2f51c296aa28ffdd8ab68e5ac206e7 data/doggytalents/recipes/conducting_bone.json
 0e6fcaf1bd463312abefbe714a7829cdb2bb1e6f data/doggytalents/recipes/death_hood.json
 bc7e754dd781539ea9a447e465e8ff0b0b55e840 data/doggytalents/recipes/dire_treat.json

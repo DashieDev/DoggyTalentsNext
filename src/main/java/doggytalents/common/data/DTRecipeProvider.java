@@ -85,6 +85,29 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(Items.NETHER_WART)
             .unlockedBy("has_soul_torch", has(Items.SOUL_TORCH))
             .save(consumer);
+        ShapelessRecipeBuilder.shapeless(DoggyItems.CONAN_SUIT.get(), 1)
+            .requires(DoggyItems.CAPE_COLOURED.get())
+            .requires(Items.PAPER)
+            .requires(Items.RED_DYE)
+            .requires(Items.BLUE_DYE)
+            .unlockedBy("has_paper", has(Items.PAPER))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(DoggyItems.BEASTARS_UNIFORM_FEMALE.get(), 1)
+            .requires(DoggyItems.CAPE_COLOURED.get())
+            .requires(Items.PAPER)
+            .requires(Items.RED_DYE)
+            .requires(Items.PURPLE_DYE)
+            .requires(Items.PINK_DYE)
+            .unlockedBy("has_paper", has(Items.PAPER))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(DoggyItems.BEASTARS_UNIFORM_MALE.get(), 1)
+            .requires(DoggyItems.CAPE_COLOURED.get())
+            .requires(Items.PAPER)
+            .requires(Items.RED_DYE)
+            .requires(Items.PURPLE_DYE)
+            .requires(Items.BLUE_DYE)
+            .unlockedBy("has_paper", has(Items.PAPER))
+            .save(consumer);
         
         ShapedRecipeBuilder.shaped(DoggyItems.LEATHER_JACKET.get(), 1).pattern("L L").pattern("LWL").pattern("LWL").define('L', Items.LEATHER).define('W', ItemTags.WOOL).unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.SPOTTED_COLLAR.get(), 1).pattern("BWB").pattern("WCW").pattern("BSB").define('C', DoggyItems.WOOL_COLLAR.get()).define('B', Items.BLACK_DYE).define('W', Items.WHITE_DYE).define('S', Items.STRING).unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get())).save(consumer);
