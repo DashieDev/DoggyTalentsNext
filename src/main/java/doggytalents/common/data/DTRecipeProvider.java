@@ -59,6 +59,15 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Blocks.BLACK_WOOL)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
+        ShapedRecipeBuilder.shaped(DoggyItems.EGG_SANDWICH.get(), 1)
+            .pattern(" B ")
+            .pattern("EME")
+            .pattern(" B ")
+            .define('B', Items.BREAD)
+            .define('E', Items.EGG)
+            .define('M', Items.MILK_BUCKET)
+            .unlockedBy("has_egg", has(Items.EGG))
+            .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BOWTIE.get(), 1)
             .pattern("W W")
             .pattern("WSW")
