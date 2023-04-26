@@ -18,7 +18,10 @@ public class DogNearestToOwnerAttackableTargetGoal<T extends LivingEntity> exten
     @Override
     protected void findTarget() {
         var owner = this.dog.getOwner();
-        if (owner == null) return;
+        if (owner == null) {
+            this.target = null;
+            return;
+        };
         if (this.targetType != Player.class && this.targetType != ServerPlayer.class) {
            this.target = owner.level.getNearestEntity(this.mob.level.getEntitiesOfClass(this.targetType, this.getTargetSearchArea(this.getFollowDistance()), (p_148152_) -> {
               return true;
