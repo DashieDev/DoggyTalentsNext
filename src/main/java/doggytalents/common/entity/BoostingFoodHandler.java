@@ -2,6 +2,7 @@ package doggytalents.common.entity;
 
 import javax.annotation.Nullable;
 
+import doggytalents.DoggyItems;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
@@ -18,8 +19,10 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
     @Override
     public boolean isFood(ItemStack stackIn) {
         var item = stackIn.getItem();
-        return (item == Items.GOLDEN_APPLE
-            || item == Items.ENCHANTED_GOLDEN_APPLE);
+        return item == Items.GOLDEN_APPLE
+            || item == Items.ENCHANTED_GOLDEN_APPLE
+            || item == Items.GOLDEN_CARROT
+            || item == DoggyItems.EGG_SANDWICH.get();
     }
 
     @Override
