@@ -1,4 +1,4 @@
-// 1.19.2	2023-04-25T01:10:08.7401406	DoggyTalents Recipes
+// 1.19.2	2023-04-26T14:34:39.8451989	DoggyTalents Recipes
 f82ebd7e7f86556c2c4017ce9dfb40d17c7f3213 data/doggytalents/advancements/recipes/doggytalents/beastars_uniform_female.json
 cb852065027b8daa626b5722d85d47f858ba3190 data/doggytalents/advancements/recipes/doggytalents/beastars_uniform_male.json
 d3f9a69cd01f3d7652aebdc18f0475c8de2fd345 data/doggytalents/advancements/recipes/doggytalents/big_bone.json
@@ -13,6 +13,7 @@ a86fe38efcf3f51a50dc5528329de11201e124e5 data/doggytalents/advancements/recipes/
 2b12f04077c48665e7b4c6024f9287a924520392 data/doggytalents/advancements/recipes/doggytalents/death_hood.json
 66ff3ad3da37d059acf40a268baf5547e2a1c9c1 data/doggytalents/advancements/recipes/doggytalents/dire_treat.json
 61afea2159e2ab58b4292a8e86aaab53dec18b73 data/doggytalents/advancements/recipes/doggytalents/dog_bath.json
+5f10f50713ab3dc2141dbca7faf36700f3ef2b5b data/doggytalents/advancements/recipes/doggytalents/egg_sandwich.json
 8ae29969080135e58f4ea768d5d437af7ceaf06d data/doggytalents/advancements/recipes/doggytalents/food_bowl.json
 d3bb1a639b49bd73f9e0a75e44e079862995c63c data/doggytalents/advancements/recipes/doggytalents/guard_suit.json
 1068f7b4285fa507ce9c39dd0406e0bc2d003e6c data/doggytalents/advancements/recipes/doggytalents/leather_jacket.json
@@ -51,6 +52,7 @@ b0c8b22e09f140768581b39f17497046c0a81ff9 data/doggytalents/recipes/collar_shears
 bc7e754dd781539ea9a447e465e8ff0b0b55e840 data/doggytalents/recipes/dire_treat.json
 e86ecaead74087dbc7aecffb5e8c7bd7ce36dedd data/doggytalents/recipes/dog_bath.json
 370ea7b899a9652030231466548a73ddedffdcd3 data/doggytalents/recipes/dog_bed.json
+bc7f047f29ac108fd185126f1cf492c050b10984 data/doggytalents/recipes/egg_sandwich.json
 c8a9119c28294f840f3fbf328854a0244acd9892 data/doggytalents/recipes/food_bowl.json
 347d4b1e6e59fdf40b7266c84ae54bb94025f8d7 data/doggytalents/recipes/guard_suit.json
 8566b61f83d0b13f807bf49c1e182e72054f2034 data/doggytalents/recipes/leather_jacket.json
