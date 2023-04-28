@@ -42,6 +42,9 @@ public final class PacketHandler {
         registerPacket(new RadarPackets.StartLocatingPacket(), RadarData.StartLocatingData.class);
         registerPacket(new RadarPackets.RequestPosUpdatePacket(), RadarData.RequestPosUpdateData.class);
         registerPacket(new RadarPackets.ResponsePosUpdatePacket(), RadarData.ResponsePosUpdateData.class);
+        registerPacket(new DogDeTrainPacket(), DogDeTrainData.class);
+        registerPacket(new DogUntamePacket(), DogUntameData.class);
+        registerPacket(new DogMigrateOwnerPacket(), DogMigrateOwnerData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {

@@ -59,6 +59,17 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Blocks.BLACK_WOOL)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
+        ShapedRecipeBuilder.shaped(DoggyItems.AMNESIA_BONE.get(), 1)
+            .pattern(" RN")
+            .pattern("WBR")
+            .pattern("SW ")
+            .define('S', Items.SOUL_SOIL)
+            .define('W', Items.NETHER_WART)
+            .define('B', Items.BONE)
+            .define('R', Items.BLAZE_ROD)
+            .define('N', Items.NETHERITE_INGOT)
+            .unlockedBy("has_netherite_ingot", has(Items.NETHERITE_INGOT))
+            .save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.EGG_SANDWICH.get(), 1)
             .pattern(" B ")
             .pattern("EME")
