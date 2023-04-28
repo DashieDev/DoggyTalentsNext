@@ -34,6 +34,11 @@ public class WolfMountTalent extends TalentInstance {
         dogIn.setAttributeModifier(DoggyAttributes.JUMP_POWER.get(), WOLF_MOUNT_JUMP, this::createSpeedModifier);
     }
 
+    @Override
+    public void remove(AbstractDog dog) {
+        dog.removeAttributeModifier(DoggyAttributes.JUMP_POWER.get(), WOLF_MOUNT_JUMP);
+    }
+
     public AttributeModifier createSpeedModifier(AbstractDog dogIn, UUID uuidIn) {
         if (this.level() > 0) {
             double speed = 0.06D * this.level();

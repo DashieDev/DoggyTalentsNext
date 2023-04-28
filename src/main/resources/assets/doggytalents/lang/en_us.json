@@ -45,6 +45,7 @@
    "item.doggytalents.tiny_bone": "Tiny Bone",
    "item.doggytalents.big_bone": "Big Bone",
    "item.doggytalents.owner_change": "Change Dog Owner",
+   "item.doggytalents.amnesia_bone": "Amnesia Bone",
    "item.doggytalents.guard_suit" : "Guard Suit",
    "item.doggytalents.conducting_bone": "Conducting Bone",
 
@@ -70,6 +71,11 @@
    "item.doggytalents.radar.locate.line1" : "%s is",
    "item.doggytalents.radar.locate.line2.far" : "%d blocks away.",
    "item.doggytalents.radar.locate.line2.close" : "Here.",
+   "item.doggytalents.amnesia_bone.reject": "This item can only be used on dogs whom you can interact with.",
+   "item.doggytalents.amnesia_bone.status": "Requesting Ownership for: %s",
+   "item.doggytalents.amnesia_bone.use_status": "Uses left: %d/%d",
+   "item.doggytalents.amnesia_bone.migrate_owner.reject": "Your request to own %s has been rejected.",
+   "item.doggytalents.amnesia_bone.migrate_owner.confirmed": "You are now the owner of %s. Take good care of %s.",
 
    "container.doggytalents.pack_puppy": "Pack Puppy",
    "container.doggytalents.food_bowl": "Food Bowl",
@@ -273,6 +279,9 @@
    "doggytalents.screen.radar.help_title" : "Radar Menu Help",
    "doggytalents.screen.radar.no_dog_found" : "No dog found in this dimension.",
 
+   "amnesia_bone_gui.navbar.general" : "General",
+   "amnesia_bone_gui.navbar.talents" : "Talents",
+
    "doggui.common.apply" : "Apply",
    "doggui.common.go_back" : "Go back",
    "doggui.common.debug" : "Debug",
@@ -340,6 +349,23 @@
    "doggui.owner.you": "You",
    "doggui.age.baby": "Puppy",
    "doggui.age.adult": "Adult",
+
+   "doggui.detrain.talents.insufficent_xp": "Insufficent XP",
+   "doggui.detrain.talents.no_level": "De-trained",
+   "doggui.detrain.talents.detrain": "De-train",
+   "doggui.detrain.confirm.title": "Untame this dog?",
+   "doggui.detrain.confirm.subtitle": "This dog will completely forget you. Proceed?",
+   "doggui.untame.confirm.confirmed": "Confirm",
+   "doggui.migrate_owner.help.title": "Ownership Migration",
+   "doggui.migrate_owner.help.subtitle": "To begin the proccess of migrating ownership, the dog must be allowed to Obey Others first. After that, this item can be used on the dog by the target player to set self as the requester. The owner then retrieves the item back, uses it on the dog, and navigates to this page again. Here, the owner may choose to Reject or Confirm the request.",
+   "doggui.migrate_owner.confirm.title": "Migrate Owner?",
+   "doggui.migrate_owner.confirm.subtitle": "This dog will completely forget you. Proceed?",
+   "doggui.migrate_owner.info.dog": "Dog: %s",
+   "doggui.migrate_owner.info.new_owner": "New owner: %s",
+   "doggui.migrate_owner.info.new_owner_uuid": "New owner's uuid: %s",
+   "doggui.migrate_owner.deny": "Deny",
+   "doggui.migrate_owner.confirm": "Confirm",
+   "doggui.migrate_owner.show_uuid": "Show New Owner UUID",
 
    "dogradar.north": "**** %s is %d blocks north ****",
    "dogradar.north.east": "**** %s is %d blocks roughly north east ****",
