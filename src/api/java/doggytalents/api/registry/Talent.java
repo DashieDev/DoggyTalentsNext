@@ -37,6 +37,10 @@ public class Talent {
         return level * (level + 1) / 2;
     }
 
+    public int getDeTrainXPCost(int level) {
+        return level < this.getMaxLevel() ? 1 : 2;
+    }
+
     public String getTranslationKey() {
         if (this.translationKey == null) {
             this.translationKey = Util.makeDescriptionId("talent", DoggyTalentsAPI.TALENTS.get().getKey(this));
