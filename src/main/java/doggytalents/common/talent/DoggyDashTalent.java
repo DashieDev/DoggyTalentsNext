@@ -26,6 +26,11 @@ public class DoggyDashTalent extends TalentInstance {
         dogIn.setAttributeModifier(Attributes.MOVEMENT_SPEED, DASH_BOOST_ID, this::createSpeedModifier);
     }
 
+    @Override
+    public void remove(AbstractDog dogIn) {
+        dogIn.removeAttributeModifier(Attributes.MOVEMENT_SPEED, DASH_BOOST_ID);
+    }
+
     public AttributeModifier createSpeedModifier(AbstractDog dogIn, UUID uuidIn) {
         if (this.level() > 0) {
             double speed = 0.03D * this.level();
