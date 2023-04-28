@@ -39,6 +39,17 @@ public class DTRecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(DoggyItems.MASTER_TREAT.get(), 5).requires(DoggyItems.SUPER_TREAT.get(), 5).requires(Items.DIAMOND, 1).unlockedBy("has_master_treat", has(DoggyItems.SUPER_TREAT.get())).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.TRAINING_TREAT.get(), 1).pattern("TUV").pattern("XXX").pattern("YYY").define('T', Items.STRING).define('U', Items.BONE).define('V', Items.GUNPOWDER).define('X', Items.SUGAR).define('Y', Items.WHEAT).unlockedBy("has_wheat", has(Items.WHEAT)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.COLLAR_SHEARS.get(), 1).pattern(" X ").pattern("XYX").pattern(" X ").define('X', Items.BONE).define('Y', Items.SHEARS).unlockedBy("has_shears", has(Items.SHEARS)).save(consumer);
+        ShapedRecipeBuilder.shaped(DoggyItems.AMNESIA_BONE.get(), 1)
+            .pattern(" RN")
+            .pattern("WBR")
+            .pattern("SW ")
+            .define('S', Items.SOUL_SOIL)
+            .define('W', Items.NETHER_WART)
+            .define('B', Items.BONE)
+            .define('R', Items.BLAZE_ROD)
+            .define('N', Items.NETHERITE_INGOT)
+            .unlockedBy("has_netherite_ingot", has(Items.NETHERITE_INGOT))
+            .save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.WHISTLE.get(), 1).pattern("IRI").pattern("II ").define('I', Items.IRON_INGOT).define('R', Items.REDSTONE).unlockedBy("has_iron_ingot", has(Items.IRON_INGOT)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyBlocks.FOOD_BOWL.get(), 1).pattern("XXX").pattern("XYX").pattern("XXX").define('X', Items.IRON_INGOT).define('Y', Items.BONE).unlockedBy("has_iron_ingot", has(Items.IRON_INGOT)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyBlocks.DOG_BATH.get(), 1).pattern("XXX").pattern("XYX").pattern("XXX").define('X', Items.IRON_INGOT).define('Y', Items.WATER_BUCKET).unlockedBy("has_iron_ingot", has(Items.IRON_INGOT)).save(consumer);

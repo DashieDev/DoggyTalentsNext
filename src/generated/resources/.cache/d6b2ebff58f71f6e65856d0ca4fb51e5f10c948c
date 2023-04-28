@@ -1,4 +1,5 @@
-// 1.19.2	2023-04-26T14:34:39.8451989	DoggyTalents Recipes
+// 1.19.2	2023-04-28T19:27:26.7601036	DoggyTalents Recipes
+27d79d5209be4c4faa190b319b12343e40d8d6b7 data/doggytalents/advancements/recipes/doggytalents/amnesia_bone.json
 f82ebd7e7f86556c2c4017ce9dfb40d17c7f3213 data/doggytalents/advancements/recipes/doggytalents/beastars_uniform_female.json
 cb852065027b8daa626b5722d85d47f858ba3190 data/doggytalents/advancements/recipes/doggytalents/beastars_uniform_male.json
 d3f9a69cd01f3d7652aebdc18f0475c8de2fd345 data/doggytalents/advancements/recipes/doggytalents/big_bone.json
@@ -37,6 +38,7 @@ d7363ca69aeb8ee71447e7569d320b0f0c04ef55 data/doggytalents/advancements/recipes/
 6aa0e02ba8a819715828b665535fff16f66ec07e data/doggytalents/advancements/recipes/doggytalents/whistle.json
 0369d14535d0d97316e54067058c39730dc906b1 data/doggytalents/advancements/recipes/doggytalents/wig.json
 69527c82f8178f682ae6224f1493f7fd4abb6439 data/doggytalents/advancements/recipes/doggytalents/wool_collar.json
+ecf7d52adc3ddba3ae60fcc9bdeb19531d10c095 data/doggytalents/recipes/amnesia_bone.json
 8d882c23392f7d7d794bb7f7024cab0283f26576 data/doggytalents/recipes/beastars_uniform_female.json
 c6a9f9194686f6b5a1c0caac62d085fb12b5cbb0 data/doggytalents/recipes/beastars_uniform_male.json
 37fd32f404451f6a183e84b9b19923fd78d1bb5b data/doggytalents/recipes/big_bone.json

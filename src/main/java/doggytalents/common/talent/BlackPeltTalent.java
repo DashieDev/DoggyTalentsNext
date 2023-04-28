@@ -33,6 +33,13 @@ public class BlackPeltTalent extends TalentInstance {
         dogIn.setAttributeModifier(DoggyAttributes.CRIT_BONUS.get(), BLACK_PELT_CRIT_BONUS_ID, this::createPeltCritBonus);
     }
 
+    @Override
+    public void remove(AbstractDog dogIn) {
+        dogIn.removeAttributeModifier(Attributes.ATTACK_DAMAGE, BLACK_PELT_DAMAGE_ID);
+        dogIn.removeAttributeModifier(DoggyAttributes.CRIT_CHANCE.get(), BLACK_PELT_CRIT_CHANCE_ID);
+        dogIn.removeAttributeModifier(DoggyAttributes.CRIT_BONUS.get(), BLACK_PELT_CRIT_BONUS_ID);
+    }
+
     public AttributeModifier createPeltModifier(AbstractDog dogIn, UUID uuidIn) {
         if (this.level() > 0) {
             double damageBonus = this.level();
