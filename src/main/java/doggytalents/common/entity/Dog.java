@@ -2472,7 +2472,9 @@ public class Dog extends AbstractDog {
             inst.setLevel(level);
             inst.set(this, previousLevel);
 
-            if (level == 0) {
+            if (level <= 0) {
+                //Safely remove the talents.
+                inst.remove(this);
                 activeTalents.remove(inst);
             }
         }
@@ -2567,17 +2569,31 @@ public class Dog extends AbstractDog {
 
     @Override
     public void untame() {
-        this.setTame(false);
         this.navigation.stop();
+        this.clearTriggerableAction();
+        this.goalSelector.getRunningGoals()
+            .map(goal -> { goal.stop(); return goal; } );
         this.setOrderedToSit(false);
         this.setHealth(8);
 
         this.getTalentMap().clear();
         this.markDataParameterDirty(TALENTS.get());
 
+        this.setTame(false);
         this.setOwnerUUID(null);
         this.setWillObeyOthers(false);
+        this.setCanPlayersAttack(true);
         this.setMode(EnumMode.DOCILE);
+    }
+
+    public void migrateOwner(UUID newOwnerUUID) {
+        this.navigation.stop();
+        this.clearTriggerableAction();
+        this.goalSelector.getRunningGoals()
+            .forEach(goal -> { goal.stop(); } );
+        
+        this.setMode(EnumMode.DOCILE);
+        this.setOwnerUUID(newOwnerUUID);
     }
 
     public boolean canSpendPoints(int amount) {

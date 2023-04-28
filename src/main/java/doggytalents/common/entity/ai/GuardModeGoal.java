@@ -79,6 +79,11 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
        this.target = this.dog.level.getNearestEntity(this.targetType, this.targetConditions, this.dog, this.owner.getX(), this.owner.getEyeY(), this.owner.getZ(), this.getTargetSearchArea(this.getFollowDistance()));
     }
 
+    @Override
+    public void stop() {
+        this.owner = null;
+    }
+
     /**
      * @author DashieDev
      */
@@ -190,7 +195,14 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
                 );
         }
 
+        @Override
+        public void stop() {
+            this.owner = null;
+        }
+
     }
+
+    
 
     /**
      * @author DashieDev
@@ -248,6 +260,11 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
                     }
                 }
             }
+        }
+
+        @Override
+        public void stop() {
+            this.owner = null;
         }
 
     }
