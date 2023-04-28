@@ -36,7 +36,9 @@ public class TextOnlyButton extends AbstractButton {
         if (this.isHovered) {
             var txt1 = txt.copy();
             txt1.withStyle(txt1.getStyle().withUnderlined(true).withBold(true));
+            tX = this.x + mX - font.width(txt1)/2;
             this.font.draw(stack, txt1, tX, tY, 0xffffffff);
+            this.renderToolTip(stack, mouseX, mouseY);
         } else {
             this.font.draw(stack, txt, tX, tY, 0xffffffff);
         }
