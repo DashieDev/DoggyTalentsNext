@@ -6,6 +6,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.registry.Talent;
+import doggytalents.client.screen.AmnesiaBoneScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
@@ -36,6 +37,11 @@ public class TalentListPanel extends AbstractElement {
     public AbstractElement init() {
         this.children().clear();
         this.getPosition().setChildDirection(ChildDirection.COL);
+        var selectedTalent = Store.get(getScreen())
+        .getStateOrDefault(ActiveTalentDescSlice.class, 
+        ActiveTalentDescSlice.class, 
+        new ActiveTalentDescSlice(null)).activeTalent;
+        
         trainedTalents = this.getTrainedTalent(dog);
         int talentButtonAreaSize = this.getSizeY() - 50;
         int startIndex = TalentButtonEntryElement.getStartIndex(
@@ -44,7 +50,7 @@ public class TalentListPanel extends AbstractElement {
         if (startIndex >= trainedTalents.size() && pageIndex != 1) 
             pageIndex = 1;
         var talentListEntries =
-            new TalentButtonEntryElement(this, getScreen(), dog, pageIndex, trainedTalents);
+            new TalentButtonEntryElement(this, getScreen(), dog, pageIndex, trainedTalents, selectedTalent);
         talentListEntries
             .setPosition(PosType.RELATIVE, 0, 0)
             .setSize(1f, talentButtonAreaSize)

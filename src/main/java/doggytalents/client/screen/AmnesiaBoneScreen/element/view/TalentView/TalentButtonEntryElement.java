@@ -20,6 +20,7 @@ public class TalentButtonEntryElement extends AbstractElement {
     Dog dog;
     int pageIndex;
     List<Talent> talentList;
+    Talent selectedTalent;
 
     static final int BUTTON_HEIGHT = 20;
     static final int BUTTON_SPACING = 2;
@@ -28,11 +29,12 @@ public class TalentButtonEntryElement extends AbstractElement {
 
     
     public TalentButtonEntryElement(AbstractElement parent, Screen screen, 
-        Dog dog, int pageIndex, List<Talent> talentList) {
+        Dog dog, int pageIndex, List<Talent> talentList, Talent selectedTalent) {
         super(parent, screen);
         this.dog = dog;
         this.pageIndex = pageIndex;
         this.talentList = talentList;
+        this.selectedTalent = selectedTalent;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class TalentButtonEntryElement extends AbstractElement {
             talentButtons.add(
                 new TalentListEntryButton(0, 0, 
                     this.getSizeX(), BUTTON_HEIGHT, talent, 
-                    getScreen(), dog)
+                    getScreen(), dog, talent == selectedTalent)
             );
             --buttonsUntilFull;
             if (buttonsUntilFull <= 0) break;

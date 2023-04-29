@@ -34,15 +34,17 @@ public class TalentListEntryButton extends AbstractButton {
     Talent talent;
     Screen screen;
     Dog dog;
+    boolean selected;
 
     public TalentListEntryButton(int x, int y, int width, int height, 
-        Talent talent, Screen screen, Dog dog) {
+        Talent talent, Screen screen, Dog dog, boolean selected) {
         super(x, y, width, height, Component.translatable(talent.getTranslationKey()));
         //TODO Auto-generated constructor stub
         this.font = Minecraft.getInstance().font;
         this.talent = talent;
         this.screen = screen;
         this.dog = dog;
+        this.selected = selected;
     }
 
     @Override
@@ -79,6 +81,12 @@ public class TalentListEntryButton extends AbstractButton {
         int mX = this.getX() + this.width/2;
         int mY = this.getY() + this.height/2;
         var msg = this.getMessage();
+        if (this.selected) {
+            msg = msg.copy().withStyle(
+                msg.getStyle()
+                .withUnderlined(true)
+            );
+        }
         int tX = mX - font.width(msg)/2;
         int tY = mY - font.lineHeight/2;
         //TODO if the name is too long, draw it cut off with a ..
