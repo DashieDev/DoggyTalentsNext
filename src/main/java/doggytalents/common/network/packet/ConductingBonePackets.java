@@ -144,6 +144,14 @@ public class ConductingBonePackets {
     
                 if (side.isServer()) {
                     var sender = ctx.get().getSender();
+
+                    //Make sure the owner actually have the item in hand serverside.
+                    var item = sender.getItemInHand(InteractionHand.MAIN_HAND).getItem();
+                    if (item != DoggyItems.CONDUCTING_BONE.get()) return;
+
+                    //And is not on cooldown
+                    if (sender.getCooldowns().isOnCooldown(DoggyItems.CONDUCTING_BONE.get())) return;
+
                     var uuid = data.dogUUID;
                     if (uuid == null) return; 
                     var storage = 
@@ -154,10 +162,6 @@ public class ConductingBonePackets {
                     if (dogData == null) return;
                     if (!sender.getUUID().equals(dogData.getOwnerId())) return;
 
-                    //Make sure the owner actually have the item in hand serverside.
-                    var item = sender.getItemInHand(InteractionHand.MAIN_HAND).getItem();
-                    if (item != DoggyItems.CONDUCTING_BONE.get()) return;
-                    
                     if (!data.toBed) {
                         DogUtil.attemptToTeleportDogNearbyOrSendPromise(uuid, sender);
                     } else {
