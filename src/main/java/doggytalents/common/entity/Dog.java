@@ -1547,6 +1547,9 @@ public class Dog extends AbstractDog {
             if (data != null) data.update(this);
         }
         super.onRemovedFromWorld();
+        for (var x : this.alterations) {
+            x.remove(this);
+        }
     }
 
     @Override
@@ -1889,14 +1892,10 @@ public class Dog extends AbstractDog {
         //this.markDataParameterDirty(ACCESSORIES.get(), false); // Mark dirty so data is synced to client
         this.entityData.set(ACCESSORIES.get(), newAccInstLs);
 
-        // Does what notifyDataManagerChange would have done but this way only does it once
-        this.recalculateAlterationsCache();
-        this.spendablePoints.markForRefresh();
-
         try {
-            for (IDogAlteration inst : this.alterations) {
-                inst.init(this);
-            }
+            // Does what notifyDataManagerChange would have done but this way only does it once
+            this.recalculateAlterationsCache();
+            this.spendablePoints.markForRefresh();
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to init alteration: " + e.getMessage());
             e.printStackTrace();
@@ -2028,10 +2027,6 @@ public class Dog extends AbstractDog {
         super.onSyncedDataUpdated(key);
         if (TALENTS.get().equals(key) || ACCESSORIES.get().equals(key)) {
             this.recalculateAlterationsCache();
-
-            for (IDogAlteration inst : this.alterations) {
-                inst.init(this);
-            }
         }
 
         if (TALENTS.get().equals(key)) {
@@ -2067,6 +2062,10 @@ public class Dog extends AbstractDog {
     }
 
     public void recalculateAlterationsCache() {
+        //safely remove all alterations
+        for (var inst : this.alterations) {
+            inst.remove(this);
+        }
         this.alterations.clear();
         this.foodHandlers.clear();
 
@@ -2086,6 +2085,9 @@ public class Dog extends AbstractDog {
             if (inst instanceof IDogFoodHandler) {
                 this.foodHandlers.add((IDogFoodHandler) inst);
             }
+        }
+        for (var inst : this.alterations) {
+            inst.init(this);
         }
     }
 
