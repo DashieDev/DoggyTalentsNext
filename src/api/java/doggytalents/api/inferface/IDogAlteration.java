@@ -22,8 +22,8 @@ import net.minecraftforge.common.util.LazyOptional;
 public interface IDogAlteration {
 
     /**
-     * Called when ever this instance is first added to a dog, this is called when
-     * the level is first set on the dog or when it is loaded from NBT and when the
+     * Called when this instance is added to a dog, which includes when
+     * the level is first set on the dog, when it is loaded from NBT or when the
      * talents are synced to the client
      *
      * @param dogIn The dog
@@ -32,6 +32,14 @@ public interface IDogAlteration {
 
     }
 
+    /**
+     * Called when this instance is about to be removed from the dog.
+     * Or the Dog Object owning this instance is about to be removed.
+     * Notice that the later happens before the call to save CompoundTag,
+     * hence info which need to be saved should always be ready.
+     * 
+     * @param dogIn
+     */
     default void remove(AbstractDog dogIn) {
 
     }
