@@ -8,6 +8,6 @@ public class DogEatingParticleData {
 
     public DogEatingParticleData(int dogId, ItemStack food) {
         this.dogId = dogId;
-        this.food = food;
+        this.food = food == null ? ItemStack.EMPTY : food;
     }
 }
