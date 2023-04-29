@@ -40,6 +40,7 @@ public class DogDeTrainPacket extends DogPacket<DogDeTrainData> {
         var xp_cost = talent.getDeTrainXPCost(dog_level);
         if (sender.experienceLevel < xp_cost) return;
         dog.setTalentLevel(talent, 0);
+        dog.clearTriggerableAction();
         sender.giveExperienceLevels(-xp_cost);
     }
     
