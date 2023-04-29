@@ -51,9 +51,15 @@ public class HellHoundTalent extends TalentInstance {
         }
     }
 
-    //TODO Although talents can't be practically removed from dogs,
-    //there is nothing stoping users from directly modifying the dogs
-    //CompoundTag data... So this is kinda needed...
+    @Override
+    public void set(AbstractDog dog, int levelBefore) {
+        if (levelBefore >= 5 && this.level() < 5) {
+            dog.setPathfindingMalus(BlockPathTypes.LAVA, this.oldLavaCost);
+            dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, this.oldFireCost);
+            dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, this.oldDangerFireCost);
+        }
+    }
+
     @Override
     public void remove(AbstractDog dog) {
         if (this.level() < 5) return;
