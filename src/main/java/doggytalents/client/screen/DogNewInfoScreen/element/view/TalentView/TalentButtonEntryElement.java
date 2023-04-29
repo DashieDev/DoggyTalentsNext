@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.registry.Talent;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListPageCounterSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice.TalentListData;
@@ -21,6 +22,7 @@ public class TalentButtonEntryElement extends AbstractElement {
     Dog dog;
     TalentListData talentList;
     int pageIndex;
+    Talent selectedTalent;
 
     static final int BUTTON_HEIGHT = 20;
     static final int BUTTON_SPACING = 2;
@@ -28,11 +30,12 @@ public class TalentButtonEntryElement extends AbstractElement {
     static final int PADDING_LEFT = 0;
 
     public TalentButtonEntryElement(AbstractElement parent, Screen screen, 
-        Dog dog, int pageIndex, TalentListData talentList) {
+        Dog dog, int pageIndex, TalentListData talentList, Talent selectedTalent) {
         super(parent, screen);
         this.dog = dog;
         this.pageIndex = pageIndex;
         this.talentList = talentList;
+        this.selectedTalent = selectedTalent;
     }
 
     @Override
@@ -45,7 +48,7 @@ public class TalentButtonEntryElement extends AbstractElement {
             talentButtons.add(
                 new TalentListEntryButton(0, 0, 
                     this.getSizeX(), BUTTON_HEIGHT, talent, 
-                    getScreen(), dog)
+                    getScreen(), dog, talent == selectedTalent)
             );
             --buttonsUntilFull;
             if (buttonsUntilFull <= 0) break;
