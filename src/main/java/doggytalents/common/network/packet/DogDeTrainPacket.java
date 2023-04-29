@@ -41,6 +41,7 @@ public class DogDeTrainPacket extends DogPacket<DogDeTrainData> {
         if (sender.experienceLevel < xp_cost) return;
         dog.setTalentLevel(talent, 0);
         dog.clearTriggerableAction();
+        sender.getCooldowns().addCooldown(DoggyItems.AMNESIA_BONE.get(), 20);
         sender.giveExperienceLevels(-xp_cost);
     }
     
