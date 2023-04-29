@@ -26,24 +26,23 @@ public class DoggyToolsItemHandler extends ItemStackHandler {
         }
 
         CompoundTag compound = new CompoundTag();
-        compound.put("doggyTools", itemsList);
+        compound.put("item_list", itemsList);
 
         return compound;
     }
 
     @Override
     public void deserializeNBT(CompoundTag compound) {
-        if (compound.contains("doggyTools", Tag.TAG_LIST)) {
-            ListTag tagList = compound.getList("doggyTools", Tag.TAG_COMPOUND);
-            for (int i = 0; i < tagList.size(); i++) {
-                CompoundTag itemTag = tagList.getCompound(i);
-                int slot = itemTag.getInt("Slot");
+        if (!compound.contains("item_list", Tag.TAG_LIST)) return;
+        ListTag tagList = compound.getList("item_list", Tag.TAG_LIST);
+        for (int i = 0; i < tagList.size(); i++) {
+            CompoundTag itemTag = tagList.getCompound(i);
+            int slot = itemTag.getInt("Slot");
 
-                if (slot >= 0 && slot < this.stacks.size()) {
-                    this.stacks.set(slot, ItemStack.of(itemTag));
-                }
+            if (slot >= 0 && slot < this.stacks.size()) {
+                this.stacks.set(slot, ItemStack.of(itemTag));
             }
-            this.onLoad();
         }
+        this.onLoad();
     }
 }
