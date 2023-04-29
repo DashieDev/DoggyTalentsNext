@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListPageCounterSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListSlice.TalentListData;
@@ -41,8 +42,12 @@ public class TalentListPanel extends AbstractElement {
                 TalentListData.class, 
                 new TalentListData(List.of())
             );
+        var selectedTalent = Store.get(getScreen())
+            .getStateOrDefault(ActiveTalentDescSlice.class, 
+            ActiveTalentDescSlice.class, 
+            new ActiveTalentDescSlice(null)).activeTalent;
         var talentListEntries =
-            new TalentButtonEntryElement(this, getScreen(), dog, pageIndex, talentList);
+            new TalentButtonEntryElement(this, getScreen(), dog, pageIndex, talentList, selectedTalent);
         talentListEntries
             .setPosition(PosType.RELATIVE, 0, 0)
             .setSize(1f, this.getSizeY() - 50)
