@@ -35,6 +35,9 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
         var stack = sender.getMainHandItem();
         if (stack.getItem() != DoggyItems.AMNESIA_BONE.get()) return;
 
+        //And not in cooldown
+        if (sender.getCooldowns().isOnCooldown(DoggyItems.AMNESIA_BONE.get())) return;
+
         //And is dog's owner.
         var ownerUUID = dog.getOwnerUUID();
         if (ownerUUID == null) return;
