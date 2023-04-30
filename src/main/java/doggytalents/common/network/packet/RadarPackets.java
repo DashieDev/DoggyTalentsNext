@@ -200,6 +200,10 @@ public class RadarPackets {
                 ChopinLogger.l("Recieved correction request");
 
                 var sender = ctx.get().getSender();
+
+                var stack = sender.getMainHandItem();
+                if (!(stack.getItem() instanceof RadarItem)) return;
+
                 var storage = 
                     DogLocationStorage.get(sender.level);
                 
