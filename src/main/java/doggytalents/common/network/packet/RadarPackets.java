@@ -197,6 +197,10 @@ public class RadarPackets {
                 if (!side.isServer()) return;
 
                 var sender = ctx.get().getSender();
+
+                var stack = sender.getMainHandItem();
+                if (!(stack.getItem() instanceof RadarItem)) return;
+
                 var storage = 
                     DogLocationStorage.get(sender.level);
                 
