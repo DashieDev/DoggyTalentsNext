@@ -4,12 +4,12 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 
-public class ToolAction extends TriggerableAction {
+public abstract class ToolAction extends TriggerableAction {
 
     protected DoggyToolsTalent talent;
 
-    public ToolAction(Dog dog, boolean trivial, boolean canPause, DoggyToolsTalent talent) {
-        super(dog, trivial, canPause);
+    public ToolAction(Dog dog, DoggyToolsTalent talent) {
+        super(dog, true, false);
         this.talent = talent;
     }
 
@@ -25,5 +25,7 @@ public class ToolAction extends TriggerableAction {
     public void onStop() {
         //TODO reset hotslot.
     }
+
+    public abstract boolean shouldUse();
     
 }
