@@ -5,6 +5,8 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -72,6 +74,7 @@ public class DogFarmerAction extends ToolAction {
     public void onStop() {
         this.setState(ActionState.PENDING);
         this.nextFarmBlock = null;
+        dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
     }
 
     @Override

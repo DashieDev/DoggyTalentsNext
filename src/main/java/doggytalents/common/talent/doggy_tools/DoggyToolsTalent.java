@@ -12,6 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -39,6 +40,16 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
 
     @Override
+    public boolean hasRenderer() {
+        return true;
+    }
+
+    @Override
+    public void remove(AbstractDog dog) {
+        dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+    }
+
+    @Override
     public void tick(AbstractDog d) {
         if (d.level.isClientSide) return;
         
@@ -52,6 +63,7 @@ public class DoggyToolsTalent extends TalentInstance  {
             var item = stack.getItem();
             var action = TOOL_ACTION_MAP.get(item);
             if (action.shouldUse()) {
+                dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 dog.triggerAction(action);
                 break; 
             }
