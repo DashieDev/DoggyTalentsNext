@@ -22,6 +22,7 @@ import doggytalents.client.entity.render.CollarRenderManager;
 import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.client.entity.render.DoggyBeamRenderer;
+import doggytalents.client.entity.render.layer.DogMouthItemRenderer;
 import doggytalents.client.entity.render.layer.PackPuppyRenderer;
 import doggytalents.client.entity.render.layer.RescueDogRenderer;
 import doggytalents.client.entity.render.layer.accessory.AccessoryModelRenderer;
@@ -103,6 +104,7 @@ public class ClientSetup {
         CollarRenderManager.registerLayer(PackPuppyRenderer::new);
         CollarRenderManager.registerLayer(RescueDogRenderer::new);
         CollarRenderManager.registerLayer(AccessoryModelRenderer::new);
+        CollarRenderManager.registerLayer(DogMouthItemRenderer::new);
         
     }
 
