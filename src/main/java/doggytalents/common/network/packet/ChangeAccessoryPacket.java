@@ -29,6 +29,7 @@ public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
     @Override
     public void handleDog(Dog dog, ChangeAccessoriesData data, Supplier<Context> ctx) {
         var sender = ctx.get().getSender();
+        if (!dog.canInteract(sender)) return;
         if (data.add) {
             var inventory = sender.getInventory();
             var items = inventory.items;
