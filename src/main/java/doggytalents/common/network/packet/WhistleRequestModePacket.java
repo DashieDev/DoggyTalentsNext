@@ -3,7 +3,6 @@ package doggytalents.common.network.packet;
 import doggytalents.common.item.WhistleItem;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.WhistleRequestModeData;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent.Context;
@@ -27,19 +26,12 @@ public class WhistleRequestModePacket implements IPacket<WhistleRequestModeData>
         ctx.get().enqueueWork(() -> {
             LogicalSide side = ctx.get().getDirection().getReceptionSide();
 
-            if (side.isServer()) {
-                var player = ctx.get().getSender();
-                var stack = player.getMainHandItem();
-                if (stack.getItem() instanceof WhistleItem) {
-                    if (!stack.hasTag()) {
-                        stack.setTag(new CompoundTag());
-                        stack.getTag().putByte("mode", (byte)data.id);
-                    } else {
-                        stack.getTag().putByte("mode", (byte)data.id);
-                    }                
-                }
-            }
-
+            if (!side.isServer()) return;
+            var player = ctx.get().getSender();
+            var stack = player.getMainHandItem();
+            if (!(stack.getItem() instanceof WhistleItem)) return;
+            var tag = stack.getOrCreateTag();
+            tag.putByte("mode", (byte)data.id);
         });
 
         ctx.get().setPacketHandled(true);
