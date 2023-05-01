@@ -15,6 +15,7 @@ import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.Mai
 import doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView.StatsView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.StyleView;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.TalentView.TalentView;
+import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.*;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Tab;
@@ -178,6 +179,12 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         if (toolTipManager.hasToolTip()) {
             toolTipManager.render(this, stack, mouseX, mouseY);
             toolTipManager.reset();
+        }
+
+        if (!this.dog.isAlive()) {
+            Minecraft.getInstance().setScreen(null);
+        } else if (this.dog.isDefeated()) {
+            DogCannotInteractWithScreen.open(dog);
         }
         
     }

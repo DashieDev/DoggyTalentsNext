@@ -56,7 +56,7 @@ public class DogInventorySlot extends SlotItemHandler {
 
     @Override
     public boolean isActive() {
-        return this.enabled && this.dog.isAlive() && this.dog.distanceToSqr(this.player) < 400;
+        return this.enabled && this.dog.isAlive() && !this.dog.isDefeated() && this.dog.distanceToSqr(this.player) < 400;
     }
 
     public Dog getDog() {
