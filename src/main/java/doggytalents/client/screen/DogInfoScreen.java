@@ -406,6 +406,10 @@ public class DogInfoScreen extends Screen {
         //     }
         //  }
 
+         if (!this.dog.isAlive() || this.dog.isDefeated()) {
+            Minecraft.getInstance().setScreen(null);
+        } 
+
        // RenderHelper.enableStandardItemLighting();
     }
 
