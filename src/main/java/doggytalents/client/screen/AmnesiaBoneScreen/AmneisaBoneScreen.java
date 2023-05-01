@@ -95,6 +95,10 @@ public class AmneisaBoneScreen extends StoreConnectedScreen {
             toolTipManager.render(this, stack, mouseX, mouseY);
             toolTipManager.reset();
         }
+
+        if (!this.dog.isAlive() || dog.isDefeated()) {
+            Minecraft.getInstance().setScreen(null);
+        }
         
     }
     
