@@ -117,8 +117,7 @@ public interface IDogAlteration {
         return InteractionResult.PASS;
     }
 
-    default InteractionResult attackEntityAsMob(AbstractDog dogIn, Entity target) {
-        return InteractionResult.PASS;
+    default void doAdditionalAttackEffects(AbstractDog dogIn, Entity target) {
     }
 
 

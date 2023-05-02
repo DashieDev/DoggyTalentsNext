@@ -1218,15 +1218,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean doHurtTarget(Entity target) {
-        for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.attackEntityAsMob(this, target);
-
-            if (result.shouldSwing()) {
-                return true;
-            } else if (result == InteractionResult.FAIL) {
-                return false;
-            }
-        }
+        
 
         AttributeInstance attackDamageInst = this.getAttribute(Attributes.ATTACK_DAMAGE);
 
@@ -1250,6 +1242,10 @@ public class Dog extends AbstractDog {
             if (critModifiers != null) {
                 CritEmitterPacket.sendCritEmitterPacketToNearClients(target);    
             }
+        }
+
+        for (IDogAlteration alter : this.alterations) {
+            alter.doAdditionalAttackEffects(this, target);
         }
 
         return flag;
