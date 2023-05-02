@@ -22,6 +22,7 @@ import doggytalents.client.entity.render.CollarRenderManager;
 import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.client.entity.render.DoggyBeamRenderer;
+import doggytalents.client.entity.render.layer.DogMouthItemRenderer;
 import doggytalents.client.entity.render.layer.PackPuppyRenderer;
 import doggytalents.client.entity.render.layer.RescueDogRenderer;
 import doggytalents.client.entity.render.layer.accessory.AccessoryModelRenderer;
@@ -31,6 +32,7 @@ import doggytalents.client.entity.render.layer.accessory.IncapacitatedRenderer;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.AccessoryModelRenderEntries;
 import doggytalents.client.screen.DogArmorScreen;
 import doggytalents.client.screen.DogInventoriesScreen;
+import doggytalents.client.screen.DoggyToolsScreen;
 import doggytalents.client.screen.FoodBowlScreen;
 import doggytalents.client.screen.PackPuppyScreen;
 import doggytalents.client.screen.TreatBagScreen;
@@ -68,6 +70,7 @@ public class ClientSetup {
         MenuScreens.register(DoggyContainerTypes.TREAT_BAG.get(), TreatBagScreen::new);
         MenuScreens.register(DoggyContainerTypes.DOG_INVENTORIES.get(), DogInventoriesScreen::new);
         MenuScreens.register(DoggyContainerTypes.DOG_ARMOR.get(), DogArmorScreen::new);
+        MenuScreens.register(DoggyContainerTypes.DOG_TOOLS.get(), DoggyToolsScreen::new);
     }
 
     public static void setupEntityRenderers(final EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -103,6 +106,7 @@ public class ClientSetup {
         CollarRenderManager.registerLayer(PackPuppyRenderer::new);
         CollarRenderManager.registerLayer(RescueDogRenderer::new);
         CollarRenderManager.registerLayer(AccessoryModelRenderer::new);
+        CollarRenderManager.registerLayer(DogMouthItemRenderer::new);
         
     }
 

@@ -14,6 +14,7 @@ public class Resources {
     public static final ResourceLocation INVENTORY_BUTTON = getGui("dog_button");
     public static final ResourceLocation SMALL_WIDGETS = getGui("small_widgets");
     public static final ResourceLocation DOGGY_ARMOR_GUI = getGui("dog_amor_gui");
+    public static final ResourceLocation DOGGY_TOOLS_GUI = getGui("doggy_tools_gui");
     public static final ResourceLocation STYLE_ADD_REMOVE = getGui("style_add_remove");
     public static final ResourceLocation HAMBURGER = getGui("hamburger");
 
