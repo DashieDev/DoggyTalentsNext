@@ -50,11 +50,17 @@ public class DoggyArmorTalent extends TalentInstance {
 
     @Override
     public void init(AbstractDog dogIn) {
-        
+        if (dogIn.level.isClientSide) return;
+        for (int i = 0; i < this.armors.getSlots(); ++i) {
+            var stack = this.armors.getStackInSlot(i);
+            var slot = Dog.getEquipmentSlotForItem(stack);
+            dogIn.setItemSlot(slot, stack);
+        }
     }
 
     @Override
     public void set(AbstractDog dog, int levelBefore) {
+        if (dog.level.isClientSide) return;
         if (levelBefore > 0 && this.level() <= 0) {
             this.dropArmor(dog);
         }
@@ -81,6 +87,7 @@ public class DoggyArmorTalent extends TalentInstance {
 
     @Override
     public void remove(AbstractDog dogIn) {
+        if (dogIn.level.isClientSide) return;
         for (var slot : SLOT_IDS) {
             dogIn.setItemSlot(slot, ItemStack.EMPTY);
         }
