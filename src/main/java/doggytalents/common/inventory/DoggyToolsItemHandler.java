@@ -7,8 +7,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class DoggyToolsItemHandler extends ItemStackHandler {
-    public DoggyToolsItemHandler(int size) {
-        super(size);
+    public DoggyToolsItemHandler() {
+        super(5);
     }
 
     @Override

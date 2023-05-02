@@ -12,6 +12,7 @@ import doggytalents.common.talent.doggy_tools.tool_actions.ToolAction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -33,11 +34,11 @@ public class DoggyToolsTalent extends TalentInstance  {
 
     public DoggyToolsTalent(Talent talentIn, int level) {
         super(talentIn, level);
-        this.tools = new DoggyToolsItemHandler(getSize(level));
+        this.tools = new DoggyToolsItemHandler();
     }
 
-    private int getSize(int level) {
-        return level;
+    public int getSize() {
+        return Mth.clamp(this.level(), 0, 5);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
     
     private void pickTargetTool(Dog dog) {
-        for (int i = 0; i < this.tools.getSlots(); ++i) {
+        for (int i = 0; i < this.getSize(); ++i) {
             var stack = this.tools.getStackInSlot(i);
             if (stack.isEmpty()) continue;
             var item = stack.getItem();
@@ -86,7 +87,7 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
 
     private void pickActionTool(Dog dog) {
-        for (int i = 0; i < this.tools.getSlots(); ++i) {
+        for (int i = 0; i < this.getSize(); ++i) {
             var stack = this.tools.getStackInSlot(i);
             if (stack.isEmpty()) continue;
             var item = stack.getItem();
@@ -120,15 +121,15 @@ public class DoggyToolsTalent extends TalentInstance  {
 
     @Override
     public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.writeToNBT(dogIn, compound);
         var tag = new CompoundTag();
-        
         tag.put("tool_inv", tools.serializeNBT());
-
         compound.put("doggy_tools", tag);
     }
 
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.readFromNBT(dogIn, compound);
         var tag = compound.getCompound("doggy_tools");
         if (tag == null) return;
         var inv_tag = tag.getCompound("tool_inv");
@@ -138,14 +139,13 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
 
     @Override
-    public InteractionResult attackEntityAsMob(AbstractDog dogIn, Entity target) {
+    public void doAdditionalAttackEffects(AbstractDog dogIn, Entity target) {
         var stack = dogIn.getMainHandItem();
         var item = stack.getItem();
         if (!(item instanceof SwordItem sword)) 
-            return InteractionResult.PASS;
+            return;
         if (!(target instanceof LivingEntity living))
-            return InteractionResult.PASS;
+            return;
         sword.hurtEnemy(stack, living, dogIn);
-        return InteractionResult.SUCCESS;
     }
 }
