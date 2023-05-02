@@ -34,7 +34,7 @@ public class DoggyToolsItemHandler extends ItemStackHandler {
     @Override
     public void deserializeNBT(CompoundTag compound) {
         if (!compound.contains("item_list", Tag.TAG_LIST)) return;
-        ListTag tagList = compound.getList("item_list", Tag.TAG_LIST);
+        ListTag tagList = compound.getList("item_list", Tag.TAG_COMPOUND);
         for (int i = 0; i < tagList.size(); i++) {
             CompoundTag itemTag = tagList.getCompound(i);
             int slot = itemTag.getInt("Slot");

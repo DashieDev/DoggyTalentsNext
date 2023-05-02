@@ -30,7 +30,7 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         if (dog.getDogLevel(DoggyTalents.DOGGY_TOOLS.get()) <= 0) return;
 
         var stack = dog.getItemInHand(InteractionHand.MAIN_HAND);
-        if (stack == null) return;
+        if (stack == null || stack.isEmpty()) return;
 
         matrixStack.pushPose();
         DogModel<Dog> model = this.getParentModel();

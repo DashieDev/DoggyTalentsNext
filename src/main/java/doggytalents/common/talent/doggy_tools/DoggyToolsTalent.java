@@ -5,19 +5,25 @@ import java.util.Map;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.Screens;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.inventory.DoggyToolsItemHandler;
 import doggytalents.common.talent.doggy_tools.tool_actions.ToolAction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 
 public class DoggyToolsTalent extends TalentInstance  {
@@ -57,11 +63,35 @@ public class DoggyToolsTalent extends TalentInstance  {
 
         if (dog.isBusy()) return;
 
+        if (dog.getTarget() != null) {
+            pickTargetTool(dog);
+            return;
+        }
+
+        dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        pickActionTool(dog);
+        
+    }
+    
+    private void pickTargetTool(Dog dog) {
+        for (int i = 0; i < this.tools.getSlots(); ++i) {
+            var stack = this.tools.getStackInSlot(i);
+            if (stack.isEmpty()) continue;
+            var item = stack.getItem();
+            if (item instanceof SwordItem) {
+                dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
+                break;
+            }
+        }
+    }
+
+    private void pickActionTool(Dog dog) {
         for (int i = 0; i < this.tools.getSlots(); ++i) {
             var stack = this.tools.getStackInSlot(i);
             if (stack.isEmpty()) continue;
             var item = stack.getItem();
             var action = TOOL_ACTION_MAP.get(item);
+            if (action == null) continue;
             if (action.shouldUse()) {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 dog.triggerAction(action);
@@ -70,17 +100,22 @@ public class DoggyToolsTalent extends TalentInstance  {
         }
     }
 
+    public DoggyToolsItemHandler getTools() {
+        return this.tools;
+    }
+
     @Override
-    public InteractionResult processInteract(AbstractDog dog, Level levek, Player player,
+    public InteractionResult processInteract(AbstractDog d, Level levek, Player player,
             InteractionHand hand) {
-        
         var stack = player.getItemInHand(hand);
-        if (stack.getItem() == Items.STONE_HOE) {
-            this.tools.setStackInSlot(0, new ItemStack(Items.STONE_HOE));
-        } else if (stack.getItem() == Items.STONE_AXE) {
-            this.tools.setStackInSlot(0, ItemStack.EMPTY);
+        if (!(stack.getItem() instanceof PickaxeItem)) 
+            return InteractionResult.PASS;
+        if (!(d instanceof Dog dog)) 
+            return InteractionResult.PASS;
+        if (!dog.level.isClientSide && player instanceof ServerPlayer sP) {
+            Screens.openDoggyToolsScreen(sP, dog);
         }
-        return InteractionResult.PASS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
@@ -100,5 +135,27 @@ public class DoggyToolsTalent extends TalentInstance  {
         if (inv_tag != null) {
             this.tools.deserializeNBT(inv_tag);
         }
+    }
+
+    @Override
+    public InteractionResult attackEntityAsMob(AbstractDog dogIn, Entity target) {
+        var stack = dogIn.getMainHandItem();
+        var item = stack.getItem();
+        if (!(item instanceof SwordItem sword)) 
+            return InteractionResult.PASS;
+        if (!(target instanceof LivingEntity living))
+            return InteractionResult.PASS;
+        sword.hurtEnemy(stack, living, dogIn);
+        if (p_21372_ instanceof LivingEntity) {
+            f += EnchantmentHelper.getDamageBonus(this.getMainHandItem(), ((LivingEntity)p_21372_).getMobType());
+            f1 += (float)EnchantmentHelper.getKnockbackBonus(this);
+         }
+   
+         int i = EnchantmentHelper.getFireAspect(this);
+         if (i > 0) {
+            p_21372_.setSecondsOnFire(i * 4);
+         }
+
+        return InteractionResult.SUCCESS;
     }
 }

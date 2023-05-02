@@ -6,6 +6,8 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
@@ -34,6 +36,12 @@ public class DogFarmerAction extends ToolAction {
 
     @Override
     public void tick() {
+
+        var stack = this.dog.getItemInHand(InteractionHand.MAIN_HAND);
+        if (stack == null || stack.getItem() != Items.STONE_HOE) {
+            this.setState(ActionState.FINISHED);
+            return;
+        }
 
         if (this.nextFarmBlock == null && --this.tickTillResearch <= 0) {
             this.tickTillResearch = 10;
