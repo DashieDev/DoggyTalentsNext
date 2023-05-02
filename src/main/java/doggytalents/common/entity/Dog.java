@@ -1195,7 +1195,7 @@ public class Dog extends AbstractDog {
         }
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResultHolder<Float> result = alter.attackEntityFrom(this, source, amount);
+            InteractionResultHolder<Float> result = alter.gettingAttackedFrom(this, source, amount);
 
             // TODO
             if (result.getResult() == InteractionResult.FAIL) {

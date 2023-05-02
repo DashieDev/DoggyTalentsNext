@@ -121,7 +121,7 @@ public interface IDogAlteration {
     }
 
 
-    default InteractionResultHolder<Float> attackEntityFrom(AbstractDog dog, DamageSource source, float damage) {
+    default InteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
         return InteractionResultHolder.pass(damage);
     }
 
