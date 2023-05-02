@@ -1,6 +1,8 @@
 package doggytalents.client.entity.render.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.ClientSetup;
@@ -28,6 +30,14 @@ public class RescueDogRenderer extends RenderLayer<Dog, DogModel<Dog>> {
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (dog.isInvisible()) {
             return;
+        }
+
+        //dont render when bowtie is present
+        var accessories = dog.getAccessories();
+        for (var acc : accessories) {
+            if (acc.getAccessory().getType() == DoggyAccessoryTypes.BOWTIE.get()) {
+                return;
+            }
         }
 
         Optional<TalentInstance> inst = dog.getTalent(DoggyTalents.RESCUE_DOG);
