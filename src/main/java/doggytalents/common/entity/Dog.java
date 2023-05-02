@@ -2959,6 +2959,12 @@ public class Dog extends AbstractDog {
         return false;
     }
 
+    @Override
+    public void onEquipItem(EquipmentSlot p_238393_, ItemStack p_238394_, ItemStack p_238395_) {
+        //Don't play additional sound
+        //Cause that been done by the talents.
+    }
+
     public boolean isLowAirSupply() {
         return this.getAirSupply() < this.getMaxAirSupply() * 0.3;
     }
