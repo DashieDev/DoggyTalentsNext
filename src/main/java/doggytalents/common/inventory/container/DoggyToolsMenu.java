@@ -49,7 +49,7 @@ public class DoggyToolsMenu extends AbstractContainerMenu {
         int mX = 90;
         int aY = 23;
 
-        this.toolsSize = talent.get().getSize();
+        this.toolsSize = DoggyToolsTalent.getSize(talent.map(inst -> inst.level()).orElse(0));
         int toolsSlotsOffsetX = toolsSize/2*18 + toolsSize%2*9;
         int pX = mX - toolsSlotsOffsetX;
         
