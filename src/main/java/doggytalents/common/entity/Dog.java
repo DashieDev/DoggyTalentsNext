@@ -809,6 +809,10 @@ public class Dog extends AbstractDog {
                 }
 
                 return InteractionResult.SUCCESS;
+            } else {
+                if (this.level.isClientSide) {
+                    this.displayToastIfNoPermission(player);
+                }
             }
         } else { // Not tamed
             if (stack.getItem() == Items.BONE || stack.getItem() == DoggyItems.TRAINING_TREAT.get()) {
@@ -919,8 +923,24 @@ public class Dog extends AbstractDog {
         } else if (this.isPassenger()) {
             if(!this.level.isClientSide) this.stopRiding();
             return InteractionResult.SUCCESS;
+        } else {
+            if (this.level.isClientSide) this.displayToastIncapacitated(player);
         }
         return InteractionResult.FAIL;
+    }
+
+    private void displayToastIfNoPermission(Player player) {
+        player.displayClientMessage(
+            Component.translatable("doggui.invalid_dog.no_permission.title")
+            .withStyle(ChatFormatting.RED) 
+        , true);
+    }
+
+    private void displayToastIncapacitated(Player player) {
+        player.displayClientMessage(
+            Component.translatable("doggui.invalid_dog.incapacitated.title")
+            .withStyle(ChatFormatting.RED) 
+        , true);
     }
 
     @Override
