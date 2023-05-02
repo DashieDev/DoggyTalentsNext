@@ -1554,6 +1554,8 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean canMate(Animal otherAnimal) {
+        if (this.isDefeated()) return false;
+
         if (otherAnimal == this) {
             return false;
         } else if (!this.isTame()) {
@@ -1569,7 +1571,7 @@ public class Dog extends AbstractDog {
             } else if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) && !this.getGender().canMateWith(entitydog.getGender())) {
                 return false;
             } else {
-                return this.isInLove() && entitydog.isInLove();
+                return !entitydog.isDefeated() && this.isInLove() && entitydog.isInLove();
             }
         }
     }
