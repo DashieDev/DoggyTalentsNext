@@ -146,16 +146,6 @@ public class DoggyToolsTalent extends TalentInstance  {
         if (!(target instanceof LivingEntity living))
             return InteractionResult.PASS;
         sword.hurtEnemy(stack, living, dogIn);
-        if (p_21372_ instanceof LivingEntity) {
-            f += EnchantmentHelper.getDamageBonus(this.getMainHandItem(), ((LivingEntity)p_21372_).getMobType());
-            f1 += (float)EnchantmentHelper.getKnockbackBonus(this);
-         }
-   
-         int i = EnchantmentHelper.getFireAspect(this);
-         if (i > 0) {
-            p_21372_.setSecondsOnFire(i * 4);
-         }
-
         return InteractionResult.SUCCESS;
     }
 }
