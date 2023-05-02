@@ -47,13 +47,11 @@ public class DTItemModelProvider extends ItemModelProvider {
 
         generated(DoggyItems.CAPE);
         generated(DoggyItems.CAPE_COLOURED);
-        generated(DoggyItems.COLLAR_SHEARS);
         generated(DoggyItems.CREATIVE_COLLAR);
         generated(DoggyItems.DOGGY_CHARM);
         generated(DoggyItems.GUARD_SUIT);
         generated(DoggyItems.LEATHER_JACKET);
         generated(DoggyItems.MULTICOLOURED_COLLAR);
-        generated(DoggyItems.OWNER_CHANGE);
         generated(DoggyItems.AMNESIA_BONE);
         generated(DoggyItems.RADIO_COLLAR);
         generated(DoggyItems.SPOTTED_COLLAR);

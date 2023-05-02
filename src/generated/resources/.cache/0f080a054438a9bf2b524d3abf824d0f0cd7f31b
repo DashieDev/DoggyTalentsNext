@@ -1,4 +1,4 @@
-// 1.19.2	2023-04-28T00:03:43.649234	DoggyTalents Item Models
+// 1.19.2	2023-05-03T03:19:35.1419634	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 800b0dd973429034a05cbf92a314183d189700bb assets/doggytalents/models/item/beastars_uniform_female.json
 0b2cb480f564f26dea464bf88fa8dc72ef3976b4 assets/doggytalents/models/item/beastars_uniform_male.json
@@ -8,7 +8,6 @@ e16db99d3f12eb93982beacb24a089aeea4a0139 assets/doggytalents/models/item/breedin
 8930778c93f214896857d7fb0e6cb986b84365b8 assets/doggytalents/models/item/cape.json
 f4680c4abb5ae1f964c3a9d18c72867eda849841 assets/doggytalents/models/item/cape_coloured.json
 b7cb166f22c3df2ad740c61c2f774e78f73bbb75 assets/doggytalents/models/item/chew_stick.json
-a02a0a43c948d454ef995604a24868c61f80ad7b assets/doggytalents/models/item/collar_shears.json
 f52223bb5d6925b64f96598d718dc11355d78019 assets/doggytalents/models/item/conan_suit.json
 d4961b5956ecb514cc73fc4902995ee2dc1e4e76 assets/doggytalents/models/item/conducting_bone.json
 c32b03263dcdad77d9e68e3140b94f5d71fba4a5 assets/doggytalents/models/item/creative_collar.json
@@ -24,7 +23,6 @@ bbbddd194d8bce956f46ef7e0e9c24bef18cf451 assets/doggytalents/models/item/guard_s
 483e3ff3b100e7bd5a29b802982385f35d98c5cb assets/doggytalents/models/item/leather_jacket.json
 c78372cc5d3fb956867a2378707fdf0de6287dd0 assets/doggytalents/models/item/master_treat.json
 2898b9dfb81537fc36b6033c98081737b04b1f80 assets/doggytalents/models/item/multicoloured_collar.json
-6041d97228881f499cd30fd5c12f75635ac7d565 assets/doggytalents/models/item/owner_change.json
 bc4344cde9b92b3d303523e9d15fe95482b486c4 assets/doggytalents/models/item/pianist_suit.json
 04168bd8a19365ad74e249c9e4443fddfb535b5e assets/doggytalents/models/item/radar.json
 6154f41cf2303fc6636ee83009cc983c95970804 assets/doggytalents/models/item/radio_collar.json
