@@ -37,8 +37,8 @@ public class DoggyToolsTalent extends TalentInstance  {
         this.tools = new DoggyToolsItemHandler();
     }
 
-    public int getSize() {
-        return Mth.clamp(this.level(), 0, 5);
+    public static int getSize(int level) {
+        return Mth.clamp(level, 0, 5);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
     
     private void pickTargetTool(Dog dog) {
-        for (int i = 0; i < this.getSize(); ++i) {
+        for (int i = 0; i < getSize(this.level()); ++i) {
             var stack = this.tools.getStackInSlot(i);
             if (stack.isEmpty()) continue;
             var item = stack.getItem();
@@ -87,7 +87,7 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
 
     private void pickActionTool(Dog dog) {
-        for (int i = 0; i < this.getSize(); ++i) {
+        for (int i = 0; i < getSize(this.level()); ++i) {
             var stack = this.tools.getStackInSlot(i);
             if (stack.isEmpty()) continue;
             var item = stack.getItem();
