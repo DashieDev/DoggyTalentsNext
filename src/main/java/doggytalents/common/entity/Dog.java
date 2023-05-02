@@ -1288,7 +1288,9 @@ public class Dog extends AbstractDog {
         this.statsTracker.increaseDamageDealt(damage);
 
         if (critModifiers != null) {
-            CritEmitterPacket.sendCritEmitterPacketToNearClients(target);    
+            CritEmitterPacket.sendCritEmitterPacketToNearClients(target);
+            //Borrow the sound from the player.
+            this.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 0.5f, 1);
         }
 
         for (IDogAlteration alter : this.alterations) {
