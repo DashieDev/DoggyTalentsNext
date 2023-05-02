@@ -38,7 +38,7 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
             I18n.get("doggui.owner.you")
             : this.dog.getOwnersName().orElse(Component.translatable("entity.doggytalents.dog.unknown_owner")).getString()
         );
-        var friendlyFire = "" + this.dog.canPlayersAttack();
+        var friendlyFire = "" + this.dog.canOwnerAttack();
         var obeyOther = "" + this.dog.willObeyOthers();
         
         int startX = this.getRealX();
@@ -63,7 +63,7 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
         pY += this.font.lineHeight + 2;
         this.font.draw(stack, 
             createDescEntry(I18n.get("doggui.friendlyfire") + " ", friendlyFire, 
-                this.dog.canPlayersAttack() ? 0xffcda700: 0xffffffff),
+                this.dog.canOwnerAttack() ? 0xffcda700: 0xffffffff),
             startX, pY, 0xffffffff);
         pY += this.font.lineHeight + 2;
         this.font.draw(stack, 
