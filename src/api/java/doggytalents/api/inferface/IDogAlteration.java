@@ -113,7 +113,7 @@ public interface IDogAlteration {
         return InteractionResult.PASS;
     }
 
-    default InteractionResult hitByEntity(AbstractDog dog, Entity entity) {
+    default InteractionResult shouldSkipAttackFrom(AbstractDog dog, Entity entity) {
         return InteractionResult.PASS;
     }
 
