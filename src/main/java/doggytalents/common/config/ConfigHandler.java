@@ -145,6 +145,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue DOG_GREET_OWNER;
         public ForgeConfigSpec.IntValue DOG_GREET_OWNER_LIMIT;
         public ForgeConfigSpec.BooleanValue MAX_CREEPER_SWEEPER_DONT_GROWL;
+        public ForgeConfigSpec.BooleanValue ALL_PLAYER_CANNOT_ATTACK_DOG;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -216,6 +217,11 @@ public class ConfigHandler {
                 .comment("is so wide that it includes creepers which are not in danger zone or not reachable.")
                 .translation("doggytalents.max_creeper_sweeper_dont_growl")
                 .define("max_creeper_sweeper_dont_growl", true);
+            ALL_PLAYER_CANNOT_ATTACK_DOG = builder
+                .comment("Option to disable friendly fire for all players toward all dogs.")
+                .comment("This is used to always be the case with friendly fire disabled for a single dog.")
+                .translation("doggytalents.all_player_cannot_attack_dog")
+                .define("all_player_cannot_attack_dog", false);
             builder.pop();
 
             

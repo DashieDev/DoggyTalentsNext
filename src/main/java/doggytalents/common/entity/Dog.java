@@ -1177,6 +1177,9 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+
+        var attacker = source.getEntity();
+
         if (this.isDefeated() && !source.isBypassInvul()) {
             //Reset the dog incapacitated healing time
             //The dog is already weak, hurting the dog makes,
@@ -1184,8 +1187,7 @@ public class Dog extends AbstractDog {
             this.setDogHunger(0); 
 
             //Invalidate dog as a target for whatever killed him.
-            var e = source.getEntity();
-            if (e instanceof Mob mob) {
+            if (attacker instanceof Mob mob) {
                 var target = mob.getTarget();
                 if (target == this) {
                     mob.setTarget(null);
@@ -1208,23 +1210,41 @@ public class Dog extends AbstractDog {
 
         if (this.isInvulnerableTo(source)) {
             return false;
-        } else {
-            Entity entity = source.getEntity();
-            // Must be checked here too as hitByEntity only applies to when the dog is
-            // directly hit not indirect damage like sweeping effect etc
-            if (entity instanceof Player && !this.canPlayersAttack()) {
-                return false;
-            }
-
-            this.setOrderedToSit(false);
-
-            if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
-                amount = (amount + 1.0F) / 2.0F;
-            }
-
-
-            return super.hurt(source, amount);
         }
+
+        boolean allPlayerCannotAttackDog = 
+            ConfigHandler.ClientConfig.getConfig(ConfigHandler.SERVER.ALL_PLAYER_CANNOT_ATTACK_DOG);
+
+        if (allPlayerCannotAttackDog && attacker instanceof Player) {
+            return false;
+        } 
+
+        // Must be checked here too as hitByEntity only applies to when the dog is
+        // directly hit not indirect damage like sweeping effect etc
+        if (!this.canOwnerAttack()) {
+            var owner = this.getOwner();
+            boolean flag = 
+                this.checkIfAttackedFromOwnerOrTeam(owner, attacker);
+            if (flag) return false;
+        }
+
+        this.setOrderedToSit(false);
+
+        if (attacker != null && !(attacker instanceof Player) && !(attacker instanceof AbstractArrow)) {
+            amount = (amount + 1.0F) / 2.0F;
+        }
+
+        return super.hurt(source, amount);
+    }
+
+    public boolean checkIfAttackedFromOwnerOrTeam(LivingEntity owner, Entity attacker) {
+        if (owner == null || attacker == null) 
+            return false;
+        if (owner == attacker) 
+            return true;
+        if (attacker.isAlliedTo(owner))
+            return true;
+        return false;
     }
 
     @Override
@@ -1465,7 +1485,16 @@ public class Dog extends AbstractDog {
 
     @Override // blockAttackFromPlayer
     public boolean skipAttackInteraction(Entity entityIn) {
-        if (entityIn instanceof Player && !this.canPlayersAttack()) {
+
+        boolean allPlayerCannotAttackDog = 
+            ConfigHandler.ClientConfig.getConfig(ConfigHandler.SERVER.ALL_PLAYER_CANNOT_ATTACK_DOG);
+
+        if (allPlayerCannotAttackDog && entityIn instanceof Player) {
+            return true;
+        } 
+
+        if (!this.canOwnerAttack() 
+            && this.checkIfAttackedFromOwnerOrTeam(this.getOwner(), entityIn)) {
             return true;
         }
 
@@ -1723,7 +1752,7 @@ public class Dog extends AbstractDog {
 
         compound.putString("customSkinHash", this.getSkinHash());
         compound.putBoolean("willObey", this.willObeyOthers());
-        compound.putBoolean("friendlyFire", this.canPlayersAttack());
+        compound.putBoolean("friendlyFire", this.canOwnerAttack());
         compound.putBoolean("regardTeamPlayers", this.regardTeamPlayers());
         compound.putBoolean("forceSit", this.forceSit());
         compound.putInt("dogSize", this.getDogSize());
@@ -2436,7 +2465,7 @@ public class Dog extends AbstractDog {
         this.setDogFlag(4, flag);
     }
 
-    public boolean canPlayersAttack() {
+    public boolean canOwnerAttack() {
         return this.getDogFlag(4);
     }
 
