@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
@@ -150,16 +151,35 @@ public class EventHandler {
             return;
         }
 
+        boolean flag = 
+            checkIfArrowShouldNotHurtDog(dog, projectileOnwer, dogOwner);
+        if (!flag) return;
+
+        //Workaround to avoid infinite loop
+        //net.minecraft.world.entity.projectile.AbstractArrow:193
+        //This should not happen by design.
+        if (projectile instanceof AbstractArrow arrow) {
+            if (arrow.getPierceLevel() > 0) {
+                arrow.setPierceLevel((byte) 0);
+            }
+        }
+
+        event.setCanceled(true);
+            
+    }
+
+    private static boolean checkIfArrowShouldNotHurtDog(Dog dog, Entity projectileOnwer, LivingEntity dogOwner) {
         boolean allPlayerCannotAttackDog = 
             ConfigHandler.ClientConfig.getConfig(ConfigHandler.SERVER.ALL_PLAYER_CANNOT_ATTACK_DOG);
 
         if (allPlayerCannotAttackDog && projectileOnwer instanceof Player) {
-            event.setCanceled(true); return;
+            return true;
         } 
         
         if (!dog.canOwnerAttack() && dog.checkIfAttackedFromOwnerOrTeam(dogOwner, projectileOnwer)) {
-            event.setCanceled(true); return;
+            return true;
         }
-            
+
+        return false;
     }
 }
