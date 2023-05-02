@@ -96,6 +96,7 @@ import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -1233,25 +1234,61 @@ public class Dog extends AbstractDog {
         }
 
         int damage = ((int) attackDamageInst.getValue());
+
+        //Vanilla hardcoded enchantment effect bonus
+        var stack = this.getMainHandItem();
+        if (target instanceof LivingEntity && stack != null) {
+            damage += EnchantmentHelper
+                .getDamageBonus(this.getMainHandItem(), ((LivingEntity)target).getMobType());
+        }
+
+
         if (critModifiers != null) {
             critModifiers.forEach(attackDamageInst::removeModifier);
         }
 
-        boolean flag = target.hurt(this.damageSources().mobAttack(this), damage);
-        if (flag) {
-            this.doEnchantDamageEffects(this, target);
-            this.statsTracker.increaseDamageDealt(damage);
+        boolean flag = target.hurt(DamageSource.mobAttack(this), damage);
+        if (!flag) return false;
 
-            if (critModifiers != null) {
-                CritEmitterPacket.sendCritEmitterPacketToNearClients(target);    
-            }
+        this.doEnchantDamageEffects(this, target);
+        this.statsTracker.increaseDamageDealt(damage);
+
+        if (critModifiers != null) {
+            CritEmitterPacket.sendCritEmitterPacketToNearClients(target);    
         }
 
         for (IDogAlteration alter : this.alterations) {
             alter.doAdditionalAttackEffects(this, target);
         }
 
-        return flag;
+        return true;
+    }
+
+    @Override
+    public void doEnchantDamageEffects(LivingEntity dog, Entity target) {
+        
+        //instead of doing this before the damage is done, this can be done after
+        int i = EnchantmentHelper.getFireAspect(this);
+        if (i > 0) {
+            target.setSecondsOnFire(i * 4);
+        }
+
+        //Also this
+        float knockback = (float)this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
+        knockback += (float)EnchantmentHelper.getKnockbackBonus(this);
+        if (knockback > 0 && target instanceof LivingEntity living) {
+            living.knockback(
+                (double)(knockback * 0.5F), 
+                (double)Mth.sin(this.getYRot() * Mth.DEG_TO_RAD), 
+                (double)(-Mth.cos(this.getYRot() * Mth.DEG_TO_RAD))
+            );
+            this.setDeltaMovement(
+                this.getDeltaMovement()
+                    .multiply(0.6D, 1.0D, 0.6D)
+            );
+        }
+
+        super.doEnchantDamageEffects(dog, target);
     }
 
     @Override
