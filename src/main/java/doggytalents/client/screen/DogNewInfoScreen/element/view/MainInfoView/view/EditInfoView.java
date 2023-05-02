@@ -72,9 +72,9 @@ public class EditInfoView extends AbstractElement {
         //<Text> Friendly fire?: </Text>
         var friendlyFireButton = new FlatButton(
             startX + 130, pY, 
-            40, 20, Component.literal("" + this.dog.canPlayersAttack()), 
+            40, 20, Component.literal("" + this.dog.canOwnerAttack()), 
             b -> {
-                boolean newVal = !dog.canPlayersAttack();
+                boolean newVal = !dog.canOwnerAttack();
                 b.setMessage(Component.literal("" + newVal));
                 this.requestFriendlyFire(newVal);
             }

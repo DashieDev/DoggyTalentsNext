@@ -139,18 +139,27 @@ public class EventHandler {
         var projectileOnwer = projectile.getOwner();
         if (projectileOnwer == null) return;
         var dogOwner = dog.getOwner();
-        if (dogOwner != projectileOnwer) return;
         
         if (projectile instanceof Snowball) {
             if (
-                ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PLAY_TAG_WITH_DOG)
+                projectileOnwer == dogOwner
+                && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PLAY_TAG_WITH_DOG)
                 && !dog.isBusy()
             ) 
                 dog.triggerAction(new DogPlayTagAction(dog, dogOwner));
             return;
         }
+
+        boolean allPlayerCannotAttackDog = 
+            ConfigHandler.ClientConfig.getConfig(ConfigHandler.SERVER.ALL_PLAYER_CANNOT_ATTACK_DOG);
+
+        if (allPlayerCannotAttackDog && projectileOnwer instanceof Player) {
+            event.setCanceled(true); return;
+        } 
         
-        if (!dog.canPlayersAttack())
-            event.setCanceled(true);
+        if (!dog.canOwnerAttack() && dog.checkIfAttackedFromOwnerOrTeam(dogOwner, projectileOnwer)) {
+            event.setCanceled(true); return;
+        }
+            
     }
 }
