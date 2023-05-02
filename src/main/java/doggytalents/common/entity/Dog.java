@@ -1254,16 +1254,22 @@ public class Dog extends AbstractDog {
     public boolean doHurtTarget(Entity target) {
         
 
-        AttributeInstance attackDamageInst = this.getAttribute(Attributes.ATTACK_DAMAGE);
+        var attackDamageInst = this.getAttribute(Attributes.ATTACK_DAMAGE);
+        var critDamageInst = this.getAttribute(DoggyAttributes.CRIT_CHANCE.get());
 
         Set<AttributeModifier> critModifiers = null;
 
-        if (this.getAttribute(DoggyAttributes.CRIT_CHANCE.get()).getValue() > this.getRandom().nextDouble()) {
-            critModifiers = this.getAttribute(DoggyAttributes.CRIT_BONUS.get()).getModifiers();
+        if (critDamageInst != null && critDamageInst.getValue() > this.getRandom().nextDouble()) {
+            var critBonusInst = this.getAttribute(DoggyAttributes.CRIT_BONUS.get());
+            critModifiers = 
+                critBonusInst == null ? null 
+                    : critBonusInst.getModifiers();
+            if (critModifiers != null && attackDamageInst != null)
             critModifiers.forEach(attackDamageInst::addTransientModifier);
         }
 
-        int damage = ((int) attackDamageInst.getValue());
+        int damage = (int)(attackDamageInst == null ? 0
+            : attackDamageInst.getValue());
 
         //Vanilla hardcoded enchantment effect bonus
         var stack = this.getMainHandItem();
