@@ -48,7 +48,7 @@ public class DoggyEntityTypes {
                  Mob.createMobAttributes()
                  .add(Attributes.MAX_HEALTH, 8.0D)
                  .add(Attributes.MOVEMENT_SPEED, 0.3D)
-                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
+                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.25D)
                  .add(Attributes.ATTACK_DAMAGE, 2.0D)
                  .add(DoggyAttributes.JUMP_POWER.get(), 0.42D)
                  .add(DoggyAttributes.CRIT_CHANCE.get(), 0.01D)
