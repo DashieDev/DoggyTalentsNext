@@ -88,13 +88,10 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult attackEntityAsMob(AbstractDog dogIn, Entity entity) {
+    public void doAdditionalAttackEffects(AbstractDog dogIn, Entity entity) {
         if (this.level() > 0) {
             entity.setSecondsOnFire(this.level());
-            return InteractionResult.PASS;
         }
-
-        return InteractionResult.PASS;
     }
 
     @Override
