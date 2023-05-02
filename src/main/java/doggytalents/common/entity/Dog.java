@@ -1424,7 +1424,7 @@ public class Dog extends AbstractDog {
         }
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.hitByEntity(this, entityIn);
+            InteractionResult result = alter.shouldSkipAttackFrom(this, entityIn);
 
             if (result.shouldSwing()) {
                 return true;

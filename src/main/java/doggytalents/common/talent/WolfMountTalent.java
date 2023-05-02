@@ -103,7 +103,7 @@ public class WolfMountTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult hitByEntity(AbstractDog dogIn, Entity entity) {
+    public InteractionResult shouldSkipAttackFrom(AbstractDog dogIn, Entity entity) {
         // If the attacking entity is riding block
         return dogIn.isPassengerOfSameVehicle(entity) ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
