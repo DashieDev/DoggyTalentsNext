@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -54,6 +55,22 @@ public class DoggyToolsTalent extends TalentInstance  {
     @Override
     public void remove(AbstractDog dog) {
         dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+    }
+
+    @Override
+    public void set(AbstractDog dog, int levelBefore) {
+        if (dog.level.isClientSide) return;
+        if (levelBefore > 0 && this.level() <= 0) {
+            this.dropAllToolbar(dog);
+        }
+    }
+
+    private void dropAllToolbar(AbstractDog dog) {
+        for (int i = 0; i < this.tools.getSlots(); ++i) {
+            Containers.dropItemStack(dog.level, dog.getX(), dog.getY(), dog.getZ(), 
+                this.tools.getStackInSlot(i));
+            this.tools.setStackInSlot(i, ItemStack.EMPTY);
+        }
     }
 
     @Override
