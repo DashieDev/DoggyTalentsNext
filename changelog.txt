@@ -396,3 +396,74 @@ any time you swing with a digger item in hand. Also they will not teleport in fr
 * Fixed stupid🤡 inversion that cause non accessories to be listed instead of accessories in the
 Style>Accessories view.
 + Radar text now can actually be seen through, although the code to make it work is ... questionable.
+
+1.12.0 - 4th May 2023
+# Go Behind Action improvement : Dogs now can find and go to a block that is behind owner 
+which also requires going upstairs.
+# Code refactor in GUI framework.
+* Low Health dog no longer earrape players if they spam click him.
+# Removed "x64" texture requirements in accessories. DogModel with different texSize and 
+same cubes with classical now request another model with the original texSize to be rendered.
+# Allow Accessories to have different textures between the front and the back legs.
++ New Accessories : Conan Suit.
++ BEASTARS ビースターズ ! : =============================
++ Added styles from the popular anime series. 
++
++ Accessories :
++ The series's school uniform for male and female.
++
++ Skins :
++ Legoshi the Wolf
++ Juno the Wolf
++ Jack the Golden Retriever
++ 
++ Added egg sandwiches, Legoshi's favorite food, yum!
++ ======================================================
+# TextOnlyButtons now properly center bold text.
++ Added Amnesia Bone ===================================
++ This expensive nether-infused item allows you to do three things :
++ 1. Detrain the dog, talent by talent.
++ 2. Untame the dog.
++ 3. Change dog's owner.
++ Like the Conducting Bone, user accesses the functions via a GUI.
++ Each stack of the item has a Use Cap, which is currently 8. If user
++ reaches this cap, the item will break regardless of anything. This cap is completely
++ fixed and seperated from the durability system and cannot be altered by any means 
++ including enchantments.
++ Each Changes owner & Untame usage will count towards the cap. Fortunately, this does not
++ apply to the Detrain function, in which each usage do not count towards the cap.
++ However, every functions cost XP, the amount is following:
++ 5 for changeOwner
++ 3 for untame
++ 2 for maxLevel detrain
++ 1 for otherLevel detrain
++ ======================================================
+* Fixed DoggyArmor desync.
++ Added Doggy Tools Talent ⛏️==========================
++ This talent give dogs a toolbar where dog can make uses of specific
++ tools.
++ For example :
++ If a dog has a target, he will find the
++ nearest weapon from left to right of
++ the toolbar and equip.
++ If a dog has a hoe in the toolbar, the dog
++ will help you farming!
++ Also note that currently dogs can only use tools when near owner.
++ ======================================================
+# Friendly fire preventing function is now more explicit:
+By default, the option now only affects the dog's owner and player who shares the same team.
+Other player can still attack the dog as normal with FF disabled.
+There is now a dedicated ServerConfig for disabling FF for all players towards all dogs.
++ Dog now also makes sound when crit an entity, it is the same sound when you jump-attack.
+# Knockback Immunity is now more explicit.
+No more free Knockback Immunity. Instead it can be achieved via the Shock Absorber Talent.
++ When an player "order" a dog whom he does not have the permission to interact with, a toast 
+will be shown on his screen.
++ RescueBox now will get out of the way for Bowtie to render if present.
+- FINALLY!!! THE REMOVAL OF THE SHEAR ✂️🚫 ============
+- Removed items :
+- Collar Shear - can be considered unintuitive and unethical to use and underestimate the loyalty
+- of dogs in general.
+- Change Owner.
+- Both is replaced with the new GUI for modifying accessories and The Amnesia Bone.
+- ======================================================
