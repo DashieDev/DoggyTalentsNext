@@ -29,10 +29,10 @@ public class DogUntamePacket extends DogPacket<DogUntameData> {
         var ownerUUID = dog.getOwnerUUID();
         if (ownerUUID == null) return;
         if (!ownerUUID.equals(sender.getUUID())) return;
-        if (sender.experienceLevel < AmnesiaBoneItem.getUntameXPost()) return;
+        if (sender.experienceLevel < AmnesiaBoneItem.getUntameXPCost()) return;
         
         dog.untame();
-        sender.giveExperienceLevels(-AmnesiaBoneItem.getUntameXPost());
+        sender.giveExperienceLevels(-AmnesiaBoneItem.getUntameXPCost());
         
         dog.level.broadcastEntityEvent(dog, Constants.EntityState.WOLF_SMOKE);
         
