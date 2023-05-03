@@ -45,4 +45,12 @@ public class DoggyToolsItemHandler extends ItemStackHandler {
         }
         this.onLoad();
     }
+
+    public boolean hasStackRef(ItemStack stack) {
+        //do not depends on the equals() like contains() do.
+        for (var s : this.stacks) {
+            if (stack == s) return true;
+        }
+        return false;
+    }
 }
