@@ -32,7 +32,7 @@ public class MultiLineFlatButton extends FlatButton {
 
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
         
-        fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, cl);
+        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
         
         if (this.align == TextType.Align.LEFT) {
             drawLeft(stack);
@@ -42,8 +42,8 @@ public class MultiLineFlatButton extends FlatButton {
     }
 
     private void drawCentered(PoseStack stack) {
-        int mX = this.x + this.width/2;
-        int mY = this.y + this.height/2;
+        int mX = this.getX() + this.width/2;
+        int mY = this.getY() + this.height/2;
         int lines_cnt = this.lines.size();
         int text_height = lines_cnt*font.lineHeight + (lines_cnt-1)*LINE_SPACING;
         int pTX;
@@ -56,11 +56,11 @@ public class MultiLineFlatButton extends FlatButton {
     }
 
     private void drawLeft(PoseStack stack) {
-        int mX = this.x + this.width/2;
-        int mY = this.y + this.height/2;
+        int mX = this.getX() + this.width/2;
+        int mY = this.getY() + this.height/2;
         int lines_cnt = this.lines.size();
         int text_height = lines_cnt*font.lineHeight + (lines_cnt-1)*LINE_SPACING;
-        int pTX = this.x + PADDING_LEFT;
+        int pTX = this.getX() + PADDING_LEFT;
         int pTY = mY - text_height/2;
         for (var line : lines) {
             font.draw(stack, line, pTX, pTY, 0xffffffff);
