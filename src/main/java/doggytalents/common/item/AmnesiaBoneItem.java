@@ -91,6 +91,6 @@ public class AmnesiaBoneItem extends Item implements IDogItem  {
     }
 
     public static int getUseCap() { return 8; }
-    public static int getUntameXPost() { return 3; }
+    public static int getUntameXPCost() { return 3; }
     public static int getMigrateOwnerXPCost() { return 5; }
 }
