@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "doggytalents:cape_coloured"
-  }
+  },
+  "show_notification": true
 }

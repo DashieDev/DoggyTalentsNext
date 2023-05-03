@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "doggytalents:food_bowl"
-  }
+  },
+  "show_notification": true
 }

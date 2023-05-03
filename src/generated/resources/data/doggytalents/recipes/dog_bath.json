@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "doggytalents:dog_bath"
-  }
+  },
+  "show_notification": true
 }

@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "doggytalents:tiny_bone"
-  }
+  },
+  "show_notification": true
 }

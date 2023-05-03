@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "doggytalents:chew_stick"
-  }
+  },
+  "show_notification": true
 }

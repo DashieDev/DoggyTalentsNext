@@ -22,5 +22,6 @@
   ],
   "result": {
     "item": "doggytalents:conducting_bone"
-  }
+  },
+  "show_notification": true
 }

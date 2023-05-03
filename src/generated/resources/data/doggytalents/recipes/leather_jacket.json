@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "doggytalents:leather_jacket"
-  }
+  },
+  "show_notification": true
 }

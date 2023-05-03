@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "doggytalents:wig"
-  }
+  },
+  "show_notification": true
 }

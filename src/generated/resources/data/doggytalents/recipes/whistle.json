@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "doggytalents:whistle"
-  }
+  },
+  "show_notification": true
 }

@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "doggytalents:sunglasses"
-  }
+  },
+  "show_notification": true
 }

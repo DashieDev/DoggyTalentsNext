@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "doggytalents:throw_stick"
-  }
+  },
+  "show_notification": true
 }
