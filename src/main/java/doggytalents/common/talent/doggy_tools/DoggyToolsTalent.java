@@ -81,7 +81,7 @@ public class DoggyToolsTalent extends TalentInstance  {
         
         if (!(d instanceof Dog dog)) return;
 
-        if (dog.isBusy()) return;
+        if (dog.isBusy() || dog.isOrderedToSit()) return;
 
         if (dog.getTarget() != null) {
             pickTargetTool(dog);
