@@ -1,6 +1,5 @@
 package doggytalents.common.talent.doggy_tools.tool_actions;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;

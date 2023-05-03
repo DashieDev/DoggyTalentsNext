@@ -2,7 +2,6 @@ package doggytalents.common.talent;
 
 import java.util.Map;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;

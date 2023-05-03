@@ -8,7 +8,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.element.MainButtonToolboxRowElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.DogInfoNavBarElement;
-import doggytalents.ChopinLogger;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogDescriptionViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.MainInfoView;
