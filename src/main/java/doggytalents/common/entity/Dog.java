@@ -1285,7 +1285,7 @@ public class Dog extends AbstractDog {
         }
 
 
-        if (critModifiers != null) {
+        if (critModifiers != null && attackDamageInst != null) {
             critModifiers.forEach(attackDamageInst::removeModifier);
         }
 
