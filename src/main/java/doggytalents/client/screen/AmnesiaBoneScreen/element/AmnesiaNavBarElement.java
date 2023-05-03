@@ -62,7 +62,7 @@ public class AmnesiaNavBarElement extends AbstractElement {
         //int startRelativeXOff = (this.getSizeX() - totalWidth)/2;
         int pX = this.getRealX() - totalWidth/2;
         for (var b : bLs) {
-            b.x = pX;
+            b.setX(pX);
             this.addChildren(b);
             pX += b.getWidth() + BUTTON_SPACING;
         }

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.framework.Store;
+import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AmnesiaBoneItem;
 import doggytalents.common.network.PacketHandler;
@@ -90,7 +91,7 @@ public class DogUntameConfirmScreen extends Screen {
     }
 
     private void addUntameButton() {
-        var untameButton = new Button(this.width/2 - 25, this.height/2 + 58, 
+        var untameButton = new CustomButton(this.width/2 - 25, this.height/2 + 58, 
             50, 20, Component.translatable("doggui.untame.confirm.confirmed"), 
             b -> {
                 requestUntame();
@@ -109,8 +110,8 @@ public class DogUntameConfirmScreen extends Screen {
                 int costStrColor;
                 costStr = I18n.get("doggui.talents.cost") + AmnesiaBoneItem.getUntameXPCost();
                 costStrColor = 0xffffffff;
-                int tX = this.x + this.width/2 - font.width(costStr)/2;
-                int tY = this.y - 2 - font.lineHeight;
+                int tX = this.getX() + this.width/2 - font.width(costStr)/2;
+                int tY = this.getY() - 2 - font.lineHeight;
                 font.draw(stack, costStr, tX, tY, costStrColor);
                 var player = Minecraft.getInstance().player;
                 this.active = 
@@ -118,7 +119,9 @@ public class DogUntameConfirmScreen extends Screen {
             }
 
             @Override
-            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
                 MutableComponent c1;
                 if (this.active) {
                     return;

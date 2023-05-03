@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
+import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AmnesiaBoneItem;
 import doggytalents.common.network.PacketHandler;
@@ -55,7 +56,9 @@ public class DogMigrateOwnerScreen extends Screen {
             .withStyle(ChatFormatting.GRAY), 
             $ -> {}, Minecraft.getInstance().font) {
                 @Override
-                public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+                public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
                     int a =4;
 
                     DogMigrateOwnerScreen.this.renderComponentTooltip(stack, List.of(
@@ -156,8 +159,8 @@ public class DogMigrateOwnerScreen extends Screen {
         pY += font.lineHeight + 3;
         this.font.draw(stack, owner_title, mX - font.width(owner_title)/2, pY, 0xffffffff );
         pY += font.lineHeight + 3;
-        this.uuidShowButton.x = this.width/2 - uuidShowButton.getWidth()/2;
-        this.uuidShowButton.y = pY-6;
+        this.uuidShowButton.setX(this.width/2 - uuidShowButton.getWidth()/2);
+        this.uuidShowButton.setY(pY-6);
         pY += font.lineHeight + 6;  
         this.font.draw(stack, costStr, mX - font.width(costStr)/2, pY, 0xffffffff );
         pY += 40;
@@ -170,7 +173,7 @@ public class DogMigrateOwnerScreen extends Screen {
     }
 
     private void addConfirmButton() {
-        var confirmButton = new Button(this.width/2 + 2, this.height/2 + 58, 
+        var confirmButton = new CustomButton(this.width/2 + 2, this.height/2 + 58, 
             50, 20, Component.translatable("doggui.migrate_owner.confirm"), 
             b -> {
                 requestMigrateOwner(true);
@@ -186,7 +189,9 @@ public class DogMigrateOwnerScreen extends Screen {
                     (player != null && player.experienceLevel >= AmnesiaBoneItem.getMigrateOwnerXPCost());
             }
             @Override
-            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
                 MutableComponent c1;
                 if (this.active) {
                     return;
@@ -214,7 +219,7 @@ public class DogMigrateOwnerScreen extends Screen {
     }
 
     public void addDenyButton() {
-        var denyButton = new Button(this.width/2 - 50 - 2, this.height/2 + 58, 
+        var denyButton = new CustomButton(this.width/2 - 50 - 2, this.height/2 + 58, 
             50, 20, Component.translatable("doggui.migrate_owner.deny"), 
             b -> {
                 requestMigrateOwner(false);

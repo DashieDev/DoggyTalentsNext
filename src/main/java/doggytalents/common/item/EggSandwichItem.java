@@ -10,7 +10,7 @@ public class EggSandwichItem extends Item {
 
     public EggSandwichItem() {
         super(
-            (new Properties()).tab(DoggyItemGroups.GENERAL).food(
+            (new Properties()).food(
                 (new FoodProperties.Builder())
                     .nutrition(6)
                     .saturationMod(0.6F)
