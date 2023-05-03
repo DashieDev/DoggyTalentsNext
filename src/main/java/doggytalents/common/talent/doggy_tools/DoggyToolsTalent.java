@@ -89,6 +89,12 @@ public class DoggyToolsTalent extends TalentInstance  {
         }
 
         dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        
+        var owner = dog.getOwner();
+        if (owner == null || dog.distanceToSqr(owner) > getMaxOwnerDistSqr()) {
+            return;
+        }
+
         pickActionTool(dog);
         
     }
@@ -174,4 +180,8 @@ public class DoggyToolsTalent extends TalentInstance  {
             return;
         sword.hurtEnemy(stack, living, dogIn);
     }
+
+    public int getMaxOwnerDistSqr() {
+        return 8*8;
+    } 
 }
