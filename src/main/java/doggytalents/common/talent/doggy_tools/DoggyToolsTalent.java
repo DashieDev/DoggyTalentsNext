@@ -59,6 +59,8 @@ public class DoggyToolsTalent extends TalentInstance  {
     @Override
     public void tick(AbstractDog d) {
         if (d.level.isClientSide) return;
+
+        validateAndSync(d);
         
         if (!(d instanceof Dog dog)) return;
 
@@ -72,6 +74,13 @@ public class DoggyToolsTalent extends TalentInstance  {
         dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
         pickActionTool(dog);
         
+    }
+
+    private void validateAndSync(AbstractDog d) {
+        var stack = d.getMainHandItem();
+        if (!this.tools.hasStackRef(stack)) {
+            d.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        }
     }
     
     private void pickTargetTool(Dog dog) {
