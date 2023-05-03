@@ -807,10 +807,6 @@ public class Dog extends AbstractDog {
                 }
 
                 return InteractionResult.SUCCESS;
-            } else {
-                if (this.level.isClientSide) {
-                    this.displayToastIfNoPermission(player);
-                }
             }
         } else { // Not tamed
             if (stack.getItem() == Items.BONE || stack.getItem() == DoggyItems.TRAINING_TREAT.get()) {
@@ -860,6 +856,8 @@ public class Dog extends AbstractDog {
             this.navigation.stop();
             this.setTarget(null);
             return InteractionResult.SUCCESS;
+        } else if (this.level.isClientSide) {
+            this.displayToastIfNoPermission(player);
         }
 
         return actionresulttype;
