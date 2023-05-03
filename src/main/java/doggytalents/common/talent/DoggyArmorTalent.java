@@ -2,6 +2,7 @@ package doggytalents.common.talent;
 
 import java.util.Map;
 
+import doggytalents.ChopinLogger;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -125,8 +126,24 @@ public class DoggyArmorTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog dog) {
+
+        if (!dog.level.isClientSide) {
+            validateAndSync(dog);
+        }
+            
+
         if (this.level() >= 3) {
             this.scanForXpAndRepair(dog);
+        }
+    }
+    
+    private void validateAndSync(AbstractDog dog) {
+        for (var slot : SLOT_IDS) {
+            var pStack = dog.getItemBySlot(slot);
+            var insStack = this.armors.getArmorWithSlot(slot);
+            if (pStack != insStack) {
+                dog.setItemSlot(slot, insStack);
+            }
         }
     }
 
