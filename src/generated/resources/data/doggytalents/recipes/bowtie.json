@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "doggytalents:bowtie"
-  }
+  },
+  "show_notification": true
 }

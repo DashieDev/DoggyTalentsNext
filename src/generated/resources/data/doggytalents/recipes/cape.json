@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "doggytalents:cape"
-  }
+  },
+  "show_notification": true
 }

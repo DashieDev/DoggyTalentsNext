@@ -22,5 +22,6 @@
   ],
   "result": {
     "item": "doggytalents:pianist_suit"
-  }
+  },
+  "show_notification": true
 }

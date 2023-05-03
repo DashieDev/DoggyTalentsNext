@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "doggytalents:guard_suit"
-  }
+  },
+  "show_notification": true
 }

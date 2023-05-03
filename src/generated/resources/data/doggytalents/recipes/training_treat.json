@@ -25,5 +25,6 @@
   ],
   "result": {
     "item": "doggytalents:training_treat"
-  }
+  },
+  "show_notification": true
 }

@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "doggytalents:big_bone"
-  }
+  },
+  "show_notification": true
 }

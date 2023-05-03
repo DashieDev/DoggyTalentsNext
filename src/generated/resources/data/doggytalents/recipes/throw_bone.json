@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "doggytalents:throw_bone"
-  }
+  },
+  "show_notification": true
 }

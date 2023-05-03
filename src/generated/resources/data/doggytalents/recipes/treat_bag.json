@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "doggytalents:treat_bag"
-  }
+  },
+  "show_notification": true
 }
