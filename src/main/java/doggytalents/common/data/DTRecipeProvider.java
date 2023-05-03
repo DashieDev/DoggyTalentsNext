@@ -58,7 +58,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Blocks.BLACK_WOOL)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
-        ShapedRecipeBuilder.shaped(DoggyItems.AMNESIA_BONE.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DoggyItems.AMNESIA_BONE.get(), 1)
             .pattern(" RN")
             .pattern("WBR")
             .pattern("SW ")
@@ -69,7 +69,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('N', Items.NETHERITE_INGOT)
             .unlockedBy("has_netherite_ingot", has(Items.NETHERITE_INGOT))
             .save(consumer);
-        ShapedRecipeBuilder.shaped(DoggyItems.EGG_SANDWICH.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.EGG_SANDWICH.get(), 1)
             .pattern(" B ")
             .pattern("EME")
             .pattern(" B ")
@@ -109,14 +109,14 @@ public class DTRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BIG_BONE.get(), 1).pattern("BI").pattern("IB").pattern("BI").define('B', Items.BONE).define('I', Items.IRON_INGOT).unlockedBy("has_iron_ingot", has(Items.IRON_INGOT)).save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.RADIO_COLLAR.get(), 1).pattern("XX").pattern("YX").define('X', Items.IRON_INGOT).define('Y', Items.REDSTONE).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.RADAR.get(), 1).requires(Items.MAP, 1).requires(Items.REDSTONE, 1).requires(DoggyItems.RADIO_COLLAR.get(), 1).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(DoggyItems.CONAN_SUIT.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.CONAN_SUIT.get(), 1)
             .requires(DoggyItems.CAPE_COLOURED.get())
             .requires(Items.PAPER)
             .requires(Items.RED_DYE)
             .requires(Items.BLUE_DYE)
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer);
-        ShapelessRecipeBuilder.shapeless(DoggyItems.BEASTARS_UNIFORM_FEMALE.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.BEASTARS_UNIFORM_FEMALE.get(), 1)
             .requires(DoggyItems.CAPE_COLOURED.get())
             .requires(Items.PAPER)
             .requires(Items.RED_DYE)
@@ -124,7 +124,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(Items.PINK_DYE)
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer);
-        ShapelessRecipeBuilder.shapeless(DoggyItems.BEASTARS_UNIFORM_MALE.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.BEASTARS_UNIFORM_MALE.get(), 1)
             .requires(DoggyItems.CAPE_COLOURED.get())
             .requires(Items.PAPER)
             .requires(Items.RED_DYE)

@@ -1,7 +1,7 @@
 package doggytalents.client.entity.render.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.IThrowableItem;
@@ -48,8 +48,8 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         if (item instanceof SwordItem) {
             matrixStack.translate(0.25, 0, 0);
         }
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(45.0F));
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(45.0F));
+        matrixStack.mulPose(Axis.XP.rotationDegrees(90.0F));
 
         this.itemInHandRenderer.renderItem(dog, stack, ItemTransforms.TransformType.GROUND, false, matrixStack, bufferSource, packedLight);
         matrixStack.popPose();

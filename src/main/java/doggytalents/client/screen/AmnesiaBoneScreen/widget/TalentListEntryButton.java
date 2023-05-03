@@ -48,12 +48,6 @@ public class TalentListEntryButton extends AbstractButton {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
     public void onPress() {
         Store.get(screen).dispatch(ActiveTalentDescSlice.class, 
             new UIAction(UIActionTypes.Talents.OPEN_DESC, new ActiveTalentDescSlice(this.talent))
@@ -80,12 +74,12 @@ public class TalentListEntryButton extends AbstractButton {
         
         }
         
-        fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, cl);
-        fill(stack, this.x, this.y, this.x+Mth.ceil(this.width*talentLvlPercent), this.y+this.height, lvlcl);
+        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
+        fill(stack, this.getX(), this.getY(), this.getX()+Mth.ceil(this.width*talentLvlPercent), this.getY()+this.height, lvlcl);
         
         //draw text
-        int mX = this.x + this.width/2;
-        int mY = this.y + this.height/2;
+        int mX = this.getX() + this.width/2;
+        int mY = this.getY() + this.height/2;
         var msg = this.getMessage();
         if (this.selected) {
             msg = msg.copy().withStyle(
@@ -97,6 +91,10 @@ public class TalentListEntryButton extends AbstractButton {
         int tY = mY - font.lineHeight/2;
         //TODO if the name is too long, draw it cut off with a ..
         font.draw(stack, msg, tX, tY, 0xffffffff);
+    }
+
+    @Override
+    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
     }
     
 }
