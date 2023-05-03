@@ -107,14 +107,14 @@ public class DogUntameConfirmScreen extends Screen {
                 //     : "Max Level Reached.";
                 String costStr;
                 int costStrColor;
-                costStr = I18n.get("doggui.talents.cost") + AmnesiaBoneItem.getUntameXPost();
+                costStr = I18n.get("doggui.talents.cost") + AmnesiaBoneItem.getUntameXPCost();
                 costStrColor = 0xffffffff;
                 int tX = this.x + this.width/2 - font.width(costStr)/2;
                 int tY = this.y - 2 - font.lineHeight;
                 font.draw(stack, costStr, tX, tY, costStrColor);
                 var player = Minecraft.getInstance().player;
                 this.active = 
-                    (player != null && player.experienceLevel >= AmnesiaBoneItem.getUntameXPost());
+                    (player != null && player.experienceLevel >= AmnesiaBoneItem.getUntameXPCost());
             }
 
             @Override
@@ -124,7 +124,7 @@ public class DogUntameConfirmScreen extends Screen {
                     return;
                 } else {
                     var player = Minecraft.getInstance().player;
-                    if (player != null && player.experienceLevel < AmnesiaBoneItem.getUntameXPost()) {
+                    if (player != null && player.experienceLevel < AmnesiaBoneItem.getUntameXPCost()) {
                         c1 = Component.translatable("doggui.detrain.talents.insufficent_xp");
                         c1.setStyle(
                             Style.EMPTY
@@ -140,7 +140,7 @@ public class DogUntameConfirmScreen extends Screen {
         };
         var player = Minecraft.getInstance().player;
         untameButton.active = 
-            (player != null && player.experienceLevel >= AmnesiaBoneItem.getUntameXPost());
+            (player != null && player.experienceLevel >= AmnesiaBoneItem.getUntameXPCost());
 
         this.addRenderableWidget(untameButton);
     }
