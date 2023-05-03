@@ -55,7 +55,7 @@ public class DogArmorItemHandler extends ItemStackHandler {
             var item = s.getItem();
             if (!(item instanceof ArmorItem armor)) 
                 continue;
-            if (armor.getSlot() == slot)
+            if (armor.getType().getSlot() == slot)
                 return s;
         }
         return ItemStack.EMPTY;

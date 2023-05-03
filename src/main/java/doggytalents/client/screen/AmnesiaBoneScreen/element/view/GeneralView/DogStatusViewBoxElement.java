@@ -60,7 +60,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
             dog.setCustomName(Component.literal(tempName));
         }
 
-        InventoryScreen.renderEntityInInventory(dog_mX, dog_mY, size, 
+        InventoryScreen.renderEntityInInventoryFollowsMouse(stack, dog_mX, dog_mY, size, 
             lookX, lookY, dog);
 
         if (nameTooLong) {

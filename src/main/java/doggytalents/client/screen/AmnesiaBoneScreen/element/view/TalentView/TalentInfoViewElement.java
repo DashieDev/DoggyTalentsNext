@@ -75,9 +75,9 @@ public class TalentInfoViewElement extends AbstractElement {
             }
         ) {
             @Override
-            public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+            public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
                 // TODO Auto-generated method stub
-                super.renderButton(stack, mouseX, mouseY, pTicks);
+                super.renderWidget(stack, mouseX, mouseY, pTicks);
                 int tX = this.getX();
                 int tY = this.getY() - LINE_SPACING - font.lineHeight;
                 // var costStr = dogLevel < talent.getMaxLevel() ?

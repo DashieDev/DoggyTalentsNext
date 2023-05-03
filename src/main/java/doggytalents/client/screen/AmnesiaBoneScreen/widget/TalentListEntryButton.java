@@ -55,7 +55,7 @@ public class TalentListEntryButton extends AbstractButton {
     }
 
     @Override
-    public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
         int lvlcl = this.isHovered ? DEFAULT_LEVEL_HLCOLOR : DEFAULT_LEVEL_COLOR;
         

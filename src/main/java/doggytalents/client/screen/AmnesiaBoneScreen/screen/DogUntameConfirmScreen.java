@@ -99,9 +99,9 @@ public class DogUntameConfirmScreen extends Screen {
             }
         ) {
             @Override
-            public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+            public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
                 // TODO Auto-generated method stub
-                super.renderButton(stack, mouseX, mouseY, pTicks);
+                super.renderWidget(stack, mouseX, mouseY, pTicks);
                 
                 // var costStr = dogLevel < talent.getMaxLevel() ?
                 //     "Cost : " + talent.getLevelCost(dogLevel + 1)
