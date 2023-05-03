@@ -25,6 +25,7 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -69,9 +70,11 @@ public class DogArmorContainer extends AbstractContainerMenu {
                 public int getMaxStackSize() {
                    return 1;
                 }
-    
-                public boolean mayPlace(ItemStack p_39746_) {
-                   return p_39746_.canEquip(equipmentslot, dog);
+                
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    if (!(stack.getItem() instanceof ArmorItem)) return false;
+                   return stack.canEquip(equipmentslot, dog);
                 }
 
                 @Override
@@ -100,8 +103,9 @@ public class DogArmorContainer extends AbstractContainerMenu {
                 }
                 
                 @Override
-                public boolean mayPlace(ItemStack p_39746_) {
-                   return p_39746_.canEquip(equipmentslot, dog);
+                public boolean mayPlace(ItemStack stack) {
+                    if (!(stack.getItem() instanceof ArmorItem)) return false;
+                   return stack.canEquip(equipmentslot, dog);
                 }
 
                 @Override
