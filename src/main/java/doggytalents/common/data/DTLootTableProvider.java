@@ -13,6 +13,7 @@ import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -58,7 +59,7 @@ public class DTLootTableProvider extends LootTableProvider {
         private static final Set<Item> EXPLOSION_RESISTANT = Stream.of(DoggyBlocks.DOG_BED.get()).map(ItemLike::asItem).collect(Collectors.toSet());
 
         protected Blocks() {
-            super(EXPLOSION_RESISTANT, FeatureFlagSet.of());
+            super(EXPLOSION_RESISTANT, FeatureFlags.VANILLA_SET);
             //TODO Auto-generated constructor stub
         }
 
@@ -99,7 +100,7 @@ public class DTLootTableProvider extends LootTableProvider {
     private static class Entities extends EntityLootSubProvider {
 
         protected Entities() {
-            super(FeatureFlagSet.of());
+            super(FeatureFlags.VANILLA_SET);
         }
 
         protected void registerNoLoot(Supplier<? extends EntityType<?>> type) {
