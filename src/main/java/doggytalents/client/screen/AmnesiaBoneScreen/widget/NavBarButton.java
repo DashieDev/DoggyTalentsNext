@@ -34,9 +34,4 @@ public class NavBarButton extends TextOnlyButton {
             ActiveTabSlice.UIActionCreator(dog, tab)
         );
     }
-
-    @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
-        return; // TODO
-    }
 }

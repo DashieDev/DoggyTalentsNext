@@ -76,8 +76,8 @@ public class GeneralView extends AbstractElement {
                 @Override
                 public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
                     super.render(stack, mouseX, mouseY, partialTicks);
-                    int tX = this.x + this.width - 10;
-                    int tY = this.y + this.height/2 - font.lineHeight/2;
+                    int tX = this.getX() + this.width - 10;
+                    int tY = this.getY() + this.height/2 - font.lineHeight/2;
                     font.draw(stack, ">", tX, tY, 0xffffffff);
                 }
             }.setTextAlign(Align.LEFT)
@@ -91,8 +91,8 @@ public class GeneralView extends AbstractElement {
                 @Override
                 public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
                     super.render(stack, mouseX, mouseY, partialTicks);
-                    int tX = this.x + this.width - 10;
-                    int tY = this.y + this.height/2 - font.lineHeight/2;
+                    int tX = this.getX() + this.width - 10;
+                    int tY = this.getY() + this.height/2 - font.lineHeight/2;
                     font.draw(stack, ">", tX, tY, 0xffffffff);
                 }
             }.setTextAlign(Align.LEFT)

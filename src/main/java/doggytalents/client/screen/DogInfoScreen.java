@@ -114,7 +114,7 @@ public class DogInfoScreen extends Screen {
             this.addRenderableWidget(obeyBtn);
         }
 
-        Button attackPlayerBtn = new Button(this.width - 64, topY - 5, 42, 20, Component.literal(String.valueOf(this.dog.canOwnerAttack())), button -> {
+        Button attackPlayerBtn = new CustomButton(this.width - 64, topY - 5, 42, 20, Component.literal(String.valueOf(this.dog.canOwnerAttack())), button -> {
             button.setMessage(Component.literal(String.valueOf(!this.dog.canOwnerAttack())));
             PacketHandler.send(PacketDistributor.SERVER.noArg(), new FriendlyFireData(this.dog.getId(), !this.dog.canOwnerAttack()));
         });

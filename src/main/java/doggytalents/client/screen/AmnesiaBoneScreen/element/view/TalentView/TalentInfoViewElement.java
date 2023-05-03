@@ -10,6 +10,7 @@ import doggytalents.client.screen.AmnesiaBoneScreen.store.slice.ActiveTalentDesc
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.framework.element.AbstractElement;
+import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -66,7 +67,7 @@ public class TalentInfoViewElement extends AbstractElement {
 
     private void addDetrainButton(Dog dog) {
         int dogLevel = dog.getDogLevel(talent);
-        var trainButton = new Button(0, 0, 
+        var trainButton = new CustomButton(0, 0, 
             50, 20, Component.translatable("doggui.detrain.talents.detrain"), 
             b -> {
                 //send training packet and dispatch here.
@@ -77,8 +78,8 @@ public class TalentInfoViewElement extends AbstractElement {
             public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
                 // TODO Auto-generated method stub
                 super.renderButton(stack, mouseX, mouseY, pTicks);
-                int tX = this.x;
-                int tY = this.y - LINE_SPACING - font.lineHeight;
+                int tX = this.getX();
+                int tY = this.getY() - LINE_SPACING - font.lineHeight;
                 // var costStr = dogLevel < talent.getMaxLevel() ?
                 //     "Cost : " + talent.getLevelCost(dogLevel + 1)
                 //     : "Max Level Reached.";
@@ -100,7 +101,9 @@ public class TalentInfoViewElement extends AbstractElement {
             }
 
             @Override
-            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
                 MutableComponent c1;
                 var player = Minecraft.getInstance().player;
                 if (this.active) {
@@ -127,8 +130,8 @@ public class TalentInfoViewElement extends AbstractElement {
         int trainButtonX = this.getRealX() + this.getSizeX() - trainButton.getWidth() - 35;
         int trainButtonY = this.getRealY() + this.getSizeY() - trainButton.getHeight() - 20;
 
-        trainButton.x = trainButtonX;
-        trainButton.y = trainButtonY;
+        trainButton.setX(trainButtonX);
+        trainButton.setY(trainButtonY);
 
         this.addChildren(trainButton);
     }
