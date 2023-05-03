@@ -268,7 +268,7 @@ public class DogMeleeAttackGoal extends Goal {
       var v_dog = dog.position();
       for (int i = 1; i <=3; ++i) {
          v_dog = v_dog.add(v_offset);
-         if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level, new BlockPos(v_dog).mutable()) !=BlockPathTypes.WALKABLE)  {
+         if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level, BlockPos.containing(v_dog).mutable()) !=BlockPathTypes.WALKABLE)  {
             return false;
          }
       }

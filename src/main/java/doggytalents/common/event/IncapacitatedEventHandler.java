@@ -25,7 +25,7 @@ public class IncapacitatedEventHandler {
         if (!ServerConfig.getConfig(ConfigHandler.SERVER.IMMORTAL_DOGS)) return;
         var e = ev.getEntity();
         //Can't save dog if dog is out of world
-        if (ev.getSource().isBypassInvul()) return;
+        if (ev.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
         if (!(e instanceof Dog dog)) return;//TODO check based on var
         if (dog.getOwnerUUID() == null) return;
         ev.setCanceled(true);
@@ -60,9 +60,9 @@ public class IncapacitatedEventHandler {
             owner.sendSystemMessage(msg);
         }
         AccessoryInstance hurtLayer;
-        if (ev.getSource().isFire()) {
+        if (ev.getSource().is(DamageTypeTags.IS_FIRE)) {
             hurtLayer = DoggyAccessories.INCAPACITATED_BURN.get().getDefault();
-        } else if (ev.getSource() == DamageSource.MAGIC) {
+        } else if (ev.getSource().is(DamageTypes.MAGIC)) {
             hurtLayer = DoggyAccessories.INCAPACITATED_POISON.get().getDefault();
         } else {
             hurtLayer = DoggyAccessories.INCAPACITATED_BLOOD.get().getDefault();

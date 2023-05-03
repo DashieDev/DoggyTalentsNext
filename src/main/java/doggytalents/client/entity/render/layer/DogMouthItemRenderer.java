@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.SwordItem;
 
 public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel<Dog>> {
@@ -51,7 +52,7 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         matrixStack.mulPose(Axis.YP.rotationDegrees(45.0F));
         matrixStack.mulPose(Axis.XP.rotationDegrees(90.0F));
 
-        this.itemInHandRenderer.renderItem(dog, stack, ItemTransforms.TransformType.GROUND, false, matrixStack, bufferSource, packedLight);
+        this.itemInHandRenderer.renderItem(dog, stack, ItemDisplayContext.GROUND, false, matrixStack, bufferSource, packedLight);
         matrixStack.popPose();
     }
 }

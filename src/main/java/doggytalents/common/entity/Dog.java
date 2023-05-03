@@ -1192,7 +1192,7 @@ public class Dog extends AbstractDog {
 
         var attacker = source.getEntity();
 
-        if (this.isDefeated() && !source.isBypassInvul()) {
+        if (this.isDefeated() && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             //Reset the dog incapacitated healing time
             //The dog is already weak, hurting the dog makes,
             //the dog being weak for longer...
@@ -1292,7 +1292,7 @@ public class Dog extends AbstractDog {
             critModifiers.forEach(attackDamageInst::removeModifier);
         }
 
-        boolean flag = target.hurt(DamageSource.mobAttack(this), damage);
+        boolean flag = target.hurt(this.damageSources().mobAttack(this), damage);
         if (!flag) return false;
 
         this.doEnchantDamageEffects(this, target);

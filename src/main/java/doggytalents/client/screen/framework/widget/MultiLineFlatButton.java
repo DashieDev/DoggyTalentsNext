@@ -27,7 +27,7 @@ public class MultiLineFlatButton extends FlatButton {
     }
 
     @Override
-    public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
         if (!this.active) return;
 
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
