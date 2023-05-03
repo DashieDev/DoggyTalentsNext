@@ -37,6 +37,12 @@ public class DogFarmerAction extends ToolAction {
     @Override
     public void tick() {
 
+        var owner = this.dog.getOwner();
+        if (owner == null || dog.distanceToSqr(owner) > this.talent.getMaxOwnerDistSqr()) {
+            this.setState(ActionState.FINISHED);
+            return;
+        } 
+
         var stack = this.dog.getItemInHand(InteractionHand.MAIN_HAND);
         if (stack == null || stack.getItem() != Items.STONE_HOE) {
             this.setState(ActionState.FINISHED);
@@ -122,10 +128,13 @@ public class DogFarmerAction extends ToolAction {
 
     private BlockPos findNextFarmBlock() {
         var bp = this.dog.blockPosition();
+        var owner = this.dog.getOwner();
+        if (owner == null) return null;
         for (BlockPos pos : BlockPos.betweenClosed(
             bp.offset(-SEARCH_RADIUS, -4, -SEARCH_RADIUS), 
             bp.offset(SEARCH_RADIUS, 4, SEARCH_RADIUS))) {
-            if (this.getFarmState(pos) != FarmState.NONE) { 
+            if (this.getFarmState(pos) != FarmState.NONE 
+                && owner.distanceToSqr(Vec3.atBottomCenterOf(pos)) + 1 < this.talent.getMaxOwnerDistSqr()) { 
                 return pos;
             }
         }
