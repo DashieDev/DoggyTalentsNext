@@ -9,11 +9,12 @@ import doggytalents.client.screen.DogNewInfoScreen.store.payload.InitSkinIndexPa
 import doggytalents.client.screen.DogNewInfoScreen.store.payload.interfaces.TabChange;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Tab;
 import doggytalents.client.screen.framework.AbstractSlice;
+import doggytalents.client.screen.framework.CleanableSlice;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.framework.CommonUIActionTypes;
 import net.minecraft.resources.ResourceLocation;
 
-public class ActiveSkinSlice implements AbstractSlice {
+public class ActiveSkinSlice implements CleanableSlice {
 
     public static List<DogSkin> locList;
 
@@ -58,6 +59,11 @@ public class ActiveSkinSlice implements AbstractSlice {
 
     public static void initLocList() {
         locList = DogTextureManager.INSTANCE.getAll();
+    }
+
+    @Override
+    public void cleanUpSlice() {
+        locList = null;
     }
     
 }
