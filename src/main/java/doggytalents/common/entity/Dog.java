@@ -1820,7 +1820,6 @@ public class Dog extends AbstractDog {
         //Never save these entry, these will be loaded by the talents itself.
         compound.remove("HandItems");
         compound.remove("ArmorItems");
-        ChopinLogger.l("added additional data for : " + this);
     }
 
     //BEGIN : Temporary avoiding dog sometimes as experinced,

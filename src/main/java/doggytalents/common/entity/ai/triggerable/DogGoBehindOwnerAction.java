@@ -2,7 +2,6 @@ package doggytalents.common.entity.ai.triggerable;
 
 import javax.annotation.Nonnull;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import doggytalents.ChopinLogger;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -37,8 +36,7 @@ public class StoreConnectedScreen extends Screen {
         if (guiEventListener instanceof AbstractElement) {
             //TODO Maybe AbstractElement::canFocus() in the future.
             return;
-        } 
-        ChopinLogger.l("set focus : " + guiEventListener);
+        }
         super.setFocused(guiEventListener);
     }
 

@@ -34,7 +34,6 @@ public class AccessoryModelManager {
     public static void registerLayerDef(EntityRenderersEvent.RegisterLayerDefinitions event) {
         for (var x : entryArraySyncedView) {
             x.registerLayerDef(event);
-            ChopinLogger.l("Registered layer def : " + x);
         }
     }
 
