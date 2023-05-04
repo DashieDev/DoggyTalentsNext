@@ -56,8 +56,6 @@ public class DogMigrateOwnerScreen extends Screen {
             $ -> {}, Minecraft.getInstance().font) {
                 @Override
                 public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
-                    int a =4;
-
                     DogMigrateOwnerScreen.this.renderComponentTooltip(stack, List.of(
                         Component.literal(migrateTo == null ? "UUID_ZERO" : migrateTo.toString())
                     ), mouseX, mouseY);
@@ -133,15 +131,6 @@ public class DogMigrateOwnerScreen extends Screen {
         var owner_title = Component.translatable(
             "doggui.migrate_owner.info.new_owner",
             newOwnerName
-        ).withStyle(
-            Style.EMPTY
-                .withHoverEvent(
-                    new HoverEvent(
-                        HoverEvent.Action.SHOW_TEXT, 
-                        Component.translatable("doggui.migrate_owner.info.new_owner_uuid",
-                            newOwnerUUID.toString())
-                    )
-                )
         );
         var costStr = I18n.get("doggui.talents.cost") + AmnesiaBoneItem.getMigrateOwnerXPCost();
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
