@@ -49,14 +49,22 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         this.dog = dog;
         
         this.rightTabButton = new TextOnlyButton(0, 0, 0, 0, Component.literal(">"), b -> {
+            var selectedTab = Store.get(this).getStateOrDefault(
+                ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
+                ActiveTabSlice.Tab.HOME
+            );
             Store.get(this).dispatch(ActiveTabSlice.class, 
-                new UIAction(CommonUIActionTypes.CHANGE_TAB_NEXT, null)
+                ActiveTabSlice.UIActionCreator(dog, ActiveTabSlice.getNextTab(selectedTab))
             );
         }, Minecraft.getInstance().font);
 
         this.lefTabButton = new TextOnlyButton(0, 0, 0, 0, Component.literal("<"), b -> {
+            var selectedTab = Store.get(this).getStateOrDefault(
+                ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
+                ActiveTabSlice.Tab.HOME
+            );
             Store.get(this).dispatch(ActiveTabSlice.class, 
-                new UIAction(CommonUIActionTypes.CHANGE_TAB_PREV, null)
+                ActiveTabSlice.UIActionCreator(dog, ActiveTabSlice.getPrevTab(selectedTab))
             );
         }, Minecraft.getInstance().font);
 

@@ -24,37 +24,7 @@ public class ActiveTabSlice implements AbstractSlice {
             if (action.payload instanceof ChangeTabPayload tabPayload) {
                 return tabPayload.getTab();
             }
-        } else if (action.type == CommonUIActionTypes.CHANGE_TAB_NEXT) {
-            if (oldData instanceof Tab tab) {
-                switch (tab) {
-                    case HOME:
-                        return Tab.TALENTS;
-                    case STATS:
-                        return Tab.HOME;
-                    case STYLE:
-                        return Tab.STATS;
-                    case TALENTS:
-                        return Tab.STYLE;
-                    default:
-                        return Tab.HOME;
-                }
-            }
-        } else if (action.type == CommonUIActionTypes.CHANGE_TAB_PREV) {
-            if (oldData instanceof Tab tab) {
-                switch (tab) {
-                    case HOME:
-                        return Tab.STATS;
-                    case STATS:
-                        return Tab.STYLE;
-                    case STYLE:
-                        return Tab.TALENTS;
-                    case TALENTS:
-                        return Tab.HOME;
-                    default:
-                        return Tab.HOME;
-                }
-            }
-        }
+        } 
         return oldData;
     }
 
@@ -70,6 +40,36 @@ public class ActiveTabSlice implements AbstractSlice {
         }
 
         return new UIAction(CommonUIActionTypes.CHANGE_TAB, payload);
+    }
+
+    public static Tab getPrevTab(Tab tab) {
+        switch (tab) {
+        case HOME:
+            return Tab.STATS;
+        case STATS:
+            return Tab.STYLE;
+        case STYLE:
+            return Tab.TALENTS;
+        case TALENTS:
+            return Tab.HOME;
+        default:
+            return Tab.HOME;
+        }
+    }
+
+    public static Tab getNextTab(Tab tab) {
+        switch (tab) {
+        case HOME:
+            return Tab.TALENTS;
+        case STATS:
+            return Tab.HOME;
+        case STYLE:
+            return Tab.STATS;
+        case TALENTS:
+            return Tab.STYLE;
+        default:
+            return Tab.HOME;
+        }
     }
 
     private static void setupStats(Dog dog) {
