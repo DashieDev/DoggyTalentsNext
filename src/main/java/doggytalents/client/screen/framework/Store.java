@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import doggytalents.ChopinLogger;
 import net.minecraft.client.gui.screens.Screen;
 
 public class Store {
