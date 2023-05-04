@@ -471,3 +471,6 @@ will be shown on his screen.
 - Change Owner.
 - Both is replaced with the new GUI for modifying accessories and The Amnesia Bone.
 - ======================================================
+
+1.12.1 -  5th May 2023
+* HOTFIX : Skin failed to init when switching tab using keyboard.
