@@ -1833,50 +1833,6 @@ public class Dog extends AbstractDog {
         ChopinLogger.l("added additional data for : " + this);
     }
 
-    //BEGIN : Temporary avoiding dog sometimes as experinced,
-    //SEEMS TO failed to dismount player upon quiting game, and somehow
-    //it SEEMS THAT player data doesn't save passengers, 
-    //causing dog to be discarded. This cause no harm but with the cost of dog
-    //will not be saved AS A PASSENGER if the dog is 
-    //a passanger and being loaded as no vehicle
-    //upon next load, but currently there is no implementation of dog
-    //riding another entity other than his owner, and in that instance,
-    //the dog already is getting dismounted before game quit...
-    
-    @Override
-    public boolean saveAsPassenger(CompoundTag tag) {
-        return false;
-    }
-
-    @Override
-    public boolean save(CompoundTag tag) {
-        var removalReason = this.getRemovalReason();
-        if (removalReason != null && removalReason.shouldSave()) {
-            return false;
-        } else {
-            String s = this.getEncodeId();
-            if (s == null) {
-                return false;
-            } else {
-                tag.putString("id", s);
-                this.saveWithoutId(tag);
-                return true;
-            }
-        }
-    }
-
-    @Override
-    public boolean shouldBeSaved() {
-        var removalReason = this.getRemovalReason();
-        if (removalReason != null && !removalReason.shouldSave()) {
-           return false;
-        } else {
-           return !this.isVehicle() || !this.hasExactlyOnePlayerPassenger();
-        }
-    }
-
-    //END
-
     @Override
     public void load(CompoundTag compound) {
 
