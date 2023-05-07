@@ -474,3 +474,7 @@ will be shown on his screen.
 
 1.12.1 -  5th May 2023
 * HOTFIX : Skin failed to init when switching tab using keyboard.
+
+1.12.2 - 7th May 2023
+* HOTFIX : dog corrupts when player logged out while sharing the same boat with the dog.
+* fix desync when dog is mounted to player while already being a passanger of a different vehicle.
