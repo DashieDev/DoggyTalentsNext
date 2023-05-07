@@ -963,7 +963,7 @@ public class Dog extends AbstractDog {
             var e0 = this.getVehicle();
             super.stopRiding();
             var e1 = this.getVehicle();
-            if (e0 != e1) {
+            if (e0 != e1 && e0 instanceof Player) {
                 PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> this), 
                     new DogDismountData(this.getId())
                 );
