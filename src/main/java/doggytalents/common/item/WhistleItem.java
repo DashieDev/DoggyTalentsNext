@@ -122,7 +122,7 @@ public class WhistleItem extends Item {
         }
     }
 
-    private void useMode(WhistleMode mode, List<Dog> dogsList, Level world, Player player, InteractionHand hand) {
+    public void useMode(WhistleMode mode, List<Dog> dogsList, Level world, Player player, InteractionHand hand) {
         if (mode == null) return;
 
         if (ConfigHandler.WHISTLE_SOUNDS)
@@ -197,7 +197,7 @@ public class WhistleItem extends Item {
             }
             return;
         case OKAY:
-            if (world.isClientSide)
+            if (world.isClientSide) return;
             for (var dog : dogsList) {
                 successful = true;
                 dog.getNavigation().stop();
