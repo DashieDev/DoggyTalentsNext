@@ -1,16 +1,26 @@
 package doggytalents.client.event;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+
+import doggytalents.ChopinLogger;
 import doggytalents.DoggyBlocks;
+import doggytalents.DoggyItems;
 import doggytalents.DoggyTalentsNext;
+import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.item.WhistleItem;
+import doggytalents.common.item.WhistleItem.WhistleMode;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
+import doggytalents.common.network.packet.data.WhistleUseData;
+import doggytalents.common.util.InventoryUtil;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
@@ -27,17 +37,24 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.client.settings.KeyConflictContext;
+import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
 import java.util.Map;
 
 public class ClientEventHandler {
@@ -144,6 +161,57 @@ public class ClientEventHandler {
                 //event.getPoseStack().translate(guiLeft, guiTop, 0);
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onKeyboardInput(InputEvent.Key event) {
+        proccessWhistle(event);
+    }
+
+    public void proccessWhistle(InputEvent.Key event) {
+
+        //Same check as IN_GAME_AND_HAS_WHISTLE.isActive()
+        var mc = Minecraft.getInstance();
+        var player = mc.player;
+        if (player == null) return;
+        var whistle = DoggyItems.WHISTLE.get();
+        var whistle_stack = 
+            InventoryUtil.findStackWithItemFromHands(player, whistle);
+        if (whistle_stack == null) return;
+
+        int hotkey_use = -1;
+        var hotkeys_whistle = DoggyKeybinds.hotkeys_whistle;
+        for (int i = 0; i < hotkeys_whistle.length; ++i) {
+            if (hotkeys_whistle[i].consumeClick()) {
+                hotkey_use = i;
+                break;
+            }
+        }
+        if (hotkey_use < 0) return;
+
+        if (player.getCooldowns().isOnCooldown(whistle)) return;
+        
+        var tag = whistle_stack.getTag();
+        if (tag == null) return;
+        var hotkeyarr = tag.getIntArray("hotkey_modes");
+        if (hotkeyarr == null) return;
+        if (hotkeyarr.length != 4) return;
+        
+        int mode_id = hotkeyarr[hotkey_use];
+        var whistle_modes = WhistleMode.VALUES;
+        if (mode_id >= whistle_modes.length) return;
+        if (mode_id < 0) return;
+        var useMode = whistle_modes[mode_id];
+
+        List<Dog> dogsList = player.level.getEntitiesOfClass(
+            Dog.class, 
+            player.getBoundingBox().inflate(100D, 50D, 100D), 
+            dog -> dog.isAlive() && !dog.isDefeated() && dog.isOwnedBy(player)
+        );
+        whistle.useMode(useMode, dogsList, 
+            player.level, player, InteractionHand.MAIN_HAND);
+        PacketHandler.send(PacketDistributor.SERVER.noArg(), 
+            new WhistleUseData(mode_id));
     }
 
 
