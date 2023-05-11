@@ -45,6 +45,8 @@ public final class PacketHandler {
         registerPacket(new DogDeTrainPacket(), DogDeTrainData.class);
         registerPacket(new DogUntamePacket(), DogUntameData.class);
         registerPacket(new DogMigrateOwnerPacket(), DogMigrateOwnerData.class);
+        registerPacket(new WhistleEditHotKeyPacket(), WhisltleEditHotKeyData.class);
+        registerPacket(new WhistleUsePacket(), WhistleUseData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
