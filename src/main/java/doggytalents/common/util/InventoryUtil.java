@@ -6,6 +6,8 @@ import doggytalents.api.inferface.IDogFoodHandler;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -87,4 +89,16 @@ public class InventoryUtil {
            return Mth.floor(f * 14.0F) + (i > 0 ? 1 : 0);
         }
      }
+
+    public static @Nullable ItemStack findStackWithItemFromHands(Player player, Item item) {
+        if (item == null) return null;
+        if (player == null) return null;
+        var stack0 = player.getMainHandItem();
+        var stack1 = player.getOffhandItem();
+        if (stack0 != null && stack0.getItem() == item) 
+            return stack0;
+        if (stack1 != null && stack1.getItem() == item)
+            return stack1;
+        return null; 
+    }
 }
