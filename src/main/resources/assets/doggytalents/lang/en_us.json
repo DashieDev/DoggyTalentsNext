@@ -277,6 +277,9 @@
    "doggytalents.screen.whistler.heel_by_name.no_dog_found" : "No dogs were found in this area.",
    "doggytalents.screen.whistler.heel_by_name.soft_heel" : "Soft Heel",
    "doggytalents.screen.whistler.heel_by_name.soft_heel.help" : "By default, dog will always teleport to you upon using this command. If this option is set to true, dog will stand up (if sitting), run to owner as usual and only teleport if too far.",
+   "doggytalents.screen.whistler.screen.set_hotkey" : "Set Hotkey",
+   "doggytalents.screen.whistler.screen.use_whistle" : "Use Whistle",
+   "doggytalents.screen.whistler.screen.set_hotkey.help" : "Commands also can be issued without opening this menu via keybinds which can be configured via minecraft's option menu. Currently, you can assign up to 4 functions to be triggered using their respective keybinds. Note that these keybinds only active when you have the whistle in one of the hands.",
    "doggytalents.screen.conducting_bone.help" : "Use the Up and Down arrow to select the dog you want to teleport, you can also type to search for your dog's name. Press enter to finish the command. Esc to cancel.",
    "doggytalents.screen.conducting_bone.help_title" : "Conducting Bone Menu Help",
    "doggytalents.screen.conducting_bone.no_dog_found" : "No dog found in this dimension.",
@@ -370,6 +373,12 @@
    "doggui.migrate_owner.deny": "Deny",
    "doggui.migrate_owner.confirm": "Confirm",
    "doggui.migrate_owner.show_uuid": "Show New Owner UUID",
+
+   "key.categories.doggy_talents": "Doggy Talents",
+   "key.whistle.1": "Whistle #1",
+   "key.whistle.2": "Whistle #2",
+   "key.whistle.3": "Whistle #3",
+   "key.whistle.4": "Whistle #4",
 
    "dogradar.north": "**** %s is %d blocks north ****",
    "dogradar.north.east": "**** %s is %d blocks roughly north east ****",

@@ -8,11 +8,14 @@ import org.antlr.v4.parse.ANTLRParser.parserRule_return;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.ChopinLogger;
+import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem;
 import doggytalents.common.item.WhistleItem.WhistleMode;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.HeelByNameData;
+import doggytalents.common.network.packet.data.WhisltleEditHotKeyData;
 import doggytalents.common.network.packet.data.WhistleRequestModeData;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
@@ -22,6 +25,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +46,10 @@ public class WhistleScreen extends Screen{
 
     private int mouseX0;
     private int mouseY0;
+
+    private boolean settingKeysMode = false;
+    private int pKey = 0;
+    private int[] hotkeysModeArr = {-1, -1, -1, -1};
 
     public WhistleScreen() {
         super(Component.translatable("doggytalents.screen.whistler.title"));
@@ -74,8 +82,32 @@ public class WhistleScreen extends Screen{
                 WhistleScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
             }
         };
+
+        Button setKey = new Button(3, 23, 60, 20, Component.translatable("doggytalents.screen.whistler.screen.set_hotkey"),
+            b -> {
+                if (settingKeysMode) {
+                    settingKeysMode = false;
+                    b.setMessage(Component.translatable("doggytalents.screen.whistler.screen.set_hotkey"));
+                } else {
+                    settingKeysMode = true;
+                    b.setMessage(Component.translatable("doggytalents.screen.whistler.screen.use_whistle"));
+                }
+            }
+        ) {
+            @Override
+            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+                List<Component> list = new ArrayList<>();
+                list.add(Component.translatable("doggytalents.screen.whistler.screen.set_hotkey")
+                    .withStyle(Style.EMPTY.withBold(true)));
+                String str = I18n.get("doggytalents.screen.whistler.screen.set_hotkey.help");
+                list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
+
+                WhistleScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+            }
+        };
         
         this.addRenderableWidget(help);
+        this.addRenderableWidget(setKey);
     }
 
  
@@ -95,6 +127,25 @@ public class WhistleScreen extends Screen{
         Gui.fill(stack, half_width - 100, half_height + 105, half_width + 100, half_height + 117, Integer.MIN_VALUE);
 
         super.render(stack, mouseX, mouseY, partialTicks);
+
+        if (this.settingKeysMode) {
+            renderModeListSetHotkey(stack, mouseX, mouseY, partialTicks);
+        } else {
+            renderModeListWhistleUse(stack, mouseX, mouseY, partialTicks);
+        }
+
+        
+        int txtorgx = half_width - 90;
+        int txtorgy = half_height + 107;
+        
+        this.font.draw(stack, this.value + "_", txtorgx, txtorgy,  0xffffffff);
+         
+    }
+
+    public void renderModeListWhistleUse(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+        int half_width = this.width >> 1;
+        int half_height = this.height >> 1; 
+        
         int offset = 0;
         int textx = half_width - 100 + 2;
         int texty = half_height - 100 + 2;
@@ -102,11 +153,57 @@ public class WhistleScreen extends Screen{
         for (int i = 0; i < this.modeFilterList.size(); ++i) {
             int color = 0xffffffff;
             if (i == this.selectedId) color = this.hightlightTextColor;
-            var text = Component.literal(i + " ");
+            var text = Component.translatable(this.modeFilterList.get(i).getUnlocalisedTitle());
+            text.withStyle(
+                Style.EMPTY
+                .withBold(false)
+                .withColor(color)
+            );
+            this.font.draw(stack, text, textx, texty + offset, color);
+            offset+=10;
+            if (offset > 190) break;
+        }
+    }
+
+    public void renderModeListSetHotkey(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+
+        updateCurrentHotKeys();
+        this.pKey = findEmptyHotkey();
+
+        int half_width = this.width >> 1;
+        int half_height = this.height >> 1; 
+        
+        int offset = 0;
+        int textx = half_width - 100 + 2;
+        int texty = half_height - 100 + 2;
+
+        for (int i = 0; i < this.modeFilterList.size(); ++i) {
+            int color = 0xffffffff;
+            if (i == this.selectedId) color = this.hightlightTextColor;
+            int mode_id = this.modeFilterList.get(i).getIndex();
+            int hotkey_indx = findHotkeyForMode(mode_id);
+            int prefix_color = 0xff6f00;
+            MutableComponent text; 
+            if (i == this.selectedId) {
+                boolean remove = false;
+                prefix_color = 0x0aff43;
+                if (hotkey_indx >= 0) { 
+                    prefix_color = 0xff3636;
+                    remove = true;
+                }
+                text = Component.literal(
+                    remove ? "- " : pKey + " "
+                );
+            } else if (hotkey_indx >= 0) {
+                prefix_color = 0xff6f00;
+                text = Component.literal(hotkey_indx + " ");
+            } else {
+                text = Component.literal("  ");
+            }
             text.withStyle(
                 Style.EMPTY
                     .withBold(true)
-                    .withColor(0xff6f00)
+                    .withColor(prefix_color)
             );
             var title = Component.translatable(this.modeFilterList.get(i).getUnlocalisedTitle());
             title.withStyle(
@@ -119,12 +216,47 @@ public class WhistleScreen extends Screen{
             offset+=10;
             if (offset > 190) break;
         }
+    }
 
-        int txtorgx = half_width - 90;
-        int txtorgy = half_height + 107;
-        
-        this.font.draw(stack, this.value + "_", txtorgx, txtorgy,  0xffffffff);
-         
+    private void updateCurrentHotKeys() {
+        for (int i = 0; i < this.hotkeysModeArr.length; ++i) {
+            this.hotkeysModeArr[i] = -1;
+        }
+        var mc = Minecraft.getInstance();
+        var player = mc.player;
+        if (player == null) return;
+        var stack = player.getMainHandItem();
+        if (stack == null) return;
+        if (stack.getItem() != DoggyItems.WHISTLE.get()) return;
+        var tag = stack.getTag();
+        if (tag == null) return;
+        var list = tag.getIntArray("hotkey_modes");
+        if (list == null) return;
+        for (int i = 0; i < this.hotkeysModeArr.length; ++i) {
+            if (i >= list.length) break;
+            this.hotkeysModeArr[i] = list[i];
+        }
+    }
+
+    private int findEmptyHotkey() {
+        for (int i = 0; i < this.hotkeysModeArr.length; ++i) {
+            if (this.hotkeysModeArr[i] < 0) 
+                return i;
+        }
+        return 3;
+    }
+
+    private int findHotkeyForMode(int mode_id) {
+        for (int i = 0; i < this.hotkeysModeArr.length; ++i) {
+            if (this.hotkeysModeArr[i] == mode_id) 
+                return i;
+        }
+        return -1;
+    }
+
+    private void sendHotKeyEdits(int hotkey_id, int mode_id) {
+        PacketHandler.send(PacketDistributor.SERVER.noArg(), 
+            new WhisltleEditHotKeyData(hotkey_id, mode_id));
     }
 
     private int getHoveredIndex(double x, double y, int entry_size) {
@@ -153,8 +285,7 @@ public class WhistleScreen extends Screen{
         if (Math.abs(y - mY) > 100) return ret;
         int indx = getHoveredIndex(x, y, this.modeFilterList.size());
         if (indx >= 0) {
-            this.requestMode(this.modeFilterList.get(indx).getIndex());
-            Minecraft.getInstance().setScreen(null);
+            proccessSelectIndx(indx);
         }
         return ret;
     }
@@ -169,8 +300,7 @@ public class WhistleScreen extends Screen{
             this.selectedId = Mth.clamp(this.selectedId -1, 0,  this.modeFilterList.size()-1);
         } else if (keyCode == 257) {
             if (this.modeFilterList.isEmpty()) return false; 
-            this.requestMode(this.modeFilterList.get(this.selectedId).getIndex());
-            this.minecraft.setScreen(null);
+            proccessSelectIndx(this.selectedId);
         } else if (keyCode == 259) {
             this.popCharInText();
         } 
@@ -178,16 +308,26 @@ public class WhistleScreen extends Screen{
         return super.keyReleased(keyCode, scanCode, modifiers);
     }
 
+    public void proccessSelectIndx(int indx) {
+        if (this.settingKeysMode) {
+            int new_mode_id = this.modeFilterList.get(indx).getIndex();
+            int send_key = this.pKey;
+            int occupied_key = this.findHotkeyForMode(new_mode_id);
+            if (occupied_key >= 0) {
+                new_mode_id = -1;
+                send_key = occupied_key;
+            }
+                
+            this.sendHotKeyEdits(send_key, new_mode_id);
+        } else {
+            this.requestMode(this.modeFilterList.get(indx).getIndex());
+            Minecraft.getInstance().setScreen(null);
+        }
+    }
+
 
     @Override
     public boolean charTyped(char code, int p_231042_2_) {
-        int number = code - 48;
-        if (0 <= number && number <= 9) {
-            if (number < this.modeFilterList.size()) {
-                this.requestMode(this.modeFilterList.get(number).getIndex());
-                Minecraft.getInstance().setScreen(null);
-            }
-        }
 
         if (SharedConstants.isAllowedChatCharacter(code)) {
             this.insertText(Character.toString(code));
