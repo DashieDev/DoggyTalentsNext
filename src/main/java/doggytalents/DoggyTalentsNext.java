@@ -3,6 +3,7 @@ package doggytalents;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.feature.InteractHandler;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.data.DTBlockstateProvider;
 import doggytalents.client.data.DTItemModelProvider;
 import doggytalents.client.entity.render.world.BedFinderRenderer;
@@ -101,6 +102,7 @@ public class DoggyTalentsNext {
 
         // Client Events
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+            modEventBus.addListener(DoggyKeybinds::registerDTKeyMapping);
             modEventBus.addListener(this::clientSetup);
             modEventBus.addListener(DoggyBlocks::registerBlockColours);
             modEventBus.addListener(DoggyItems::registerItemColours);
