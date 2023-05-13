@@ -65,6 +65,9 @@ public class DogEatFromChestDogGoal extends Goal {
         if (chestDog != null && !chestDog.isAlive()) {
             this.chestDog = null;
         }
+        if (chestDog != null && !chestDog.isDefeated()) {
+            this.chestDog = null;
+        }
         this.inspectNearbyChestDogsForFood();
         if (this.chestDog == null) return false;
         return true;
@@ -178,6 +181,7 @@ public class DogEatFromChestDogGoal extends Goal {
     private boolean validChestDog(Dog chestDog) {
         if (chestDog == null) return false;
         if (!chestDog.isAlive()) return false;
+        if (chestDog.isDefeated()) return false;
         if (!isChestDog(chestDog)) return false;
         var chestDogOwner = chestDog.getOwner();
         if (chestDogOwner == null) return false;
