@@ -8,6 +8,7 @@ import doggytalents.client.screen.framework.CommonUIActionTypes;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
+import doggytalents.common.network.packet.data.DogGroupsData;
 import doggytalents.common.network.packet.data.StatsSyncData;
 import net.minecraftforge.network.PacketDistributor;
 
@@ -37,6 +38,8 @@ public class ActiveTabSlice implements AbstractSlice {
             setupStats(dog);
         } else if (tab == Tab.STYLE) {
             payload = setupSkins(dog);
+        } else if (tab == Tab.HOME) {
+            setupGroups(dog);
         }
 
         return new UIAction(CommonUIActionTypes.CHANGE_TAB, payload);
@@ -80,6 +83,11 @@ public class ActiveTabSlice implements AbstractSlice {
     private static InitSkinIndexPayload setupSkins(Dog dog) {
         ActiveSkinSlice.initLocList();
         return new InitSkinIndexPayload(Tab.STYLE, dog);
+    }
+
+    private static void setupGroups(Dog dog) {
+        PacketHandler.send(PacketDistributor.SERVER.noArg(), 
+        new DogGroupsData.FETCH_REQUEST(dog.getId()));
     }
 
     public enum Tab {
