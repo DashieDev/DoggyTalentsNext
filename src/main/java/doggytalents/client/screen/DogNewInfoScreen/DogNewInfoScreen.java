@@ -21,6 +21,7 @@ import doggytalents.client.screen.DogNewInfoScreen.store.slice.*;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Tab;
 import doggytalents.client.screen.framework.AbstractSlice;
 import doggytalents.client.screen.framework.CommonUIActionTypes;
+import doggytalents.client.screen.framework.DropdownMenuManager;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.StoreConnectedScreen;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
@@ -84,6 +85,8 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     @Override
     public void init() {
         super.init();
+
+        this.setupDropdown();
         
         int mX = this.width/2;
         int mY = this.height/2;
@@ -129,6 +132,11 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
 
         //var button = new Button(0, 0, 40, 20, Component.literal(A ctiveTabSlice.activeTab.title), b -> {});
         //this.addRenderableWidget(button);
+    }
+
+    public void setupDropdown() {
+        var dropdownManager = DropdownMenuManager.get(this);
+        dropdownManager.attach(this, dropdown -> this.addWidget(dropdown));
     }
 
     private void addSwitchTabButtons(Tab activeTab) {
@@ -189,12 +197,18 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             toolTipManager.reset();
         }
 
+        //Dropdown manager
+        var dropdownMananger = DropdownMenuManager.get(this);
+        if (dropdownMananger.hasDropdownMenu()) {
+            dropdownMananger.getDropdownMenu()
+                .render(stack, mouseX, mouseY, pTicks);
+        }
+
         if (!this.dog.isAlive()) {
             Minecraft.getInstance().setScreen(null);
         } else if (this.dog.isDefeated()) {
             DogCannotInteractWithScreen.open(dog);
         }
-        
     }
 
     @Override
@@ -214,12 +228,25 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             this.rightTabButton.onClick(0, 0);
         }
 
+        DropdownMenuManager.get(this).keyPressed(keyCode, scanCode, modifiers);
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    @Override
+    public void resize(Minecraft p_96575_, int width, int height) {
+        DropdownMenuManager.get(this).clearActiveDropdownMenu();
+        super.resize(p_96575_, width, height);
+    }
+
+    @Override
+    public void removed() {
+        super.removed();
+        DropdownMenuManager.finish();
     }
 
     @Override
