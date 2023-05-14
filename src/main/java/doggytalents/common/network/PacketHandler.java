@@ -47,6 +47,9 @@ public final class PacketHandler {
         registerPacket(new DogMigrateOwnerPacket(), DogMigrateOwnerData.class);
         registerPacket(new WhistleEditHotKeyPacket(), WhisltleEditHotKeyData.class);
         registerPacket(new WhistleUsePacket(), WhistleUseData.class);
+        registerPacket(new DogGroupPackets.EDIT(), DogGroupsData.EDIT.class);
+        registerPacket(new DogGroupPackets.FETCH_REQUEST(), DogGroupsData.FETCH_REQUEST.class);
+        registerPacket(new DogGroupPackets.UPDATE(), DogGroupsData.UPDATE.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
