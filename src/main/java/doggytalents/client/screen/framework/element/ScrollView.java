@@ -1,13 +1,18 @@
 package doggytalents.client.screen.framework.element;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.ChopinLogger;
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.Mth;
 
@@ -40,6 +45,7 @@ public class ScrollView extends AbstractElement {
 
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+        updateWidgetOffsetRescursive(container.children());
         GuiComponent.enableScissor(
             this.getRealX(), this.getRealY(), 
             this.getRealX() + this.getSizeX(), 
@@ -57,6 +63,28 @@ public class ScrollView extends AbstractElement {
             drawScrollBar(stack, mouseX, mouseY, partialTicks);
         }
         GuiComponent.disableScissor();
+        resetWidgetOffsetRescursive(container.children());
+        
+    }
+
+    private void updateWidgetOffsetRescursive(List<? extends GuiEventListener> childrens) {
+        for (var child : childrens) {
+            if (child instanceof AbstractWidget widget) {
+                widget.y -= this.container.getOffset();
+            } else if (child instanceof AbstractElement element) {
+                updateWidgetOffsetRescursive(element.children());
+            } 
+        }
+    }
+
+    private void resetWidgetOffsetRescursive(List<? extends GuiEventListener> childrens) {
+        for (var child : childrens) {
+            if (child instanceof AbstractWidget widget) {
+                widget.y += this.container.getOffset();
+            } else if (child instanceof AbstractElement element) {
+                resetWidgetOffsetRescursive(element.children());
+            } 
+        }
     }
 
     private void drawScrollBar(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
