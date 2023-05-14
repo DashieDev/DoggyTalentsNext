@@ -54,6 +54,25 @@ public class Util {
         return new int[] {r, g, b};
     }
 
+    public static float getRelativeLuminance(float sr, float sg, float sb) {
+        sr = sr < 0.03928f ? sr/12.92f : (float) Math.pow((sr + 0.055) / 1.055 , 2.4);
+        sg = sg < 0.03928f ? sg/12.92f : (float) Math.pow((sg + 0.055) / 1.055 , 2.4);
+        sb = sb < 0.03928f ? sb/12.92f : (float) Math.pow((sb + 0.055) / 1.055 , 2.4);
+        return sr + sg + sb;
+    }
+
+    public static float getRelativeLuminance(int color) {
+        var arr = rgbIntToFloatArray(color);
+        return getRelativeLuminance(arr[0], arr[1], arr[2]);
+    }
+
+    public static int getTextBlackOrWhite(int background_color) {
+        float luminance = getRelativeLuminance(background_color);
+        float black_contrast = (luminance + 0.05f) / 0.05f;
+        float white_contrast = (1.0f + 0.05f) / (luminance + 0.05f);
+        return black_contrast > white_contrast ? 0 : 0xffffffff;
+    }
+
     public static int colorDye(int startColor, DyeColor dye) {
         return colorDye(startColor, Lists.newArrayList(dye));
     }
