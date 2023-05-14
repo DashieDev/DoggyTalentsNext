@@ -15,6 +15,7 @@ import net.minecraft.world.phys.Vec3;
 import static doggytalents.common.util.CachedSearchUtil.PoolValues.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CachedSearchUtil {
 
@@ -206,6 +207,20 @@ public class CachedSearchUtil {
     }
 
     public static BlockPos getRandomSafePosUsingPool(Dog dog, BlockPos targetPos, boolean exludeInfrontOfOwner, int realRadiusXZ, int realRadiusY) {
+        var safePosList = getAllSafePosUsingPool(dog, targetPos, exludeInfrontOfOwner, realRadiusXZ, realRadiusY);
+        
+        if (safePosList.isEmpty()) {
+            // long stopTime = System.nanoTime();
+            // ChopinLogger.l("search failed in : " + (stopTime-startTime) + " nanoseconds");
+            return null;
+        }
+        int index = dog.getRandom().nextInt(safePosList.size());
+        // long stopTime = System.nanoTime();
+        // ChopinLogger.l("search succeed in : " + (stopTime-startTime) + " nanoseconds");
+        return safePosList.get(index);
+    }
+
+    public static List<BlockPos> getAllSafePosUsingPool(Dog dog, BlockPos targetPos, boolean exludeInfrontOfOwner, int realRadiusXZ, int realRadiusY) {
         // ChopinLogger.l("Begining search: unit: nanoseconds");
         // long startTime = System.nanoTime();
         int poolXZ = realRadiusXZ+1;
@@ -238,16 +253,7 @@ public class CachedSearchUtil {
                 }
             }
         }
-        
-        if (safePosList.isEmpty()) {
-            // long stopTime = System.nanoTime();
-            // ChopinLogger.l("search failed in : " + (stopTime-startTime) + " nanoseconds");
-            return null;
-        }
-        int index = dog.getRandom().nextInt(safePosList.size());
-        // long stopTime = System.nanoTime();
-        // ChopinLogger.l("search succeed in : " + (stopTime-startTime) + " nanoseconds");
-        return safePosList.get(index);
+        return safePosList;
     }
 
     // public static BlockPos ringSearchSafePosUsingPool(Dog dog, BlockPos targetPos, int realRadiusXZ, int realRadiusY) {
