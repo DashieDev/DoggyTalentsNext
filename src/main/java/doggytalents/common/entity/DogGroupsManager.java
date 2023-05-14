@@ -19,17 +19,13 @@ public class DogGroupsManager {
         return Collections.unmodifiableList(groups);
     }
 
-    public boolean addGroups(DogGroup group) {
-        return false;
-    }
-
     public void load(CompoundTag compound) {
         var groupsListTag = compound.getList("doggy_groups", Tag.TAG_COMPOUND);
         for (var tag : groupsListTag) {
             if (!(tag instanceof CompoundTag groupTag)) continue;
             var group_name = groupTag.getString("group_name");
             var group_color = groupTag.getInt("group_color");
-            groups.add(new DogGroup(group_name, group_color));
+            add(new DogGroup(group_name, group_color));
         }
     }
     
