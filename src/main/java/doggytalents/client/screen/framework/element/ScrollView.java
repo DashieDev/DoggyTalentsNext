@@ -129,7 +129,7 @@ public class ScrollView extends AbstractElement {
     }
 
     public int getMaxOffset() {
-        return container.getSizeY() - this.getSizeY();
+        return Math.max(0, container.getSizeY() - this.getSizeY());
     }
 
     public float getPercentScrolled() {
