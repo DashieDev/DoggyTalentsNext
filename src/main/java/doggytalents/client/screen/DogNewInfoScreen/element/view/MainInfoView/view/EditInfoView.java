@@ -59,7 +59,7 @@ public class EditInfoView extends AbstractElement {
         this.applyButton = new FlatButton(
             startX + this.nameEdit.getWidth() + 15,
             pY, 40, 20, 
-            Component.literal("Apply"), b -> {
+            Component.translatable("doggui.common.apply"), b -> {
                 var newName = this.nameEdit.getValue();
                 this.requestNameChange(newName);
                 b.active = false;
