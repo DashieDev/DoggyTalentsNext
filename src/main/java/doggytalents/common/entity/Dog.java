@@ -43,6 +43,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -171,12 +172,16 @@ public class Dog extends AbstractDog {
     private DogSkin clientSkin = DogSkin.CLASSICAL;
     private ArrayList<AccessoryInstance> clientAccessories
         = new ArrayList<AccessoryInstance>();
+
+    
         
     public final StatsTracker statsTracker = new StatsTracker();
     public final DogOwnerDistanceManager dogOwnerDistanceManager 
         = new DogOwnerDistanceManager(this);
     public final DogMiningCautiousManager dogMiningCautiousManager
         = new DogMiningCautiousManager(this);
+    public final DogGroupsManager dogGroupsManager
+        = new DogGroupsManager();
 
     protected final PathNavigation defaultNavigation;
     protected final MoveControl defaultMoveControl;
@@ -1817,6 +1822,8 @@ public class Dog extends AbstractDog {
 
         this.alterations.forEach((alter) -> alter.onWrite(this, compound));
 
+        this.dogGroupsManager.save(compound);
+
         //Never save these entry, these will be loaded by the talents itself.
         compound.remove("HandItems");
         compound.remove("ArmorItems");
@@ -2072,6 +2079,12 @@ public class Dog extends AbstractDog {
                 e.printStackTrace();
             }
         });
+
+        try {
+            this.dogGroupsManager.load(compound);
+        } catch (Exception e) {
+
+        }
 
     }
 
@@ -3161,6 +3174,10 @@ public class Dog extends AbstractDog {
 
     public StatsTracker getStatTracker() {
         return this.statsTracker;
+    }
+
+    public DogGroupsManager getGroups() {
+        return this.dogGroupsManager;
     }
 
     public boolean isMiningCautious() {

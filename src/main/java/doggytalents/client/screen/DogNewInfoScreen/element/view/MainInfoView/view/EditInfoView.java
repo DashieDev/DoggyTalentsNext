@@ -5,8 +5,10 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.ScreenUtil;
+import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.GroupsListElement;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.client.screen.framework.element.AbstractElement;
+import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
@@ -134,8 +136,20 @@ public class EditInfoView extends AbstractElement {
                 }
             }
         };
-        this.addChildren(forceSit);
+        this.addChildren(forceSit); 
 
+        pY += 20 + LINE_SPACING;
+
+        //<Text> Groups: </Text>
+
+        pY += 20 + LINE_SPACING;
+
+        this.addChildren(
+            new GroupsListElement(this, getScreen(), dog)
+            .setPosition(PosType.ABSOLUTE, PADDING_LEFT, pY - this.getRealY())
+            .setSize(this.getSizeX() - 2*PADDING_LEFT, 50)
+            .init()
+        );
 
         return this;
     }
@@ -171,6 +185,10 @@ public class EditInfoView extends AbstractElement {
 
         font.draw(stack, I18n.get("doggui.force_sit"), startX, pY + 6, 0xffffffff);
         //<Checkbox/>
+
+        pY += 20 + LINE_SPACING;
+
+        font.draw(stack, "Groups :", startX, pY + 6, 0xffffffff);
 
 
     }
