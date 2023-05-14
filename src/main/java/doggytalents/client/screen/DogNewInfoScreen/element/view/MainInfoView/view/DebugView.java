@@ -43,7 +43,7 @@ public class DebugView extends AbstractElement {
                 
                 @Override
                 public AbstractElement init() {
-                    testButt = new CustomButton(0, 0, 40, 20, 
+                    testButt = new Button(getRealX(), getRealY(), 40, 20, 
                         Component.literal("test"), b -> {
                             ChopinLogger.l("Clicked test!");
                         });
@@ -52,9 +52,7 @@ public class DebugView extends AbstractElement {
                 }
 
                 @Override
-                public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-                    this.testButt.setX(this.getRealX() + 10);
-                    this.testButt.setY(this.getRealY() + 10);               
+                public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) { 
                     super.renderElement(stack, mouseX, mouseY, partialTicks);
                 }
             })
