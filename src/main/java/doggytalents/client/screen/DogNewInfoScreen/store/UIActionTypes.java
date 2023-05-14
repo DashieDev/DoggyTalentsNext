@@ -1,6 +1,8 @@
 package doggytalents.client.screen.DogNewInfoScreen.store;
 
 public class UIActionTypes {
+
+    public static String DOG_GROUPS_RESPONSE = "dog_groups.response";
     
     public static class Talents {
         public static String OPEN_DESC = "talents.desc";
