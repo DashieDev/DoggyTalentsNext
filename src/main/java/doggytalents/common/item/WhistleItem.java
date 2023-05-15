@@ -4,6 +4,7 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggySounds;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.EnumMode;
+import doggytalents.client.screen.HeelByGroupScreen;
 import doggytalents.client.screen.HeelByNameScreen;
 import doggytalents.client.screen.WhistleScreen;
 import doggytalents.common.config.ConfigHandler;
@@ -53,7 +54,9 @@ public class WhistleItem extends Item {
         ROAR(6, WhistleSound.NONE),
         HEEL_BY_NAME(7, WhistleSound.NONE),
         TO_BED(8, WhistleSound.LONG),
-        GO_BEHIND(9, WhistleSound.SHORT);
+        GO_BEHIND(9, WhistleSound.SHORT),
+        HEEL_BY_GROUP(10, WhistleSound.NONE);
+        
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -265,6 +268,10 @@ public class WhistleItem extends Item {
             }
             return;
         }
+        case HEEL_BY_GROUP:
+            if (world.isClientSide) 
+                HeelByGroupScreen.open();
+            return;
         }
     }
 
