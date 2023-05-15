@@ -1,6 +1,8 @@
 package doggytalents.common.util.CachedSearchUtil;
 
 import doggytalents.common.entity.Dog;
+import net.minecraft.world.level.Level;
+
 import static doggytalents.common.util.CachedSearchUtil.PoolValues.*;
 
 public class CachedSearchPool {
@@ -11,8 +13,8 @@ public class CachedSearchPool {
     private static byte[][][] CACHED_TYPE_POOL = 
         new byte[POOL_SIZE_XZ][POOL_SIZE_Y][POOL_SIZE_XZ];
 
-    public static byte getPoolValue(Dog dog, int x, int y, int z) {
-        if (dog.level.isClientSide) {
+    public static byte getPoolValue(Level level, int x, int y, int z) {
+        if (level.isClientSide) {
             return ERR;
         }
         if (x >= POOL_SIZE_XZ || x < 0) return ERR;
@@ -21,8 +23,8 @@ public class CachedSearchPool {
         return CACHED_TYPE_POOL[x][y][z];
     }
     
-    public static void setPoolValue(Dog dog, int x, int y, int z, byte value) {
-        if (dog.level.isClientSide) {
+    public static void setPoolValue(Level level, int x, int y, int z, byte value) {
+        if (level.isClientSide) {
             return;
         }
         if (x >= POOL_SIZE_XZ || x < 0) return;
