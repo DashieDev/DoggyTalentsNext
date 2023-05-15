@@ -113,7 +113,7 @@ public class DogUtil {
 
         long stopTime = System.nanoTime();
 
-        ChopinLogger.l("teleported " + dogs.size() + " dogs to owner costed " + (stopTime - startTime + "nanoseconds"));
+        ChopinLogger.l("teleported " + dogs.size() + " dogs to owner cost " + (stopTime - startTime) + " nanoseconds");
         
         return true;
     }
