@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -49,11 +50,8 @@ public class CachedSearchUtil {
         }
     }
 
-    public static void populateCollideOwner(Dog dog, int radiusXZ, int radiusY) {
+    public static void populateCollideOwner(Dog dog, LivingEntity owner, int radiusXZ, int radiusY) {
         final var DISTANCE_AWAY = 1.5;
-
-        var owner = dog.getOwner();
-        if (owner == null) return;
 
         //get owner look vector
         var a1 = owner.getYHeadRot();
@@ -91,41 +89,6 @@ public class CachedSearchUtil {
             }
         }
     }
-
-    // public static void populateEntityCollision(Dog dog, int radiusXZ, int radiusY) {
-    //     var entities = 
-    //         dog.level.getEntities(
-    //             dog, 
-    //             new AABB(
-    //                 dog.blockPosition().offset(-radiusXZ, -radiusY, -radiusXZ ),
-    //                 dog.blockPosition().offset(radiusXZ, radiusY, radiusXZ )
-    //             ), 
-    //             EntitySelector.NO_SPECTATORS.and(dog::canCollideWith)
-    //         );
-    //     for (var e : entities) {
-    //         var bb = e.getBoundingBox();
-    //         var bStart = new BlockPos(
-    //             Mth.floor(bb.minX),
-    //             Mth.floor(bb.minY),
-    //             Mth.floor(bb.minZ)
-    //         );
-    //         var bEnd = new BlockPos(
-    //             Mth.ceil(bb.maxX),
-    //             Mth.ceil(bb.maxY),
-    //             Mth.ceil(bb.maxZ)
-    //         );
-    //         for (var b : BlockPos.betweenClosed(bStart, bEnd)) {
-    //             var off = b.subtract(dog.blockPosition());
-    //             CachedSearchPool.setPoolValue(
-    //                 dog, 
-    //                 off.getX(), 
-    //                 off.getY(), 
-    //                 off.getZ(), 
-    //                 BLOCKED
-    //             );
-    //         }
-    //     }
-    // }
 
     public static void populateBlockCollision(Dog dog, int radiusXZ, int radiusY) {
         int bbWExt = Mth.ceil((dog.getBbWidth() - 1)*0.5);
@@ -207,8 +170,50 @@ public class CachedSearchUtil {
         return count;
     }
 
-    public static BlockPos getRandomSafePosUsingPool(Dog dog, BlockPos targetPos, boolean exludeInfrontOfOwner, int realRadiusXZ, int realRadiusY) {
-        var safePosList = getAllSafePosUsingPool(dog, targetPos, exludeInfrontOfOwner, realRadiusXZ, realRadiusY);
+    public static void populatePool(Dog dog, BlockPos targetPos, int radiusXZ, int radiusY) {
+        resetPool(dog.level, radiusXZ, radiusY);
+        // long startTime1 = System.nanoTime();
+        populatePoolRaw(dog, targetPos, radiusXZ, radiusY);
+        // long stopTime1 = System.nanoTime();
+        //     ChopinLogger.l("populate collision in : " + (stopTime1-startTime1) + " nanoseconds");
+        populateBlockCollision(dog, radiusXZ, radiusY);
+        populateDangerPos(dog.level, radiusXZ, radiusY);
+        populateWalkablePos(dog.level, radiusXZ, radiusY);
+    }
+
+    public static List<BlockPos> collectSafePos(Level level, BlockPos targetPos, int radiusXZ, int radiusY) {
+        
+        var safePosList = new ArrayList<BlockPos>(); 
+        
+        var b0 = targetPos;
+        var bMin = b0.offset(-radiusXZ, -radiusY, -radiusXZ);
+        
+        // ChopinLogger.outputToFile(
+        //     "name = " + dog.getName().getString() + "\n"
+        //     + "0, 0, 0 = " + bMin + "\n"
+        //     + "OwnerLookVec = " + dx1 + ", " + dz1 + "\n"
+        //     + dumpPool(dog, poolXZ, poolY) + "\n\n"); 
+        
+        int maxXZ = radiusXZ*2-1;
+        int maxY = radiusY*2-1;
+        
+        for (int i = 1; i <= maxXZ; ++i) {
+            for (int j = 1; j <= maxY; ++j) {
+                for (int k = 1; k <= maxXZ; ++k) {
+                    if (CachedSearchPool.getPoolValue(level, i, j, k) == OK) {
+                        var pos = bMin.offset(i, j, k);
+                        safePosList.add(pos);
+                    }
+                }
+            }
+        }
+
+        return safePosList;
+
+    }
+
+    public static BlockPos getRandomSafePosUsingPool(Dog dog, BlockPos targetPos, int realRadiusXZ, int realRadiusY) {
+        var safePosList = getAllSafePosUsingPool(dog, targetPos, realRadiusXZ, realRadiusY);
         
         if (safePosList.isEmpty()) {
             // long stopTime = System.nanoTime();
@@ -221,128 +226,48 @@ public class CachedSearchUtil {
         return safePosList.get(index);
     }
 
-    public static List<BlockPos> getAllSafePosUsingPool(Dog dog, BlockPos targetPos, boolean exludeInfrontOfOwner, int realRadiusXZ, int realRadiusY) {
+    public static BlockPos getRandomSafePosUsingPoolExcludeInfrontOfOwner(Dog dog, LivingEntity owner, BlockPos targetPos, int realRadiusXZ, int realRadiusY) {
+        var safePosList = getAllSafePosUsingPoolExcludeInfrontOfOwner(dog, owner, targetPos, realRadiusXZ, realRadiusY);
+        
+        if (safePosList.isEmpty()) {
+            // long stopTime = System.nanoTime();
+            // ChopinLogger.l("search failed in : " + (stopTime-startTime) + " nanoseconds");
+            return null;
+        }
+        int index = dog.getRandom().nextInt(safePosList.size());
+        // long stopTime = System.nanoTime();
+        // ChopinLogger.l("search succeed in : " + (stopTime-startTime) + " nanoseconds");
+        return safePosList.get(index);
+    }
+
+    public static List<BlockPos> getAllSafePosUsingPool(Dog dog, BlockPos targetPos, int realRadiusXZ, int realRadiusY) {
         // ChopinLogger.l("Begining search: unit: nanoseconds");
         // long startTime = System.nanoTime();
         int poolXZ = realRadiusXZ+1;
         int poolY = realRadiusY+1;
         if (poolXZ > CachedSearchPool.MAX_RADIUS_XZ || poolXZ < 0) return null;
         if (poolY > CachedSearchPool.MAX_RADIUS_Y || poolY < 0) return null;
-        resetPool(dog.level, poolXZ, poolY);
-        // long startTime1 = System.nanoTime();
-        populatePoolRaw(dog, targetPos, poolXZ, poolY);
-        // long stopTime1 = System.nanoTime();
-        //     ChopinLogger.l("populate collision in : " + (stopTime1-startTime1) + " nanoseconds");
-        if (exludeInfrontOfOwner) populateCollideOwner(dog, poolXZ, poolY);
-        populateBlockCollision(dog, poolXZ, poolY);
-        populateDangerPos(dog.level, poolXZ, poolY);
-        populateWalkablePos(dog.level, poolXZ, poolY);
-        
-        var b0 = targetPos;
-        var bMin = b0.offset(-poolXZ, -poolY, -poolXZ);
+        populatePool(dog, targetPos, poolXZ, poolY);
 
-        int maxXZ = poolXZ*2-1;
-        int maxY = poolY*2-1;
-        var safePosList = new ArrayList<BlockPos>(); 
-        for (int i = 1; i <= maxXZ; ++i) {
-            for (int j = 1; j <= maxY; ++j) {
-                for (int k = 1; k <= maxXZ; ++k) {
-                    if (CachedSearchPool.getPoolValue(dog.level, i, j, k) == OK) {
-                        var pos = bMin.offset(i, j, k);
-                        safePosList.add(pos);
-                    }
-                }
-            }
-        }
+        var safePosList = collectSafePos(dog.level, targetPos, poolXZ, poolY);
+
         return safePosList;
     }
 
-    // public static BlockPos ringSearchSafePosUsingPool(Dog dog, BlockPos targetPos, int realRadiusXZ, int realRadiusY) {
-    //     int poolXZ = realRadiusXZ+1;
-    //     int poolY = realRadiusY+1;
-    //     if (poolXZ > CachedSearchPool.MAX_RADIUS_XZ || poolXZ < 0) return null;
-    //     if (poolY > CachedSearchPool.MAX_RADIUS_Y || poolY < 0) return null;
-    //     resetPool(dog, poolXZ, poolY);
-    //     populatePoolRaw(dog, targetPos, poolXZ, poolY);
-    //     populateDangerPos(dog, poolXZ, poolY);
-    //     populateWalkablePos(dog, poolXZ, poolY);
-    //     var b0 = targetPos;
-    //     var bMin = b0.offset(-poolXZ, -poolY, -poolXZ);
-    //     int mXZ = poolXZ;
-    //     int mY = poolY;
+    public static List<BlockPos> getAllSafePosUsingPoolExcludeInfrontOfOwner(Dog dog, LivingEntity owner, BlockPos targetPos, int realRadiusXZ, int realRadiusY) {
+        // ChopinLogger.l("Begining search: unit: nanoseconds");
+        // long startTime = System.nanoTime();
+        int poolXZ = realRadiusXZ+1;
+        int poolY = realRadiusY+1;
+        if (poolXZ > CachedSearchPool.MAX_RADIUS_XZ || poolXZ < 0) return null;
+        if (poolY > CachedSearchPool.MAX_RADIUS_Y || poolY < 0) return null;
+        populatePool(dog, targetPos, poolXZ, poolY);
+        populateCollideOwner(dog, owner, poolXZ, poolY);
         
-    //     int inflate = 1; // this is to prevent dog from repeating himself
-    //     while (inflate <= realRadiusXZ) {
-    //         final int minX = mXZ - inflate;
-    //         final int maxX = mXZ + inflate;
-    //         final int minZ = mXZ - inflate;
-    //         final int maxZ = mXZ + inflate;
+        var safePosList = collectSafePos(dog.level, targetPos, poolXZ, poolY);
 
-    //         //ChopinLogger.l("blockpos" + b0);
-
-    //         if (inflate <= 0) {
-    //             //Maybe treat the center block as an optional return
-    //             //If nothing else outside satisfies this, then return this.
-    //             for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-    //                 int x = mXZ, y = mY + j, z =  mXZ;
-    //                 if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
-    //                     var pos = bMin.offset(x, y, z);
-    //                     return pos;
-    //                 }
-    //             }
-    //             ++inflate;
-    //             continue;
-    //         }
-
-    //         int x = minX, y = 0, z = minZ;
-
-    //         for (int i = minX; i <= maxX; ++i) {
-    //             for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-    //                 x = i; y = mY + j;
-    //                 if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
-    //                     var pos = bMin.offset(x, y, z);
-    //                     return pos;
-    //                 }
-    //             }
-    //         }
-
-    //         //b0m: maxX, minZ
-    //         for (int i = minZ + 1; i <= maxZ; ++i) {
-    //             for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-    //                 y = mY + j; z = i;
-    //                 if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
-    //                     var pos = bMin.offset(x, y, z);
-    //                     return pos;
-    //                 }
-    //             }
-    //         }
-
-    //         //b0m: maxX, maxZ
-    //         for (int i = maxX-1; i >= minX; --i) {
-    //             for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-    //                 x = i; y = mY + j;
-    //                 if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
-    //                     var pos = bMin.offset(x, y, z);
-    //                     return pos;
-    //                 }
-    //             }
-    //         }
-
-    //         //b0m: minX, maxZ
-    //         for (int i = maxZ - 1; i >= minZ + 1; --i) {
-    //             for (int j = -realRadiusY; j <= realRadiusY; ++j) {
-    //                 y = mY + j; z = i;
-    //                 if (CachedSearchPool.getPoolValue(dog, x, y, z) == OK) {
-    //                     var pos = bMin.offset(x, y, z);
-    //                     return pos;
-    //                 }
-    //             }
-    //         }
-    //         ++inflate;
-    //         //ChopinLogger.l("inflate!" + inflate);
-    //     }
-    //     return null;
-    // }
+        return safePosList;
+    }
 
     public static String dumpPool(Level level, int radiusXZ, int radiusY) {
         int maxXZ = radiusXZ * 2;
