@@ -50,6 +50,9 @@ public final class PacketHandler {
         registerPacket(new DogGroupPackets.EDIT(), DogGroupsData.EDIT.class);
         registerPacket(new DogGroupPackets.FETCH_REQUEST(), DogGroupsData.FETCH_REQUEST.class);
         registerPacket(new DogGroupPackets.UPDATE(), DogGroupsData.UPDATE.class);
+        registerPacket(new HeelByGroupPackets.REQUEST_GROUP_LIST(), HeelByGroupData.REQUEST_GROUP_LIST.class);
+        registerPacket(new HeelByGroupPackets.RESPONSE_GROUP_LIST(), HeelByGroupData.RESPONSE_GROUP_LIST.class);
+        registerPacket(new HeelByGroupPackets.REQUEST_HEEL(), HeelByGroupData.REQUEST_HEEL.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
