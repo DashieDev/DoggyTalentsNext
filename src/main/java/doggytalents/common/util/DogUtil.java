@@ -23,6 +23,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -82,6 +83,77 @@ public class DogUtil {
             return false;
         }
         teleportInternal(dog, target);
+        
+        return true;
+    }
+
+    public static boolean dynamicSearchAndTeleportToOwnwerInBatch(Level level, List<Dog> dogs, LivingEntity owner, int radius) {
+        
+        if (dogs.isEmpty()) return false;
+
+        long startTime = System.nanoTime();
+
+        List<BlockPos> safePosList;
+        if (owner.isSprinting()) {
+            safePosList = CachedSearchUtil
+                .getAllSafePosUsingPoolExcludeInfrontOfOwner(level, dogs, owner, owner.blockPosition(), radius, 1);
+        } else {
+            safePosList = CachedSearchUtil
+                .getAllSafePosUsingPool(level, dogs, owner.blockPosition(), radius, 1);
+        }
+
+        if (safePosList.isEmpty()) return false;
+   
+        for (var dog : dogs) {
+            int r_indx = dog.getRandom().nextInt(safePosList.size());
+            teleportInternal(dog, safePosList.get(r_indx));
+        }
+
+        long stopTime = System.nanoTime();
+
+        ChopinLogger.l("teleported " + dogs.size() + " dogs to owner costed " + (stopTime - startTime + "nanoseconds"));
+        
+        return true;
+    }
+
+    public static boolean dynamicSearchAndTeleportToOwnwerInBatchMaxDensity(Level level, List<Dog> dogs, LivingEntity owner, int radius, int max_density) {
+        
+        if (dogs.isEmpty()) return false;
+
+        long startTime = System.nanoTime();
+
+        List<BlockPos> safePosList;
+        if (owner.isSprinting()) {
+            safePosList = CachedSearchUtil
+                .getAllSafePosUsingPoolExcludeInfrontOfOwner(level, dogs, owner, owner.blockPosition(), radius, 1);
+        } else {
+            safePosList = CachedSearchUtil
+                .getAllSafePosUsingPool(level, dogs, owner.blockPosition(), radius, 1);
+        }
+
+        if (safePosList.isEmpty()) return false;
+
+        var densityMap = new ArrayList<Integer>(safePosList.size());
+        for (int i = 0; i < safePosList.size(); ++i) {
+            densityMap.add(0); 
+        }
+   
+        for (var dog : dogs) {
+            if (safePosList.isEmpty()) break;
+            int r_indx = dog.getRandom().nextInt(safePosList.size());
+            teleportInternal(dog, safePosList.get(r_indx));
+            int density_count = densityMap.get(r_indx) + 1;
+            if (density_count >= max_density) {
+                densityMap.remove(r_indx);
+                safePosList.remove(r_indx);
+            } else {
+                densityMap.set(r_indx, density_count);
+            }
+        }
+
+        long stopTime = System.nanoTime();
+
+        ChopinLogger.l("teleported " + dogs.size() + " dogs to owner costed " + (stopTime - startTime + "nanoseconds"));
         
         return true;
     }
@@ -527,6 +599,17 @@ public class DogUtil {
                 sP
             );
         }
+    }
+
+    public static Dog findBiggestDog(List<Dog> dogs) {
+        if (dogs.isEmpty()) return null;
+        var biggest_dog = dogs.get(0);
+        for (var dog : dogs) {
+            if (dog.getDogSize() > biggest_dog.getDogSize()) {
+                biggest_dog = dog;
+            }
+        }
+        return biggest_dog;
     }
 
     public static boolean isSafeBlock() {
