@@ -48,6 +48,7 @@ public class DogGroupsManager {
         if (this.groups.size() >= MAX_GROUP_SIZE) return false;
         if (this.groups.contains(group)) return false;
         if (group.name.length() > MAX_GROUP_STRLEN) return false;
+        if (group.name.isEmpty()) return false;
         this.groups.add(group);
         return true;
     }
