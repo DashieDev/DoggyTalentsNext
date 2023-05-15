@@ -262,7 +262,7 @@ public class CachedSearchUtil {
         if (poolXZ > CachedSearchPool.MAX_RADIUS_XZ || poolXZ < 0) return null;
         if (poolY > CachedSearchPool.MAX_RADIUS_Y || poolY < 0) return null;
         populatePool(dog, targetPos, poolXZ, poolY);
-        populateCollideOwner(dog, owner, poolXZ, poolY);
+        populateCollideOwner(owner, poolXZ, poolY);
         
         var safePosList = collectSafePos(dog.level, targetPos, poolXZ, poolY);
 
