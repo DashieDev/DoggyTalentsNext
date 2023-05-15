@@ -50,7 +50,7 @@ public class CachedSearchUtil {
         }
     }
 
-    public static void populateCollideOwner(Dog dog, LivingEntity owner, int radiusXZ, int radiusY) {
+    public static void populateCollideOwner(LivingEntity owner, int radiusXZ, int radiusY) {
         final var DISTANCE_AWAY = 1.5;
 
         //get owner look vector
@@ -73,7 +73,7 @@ public class CachedSearchUtil {
                     , ownerPosRelative2d, ownerLookUnitVector);
                 if (!(x < 0 || x > DISTANCE_AWAY)) {
                     for (int j = 0; j <= maxY; ++j) {
-                        CachedSearchPool.setPoolValue(dog.level, i, j, k, COLLIDE);
+                        CachedSearchPool.setPoolValue(owner.level, i, j, k, COLLIDE);
                     }
                 }
                     
@@ -84,7 +84,7 @@ public class CachedSearchUtil {
         for (int i = -1; i <= 1; ++i) {
             for (int k = -1; k <= 1; ++k) {
                 for (int j = 0; j <= maxY; ++j) {
-                    CachedSearchPool.setPoolValue(dog.level, cXZ + i, j, cXZ + k, COLLIDE);
+                    CachedSearchPool.setPoolValue(owner.level, cXZ + i, j, cXZ + k, COLLIDE);
                 } 
             }
         }
