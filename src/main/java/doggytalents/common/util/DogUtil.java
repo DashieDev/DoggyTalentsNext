@@ -69,11 +69,16 @@ public class DogUtil {
      */
     public static boolean dynamicSearchAndTeleportToOwnwer(Dog dog, LivingEntity owner, int radius) {
         
-        var target = CachedSearchUtil.getRandomSafePosUsingPool(
-            dog, owner.blockPosition(),
-            owner.isSprinting() || dog.isMiningCautious(),
-            radius, 1
-        );
+        BlockPos target;
+        if (owner.isSprinting() || dog.isMiningCautious()) {
+            target = CachedSearchUtil
+                .getRandomSafePosUsingPoolExcludeInfrontOfOwner(dog, owner, owner.blockPosition(), radius, 1);
+        } else {
+            target = CachedSearchUtil
+                .getRandomSafePosUsingPool(dog, owner.blockPosition(), radius, 1);
+        }
+
+        ChopinLogger.sendToOwner(dog, "Yo !");
    
         if (target == null) {
             return false;
@@ -97,9 +102,7 @@ public class DogUtil {
     public static boolean dynamicSearchAndTeleportToBlockPos(Dog dog, BlockPos pos, int radius) {
     
         var target = CachedSearchUtil.getRandomSafePosUsingPool(
-            dog, pos,
-            false,
-            radius, 1
+            dog, pos, radius, 1
         );
    
         if (target == null) {
