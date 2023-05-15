@@ -35,6 +35,7 @@
    "item.doggytalents.whistle.7": "Heel By Name Whistle",
    "item.doggytalents.whistle.8": "Whistle: Command To Bed",
    "item.doggytalents.whistle.9": "Whistle: Command Go Behind",
+   "item.doggytalents.whistle.10": "Heel By Group Whistle",
    "item.doggytalents.treat_bag": "Treat Bag",
    "item.doggytalents.chew_stick": "Chew Stick",
    "item.doggytalents.egg_sandwich": "Egg Sandwich",
@@ -266,6 +267,7 @@
    "dogcommand.ok": "Okay!",
    "dogcommand.heel": "Heel!",
    "dogcommand.heel_by_name": "%s, Heel!",
+   "dogcommand.heel_by_group": "%s, Heel!",
 
    "doggytalents.screen.whistler.screen.help_title" : "Whistle Mode Select",
    "doggytalents.screen.whistler.screen.help" : "Use the Up and Down arrow to select the mode you want to set the Whistle to, you can also type to search for the mode. Press enter to finish the command. Additionally, you can quick select a mode by pressing its corresponding number key shown before the name in Orange. Esc to cancel.", 
@@ -286,6 +288,9 @@
    "doggytalents.screen.radar.help" : "Use the Up and Down arrow to select the dog you want to track, you can also type to search for your dog's name. Press enter to begin tracking. Esc to cancel.",
    "doggytalents.screen.radar.help_title" : "Radar Menu Help",
    "doggytalents.screen.radar.no_dog_found" : "No dog found in this dimension.",
+   "doggytalents.screen.heel_by_group.help_title": "Heel By Group",
+   "doggytalents.screen.heel_by_group.help": "Use the Up and Down arrow to select the group you want to heel, you can also type to search for the group. Press enter to finish the command. Esc to cancel.",
+   "doggytalents.screen.heel_by_group.no_group_found": "No Group Found.",
 
    "amnesia_bone_gui.navbar.general" : "General",
    "amnesia_bone_gui.navbar.talents" : "Talents",
