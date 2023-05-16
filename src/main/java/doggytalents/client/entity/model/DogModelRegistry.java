@@ -14,6 +14,7 @@ import doggytalents.client.entity.model.dog.JackModel;
 import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
+import doggytalents.client.entity.model.dog.StBernardModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
@@ -42,6 +43,7 @@ public class DogModelRegistry {
         register("legoshi", ctx -> new LegoshiModel(ctx.bakeLayer(ClientSetup.DOG_LEGOSHI)));
         register("jack", ctx -> new JackModel(ctx.bakeLayer(ClientSetup.DOG_JACK)));
         register("juno", ctx -> new JunoModel(ctx.bakeLayer(ClientSetup.DOG_JUNO)));
+        register("st_bernard", ctx -> new StBernardModel(ctx.bakeLayer(ClientSetup.DOG_ST_BERNARD)));
     }
 
     public static class DogModelHolder<T extends AbstractDog> {
