@@ -31,6 +31,11 @@
             "use_model" : "juno"
         },
         {
+            "skin_name" : "St Bernard",
+            "skin_id" : "st_bernard",
+            "use_model" : "st_bernard"
+        },
+        {
             "skin_name" : "German Shepherd",
             "skin_id" : "german_shepherd",
             "use_model" : "default"
