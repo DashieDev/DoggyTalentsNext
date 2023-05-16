@@ -17,6 +17,7 @@ import doggytalents.client.entity.model.dog.JackModel;
 import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
+import doggytalents.client.entity.model.dog.StBernardModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.CollarRenderManager;
 import doggytalents.client.entity.render.DogScreenOverlays;
@@ -57,6 +58,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_LEGOSHI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_legoshi"), "main");    
     public static final ModelLayerLocation DOG_JACK = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_jack"), "main");   
     public static final ModelLayerLocation DOG_JUNO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_juno"), "main");   
+    public static final ModelLayerLocation DOG_ST_BERNARD = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_st_bernard"), "main");   
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -81,6 +83,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_LEGOSHI, LegoshiModel::createBodyLayer);
         event.registerLayerDefinition(DOG_JACK, JackModel::createBodyLayer);
         event.registerLayerDefinition(DOG_JUNO, JunoModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_ST_BERNARD, StBernardModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createArmorLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
