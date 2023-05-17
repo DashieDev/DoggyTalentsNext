@@ -18,6 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidType;
 
 /**
  * Defines objects which may alter the dog's properties or functions.
@@ -182,6 +183,10 @@ public interface IDogAlteration {
     }
 
     default InteractionResult canSwimUnderwater(AbstractDog dogIn) {
+        return InteractionResult.PASS;
+    }
+
+    default InteractionResult canResistPushFromFluidType(FluidType type) {
         return InteractionResult.PASS;
     }
 

@@ -18,6 +18,7 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.fluids.FluidType;
 
 public class HellHoundTalent extends TalentInstance {
 
@@ -92,6 +93,17 @@ public class HellHoundTalent extends TalentInstance {
         if (this.level() > 0) {
             entity.setSecondsOnFire(this.level());
         }
+    }
+
+    @Override
+    public InteractionResult canResistPushFromFluidType(FluidType type) {
+        if (type != ForgeMod.LAVA_TYPE.get())
+            return InteractionResult.PASS;
+
+        if (this.level() >= 5) 
+            return InteractionResult.SUCCESS;
+
+        return InteractionResult.PASS;
     }
 
     @Override
