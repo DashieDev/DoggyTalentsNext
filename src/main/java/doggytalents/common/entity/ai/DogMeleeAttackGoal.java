@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.Dog.LowHealthStrategy;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -57,6 +58,13 @@ public class DogMeleeAttackGoal extends Goal {
    public boolean canUse() {
 
       if (!this.dog.getMode().shouldAttack()) return false;
+
+      if (
+         this.dog.isDogLowHealth() 
+         && this.dog.getLowHealthStrategy() == LowHealthStrategy.RUN_AWAY
+      ) {
+         return false;
+      }
 
       if (this.dog.fallDistance > 7) return false;
       
