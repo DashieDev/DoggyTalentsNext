@@ -201,4 +201,8 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public boolean isDefeated() {
         return this.getMode() == EnumMode.INCAPACITATED;
     }
+
+    public boolean isDogLowHealth() {
+        return false;
+    }
 }
