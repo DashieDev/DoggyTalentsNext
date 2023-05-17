@@ -65,6 +65,7 @@ public class ScrollView extends AbstractElement {
     }
 
     private void shiftWidgetOffsetRescursive(List<? extends GuiEventListener> childrens, int offset) {
+        if (offset == 0) return;
         for (var child : childrens) {
             if (child instanceof AbstractWidget widget) {
                 widget.y += offset;
