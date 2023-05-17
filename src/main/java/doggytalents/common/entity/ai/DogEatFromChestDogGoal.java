@@ -65,7 +65,7 @@ public class DogEatFromChestDogGoal extends Goal {
         if (chestDog != null && !chestDog.isAlive()) {
             this.chestDog = null;
         }
-        if (chestDog != null && !chestDog.isDefeated()) {
+        if (chestDog != null && chestDog.isDefeated()) {
             this.chestDog = null;
         }
         this.inspectNearbyChestDogsForFood();
