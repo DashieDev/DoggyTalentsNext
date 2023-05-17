@@ -243,7 +243,6 @@ public class EditInfoView extends AbstractElement {
 
         private void addEditNameBox(int x, int y, int w, int h) {
             this.nameEdit = new EditBox(this.font, x, y, w, h, Component.translatable("dogInfo.enterName"));
-            nameEdit.setFocus(false);
             nameEdit.setMaxLength(32);
             nameEdit.setResponder(s -> {
                 if (this.applyButton == null) return;
@@ -283,9 +282,9 @@ public class EditInfoView extends AbstractElement {
             this.setPosition(PosType.RELATIVE, 0, 0);
             this.setSize(1f, 20 + LINE_SPACING);
 
-            this.button.x = this.getRealX() + PADDING_LEFT + 130;
-            this.button.y = this.getRealY() + this.getSizeY()/2
-                - this.button.getHeight()/2 + 1;
+            this.button.setX( this.getRealX() + PADDING_LEFT + 130);
+            this.button.setY( this.getRealY() + this.getSizeY()/2
+                - this.button.getHeight()/2 + 1);
             this.addChildren(button);
             return this;
         }

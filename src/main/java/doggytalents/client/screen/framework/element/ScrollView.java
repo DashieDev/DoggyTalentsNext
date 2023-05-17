@@ -68,10 +68,10 @@ public class ScrollView extends AbstractElement {
         if (offset == 0) return;
         for (var child : childrens) {
             if (child instanceof AbstractWidget widget) {
-                widget.y += offset;
+                widget.setY(widget.getY() + offset);
             } else if (child instanceof AbstractElement element) {
                 shiftWidgetOffsetRescursive(element.children(), offset);
-            } 
+            }
         }
     }
 

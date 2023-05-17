@@ -87,7 +87,7 @@ public class WhistleScreen extends Screen{
             }
         };
 
-        Button setKey = new Button(3, 23, 60, 20, Component.translatable("doggytalents.screen.whistler.screen.set_hotkey"),
+        var setKey = new CustomButton(3, 23, 60, 20, Component.translatable("doggytalents.screen.whistler.screen.set_hotkey"),
             b -> {
                 if (settingKeysMode) {
                     settingKeysMode = false;
@@ -99,7 +99,9 @@ public class WhistleScreen extends Screen{
             }
         ) {
             @Override
-            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.screen.set_hotkey")
                     .withStyle(Style.EMPTY.withBold(true)));
