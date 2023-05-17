@@ -63,7 +63,7 @@ public class DogEatFromChestDogGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         if (this.chestDog == null) return false;
-        return this.dog.getDogHunger() <= 80 || (this.dog.getHealth() <= 6 && this.dog.getDogHunger() < this.dog.getMaxHunger() );
+        return this.dog.getDogHunger() <= 80 || (this.dog.isDogLowHealth() && this.dog.getDogHunger() < this.dog.getMaxHunger() );
     }
 
     @Override
