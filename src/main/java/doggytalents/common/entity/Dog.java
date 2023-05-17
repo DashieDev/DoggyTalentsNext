@@ -110,6 +110,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -2769,31 +2770,11 @@ public class Dog extends AbstractDog {
                    forward *= 0.5F;
                 } 
 
-                if (this.jumpPower > 0.0F && !this.isDogJumping() && this.isOnGround()) {
-
-                    // Calculate jump value based of jump strength, power this jump and jump boosts
-                    double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER.get()).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
-                    if (this.hasEffect(MobEffects.JUMP)) {
-                        jumpValue += (this.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.1F;
-                    }
-
-                    // Apply jump
-                    Vec3 vec3d = this.getDeltaMovement();
-                    this.setDeltaMovement(vec3d.x, jumpValue, vec3d.z);
-                    this.setDogJumping(true);
-                    this.hasImpulse = true;
-
-                    // If moving forward, propel further in the direction
-                    if (forward > 0.0F) {
-                        final float amount = 0.4F; // TODO Allow people to change this value
-                        float compX = Mth.sin(this.getYRot() * ((float)Math.PI / 180F));
-                        float compZ = Mth.cos(this.getYRot() * ((float)Math.PI / 180F));
-                        this.setDeltaMovement(this.getDeltaMovement().add(-amount * compX * this.jumpPower, 0.0D, amount * compZ * this.jumpPower));
-                        //this.playJumpSound();
-                    }
-
-                    // Mark as unable jump until reset
-                    this.jumpPower = 0.0F;
+                if (this.jumpPower > 0) {
+                    if (this.isInWater() && this.canSwimUnderwater())
+                        this.doDogRideFloat();
+                    else if (!this.isDogJumping() && this.isOnGround())
+                        this.doDogRideJump(forward);
                 }
 
                 this.flyingSpeed = this.getSpeed() * 0.1F;
@@ -2839,6 +2820,39 @@ public class Dog extends AbstractDog {
         }
     }
 
+    private void doDogRideFloat() {
+        Vec3 vec3d = this.getDeltaMovement();
+        this.setDeltaMovement(vec3d.x, 0.1, vec3d.z);
+        //Consume
+        this.jumpPower = 0.0F;
+    }
+
+    private void doDogRideJump(double forward) {
+        // Calculate jump value based of jump strength, power this jump and jump boosts
+        double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER.get()).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
+        if (this.hasEffect(MobEffects.JUMP)) {
+            jumpValue += (this.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.1F;
+        }
+
+        // Apply jump
+        Vec3 vec3d = this.getDeltaMovement();
+        this.setDeltaMovement(vec3d.x, jumpValue, vec3d.z);
+        this.setDogJumping(true);
+        this.hasImpulse = true;
+
+        // If moving forward, propel further in the direction
+        if (forward > 0.0F) {
+            final float amount = 0.4F; // TODO Allow people to change this value
+            float compX = Mth.sin(this.getYRot() * ((float)Math.PI / 180F));
+            float compZ = Mth.cos(this.getYRot() * ((float)Math.PI / 180F));
+            this.setDeltaMovement(this.getDeltaMovement().add(-amount * compX * this.jumpPower, 0.0D, amount * compZ * this.jumpPower));
+            //this.playJumpSound();
+        }
+
+        // Mark as unable jump until reset
+        this.jumpPower = 0.0F;
+    }
+
     public void addMovementStat(double xD, double yD, double zD) {
         if (this.isVehicle()) {
             int j = Math.round(Mth.sqrt((float) (xD * xD + zD * zD)) * 100.0F);
@@ -2870,9 +2884,19 @@ public class Dog extends AbstractDog {
                 int j1 = Math.round(Mth.sqrt((float) (xD * xD + zD * zD)) * 100.0F);
                 //this.STATS.increaseDistanceInWater(k);
             }
-
-
         }
+    }
+
+    @Override
+    public boolean isPushedByFluid(FluidType type) {
+        for (var alter : this.alterations) {
+            InteractionResult result = alter.canResistPushFromFluidType(type);
+
+            if (result.shouldSwing()) {
+                return false;
+            }
+        }
+        return super.isPushedByFluid(type);
     }
 
     @Override
