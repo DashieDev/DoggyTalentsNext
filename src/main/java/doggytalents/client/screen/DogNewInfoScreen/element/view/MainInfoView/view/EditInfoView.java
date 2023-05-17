@@ -1,7 +1,5 @@
 package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.view;
 
-import java.util.List;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.ScreenUtil;
@@ -9,6 +7,7 @@ import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.Gro
 import doggytalents.client.screen.DogNewInfoScreen.widget.LowHealthStrategySwitch;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.client.screen.framework.element.AbstractElement;
+import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.entity.Dog;
@@ -18,9 +17,9 @@ import doggytalents.common.network.packet.data.DogNameData;
 import doggytalents.common.network.packet.data.DogObeyData;
 import doggytalents.common.network.packet.data.DogRegardTeamPlayersData;
 import doggytalents.common.network.packet.data.FriendlyFireData;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Checkbox;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
@@ -37,11 +36,6 @@ public class EditInfoView extends AbstractElement {
     Dog dog; 
     Font font;
 
-    //local state
-    EditBox nameEdit;
-    FlatButton applyButton;
-    
-
     public EditInfoView(AbstractElement parent, Screen screen, Dog dog, Font font) {
         super(parent, screen);
         this.dog = dog;
@@ -50,112 +44,107 @@ public class EditInfoView extends AbstractElement {
 
     @Override
     public AbstractElement init() {
-        int startX = this.getRealX() + PADDING_LEFT;
-        int endX = this.getRealX() + this.getSizeX() - PADDING_RIGHT;
-        int pY = this.getRealY() + PADDING_TOP;
 
-        //<Text> Dog name: </Text>
-        
-        pY += font.lineHeight + LINE_SPACING;
-
-        this.addEditNameBox(startX, pY, 180, 20);
-        this.applyButton = new FlatButton(
-            startX + this.nameEdit.getWidth() + 15,
-            pY, 40, 20, 
-            Component.translatable("doggui.common.apply"), b -> {
-                var newName = this.nameEdit.getValue();
-                this.requestNameChange(newName);
-                b.active = false;
-            });
-        this.applyButton.active = false;
-        this.addChildren(applyButton);
-
-        pY += 20 + LINE_SPACING + 2 * (font.lineHeight + LINE_SPACING);
-
-        //<Text> Friendly fire?: </Text>
-        var friendlyFireButton = new FlatButton(
-            startX + 130, pY, 
-            40, 20, Component.literal("" + this.dog.canOwnerAttack()), 
-            b -> {
-                boolean newVal = !dog.canOwnerAttack();
-                b.setMessage(Component.literal("" + newVal));
-                this.requestFriendlyFire(newVal);
-            }
-        );
-        this.addChildren(friendlyFireButton);
-
-        pY += 20 + LINE_SPACING;
-        //<Text> Obey Others?: </Text>
-        var obeyOthersButton = new FlatButton(
-            startX + 130, pY, 
-            40, 20, Component.literal("" + this.dog.willObeyOthers()), 
-            b -> {
-                Boolean newVal = !this.dog.willObeyOthers();
-                b.setMessage(Component.literal("" + newVal));
-                this.requestObeyOthers(newVal);
-            }     
-        );
-        this.addChildren(obeyOthersButton);
-        
-        pY += 20 + LINE_SPACING;
-        //<Text> Regard Team Players?: </Text>
-        var regardTeamPlayersButton = new FlatButton(
-            startX + 130, pY, 
-            40, 20, Component.literal("" + this.dog.regardTeamPlayers()), 
-            b -> {
-                Boolean newVal = !this.dog.regardTeamPlayers();
-                b.setMessage(Component.literal("" + newVal));
-                this.requestRegardTeamPlayers(newVal);
-            }     
-        ) {
-            @Override
-            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                super.render(stack, mouseX, mouseY, pTicks);
-                if (this.isHovered) {
-                    ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.regard_team_players.help"), 150, font));
-                }
-            }
-        };
-        this.addChildren(regardTeamPlayersButton);
-
-        pY += 20 + LINE_SPACING;
-        //<Text> Regard Team Players?: </Text>
-        var forceSit = new FlatButton(
-            startX + 130, pY, 
-            40, 20, Component.literal("" + this.dog.forceSit()), 
-            b -> {
-                Boolean newVal = !this.dog.forceSit();
-                b.setMessage(Component.literal("" + newVal));
-                this.requestForceSit(newVal);
-            }     
-        ) {
-            @Override
-            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                super.render(stack, mouseX, mouseY, pTicks);
-                if (this.isHovered) {
-                    ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.force_sit.help"), 150, font));
-                }
-            }
-        };
-        this.addChildren(forceSit); 
-
-        pY += 20 + LINE_SPACING;
-
-        //<Text> Low Health Strategy </Text>
-        var lowHealthStrategySwitch = new LowHealthStrategySwitch(startX + 130, pY, 
-            100, 20, dog, font, getScreen());
-        this.addChildren(lowHealthStrategySwitch);
-        
-        pY += 20 + LINE_SPACING;
-
-        //<Text> Groups: </Text>
-
-        pY += 20 + LINE_SPACING;
+        this.getPosition().setChildDirection(ChildDirection.COL);
 
         this.addChildren(
-            new GroupsListElement(this, getScreen(), dog)
-            .setPosition(PosType.ABSOLUTE, PADDING_LEFT, pY - this.getRealY())
-            .setSize(this.getSizeX() - 2*PADDING_LEFT, 50)
+            new NewnameEntry(this, getScreen(), dog)
+                .init()
+        );
+
+        this.addChildren(
+            new ButtonOptionEntry(this, getScreen(), 
+                new FlatButton(
+                    0, 0, 
+                    40, 20, Component.literal("" + this.dog.canOwnerAttack()), 
+                    b -> {
+                        boolean newVal = !dog.canOwnerAttack();
+                        b.setMessage(Component.literal("" + newVal));
+                        this.requestFriendlyFire(newVal);
+                    }
+                ),
+                I18n.get("doggui.friendlyfire")
+            )
+            .init()
+        );
+
+        this.addChildren(
+            new ButtonOptionEntry(this, getScreen(), 
+                new FlatButton(
+                    0, 0,
+                    40, 20, Component.literal("" + this.dog.willObeyOthers()), 
+                    b -> {
+                        Boolean newVal = !this.dog.willObeyOthers();
+                        b.setMessage(Component.literal("" + newVal));
+                        this.requestObeyOthers(newVal);
+                    }     
+                ),
+                I18n.get("doggui.obeyothers")
+            )
+            .init()
+        );
+
+        this.addChildren(
+            new ButtonOptionEntry(this, getScreen(), 
+                new FlatButton(
+                    0, 0,
+                    40, 20, Component.literal("" + this.dog.regardTeamPlayers()), 
+                    b -> {
+                        Boolean newVal = !this.dog.regardTeamPlayers();
+                        b.setMessage(Component.literal("" + newVal));
+                        this.requestRegardTeamPlayers(newVal);
+                    }     
+                ) {
+                    @Override
+                    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                        super.render(stack, mouseX, mouseY, pTicks);
+                        if (this.isHovered) {
+                            ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.regard_team_players.help"), 150, font));
+                        }
+                    }
+                },
+                I18n.get("doggui.regard_team_players")
+            )
+            .init()
+        );
+
+        this.addChildren(
+            new ButtonOptionEntry(this, getScreen(), 
+                new FlatButton(
+                    0, 0,
+                    40, 20, Component.literal("" + this.dog.forceSit()), 
+                    b -> {
+                        Boolean newVal = !this.dog.forceSit();
+                        b.setMessage(Component.literal("" + newVal));
+                        this.requestForceSit(newVal);
+                    }     
+                ) {
+                    @Override
+                    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                        super.render(stack, mouseX, mouseY, pTicks);
+                        if (this.isHovered) {
+                            ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.force_sit.help"), 150, font));
+                        }
+                    }
+                },
+                I18n.get(I18n.get("doggui.force_sit"))
+            )
+            .init()
+        );
+
+        this.addChildren(
+            new ButtonOptionEntry(this, getScreen(), 
+                new LowHealthStrategySwitch(
+                    0, 0, 
+                    100, 20, dog, font, getScreen()
+                ),
+                I18n.get("doggui.friendlyfire")
+            )
+            .init()
+        );
+
+        this.addChildren(
+            new GroupEntry(this, getScreen(), dog)
             .init()
         );
 
@@ -164,74 +153,12 @@ public class EditInfoView extends AbstractElement {
 
     @Override
     public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-        int startX = this.getRealX() + PADDING_LEFT;
-        int endX = this.getRealX() + this.getSizeX() - PADDING_RIGHT;
-        int pY = this.getRealY() + PADDING_TOP;
-
-        font.draw(stack, I18n.get("doggui.newname"), startX, pY, 0xffffffff);
-        
-        pY += font.lineHeight + LINE_SPACING;
-
-        //<TextFieldAndApplyButton/>
-
-        pY += 20 + LINE_SPACING + 2 * (font.lineHeight + LINE_SPACING);
-
-        font.draw(stack, I18n.get("doggui.friendlyfire"), startX, pY + 6, 0xffffffff);
-        //<Checkbox/>
-
-        pY += 20 + LINE_SPACING;
-
-        font.draw(stack, I18n.get("doggui.obeyothers"), startX, pY + 6, 0xffffffff);
-        //<Checkbox/>
-
-        pY += 20 + LINE_SPACING;
-
-        font.draw(stack, I18n.get("doggui.regard_team_players"), startX, pY + 6, 0xffffffff);
-        //<Checkbox/>
-
-        pY += 20 + LINE_SPACING;
-
-        font.draw(stack, I18n.get("doggui.force_sit"), startX, pY + 6, 0xffffffff);
-        //<Checkbox/>
-
-        pY += 20 + LINE_SPACING;
-
-        font.draw(stack, I18n.get("dog.low_health_strategy"), startX, pY + 6, 0xffffffff);
-        //<Checkbox/>
-
-        pY += 20 + LINE_SPACING;
-
-        font.draw(stack, "Groups :", startX, pY + 6, 0xffffffff);
-
-
     }
 
-    private void addEditNameBox(int x, int y, int w, int h) {
-        this.nameEdit = new EditBox(this.font, x, y, w, h, Component.translatable("dogInfo.enterName"));
-        nameEdit.setFocused(false);
-        nameEdit.setMaxLength(32);
-        nameEdit.setResponder(s -> {
-            if (this.applyButton == null) return;
-            if (this.applyButton.active) return;
-            var dogName = this.dog.hasCustomName() ?
-                this.dog.getCustomName().getString()
-                : "";
-            if (!s.equals(dogName)) {
-                this.applyButton.active = true;
-            }
-        });
-
-        if (this.dog.hasCustomName()) {
-            nameEdit.setValue(this.dog.getCustomName().getString());
-        }
-
-        this.addChildren(nameEdit);
-    }
-
-    private void requestNameChange(String value) {
+    private static void requestNameChange(Dog dog, String value) {
         PacketHandler
             .send(PacketDistributor.SERVER.noArg(),
-             new DogNameData(this.dog.getId(), value));
+             new DogNameData(dog.getId(), value));
     }
 
     private void requestFriendlyFire(boolean val) {
@@ -256,6 +183,146 @@ public class EditInfoView extends AbstractElement {
         PacketHandler
             .send(PacketDistributor.SERVER.noArg(), 
             new DogForceSitData(this.dog.getId(), val));
+    }
+
+    private static class NewnameEntry extends AbstractElement {
+
+        private Font font;
+        private Dog dog;
+        private EditBox nameEdit;
+        private FlatButton applyButton;
+
+        public NewnameEntry(AbstractElement parent, Screen screen, Dog dog) {
+            super(parent, screen);
+            this.font = Minecraft.getInstance().font;
+            this.dog = dog;
+        }
+
+        @Override
+        public AbstractElement init() {
+
+            this.setPosition(PosType.RELATIVE, 0, 0);
+            this.setSize(1f, 60);
+
+            int startX = this.getRealX() + PADDING_LEFT;
+            int pY = this.getRealY() + PADDING_TOP;
+            
+            pY += font.lineHeight + LINE_SPACING;
+
+            this.addEditNameBox(startX, pY, 180, 20);
+            this.applyButton = new FlatButton(
+                startX + this.nameEdit.getWidth() + 15,
+                pY, 40, 20, 
+                Component.translatable("doggui.common.apply"), b -> {
+                    var newName = this.nameEdit.getValue();
+                    requestNameChange(this.dog, newName);
+                    b.active = false;
+                });
+            this.applyButton.active = false;
+            this.addChildren(applyButton);
+
+            return this;
+        }
+
+        @Override
+        public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+            int startX = this.getRealX() + PADDING_LEFT;
+            int pY = this.getRealY() + PADDING_TOP;
+
+            font.draw(stack, I18n.get("doggui.newname"), startX, pY, 0xffffffff);
+            
+        }
+
+        private void addEditNameBox(int x, int y, int w, int h) {
+            this.nameEdit = new EditBox(this.font, x, y, w, h, Component.translatable("dogInfo.enterName"));
+            nameEdit.setFocus(false);
+            nameEdit.setMaxLength(32);
+            nameEdit.setResponder(s -> {
+                if (this.applyButton == null) return;
+                if (this.applyButton.active) return;
+                var dogName = this.dog.hasCustomName() ?
+                    this.dog.getCustomName().getString()
+                    : "";
+                if (!s.equals(dogName)) {
+                    this.applyButton.active = true;
+                }
+            });
+    
+            if (this.dog.hasCustomName()) {
+                nameEdit.setValue(this.dog.getCustomName().getString());
+            }
+    
+            this.addChildren(nameEdit);
+        }
+        
+    }
+
+    private static class ButtonOptionEntry extends AbstractElement {
+
+        private AbstractWidget button;
+        private String label;
+        private Font font;
+
+        public ButtonOptionEntry(AbstractElement parent, Screen screen, AbstractWidget button, String label) {
+            super(parent, screen);
+            this.font = Minecraft.getInstance().font;
+            this.button = button;
+            this.label = label;
+        }
+
+        @Override
+        public AbstractElement init() {
+            this.setPosition(PosType.RELATIVE, 0, 0);
+            this.setSize(1f, 20 + LINE_SPACING);
+
+            this.button.x = this.getRealX() + PADDING_LEFT + 130;
+            this.button.y = this.getRealY() + this.getSizeY()/2
+                - this.button.getHeight()/2;
+            this.addChildren(button);
+            return this;
+        }
+
+        @Override
+        public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+            int startX = this.getRealX() + PADDING_LEFT;
+            int pY = this.getRealY() + this.getSizeY()/2
+                - font.lineHeight/2;
+            font.draw(stack, this.label, startX, pY, 0xffffffff);
+        }
+    }
+
+    private static class GroupEntry extends AbstractElement {
+
+        private Font font;
+        private Dog dog;
+
+        public GroupEntry(AbstractElement parent, Screen screen, Dog dog) {
+            super(parent, screen);
+            this.dog = dog;
+            this.font = Minecraft.getInstance().font;
+        }
+
+        @Override
+        public AbstractElement init() {
+            this.setPosition(PosType.RELATIVE, 0, 0);
+            this.setSize(1f, 60);
+            this.addChildren(
+                new GroupsListElement(this, getScreen(), dog)
+                .setPosition(PosType.ABSOLUTE, PADDING_LEFT, 24)
+                .setSize(this.getSizeX() - 2*PADDING_LEFT, 40)
+                .init()
+            );
+            return this;
+        }
+
+        @Override
+        public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+            int startX = this.getRealX() + PADDING_LEFT;
+            int pY = this.getRealY() + 10;
+
+            font.draw(stack, "Groups: ", startX, pY, 0xffffffff);
+        }
+
     }
 
 }
