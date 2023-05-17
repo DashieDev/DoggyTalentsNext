@@ -131,8 +131,8 @@ public class Dog extends AbstractDog {
      *     1               2                   OBEY_OTHER
      *     2               4                   FRIENDLY_FIRE
      *     3               8                   FORCE_SIT
-     *     4               16                  <Reserved>            
-     *     5               32                  <Reserved>
+     *     4               16                  LOW_HEALTH_STRATEGY_LSB           
+     *     5               32                  LOW_HEALTH_STRATEGY_MSB
      *     6               64                  <Reserved>
      *     7               128                 REGARD_TEAM_PLAYERS
      */
@@ -225,6 +225,7 @@ public class Dog extends AbstractDog {
         super(type, worldIn);
         this.setTame(false);
         this.setGender(EnumGender.random(this.getRandom()));
+        this.setLowHealthStrategy(LowHealthStrategy.STICK_TO_OWNER);
 
         this.defaultNavigation = this.navigation;
         this.defaultMoveControl = this.moveControl;
@@ -262,7 +263,8 @@ public class Dog extends AbstractDog {
         ++p;
         this.goalSelector.addGoal(p, new DogHungryGoal(this, 1.0f, 2.0f));
         ++p;
-        this.goalSelector.addGoal(p, new DogLowHealthGoal(this, 1.0f, 2.0f));
+        this.goalSelector.addGoal(p, new DogLowHealthGoal.StickToOwner(this));
+        this.goalSelector.addGoal(p, new DogLowHealthGoal.RunAway(this));
         //this.goalSelector.addGoal(4, new DogLeapAtTargetGoal(this, 0.4F));
         ++p;
         this.goalSelector.addGoal(p, new DogEatFromChestDogGoal(this, 1.0));
@@ -271,7 +273,7 @@ public class Dog extends AbstractDog {
         //All mutex by nature
         this.goalSelector.addGoal(p, new GuardModeGoal.Minor(this));
         this.goalSelector.addGoal(p, new GuardModeGoal.Major(this));
-        ++p; 
+        ++p;
         this.goalSelector.addGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
         this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
         ++p;
@@ -1790,6 +1792,7 @@ public class Dog extends AbstractDog {
         compound.putBoolean("friendlyFire", this.canOwnerAttack());
         compound.putBoolean("regardTeamPlayers", this.regardTeamPlayers());
         compound.putBoolean("forceSit", this.forceSit());
+        compound.putByte("lowHealthStrategy", this.getLowHealthStrategy().getId());
         compound.putInt("dogSize", this.getDogSize());
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
         compound.putInt("level_dire", this.getDogLevel().getLevel(Type.DIRE));
@@ -1997,6 +2000,8 @@ public class Dog extends AbstractDog {
             this.setCanPlayersAttack(compound.getBoolean("friendlyFire"));
             this.setRegardTeamPlayers(compound.getBoolean("regardTeamPlayers"));
             this.setForceSit(compound.getBoolean("forceSit"));
+            var low_health_strategy_id = compound.getByte("lowHealthStrategy");
+            this.setLowHealthStrategy(LowHealthStrategy.fromId(low_health_strategy_id));
             if (compound.contains("dogSize", Tag.TAG_ANY_NUMERIC)) {
                 this.setDogSize(compound.getInt("dogSize"));
             }
@@ -2480,24 +2485,18 @@ public class Dog extends AbstractDog {
         this.setDogFlag(16, sunglasses);
     }
 
-    public boolean hasSunglasses() {
-        return this.getDogFlag(16);
+    public LowHealthStrategy getLowHealthStrategy() {
+        int msb = this.getDogFlag(32) ? 1 : 0;
+        int lsb = this.getDogFlag(16) ? 1 : 0;
+        return LowHealthStrategy.fromId(msb * 2 + lsb);
     }
 
-    public void setLyingDown(boolean lying) {
-        this.setDogFlag(32, lying);
-    }
-
-    public boolean isLyingDown() {
-        return this.getDogFlag(32);
-    }
-
-    public void set64Flag(boolean lying) {
-        this.setDogFlag(64, lying);
-    }
-
-    public boolean get64Flag() {
-        return this.getDogFlag(64);
+    public void setLowHealthStrategy(LowHealthStrategy strategy) {
+        int id = strategy.getId();
+        boolean lsb = (id & 1) == 1;
+        boolean msb = ((id >> 1) & 1) == 1;
+        this.setDogFlag(32, msb);
+        this.setDogFlag(16, lsb);
     }
 
     public void setRegardTeamPlayers(boolean val) {
@@ -2960,6 +2959,10 @@ public class Dog extends AbstractDog {
         return this.getAirSupply() < this.getMaxAirSupply() * 0.3;
     }
 
+    public boolean isDogLowHealth() {
+        return this.getHealth() < 6;
+    }
+
     public void setDogSwimming(boolean s) {
         this.isDogSwimming = s;
     }
@@ -3098,6 +3101,62 @@ public class Dog extends AbstractDog {
     //Client
     public List<AccessoryInstance> getClientSortedAccessories() {
         return this.clientAccessories;
+    }
+
+    /**
+     * 2 bit for strategy
+     */
+    public static enum LowHealthStrategy {
+        NONE(0),
+        RUN_AWAY(1),
+        STICK_TO_OWNER(2);
+
+        public static final LowHealthStrategy[] VALUES = 
+            Arrays.stream(LowHealthStrategy.values())
+            .sorted(
+                Comparator.comparingInt(LowHealthStrategy::getId)
+            ).toArray(size -> {
+                return new LowHealthStrategy[size];
+            });
+
+        private final byte id;
+
+        private LowHealthStrategy(int id) {
+            this.id = (byte) id;
+        }
+
+        public byte getId() {
+            return this.id;
+        }
+
+        public String getUnlocalisedTitle() {
+            return "dog.low_health_strategy." + this.getId();
+        }
+
+        public String getUnlocalisedInfo() {
+            return "dog.low_health_strategy." + this.getId() + ".help";
+        }
+
+        public static LowHealthStrategy fromId(int id) {
+            if (!(0 <= id && id <= 2)) return NONE;
+            return VALUES[id];
+        }
+
+        public LowHealthStrategy prev() {
+            int i = this.getId() - 1;
+            if (i < 0) {
+                i = VALUES.length - 1;
+            }
+            return VALUES[i];
+        }
+    
+        public LowHealthStrategy next() {
+            int i = this.getId() + 1;
+            if (i >= VALUES.length) {
+                i = 0;
+            }
+            return VALUES[i];
+        }
     }
 
 }
