@@ -50,8 +50,8 @@ public class GroupsListElement extends AbstractElement {
             if (pX + groupButton.getWidth() > this.getRealX() + this.getSizeX()) {
                 pX = this.getRealX();
                 pY += LINE_SPACING + groupButton.getHeight();
-                groupButton.x = pX;
-                groupButton.y = pY;
+                groupButton.setX(pX);
+                groupButton.setY(pY);
             }
             this.addChildren(groupButton);
             pX += GROUP_SPACING + groupButton.getWidth();
@@ -59,7 +59,7 @@ public class GroupsListElement extends AbstractElement {
         int addButtonSize = font.lineHeight + GroupEntryButton.PADDING_VERT*2;
         var addButton = new FlatButton(pX, pY, addButtonSize, addButtonSize, Component.literal("+"), 
             b -> {
-                displayGroupMenu(b.x, b.y);
+                displayGroupMenu(b.getX(), b.getY());
             }
         ) {
 
@@ -72,10 +72,10 @@ public class GroupsListElement extends AbstractElement {
 
                 int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
                 
-                fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, cl);
+                fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
                 
-                int mX = this.x + this.width/2;
-                int mY = this.y + this.height/2;
+                int mX = this.getX() + this.width/2;
+                int mY = this.getY() + this.height/2;
                 var msg = this.getMessage();
                 int tX = mX - font.width(msg)/2 + 1;
                 int tY = mY - font.lineHeight/2 + 1;
@@ -86,8 +86,8 @@ public class GroupsListElement extends AbstractElement {
         if (pX > this.getRealX() + this.getSizeX()) {
             pX = this.getRealX();
             pY += LINE_SPACING + addButton.getHeight();
-            addButton.x = pX;
-            addButton.y = pY;
+            addButton.setX(pX);
+            addButton.setY(pY);
         }
         this.addChildren(addButton);
         pX += GROUP_SPACING;
@@ -142,11 +142,11 @@ public class GroupsListElement extends AbstractElement {
 
             int cl = this.group.color;
             
-            fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, cl);
+            fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
             
             //draw text
-            int mX = this.x + this.width/2;
-            int mY = this.y + this.height/2;
+            int mX = this.getX() + this.width/2;
+            int mY = this.getY() + this.height/2;
             var msg = this.getMessage();
             int tX = mX - font.width(msg)/2;
             int tY = mY - font.lineHeight/2;
@@ -174,7 +174,7 @@ public class GroupsListElement extends AbstractElement {
             RenderSystem.defaultBlendFunc();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             int iX = ICON_REM_X;
-            this.blit(stack, x+this.getWidth() - 4, y+this.getHeight() - 4, iX, 0, 9, 9);
+            this.blit(stack, this.getX()+this.getWidth() - 4, getY()+this.getHeight() - 4, iX, 0, 9, 9);
         }
 
         

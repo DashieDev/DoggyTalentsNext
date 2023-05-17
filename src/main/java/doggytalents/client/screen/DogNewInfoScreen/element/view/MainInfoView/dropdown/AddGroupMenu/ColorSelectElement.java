@@ -95,10 +95,10 @@ public class ColorSelectElement extends AbstractElement {
             if (!this.active) return;
 
             if (selected) {
-                fill(stack, this.x - 1, this.y - 1, 
-                    this.x+this.width + 1, this.y+this.height + 1, 0xffffffff);
+                fill(stack, this.getX() - 1, this.getY() - 1, 
+                    this.getX()+this.width + 1, this.getY()+this.height + 1, 0xffffffff);
             }
-            fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, this.color);
+            fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, this.color);
         }
         
     }

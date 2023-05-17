@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogGroupsManager.DogGroup;
 import doggytalents.common.item.WhistleItem;
@@ -72,12 +73,13 @@ public class HeelByGroupScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         this.rect = new Rect2i(0, 0,500, 500);
 
-        Button help = new Button(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
+        var help = new CustomButton(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.heel_by_group.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
@@ -255,7 +257,6 @@ public class HeelByGroupScreen extends Screen {
     @Override
     public void removed() {
         super.removed();
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
     }
 
     @Override
