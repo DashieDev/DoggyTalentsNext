@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.GroupsListElement;
+import doggytalents.client.screen.DogNewInfoScreen.widget.LowHealthStrategySwitch;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
@@ -140,6 +141,13 @@ public class EditInfoView extends AbstractElement {
 
         pY += 20 + LINE_SPACING;
 
+        //<Text> Low Health Strategy </Text>
+        var lowHealthStrategySwitch = new LowHealthStrategySwitch(startX + 130, pY, 
+            100, 20, dog, font, getScreen());
+        this.addChildren(lowHealthStrategySwitch);
+        
+        pY += 20 + LINE_SPACING;
+
         //<Text> Groups: </Text>
 
         pY += 20 + LINE_SPACING;
@@ -184,6 +192,11 @@ public class EditInfoView extends AbstractElement {
         pY += 20 + LINE_SPACING;
 
         font.draw(stack, I18n.get("doggui.force_sit"), startX, pY + 6, 0xffffffff);
+        //<Checkbox/>
+
+        pY += 20 + LINE_SPACING;
+
+        font.draw(stack, I18n.get("dog.low_health_strategy"), startX, pY + 6, 0xffffffff);
         //<Checkbox/>
 
         pY += 20 + LINE_SPACING;
