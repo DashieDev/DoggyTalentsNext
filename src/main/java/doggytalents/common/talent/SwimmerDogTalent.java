@@ -29,6 +29,7 @@ import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.fluids.FluidType;
 
 public class SwimmerDogTalent extends TalentInstance {
     
@@ -199,6 +200,17 @@ public class SwimmerDogTalent extends TalentInstance {
     @Override
     public InteractionResult canSwimUnderwater(AbstractDog dogIn) {
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public InteractionResult canResistPushFromFluidType(FluidType type) {
+        if (type != ForgeMod.WATER_TYPE.get())
+            return InteractionResult.PASS;
+
+        if (this.level() >= 2) 
+            return InteractionResult.SUCCESS;
+
+        return InteractionResult.PASS;
     }
 
     @Override
