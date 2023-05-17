@@ -7,6 +7,7 @@ import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.Gro
 import doggytalents.client.screen.DogNewInfoScreen.widget.LowHealthStrategySwitch;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.client.screen.framework.element.AbstractElement;
+import doggytalents.client.screen.framework.element.ScrollView;
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.FlatButton;
@@ -45,15 +46,22 @@ public class EditInfoView extends AbstractElement {
     @Override
     public AbstractElement init() {
 
-        this.getPosition().setChildDirection(ChildDirection.COL);
+        var scrollView = new ScrollView(this, getScreen());
+        scrollView
+            .setPosition(PosType.ABSOLUTE, 0, 0)
+            .setSize(1f, 1f)
+            .init();
+        this.addChildren(scrollView);
 
-        this.addChildren(
-            new NewnameEntry(this, getScreen(), dog)
+        var scroll = scrollView.getContainer();
+
+        scroll.addChildren(
+            new NewnameEntry(scroll, getScreen(), dog)
                 .init()
         );
 
-        this.addChildren(
-            new ButtonOptionEntry(this, getScreen(), 
+        scroll.addChildren(
+            new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0, 
                     40, 20, Component.literal("" + this.dog.canOwnerAttack()), 
@@ -68,8 +76,8 @@ public class EditInfoView extends AbstractElement {
             .init()
         );
 
-        this.addChildren(
-            new ButtonOptionEntry(this, getScreen(), 
+        scroll.addChildren(
+            new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0,
                     40, 20, Component.literal("" + this.dog.willObeyOthers()), 
@@ -84,8 +92,8 @@ public class EditInfoView extends AbstractElement {
             .init()
         );
 
-        this.addChildren(
-            new ButtonOptionEntry(this, getScreen(), 
+        scroll.addChildren(
+            new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0,
                     40, 20, Component.literal("" + this.dog.regardTeamPlayers()), 
@@ -108,8 +116,8 @@ public class EditInfoView extends AbstractElement {
             .init()
         );
 
-        this.addChildren(
-            new ButtonOptionEntry(this, getScreen(), 
+        scroll.addChildren(
+            new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0,
                     40, 20, Component.literal("" + this.dog.forceSit()), 
@@ -132,19 +140,19 @@ public class EditInfoView extends AbstractElement {
             .init()
         );
 
-        this.addChildren(
-            new ButtonOptionEntry(this, getScreen(), 
+        scroll.addChildren(
+            new ButtonOptionEntry(scroll, getScreen(), 
                 new LowHealthStrategySwitch(
                     0, 0, 
                     100, 20, dog, font, getScreen()
                 ),
-                I18n.get("doggui.friendlyfire")
+                I18n.get("dog.low_health_strategy")
             )
             .init()
         );
 
-        this.addChildren(
-            new GroupEntry(this, getScreen(), dog)
+        scroll.addChildren(
+            new GroupEntry(scroll, getScreen(), dog)
             .init()
         );
 
