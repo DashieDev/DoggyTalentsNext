@@ -3,21 +3,14 @@ package doggytalents.common.entity.ai;
 
 import doggytalents.ChopinLogger;
 import doggytalents.DoggyTalents;
-import doggytalents.api.feature.FoodHandler;
-import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.inventory.PackPuppyItemHandler;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.InventoryUtil;
-import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 import java.util.EnumSet;
@@ -30,7 +23,7 @@ public class DogEatFromChestDogGoal extends Goal {
 
     private Dog dog;
 
-    private int timeToRecalcPath;
+    private int tickTillPathRecalc;
     private float oldWaterCost;
 
     private final double speedModifier;
@@ -62,12 +55,7 @@ public class DogEatFromChestDogGoal extends Goal {
         if (this.dog.getDogHunger() >= 50) {
             return false;
         }
-        if (chestDog != null && !chestDog.isAlive()) {
-            this.chestDog = null;
-        }
-        if (chestDog != null && chestDog.isDefeated()) {
-            this.chestDog = null;
-        }
+        this.invalidateChestDogCache();
         this.inspectNearbyChestDogsForFood();
         if (this.chestDog == null) return false;
         return true;
@@ -81,7 +69,7 @@ public class DogEatFromChestDogGoal extends Goal {
 
     @Override
     public void start() {
-        this.timeToRecalcPath = 0;
+        this.tickTillPathRecalc = 0;
         this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
         this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
     }
@@ -95,26 +83,13 @@ public class DogEatFromChestDogGoal extends Goal {
 
     @Override
     public void tick() {
+        this.invalidateChestDogCache();
+        if (this.chestDog == null) return;
+        if (!this.chestDog.isAlive() || this.chestDog.isDefeated() ) {
+            this.chestDog = null; return;
+        }
         if (this.dog.distanceToSqr(this.chestDog) > stopDist*stopDist) {
-            this.dog.getLookControl().setLookAt(this.chestDog, 10.0F, this.dog.getMaxHeadXRot());
-            if (--this.timeToRecalcPath <= 0) {
-                this.timeToRecalcPath = 10;
-                if (this.chestDog == null) return;
-                if (!this.validChestDog(this.chestDog)) {
-                    this.chestDog = null; return;
-                }
-                if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
-                    // if (this.dog.distanceToSqr(this.owner) >= 144.0D) {
-                    //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
-                    // } else {
-                    DogUtil.moveToIfReachOrElse(dog, 
-                        this.chestDog.blockPosition(), speedModifier, 
-                        1, 1, (d) -> {
-                            this.chestDog = null;
-                        });
-                    //}
-                }
-            }
+            this.moveToChestDog();
         } else {
             //TODO maintain some space ??
             //this.dog.getNavigation().stop();
@@ -122,7 +97,29 @@ public class DogEatFromChestDogGoal extends Goal {
         }
     }
 
+    private void moveToChestDog() {
+        this.dog.getLookControl().setLookAt(this.chestDog, 10.0F, this.dog.getMaxHeadXRot());
+        if (--this.tickTillPathRecalc <= 0) {
+            this.tickTillPathRecalc = 10;
+            if (!this.checkChestDogForFood(this.chestDog)) {
+                this.chestDog = null; return;
+            }
+            if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
+                // if (this.dog.distanceToSqr(this.owner) >= 144.0D) {
+                //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
+                // } else {
+                DogUtil.moveToIfReachOrElse(dog, 
+                    this.chestDog.blockPosition(), speedModifier, 
+                    1, 1, (d) -> {
+                        this.chestDog = null;
+                    });
+                //}
+            }
+        }
+    }
+
     private void inspectNearbyChestDogsForFood() {
+        
         if (--this.tickTillNextChestDogSearch <= 0) {
             this.tickTillNextChestDogSearch = 10;
             
@@ -132,7 +129,7 @@ public class DogEatFromChestDogGoal extends Goal {
                 this.chooseRandomChestDog();
             }
             
-            if (!this.validChestDog(this.chestDog)) {
+            if (!this.checkChestDogForFood(this.chestDog)) {
                 this.chestDog = null;
             }
         }
@@ -157,6 +154,15 @@ public class DogEatFromChestDogGoal extends Goal {
         this.chestDog = target;
     }
 
+    private void invalidateChestDogCache() {
+        if (chestDog != null && !chestDog.isAlive()) {
+            this.chestDog = null;
+        }
+        if (chestDog != null && chestDog.isDefeated()) {
+            this.chestDog = null;
+        }
+    }
+
     private void chooseRandomChestDog() {
         if (this.chestDogs == null) return;
         if (this.chestDogs.isEmpty()) return;
@@ -178,10 +184,8 @@ public class DogEatFromChestDogGoal extends Goal {
         return chestDog.getDogLevel(DoggyTalents.PACK_PUPPY) > 0;
     }
 
-    private boolean validChestDog(Dog chestDog) {
+    private boolean checkChestDogForFood(Dog chestDog) {
         if (chestDog == null) return false;
-        if (!chestDog.isAlive()) return false;
-        if (chestDog.isDefeated()) return false;
         if (!isChestDog(chestDog)) return false;
         var chestDogOwner = chestDog.getOwner();
         if (chestDogOwner == null) return false;
