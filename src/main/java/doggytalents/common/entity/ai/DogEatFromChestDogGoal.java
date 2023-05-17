@@ -2,19 +2,30 @@ package doggytalents.common.entity.ai;
 
 
 import doggytalents.ChopinLogger;
+import doggytalents.DoggyItems;
 import doggytalents.DoggyTalents;
+import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.inventory.PackPuppyItemHandler;
+import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.InventoryUtil;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 import java.util.EnumSet;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 /**
  * @author DashieDev
@@ -41,7 +52,7 @@ public class DogEatFromChestDogGoal extends Goal {
     private int tickTillNextChestDogSearch = 0;
     private final int SEARCH_RADIUS = 12; //TODO
 
-    private static final MeatFoodHandler FOOD_VALIDATOR = new MeatFoodHandler();
+    private static final ChestDogFoodHandler FOOD_VALIDATOR = new ChestDogFoodHandler();
 
     public DogEatFromChestDogGoal(Dog dog, double speedModifier) {
         this.dog = dog;
@@ -231,6 +242,19 @@ public class DogEatFromChestDogGoal extends Goal {
             
             if (inventory == null) return;
 
+            //Priotize Egg Sandwich when low health.
+            if (
+                this.dog.isDogLowHealth()
+                && !dog.hasEffect(MobEffects.REGENERATION)
+            ) 
+            for (int i = 0; i < inventory.getSlots(); ++i) {
+                var stack = inventory.getStackInSlot(i);
+                if (stack.getItem() == DoggyItems.EGG_SANDWICH.get()) {
+                    FOOD_VALIDATOR.consume(dog, stack, null);
+                    return;
+                }
+            }
+
             for (int i = 0; i < inventory.getSlots(); i++) {
 
                 ItemStack stack = inventory.getStackInSlot(i);
@@ -247,6 +271,46 @@ public class DogEatFromChestDogGoal extends Goal {
 
 
 
+    public static class ChestDogFoodHandler extends MeatFoodHandler {
+
+        @Override
+        public boolean canConsume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
+            return super.canConsume(dog, stack, entityIn);
+        }
+
+        @Override
+        public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
+            if (dog.level.isClientSide) return InteractionResult.SUCCESS;
+                
+            var item = stack.getItem();
+            var props = item.getFoodProperties();
+            if (props == null) return InteractionResult.FAIL;
+            int heal = props.getNutrition() * 5;
+
+            dog.addHunger(heal);
+            dog.consumeItemFromStack(entityIn, stack);
+
+            if (item == DoggyItems.EGG_SANDWICH.get())
+            for(var pair : props.getEffects()) {
+                if (pair.getFirst() != null && dog.getRandom().nextFloat() < pair.getSecond()) {
+                dog.addEffect(new MobEffectInstance(pair.getFirst()));
+                }
+            }
+
+            if (dog.level instanceof ServerLevel) {
+                ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(
+                    dog, new ItemStack(item));
+            }
+            dog.playSound(
+                SoundEvents.GENERIC_EAT, 
+                dog.getSoundVolume(), 
+                (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
+            );
+
+            return InteractionResult.SUCCESS;
+        }
+
+    }
 
 
 
