@@ -84,7 +84,7 @@ public class RoaringGaleTalent extends TalentInstance {
             for (LivingEntity mob : targets) {
                 if (!(mob instanceof Enemy)) continue;
                 hit = true;
-                mob.hurt(DamageSource.GENERIC, damage);
+                mob.hurt(mob.damageSources().generic(), damage);
                 mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, effectDuration, 127, false, false));
                 mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, effectDuration, 1, false, false));
                 mob.push(
