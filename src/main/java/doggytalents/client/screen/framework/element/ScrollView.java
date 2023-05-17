@@ -45,7 +45,6 @@ public class ScrollView extends AbstractElement {
 
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-        updateWidgetOffsetRescursive(container.children());
         GuiComponent.enableScissor(
             this.getRealX(), this.getRealY(), 
             this.getRealX() + this.getSizeX(), 
@@ -62,27 +61,15 @@ public class ScrollView extends AbstractElement {
             millis0 = millis;
             drawScrollBar(stack, mouseX, mouseY, partialTicks);
         }
-        GuiComponent.disableScissor();
-        resetWidgetOffsetRescursive(container.children());
-        
+        GuiComponent.disableScissor();       
     }
 
-    private void updateWidgetOffsetRescursive(List<? extends GuiEventListener> childrens) {
+    private void shiftWidgetOffsetRescursive(List<? extends GuiEventListener> childrens, int offset) {
         for (var child : childrens) {
             if (child instanceof AbstractWidget widget) {
-                widget.y -= this.container.getOffset();
+                widget.y += offset;
             } else if (child instanceof AbstractElement element) {
-                updateWidgetOffsetRescursive(element.children());
-            } 
-        }
-    }
-
-    private void resetWidgetOffsetRescursive(List<? extends GuiEventListener> childrens) {
-        for (var child : childrens) {
-            if (child instanceof AbstractWidget widget) {
-                widget.y += this.container.getOffset();
-            } else if (child instanceof AbstractElement element) {
-                resetWidgetOffsetRescursive(element.children());
+                shiftWidgetOffsetRescursive(element.children(), offset);
             } 
         }
     }
@@ -111,12 +98,15 @@ public class ScrollView extends AbstractElement {
     public boolean mouseScrolled(double x, double y, double dir) {
         scrollBarAppearDuration = 1500;
         millis0 = System.currentTimeMillis();
+        int offset0 = container.getOffset();
         container.setOffset(Mth.ceil(container.getOffset() + (-dir) * SCROLL_SPEED));
         int maxOff = getMaxOffset();
         if (container.getOffset() < 0) 
             container.setOffset(0);
         else if (container.getOffset() >= maxOff)
             container.setOffset(maxOff);
+        int offset1 = container.getOffset();
+        shiftWidgetOffsetRescursive(container.children(), -(offset1-offset0));
         return super.mouseScrolled(x, y, dir);
     }
 
