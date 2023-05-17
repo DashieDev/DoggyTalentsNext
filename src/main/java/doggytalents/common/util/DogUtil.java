@@ -1,6 +1,7 @@
 package doggytalents.common.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -137,8 +138,11 @@ public class DogUtil {
         for (int i = 0; i < safePosList.size(); ++i) {
             densityMap.add(0); 
         }
+
+        var sorted_dogs = new ArrayList<>(dogs);
+        Collections.sort(sorted_dogs, new EntityUtil.Sorter(owner));
    
-        for (var dog : dogs) {
+        for (var dog : sorted_dogs) {
             if (safePosList.isEmpty()) break;
             int r_indx = dog.getRandom().nextInt(safePosList.size());
             teleportInternal(dog, safePosList.get(r_indx));
