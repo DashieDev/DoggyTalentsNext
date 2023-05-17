@@ -67,7 +67,7 @@ public class GroupsListElement extends AbstractElement {
             static final int DEFAULT_HLCOLOR = 0x835e5d5d;
 
             @Override
-            public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+            public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
                 if (!this.active) return;
 
                 int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
@@ -136,7 +136,7 @@ public class GroupsListElement extends AbstractElement {
         }
 
         @Override
-        public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+        public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
 
             if (!this.active) return;
 

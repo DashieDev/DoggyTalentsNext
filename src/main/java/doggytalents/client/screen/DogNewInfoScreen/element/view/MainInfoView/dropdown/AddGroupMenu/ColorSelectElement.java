@@ -91,7 +91,7 @@ public class ColorSelectElement extends AbstractElement {
         }
 
         @Override
-        public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+        public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
             if (!this.active) return;
 
             if (selected) {
