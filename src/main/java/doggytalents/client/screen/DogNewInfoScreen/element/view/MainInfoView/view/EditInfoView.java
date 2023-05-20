@@ -270,6 +270,8 @@ public class EditInfoView extends AbstractElement {
         private String label;
         private Font font;
 
+        private boolean newline = false;
+
         public ButtonOptionEntry(AbstractElement parent, Screen screen, AbstractWidget button, String label) {
             super(parent, screen);
             this.font = Minecraft.getInstance().font;
@@ -282,15 +284,40 @@ public class EditInfoView extends AbstractElement {
             this.setPosition(PosType.RELATIVE, 0, 0);
             this.setSize(1f, 20 + LINE_SPACING);
 
-            this.button.setX( this.getRealX() + PADDING_LEFT + 130);
-            this.button.setY( this.getRealY() + this.getSizeY()/2
-                - this.button.getHeight()/2 + 1);
+            int buttonX_offset = PADDING_LEFT + 130;
+            int buttonY_offset = this.getSizeY()/2
+                - this.button.getHeight()/2 + 1;
+
+            var p = this.getParent();
+            if (
+                p != null
+                && buttonX_offset + this.button.getWidth() > p.getSizeX()
+            ) {
+                this.newline = true; 
+                buttonX_offset = PADDING_LEFT; 
+                buttonY_offset += 14;
+            }
+
+            if (newline)
+            this.setSize(1f, 20 + LINE_SPACING + 14);
+
+            this.button.x = (this.getRealX() + buttonX_offset);
+            this.button.y = (this.getRealY() + buttonY_offset);
+
             this.addChildren(button);
             return this;
         }
 
         @Override
         public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+            if (newline) {
+                int startX = this.getRealX() + PADDING_LEFT;
+                int pY = this.getRealY() + 3;
+                font.draw(stack, this.label, startX, pY, 0xffffffff);
+                
+                return;
+            } 
+
             int startX = this.getRealX() + PADDING_LEFT;
             int pY = this.getRealY() + this.getSizeY()/2
                 - font.lineHeight/2;
