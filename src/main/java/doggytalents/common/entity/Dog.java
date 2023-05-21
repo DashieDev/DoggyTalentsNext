@@ -2479,11 +2479,7 @@ public class Dog extends AbstractDog {
     public boolean forceSit() {
         return this.getDogFlag(8);
     }
-
-    public void setHasSunglasses(boolean sunglasses) {
-        this.setDogFlag(16, sunglasses);
-    }
-
+    
     public LowHealthStrategy getLowHealthStrategy() {
         int msb = this.getDogFlag(32) ? 1 : 0;
         int lsb = this.getDogFlag(16) ? 1 : 0;
