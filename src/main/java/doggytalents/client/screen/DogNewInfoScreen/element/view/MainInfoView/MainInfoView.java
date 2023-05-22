@@ -82,11 +82,11 @@ public class MainInfoView extends AbstractElement {
         int mY = sizeY/2;
 
         int editInfoViewBoxSizeX = sizeX > 507 ? 448 : sizeX;
-        int editInfoViewBoxSizeY = sizeY > 304 ? 320 : sizeY;
+        int editInfoViewBoxSizeY = sizeY > 337 ? 320 : sizeY;
         
         var editInfoViewBoxDiv = new DivElement(this, getScreen())
             .setPosition(PosType.ABSOLUTE, mX - editInfoViewBoxSizeX/2, 
-            mY - editInfoViewBoxSizeY/2 + (sizeY > 304 ? 10 : 0)) //+10 if detached to center it.
+            mY - editInfoViewBoxSizeY/2 + (sizeY > 337 ? 10 : 0)) //+10 if detached to center it.
             .setSize(editInfoViewBoxSizeX, editInfoViewBoxSizeY);
             //.setBackgroundColor(0xffff05de);
         this.addChildren(editInfoViewBoxDiv);
