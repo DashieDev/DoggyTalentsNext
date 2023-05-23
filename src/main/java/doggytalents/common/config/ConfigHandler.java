@@ -146,6 +146,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.IntValue DOG_GREET_OWNER_LIMIT;
         public ForgeConfigSpec.BooleanValue MAX_CREEPER_SWEEPER_DONT_GROWL;
         public ForgeConfigSpec.BooleanValue ALL_PLAYER_CANNOT_ATTACK_DOG;
+        public ForgeConfigSpec.BooleanValue ALL_DOG_BLOCK_PORTAL;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -222,6 +223,13 @@ public class ConfigHandler {
                 .comment("This is used to always be the case with friendly fire disabled for a single dog.")
                 .translation("doggytalents.all_player_cannot_attack_dog")
                 .define("all_player_cannot_attack_dog", false);
+            ALL_DOG_BLOCK_PORTAL = builder
+                .comment("Option to prevent dogs from accidentally go into a portal and get")
+                .comment("unecessary transfered to another dimension, causing the owner having")
+                .comment("to take them back. The prefered way to make a dog go to another dimension is")
+                .comment("to have Cross Origin Teleport set to true on that dog.")
+                .translation("doggytalents.all_dog_block_portal")
+                .define("all_dog_block_portal", true);
             builder.pop();
 
             
