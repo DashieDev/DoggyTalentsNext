@@ -1639,6 +1639,9 @@ public class Dog extends AbstractDog {
 
     @Override
     public Entity changeDimension(ServerLevel worldIn, ITeleporter teleporter) {
+        boolean flag =
+            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.ALL_DOG_BLOCK_PORTAL);
+        if (flag) return null;
         Entity transportedEntity = super.changeDimension(worldIn, teleporter);
         if (transportedEntity instanceof Dog) {
             DogLocationStorage.get(this.level).getOrCreateData(this).update((Dog) transportedEntity);
