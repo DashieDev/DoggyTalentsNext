@@ -13,6 +13,7 @@ import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
+import doggytalents.common.network.packet.data.CrossOriginTpData;
 import doggytalents.common.network.packet.data.DogForceSitData;
 import doggytalents.common.network.packet.data.DogNameData;
 import doggytalents.common.network.packet.data.DogObeyData;
@@ -142,6 +143,30 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
+                new FlatButton(
+                    0, 0,
+                    40, 20, Component.literal("" + this.dog.crossOriginTp()), 
+                    b -> {
+                        Boolean newVal = !this.dog.crossOriginTp();
+                        b.setMessage(Component.literal("" + newVal));
+                        this.requestCrossOriginTp(newVal);
+                    }     
+                ) {
+                    @Override
+                    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                        super.render(stack, mouseX, mouseY, pTicks);
+                        if (this.isHovered) {
+                            ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.cross_origin_tp.help"), 150, font));
+                        }
+                    }
+                },
+                I18n.get(I18n.get("doggui.cross_origin_tp"))
+            )
+            .init()
+        );
+
+        scroll.addChildren(
+            new ButtonOptionEntry(scroll, getScreen(), 
                 new LowHealthStrategySwitch(
                     0, 0, 
                     100, 20, dog, font, getScreen()
@@ -191,6 +216,12 @@ public class EditInfoView extends AbstractElement {
         PacketHandler
             .send(PacketDistributor.SERVER.noArg(), 
             new DogForceSitData(this.dog.getId(), val));
+    }
+
+    private void requestCrossOriginTp(boolean val) {
+        PacketHandler
+            .send(PacketDistributor.SERVER.noArg(), 
+            new CrossOriginTpData(this.dog.getId(), val));
     }
 
     private static class NewnameEntry extends AbstractElement {
