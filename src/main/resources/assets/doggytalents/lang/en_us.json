@@ -360,6 +360,8 @@
    "doggui.regard_team_players.help": "If this dog should support other player from the same team as yours.",
    "doggui.force_sit": "Force Sit?",
    "doggui.force_sit.help": "This prevent some actions that may cause the dog to stand up. Ex: Greet Owner, Extinguish...",
+   "doggui.cross_origin_tp": "Cross-Origin Teleport?",
+   "doggui.cross_origin_tp.help": "Should this dog automatically teleport to you when you switch dimension or distant teleporting?",
    "doggui.friendlyfire": "Friendly Fire?",
    "doggui.health": "Health:",
    "doggui.speed": "Speed:",
