@@ -134,7 +134,7 @@ public class Dog extends AbstractDog {
      *     3               8                   FORCE_SIT
      *     4               16                  LOW_HEALTH_STRATEGY_LSB           
      *     5               32                  LOW_HEALTH_STRATEGY_MSB
-     *     6               64                  <Reserved>
+     *     6               64                  CROSS_ORIGIN_TP
      *     7               128                 REGARD_TEAM_PLAYERS
      */
     private static final EntityDataAccessor<Byte> DOG_FLAGS = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.BYTE);
@@ -1786,6 +1786,7 @@ public class Dog extends AbstractDog {
         compound.putBoolean("regardTeamPlayers", this.regardTeamPlayers());
         compound.putBoolean("forceSit", this.forceSit());
         compound.putByte("lowHealthStrategy", this.getLowHealthStrategy().getId());
+        compound.putBoolean("crossOriginTp", this.crossOriginTp());
         compound.putInt("dogSize", this.getDogSize());
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
         compound.putInt("level_dire", this.getDogLevel().getLevel(Type.DIRE));
@@ -1993,6 +1994,7 @@ public class Dog extends AbstractDog {
             this.setCanPlayersAttack(compound.getBoolean("friendlyFire"));
             this.setRegardTeamPlayers(compound.getBoolean("regardTeamPlayers"));
             this.setForceSit(compound.getBoolean("forceSit"));
+            this.setCrossOriginTp(compound.getBoolean("crossOriginTp")); 
             var low_health_strategy_id = compound.getByte("lowHealthStrategy");
             this.setLowHealthStrategy(LowHealthStrategy.fromId(low_health_strategy_id));
             if (compound.contains("dogSize", Tag.TAG_ANY_NUMERIC)) {
@@ -2494,6 +2496,14 @@ public class Dog extends AbstractDog {
 
     public boolean regardTeamPlayers() {
         return this.getDogFlag(128);
+    }
+
+    public boolean crossOriginTp() {
+        return this.getDogFlag(64);
+    }
+
+    public void setCrossOriginTp(boolean val) {
+        this.setDogFlag(64, val);
     }
 
     public List<TalentInstance> getTalentMap() {

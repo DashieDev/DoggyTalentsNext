@@ -7,7 +7,11 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.talent.HunterDogTalent;
 import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
+import doggytalents.common.util.doggyasynctask.promise.DogHoldChunkToTeleportPromise;
+import doggytalents.common.util.doggyasynctask.promise.DogBatchTeleportToDimensionPromise;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -22,11 +26,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.EntityTeleportEvent.TeleportCommand;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -181,5 +191,86 @@ public class EventHandler {
         }
 
         return false;
+    }
+
+    public final int COLLECT_RADIUS = 26;
+    @SubscribeEvent
+    public void onEntityChangeDimension(EntityTravelToDimensionEvent event) {
+        var entity = event.getEntity();
+        if (entity.level.isClientSide) return;
+        if ((entity instanceof ServerPlayer owner)) {
+            onOwnerChangeDimension(event, owner);
+        }
+    }
+
+    private void onOwnerChangeDimension(EntityTravelToDimensionEvent event, ServerPlayer owner) {
+        if (!(owner.level instanceof ServerLevel sLevel)) return;
+        var mcServer = sLevel.getServer();
+        var fromLevel = sLevel;
+        var toLevel = mcServer.getLevel(event.getDimension());
+        if (fromLevel == toLevel) return;
+        
+        var crossOriginTpList = fromLevel
+            .getEntitiesOfClass(
+                Dog.class, 
+                owner.getBoundingBox().inflate(COLLECT_RADIUS, 4, COLLECT_RADIUS),
+                d -> {
+                    if (!d.isAlive() || d.isDefeated()) 
+                        return false;
+                    if (d.getOwner() != owner)
+                        return false;
+                    if (d.isOrderedToSit())
+                        return false;
+                    if (!d.getMode().shouldFollowOwner())
+                        return false;
+                    return d.crossOriginTp();
+                }
+            );
+        if (crossOriginTpList.isEmpty()) return;
+
+        DogAsyncTaskManager.addPromiseWithOwnerAndStartImmediately(
+            new DogBatchTeleportToDimensionPromise(
+                crossOriginTpList, 
+                fromLevel, owner.getUUID(), event.getDimension())
+            , owner);
+    }
+
+    public final int MIN_DISTANCE_TO_TRIGGER_TELEPORT_SQR = 400;
+    @SubscribeEvent
+    public void onOwnerTeleport(EntityTeleportEvent event) {
+        var entity = event.getEntity();
+        if (!(entity instanceof ServerPlayer owner)) return;
+        if (!(owner.level instanceof ServerLevel sLevel)) return;
+        
+        if (this.distanceTooShortToTeleport(event.getPrev(), event.getTarget()))
+            return;
+
+        var crossOriginTpList = sLevel
+            .getEntitiesOfClass(
+                Dog.class, 
+                owner.getBoundingBox().inflate(COLLECT_RADIUS, 4, COLLECT_RADIUS),
+                d -> {
+                    if (!d.isAlive() || d.isDefeated()) 
+                        return false;
+                    if (d.getOwner() != owner)
+                        return false;
+                    if (d.isInSittingPose())
+                        return false;
+                    if (!d.getMode().shouldFollowOwner())
+                        return false;
+                    return d.crossOriginTp();
+                }
+            );
+        if (crossOriginTpList.isEmpty()) return;
+
+        DogAsyncTaskManager.addPromiseWithOwnerAndStartImmediately(
+            new DogHoldChunkToTeleportPromise(
+                crossOriginTpList, sLevel
+            )
+            , owner);
+    }
+
+    private boolean distanceTooShortToTeleport(Vec3 from, Vec3 to) {
+        return from.distanceToSqr(to) < MIN_DISTANCE_TO_TRIGGER_TELEPORT_SQR;
     }
 }
