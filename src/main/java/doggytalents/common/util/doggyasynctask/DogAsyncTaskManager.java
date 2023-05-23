@@ -76,4 +76,18 @@ public class DogAsyncTaskManager {
         return true;
     }
 
+    public static boolean addPromiseWithOwnerAndStartImmediately(AbstractPromise promise, ServerPlayer owner) {
+        for (var p : PROMISES) {
+            if (p.getOwner() == owner) {
+                return false;
+            }
+        }
+        promise.setOwner(owner);
+        addPromise(promise);
+        
+        promise.start();
+        promise.setState(RUNNING);
+        return true;
+    }
+
 }
