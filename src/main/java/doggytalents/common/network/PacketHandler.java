@@ -54,6 +54,7 @@ public final class PacketHandler {
         registerPacket(new HeelByGroupPackets.RESPONSE_GROUP_LIST(), HeelByGroupData.RESPONSE_GROUP_LIST.class);
         registerPacket(new HeelByGroupPackets.REQUEST_HEEL(), HeelByGroupData.REQUEST_HEEL.class);
         registerPacket(new DogLowHealthStrategyPacket(), DogLowHealthStrategyData.class);
+        registerPacket(new CrossOriginTpPacket(), CrossOriginTpData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
