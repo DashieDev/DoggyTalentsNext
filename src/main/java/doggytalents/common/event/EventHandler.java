@@ -72,7 +72,11 @@ public class EventHandler {
         }
 
         if (!level.isClientSide) {
-            trainWolf(wolf, owner, stack, level);
+            if (!owner.getAbilities().instabuild) {
+                stack.shrink(1);
+            }
+
+            trainWolf(wolf, owner, level);
         }
 
         event.setCancellationResult(InteractionResult.SUCCESS);
@@ -85,11 +89,7 @@ public class EventHandler {
         return true;
     }
 
-    private void trainWolf(Wolf wolf, Player owner, ItemStack stack, Level level) {
-        if (!owner.getAbilities().instabuild) {
-            stack.shrink(1);
-        }
-
+    private void trainWolf(Wolf wolf, Player owner, Level level) {
         boolean keep_old_uuid =
             ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.KEEP_OLD_UUID_UPON_RESPAWN);
 
