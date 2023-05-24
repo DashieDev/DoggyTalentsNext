@@ -1,11 +1,13 @@
 package doggytalents.common.event;
 
+import doggytalents.DoggyAccessories;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.talent.HunterDogTalent;
+import doggytalents.common.util.Util;
 import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
 import doggytalents.common.util.doggyasynctask.promise.DogHoldChunkToTeleportPromise;
 import doggytalents.common.util.doggyasynctask.promise.DogBatchTeleportToDimensionPromise;
@@ -102,7 +104,18 @@ public class EventHandler {
         dog.setOrderedToSit(false);
         dog.setAge(wolf.getAge());
         dog.absMoveTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
-        
+
+        var wolf_collar_color = wolf.getCollarColor();
+        var color = Util.srgbArrayToInt(wolf_collar_color.getTextureDiffuseColors());
+        var dog_collar = DoggyAccessories.DYEABLE_COLLAR.get()
+            .create(color);
+        if (dog_collar != null)
+            dog.addAccessory(dog_collar);
+            
+        if (wolf.hasCustomName()) {
+            dog.setCustomName(wolf.getCustomName());
+        }
+
         level.addFreshEntity(dog);
 
         wolf.discard();
