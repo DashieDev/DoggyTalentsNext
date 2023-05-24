@@ -1470,6 +1470,13 @@ public class Dog extends AbstractDog {
 
         super.setUUID(uniqueIdIn);
 
+        //It doesn't make sense updating a dangling dog.
+        //The location data only persist if the dog is saved.
+        //And when the dog joined the world, the object always being created
+        //new and restore from nbt, so there won't be any case
+        //where a dog object is removed from the world, change the UUID and then re-added back in.
+        if (!this.isAddedToWorld()) return;
+
         if (this.level != null && !this.level.isClientSide) {
             DogLocationStorage.get(this.level).remove(oldUniqueId);
             DogLocationStorage.get(this.level).getOrCreateData(this).update(this);
