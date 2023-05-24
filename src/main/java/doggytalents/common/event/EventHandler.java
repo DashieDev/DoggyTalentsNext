@@ -79,6 +79,9 @@ public class EventHandler {
                         stack.shrink(1);
                     }
 
+                    boolean keep_old_uuid =
+                        ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.KEEP_OLD_UUID_UPON_RESPAWN);
+
                     Dog dog = DoggyEntityTypes.DOG.get().create(world);
                     dog.tame(player);
                     dog.setHealth(dog.getMaxHealth());
@@ -89,6 +92,7 @@ public class EventHandler {
                     world.addFreshEntity(dog);
 
                     wolf.discard();
+                    if (keep_old_uuid) dog.setUUID(wolf.getUUID());
                 }
 
                 event.setCancellationResult(InteractionResult.SUCCESS);
