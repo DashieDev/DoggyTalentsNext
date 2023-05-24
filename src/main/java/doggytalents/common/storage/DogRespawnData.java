@@ -3,6 +3,7 @@ package doggytalents.common.storage;
 import com.google.common.collect.Lists;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.api.feature.EnumMode;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.BlockPos;
@@ -78,12 +79,16 @@ public class DogRespawnData implements IDogData {
             return null;
         }
 
+        boolean keep_old_uuid =
+            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.KEEP_OLD_UUID_UPON_RESPAWN);
+
         CompoundTag compoundnbt = dog.saveWithoutId(new CompoundTag());
         UUID uuid = dog.getUUID();
         compoundnbt.merge(this.data);
-        dog.setUUID(uuid);
         dog.load(compoundnbt);
-
+        
+        dog.setUUID(keep_old_uuid ? this.uuid : uuid);
+        
         dog.setMode(EnumMode.DOCILE);
         dog.setOrderedToSit(true);
 
