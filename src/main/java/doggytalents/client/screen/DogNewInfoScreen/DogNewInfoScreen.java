@@ -31,6 +31,7 @@ import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -43,6 +44,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
 
     private TextOnlyButton rightTabButton;
     private TextOnlyButton lefTabButton;
+    private boolean sideTabNavLocked = false;
 
     private DogNewInfoScreen(Dog dog) {
         super(Component.translatable("doggytalents.screen.dog.title"));
@@ -56,7 +58,48 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             Store.get(this).dispatch(ActiveTabSlice.class, 
                 ActiveTabSlice.UIActionCreator(dog, ActiveTabSlice.getNextTab(selectedTab))
             );
-        }, Minecraft.getInstance().font);
+        }, Minecraft.getInstance().font) {
+
+            private boolean selected = false;
+
+            @Override
+            public void renderButton(PoseStack stack, int mouseX, int mouseY, float pticks) {
+                super.renderButton(stack, mouseX, mouseY, pticks);
+
+                //draw key hint
+                var mc = Minecraft.getInstance();
+                var key_right = mc.options.keyRight;
+                var key_str = key_right.getTranslatedKeyMessage();
+                var bg_color = selected ?
+                    0x487500A5 : 0x485e5d5d;
+
+                var key_str_len = font.width(key_str);
+                var tX = this.x + this.getWidth()/2
+                    - key_str_len/2;
+                var tY = this.y + this.getHeight()/2 + 20;
+                font.draw(stack, key_str, tX, tY, 0xffffffff);
+                
+                GuiComponent.fill(stack, tX - 1, tY - 1, 
+                    tX + key_str_len + 1, tY + font.lineHeight + 1, bg_color); 
+            }
+
+            @Override
+            public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+                var mc = Minecraft.getInstance();
+                if (keyCode == mc.options.keyRight.getKey().getValue()) {
+                    this.selected = true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+                this.selected = false;
+
+                return false;
+            }
+
+        };
 
         this.lefTabButton = new TextOnlyButton(0, 0, 0, 0, Component.literal("<"), b -> {
             var selectedTab = Store.get(this).getStateOrDefault(
@@ -66,7 +109,48 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             Store.get(this).dispatch(ActiveTabSlice.class, 
                 ActiveTabSlice.UIActionCreator(dog, ActiveTabSlice.getPrevTab(selectedTab))
             );
-        }, Minecraft.getInstance().font);
+        }, Minecraft.getInstance().font) {
+
+            private boolean selected;
+
+            @Override
+            public void renderButton(PoseStack stack, int mouseX, int mouseY, float pticks) {
+                super.renderButton(stack, mouseX, mouseY, pticks);
+
+                //draw key hint
+                var mc = Minecraft.getInstance();
+                var key_left = mc.options.keyLeft;
+                var key_str = key_left.getTranslatedKeyMessage();
+                var bg_color = selected ?
+                    0x487500A5 : 0x485e5d5d;
+
+                var key_str_len = font.width(key_str);
+                var tX = this.x + this.getWidth()/2
+                    - key_str_len/2;
+                var tY = this.y + this.getHeight()/2 + 20;
+                font.draw(stack, key_str, tX, tY, 0xffffffff);
+                
+                GuiComponent.fill(stack, tX - 1, tY - 1, 
+                    tX + key_str_len + 1, tY + font.lineHeight + 1, bg_color); 
+            }
+
+            @Override
+            public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+                var mc = Minecraft.getInstance();
+                if (keyCode == mc.options.keyLeft.getKey().getValue()) {
+                    this.selected = true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+                this.selected = false;
+
+                return false;
+            }
+
+        };
 
     }
 
@@ -219,16 +303,29 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         var mc = Minecraft.getInstance();
         var options = mc.options;
         
-        if (keyCode == options.keyLeft.getKey().getValue()) {
-            this.lefTabButton.playDownSound(mc.getSoundManager());
-            this.lefTabButton.onClick(0, 0);
-        } else if (keyCode == options.keyRight.getKey().getValue()) {
-            this.rightTabButton.playDownSound(mc.getSoundManager());
-            this.rightTabButton.onClick(0, 0);
+        if (!this.sideTabNavLocked) {
+            this.sideTabNavLocked = true;
+            if (keyCode == options.keyLeft.getKey().getValue()) {
+                this.lefTabButton.playDownSound(mc.getSoundManager());
+                this.lefTabButton.onClick(0, 0);
+                this.lefTabButton.keyPressed(keyCode, scanCode, modifiers);
+            } else if (keyCode == options.keyRight.getKey().getValue()) {
+                this.rightTabButton.playDownSound(mc.getSoundManager());
+                this.rightTabButton.onClick(0, 0);
+                this.rightTabButton.keyPressed(keyCode, scanCode, modifiers);
+            }
         }
-
+        
         DropdownMenuManager.get(this).keyPressed(keyCode, scanCode, modifiers);
         return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        this.sideTabNavLocked = false;
+        this.lefTabButton.keyReleased(keyCode, scanCode, modifiers);
+        this.rightTabButton.keyReleased(keyCode, scanCode, modifiers);
+        return super.keyReleased(keyCode, scanCode, modifiers);
     }
 
     @Override
