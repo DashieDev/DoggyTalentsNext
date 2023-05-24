@@ -1664,6 +1664,16 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public void onAddedToWorld() {
+        if (this.level instanceof ServerLevel serverLevel && this.isAlive()) {
+            var data = DogLocationStorage.get(serverLevel).getOrCreateData(this);
+            
+            if (data != null) data.update(this);
+        }
+        super.onAddedToWorld();
+    }
+
+    @Override
     public void remove(Entity.RemovalReason removalReason) {
         super.remove(removalReason);
 
