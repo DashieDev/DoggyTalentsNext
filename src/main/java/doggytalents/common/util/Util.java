@@ -55,6 +55,21 @@ public class Util {
         return new int[] {r, g, b};
     }
 
+    public static int[] srgbArrayToIntArray(float[] color_srgb) {
+        int[] color_rgb = new int[color_srgb.length]; 
+        for (int i = 0; i < color_srgb.length; ++i) {
+            color_rgb[i] = (int)(color_srgb[i]*255);
+        }
+        return color_rgb;
+    }
+
+    public static int srgbArrayToInt(float[] color_srgb) {
+        var color_rgb = srgbArrayToIntArray(color_srgb);
+        return color_rgb[0] << 16
+             | color_rgb[1] << 8
+             | color_rgb[2];
+    }
+
     public static float getRelativeLuminance(float sr, float sg, float sb) {
         sr = sr < 0.03928f ? sr/12.92f : (float) Math.pow((sr + 0.055) / 1.055 , 2.4);
         sg = sg < 0.03928f ? sg/12.92f : (float) Math.pow((sg + 0.055) / 1.055 , 2.4);
