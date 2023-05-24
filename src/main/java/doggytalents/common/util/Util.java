@@ -12,6 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -78,11 +79,16 @@ public class Util {
     }
 
     public static int colorDye(int startColor, Collection<DyeColor> dyes) {
-        List<int[]> colors = dyes.stream()
-                .mapToInt(DyeColor::getTextColor)
-                .mapToObj(Util::rgbIntToIntArray)
-                .collect(Collectors.toList());
-
+        var colors = new ArrayList<int[]>(dyes.size());
+        for (var dye : dyes) {
+            var color_srgb = dye.getTextureDiffuseColors();
+            var color_rgb = new int[color_srgb.length];
+            for (int i = 0; i < color_srgb.length; ++i) {
+                color_rgb[i] = (int)(color_srgb[i]*255);
+            }
+            colors.add(color_rgb);
+        }
+        
         if (startColor != -1) {
             colors.add(0, rgbIntToIntArray(startColor));
         }
