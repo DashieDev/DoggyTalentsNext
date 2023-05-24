@@ -16,8 +16,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -25,18 +25,14 @@ import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.EntityTeleportEvent.TeleportCommand;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -58,48 +54,59 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void rightClickEntity(final PlayerInteractEvent.EntityInteract event) {
+    public void onWolfRightClickWithTreat(final PlayerInteractEvent.EntityInteract event) {
+        var level = event.getLevel();
+        var stack = event.getItemStack();
+        var target = event.getTarget();
+        var owner = event.getEntity();
 
-        Level world = event.getLevel();
-
-        ItemStack stack = event.getItemStack();
-        Entity target = event.getTarget();
-
-        if (target.getType() == EntityType.WOLF && target instanceof TamableAnimal && stack.getItem() == DoggyItems.TRAINING_TREAT.get()) {
-            event.setCanceled(true);
-
-            TamableAnimal wolf = (TamableAnimal) target;
-
-            Player player = event.getEntity();
-
-            if (wolf.isAlive() && wolf.isTame() && wolf.isOwnedBy(player)) {
-
-                if (!world.isClientSide) {
-                    if (!player.getAbilities().instabuild) {
-                        stack.shrink(1);
-                    }
-
-                    boolean keep_old_uuid =
-                        ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.KEEP_OLD_UUID_UPON_RESPAWN);
-
-                    Dog dog = DoggyEntityTypes.DOG.get().create(world);
-                    dog.tame(player);
-                    dog.setHealth(dog.getMaxHealth());
-                    dog.setOrderedToSit(false);
-                    dog.setAge(wolf.getAge());
-                    dog.absMoveTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
-
-                    world.addFreshEntity(dog);
-
-                    wolf.discard();
-                    if (keep_old_uuid) dog.setUUID(wolf.getUUID());
-                }
-
-                event.setCancellationResult(InteractionResult.SUCCESS);
-            } else {
-                event.setCancellationResult(InteractionResult.FAIL);
-            }
+        if (stack.getItem() != DoggyItems.TRAINING_TREAT.get()) 
+            return;
+        if (target.getType() != EntityType.WOLF) return;
+        if (!(target instanceof Wolf wolf)) return;
+        event.setCanceled(true);
+        
+        if (!checkValidWolf(wolf, owner)) {
+            event.setCancellationResult(InteractionResult.FAIL);
+            return;
         }
+
+        if (!level.isClientSide) {
+            trainWolf(wolf, owner, stack, level);
+        }
+
+        event.setCancellationResult(InteractionResult.SUCCESS);
+    }
+
+    private boolean checkValidWolf(Wolf wolf, Player owner) {
+        if (!wolf.isAlive()) return false;
+        if (!wolf.isTame()) return false;
+        if (!wolf.isOwnedBy(owner)) return false;
+        return true;
+    }
+
+    private void trainWolf(Wolf wolf, Player owner, ItemStack stack, Level level) {
+        if (!owner.getAbilities().instabuild) {
+            stack.shrink(1);
+        }
+
+        boolean keep_old_uuid =
+            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.KEEP_OLD_UUID_UPON_RESPAWN);
+
+        Dog dog = DoggyEntityTypes.DOG.get().create(level);
+        if (dog == null) {
+            throw new IllegalStateException("Creator function for the dog returned \"null\"");
+        }
+        dog.tame(owner);
+        dog.setHealth(dog.getMaxHealth());
+        dog.setOrderedToSit(false);
+        dog.setAge(wolf.getAge());
+        dog.absMoveTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
+        
+        level.addFreshEntity(dog);
+
+        wolf.discard();
+        if (keep_old_uuid) dog.setUUID(wolf.getUUID());
     }
 
     @SubscribeEvent
@@ -218,17 +225,7 @@ public class EventHandler {
             .getEntitiesOfClass(
                 Dog.class, 
                 owner.getBoundingBox().inflate(COLLECT_RADIUS, 4, COLLECT_RADIUS),
-                d -> {
-                    if (!d.isAlive() || d.isDefeated()) 
-                        return false;
-                    if (d.getOwner() != owner)
-                        return false;
-                    if (d.isOrderedToSit())
-                        return false;
-                    if (!d.getMode().shouldFollowOwner())
-                        return false;
-                    return d.crossOriginTp();
-                }
+                d -> isDogReadyToTeleport(d, owner)
             );
         if (crossOriginTpList.isEmpty()) return;
 
@@ -253,17 +250,7 @@ public class EventHandler {
             .getEntitiesOfClass(
                 Dog.class, 
                 owner.getBoundingBox().inflate(COLLECT_RADIUS, 4, COLLECT_RADIUS),
-                d -> {
-                    if (!d.isAlive() || d.isDefeated()) 
-                        return false;
-                    if (d.getOwner() != owner)
-                        return false;
-                    if (d.isInSittingPose())
-                        return false;
-                    if (!d.getMode().shouldFollowOwner())
-                        return false;
-                    return d.crossOriginTp();
-                }
+                d -> isDogReadyToTeleport(d, owner)
             );
         if (crossOriginTpList.isEmpty()) return;
 
@@ -272,6 +259,18 @@ public class EventHandler {
                 crossOriginTpList, sLevel
             )
             , owner);
+    }
+
+    private boolean isDogReadyToTeleport(Dog dog, LivingEntity owner) {
+        if (!dog.isAlive() || dog.isDefeated()) 
+        return false;
+        if (dog.getOwner() != owner)
+            return false;
+        if (dog.isOrderedToSit())
+            return false;
+        if (!dog.getMode().shouldFollowOwner())
+            return false;
+        return dog.crossOriginTp();
     }
 
     private boolean distanceTooShortToTeleport(Vec3 from, Vec3 to) {
