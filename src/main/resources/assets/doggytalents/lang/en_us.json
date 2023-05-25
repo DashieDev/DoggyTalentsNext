@@ -251,8 +251,8 @@
    "dog.low_health_strategy.2" : "Stick To Owner",
 
    "dog.low_health_strategy.0.help" : "Dog continues to do whatever he is doing despite being low on health.",
-   "dog.low_health_strategy.1.help" : "Dog will start be alerted of any enemies targeting the dog and try to run away when they get close. He also whines to notify owner that he is on low health.",
-   "dog.low_health_strategy.2.help" : "Dog will stay close to his owner while being low on health. He also whines to notify owner. He also whines to notify owner that he is on low health.",
+   "dog.low_health_strategy.1.help" : "Dog will start to be alerted of any enemies targeting the dog and try to run away when they get close.",
+   "dog.low_health_strategy.2.help" : "Dog will stay close to owner while being low on health. He also whines to notify owner. He also whines to notify owner that he is on low health.",
 
    "dog.msg.greet_owner.0": "%s: Wooooooof woof woooooof? (Where have you been?)",
    "dog.msg.greet_owner.1": "%s: Woof Woof Wooof Wooof woof wooooooooooof! (You don't know how much i've been waiting for you!)",
