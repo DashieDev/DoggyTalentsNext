@@ -1,6 +1,7 @@
 package doggytalents.common.network.packet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.function.Supplier;
 
 import doggytalents.DoggyItems;
@@ -14,6 +15,7 @@ import doggytalents.common.network.IPacket;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.HeelByGroupData;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.EntityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -152,6 +154,16 @@ public class HeelByGroupPackets {
                     dog -> dog.isAlive() && !dog.isDefeated() && dog.isOwnedBy(sender)
                         && dog.getGroups().isGroup(data.group)
                 );
+
+                int max_heel_count = ConfigHandler.ServerConfig.getConfig(
+                    ConfigHandler.SERVER.MAX_HEEL_LIMIT
+                );
+                if (max_heel_count > 0) {
+                    if (dogs.size() > max_heel_count) {
+                        Collections.sort(dogs, new EntityUtil.Sorter(sender));
+                        dogs = dogs.subList(0, max_heel_count);
+                    }
+                }
 
                 for (var dog : dogs) {
                     if (dog.isPassenger()) dog.stopRiding();
