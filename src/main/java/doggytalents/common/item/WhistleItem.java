@@ -13,6 +13,7 @@ import doggytalents.common.entity.DoggyBeamEntity;
 import doggytalents.common.entity.ai.triggerable.DogGoBehindOwnerAction;
 import doggytalents.common.entity.ai.triggerable.DogMoveToBedAction;
 import doggytalents.common.talent.RoaringGaleTalent;
+import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
@@ -38,6 +39,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.I18NParser;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -170,18 +172,32 @@ public class WhistleItem extends Item {
             return;
         case HEEL:
             if (world.isClientSide) return;
-            for (Dog dog : dogsList) {
-                if (dog.isInSittingPose()) continue;
-                if (!dog.getMode().shouldFollowOwner()) continue;
-                if (dog.distanceToSqr(dog.getOwner()) > 9) { // Only heel if less than 3 blocks away
-                    EntityUtil.tryToTeleportNearEntity(dog, dog.getNavigation(), dog.getOwner(), 2);
-                }
-                successful = true;
-            }
+            int max_heel_count = ConfigHandler.ServerConfig.getConfig(
+                ConfigHandler.SERVER.MAX_HEEL_LIMIT
+            );
 
-            if (successful) {
-                player.sendSystemMessage(Component.translatable("dogcommand.heel"));
+            var heel_list = dogsList.stream()
+                .filter(filter_dog -> {
+                    if (filter_dog.isOrderedToSit()) 
+                        return false;
+                    if (!filter_dog.getMode().shouldFollowOwner())
+                        return false;
+                    return filter_dog.distanceToSqr(filter_dog.getOwner()) > 9;
+                })
+                .collect(Collectors.toList());
+            if (max_heel_count > 0) {
+                if (heel_list.size() > max_heel_count) {
+                    Collections.sort(heel_list, new EntityUtil.Sorter(player));
+                    heel_list = heel_list.subList(0, max_heel_count);
+                }
             }
+            if (heel_list.isEmpty()) return;
+
+            DogUtil.dynamicSearchAndTeleportToOwnwerInBatch(
+                world, heel_list, player, 3);
+
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            player.sendSystemMessage(Component.translatable("dogcommand.heel"));
             return;
         case STAY:
             if (world.isClientSide) return;
