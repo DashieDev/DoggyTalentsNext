@@ -184,6 +184,8 @@ public class Dog extends AbstractDog {
         = new DogMiningCautiousManager(this);
     public final DogGroupsManager dogGroupsManager
         = new DogGroupsManager();
+    public final DogIncapacitatedMananger incapacitatedMananger
+        = new DogIncapacitatedMananger(this);
 
     protected final PathNavigation defaultNavigation;
     protected final MoveControl defaultMoveControl;
@@ -218,8 +220,6 @@ public class Dog extends AbstractDog {
     protected boolean isLowHunger;
     protected boolean isZeroHunger;
     protected int hungerDamageTick;
-
-    protected int incapacitatedMutiplier = 1;
 
     private static final UUID HUNGER_MOVEMENT = UUID.fromString("50671f49-1dfd-4397-242b-78bb6b178115");
 
@@ -610,13 +610,8 @@ public class Dog extends AbstractDog {
 
         this.alterations.forEach((alter) -> alter.livingTick(this));
 
-        if (!this.level.isClientSide && this.isDefeated()) {
-            this.incapacitatedTick();
-        }
-
-        if (this.level.isClientSide && this.isDefeated()) {
-            this.incapacitatedClientTick();
-        }
+        if (this.isDefeated())
+            this.incapacitatedMananger.tick();
     }
 
     public TriggerableAction getTriggerableAction() {
@@ -698,91 +693,6 @@ public class Dog extends AbstractDog {
         this.stashedAction = action;
     }
 
-    public void incapacitatedClientTick() {
-        for (var i : this.getAccessories()) {
-            if (i.getAccessory() instanceof IncapacitatedLayer iL) {
-                if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
-                boolean isLowGraphic = 
-                    ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
-                if (isLowGraphic) return;
-                iL.tickClient(this);
-            }
-        }
-    }
-
-    /**
-     * When dogs enter Incapacitated Mode, hunger now acts as incapacitated units.
-     * 
-     * When "hunger" reaches Zero, it will reset and the dog will exit I Mode
-     * 
-     */
-    public void incapacitatedTick() {
-        // 3 days max 60 min = 72 000 ticks
-
-        var owner = this.getOwner();
-        var dog_b0_state = this.level.getBlockState(this.blockPosition());
-        var dog_b0_block = dog_b0_state.getBlock();
-
-        if (this.getDogHunger() >= this.getMaxIncapacitatedHunger()) {
-            incapacitatedExit();
-            return;
-        }
-
-        if (dog_b0_block == Blocks.AIR) {
-            this.addHunger(0.001f*this.getIncapacitatedMutiplier());
-        } else if (dog_b0_block == DoggyBlocks.DOG_BED.get()) {
-            if (!this.isInSittingPose())
-                this.setInSittingPose(true);
-            incapacitatedHealWithBed(owner);
-        }
-    }
-        
-
-    private void incapacitatedExit() {
-        this.setHealth(20);
-        this.setMode(EnumMode.DOCILE);
-        this.setDogHunger(this.getMaxHunger());
-        this.setOrderedToSit(true);
-        var toRemove = new ArrayList<AccessoryInstance>();
-        for (var i : this.getAccessories()) {
-            if (i.getAccessory() instanceof IncapacitatedLayer) {
-                toRemove.add(i);
-            }
-        }
-        for (var i : toRemove) {
-            this.getAccessories().remove(i);
-        }
-        this.markDataParameterDirty(ACCESSORIES.get());
-
-        if (this.level instanceof ServerLevel sL) {
-            sL.sendParticles(
-                ParticleTypes.HEART, 
-                this.getX(), this.getY(), this.getZ(), 
-                24, 
-                this.getBbWidth(), 0.8f, this.getBbWidth(), 
-                0.1
-            );
-        }
-    }
-
-    private void incapacitatedHealWithBed(LivingEntity owner) {
-        this.addHunger(0.002f*this.getIncapacitatedMutiplier());
-
-        if (owner == null) return;
-        if (this.distanceToSqr(owner) > 100) return;
-        this.addHunger(0.02f*this.getIncapacitatedMutiplier());
-
-        if (!(this.level instanceof ServerLevel)) return;
-        if (this.tickCount % 10 != 0) return;
-        ((ServerLevel) this.level).sendParticles(
-            ParticleTypes.HEART, 
-            this.getX(), this.getY(), this.getZ(), 
-            1, 
-            this.getBbWidth(), 0.8f, this.getBbWidth(), 
-            0.1
-        );
-    }
-
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
 
@@ -796,7 +706,8 @@ public class Dog extends AbstractDog {
         // }
 
         if (this.isDefeated()) 
-            return this.interactIncapacitated(stack, player, hand);
+            return this.incapacitatedMananger
+                .interact(stack, player, hand);
 
         if (this.isTame()) {
             if (stack.getItem() == Items.STICK) {
@@ -874,79 +785,12 @@ public class Dog extends AbstractDog {
         return actionresulttype;
     }
 
-    protected InteractionResult interactIncapacitated(ItemStack stack, Player player, InteractionHand hand) {
-        if (stack.getItem() == Items.TOTEM_OF_UNDYING) {
-            if (!this.level.isClientSide) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
-
-                var defeatedDogs = DogUtil.getOtherIncapacitatedDogNearby(this);
-                
-                for (var d : defeatedDogs) {
-                    d.setDogHunger(this.getMaxIncapacitatedHunger());
-
-                    d.removeAllEffects();
-                    d.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
-                    d.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
-                    d.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
-                    //Earraper.
-                    //d.level.broadcastEntityEvent(d, (byte)35);
-                }
-                this.level.broadcastEntityEvent(this, (byte)35);
-            }
-            return InteractionResult.SUCCESS;
-        } else if (stack.getItem() == Items.CAKE && this.getIncapacitatedMutiplier() < 2) {
-
-            if (this.level instanceof ServerLevel) {
-                ParticlePackets.DogEatingParticlePacket
-                    .sendDogEatingParticlePacketToNearby(this, new ItemStack(Items.CAKE));
-            }
-            this.consumeItemFromStack(player, stack);
-            this.playSound(
-                SoundEvents.GENERIC_EAT, 
-                this.getSoundVolume(), 
-                (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F
-            );
-
-            this.setIncapacitatedMutiplier(this.getIncapacitatedMutiplier()*2);
-        } else if (stack.getItem() == Items.BONE && !this.isPassenger() && !player.isVehicle()) {
-            if (this.getOwner() == player) {
-                this.startRiding(player);
-            }
-            return InteractionResult.SUCCESS;
-        } else if (stack.getItem() == Items.STICK) {
-
-            if (this.level.isClientSide) {
-                boolean useLegacyDogGui = 
-                    ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.USE_LEGACY_DOGGUI); 
-
-                if (!useLegacyDogGui) {
-                    DogCannotInteractWithScreen.open(this);
-                }
-            }
-
-            return InteractionResult.SUCCESS;
-        } else if (this.isPassenger()) {
-            if(!this.level.isClientSide) this.stopRiding();
-            return InteractionResult.SUCCESS;
-        } else {
-            if (this.level.isClientSide) this.displayToastIncapacitated(player);
-        }
-        return InteractionResult.FAIL;
-    }
+    
 
     private void displayToastIfNoPermission(Player player) {
         if (this.canInteract(player)) return;
         player.displayClientMessage(
             Component.translatable("doggui.invalid_dog.no_permission.title")
-            .withStyle(ChatFormatting.RED) 
-        , true);
-    }
-
-    private void displayToastIncapacitated(Player player) {
-        player.displayClientMessage(
-            Component.translatable("doggui.invalid_dog.incapacitated.title")
             .withStyle(ChatFormatting.RED) 
         , true);
     }
@@ -1790,7 +1634,7 @@ public class Dog extends AbstractDog {
         this.setHealth(1);
         this.setMode(EnumMode.INCAPACITATED);
         this.setDogHunger(0);
-        this.setIncapacitatedMutiplier(1);
+        this.incapacitatedMananger.init();
         this.unRide();
         addIncapacitatedLayer(source);
 
@@ -3295,14 +3139,6 @@ public class Dog extends AbstractDog {
 
     public int getMaxIncapacitatedHunger() {
         return 64;
-    }
-
-    public int getIncapacitatedMutiplier() {
-        return this.incapacitatedMutiplier;
-    }
-
-    public void setIncapacitatedMutiplier(int m) {
-        this.incapacitatedMutiplier = m;
     }
 
     public StatsTracker getStatTracker() {
