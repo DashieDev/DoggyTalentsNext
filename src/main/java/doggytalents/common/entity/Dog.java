@@ -47,6 +47,7 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -1745,11 +1746,80 @@ public class Dog extends AbstractDog {
 
     @Override
     public void die(DamageSource cause) {
+        if (checkAndHandleIncapacitated(cause))
+            return;
+        
         this.wetSource = null;
         this.finishShaking();
 
         this.alterations.forEach((alter) -> alter.onDeath(this, cause));
         super.die(cause);
+    }
+
+    private boolean checkAndHandleIncapacitated(DamageSource cause) {
+        if (!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.IMMORTAL_DOGS)) 
+            return false;
+        if (cause.isBypassInvul()) 
+            return false;
+        if (this.getOwnerUUID() == null) 
+            return false;
+
+        handleIncapacitated(cause);
+        return true;
+    }
+
+    /**
+     * in Incapacitated Mode, the dog hunger is rendered by the negative of 
+        the maxIncapaciatedHunger's complement of the actuall hunger value.
+        At first the hunger will be zero, when the dog enters Incapacitated.
+        To exit incapacitated, the dog hunger have to reach maxIncapacitatedHunger.
+     */
+    private void handleIncapacitated(DamageSource source) {
+        this.setHealth(1);
+        this.setMode(EnumMode.INCAPACITATED);
+        this.setDogHunger(0);
+        this.setIncapacitatedMutiplier(1);
+        this.unRide();
+        addIncapacitatedLayer(source);
+
+        var owner = this.getOwner();
+        if (owner != null) sendIncapacitatedMsg(owner, source);
+    }
+
+    private void sendIncapacitatedMsg(LivingEntity owner, DamageSource source) {
+        var msg = source.getLocalizedDeathMessage(this).copy();
+        var genderStr = Component.translatable(this.getGender()
+            .getUnlocalisedSubject()).getString();
+        var msg005 = ". "
+            + genderStr.substring(0, 1).toUpperCase()
+            + genderStr.substring(1)
+            + " ";
+        var msg01 = Component.translatable(
+            "dog.mode.incapacitated.msg.partition1",
+            Component.literal(msg005),
+            Component.translatable(EnumMode.INCAPACITATED.getUnlocalisedName())
+            .withStyle(
+                Style.EMPTY
+                .withBold(true)
+                .withColor(0xd60404)
+            )
+        );
+    
+        msg.append(msg01);
+        owner.sendSystemMessage(msg);
+    }
+
+    private void addIncapacitatedLayer(DamageSource source) {
+        AccessoryInstance hurtLayer;
+        if (source.isFire()) {
+            hurtLayer = DoggyAccessories.INCAPACITATED_BURN.get().getDefault();
+        } else if (source == DamageSource.MAGIC) {
+            hurtLayer = DoggyAccessories.INCAPACITATED_POISON.get().getDefault();
+        } else {
+            hurtLayer = DoggyAccessories.INCAPACITATED_BLOOD.get().getDefault();
+        }
+        
+        if (hurtLayer != null) this.addAccessory(hurtLayer);
     }
 
     @Override
