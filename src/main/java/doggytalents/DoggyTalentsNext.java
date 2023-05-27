@@ -20,7 +20,6 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.HelmetInteractHandler;
 import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.event.EventHandler;
-import doggytalents.common.event.IncapacitatedEventHandler;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;
@@ -98,7 +97,6 @@ public class DoggyTalentsNext {
 
         //debug
         forgeEventBus.register(new ChopinLogger());
-        forgeEventBus.register(new IncapacitatedEventHandler());
 
         // Client Events
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
