@@ -148,6 +148,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue ALL_PLAYER_CANNOT_ATTACK_DOG;
         public ForgeConfigSpec.BooleanValue ALL_DOG_BLOCK_PORTAL;
         public ForgeConfigSpec.BooleanValue KEEP_OLD_UUID_UPON_RESPAWN;
+        public ForgeConfigSpec.IntValue MAX_HEEL_LIMIT;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -237,6 +238,11 @@ public class ConfigHandler {
                 .comment("Enable this if you wish to always keep the old UUID.")
                 .translation("doggytalents.keep_old_uuid_upon_respawn")
                 .define("keep_old_uuid_upon_respawn", false);
+            MAX_HEEL_LIMIT = builder
+                .comment("Define how many dogs a player can listen to commands which summon more than one dog to you")
+                .comment("at the same time. Set this to any negative value to remove the limit completely.")
+                .translation("doggytalents.max_heel_limit")
+                .defineInRange("max_heel_limit", 20, Integer.MIN_VALUE, Integer.MAX_VALUE);
             builder.pop();
 
             
