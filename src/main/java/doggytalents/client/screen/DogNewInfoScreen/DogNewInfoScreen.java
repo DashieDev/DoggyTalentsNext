@@ -330,6 +330,15 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     }
 
     @Override
+    public void setFocused(@Nullable GuiEventListener guiEventListener) {
+        if (guiEventListener == this.lefTabButton) 
+            return;
+        if (guiEventListener == this.rightTabButton)
+            return;        
+        super.setFocused(guiEventListener);
+    }
+
+    @Override
     public boolean isPauseScreen() {
         return false;
     }
