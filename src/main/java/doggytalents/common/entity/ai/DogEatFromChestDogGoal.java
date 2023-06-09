@@ -95,7 +95,7 @@ public class DogEatFromChestDogGoal extends Goal {
     public void tick() {
         this.invalidateChestDogCache();
         if (this.chestDog == null) return;
-        if (!this.chestDog.isAlive() || this.chestDog.isDefeated() ) {
+        if (!this.chestDog.isDoingFine()) {
             this.chestDog = null; return;
         }
         if (this.dog.distanceToSqr(this.chestDog) > stopDist*stopDist) {
@@ -163,10 +163,7 @@ public class DogEatFromChestDogGoal extends Goal {
     }
 
     private void invalidateChestDogCache() {
-        if (chestDog != null && !chestDog.isAlive()) {
-            this.chestDog = null;
-        }
-        if (chestDog != null && chestDog.isDefeated()) {
+        if (chestDog != null && !chestDog.isDoingFine()) {
             this.chestDog = null;
         }
     }

@@ -401,7 +401,7 @@ public class DogInfoScreen extends Screen {
         //     }
         //  }
 
-         if (!this.dog.isAlive() || this.dog.isDefeated()) {
+         if (!this.dog.isDoingFine()) {
             Minecraft.getInstance().setScreen(null);
         } 
 

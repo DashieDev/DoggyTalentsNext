@@ -51,7 +51,7 @@ public class PackPuppyTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog dogIn) {
-        if (dogIn.isAlive() && !dogIn.isDefeated() && !dogIn.level.isClientSide && this.level() >= 5) {
+        if (dogIn.isDoingFine() && !dogIn.level.isClientSide && this.level() >= 5) {
             List<ItemEntity> list = dogIn.level.getEntitiesOfClass(ItemEntity.class, dogIn.getBoundingBox().inflate(2.5D, 1D, 2.5D), SHOULD_PICKUP_ENTITY_ITEM);
 
             if (!list.isEmpty()) {
@@ -144,6 +144,6 @@ public class PackPuppyTalent extends TalentInstance {
     }
 
     public static boolean hasInventory(AbstractDog dogIn) {
-        return dogIn.isAlive() && dogIn.getTalent(DoggyTalents.PACK_PUPPY).isPresent();
+        return dogIn.isDoingFine() && dogIn.getTalent(DoggyTalents.PACK_PUPPY).isPresent();
     }
 }
