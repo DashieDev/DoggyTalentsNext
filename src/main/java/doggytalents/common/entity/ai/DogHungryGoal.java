@@ -51,6 +51,9 @@ public class DogHungryGoal extends Goal {
             }
         }
 
+        if (!this.dog.isDoingFine())
+            return false;
+
         LivingEntity owner = this.dog.getOwner();
         if (owner == null || this.remindtime > 0) {
             return false;

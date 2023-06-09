@@ -70,7 +70,7 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
             return;
 
         var tp_dogs = this.dogs.stream()
-            .filter(d -> d.isAlive() && !d.isDefeated())
+            .filter(d -> d.isDoingFine())
             .collect(Collectors.toList());
         if (tp_dogs.isEmpty()) {
             this.setState(State.REJECTED);
@@ -101,7 +101,7 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
     }
 
     private void teleportDog(Dog dog0, ServerLevel targetLevel, BlockPos pos) {
-        if (!dog0.isAlive() || dog0.isDefeated()) return;
+        if (!dog0.isDoingFine()) return;
 
         //TODO Maybe broadcast Forge Event here.
 
@@ -138,7 +138,7 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
 
     private void forceDogChunk() {
         for (var dog : dogs) {
-            if (!dog.isAlive() || dog.isDefeated())
+            if (!dog.isDoingFine())
                 continue;
             var chunkpos = new ChunkPos(dog.blockPosition());
             if (this.forcedDogChunk.contains(chunkpos))

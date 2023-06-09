@@ -1,5 +1,6 @@
 package doggytalents.common.entity.ai;
 
+import doggytalents.common.entity.Dog;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -46,7 +47,9 @@ public class BreedGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return this.targetMate.isAlive() && this.targetMate.isInLove() && this.spawnBabyDelay < 60;
+        if (!(targetMate instanceof Dog dog)) return false;
+        if (!dog.isDoingFine()) return false;
+        return this.targetMate.isInLove() && this.spawnBabyDelay < 60;
     }
 
     @Override
