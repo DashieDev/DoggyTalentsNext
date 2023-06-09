@@ -61,7 +61,7 @@ public class DogHoldChunkToTeleportPromise extends AbstractPromise {
 
     private void forceDogChunk() {
         for (var dog : dogs) {
-            if (!dog.isAlive() || dog.isDefeated())
+            if (!dog.isDoingFine())
                 continue;
             var chunkpos = new ChunkPos(dog.blockPosition());
             if (this.forcedDogChunk.contains(chunkpos))
