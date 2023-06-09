@@ -75,6 +75,8 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
         List<Dog> dogList = bowl.level.getEntitiesOfClass(Dog.class, new AABB(pos).inflate(5, 5, 5));
 
         for (Dog dog : dogList) {
+            if (!dog.isDoingFine()) continue;
+
             //TODO make dog bowl remember who placed and only their dogs can attach to the bowl
             UUID placerId = bowl.getPlacerId();
             if (placerId != null && placerId.equals(dog.getOwnerUUID()) && !dog.getBowlPos().isPresent()) {

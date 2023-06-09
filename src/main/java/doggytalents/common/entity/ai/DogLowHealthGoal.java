@@ -59,6 +59,7 @@ public class DogLowHealthGoal {
 
             LivingEntity owner = this.dog.getOwner();
             if (owner == null) return false;
+            if (!this.dog.isDoingFine()) return false;
             if (!this.dog.isDogLowHealth()) return false;
             if (this.dog.getLowHealthStrategy() != LowHealthStrategy.STICK_TO_OWNER)
                 return false;
@@ -166,6 +167,7 @@ public class DogLowHealthGoal {
             if (this.tickTillUpdateEnemyRecalc > 0)
                 --this.tickTillUpdateEnemyRecalc;
 
+            if (!this.dog.isDoingFine()) return false;
             if (this.dog.isInSittingPose()) return false;
             if (!this.dog.isDogLowHealth()) return false;
             if (this.dog.getLowHealthStrategy() != LowHealthStrategy.RUN_AWAY) {

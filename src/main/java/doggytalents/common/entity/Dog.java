@@ -2111,7 +2111,7 @@ public class Dog extends AbstractDog {
      */
     @Override
     public boolean canInteract(LivingEntity livingEntity) {
-        if (this.isDefeated()) return false;
+        if (!this.isDoingFine()) return false;
         return this.willObeyOthers() || this.isOwnedBy(livingEntity);
     }
 
@@ -2690,7 +2690,7 @@ public class Dog extends AbstractDog {
     @Override
     public void travel(Vec3 positionIn) {
         if (this.isAlive()) {
-            if (this.isVehicle()) {
+            if (this.isVehicle() && !this.isDefeated()) {
                 LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
 
                 // Face the dog in the direction of the controlling passenger
