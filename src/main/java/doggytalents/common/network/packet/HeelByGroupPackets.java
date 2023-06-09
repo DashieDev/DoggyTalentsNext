@@ -49,7 +49,7 @@ public class HeelByGroupPackets {
                 var dogsList = sender.level.getEntitiesOfClass(
                     Dog.class, 
                     sender.getBoundingBox().inflate(100D, 50D, 100D), 
-                    dog -> dog.isAlive() && !dog.isDefeated() && dog.isOwnedBy(sender)
+                    dog -> dog.isDoingFine() && dog.isOwnedBy(sender)
                 );
 
                 var groups_response = new ArrayList<DogGroup>();
@@ -151,7 +151,7 @@ public class HeelByGroupPackets {
                 var dogs = sender.level.getEntitiesOfClass(
                     Dog.class, 
                     sender.getBoundingBox().inflate(100D, 50D, 100D), 
-                    dog -> dog.isAlive() && !dog.isDefeated() && dog.isOwnedBy(sender)
+                    dog -> dog.isDoingFine() && dog.isOwnedBy(sender)
                         && dog.getGroups().isGroup(data.group)
                 );
 

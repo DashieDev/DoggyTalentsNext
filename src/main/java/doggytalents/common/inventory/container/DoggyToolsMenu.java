@@ -98,7 +98,7 @@ public class DoggyToolsMenu extends AbstractContainerMenu {
         if (getToolsSize() != DoggyToolsTalent.getSize(toolsLevel))
             return false;
         
-        return dog.isAlive() && !dog.isDefeated();
+        return dog.isDoingFine();
     }
 
     public int getToolsSize() {

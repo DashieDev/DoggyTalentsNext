@@ -44,7 +44,7 @@ public class WhistleUsePacket implements IPacket<WhistleUseData> {
             List<Dog> dogsList = player.level.getEntitiesOfClass(
                 Dog.class, 
                 player.getBoundingBox().inflate(100D, 50D, 100D), 
-                dog -> dog.isAlive() && !dog.isDefeated() && dog.isOwnedBy(player)
+                dog -> dog.isDoingFine() && dog.isOwnedBy(player)
             );
             whistle.useMode(useMode, dogsList, 
                 player.level, player, InteractionHand.MAIN_HAND);

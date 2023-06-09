@@ -275,7 +275,7 @@ public class EventHandler {
     }
 
     private boolean isDogReadyToTeleport(Dog dog, LivingEntity owner) {
-        if (!dog.isAlive() || dog.isDefeated()) 
+        if (!dog.isDoingFine()) 
         return false;
         if (dog.getOwner() != owner)
             return false;

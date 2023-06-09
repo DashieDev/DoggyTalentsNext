@@ -163,7 +163,7 @@ public class DogArmorContainer extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player p_38874_) {
-        return dog.isAlive() && !dog.isDefeated() 
+        return dog.isDoingFine()
             && dog.getDogLevel(DoggyTalents.DOGGY_ARMOR.get()) > 0;
     }
 

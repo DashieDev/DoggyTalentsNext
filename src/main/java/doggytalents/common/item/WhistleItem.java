@@ -116,7 +116,7 @@ public class WhistleItem extends Item {
             List<Dog> dogsList = world.getEntitiesOfClass(
                 Dog.class, 
                 player.getBoundingBox().inflate(100D, 50D, 100D), 
-                dog -> dog.isAlive() && !dog.isDefeated() && dog.isOwnedBy(player)
+                dog -> dog.isDoingFine() && dog.isOwnedBy(player)
             );
 
             if (id_mode >= WhistleMode.VALUES.length) id_mode = 0;
