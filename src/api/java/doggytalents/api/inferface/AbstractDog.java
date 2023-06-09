@@ -57,7 +57,9 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     }
 
     public void removeAttributeModifier(Attribute attribute, UUID modifierUUID) {
-        this.getAttribute(attribute).removeModifier(modifierUUID);
+        var attrib = this.getAttribute(attribute);
+        if (attrib == null) return;
+        attrib.removeModifier(modifierUUID);
     }
 
     @Override
