@@ -154,7 +154,7 @@ public class DogIncapacitatedMananger {
         var incap_state = dog.getIncapSyncState();
         var new_incap_state = incap_state.updateBandaid(bandagesCount);
         if (new_incap_state != incap_state) {
-            dog.setIcapSyncState(new_incap_state);
+            dog.setIncapSyncState(new_incap_state);
         }
     }
 
@@ -242,7 +242,7 @@ public class DogIncapacitatedMananger {
         var incap_state = dog.getIncapSyncState();
         var new_incap_state = incap_state.updateBandaid(bandagesCount);
         if (new_incap_state != incap_state) {
-            dog.setIcapSyncState(new_incap_state);
+            dog.setIncapSyncState(new_incap_state);
         }
         healWithBandaid(new_incap_state.bandaid);
 
@@ -270,7 +270,7 @@ public class DogIncapacitatedMananger {
         this.dog.setMode(EnumMode.DOCILE);
         this.dog.setDogHunger(this.dog.getMaxHunger());
         this.dog.setOrderedToSit(true);
-        this.dog.setIcapSyncState(IncapacitatedSyncState.NONE);
+        this.dog.setIncapSyncState(IncapacitatedSyncState.NONE);
 
         if (this.appliedIncapChanges) {
             this.appliedIncapChanges = false;
@@ -338,7 +338,7 @@ public class DogIncapacitatedMananger {
         var type = DefeatedType.byId(tg0.getInt("type"));
         var bandaid_count = tg0.getInt("bandaid");
         this.bandagesCount = bandaid_count;
-        dog.setIcapSyncState(new IncapacitatedSyncState(type));
+        dog.setIncapSyncState(new IncapacitatedSyncState(type));
     }
 
     public static class IncapacitatedSyncState {
