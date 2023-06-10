@@ -74,6 +74,9 @@ public class Resources {
     public static final ResourceLocation INCAPACITATED_POISON = getEntity("dog", "doggy_hurt/poison");
     public static final ResourceLocation INCAPACITATED_LESS_GRAPHIC = getEntity("dog", "doggy_hurt/less_graphic");
 
+    public static final ResourceLocation BANDAID_OVERLAY_HALF = getEntity("dog", "doggy_hurt/bandaid/overlay_half");
+    public static final ResourceLocation BANDAID_OVERLAY_FULL = getEntity("dog", "doggy_hurt/bandaid/overlay_full");
+
     public static ResourceLocation getEntity(String type, String textureFileName) {
         return Util.getResource("textures/entity/" + type + "/" + textureFileName + ".png");
     }
