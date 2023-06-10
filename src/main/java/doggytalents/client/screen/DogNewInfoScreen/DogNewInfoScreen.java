@@ -74,9 +74,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
                     0x487500A5 : 0x485e5d5d;
 
                 var key_str_len = font.width(key_str);
-                var tX = this.x + this.getWidth()/2
+                var tX = this.getX() + this.getWidth()/2
                     - key_str_len/2;
-                var tY = this.y + this.getHeight()/2 + 20;
+                var tY = this.getY() + this.getHeight()/2 + 20;
                 font.draw(stack, key_str, tX, tY, 0xffffffff);
                 
                 GuiComponent.fill(stack, tX - 1, tY - 1, 
@@ -125,9 +125,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
                     0x487500A5 : 0x485e5d5d;
 
                 var key_str_len = font.width(key_str);
-                var tX = this.x + this.getWidth()/2
+                var tX = this.getX() + this.getWidth()/2
                     - key_str_len/2;
-                var tY = this.y + this.getHeight()/2 + 20;
+                var tY = this.getY() + this.getHeight()/2 + 20;
                 font.draw(stack, key_str, tX, tY, 0xffffffff);
                 
                 GuiComponent.fill(stack, tX - 1, tY - 1, 
