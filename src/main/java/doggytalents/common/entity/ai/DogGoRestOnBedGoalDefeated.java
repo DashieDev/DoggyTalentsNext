@@ -67,6 +67,7 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
 
     @Override
     public void tick() {
+        validateTarget();
         if (this.targetBed == null)
             return;
         var nav = dog.getNavigation();
@@ -85,10 +86,15 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
             targetBed.getY(), targetBed.getZ() + 0.5, 1);
         }
         this.dog.setInSittingPose(d_targetBed < 1);
-        if (this.dog.tickCount % 2 != 0) return;
-        var state = this.dog.level.getBlockState(targetBed);
-        if (!isBed(state)) {
-            this.targetBed = null;
+    }
+
+    private void validateTarget() {
+        if (targetBed == null) return;
+        if (this.dog.tickCount % 2 == 0) {
+            var state = this.dog.level.getBlockState(targetBed);
+            if (!isBed(state)) {
+                this.targetBed = null;
+            }
         }
     }
 
