@@ -139,6 +139,14 @@ public class DTRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(DoggyItems.RADIO_COLLAR.get(), 1).pattern("XX").pattern("YX").define('X', Items.IRON_INGOT).define('Y', Items.REDSTONE).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
         ShapelessRecipeBuilder.shapeless(DoggyItems.RADAR.get(), 1).requires(Items.MAP, 1).requires(Items.REDSTONE, 1).requires(DoggyItems.RADIO_COLLAR.get(), 1).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.CONDUCTING_BONE.get(), 1).pattern(" B ").pattern("RBR").pattern("PEP").define('P', Items.SHULKER_SHELL).define('E', Items.END_CRYSTAL).define('B', Items.BONE).define('R', Items.NETHERITE_INGOT).unlockedBy("has_shulker_shell", has(Items.SHULKER_SHELL)).save(consumer);
+        ShapelessRecipeBuilder.shapeless(DoggyItems.BANDAID.get(), 1)
+            .requires(DoggyItems.TRAINING_TREAT.get())
+            .requires(Items.PAPER)
+            .requires(Items.SLIME_BALL)
+            .requires(Items.BONE_MEAL, 2)
+            .requires(Items.STRING)
+            .unlockedBy("has_paper", has(Items.PAPER))
+            .save(consumer);
 
         SpecialRecipeBuilder.special(DoggyRecipeSerializers.DOG_BED.get()).save(consumer, Util.getResourcePath("dog_bed"));
     }
