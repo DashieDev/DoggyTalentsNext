@@ -1661,6 +1661,9 @@ public class Dog extends AbstractDog {
 
         var owner = this.getOwner();
         if (owner != null) sendIncapacitatedMsg(owner, source);
+    
+        //TODO Maybe need to find somewhere more appropriate to do this.
+        this.removeAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT);
     }
 
     private void sendIncapacitatedMsg(LivingEntity owner, DamageSource source) {
@@ -2971,6 +2974,7 @@ public class Dog extends AbstractDog {
     }
 
     private void hungerHighToLow() {
+        if (!this.isDefeated())
         this.setAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT,
                 (d, u) -> new AttributeModifier(u, "Hunger Slowness", -0.35f, Operation.MULTIPLY_TOTAL) // this
                                                                                                         // operation is
