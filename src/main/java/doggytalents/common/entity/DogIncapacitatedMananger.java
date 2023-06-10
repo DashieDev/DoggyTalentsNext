@@ -196,7 +196,7 @@ public class DogIncapacitatedMananger {
 
         if (!this.appliedIncapChanges) {
             this.dog.setAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT,
-                (d, u) -> new AttributeModifier(u, "Defeated Slowness", -0.35f, Operation.MULTIPLY_TOTAL)
+                (d, u) -> new AttributeModifier(u, "Defeated Slowness", -0.5f, Operation.MULTIPLY_TOTAL)
             );
             this.appliedIncapChanges = true;
         }
