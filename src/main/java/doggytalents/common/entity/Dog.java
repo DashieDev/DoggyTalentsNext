@@ -22,7 +22,8 @@ import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.ai.triggerable.DogTriggerableGoal;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
-import doggytalents.common.entity.accessory.IncapacitatedLayer;
+import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
+import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.stats.StatsTracker;
@@ -152,6 +153,7 @@ public class Dog extends AbstractDog {
     private static final Cache<EntityDataAccessor<EnumMode>> MODE = Cache.make(() -> (EntityDataAccessor<EnumMode>) SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BED_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BOWL_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get()));
+    private static final Cache<EntityDataAccessor<IncapacitatedSyncState>> DOG_INCAP_SYNC_STATE = Cache.make(() -> (EntityDataAccessor<IncapacitatedSyncState>) SynchedEntityData.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER.get()));
 
     public static final void initDataParameters() {
         ACCESSORIES.get();
@@ -161,6 +163,7 @@ public class Dog extends AbstractDog {
         MODE.get();
         DOG_BED_LOCATION.get();
         DOG_BOWL_LOCATION.get();
+        DOG_INCAP_SYNC_STATE.get();
     }
 
     // Cached values
@@ -244,6 +247,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(HUNGER_INT, 60F);
         this.entityData.define(CUSTOM_SKIN, "");
         this.entityData.define(DOG_LEVEL.get(), new DogLevel(0, 0));
+        this.entityData.define(DOG_INCAP_SYNC_STATE.get(), IncapacitatedSyncState.NONE);
         this.entityData.define(SIZE, (byte) 3);
         this.entityData.define(BONE_VARIANT, ItemStack.EMPTY);
         this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
@@ -1652,7 +1656,7 @@ public class Dog extends AbstractDog {
         this.setDogHunger(0);
         this.incapacitatedMananger.onBeingDefeated();
         this.unRide();
-        addIncapacitatedLayer(source);
+        createIncapSyncState(source);
 
         var owner = this.getOwner();
         if (owner != null) sendIncapacitatedMsg(owner, source);
@@ -1681,17 +1685,17 @@ public class Dog extends AbstractDog {
         owner.sendSystemMessage(msg);
     }
 
-    private void addIncapacitatedLayer(DamageSource source) {
-        AccessoryInstance hurtLayer;
+    private void createIncapSyncState(DamageSource source) {
+        DefeatedType type;
         if (source.isFire()) {
-            hurtLayer = DoggyAccessories.INCAPACITATED_BURN.get().getDefault();
+            type = DefeatedType.BURN;
         } else if (source == DamageSource.MAGIC) {
-            hurtLayer = DoggyAccessories.INCAPACITATED_POISON.get().getDefault();
+            type = DefeatedType.POISON;
         } else {
-            hurtLayer = DoggyAccessories.INCAPACITATED_BLOOD.get().getDefault();
+            type = DefeatedType.BLOOD;
         }
         
-        if (hurtLayer != null) this.addAccessory(hurtLayer);
+        this.setIcapSyncState(new IncapacitatedSyncState(type));
     }
 
     @Override
@@ -1788,6 +1792,8 @@ public class Dog extends AbstractDog {
         this.alterations.forEach((alter) -> alter.onWrite(this, compound));
 
         this.dogGroupsManager.save(compound);
+        if (this.isDefeated()) 
+            this.incapacitatedMananger.save(compound);
 
         //Never save these entry, these will be loaded by the talents itself.
         compound.remove("HandItems");
@@ -2049,6 +2055,8 @@ public class Dog extends AbstractDog {
 
         try {
             this.dogGroupsManager.load(compound);
+            if (this.isDefeated())
+            this.incapacitatedMananger.load(compound);
         } catch (Exception e) {
 
         }
@@ -2358,6 +2366,14 @@ public class Dog extends AbstractDog {
 
     public void setLevel(DogLevel level) {
         this.entityData.set(DOG_LEVEL.get(), level);
+    }
+
+    public IncapacitatedSyncState getIncapSyncState() {
+        return this.entityData.get(DOG_INCAP_SYNC_STATE.get());
+    }
+
+    public void setIcapSyncState(IncapacitatedSyncState state) {
+        this.entityData.set(DOG_INCAP_SYNC_STATE.get(), state);
     }
 
     @Override
