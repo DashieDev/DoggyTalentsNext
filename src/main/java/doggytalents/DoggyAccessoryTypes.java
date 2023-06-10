@@ -19,7 +19,6 @@ public class DoggyAccessoryTypes {
     public static final RegistryObject<AccessoryType> HEAD = register("head");
     public static final RegistryObject<AccessoryType> FEET = register("feet");
     public static final RegistryObject<AccessoryType> TAIL = register("tail");
-    public static final RegistryObject<AccessoryType> INCAPACITATED = register("incapacitated");
 
     private static RegistryObject<AccessoryType> register(final String name) {
         return register(name, () -> new AccessoryType());

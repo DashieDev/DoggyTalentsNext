@@ -45,26 +45,37 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
 
         if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
 
-        for (AccessoryInstance accessoryInst : dog.getAccessories()) {
-            var accessory = accessoryInst.getAccessory();
-            if (accessory.getType() != DoggyAccessoryTypes.INCAPACITATED.get()) continue;
-            var dogModel = this.getParentModel();
-            if (dogModel.useDefaultModelForAccessories()) {
-                dogModel.copyPropertiesTo(defaultModel);
-                defaultModel.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-                defaultModel.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                dogModel = defaultModel;
-            }
-            var texture_rl =accessoryInst.getModelTexture(dog);
-            boolean isLowGraphic = 
-                ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
-            if (isLowGraphic) {
-                texture_rl = Resources.INCAPACITATED_LESS_GRAPHIC;
-            }
-            if (texture_rl == null) continue;
-            var alpha = (float) (dog.getMaxIncapacitatedHunger()-dog.getDogHunger())/dog.getMaxIncapacitatedHunger();
-            renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
+        var dogModel = this.getParentModel();
+        if (dogModel.useDefaultModelForAccessories()) {
+            dogModel.copyPropertiesTo(defaultModel);
+            defaultModel.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
+            defaultModel.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            dogModel = defaultModel;
         }
+        var sync_state = dog.getIncapSyncState();
+        var type = sync_state.type;
+        var texture_rl = Resources.INCAPACITATED_BLOOD;
+        switch (type) {
+        case BLOOD:
+            texture_rl = Resources.INCAPACITATED_BLOOD;
+            break;
+        case BURN:
+            texture_rl = Resources.INCAPACITATED_BURN;
+            break;
+        case POISON:
+            texture_rl = Resources.INCAPACITATED_POISON;
+            break;
+        default:
+            break; 
+        }
+        boolean isLowGraphic = 
+            ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
+        if (isLowGraphic) {
+            texture_rl = Resources.INCAPACITATED_LESS_GRAPHIC;
+        }
+        if (texture_rl == null) return;
+        var alpha = (float) (dog.getMaxIncapacitatedHunger()-dog.getDogHunger())/dog.getMaxIncapacitatedHunger();
+        renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
     }
 
     public static <T extends LivingEntity> void renderTranslucentModel(EntityModel<T> p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, T p_117382_, float p_117383_, float p_117384_, float p_117385_, float opascity) {
