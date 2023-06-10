@@ -1,6 +1,7 @@
 package doggytalents.common.entity.serializers;
 
 import doggytalents.common.entity.DogIncapacitatedMananger;
+import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,12 +12,14 @@ public class IncapacitatedSyncSerializer implements EntityDataSerializer<Incapac
     @Override
     public void write(FriendlyByteBuf buf, IncapacitatedSyncState state) {
         buf.writeInt(state.type.getId());
+        buf.writeInt(state.bandaid.getId());
     }
 
     @Override
     public IncapacitatedSyncState read(FriendlyByteBuf buf) {
         var type = DefeatedType.byId(buf.readInt());
-        return new IncapacitatedSyncState(type);
+        var bandaid = BandaidState.byId(buf.readInt());
+        return new IncapacitatedSyncState(type, bandaid);
     }
 
     @Override

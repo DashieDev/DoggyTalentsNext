@@ -72,6 +72,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.BEASTARS_UNIFORM_FEMALE);
         generated(DoggyItems.BEASTARS_UNIFORM_MALE);
         generated(DoggyItems.EGG_SANDWICH);
+        generated(DoggyItems.BANDAID);
 
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);

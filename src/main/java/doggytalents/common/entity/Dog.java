@@ -1071,7 +1071,8 @@ public class Dog extends AbstractDog {
             //Reset the dog incapacitated healing time
             //The dog is already weak, hurting the dog makes,
             //the dog being weak for longer...
-            this.setDogHunger(0); 
+            this.setDogHunger(0);
+            this.incapacitatedMananger.onHurt();
 
             //Invalidate dog as a target for whatever killed him.
             if (attacker instanceof Mob mob) {

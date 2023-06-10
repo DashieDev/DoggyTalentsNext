@@ -76,6 +76,23 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         if (texture_rl == null) return;
         var alpha = (float) (dog.getMaxIncapacitatedHunger()-dog.getDogHunger())/dog.getMaxIncapacitatedHunger();
         renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
+        
+        //Bandaid layer
+        var bandaid_state = sync_state.bandaid;
+        ResourceLocation bandaid_texture_rl = null;
+        switch (bandaid_state) {
+        case FULL:
+            bandaid_texture_rl = Resources.BANDAID_OVERLAY_FULL;
+            break;
+        case HALF:
+            bandaid_texture_rl = Resources.BANDAID_OVERLAY_HALF;
+            break;
+        default:
+            break;
+        }
+
+        if (bandaid_texture_rl != null)
+        renderTranslucentModel(dogModel, bandaid_texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, 1);
     }
 
     public static <T extends LivingEntity> void renderTranslucentModel(EntityModel<T> p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, T p_117382_, float p_117383_, float p_117384_, float p_117385_, float opascity) {
