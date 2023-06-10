@@ -1,6 +1,7 @@
 package doggytalents.common.entity;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.api.feature.EnumMode;
@@ -21,6 +22,9 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -31,16 +35,25 @@ public class DogIncapacitatedMananger {
     private final Dog dog;
 
     private int recoveryMultiplier = 1;
+    private static final UUID INCAP_MOVEMENT = UUID.fromString("9576c796-c7c7-4995-90d5-f60eafc58805");
+    private boolean hasMovementModifer = false;
 
     public DogIncapacitatedMananger(Dog dog) {
         this.dog = dog;
     }
 
-    public void init() {
+    public void onBeingDefeated() {
         recoveryMultiplier = 1;
     }
 
     public void tick() {
+        if (!this.dog.isDefeated()) {
+            if (this.hasMovementModifer) {
+                this.hasMovementModifer = false;
+                this.dog.removeAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT);
+            }
+            return;
+        }
         if (this.dog.level.isClientSide) 
             incapacitatedClientTick();
         else
@@ -48,6 +61,7 @@ public class DogIncapacitatedMananger {
     }
 
     public InteractionResult interact(ItemStack stack, Player player, InteractionHand hand) {
+        var owner_uuid = dog.getOwnerUUID();
         if (stack.getItem() == Items.TOTEM_OF_UNDYING) {
             if (!this.dog.level.isClientSide) {
                 if (!player.getAbilities().instabuild) {
@@ -103,6 +117,10 @@ public class DogIncapacitatedMananger {
         } else if (this.dog.isPassenger()) {
             if(!this.dog.level.isClientSide) this.dog.stopRiding();
             return InteractionResult.SUCCESS;
+        } else if (owner_uuid != null && owner_uuid.equals(player.getUUID())) {
+            this.dog.setOrderedToSit(!this.dog.isOrderedToSit());
+            this.dog.getNavigation().stop();
+            return InteractionResult.SUCCESS;
         } else {
             if (this.dog.level.isClientSide) this.displayToastIncapacitated(player);
         }
@@ -137,6 +155,13 @@ public class DogIncapacitatedMananger {
     public void incapacitatedTick() {
         // 3 days max 60 min = 72 000 ticks
 
+        if (!this.hasMovementModifer) {
+            this.dog.setAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT,
+                (d, u) -> new AttributeModifier(u, "Defeated Slowness", -0.35f, Operation.MULTIPLY_TOTAL)
+            );
+            this.hasMovementModifer = true;
+        }
+
         var owner = this.dog.getOwner();
         var dog_b0_state = this.dog.level.getBlockState(this.dog.blockPosition());
         var dog_b0_block = dog_b0_state.getBlock();
@@ -149,8 +174,6 @@ public class DogIncapacitatedMananger {
         if (dog_b0_block == Blocks.AIR) {
             this.dog.addHunger(0.001f*this.recoveryMultiplier);
         } else if (dog_b0_block == DoggyBlocks.DOG_BED.get()) {
-            if (!this.dog.isInSittingPose())
-                this.dog.setInSittingPose(true);
             incapacitatedHealWithBed(owner);
         }
     }
@@ -161,6 +184,12 @@ public class DogIncapacitatedMananger {
         this.dog.setMode(EnumMode.DOCILE);
         this.dog.setDogHunger(this.dog.getMaxHunger());
         this.dog.setOrderedToSit(true);
+
+        if (this.hasMovementModifer) {
+            this.hasMovementModifer = false;
+            this.dog.removeAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT);
+        }
+
         var toRemove = new ArrayList<AccessoryInstance>();
         for (var i : this.dog.getAccessories()) {
             if (i.getAccessory() instanceof IncapacitatedLayer) {
@@ -199,6 +228,10 @@ public class DogIncapacitatedMananger {
             this.dog.getBbWidth(), 0.8f, this.dog.getBbWidth(), 
             0.1
         );
+    }
+
+    public boolean canMove() {
+        return true;
     }
     
 }
