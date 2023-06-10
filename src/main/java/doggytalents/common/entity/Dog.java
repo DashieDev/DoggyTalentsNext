@@ -191,6 +191,7 @@ public class Dog extends AbstractDog {
     
     protected TriggerableAction stashedAction;
     protected TriggerableAction activeAction;
+    protected int delayedActionStart = 0;
 
     private int hungerTick;
     private int prevHungerTick;  
@@ -505,6 +506,10 @@ public class Dog extends AbstractDog {
     @Override
     public void aiStep() {
         super.aiStep();
+
+        if (!this.level.isClientSide && this.delayedActionStart > 0)
+            --this.delayedActionStart; 
+
         if (!this.level.isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.isOnGround()) {
             this.startShakingAndBroadcast(false);
         }
@@ -688,6 +693,17 @@ public class Dog extends AbstractDog {
         if (action == this.stashedAction) return;
         if (this.stashedAction != null) this.stashedAction.onStop();
         this.stashedAction = action;
+    }
+
+    public boolean hasDelayedActionStart() {
+        return this.delayedActionStart > 0;
+    }
+
+    public boolean triggerActionDelayed(int delay, TriggerableAction action) {
+        boolean triggered = this.triggerAction(action);
+        if (triggered)
+            this.delayedActionStart = delay;
+        return triggered;
     }
 
     @Override
