@@ -62,7 +62,7 @@ public class DogEatFromChestDogGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (this.dog.getDogHunger() >= 50) {
+        if (this.dog.getDogHunger() >= 50 || this.dog.isDefeated()) {
             return false;
         }
         this.invalidateChestDogCache();

@@ -18,7 +18,6 @@ import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
-import doggytalents.common.entity.ai.BreedGoal;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.ai.triggerable.DogTriggerableGoal;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
@@ -279,13 +278,15 @@ public class Dog extends AbstractDog {
         ++p;
         this.goalSelector.addGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
         this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
+        this.goalSelector.addGoal(p, new DogGoRestOnBedGoalDefeated(this));
         ++p;
         //Dog greet owner goal here
         this.goalSelector.addGoal(p, new DogTriggerableGoal(this, true));
         //this.goalSelector.addGoal(p, new FetchGoal(this, 1.0D, 32.0F));
+        this.goalSelector.addGoal(p, new DogFollowOwnerGoalDefeated(this));
         this.goalSelector.addGoal(p, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
         ++p;
-        this.goalSelector.addGoal(p, new BreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(p, new DogBreedGoal(this, 1.0D));
         ++p;
         this.goalSelector.addGoal(p, new DogRandomStrollGoal(this, 1.0D));
         ++p;
@@ -615,8 +616,7 @@ public class Dog extends AbstractDog {
 
         this.alterations.forEach((alter) -> alter.livingTick(this));
 
-        if (this.isDefeated())
-            this.incapacitatedMananger.tick();
+        this.incapacitatedMananger.tick();
     }
 
     public TriggerableAction getTriggerableAction() {
@@ -668,11 +668,13 @@ public class Dog extends AbstractDog {
     }
 
     public boolean isBusy() {
+        if (!this.isDoingFine()) return false;
         if (this.isInSittingPose() && this.forceSit()) return true;
         return this.activeAction != null;
     }
 
     public boolean readyForNonTrivialAction() {
+        if (!this.isDoingFine()) return false;
         if (this.isInSittingPose() && this.forceSit()) return false;
         if (this.activeAction == null) return true;
         return this.activeAction.isTrivial();
@@ -1641,7 +1643,7 @@ public class Dog extends AbstractDog {
         this.setHealth(1);
         this.setMode(EnumMode.INCAPACITATED);
         this.setDogHunger(0);
-        this.incapacitatedMananger.init();
+        this.incapacitatedMananger.onBeingDefeated();
         this.unRide();
         addIncapacitatedLayer(source);
 
@@ -3126,10 +3128,10 @@ public class Dog extends AbstractDog {
 
     @Override
     protected void updateControlFlags() {
-        boolean notIncapacitated = !this.isDefeated();
+        boolean incapBlockedMove = this.isDefeated() && !this.incapacitatedMananger.canMove();
         boolean notControlledByPlayer = !(this.getControllingPassenger() instanceof ServerPlayer);
         boolean notRidingBoat = !(this.getVehicle() instanceof Boat);
-        this.goalSelector.setControlFlag(Goal.Flag.MOVE, notControlledByPlayer && notIncapacitated);
+        this.goalSelector.setControlFlag(Goal.Flag.MOVE, notControlledByPlayer && !incapBlockedMove);
         this.goalSelector.setControlFlag(Goal.Flag.JUMP, notControlledByPlayer && notRidingBoat);
         this.goalSelector.setControlFlag(Goal.Flag.LOOK, notControlledByPlayer);
     }
