@@ -615,9 +615,9 @@ public class Dog extends AbstractDog {
         return this.activeAction;
     }
 
-    public void triggerAction(TriggerableAction action) {
+    public boolean triggerAction(TriggerableAction action) {
         if (this.activeAction == action) {
-            return;
+            return false;
         }
         //Trigger Action cancel.
         //If dog have stashed action then will push the action back instead.
@@ -629,18 +629,18 @@ public class Dog extends AbstractDog {
                 this.stashedAction = null;
                 ChopinLogger.lwn(this, "retrieved stashed action : " + this.activeAction);
             }
-            return;
+            return false;
         }
         //Replacement only happens if 
         //old action is Trivial and new action is not.
         if (this.activeAction != null) {
-            if (!this.activeAction.isTrivial()) return;
-            else if (action.isTrivial()) return;
+            if (!this.activeAction.isTrivial()) return false;
+            else if (action.isTrivial()) return false;
         }
         //Only set action dog is not sitting or action can override sit.
         if (this.isOrderedToSit()) {
-            if (this.forceSit()) return;
-            if (!action.canOverrideSit()) return;
+            if (this.forceSit()) return false;
+            if (!action.canOverrideSit()) return false;
         }
         this.setOrderedToSit(false);
         //Check And Stash existing action.
@@ -659,6 +659,7 @@ public class Dog extends AbstractDog {
         //Set.
         this.activeAction = action;
         ChopinLogger.lwn(this, "triggered action : " + action);
+        return true;
     }
 
     public boolean isBusy() {
