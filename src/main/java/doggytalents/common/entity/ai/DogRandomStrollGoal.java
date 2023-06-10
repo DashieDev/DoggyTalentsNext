@@ -22,6 +22,20 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
         super(dog, speedModifier);
         this.dog = dog;
     }
+
+    @Override
+    public boolean canUse() {
+        if (!dog.isDoingFine())
+            return false;
+        return super.canUse();
+    }
+
+    @Override
+    public boolean canContinueToUse() {
+        if (!dog.isDoingFine())
+            return false;
+        return super.canContinueToUse();
+    }
     
     //  TODO : Make this more user friendly, maybe make this into a talent or mode
     //
