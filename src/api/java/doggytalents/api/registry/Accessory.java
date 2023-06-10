@@ -124,7 +124,7 @@ public class Accessory {
         return (T) this;
     }
 
-    public static enum AccessoryRenderType { OVERLAY, MODEL, OVERLAY_AND_MODEL, INCAPACITATED }
+    public static enum AccessoryRenderType { OVERLAY, MODEL, OVERLAY_AND_MODEL }
     private AccessoryRenderType accessoryRenderType = AccessoryRenderType.OVERLAY;
     
     public <T extends Accessory> T setAccessoryRenderType(AccessoryRenderType type) {

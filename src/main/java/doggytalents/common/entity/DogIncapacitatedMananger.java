@@ -9,11 +9,13 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
-import doggytalents.common.entity.accessory.IncapacitatedLayer;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -135,14 +137,49 @@ public class DogIncapacitatedMananger {
     }
 
     public void incapacitatedClientTick() {
-        for (var i : this.dog.getAccessories()) {
-            if (i.getAccessory() instanceof IncapacitatedLayer iL) {
-                if (!ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAPACITATED_TEXTURE)) return;
-                boolean isLowGraphic = 
-                    ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
-                if (isLowGraphic) return;
-                iL.tickClient(this.dog);
+        var sync_state = this.dog.getIncapSyncState();
+        var type = sync_state.type;
+        switch (type) {
+        case BURN:
+            if (dog.getDogHunger() <= 10) {
+                for (int i = 0; i < 2; ++i) {
+                    float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
+                    float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
+                    dog.level.addParticle(ParticleTypes.ASH,
+                    dog.getX() + f1,
+                    dog.getY() + 0.4,
+                    dog.getZ() + f2,
+                    0, -0.05 , 0 );
+                }
+    
+                if (dog.getRandom().nextInt(3) == 0) {
+                    float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
+                    float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
+                    dog.level.addParticle(ParticleTypes.SMOKE,
+                    dog.getX() + f1,
+                    dog.getY() + dog.getEyeHeight(),
+                    dog.getZ() + f2,
+                    0, 0.05 , 0 );
+                }
             }
+            break;
+        case BLOOD:
+            if (dog.getDogHunger() <= 10 && dog.tickCount % 8 == 0) {
+                for (int i = 0; i < 2; ++i) {
+                    float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
+                    float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
+                    dog.level.addParticle(
+                        new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(Items.NETHER_WART)),
+                        dog.getX() + f1,
+                        dog.getY() + 0.4,
+                        dog.getZ() + f2,
+                        0, -0.05 , 0 
+                    );
+                }
+            }
+            break;
+        default:
+            break;
         }
     }
 
@@ -184,22 +221,12 @@ public class DogIncapacitatedMananger {
         this.dog.setMode(EnumMode.DOCILE);
         this.dog.setDogHunger(this.dog.getMaxHunger());
         this.dog.setOrderedToSit(true);
+        this.dog.setIcapSyncState(IncapacitatedSyncState.NONE);
 
         if (this.hasMovementModifer) {
             this.hasMovementModifer = false;
             this.dog.removeAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT);
         }
-
-        var toRemove = new ArrayList<AccessoryInstance>();
-        for (var i : this.dog.getAccessories()) {
-            if (i.getAccessory() instanceof IncapacitatedLayer) {
-                toRemove.add(i);
-            }
-        }
-        for (var i : toRemove) {
-            this.dog.getAccessories().remove(i);
-        }
-        this.dog.markAccessoriesDirty();
 
         if (this.dog.level instanceof ServerLevel sL) {
             sL.sendParticles(
@@ -233,5 +260,63 @@ public class DogIncapacitatedMananger {
     public boolean canMove() {
         return true;
     }
+
+    public void save(CompoundTag tag) {
+        var tg0 = new CompoundTag();
+        var syncState = this.dog.getIncapSyncState();
+        tg0.putInt("type", syncState.type.getId());
+        tag.put("doggyIncapacitated", tg0);
+    }
+
+    public void load(CompoundTag tag) {
+        var tg0 = tag.getCompound("doggyIncapacitated");
+        var type = DefeatedType.byId(tg0.getInt("type"));
+        dog.setIcapSyncState(new IncapacitatedSyncState(type));
+    }
+
+    public static class IncapacitatedSyncState {
+
+        public static IncapacitatedSyncState NONE = 
+            new IncapacitatedSyncState(DefeatedType.NONE);
+        public DefeatedType type = DefeatedType.NONE;
+
+        public IncapacitatedSyncState(DefeatedType type) {
+            this.type = type;
+        }
+
+        public IncapacitatedSyncState copy() {
+            return new IncapacitatedSyncState(type);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof IncapacitatedSyncState state))
+                return false;
+            if (this.type != state.type)
+                return false;
+            return true;
+        }
+
+    }
     
+    public static enum DefeatedType { 
+        NONE(0), BLOOD(1), BURN(2), POISON(3);
+
+        private final int id;
+        private DefeatedType(int id) {
+            this.id = id;
+        }
+
+        public static DefeatedType byId(int i) {
+            var values = DefeatedType.values();
+            if (i < 0) return NONE;
+            if (i >= values.length) return NONE;
+            return values[i];
+        };
+
+        public int getId() { return this.id; }
+
+        
+    }
+
 }
