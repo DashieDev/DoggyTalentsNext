@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import doggytalents.DoggyBlocks;
+import doggytalents.DoggyItems;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
@@ -19,6 +20,8 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -40,6 +43,9 @@ public class DogIncapacitatedMananger {
     private static final UUID INCAP_MOVEMENT = UUID.fromString("9576c796-c7c7-4995-90d5-f60eafc58805");
     private boolean appliedIncapChanges = false;
     
+    private static final int MAX_BANDAID_COUNT = 8;
+    private int bandagesCount = 0;
+    private int bandageCooldown = 0;
 
     public DogIncapacitatedMananger(Dog dog) {
         this.dog = dog;
@@ -54,6 +60,7 @@ public class DogIncapacitatedMananger {
             if (this.appliedIncapChanges) {
                 this.appliedIncapChanges = false;
                 this.dog.removeAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT);
+                this.bandagesCount = 0;
                 recoveryMultiplier = 1;
             }
             return;
@@ -66,7 +73,15 @@ public class DogIncapacitatedMananger {
 
     public InteractionResult interact(ItemStack stack, Player player, InteractionHand hand) {
         var owner_uuid = dog.getOwnerUUID();
-        if (stack.getItem() == Items.TOTEM_OF_UNDYING) {
+        if (stack.getItem() == DoggyItems.BANDAID.get()) {
+            if (!this.dog.level.isClientSide && this.bandageCooldown <= 0
+                && this.bandagesCount < MAX_BANDAID_COUNT) {
+                this.bandageCooldown = 10;
+                player.getCooldowns().addCooldown(DoggyItems.BANDAID.get(), 11);
+                ++this.bandagesCount;
+            }
+            return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.TOTEM_OF_UNDYING) {
             if (!this.dog.level.isClientSide) {
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
@@ -129,6 +144,29 @@ public class DogIncapacitatedMananger {
             if (this.dog.level.isClientSide) this.displayToastIncapacitated(player);
         }
         return InteractionResult.FAIL;
+    }
+
+    public void onHurt() {
+        this.dropBandages();
+        this.bandagesCount = 0;
+
+        //Update.
+        var incap_state = dog.getIncapSyncState();
+        var new_incap_state = incap_state.updateBandaid(bandagesCount);
+        if (new_incap_state != incap_state) {
+            dog.setIcapSyncState(new_incap_state);
+        }
+    }
+
+    private void dropBandages() {
+        float keep_precentage = 
+            0.8f - dog.getRandom().nextInt(4)*0.1f;
+        int keep_amount = Mth.floor(keep_precentage*this.bandagesCount);
+        for (int i = 0; i < keep_amount; ++i) {
+            Containers.dropItemStack(dog.level, dog.getX(), dog.getY(), dog.getZ(), 
+                new ItemStack(DoggyItems.BANDAID.get(), 1));
+        }
+        bandageCooldown = 200;
     }
 
     private void displayToastIncapacitated(Player player) {
@@ -201,6 +239,15 @@ public class DogIncapacitatedMananger {
             this.appliedIncapChanges = true;
         }
 
+        var incap_state = dog.getIncapSyncState();
+        var new_incap_state = incap_state.updateBandaid(bandagesCount);
+        if (new_incap_state != incap_state) {
+            dog.setIcapSyncState(new_incap_state);
+        }
+        healWithBandaid(new_incap_state.bandaid);
+
+        if (this.bandageCooldown > 0) --bandageCooldown;
+
         var owner = this.dog.getOwner();
         var dog_b0_state = this.dog.level.getBlockState(this.dog.blockPosition());
         var dog_b0_block = dog_b0_state.getBlock();
@@ -228,6 +275,7 @@ public class DogIncapacitatedMananger {
         if (this.appliedIncapChanges) {
             this.appliedIncapChanges = false;
             this.dog.removeAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT);
+            this.bandagesCount = 0;
             this.recoveryMultiplier = 1;
         }
 
@@ -260,20 +308,36 @@ public class DogIncapacitatedMananger {
         );
     }
 
+    private void healWithBandaid(BandaidState state) {
+        switch (state) {
+        case FULL:
+            this.dog.addHunger(0.02f*this.recoveryMultiplier);
+            break;
+        case HALF:
+            this.dog.addHunger(0.01f*this.recoveryMultiplier);
+            break;
+        default:
+            break;
+        }
+    }
+
     public boolean canMove() {
-        return true;
+        return this.bandagesCount >= 8;
     }
 
     public void save(CompoundTag tag) {
         var tg0 = new CompoundTag();
         var syncState = this.dog.getIncapSyncState();
         tg0.putInt("type", syncState.type.getId());
+        tg0.putInt("bandaid", this.bandagesCount);
         tag.put("doggyIncapacitated", tg0);
     }
 
     public void load(CompoundTag tag) {
         var tg0 = tag.getCompound("doggyIncapacitated");
         var type = DefeatedType.byId(tg0.getInt("type"));
+        var bandaid_count = tg0.getInt("bandaid");
+        this.bandagesCount = bandaid_count;
         dog.setIcapSyncState(new IncapacitatedSyncState(type));
     }
 
@@ -282,13 +346,25 @@ public class DogIncapacitatedMananger {
         public static IncapacitatedSyncState NONE = 
             new IncapacitatedSyncState(DefeatedType.NONE);
         public DefeatedType type = DefeatedType.NONE;
+        public BandaidState bandaid = BandaidState.NONE;
 
         public IncapacitatedSyncState(DefeatedType type) {
             this.type = type;
         }
 
+        public IncapacitatedSyncState(DefeatedType type, BandaidState bandaid) {
+            this.type = type;
+            this.bandaid = bandaid;
+        }
+
         public IncapacitatedSyncState copy() {
-            return new IncapacitatedSyncState(type);
+            return new IncapacitatedSyncState(type, bandaid);
+        }
+
+        public IncapacitatedSyncState updateBandaid(int bandaid_count) {
+            var new_state = BandaidState.getState(bandaid_count);
+            if (new_state == this.bandaid) return this;
+            return new IncapacitatedSyncState(type, new_state);
         }
 
         @Override
@@ -297,11 +373,41 @@ public class DogIncapacitatedMananger {
                 return false;
             if (this.type != state.type)
                 return false;
+            if (this.bandaid != state.bandaid)
+                return false;
             return true;
         }
 
     }
-    
+
+    public static enum BandaidState { 
+        NONE(0), HALF(1), FULL(2);
+        
+        private final int id;
+        private BandaidState(int id) {
+            this.id = id;
+        }
+
+        public static BandaidState byId(int i) {
+            var values = BandaidState.values();
+            if (i < 0) return NONE;
+            if (i >= values.length) return NONE;
+            return values[i];
+        };
+        public static BandaidState getState(int bandaid_count) {
+            if (bandaid_count <= 3) {
+                return NONE;
+            }
+            if (bandaid_count <= 7) {
+                return HALF;
+            }
+            return FULL;
+        }
+
+        public int getId() { return this.id; }
+        
+
+    }
     public static enum DefeatedType { 
         NONE(0), BLOOD(1), BURN(2), POISON(3);
 
