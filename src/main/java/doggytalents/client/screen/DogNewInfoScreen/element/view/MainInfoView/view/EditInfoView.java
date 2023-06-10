@@ -332,8 +332,8 @@ public class EditInfoView extends AbstractElement {
             if (newline)
             this.setSize(1f, 20 + LINE_SPACING + 14);
 
-            this.button.x = (this.getRealX() + buttonX_offset);
-            this.button.y = (this.getRealY() + buttonY_offset);
+            this.button.setX(this.getRealX() + buttonX_offset);
+            this.button.setY(this.getRealY() + buttonY_offset);
 
             this.addChildren(button);
             return this;

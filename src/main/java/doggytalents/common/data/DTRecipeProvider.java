@@ -136,7 +136,7 @@ public class DTRecipeProvider extends RecipeProvider {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.CONDUCTING_BONE.get(), 1).pattern(" B ").pattern("RBR").pattern("PEP").define('P', Items.SHULKER_SHELL).define('E', Items.END_CRYSTAL).define('B', Items.BONE).define('R', Items.NETHERITE_INGOT).unlockedBy("has_shulker_shell", has(Items.SHULKER_SHELL)).save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(DoggyItems.BANDAID.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.BANDAID.get(), 1)
             .requires(DoggyItems.TRAINING_TREAT.get())
             .requires(Items.PAPER)
             .requires(Items.SLIME_BALL)
