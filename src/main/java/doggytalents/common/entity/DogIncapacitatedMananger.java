@@ -38,7 +38,8 @@ public class DogIncapacitatedMananger {
 
     private int recoveryMultiplier = 1;
     private static final UUID INCAP_MOVEMENT = UUID.fromString("9576c796-c7c7-4995-90d5-f60eafc58805");
-    private boolean hasMovementModifer = false;
+    private boolean appliedIncapChanges = false;
+    
 
     public DogIncapacitatedMananger(Dog dog) {
         this.dog = dog;
@@ -50,9 +51,10 @@ public class DogIncapacitatedMananger {
 
     public void tick() {
         if (!this.dog.isDefeated()) {
-            if (this.hasMovementModifer) {
-                this.hasMovementModifer = false;
+            if (this.appliedIncapChanges) {
+                this.appliedIncapChanges = false;
                 this.dog.removeAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT);
+                recoveryMultiplier = 1;
             }
             return;
         }
@@ -192,11 +194,11 @@ public class DogIncapacitatedMananger {
     public void incapacitatedTick() {
         // 3 days max 60 min = 72 000 ticks
 
-        if (!this.hasMovementModifer) {
+        if (!this.appliedIncapChanges) {
             this.dog.setAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT,
                 (d, u) -> new AttributeModifier(u, "Defeated Slowness", -0.35f, Operation.MULTIPLY_TOTAL)
             );
-            this.hasMovementModifer = true;
+            this.appliedIncapChanges = true;
         }
 
         var owner = this.dog.getOwner();
@@ -223,9 +225,10 @@ public class DogIncapacitatedMananger {
         this.dog.setOrderedToSit(true);
         this.dog.setIcapSyncState(IncapacitatedSyncState.NONE);
 
-        if (this.hasMovementModifer) {
-            this.hasMovementModifer = false;
+        if (this.appliedIncapChanges) {
+            this.appliedIncapChanges = false;
             this.dog.removeAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT);
+            this.recoveryMultiplier = 1;
         }
 
         if (this.dog.level instanceof ServerLevel sL) {
