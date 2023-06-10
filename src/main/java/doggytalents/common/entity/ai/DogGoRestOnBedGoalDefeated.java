@@ -90,6 +90,11 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
 
     private void validateTarget() {
         if (targetBed == null) return;
+        int invalidate_dist = (SEARCH_RADIUS + 1) * (SEARCH_RADIUS + 1);
+        if (this.dog.distanceToSqr(Vec3.atBottomCenterOf(targetBed)) > invalidate_dist) {
+            targetBed = null;
+            return;
+        }
         if (this.dog.tickCount % 2 == 0) {
             var state = this.dog.level.getBlockState(targetBed);
             if (!isBed(state)) {
