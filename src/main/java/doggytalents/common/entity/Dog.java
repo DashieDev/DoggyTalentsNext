@@ -1702,7 +1702,7 @@ public class Dog extends AbstractDog {
             type = DefeatedType.BLOOD;
         }
         
-        this.setIcapSyncState(new IncapacitatedSyncState(type));
+        this.setIncapSyncState(new IncapacitatedSyncState(type));
     }
 
     @Override
@@ -2380,7 +2380,7 @@ public class Dog extends AbstractDog {
         return this.entityData.get(DOG_INCAP_SYNC_STATE.get());
     }
 
-    public void setIcapSyncState(IncapacitatedSyncState state) {
+    public void setIncapSyncState(IncapacitatedSyncState state) {
         this.entityData.set(DOG_INCAP_SYNC_STATE.get(), state);
     }
 
