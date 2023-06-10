@@ -257,7 +257,7 @@ public class WhistleItem extends Item {
                 if (bedPos == null) continue;
                 if (dog.blockPosition().equals(bedPos) && dog.isInSittingPose()) continue;
                 if (dog.distanceToSqr(Vec3.atBottomCenterOf(bedPos)) < 400) {
-                    dog.triggerAction(new DogMoveToBedAction(dog, bedPos, false));
+                    dog.triggerActionDelayed(2, new DogMoveToBedAction(dog, bedPos, false));
                 }
             }
             if (!noDogs) {

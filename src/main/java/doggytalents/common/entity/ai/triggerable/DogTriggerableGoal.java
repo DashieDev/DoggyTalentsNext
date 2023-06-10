@@ -38,6 +38,8 @@ public class DogTriggerableGoal extends Goal {
     public void tick() {
         var action = dog.getTriggerableAction();
         if (action == null) return;
+        if (dog.hasDelayedActionStart())
+            return;
         switch (action.getState()) {
             case PENDING :
                 action.setState(ActionState.RUNNING);
