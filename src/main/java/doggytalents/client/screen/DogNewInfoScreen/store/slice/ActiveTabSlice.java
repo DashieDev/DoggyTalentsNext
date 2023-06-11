@@ -1,15 +1,18 @@
 package doggytalents.client.screen.DogNewInfoScreen.store.slice;
 
+import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.payload.ChangeTabPayload;
 import doggytalents.client.screen.DogNewInfoScreen.store.payload.InitSkinIndexPayload;
 import doggytalents.client.screen.framework.AbstractSlice;
 import doggytalents.client.screen.framework.CommonUIActionTypes;
+import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogGroupsData;
 import doggytalents.common.network.packet.data.StatsSyncData;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.network.PacketDistributor;
 
 public class ActiveTabSlice implements AbstractSlice {
@@ -88,6 +91,14 @@ public class ActiveTabSlice implements AbstractSlice {
     private static void setupGroups(Dog dog) {
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
         new DogGroupsData.FETCH_REQUEST(dog.getId()));
+    }
+
+    public static void dispatchGroupUpdates() {
+        var screen = Minecraft.getInstance().screen;
+        if (screen instanceof DogNewInfoScreen dogInfoScreen) {
+            Store.get(dogInfoScreen).dispatch(ActiveTabSlice.class, 
+                new UIAction(UIActionTypes.DOG_GROUPS_RESPONSE, new Object()));
+        }
     }
 
     public enum Tab {
