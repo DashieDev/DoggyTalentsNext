@@ -207,7 +207,7 @@ public class DogBedBlock extends BaseEntityBlock {
                         Dog dog = storage.respawn((ServerLevel) worldIn, player, pos.above());
 
                         dogBedTileEntity.setOwner(dog);
-                        dog.setBedPos(dog.level.dimension(), pos);
+                        dog.setBedPos(dog.level().dimension(), pos);
                         return InteractionResult.SUCCESS;
                     } else {
                         Component name = dogBedTileEntity.getOwnerName();

@@ -88,7 +88,7 @@ public class ThrowableItem extends Item implements IThrowableItem {
     private void triggerNearbyDogs(@Nonnull Player player, @Nonnull ItemEntity entityitem) {
         final int RADIUS = 5;
         var dogs = 
-            player.level.getEntitiesOfClass(
+            player.level().getEntitiesOfClass(
                 Dog.class, 
                 player.getBoundingBox().inflate(RADIUS, 3, RADIUS),
                 d -> d.canInteract(player)

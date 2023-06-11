@@ -44,9 +44,9 @@ public class CachedSearchUtil {
             for (int j = 0; j <= maxY; ++j) {
                 for (int k = 0; k <= maxXZ; ++k) {
                     var type = WalkNodeEvaluatorDelegate
-                        .getTypeDelegate(dog.level, bMin.offset(i, j, k));
+                        .getTypeDelegate(dog.level(), bMin.offset(i, j, k));
                     byte val = inferType(dog, type);
-                    CachedSearchPool.setPoolValue(dog.level, i, j, k, val);
+                    CachedSearchPool.setPoolValue(dog.level(), i, j, k, val);
                 }
             }
         }
@@ -118,14 +118,14 @@ public class CachedSearchUtil {
         for (int i = 0; i <= maxXZ; ++i) {
             for (int j = 0; j <= maxY; ++j) {
                 for (int k = 0; k <= maxXZ; ++k) {
-                    if (CachedSearchPool.getPoolValue(dog.level, i, j, k) == BLOCKED) {
+                    if (CachedSearchPool.getPoolValue(dog.level(), i, j, k) == BLOCKED) {
                         for (int i1 = i-bbWExt; i1 <= i+bbWExt; ++i1 ) {
                             for (int j1 = j-bbHExt; j1 <= j; ++j1) {
                                 for (int k1 = k-bbWExt; k1 <= k+bbWExt; ++k1) {
-                                    if (CachedSearchPool.getPoolValue(dog.level, i1, j1, k1) != BLOCKED
-                                        && CachedSearchPool.getPoolValue(dog.level, i1, j1, k1) != ERR
+                                    if (CachedSearchPool.getPoolValue(dog.level(), i1, j1, k1) != BLOCKED
+                                        && CachedSearchPool.getPoolValue(dog.level(), i1, j1, k1) != ERR
                                     )
-                                    CachedSearchPool.setPoolValue(dog.level, i1, j1, k1, COLLIDE);
+                                    CachedSearchPool.setPoolValue(dog.level(), i1, j1, k1, COLLIDE);
                                 }
                             }
                         }
@@ -219,14 +219,14 @@ public class CachedSearchUtil {
     }
 
     public static void populatePool(Dog dog, BlockPos targetPos, int radiusXZ, int radiusY) {
-        resetPool(dog.level, radiusXZ, radiusY);
+        resetPool(dog.level(), radiusXZ, radiusY);
         // long startTime1 = System.nanoTime();
         populatePoolRaw(dog, targetPos, radiusXZ, radiusY);
         // long stopTime1 = System.nanoTime();
         //     ChopinLogger.l("populate collision in : " + (stopTime1-startTime1) + " nanoseconds");
         populateBlockCollision(dog, radiusXZ, radiusY);
-        populateDangerPos(dog.level, radiusXZ, radiusY);
-        populateWalkablePos(dog.level, radiusXZ, radiusY);
+        populateDangerPos(dog.level(), radiusXZ, radiusY);
+        populateWalkablePos(dog.level(), radiusXZ, radiusY);
     }
 
     public static void populatePool(Level level, List<Dog> dogs, BlockPos targetPos, int radiusXZ, int radiusY) {
@@ -308,7 +308,7 @@ public class CachedSearchUtil {
         if (poolY > CachedSearchPool.MAX_RADIUS_Y || poolY < 0) return null;
         populatePool(dog, targetPos, poolXZ, poolY);
         
-        var safePosList = collectSafePos(dog.level, targetPos, poolXZ, poolY);
+        var safePosList = collectSafePos(dog.level(), targetPos, poolXZ, poolY);
 
         return safePosList;
     }
@@ -323,7 +323,7 @@ public class CachedSearchUtil {
         populatePool(dog, targetPos, poolXZ, poolY);
         populateCollideOwner(owner, poolXZ, poolY);
         
-        var safePosList = collectSafePos(dog.level, targetPos, poolXZ, poolY);
+        var safePosList = collectSafePos(dog.level(), targetPos, poolXZ, poolY);
 
         return safePosList;
     }

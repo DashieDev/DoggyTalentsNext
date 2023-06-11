@@ -56,13 +56,13 @@ public class DogMoveToBedAction extends TriggerableAction {
 
     private void claimBed() {
         var target = this.targetBedPos;
-        var dogBedTileEntity = WorldUtil.getTileEntity(dog.level, target, DogBedTileEntity.class);
+        var dogBedTileEntity = WorldUtil.getTileEntity(dog.level(), target, DogBedTileEntity.class);
         if (dogBedTileEntity == null) return;
         if (dogBedTileEntity.getOwnerUUID() != null) return;
 
         dogBedTileEntity.setOwner(this.dog);
-        this.dog.setBedPos(this.dog.level.dimension(), target);
-        this.dog.level.broadcastEntityEvent(this.dog, Constants.EntityState.WOLF_HEARTS);
+        this.dog.setBedPos(this.dog.level().dimension(), target);
+        this.dog.level().broadcastEntityEvent(this.dog, Constants.EntityState.WOLF_HEARTS);
     }
 
     @Override

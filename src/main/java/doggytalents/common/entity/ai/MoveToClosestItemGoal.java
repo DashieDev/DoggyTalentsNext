@@ -54,7 +54,7 @@ public class MoveToClosestItemGoal extends Goal {
     @Override
     public boolean canUse() {
         double d0 = EntityUtil.getFollowRange(this.dog);
-        List<ItemEntity> list = this.dog.level.getEntitiesOfClass(ItemEntity.class, this.dog.getBoundingBox().inflate(d0, 4.0D, d0), this.predicate);
+        List<ItemEntity> list = this.dog.level().getEntitiesOfClass(ItemEntity.class, this.dog.getBoundingBox().inflate(d0, 4.0D, d0), this.predicate);
         if (list.isEmpty()) {
             return false;
         } else {

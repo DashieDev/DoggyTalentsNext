@@ -65,7 +65,7 @@ public class ShepherdDogTalent extends TalentInstance {
 
     @Override
     public void livingTick(AbstractDog abstractDog) {
-        if (abstractDog.level.isClientSide) {
+        if (abstractDog.level().isClientSide) {
             return;
         }
 
@@ -126,7 +126,7 @@ public class ShepherdDogTalent extends TalentInstance {
     }
 
     public void refreshShepherdTargets(Dog dog, int searchRange) {
-        this.targets = dog.level.getEntitiesOfClass(
+        this.targets = dog.level().getEntitiesOfClass(
             Animal.class, 
             dog.getBoundingBox().inflate(searchRange, 4, searchRange),
             e -> this.isValidAnimal(dog, e) 
@@ -303,7 +303,7 @@ public class ShepherdDogTalent extends TalentInstance {
 
     //     public EntityAIShepherdDog(AbstractDog dogIn, double speedIn, float range, @Nullable Predicate<Animal> targetSelector) {
     //         this.dog = dogIn;
-    //         this.world = dogIn.level;
+    //         this.world = dogIn.level();
     //         this.dogPathfinder = dogIn.getNavigation();
     //         this.followSpeed = speedIn;
     //         this.maxDist = range;

@@ -248,12 +248,12 @@ public class WhistleItem extends Item {
         case TO_BED: 
         {
             if (dogsList.isEmpty()) return;
-            if (player.level.isClientSide) return;
+            if (player.level().isClientSide) return;
             boolean noDogs = true;
             for (var dog : dogsList) {
                 noDogs = false;
                 if (!dog.readyForNonTrivialAction()) continue;
-                var bedPos = dog.getBedPos(player.level.dimension()).orElse(null);
+                var bedPos = dog.getBedPos(player.level().dimension()).orElse(null);
                 if (bedPos == null) continue;
                 if (dog.blockPosition().equals(bedPos) && dog.isInSittingPose()) continue;
                 if (dog.distanceToSqr(Vec3.atBottomCenterOf(bedPos)) < 400) {
@@ -267,7 +267,7 @@ public class WhistleItem extends Item {
         }
         case GO_BEHIND:
         {
-            if (player.level.isClientSide) return;
+            if (player.level().isClientSide) return;
             boolean noDogs = true;
             for (var dog : dogsList) {
                 if (!dog.getMode().shouldFollowOwner()) continue;

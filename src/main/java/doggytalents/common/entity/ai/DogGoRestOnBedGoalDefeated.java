@@ -98,7 +98,7 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
             targetBed = null;
             return;
         }
-        var state = this.dog.level.getBlockState(targetBed);
+        var state = this.dog.level().getBlockState(targetBed);
         if (!isBed(state)) {
             this.targetBed = null;
             return;
@@ -106,7 +106,7 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
         if (--this.tickTillValidateNeabyDogs <= 0) {
             this.tickTillValidateNeabyDogs = 5;
             var bed_center = Vec3.atBottomCenterOf(targetBed);
-            var nearby_defeated_dogs = dog.level
+            var nearby_defeated_dogs = dog.level()
                 .getEntitiesOfClass(Dog.class, 
                 new AABB(bed_center.add(-2, -2, -2), bed_center.add(2, 2, 2)),
                     filter_dog -> filter_dog.isDefeated());
@@ -118,7 +118,7 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
     }
 
     private BlockPos searchForBed() {        
-        var nearby_defeated_dogs = dog.level
+        var nearby_defeated_dogs = dog.level()
             .getEntitiesOfClass(Dog.class, 
             dog.getBoundingBox()
                 .inflate(SEARCH_RADIUS + 1, 2, SEARCH_RADIUS + 1), 
@@ -129,7 +129,7 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
             dog_b0.offset(-SEARCH_RADIUS, -1, -SEARCH_RADIUS), 
             dog_b0.offset(SEARCH_RADIUS, 1, SEARCH_RADIUS))
         ) {
-            var state = dog.level.getBlockState(bpos);
+            var state = dog.level().getBlockState(bpos);
             if (isBed(state) && noDogsIsNearby(Vec3.atBottomCenterOf(bpos), nearby_defeated_dogs))
                 return bpos;
         }

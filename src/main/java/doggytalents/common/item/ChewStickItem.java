@@ -31,13 +31,13 @@ public class ChewStickItem extends Item implements IDogFoodHandler {
 
     @Override
     public InteractionResult consume(AbstractDog dog, ItemStack stack, Entity entityIn) {
-        if (!dog.level.isClientSide) {
+        if (!dog.level().isClientSide) {
             dog.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100, 1, false, true));
             dog.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200, 6, false, true));
             dog.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 2, false, true));
             dog.consumeItemFromStack(entityIn, stack);
 
-            if (dog.level instanceof ServerLevel) {
+            if (dog.level() instanceof ServerLevel) {
                 ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(
                     dog, new ItemStack(DoggyItems.CHEW_STICK.get()));
             }

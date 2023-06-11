@@ -32,7 +32,7 @@ public class DoggyContainerTypes {
         return new FoodBowlContainer(windowId, inv.player.level, pos, inv, inv.player);
     });
     public static final RegistryObject<MenuType<PackPuppyContainer>> PACK_PUPPY = register("pack_puppy", (windowId, inv, data) -> {
-        Entity entity = inv.player.level.getEntity(data.readInt());
+        Entity entity = inv.player.level().getEntity(data.readInt());
         return entity instanceof Dog ? new PackPuppyContainer(windowId, inv, (Dog) entity) : null;
     });
     public static final RegistryObject<MenuType<TreatBagContainer>> TREAT_BAG = register("treat_bag", (windowId, inv, data) -> {
@@ -44,7 +44,7 @@ public class DoggyContainerTypes {
         List<Dog> dogs = new ArrayList<>(noDogs);
         SimpleContainerData array = new SimpleContainerData(noDogs);
         for (int i = 0; i < noDogs; i++) {
-            Entity entity = inv.player.level.getEntity(data.readInt());
+            Entity entity = inv.player.level().getEntity(data.readInt());
             if (entity instanceof Dog) {
                 dogs.add((Dog) entity);
                 array.set(i, entity.getId());
@@ -55,14 +55,14 @@ public class DoggyContainerTypes {
 
     public static final RegistryObject<MenuType<DogArmorContainer>> DOG_ARMOR = register("dog_armor", (windowId, inv, data) -> {
         int dogId = data.readInt();
-        var e = inv.player.level.getEntity(dogId);
+        var e = inv.player.level().getEntity(dogId);
         if (!(e instanceof Dog)) return null;
         return new DogArmorContainer(windowId, inv, (Dog) e);
     });
 
     public static final RegistryObject<MenuType<DoggyToolsMenu>> DOG_TOOLS = register("dog_tools", (windowId, inv, data) -> {
         int dogId = data.readInt();
-        var e = inv.player.level.getEntity(dogId);
+        var e = inv.player.level().getEntity(dogId);
         if (!(e instanceof Dog)) return null;
         return new DoggyToolsMenu(windowId, inv, (Dog) e);
     });

@@ -143,23 +143,23 @@ public class DogFarmerAction extends ToolAction {
 
     private void placeSeed() {
         var wheatState = Blocks.WHEAT.defaultBlockState();
-        this.dog.level.setBlockAndUpdate(this.nextFarmBlock.above(), wheatState);
+        this.dog.level().setBlockAndUpdate(this.nextFarmBlock.above(), wheatState);
         var soundtype = wheatState.getSoundType(
-            this.dog.level, this.nextFarmBlock.above(), this.dog);
+            this.dog.level(), this.nextFarmBlock.above(), this.dog);
         this.dog.playSound(soundtype.getPlaceSound(), 
             (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
     }
 
     private void harvest() {
-        this.dog.level.destroyBlock(this.nextFarmBlock.above(), true);
+        this.dog.level().destroyBlock(this.nextFarmBlock.above(), true);
         this.nextFarmBlock = this.findNextFarmBlock();
     }
 
     private FarmState getFarmState(BlockPos pos) { 
         if (pos == null) return FarmState.NONE;
-        var state = this.dog.level.getBlockState(pos);
+        var state = this.dog.level().getBlockState(pos);
         if(state.getBlock() != Blocks.FARMLAND) return FarmState.NONE;
-        var state_above = this.dog.level.getBlockState(pos.above());
+        var state_above = this.dog.level().getBlockState(pos.above());
         if(state_above.getBlock() == Blocks.AIR) {
             return FarmState.PLACE_SEED;
         }

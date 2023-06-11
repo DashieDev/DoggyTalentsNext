@@ -32,7 +32,7 @@ public class DogFollowOwnerGoal extends Goal {
 
     public DogFollowOwnerGoal(Dog dogIn, double speedIn, float minDistIn, float maxDistIn) {
         this.dog = dogIn;
-        this.world = dogIn.level;
+        this.world = dogIn.level();
         this.followSpeed = speedIn;
         this.startDist = minDistIn;
         this.stopDist = maxDistIn;
