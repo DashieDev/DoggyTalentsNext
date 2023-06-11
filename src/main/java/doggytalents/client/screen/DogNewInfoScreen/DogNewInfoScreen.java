@@ -63,8 +63,8 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             private boolean selected = false;
 
             @Override
-            public void renderButton(PoseStack stack, int mouseX, int mouseY, float pticks) {
-                super.renderButton(stack, mouseX, mouseY, pticks);
+            public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pticks) {
+                super.renderWidget(stack, mouseX, mouseY, pticks);
 
                 //draw key hint
                 var mc = Minecraft.getInstance();
@@ -114,8 +114,8 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             private boolean selected;
 
             @Override
-            public void renderButton(PoseStack stack, int mouseX, int mouseY, float pticks) {
-                super.renderButton(stack, mouseX, mouseY, pticks);
+            public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pticks) {
+                super.renderWidget(stack, mouseX, mouseY, pticks);
 
                 //draw key hint
                 var mc = Minecraft.getInstance();
