@@ -107,6 +107,7 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
 
             this.blit(stack, l + slot.x - 1, i1 + slot.y - 1, 197, 2, 18, 18);
         }
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     @Override
