@@ -68,6 +68,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -1639,7 +1640,7 @@ public class Dog extends AbstractDog {
     private boolean checkAndHandleIncapacitated(DamageSource cause) {
         if (!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.IMMORTAL_DOGS)) 
             return false;
-        if (cause.isBypassInvul()) 
+        if (cause.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
             return false;
         if (this.getOwnerUUID() == null) 
             return false;
@@ -1694,9 +1695,9 @@ public class Dog extends AbstractDog {
 
     private void createIncapSyncState(DamageSource source) {
         DefeatedType type;
-        if (source.isFire()) {
+        if (source.is(DamageTypeTags.IS_FIRE)) {
             type = DefeatedType.BURN;
-        } else if (source == DamageSource.MAGIC) {
+        } else if (source.is(DamageTypes.MAGIC)) {
             type = DefeatedType.POISON;
         } else {
             type = DefeatedType.BLOOD;
