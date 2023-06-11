@@ -1843,7 +1843,7 @@ public class Dog extends AbstractDog {
                     case "forge.swimSpeed": name = ForgeMod.SWIM_SPEED; break;
                     case "forge.nameTagDistance": name = ForgeMod.NAMETAG_DISTANCE; break;
                     case "forge.entity_gravity": name = ForgeMod.ENTITY_GRAVITY; break;
-                    case "forge.reachDistance": name = ForgeMod.REACH_DISTANCE; break;
+                    case "forge.reachDistance": name = ForgeMod.BLOCK_REACH; break;
                     case "generic.maxHealth": name = Attributes.MAX_HEALTH; break;
                     case "generic.knockbackResistance": name = Attributes.KNOCKBACK_RESISTANCE; break;
                     case "generic.movementSpeed": name = Attributes.MOVEMENT_SPEED; break;
