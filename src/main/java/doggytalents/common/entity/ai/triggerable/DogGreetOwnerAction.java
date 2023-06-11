@@ -116,7 +116,7 @@ public class DogGreetOwnerAction extends TriggerableAction {
             this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
         }
         if (dog.getRandom().nextInt(HEART_CHANCE_WINDOW) == 0) {
-            if (dog.level instanceof ServerLevel sLevel) {
+            if (dog.level() instanceof ServerLevel sLevel) {
                 sLevel.sendParticles(
                     ParticleTypes.HEART, 
                     dog.getX(), dog.getY(), dog.getZ(), 

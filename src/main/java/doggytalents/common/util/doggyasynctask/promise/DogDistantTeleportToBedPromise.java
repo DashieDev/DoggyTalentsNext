@@ -29,7 +29,7 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
 
     public DogDistantTeleportToBedPromise(Dog dog) {
         this.dog = dog;
-        if (this.dog.level instanceof ServerLevel sLevel) {
+        if (this.dog.level() instanceof ServerLevel sLevel) {
             this.level = sLevel;
         } else {
             this.level = null;
@@ -52,7 +52,7 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
         var bedPos0 = bedPosOptional.get();
         this.bedPos = bedPos0;
         var chunkpos = new ChunkPos(bedPos);
-        if (dog.level.hasChunk(chunkpos.x, chunkpos.z)) {
+        if (dog.level().hasChunk(chunkpos.x, chunkpos.z)) {
             this.rejectedMsg = "ALREADYREQUESTORLOADED";
             this.setState(State.REJECTED);
             return;

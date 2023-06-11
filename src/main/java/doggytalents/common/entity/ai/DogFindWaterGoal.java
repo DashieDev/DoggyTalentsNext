@@ -162,10 +162,10 @@ public class DogFindWaterGoal extends Goal {
 
     private boolean isWaterPos(BlockPos pos) {
         if (pos == null) return false;
-        if (dog.level.getFluidState(pos).is(FluidTags.WATER)) {
+        if (dog.level().getFluidState(pos).is(FluidTags.WATER)) {
             return true;
         }
-        if (dog.level.isRainingAt(pos)) {
+        if (dog.level().isRainingAt(pos)) {
             return true;
         }
         return false;

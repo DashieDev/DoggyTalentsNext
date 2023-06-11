@@ -59,7 +59,7 @@ public class DoggyToolsTalent extends TalentInstance  {
 
     @Override
     public void set(AbstractDog dog, int levelBefore) {
-        if (dog.level.isClientSide) return;
+        if (dog.level().isClientSide) return;
         if (levelBefore > 0 && this.level() <= 0) {
             this.dropAllToolbar(dog);
         }
@@ -67,7 +67,7 @@ public class DoggyToolsTalent extends TalentInstance  {
 
     private void dropAllToolbar(AbstractDog dog) {
         for (int i = 0; i < this.tools.getSlots(); ++i) {
-            Containers.dropItemStack(dog.level, dog.getX(), dog.getY(), dog.getZ(), 
+            Containers.dropItemStack(dog.level(), dog.getX(), dog.getY(), dog.getZ(), 
                 this.tools.getStackInSlot(i));
             this.tools.setStackInSlot(i, ItemStack.EMPTY);
         }
@@ -145,7 +145,7 @@ public class DoggyToolsTalent extends TalentInstance  {
             return InteractionResult.PASS;
         if (!(d instanceof Dog dog)) 
             return InteractionResult.PASS;
-        if (!dog.level.isClientSide && player instanceof ServerPlayer sP) {
+        if (!dog.level().isClientSide && player instanceof ServerPlayer sP) {
             Screens.openDoggyToolsScreen(sP, dog);
         }
         return InteractionResult.SUCCESS;

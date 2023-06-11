@@ -31,7 +31,7 @@ public class OpenDogScreenPacket implements IPacket<OpenDogScreenData>  {
         ctx.get().enqueueWork(() -> {
             if (ctx.get().getDirection().getReceptionSide() == LogicalSide.SERVER) {
                 ServerPlayer player = ctx.get().getSender();
-                List<Dog> dogs = player.level.getEntitiesOfClass(Dog.class, player.getBoundingBox().inflate(12D, 12D, 12D),
+                List<Dog> dogs = player.level().getEntitiesOfClass(Dog.class, player.getBoundingBox().inflate(12D, 12D, 12D),
                     (dog) -> dog.canInteract(player) && PackPuppyTalent.hasInventory(dog)
                 );
 				if (!dogs.isEmpty()) {

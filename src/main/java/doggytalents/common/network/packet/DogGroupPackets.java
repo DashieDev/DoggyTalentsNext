@@ -43,7 +43,7 @@ public class DogGroupPackets {
         @Override
         public void handleDog(Dog dogIn, DogGroupsData.EDIT data,
                 Supplier<Context> ctx) {
-            if (dogIn.level.isClientSide) return;
+            if (dogIn.level().isClientSide) return;
             var sender = ctx.get().getSender();
             if (!dogIn.canInteract(sender)) return;
             var groups = dogIn.getGroups();
@@ -73,7 +73,7 @@ public class DogGroupPackets {
         @Override
         public void handleDog(Dog dogIn, DogGroupsData.FETCH_REQUEST data,
                 Supplier<Context> ctx) {
-            if (dogIn.level.isClientSide) return;
+            if (dogIn.level().isClientSide) return;
             var groups = dogIn.getGroups();
             var sender = ctx.get().getSender();
             PacketHandler.send(

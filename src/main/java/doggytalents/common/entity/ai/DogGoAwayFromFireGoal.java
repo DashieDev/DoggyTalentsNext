@@ -93,7 +93,7 @@ public class DogGoAwayFromFireGoal extends Goal {
 
         byte ret = -1; //Assume all is safe
         for (BlockPos x : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
-            var state = dog.level.getBlockState(x);
+            var state = dog.level().getBlockState(x);
             var isBurning = WalkNodeEvaluator.isBurningBlock(state);
 
             if (isBurning) {
@@ -106,7 +106,7 @@ public class DogGoAwayFromFireGoal extends Goal {
 
         // {
         //     var x = new BlockPos(pos.x, pos.y-1, pos.z);
-        //     var state = dog.level.getBlockState(x);
+        //     var state = dog.level().getBlockState(x);
         //     var isBurning = WalkNodeEvaluator.isBurningBlock(state);
 
         //     if (isBurning) {
@@ -121,7 +121,7 @@ public class DogGoAwayFromFireGoal extends Goal {
     }
 
     private boolean isSafePos(BlockPos pos) {
-        var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
+        var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
 
         if (blockType == BlockPathTypes.WALKABLE) {
             return true;

@@ -60,7 +60,7 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
         //Migrating between same uuid is a NO-OP
         if (ownerUUID.equals(uuid)) return;
 
-        var requester = dog.level.getPlayerByUUID(uuid);
+        var requester = dog.level().getPlayerByUUID(uuid);
 
         //the requester doesn't exist, nothing to do.
         if (requester == null) return;

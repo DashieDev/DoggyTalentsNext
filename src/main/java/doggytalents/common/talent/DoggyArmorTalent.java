@@ -50,7 +50,7 @@ public class DoggyArmorTalent extends TalentInstance {
 
     @Override
     public void init(AbstractDog dogIn) {
-        if (dogIn.level.isClientSide) return;
+        if (dogIn.level().isClientSide) return;
         for (int i = 0; i < this.armors.getSlots(); ++i) {
             var stack = this.armors.getStackInSlot(i);
             var slot = Dog.getEquipmentSlotForItem(stack);
@@ -60,7 +60,7 @@ public class DoggyArmorTalent extends TalentInstance {
 
     @Override
     public void set(AbstractDog dog, int levelBefore) {
-        if (dog.level.isClientSide) return;
+        if (dog.level().isClientSide) return;
         if (levelBefore > 0 && this.level() <= 0) {
             this.dropArmor(dog);
         }
@@ -87,7 +87,7 @@ public class DoggyArmorTalent extends TalentInstance {
 
     @Override
     public void remove(AbstractDog dogIn) {
-        if (dogIn.level.isClientSide) return;
+        if (dogIn.level().isClientSide) return;
         for (var slot : SLOT_IDS) {
             dogIn.setItemSlot(slot, ItemStack.EMPTY);
         }
@@ -96,7 +96,7 @@ public class DoggyArmorTalent extends TalentInstance {
     private void dropArmor(AbstractDog dogIn) {
         
         for (int i = 0; i < this.armors.getSlots(); ++i) {
-            Containers.dropItemStack(dogIn.level, dogIn.getX(), dogIn.getY(), dogIn.getZ(), 
+            Containers.dropItemStack(dogIn.level(), dogIn.getX(), dogIn.getY(), dogIn.getZ(), 
                 this.armors.getStackInSlot(i));
             this.armors.setStackInSlot(i, ItemStack.EMPTY);
         }
@@ -126,7 +126,7 @@ public class DoggyArmorTalent extends TalentInstance {
     @Override
     public void tick(AbstractDog dog) {
 
-        if (!dog.level.isClientSide) {
+        if (!dog.level().isClientSide) {
             validateAndSync(dog);
         }
             
@@ -147,7 +147,7 @@ public class DoggyArmorTalent extends TalentInstance {
     }
 
     private void scanForXpAndRepair(AbstractDog dog) {
-        if (dog.level.isClientSide) return;
+        if (dog.level().isClientSide) return;
         if (--this.tickUntilXPSearch <= 0) {
             this.tickUntilXPSearch = 10;
 
@@ -170,7 +170,7 @@ public class DoggyArmorTalent extends TalentInstance {
             if (!itemstack.isDamaged()) return;
             
 
-            var orbs = dog.level.getEntitiesOfClass(
+            var orbs = dog.level().getEntitiesOfClass(
                 ExperienceOrb.class, 
                 dog.getBoundingBox().inflate(SEARCH_RADIUS)
             );

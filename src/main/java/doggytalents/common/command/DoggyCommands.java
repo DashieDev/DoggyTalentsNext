@@ -382,7 +382,7 @@ public class DoggyCommands {
     private static int locate(DogLocationStorage respawnStorage, DogLocationData locationData, final CommandSourceStack source) throws CommandSyntaxException {
         Player player = source.getPlayerOrException();
 
-        if (locationData.getDimension().equals(player.level.dimension())) {
+        if (locationData.getDimension().equals(player.level().dimension())) {
             String translateStr = RadarItem.getDirectionTranslationKey(locationData, player);
             int distance = Mth.ceil(locationData.getPos() != null ? locationData.getPos().distanceTo(player.position()) : -1);
 

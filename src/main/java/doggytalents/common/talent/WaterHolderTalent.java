@@ -97,7 +97,7 @@ public class WaterHolderTalent extends TalentInstance {
 
     @Override
     public void livingTick(AbstractDog abstractDog) {
-        if (abstractDog.level.isClientSide) {
+        if (abstractDog.level().isClientSide) {
             return;
         }
 
@@ -137,7 +137,7 @@ public class WaterHolderTalent extends TalentInstance {
         
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() instanceof BucketItem) {
-            if (!dog.level.isClientSide) {
+            if (!dog.level().isClientSide) {
                 if (player.isShiftKeyDown()) {
                     var c1 = Component.translatable("talent.doggytalents.water_holder.amount");
                     c1.append(Component.literal(": "));
@@ -164,7 +164,7 @@ public class WaterHolderTalent extends TalentInstance {
 
         if (stack.getItem() == Items.WATER_BUCKET) {
 
-            if (!dog.level.isClientSide) {
+            if (!dog.level().isClientSide) {
                 
                 if (this.getWaterUnitleft() >= this.getMaxWaterHold()) return InteractionResult.PASS;
 
@@ -172,7 +172,7 @@ public class WaterHolderTalent extends TalentInstance {
 
                 if (!player.getAbilities().instabuild) player.setItemInHand(hand, new ItemStack(Items.BUCKET) );
                 dog.playSound(SoundEvents.BUCKET_FILL, dog.getSoundVolume(), 1.0f);
-                if (dog.level instanceof ServerLevel serverLevel) {
+                if (dog.level() instanceof ServerLevel serverLevel) {
                     serverLevel.sendParticles(
                         ParticleTypes.SPLASH, 
                         dog.getX(), dog.getY(), dog.getZ(), 
@@ -219,7 +219,7 @@ public class WaterHolderTalent extends TalentInstance {
         e.playSound( 
             SoundEvents.FIRE_EXTINGUISH,  
             0.5F, 2.6F + e.getRandom().nextFloat() - e.getRandom().nextFloat() * 0.8F);
-        if (dog.level instanceof ServerLevel serverLevel)
+        if (dog.level() instanceof ServerLevel serverLevel)
         serverLevel.sendParticles(
             ParticleTypes.SMOKE, 
             e.getX(), e.getY(), e.getZ(), 
@@ -249,7 +249,7 @@ public class WaterHolderTalent extends TalentInstance {
     private List<LivingEntity> getNearbyOnFire(AbstractDog dog) {
         var owner = dog.getOwner();
         if (owner == null) return List.of();
-        return dog.level.getEntitiesOfClass(LivingEntity.class, dog.getBoundingBox().inflate(EFFECT_RANGE, 4, EFFECT_RANGE), 
+        return dog.level().getEntitiesOfClass(LivingEntity.class, dog.getBoundingBox().inflate(EFFECT_RANGE, 4, EFFECT_RANGE), 
             e -> 
             
                 //Low health entities
@@ -298,7 +298,7 @@ public class WaterHolderTalent extends TalentInstance {
         }
         
         //Get Dogs of the same owner
-        var dogs = dog.level.getEntitiesOfClass(
+        var dogs = dog.level().getEntitiesOfClass(
             AbstractDog.class,    
             dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
             d -> (
@@ -311,7 +311,7 @@ public class WaterHolderTalent extends TalentInstance {
         }
 
         //Get Wolves of the same owner
-        var wolves = dog.level.getEntitiesOfClass(
+        var wolves = dog.level().getEntitiesOfClass(
             Wolf.class,    
             dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
             w -> (
@@ -324,7 +324,7 @@ public class WaterHolderTalent extends TalentInstance {
         }
 
         if (dog instanceof Dog ddog && ddog.regardTeamPlayers()) {
-            var teamPlayers = dog.level.getEntitiesOfClass(
+            var teamPlayers = dog.level().getEntitiesOfClass(
                 Player.class,    
                 dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
                 p -> (

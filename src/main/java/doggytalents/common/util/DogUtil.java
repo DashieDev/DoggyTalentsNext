@@ -331,7 +331,7 @@ public class DogUtil {
         if (pos1.distanceTo(pos2) > 128.0D) {
             return false;
         } else {
-            return dog.level.clip(new ClipContext(pos1, pos2, ClipContext.Block.COLLIDER, 
+            return dog.level().clip(new ClipContext(pos1, pos2, ClipContext.Block.COLLIDER, 
                 ClipContext.Fluid.NONE, dog)).getType() == HitResult.Type.MISS;
         }
     }
@@ -341,7 +341,7 @@ public class DogUtil {
     //Allow dog to teleportToLeaves, there is no reason to not to consider the existance of the push a.i
     //And height danger exist everywhere not just leaves
     public static boolean isTeleportSafeBlock(Dog dog, BlockPos pos) {
-        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
+        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
         boolean alterationWalkable = false;
         for (var x : dog.getAlterations()) {
             if (x.isBlockTypeWalkable(dog, pathnodetype).shouldSwing()) {
@@ -353,17 +353,17 @@ public class DogUtil {
             return false;
         } else {
             var blockpos = pos.subtract(dog.blockPosition());
-            return dog.level.noCollision(dog, dog.getBoundingBox().move(blockpos));
+            return dog.level().noCollision(dog, dog.getBoundingBox().move(blockpos));
         }
     }
 
     public static boolean isTeleportSafeBlockMidAir(Dog dog, BlockPos pos) {
-        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
+        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
         if (pathnodetype != BlockPathTypes.OPEN) {
             return false;
         } else {
             var blockpos = pos.subtract(dog.blockPosition());
-            return dog.level.noCollision(dog, dog.getBoundingBox().move(blockpos));
+            return dog.level().noCollision(dog, dog.getBoundingBox().move(blockpos));
         }
     }
 
@@ -441,7 +441,7 @@ public class DogUtil {
         var dog_b1 = new BlockPos(Mth.floor(dog_p01.x), Mth.floor(dog_p01.y), Mth.floor(dog_p01.z));
 
         var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(
-            dog.level, 
+            dog.level(), 
             dog_b1.mutable()
         );
 
@@ -461,7 +461,7 @@ public class DogUtil {
             boolean noWalkable = true;
             for (int i = 1; i <= dog.getMaxFallDistance(); ++i) {
                 if (WalkNodeEvaluator.getBlockPathTypeStatic(
-                    dog.level, 
+                    dog.level(), 
                     dog_b1.below(i).mutable()
                 ) == BlockPathTypes.WALKABLE) {
                     noWalkable = false;
@@ -556,7 +556,7 @@ public class DogUtil {
 
     public static List<Dog> getOtherIncapacitatedDogNearby(Dog dog) {
         int SEARCH_RADIUS = 12;
-        var l = dog.level.getEntitiesOfClass(
+        var l = dog.level().getEntitiesOfClass(
             Dog.class, 
             dog.getBoundingBox().inflate(SEARCH_RADIUS, 2, SEARCH_RADIUS),
             d -> d.isDefeated());
@@ -589,7 +589,7 @@ public class DogUtil {
         if (!bedPos.isPresent()) return;
         var chunkpos = new ChunkPos(bedPos.get());
         var owner = dog.getOwner();
-        if (dog.level.hasChunk(chunkpos.x, chunkpos.z)) {
+        if (dog.level().hasChunk(chunkpos.x, chunkpos.z)) {
             if (isTeleportSafeBlockMidAir(dog, bedPos.get().above())) {
                 teleportInternal(dog, bedPos.get().above());
             }

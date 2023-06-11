@@ -17,7 +17,7 @@ public class PestFighterTalent extends TalentInstance {
 
     @Override
     public void livingTick(AbstractDog dogIn) {
-        if (dogIn.level.isClientSide || dogIn.tickCount % 2 == 0) {
+        if (dogIn.level().isClientSide || dogIn.tickCount % 2 == 0) {
             return;
         }
 
@@ -28,7 +28,7 @@ public class PestFighterTalent extends TalentInstance {
                 damage = 2;
             }
 
-            List<Silverfish> list = dogIn.level.getEntitiesOfClass(
+            List<Silverfish> list = dogIn.level().getEntitiesOfClass(
                 Silverfish.class, dogIn.getBoundingBox().inflate(this.level() * 3, 4D, this.level() * 3), EntitySelector.ENTITY_STILL_ALIVE
             );
             for (Silverfish silverfish : list) {

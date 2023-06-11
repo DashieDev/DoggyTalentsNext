@@ -33,7 +33,7 @@ public class DogOwnerDistanceManager {
 
     public DogOwnerDistanceManager(Dog dog) {
         this.dog = dog;
-        this.lastWithOwnerTime = dog.level.getDayTime();
+        this.lastWithOwnerTime = dog.level().getDayTime();
     }
 
     public void tick() {
@@ -46,7 +46,7 @@ public class DogOwnerDistanceManager {
 
     private void updateGreetingCondition(Dog dog, @Nonnull LivingEntity owner) {
         if (this.isOwnerReturned(dog, owner)) {
-            long gtime = dog.level.getDayTime();
+            long gtime = dog.level().getDayTime();
             long dtime = gtime - lastWithOwnerTime;
             if (dtime >= START_MISSING_OWNER_TIME) {
                 this.willGreet = true;

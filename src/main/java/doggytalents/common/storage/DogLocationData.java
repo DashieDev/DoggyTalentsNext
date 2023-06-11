@@ -77,7 +77,7 @@ public class DogLocationData implements IDogData {
     public void update(Dog dogIn) {
         this.ownerId = dogIn.getOwnerUUID();
         this.position = dogIn.position();
-        this.dimension = dogIn.level.dimension();
+        this.dimension = dogIn.level().dimension();
 
         this.name = dogIn.getName();
         this.ownerName = dogIn.getOwnersName().orElse(null);

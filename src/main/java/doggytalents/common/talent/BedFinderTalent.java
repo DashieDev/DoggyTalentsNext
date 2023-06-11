@@ -28,7 +28,7 @@ public class BedFinderTalent extends TalentInstance {
                 if (playerIn.getItemInHand(handIn).getItem() == Items.BONE && dogIn.canInteract(playerIn)) {
 
                     if (dogIn.startRiding(playerIn)) {
-                        if (!dogIn.level.isClientSide) {
+                        if (!dogIn.level().isClientSide) {
                             dogIn.setOrderedToSit(true);
                         }
 
@@ -37,7 +37,7 @@ public class BedFinderTalent extends TalentInstance {
                     }
                 }
             } else {
-                if (!dogIn.level.isClientSide) dogIn.stopRiding();
+                if (!dogIn.level().isClientSide) dogIn.stopRiding();
                 return InteractionResult.SUCCESS;
             }
         }

@@ -174,7 +174,7 @@ public class RadarLocateRenderer {
                 cachedDog = new WeakReference<Dog>(null);
         }
         if (locatingUUID == null || player.tickCount % 8 != 0) return;
-        var dogs = player.level.getEntitiesOfClass(Dog.class, 
+        var dogs = player.level().getEntitiesOfClass(Dog.class, 
             //TODO wider ?
             player.getBoundingBox().inflate(12, 0, 12),
             dog -> dog.getUUID().equals(locatingUUID));

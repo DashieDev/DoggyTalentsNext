@@ -239,7 +239,7 @@ public class DogLowHealthGoal {
         }
 
         private void updateEnemies(int search_radius) {
-            this.enemies = dog.level.getEntitiesOfClass(
+            this.enemies = dog.level().getEntitiesOfClass(
                 Mob.class, 
                 dog.getBoundingBox().inflate(search_radius, 3, search_radius),
                 mob -> mob.isAlive() && mob.getTarget() == dog

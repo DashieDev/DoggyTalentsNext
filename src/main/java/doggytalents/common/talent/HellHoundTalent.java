@@ -129,7 +129,7 @@ public class HellHoundTalent extends TalentInstance {
 
     private void fireSpreadToEnermies() {
         var targets = 
-            this.dog.level.getEntitiesOfClass(
+            this.dog.level().getEntitiesOfClass(
                 LivingEntity.class, 
                 this.dog.getBoundingBox().inflate(SEARCH_RANGE, 2, SEARCH_RANGE)
             );

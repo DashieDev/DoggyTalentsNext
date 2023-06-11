@@ -15,7 +15,7 @@ public class FisherDogTalent extends TalentInstance {
 
     @Override
     public void onShakingDry(AbstractDog dogIn, WetSource source) {
-        if (dogIn.level.isClientSide) { // On client do nothing
+        if (dogIn.level().isClientSide) { // On client do nothing
             return;
         }
 

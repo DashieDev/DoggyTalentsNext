@@ -43,7 +43,7 @@ public class DogLeapAtTargetGoal extends Goal {
             } else {
                if (this.dog.getRandom().nextInt(reducedTickDelay(5)) != 0) return false;
                var tpos = target.blockPosition();
-               if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level, tpos.mutable()) !=BlockPathTypes.WALKABLE) {
+               if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level(), tpos.mutable()) !=BlockPathTypes.WALKABLE) {
                   return false;
                }
                
@@ -53,7 +53,7 @@ public class DogLeapAtTargetGoal extends Goal {
                var v1 = new Vec3(bp1.getX(), bp1.getY(), bp1.getZ());
                for (int i = 1; i <=2; ++i) {
                   v1 = v1.add(v0);
-                  if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level, new BlockPos(Mth.floor(v1.x), Mth.floor(v1.y), Mth.floor(v1.z)).mutable()) !=BlockPathTypes.WALKABLE)  {
+                  if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level(), new BlockPos(Mth.floor(v1.x), Mth.floor(v1.y), Mth.floor(v1.z)).mutable()) !=BlockPathTypes.WALKABLE)  {
                      return false;
                   }
                }

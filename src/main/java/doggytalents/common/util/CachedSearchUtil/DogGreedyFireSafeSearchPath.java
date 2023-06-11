@@ -69,7 +69,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
             for (int j = -1; j <= 1; ++j) {
                 if (i == 0 && j == 0) continue;
                 var b1 = b0.offset(i, 0, j).mutable();
-                var b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level, b1.mutable());
+                var b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level(), b1.mutable());
                 int offsetY = 0;
                 if (b1_type == BlockPathTypes.BLOCKED) {
                      offsetY= 1;
@@ -78,7 +78,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
                 }
                 if (offsetY != 0) {
                     b1.move(0, offsetY, 0);
-                    b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level, b1.mutable());
+                    b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level(), b1.mutable());
                 }
                 if (b1_type == BlockPathTypes.WALKABLE) {
                     path.finished = true;

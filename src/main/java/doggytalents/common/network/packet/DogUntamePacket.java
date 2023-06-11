@@ -34,7 +34,7 @@ public class DogUntamePacket extends DogPacket<DogUntameData> {
         dog.untame();
         sender.giveExperienceLevels(-AmnesiaBoneItem.getUntameXPCost());
         
-        dog.level.broadcastEntityEvent(dog, Constants.EntityState.WOLF_SMOKE);
+        dog.level().broadcastEntityEvent(dog, Constants.EntityState.WOLF_SMOKE);
         
         var tag = stack.getOrCreateTag();
         int usedTime = tag.getInt("amnesia_bone_used_time");

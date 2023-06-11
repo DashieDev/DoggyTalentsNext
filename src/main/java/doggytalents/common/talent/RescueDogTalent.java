@@ -48,7 +48,7 @@ public class RescueDogTalent extends TalentInstance {
 
     @Override
     public void livingTick(AbstractDog abstractDog) {
-        if (abstractDog.level.isClientSide) {
+        if (abstractDog.level().isClientSide) {
             return;
         }
 
@@ -129,8 +129,8 @@ public class RescueDogTalent extends TalentInstance {
         e.heal(
             this.healAmount(dog, e)
         );
-        if (dog.level instanceof ServerLevel) {
-            ((ServerLevel) dog.level).sendParticles(
+        if (dog.level() instanceof ServerLevel) {
+            ((ServerLevel) dog.level()).sendParticles(
                 ParticleTypes.HEART, 
                 e.getX(), e.getY(), e.getZ(), 
                 this.level*8, 
@@ -172,7 +172,7 @@ public class RescueDogTalent extends TalentInstance {
         }
         
         //Get Dogs of the same owner
-        var dogs = dog.level.getEntitiesOfClass(
+        var dogs = dog.level().getEntitiesOfClass(
             AbstractDog.class,    
             dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
             d -> (
@@ -185,7 +185,7 @@ public class RescueDogTalent extends TalentInstance {
         }
 
         //Get Wolves of the same owner
-        var wolves = dog.level.getEntitiesOfClass(
+        var wolves = dog.level().getEntitiesOfClass(
             Wolf.class,    
             dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
             w -> (
@@ -198,7 +198,7 @@ public class RescueDogTalent extends TalentInstance {
         }
 
         if (dog instanceof Dog ddog && ddog.regardTeamPlayers()) {
-            var teamPlayers = dog.level.getEntitiesOfClass(
+            var teamPlayers = dog.level().getEntitiesOfClass(
                 Player.class,    
                 dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS),
                 p -> (

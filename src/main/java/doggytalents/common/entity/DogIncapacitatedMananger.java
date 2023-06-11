@@ -65,7 +65,7 @@ public class DogIncapacitatedMananger {
             }
             return;
         }
-        if (this.dog.level.isClientSide) 
+        if (this.dog.level().isClientSide) 
             incapacitatedClientTick();
         else
             incapacitatedTick();
@@ -74,7 +74,7 @@ public class DogIncapacitatedMananger {
     public InteractionResult interact(ItemStack stack, Player player, InteractionHand hand) {
         var owner_uuid = dog.getOwnerUUID();
         if (stack.getItem() == DoggyItems.BANDAID.get()) {
-            if (!this.dog.level.isClientSide && this.bandageCooldown <= 0
+            if (!this.dog.level().isClientSide && this.bandageCooldown <= 0
                 && this.bandagesCount < MAX_BANDAID_COUNT) {
                 this.bandageCooldown = 10;
                 player.getCooldowns().addCooldown(DoggyItems.BANDAID.get(), 11);
@@ -85,7 +85,7 @@ public class DogIncapacitatedMananger {
             }
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.TOTEM_OF_UNDYING) {
-            if (!this.dog.level.isClientSide) {
+            if (!this.dog.level().isClientSide) {
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }
@@ -102,12 +102,12 @@ public class DogIncapacitatedMananger {
                     //Earraper.
                     //d.level.broadcastEntityEvent(d, (byte)35);
                 }
-                this.dog.level.broadcastEntityEvent(this.dog, (byte)35);
+                this.dog.level().broadcastEntityEvent(this.dog, (byte)35);
             }
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.CAKE && recoveryMultiplier < 2) {
 
-            if (this.dog.level instanceof ServerLevel) {
+            if (this.dog.level() instanceof ServerLevel) {
                 ParticlePackets.DogEatingParticlePacket
                     .sendDogEatingParticlePacketToNearby(this.dog, new ItemStack(Items.CAKE));
             }
@@ -126,7 +126,7 @@ public class DogIncapacitatedMananger {
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.STICK) {
 
-            if (this.dog.level.isClientSide) {
+            if (this.dog.level().isClientSide) {
                 boolean useLegacyDogGui = 
                     ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.USE_LEGACY_DOGGUI); 
 
@@ -137,14 +137,14 @@ public class DogIncapacitatedMananger {
 
             return InteractionResult.SUCCESS;
         } else if (this.dog.isPassenger()) {
-            if(!this.dog.level.isClientSide) this.dog.stopRiding();
+            if(!this.dog.level().isClientSide) this.dog.stopRiding();
             return InteractionResult.SUCCESS;
         } else if (owner_uuid != null && owner_uuid.equals(player.getUUID())) {
             this.dog.setOrderedToSit(!this.dog.isOrderedToSit());
             this.dog.getNavigation().stop();
             return InteractionResult.SUCCESS;
         } else {
-            if (this.dog.level.isClientSide) this.displayToastIncapacitated(player);
+            if (this.dog.level().isClientSide) this.displayToastIncapacitated(player);
         }
         return InteractionResult.FAIL;
     }
@@ -166,7 +166,7 @@ public class DogIncapacitatedMananger {
             0.8f - dog.getRandom().nextInt(4)*0.1f;
         int keep_amount = Mth.floor(keep_precentage*this.bandagesCount);
         for (int i = 0; i < keep_amount; ++i) {
-            Containers.dropItemStack(dog.level, dog.getX(), dog.getY(), dog.getZ(), 
+            Containers.dropItemStack(dog.level(), dog.getX(), dog.getY(), dog.getZ(), 
                 new ItemStack(DoggyItems.BANDAID.get(), 1));
         }
         bandageCooldown = 200;
@@ -188,7 +188,7 @@ public class DogIncapacitatedMananger {
                 for (int i = 0; i < 2; ++i) {
                     float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
                     float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
-                    dog.level.addParticle(ParticleTypes.ASH,
+                    dog.level().addParticle(ParticleTypes.ASH,
                     dog.getX() + f1,
                     dog.getY() + 0.4,
                     dog.getZ() + f2,
@@ -198,7 +198,7 @@ public class DogIncapacitatedMananger {
                 if (dog.getRandom().nextInt(3) == 0) {
                     float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
                     float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
-                    dog.level.addParticle(ParticleTypes.SMOKE,
+                    dog.level().addParticle(ParticleTypes.SMOKE,
                     dog.getX() + f1,
                     dog.getY() + dog.getEyeHeight(),
                     dog.getZ() + f2,
@@ -211,7 +211,7 @@ public class DogIncapacitatedMananger {
                 for (int i = 0; i < 2; ++i) {
                     float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
                     float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
-                    dog.level.addParticle(
+                    dog.level().addParticle(
                         new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(Items.NETHER_WART)),
                         dog.getX() + f1,
                         dog.getY() + 0.4,
@@ -252,7 +252,7 @@ public class DogIncapacitatedMananger {
         if (this.bandageCooldown > 0) --bandageCooldown;
 
         var owner = this.dog.getOwner();
-        var dog_b0_state = this.dog.level.getBlockState(this.dog.blockPosition());
+        var dog_b0_state = this.dog.level().getBlockState(this.dog.blockPosition());
         var dog_b0_block = dog_b0_state.getBlock();
 
         if (this.dog.getDogHunger() >= this.dog.getMaxIncapacitatedHunger()) {
@@ -282,7 +282,7 @@ public class DogIncapacitatedMananger {
             this.recoveryMultiplier = 1;
         }
 
-        if (this.dog.level instanceof ServerLevel sL) {
+        if (this.dog.level() instanceof ServerLevel sL) {
             sL.sendParticles(
                 ParticleTypes.HEART, 
                 this.dog.getX(), this.dog.getY(), this.dog.getZ(), 
@@ -300,9 +300,9 @@ public class DogIncapacitatedMananger {
         if (this.dog.distanceToSqr(owner) > 100) return;
         this.dog.addHunger(0.02f*this.recoveryMultiplier);
 
-        if (!(this.dog.level instanceof ServerLevel)) return;
+        if (!(this.dog.level() instanceof ServerLevel)) return;
         if (this.dog.tickCount % 10 != 0) return;
-        ((ServerLevel) this.dog.level).sendParticles(
+        ((ServerLevel) this.dog.level()).sendParticles(
             ParticleTypes.HEART, 
             this.dog.getX(), this.dog.getY(), this.dog.getZ(), 
             1, 

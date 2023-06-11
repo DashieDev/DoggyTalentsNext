@@ -56,7 +56,7 @@ public class SwimmerDogTalent extends TalentInstance {
             new SmoothSwimmingMoveControl(dog, dog.getMaxHeadXRot(), 
                 dog.getMaxHeadYRot(), 1, 1, false);
         this.navigator = 
-            new DogWaterBoundNavigation(dog, dog.level);
+            new DogWaterBoundNavigation(dog, dog.level());
         // if (!(dogIn instanceof Dog)) return;
         // if (!dogIn.hasData(SWIM_AI)) {
         //     SwimmerDogGoal swimmerDogGoal = new SwimmerDogGoal((Dog)dogIn);
@@ -69,7 +69,7 @@ public class SwimmerDogTalent extends TalentInstance {
     
     @Override
     public void livingTick(AbstractDog abstractDog) {
-        if (abstractDog.level.isClientSide) {
+        if (abstractDog.level().isClientSide) {
             return;
         }
 
@@ -125,7 +125,7 @@ public class SwimmerDogTalent extends TalentInstance {
             dog_b0.offset(-1, -1, -1), 
             dog_b0.offset(1, 1, 1)
         )) {
-            var type = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
+            var type = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
             if (type == BlockPathTypes.WALKABLE || type == BlockPathTypes.WATER_BORDER) return true;
         }
         return false;
@@ -265,7 +265,7 @@ public class SwimmerDogTalent extends TalentInstance {
 
     //     private boolean checkSurroundingForLand(AbstractDog dogIn, BlockPos p) {
     //         for (BlockPos dp : BlockPos.betweenClosed(p.offset(-1, -1, -1), p.offset(1, 1, 1))) {
-    //             BlockPathTypes pn = WalkNodeEvaluator.getBlockPathTypeStatic(dogIn.level, dp.mutable());
+    //             BlockPathTypes pn = WalkNodeEvaluator.getBlockPathTypeStatic(dogIn.level(), dp.mutable());
     //             if (pn == BlockPathTypes.WALKABLE || pn == BlockPathTypes.WATER_BORDER) return true;
     //         }
     //         return false;

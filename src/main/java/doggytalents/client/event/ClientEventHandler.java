@@ -223,7 +223,7 @@ public class ClientEventHandler {
         if (mode_id < 0) return;
         var useMode = whistle_modes[mode_id];
 
-        List<Dog> dogsList = player.level.getEntitiesOfClass(
+        List<Dog> dogsList = player.level().getEntitiesOfClass(
             Dog.class, 
             player.getBoundingBox().inflate(100D, 50D, 100D), 
             dog -> dog.isDoingFine() && dog.isOwnedBy(player)

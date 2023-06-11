@@ -51,8 +51,8 @@ public class PackPuppyTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog dogIn) {
-        if (dogIn.isDoingFine() && !dogIn.level.isClientSide && this.level() >= 5) {
-            List<ItemEntity> list = dogIn.level.getEntitiesOfClass(ItemEntity.class, dogIn.getBoundingBox().inflate(2.5D, 1D, 2.5D), SHOULD_PICKUP_ENTITY_ITEM);
+        if (dogIn.isDoingFine() && !dogIn.level().isClientSide && this.level() >= 5) {
+            List<ItemEntity> list = dogIn.level().getEntitiesOfClass(ItemEntity.class, dogIn.getBoundingBox().inflate(2.5D, 1D, 2.5D), SHOULD_PICKUP_ENTITY_ITEM);
 
             if (!list.isEmpty()) {
                 for (ItemEntity entityItem : list) {
@@ -62,7 +62,7 @@ public class PackPuppyTalent extends TalentInstance {
                         entityItem.setItem(remaining);
                     } else {
                         entityItem.discard();
-                        dogIn.playSound(SoundEvents.ITEM_PICKUP, 0.25F, ((dogIn.level.random.nextFloat() - dogIn.level.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                        dogIn.playSound(SoundEvents.ITEM_PICKUP, 0.25F, ((dogIn.level().random.nextFloat() - dogIn.level().random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                     }
                 }
             }
@@ -102,7 +102,7 @@ public class PackPuppyTalent extends TalentInstance {
         //TODO either drop inventory or save to respawn data, currently does both
         // No need to drop anything if dog didn't have pack puppy
         for (int i = 0; i < this.packPuppyHandler.getSlots(); ++i) {
-            Containers.dropItemStack(dogIn.level, dogIn.getX(), dogIn.getY(), dogIn.getZ(), this.packPuppyHandler.getStackInSlot(i));
+            Containers.dropItemStack(dogIn.level(), dogIn.getX(), dogIn.getY(), dogIn.getZ(), this.packPuppyHandler.getStackInSlot(i));
             this.packPuppyHandler.setStackInSlot(i, ItemStack.EMPTY);
         }
     }

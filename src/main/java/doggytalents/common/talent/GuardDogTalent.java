@@ -44,7 +44,7 @@ public class GuardDogTalent extends TalentInstance {
 
     @Override
     public InteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dogIn, DamageSource damageSource, float damage) {
-        if (dogIn.level.isClientSide) {
+        if (dogIn.level().isClientSide) {
             return InteractionResultHolder.pass(damage);
         }
 

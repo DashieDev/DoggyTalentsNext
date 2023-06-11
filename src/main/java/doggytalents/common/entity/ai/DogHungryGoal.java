@@ -34,7 +34,7 @@ public class DogHungryGoal extends Goal {
 
     public DogHungryGoal(Dog dog, double speedIn, float minDistIn) {
         this.dog = dog;
-        this.world = dog.level;
+        this.world = dog.level();
         this.followSpeed = speedIn;
         this.stopDist = 3;
         this.looktime = 0;

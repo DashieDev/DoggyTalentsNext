@@ -32,7 +32,7 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
 
     @Override
     public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
-        if (!dog.level.isClientSide) {
+        if (!dog.level().isClientSide) {
             
             var item = stack.getItem();
 
@@ -51,7 +51,7 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
                 }
              }
 
-            if (dog.level instanceof ServerLevel) {
+            if (dog.level() instanceof ServerLevel) {
                 ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(
                     dog, new ItemStack(item));
             }

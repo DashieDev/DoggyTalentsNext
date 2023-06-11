@@ -60,7 +60,7 @@ public class PuppyEyesTalent extends TalentInstance {
             return;
         }
 
-        if (dogIn.level.isClientSide || !dogIn.isTame()) {
+        if (dogIn.level().isClientSide || !dogIn.isTame()) {
             return;
         }
 
@@ -122,7 +122,7 @@ public class PuppyEyesTalent extends TalentInstance {
     }
 
     public LivingEntity getClosestVisibleVillager(AbstractDog dogIn, double radiusIn) {
-        List<AbstractVillager> list = dogIn.level.getEntitiesOfClass(
+        List<AbstractVillager> list = dogIn.level().getEntitiesOfClass(
             AbstractVillager.class,
             dogIn.getBoundingBox().inflate(radiusIn, radiusIn, radiusIn),
             (village) -> village.hasLineOfSight(dogIn)

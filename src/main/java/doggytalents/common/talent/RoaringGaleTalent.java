@@ -80,7 +80,7 @@ public class RoaringGaleTalent extends TalentInstance {
             int knockback = getKnockback(level);
 
             boolean hit = false;
-            var targets = dog.level.<LivingEntity>getEntitiesOfClass(LivingEntity.class, dog.getBoundingBox().inflate(level * 4, 4D, level * 4));
+            var targets = dog.level().<LivingEntity>getEntitiesOfClass(LivingEntity.class, dog.getBoundingBox().inflate(level * 4, 4D, level * 4));
             for (LivingEntity mob : targets) {
                 if (!(mob instanceof Enemy)) continue;
                 hit = true;

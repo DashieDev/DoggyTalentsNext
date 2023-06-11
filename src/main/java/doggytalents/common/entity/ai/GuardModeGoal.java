@@ -76,7 +76,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
 
     @Override
     protected void findTarget() {
-       this.target = this.dog.level.getNearestEntity(this.targetType, this.targetConditions, this.dog, this.owner.getX(), this.owner.getEyeY(), this.owner.getZ(), this.getTargetSearchArea(this.getFollowDistance()));
+       this.target = this.dog.level().getNearestEntity(this.targetType, this.targetConditions, this.dog, this.owner.getX(), this.owner.getEyeY(), this.owner.getZ(), this.getTargetSearchArea(this.getFollowDistance()));
     }
 
     @Override
@@ -175,7 +175,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
                 //guard dogs' HEALTH instead
                 return;
             }
-            this.nearestDanger = this.dog.level
+            this.nearestDanger = this.dog.level()
                 .getNearestEntity(
                     Monster.class,
                     TargetingConditions.forCombat().selector( target -> {

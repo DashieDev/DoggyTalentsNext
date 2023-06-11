@@ -178,7 +178,7 @@ public class DogEatFromChestDogGoal extends Goal {
 
     private void fetchChestDogs() {
         this.chestDogs = 
-        this.dog.level.getEntitiesOfClass(
+        this.dog.level().getEntitiesOfClass(
             Dog.class, 
             dog.getBoundingBox().inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS), 
             d -> isChestDog(d)
@@ -273,7 +273,7 @@ public class DogEatFromChestDogGoal extends Goal {
 
         @Override
         public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
-            if (dog.level.isClientSide) return InteractionResult.SUCCESS;
+            if (dog.level().isClientSide) return InteractionResult.SUCCESS;
                 
             var item = stack.getItem();
             var props = item.getFoodProperties();
@@ -290,7 +290,7 @@ public class DogEatFromChestDogGoal extends Goal {
                 }
             }
 
-            if (dog.level instanceof ServerLevel) {
+            if (dog.level() instanceof ServerLevel) {
                 ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(
                     dog, new ItemStack(item));
             }
