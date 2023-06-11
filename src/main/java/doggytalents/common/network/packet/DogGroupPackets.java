@@ -125,12 +125,7 @@ public class DogGroupPackets {
                     groups.add(group);
                 }
 
-                var screen = mc.screen;
-                if (screen instanceof DogNewInfoScreen dogInfoScreen) {
-                    Store.get(dogInfoScreen).dispatch(ActiveTabSlice.class, 
-                        new UIAction(UIActionTypes.DOG_GROUPS_RESPONSE, new Object()));
-                }
-                
+                ActiveTabSlice.dispatchGroupUpdates();
             });
 
             ctx.get().setPacketHandled(true);
