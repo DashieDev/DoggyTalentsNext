@@ -506,3 +506,6 @@ looks different to applying to the vanilla dogs.
 When a dog is incapacitated, users can apply band-aid to him, if they apply enough band-aid, the dog can begin to walk
 and follows the owner, he will automatically find and go rest on any beds nearby, he will also avoid beds which is occupied
 by another defeated dog.
+
+1.13.1 - 11th June 2023
+* HOTFIX : Dedicated Server failed to start for some reason.
