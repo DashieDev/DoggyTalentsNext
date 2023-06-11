@@ -471,3 +471,38 @@ will be shown on his screen.
 1.12.2 - 7th May 2023
 * HOTFIX : dog corrupts when player logged out while sharing the same boat with the dog.
 * fix desync when dog is mounted to player while already being a passanger of a different vehicle.
+
+1.13.0 - 11th June 2023
+# Incapacitated Dogs no longer unable to completely move, in other words, will float if died in lava for the owner to rescue.
++ Readded and Integrate the Command Emblem into the Whistle :
+Users can now assign Hotkeys to activate up to 4 commands in the Whistle without having to open the Gui to change.
+Executes the hotkeys while holding the Whistle and the command assigned is activated!
+* Prevent dog from potentially pursuing dead/defeated ChestDogs
++ Added Dropdown menu in Gui
++ Added Group System and Heel By Group Command:
+User can assigns each dog to certain groups where they will refer to when needing to heel all of the dog in that group
+using the Heel By Group commands.
++ Added St Bernald Skin
++ Added LowHealthStrategy system
+Owner now can tell the dogs what they should do when on low health: 
+There is 3 options : Do nothing and continue on what they are doing, stick to you or try to run away from any targetting 
+enemies while still try to be close to the owner.
++ SwimmerDogs now resist push from water.
++ When riding SwimmerDogs, rider can hold space to float up.
+# Dog now strategically eat Egg Sandwich from ChestDogs.
++ Added Cross Origin Teleport:
+Now, by default, dog will resist dimension change when in portal, this prevents dog accidentally wander to a portal, 
+(This however can be configured)
+Added Cross Origin Teleport as an option in the dog's menu. If turned on, dog will automatically teleport to owner when 
+he either distant teleport somehow or change dimension, and they will do it safely. Else, they will remains where they are.
++ Added Option to keep dog's UUID when turned into Trained Dog from Vanilla Dogs and being brought back from the dead.
+* Old DoggyTalents get dye color from dye using the wrong function, which causes dyes when applying on the dog collar
+looks different to applying to the vanilla dogs.
+# Trained dog now preserve name and collar from vanilla dogs, which owner can changes anytime.
++ Added key hint in Dog's menu, hinting user that they can press the respective keys to navigate between tabs
++ Added config to add a cap to how much dog user can heel at a time.
+# Improved Heel Command.
++ Added Bandage System and Incapacitated Dogs improve:
+When a dog is incapacitated, users can apply band-aid to him, if they apply enough band-aid, the dog can begin to walk
+and follows the owner, he will automatically find and go rest on any beds nearby, he will also avoid beds which is occupied
+by another defeated dog.
