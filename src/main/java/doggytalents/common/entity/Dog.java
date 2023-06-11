@@ -666,7 +666,6 @@ public class Dog extends AbstractDog {
         //Set.
         this.activeAction = action;
 
-        ChopinLogger.lwn(this, "triggered action : " + action);
         return true;
     }
 

@@ -3,7 +3,6 @@ package doggytalents.common.entity.ai;
 import java.util.EnumSet;
 import java.util.List;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyBlocks;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
@@ -83,7 +82,6 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
         if (  
             nav.isDone() && !onBed
         ) {
-            ChopinLogger.l("move!");
             dog.getMoveControl().setWantedPosition(targetBed.getX() + 0.5, 
             targetBed.getY(), targetBed.getZ() + 0.5, 1);
         }

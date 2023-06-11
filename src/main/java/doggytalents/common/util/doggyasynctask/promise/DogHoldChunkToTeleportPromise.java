@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
@@ -47,7 +46,6 @@ public class DogHoldChunkToTeleportPromise extends AbstractPromise {
 
     @Override
     public void onFulfilled() {
-        ChopinLogger.l("teleported dogs distant!");
     }
 
     @Override

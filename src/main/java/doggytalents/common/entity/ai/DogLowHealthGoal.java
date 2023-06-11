@@ -84,7 +84,6 @@ public class DogLowHealthGoal {
                 //Ensure this function never get called too many times.
                 DogUtil.dynamicSearchAndTeleportToOwnwer(dog, owner, 4);
             }
-            ChopinLogger.l("Low Health started!");
         }
 
         @Override
@@ -223,16 +222,11 @@ public class DogLowHealthGoal {
                 tickTillMoveAwayRecalc = 3 + dog.getRandom().nextInt(3);
                 updateMoveAway(owner);
                 if (this.moveAwayPos != null) {
-                    ChopinLogger.sendToOwner(dog,
-                        "Going to : " + moveAwayPos
-                        + " distance away : " + (moveAwayPos.distanceTo(dog.position()))
-                    );
                     dogNav.moveTo(
                         moveAwayPos.x, moveAwayPos.y, moveAwayPos.z, 
                         this.dog.getUrgentSpeedModifier()
                     );
                 } else {
-                    ChopinLogger.sendToOwner(dog, "what?");
                 }
             }
 

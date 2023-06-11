@@ -79,8 +79,6 @@ public class DogUtil {
             target = CachedSearchUtil
                 .getRandomSafePosUsingPool(dog, owner.blockPosition(), radius, 1);
         }
-
-        ChopinLogger.sendToOwner(dog, "Yo !");
    
         if (target == null) {
             return false;
@@ -114,8 +112,6 @@ public class DogUtil {
 
         long stopTime = System.nanoTime();
 
-        ChopinLogger.l("teleported " + dogs.size() + " dogs to owner cost " + (stopTime - startTime) + " nanoseconds");
-        
         return true;
     }
 
@@ -159,8 +155,6 @@ public class DogUtil {
 
         long stopTime = System.nanoTime();
 
-        ChopinLogger.l("teleported " + dogs.size() + " dogs to owner costed " + (stopTime - startTime + "nanoseconds"));
-        
         return true;
     }
 

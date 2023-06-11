@@ -1,7 +1,6 @@
 package doggytalents.common.entity.ai;
 
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
