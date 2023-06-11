@@ -79,6 +79,9 @@ public class DogIncapacitatedMananger {
                 this.bandageCooldown = 10;
                 player.getCooldowns().addCooldown(DoggyItems.BANDAID.get(), 11);
                 ++this.bandagesCount;
+                if (!player.getAbilities().instabuild) {
+                    stack.shrink(1);
+                }
             }
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.TOTEM_OF_UNDYING) {
