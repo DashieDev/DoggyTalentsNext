@@ -18,6 +18,7 @@ import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
 public class AmneisaBoneScreen extends StoreConnectedScreen {
@@ -78,10 +79,12 @@ public class AmneisaBoneScreen extends StoreConnectedScreen {
     }
     
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
 
-        this.renderBackground(stack);
-        super.render(stack, mouseX, mouseY, pTicks);
+        var stack = graphics.pose();
+
+        this.renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, pTicks);
 
         //font.draw(stack, Component.literal("width : " + this.width ), 3 , 3, 0xffffffff);
         //font.draw(stack, Component.literal("height : " + this.height ), 3 , 11, 0xffffffff);

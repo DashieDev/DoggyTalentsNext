@@ -3,6 +3,7 @@ package doggytalents.client.screen.framework.widget;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -26,7 +27,7 @@ public class TextOnlyButton extends AbstractButton {
     }
 
     @Override
-    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pticks) {
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pticks) {
         // No HightLight
         if (!this.active) return;
         int mX = this.width/2;
@@ -38,9 +39,9 @@ public class TextOnlyButton extends AbstractButton {
             var txt1 = txt.copy();
             txt1.withStyle(txt1.getStyle().withUnderlined(true).withBold(true));
             tX = this.getX() + mX - font.width(txt1)/2;
-            this.font.draw(stack, txt1, tX, tY, 0xffffffff);
+            graphics.drawString(font, txt1, tX, tY, 0xffffffff);
         } else {
-            this.font.draw(stack, txt, tX, tY, 0xffffffff);
+            graphics.drawString(font, txt, tX, tY, 0xffffffff);
         }
 
     }

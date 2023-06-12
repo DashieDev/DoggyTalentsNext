@@ -14,6 +14,7 @@ import doggytalents.common.network.packet.data.DogLowHealthStrategyData;
 import doggytalents.common.network.packet.data.DogModeData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -67,11 +68,11 @@ public class LowHealthStrategySwitch extends AbstractWidget {
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         if (!this.visible) return;
 
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
-        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY() +this.height, cl);
+        graphics.fill( this.getX(), this.getY(), this.getX()+this.width, this.getY() +this.height, cl);
 
         this.updateHover(mouseX, mouseY);
 
@@ -97,7 +98,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         );
         int back_tX = this.getX() + PADDING_HORIZONTAL;
         int back_tY = mY - font.lineHeight/2;
-        this.font.draw(stack, back_c1, back_tX, back_tY, hoveredLeft ? 0xffffffff : 0xa5ffffff);
+        graphics.drawString(font, back_c1, back_tX, back_tY, hoveredLeft ? 0xffffffff : 0xa5ffffff);
 
         var next_c1 = Component.literal(">");
         next_c1.withStyle(
@@ -105,12 +106,12 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         );
         int next_tX = this.getX() + this.width - PADDING_HORIZONTAL - font.width(next_c1);
         int next_tY = mY - font.lineHeight/2;
-        this.font.draw(stack, next_c1, next_tX, next_tY, hoveredRight ? 0xffffffff : 0xa5ffffff);
+        graphics.drawString(font, next_c1, next_tX, next_tY, hoveredRight ? 0xffffffff : 0xa5ffffff);
 
         var mode_c1 = this.getMessage();
         int mode_tX = mX - this.font.width(mode_c1)/2;
         int mode_tY = mY - this.font.lineHeight/2;
-        this.font.draw(stack, mode_c1, mode_tX, mode_tY, 0xffffffff);
+        graphics.drawString(font, mode_c1, mode_tX, mode_tY, 0xffffffff);
 
         if (this.stillHovered) {
             if (this.dog.tickCount - this.tickCount0 >= 1) {
@@ -159,7 +160,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
 	}
 
     @Override
-    public void renderWidget(PoseStack p_268228_, int p_268034_, int p_268009_, float p_268085_) {
+    public void renderWidget(GuiGraphics graphics, int p_268034_, int p_268009_, float p_268085_) {
     }
     
 }

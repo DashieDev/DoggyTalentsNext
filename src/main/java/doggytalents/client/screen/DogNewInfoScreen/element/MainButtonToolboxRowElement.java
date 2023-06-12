@@ -13,6 +13,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -47,19 +48,18 @@ public class MainButtonToolboxRowElement extends AbstractElement {
             MainTab.EDIT_INFO 
         ) {
             @Override
-            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                super.render(stack, mouseX, mouseY, pTicks);
+            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.render(graphics, mouseX, mouseY, pTicks);
 
                 int mX = this.getX() + this.width/2;
                 int mY = this.getY() + this.height/2;
 
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
-                RenderSystem.setShaderTexture(0, Resources.HAMBURGER);
                 RenderSystem.enableBlend();
                 RenderSystem.defaultBlendFunc();
                 RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-                this.blit(stack, mX - 10, mY - 10, 0, 0, 20, 20);
+                graphics.blit(Resources.HAMBURGER, mX - 10, mY - 10, 0, 0, 20, 20);
             }
         };
         totalWidth += editInfoButton.getWidth();
@@ -76,7 +76,7 @@ public class MainButtonToolboxRowElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         
     }
     

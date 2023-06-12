@@ -14,6 +14,7 @@ import doggytalents.common.network.packet.data.DogGroupsData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -64,12 +65,12 @@ public class AddGroupMenu extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
         int aX = this.getRealX() + 5;
         int pY = this.getRealY() + 7;
 
-        font.draw(stack, "Add Group: ", aX, pY, 0xffffffff);
+        graphics.drawString(font, "Add Group: ", aX, pY, 0xffffffff);
 
     }
 

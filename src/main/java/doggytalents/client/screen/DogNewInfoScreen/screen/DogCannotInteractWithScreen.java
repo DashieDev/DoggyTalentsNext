@@ -7,10 +7,12 @@ import doggytalents.client.screen.framework.Store;
 import doggytalents.common.entity.Dog;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.util.Mth;
 
 public class DogCannotInteractWithScreen extends Screen {
 
@@ -28,9 +30,10 @@ public class DogCannotInteractWithScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-        this.renderBackground(stack);
-        super.render(stack, mouseX, mouseY, pTicks);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+        var stack = graphics.pose();
+        this.renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, pTicks);
         int mX = this.width/2;
         int mY = this.height/2; 
 
@@ -75,16 +78,16 @@ public class DogCannotInteractWithScreen extends Screen {
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
         stack.pushPose();
         stack.scale(1.2f, 1.2f, 1.2f);
-        this.font.draw(stack, title, (mX/1.2f -font.width(title)/2 ), pY/1.2f, 0xffffffff);
+        graphics.drawString(font, title, Mth.floor(mX/1.2f -font.width(title)/2 ), Mth.floor(pY/1.2f), 0xffffffff);
         stack.popPose();
         pY += 40;
-        this.font.draw(stack, help, mX - font.width(help)/2, pY, 0xffffffff);
+        graphics.drawString(font, help, mX - font.width(help)/2, pY, 0xffffffff);
         pY += 40;
-        this.font.draw(stack, dog_title, mX - font.width(dog_title)/2, pY, 0xffffffff );
+        graphics.drawString(font, dog_title, mX - font.width(dog_title)/2, pY, 0xffffffff );
         pY += font.lineHeight + 3;
-        this.font.draw(stack, owner_title, mX - font.width(owner_title)/2, pY, 0xffffffff );
+        graphics.drawString(font, owner_title, mX - font.width(owner_title)/2, pY, 0xffffffff );
         pY += 40;
-        this.font.draw(stack, escToReturn, mX - font.width(escToReturn)/2, pY, 0xffffffff );
+        graphics.drawString(font, escToReturn, mX - font.width(escToReturn)/2, pY, 0xffffffff );
 
     }
 

@@ -6,6 +6,7 @@ import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.common.entity.Dog;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 
 public class TalentView extends AbstractElement {
@@ -76,7 +77,7 @@ public class TalentView extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         // var font = getScreen().getMinecraft().font;
         // font.draw(stack, "talents", this.getRealX()+3, this.getRealY() + 40, 0xffffffff);
         

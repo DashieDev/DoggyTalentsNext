@@ -18,6 +18,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogTextureData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -107,13 +108,13 @@ public class SkinButtonElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         
         int tX = this.getRealX() + 38;
         int tY = this.getRealY() + this.getSizeY()/2 - font.lineHeight/2;
         if (this.activeSkinId+1 < 10) tX += 2;  
         String str = (this.activeSkinId+1) + "/" + this.locList.size();
-        this.font.draw(stack, str, tX, tY, 0xffffffff);
+        graphics.drawString(font, str, tX, tY, 0xffffffff);
         
     }
 

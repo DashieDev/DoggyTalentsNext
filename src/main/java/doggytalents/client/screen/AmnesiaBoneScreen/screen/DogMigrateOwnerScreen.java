@@ -17,6 +17,7 @@ import doggytalents.common.network.packet.data.DogUntameData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
@@ -24,6 +25,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.util.Mth;
 import net.minecraftforge.network.PacketDistributor;
 
 public class DogMigrateOwnerScreen extends Screen {
@@ -56,8 +58,8 @@ public class DogMigrateOwnerScreen extends Screen {
             .withStyle(ChatFormatting.GRAY), 
             $ -> {}, Minecraft.getInstance().font) {
                 @Override
-                public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                    super.render(stack, mouseX, mouseY, pTicks);
+                public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                    super.render(graphics, mouseX, mouseY, pTicks);
                     if (!this.isHovered) return;
                     DogMigrateOwnerScreen.this.renderComponentTooltip(stack, List.of(
                         Component.literal(migrateTo == null ? "UUID_ZERO" : migrateTo.toString())
@@ -73,12 +75,14 @@ public class DogMigrateOwnerScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-        this.renderBackground(stack);
-        super.render(stack, mouseX, mouseY, pTicks);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+        this.renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, pTicks);
+
+        var stack = graphics.pose();
 
         if (this.migrateTo != null) {
-            this.drawWhenHaveRequest(stack, mouseX, mouseY, pTicks, this.migrateTo, this.migrateToStr);
+            this.drawWhenHaveRequest(graphics, mouseX, mouseY, pTicks, this.migrateTo, this.migrateToStr);
             return;
         }
 
@@ -97,20 +101,23 @@ public class DogMigrateOwnerScreen extends Screen {
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
         stack.pushPose();
         stack.scale(1.2f, 1.2f, 1.2f);
-        this.font.draw(stack, title, (mX/1.2f -font.width(title)/2 ), pY/1.2f, 0xffffffff);
+        graphics.drawString(font, title, Mth.floor(mX/1.2f -font.width(title)/2 ), Mth.floor(pY/1.2f), 0xffffffff);
         stack.popPose();
         pY += 40;
         for (var line : help) {
-            this.font.draw(stack, line, mX - font.width(line)/2, pY, 0xffffffff);
+            graphics.drawString(font, line, mX - font.width(line)/2, pY, 0xffffffff);
             pY += font.lineHeight + 3;
         }
         pY += 40;
-        this.font.draw(stack, escToReturn, mX - font.width(escToReturn)/2, pY, 0xffffffff );
+        graphics.drawString(font, escToReturn, mX - font.width(escToReturn)/2, pY, 0xffffffff );
 
     }
 
-    public void drawWhenHaveRequest(PoseStack stack, int mouseX, int mouseY, float pTicks, 
+    public void drawWhenHaveRequest(GuiGraphics graphics, int mouseX, int mouseY, float pTicks, 
         UUID newOwnerUUID, String newOwnerName) {
+        
+        var stack = graphics.pose();
+
         int mX = this.width/2;
         int mY = this.height/2; 
 
@@ -139,21 +146,21 @@ public class DogMigrateOwnerScreen extends Screen {
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
         stack.pushPose();
         stack.scale(1.2f, 1.2f, 1.2f);
-        this.font.draw(stack, title, (mX/1.2f -font.width(title)/2 ), pY/1.2f, 0xffffffff);
+        graphics.drawString(font, title, Mth.floor(mX/1.2f -font.width(title)/2 ), Mth.floor(pY/1.2f), 0xffffffff);
         stack.popPose();
         pY += 40;
-        this.font.draw(stack, help, mX - font.width(help)/2, pY, 0xffffffff);
+        graphics.drawString(font, help, mX - font.width(help)/2, pY, 0xffffffff);
         pY += 40;
-        this.font.draw(stack, dog_title, mX - font.width(dog_title)/2, pY, 0xffffffff );
+        graphics.drawString(font, dog_title, mX - font.width(dog_title)/2, pY, 0xffffffff );
         pY += font.lineHeight + 3;
-        this.font.draw(stack, owner_title, mX - font.width(owner_title)/2, pY, 0xffffffff );
+        graphics.drawString(font, owner_title, mX - font.width(owner_title)/2, pY, 0xffffffff );
         pY += font.lineHeight + 3;
         this.uuidShowButton.setX(this.width/2 - uuidShowButton.getWidth()/2);
         this.uuidShowButton.setY(pY-6);
         pY += font.lineHeight + 6;  
-        this.font.draw(stack, costStr, mX - font.width(costStr)/2, pY, 0xffffffff );
+        graphics.drawString(font, costStr, mX - font.width(costStr)/2, pY, 0xffffffff );
         pY += 40;
-        this.font.draw(stack, escToReturn, mX - font.width(escToReturn)/2, pY, 0xffffffff );
+        graphics.drawString(font, escToReturn, mX - font.width(escToReturn)/2, pY, 0xffffffff );
     } 
 
     @Override
@@ -170,16 +177,16 @@ public class DogMigrateOwnerScreen extends Screen {
             }
         ) {
             @Override
-            public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
                 // TODO Auto-generated method stub
-                super.renderWidget(stack, mouseX, mouseY, pTicks);
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 var player = Minecraft.getInstance().player;
                 this.active = 
                     (player != null && player.experienceLevel >= AmnesiaBoneItem.getMigrateOwnerXPCost());
             }
             @Override
-            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                super.render(stack, mouseX, mouseY, pTicks);
+            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.render(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 MutableComponent c1;
                 if (this.active) {

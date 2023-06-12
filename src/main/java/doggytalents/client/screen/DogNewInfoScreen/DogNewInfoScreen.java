@@ -32,6 +32,7 @@ import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -63,8 +64,8 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             private boolean selected = false;
 
             @Override
-            public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pticks) {
-                super.renderWidget(stack, mouseX, mouseY, pticks);
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pticks) {
+                super.renderWidget(graphics, mouseX, mouseY, pticks);
 
                 //draw key hint
                 var mc = Minecraft.getInstance();
@@ -77,9 +78,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
                 var tX = this.getX() + this.getWidth()/2
                     - key_str_len/2;
                 var tY = this.getY() + this.getHeight()/2 + 20;
-                font.draw(stack, key_str, tX, tY, 0xffffffff);
+                graphics.drawString(font, key_str, tX, tY, 0xffffffff);
                 
-                GuiComponent.fill(stack, tX - 1, tY - 1, 
+                graphics.fill(tX - 1, tY - 1, 
                     tX + key_str_len + 1, tY + font.lineHeight + 1, bg_color); 
             }
 
@@ -114,8 +115,8 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             private boolean selected;
 
             @Override
-            public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pticks) {
-                super.renderWidget(stack, mouseX, mouseY, pticks);
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pticks) {
+                super.renderWidget(graphics, mouseX, mouseY, pticks);
 
                 //draw key hint
                 var mc = Minecraft.getInstance();
@@ -128,9 +129,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
                 var tX = this.getX() + this.getWidth()/2
                     - key_str_len/2;
                 var tY = this.getY() + this.getHeight()/2 + 20;
-                font.draw(stack, key_str, tX, tY, 0xffffffff);
+                graphics.drawString(font, key_str, tX, tY, 0xffffffff);
                 
-                GuiComponent.fill(stack, tX - 1, tY - 1, 
+                graphics.fill(tX - 1, tY - 1, 
                     tX + key_str_len + 1, tY + font.lineHeight + 1, bg_color); 
             }
 
@@ -260,12 +261,12 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
 
         
         
-        this.renderBackground(stack);
-        super.render(stack, mouseX, mouseY, pTicks);
+        this.renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, pTicks);
 
         //font.draw(stack, Component.literal("width : " + this.width ), 3 , 3, 0xffffffff);
         //font.draw(stack, Component.literal("height : " + this.height ), 3 , 11, 0xffffffff);
@@ -284,7 +285,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         var dropdownMananger = DropdownMenuManager.get(this);
         if (dropdownMananger.hasDropdownMenu()) {
             dropdownMananger.getDropdownMenu()
-                .render(stack, mouseX, mouseY, pTicks);
+                .render(graphics, mouseX, mouseY, pTicks);
         }
 
         if (!this.dog.isAlive()) {

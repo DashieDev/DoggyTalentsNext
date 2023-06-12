@@ -18,6 +18,7 @@ import doggytalents.common.network.packet.data.HeelByNameData;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.Rect2i;
@@ -103,8 +104,8 @@ public class HeelByNameScreen extends Screen {
 
         Button help = new CustomButton(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                super.render(stack, mouseX, mouseY, pTicks);
+            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.render(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
@@ -122,8 +123,8 @@ public class HeelByNameScreen extends Screen {
                 b.setMessage(Component.literal("" + this.softHeel));
         }) {
             @Override
-            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                super.render(stack, mouseX, mouseY, pTicks);
+            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.render(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.soft_heel")
@@ -142,10 +143,10 @@ public class HeelByNameScreen extends Screen {
 
  
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
         var soft_heel = I18n.get("doggytalents.screen.whistler.heel_by_name.soft_heel");
-        this.font.draw(stack, soft_heel, 3, 52, 0xffffffff);
+        graphics.drawString(font, soft_heel, 3, 52, 0xffffffff);
 
         int half_width = this.width >> 1;
         int half_height = this.height >> 1; 
@@ -167,15 +168,15 @@ public class HeelByNameScreen extends Screen {
             
         }
       
-        Gui.fill(stack, half_width - 100, half_height - 100, half_width + 100, half_height + 100, Integer.MIN_VALUE);
-        Gui.fill(stack, half_width - 100, half_height + 105, half_width + 100, half_height + 117, Integer.MIN_VALUE);
+        graphics.fill( half_width - 100, half_height - 100, half_width + 100, half_height + 100, Integer.MIN_VALUE);
+        graphics.fill( half_width - 100, half_height + 105, half_width + 100, half_height + 117, Integer.MIN_VALUE);
 
-        super.render(stack, mouseX, mouseY, partialTicks);
+        super.render(graphics, mouseX, mouseY, partialTicks);
         int offset = 0;
         int textx = half_width - 100 + 2;
         int texty = half_height - 100 + 2;
         if (this.dogNameFilterList.size() <= 0) {
-            this.font.draw(stack, 
+            graphics.drawString(font, 
                 I18n.get("doggytalents.screen.whistler.heel_by_name.no_dog_found"), 
                 textx, texty + offset, 0xf50a0a);
         }
@@ -195,7 +196,7 @@ public class HeelByNameScreen extends Screen {
                     }
                 }
             }
-            this.font.draw(stack, text, textx, texty + offset, color);
+            graphics.drawString(font, text, textx, texty + offset, color);
             offset+=10;
             if (offset > 190) break;
         }
@@ -203,7 +204,7 @@ public class HeelByNameScreen extends Screen {
         int txtorgx = half_width - 90;
         int txtorgy = half_height + 107;
         
-        this.font.draw(stack, this.value + "_", txtorgx, txtorgy,  0xffffffff);
+        graphics.drawString(font, this.value + "_", txtorgx, txtorgy,  0xffffffff);
          
     }
 

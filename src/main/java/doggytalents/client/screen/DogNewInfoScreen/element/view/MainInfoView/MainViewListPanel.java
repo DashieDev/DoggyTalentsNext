@@ -13,6 +13,7 @@ import doggytalents.client.screen.framework.element.ElementPosition.ChildDirecti
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -43,7 +44,7 @@ public class MainViewListPanel extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         // int mX = this.getSizeX()/2;
         // var c1 = Component.literal("Pts: " + this.dog.getSpendablePoints());
         // int tX = this.getRealX() + mX - font.width(c1)/2;

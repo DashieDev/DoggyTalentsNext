@@ -13,6 +13,7 @@ import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
@@ -44,7 +45,7 @@ public class DogSkinElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
         if (this.locList == null) return;
         if (this.locList.isEmpty()) return;
@@ -61,23 +62,23 @@ public class DogSkinElement extends AbstractElement {
             c1.withStyle(Style.EMPTY.withBold(true));
             int nameX = this.getRealX() + mX - font.width(c1)/2;
             int nameY = this.getRealY() + this.getSizeY() - 13;
-            font.draw(stack, c1, nameX, nameY, 0xffffffff);
+            graphics.drawString(font, c1, nameX, nameY, 0xffffffff);
         }
 
         
-        this.renderSkinAndDogModel(activeSkinId, true, stack, 
+        this.renderSkinAndDogModel(activeSkinId, true, graphics, 
             mouseX, mouseY, e_mX, e_mY + 36, 64);
         
         int prevId = this.activeSkinId - 1;
         int nextId = this.activeSkinId + 1;
 
         if (nextId < locList.size()) {
-            this.renderSkinAndDogModel(nextId, false, stack, 
+            this.renderSkinAndDogModel(nextId, false, graphics, 
                 mouseX, mouseY, e_mX + 32 + 25 + 25, e_mY + 32, 50);
         }
 
         if (prevId >= 0) {
-            this.renderSkinAndDogModel(prevId, false, stack, 
+            this.renderSkinAndDogModel(prevId, false, graphics, 
                 mouseX, mouseY, e_mX - 32 - 25 - 25, e_mY + 32, 50);
         }
 
@@ -85,12 +86,12 @@ public class DogSkinElement extends AbstractElement {
          
     }
 
-    private void renderSkinAndDogModel(int indx, boolean followMouse, PoseStack stack, int mouseX, 
+    private void renderSkinAndDogModel(int indx, boolean followMouse, GuiGraphics graphics, int mouseX, 
         int mouseY, int e_mX, int e_mY, int size) {
         var oldSkin = dog.getClientSkin();
         var manifestSkin = this.locList.get(indx);
         dog.setClientSkin(manifestSkin);
-        DogStatusViewBoxElement.renderDogInside(stack, dog, e_mX, e_mY, size, 
+        DogStatusViewBoxElement.renderDogInside(graphics, dog, e_mX, e_mY, size, 
             followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
         
         dog.setClientSkin(oldSkin);
@@ -107,7 +108,7 @@ public class DogSkinElement extends AbstractElement {
             int tX = e_mX - c1_len/2;
             int tY = e_mY + 28;
             
-            font.draw(stack, c1, tX, tY, 0xffffffff);
+            graphics.drawString(font, c1, tX, tY, 0xffffffff);
         }
     }
     

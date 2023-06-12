@@ -13,12 +13,14 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogUntameData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.util.Mth;
 import net.minecraftforge.network.PacketDistributor;
 
 public class DogUntameConfirmScreen extends Screen {
@@ -42,9 +44,11 @@ public class DogUntameConfirmScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-        this.renderBackground(stack);
-        super.render(stack, mouseX, mouseY, pTicks);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+        this.renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, pTicks);
+
+        var stack = graphics.pose();
         int mX = this.width/2;
         int mY = this.height/2; 
 
@@ -72,16 +76,16 @@ public class DogUntameConfirmScreen extends Screen {
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
         stack.pushPose();
         stack.scale(1.2f, 1.2f, 1.2f);
-        this.font.draw(stack, title, (mX/1.2f -font.width(title)/2 ), pY/1.2f, 0xffffffff);
+        graphics.drawString(font, title, Mth.floor(mX/1.2f -font.width(title)/2 ), Mth.floor(pY/1.2f), 0xffffffff);
         stack.popPose();
         pY += 40;
-        this.font.draw(stack, help, mX - font.width(help)/2, pY, 0xffffffff);
+        graphics.drawString(font, help, mX - font.width(help)/2, pY, 0xffffffff);
         pY += 40;
-        this.font.draw(stack, dog_title, mX - font.width(dog_title)/2, pY, 0xffffffff );
+        graphics.drawString(font, dog_title, mX - font.width(dog_title)/2, pY, 0xffffffff );
         pY += font.lineHeight + 3;
-        this.font.draw(stack, owner_title, mX - font.width(owner_title)/2, pY, 0xffffffff );
+        graphics.drawString(font, owner_title, mX - font.width(owner_title)/2, pY, 0xffffffff );
         pY += 80;
-        this.font.draw(stack, escToReturn, mX - font.width(escToReturn)/2, pY, 0xffffffff );
+        graphics.drawString(font, escToReturn, mX - font.width(escToReturn)/2, pY, 0xffffffff );
 
     }
 
@@ -99,9 +103,9 @@ public class DogUntameConfirmScreen extends Screen {
             }
         ) {
             @Override
-            public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
                 // TODO Auto-generated method stub
-                super.renderWidget(stack, mouseX, mouseY, pTicks);
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 
                 // var costStr = dogLevel < talent.getMaxLevel() ?
                 //     "Cost : " + talent.getLevelCost(dogLevel + 1)
@@ -112,15 +116,15 @@ public class DogUntameConfirmScreen extends Screen {
                 costStrColor = 0xffffffff;
                 int tX = this.getX() + this.width/2 - font.width(costStr)/2;
                 int tY = this.getY() - 2 - font.lineHeight;
-                font.draw(stack, costStr, tX, tY, costStrColor);
+                graphics.drawString(font, costStr, tX, tY, costStrColor);
                 var player = Minecraft.getInstance().player;
                 this.active = 
                     (player != null && player.experienceLevel >= AmnesiaBoneItem.getUntameXPCost());
             }
 
             @Override
-            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                super.render(stack, mouseX, mouseY, pTicks);
+            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.render(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 MutableComponent c1;
                 if (this.active) {

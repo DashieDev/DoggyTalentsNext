@@ -10,6 +10,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
@@ -43,12 +44,12 @@ public class ScrollView extends AbstractElement {
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-        GuiComponent.enableScissor(
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        graphics.enableScissor(
             this.getRealX(), this.getRealY(), 
             this.getRealX() + this.getSizeX(), 
             this.getRealY() + this.getSizeY());
-        super.render(stack, mouseX, mouseY, partialTicks);
+        super.render(graphics, mouseX, mouseY, partialTicks);
 
         long millis = System.currentTimeMillis();
         long millis_elapsed = millis - millis0;
@@ -58,9 +59,9 @@ public class ScrollView extends AbstractElement {
         ) {
             scrollBarAppearDuration -= millis_elapsed;
             millis0 = millis;
-            drawScrollBar(stack, mouseX, mouseY, partialTicks);
+            drawScrollBar(graphics, mouseX, mouseY, partialTicks);
         }
-        GuiComponent.disableScissor();       
+        graphics.disableScissor();       
     }
 
     private void shiftWidgetOffsetRescursive(List<? extends GuiEventListener> childrens, int offset) {
@@ -74,7 +75,7 @@ public class ScrollView extends AbstractElement {
         }
     }
 
-    private void drawScrollBar(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    private void drawScrollBar(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         int fullBarSize = this.getSizeY() - 2*SCROLL_BAR_MARGIN_HORZ;
         int containerSize = this.container.getSizeY();
         if (containerSize <= 0) return;
@@ -86,11 +87,11 @@ public class ScrollView extends AbstractElement {
         
         int barX = this.getRealX() + this.getSizeX() - SCROLL_BAR_MARGIN_RIGHT - SCROLL_BAR_THICK;
         int barY = this.getRealY() + SCROLL_BAR_MARGIN_HORZ;
-        fill(stack, barX, barY, barX + SCROLL_BAR_THICK, barY + fullBarSize, SCROLL_BAR_REST_CLR);
+        graphics.fill( barX, barY, barX + SCROLL_BAR_THICK, barY + fullBarSize, SCROLL_BAR_REST_CLR);
 
         int handleX = barX;
         int handleY = barY + handleOffset;
-        fill(stack, handleX, handleY, handleX + SCROLL_BAR_THICK, handleY + handleSize, SCROLL_BAR_HANDLE_CLR);
+        graphics.fill( handleX, handleY, handleX + SCROLL_BAR_THICK, handleY + handleSize, SCROLL_BAR_HANDLE_CLR);
     }
 
     //dir : -1.0 = down; 1.0 = up
@@ -111,7 +112,7 @@ public class ScrollView extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
     }
 
     public void addScrollChildren(AbstractElement element) {
@@ -154,7 +155,7 @@ public class ScrollView extends AbstractElement {
         }
 
         @Override
-        public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         }
 
         public int getOffset() {

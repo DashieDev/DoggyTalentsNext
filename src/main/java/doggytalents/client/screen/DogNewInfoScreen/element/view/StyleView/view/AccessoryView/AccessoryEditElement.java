@@ -12,6 +12,7 @@ import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AccessoryItem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
@@ -89,7 +90,7 @@ public class AccessoryEditElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         int holderIndx = 0;
         var items = this.inventory.items;
         this.lastPage.active = startIndex > 0;
@@ -119,12 +120,12 @@ public class AccessoryEditElement extends AbstractElement {
                 var txt = Component.translatable("doggui.style.accessories.no_accessories_in_inv");
                 int tX = this.getRealX() + mX - mc.font.width(txt)/2;
                 int tY = this.getRealY() + mY - mc.font.lineHeight/2;
-                mc.font.draw(stack, txt, tX, tY, 0xffffffff);
+                graphics.drawString(mc.font, txt, tX, tY, 0xffffffff);
             }
         } else {
             int tX = this.getRealX() + 6;
             int tY = this.getRealY() + 6;
-            mc.font.draw(stack, I18n.get("doggui.style.accessories.your_accessories"), tX, tY, 0xffffffff);
+            graphics.drawString(mc.font, I18n.get("doggui.style.accessories.your_accessories"), tX, tY, 0xffffffff);
         }
         while (holderIndx < this.accessoryHolders.size()) {
             this.accessoryHolders.get(holderIndx).setStack(ItemStack.EMPTY);

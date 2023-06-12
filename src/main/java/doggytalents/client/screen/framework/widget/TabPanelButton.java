@@ -12,6 +12,7 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -50,11 +51,11 @@ public class TabPanelButton extends AbstractButton {
     }
 
     @Override
-    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
         int sel_cl = this.isHovered ? DEFAULT_SEL_HLCOLOR : DEFAULT_SEL_COLOR;
         
-        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height,
+        graphics.fill( this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height,
             this.selected ? sel_cl : cl);
         
         //draw text
@@ -64,7 +65,7 @@ public class TabPanelButton extends AbstractButton {
         int tX = mX - font.width(msg)/2;
         int tY = mY - font.lineHeight/2;
         //TODO if the name is too long, draw it cut off with a ..
-        font.draw(stack, msg, tX, tY, 0xffffffff);
+        graphics.drawString(font, msg, tX, tY, 0xffffffff);
     }
 
     @Override

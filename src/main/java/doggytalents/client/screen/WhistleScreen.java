@@ -20,6 +20,7 @@ import doggytalents.common.network.packet.data.WhistleRequestModeData;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
@@ -74,8 +75,8 @@ public class WhistleScreen extends Screen{
 
         Button help = new CustomButton(3, 3, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                super.render(stack, mouseX, mouseY, pTicks);
+            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.render(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
@@ -99,8 +100,8 @@ public class WhistleScreen extends Screen{
             }
         ) {
             @Override
-            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                super.render(stack, mouseX, mouseY, pTicks);
+            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.render(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.screen.set_hotkey")
@@ -118,7 +119,7 @@ public class WhistleScreen extends Screen{
 
  
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
         if (this.mouseX0 != mouseX || this.mouseY0 != mouseY) {
             this.onMouseMoved(mouseX, mouseY);
@@ -129,26 +130,26 @@ public class WhistleScreen extends Screen{
         int half_width = this.width >> 1;
         int half_height = this.height >> 1; 
       
-        Gui.fill(stack, half_width - 100, half_height - 100, half_width + 100, half_height + 100, Integer.MIN_VALUE);
-        Gui.fill(stack, half_width - 100, half_height + 105, half_width + 100, half_height + 117, Integer.MIN_VALUE);
+        graphics.fill( half_width - 100, half_height - 100, half_width + 100, half_height + 100, Integer.MIN_VALUE);
+        graphics.fill( half_width - 100, half_height + 105, half_width + 100, half_height + 117, Integer.MIN_VALUE);
 
-        super.render(stack, mouseX, mouseY, partialTicks);
+        super.render(graphics, mouseX, mouseY, partialTicks);
 
         if (this.settingKeysMode) {
-            renderModeListSetHotkey(stack, mouseX, mouseY, partialTicks);
+            renderModeListSetHotkey(graphics, mouseX, mouseY, partialTicks);
         } else {
-            renderModeListWhistleUse(stack, mouseX, mouseY, partialTicks);
+            renderModeListWhistleUse(graphics, mouseX, mouseY, partialTicks);
         }
 
         
         int txtorgx = half_width - 90;
         int txtorgy = half_height + 107;
         
-        this.font.draw(stack, this.value + "_", txtorgx, txtorgy,  0xffffffff);
+        graphics.drawString(font, this.value + "_", txtorgx, txtorgy,  0xffffffff);
          
     }
 
-    public void renderModeListWhistleUse(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderModeListWhistleUse(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         int half_width = this.width >> 1;
         int half_height = this.height >> 1; 
         
@@ -165,13 +166,13 @@ public class WhistleScreen extends Screen{
                 .withBold(false)
                 .withColor(color)
             );
-            this.font.draw(stack, text, textx, texty + offset, color);
+            graphics.drawString(font, text, textx, texty + offset, color);
             offset+=10;
             if (offset > 190) break;
         }
     }
 
-    public void renderModeListSetHotkey(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderModeListSetHotkey(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
         updateCurrentHotKeys();
         this.pKey = findEmptyHotkey();
@@ -218,7 +219,7 @@ public class WhistleScreen extends Screen{
                 .withColor(color)
             );
             text.append(title);
-            this.font.draw(stack, text, textx, texty + offset, color);
+            graphics.drawString(font, text, textx, texty + offset, color);
             offset+=10;
             if (offset > 190) break;
         }

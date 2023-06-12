@@ -5,9 +5,11 @@ import java.util.Random;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
@@ -27,20 +29,20 @@ public class DogStatusViewBoxElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
         int e_mX = this.getRealX() + this.getSizeX()/2; 
         int e_mY = this.getRealY() + this.getSizeY()/2; 
 
-        renderDogInside(stack, dog, e_mX, e_mY + 32, 50, e_mX - mouseX, e_mY - mouseY);
+        renderDogInside(graphics, dog, e_mX, e_mY + 32, 50, e_mX - mouseX, e_mY - mouseY);
 
-        this.renderHealthBar(stack, dog, e_mX - 41, this.getRealY() + this.getSizeY() - 10);
+        this.renderHealthBar(graphics, dog, e_mX - 41, this.getRealY() + this.getSizeY() - 10);
 
         var points = this.dog.getSpendablePoints();
-        this.font.draw(stack, "Pts: " + points, this.getRealX(), this.getRealY(), 0xffffffff);
+        graphics.drawString(font, "Pts: " + points, this.getRealX(), this.getRealY(), 0xffffffff);
     }
 
-    public static void renderDogInside(PoseStack stack, Dog dog, 
+    public static void renderDogInside(GuiGraphics graphics, Dog dog, 
         int dog_mX, int dog_mY, int size, int lookX, int lookY) {
         int currentDogSize = dog.getDogSize();
         boolean dogTooBig = currentDogSize > 3;
@@ -60,7 +62,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
             dog.setCustomName(Component.literal(tempName));
         }
 
-        InventoryScreen.renderEntityInInventoryFollowsMouse(stack, dog_mX, dog_mY, size, 
+        InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, dog_mX, dog_mY, size, 
             lookX, lookY, dog);
 
         if (nameTooLong) {
@@ -71,7 +73,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         }
     }
 
-    public void renderHealthBar(PoseStack stack, Dog dog, int x, int y) {
+    public void renderHealthBar(GuiGraphics graphics, Dog dog, int x, int y) {
         Random random = new Random();
         random.setSeed((long) (dog.tickCount * 312871));
         int dogHealth = Mth.ceil(dog.getHealth());
@@ -81,17 +83,15 @@ public class DogStatusViewBoxElement extends AbstractElement {
         int dogAbsorbAmount = Mth.ceil(dog.getAbsorptionAmount());
         float totalHealth = (dogMaxHealth + (float) dogAbsorbAmount);
         if (totalHealth > 40f) {
-            RenderSystem.setShaderTexture(0, Screen.GUI_ICONS_LOCATION);
-            
             int pX = aX;
             int pY = aY;
             
             String healthStr = " x " + dog.getHealth() + "/" + dogMaxHealth;
             pX += (80 - (8 + font.width(healthStr)))/2; 
-            blit(stack, pX, pY, 16 + 36, 0 ,9, 9);
+            graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
             pX += 9;
             pY += 1;
-            this.font.draw(stack, healthStr, pX, pY, 0xffffffff);
+            graphics.drawString(font, healthStr, pX, pY, 0xffffffff);
             
             return;
         }
@@ -105,7 +105,6 @@ public class DogStatusViewBoxElement extends AbstractElement {
         if (dog.hasEffect(MobEffects.REGENERATION)) {
             k3 = dog.tickCount % Mth.ceil(dogMaxHealth + 5.0F);
         }
-        RenderSystem.setShaderTexture(0, Screen.GUI_ICONS_LOCATION);
         // this.minecraft.getProfiler().push("health");
         // not gonna display effect now becuz there is an client entity effect sync
         // problem
@@ -132,25 +131,25 @@ public class DogStatusViewBoxElement extends AbstractElement {
 
             
 
-            this.getScreen().blit(stack, heartX, heartY, 16, 0, 9, 9);
+            graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, 16, 0, 9, 9);
 
             if (pDogAbsorbAmount > 0) {
                 //Render Yellow Heart.
                 if (pDogAbsorbAmount == dogAbsorbAmount && dogAbsorbAmount % 2 == 1) {
-                    this.getScreen().blit(stack, heartX, heartY, guiIconIndexX + 153, 9 * guiIconIndexY, 9, 9);
+                    graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 153, 9 * guiIconIndexY, 9, 9);
                     --pDogAbsorbAmount;
                 } else {
-                    this.getScreen().blit(stack, heartX, heartY, guiIconIndexX + 144, 9 * guiIconIndexY, 9, 9);
+                    graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 144, 9 * guiIconIndexY, 9, 9);
                     pDogAbsorbAmount -= 2;
                 }
             } else {
                 //Render last red heart
                 if (pHeart * 2 + 1 < dogHealth) {
-                    this.getScreen().blit(stack, heartX, heartY, guiIconIndexX + 36, 9 * guiIconIndexY, 9, 9);
+                    graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 36, 9 * guiIconIndexY, 9, 9);
                 }
 
                 if (pHeart * 2 + 1 == dogHealth) {
-                    this.getScreen().blit(stack, heartX, heartY, guiIconIndexX + 45, 9 * guiIconIndexY, 9, 9);
+                    graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 45, 9 * guiIconIndexY, 9, 9);
                 }
             }
 

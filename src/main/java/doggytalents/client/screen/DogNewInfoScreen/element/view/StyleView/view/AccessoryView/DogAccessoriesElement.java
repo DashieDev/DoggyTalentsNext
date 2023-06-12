@@ -12,6 +12,7 @@ import doggytalents.client.screen.framework.element.ElementPosition.ChildDirecti
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.world.item.ItemStack;
@@ -83,7 +84,7 @@ public class DogAccessoriesElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         //dog div
         {
             int mX = dogDiv.getSizeX()/2;
@@ -91,7 +92,7 @@ public class DogAccessoriesElement extends AbstractElement {
             int e_mX = dogDiv.getRealX() + mX;
             int e_mY = dogDiv.getRealY() + mY;
 
-            DogStatusViewBoxElement.renderDogInside(stack, this.dog, e_mX, e_mY + 32, 50, 
+            DogStatusViewBoxElement.renderDogInside(graphics, this.dog, e_mX, e_mY + 32, 50, 
             e_mX - mouseX, e_mY - mouseY);
         }
 
