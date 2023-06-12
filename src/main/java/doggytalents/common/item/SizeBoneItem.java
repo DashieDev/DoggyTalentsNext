@@ -37,7 +37,7 @@ public class SizeBoneItem extends Item implements IDogItem {
     public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
         if (dogIn.getAge() < 0) {
 
-            if (!playerIn.level.isClientSide){
+            if (!playerIn.level().isClientSide){
                 playerIn.sendSystemMessage(Component.translatable("treat."+this.type.getName()+".too_young"));
             }
 
@@ -48,7 +48,7 @@ public class SizeBoneItem extends Item implements IDogItem {
                 playerIn.getItemInHand(handIn).shrink(1);
             }
 
-            if (!playerIn.level.isClientSide) {
+            if (!playerIn.level().isClientSide) {
                 dogIn.setDogSize(dogIn.getDogSize() + (this.type == Type.BIG ? 1 : -1));
             }
             return InteractionResult.SUCCESS;

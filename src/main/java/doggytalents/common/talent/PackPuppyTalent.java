@@ -78,7 +78,7 @@ public class PackPuppyTalent extends TalentInstance {
 
                 if (dogIn.canInteract(playerIn)) {
 
-                    if (!playerIn.level.isClientSide) {
+                    if (!playerIn.level().isClientSide) {
                         playerIn.displayClientMessage(Component.translatable("talent.doggytalents.pack_puppy.version_migration"), false);
                     }
                     return InteractionResult.SUCCESS;

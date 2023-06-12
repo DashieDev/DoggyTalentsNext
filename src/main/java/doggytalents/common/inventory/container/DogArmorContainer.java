@@ -46,7 +46,7 @@ public class DogArmorContainer extends AbstractContainerMenu {
     //Server method
     public DogArmorContainer(int windowId, Inventory playerInventory, Dog dog) {
         super(DoggyContainerTypes.DOG_ARMOR.get(), windowId);
-        this.world = playerInventory.player.level;
+        this.world = playerInventory.player.level();
         this.player = playerInventory.player;
         this.dog = dog;
 

@@ -571,7 +571,7 @@ public class DogUtil {
     }
 
     public static void attemptToTeleportDogNearbyOrSendPromise(@Nonnull UUID dogUUID, @Nonnull ServerPlayer owner) {
-        if (owner.level instanceof ServerLevel sLevel) {
+        if (owner.level()() instanceof ServerLevel sLevel) {
             var e = sLevel.getEntity(dogUUID);
             if (e != null && e instanceof Dog d) {
                 dynamicSearchAndTeleportToOwnwer(d, owner, 4);

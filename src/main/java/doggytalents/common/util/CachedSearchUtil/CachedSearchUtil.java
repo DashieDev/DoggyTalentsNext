@@ -92,7 +92,7 @@ public class CachedSearchUtil {
                     , ownerPosRelative2d, ownerLookUnitVector);
                 if (!(x < 0 || x > DISTANCE_AWAY)) {
                     for (int j = 0; j <= maxY; ++j) {
-                        CachedSearchPool.setPoolValue(owner.level, i, j, k, COLLIDE);
+                        CachedSearchPool.setPoolValue(owner.level(), i, j, k, COLLIDE);
                     }
                 }
                     
@@ -103,7 +103,7 @@ public class CachedSearchUtil {
         for (int i = -1; i <= 1; ++i) {
             for (int k = -1; k <= 1; ++k) {
                 for (int j = 0; j <= maxY; ++j) {
-                    CachedSearchPool.setPoolValue(owner.level, cXZ + i, j, cXZ + k, COLLIDE);
+                    CachedSearchPool.setPoolValue(owner.level(), cXZ + i, j, cXZ + k, COLLIDE);
                 } 
             }
         }

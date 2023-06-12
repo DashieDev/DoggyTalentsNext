@@ -52,7 +52,7 @@ public class ParticlePackets {
 
         public static void sendCritEmitterPacketToNearClients(Entity e) {
             final int RADIUS = 64;
-            PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(e.getX(), e.getY(), e.getZ(), RADIUS, e.level.dimension());
+            PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(e.getX(), e.getY(), e.getZ(), RADIUS, e.level().dimension());
             PacketHandler.send(PacketDistributor.NEAR.with(() -> tarp), new CritEmitterData(e.getId()));
         }
 

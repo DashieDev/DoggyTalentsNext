@@ -12,6 +12,8 @@ import doggytalents.client.screen.ConductingBoneScreen;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.PacketHandler;
+import doggytalents.common.network.packet.data.ConductingBoneData.RequestDistantTeleportDogData;
+import doggytalents.common.network.packet.data.ConductingBoneData.RequestDogsData;
 import doggytalents.common.network.packet.data.ConductingBoneData.ResponseDogsData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.DogUtil;
@@ -52,9 +54,9 @@ public class ConductingBonePackets {
                 if (side.isServer()) {
                     var sender = ctx.get().getSender();
                     var storage = 
-                        DogLocationStorage.get(sender.level);
+                        DogLocationStorage.get(sender.level()());
                     var dogLs = 
-                        storage.getDogs(sender, sender.level.dimension())
+                        storage.getDogs(sender, sender.level()().dimension())
                         .map(dogLoc -> Pair.of(dogLoc.getDogId(), dogLoc.getDogName()))
                         .collect(Collectors.toList());
 
@@ -155,7 +157,7 @@ public class ConductingBonePackets {
                     var uuid = data.dogUUID;
                     if (uuid == null) return; 
                     var storage = 
-                        DogLocationStorage.get(sender.level);
+                        DogLocationStorage.get(sender.level());
                     var dogData = storage.getData(uuid);
                     
                     //not exist and make sure it is the same owner serverside.
@@ -165,7 +167,7 @@ public class ConductingBonePackets {
                     if (!data.toBed) {
                         DogUtil.attemptToTeleportDogNearbyOrSendPromise(uuid, sender);
                     } else {
-                        if (sender.level instanceof ServerLevel sL) {
+                        if (sender.level() instanceof ServerLevel sL) {
                             var e = sL.getEntity(data.dogUUID);
                             if (e instanceof Dog d) {
                                 DogUtil.attemptToTeleportDogToBedOrSendPromise(d);

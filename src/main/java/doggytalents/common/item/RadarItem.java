@@ -50,7 +50,7 @@ public class RadarItem extends Item {
                 return new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
             }
 
-        //     ResourceKey<Level> dimCurr = playerIn.level.dimension();
+        //     ResourceKey<Level> dimCurr = playerIn.level().dimension();
 
         //     playerIn.sendSystemMessage(Component.literal(""));
 

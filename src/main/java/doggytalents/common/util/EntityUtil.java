@@ -61,16 +61,16 @@ public class EntityUtil {
     }
 
     private static boolean isTeleportFriendlyBlock(LivingEntity entityIn, BlockPos pos, boolean teleportToLeaves) {
-        BlockPathTypes pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(entityIn.level, pos.mutable());
+        BlockPathTypes pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(entityIn.level(), pos.mutable());
         if (pathnodetype != BlockPathTypes.WALKABLE) {
             return false;
         } else {
-            BlockState blockstate = entityIn.level.getBlockState(pos.below());
+            BlockState blockstate = entityIn.level().getBlockState(pos.below());
             if (!teleportToLeaves && blockstate.getBlock() instanceof LeavesBlock) {
                 return false;
             } else {
                 BlockPos blockpos = pos.subtract(entityIn.blockPosition());
-                return entityIn.level.noCollision(entityIn, entityIn.getBoundingBox().move(blockpos));
+                return entityIn.level().noCollision(entityIn, entityIn.getBoundingBox().move(blockpos));
             }
         }
     }

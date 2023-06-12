@@ -56,10 +56,10 @@ public class RadarPackets {
                 
                 var sender = ctx.get().getSender();
                 var storage = 
-                    DogLocationStorage.get(sender.level);
+                    DogLocationStorage.get(sender.level());
                 var dogLs = 
-                    storage.getDogs(sender, sender.level.dimension())
-                    .filter(dogLoc -> dogLoc.shouldDisplay(sender.level, sender, InteractionHand.MAIN_HAND))
+                    storage.getDogs(sender, sender.level().dimension())
+                    .filter(dogLoc -> dogLoc.shouldDisplay(sender.level(), sender, InteractionHand.MAIN_HAND))
                     .map(
                         dogLoc -> Triple.of(
                             dogLoc.getDogId(), 
@@ -205,7 +205,7 @@ public class RadarPackets {
                 if (!(stack.getItem() instanceof RadarItem)) return;
 
                 var storage = 
-                    DogLocationStorage.get(sender.level);
+                    DogLocationStorage.get(sender.level());
                 
                 var entry = storage.getData(data.uuid);
                 if (entry == null) return;
