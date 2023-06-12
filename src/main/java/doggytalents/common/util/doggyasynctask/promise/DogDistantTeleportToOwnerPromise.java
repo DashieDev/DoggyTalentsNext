@@ -45,7 +45,7 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
     public DogDistantTeleportToOwnerPromise(@Nonnull UUID dogUUID, @Nonnull LivingEntity owner,
          @Nonnull BlockPos dogPos) {
         this.dogUUID = dogUUID;
-        if (owner.level()() instanceof ServerLevel sL) {
+        if (owner.level() instanceof ServerLevel sL) {
             this.level = sL;
         } else {
             this.level = null;

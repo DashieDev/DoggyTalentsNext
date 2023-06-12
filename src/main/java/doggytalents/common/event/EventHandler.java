@@ -228,7 +228,7 @@ public class EventHandler {
     }
 
     private void onOwnerChangeDimension(EntityTravelToDimensionEvent event, ServerPlayer owner) {
-        if (!(owner.level()() instanceof ServerLevel sLevel)) return;
+        if (!(owner.level() instanceof ServerLevel sLevel)) return;
         var mcServer = sLevel.getServer();
         var fromLevel = sLevel;
         var toLevel = mcServer.getLevel(event.getDimension());
@@ -254,7 +254,7 @@ public class EventHandler {
     public void onOwnerTeleport(EntityTeleportEvent event) {
         var entity = event.getEntity();
         if (!(entity instanceof ServerPlayer owner)) return;
-        if (!(owner.level()() instanceof ServerLevel sLevel)) return;
+        if (!(owner.level() instanceof ServerLevel sLevel)) return;
         
         if (this.distanceTooShortToTeleport(event.getPrev(), event.getTarget()))
             return;

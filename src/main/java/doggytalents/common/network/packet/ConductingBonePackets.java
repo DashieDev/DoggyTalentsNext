@@ -54,9 +54,9 @@ public class ConductingBonePackets {
                 if (side.isServer()) {
                     var sender = ctx.get().getSender();
                     var storage = 
-                        DogLocationStorage.get(sender.level()());
+                        DogLocationStorage.get(sender.level());
                     var dogLs = 
-                        storage.getDogs(sender, sender.level()().dimension())
+                        storage.getDogs(sender, sender.level().dimension())
                         .map(dogLoc -> Pair.of(dogLoc.getDogId(), dogLoc.getDogName()))
                         .collect(Collectors.toList());
 
