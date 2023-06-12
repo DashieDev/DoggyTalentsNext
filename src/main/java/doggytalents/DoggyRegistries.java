@@ -32,22 +32,22 @@ public class DoggyRegistries {
         return new RegistryBuilder<T>().setName(rl);
     }
 
-    private static class BeddingCallbacks implements IForgeRegistry.DummyFactory<IBeddingMaterial> {
+    private static class BeddingCallbacks implements IForgeRegistry.MissingFactory<IBeddingMaterial> {
 
         static final BeddingCallbacks INSTANCE = new BeddingCallbacks();
 
         @Override
-        public IBeddingMaterial createDummy(ResourceLocation key) {
+        public IBeddingMaterial createMissing(ResourceLocation key, boolean isNetwork) {
             return new MissingBeddingMaterial();
         }
     }
 
-    private static class CasingCallbacks implements IForgeRegistry.DummyFactory<ICasingMaterial> {
+    private static class CasingCallbacks implements IForgeRegistry.MissingFactory<ICasingMaterial> {
 
         static final CasingCallbacks INSTANCE = new CasingCallbacks();
 
         @Override
-        public ICasingMaterial createDummy(ResourceLocation key) {
+        public ICasingMaterial createMissing(ResourceLocation key, boolean isNetwork) {
             return new MissingCasingMissing().setRegistryName(key);
         }
     }
