@@ -30,7 +30,7 @@ public class DogFindWaterGoal extends Goal {
     public boolean canUse() {
         if (this.dog.fireImmune()) return false;
 
-        if (!dog.isOnGround()) return false;
+        if (!dog.onGround()) return false;
 
         if (!dog.isOnFire()) return false;
 

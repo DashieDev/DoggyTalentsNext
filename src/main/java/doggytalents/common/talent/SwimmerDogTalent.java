@@ -99,7 +99,7 @@ public class SwimmerDogTalent extends TalentInstance {
 
     private void updateSwimming(Dog dog) {
         if (
-            (!dog.isInWater() && dog.isOnGround())
+            (!dog.isInWater() && dog.onGround())
             || dog.isLowAirSupply()
             || isNearLand(dog)
         ) {

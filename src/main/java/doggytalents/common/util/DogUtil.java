@@ -425,7 +425,7 @@ public class DogUtil {
     public static boolean mayGetPushedIntoHazard(Dog dog, Vec3 pushVec) {
         //final var DISTANCE_HAZARD_CHECK = 0.5f;
 
-        if (!dog.isOnGround()) return false;
+        if (!dog.onGround()) return false;
 
         var dog_v0 = pushVec;
         var dog_v01 = new Vec3(dog_v0.x, 0, dog_v0.z);

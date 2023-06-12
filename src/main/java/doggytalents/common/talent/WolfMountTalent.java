@@ -59,7 +59,7 @@ public class WolfMountTalent extends TalentInstance {
 
         if (stack.isEmpty()) { // Held item
             if (dogIn.canInteract(playerIn) && this.level() > 0) { // Dog
-                if (playerIn.getVehicle() == null && !playerIn.isOnGround()) { // Player
+                if (playerIn.getVehicle() == null && !playerIn.onGround()) { // Player
                     if (!dogIn.level().isClientSide) {
                         dogIn.setOrderedToSit(false);
                         playerIn.setYRot(dogIn.getYRot());

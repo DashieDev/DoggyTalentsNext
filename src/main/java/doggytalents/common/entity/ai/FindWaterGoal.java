@@ -38,7 +38,7 @@ public class FindWaterGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (!this.creature.isOnGround() || (this.creature.tickCount % 5) != 0) {
+        if (!this.creature.onGround() || (this.creature.tickCount % 5) != 0) {
             return false;
         }
 

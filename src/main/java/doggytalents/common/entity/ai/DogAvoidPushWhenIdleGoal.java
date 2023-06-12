@@ -23,7 +23,7 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (!this.dog.isOnGround()) return false;
+        if (!this.dog.onGround()) return false;
 
         if (this.dog.isVehicle()) return false;
 

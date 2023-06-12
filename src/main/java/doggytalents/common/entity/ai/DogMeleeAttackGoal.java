@@ -256,9 +256,9 @@ public class DogMeleeAttackGoal extends Goal {
 
       if (this.dog.isVehicle()) return false;
 
-      if (!this.dog.isOnGround()) return false;
+      if (!this.dog.onGround()) return false;
 
-      if (!target.isOnGround()) return false;
+      if (!target.onGround()) return false;
 
       double d0 = this.dog.distanceToSqr(target);
 
