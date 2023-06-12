@@ -2844,7 +2844,7 @@ public class Dog extends AbstractDog {
     // }
 
     @Override
-    protected void tickRidden(LivingEntity rider, Vec3 rideVec) {
+    protected void tickRidden(Player rider, Vec3 rideVec) {
 
         if (this.isDefeated()) return;
 
@@ -2900,7 +2900,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    protected Vec3 getRiddenInput(LivingEntity rider, Vec3 rideVec) {
+    protected Vec3 getRiddenInput(Player rider, Vec3 rideVec) {
         float straf = rider.xxa * 0.7F;
         float forward = rider.zza;
         double downward = rideVec.y; 
@@ -2920,7 +2920,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    protected float getRiddenSpeed(LivingEntity rider) {
+    protected float getRiddenSpeed(Player rider) {
         return (float) this.getAttribute(Attributes.MOVEMENT_SPEED).getValue() * 0.5f;
     }
 
