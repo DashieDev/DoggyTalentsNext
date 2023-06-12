@@ -3,12 +3,15 @@ package doggytalents.client.entity.render;
 import com.mojang.blaze3d.systems.RenderSystem;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 public class DogScreenOverlays {
+
+    public static final ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation("textures/gui/icons.png");
 
     public static final IGuiOverlay FOOD_LEVEL_ELEMENT = (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
         Minecraft mc = Minecraft.getInstance();
@@ -38,12 +41,12 @@ public class DogScreenOverlays {
                     background = 13;
                 }
 
-                gui.blit(mStack, x, y, 16 + background * 9, 27, 9, 9);
+                mStack.blit(GUI_ICONS_LOCATION, x, y, 16 + background * 9, 27, 9, 9);
 
                 if (idx < level)
-                    gui.blit(mStack, x, y, icon + 36, 27, 9, 9);
+                    mStack.blit(GUI_ICONS_LOCATION, x, y, icon + 36, 27, 9, 9);
                 else if (idx == level)
-                    gui.blit(mStack, x, y, icon + 45, 27, 9, 9);
+                    mStack.blit(GUI_ICONS_LOCATION, x, y, icon + 45, 27, 9, 9);
             }
             RenderSystem.disableBlend();
             mc.getProfiler().pop();
@@ -72,7 +75,7 @@ public class DogScreenOverlays {
                     int x = left - i * 8 - 9;
                     int y = top;
 
-                    gui.blit(mStack, x, y, (i < full ? 16 : 25), 18, 9, 9);
+                    mStack.blit(GUI_ICONS_LOCATION, x, y, (i < full ? 16 : 25), 18, 9, 9);
                 }
                 gui.rightHeight += 10;
             }

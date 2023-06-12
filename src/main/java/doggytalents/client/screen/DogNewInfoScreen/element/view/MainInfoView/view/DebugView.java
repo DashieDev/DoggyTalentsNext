@@ -12,6 +12,7 @@ import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -52,8 +53,7 @@ public class DebugView extends AbstractElement {
                 }
 
                 @Override
-                public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) { 
-                    super.renderElement(stack, mouseX, mouseY, partialTicks);
+                public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) { 
                 }
             })
                 .setPosition(PosType.RELATIVE, 0, 0)
@@ -129,8 +129,8 @@ public class DebugView extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-        this.font.draw(stack, Component.literal("Debug"), 
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        graphics.drawString(font, Component.literal("Debug"), 
             this.getRealX(), this.getRealY(), 0xffffffff);
     }
     

@@ -8,6 +8,7 @@ import doggytalents.common.lib.Resources;
 import doggytalents.common.talent.PackPuppyTalent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -42,7 +43,7 @@ public class DogInventoryButton extends Button {
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
         if (this.parent instanceof CreativeModeInventoryScreen) {
             var cscreen = ((CreativeModeInventoryScreen) this.parent);
@@ -72,20 +73,19 @@ public class DogInventoryButton extends Button {
             }
         }
 
-        super.render(stack, mouseX, mouseY, partialTicks);
+        super.render(graphics, mouseX, mouseY, partialTicks);
     }
 
     @Override
-    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
-        RenderSystem.setShaderTexture(0, Resources.SMALL_WIDGETS);
        Minecraft mc = Minecraft.getInstance();
        int i = this.getTextureY();
        RenderSystem.enableBlend();
        RenderSystem.defaultBlendFunc();
        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-       this.blit(stack, this.getX(), this.getY(), 0, 36 + i * 10, this.width, this.height);
+       graphics.blit(Resources.SMALL_WIDGETS, this.getX(), this.getY(), 0, 36 + i * 10, this.width, this.height);
        //TODO : 1.19.4 ???
        //this.renderBg(stack, mc, mouseX, mouseY);
 

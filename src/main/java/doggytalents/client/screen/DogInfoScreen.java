@@ -17,6 +17,7 @@ import doggytalents.common.network.packet.data.*;
 import doggytalents.common.util.Util;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -163,8 +164,8 @@ public class DogInfoScreen extends Screen {
             PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(DogInfoScreen.this.dog.getId(), mode));
         }) {
             @Override
-            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                super.render(stack, mouseX, mouseY, pTicks);
+            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.render(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 String str = I18n.get(dog.getMode().getUnlocalisedInfo());
@@ -304,8 +305,8 @@ public class DogInfoScreen extends Screen {
             
             {
                 @Override
-                public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                    super.render(stack, mouseX, mouseY, pTicks);
+                public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                    super.render(graphics, mouseX, mouseY, pTicks);
                     if (!this.isHovered) return;
                     List<Component> list = new ArrayList<>();
 
@@ -330,11 +331,11 @@ public class DogInfoScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         //Background
         int topX = this.width / 2;
         int topY = this.height / 2;
-        this.renderBackground(stack);
+        this.renderBackground(graphics);
 
         // Background
         String health = Util.format1DP(this.dog.getHealth());
@@ -356,42 +357,42 @@ public class DogInfoScreen extends Screen {
         }
 
         //this.font.drawString(I18n.format("doggui.health") + healthState, this.width - 160, topY - 110, 0xFFFFFF);
-        this.font.draw(stack, I18n.get("doggui.speed") + " " + speedValue, this.width - 160, topY - 100, 0xFFFFFF);
-        this.font.draw(stack, I18n.get("doggui.owner") + " " + tamedString, this.width - 160, topY - 90, 0xFFFFFF);
-        this.font.draw(stack, I18n.get("doggui.age") + " " + ageString, this.width - 160, topY - 80, 0xFFFFFF);
-        this.font.draw(stack, I18n.get("doggui.armor") + " " + armorValue, this.width - 160, topY - 70, 0xFFFFFF);
+        graphics.drawString(font, I18n.get("doggui.speed") + " " + speedValue, this.width - 160, topY - 100, 0xFFFFFF);
+        graphics.drawString(font, I18n.get("doggui.owner") + " " + tamedString, this.width - 160, topY - 90, 0xFFFFFF);
+        graphics.drawString(font, I18n.get("doggui.age") + " " + ageString, this.width - 160, topY - 80, 0xFFFFFF);
+        graphics.drawString(font, I18n.get("doggui.armor") + " " + armorValue, this.width - 160, topY - 70, 0xFFFFFF);
         if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER)) {
-            this.font.draw(stack, I18n.get("doggui.gender") + " "+ I18n.get(this.dog.getGender().getUnlocalisedName()), this.width - 160, topY - 60, 0xFFFFFF);
+            graphics.drawString(font, I18n.get("doggui.gender") + " "+ I18n.get(this.dog.getGender().getUnlocalisedName()), this.width - 160, topY - 60, 0xFFFFFF);
         }
 
-        this.font.draw(stack, I18n.get("doggui.newname"), topX - 100, topY + 38, 4210752);
-        this.font.draw(stack, I18n.get("doggui.level") + " " + this.dog.getDogLevel().getLevel(Type.NORMAL), topX - 65, topY + 75, 0xFF10F9);
-        this.font.draw(stack, I18n.get("doggui.leveldire") + " " + this.dog.getDogLevel().getLevel(Type.DIRE), topX, topY + 75, 0xFF10F9);
+        graphics.drawString(font, I18n.get("doggui.newname"), topX - 100, topY + 38, 4210752);
+        graphics.drawString(font, I18n.get("doggui.level") + " " + this.dog.getDogLevel().getLevel(Type.NORMAL), topX - 65, topY + 75, 0xFF10F9);
+        graphics.drawString(font, I18n.get("doggui.leveldire") + " " + this.dog.getDogLevel().getLevel(Type.DIRE), topX, topY + 75, 0xFF10F9);
         if (this.dog.getAccessory(DoggyAccessories.GOLDEN_COLLAR.get()).isPresent()) {
-            this.font.draw(stack, ChatFormatting.GOLD + "Unlimited Points", topX - 38, topY + 89, 0xFFFFFF); //TODO translation
+            graphics.drawString(font, ChatFormatting.GOLD + "Unlimited Points", topX - 38, topY + 89, 0xFFFFFF); //TODO translation
         } else {
-            this.font.draw(stack, I18n.get("doggui.pointsleft") + " " + this.dog.getSpendablePoints(), topX - 38, topY + 89, 0xFFFFFF);
+            graphics.drawString(font, I18n.get("doggui.pointsleft") + " " + this.dog.getSpendablePoints(), topX - 38, topY + 89, 0xFFFFFF);
         }
        // if (ConfigHandler.CLIENT.USE_DT_TEXTURES.get()) {
-            this.font.draw(stack, I18n.get("doggui.textureindex"), this.width - 80, topY + 20, 0xFFFFFF);
-            this.font.draw(stack, this.dog.getSkinHash().substring(0, Math.min(this.dog.getSkinHash().length(), 10)), this.width - 73, topY + 54, 0xFFFFFF);
+            graphics.drawString(font, I18n.get("doggui.textureindex"), this.width - 80, topY + 20, 0xFFFFFF);
+            graphics.drawString(font, this.dog.getSkinHash().substring(0, Math.min(this.dog.getSkinHash().length(), 10)), this.width - 73, topY + 54, 0xFFFFFF);
        // }
 
         if (this.dog.isOwnedBy(this.player)) {
-            this.font.draw(stack, I18n.get("doggui.obeyothers"), this.width - 76, topY + 67, 0xFFFFFF);
+            graphics.drawString(font, I18n.get("doggui.obeyothers"), this.width - 76, topY + 67, 0xFFFFFF);
         }
 
-        this.font.draw(stack, I18n.get("doggui.friendlyfire"), this.width - 76, topY - 15, 0xFFFFFF);
+        graphics.drawString(font, I18n.get("doggui.friendlyfire"), this.width - 76, topY - 15, 0xFFFFFF);
 
 
         this.renderables.forEach(widget -> {
             if (widget instanceof TalentButton) {
                 TalentButton talBut = (TalentButton)widget;
-                this.font.draw(stack, I18n.get(talBut.talent.getTranslationKey()), talBut.getX()+ 25, talBut.getY() + 7, 0xFFFFFF);
+                graphics.drawString(font, I18n.get(talBut.talent.getTranslationKey()), talBut.getX()+ 25, talBut.getY() + 7, 0xFFFFFF);
             }
         });
 
-        super.render(stack, mouseX, mouseY, partialTicks);
+        super.render(graphics, mouseX, mouseY, partialTicks);
         //RenderHelper.disableStandardItemLighting(); // 1.14 enableGUIStandardItemLighting
 
         // for (var widget : this.renderables) {

@@ -7,6 +7,7 @@ import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.stats.StatsTracker;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.resources.language.I18n;
@@ -72,13 +73,13 @@ public class MobKillsView extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         var mobKillMap = stats.getAllKillCount();
         int startX = this.getRealX() + PADDING_LEFT;
         int pY = this.getRealY() + PADDING_TOP;
         if (mobKillMap.isEmpty()) {
             String str = I18n.get("doggui.stats.mob_kills.no_kills", dog.getName().getString() );
-            this.font.draw(stack, str, startX, pY, 0xffffffff);
+            graphics.drawString(font, str, startX, pY, 0xffffffff);
             this.lastPage.active = false;
             this.nextPage.active = false;
             return;
@@ -100,11 +101,11 @@ public class MobKillsView extends AbstractElement {
             );
             //TODO Grammar plural ??
             var kills = entry.getValue();
-            this.font.draw(stack, mobName, startX, pY, 0xffffffff);
+            graphics.drawString(font, mobName, startX, pY, 0xffffffff);
             pY += font.lineHeight + LINE_SPACING;
             var killSentence = dog.getName().getString() + " has killed " 
                 + kills + " " + mobName.getString();
-            this.font.draw(stack, killSentence, startX, pY, 0xffffffff);
+            graphics.drawString(font, killSentence, startX, pY, 0xffffffff);
             pY += font.lineHeight + LINE_SPACING;
             ++entryDrawm;
         }
@@ -116,7 +117,7 @@ public class MobKillsView extends AbstractElement {
         var txt = (this.pageIndex+1) + "/" + this.maxPageNum;
         int tX = this.getRealX() + mX - font.width(txt)/2;
         int tY = this.getRealY() + this.getSizeY() - 19;
-        font.draw(stack, txt, tX, tY, 0xffffffff);
+        graphics.drawString(font, txt, tX, tY, 0xffffffff);
 
     }
 

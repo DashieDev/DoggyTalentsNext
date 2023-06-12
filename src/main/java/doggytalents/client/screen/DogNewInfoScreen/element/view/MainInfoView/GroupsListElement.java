@@ -18,6 +18,7 @@ import doggytalents.common.network.packet.data.DogGroupsData;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -67,19 +68,19 @@ public class GroupsListElement extends AbstractElement {
             static final int DEFAULT_HLCOLOR = 0x835e5d5d;
 
             @Override
-            public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
                 if (!this.active) return;
 
                 int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
                 
-                fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
+                graphics.fill(this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
                 
                 int mX = this.getX() + this.width/2;
                 int mY = this.getY() + this.height/2;
                 var msg = this.getMessage();
                 int tX = mX - font.width(msg)/2 + 1;
                 int tY = mY - font.lineHeight/2 + 1;
-                font.draw(stack, msg, tX, tY, 0xffffffff);
+                graphics.drawString(font, msg, tX, tY, 0xffffffff);
             }
         };
         pX += addButton.getWidth();
@@ -97,7 +98,7 @@ public class GroupsListElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         
     }
 
@@ -136,13 +137,13 @@ public class GroupsListElement extends AbstractElement {
         }
 
         @Override
-        public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+        public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
 
             if (!this.active) return;
 
             int cl = this.group.color;
             
-            fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
+            graphics.fill(this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
             
             //draw text
             int mX = this.getX() + this.width/2;
@@ -150,9 +151,9 @@ public class GroupsListElement extends AbstractElement {
             var msg = this.getMessage();
             int tX = mX - font.width(msg)/2;
             int tY = mY - font.lineHeight/2;
-            font.draw(stack, msg, tX, tY, textColor);
+            graphics.drawString(font, msg, tX, tY, textColor);
 
-            if (this.isHovered) drawRemoveIcon(stack, mouseX, mouseY, pTicks);
+            if (this.isHovered) drawRemoveIcon(graphics, mouseX, mouseY, pTicks);
         }
 
         @Override
@@ -166,15 +167,14 @@ public class GroupsListElement extends AbstractElement {
                 new DogGroupsData.EDIT(this.dog.getId(), this.group, false));
         }
 
-        private void drawRemoveIcon(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+        private void drawRemoveIcon(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.setShaderTexture(0, Resources.STYLE_ADD_REMOVE);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             int iX = ICON_REM_X;
-            this.blit(stack, this.getX()+this.getWidth() - 4, getY()+this.getHeight() - 4, iX, 0, 9, 9);
+            graphics.blit(Resources.STYLE_ADD_REMOVE, this.getX()+this.getWidth() - 4, getY()+this.getHeight() - 4, iX, 0, 9, 9);
         }
 
         

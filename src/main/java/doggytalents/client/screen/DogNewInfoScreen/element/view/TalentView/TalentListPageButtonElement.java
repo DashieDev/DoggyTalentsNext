@@ -9,6 +9,7 @@ import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -66,13 +67,13 @@ public class TalentListPageButtonElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         int mX = this.getSizeX()/2;
         int mY = this.getSizeY()/2;
         var c0 = Component.literal(this.curPage + "/" + this.maxPage);
         int tX = this.getRealX() + mX - font.width(c0)/2;
         int tY = this.getRealY() + mY - font.lineHeight/2;
-        font.draw(stack, c0, tX, tY, 0xffffffff);
+        graphics.drawString(font, c0, tX, tY, 0xffffffff);
         
     }
     

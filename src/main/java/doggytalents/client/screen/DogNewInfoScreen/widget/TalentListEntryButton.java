@@ -13,6 +13,7 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -55,7 +56,7 @@ public class TalentListEntryButton extends AbstractButton {
     }
 
     @Override
-    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
         int lvlcl = this.isHovered ? DEFAULT_LEVEL_HLCOLOR : DEFAULT_LEVEL_COLOR;
         
@@ -74,8 +75,8 @@ public class TalentListEntryButton extends AbstractButton {
         
         }
         
-        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
-        fill(stack, this.getX(), this.getY(), this.getX()+Mth.ceil(this.width*talentLvlPercent), this.getY()+this.height, lvlcl);
+        graphics.fill( this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
+        graphics.fill( this.getX(), this.getY(), this.getX()+Mth.ceil(this.width*talentLvlPercent), this.getY()+this.height, lvlcl);
         
         //draw text
         int mX = this.getX() + this.width/2;
@@ -90,7 +91,7 @@ public class TalentListEntryButton extends AbstractButton {
         int tX = mX - font.width(msg)/2;
         int tY = mY - font.lineHeight/2;
         //TODO if the name is too long, draw it cut off with a ..
-        font.draw(stack, msg, tX, tY, 0xffffffff);
+        graphics.drawString(font, msg, tX, tY, 0xffffffff);
     }
 
     @Override

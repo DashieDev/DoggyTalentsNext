@@ -21,6 +21,7 @@ import doggytalents.common.network.packet.data.DogRegardTeamPlayersData;
 import doggytalents.common.network.packet.data.FriendlyFireData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -105,8 +106,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                        super.render(stack, mouseX, mouseY, pTicks);
+                    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                        super.render(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.regard_team_players.help"), 150, font));
                         }
@@ -129,8 +130,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                        super.render(stack, mouseX, mouseY, pTicks);
+                    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                        super.render(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.force_sit.help"), 150, font));
                         }
@@ -153,8 +154,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-                        super.render(stack, mouseX, mouseY, pTicks);
+                    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                        super.render(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.cross_origin_tp.help"), 150, font));
                         }
@@ -185,7 +186,7 @@ public class EditInfoView extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
     }
 
     private static void requestNameChange(Dog dog, String value) {
@@ -264,11 +265,11 @@ public class EditInfoView extends AbstractElement {
         }
 
         @Override
-        public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
             int startX = this.getRealX() + PADDING_LEFT;
             int pY = this.getRealY() + PADDING_TOP;
 
-            font.draw(stack, I18n.get("doggui.newname"), startX, pY, 0xffffffff);
+            graphics.drawString(font, I18n.get("doggui.newname"), startX, pY, 0xffffffff);
             
         }
 
@@ -340,11 +341,11 @@ public class EditInfoView extends AbstractElement {
         }
 
         @Override
-        public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
             if (newline) {
                 int startX = this.getRealX() + PADDING_LEFT;
                 int pY = this.getRealY() + 3;
-                font.draw(stack, this.label, startX, pY, 0xffffffff);
+                graphics.drawString(font, this.label, startX, pY, 0xffffffff);
                 
                 return;
             } 
@@ -352,7 +353,7 @@ public class EditInfoView extends AbstractElement {
             int startX = this.getRealX() + PADDING_LEFT;
             int pY = this.getRealY() + this.getSizeY()/2
                 - font.lineHeight/2;
-            font.draw(stack, this.label, startX, pY, 0xffffffff);
+            graphics.drawString(font, this.label, startX, pY, 0xffffffff);
         }
     }
 
@@ -381,11 +382,11 @@ public class EditInfoView extends AbstractElement {
         }
 
         @Override
-        public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
             int startX = this.getRealX() + PADDING_LEFT;
             int pY = this.getRealY() + 10;
 
-            font.draw(stack, "Groups: ", startX, pY, 0xffffffff);
+            graphics.drawString(font, "Groups: ", startX, pY, 0xffffffff);
         }
 
     }

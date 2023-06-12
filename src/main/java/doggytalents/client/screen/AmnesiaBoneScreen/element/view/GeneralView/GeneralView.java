@@ -18,6 +18,7 @@ import doggytalents.client.screen.framework.widget.MultiLineFlatButton;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -74,11 +75,11 @@ public class GeneralView extends AbstractElement {
                 this.openChangeOwnerScreen();
             }) {
                 @Override
-                public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-                    super.render(stack, mouseX, mouseY, partialTicks);
+                public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+                    super.render(graphics, mouseX, mouseY, partialTicks);
                     int tX = this.getX() + this.width - 10;
                     int tY = this.getY() + this.height/2 - font.lineHeight/2;
-                    font.draw(stack, ">", tX, tY, 0xffffffff);
+                    graphics.drawString(font, ">", tX, tY, 0xffffffff);
                 }
             }.setTextAlign(Align.LEFT)
         );
@@ -89,11 +90,11 @@ public class GeneralView extends AbstractElement {
                 DogUntameConfirmScreen.open(dog);
             }) {
                 @Override
-                public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-                    super.render(stack, mouseX, mouseY, partialTicks);
+                public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+                    super.render(graphics, mouseX, mouseY, partialTicks);
                     int tX = this.getX() + this.width - 10;
                     int tY = this.getY() + this.height/2 - font.lineHeight/2;
-                    font.draw(stack, ">", tX, tY, 0xffffffff);
+                    graphics.drawString(font, ">", tX, tY, 0xffffffff);
                 }
             }.setTextAlign(Align.LEFT)
         );
@@ -144,7 +145,7 @@ public class GeneralView extends AbstractElement {
     // }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
     }
 

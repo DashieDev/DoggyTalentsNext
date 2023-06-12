@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.framework.types.TextType;
 import doggytalents.client.screen.framework.types.TextType.Align;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
 public class MultiLineFlatButton extends FlatButton {
@@ -27,21 +28,21 @@ public class MultiLineFlatButton extends FlatButton {
     }
 
     @Override
-    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         if (!this.active) return;
 
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
         
-        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
+        graphics.fill(this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
         
         if (this.align == TextType.Align.LEFT) {
-            drawLeft(stack);
+            drawLeft(graphics);
         } else if (this.align == TextType.Align.MIDDLE) {
-            drawCentered(stack);
+            drawCentered(graphics);
         }
     }
 
-    private void drawCentered(PoseStack stack) {
+    private void drawCentered(GuiGraphics graphics) {
         int mX = this.getX() + this.width/2;
         int mY = this.getY() + this.height/2;
         int lines_cnt = this.lines.size();
@@ -50,12 +51,12 @@ public class MultiLineFlatButton extends FlatButton {
         int pTY = mY - text_height/2;
         for (var line : lines) {
             pTX = mX - font.width(line)/2;
-            font.draw(stack, line, pTX, pTY, 0xffffffff);
+            graphics.drawString(font, line, pTX, pTY, 0xffffffff);
             pTY += font.lineHeight + LINE_SPACING; 
         }
     }
 
-    private void drawLeft(PoseStack stack) {
+    private void drawLeft(GuiGraphics graphics) {
         int mX = this.getX() + this.width/2;
         int mY = this.getY() + this.height/2;
         int lines_cnt = this.lines.size();
@@ -63,7 +64,7 @@ public class MultiLineFlatButton extends FlatButton {
         int pTX = this.getX() + PADDING_LEFT;
         int pTY = mY - text_height/2;
         for (var line : lines) {
-            font.draw(stack, line, pTX, pTY, 0xffffffff);
+            graphics.drawString(font, line, pTX, pTY, 0xffffffff);
             pTY += font.lineHeight + LINE_SPACING; 
         }
     }

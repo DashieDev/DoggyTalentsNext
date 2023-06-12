@@ -6,6 +6,7 @@ import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
@@ -30,7 +31,7 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         var name = this.dog.getName().getString();
         var age = "" + this.dog.getAge();
         var gender = this.dog.getGenderName().getString();
@@ -45,28 +46,28 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
         int startY = this.getRealY()
             + ((this.getSizeY() - (6*this.font.lineHeight + 2*5))/2);
         int pY = startY;
-        this.font.draw(stack, 
+        graphics.drawString(font,
             createDescEntry(I18n.get("doggui.home.name") + " ", name, 0xffffffff),
                 startX, pY, 0xffffffff);
         pY += this.font.lineHeight + 2;
-        this.font.draw(stack, 
+        graphics.drawString(font,
             createDescEntry(I18n.get("doggui.age") + " ", age, 0xffffffff),
                 startX, pY, 0xffffffff);
         pY += this.font.lineHeight + 2;
-        this.font.draw(stack, 
+        graphics.drawString(font,
             createDescEntry(I18n.get("doggui.gender") + " ", gender, 0xffffffff),
                 startX, pY, 0xffffffff);
         pY += this.font.lineHeight + 2;
-        this.font.draw(stack, 
+        graphics.drawString(font,
             createDescEntry(I18n.get("doggui.owner") + " ", owner, 0xffffffff),
                 startX, pY, 0xffffffff);
         pY += this.font.lineHeight + 2;
-        this.font.draw(stack, 
+        graphics.drawString(font,
             createDescEntry(I18n.get("doggui.friendlyfire") + " ", friendlyFire, 
                 this.dog.canOwnerAttack() ? 0xffcda700: 0xffffffff),
             startX, pY, 0xffffffff);
         pY += this.font.lineHeight + 2;
-        this.font.draw(stack, 
+        graphics.drawString(font,
             createDescEntry(I18n.get("doggui.obeyothers") + " ", obeyOther, 
                 this.dog.willObeyOthers() ? 0xffcda700: 0xffffffff),
             startX, pY, 0xffffffff);
