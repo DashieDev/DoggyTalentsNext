@@ -516,3 +516,4 @@ by another defeated dog.
 
 1.13.1 - 11th June 2023
 * HOTFIX : Dedicated Server failed to start for some reason.
++ Update to 1.20

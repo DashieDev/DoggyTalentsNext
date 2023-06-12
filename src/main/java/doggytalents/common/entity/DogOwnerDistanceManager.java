@@ -84,7 +84,7 @@ public class DogOwnerDistanceManager {
             this.lastWithOwnerTime = tg0.getLong("lastWithOwnerTime");
             this.willGreet = tg0.getBoolean("willGreet");
         } else {
-            this.lastWithOwnerTime = this.dog.level.getDayTime();
+            this.lastWithOwnerTime = this.dog.level().getDayTime();
             this.willGreet = false;
         }
     }
