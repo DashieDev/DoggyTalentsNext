@@ -36,6 +36,7 @@ public class DoggyTalentsAdvancements implements Consumer<Consumer<Advancement>>
         private Map<String, Criterion> criteria = Maps.newLinkedHashMap();
         private String[][] requirements;
         private RequirementsStrategy requirementsStrategy = RequirementsStrategy.AND;
+        private boolean telementry = false;
 
         private Builder(@Nullable ResourceLocation parentIdIn, @Nullable DisplayInfo displayIn, AdvancementRewards rewardsIn, Map<String, Criterion> criteriaIn, String[][] requirementsIn) {
            this.parentId = parentIdIn;
@@ -108,6 +109,11 @@ public class DoggyTalentsAdvancements implements Consumer<Consumer<Advancement>>
            return this;
         }
 
+        public DoggyTalentsAdvancements.Builder telemetry() {
+           this.telementry = true;
+           return this;
+        }
+
         /**
          * Tries to resolve the parent of this advancement, if possible. Returns true on success.
          */
@@ -133,7 +139,7 @@ public class DoggyTalentsAdvancements implements Consumer<Consumer<Advancement>>
                  this.requirements = this.requirementsStrategy.createRequirements(this.criteria.keySet());
               }
 
-              return new Advancement(id, this.parent, this.display, this.rewards, this.criteria, this.requirements);
+              return new Advancement(id, this.parent, this.display, this.rewards, this.criteria, this.requirements, telementry);
            }
         }
 
