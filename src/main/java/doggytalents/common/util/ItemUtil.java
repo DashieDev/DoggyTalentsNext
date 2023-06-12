@@ -18,7 +18,7 @@ public class ItemUtil {
                 for (int j = 0; j < items.size(); j++) {
                     ItemStack stack = items.get(j);
                     //TODO ?? 1.19.3
-                    if (ItemStack.isSame(stack, itemstack) && ItemStack.tagMatches(stack, itemstack)) {
+                    if (ItemStack.matches(stack, itemstack)) {
                         stack.grow(itemstack.getCount());
                         continue SLOT;
                     }
