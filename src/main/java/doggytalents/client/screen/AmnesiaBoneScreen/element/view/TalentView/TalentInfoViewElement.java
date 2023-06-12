@@ -121,7 +121,7 @@ public class TalentInfoViewElement extends AbstractElement {
                         );
                     }
                 }
-                getScreen().renderComponentTooltip(graphics, List.of(c1), mouseX, mouseY);
+                graphics.renderComponentTooltip(font, List.of(c1), mouseX, mouseY);
             }
         };
         var player = Minecraft.getInstance().player;

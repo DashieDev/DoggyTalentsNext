@@ -121,7 +121,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         }
 
         if (this.timeHoveredWithoutClick >= 25) {
-            this.setOverlayToolTip(stack, mouseX, mouseY);
+            this.setOverlayToolTip(graphics.pose(), mouseX, mouseY);
         }
 
     }

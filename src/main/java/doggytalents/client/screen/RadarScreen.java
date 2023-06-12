@@ -97,7 +97,7 @@ public class RadarScreen extends Screen {
                 String str = I18n.get("doggytalents.screen.radar.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, RadarScreen.this.font));
 
-                RadarScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
             }
         };
         

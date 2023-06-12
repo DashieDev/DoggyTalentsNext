@@ -85,7 +85,7 @@ public class WhistleScreen extends Screen{
                 String str = I18n.get("doggytalents.screen.whistler.screen.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
-                WhistleScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
             }
         };
 
@@ -110,7 +110,7 @@ public class WhistleScreen extends Screen{
                 String str = I18n.get("doggytalents.screen.whistler.screen.set_hotkey.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
-                WhistleScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
             }
         };
         

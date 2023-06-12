@@ -130,7 +130,7 @@ public class TalentInfoViewElement extends AbstractElement {
                         return;
                     }
                 }
-                getScreen().renderComponentTooltip(stack, List.of(c1), mouseX, mouseY);
+                graphics.renderComponentTooltip(font, List.of(c1), mouseX, mouseY);
             }
         };
         trainButton.active = 

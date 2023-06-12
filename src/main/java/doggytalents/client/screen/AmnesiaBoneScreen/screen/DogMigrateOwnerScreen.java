@@ -61,7 +61,7 @@ public class DogMigrateOwnerScreen extends Screen {
                 public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
                     super.render(graphics, mouseX, mouseY, pTicks);
                     if (!this.isHovered) return;
-                    DogMigrateOwnerScreen.this.renderComponentTooltip(stack, List.of(
+                    graphics.renderComponentTooltip(font, List.of(
                         Component.literal(migrateTo == null ? "UUID_ZERO" : migrateTo.toString())
                     ), mouseX, mouseY);
                 }
@@ -204,7 +204,7 @@ public class DogMigrateOwnerScreen extends Screen {
                         return;
                     }
                 }
-                renderComponentTooltip(stack, List.of(c1), mouseX, mouseY);
+                graphics.renderComponentTooltip(font, List.of(c1), mouseX, mouseY);
             }
         };
         var player = Minecraft.getInstance().player;

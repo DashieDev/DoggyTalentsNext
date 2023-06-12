@@ -87,7 +87,7 @@ public class HeelByGroupScreen extends Screen {
                 String str = I18n.get("doggytalents.screen.heel_by_group.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, HeelByGroupScreen.this.font));
 
-                HeelByGroupScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
             }
         };
         

@@ -57,7 +57,7 @@ public class AccessoryHolder extends AbstractWidget {
             graphics.fill( this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, bkg_col);
         }
         
-        this.itemRenderer.renderGuiItem(graphics, itemStack, this.getX()+1, this.getY()+1);
+        graphics.renderItem(itemStack, this.getX()+1, this.getY()+1);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();

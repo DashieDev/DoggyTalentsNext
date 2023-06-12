@@ -186,7 +186,7 @@ public class DogInfoScreen extends Screen {
                     }
                 }
 
-                DogInfoScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
             }
         };
 
@@ -319,7 +319,7 @@ public class DogInfoScreen extends Screen {
                         list.add(Component.literal("Talent disabled").withStyle(ChatFormatting.RED));
                     }
 
-                    DogInfoScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                    graphics.renderComponentTooltip(font, list, mouseX, mouseY);
                 }
             };
 

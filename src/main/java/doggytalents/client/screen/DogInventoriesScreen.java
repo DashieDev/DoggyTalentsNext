@@ -131,7 +131,7 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
 //            if (this.hoveredSlot instanceof DogInventorySlot) {
 //                this.renderTooltip(Arrays.asList(new TranslationTextComponent("test").applyTextStyle(TextFormatting.RED).getFormattedText()), mouseX, mouseY);
 //            } else {
-                this.renderTooltip(graphics, this.hoveredSlot.getItem(), mouseX, mouseY);
+                graphics.renderItem(this.hoveredSlot.getItem(), mouseX, mouseY);
 //            }
         }
 

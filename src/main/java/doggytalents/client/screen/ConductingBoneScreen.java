@@ -96,7 +96,7 @@ public class ConductingBoneScreen extends Screen {
                 String str = I18n.get("doggytalents.screen.conducting_bone.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, ConductingBoneScreen.this.font));
 
-                ConductingBoneScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
             }
         };
         Button toBedButton = new CustomButton(3, 49, 60, 20, Component.literal(this.toBed? "To Bed" : "To Self"), b -> {
