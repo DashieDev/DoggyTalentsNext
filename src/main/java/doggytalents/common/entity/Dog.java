@@ -441,9 +441,9 @@ public class Dog extends AbstractDog {
                 if (this.wetSource == null) {
                     this.wetSource = WetSource.of(inWater, inBubbleColumn, inRain);
                 }
-                if (this.isShaking && !this.level.isClientSide) {
+                if (this.isShaking && !this.level().isClientSide) {
                     this.finishShaking();
-                    this.level.broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING);
+                    this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING);
                 }
             } else if ((this.wetSource != null || this.isShaking) && this.isShaking) {
                 if (this.timeWolfIsShaking == 0.0F) {
@@ -476,13 +476,13 @@ public class Dog extends AbstractDog {
                         if (this.shakeFire) {
                             byte r = (byte) this.getRandom().nextInt(3);
                             if (r==0)
-                                this.level.addParticle(ParticleTypes.LAVA, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                                this.level().addParticle(ParticleTypes.LAVA, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                             else if (r==1)
-                                this.level.addParticle(ParticleTypes.FLAME, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                                this.level().addParticle(ParticleTypes.FLAME, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                             else if (r==2)
-                                this.level.addParticle(ParticleTypes.SMOKE, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                                this.level().addParticle(ParticleTypes.SMOKE, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                         } else
-                        this.level.addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                        this.level().addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                     }
                 }
 
@@ -492,11 +492,11 @@ public class Dog extends AbstractDog {
             }
 
             // On server side
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
 
                 // Every 2 seconds
                 if (this.tickCount % 40 == 0) {
-                    DogLocationStorage.get(this.level).getOrCreateData(this).update(this);
+                    DogLocationStorage.get(this.level()).getOrCreateData(this).update(this);
 
 
                     var owner = this.getOwner();
@@ -516,14 +516,14 @@ public class Dog extends AbstractDog {
     public void aiStep() {
         super.aiStep();
 
-        if (!this.level.isClientSide && this.delayedActionStart > 0)
+        if (!this.level().isClientSide && this.delayedActionStart > 0)
             --this.delayedActionStart; 
 
-        if (!this.level.isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.isOnGround()) {
+        if (!this.level().isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.isOnGround()) {
             this.startShakingAndBroadcast(false);
         }
 
-        if (!this.level.isClientSide && this.fireImmune()) {
+        if (!this.level().isClientSide && this.fireImmune()) {
             if (this.isInLava()) {
                 this.wasInLava = true;
             }
@@ -534,7 +534,7 @@ public class Dog extends AbstractDog {
         }
         
         //Hunger And Healing tick.
-        if (!this.level.isClientSide && !this.isDefeated()) {
+        if (!this.level().isClientSide && !this.isDefeated()) {
             
             if (! ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_HUNGER)) {
                 this.prevHungerTick = this.hungerTick;
@@ -601,20 +601,20 @@ public class Dog extends AbstractDog {
             this.dogMiningCautiousManager.tick();
         }
 
-        if (this.level.isClientSide && this.getDogLevel().isDireDog() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DIRE_PARTICLES)) {
+        if (this.level().isClientSide && this.getDogLevel().isDireDog() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DIRE_PARTICLES)) {
             for (int i = 0; i < 2; i++) {
-                this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2D);
+                this.level().addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2D);
             }
         }
 
         // Check if dog bowl still exists every 50t/2.5s, if not remove
         if (this.tickCount % 50 == 0) {
-            ResourceKey<Level> dimKey = this.level.dimension();
+            ResourceKey<Level> dimKey = this.level().dimension();
             Optional<BlockPos> bowlPos = this.getBowlPos(dimKey);
 
             // If the dog has a food bowl in this dimension then check if it is still there
             // Only check if the chunk it is in is loaded
-            if (bowlPos.isPresent() && this.level.hasChunkAt(bowlPos.get()) && !this.level.getBlockState(bowlPos.get()).is(DoggyBlocks.FOOD_BOWL.get())) {
+            if (bowlPos.isPresent() && this.level().hasChunkAt(bowlPos.get()) && !this.level().getBlockState(bowlPos.get()).is(DoggyBlocks.FOOD_BOWL.get())) {
                 this.setBowlPos(dimKey, Optional.empty());
             }
         }
@@ -726,7 +726,7 @@ public class Dog extends AbstractDog {
         if (this.isTame()) {
             if (stack.getItem() == Items.STICK) {
 
-                if (this.level.isClientSide) {
+                if (this.level().isClientSide) {
                     boolean useLegacyDogGui = 
                         ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.USE_LEGACY_DOGGUI); 
                     if (this.canInteract(player)) {
@@ -747,7 +747,7 @@ public class Dog extends AbstractDog {
         } else { // Not tamed
             if (stack.getItem() == Items.BONE || stack.getItem() == DoggyItems.TRAINING_TREAT.get()) {
 
-                if (!this.level.isClientSide) {
+                if (!this.level().isClientSide) {
                     this.usePlayerItem(player, hand, stack);
 
                     if (stack.getItem() == DoggyItems.TRAINING_TREAT.get() || this.random.nextInt(3) == 0) {
@@ -756,9 +756,9 @@ public class Dog extends AbstractDog {
                         this.setTarget((LivingEntity) null);
                         this.setOrderedToSit(true);
                         this.setHealth(20.0F);
-                        this.level.broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_HEARTS);
+                        this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_HEARTS);
                     } else {
-                        this.level.broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_SMOKE);
+                        this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_SMOKE);
                     }
                 }
 
@@ -779,7 +779,7 @@ public class Dog extends AbstractDog {
         }
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.processInteract(this, this.level, player, hand);
+            InteractionResult result = alter.processInteract(this, this.level(), player, hand);
             if (result != InteractionResult.PASS) {
                 return result;
             }
@@ -792,7 +792,7 @@ public class Dog extends AbstractDog {
             this.navigation.stop();
             this.setTarget(null);
             return InteractionResult.SUCCESS;
-        } else if (this.level.isClientSide) {
+        } else if (this.level().isClientSide) {
             this.displayToastIfNoPermission(player);
         }
 
@@ -826,7 +826,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public void stopRiding() {
-        if (!this.level.isClientSide) { 
+        if (!this.level().isClientSide) { 
             var e0 = this.getVehicle();
             super.stopRiding();
             var e1 = this.getVehicle();
@@ -1339,9 +1339,9 @@ public class Dog extends AbstractDog {
         //where a dog object is removed from the world, change the UUID and then re-added back in.
         if (!this.isAddedToWorld()) return;
 
-        if (this.level != null && !this.level.isClientSide) {
-            DogLocationStorage.get(this.level).remove(oldUniqueId);
-            DogLocationStorage.get(this.level).getOrCreateData(this).update(this);
+        if (this.level() != null && !this.level().isClientSide) {
+            DogLocationStorage.get(this.level()).remove(oldUniqueId);
+            DogLocationStorage.get(this.level()).getOrCreateData(this).update(this);
         }
     }
 
@@ -1513,14 +1513,14 @@ public class Dog extends AbstractDog {
         if (flag) return null;
         Entity transportedEntity = super.changeDimension(worldIn, teleporter);
         if (transportedEntity instanceof Dog) {
-            DogLocationStorage.get(this.level).getOrCreateData(this).update((Dog) transportedEntity);
+            DogLocationStorage.get(this.level()).getOrCreateData(this).update((Dog) transportedEntity);
         }
         return transportedEntity;
     }
 
     @Override
     public void onRemovedFromWorld() {
-        if (this.level instanceof ServerLevel serverLevel && this.isAlive()) {
+        if (this.level() instanceof ServerLevel serverLevel && this.isAlive()) {
             //Force location update when the dog is about to get untracked from world.
             //To be sure, only update existing data and when the dog is still living.
             var data = DogLocationStorage.get(serverLevel).getData(this);
@@ -1535,7 +1535,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public void onAddedToWorld() {
-        if (this.level instanceof ServerLevel serverLevel && this.isAlive()) {
+        if (this.level() instanceof ServerLevel serverLevel && this.isAlive()) {
             var data = DogLocationStorage.get(serverLevel).getOrCreateData(this);
             
             if (data != null) data.update(this);
@@ -1548,9 +1548,9 @@ public class Dog extends AbstractDog {
         super.remove(removalReason);
 
         if (removalReason == RemovalReason.DISCARDED || removalReason == RemovalReason.KILLED) {
-            if (this.level != null && !this.level.isClientSide) {
-                DogRespawnStorage.get(this.level).putData(this);
-                DogLocationStorage.get(this.level).remove(this);
+            if (this.level() != null && !this.level().isClientSide) {
+                DogRespawnStorage.get(this.level()).putData(this);
+                DogLocationStorage.get(this.level()).remove(this);
             }
         }
     }
@@ -1558,7 +1558,7 @@ public class Dog extends AbstractDog {
     @Override
     protected void tickDeath() {
         if (this.deathTime == 19) { // 1 second after death
-            if (this.level != null && !this.level.isClientSide) {
+            if (this.level() != null && !this.level().isClientSide) {
 //                DogRespawnStorage.get(this.world).putData(this);
 //                DoggyTalents.LOGGER.debug("Saved dog as they died {}", this);
 //
@@ -1586,14 +1586,14 @@ public class Dog extends AbstractDog {
      */
     public void startShakingAndBroadcast(boolean shakeFire) {
         if (this.isShaking) return; //Already shaking
-        if (this.level.isClientSide) return;
+        if (this.level().isClientSide) return;
         if (shakeFire) {
             this.startShakingLava();
             ParticlePackets.DogStartShakingLavaPacket.sendDogStartShakingLavaPacketToNearByClients(this);
             return;
         }
         this.startShaking();
-        this.level.broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_START_SHAKING);
+        this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_START_SHAKING);
     }
 
     private void finishShaking() {
@@ -2079,7 +2079,7 @@ public class Dog extends AbstractDog {
 
         if (ACCESSORIES.get().equals(key)) {
             // If client sort accessories
-            if (this.level.isClientSide) {
+            if (this.level().isClientSide) {
                 // Does not recall this notifyDataManagerChange as list object is
                 // still the same, maybe in future MC versions this will change so need to watch out
                 this.clientAccessories = new ArrayList<>(this.getAccessories());
@@ -2092,7 +2092,7 @@ public class Dog extends AbstractDog {
             this.refreshDimensions();
         }
 
-        if (this.level.isClientSide && CUSTOM_SKIN.equals(key)) {
+        if (this.level().isClientSide && CUSTOM_SKIN.equals(key)) {
             this.setClientSkin(
                 DogTextureManager.INSTANCE
                     .getLocFromHashOrGet(
@@ -2252,7 +2252,7 @@ public class Dog extends AbstractDog {
     }
 
     public Optional<BlockPos> getBedPos() {
-        return this.getBedPos(this.level.dimension());
+        return this.getBedPos(this.level().dimension());
     }
 
     public Optional<BlockPos> getBedPos(ResourceKey<Level> registryKey) {
@@ -2260,7 +2260,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setBedPos(@Nullable BlockPos pos) {
-        this.setBedPos(this.level.dimension(), pos);
+        this.setBedPos(this.level().dimension(), pos);
     }
 
     public void setBedPos(ResourceKey<Level> registryKey, @Nullable BlockPos pos) {
@@ -2272,7 +2272,7 @@ public class Dog extends AbstractDog {
     }
 
     public Optional<BlockPos> getBowlPos() {
-        return this.getBowlPos(this.level.dimension());
+        return this.getBowlPos(this.level().dimension());
     }
 
     public Optional<BlockPos> getBowlPos(ResourceKey<Level> registryKey) {
@@ -2280,7 +2280,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setBowlPos(@Nullable BlockPos pos) {
-        this.setBowlPos(this.level.dimension(), pos);
+        this.setBowlPos(this.level().dimension(), pos);
     }
 
     public void setBowlPos(ResourceKey<Level> registryKey, @Nullable BlockPos pos) {
@@ -3008,14 +3008,14 @@ public class Dog extends AbstractDog {
 
         // The dog blockPos is still the same as the bed pos when the dog is sitting on it :v
         // Disable it for now.
-        // BlockState blockBelow = this.level.getBlockState(this.blockPosition().below());
+        // BlockState blockBelow = this.level().getBlockState(this.blockPosition().below());
         // boolean onBed = blockBelow.is(DoggyBlocks.DOG_BED.get()) || blockBelow.is(BlockTags.BEDS);
         // if (onBed) {
         //     return true;
         // }
 
         if (this.isDefeated()) {
-            BlockState blockBelow = this.level.getBlockState(this.blockPosition());
+            BlockState blockBelow = this.level().getBlockState(this.blockPosition());
             boolean onBed = blockBelow.is(DoggyBlocks.DOG_BED.get()) || blockBelow.is(BlockTags.BEDS);
             if (onBed) {
                 return true;
@@ -3118,7 +3118,7 @@ public class Dog extends AbstractDog {
         ++this.hungerDamageTick;
         int hurt_interval = -1;
         boolean hurt_last_health = false;
-        switch (this.level.getDifficulty()) {
+        switch (this.level().getDifficulty()) {
             case EASY: {
                 hurt_interval = 125;
                 break;
