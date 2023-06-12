@@ -315,11 +315,11 @@ public class DoggyCommands {
 
         if (dog != null) {
             respawnStorage.remove(respawnData.getDogId());
-            source.sendSuccess(Component.translatable("commands.dogrespawn.uuid.success", respawnData.getDogName()), false);
+            source.sendSuccess(() -> Component.translatable("commands.dogrespawn.uuid.success", respawnData.getDogName()), false);
             return 1;
         }
 
-        source.sendSuccess(Component.translatable("commands.dogrespawn.uuid.failure", respawnData.getDogName()), false);
+        source.sendSuccess(() -> Component.translatable("commands.dogrespawn.uuid.failure", respawnData.getDogName()), false);
         return 0;
     }
 
@@ -386,9 +386,9 @@ public class DoggyCommands {
             String translateStr = RadarItem.getDirectionTranslationKey(locationData, player);
             int distance = Mth.ceil(locationData.getPos() != null ? locationData.getPos().distanceTo(player.position()) : -1);
 
-            source.sendSuccess(Component.translatable(translateStr, locationData.getName(player.level()), distance), false);
+            source.sendSuccess(() -> Component.translatable(translateStr, locationData.getName(player.level()), distance), false);
         } else {
-            source.sendSuccess(Component.translatable("dogradar.notindim", locationData.getDimension()), false); // TODO change message
+            source.sendSuccess(() -> Component.translatable("dogradar.notindim", locationData.getDimension()), false); // TODO change message
         }
         return 1;
 
