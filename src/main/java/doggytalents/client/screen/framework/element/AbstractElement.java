@@ -5,17 +5,17 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.ContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.layouts.LayoutElement;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 
-public abstract class AbstractElement extends GuiComponent implements Renderable, ContainerEventHandler, NarratableEntry {
+//TODO: maybe implements LayoutElement too
+public abstract class AbstractElement implements Renderable, ContainerEventHandler, NarratableEntry {
 
     @Nullable
     private GuiEventListener focused;
@@ -60,24 +60,24 @@ public abstract class AbstractElement extends GuiComponent implements Renderable
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         if (this.backgroundColor != 0) {
             int aX = this.getRealX();
             int aY = this.getRealY();
-            AbstractElement.fill(stack, aX, aY, aX + this.getSizeX(), 
+            graphics.fill(aX, aY, aX + this.getSizeX(), 
                 aY + this.getSizeY(), this.backgroundColor);
         }
-        this.renderElement(stack, mouseX, mouseY, partialTicks);
+        this.renderElement(graphics, mouseX, mouseY, partialTicks);
         for (var c : this.child) {
             if (c instanceof Renderable wid)
-            wid.render(stack, mouseX, mouseY, partialTicks);
+            wid.render(graphics, mouseX, mouseY, partialTicks);
         }
     }
 
     /**
      * Never call render() here!!!
      */
-    public abstract void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks);
+    public abstract void renderElement(GuiGraphics stack, int mouseX, int mouseY, float partialTicks);
 
     public AbstractElement setPosition(ElementPosition.PosType type, int left, int top) {
         this.position = new ElementPosition(this, left, top, type);
