@@ -2,7 +2,6 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.dr
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.ChopinLogger;
 import doggytalents.client.screen.framework.DropdownMenuManager;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;

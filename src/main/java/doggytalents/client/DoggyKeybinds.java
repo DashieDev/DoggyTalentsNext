@@ -2,7 +2,6 @@ package doggytalents.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyItems;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.client.KeyMapping;
@@ -63,7 +62,6 @@ public class DoggyKeybinds {
         IN_GAME_AND_HAS_WHISTLE {
             @Override
             public boolean isActive() {
-                ChopinLogger.l("asking if conflict is active");
                 var mc = Minecraft.getInstance();
                 var screen = mc.screen;
                 if (screen != null) return false;
