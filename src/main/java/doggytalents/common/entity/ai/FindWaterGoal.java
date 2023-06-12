@@ -9,7 +9,6 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 
 import javax.annotation.Nullable;
@@ -165,10 +164,7 @@ public class FindWaterGoal extends Goal {
      */
     public BlockType getBlockType(BlockPos posIn) {
         // If the block is fire or lava
-        Material material = this.world.getBlockState(posIn).getMaterial();
-        if (material == Material.FIRE || material == Material.LAVA) {
-            return BlockType.FIRE;
-        }
+        //Remove this, this whole file is redundant anyways, and is ready to be removed.
 
         // If it is water
         if (this.world.getFluidState(posIn).is(FluidTags.WATER)) {
