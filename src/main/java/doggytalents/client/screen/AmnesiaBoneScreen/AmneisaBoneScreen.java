@@ -95,7 +95,7 @@ public class AmneisaBoneScreen extends StoreConnectedScreen {
         //ToolTipManager
         var toolTipManager = ToolTipOverlayManager.get();
         if (toolTipManager.hasToolTip()) {
-            toolTipManager.render(this, stack, mouseX, mouseY);
+            toolTipManager.render(this, graphics, mouseX, mouseY);
             toolTipManager.reset();
         }
 
