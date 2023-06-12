@@ -35,10 +35,10 @@ public class DogLeapAtTargetGoal extends Goal {
       } else {
         this.target = this.dog.getTarget();
         if (this.target == null) return false;
-        if (!this.target.isOnGround()) return false;
+        if (!this.target.onGround()) return false;
         double d0 = this.dog.distanceToSqr(this.target);
         if (d0 >= DONT_LEAP_AT_DIS_SQR && d0 <= START_LEAPING_AT_DIS_SQR) {
-            if (!this.dog.isOnGround()) {
+            if (!this.dog.onGround()) {
                 return false;
             } else {
                if (this.dog.getRandom().nextInt(reducedTickDelay(5)) != 0) return false;
@@ -67,7 +67,7 @@ public class DogLeapAtTargetGoal extends Goal {
    }
 
    public boolean canContinueToUse() {
-      return !this.dog.isOnGround();  
+      return !this.dog.onGround();  
    }
 
    public void start() {

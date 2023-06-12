@@ -519,7 +519,7 @@ public class Dog extends AbstractDog {
         if (!this.level().isClientSide && this.delayedActionStart > 0)
             --this.delayedActionStart; 
 
-        if (!this.level().isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.isOnGround()) {
+        if (!this.level().isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.onGround()) {
             this.startShakingAndBroadcast(false);
         }
 
@@ -527,7 +527,7 @@ public class Dog extends AbstractDog {
             if (this.isInLava()) {
                 this.wasInLava = true;
             }
-            if (this.wasInLava == true && !this.isInLava() && !this.isShaking && !this.isPathFinding() && this.isOnGround()) {
+            if (this.wasInLava == true && !this.isInLava() && !this.isShaking && !this.isPathFinding() && this.onGround()) {
                 this.startShakingAndBroadcast(true);
                 this.wasInLava = false;
             }
@@ -2768,7 +2768,7 @@ public class Dog extends AbstractDog {
     //                forward *= 0.5F;
     //             } 
 
-    //             if (this.jumpPower > 0.0F && !this.isDogJumping() && this.isOnGround()) {
+    //             if (this.jumpPower > 0.0F && !this.isDogJumping() && this.onGround()) {
 
     //                 // Calculate jump value based of jump strength, power this jump and jump boosts
     //                 double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER.get()).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
@@ -2809,7 +2809,7 @@ public class Dog extends AbstractDog {
     //             }
 
     //             // Once the entity reaches the ground again allow it to jump again
-    //             if (this.isOnGround()) {
+    //             if (this.onGround()) {
     //                 this.jumpPower = 0.0F;
     //                 this.setDogJumping(false);
     //             }
@@ -2886,12 +2886,12 @@ public class Dog extends AbstractDog {
         if (this.jumpPower > 0) {
             if (this.isInWater() && this.canSwimUnderwater())
                 this.doDogRideFloat();
-            else if (!this.isDogJumping() && this.isOnGround())
+            else if (!this.isDogJumping() && this.onGround())
                 this.doDogRideJump(forward);
         }
 
         // Once the entity reaches the ground again allow it to jump again
-        if (this.isOnGround()) {
+        if (this.onGround()) {
             this.jumpPower = 0.0F;
             this.setDogJumping(false);
         } else {
@@ -2973,7 +2973,7 @@ public class Dog extends AbstractDog {
                 if (k > 0) {
                     this.statsTracker.increaseDistanceInWater(k);
                 }
-            } else if (this.isOnGround()) {
+            } else if (this.onGround()) {
                 int l = Math.round(Mth.sqrt((float) (xD * xD + zD * zD)) * 100.0F);
                 if (l > 0) {
                     if (this.isSprinting()) {

@@ -58,7 +58,7 @@ public class ThrowableItem extends Item implements IThrowableItem {
         float f2 = Mth.cos(rotationYawIn * ((float)Math.PI / 180F)) * Mth.cos(rotationPitchIn * ((float)Math.PI / 180F));
         this.setThrowableHeading(entityItem, f, f1, f2, velocity, inaccuracy);
         Vec3 vec3d = entityThrower.getDeltaMovement();
-        entityItem.setDeltaMovement(entityItem.getDeltaMovement().add(vec3d.x, entityThrower.isOnGround() ? 0.0D : vec3d.y, vec3d.z));
+        entityItem.setDeltaMovement(entityItem.getDeltaMovement().add(vec3d.x, entityThrower.onGround() ? 0.0D : vec3d.y, vec3d.z));
     }
 
     @Override
