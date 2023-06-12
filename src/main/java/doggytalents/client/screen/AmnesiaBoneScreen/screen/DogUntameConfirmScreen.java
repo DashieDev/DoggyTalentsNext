@@ -142,7 +142,7 @@ public class DogUntameConfirmScreen extends Screen {
                         return;
                     }
                 }
-                renderComponentTooltip(stack, List.of(c1), mouseX, mouseY);
+                graphics.renderComponentTooltip(font, List.of(c1), mouseX, mouseY);
             }
         };
         var player = Minecraft.getInstance().player;

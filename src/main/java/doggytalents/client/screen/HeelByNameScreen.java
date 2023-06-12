@@ -113,7 +113,7 @@ public class HeelByNameScreen extends Screen {
                 String str = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
 
-                HeelByNameScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
             }
         };
 
@@ -132,7 +132,7 @@ public class HeelByNameScreen extends Screen {
                 String str = I18n.get("doggytalents.screen.whistler.heel_by_name.soft_heel.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
 
-                HeelByNameScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
             }
         };
         
