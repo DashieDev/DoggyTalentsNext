@@ -75,7 +75,7 @@ public class DoggyToolsTalent extends TalentInstance  {
 
     @Override
     public void tick(AbstractDog d) {
-        if (d.level.isClientSide) return;
+        if (d.level().isClientSide) return;
 
         validateAndSync(d);
         

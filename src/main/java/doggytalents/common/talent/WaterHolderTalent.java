@@ -233,8 +233,8 @@ public class WaterHolderTalent extends TalentInstance {
         for (int i = -1; i <= 1; ++i) {
             for(int j = -1; j <= 1; ++j) {
                 e_b0m.setX(e_b0.getX() + i); e_b0m.setZ(e_b0.getZ()+j);
-                if (e.level.getBlockState(e_b0m).getBlock() == Blocks.FIRE ) {
-                    e.level.setBlockAndUpdate(e_b0m, Blocks.AIR.defaultBlockState());
+                if (e.level().getBlockState(e_b0m).getBlock() == Blocks.FIRE ) {
+                    e.level().setBlockAndUpdate(e_b0m, Blocks.AIR.defaultBlockState());
                 }
             }
         }

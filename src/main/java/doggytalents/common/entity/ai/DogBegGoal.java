@@ -23,7 +23,7 @@ public class DogBegGoal extends Goal {
 
     public DogBegGoal(Dog wolf, float minDistance) {
         this.dog = wolf;
-        this.world = wolf.level;
+        this.world = wolf.level();
         this.minPlayerDistance = minDistance;
         this.playerPredicate = TargetingConditions.forNonCombat().range(minDistance); // TODO check
         this.setFlags(EnumSet.of(Goal.Flag.LOOK));

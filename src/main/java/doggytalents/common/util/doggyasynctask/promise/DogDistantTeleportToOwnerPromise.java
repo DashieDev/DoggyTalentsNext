@@ -44,7 +44,7 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
     public DogDistantTeleportToOwnerPromise(@Nonnull UUID dogUUID, @Nonnull LivingEntity owner,
          @Nonnull BlockPos dogPos) {
         this.dogUUID = dogUUID;
-        if (owner.level instanceof ServerLevel sL) {
+        if (owner.level()() instanceof ServerLevel sL) {
             this.level = sL;
         } else {
             this.level = null;
@@ -137,7 +137,7 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
             return;
         }
         var dogDimKey = data.getDimension();
-        var ownerDimKey = owner.level.dimension();
+        var ownerDimKey = owner.level().dimension();
         if (ownerDimKey == null || dogDimKey == null) {
             this.rejectedMsg = "WHAT?";
             this.setState(State.REJECTED);

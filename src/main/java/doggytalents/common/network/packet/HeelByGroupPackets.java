@@ -46,7 +46,7 @@ public class HeelByGroupPackets {
                 if (!side.isServer()) return;
                 var sender = ctx.get().getSender();
 
-                var dogsList = sender.level.getEntitiesOfClass(
+                var dogsList = sender.level().getEntitiesOfClass(
                     Dog.class, 
                     sender.getBoundingBox().inflate(100D, 50D, 100D), 
                     dog -> dog.isDoingFine() && dog.isOwnedBy(sender)
@@ -148,7 +148,7 @@ public class HeelByGroupPackets {
                 var sender = ctx.get().getSender();
                 if (sender.getCooldowns().isOnCooldown(DoggyItems.WHISTLE.get())) return;
 
-                var dogs = sender.level.getEntitiesOfClass(
+                var dogs = sender.level().getEntitiesOfClass(
                     Dog.class, 
                     sender.getBoundingBox().inflate(100D, 50D, 100D), 
                     dog -> dog.isDoingFine() && dog.isOwnedBy(sender)
@@ -172,11 +172,11 @@ public class HeelByGroupPackets {
                 }
 
                 DogUtil.dynamicSearchAndTeleportToOwnwerInBatch(
-                    sender.level, dogs, sender, 3
+                    sender.level(), dogs, sender, 3
                 );
 
                 if (ConfigHandler.WHISTLE_SOUNDS)
-                sender.level.playSound(null, sender.blockPosition(), DoggySounds.WHISTLE_LONG.get(), SoundSource.PLAYERS, 0.6F + sender.level.random.nextFloat() * 0.1F, 0.4F + sender.level.random.nextFloat() * 0.2F);
+                sender.level().playSound(null, sender.blockPosition(), DoggySounds.WHISTLE_LONG.get(), SoundSource.PLAYERS, 0.6F + sender.level().random.nextFloat() * 0.1F, 0.4F + sender.level().random.nextFloat() * 0.2F);
                 sender.sendSystemMessage(Component.translatable("dogcommand.heel_by_group", 
                     Component.literal(data.group.name)
                     .withStyle(

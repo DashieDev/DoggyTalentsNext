@@ -23,11 +23,11 @@ public class DogNearestToOwnerAttackableTargetGoal<T extends LivingEntity> exten
             return;
         };
         if (this.targetType != Player.class && this.targetType != ServerPlayer.class) {
-           this.target = owner.level.getNearestEntity(this.mob.level.getEntitiesOfClass(this.targetType, this.getTargetSearchArea(this.getFollowDistance()), (p_148152_) -> {
+           this.target = owner.level()().getNearestEntity(this.mob.level().getEntitiesOfClass(this.targetType, this.getTargetSearchArea(this.getFollowDistance()), (p_148152_) -> {
               return true;
            }), this.targetConditions, this.dog, owner.getX(), owner.getEyeY(), owner.getZ());
         } else {
-           this.target = owner.level.getNearestPlayer(this.targetConditions, this.dog, owner.getX(), owner.getEyeY(), owner.getZ());
+           this.target = owner.level()().getNearestPlayer(this.targetConditions, this.dog, owner.getX(), owner.getEyeY(), owner.getZ());
         }
   
     }

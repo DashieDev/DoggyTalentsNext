@@ -47,7 +47,7 @@ public class DoggyBeamEntity extends ThrowableProjectile implements IEntityAddit
                 LivingEntity livingThrower = (LivingEntity) thrower;
                 LivingEntity livingEntity = (LivingEntity) entityHit;
 
-                this.level.getEntitiesOfClass(Dog.class, this.getBoundingBox().inflate(64D, 16D, 64D)).stream()
+                this.level().getEntitiesOfClass(Dog.class, this.getBoundingBox().inflate(64D, 16D, 64D)).stream()
                     .filter(Predicates.not(Dog::isInSittingPose))
                     .filter(d -> d.isMode(EnumMode.AGGRESIVE, EnumMode.TACTICAL, EnumMode.BERSERKER))
                     .filter(d -> d.canInteract(livingThrower))
@@ -57,12 +57,12 @@ public class DoggyBeamEntity extends ThrowableProjectile implements IEntityAddit
             }
 
             for (int j = 0; j < 8; ++j) {
-                this.level.addParticle(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                this.level().addParticle(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
             }
         }
 
-        if (!this.level.isClientSide) {
-            this.level.broadcastEntityEvent(this, Constants.EntityState.DEATH);
+        if (!this.level().isClientSide) {
+            this.level().broadcastEntityEvent(this, Constants.EntityState.DEATH);
             this.discard();
         }
     }

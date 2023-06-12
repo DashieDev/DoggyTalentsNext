@@ -29,7 +29,7 @@ public class DoggyContainerTypes {
 
     public static final RegistryObject<MenuType<FoodBowlContainer>> FOOD_BOWL = register("food_bowl", (windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
-        return new FoodBowlContainer(windowId, inv.player.level, pos, inv, inv.player);
+        return new FoodBowlContainer(windowId, inv.player.level(), pos, inv, inv.player);
     });
     public static final RegistryObject<MenuType<PackPuppyContainer>> PACK_PUPPY = register("pack_puppy", (windowId, inv, data) -> {
         Entity entity = inv.player.level().getEntity(data.readInt());

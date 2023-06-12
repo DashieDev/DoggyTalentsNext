@@ -117,7 +117,7 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
         dog0.unRide();
         dog0.remove(RemovalReason.CHANGED_DIMENSION);
         targetLevel.resetEmptyTime();
-        if (dog0.level instanceof ServerLevel sLevel) 
+        if (dog0.level() instanceof ServerLevel sLevel) 
             sLevel.resetEmptyTime();
     }
 

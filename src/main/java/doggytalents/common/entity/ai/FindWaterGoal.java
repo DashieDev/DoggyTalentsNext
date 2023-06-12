@@ -32,7 +32,7 @@ public class FindWaterGoal extends Goal {
     public FindWaterGoal(PathfinderMob creatureIn) {
         this.creature = creatureIn;
         this.navigator = creatureIn.getNavigation();
-        this.world = creatureIn.level;
+        this.world = creatureIn.level();
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
 
