@@ -83,12 +83,11 @@ public class DoggyTalentsNext {
         DoggyBedMaterials.BEDDINGS.register(modEventBus);
         DoggyBedMaterials.CASINGS.register(modEventBus);
         DoggyAttributes.ATTRIBUTES.register(modEventBus);
+        DoggyItemGroups.ITEM_GROUP.register(modEventBus);
 
         modEventBus.addListener(DoggyRegistries::newRegistry);
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
         modEventBus.addListener(Capabilities::registerCaps);
-
-        modEventBus.addListener(DoggyItemGroups::onCreativeTabRegister);
 
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
