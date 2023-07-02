@@ -86,16 +86,17 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onInputEvent(final MovementInputUpdateEvent event) {
-        if (event.getInput().jumping) {
-            Entity entity = event.getEntity().getVehicle();
-            if (event.getEntity().isPassenger() && entity instanceof Dog) {
-                Dog dog = (Dog) entity;
-
-                if (dog.canJump()) {
-                    dog.setJumpPower(100);
-                }
-            }
-        }
+        if (!event.getInput().jumping)
+            return;
+        var entity = event.getEntity();
+        var vehicle = entity.getVehicle();
+        if (!entity.isPassenger())
+            return;
+        if (!(vehicle instanceof Dog dog))
+            return;
+        if (!dog.canJump())
+            return;
+        dog.setJumpPower(100);
     }
 
     @SubscribeEvent
