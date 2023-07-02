@@ -84,6 +84,7 @@ public class ClientEventHandler {
         }
     }
 
+    private static int lastInputTickCount = 0;
     @SubscribeEvent
     public void onInputEvent(final MovementInputUpdateEvent event) {
         if (!event.getInput().jumping)
@@ -96,7 +97,10 @@ public class ClientEventHandler {
             return;
         if (!dog.canJump())
             return;
+        if (dog.tickCount - lastInputTickCount < 10)
+            return;
         dog.setJumpPower(100);
+        lastInputTickCount = dog.tickCount;
     }
 
     @SubscribeEvent

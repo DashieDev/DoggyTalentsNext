@@ -2726,6 +2726,9 @@ public class Dog extends AbstractDog {
         //TODO return this.TALENTS.getLevel(ModTalents.WOLF_MOUNT) > 0;
     }
 
+    private boolean secondaryJump = false;
+    private int tickTillSecondaryJump = 0;
+
     @Override
     public void travel(Vec3 positionIn) {
         if (this.isAlive()) {
@@ -2755,13 +2758,32 @@ public class Dog extends AbstractDog {
                 // If moving backwards half  the speed
                 if (forward <= 0.0F) {
                    forward *= 0.5F;
-                } 
+                }
+
+                if (this.tickTillSecondaryJump > 0) {
+                    if (this.isOnGround())
+                        this.tickTillSecondaryJump = 0;
+                    else
+                        --this.tickTillSecondaryJump;
+                }
+
+                if (this.secondaryJump) {
+                    if (this.isOnGround()) 
+                        this.secondaryJump = false;
+                }
 
                 if (this.jumpPower > 0) {
                     if (this.isInWater() && this.canSwimUnderwater())
                         this.doDogRideFloat();
-                    else if (!this.isDogJumping() && this.isOnGround())
+                    else if (this.tickTillSecondaryJump <= 0 && this.secondaryJump) {
+                        this.secondaryJump = false;
                         this.doDogRideJump(forward);
+                    }
+                    else if (!this.isDogJumping() && this.isOnGround()) {
+                        this.doDogRideJump(forward);
+                        this.secondaryJump = true;
+                        this.tickTillSecondaryJump = 10;
+                    }
                 }
 
                 this.flyingSpeed = this.getSpeed() * 0.1F;
