@@ -1,18 +1,24 @@
 package doggytalents.client.entity.model.dog;
 
+import java.util.function.Function;
+
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
+import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.ColorableAgeableListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T> {
+public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
 
     public static final float[] MANE_LYING_OFF = {0f, 6f, 1f};
     public static final float[] MANE_SITTING_OFF = {0f, 2f, 0f};
@@ -112,6 +118,10 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
 //
 //        //HeadMain Nose
 //        this.head.texOffs(0, 10).addBox(-0.5F, 0.0F, -5.0F, 3, 3, 4, scaleFactor);
+    }
+
+    public DogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
+        super(renderType, false, 5.0F, 2.0F, 2.0F, 2.0F, 24.0F);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -302,4 +312,23 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
     public void doTickClient(Dog dog) {}
     public boolean hasAdditonalRendering() { return false; }
     public void doAdditonalRendering(Dog dog, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {}
+
+    //Decoupled from ColorableAgeableListModel
+    private float r = 1.0F;
+    private float g = 1.0F;
+    private float b = 1.0F;
+
+    public void setColor(float p_102420_, float p_102421_, float p_102422_) {
+        this.r = p_102420_;
+        this.g = p_102421_;
+        this.b = p_102422_;
+    }
+
+    @Override
+    public void renderToBuffer(PoseStack p_102424_, VertexConsumer p_102425_, int p_102426_, int p_102427_, float p_102428_, float p_102429_, float p_102430_, float p_102431_) {
+        super.renderToBuffer(p_102424_, p_102425_, p_102426_, p_102427_, this.r * p_102428_, this.g * p_102429_, this.b * p_102430_, p_102431_);
+    }
+    //END
+
+
 }
