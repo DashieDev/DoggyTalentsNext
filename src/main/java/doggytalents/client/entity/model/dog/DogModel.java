@@ -1,11 +1,15 @@
 package doggytalents.client.entity.model.dog;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.ColorableAgeableListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.util.Mth;
 
 public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T> {
@@ -293,4 +297,9 @@ public class DogModel<T extends AbstractDog> extends ColorableAgeableListModel<T
         this.tail.visible = visible;
         this.mane.visible = visible;
     }
+
+    public boolean tickClient() { return false; }
+    public void doTickClient(Dog dog) {}
+    public boolean hasAdditonalRendering() { return false; }
+    public void doAdditonalRendering(Dog dog, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {}
 }
