@@ -146,8 +146,10 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         if (dog.isDogWet()) {
             this.model.setColor(1.0F, 1.0F, 1.0F);
         }
-    }
 
+        if (this.model.hasAdditonalRendering())
+            this.model.doAdditonalRendering(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+    }
 
     private Component getNameUnknown(Dog dogIn) {
         return Component.translatable(dogIn.getOwnerUUID() != null ? "entity.doggytalents.dog.unknown_owner" : "entity.doggytalents.dog.untamed");
