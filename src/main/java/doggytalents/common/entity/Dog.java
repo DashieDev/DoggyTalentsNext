@@ -510,6 +510,19 @@ public class Dog extends AbstractDog {
         this.setMaxUpStep(this.isVehicle() ? 1f : 0.6f);
 
         this.alterations.forEach((alter) -> alter.tick(this));
+
+        //Client
+        if (this.level.isClientSide) {
+            proccessCustomModelSkin();
+            
+        }
+    }
+
+    private void proccessCustomModelSkin() {
+        var skin = this.getClientSkin();
+        if (!skin.useCustomModel()) return;
+        var model = skin.getCustomModel().getValue();
+        if (model.tickClient()) model.doTickClient(this);
     }
 
     @Override
