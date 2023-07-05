@@ -23,6 +23,12 @@ public class DogSkin {
     private DogModelHolder<Dog> customModelHolder;
     private byte tail = 0, ear = 0;
 
+    //Extra info
+    private boolean hasExtraInfo = false;
+    private String basedOn = "";
+    private String author = "";
+    private String fromPack = "";
+
     public DogSkin(ResourceLocation path) {
         this.texturePath = path;
         this.useCustomModel = false;
@@ -71,5 +77,28 @@ public class DogSkin {
     public ResourceLocation getPath() {
         return this.texturePath;
     }
+
+    public void setAuthor(String author) {
+        this.hasExtraInfo = true;
+        if (author == null) this.author = "";
+        else this.author = author;
+    }
+
+    public void setBasedOn(String basedOn) {
+        this.hasExtraInfo = true;
+        if (basedOn == null) this.basedOn = "";
+        else this.basedOn = basedOn;
+    }
+
+    public void setPack(String fromPack) {
+        this.hasExtraInfo = true;
+        if (fromPack == null) this.fromPack = "";
+        else this.fromPack = fromPack;
+    }
+
+    public boolean hasExtraInfo() { return this.hasExtraInfo; }
+    public String getBasedOn() { return this.basedOn; }
+    public String getAuthor() { return this.author; }
+    public String getPack() { return this.fromPack; }
 
 }
