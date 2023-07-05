@@ -7,6 +7,13 @@
             "author" : "MashXP, DashieDev"
         },
         {
+            "skin_name" : "Okami Amaterasu",
+            "skin_id" : "okami_amaterasu",
+            "use_model" : "okami_amaterasu",
+            "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
             "skin_name" : "Iwanko (RockRuff)",
             "skin_id" : "iwanko",
             "use_model" : "iwanko",
