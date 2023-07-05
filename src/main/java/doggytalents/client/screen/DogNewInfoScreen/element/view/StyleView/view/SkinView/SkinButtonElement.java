@@ -29,8 +29,10 @@ public class SkinButtonElement extends AbstractElement {
     Dog dog;
     Font font;
     List<DogSkin> locList;
+    Button showHideInfoButton;
     Button applyButton;
     int activeSkinId;
+    boolean showInfo;
 
     public SkinButtonElement(AbstractElement parent, Screen screen, Dog dog, List<DogSkin> locList) {
         super(parent, screen);
@@ -47,6 +49,10 @@ public class SkinButtonElement extends AbstractElement {
             .getStateOrDefault(ActiveSkinSlice.class,
             ActiveSkinSlice.class, new ActiveSkinSlice())
             .activeSkinId;
+        showInfo = 
+            Store.get(getScreen()).getStateOrDefault(
+                ActiveSkinSlice.class, ActiveSkinSlice.class, 
+                new ActiveSkinSlice()).showInfo;
         
         
         int mX = this.getSizeX()/2;
@@ -83,7 +89,22 @@ public class SkinButtonElement extends AbstractElement {
             }, this.font);
             nextSkinButton.active = activeSkinId < this.locList.size() - 1;
 
-        applyButton = new CustomButton(
+        showHideInfoButton = applyButton = new Button(
+            this.getRealX() + this.getSizeX() - 30 - 30 - 62,
+            this.getRealY() + mY - 10, 58, 20,
+            Component.literal(!this.showInfo ? "Show Info" : "Hide Info"),
+            b -> {
+                Store.get(getScreen()).dispatch(ActiveSkinSlice.class, 
+                    new UIAction(
+                        !this.showInfo ?
+                        UIActionTypes.Skins.SHOW_INFO : UIActionTypes.Skins.HIDE_INFO,
+                        new ActiveSkinSlice()
+                    ) 
+                );
+            }  
+        );
+
+        applyButton = new Button(
             this.getRealX() + this.getSizeX() - 30 - 30,
             this.getRealY() + mY - 10, 40, 20,
             Component.literal("Apply"),
@@ -102,6 +123,7 @@ public class SkinButtonElement extends AbstractElement {
         this.addChildren(prevSkinButton);
         this.addChildren(nextSkinButton);
         this.addChildren(applyButton);
+        this.addChildren(showHideInfoButton);
         
         return this;
     }
