@@ -7,6 +7,7 @@ import com.google.common.collect.Maps;
 
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
@@ -44,6 +45,7 @@ public class DogModelRegistry {
         register("jack", ctx -> new JackModel(ctx.bakeLayer(ClientSetup.DOG_JACK)));
         register("juno", ctx -> new JunoModel(ctx.bakeLayer(ClientSetup.DOG_JUNO)));
         register("st_bernard", ctx -> new StBernardModel(ctx.bakeLayer(ClientSetup.DOG_ST_BERNARD)));
+        register("okami_amaterasu", ctx ->  new AmaterasuModel(ctx.bakeLayer(ClientSetup.OKAMI_AMATERASU)));
     }
 
     public static class DogModelHolder<T extends AbstractDog> {
