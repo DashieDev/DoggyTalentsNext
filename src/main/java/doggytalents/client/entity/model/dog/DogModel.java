@@ -122,6 +122,21 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
 
     public DogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
         super(renderType, false, 5.0F, 2.0F, 2.0F, 2.0F, 24.0F);
+        this.head = box.getChild("head");
+        this.realHead = this.head.getChild("real_head");
+        this.earNormal = this.realHead.getChild("ear_normal");
+        this.earBoni = this.realHead.getChild("ear_boni");
+        this.earSmall = this.realHead.getChild("ear_small");
+        this.body = box.getChild("body");
+        this.mane = box.getChild("upper_body");
+        this.legBackRight = box.getChild("right_hind_leg");
+        this.legBackLeft = box.getChild("left_hind_leg");
+        this.legFrontRight = box.getChild("right_front_leg");
+        this.legFrontLeft = box.getChild("left_front_leg");
+        this.tail = box.getChild("tail");
+        this.realTail = this.tail.getChild("real_tail");
+        this.realTail2 = this.tail.getChild("real_tail_2");
+        this.realTail3 = this.tail.getChild("real_tail_bushy");
     }
 
     public static LayerDefinition createBodyLayer() {
