@@ -21,6 +21,7 @@ public class InitSkinIndexPayload extends ChangeTabPayload implements InitSkinIn
     public ActiveSkinSlice getInitSkinIndex() {
         var ret = new ActiveSkinSlice();
         ret.activeSkinId = index;
+        ret.showInfo = false;
         return ret;
     }
     

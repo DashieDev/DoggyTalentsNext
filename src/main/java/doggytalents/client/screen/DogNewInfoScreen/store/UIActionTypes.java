@@ -14,5 +14,8 @@ public class UIActionTypes {
     public static class Skins {
         public static String ACTIVE_INC = "skins.active.increment";
         public static String ACTIVE_DEC = "skins.active.decrement";
+
+        public static String SHOW_INFO = "skin.active.showinfo";
+        public static String HIDE_INFO = "skin.active.hideinfo";
     }
 }
