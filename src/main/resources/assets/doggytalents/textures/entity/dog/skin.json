@@ -3,12 +3,15 @@
         {
             "skin_name" : "Akita Inu",
             "skin_id" : "akita_inu",
-            "use_model" : "default"
+            "use_model" : "default",
+            "author" : "MashXP, DashieDev"
         },
         {
             "skin_name" : "Iwanko (RockRuff)",
             "skin_id" : "iwanko",
-            "use_model" : "iwanko"
+            "use_model" : "iwanko",
+            "based_on" : "Rockruff from Pokemon Gen 7",
+            "author" : "MashXP, DashieDev"
         },
         {
             "skin_name" : "Grey Wolf",
@@ -18,22 +21,29 @@
         {
             "skin_name" : "Legoshi",
             "skin_id" : "legoshi",
-            "use_model" : "legoshi"
+            "use_model" : "legoshi",
+            "based_on" : "Legoshi from Beastars",
+            "author" : "MashXP, DashieDev"
         },
         {
             "skin_name" : "Jack",
             "skin_id" : "jack",
-            "use_model" : "jack"
+            "use_model" : "jack",
+            "based_on" : "Jack from Beastars",
+            "author" : "MashXP, DashieDev"
         },
         {
             "skin_name" : "Juno",
             "skin_id" : "juno",
-            "use_model" : "juno"
+            "use_model" : "juno",
+            "based_on" : "Juno from Beastars",
+            "author" : "MashXP, DashieDev"
         },
         {
             "skin_name" : "St Bernard",
             "skin_id" : "st_bernard",
-            "use_model" : "st_bernard"
+            "use_model" : "st_bernard",
+            "author" : "MashXP, DashieDev"
         },
         {
             "skin_name" : "German Shepherd",
@@ -87,12 +97,16 @@
         {
             "skin_name" : "Lucario",
             "skin_id" : "lucario",
-            "use_model" : "lucario"
+            "use_model" : "lucario",
+            "based_on" : "Lucario from Pokemon",
+            "author" : "MashXP, DashieDev"
         },
         {
             "skin_name" : "Death",
             "skin_id" : "death",
-            "use_model" : "death"
+            "use_model" : "death",
+            "based_on" : "Death from Puss In Boots : The Last Wish",
+            "author" : "MashXP, DashieDev"
         },
         {
             "skin_name" : "Racoon",
