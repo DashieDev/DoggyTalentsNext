@@ -149,6 +149,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue ALL_DOG_BLOCK_PORTAL;
         public ForgeConfigSpec.BooleanValue KEEP_OLD_UUID_UPON_RESPAWN;
         public ForgeConfigSpec.IntValue MAX_HEEL_LIMIT;
+        public ForgeConfigSpec.BooleanValue PREVENT_DOGS_PUSHING_EACH_OTHER;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -243,6 +244,11 @@ public class ConfigHandler {
                 .comment("at the same time. Set this to any negative value to remove the limit completely.")
                 .translation("doggytalents.max_heel_limit")
                 .defineInRange("max_heel_limit", 20, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            PREVENT_DOGS_PUSHING_EACH_OTHER = builder
+                .comment("Prevent dogs from pushing each other when navigating, this prevents dogs from pushing")
+                .comment("another dog into a dangeruous area and improve navigation.")
+                .translation("doggytalents.prevent_dogs_pushing_each_other")
+                .define("prevent_dogs_pushing_each_other", true);
             builder.pop();
 
             
