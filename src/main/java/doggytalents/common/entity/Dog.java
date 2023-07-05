@@ -18,6 +18,8 @@ import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
+import doggytalents.common.entity.ai.nav.DogMoveControl;
+import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.ai.triggerable.DogTriggerableGoal;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
@@ -230,6 +232,9 @@ public class Dog extends AbstractDog {
         this.setTame(false);
         this.setGender(EnumGender.random(this.getRandom()));
         this.setLowHealthStrategy(LowHealthStrategy.STICK_TO_OWNER);
+
+        this.navigation = new DogPathNavigation(this, worldIn);
+        this.moveControl = new DogMoveControl(this);
 
         this.defaultNavigation = this.navigation;
         this.defaultMoveControl = this.moveControl;
