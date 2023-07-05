@@ -19,11 +19,13 @@ public class ActiveSkinSlice implements CleanableSlice {
     public static List<DogSkin> locList;
 
     public int activeSkinId;
+    public boolean showInfo;
 
     @Override
     public Object getInitalState() {
         var ret = new ActiveSkinSlice();
         ret.activeSkinId = 0;
+        ret.showInfo = false;
         return ret;
     }
 
@@ -35,6 +37,7 @@ public class ActiveSkinSlice implements CleanableSlice {
             if (action.type == UIActionTypes.Skins.ACTIVE_INC) {
                 var ret = new ActiveSkinSlice();
                     ret.activeSkinId = oldActiveSkin.activeSkinId;
+                    ret.showInfo = oldActiveSkin.showInfo;
                     ++ret.activeSkinId;
                     if (ret.activeSkinId >= locList.size()) {
                         ret.activeSkinId = locList.size() - 1;
@@ -43,6 +46,7 @@ public class ActiveSkinSlice implements CleanableSlice {
             } else if (action.type == UIActionTypes.Skins.ACTIVE_DEC) {
                 var ret = new ActiveSkinSlice();
                     ret.activeSkinId = oldActiveSkin.activeSkinId;
+                    ret.showInfo = oldActiveSkin.showInfo;
                     --ret.activeSkinId;
                     if (ret.activeSkinId < 0) {
                         ret.activeSkinId = 0;
@@ -52,6 +56,16 @@ public class ActiveSkinSlice implements CleanableSlice {
                 if (action.payload instanceof InitSkinIndexPayload initSkin && initSkin.getTab() == Tab.STYLE) {
                     return initSkin.getInitSkinIndex();
                 }
+            } else if (action.type == UIActionTypes.Skins.SHOW_INFO) {
+                var ret = new ActiveSkinSlice();
+                ret.activeSkinId = oldActiveSkin.activeSkinId;
+                ret.showInfo = true;
+                return ret;
+            } else if (action.type == UIActionTypes.Skins.HIDE_INFO) {
+                var ret = new ActiveSkinSlice();
+                ret.activeSkinId = oldActiveSkin.activeSkinId;
+                ret.showInfo = false;
+                return ret;
             }
         }
         return oldData;

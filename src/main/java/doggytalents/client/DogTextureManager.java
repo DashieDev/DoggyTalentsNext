@@ -358,10 +358,19 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                 else skin = new DogSkin(text_rl, dogModel).setName(name);
             }
 
+            readSkinExtraInfo(skin, skinObject);
+
             var res = resMan.getResource(text_rl);
             if (res.isPresent())
             loadDogSkinResourceWithMetadata(prep, res.get(), skin);
         }
+    }
+
+    private void readSkinExtraInfo(DogSkin skin, JsonObject skinJsonObject) {
+        var author = skinJsonObject.get("author");
+        if (author != null) skin.setAuthor(author.getAsString());
+        var based_on = skinJsonObject.get("based_on");
+        if (based_on != null) skin.setBasedOn(based_on.getAsString());
     }
 
     @Override
