@@ -3171,6 +3171,30 @@ public class Dog extends AbstractDog {
         this.goalSelector.setControlFlag(Goal.Flag.LOOK, notControlledByPlayer);
     }
 
+    @Override
+    protected void doPush(Entity pushTarget) {
+        if (
+            pushTarget instanceof Dog
+            && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER)
+        )
+            return;
+        super.doPush(pushTarget);    
+    }
+
+    @Override
+    public boolean canCollideWith(Entity otherEntity) {
+        //TODO should this be dog of the same team ?
+        if (
+            otherEntity instanceof Dog
+            && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER)
+        ) {
+            ChopinLogger.l("Colliding with dog!");
+            return false;
+        }
+            
+        return super.canCollideWith(otherEntity);
+    }
+
     public float getTimeDogIsShaking() {
         return this.timeWolfIsShaking;
     }
