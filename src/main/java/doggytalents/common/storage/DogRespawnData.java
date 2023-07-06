@@ -2,6 +2,7 @@ package doggytalents.common.storage;
 
 import com.google.common.collect.Lists;
 import doggytalents.DoggyEntityTypes;
+import doggytalents.DoggyTalentsNext;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -87,7 +88,27 @@ public class DogRespawnData implements IDogData {
         compoundnbt.merge(this.data);
         dog.load(compoundnbt);
         
-        dog.setUUID(keep_old_uuid ? this.uuid : uuid);
+        var set_uuid = uuid;
+
+        //Give up the old uuid if it is occupied already.
+        if (keep_old_uuid && this.uuid != null && set_uuid != null) {
+            var e = worldIn.getEntity(this.uuid);
+            if (e == null) {
+                set_uuid = this.uuid;
+            } else {
+                DoggyTalentsNext.LOGGER.info(
+                    "The old UUID ["
+                    + this.uuid.toString()
+                    + "] of reviving dog named ["
+                    + this.getDogName()
+                    + "] has been taken. The dog's UUID is now ["
+                    + set_uuid.toString()
+                    + "]"
+                );
+            }
+        }
+
+        dog.setUUID(set_uuid);
         
         dog.setMode(EnumMode.DOCILE);
         dog.setOrderedToSit(true);
