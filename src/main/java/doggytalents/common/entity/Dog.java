@@ -3070,12 +3070,21 @@ public class Dog extends AbstractDog {
 
     @Override
     protected void doPush(Entity pushTarget) {
+        boolean pushEachOther = 
+            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER);
         if (
-            pushTarget instanceof Dog
-            && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER)
+            pushTarget instanceof Dog dog
+            && !dog.getNavigation().isDone()
+            && !dog.isOnGround()
+            && pushEachOther
         )
             return;
-        super.doPush(pushTarget);    
+        if (
+            pushTarget instanceof Player
+            && pushEachOther
+        )
+            return;
+        super.doPush(pushTarget);
     }
 
     @Override
