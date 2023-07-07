@@ -24,7 +24,8 @@ public class ActiveTabSlice implements AbstractSlice {
 
     @Override
     public Object reducer(Object oldData, UIAction action) {
-        if (action.type == CommonUIActionTypes.CHANGE_TAB) {
+        if (action.type == CommonUIActionTypes.CHANGE_TAB 
+            || action.type == CommonUIActionTypes.SWITCH_TAB) {
             if (action.payload instanceof ChangeTabPayload tabPayload) {
                 return tabPayload.getTab();
             }
@@ -33,7 +34,7 @@ public class ActiveTabSlice implements AbstractSlice {
     }
 
     //UI Action creator for tab setup, network request may be here.
-    public static UIAction UIActionCreator(Dog dog, Tab tab) {
+    public static UIAction UIActionCreator(Dog dog, Tab tab, String type) {
 
         var payload = new ChangeTabPayload(tab);
 
@@ -45,7 +46,7 @@ public class ActiveTabSlice implements AbstractSlice {
             setupGroups(dog);
         }
 
-        return new UIAction(CommonUIActionTypes.CHANGE_TAB, payload);
+        return new UIAction(type, payload);
     }
 
     public static Tab getPrevTab(Tab tab) {
