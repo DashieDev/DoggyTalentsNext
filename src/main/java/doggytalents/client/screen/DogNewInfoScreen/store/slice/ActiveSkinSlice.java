@@ -52,7 +52,8 @@ public class ActiveSkinSlice implements CleanableSlice {
                         ret.activeSkinId = 0;
                     }
                     return ret;  
-            } else if (action.type == CommonUIActionTypes.CHANGE_TAB) {
+            } else if (action.type == CommonUIActionTypes.CHANGE_TAB
+                || action.type == CommonUIActionTypes.SWITCH_TAB) {
                 if (action.payload instanceof InitSkinIndexPayload initSkin && initSkin.getTab() == Tab.STYLE) {
                     return initSkin.getInitSkinIndex();
                 }
