@@ -104,6 +104,8 @@ public class EventHandler {
         dog.setOrderedToSit(false);
         dog.setAge(wolf.getAge());
         dog.absMoveTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
+        dog.setYHeadRot(wolf.getYHeadRot());
+        dog.setYBodyRot(wolf.getVisualRotationYInDegrees());
 
         var wolf_collar_color = wolf.getCollarColor();
         var color = Util.srgbArrayToInt(wolf_collar_color.getTextureDiffuseColors());
