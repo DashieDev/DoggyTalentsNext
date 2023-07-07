@@ -1566,9 +1566,10 @@ public class Dog extends AbstractDog {
         super.remove(removalReason);
 
         if (removalReason == RemovalReason.DISCARDED || removalReason == RemovalReason.KILLED) {
-            if (this.level() != null && !this.level().isClientSide) {
-                DogRespawnStorage.get(this.level()).putData(this);
-                DogLocationStorage.get(this.level()).remove(this);
+            if (this.level != null && !this.level.isClientSide) {                
+                DogLocationStorage.get(this.level).remove(this);
+                if (this.getOwnerUUID() != null)
+                    DogRespawnStorage.get(this.level).putData(this);
             }
         }
     }
