@@ -55,8 +55,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
                 ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
                 ActiveTabSlice.Tab.HOME
             );
-            Store.get(this).dispatch(ActiveTabSlice.class, 
-                ActiveTabSlice.UIActionCreator(dog, ActiveTabSlice.getNextTab(selectedTab))
+            Store.get(this).dispatchAll(
+                ActiveTabSlice.UIActionCreator(dog, ActiveTabSlice.getNextTab(selectedTab),
+                    CommonUIActionTypes.SWITCH_TAB)
             );
         }, Minecraft.getInstance().font) {
 
@@ -106,8 +107,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
                 ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
                 ActiveTabSlice.Tab.HOME
             );
-            Store.get(this).dispatch(ActiveTabSlice.class, 
-                ActiveTabSlice.UIActionCreator(dog, ActiveTabSlice.getPrevTab(selectedTab))
+            Store.get(this).dispatchAll(
+                ActiveTabSlice.UIActionCreator(dog, ActiveTabSlice.getPrevTab(selectedTab),
+                    CommonUIActionTypes.SWITCH_TAB)
             );
         }, Minecraft.getInstance().font) {
 
@@ -161,7 +163,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         var screen = new DogNewInfoScreen(dog);
         mc.setScreen(screen);
         Store.get(screen).dispatchAll(
-            ActiveTabSlice.UIActionCreator(dog, initTab)
+            ActiveTabSlice.UIActionCreator(dog, initTab, CommonUIActionTypes.CHANGE_TAB)
         );
     }
 
