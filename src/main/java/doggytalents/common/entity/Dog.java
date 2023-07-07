@@ -3067,15 +3067,17 @@ public class Dog extends AbstractDog {
         boolean pushEachOther = 
             ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER);
         if (
-            pushTarget instanceof Dog dog
+            pushEachOther
+            && pushTarget instanceof Dog dog
             && !dog.getNavigation().isDone()
             && !dog.isOnGround()
-            && pushEachOther
         )
             return;
         if (
-            pushTarget instanceof Player
-            && pushEachOther
+            pushEachOther
+            && pushTarget instanceof Player player
+            && !player.isShiftKeyDown()
+            && this.isDoingFine()
         )
             return;
         super.doPush(pushTarget);
