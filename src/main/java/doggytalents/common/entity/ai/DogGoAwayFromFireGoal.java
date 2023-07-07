@@ -67,6 +67,9 @@ public class DogGoAwayFromFireGoal extends Goal {
 
     @Override
     public void stop() {
+        //Penalty
+        this.tickUntilSearch = 20 + dog.getRandom().nextInt(3)*10;
+        
         if (this.path == null) return;
         var end_node = this.path.getEndNode();
         if (end_node == null) return;
