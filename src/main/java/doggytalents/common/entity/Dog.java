@@ -1657,6 +1657,8 @@ public class Dog extends AbstractDog {
     }
 
     private boolean checkAndHandleIncapacitated(DamageSource cause) {
+        if (this.level.isClientSide)
+            return false;
         if (!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.IMMORTAL_DOGS)) 
             return false;
         if (cause.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
