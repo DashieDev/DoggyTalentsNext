@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Tab;
+import doggytalents.client.screen.framework.CommonUIActionTypes;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
@@ -31,7 +32,7 @@ public class NavBarButton extends TextOnlyButton {
         //dispatch all to notify all slice of changetab so they can do setup before
         //appearing in the tab.
         .dispatchAll(
-            ActiveTabSlice.UIActionCreator(dog, tab)
+            ActiveTabSlice.UIActionCreator(dog, tab, CommonUIActionTypes.CHANGE_TAB)
         );
     }
 
