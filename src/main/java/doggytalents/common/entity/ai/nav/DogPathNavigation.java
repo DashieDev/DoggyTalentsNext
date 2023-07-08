@@ -39,7 +39,7 @@ public class DogPathNavigation extends GroundPathNavigation {
             && dy < 1.0D
             && dz <= (double)this.maxDistanceToWaypoint;
         boolean canCutCorner = 
-            this.mob.canCutCorner(this.path.getNextNode().type) 
+            this.canCutCorner(this.path.getNextNode().type) 
             && this.shouldTargetNextNodeInDirection(currentPos);
 
         if (isCloseEnough || canCutCorner) {
@@ -85,7 +85,7 @@ public class DogPathNavigation extends GroundPathNavigation {
         double v_current_next2th_lSqr = v_current_next2th.lengthSqr();
         if (v_current_next2th_lSqr < 1) return true;
         Vec3 v_add = v_current_next2th.normalize();
-        var check_b0 = new BlockPos(current_pos.add(v_add));
+        var check_b0 = BlockPos.containing(current_pos.add(v_add));
         var type = WalkNodeEvaluator
             .getBlockPathTypeStatic(level, check_b0.mutable());
         return type == BlockPathTypes.WALKABLE;
