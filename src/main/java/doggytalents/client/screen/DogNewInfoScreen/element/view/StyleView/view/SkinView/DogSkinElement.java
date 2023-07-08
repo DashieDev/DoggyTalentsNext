@@ -63,13 +63,13 @@ public class DogSkinElement extends AbstractElement {
         if (activeSkinId >= this.locList.size()) return;
 
         if (this.showInfo)
-            renderShowInfo(stack, mouseX, mouseY, partialTicks);
+            renderShowInfo(graphics, mouseX, mouseY, partialTicks);
         else
-            renderNonShowInfo(stack, mouseX, mouseY, partialTicks);
+            renderNonShowInfo(graphics, mouseX, mouseY, partialTicks);
          
     }
 
-    private void renderNonShowInfo(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    private void renderNonShowInfo(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         int mX = this.getSizeX()/2;
         int mY = this.getSizeY()/2;
         int e_mX = this.getRealX() + mX;
@@ -101,19 +101,19 @@ public class DogSkinElement extends AbstractElement {
         }
     }
 
-    private void renderShowInfo(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    private void renderShowInfo(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         int mX = this.getSizeX()/2;
         int mY = this.getSizeY()/2;
         int e_mX = this.getRealX() + mX;
         int e_mY = this.getRealY() + mY - 10;
 
-        this.renderSkinAndDogModel(activeSkinId, true, stack, 
+        this.renderSkinAndDogModel(activeSkinId, true, graphics, 
             mouseX, mouseY, this.getRealX() + 70, e_mY + 36, 64);
 
         var manifestSkin = this.locList.get(activeSkinId);
     
         if (!manifestSkin.hasExtraInfo()) {
-            renderNoInfo(stack, mouseX, mouseY, partialTicks);
+            renderNoInfo(graphics, mouseX, mouseY, partialTicks);
             return;
         }
         
@@ -131,36 +131,36 @@ public class DogSkinElement extends AbstractElement {
         int tX = this.getRealX() + mX - 20;
         int tY = this.getRealY() + mY - size/2;
 
-        font.draw(stack, "Name: ", tX, tY, 0xffffffff);
+        graphics.drawString(font, "Name: ", tX, tY, 0xffffffff);
         tY += font.lineHeight + LINE_SPACING;
-        font.draw(stack, manifestSkin.getName(), tX, tY, 0xffffffff);
+        graphics.drawString(font, manifestSkin.getName(), tX, tY, 0xffffffff);
         tY += font.lineHeight + LINE_SPACING;
 
 
         tY += font.lineHeight + LINE_SPACING;
         
-        font.draw(stack, "Based On: ", tX, tY, 0xffffffff);
+        graphics.drawString(font, "Based On: ", tX, tY, 0xffffffff);
         tY += font.lineHeight + LINE_SPACING;
         
         for (var c : split_basedOn) {
-            font.draw(stack, c, tX, tY, 0xffffffff);
+            graphics.drawString(font, c, tX, tY, 0xffffffff);
             tY += font.lineHeight + LINE_SPACING;
         }
 
         
         tY += font.lineHeight + LINE_SPACING;
 
-        font.draw(stack, "Author: ", tX, tY, 0xffffffff);
+        graphics.drawString(font, "Author: ", tX, tY, 0xffffffff);
         tY += font.lineHeight + LINE_SPACING;
         
         for (var c : split_authors) {
-            font.draw(stack, c, tX, tY, 0xffffffff);
+            graphics.drawString(font, c, tX, tY, 0xffffffff);
             tY += font.lineHeight + LINE_SPACING;
         }
         
     }
 
-    private void renderNoInfo(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    private void renderNoInfo(GuiGraphics graphics,  int mouseX, int mouseY, float partialTicks) {
         int mX = this.getSizeX()/2;
         int mY = this.getSizeY()/2;
 
@@ -169,7 +169,7 @@ public class DogSkinElement extends AbstractElement {
         int tX = this.getRealX() + mX - 10;
         int tY = this.getRealY() + mY - font.lineHeight/2;
 
-        font.draw(stack, c1, tX, tY, 0xffffffff);
+        graphics.drawString(font, c1, tX, tY, 0xffffffff);
     }
 
     private void renderSkinAndDogModel(int indx, boolean followMouse, GuiGraphics graphics, int mouseX, 

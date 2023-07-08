@@ -517,7 +517,7 @@ public class Dog extends AbstractDog {
         this.alterations.forEach((alter) -> alter.tick(this));
 
         //Client
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             proccessCustomModelSkin();
             
         }
@@ -1566,10 +1566,10 @@ public class Dog extends AbstractDog {
         super.remove(removalReason);
 
         if (removalReason == RemovalReason.DISCARDED || removalReason == RemovalReason.KILLED) {
-            if (this.level != null && !this.level.isClientSide) {                
-                DogLocationStorage.get(this.level).remove(this);
+            if (this.level() != null && !this.level().isClientSide) {                
+                DogLocationStorage.get(this.level()).remove(this);
                 if (this.getOwnerUUID() != null)
-                    DogRespawnStorage.get(this.level).putData(this);
+                    DogRespawnStorage.get(this.level()).putData(this);
             }
         }
     }
@@ -1647,7 +1647,7 @@ public class Dog extends AbstractDog {
     }
 
     private boolean checkAndHandleIncapacitated(DamageSource cause) {
-        if (this.level.isClientSide)
+        if (this.level().isClientSide)
             return false;
         if (!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.IMMORTAL_DOGS)) 
             return false;
@@ -3187,7 +3187,7 @@ public class Dog extends AbstractDog {
             pushEachOther
             && pushTarget instanceof Dog dog
             && !dog.getNavigation().isDone()
-            && !dog.isOnGround()
+            && !dog.onGround()
         )
             return;
         if (
