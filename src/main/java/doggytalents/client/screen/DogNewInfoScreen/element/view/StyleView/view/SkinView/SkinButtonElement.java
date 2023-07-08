@@ -90,7 +90,7 @@ public class SkinButtonElement extends AbstractElement {
             }, this.font);
             nextSkinButton.active = activeSkinId < this.locList.size() - 1;
 
-        showHideInfoButton = applyButton = new Button(
+        showHideInfoButton = applyButton = new CustomButton(
             this.getRealX() + this.getSizeX() - 30 - 30 - 62,
             this.getRealY() + mY - 10, 58, 20,
             Component.literal(!this.showInfo ? "Show Info" : "Hide Info"),
@@ -105,7 +105,7 @@ public class SkinButtonElement extends AbstractElement {
             }  
         );
 
-        applyButton = new Button(
+        applyButton = new CustomButton(
             this.getRealX() + this.getSizeX() - 30 - 30,
             this.getRealY() + mY - 10, 40, 20,
             Component.literal("Apply"),
