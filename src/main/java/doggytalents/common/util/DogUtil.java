@@ -627,6 +627,7 @@ public class DogUtil {
         dog.fallDistance = 0;
         dog.moveTo(target.getX() + 0.5F, target.getY(), target.getZ() + 0.5F, dog.getYRot(), dog.getXRot());
         dog.getNavigation().stop();
+        dog.breakMoveControl();
     }
 
 
