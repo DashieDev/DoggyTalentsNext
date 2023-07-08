@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -45,7 +46,9 @@ public class DogMoveControl extends MoveControl {
 
             float f9 = (float)(Mth.atan2(d1, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
             this.mob.setYRot(this.rotlerp(this.mob.getYRot(), f9, 90.0F));
-            float speed = dy > 1.75 ? SNEAK_SPEED_2 : SNEAK_SPEED_1;
+            float speed_cap = dy > 1.75 ? SNEAK_SPEED_2 : SNEAK_SPEED_1;
+            float speed = Math.min(speed_cap, 
+                (float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
             this.mob.setSpeed(speed);
             BlockPos blockpos = this.mob.blockPosition();
             BlockState blockstate = this.mob.level.getBlockState(blockpos);
