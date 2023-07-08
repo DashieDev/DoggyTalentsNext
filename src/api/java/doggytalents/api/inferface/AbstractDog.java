@@ -119,6 +119,12 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
 
     //TODO try to replicate the bug and check if moveControl.haveWantedPosition using debug magic
     public void setMoveControl(MoveControl m) {
+        breakMoveControl();
+
+        this.moveControl = m;
+    }
+
+    public void breakMoveControl() {
         /*
          * Force the MoveControl To Reset :
          * this will set the dog's wanted Position to his current Position
@@ -142,8 +148,6 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         this.setXxa(0.0F);
         this.setYya(0.0F);
         this.setZza(0.0F);
-
-        this.moveControl = m;
     }
 
     public abstract void resetNavigation();
