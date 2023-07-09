@@ -509,15 +509,3 @@ by another defeated dog.
 
 1.13.1 - 11th June 2023
 * HOTFIX : Dedicated Server failed to start for some reason.
-
-1.14.0 - 9th July 2023
-+ Added Author/Based-on metadata for Dog Skins
-+ Optimize Push Protection
-+ Dog cannot push each other while navigating. (Configurable)
-+ Improved Dog's navigation's accuracy
-+ Ōkami 大神 (2006): =============================
-Added Okami Amaterasu skin.
-"Ah...Amaterasu. Origin of all that is good and mother to us all."
-==================================================
-+ Smoother transition between Tamed Wolves and Trained.
-* Fix dog who is avoidiing fire constantly sit up and down in some case.
