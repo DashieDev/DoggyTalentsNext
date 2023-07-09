@@ -3093,7 +3093,6 @@ public class Dog extends AbstractDog {
             && !dog.getNavigation().isDone()
             && !dog.isOnGround()
         ) {
-            ChopinLogger.l("Colliding with dog!");
             return false;
         }
             
