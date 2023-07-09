@@ -36,13 +36,6 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(graphics);
-        super.render(graphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(graphics, mouseX, mouseY);
-    }
-
-    @Override
     public void init() {
         super.init();
         this.left = new SmallButton(this.leftPos + this.imageWidth - 29, this.topPos + 4, Component.literal("<"), (btn) -> {
