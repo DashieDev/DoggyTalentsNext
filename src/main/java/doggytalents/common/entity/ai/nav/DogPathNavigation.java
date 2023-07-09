@@ -1,6 +1,5 @@
 package doggytalents.common.entity.ai.nav;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Mob;
