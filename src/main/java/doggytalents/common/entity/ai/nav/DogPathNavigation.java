@@ -51,15 +51,21 @@ public class DogPathNavigation extends GroundPathNavigation {
 
     protected boolean invalidateIfNextNodeIsTooHigh() {
         var path = this.path;
-        if (path != null) {
-            var nextPos = path.getNextNodePos();
-            var dy = this.mob.getY() - (double)nextPos.getY();
-                    
-            if (dy < -1.75) {
-                this.stop();
-                return true;
-            }
+        if (path == null) return true;
+        var nextPos = path.getNextNodePos();
+        var dy = this.dog.getY() - (double)nextPos.getY();
+                
+        if (dy < -1.75) {
+            this.stop();
+            return true;
         }
+
+        var nextNode = path.getNextNode();
+        if (dog.getPathfindingMalus(nextNode.type) < 0) {
+            this.stop();
+            return true;
+        }
+
         return false;
     }
 
