@@ -3086,9 +3086,12 @@ public class Dog extends AbstractDog {
     @Override
     public boolean canCollideWith(Entity otherEntity) {
         //TODO should this be dog of the same team ?
+        boolean pushEachOther = ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER);
         if (
-            otherEntity instanceof Dog
-            && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER)
+            pushEachOther
+            && otherEntity instanceof Dog dog
+            && !dog.getNavigation().isDone()
+            && !dog.onGround()
         ) {
             ChopinLogger.l("Colliding with dog!");
             return false;
