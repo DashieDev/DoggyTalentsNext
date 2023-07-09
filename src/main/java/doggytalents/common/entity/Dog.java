@@ -3218,7 +3218,7 @@ public class Dog extends AbstractDog {
             pushEachOther
             && otherEntity instanceof Dog dog
             && !dog.getNavigation().isDone()
-            && !dog.onGround()
+            && !dog.isOnGround()
         ) {
             ChopinLogger.l("Colliding with dog!");
             return false;
