@@ -437,47 +437,27 @@ public class DogUtil {
             dog_b1.mutable()
         );
 
-        if (
-            //TODO GetDanger based on IDogAlterations
-            blockType.getDanger() != null
-        ) {
-            // ChopinLogger.lwn(
-            //         dog,
-            //         "About to get pushed to : " 
-            //         + dog_b1 + " from " + dog_p0
-            // );
+        if (blockType.getDanger() != null)
             return true;
-        }
-        
-        if (blockType == BlockPathTypes.OPEN) {
-            boolean noWalkable = true;
-            for (int i = 1; i <= dog.getMaxFallDistance(); ++i) {
-                if (WalkNodeEvaluator.getBlockPathTypeStatic(
-                    dog.level, 
-                    dog_b1.below(i).mutable()
-                ) == BlockPathTypes.WALKABLE) {
-                    noWalkable = false;
-                    break;
-                }
-            }
 
-            if (noWalkable) {
-                // ChopinLogger.lwn(
-                //     dog,
-                //     "About to get pushed to : " 
-                //     + dog_b1 + " from " + dog_p0
-                // );
-                return true;
+        if (blockType != BlockPathTypes.OPEN)
+            return false;
+        
+        boolean noWalkable = true;
+        for (int i = 1; i <= dog.getMaxFallDistance(); ++i) {
+            var type = WalkNodeEvaluator.getBlockPathTypeStatic(
+                dog.level(), 
+                dog_b1.below(i).mutable()
+            );
+            if (type == BlockPathTypes.OPEN)
+                continue;
+            else {
+                noWalkable = type != BlockPathTypes.WALKABLE;
+                break;
             }
         }
-        
-        // ChopinLogger.lwn(
-        //             dog,
-        //             "About to get safely pushed to : " 
-        //             + dog_b1 + " from " + dog_p0
-        //     );
-        
-        return false;
+
+        return noWalkable;
 
     }
 
