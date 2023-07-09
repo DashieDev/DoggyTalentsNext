@@ -3207,7 +3207,6 @@ public class Dog extends AbstractDog {
             otherEntity instanceof Dog
             && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER)
         ) {
-            ChopinLogger.l("Colliding with dog!");
             return false;
         }
             
