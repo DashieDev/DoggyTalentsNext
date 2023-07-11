@@ -2,6 +2,7 @@ package doggytalents.common.entity.ai.triggerable;
 
 import javax.annotation.Nonnull;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogOwnerDistanceManager;
@@ -10,7 +11,6 @@ import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;

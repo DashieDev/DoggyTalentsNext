@@ -1,10 +1,10 @@
 package doggytalents.api.impl;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.IBeddingMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class MissingBeddingMaterial extends IBeddingMaterial {
 

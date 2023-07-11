@@ -2,6 +2,7 @@ package doggytalents.client.screen.DogNewInfoScreen.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.common.entity.Dog;
@@ -10,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 
 public class DogCannotInteractWithScreen extends Screen {

@@ -1,11 +1,11 @@
 package doggytalents.api.impl;
 
 import cpw.mods.modlauncher.api.ITransformationService.Resource;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.ICasingMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 public class MissingCasingMissing extends ICasingMaterial {
 
     public static final ICasingMaterial NULL = new MissingCasingMissing();

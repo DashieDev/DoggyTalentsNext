@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.DoggyAccessories;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.DogLevel.Type;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.registry.Talent;
@@ -23,8 +24,6 @@ import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;

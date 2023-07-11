@@ -1,9 +1,9 @@
 package doggytalents.common.entity.ai;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;

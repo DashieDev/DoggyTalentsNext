@@ -5,8 +5,8 @@ import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 
 import java.util.UUID;
 

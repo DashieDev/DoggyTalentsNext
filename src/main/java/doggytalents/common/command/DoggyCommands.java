@@ -10,6 +10,8 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.command.arguments.UUIDArgument;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.RadarItem;
@@ -21,7 +23,6 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.server.commands.EffectCommands;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;

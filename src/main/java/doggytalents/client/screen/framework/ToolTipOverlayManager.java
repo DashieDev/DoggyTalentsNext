@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class ToolTipOverlayManager {
 

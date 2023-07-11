@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.element.MainButtonToolboxRowElement;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.DogNewInfoScreen.element.DogInfoNavBarElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogDescriptionViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
@@ -37,7 +38,6 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class DogNewInfoScreen extends StoreConnectedScreen {
 

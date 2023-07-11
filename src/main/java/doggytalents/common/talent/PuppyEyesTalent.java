@@ -1,12 +1,12 @@
 package doggytalents.common.talent;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.item.Items;

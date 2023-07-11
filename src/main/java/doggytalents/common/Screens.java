@@ -1,6 +1,7 @@
 package doggytalents.common;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.block.tileentity.FoodBowlTileEntity;
 import doggytalents.common.entity.Dog;
@@ -10,7 +11,6 @@ import doggytalents.common.inventory.container.DoggyToolsMenu;
 import doggytalents.common.inventory.container.PackPuppyContainer;
 import doggytalents.common.inventory.container.TreatBagContainer;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;

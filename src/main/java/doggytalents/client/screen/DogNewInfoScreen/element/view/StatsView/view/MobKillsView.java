@@ -2,6 +2,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView.view;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
@@ -11,7 +12,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 

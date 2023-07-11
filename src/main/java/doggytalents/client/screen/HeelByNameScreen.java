@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem;
 import doggytalents.common.network.PacketHandler;
@@ -22,7 +23,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;

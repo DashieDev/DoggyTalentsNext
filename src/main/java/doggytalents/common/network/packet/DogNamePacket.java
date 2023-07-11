@@ -1,10 +1,10 @@
 package doggytalents.common.network.packet;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.DogNameData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraftforge.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;

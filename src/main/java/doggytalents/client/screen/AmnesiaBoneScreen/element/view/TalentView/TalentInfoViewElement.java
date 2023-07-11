@@ -5,6 +5,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyTalents;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.Talent;
 import doggytalents.client.screen.AmnesiaBoneScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.client.screen.framework.Store;
@@ -23,7 +24,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraftforge.network.PacketDistributor;

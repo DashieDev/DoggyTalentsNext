@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.widget.AccessoryHolder;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
@@ -15,7 +16,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

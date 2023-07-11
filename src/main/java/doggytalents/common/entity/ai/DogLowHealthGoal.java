@@ -3,6 +3,7 @@ package doggytalents.common.entity.ai;
 import java.util.EnumSet;
 import java.util.List;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
@@ -11,7 +12,6 @@ import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;

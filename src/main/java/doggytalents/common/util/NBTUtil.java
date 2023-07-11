@@ -1,11 +1,11 @@
 package doggytalents.common.util;
 
 import doggytalents.DoggyTalentsNext;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;

@@ -3,6 +3,7 @@ package doggytalents.common.block;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
@@ -22,8 +23,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
