@@ -9,6 +9,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.util.Mth;
 
 public class SmallButton extends Button {

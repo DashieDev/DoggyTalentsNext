@@ -24,6 +24,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
@@ -51,7 +52,7 @@ public class WhistleScreen extends Screen{
     private int[] hotkeysModeArr = {-1, -1, -1, -1};
 
     public WhistleScreen() {
-        super(Component.translatable("doggytalents.screen.whistler.title"));
+        super(ComponentUtil.translatable("doggytalents.screen.whistler.title"));
         this.modeFilterList = new ArrayList<WhistleMode>();
         for (var i : WhistleMode.VALUES) {
             this.modeFilterList.add(i);
@@ -69,11 +70,11 @@ public class WhistleScreen extends Screen{
         super.init();
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 
-        Button help = new Button(3, 3, 20, 20, Component.literal("?"), b -> {} ) {
+        Button help = new Button(3, 3, 20, 20, ComponentUtil.literal("?"), b -> {} ) {
             @Override
             public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
                 List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
+                list.add(ComponentUtil.translatable("doggytalents.screen.whistler.screen.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
                 String str = I18n.get("doggytalents.screen.whistler.screen.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
@@ -82,21 +83,21 @@ public class WhistleScreen extends Screen{
             }
         };
 
-        Button setKey = new Button(3, 23, 60, 20, Component.translatable("doggytalents.screen.whistler.screen.set_hotkey"),
+        Button setKey = new Button(3, 23, 60, 20, ComponentUtil.translatable("doggytalents.screen.whistler.screen.set_hotkey"),
             b -> {
                 if (settingKeysMode) {
                     settingKeysMode = false;
-                    b.setMessage(Component.translatable("doggytalents.screen.whistler.screen.set_hotkey"));
+                    b.setMessage(ComponentUtil.translatable("doggytalents.screen.whistler.screen.set_hotkey"));
                 } else {
                     settingKeysMode = true;
-                    b.setMessage(Component.translatable("doggytalents.screen.whistler.screen.use_whistle"));
+                    b.setMessage(ComponentUtil.translatable("doggytalents.screen.whistler.screen.use_whistle"));
                 }
             }
         ) {
             @Override
             public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
                 List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.whistler.screen.set_hotkey")
+                list.add(ComponentUtil.translatable("doggytalents.screen.whistler.screen.set_hotkey")
                     .withStyle(Style.EMPTY.withBold(true)));
                 String str = I18n.get("doggytalents.screen.whistler.screen.set_hotkey.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
@@ -152,7 +153,7 @@ public class WhistleScreen extends Screen{
         for (int i = 0; i < this.modeFilterList.size(); ++i) {
             int color = 0xffffffff;
             if (i == this.selectedId) color = this.hightlightTextColor;
-            var text = Component.translatable(this.modeFilterList.get(i).getUnlocalisedTitle());
+            var text = ComponentUtil.translatable(this.modeFilterList.get(i).getUnlocalisedTitle());
             text.withStyle(
                 Style.EMPTY
                 .withBold(false)
@@ -190,21 +191,21 @@ public class WhistleScreen extends Screen{
                     prefix_color = 0xff3636;
                     remove = true;
                 }
-                text = Component.literal(
+                text = ComponentUtil.literal(
                     remove ? "- " : pKey + " "
                 );
             } else if (hotkey_indx >= 0) {
                 prefix_color = 0xff6f00;
-                text = Component.literal(hotkey_indx + " ");
+                text = ComponentUtil.literal(hotkey_indx + " ");
             } else {
-                text = Component.literal("  ");
+                text = ComponentUtil.literal("  ");
             }
             text.withStyle(
                 Style.EMPTY
                     .withBold(true)
                     .withColor(prefix_color)
             );
-            var title = Component.translatable(this.modeFilterList.get(i).getUnlocalisedTitle());
+            var title = ComponentUtil.translatable(this.modeFilterList.get(i).getUnlocalisedTitle());
             title.withStyle(
                 Style.EMPTY
                 .withBold(false)

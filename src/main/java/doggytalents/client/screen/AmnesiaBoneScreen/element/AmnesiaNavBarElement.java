@@ -13,6 +13,7 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 
 public class AmnesiaNavBarElement extends AbstractElement {
@@ -36,7 +37,7 @@ public class AmnesiaNavBarElement extends AbstractElement {
         int totalButtonWidth = 0;
         
         for (var tab : tabsVal) {
-            var title = Component.translatable(tab.unlocalizedTitle);
+            var title = ComponentUtil.translatable(tab.unlocalizedTitle);
             int buttonWidth = font.width(title);
             var activeTab = 
                 Store.get(getScreen())

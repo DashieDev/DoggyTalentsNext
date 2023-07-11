@@ -17,6 +17,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraftforge.network.PacketDistributor;
 
 public class AddGroupMenu extends AbstractElement {
@@ -40,7 +41,7 @@ public class AddGroupMenu extends AbstractElement {
 
         addName = new EditBox(this.font, 
         this.getRealX() + aX, this.getRealY() + pY, this.getSizeX() - aX*2, 20, 
-                Component.empty());
+                ComponentUtil.empty());
         addName.setMaxLength(DogGroupsManager.MAX_GROUP_STRLEN);
         this.addChildren(addName);
 
@@ -54,7 +55,7 @@ public class AddGroupMenu extends AbstractElement {
 
         pY += colorSelect.getSizeY() + 7;
 
-        var confirmButton = new FlatButton(this.getRealX() + aX, this.getRealY()+ pY, 40, 20, Component.literal("Add"), b -> {
+        var confirmButton = new FlatButton(this.getRealX() + aX, this.getRealY()+ pY, 40, 20, ComponentUtil.literal("Add"), b -> {
             requestAddGroup();
             DropdownMenuManager.get(getScreen()).clearActiveDropdownMenu();
         });

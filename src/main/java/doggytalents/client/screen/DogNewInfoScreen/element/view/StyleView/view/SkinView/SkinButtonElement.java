@@ -20,6 +20,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.PacketDistributor;
 
@@ -61,7 +62,7 @@ public class SkinButtonElement extends AbstractElement {
         if (locList.isEmpty()) return this;
         var prevSkinButton = new TextOnlyButton(
             this.getRealX() + 10, this.getRealY() + mY - 9,
-            18, 18, Component.literal("<"), 
+            18, 18, ComponentUtil.literal("<"), 
             b -> {
                 Store.get(getScreen()).dispatch(ActiveSkinSlice.class, 
                     new UIAction(
@@ -76,7 +77,7 @@ public class SkinButtonElement extends AbstractElement {
 
         var nextSkinButton = new TextOnlyButton(
             this.getRealX() + 75, this.getRealY() + mY - 9,
-            18, 18, Component.literal(">"), 
+            18, 18, ComponentUtil.literal(">"), 
             b -> {
                 Store.get(getScreen()).dispatch(ActiveSkinSlice.class, 
                     new UIAction(
@@ -91,7 +92,7 @@ public class SkinButtonElement extends AbstractElement {
         showHideInfoButton = applyButton = new Button(
             this.getRealX() + this.getSizeX() - 30 - 30 - 62,
             this.getRealY() + mY - 10, 58, 20,
-            Component.literal(!this.showInfo ? "Show Info" : "Hide Info"),
+            ComponentUtil.literal(!this.showInfo ? "Show Info" : "Hide Info"),
             b -> {
                 Store.get(getScreen()).dispatch(ActiveSkinSlice.class, 
                     new UIAction(
@@ -106,7 +107,7 @@ public class SkinButtonElement extends AbstractElement {
         applyButton = new Button(
             this.getRealX() + this.getSizeX() - 30 - 30,
             this.getRealY() + mY - 10, 40, 20,
-            Component.literal("Apply"),
+            ComponentUtil.literal("Apply"),
             b -> {
                 applyAndRequestSkinChange(activeSkinId);
             }  

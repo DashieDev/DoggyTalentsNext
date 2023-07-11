@@ -5,6 +5,7 @@ import doggytalents.api.registry.ICasingMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 public class MissingCasingMissing extends ICasingMaterial {
 
     public static final ICasingMaterial NULL = new MissingCasingMissing();
@@ -19,12 +20,7 @@ public class MissingCasingMissing extends ICasingMaterial {
 
     @Override
     public Component getTooltip() {
-        return Component.translatable("dogbed.casing.missing", this.registryName.getPath());
-    }
-
-    public MissingCasingMissing setRegistryName(ResourceLocation r) {
-        this.registryName = r;
-        return this;
+        return ComponentUtil.translatable("dogbed.casing.missing", this.registryName.getPath());
     }
 
     @Override

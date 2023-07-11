@@ -19,6 +19,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraftforge.network.PacketDistributor;
 
@@ -41,7 +42,7 @@ public class ModeSwitch extends AbstractWidget {
     long tickCount0;
 
     public ModeSwitch(int x, int y, int width, int height, Dog dog, Font font, Screen screen) {
-        super(x, y, width, height, Component.translatable(dog.getMode().getUnlocalisedName()));
+        super(x, y, width, height, ComponentUtil.translatable(dog.getMode().getUnlocalisedName()));
         this.dog = dog;
         this.font = font;
         this.screen = screen;
@@ -59,9 +60,9 @@ public class ModeSwitch extends AbstractWidget {
             mode = this.dog.getMode().nextMode();
         }
         if (mode == EnumMode.WANDERING && !this.dog.getBowlPos().isPresent()) {
-            this.setMessage(Component.translatable(mode.getUnlocalisedName()).withStyle(ChatFormatting.RED));
+            this.setMessage(ComponentUtil.translatable(mode.getUnlocalisedName()).withStyle(ChatFormatting.RED));
         } else {
-            this.setMessage(Component.translatable(mode.getUnlocalisedName()));
+            this.setMessage(ComponentUtil.translatable(mode.getUnlocalisedName()));
         }
 
         PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(this.dog.getId(), mode));
@@ -92,7 +93,7 @@ public class ModeSwitch extends AbstractWidget {
         int mX = this.x + this.width/2;
         int mY = this.y + this.height/2;
 
-        var back_c1 = Component.literal("<");
+        var back_c1 = ComponentUtil.literal("<");
         back_c1.withStyle(
             Style.EMPTY.withBold(hoveredLeft)
         );
@@ -100,7 +101,7 @@ public class ModeSwitch extends AbstractWidget {
         int back_tY = mY - font.lineHeight/2;
         this.font.draw(stack, back_c1, back_tX, back_tY, hoveredLeft ? 0xffffffff : 0xa5ffffff);
 
-        var next_c1 = Component.literal(">");
+        var next_c1 = ComponentUtil.literal(">");
         next_c1.withStyle(
             Style.EMPTY.withBold(hoveredRight)
         );
@@ -158,12 +159,12 @@ public class ModeSwitch extends AbstractWidget {
                 double distance = this.dog.blockPosition().distSqr(this.dog.getBowlPos().get());
 
                 if (distance > 256D) {
-                    list.add(Component.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(ChatFormatting.RED));
+                    list.add(ComponentUtil.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(ChatFormatting.RED));
                 } else {
-                    list.add(Component.translatable("dog.mode.docile.bowl", (int) Math.sqrt(distance)).withStyle(ChatFormatting.GREEN));
+                    list.add(ComponentUtil.translatable("dog.mode.docile.bowl", (int) Math.sqrt(distance)).withStyle(ChatFormatting.GREEN));
                 }
             } else {
-                list.add(Component.translatable("dog.mode.docile.nobowl").withStyle(ChatFormatting.RED));
+                list.add(ComponentUtil.translatable("dog.mode.docile.nobowl").withStyle(ChatFormatting.RED));
             }
         }
 

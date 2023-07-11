@@ -16,6 +16,7 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -139,24 +140,24 @@ public class WaterHolderTalent extends TalentInstance {
         if (stack.getItem() instanceof BucketItem) {
             if (!dog.level.isClientSide) {
                 if (player.isShiftKeyDown()) {
-                    var c1 = Component.translatable("talent.doggytalents.water_holder.amount");
-                    c1.append(Component.literal(": "));
+                    var c1 = ComponentUtil.translatable("talent.doggytalents.water_holder.amount");
+                    c1.append(ComponentUtil.literal(": "));
                     if (this.level < this.talent.getMaxLevel()) {
-                        c1.append(Component.literal("" +this.getWaterUnitleft())
+                        c1.append(ComponentUtil.literal("" +this.getWaterUnitleft())
                         .withStyle(
                             Style.EMPTY.withBold(true)
                             .withColor(0x03a5fc)
                         ));
-                        c1.append(Component.literal("/" + this.getMaxWaterHold()));
+                        c1.append(ComponentUtil.literal("/" + this.getMaxWaterHold()));
                     } else {
-                        c1.append(Component.translatable("talent.doggytalents.water_holder.amount.unlim")
+                        c1.append(ComponentUtil.translatable("talent.doggytalents.water_holder.amount.unlim")
                         .withStyle(
                             Style.EMPTY.withBold(true)
                             .withColor(0x03a5fc)
                         ));
                     }
                     
-                    player.sendSystemMessage(c1);
+                    player.sendMessage(c1, net.minecraft.Util.NIL_UUID);
                     return InteractionResult.SUCCESS;
                 }
             }

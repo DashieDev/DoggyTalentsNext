@@ -8,6 +8,7 @@ import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.common.entity.Dog;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -23,7 +24,7 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel<Dog>> {
 
     public DogMouthItemRenderer(RenderLayerParent dogRendererIn, EntityRendererProvider.Context ctx) {
         super(dogRendererIn);
-        this.itemInHandRenderer = ctx.getItemInHandRenderer();
+        this.itemInHandRenderer = Minecraft.getInstance().getItemInHandRenderer();
     }
 
     @Override

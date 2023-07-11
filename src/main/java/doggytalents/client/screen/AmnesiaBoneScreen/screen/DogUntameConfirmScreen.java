@@ -16,6 +16,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraftforge.network.PacketDistributor;
@@ -25,7 +26,7 @@ public class DogUntameConfirmScreen extends Screen {
     Dog dog;
 
     protected DogUntameConfirmScreen(Dog dog) {
-        super(Component.literal(""));
+        super(ComponentUtil.literal(""));
         this.dog = dog;
     }
 
@@ -50,7 +51,7 @@ public class DogUntameConfirmScreen extends Screen {
         int pY = mY - 72;
         Component title;
         String help;
-        title = Component.translatable("doggui.detrain.confirm.title")
+        title = ComponentUtil.translatable("doggui.detrain.confirm.title")
         .withStyle(
             Style.EMPTY
             .withBold(true)
@@ -66,7 +67,7 @@ public class DogUntameConfirmScreen extends Screen {
         );
         var owner_title = I18n.get(
             "doggui.invalid_dog.info.owner",
-            this.dog.getOwnersName().orElse(Component.literal("")).getString()
+            this.dog.getOwnersName().orElse(ComponentUtil.literal("")).getString()
         );
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
         stack.pushPose();
@@ -91,7 +92,7 @@ public class DogUntameConfirmScreen extends Screen {
 
     private void addUntameButton() {
         var untameButton = new Button(this.width/2 - 25, this.height/2 + 58, 
-            50, 20, Component.translatable("doggui.untame.confirm.confirmed"), 
+            50, 20, ComponentUtil.translatable("doggui.untame.confirm.confirmed"), 
             b -> {
                 requestUntame();
                 Minecraft.getInstance().setScreen(null);
@@ -125,7 +126,7 @@ public class DogUntameConfirmScreen extends Screen {
                 } else {
                     var player = Minecraft.getInstance().player;
                     if (player != null && player.experienceLevel < AmnesiaBoneItem.getUntameXPCost()) {
-                        c1 = Component.translatable("doggui.detrain.talents.insufficent_xp");
+                        c1 = ComponentUtil.translatable("doggui.detrain.talents.insufficent_xp");
                         c1.setStyle(
                             Style.EMPTY
                             .withColor(0xffB20000)

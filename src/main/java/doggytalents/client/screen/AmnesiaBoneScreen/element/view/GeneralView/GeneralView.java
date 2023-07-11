@@ -20,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.InteractionHand;
 
 public class GeneralView extends AbstractElement {
@@ -68,8 +69,8 @@ public class GeneralView extends AbstractElement {
         );
         this.addChildren(
             new MultiLineFlatButton(mX + 20, mY - 40, 80, 30, List.of(
-                Component.literal("Ownership"),
-                Component.literal("change")
+                ComponentUtil.literal("Ownership"),
+                ComponentUtil.literal("change")
             ), b -> {
                 this.openChangeOwnerScreen();
             }) {
@@ -84,7 +85,7 @@ public class GeneralView extends AbstractElement {
         );
         this.addChildren(
             new MultiLineFlatButton(mX + 20, mY + 10, 80, 20, List.of(
-                Component.literal("Untame")
+                ComponentUtil.literal("Untame")
             ), b -> {
                 DogUntameConfirmScreen.open(dog);
             }) {

@@ -10,6 +10,7 @@ import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -25,10 +26,10 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.EmptyHandler;
@@ -68,18 +69,18 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
-        IItemHandler bagInventory = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
+        IItemHandler bagInventory = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(EmptyHandler.INSTANCE);
         List<ItemStack> condensedContents = ItemUtil.getContentOverview(bagInventory);
 
         condensedContents.forEach((food) -> {
-            tooltip.add(Component.translatable(this.contentsTranslationKey.get(), food.getCount(), Component.translatable(food.getDescriptionId())));
+            tooltip.add(ComponentUtil.translatable(this.contentsTranslationKey.get(), food.getCount(), ComponentUtil.translatable(food.getDescriptionId())));
         });
     }
 
     @Override
     public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundTag nbt) {
         // https://github.com/MinecraftForge/MinecraftForge/issues/5989
-        if (ForgeCapabilities.ITEM_HANDLER == null) {
+        if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY == null) {
             return null;
         }
 
@@ -89,7 +90,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
             @Override
             @Nonnull
             public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, final @Nullable Direction side) {
-                if (cap == ForgeCapabilities.ITEM_HANDLER) {
+                if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
                     return (LazyOptional<T>) this.itemHandlerInstance;
                 }
                 return LazyOptional.empty();
@@ -115,7 +116,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
 
     @Override
     public InteractionResult consume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
-        IItemHandlerModifiable treatBag = (IItemHandlerModifiable) stackIn.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
+        IItemHandlerModifiable treatBag = (IItemHandlerModifiable) stackIn.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(EmptyHandler.INSTANCE);
         return InventoryUtil.feedDogFrom(dogIn, entityIn, treatBag);
     }
 }

@@ -36,10 +36,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.data.event.GatherDataEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -126,7 +126,6 @@ public class DoggyTalentsNext {
         FoodHandler.registerDynPredicate(HappyEaterTalent.INNER_DYN_PRED);
         //InteractHandler.registerHandler(new HelmetInteractHandler());
         ConfigHandler.initTalentConfig();
-        DoggyCommands.registerSerilizers();
         Dog.initDataParameters();
         event.enqueueWork(() -> {
             GarbageChunkCollector.init();
@@ -160,18 +159,18 @@ public class DoggyTalentsNext {
 
         if (event.includeClient()) {
             DTBlockstateProvider blockstates = new DTBlockstateProvider(gen, event.getExistingFileHelper());
-            gen.addProvider(true, blockstates);
-            gen.addProvider(true, new DTItemModelProvider(gen, blockstates.getExistingHelper()));
+            gen.addProvider(blockstates);
+            gen.addProvider(new DTItemModelProvider(gen, blockstates.getExistingHelper()));
         }
 
         if (event.includeServer()) {
             // gen.addProvider(new DTBlockTagsProvider(gen));
-            gen.addProvider(true, new DTAdvancementProvider(gen));
+            gen.addProvider(new DTAdvancementProvider(gen));
             DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(gen, event.getExistingFileHelper());
-            gen.addProvider(true, blockTagProvider);
-            gen.addProvider(true, new DTItemTagsProvider(gen, blockTagProvider, event.getExistingFileHelper()));
-            gen.addProvider(true, new DTRecipeProvider(gen));
-            gen.addProvider(true, new DTLootTableProvider(gen));
+            gen.addProvider(blockTagProvider);
+            gen.addProvider(new DTItemTagsProvider(gen, blockTagProvider, event.getExistingFileHelper()));
+            gen.addProvider(new DTRecipeProvider(gen));
+            gen.addProvider(new DTLootTableProvider(gen));
         }
     }
 }

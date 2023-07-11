@@ -12,7 +12,6 @@ import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.TameAnimalTrigger;
-import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
@@ -45,7 +44,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
     }
 
     @Override
-    public void run(CachedOutput cache) {
+    public void run(HashCache cache) {
         Path path = this.generator.getOutputFolder();
         Set<ResourceLocation> set = Sets.newHashSet();
         Consumer<Advancement> consumer = (advancement) -> {
@@ -55,7 +54,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                 Path path1 = getPath(path, advancement);
 
                 try {
-                    DataProvider.saveStable(cache, advancement.deconstruct().serializeToJson(), path1);
+                    DataProvider.save(GSON, cache, advancement.deconstruct().serializeToJson(), path1);
                 } catch (IOException ioexception) {
                     LOGGER.error("Couldn't save advancement {}", path1, ioexception);
                 }

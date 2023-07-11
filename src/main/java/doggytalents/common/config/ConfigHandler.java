@@ -122,10 +122,7 @@ public class ConfigHandler {
         }
 
         public static<T> T getConfig(ConfigValue<T> config) {
-                if (CONFIG_CLIENT_SPEC.isLoaded()) {
-                        return config.get();
-                }
-                return config.getDefault();
+                return config.get();
         }
 
         
@@ -255,10 +252,7 @@ public class ConfigHandler {
         }
 
         public static<T> T getConfig(ConfigValue<T> config) {
-                if (CONFIG_SERVER_SPEC.isLoaded()) {
-                        return config.get();
-                }
-                return config.getDefault();
+                return config.get();
         }
     }
 
@@ -286,10 +280,7 @@ public class ConfigHandler {
         }
 
         public static<T> T getConfig(ConfigValue<T> config) {
-                if (CONFIG_TALENT_SPEC.isLoaded()) {
-                        return config.get();
-                }
-                return config.getDefault();
+                return config.get();
         }
     }
 }

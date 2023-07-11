@@ -12,7 +12,7 @@ import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -126,28 +126,28 @@ public class DoggyItems {
         return ITEMS.register(name, sup);
     }
 
-    public static void registerItemColours(final RegisterColorHandlersEvent.Item event) {
+    public static void registerItemColours(final ColorHandlerEvent.Item event) {
         ItemColors itemColors = event.getItemColors();
         Util.acceptOrElse(DoggyItems.WOOL_COLLAR, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.CAPE_COLOURED, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.BOWTIE, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.WIG, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);

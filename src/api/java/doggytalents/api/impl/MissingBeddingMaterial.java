@@ -4,6 +4,7 @@ import doggytalents.api.registry.IBeddingMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class MissingBeddingMaterial extends IBeddingMaterial {
 
@@ -17,7 +18,7 @@ public class MissingBeddingMaterial extends IBeddingMaterial {
 
     @Override
     public Component getTooltip() {
-        return Component.translatable("dogbed.casing.missing");
+        return ComponentUtil.translatable("dogbed.casing.missing");
     }
 
     @Override

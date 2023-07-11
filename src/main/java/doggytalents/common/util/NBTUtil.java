@@ -5,10 +5,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -102,7 +104,7 @@ public class NBTUtil {
     }
 
     @Nullable
-    public static <T> T getRegistryValue(CompoundTag compound, String key, IForgeRegistry<T> registry) {
+    public static <T extends IForgeRegistryEntry<T>> T getRegistryValue(CompoundTag compound, String key, IForgeRegistry<T> registry) {
         ResourceLocation rl = NBTUtil.getResourceLocation(compound, key);
         if (rl != null) {
             if (registry.containsKey(rl)) {

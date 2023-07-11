@@ -11,6 +11,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 
@@ -57,7 +58,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         }
         if (nameTooLong) {
             var tempName = currentDogNameStr.substring(0, 13) + " ..";
-            dog.setCustomName(Component.literal(tempName));
+            dog.setCustomName(ComponentUtil.literal(tempName));
         }
 
         InventoryScreen.renderEntityInInventory(dog_mX, dog_mY, size, 

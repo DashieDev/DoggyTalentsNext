@@ -6,11 +6,12 @@ import doggytalents.DoggyItems;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class DoggyKeybinds {
     
@@ -51,11 +52,11 @@ public class DoggyKeybinds {
     public static KeyMapping[] hotkeys_whistle = 
         {hotkeyWhistle_1, hotkeyWhistle_2, hotkeyWhistle_3, hotkeyWhistle_4};
 
-    public static void registerDTKeyMapping(final RegisterKeyMappingsEvent event) {
-        event.register(hotkeyWhistle_1);
-        event.register(hotkeyWhistle_2);
-        event.register(hotkeyWhistle_3);
-        event.register(hotkeyWhistle_4);
+    public static void registerDTKeyMapping(final FMLClientSetupEvent event) {
+        ClientRegistry.registerKeyBinding(hotkeyWhistle_1);
+        ClientRegistry.registerKeyBinding(hotkeyWhistle_2);
+        ClientRegistry.registerKeyBinding(hotkeyWhistle_3);
+        ClientRegistry.registerKeyBinding(hotkeyWhistle_4);
     }
 
     public static enum DTKeyConflictContext implements IKeyConflictContext {

@@ -19,13 +19,14 @@ import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class AmneisaBoneScreen extends StoreConnectedScreen {
 
     private Dog dog;
 
     protected AmneisaBoneScreen(Dog dog) {
-        super(Component.translatable("doggytalents.screen.amnesia_bone.title"));
+        super(ComponentUtil.translatable("doggytalents.screen.amnesia_bone.title"));
         this.dog = dog;
     }
 
@@ -83,10 +84,10 @@ public class AmneisaBoneScreen extends StoreConnectedScreen {
         this.renderBackground(stack);
         super.render(stack, mouseX, mouseY, pTicks);
 
-        //font.draw(stack, Component.literal("width : " + this.width ), 3 , 3, 0xffffffff);
-        //font.draw(stack, Component.literal("height : " + this.height ), 3 , 11, 0xffffffff);
-        //font.draw(stack, Component.literal("cursorX : " + mouseX ), 3 , 19, 0xffffffff);
-        //font.draw(stack, Component.literal("cursorY : " + mouseY ), 3 , 27, 0xffffffff);
+        //font.draw(stack, ComponentUtil.literal("width : " + this.width ), 3 , 3, 0xffffffff);
+        //font.draw(stack, ComponentUtil.literal("height : " + this.height ), 3 , 11, 0xffffffff);
+        //font.draw(stack, ComponentUtil.literal("cursorX : " + mouseX ), 3 , 19, 0xffffffff);
+        //font.draw(stack, ComponentUtil.literal("cursorY : " + mouseY ), 3 , 27, 0xffffffff);
         //this.font.draw(p_96562_, ActiveTabSlice.activeTab.title, 0, 0, 0xffffff);
 
         //ToolTipManager

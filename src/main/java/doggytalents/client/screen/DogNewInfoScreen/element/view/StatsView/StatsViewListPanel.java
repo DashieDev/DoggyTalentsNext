@@ -15,6 +15,7 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class StatsViewListPanel extends AbstractElement {
 
@@ -45,7 +46,7 @@ public class StatsViewListPanel extends AbstractElement {
     @Override
     public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
         // int mX = this.getSizeX()/2;
-        // var c1 = Component.literal("Pts: " + this.dog.getSpendablePoints());
+        // var c1 = ComponentUtil.literal("Pts: " + this.dog.getSpendablePoints());
         // int tX = this.getRealX() + mX - font.width(c1)/2;
         // int tY = this.getRealY() + this.getSizeY() -15;
         // font.draw(stack, c1, tX, tY, 0xffffffff);

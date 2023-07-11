@@ -43,12 +43,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
+import net.minecraftforge.client.model.ForgeModelBakery;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -58,15 +59,15 @@ import java.util.Map;
 
 public class ClientEventHandler {
 
-    public static void onModelBakeEvent(final ModelEvent.BakingCompleted event) {
-        var modelRegistry = event.getModels();
+    public static void onModelBakeEvent(final ModelBakeEvent event) {
+        Map<ResourceLocation, BakedModel> modelRegistry = event.getModelRegistry();
 
         try {
             ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(DoggyBlocks.DOG_BED.get());
             ResourceLocation unbakedModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
 
-            BlockModel model = (BlockModel) event.getModelBakery().getModel(unbakedModelLoc);
-            BakedModel customModel = new DogBedModel(event.getModelBakery(), model, model.bake(event.getModelBakery(), model, Material::sprite, BlockModelRotation.X180_Y180, unbakedModelLoc, true));
+            BlockModel model = (BlockModel) event.getModelLoader().getModel(unbakedModelLoc);
+            BakedModel customModel = new DogBedModel(event.getModelLoader(), model, model.bake(event.getModelLoader(), model, ForgeModelBakery.defaultTextureGetter(), BlockModelRotation.X180_Y180, unbakedModelLoc, true));
 
             // Replace all valid block states
             DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {
@@ -99,7 +100,7 @@ public class ClientEventHandler {
     }
 
     @SubscribeEvent
-    public void onScreenInit(final ScreenEvent.Init.Post event) {
+    public void onScreenInit(final ScreenEvent.InitScreenEvent.Post event) {
         if (!ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV)) 
             return;
         Screen screen = event.getScreen();
@@ -124,7 +125,7 @@ public class ClientEventHandler {
     }
 
     @SubscribeEvent
-    public void onScreenDrawForeground(final ScreenEvent.Render event) {
+    public void onScreenDrawForeground(final ScreenEvent.DrawScreenEvent event) {
         Screen screen = event.getScreen();
         if (screen instanceof InventoryScreen || screen instanceof CreativeModeInventoryScreen) {
             boolean creative = screen instanceof CreativeModeInventoryScreen;
@@ -164,11 +165,11 @@ public class ClientEventHandler {
     }
 
     @SubscribeEvent
-    public void onKeyboardInput(InputEvent.Key event) {
+    public void onKeyboardInput(KeyInputEvent event) {
         proccessWhistle(event);
     }
 
-    public void proccessWhistle(InputEvent.Key event) {
+    public void proccessWhistle(KeyInputEvent event) {
 
         //Same check as IN_GAME_AND_HAS_WHISTLE.isActive()
         var mc = Minecraft.getInstance();

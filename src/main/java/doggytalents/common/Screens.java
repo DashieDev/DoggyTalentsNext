@@ -10,6 +10,7 @@ import doggytalents.common.inventory.container.DoggyToolsMenu;
 import doggytalents.common.inventory.container.PackPuppyContainer;
 import doggytalents.common.inventory.container.TreatBagContainer;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -38,7 +39,7 @@ public class Screens {
 
         @Override
         public Component getDisplayName() {
-            return Component.translatable("container.doggytalents.pack_puppy");
+            return ComponentUtil.translatable("container.doggytalents.pack_puppy");
         }
     }
 
@@ -61,7 +62,7 @@ public class Screens {
 
         @Override
         public Component getDisplayName() {
-            return Component.translatable("container.doggytalents.dog_inventories");
+            return ComponentUtil.translatable("container.doggytalents.dog_inventories");
         }
     }
 
@@ -82,7 +83,7 @@ public class Screens {
 
         @Override
         public Component getDisplayName() {
-            return Component.translatable("container.doggytalents.treat_bag");
+            return ComponentUtil.translatable("container.doggytalents.treat_bag");
         }
     }
 
@@ -101,7 +102,7 @@ public class Screens {
 
         @Override
         public Component getDisplayName() {
-            return Component.translatable("container.doggytalents.dog_armor");
+            return ComponentUtil.translatable("container.doggytalents.dog_armor");
         }
     }
 
@@ -120,13 +121,13 @@ public class Screens {
 
         @Override
         public Component getDisplayName() {
-            return Component.translatable("container.doggytalents.doggy_tools");
+            return ComponentUtil.translatable("container.doggytalents.doggy_tools");
         }
     }
 
     public static void openPackPuppyScreen(ServerPlayer player, Dog dogIn) {
         if (dogIn.isDoingFine()) {
-            NetworkHooks.openScreen(player, new PackPuppyContainerProvider(dogIn), (buf) -> {
+            NetworkHooks.openGui(player, new PackPuppyContainerProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
             });
         }
@@ -134,7 +135,7 @@ public class Screens {
 
     public static void openDogInventoriesScreen(ServerPlayer player, List<Dog> dogIn) {
         if (!dogIn.isEmpty()) {
-            NetworkHooks.openScreen(player, new DogInventoriesContainerProvider(dogIn), (buf) -> {
+            NetworkHooks.openGui(player, new DogInventoriesContainerProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.size());
                 for (Dog dog : dogIn) {
                     buf.writeInt(dog.getId());
@@ -144,12 +145,12 @@ public class Screens {
     }
 
     public static void openFoodBowlScreen(ServerPlayer player, FoodBowlTileEntity foodBowl) {
-        NetworkHooks.openScreen(player, foodBowl, foodBowl.getBlockPos());
+        NetworkHooks.openGui(player, foodBowl, foodBowl.getBlockPos());
     }
 
     public static void openTreatBagScreen(ServerPlayer player, ItemStack stackIn, int slotId) {
         if (stackIn.getItem() == DoggyItems.TREAT_BAG.get()) {
-            NetworkHooks.openScreen(player, new TreatBagContainerProvider(stackIn, slotId), buf -> {
+            NetworkHooks.openGui(player, new TreatBagContainerProvider(stackIn, slotId), buf -> {
                 buf.writeVarInt(slotId);
                 buf.writeItem(stackIn);
             });
@@ -158,7 +159,7 @@ public class Screens {
 
     public static void openArmorScreen(ServerPlayer player, Dog dogIn) {
         if (dogIn.isDoingFine()) {
-            NetworkHooks.openScreen(player, new DogArmorContainerProvider(dogIn), (buf) -> {
+            NetworkHooks.openGui(player, new DogArmorContainerProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
             });
         }
@@ -166,7 +167,7 @@ public class Screens {
 
     public static void openDoggyToolsScreen(ServerPlayer player, Dog dogIn) {
         if (dogIn.isDoingFine()) {
-            NetworkHooks.openScreen(player, new DoggyToolsMenuProvider(dogIn), (buf) -> {
+            NetworkHooks.openGui(player, new DoggyToolsMenuProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
             });
         }

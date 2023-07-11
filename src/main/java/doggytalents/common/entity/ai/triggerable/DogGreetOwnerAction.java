@@ -6,9 +6,11 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogOwnerDistanceManager;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -87,7 +89,7 @@ public class DogGreetOwnerAction extends TriggerableAction {
                 this.tellOwner = false;
                 int r = this.dog.getRandom().nextInt(MSG_CHANCE_WINDOW);
                 if (r < 5) {
-                    this.owner.sendSystemMessage(Component.translatable("dog.msg.greet_owner." + r, this.dog.getName().getString()));
+                    this.owner.sendMessage(ComponentUtil.translatable("dog.msg.greet_owner." + r, this.dog.getName().getString()), net.minecraft.Util.NIL_UUID);
                 }
             }
             this.doGreet();
@@ -148,10 +150,9 @@ public class DogGreetOwnerAction extends TriggerableAction {
     
     private BlockPos getRandomPosAroundOwner(LivingEntity owner) {
         var owner_b0 = owner.blockPosition();
-        var r = owner.getRandom();
-        int rX = r.nextIntBetweenInclusive(-GREET_RADIUS, GREET_RADIUS);
-        int rY = r.nextIntBetweenInclusive(-1, 1);
-        int rZ = r.nextIntBetweenInclusive(-GREET_RADIUS, GREET_RADIUS);
+        int rX = EntityUtil.getRandomNumber(owner, -GREET_RADIUS, GREET_RADIUS);
+        int rY = EntityUtil.getRandomNumber(owner, -1, 1);
+        int rZ = EntityUtil.getRandomNumber(owner, -GREET_RADIUS, GREET_RADIUS);
         return owner_b0.offset(rX, rY, rZ);
     }
     

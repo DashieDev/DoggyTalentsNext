@@ -22,6 +22,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraftforge.network.PacketDistributor;
 import doggytalents.common.entity.DogGroupsManager.DogGroup;
 
@@ -57,7 +58,7 @@ public class GroupsListElement extends AbstractElement {
             pX += GROUP_SPACING + groupButton.getWidth();
         }
         int addButtonSize = font.lineHeight + GroupEntryButton.PADDING_VERT*2;
-        var addButton = new FlatButton(pX, pY, addButtonSize, addButtonSize, Component.literal("+"), 
+        var addButton = new FlatButton(pX, pY, addButtonSize, addButtonSize, ComponentUtil.literal("+"), 
             b -> {
                 displayGroupMenu(b.x, b.y);
             }
@@ -126,7 +127,7 @@ public class GroupsListElement extends AbstractElement {
         private int textColor;
 
         public GroupEntryButton(int x, int y, DogGroup group, Font font, Dog dog) {
-            super(x, y, 0, 0, Component.literal(group.name), null);
+            super(x, y, 0, 0, ComponentUtil.literal(group.name), null);
             this.font = font;
             this.setWidth(PADDING_HORZ*2 + font.width(this.getMessage()));
             this.setHeight(font.lineHeight + PADDING_VERT*2);

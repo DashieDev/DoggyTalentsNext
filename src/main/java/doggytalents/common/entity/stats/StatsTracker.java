@@ -36,7 +36,7 @@ public class StatsTracker {
         ListTag killList = new ListTag();
         for (Entry<EntityType<?>, Integer> entry : this.ENTITY_KILLS.entrySet()) {
             CompoundTag stats = new CompoundTag();
-            NBTUtil.putRegistryValue(stats, "type", ForgeRegistries.ENTITY_TYPES.getKey(entry.getKey()));
+            NBTUtil.putRegistryValue(stats, "type", ForgeRegistries.ENTITIES.getKey(entry.getKey()));
             stats.putInt("count", entry.getValue());
             killList.add(stats);
         }
@@ -54,7 +54,7 @@ public class StatsTracker {
         ListTag killList = compound.getList("entityKills", Tag.TAG_COMPOUND);
         for (int i = 0; i < killList.size(); i++) {
             CompoundTag stats = killList.getCompound(i);
-            EntityType<?> type = NBTUtil.getRegistryValue(stats, "type", ForgeRegistries.ENTITY_TYPES);
+            EntityType<?> type = NBTUtil.getRegistryValue(stats, "type", ForgeRegistries.ENTITIES);
             this.ENTITY_KILLS.put(type, stats.getInt("count"));
         }
         this.damageDealt = compound.getFloat("damageDealt");
@@ -177,7 +177,7 @@ public class StatsTracker {
         int mapSize = this.ENTITY_KILLS.size();
         buf.writeInt(mapSize);
         for (var entry : this.ENTITY_KILLS.entrySet()) {
-            var typeId = ForgeRegistries.ENTITY_TYPES.getKey(entry.getKey());
+            var typeId = ForgeRegistries.ENTITIES.getKey(entry.getKey());
             var killCount = entry.getValue();
             buf.writeResourceLocation(typeId);
             buf.writeInt(killCount);
@@ -199,7 +199,7 @@ public class StatsTracker {
         for (int i = 0; i < mapSize; ++i) {
             var typeId = buf.readResourceLocation();
             var killCount = buf.readInt();
-            var type = ForgeRegistries.ENTITY_TYPES.getValue(typeId);
+            var type = ForgeRegistries.ENTITIES.getValue(typeId);
             this.ENTITY_KILLS.put(type, killCount);
         }
     }

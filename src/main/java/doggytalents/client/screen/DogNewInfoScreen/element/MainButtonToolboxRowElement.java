@@ -17,6 +17,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class MainButtonToolboxRowElement extends AbstractElement {
 
@@ -42,7 +43,7 @@ public class MainButtonToolboxRowElement extends AbstractElement {
         );
         totalWidth += modeButton.getWidth() + BUTTON_SPACING;
         var editInfoButton = new TabPanelButton(0, this.getRealY(), 20, this.getSizeY(),
-            getScreen(), false, Component.literal(""), 
+            getScreen(), false, ComponentUtil.literal(""), 
             MainPanelSlice.class,
             MainTab.EDIT_INFO 
         ) {

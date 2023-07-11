@@ -19,11 +19,9 @@ import doggytalents.common.util.Util;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.commands.synchronization.ArgumentTypeInfo;
-import net.minecraft.commands.synchronization.ArgumentTypeInfos;
-import net.minecraft.commands.synchronization.SingletonArgumentInfo;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.server.commands.EffectCommands;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -41,25 +39,20 @@ import static net.minecraft.commands.Commands.literal;
 
 public class DoggyCommands {
 
-    
-    public static final DeferredRegister<ArgumentTypeInfo<?,?>> ARG_TYPE = DeferredRegister.create(ForgeRegistries.Keys.COMMAND_ARGUMENT_TYPES, Constants.MOD_ID);
-    public static final RegistryObject<SingletonArgumentInfo<UUIDArgument>> SUUID = ARG_TYPE.register("doggy_uuid", () -> SingletonArgumentInfo.contextFree(UUIDArgument::uuid));
-
-
     public static final DynamicCommandExceptionType NOTFOUND_EXCEPTION = new DynamicCommandExceptionType((arg) -> {
-        return Component.translatable("command.dogrespawn.notfound", arg);
+        return ComponentUtil.translatable("command.dogrespawn.notfound", arg);
     });
 
     public static final DynamicCommandExceptionType RESPAWN_EXCEPTION = new DynamicCommandExceptionType((arg) -> {
-        return Component.translatable("command.dogrespawn.exception", arg);
+        return ComponentUtil.translatable("command.dogrespawn.exception", arg);
     });
 
     public static final DynamicCommandExceptionType AMBIGUOUS_NAME_EXCEPTION = new DynamicCommandExceptionType((name) -> {
-        return Component.translatable("command.dogrespawn.imprecise", name);
+        return ComponentUtil.translatable("command.dogrespawn.imprecise", name);
     });
 
     public static final DynamicCommandExceptionType BAD_UUID_STRING = new DynamicCommandExceptionType((name) -> {
-        return Component.translatable("command.dogrespawn.bad_uuid_str", name);
+        return ComponentUtil.translatable("command.dogrespawn.bad_uuid_str", name);
     });
 
     public static void register(final CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -115,10 +108,6 @@ public class DoggyCommands {
                                         .suggests(DoggyCommands.getDogIdSuggestionsRevive())
                                         .executes(c -> respawn(c))))))));                
 
-    }
-
-    public static void registerSerilizers() {
-        ArgumentTypeInfos.registerByClass(UUIDArgument.class, SingletonArgumentInfo.contextFree(UUIDArgument::uuid));
     }
 
     private static <S extends SharedSuggestionProvider> SuggestionProvider<S> getOwnerIdSuggestionsLocate() {
@@ -315,11 +304,11 @@ public class DoggyCommands {
 
         if (dog != null) {
             respawnStorage.remove(respawnData.getDogId());
-            source.sendSuccess(Component.translatable("commands.dogrespawn.uuid.success", respawnData.getDogName()), false);
+            source.sendSuccess(ComponentUtil.translatable("commands.dogrespawn.uuid.success", respawnData.getDogName()), false);
             return 1;
         }
 
-        source.sendSuccess(Component.translatable("commands.dogrespawn.uuid.failure", respawnData.getDogName()), false);
+        source.sendSuccess(ComponentUtil.translatable("commands.dogrespawn.uuid.failure", respawnData.getDogName()), false);
         return 0;
     }
 
@@ -386,9 +375,9 @@ public class DoggyCommands {
             String translateStr = RadarItem.getDirectionTranslationKey(locationData, player);
             int distance = Mth.ceil(locationData.getPos() != null ? locationData.getPos().distanceTo(player.position()) : -1);
 
-            source.sendSuccess(Component.translatable(translateStr, locationData.getName(player.level), distance), false);
+            source.sendSuccess(ComponentUtil.translatable(translateStr, locationData.getName(player.level), distance), false);
         } else {
-            source.sendSuccess(Component.translatable("dogradar.notindim", locationData.getDimension()), false); // TODO change message
+            source.sendSuccess(ComponentUtil.translatable("dogradar.notindim", locationData.getDimension()), false); // TODO change message
         }
         return 1;
 

@@ -1,10 +1,12 @@
 package doggytalents.api.registry;
 
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
-public abstract class ICasingMaterial{
+public abstract class ICasingMaterial extends ForgeRegistryEntry<ICasingMaterial> {
 
     /**
      * Texture location that for material, eg 'minecraft:block/white_wool'

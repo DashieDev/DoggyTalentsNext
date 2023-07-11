@@ -18,6 +18,7 @@ import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.PacketDistributor;
@@ -44,7 +45,7 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
     @Override
     public void init() {
         super.init();
-        this.left = new SmallButton(this.leftPos + this.imageWidth - 29, this.topPos + 4, Component.literal("<"), (btn) -> {
+        this.left = new SmallButton(this.leftPos + this.imageWidth - 29, this.topPos + 4, ComponentUtil.literal("<"), (btn) -> {
             int page = this.getMenu().getPage();
 
             if (page > 0) {
@@ -54,7 +55,7 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
             btn.active = page > 0;
             this.right.active = page < this.getMenu().getTotalNumColumns() - 9;
         });
-        this.right = new SmallButton(this.leftPos + this.imageWidth - 26 + 9, this.topPos + 4, Component.literal(">"), (btn) -> {
+        this.right = new SmallButton(this.leftPos + this.imageWidth - 26 + 9, this.topPos + 4, ComponentUtil.literal(">"), (btn) -> {
             int page = this.getMenu().getPage();
 
             if (page < this.getMenu().getTotalNumColumns() - 9) {

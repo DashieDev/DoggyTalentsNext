@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.client.screen.framework.types.TextType;
 import doggytalents.client.screen.framework.types.TextType.Align;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class MultiLineFlatButton extends FlatButton {
 
@@ -17,7 +18,7 @@ public class MultiLineFlatButton extends FlatButton {
     private TextType.Align align = TextType.Align.MIDDLE;
 
     public MultiLineFlatButton(int x, int y, int width, int height, List<Component> lines, OnPress onPress) {
-        super(x, y, width, height, Component.empty(), onPress);
+        super(x, y, width, height, ComponentUtil.empty(), onPress);
         this.lines = lines == null ? List.of() : lines;
     }
 

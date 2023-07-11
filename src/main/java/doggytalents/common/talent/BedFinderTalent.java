@@ -4,6 +4,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -32,7 +33,7 @@ public class BedFinderTalent extends TalentInstance {
                             dogIn.setOrderedToSit(true);
                         }
 
-                        playerIn.displayClientMessage(Component.translatable("talent.doggytalents.bed_finder.dog_mount", dogIn.getGenderPronoun()), true);
+                        playerIn.displayClientMessage(ComponentUtil.translatable("talent.doggytalents.bed_finder.dog_mount", dogIn.getGenderPronoun()), true);
                         return InteractionResult.SUCCESS;
                     }
                 }

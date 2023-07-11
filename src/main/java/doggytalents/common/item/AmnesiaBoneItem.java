@@ -12,6 +12,7 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -55,7 +56,7 @@ public class AmnesiaBoneItem extends Item implements IDogItem  {
         if (!(dog instanceof Dog)) return;
         var d = (Dog)dog;
         if (!d.willObeyOthers()) {
-            player.displayClientMessage(Component.translatable("item.doggytalents.amnesia_bone.reject")
+            player.displayClientMessage(ComponentUtil.translatable("item.doggytalents.amnesia_bone.reject")
                 .withStyle(ChatFormatting.RED) ,true);
             return;
         }
@@ -76,13 +77,13 @@ public class AmnesiaBoneItem extends Item implements IDogItem  {
         if (tag == null) return;
         if (tag.contains("amnesia_bone_used_time", Tag.TAG_INT)) {
             components.add(
-                Component.translatable("item.doggytalents.amnesia_bone.use_status", 
+                ComponentUtil.translatable("item.doggytalents.amnesia_bone.use_status", 
                 getUseCap() - tag.getInt("amnesia_bone_used_time"), getUseCap())
                 .withStyle(ChatFormatting.RED));
         }
         if (tag.contains("request_str", Tag.TAG_STRING)) {
             components.add(
-                Component.translatable("item.doggytalents.amnesia_bone.status", tag.getString("request_str"))
+                ComponentUtil.translatable("item.doggytalents.amnesia_bone.status", tag.getString("request_str"))
                 .withStyle(
                     ChatFormatting.GRAY
                 )

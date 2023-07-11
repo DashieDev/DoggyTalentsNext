@@ -23,6 +23,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraftforge.network.PacketDistributor;
@@ -67,7 +68,7 @@ public class TalentInfoViewElement extends AbstractElement {
     private void addDetrainButton(Dog dog) {
         int dogLevel = dog.getDogLevel(talent);
         var trainButton = new Button(0, 0, 
-            50, 20, Component.translatable("doggui.detrain.talents.detrain"), 
+            50, 20, ComponentUtil.translatable("doggui.detrain.talents.detrain"), 
             b -> {
                 //send training packet and dispatch here.
                 requestDeTrain();
@@ -109,7 +110,7 @@ public class TalentInfoViewElement extends AbstractElement {
                     if (player != null && player.experienceLevel >= talent.getDeTrainXPCost(dogLevel)) {
                         return;
                     } else {
-                        c1 = Component.translatable("doggui.detrain.talents.insufficent_xp");
+                        c1 = ComponentUtil.translatable("doggui.detrain.talents.insufficent_xp");
                         c1.setStyle(
                             Style.EMPTY
                             .withColor(0xffB20000)
@@ -160,7 +161,7 @@ public class TalentInfoViewElement extends AbstractElement {
         int startY = this.getRealY() + PADDING_TOP;
         int pX = startX;
         int pY = startY;
-        var title = Component.translatable(this.talent.getTranslationKey())
+        var title = ComponentUtil.translatable(this.talent.getTranslationKey())
             .withStyle(
                 Style.EMPTY
                 .withBold(true)
@@ -168,7 +169,7 @@ public class TalentInfoViewElement extends AbstractElement {
             );
         font.draw(stack, title, pX, pY, 0xffffffff);
         pY += 2*LINE_SPACING + this.font.lineHeight;
-        var desc = Component.translatable(this.talent.getInfoTranslationKey());
+        var desc = ComponentUtil.translatable(this.talent.getInfoTranslationKey());
         var desc_lines = this.font.split(desc, this.getSizeX() - (PADDING_LEFT + PADDING_RIGHT));
         for (var line : desc_lines) {
             font.draw(stack, line, pX, pY, 0xffffffff);
