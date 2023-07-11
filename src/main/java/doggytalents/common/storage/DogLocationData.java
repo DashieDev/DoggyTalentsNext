@@ -2,6 +2,7 @@ package doggytalents.common.storage;
 
 import doggytalents.DoggyAccessories;
 import doggytalents.DoggyItems;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.NBTUtil;
@@ -10,7 +11,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;

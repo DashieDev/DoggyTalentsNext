@@ -1,6 +1,7 @@
 package doggytalents.common.block.tileentity;
 
 import doggytalents.DoggyTileEntityTypes;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.inventory.container.FoodBowlContainer;
@@ -9,8 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
-
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

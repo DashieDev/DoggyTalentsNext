@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.IBeddingMaterial;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -12,7 +13,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class BeddingMaterial extends IBeddingMaterial {
 

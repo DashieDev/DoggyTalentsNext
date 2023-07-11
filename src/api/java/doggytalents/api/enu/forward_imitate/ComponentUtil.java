@@ -1,4 +1,4 @@
-package doggytalents.common.forward_imitate;
+package doggytalents.api.enu.forward_imitate;
 
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;

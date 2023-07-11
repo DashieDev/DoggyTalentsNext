@@ -3,6 +3,7 @@ package doggytalents.client.entity.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.ChopinLogger;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.model.DogModelRegistry;
@@ -20,7 +21,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;

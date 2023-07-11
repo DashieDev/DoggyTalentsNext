@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.ChopinLogger;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice.MainTab;
 import doggytalents.client.screen.DogNewInfoScreen.widget.ModeSwitch;
@@ -18,7 +19,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class MainButtonToolboxRowElement extends AbstractElement {
 

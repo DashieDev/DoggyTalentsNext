@@ -1,4 +1,4 @@
-package doggytalents.common.forward_imitate;
+package doggytalents.api.enu.forward_imitate;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;

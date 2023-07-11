@@ -2,6 +2,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.TalentView;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentListPageCounterSlice;
 import doggytalents.client.screen.framework.Store;
@@ -12,7 +13,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class TalentListPageButtonElement extends AbstractElement {
 

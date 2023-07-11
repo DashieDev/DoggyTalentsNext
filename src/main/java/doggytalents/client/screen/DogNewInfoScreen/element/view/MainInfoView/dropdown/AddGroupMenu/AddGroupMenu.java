@@ -3,6 +3,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.dr
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.ChopinLogger;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.framework.DropdownMenuManager;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
@@ -18,7 +19,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraftforge.network.PacketDistributor;
 
 public class AddGroupMenu extends AbstractElement {

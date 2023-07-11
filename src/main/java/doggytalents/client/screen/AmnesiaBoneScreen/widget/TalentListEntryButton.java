@@ -3,6 +3,7 @@ package doggytalents.client.screen.AmnesiaBoneScreen.widget;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyTalents;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.Talent;
 import doggytalents.client.screen.AmnesiaBoneScreen.store.UIActionTypes;
 import doggytalents.client.screen.AmnesiaBoneScreen.store.slice.ActiveTalentDescSlice;
@@ -17,7 +18,6 @@ import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.util.Mth;
 
 public class TalentListEntryButton extends AbstractButton {

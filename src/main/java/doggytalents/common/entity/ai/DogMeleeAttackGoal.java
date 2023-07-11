@@ -4,13 +4,13 @@ import java.util.EnumSet;
 
 import org.jetbrains.annotations.NotNull;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.LowHealthStrategy;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;

@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import doggytalents.DoggyItems;
 import doggytalents.DoggySounds;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.DogSoftHeelAction;
@@ -17,7 +18,6 @@ import doggytalents.common.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.NetworkEvent.Context;

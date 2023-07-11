@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.entity.render.RenderUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.RadarItem;
@@ -20,7 +21,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;

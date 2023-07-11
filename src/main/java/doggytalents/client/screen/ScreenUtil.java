@@ -2,10 +2,11 @@ package doggytalents.client.screen;
 
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
-import doggytalents.common.forward_imitate.ComponentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class ScreenUtil {
 
