@@ -16,6 +16,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -75,7 +76,7 @@ public class DogSkinElement extends AbstractElement {
         int e_mY = this.getRealY() + mY - 10;
 
         {
-            var c1 = Component.literal(locList.get(activeSkinId).getName());
+            var c1 = ComponentUtil.literal(locList.get(activeSkinId).getName());
             c1.withStyle(Style.EMPTY.withBold(true));
             int nameX = this.getRealX() + mX - font.width(c1)/2;
             int nameY = this.getRealY() + this.getSizeY() - 13;
@@ -117,8 +118,8 @@ public class DogSkinElement extends AbstractElement {
         }
         
         //MockData
-        Component basedOn = Component.literal(manifestSkin.getBasedOn());
-        Component authors = Component.literal(manifestSkin.getAuthor());
+        Component basedOn = ComponentUtil.literal(manifestSkin.getBasedOn());
+        Component authors = ComponentUtil.literal(manifestSkin.getAuthor());
         //END
 
         var split_basedOn = this.font.split(basedOn, 140);
@@ -163,7 +164,7 @@ public class DogSkinElement extends AbstractElement {
         int mX = this.getSizeX()/2;
         int mY = this.getSizeY()/2;
 
-        var c1 = Component.literal("No info to show.");
+        var c1 = ComponentUtil.literal("No info to show.");
 
         int tX = this.getRealX() + mX - 10;
         int tY = this.getRealY() + mY - font.lineHeight/2;
@@ -182,7 +183,7 @@ public class DogSkinElement extends AbstractElement {
         dog.setClientSkin(oldSkin);
         if (oldSkin == manifestSkin) {
             var font = Minecraft.getInstance().font;
-            var c1 = Component.translatable("doggui.style.skins.selected");
+            var c1 = ComponentUtil.translatable("doggui.style.skins.selected");
             c1.setStyle(
                 Style.EMPTY
                     .withBold(true)

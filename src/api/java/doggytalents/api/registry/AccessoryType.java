@@ -4,8 +4,9 @@ import javax.annotation.Nullable;
 
 import doggytalents.api.DoggyTalentsAPI;
 import net.minecraft.Util;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class AccessoryType {
+public class AccessoryType extends ForgeRegistryEntry<AccessoryType> {
 
     @Nullable
     private String translationKey;

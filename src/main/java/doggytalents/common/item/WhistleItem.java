@@ -19,6 +19,7 @@ import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -167,7 +168,7 @@ public class WhistleItem extends Item {
             }
 
             if (successful) {
-                player.sendSystemMessage(Component.translatable("dogcommand.come"));
+                player.sendMessage(ComponentUtil.translatable("dogcommand.come"), net.minecraft.Util.NIL_UUID);
             }
             return;
         case HEEL:
@@ -197,7 +198,7 @@ public class WhistleItem extends Item {
                 world, heel_list, player, 3);
 
             player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
-            player.sendSystemMessage(Component.translatable("dogcommand.heel"));
+            player.sendMessage(ComponentUtil.translatable("dogcommand.heel"), net.minecraft.Util.NIL_UUID);
             return;
         case STAY:
             if (world.isClientSide) return;
@@ -212,7 +213,7 @@ public class WhistleItem extends Item {
             }
 
             if (successful) {
-                player.sendSystemMessage(Component.translatable("dogcommand.stay"));
+                player.sendMessage(ComponentUtil.translatable("dogcommand.stay"), net.minecraft.Util.NIL_UUID);
             }
             return;
         case OKAY:
@@ -226,7 +227,7 @@ public class WhistleItem extends Item {
                 );
             }
             if (successful) {
-                player.sendSystemMessage(Component.translatable("dogcommand.ok"));
+                player.sendMessage(ComponentUtil.translatable("dogcommand.ok"), net.minecraft.Util.NIL_UUID);
             }
             return;
         case SHELPERD:

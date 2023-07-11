@@ -8,6 +8,7 @@ import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.util.Mth;
 
 public class ColorSelectElement extends AbstractElement {
@@ -74,7 +75,7 @@ public class ColorSelectElement extends AbstractElement {
         
 
         public ColorButton(int x, int y, int color, OnPress onPress) {
-            super(x, y, BUTTON_SIZE, BUTTON_SIZE, Component.empty(), null);
+            super(x, y, BUTTON_SIZE, BUTTON_SIZE, ComponentUtil.empty(), null);
             this.color = color;
             this.onPress = onPress;
         }

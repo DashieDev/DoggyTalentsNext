@@ -22,6 +22,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraftforge.network.PacketDistributor;
@@ -78,7 +79,7 @@ public class TalentInfoViewElement extends AbstractElement {
     private void addTrainButton(Dog dog) {
         int dogLevel = dog.getDogLevel(talent);
         var trainButton = new Button(0, 0, 
-            50, 20, Component.translatable("doggui.talents.train"), 
+            50, 20, ComponentUtil.translatable("doggui.talents.train"), 
             b -> {
                 //send training packet and dispatch here.
                 requestTrain();
@@ -116,7 +117,7 @@ public class TalentInfoViewElement extends AbstractElement {
                     return;
                 } else {
                     if (dog.getDogLevel(talent) < talent.getMaxLevel()) {
-                        c1 = Component.translatable("doggui.talents.insufficent_points");
+                        c1 = ComponentUtil.translatable("doggui.talents.insufficent_points");
                         c1.setStyle(
                             Style.EMPTY
                             .withColor(0xffB20000)
@@ -175,7 +176,7 @@ public class TalentInfoViewElement extends AbstractElement {
         } else if (!ConfigHandler.TALENT.getFlag(talent)) {
             int mX = this.getSizeX()/2;
             int mY = this.getSizeY()/2;
-            var txt = Component.translatable("doggui.talents.invalid.disabled");
+            var txt = ComponentUtil.translatable("doggui.talents.invalid.disabled");
             txt.setStyle(
                 Style.EMPTY
                 .withColor(0xffB20000)
@@ -192,7 +193,7 @@ public class TalentInfoViewElement extends AbstractElement {
         int startY = this.getRealY() + PADDING_TOP;
         int pX = startX;
         int pY = startY;
-        var title = Component.translatable(this.talent.getTranslationKey())
+        var title = ComponentUtil.translatable(this.talent.getTranslationKey())
             .withStyle(
                 Style.EMPTY
                 .withBold(true)
@@ -200,7 +201,7 @@ public class TalentInfoViewElement extends AbstractElement {
             );
         font.draw(stack, title, pX, pY, 0xffffffff);
         pY += 2*LINE_SPACING + this.font.lineHeight;
-        var desc = Component.translatable(this.talent.getInfoTranslationKey());
+        var desc = ComponentUtil.translatable(this.talent.getInfoTranslationKey());
         var desc_lines = this.font.split(desc, this.getSizeX() - (PADDING_LEFT + PADDING_RIGHT));
         for (var line : desc_lines) {
             font.draw(stack, line, pX, pY, 0xffffffff);

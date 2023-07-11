@@ -4,6 +4,8 @@ import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
+import doggytalents.common.util.EntityUtil;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -48,10 +50,10 @@ public class DogPlayTagAction extends TriggerableAction {
         if (dog.distanceToSqr(owner) > RUN_AWAY_RADIUS*RUN_AWAY_RADIUS || timeLeft <= 0) {
             this.setState(ActionState.FINISHED);
             if (this.ownerBeenTagged) {
-                owner.sendSystemMessage(Component.translatable("dog.msg.play_tag.dog_win", dog.getName().getString()));
+                owner.sendMessage(ComponentUtil.translatable("dog.msg.play_tag.dog_win", dog.getName().getString()), net.minecraft.Util.NIL_UUID);
                 dog.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
             } else {
-                owner.sendSystemMessage(Component.translatable("dog.msg.play_tag.you_win", dog.getName().getString()));
+                owner.sendMessage(ComponentUtil.translatable("dog.msg.play_tag.you_win", dog.getName().getString()), net.minecraft.Util.NIL_UUID);
                 owner.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
             }
             return;
@@ -93,7 +95,7 @@ public class DogPlayTagAction extends TriggerableAction {
         }
         if (checkAndTag(dog, owner)) {
             n.stop();
-            owner.sendSystemMessage(Component.translatable("dog.msg.play_tag.gotcha", dog.getName().getString() ));
+            owner.sendMessage(ComponentUtil.translatable("dog.msg.play_tag.gotcha", dog.getName().getString() ), net.minecraft.Util.NIL_UUID);
             this.dog.playSound(SoundEvents.WOLF_AMBIENT, 1, 1);
             this.ownerBeenTagged = true;
             this.cooldownChase = 30;
@@ -145,12 +147,11 @@ public class DogPlayTagAction extends TriggerableAction {
 
     private BlockPos getRandomPosAwayFromOwner(Dog dog, LivingEntity owner) {
         var owner_b0 = owner.blockPosition();
-        var r = dog.getRandom();
         int off = RUN_AWAY_RADIUS - RUN_AWAY_RADIUS_MIN + 1;
-        int dx = r.nextIntBetweenInclusive(-off, off);
+        int dx = EntityUtil.getRandomNumber(dog,-off, off);
         dx += Mth.sign(dx)*RUN_AWAY_RADIUS_MIN;
-        int dy = r.nextIntBetweenInclusive(-2, 2);
-        int dz = r.nextIntBetweenInclusive(-off, off);
+        int dy = EntityUtil.getRandomNumber(dog,-2, 2);
+        int dz = EntityUtil.getRandomNumber(dog,-off, off);
         dz += Mth.sign(dz)*RUN_AWAY_RADIUS_MIN;
         
         return owner_b0.offset(dx, dy, dz);

@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -60,7 +60,7 @@ public class DoggyBlocks {
         return BLOCKS.register(name, blockSupplier);
     }
 
-    public static void registerBlockColours(final RegisterColorHandlersEvent.Block event) {
+    public static void registerBlockColours(final ColorHandlerEvent.Block event) {
         BlockColors blockColors = event.getBlockColors();
 
         Util.acceptOrElse(DoggyBlocks.DOG_BATH, (block) -> {

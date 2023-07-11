@@ -30,7 +30,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -57,11 +57,12 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onWolfRightClickWithTreat(final PlayerInteractEvent.EntityInteract event) {
-        var level = event.getLevel();
+        var level = event.getWorld();
         var stack = event.getItemStack();
         var target = event.getTarget();
-        var owner = event.getEntity();
+        var entity = event.getEntity();
 
+        if (!(entity instanceof Player owner)) return;
         if (stack.getItem() != DoggyItems.TRAINING_TREAT.get()) 
             return;
         if (target.getType() != EntityType.WOLF) return;
@@ -105,7 +106,7 @@ public class EventHandler {
         dog.setAge(wolf.getAge());
         dog.absMoveTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
         dog.setYHeadRot(wolf.getYHeadRot());
-        dog.setYBodyRot(wolf.getVisualRotationYInDegrees());
+        dog.yBodyRot = (wolf.yBodyRot);
 
         var wolf_collar_color = wolf.getCollarColor();
         var color = Util.srgbArrayToInt(wolf_collar_color.getTextureDiffuseColors());
@@ -125,7 +126,7 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void onEntitySpawn(final EntityJoinLevelEvent event) {
+    public void onEntitySpawn(final EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
 
         if (entity instanceof AbstractSkeleton) {
@@ -138,7 +139,7 @@ public class EventHandler {
     public void playerLoggedIn(final PlayerLoggedInEvent event) {
         if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.STARTING_ITEMS)) {
 
-            Player player = event.getEntity();
+            Player player = event.getPlayer();
 
             CompoundTag tag = player.getPersistentData();
 

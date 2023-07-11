@@ -5,6 +5,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.common.lib.Constants;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -34,7 +35,7 @@ public class TreatItem extends Item implements IDogItem {
 
             if (!worldIn.isClientSide) {
                 worldIn.broadcastEntityEvent(dogIn, Constants.EntityState.WOLF_SMOKE);
-                playerIn.sendSystemMessage(Component.translatable("treat."+this.type.getName()+".too_young"));
+                playerIn.sendMessage(ComponentUtil.translatable("treat."+this.type.getName()+".too_young"), net.minecraft.Util.NIL_UUID);
             }
 
             return InteractionResult.CONSUME;
@@ -42,7 +43,7 @@ public class TreatItem extends Item implements IDogItem {
 
             if (!worldIn.isClientSide) {
                 worldIn.broadcastEntityEvent(dogIn, Constants.EntityState.WOLF_SMOKE);
-                playerIn.sendSystemMessage(Component.translatable("treat."+this.type.getName()+".low_level"));
+                playerIn.sendMessage(ComponentUtil.translatable("treat."+this.type.getName()+".low_level"), net.minecraft.Util.NIL_UUID);
             }
 
             return InteractionResult.CONSUME;
@@ -58,7 +59,7 @@ public class TreatItem extends Item implements IDogItem {
                 dogIn.setHealth(dogIn.getMaxHealth());
                 dogIn.setOrderedToSit(true);
                 worldIn.broadcastEntityEvent(dogIn, Constants.EntityState.WOLF_HEARTS);
-                playerIn.sendSystemMessage(Component.translatable("treat."+this.type.getName()+".level_up"));
+                playerIn.sendMessage(ComponentUtil.translatable("treat."+this.type.getName()+".level_up"), net.minecraft.Util.NIL_UUID);
             }
 
             return InteractionResult.SUCCESS;
@@ -67,7 +68,7 @@ public class TreatItem extends Item implements IDogItem {
 
             if (!worldIn.isClientSide) {
                 worldIn.broadcastEntityEvent(dogIn, Constants.EntityState.WOLF_SMOKE);
-                playerIn.sendSystemMessage(Component.translatable("treat."+this.type.getName()+".max_level"));
+                playerIn.sendMessage(ComponentUtil.translatable("treat."+this.type.getName()+".max_level"), net.minecraft.Util.NIL_UUID);
             }
 
             return InteractionResult.CONSUME;

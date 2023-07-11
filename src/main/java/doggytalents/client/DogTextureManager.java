@@ -107,8 +107,8 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         Minecraft mc = Minecraft.getInstance();
 
         ResourceManager resourceManager = mc.getResourceManager();
-        Resource resource = resourceManager.getResource(loc).get();
-        return resource.open();
+        Resource resource = resourceManager.getResource(loc);
+        return resource.getInputStream();
     } 
 
     public ResourceLocation getTexture(Dog dog) {
@@ -181,7 +181,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     private synchronized void loadDogSkinResource(DogTextureManager.Preparations prep, Resource resource, ResourceLocation rl) {
         InputStream inputstream = null;
         try {
-            inputstream = resource.open();
+            inputstream = resource.getInputStream();
             String hash = DogTextureServer.INSTANCE.getHash(IOUtils.toByteArray(inputstream));
 
             if (prep.skinHashToLoc.containsKey(hash)) {
@@ -203,7 +203,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     private synchronized void loadDogSkinResourceWithMetadata(DogTextureManager.Preparations prep, Resource resource, DogSkin dogSkin) {
         InputStream inputstream = null;
         try {
-            inputstream = resource.open();
+            inputstream = resource.getInputStream();
             String hash = DogTextureServer.INSTANCE.getHash(IOUtils.toByteArray(inputstream));
 
             if (prep.skinHashToLoc.containsKey(hash)) {
@@ -224,7 +224,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     private void loadOverrideData(DogTextureManager.Preparations prep, List<Resource> resourcesList) {
         for (Resource iresource : resourcesList) {
             try {
-                InputStream inputstream = iresource.open();
+                InputStream inputstream = iresource.getInputStream();
                 DoggyTalentsNext.LOGGER.debug("Loading {}", iresource);
                 try {
                     this.loadLocaleData(prep, inputstream);
@@ -282,25 +282,25 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             return true;
             //return fileName.getPath().endsWith(".png");
         });
-        for (var i : resources.entrySet()) {
+        for (var i : resources) {
             try {
-                Resource resource = resourceManager.getResource(i.getKey()).get();
+                Resource resource = resourceManager.getResource(i);
 
                 if (resource == null) {
                     DoggyTalentsNext.LOGGER.warn("Could not get resource");
                     continue;
                 }
 
-                this.loadDogSkinResource(prep,  i.getValue(), i.getKey());
+                this.loadDogSkinResource(prep, resource, i);
             } catch (Exception exception) {
-                DoggyTalentsNext.LOGGER.warn("Skipped custom dog skin file: {} ({})", i.getKey(), exception);
+                DoggyTalentsNext.LOGGER.warn("Skipped custom dog skin file: {} ({})", i, exception);
             }
         }
 
         try {
-            List<Resource> override = new ArrayList<>(resourceManager.listResources(OVERRIDE_RESOURCE_LOCATION.getPath(), x -> true).values());
+            List<Resource> override = resourceManager.getResources(OVERRIDE_RESOURCE_LOCATION);
             this.loadOverrideData(prep, override);
-        } catch (RuntimeException runtimeexception) {
+        } catch (RuntimeException | IOException runtimeexception) {
             DoggyTalentsNext.LOGGER.warn("Unable to parse dog skin override data: {}", runtimeexception);
         }
 
@@ -359,9 +359,15 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
             readSkinExtraInfo(skin, skinObject);
 
-            var res = resMan.getResource(text_rl);
-            if (res.isPresent())
-            loadDogSkinResourceWithMetadata(prep, res.get(), skin);
+            Resource res = null;
+            try {
+                res = resMan.getResource(text_rl);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            if (res != null)
+            loadDogSkinResourceWithMetadata(prep, res, skin);
         }
     }
 

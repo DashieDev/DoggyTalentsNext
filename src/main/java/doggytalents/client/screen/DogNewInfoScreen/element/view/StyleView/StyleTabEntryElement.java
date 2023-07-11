@@ -11,6 +11,7 @@ import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.TabPanelButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class StyleTabEntryElement extends AbstractElement {
     static final int BUTTON_HEIGHT = 20;
@@ -38,7 +39,7 @@ public class StyleTabEntryElement extends AbstractElement {
                     0, 0, getSizeX(), 
                     BUTTON_HEIGHT, getScreen(),
                     activeTab == tab, 
-                    Component.translatable(tab.unLocalizedTitle), 
+                    ComponentUtil.translatable(tab.unLocalizedTitle), 
                     StyleViewPanelSlice.class, 
                     tab
                 )

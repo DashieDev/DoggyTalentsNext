@@ -7,6 +7,7 @@ import doggytalents.common.storage.DogLocationStorage;
 import net.minecraft.Util;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
@@ -44,7 +45,7 @@ public class RadarItem extends Item {
                 if (playerIn.getAbilities().instabuild) {
                     DogLocationStorage locationManager = DogLocationStorage.get(worldIn);
                     for (UUID uuid : locationManager.getAllUUID()) {
-                        playerIn.sendSystemMessage(Component.literal(locationManager.getData(uuid).toString()));
+                        playerIn.sendMessage(ComponentUtil.literal(locationManager.getData(uuid).toString()), net.minecraft.Util.NIL_UUID);
                     }
                 }
                 return new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
@@ -52,13 +53,13 @@ public class RadarItem extends Item {
 
         //     ResourceKey<Level> dimCurr = playerIn.level.dimension();
 
-        //     playerIn.sendSystemMessage(Component.literal(""));
+        //     playerIn.sendMessage(ComponentUtil.literal(""), net.minecraft.Util.NIL_UUID);
 
         //     DogLocationStorage locationManager = DogLocationStorage.get(worldIn);
         //     List<DogLocationData> ownDogs = locationManager.getDogs(playerIn, dimCurr).collect(Collectors.toList());
 
         //     if (ownDogs.isEmpty()) {
-        //         playerIn.sendSystemMessage(Component.translatable("dogradar.errornull", dimCurr.location()));
+        //         playerIn.sendMessage(ComponentUtil.translatable("dogradar.errornull", dimCurr.location()), net.minecraft.Util.NIL_UUID);
         //     } else {
         //         boolean flag = false;
 
@@ -69,12 +70,12 @@ public class RadarItem extends Item {
         //                 String translateStr = RadarItem.getDirectionTranslationKey(loc, playerIn);
         //                 int distance = Mth.ceil(loc.getPos() != null ? loc.getPos().distanceTo(playerIn.position()) : -1);
 
-        //                 playerIn.sendSystemMessage(Component.translatable(translateStr, loc.getName(worldIn), distance));
+        //                 playerIn.sendMessage(ComponentUtil.translatable(translateStr, loc.getName(worldIn), distance), net.minecraft.Util.NIL_UUID);
         //             }
         //         }
 
         //         if (!flag) {
-        //             playerIn.sendSystemMessage(Component.translatable("dogradar.errornoradio"));
+        //             playerIn.sendMessage(ComponentUtil.translatable("dogradar.errornoradio"), net.minecraft.Util.NIL_UUID);
         //         }
         //     }
 
@@ -88,11 +89,11 @@ public class RadarItem extends Item {
         //     }
 
         //     if (otherDogs.size() > 0) {
-        //         playerIn.sendSystemMessage(Component.translatable("dogradar.notindim", otherDogs.stream().map(ResourceKey::location).map(Objects::toString).collect(Collectors.joining(", "))));
+        //         playerIn.sendMessage(ComponentUtil.translatable("dogradar.notindim", otherDogs.stream().map(ResourceKey::location).map(Objects::toString).collect(Collectors.joining(", "))), net.minecraft.Util.NIL_UUID);
         //     }
 
         //     if (noDogs.size() > 0 && stack.getItem() == DoggyItems.CREATIVE_RADAR.get()) {
-        //         playerIn.sendSystemMessage(Component.translatable("dogradar.errornull", noDogs.stream().map(ResourceKey::location).map(Objects::toString).collect(Collectors.joining(", "))));
+        //         playerIn.sendMessage(ComponentUtil.translatable("dogradar.errornull", noDogs.stream().map(ResourceKey::location).map(Objects::toString).collect(Collectors.joining(", "))), net.minecraft.Util.NIL_UUID);
         //     }
         // }
             if (stack.getItem() instanceof RadarItem && stack.hasTag()) {
@@ -141,12 +142,12 @@ public class RadarItem extends Item {
         if (stack.hasTag()) {
             var tag = stack.getTag();
             if (tag != null && tag.contains("name", Tag.TAG_STRING)) {
-                return Component.translatable("item.doggytalents.radar.status", tag.getString("name"))
+                return ComponentUtil.translatable("item.doggytalents.radar.status", tag.getString("name"))
                     .withStyle(
                         Style.EMPTY.withColor(0xff00ff5e)
                     );
             }
         }
-        return Component.translatable(this.getDescriptionId(stack));
+        return ComponentUtil.translatable(this.getDescriptionId(stack));
     }
 }

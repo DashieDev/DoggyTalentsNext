@@ -9,6 +9,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 
 public class DogDescriptionViewBoxElement extends AbstractElement {
@@ -36,7 +37,7 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
         var gender = this.dog.getGenderName().getString();
         var owner = ( this.dog.isOwnedBy(Minecraft.getInstance().player) ?
             I18n.get("doggui.owner.you")
-            : this.dog.getOwnersName().orElse(Component.translatable("entity.doggytalents.dog.unknown_owner")).getString()
+            : this.dog.getOwnersName().orElse(ComponentUtil.translatable("entity.doggytalents.dog.unknown_owner")).getString()
         );
         var friendlyFire = "" + this.dog.canOwnerAttack();
         var obeyOther = "" + this.dog.willObeyOthers();
@@ -73,8 +74,8 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
     }
 
     private Component createDescEntry(String descName, String descVal, int valColor) {
-        var c0 = Component.literal(descName + " ");
-        var c1 = Component.literal(descVal)
+        var c0 = ComponentUtil.literal(descName + " ");
+        var c1 = ComponentUtil.literal(descVal)
             .withStyle(
                 Style.EMPTY
                 .withBold(true)

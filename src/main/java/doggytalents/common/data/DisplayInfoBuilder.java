@@ -3,6 +3,7 @@ package doggytalents.common.data;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -29,8 +30,8 @@ public class DisplayInfoBuilder {
     }
 
     public DisplayInfoBuilder translate(String key) {
-        this.title(Component.translatable("advancements."+key+".title"));
-        this.description(Component.translatable("advancements."+key+".description"));
+        this.title(ComponentUtil.translatable("advancements."+key+".title"));
+        this.description(ComponentUtil.translatable("advancements."+key+".description"));
         return this;
     }
 

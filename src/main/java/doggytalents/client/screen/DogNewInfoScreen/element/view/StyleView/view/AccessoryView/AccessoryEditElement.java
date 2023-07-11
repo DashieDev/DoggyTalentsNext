@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -72,7 +73,7 @@ public class AccessoryEditElement extends AbstractElement {
         this.lastPage = new TextOnlyButton(
             this.getRealX() + mX - 80 - 9, 
             this.getRealY() + mY - 9, 18, 18,  
-            Component.literal("<"), b -> {
+            ComponentUtil.literal("<"), b -> {
                 startIndex -= accessoryHolders.size();
             }, mc.font);
         this.addChildren(lastPage);
@@ -80,7 +81,7 @@ public class AccessoryEditElement extends AbstractElement {
         this.nextPage = new TextOnlyButton(
             this.getRealX() + mX + 80 - 9, 
             this.getRealY() + mY - 9, 18, 18, 
-            Component.literal(">"), b -> {
+            ComponentUtil.literal(">"), b -> {
                 startIndex += accessoryHolders.size();
             }, mc.font);
         this.addChildren(nextPage);
@@ -116,7 +117,7 @@ public class AccessoryEditElement extends AbstractElement {
             } else {
                 int mX = this.getSizeX()/2;
                 int mY = this.getSizeY()/2;
-                var txt = Component.translatable("doggui.style.accessories.no_accessories_in_inv");
+                var txt = ComponentUtil.translatable("doggui.style.accessories.no_accessories_in_inv");
                 int tX = this.getRealX() + mX - mc.font.width(txt)/2;
                 int tY = this.getRealY() + mY - mc.font.lineHeight/2;
                 mc.font.draw(stack, txt, tX, tY, 0xffffffff);

@@ -14,6 +14,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class DebugView extends AbstractElement {
 
@@ -43,7 +44,7 @@ public class DebugView extends AbstractElement {
                 @Override
                 public AbstractElement init() {
                     testButt = new Button(getRealX(), getRealY(), 40, 20, 
-                        Component.literal("test"), b -> {
+                        ComponentUtil.literal("test"), b -> {
                             ChopinLogger.l("Clicked test!");
                         });
                     this.addChildren(testButt);
@@ -129,7 +130,7 @@ public class DebugView extends AbstractElement {
 
     @Override
     public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-        this.font.draw(stack, Component.literal("Debug"), 
+        this.font.draw(stack, ComponentUtil.literal("Debug"), 
             this.getRealX(), this.getRealY(), 0xffffffff);
     }
     

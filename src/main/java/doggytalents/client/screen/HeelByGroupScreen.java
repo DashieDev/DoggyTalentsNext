@@ -24,6 +24,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -55,7 +56,7 @@ public class HeelByGroupScreen extends Screen {
     private final int MAX_BUFFER_SIZE = 16;
 
     public HeelByGroupScreen(Player player) {
-        super(Component.translatable("doggytalents.screen.heel_by_group"));
+        super(ComponentUtil.translatable("doggytalents.screen.heel_by_group"));
         this.player = player;   
         this.dogGroupList = new ArrayList<DogGroup>();
         this.dogGroupFilterList = new ArrayList<DogGroup>();
@@ -75,11 +76,11 @@ public class HeelByGroupScreen extends Screen {
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         this.rect = new Rect2i(0, 0,500, 500);
 
-        Button help = new Button(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
+        Button help = new Button(3, 26, 20, 20, ComponentUtil.literal("?"), b -> {} ) {
             @Override
             public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
                 List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.heel_by_group.help_title")
+                list.add(ComponentUtil.translatable("doggytalents.screen.heel_by_group.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
                 String str = I18n.get("doggytalents.screen.heel_by_group.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, HeelByGroupScreen.this.font));

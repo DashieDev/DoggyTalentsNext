@@ -10,6 +10,7 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -59,14 +60,14 @@ public class RoaringGaleTalent extends TalentInstance {
             .filter(dog -> dog.getDogLevel(DoggyTalents.ROARING_GALE) > 0)
             .collect(Collectors.toList());
         if (roarDogs.isEmpty()) {
-            player.displayClientMessage(Component.translatable("talent.doggytalents.roaring_gale.level"), true);
+            player.displayClientMessage(ComponentUtil.translatable("talent.doggytalents.roaring_gale.level"), true);
             return;
         }
         roarDogs = roarDogs.stream()
             .filter(RoaringGaleTalent::isNotOnRoarCooldown)
             .collect(Collectors.toList());
         if (roarDogs.isEmpty()) {
-            player.displayClientMessage(Component.translatable("talent.doggytalents.roaring_gale.cooldown"), true);
+            player.displayClientMessage(ComponentUtil.translatable("talent.doggytalents.roaring_gale.cooldown"), true);
             return;
         }
         boolean anyHits = false;
@@ -107,7 +108,7 @@ public class RoaringGaleTalent extends TalentInstance {
         }
 
         if (!anyHits) {
-            player.displayClientMessage(Component.translatable("talent.doggytalents.roaring_gale.miss"), true);
+            player.displayClientMessage(ComponentUtil.translatable("talent.doggytalents.roaring_gale.miss"), true);
         }
     }
 

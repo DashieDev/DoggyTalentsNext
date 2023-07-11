@@ -7,8 +7,10 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AmnesiaBoneItem;
 import doggytalents.common.network.packet.data.DogMigrateOwnerData;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.network.NetworkEvent.Context;
 
@@ -67,10 +69,10 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
 
         //If reject then send the requester reject msg and return;
         if (!data.confirmed) {
-            requester.sendSystemMessage(
-                Component.translatable("item.doggytalents.amnesia_bone.migrate_owner.reject",
+            requester.sendMessage(
+                ComponentUtil.translatable("item.doggytalents.amnesia_bone.migrate_owner.reject",
                     dog.getName().getString()
-                ).withStyle(ChatFormatting.RED)
+                ).withStyle(ChatFormatting.RED), Util.NIL_UUID
             );
             return;
         }
@@ -97,10 +99,10 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
         tag.putInt("amnesia_bone_used_time", usedTime);
 
         //Proccess requester
-        requester.sendSystemMessage(
-            Component.translatable("item.doggytalents.amnesia_bone.migrate_owner.confirmed",
+        requester.sendMessage(
+            ComponentUtil.translatable("item.doggytalents.amnesia_bone.migrate_owner.confirmed",
                 dog.getName().getString(), dog.getGenderPronoun()
-            )
+            ), Util.NIL_UUID
         );
     }
     

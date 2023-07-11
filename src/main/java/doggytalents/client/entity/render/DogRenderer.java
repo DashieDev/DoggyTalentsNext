@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -35,7 +36,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         DogModelRegistry.resolve(ctx);
         this.model = DogModelRegistry.getDogModelHolder("default").getValue();
         this.defaultModel = this.model;
-        this.addLayer(new BoneLayer(this, ctx.getItemInHandRenderer()));
+        this.addLayer(new BoneLayer(this, Minecraft.getInstance().getItemInHandRenderer()));
         for (LayerFactory<Dog, DogModel<Dog>> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
         }
@@ -124,14 +125,14 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
                     this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
                     && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
 
-                var label = Component.translatable(tip);
-                var hunger_c1 = Component.literal("(" + hunger + ")");
+                var label = ComponentUtil.translatable(tip);
+                var hunger_c1 = ComponentUtil.literal("(" + hunger + ")");
                 if (dog.getDogHunger() <= 10 && flag1) {
                     hunger_c1.withStyle(Style.EMPTY.withColor(0xff3636));
                 }
                 label.append(hunger_c1);
                 if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER)) {
-                    label.append(Component.translatable(dog.getGender().getUnlocalisedTip()));
+                    label.append(ComponentUtil.translatable(dog.getGender().getUnlocalisedTip()));
                 }
 
                 RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, label, matrixStackIn, bufferIn, packedLightIn, 0.01F, 0.12F);
@@ -152,7 +153,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
     }
 
     private Component getNameUnknown(Dog dogIn) {
-        return Component.translatable(dogIn.getOwnerUUID() != null ? "entity.doggytalents.dog.unknown_owner" : "entity.doggytalents.dog.untamed");
+        return ComponentUtil.translatable(dogIn.getOwnerUUID() != null ? "entity.doggytalents.dog.unknown_owner" : "entity.doggytalents.dog.untamed");
     }
 
     @Override
@@ -207,11 +208,11 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
                 } else if (healthPercentage >= 0.3) {
                     color = TXTCLR_HEALTH_30_70;
                 }
-                var newTxt = Component.literal(hlPart).withStyle(
+                var newTxt = ComponentUtil.literal(hlPart).withStyle(
                     Style.EMPTY
                     .withColor(color)
                 );
-                var restTxt = Component.literal(nonHlPart).withStyle(
+                var restTxt = ComponentUtil.literal(nonHlPart).withStyle(
                     Style.EMPTY
                     .withColor(TXTCLR_BKG)
                 );

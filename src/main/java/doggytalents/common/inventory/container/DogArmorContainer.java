@@ -64,7 +64,7 @@ public class DogArmorContainer extends AbstractContainerMenu {
                     var itemstack = this.getItem();
                         dog.setItemSlot(equipmentslot, p_219985_);
                         super.set(p_219985_);
-                        dog.onEquipItem(equipmentslot, itemstack, p_219985_);
+                        //dog.onEquipItem(equipmentslot, itemstack, p_219985_);
                 }
     
                 public int getMaxStackSize() {
@@ -94,7 +94,7 @@ public class DogArmorContainer extends AbstractContainerMenu {
                     var itemstack = this.getItem();
                         dog.setItemSlot(equipmentslot, p_219985_);
                         super.set(p_219985_);
-                        dog.onEquipItem(equipmentslot, itemstack, p_219985_);
+                        //dog.onEquipItem(equipmentslot, itemstack, p_219985_);
                 }
                 
                 @Override

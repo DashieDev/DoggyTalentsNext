@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 
 public class DogCannotInteractWithScreen extends Screen {
@@ -17,7 +18,7 @@ public class DogCannotInteractWithScreen extends Screen {
     Dog dog;
 
     protected DogCannotInteractWithScreen(Dog dog) {
-        super(Component.literal(""));
+        super(ComponentUtil.literal(""));
         this.dog = dog;
     }
 
@@ -38,7 +39,7 @@ public class DogCannotInteractWithScreen extends Screen {
         Component title;
         String help;
         if (this.dog.isDefeated()) {
-            title = Component.translatable("doggui.invalid_dog.incapacitated.title")
+            title = ComponentUtil.translatable("doggui.invalid_dog.incapacitated.title")
                 .withStyle(
                     Style.EMPTY
                     .withBold(true)
@@ -53,7 +54,7 @@ public class DogCannotInteractWithScreen extends Screen {
                 DogNewInfoScreen.open(dog);
                 return;
             };
-            title = Component.translatable("doggui.invalid_dog.no_permission.title")
+            title = ComponentUtil.translatable("doggui.invalid_dog.no_permission.title")
             .withStyle(
                 Style.EMPTY
                 .withBold(true)
@@ -70,7 +71,7 @@ public class DogCannotInteractWithScreen extends Screen {
         );
         var owner_title = I18n.get(
             "doggui.invalid_dog.info.owner",
-            this.dog.getOwnersName().orElse(Component.literal("")).getString()
+            this.dog.getOwnersName().orElse(ComponentUtil.literal("")).getString()
         );
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
         stack.pushPose();

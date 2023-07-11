@@ -15,6 +15,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.item.CreativeModeTab;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class DogInventoryButton extends Button {
     private int baseX;
 
     public DogInventoryButton(int x, int y, Screen parentIn, OnPress onPress) {
-        super(x, y, 13, 10, Component.literal(""), onPress);
+        super(x, y, 13, 10, ComponentUtil.literal(""), onPress);
         this.baseX = x;
         this.parent = parentIn;
     }
@@ -76,10 +77,10 @@ public class DogInventoryButton extends Button {
     @Override
     public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
         if (this.active) {
-            Component msg = Component.translatable("container.doggytalents.dog_inventories.link");
+            Component msg = ComponentUtil.translatable("container.doggytalents.dog_inventories.link");
             this.parent.renderTooltip(stack, msg, mouseX, mouseY);
         } else {
-            Component msg = Component.translatable("container.doggytalents.dog_inventories.link").withStyle(ChatFormatting.RED);
+            Component msg = ComponentUtil.translatable("container.doggytalents.dog_inventories.link").withStyle(ChatFormatting.RED);
             this.parent.renderTooltip(stack, msg, mouseX, mouseY);
         }
     }

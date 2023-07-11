@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import doggytalents.common.entity.Dog;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Wolf;
@@ -37,7 +38,7 @@ public class ChopinLogger {
 
     public static void sendToOwner(Dog d, String s) {
         if (d.getOwner() == null) return;
-        d.getOwner().sendSystemMessage(Component.literal("<" + d.getName().getString() + "> : " + s));
+        d.getOwner().sendMessage(ComponentUtil.literal("<" + d.getName().getString() + "> : " + s), net.minecraft.Util.NIL_UUID);
     }
 
     public static void outputToFile(String s) {
@@ -67,7 +68,7 @@ public class ChopinLogger {
         ) {
             if (ev.getSource().isBypassInvul()) return;
             ev.setCanceled(true);
-            e.setHealth(e.getMaxHealth());
+            ((LivingEntity)e).setHealth(((LivingEntity)e).getMaxHealth());
             if (e instanceof Dog) {
                 ChopinLogger.lwn(e, "💩");
             } else {

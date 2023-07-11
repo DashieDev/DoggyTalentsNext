@@ -15,9 +15,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.data.IModelData;
+import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
 
 import javax.annotation.Nullable;
@@ -89,11 +91,11 @@ public class DogBedTileEntity extends PlacedTileEntity {
     }
 
     @Override
-    public ModelData getModelData() {
-        return ModelData.builder()
-                .with(CASING, this.casingType)
-                .with(BEDDING, this.beddingType)
-                .with(FACING, Direction.NORTH)
+    public IModelData getModelData() {
+        return new ModelDataMap.Builder()
+                .withInitial(CASING, this.casingType)
+                .withInitial(BEDDING, this.beddingType)
+                .withInitial(FACING, Direction.NORTH)
                 .build();
     }
 

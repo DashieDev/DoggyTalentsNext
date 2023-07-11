@@ -11,6 +11,7 @@ import doggytalents.common.util.InventoryUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -79,7 +80,7 @@ public class PackPuppyTalent extends TalentInstance {
                 if (dogIn.canInteract(playerIn)) {
 
                     if (!playerIn.level.isClientSide) {
-                        playerIn.displayClientMessage(Component.translatable("talent.doggytalents.pack_puppy.version_migration"), false);
+                        playerIn.displayClientMessage(ComponentUtil.translatable("talent.doggytalents.pack_puppy.version_migration"), false);
                     }
                     return InteractionResult.SUCCESS;
                 }

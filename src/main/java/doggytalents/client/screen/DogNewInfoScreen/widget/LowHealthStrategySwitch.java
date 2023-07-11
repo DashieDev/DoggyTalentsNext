@@ -19,6 +19,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraftforge.network.PacketDistributor;
 
@@ -41,7 +42,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
     long tickCount0;
 
     public LowHealthStrategySwitch(int x, int y, int width, int height, Dog dog, Font font, Screen screen) {
-        super(x, y, width, height, Component.translatable(
+        super(x, y, width, height, ComponentUtil.translatable(
             dog.getLowHealthStrategy().getUnlocalisedTitle()
         ));
         this.dog = dog;
@@ -60,7 +61,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         } else {
             strategy = this.dog.getLowHealthStrategy().next();
         }
-        this.setMessage(Component.translatable(strategy.getUnlocalisedTitle()));
+        this.setMessage(ComponentUtil.translatable(strategy.getUnlocalisedTitle()));
 
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
             new DogLowHealthStrategyData(this.dog.getId(), strategy));
@@ -91,7 +92,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         int mX = this.x + this.width/2;
         int mY = this.y + this.height/2;
 
-        var back_c1 = Component.literal("<");
+        var back_c1 = ComponentUtil.literal("<");
         back_c1.withStyle(
             Style.EMPTY.withBold(hoveredLeft)
         );
@@ -99,7 +100,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         int back_tY = mY - font.lineHeight/2;
         this.font.draw(stack, back_c1, back_tX, back_tY, hoveredLeft ? 0xffffffff : 0xa5ffffff);
 
-        var next_c1 = Component.literal(">");
+        var next_c1 = ComponentUtil.literal(">");
         next_c1.withStyle(
             Style.EMPTY.withBold(hoveredRight)
         );

@@ -5,6 +5,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -77,7 +78,7 @@ public class WolfMountTalent extends TalentInstance {
     @Override
     public void livingTick(AbstractDog dog) {
         if (dog.isVehicle() && dog.getDogHunger() < 1) {
-            dog.getControllingPassenger().sendSystemMessage(Component.translatable("talent.doggytalents.wolf_mount.exhausted", dog.getName()));
+            dog.getControllingPassenger().sendMessage(ComponentUtil.translatable("talent.doggytalents.wolf_mount.exhausted", dog.getName()), net.minecraft.Util.NIL_UUID);
 
             dog.ejectPassengers();
         }

@@ -11,6 +11,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 
@@ -52,7 +53,7 @@ public class MobKillsView extends AbstractElement {
         this.lastPage = new TextOnlyButton(
             this.getRealX() + mX - 30 - 20, 
             this.getRealY() + this.getSizeY() - 20 - 5, 20, 20,  
-            Component.literal("<"), b -> {
+            ComponentUtil.literal("<"), b -> {
                 startIndex -= this.maxEntryFit;
                 --pageIndex;
                 if (pageIndex < 0) pageIndex = 0;
@@ -62,7 +63,7 @@ public class MobKillsView extends AbstractElement {
         this.nextPage = new TextOnlyButton(
             this.getRealX() + mX + 30, 
             this.getRealY() + this.getSizeY() - 20 - 5, 20, 20, 
-            Component.literal(">"), b -> {
+            ComponentUtil.literal(">"), b -> {
                 startIndex += this.maxEntryFit;
                 ++pageIndex;
                 if (pageIndex > this.maxPageNum) pageIndex = this.maxPageNum;

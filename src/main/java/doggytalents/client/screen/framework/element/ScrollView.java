@@ -10,6 +10,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.ChopinLogger;
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
+import doggytalents.common.forward_imitate.GuiComponentUtil;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -45,7 +46,7 @@ public class ScrollView extends AbstractElement {
 
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-        GuiComponent.enableScissor(
+        GuiComponentUtil.enableScissor(
             this.getRealX(), this.getRealY(), 
             this.getRealX() + this.getSizeX(), 
             this.getRealY() + this.getSizeY());
@@ -61,7 +62,7 @@ public class ScrollView extends AbstractElement {
             millis0 = millis;
             drawScrollBar(stack, mouseX, mouseY, partialTicks);
         }
-        GuiComponent.disableScissor();       
+        GuiComponentUtil.disableScissor();       
     }
 
     private void shiftWidgetOffsetRescursive(List<? extends GuiEventListener> childrens, int offset) {

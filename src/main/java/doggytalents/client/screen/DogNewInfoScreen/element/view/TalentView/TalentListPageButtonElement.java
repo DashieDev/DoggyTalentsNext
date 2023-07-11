@@ -12,6 +12,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class TalentListPageButtonElement extends AbstractElement {
 
@@ -37,14 +38,14 @@ public class TalentListPageButtonElement extends AbstractElement {
         int mX = this.getSizeX()/2;
         int mY = this.getSizeY()/2;
         var nextButton = new TextOnlyButton(0, 0, BUTTON_SIZE, BUTTON_SIZE, 
-            Component.literal(">"), b -> {
+            ComponentUtil.literal(">"), b -> {
                 Store.get(getScreen()).dispatch(TalentListPageCounterSlice.class, 
                 new UIAction(UIActionTypes.Talents.LIST_INC, null));
             }, font
         ); 
         nextButton.active = curPage < maxPage;
         var backButton = new TextOnlyButton(0, 0, BUTTON_SIZE, BUTTON_SIZE, 
-            Component.literal("<"), b -> {
+            ComponentUtil.literal("<"), b -> {
                 Store.get(getScreen()).dispatch(TalentListPageCounterSlice.class, 
                 new UIAction(UIActionTypes.Talents.LIST_DEC, null));
             }, font
@@ -69,7 +70,7 @@ public class TalentListPageButtonElement extends AbstractElement {
     public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
         int mX = this.getSizeX()/2;
         int mY = this.getSizeY()/2;
-        var c0 = Component.literal(this.curPage + "/" + this.maxPage);
+        var c0 = ComponentUtil.literal(this.curPage + "/" + this.maxPage);
         int tX = this.getRealX() + mX - font.width(c0)/2;
         int tY = this.getRealY() + mY - font.lineHeight/2;
         font.draw(stack, c0, tX, tY, 0xffffffff);

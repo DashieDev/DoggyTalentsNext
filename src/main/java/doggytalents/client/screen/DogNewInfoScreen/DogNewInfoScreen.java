@@ -38,6 +38,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class DogNewInfoScreen extends StoreConnectedScreen {
 
@@ -48,10 +49,10 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     private boolean sideTabNavLocked = false;
 
     private DogNewInfoScreen(Dog dog) {
-        super(Component.translatable("doggytalents.screen.dog.title"));
+        super(ComponentUtil.translatable("doggytalents.screen.dog.title"));
         this.dog = dog;
         
-        this.rightTabButton = new TextOnlyButton(0, 0, 0, 0, Component.literal(">"), b -> {
+        this.rightTabButton = new TextOnlyButton(0, 0, 0, 0, ComponentUtil.literal(">"), b -> {
             var selectedTab = Store.get(this).getStateOrDefault(
                 ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
                 ActiveTabSlice.Tab.HOME
@@ -103,7 +104,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
 
         };
 
-        this.lefTabButton = new TextOnlyButton(0, 0, 0, 0, Component.literal("<"), b -> {
+        this.lefTabButton = new TextOnlyButton(0, 0, 0, 0, ComponentUtil.literal("<"), b -> {
             var selectedTab = Store.get(this).getStateOrDefault(
                 ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
                 ActiveTabSlice.Tab.HOME
@@ -216,7 +217,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         
         this.addSwitchTabButtons(selectedTab);
 
-        //var button = new Button(0, 0, 40, 20, Component.literal(A ctiveTabSlice.activeTab.title), b -> {});
+        //var button = new Button(0, 0, 40, 20, ComponentUtil.literal(A ctiveTabSlice.activeTab.title), b -> {});
         //this.addRenderableWidget(button);
     }
 
@@ -270,10 +271,10 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         this.renderBackground(stack);
         super.render(stack, mouseX, mouseY, pTicks);
 
-        //font.draw(stack, Component.literal("width : " + this.width ), 3 , 3, 0xffffffff);
-        //font.draw(stack, Component.literal("height : " + this.height ), 3 , 11, 0xffffffff);
-        //font.draw(stack, Component.literal("cursorX : " + mouseX ), 3 , 19, 0xffffffff);
-        //font.draw(stack, Component.literal("cursorY : " + mouseY ), 3 , 27, 0xffffffff);
+        //font.draw(stack, ComponentUtil.literal("width : " + this.width ), 3 , 3, 0xffffffff);
+        //font.draw(stack, ComponentUtil.literal("height : " + this.height ), 3 , 11, 0xffffffff);
+        //font.draw(stack, ComponentUtil.literal("cursorX : " + mouseX ), 3 , 19, 0xffffffff);
+        //font.draw(stack, ComponentUtil.literal("cursorY : " + mouseY ), 3 , 27, 0xffffffff);
         //this.font.draw(p_96562_, ActiveTabSlice.activeTab.title, 0, 0, 0xffffff);
 
         //ToolTipManager

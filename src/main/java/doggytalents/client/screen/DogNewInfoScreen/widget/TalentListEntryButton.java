@@ -17,6 +17,7 @@ import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.util.Mth;
 
 public class TalentListEntryButton extends AbstractButton {
@@ -38,7 +39,7 @@ public class TalentListEntryButton extends AbstractButton {
 
     public TalentListEntryButton(int x, int y, int width, int height, 
         Talent talent, Screen screen, Dog dog, boolean selected) {
-        super(x, y, width, height, Component.translatable(talent.getTranslationKey()));
+        super(x, y, width, height, ComponentUtil.translatable(talent.getTranslationKey()));
         //TODO Auto-generated constructor stub
         this.font = Minecraft.getInstance().font;
         this.talent = talent;

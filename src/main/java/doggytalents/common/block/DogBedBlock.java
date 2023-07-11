@@ -22,6 +22,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -211,11 +212,11 @@ public class DogBedBlock extends BaseEntityBlock {
                         return InteractionResult.SUCCESS;
                     } else {
                         Component name = dogBedTileEntity.getOwnerName();
-                        player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.owner", name != null ? name : "someone"));
+                        player.sendMessage(ComponentUtil.translatable("block.doggytalents.dog_bed.owner", name != null ? name : "someone"), net.minecraft.Util.NIL_UUID);
                         return InteractionResult.FAIL;
                     }
                 } else {
-                    player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.set_owner_help"));
+                    player.sendMessage(ComponentUtil.translatable("block.doggytalents.dog_bed.set_owner_help"), net.minecraft.Util.NIL_UUID);
                     return InteractionResult.SUCCESS;
                 }
             }
@@ -232,13 +233,13 @@ public class DogBedBlock extends BaseEntityBlock {
 
         tooltip.add(materials.getLeft() != null
                 ? materials.getLeft().getTooltip()
-                : Component.translatable("dogbed.casing.null").withStyle(ChatFormatting.RED));
+                : ComponentUtil.translatable("dogbed.casing.null").withStyle(ChatFormatting.RED));
         tooltip.add(materials.getRight() != null
                 ? materials.getRight().getTooltip()
-                : Component.translatable("dogbed.bedding.null").withStyle(ChatFormatting.RED));
+                : ComponentUtil.translatable("dogbed.bedding.null").withStyle(ChatFormatting.RED));
 
         if (materials.getLeft() == null && materials.getRight() == null) {
-            tooltip.add(Component.translatable("dogbed.explain.missing").withStyle(ChatFormatting.ITALIC));
+            tooltip.add(ComponentUtil.translatable("dogbed.explain.missing").withStyle(ChatFormatting.ITALIC));
         }
 
         CompoundTag tag = stack.getTagElement("doggytalents");
@@ -248,16 +249,16 @@ public class DogBedBlock extends BaseEntityBlock {
             Component ownerName = NBTUtil.getTextComponent(tag, "ownerName");
 
             if (name != null) {
-                tooltip.add(Component.literal("Bed Name: ").withStyle(ChatFormatting.WHITE).append(name));
+                tooltip.add(ComponentUtil.literal("Bed Name: ").withStyle(ChatFormatting.WHITE).append(name));
             }
 
             if (ownerName != null) {
-                tooltip.add(Component.literal("Name: ").withStyle(ChatFormatting.DARK_AQUA).append(ownerName));
+                tooltip.add(ComponentUtil.literal("Name: ").withStyle(ChatFormatting.DARK_AQUA).append(ownerName));
 
             }
 
             if (ownerId != null && (flagIn.isAdvanced() || Screen.hasShiftDown())) {
-                tooltip.add(Component.literal("UUID: ").withStyle(ChatFormatting.AQUA).append(Component.literal(ownerId.toString())));
+                tooltip.add(ComponentUtil.literal("UUID: ").withStyle(ChatFormatting.AQUA).append(ComponentUtil.literal(ownerId.toString())));
             }
         }
     }

@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 
-import net.minecraft.util.RandomSource;
-
 public enum EnumGender {
 
     MALE(1, "male"),
@@ -90,8 +88,8 @@ public enum EnumGender {
         return UNISEX;
     }
 
-    public static EnumGender random(RandomSource rng) {
+    public static EnumGender random(Random rng) {
         return rng.nextBoolean() ? MALE : FEMALE;
-    }
+    }   
 
 }

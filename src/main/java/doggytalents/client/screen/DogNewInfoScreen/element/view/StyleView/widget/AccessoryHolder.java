@@ -18,8 +18,8 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.ContainerScreenEvent.Render;
 import net.minecraftforge.network.PacketDistributor;
 
 public class AccessoryHolder extends AbstractWidget {
@@ -40,7 +40,7 @@ public class AccessoryHolder extends AbstractWidget {
     int inventorySlotId = 0;
 
     public AccessoryHolder(int x, int y, ItemRenderer renderer, Dog dog, boolean add) {
-        super(x, y, WIDGET_SIZE, WIDGET_SIZE, Component.empty());
+        super(x, y, WIDGET_SIZE, WIDGET_SIZE, ComponentUtil.empty());
         this.itemRenderer = renderer;
         this.add = add;
         this.dog = dog;

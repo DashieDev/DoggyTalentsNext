@@ -6,6 +6,7 @@ import doggytalents.common.util.Util;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -22,10 +23,10 @@ public class DoggyTalentsAdvancements implements Consumer<Consumer<Advancement>>
 
     @Override
     public void accept(Consumer<Advancement> register) {
-        Advancement advancement = Advancement.Builder.advancement().display(DoggyItems.TRAINING_TREAT.get(), Component.translatable("advancements.dog.root.title"), Component.translatable("advancements.dog.root.description"), new ResourceLocation("textures/gui/advancements/backgrounds/stone.png"), FrameType.TASK, false, false, false).addCriterion("crafting_table", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CRAFTING_TABLE)).save(register, Util.getResourcePath("dog/find_dog"));
-        Advancement advancement1 = Advancement.Builder.advancement().parent(advancement).display(Items.WOODEN_PICKAXE, Component.translatable("advancements.dog.mine_stone.title"), Component.translatable("advancements.dog.mine_stone.description"), (ResourceLocation)null, FrameType.TASK, true, true, false).addCriterion("get_stone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.COBBLESTONE)).save(register, Util.getResourcePath("dog/level_talent"));
-        Advancement advancement2 = Advancement.Builder.advancement().parent(advancement1).display(DoggyItems.CAPE.get(), Component.translatable("advancements.dog.upgrade_tools.title"), Component.translatable("advancements.dog.upgrade_tools.description"), (ResourceLocation)null, FrameType.TASK, true, true, false).addCriterion("stone_pickaxe", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STONE_PICKAXE)).save(register, Util.getResourcePath("dog/accessorise"));
-        Advancement advancement3 = Advancement.Builder.advancement().parent(advancement2).display(DoggyItems.RADIO_COLLAR.get(), Component.translatable("advancements.dog.smelt_iron.title"), Component.translatable("advancements.dog.smelt_iron.description"), (ResourceLocation)null, FrameType.TASK, true, true, false).addCriterion("iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT)).save(register, Util.getResourcePath("dog/radio_collar"));
+        Advancement advancement = Advancement.Builder.advancement().display(DoggyItems.TRAINING_TREAT.get(), ComponentUtil.translatable("advancements.dog.root.title"), ComponentUtil.translatable("advancements.dog.root.description"), new ResourceLocation("textures/gui/advancements/backgrounds/stone.png"), FrameType.TASK, false, false, false).addCriterion("crafting_table", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CRAFTING_TABLE)).save(register, Util.getResourcePath("dog/find_dog"));
+        Advancement advancement1 = Advancement.Builder.advancement().parent(advancement).display(Items.WOODEN_PICKAXE, ComponentUtil.translatable("advancements.dog.mine_stone.title"), ComponentUtil.translatable("advancements.dog.mine_stone.description"), (ResourceLocation)null, FrameType.TASK, true, true, false).addCriterion("get_stone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.COBBLESTONE)).save(register, Util.getResourcePath("dog/level_talent"));
+        Advancement advancement2 = Advancement.Builder.advancement().parent(advancement1).display(DoggyItems.CAPE.get(), ComponentUtil.translatable("advancements.dog.upgrade_tools.title"), ComponentUtil.translatable("advancements.dog.upgrade_tools.description"), (ResourceLocation)null, FrameType.TASK, true, true, false).addCriterion("stone_pickaxe", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STONE_PICKAXE)).save(register, Util.getResourcePath("dog/accessorise"));
+        Advancement advancement3 = Advancement.Builder.advancement().parent(advancement2).display(DoggyItems.RADIO_COLLAR.get(), ComponentUtil.translatable("advancements.dog.smelt_iron.title"), ComponentUtil.translatable("advancements.dog.smelt_iron.description"), (ResourceLocation)null, FrameType.TASK, true, true, false).addCriterion("iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT)).save(register, Util.getResourcePath("dog/radio_collar"));
     }
 
     public static class Builder {

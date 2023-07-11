@@ -6,8 +6,10 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -101,11 +103,12 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
     public void onFulfilled() {
         var owner = this.dog.getOwner();
         if (owner != null) {
-            owner.sendSystemMessage(
-                Component.translatable(
+            owner.sendMessage(
+                ComponentUtil.translatable(
                     "item.doggytalents.conducting_bone.fulfilled.tp_bed", 
                     this.dog.getName().getString(), this.dog.getGenderPossessiveAdj()
-                )
+                ),
+                Util.NIL_UUID
             );
         }
     }
@@ -114,14 +117,14 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
     public void onRejected() {
         var owner = this.dog.getOwner();
         if (owner != null) {
-            owner.sendSystemMessage(
-                Component.translatable(
+            owner.sendMessage(
+                ComponentUtil.translatable(
                     "item.doggytalents.conducting_bone.rejected",
-                    Component.literal(this.rejectedMsg).withStyle(
+                    ComponentUtil.literal(this.rejectedMsg).withStyle(
                         Style.EMPTY.withBold(true)
                         .withColor(ChatFormatting.RED)
                     )
-                )
+                ), Util.NIL_UUID
             );
         }
     }

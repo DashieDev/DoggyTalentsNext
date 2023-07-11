@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.world.entity.Entity;
 
 public class RenderUtil {
@@ -21,7 +22,7 @@ public class RenderUtil {
     }
 
     public static <T extends Entity> void renderLabelWithScale(T entity, EntityRenderer<T> renderer, EntityRenderDispatcher entityRenderDispatcher, String text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yChange) {
-        renderLabelWithScale(!entity.isDiscrete(), renderer, entityRenderDispatcher, Component.literal(text), stack, buffer, packedLightIn, scale, yChange + entity.getBbHeight() + 0.5F);
+        renderLabelWithScale(!entity.isDiscrete(), renderer, entityRenderDispatcher, ComponentUtil.literal(text), stack, buffer, packedLightIn, scale, yChange + entity.getBbHeight() + 0.5F);
     }
 
     // public static void renderLabelWithScale(boolean flag, EntityRenderer renderer, EntityRenderDispatcher entityRenderDispatcher, Component text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yOffset) {
@@ -79,7 +80,8 @@ public class RenderUtil {
         bufferbuilder.vertex(maxX, yMax, zLevel).uv(textureXMax, textureYMax).endVertex();
         bufferbuilder.vertex(maxX, yMin, zLevel).uv(textureXMax, textureYMin).endVertex();
         bufferbuilder.vertex(minX, yMin, zLevel).uv(textureXMin, textureYMin).endVertex();
-        BufferUploader.drawWithShader(bufferbuilder.end());
+        bufferbuilder.end();
+        BufferUploader.end(bufferbuilder);
     }
     
     public static int rgbToInt(int[] rgb) {

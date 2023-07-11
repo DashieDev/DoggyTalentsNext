@@ -20,6 +20,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -34,7 +35,7 @@ public class DogMigrateOwnerScreen extends Screen {
     private TextOnlyButton uuidShowButton;
 
     protected DogMigrateOwnerScreen(Dog dog, @Nullable UUID migrateTo, String ownerName) {
-        super(Component.literal(""));
+        super(ComponentUtil.literal(""));
         this.dog = dog;
         this.migrateTo = migrateTo;
         this.migrateToStr = ownerName;
@@ -51,13 +52,13 @@ public class DogMigrateOwnerScreen extends Screen {
     protected void init() {
 
         uuidShowButton = new TextOnlyButton(0, 0, 100, 20, 
-        Component.translatable("doggui.migrate_owner.show_uuid")
+        ComponentUtil.translatable("doggui.migrate_owner.show_uuid")
             .withStyle(ChatFormatting.GRAY), 
             $ -> {}, Minecraft.getInstance().font) {
                 @Override
                 public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
                     DogMigrateOwnerScreen.this.renderComponentTooltip(stack, List.of(
-                        Component.literal(migrateTo == null ? "UUID_ZERO" : migrateTo.toString())
+                        ComponentUtil.literal(migrateTo == null ? "UUID_ZERO" : migrateTo.toString())
                     ), mouseX, mouseY);
                 }
         };
@@ -84,13 +85,13 @@ public class DogMigrateOwnerScreen extends Screen {
 
         int pY = mY - 72;
         Component title;
-        title = Component.translatable("doggui.migrate_owner.help.title")
+        title = ComponentUtil.translatable("doggui.migrate_owner.help.title")
         .withStyle(
             Style.EMPTY
             .withBold(true)
             .withColor(ChatFormatting.RED)
         );
-        var help = font.split(Component.translatable("doggui.migrate_owner.help.subtitle"), 300);
+        var help = font.split(ComponentUtil.translatable("doggui.migrate_owner.help.subtitle"), 300);
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
         stack.pushPose();
         stack.scale(1.2f, 1.2f, 1.2f);
@@ -114,7 +115,7 @@ public class DogMigrateOwnerScreen extends Screen {
         int pY = mY - 72;
         Component title;
         String help;
-        title = Component.translatable("doggui.migrate_owner.confirm.title")
+        title = ComponentUtil.translatable("doggui.migrate_owner.confirm.title")
         .withStyle(
             Style.EMPTY
             .withBold(true)
@@ -128,7 +129,7 @@ public class DogMigrateOwnerScreen extends Screen {
             "doggui.migrate_owner.info.dog",
             dog.getName().getString()
         );
-        var owner_title = Component.translatable(
+        var owner_title = ComponentUtil.translatable(
             "doggui.migrate_owner.info.new_owner",
             newOwnerName
         );
@@ -160,7 +161,7 @@ public class DogMigrateOwnerScreen extends Screen {
 
     private void addConfirmButton() {
         var confirmButton = new Button(this.width/2 + 2, this.height/2 + 58, 
-            50, 20, Component.translatable("doggui.migrate_owner.confirm"), 
+            50, 20, ComponentUtil.translatable("doggui.migrate_owner.confirm"), 
             b -> {
                 requestMigrateOwner(true);
                 Minecraft.getInstance().setScreen(null);
@@ -182,7 +183,7 @@ public class DogMigrateOwnerScreen extends Screen {
                 } else {
                     var player = Minecraft.getInstance().player;
                     if (player != null && player.experienceLevel < AmnesiaBoneItem.getMigrateOwnerXPCost()) {
-                        c1 = Component.translatable("doggui.detrain.talents.insufficent_xp");
+                        c1 = ComponentUtil.translatable("doggui.detrain.talents.insufficent_xp");
                         c1.setStyle(
                             Style.EMPTY
                             .withColor(0xffB20000)
@@ -204,7 +205,7 @@ public class DogMigrateOwnerScreen extends Screen {
 
     public void addDenyButton() {
         var denyButton = new Button(this.width/2 - 50 - 2, this.height/2 + 58, 
-            50, 20, Component.translatable("doggui.migrate_owner.deny"), 
+            50, 20, ComponentUtil.translatable("doggui.migrate_owner.deny"), 
             b -> {
                 requestMigrateOwner(false);
                 Minecraft.getInstance().setScreen(null);

@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
@@ -87,21 +88,21 @@ public class RadarLocateRenderer {
 
         int hl_color = getHighlightColor(distance);
 
-        var line1 = Component.translatable("item.doggytalents.radar.locate.line1", 
-            Component.literal(dog_name).withStyle(
+        var line1 = ComponentUtil.translatable("item.doggytalents.radar.locate.line1", 
+            ComponentUtil.literal(dog_name).withStyle(
                 Style.EMPTY.withBold(true)
             )  
         );
         MutableComponent line2 = null;
         if (distance < 5) {
-            line2 = Component.translatable("item.doggytalents.radar.locate.line2.close")
+            line2 = ComponentUtil.translatable("item.doggytalents.radar.locate.line2.close")
                 .withStyle(
                     Style.EMPTY.withBold(true)
                     .withColor(hl_color)
                 );
         } else {
-            line2 = Component.translatable("item.doggytalents.radar.locate.line2.far",
-                Component.literal("" + Mth.ceil(distance)).withStyle(
+            line2 = ComponentUtil.translatable("item.doggytalents.radar.locate.line2.far",
+                ComponentUtil.literal("" + Mth.ceil(distance)).withStyle(
                     Style.EMPTY.withBold(true)
                     .withColor(hl_color)
                 )

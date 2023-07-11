@@ -18,6 +18,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -174,7 +175,7 @@ public class DogIncapacitatedMananger {
 
     private void displayToastIncapacitated(Player player) {
         player.displayClientMessage(
-            Component.translatable("doggui.invalid_dog.incapacitated.title")
+            ComponentUtil.translatable("doggui.invalid_dog.incapacitated.title")
             .withStyle(ChatFormatting.RED) 
         , true);
     }

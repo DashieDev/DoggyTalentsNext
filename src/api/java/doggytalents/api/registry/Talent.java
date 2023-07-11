@@ -6,11 +6,12 @@ import javax.annotation.Nullable;
 
 import doggytalents.api.DoggyTalentsAPI;
 import net.minecraft.Util;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
  * @author ProPercivalalb
  */
-public class Talent {
+public class Talent extends ForgeRegistryEntry<Talent> {
 
     @Nullable
     private String translationKey, translationInfoKey;

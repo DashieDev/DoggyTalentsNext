@@ -26,6 +26,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraftforge.network.PacketDistributor;
 
 public class EditInfoView extends AbstractElement {
@@ -65,10 +66,10 @@ public class EditInfoView extends AbstractElement {
             new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0, 
-                    40, 20, Component.literal("" + this.dog.canOwnerAttack()), 
+                    40, 20, ComponentUtil.literal("" + this.dog.canOwnerAttack()), 
                     b -> {
                         boolean newVal = !dog.canOwnerAttack();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setMessage(ComponentUtil.literal("" + newVal));
                         this.requestFriendlyFire(newVal);
                     }
                 ),
@@ -81,10 +82,10 @@ public class EditInfoView extends AbstractElement {
             new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0,
-                    40, 20, Component.literal("" + this.dog.willObeyOthers()), 
+                    40, 20, ComponentUtil.literal("" + this.dog.willObeyOthers()), 
                     b -> {
                         Boolean newVal = !this.dog.willObeyOthers();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setMessage(ComponentUtil.literal("" + newVal));
                         this.requestObeyOthers(newVal);
                     }     
                 ),
@@ -97,10 +98,10 @@ public class EditInfoView extends AbstractElement {
             new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0,
-                    40, 20, Component.literal("" + this.dog.regardTeamPlayers()), 
+                    40, 20, ComponentUtil.literal("" + this.dog.regardTeamPlayers()), 
                     b -> {
                         Boolean newVal = !this.dog.regardTeamPlayers();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setMessage(ComponentUtil.literal("" + newVal));
                         this.requestRegardTeamPlayers(newVal);
                     }     
                 ) {
@@ -121,10 +122,10 @@ public class EditInfoView extends AbstractElement {
             new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0,
-                    40, 20, Component.literal("" + this.dog.forceSit()), 
+                    40, 20, ComponentUtil.literal("" + this.dog.forceSit()), 
                     b -> {
                         Boolean newVal = !this.dog.forceSit();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setMessage(ComponentUtil.literal("" + newVal));
                         this.requestForceSit(newVal);
                     }     
                 ) {
@@ -145,10 +146,10 @@ public class EditInfoView extends AbstractElement {
             new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0,
-                    40, 20, Component.literal("" + this.dog.crossOriginTp()), 
+                    40, 20, ComponentUtil.literal("" + this.dog.crossOriginTp()), 
                     b -> {
                         Boolean newVal = !this.dog.crossOriginTp();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setMessage(ComponentUtil.literal("" + newVal));
                         this.requestCrossOriginTp(newVal);
                     }     
                 ) {
@@ -252,7 +253,7 @@ public class EditInfoView extends AbstractElement {
             this.applyButton = new FlatButton(
                 startX + this.nameEdit.getWidth() + 15,
                 pY, 40, 20, 
-                Component.translatable("doggui.common.apply"), b -> {
+                ComponentUtil.translatable("doggui.common.apply"), b -> {
                     var newName = this.nameEdit.getValue();
                     requestNameChange(this.dog, newName);
                     b.active = false;
@@ -273,7 +274,7 @@ public class EditInfoView extends AbstractElement {
         }
 
         private void addEditNameBox(int x, int y, int w, int h) {
-            this.nameEdit = new EditBox(this.font, x, y, w, h, Component.translatable("dogInfo.enterName"));
+            this.nameEdit = new EditBox(this.font, x, y, w, h, ComponentUtil.translatable("dogInfo.enterName"));
             nameEdit.setFocus(false);
             nameEdit.setMaxLength(32);
             nameEdit.setResponder(s -> {

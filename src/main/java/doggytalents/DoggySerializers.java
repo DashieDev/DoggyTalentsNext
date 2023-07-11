@@ -5,7 +5,7 @@ import doggytalents.common.lib.Constants;
 import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraftforge.registries.RegistryObject;
-
+import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -14,22 +14,22 @@ import java.util.function.Supplier;
 public class DoggySerializers {
 
     //REFERENCE DIRECTLY THE SERIALIZER! 
-    public static final DeferredRegister<EntityDataSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, Constants.MOD_ID);
+    public static final DeferredRegister<DataSerializerEntry> SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.DATA_SERIALIZERS, Constants.MOD_ID);
 
-    public static final RegistryObject<EntityDataSerializer> TALENT_SERIALIZER = register2("talents", TalentListSerializer::new);
-    public static final RegistryObject<EntityDataSerializer> COLLAR_TYPE_SERIALIZER = register2("collar", CollarSerializer::new);
-    public static final RegistryObject<EntityDataSerializer> ACCESSORY_SERIALIZER = register2("accessories", AccessorySerializer::new);
-    public static final RegistryObject<EntityDataSerializer> GENDER_SERIALIZER = register2("gender", GenderSerializer::new);
-    public static final RegistryObject<EntityDataSerializer> MODE_SERIALIZER = register2("mode", ModeSerializer::new);
-    public static final RegistryObject<EntityDataSerializer> DOG_LEVEL_SERIALIZER = register2("dog_level", DogLevelSerializer::new);
-    public static final RegistryObject<EntityDataSerializer> BED_LOC_SERIALIZER = register2("dog_bed_location", BedLocationsSerializer::new);
-    public static final RegistryObject<EntityDataSerializer> INCAP_SYNC_SERIALIZER = register2("incap_sync", IncapacitatedSyncSerializer::new);
+    public static final RegistryObject<DataSerializerEntry> TALENT_SERIALIZER = register2("talents", TalentListSerializer::new);
+    public static final RegistryObject<DataSerializerEntry> COLLAR_TYPE_SERIALIZER = register2("collar", CollarSerializer::new);
+    public static final RegistryObject<DataSerializerEntry> ACCESSORY_SERIALIZER = register2("accessories", AccessorySerializer::new);
+    public static final RegistryObject<DataSerializerEntry> GENDER_SERIALIZER = register2("gender", GenderSerializer::new);
+    public static final RegistryObject<DataSerializerEntry> MODE_SERIALIZER = register2("mode", ModeSerializer::new);
+    public static final RegistryObject<DataSerializerEntry> DOG_LEVEL_SERIALIZER = register2("dog_level", DogLevelSerializer::new);
+    public static final RegistryObject<DataSerializerEntry> BED_LOC_SERIALIZER = register2("dog_bed_location", BedLocationsSerializer::new);
+    public static final RegistryObject<DataSerializerEntry> INCAP_SYNC_SERIALIZER = register2("incap_sync", IncapacitatedSyncSerializer::new);
 
-    private static <X extends EntityDataSerializer<?>> RegistryObject<EntityDataSerializer> register2(final String name, final Supplier<X> factory) {
-        return register(name, () -> factory.get());
+    private static <X extends EntityDataSerializer<?>> RegistryObject<DataSerializerEntry> register2(final String name, final Supplier<X> factory) {
+        return register(name, () -> new DataSerializerEntry(factory.get()));
     }
 
-    private static RegistryObject<EntityDataSerializer> register(final String name, final Supplier<EntityDataSerializer> sup) {
+    private static RegistryObject<DataSerializerEntry> register(final String name, final Supplier<DataSerializerEntry> sup) {
         return SERIALIZERS.register(name, sup);
     }
 }

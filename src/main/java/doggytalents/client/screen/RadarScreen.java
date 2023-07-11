@@ -25,6 +25,7 @@ import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -56,7 +57,7 @@ public class RadarScreen extends Screen {
     private int mouseY0;
 
     public RadarScreen(Player player) {
-        super(Component.translatable("doggytalents.screen.conducting_bone"));
+        super(ComponentUtil.translatable("doggytalents.screen.conducting_bone"));
         this.player = player;   
         this.dogNameList = new ArrayList<String>(4);
         this.dogIdList = new ArrayList<UUID>(4);
@@ -78,18 +79,18 @@ public class RadarScreen extends Screen {
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         this.rect = new Rect2i(0, 0,500, 500);
         
-        Button showUuid = new Button(3, 3, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
-            btn.setMessage(Component.translatable("doggytalents.screen.whistler.heel_by_name."
+        Button showUuid = new Button(3, 3, 60, 20, ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
+            btn.setMessage(ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name."
                 + (this.showUuid? "show" : "hide")
                 +"_uuid"));
             this.showUuid = !this.showUuid;
         });
 
-        Button help = new Button(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
+        Button help = new Button(3, 26, 20, 20, ComponentUtil.literal("?"), b -> {} ) {
             @Override
             public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
                 List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.radar.help_title")
+                list.add(ComponentUtil.translatable("doggytalents.screen.radar.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
                 String str = I18n.get("doggytalents.screen.radar.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, RadarScreen.this.font));

@@ -14,6 +14,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 
 public class CasingMaterial extends ICasingMaterial {
 
@@ -54,7 +55,7 @@ public class CasingMaterial extends ICasingMaterial {
             this.translationKey = Util.makeDescriptionId("dogbed.casing", DoggyTalentsAPI.CASING_MATERIAL.get().getKey(this));
         }
 
-        return Component.translatable(this.translationKey);
+        return ComponentUtil.translatable(this.translationKey);
     }
 
     /**

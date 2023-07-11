@@ -4,6 +4,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.DogNameData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import doggytalents.common.forward_imitate.ComponentUtil;
 import net.minecraftforge.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;
@@ -33,7 +34,7 @@ public class DogNamePacket extends DogPacket<DogNameData> {
             dogIn.setCustomName(null);
         }
         else {
-            dogIn.setCustomName(Component.literal(data.name));
+            dogIn.setCustomName(ComponentUtil.literal(data.name));
         }
     }
 }
