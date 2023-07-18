@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.client.screen.DogNewInfoScreen.element.MainButtonToolboxRowElement;
 
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.view.EditInfoView;
+import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.view.ArtifactsView.ArtifactsView;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice.MainTab;
 import doggytalents.client.screen.framework.Store;
@@ -36,6 +37,9 @@ public class MainInfoView extends AbstractElement {
         
         switch (tab) {
             case EDIT_INFO:
+                setupPanelView(tab);
+                break;
+            case ARTIFACTS:
                 setupPanelView(tab);
                 break;
             default:
@@ -98,6 +102,9 @@ public class MainInfoView extends AbstractElement {
 
         AbstractElement rightView;
         switch (tab) {
+            case ARTIFACTS:
+                rightView = new ArtifactsView(editInfoViewBoxDiv, getScreen(), dog);
+                break;
             default:
                 rightView = new EditInfoView(editInfoViewBoxDiv, getScreen(), dog, font);
                 break;
