@@ -88,34 +88,6 @@ public class PillowPawTalent extends TalentInstance {
             return this.dog.fallDistance > 3;
         }
 
-        @Override
-        public void start() {
-            this.startGliding();
-        }
-
-        @Override
-        public void stop() {
-            this.stopGliding();
-        }
-
-        private void startGliding() {
-            this.dog.setAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), PILLOW_PAW_BOOST_ID, this::createSpeedModifier);
-            ChopinLogger.lwn(this.dog, "start gliding");
-        }
-
-        private void stopGliding() {
-            this.dog.removeAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), PILLOW_PAW_BOOST_ID);
-        }
-
-        public AttributeModifier createSpeedModifier(AbstractDog dogIn, UUID uuidIn) {
-            if (this.talentInst.level() >= 5) {
-                return new AttributeModifier(uuidIn, "Pillow Paw", -0.065D, AttributeModifier.Operation.ADDITION);
-            }
-    
-            return null;
-        }
-
-
 
     }
 }
