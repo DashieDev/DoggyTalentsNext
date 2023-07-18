@@ -17,6 +17,7 @@ import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.DogInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
+import doggytalents.common.artifacts.DoggyArtifact;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.nav.DogMoveControl;
@@ -30,6 +31,7 @@ import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncStat
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.stats.StatsTracker;
+import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.ParticlePackets.CritEmitterPacket;
@@ -156,6 +158,7 @@ public class Dog extends AbstractDog {
     private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BED_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BOWL_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<IncapacitatedSyncState>> DOG_INCAP_SYNC_STATE = Cache.make(() -> (EntityDataAccessor<IncapacitatedSyncState>) SynchedEntityData.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER.get().getSerializer()));
+    private static final Cache<EntityDataAccessor<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (EntityDataAccessor<List<DoggyArtifactItem>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get()));
 
     public static final void initDataParameters() {
         ACCESSORIES.get();
@@ -166,6 +169,7 @@ public class Dog extends AbstractDog {
         DOG_BED_LOCATION.get();
         DOG_BOWL_LOCATION.get();
         DOG_INCAP_SYNC_STATE.get();
+        ARTIFACTS.get();
     }
 
     // Cached values
@@ -255,6 +259,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(DOG_INCAP_SYNC_STATE.get(), IncapacitatedSyncState.NONE);
         this.entityData.define(SIZE, (byte) 3);
         this.entityData.define(BONE_VARIANT, ItemStack.EMPTY);
+        this.entityData.define(ARTIFACTS.get(), new ArrayList<DoggyArtifactItem>(3));
         this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
         this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
     }
@@ -1762,6 +1767,15 @@ public class Dog extends AbstractDog {
 
         compound.put("accessories", accessoryList);
 
+        var artifactsListTag = new ListTag();
+        var artifacts = this.getArtifactsList();
+        for (var x : artifacts) {
+            var artifactTag = DoggyArtifactItem.writeCompound(x);
+            if (artifactTag == null) continue;
+            artifactsListTag.add(artifactTag);
+        }
+        compound.put("doggy_artifacts", artifactsListTag);
+
         compound.putString("mode", this.getMode().getSaveName());
         compound.putString("dogGender", this.getGender().getSaveName());
         compound.putFloat("dogHunger", this.getDogHunger());
@@ -1948,6 +1962,20 @@ public class Dog extends AbstractDog {
 
         this.markDataParameterDirty(ACCESSORIES.get(), false); // Mark dirty so data is synced to client
 
+        var artifactsList = this.getArtifactsList();
+        artifactsList.clear();
+        if (compound.contains("doggy_artifacts", Tag.TAG_LIST)) {
+            var artifactsListTag = compound.getList("doggy_artifacts", Tag.TAG_COMPOUND);
+            for (int i = 0; i < artifactsListTag.size(); ++i) {
+                var artifactItem = DoggyArtifactItem.readCompound(
+                    artifactsListTag.getCompound(i));
+                if (artifactItem != null) {
+                    artifactsList.add(artifactItem);
+                }
+            }
+        }
+        this.markArtifactsDirty();
+
         try {
             // Does what notifyDataManagerChange would have done but this way only does it once
             this.recalculateAlterations();
@@ -2091,7 +2119,8 @@ public class Dog extends AbstractDog {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (TALENTS.get().equals(key) || ACCESSORIES.get().equals(key)) {
+        if (TALENTS.get().equals(key) || ACCESSORIES.get().equals(key) 
+            || ARTIFACTS.get().equals(key)) {
             this.recalculateAlterations();
         }
 
@@ -2152,6 +2181,13 @@ public class Dog extends AbstractDog {
                 this.foodHandlers.add((IDogFoodHandler) inst);
             }
         }
+
+        var artifacts = this.getArtifactsList();
+        for (var artifactItem : artifacts) {
+            var artifact = artifactItem.createArtifact();
+            this.alterations.add(artifact);
+        }
+
         for (var inst : this.alterations) {
             inst.init(this);
         }
@@ -2557,6 +2593,33 @@ public class Dog extends AbstractDog {
         return InteractionResult.SUCCESS;
     }
 
+    public List<DoggyArtifactItem> getArtifactsList() {
+        var array = this.entityData.get(ARTIFACTS.get());
+        return array;
+    }
+
+    public boolean addArtifact(DoggyArtifactItem artifact) {
+        if (artifact == null)
+            return false;
+        var array = this.entityData.get(ARTIFACTS.get());
+        if (array.size() >= DoggyArtifact.ARTIFACTS_LIMIT) {
+            return false;
+        }
+        if (array.contains(artifact)) 
+            return false;
+        array.add(artifact);
+        this.markDataParameterDirty(ARTIFACTS.get());
+        return true;
+    }
+
+    public ItemStack removeArtifact(int indx) {
+        var array = this.entityData.get(ARTIFACTS.get());
+        if (indx < 0 || indx >= array.size())
+            return null;
+        var removedArtifact = array.remove(indx);
+        this.markDataParameterDirty(ARTIFACTS.get());
+        return new ItemStack(removedArtifact);
+    }
 
     public <T> void markDataParameterDirty(EntityDataAccessor<T> key) {
         this.markDataParameterDirty(key, true);
@@ -2576,6 +2639,10 @@ public class Dog extends AbstractDog {
     @Override
     public void markAccessoriesDirty() {
         this.markDataParameterDirty(ACCESSORIES.get());
+    }
+
+    public void markArtifactsDirty() {
+        this.markDataParameterDirty(ARTIFACTS.get());
     }
 
     @Override
