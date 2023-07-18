@@ -316,6 +316,9 @@
 
    "doggui.home.name" : "Name:",
    "doggui.home.edit_info" : "Edit Info",
+   "doggui.home.artifacts" : "Doggy Artifacts",
+   "doggui.home.artifacts.your_artifacts" : "Your Doggy Artifacts",
+   "doggui.home.artifacts.no_artifacts_in_inv" : "Your Doggy Artifacts will show up here.",
 
    "doggui.talents.no_talents_selected" : "Select a Talent to start.",
    "doggui.talents.current_talent_level" : "Current Level: ",
