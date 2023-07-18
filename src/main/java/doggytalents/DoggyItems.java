@@ -2,6 +2,7 @@ package doggytalents;
 
 import doggytalents.api.feature.DogLevel;
 import doggytalents.api.registry.Accessory;
+import doggytalents.common.artifacts.FeatheredMantleArtifact;
 import doggytalents.common.entity.accessory.DyeableAccessory;
 import doggytalents.common.entity.accessory.Wig;
 import doggytalents.common.item.*;
@@ -65,6 +66,11 @@ public class DoggyItems {
     public static final RegistryObject<Item> TINY_BONE = registerSizeBone("tiny_bone", SizeBoneItem.Type.TINY);
     public static final RegistryObject<Item> BIG_BONE = registerSizeBone("big_bone", SizeBoneItem.Type.BIG);
     public static final RegistryObject<Item> AMNESIA_BONE = registerWith("amnesia_bone", AmnesiaBoneItem::new, 1);
+
+    public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
+        props -> new DoggyArtifactItem(
+            () -> new FeatheredMantleArtifact(), props), 1);
+
     //public static final RegistryObject<Item> PATROL = registerWith("patrol_item", PatrolItem::new, 1);
 
     private static Item.Properties createInitialProp() {
