@@ -1,4 +1,4 @@
-// 1.19.2	2023-06-11T06:28:26.831544	DoggyTalents Item Models
+// 1.19.2	2023-07-18T22:09:15.8865954	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
 800b0dd973429034a05cbf92a314183d189700bb assets/doggytalents/models/item/beastars_uniform_female.json
@@ -19,6 +19,7 @@ ad0c76a4a4a7e72ea4214910a014102656cb3a7a assets/doggytalents/models/item/doggy_c
 d7d1edf4ba2e22a722df08baa0d660f52ab65240 assets/doggytalents/models/item/dog_bath.json
 aa0e5ccc2a5183ecdf5ba2c3fedc832eca34f39f assets/doggytalents/models/item/dog_bed.json
 272d4020b9c5873f4ad8fd7d4294ece831af494c assets/doggytalents/models/item/egg_sandwich.json
+fcce3621bda79bfb2c94031ae8ab9eabef319edc assets/doggytalents/models/item/feathered_mantle.json
 7cdb64b50b71c47cea28a9126f474fa5795001a3 assets/doggytalents/models/item/food_bowl.json
 bbbddd194d8bce956f46ef7e0e9c24bef18cf451 assets/doggytalents/models/item/guard_suit.json
 483e3ff3b100e7bd5a29b802982385f35d98c5cb assets/doggytalents/models/item/leather_jacket.json
