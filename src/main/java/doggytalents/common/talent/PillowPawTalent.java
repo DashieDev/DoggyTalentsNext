@@ -56,5 +56,4 @@ public class PillowPawTalent extends TalentInstance {
 
         return InteractionResultHolder.pass(0F);
     }
-
 }
