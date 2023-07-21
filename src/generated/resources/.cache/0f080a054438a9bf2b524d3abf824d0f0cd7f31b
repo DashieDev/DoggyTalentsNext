@@ -1,9 +1,8 @@
-// 1.19.2	2023-07-18T22:09:15.8865954	DoggyTalents Item Models
+// 1.19.2	2023-07-21T14:43:26.2506947	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
 800b0dd973429034a05cbf92a314183d189700bb assets/doggytalents/models/item/beastars_uniform_female.json
 0b2cb480f564f26dea464bf88fa8dc72ef3976b4 assets/doggytalents/models/item/beastars_uniform_male.json
-4a6f8b08ed41dcd97836306e18c3d5ca66b180c4 assets/doggytalents/models/item/big_bone.json
 3d9d5eecd0fd643f244fcbff0e632a1c69fe532f assets/doggytalents/models/item/bowtie.json
 e16db99d3f12eb93982beacb24a089aeea4a0139 assets/doggytalents/models/item/breeding_bone.json
 8930778c93f214896857d7fb0e6cb986b84365b8 assets/doggytalents/models/item/cape.json
@@ -23,11 +22,13 @@ fcce3621bda79bfb2c94031ae8ab9eabef319edc assets/doggytalents/models/item/feather
 7cdb64b50b71c47cea28a9126f474fa5795001a3 assets/doggytalents/models/item/food_bowl.json
 bbbddd194d8bce956f46ef7e0e9c24bef18cf451 assets/doggytalents/models/item/guard_suit.json
 483e3ff3b100e7bd5a29b802982385f35d98c5cb assets/doggytalents/models/item/leather_jacket.json
+06a0e62363bace2c84c1e53fe38a76af334dddec assets/doggytalents/models/item/magnifying_bone.json
 c78372cc5d3fb956867a2378707fdf0de6287dd0 assets/doggytalents/models/item/master_treat.json
 2898b9dfb81537fc36b6033c98081737b04b1f80 assets/doggytalents/models/item/multicoloured_collar.json
 bc4344cde9b92b3d303523e9d15fe95482b486c4 assets/doggytalents/models/item/pianist_suit.json
 04168bd8a19365ad74e249c9e4443fddfb535b5e assets/doggytalents/models/item/radar.json
 6154f41cf2303fc6636ee83009cc983c95970804 assets/doggytalents/models/item/radio_collar.json
+846f55137451d54b108cb05be5a3f66ff601401a assets/doggytalents/models/item/shrinking_mallet.json
 aa2f1cb07f093298438c6384ff408f9474117585 assets/doggytalents/models/item/smarty_glasses.json
 37e58be2f484f704505648796db525c00a615a1f assets/doggytalents/models/item/spotted_collar.json
 312d0f2de8dba6bad821639ad26b9c5c8a7347fb assets/doggytalents/models/item/sunglasses.json
@@ -36,7 +37,6 @@ d49794ca31255fe0e821fd5b5bff9a7312654eda assets/doggytalents/models/item/super_t
 cf57c5127a904a0fde2c245765fa423cfda1d9d7 assets/doggytalents/models/item/throw_bone_wet.json
 ed79374f62fcbaf72da014a75b6f8115f75fb640 assets/doggytalents/models/item/throw_stick.json
 24bd519cf07ab7a043047f19698cc65478bdf4fd assets/doggytalents/models/item/throw_stick_wet.json
-d7c1878f9a8a6b720c9ef92e4f02ecf0bbb0fc4e assets/doggytalents/models/item/tiny_bone.json
 adc09642854ad0854ae5d3f97bcc2bcdbd7da8d0 assets/doggytalents/models/item/training_treat.json
 1149d5f23768a62627d782d1d6a66c1f0a1dd02f assets/doggytalents/models/item/treat_bag.json
 7463378ef868b9e2a5743e3fc7837c28e1c8222e assets/doggytalents/models/item/whistle.json

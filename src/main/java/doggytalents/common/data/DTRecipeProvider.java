@@ -133,9 +133,25 @@ public class DTRecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(DoggyItems.MULTICOLOURED_COLLAR.get(), 1).requires(DoggyItems.WOOL_COLLAR.get()).requires(Items.STRING).requires(Items.BLUE_DYE).requires(Items.LIME_DYE).requires(Items.YELLOW_DYE).requires(Items.ORANGE_DYE).requires(Items.RED_DYE).requires(Items.PURPLE_DYE).unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get())).save(consumer);
 
         ShapedRecipeBuilder.shaped(DoggyItems.SUNGLASSES.get(), 1).pattern("S S").pattern("GSG").define('S', Items.STICK).define('G', Blocks.GLASS_PANE).unlockedBy("has_stick", has(Items.STICK)).save(consumer);
-        ShapedRecipeBuilder.shaped(DoggyItems.TINY_BONE.get(), 1).pattern("BI").pattern("IB").define('B', Items.BONE).define('I', Items.IRON_INGOT).unlockedBy("has_iron_ingot", has(Items.IRON_INGOT)).save(consumer);
-        ShapedRecipeBuilder.shaped(DoggyItems.BIG_BONE.get(), 1).pattern("BI").pattern("IB").pattern("BI").define('B', Items.BONE).define('I', Items.IRON_INGOT).unlockedBy("has_iron_ingot", has(Items.IRON_INGOT)).save(consumer);
-
+        ShapedRecipeBuilder.shaped(DoggyItems.SHRINKING_MALLET.get(), 1)
+            .pattern(" G ")
+            .pattern("GFG")
+            .pattern(" B ")
+            .define('G', Items.GOLD_INGOT)
+            .define('F', Items.FIRE_CORAL)
+            .define('B', Items.BONE)
+            .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(DoggyItems.MAGNIFYING_BONE.get(), 1)
+            .pattern(" GF")
+            .pattern("GPG")
+            .pattern("BG ")
+            .define('G', Items.GOLD_INGOT)
+            .define('F', Items.FIRE_CORAL)
+            .define('B', Items.BONE)
+            .define('P', Items.GLASS_PANE)
+            .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
+            .save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.RADIO_COLLAR.get(), 1).pattern("XX").pattern("YX").define('X', Items.IRON_INGOT).define('Y', Items.REDSTONE).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
         ShapelessRecipeBuilder.shapeless(DoggyItems.RADAR.get(), 1).requires(Items.MAP, 1).requires(Items.REDSTONE, 1).requires(DoggyItems.RADIO_COLLAR.get(), 1).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.CONDUCTING_BONE.get(), 1).pattern(" B ").pattern("RBR").pattern("PEP").define('P', Items.SHULKER_SHELL).define('E', Items.END_CRYSTAL).define('B', Items.BONE).define('R', Items.NETHERITE_INGOT).unlockedBy("has_shulker_shell", has(Items.SHULKER_SHELL)).save(consumer);
