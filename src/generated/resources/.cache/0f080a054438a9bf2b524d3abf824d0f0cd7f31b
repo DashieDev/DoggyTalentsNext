@@ -1,4 +1,4 @@
-// 1.19.2	2023-07-21T14:43:26.2506947	DoggyTalents Item Models
+// 1.19.2	2023-07-21T18:29:26.4891411	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
 800b0dd973429034a05cbf92a314183d189700bb assets/doggytalents/models/item/beastars_uniform_female.json
@@ -7,7 +7,6 @@
 e16db99d3f12eb93982beacb24a089aeea4a0139 assets/doggytalents/models/item/breeding_bone.json
 8930778c93f214896857d7fb0e6cb986b84365b8 assets/doggytalents/models/item/cape.json
 f4680c4abb5ae1f964c3a9d18c72867eda849841 assets/doggytalents/models/item/cape_coloured.json
-b7cb166f22c3df2ad740c61c2f774e78f73bbb75 assets/doggytalents/models/item/chew_stick.json
 f52223bb5d6925b64f96598d718dc11355d78019 assets/doggytalents/models/item/conan_suit.json
 d4961b5956ecb514cc73fc4902995ee2dc1e4e76 assets/doggytalents/models/item/conducting_bone.json
 c32b03263dcdad77d9e68e3140b94f5d71fba4a5 assets/doggytalents/models/item/creative_collar.json
@@ -18,6 +17,7 @@ ad0c76a4a4a7e72ea4214910a014102656cb3a7a assets/doggytalents/models/item/doggy_c
 d7d1edf4ba2e22a722df08baa0d660f52ab65240 assets/doggytalents/models/item/dog_bath.json
 aa0e5ccc2a5183ecdf5ba2c3fedc832eca34f39f assets/doggytalents/models/item/dog_bed.json
 272d4020b9c5873f4ad8fd7d4294ece831af494c assets/doggytalents/models/item/egg_sandwich.json
+2b241a97c7a75299f0df2a8b38a741693e92e5b2 assets/doggytalents/models/item/energizer_stick.json
 fcce3621bda79bfb2c94031ae8ab9eabef319edc assets/doggytalents/models/item/feathered_mantle.json
 7cdb64b50b71c47cea28a9126f474fa5795001a3 assets/doggytalents/models/item/food_bowl.json
 bbbddd194d8bce956f46ef7e0e9c24bef18cf451 assets/doggytalents/models/item/guard_suit.json
