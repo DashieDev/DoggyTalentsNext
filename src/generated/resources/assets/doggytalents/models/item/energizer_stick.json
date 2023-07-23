@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "doggytalents:item/chew_stick"
+    "layer0": "doggytalents:item/energizer_stick"
   }
 }

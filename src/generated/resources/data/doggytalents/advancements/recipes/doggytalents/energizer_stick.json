@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:chew_stick"
+        "recipe": "doggytalents:energizer_stick"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:chew_stick"
+      "doggytalents:energizer_stick"
     ]
   }
 }
