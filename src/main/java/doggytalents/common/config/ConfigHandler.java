@@ -144,7 +144,6 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue MAX_CREEPER_SWEEPER_DONT_GROWL;
         public ForgeConfigSpec.BooleanValue ALL_PLAYER_CANNOT_ATTACK_DOG;
         public ForgeConfigSpec.BooleanValue ALL_DOG_BLOCK_PORTAL;
-        public ForgeConfigSpec.BooleanValue KEEP_OLD_UUID_UPON_RESPAWN;
         public ForgeConfigSpec.IntValue MAX_HEEL_LIMIT;
         public ForgeConfigSpec.BooleanValue PREVENT_DOGS_PUSHING_EACH_OTHER;
 
@@ -230,12 +229,6 @@ public class ConfigHandler {
                 .comment("to have Cross Origin Teleport set to true on that dog.")
                 .translation("doggytalents.all_dog_block_portal")
                 .define("all_dog_block_portal", true);
-            KEEP_OLD_UUID_UPON_RESPAWN = builder
-                .comment("By default, each dog will be assigned a new UUID everytime they respawn,")
-                .comment("and when they intially turned from vanilla wolf to Trained Dogs.")
-                .comment("Enable this if you wish to always keep the old UUID.")
-                .translation("doggytalents.keep_old_uuid_upon_respawn")
-                .define("keep_old_uuid_upon_respawn", false);
             MAX_HEEL_LIMIT = builder
                 .comment("Define how many dogs a player can listen to commands which summon more than one dog to you")
                 .comment("at the same time. Set this to any negative value to remove the limit completely.")
