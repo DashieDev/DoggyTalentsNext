@@ -22,7 +22,7 @@ public class DogMoveControl extends MoveControl {
 
     @Override
     public void tick() {
-        double dy = 9;
+        double dy = 0;
         if (this.hasWanted()) {
             dy = Math.abs(this.getWantedY() - this.dog.getY());
         }
@@ -30,7 +30,7 @@ public class DogMoveControl extends MoveControl {
             this.operation == MoveControl.Operation.MOVE_TO
             && dy > 0.75
         ) {
-            final float SNEAK_SPEED_1 = 0.275f;
+            final float SNEAK_SPEED_1 = 0.35f;
             final float SNEAK_SPEED_2 = 0.25f;
 
             this.operation = MoveControl.Operation.WAIT;
