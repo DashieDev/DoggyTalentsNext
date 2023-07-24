@@ -67,14 +67,57 @@ public class DogGreedyFireSafeSearchPath extends Path {
         if (path.nodes.isEmpty()) return null;
         var b0 = path.nodes.get(path.nodes.size()-1).asBlockPos();
         float malus_min = Float.MAX_VALUE;
-        Node node_chosen = null; 
+        Node node_chosen = null;
+        // X = 0 && Y = (i > 0 ? 1 : 0)
+        boolean[] X0_BLOCKED = new boolean[2];
+        // Y = 0 && X = (i > 0 ? 1 : 0)
+        boolean[] Y0_BLOCKED = new boolean[2];
         for (int i = -1; i <= 1; ++i) {
             for (int j = -1; j <= 1; ++j) {
                 if (i == 0 && j == 0) continue;
+                //Search the cross first
+                if (i*j != 0) continue;
                 var node = checkPos(path, b0.offset(i, 0, j));
                 if (node == null) continue;
                 if (node.type == BlockPathTypes.WALKABLE) {
                     return node;
+                }
+                if (node.type == BlockPathTypes.BLOCKED) {
+                    if (i != 0) {
+                        Y0_BLOCKED[i > 0 ? 1 : 0] = true;
+                    } else {
+                        X0_BLOCKED[j > 0 ? 1 : 0] = true;
+                    }
+                    continue;
+                }
+                var malus = path.dog.getPathfindingMalus(node.type);
+                if (node_chosen == null || malus < malus_min) {
+                    node_chosen = node;
+                    malus_min = malus;
+                }
+            }
+        }
+        for (int i = -1; i <= 1; ++i) {
+            for (int j = -1; j <= 1; ++j) {
+                if (i == 0 && j == 0) continue;
+                //Then the corner
+                if (i*j == 0) continue;
+                boolean diagonal_blocked = 
+                    X0_BLOCKED[j > 0 ? 1 : 0]
+                    && Y0_BLOCKED[i > 0 ? 1 : 0];
+                if (diagonal_blocked) continue;
+                var node = checkPos(path, b0.offset(i, 0, j));
+                if (node == null) continue;
+                if (node.type == BlockPathTypes.WALKABLE) {
+                    return node;
+                }
+                if (node.type == BlockPathTypes.BLOCKED) {
+                    if (i != 0) {
+                        Y0_BLOCKED[i > 0 ? 1 : 0] = true;
+                    } else {
+                        X0_BLOCKED[j > 0 ? 1 : 0] = true;
+                    }
+                    continue;
                 }
                 var malus = path.dog.getPathfindingMalus(node.type);
                 if (node_chosen == null || malus < malus_min) {
@@ -104,7 +147,8 @@ public class DogGreedyFireSafeSearchPath extends Path {
             b1.move(0, offsetY, 0);
             b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level(), b1.mutable());
         }
-        if (b1_type == BlockPathTypes.WALKABLE) {
+        if (b1_type == BlockPathTypes.WALKABLE 
+            || b1_type == BlockPathTypes.BLOCKED) {
             var ret_node = new Node(b1.getX(), b1.getY(), b1.getZ());
             ret_node.type = b1_type;
             return ret_node;
