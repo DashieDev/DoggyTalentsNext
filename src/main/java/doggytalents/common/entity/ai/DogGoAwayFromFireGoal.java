@@ -67,7 +67,6 @@ public class DogGoAwayFromFireGoal extends Goal {
         n.moveTo(this.path, this.dog.getUrgentSpeedModifier());
         
         var b0 = this.path.getNode(0).asBlockPos();
-        ChopinLogger.lwn(dog, "Moving fire : "+ b0);
         this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 
             this.dog.getUrgentSpeedModifier());
     }
