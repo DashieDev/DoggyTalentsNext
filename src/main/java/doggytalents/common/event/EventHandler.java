@@ -92,9 +92,6 @@ public class EventHandler {
     }
 
     private void trainWolf(Wolf wolf, Player owner, Level level) {
-        boolean keep_old_uuid =
-            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.KEEP_OLD_UUID_UPON_RESPAWN);
-
         Dog dog = DoggyEntityTypes.DOG.get().create(level);
         if (dog == null) {
             throw new IllegalStateException("Creator function for the dog returned \"null\"");
@@ -119,9 +116,7 @@ public class EventHandler {
         }
 
         level.addFreshEntity(dog);
-
         wolf.discard();
-        if (keep_old_uuid) dog.setUUID(wolf.getUUID());
     }
 
     @SubscribeEvent
