@@ -81,35 +81,11 @@ public class DogRespawnData implements IDogData {
             return null;
         }
 
-        boolean keep_old_uuid =
-            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.KEEP_OLD_UUID_UPON_RESPAWN);
-
         CompoundTag compoundnbt = dog.saveWithoutId(new CompoundTag());
         UUID uuid = dog.getUUID();
         compoundnbt.merge(this.data);
         dog.load(compoundnbt);
-        
-        var set_uuid = uuid;
-
-        //Give up the old uuid if it is occupied already.
-        if (keep_old_uuid && this.uuid != null && set_uuid != null) {
-            var e = worldIn.getEntity(this.uuid);
-            if (e == null) {
-                set_uuid = this.uuid;
-            } else {
-                DoggyTalentsNext.LOGGER.info(
-                    "The old UUID ["
-                    + this.uuid.toString()
-                    + "] of reviving dog named ["
-                    + this.getDogName()
-                    + "] has been taken. The dog's UUID is now ["
-                    + set_uuid.toString()
-                    + "]"
-                );
-            }
-        }
-
-        dog.setUUID(set_uuid);
+        dog.setUUID(uuid);
         
         dog.setMode(EnumMode.DOCILE);
         dog.setOrderedToSit(true);
