@@ -67,56 +67,55 @@ public class DogGreedyFireSafeSearchPath extends Path {
         if (path.nodes.isEmpty()) return null;
         var b0 = path.nodes.get(path.nodes.size()-1).asBlockPos();
         float malus_min = Float.MAX_VALUE;
-        BlockPos b_chosen = null; 
-        BlockPathTypes type_chosen = null;
+        Node node_chosen = null; 
         for (int i = -1; i <= 1; ++i) {
             for (int j = -1; j <= 1; ++j) {
                 if (i == 0 && j == 0) continue;
-                var b1 = b0.offset(i, 0, j).mutable();
-                var b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level(), b1.mutable());
-                int offsetY = 0;
-                if (b1_type == BlockPathTypes.BLOCKED) {
-                     offsetY= 1;
-                } else if (b1_type == BlockPathTypes.OPEN) {
-                    offsetY = -1;
+                var node = checkPos(path, b0.offset(i, 0, j));
+                if (node == null) continue;
+                if (node.type == BlockPathTypes.WALKABLE) {
+                    return node;
                 }
-                if (offsetY != 0) {
-                    b1.move(0, offsetY, 0);
-                    b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level(), b1.mutable());
-                }
-                if (b1_type == BlockPathTypes.WALKABLE) {
-                    path.finished = true;
-                    b_chosen = b1.immutable();
-                    type_chosen = b1_type;
-                    var ret_node = new Node(b_chosen.getX(), b_chosen.getY(), b_chosen.getZ());
-                    ret_node.type = type_chosen;
-                    return ret_node;
-                }
-                if (b1_type == BlockPathTypes.OPEN) continue;
-                if (path.containNode(b1)) continue;
-                float malus = path.dog.getPathfindingMalus(b1_type);
-                if (malus < 0) continue;
-                if (b_chosen == null) {
-                    b_chosen = b1.immutable();
+                var malus = path.dog.getPathfindingMalus(node.type);
+                if (node_chosen == null || malus < malus_min) {
+                    node_chosen = node;
                     malus_min = malus;
-                    type_chosen = b1_type;
-                } else if (malus < malus_min) {
-                    b_chosen = b1.immutable();
-                    malus_min = malus;
-                    type_chosen = b1_type;
                 }
             }
         }
-        if (b_chosen != null) {
-            var ret_node = new Node(b_chosen.getX(), b_chosen.getY(), b_chosen.getZ());
-            ret_node.type = type_chosen;
-            return ret_node;
+        if (node_chosen != null) {
+            return node_chosen;
         } else {
             path.finished = true;
             return null;
         }
     }
 
-
+    private static Node checkPos(DogGreedyFireSafeSearchPath path, BlockPos pos) {
+        var b1 = pos.mutable();
+        var b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level(), b1.mutable());
+        int offsetY = 0;
+        if (b1_type == BlockPathTypes.BLOCKED) {
+                offsetY= 1;
+        } else if (b1_type == BlockPathTypes.OPEN) {
+            offsetY = -1;
+        }
+        if (offsetY != 0) {
+            b1.move(0, offsetY, 0);
+            b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level(), b1.mutable());
+        }
+        if (b1_type == BlockPathTypes.WALKABLE) {
+            var ret_node = new Node(b1.getX(), b1.getY(), b1.getZ());
+            ret_node.type = b1_type;
+            return ret_node;
+        }
+        if (b1_type == BlockPathTypes.OPEN) return null;
+        if (path.containNode(b1)) return null;
+        float malus = path.dog.getPathfindingMalus(b1_type);
+        if (malus < 0) return null;
+        var ret_node = new Node(b1.getX(), b1.getY(), b1.getZ());
+        ret_node.type = b1_type;
+        return ret_node;
+    }
 
 }
