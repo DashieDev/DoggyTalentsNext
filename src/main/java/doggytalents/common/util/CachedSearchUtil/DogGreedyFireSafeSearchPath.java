@@ -49,7 +49,10 @@ public class DogGreedyFireSafeSearchPath extends Path {
     }
 
     public void tryAppendPath() {
-        scanSurroundingForNextPos(this);
+        var node = scanSurroundingForNextPos(this);
+        if (node != null) {
+            this.nodes.add(node);
+        } 
     }
 
     private boolean containNode(BlockPos node0) {
@@ -65,6 +68,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
         var b0 = path.nodes.get(path.nodes.size()-1).asBlockPos();
         float malus_min = Float.MAX_VALUE;
         BlockPos b_chosen = null; 
+        BlockPathTypes type_chosen = null;
         for (int i = -1; i <= 1; ++i) {
             for (int j = -1; j <= 1; ++j) {
                 if (i == 0 && j == 0) continue;
@@ -82,7 +86,11 @@ public class DogGreedyFireSafeSearchPath extends Path {
                 }
                 if (b1_type == BlockPathTypes.WALKABLE) {
                     path.finished = true;
-                    return new Node(b1.getX(), b1.getY(), b1.getZ());
+                    b_chosen = b1.immutable();
+                    type_chosen = b1_type;
+                    var ret_node = new Node(b_chosen.getX(), b_chosen.getY(), b_chosen.getZ());
+                    ret_node.type = type_chosen;
+                    return ret_node;
                 }
                 if (b1_type == BlockPathTypes.OPEN) continue;
                 if (path.containNode(b1)) continue;
@@ -91,14 +99,18 @@ public class DogGreedyFireSafeSearchPath extends Path {
                 if (b_chosen == null) {
                     b_chosen = b1.immutable();
                     malus_min = malus;
+                    type_chosen = b1_type;
                 } else if (malus < malus_min) {
                     b_chosen = b1.immutable();
                     malus_min = malus;
+                    type_chosen = b1_type;
                 }
             }
         }
         if (b_chosen != null) {
-            return new Node(b_chosen.getX(), b_chosen.getY(), b_chosen.getZ());
+            var ret_node = new Node(b_chosen.getX(), b_chosen.getY(), b_chosen.getZ());
+            ret_node.type = type_chosen;
+            return ret_node;
         } else {
             path.finished = true;
             return null;

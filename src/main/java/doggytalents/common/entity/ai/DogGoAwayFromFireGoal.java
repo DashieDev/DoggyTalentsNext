@@ -32,8 +32,6 @@ public class DogGoAwayFromFireGoal extends Goal {
     public boolean canUse() {
         if (this.dog.fireImmune()) return false;
 
-        if (!dog.isOnGround()) return false;
-
         byte dangerSpot = -1;
         if (--tickUntilSearch <= 0) {
             tickUntilSearch = 3;
@@ -41,40 +39,50 @@ public class DogGoAwayFromFireGoal extends Goal {
         }
         if (dangerSpot == -1) return false;
 
+        this.path = DogGreedyFireSafeSearchPath.create(dog, 10);
+        if (this.path == null) {
+            this.tickUntilSearch = 10;
+            return false;
+        }
+
         return true;
     }
 
     @Override
     public boolean canContinueToUse() {
-        return !isSafePos(this.dog.blockPosition()) && !dog.getNavigation().isDone();
+        if (isSafePos(this.dog.blockPosition()))
+            return false;
+        if (dog.getNavigation().isDone())
+            return false;
+        
+        return true;
     }
 
     @Override
     public void start() {
+        if (this.path == null) return;
         var n = this.dog.getNavigation();
-
         n.moveTo((Path) null, 1);
-
-        this.path = DogGreedyFireSafeSearchPath.create(dog, 10);
         n.moveTo(this.path, this.dog.getUrgentSpeedModifier());
         
-        if (this.path == null) return;
-        
         var b0 = this.path.getNode(0).asBlockPos();
-        this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 1);
 
+        this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 
+            this.dog.getUrgentSpeedModifier());
     }
 
     @Override
     public void stop() {
-        //Penalty
-        this.tickUntilSearch = 20 + dog.getRandom().nextInt(3)*10;
-        
         if (this.path == null) return;
         var end_node = this.path.getEndNode();
         if (end_node == null) return;
         var b0 = end_node.asBlockPos();
-        this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 1);
+        this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 
+            this.dog.getUrgentSpeedModifier());
+        
+        //Penalty
+        if (end_node.type != BlockPathTypes.WALKABLE)
+            this.tickUntilSearch = 20 + dog.getRandom().nextInt(3)*10;
     }
 
     /**
