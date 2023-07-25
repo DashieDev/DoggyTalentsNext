@@ -9,13 +9,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 
-public class SizeBoneItem extends Item implements IDogItem {
+public class DogResizeItem extends Item implements IDogItem {
 
-    private final SizeBoneItem.Type type;
+    private final DogResizeItem.Type type;
 
     public static enum Type {
-        TINY("tiny_bone"),
-        BIG("big_bone");
+        TINY("tiny_dog"),
+        BIG("big_dog");
 
         String n;
 
@@ -28,7 +28,7 @@ public class SizeBoneItem extends Item implements IDogItem {
         }
     }
 
-    public SizeBoneItem(SizeBoneItem.Type typeIn, Properties properties) {
+    public DogResizeItem(DogResizeItem.Type typeIn, Properties properties) {
         super(properties);
         this.type = typeIn;
     }
