@@ -50,28 +50,28 @@ public class ArtifactShowBox extends AbstractWidget {
 
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-        this.isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+        this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
         this.active = !this.itemStack.isEmpty();
-        fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, BKGCOL);
+        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, BKGCOL);
         if (!this.active) {
             var order_str = "" + (this.order + 1);
             int order_width = font.width(order_str);
             font.draw(stack, order_str, 
-                this.x + this.width/2 - order_width/2,
-                this.y + this.height/2 - font.lineHeight/2, TXTCOL);
+                this.getX() + this.width/2 - order_width/2,
+                this.getY() + this.height/2 - font.lineHeight/2, TXTCOL);
             return;
         }
         if (this.isHovered) {
             int bkg_col = BKGCOL_REM;
-            fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, bkg_col);
+            fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, bkg_col);
         } else {
-            fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, BKGCOL);
+            fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, BKGCOL);
         }
         
         var mvStack = RenderSystem.getModelViewStack();
         mvStack.pushPose();
         mvStack.scale(1.5f, 1.5f, 1.5f);
-        this.itemRenderer.renderGuiItem(itemStack, Mth.floor((this.x+6)/1.5f), Mth.floor((this.y+6)/1.5f));
+        this.itemRenderer.renderGuiItem(stack, itemStack, Mth.floor((this.getX()+6)/1.5f), Mth.floor((this.getY()+6)/1.5f));
         mvStack.popPose();
         RenderSystem.applyModelViewMatrix();
 
@@ -82,7 +82,7 @@ public class ArtifactShowBox extends AbstractWidget {
         RenderSystem.defaultBlendFunc();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int iX = ICON_REM_X;
-        this.blit(stack, x+this.width - 2, y+this.height -2, iX, 0, 9, 9);
+        this.blit(stack, this.getX()+this.width - 2, getY()+this.height -2, iX, 0, 9, 9);
     }
 
     @Override
@@ -97,9 +97,11 @@ public class ArtifactShowBox extends AbstractWidget {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
-        // TODO Auto-generated method stub
-        
+    public void renderWidget(PoseStack p_268228_, int p_268034_, int p_268009_, float p_268085_) {
+    }
+
+    @Override
+    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
     }
     
 }
