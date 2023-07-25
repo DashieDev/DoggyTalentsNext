@@ -40,7 +40,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         handheld(DoggyItems.MASTER_TREAT);
         handheld(DoggyItems.DIRE_TREAT);
         handheld(DoggyItems.BREEDING_BONE);
-        handheld(DoggyItems.CHEW_STICK);
+        handheld(DoggyItems.ENERGIZER_STICK);
         handheld(DoggyItems.CONDUCTING_BONE);
 
         radar(DoggyItems.CREATIVE_RADAR);
