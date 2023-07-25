@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.Villager;
@@ -88,13 +89,10 @@ public class PuppyEyesTalent extends TalentInstance {
                 //Gone is the unecessary (and a bit Cringy?) villager dialog and gift mechanic,
                 //players already abuse villages too much 🥴
 
-                int inc_time = this.level() >= 5 ? 2 : 1;
-                for (int i = 0; i < inc_time; ++i) {
-                    //Currently acts as if a villager has been cured.
-                    ((ServerLevel) owner.level)
-                        .onReputationEvent(ReputationEventType.ZOMBIE_VILLAGER_CURED, 
-                            dogIn, villager);
-                }
+                //Instead of dropping items, add good gossips based on the level.
+                int add_val = this.level() * 20;
+                villager.getGossips()
+                    .add(owner.getUUID(), GossipType.MINOR_POSITIVE, add_val);
 
                 this.cooldown = dogIn.tickCount + (this.level() >= 5 ? 24000 : 48000);
             }
