@@ -41,15 +41,15 @@ public class ArtifactHolder extends AbstractWidget {
 
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-        this.isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+        this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
         this.active = !this.itemStack.isEmpty();
         if (!this.active) return;
         if (this.isHovered) {
             int bkg_col = BKGCOL_ADD;
-            fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, bkg_col);
+            fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, bkg_col);
         }
         
-        this.itemRenderer.renderGuiItem(itemStack, this.x+1, this.y+1);
+        this.itemRenderer.renderGuiItem(stack, itemStack, this.getX()+1, this.getY()+1);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, Resources.STYLE_ADD_REMOVE);
@@ -57,7 +57,7 @@ public class ArtifactHolder extends AbstractWidget {
         RenderSystem.defaultBlendFunc();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int iX = ICON_ADD_X;
-        this.blit(stack, x+14, y+14, iX, 0, 9, 9);
+        this.blit(stack, getX()+14, getY()+14, iX, 0, 9, 9);
     }
 
     @Override
@@ -80,9 +80,11 @@ public class ArtifactHolder extends AbstractWidget {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
-        // TODO Auto-generated method stub
-        
+    public void renderWidget(PoseStack p_268228_, int p_268034_, int p_268009_, float p_268085_) {
+    }
+
+    @Override
+    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
     }
     
 }
