@@ -31,8 +31,8 @@ public class DTItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        handheld(DoggyItems.TINY_BONE);
-        handheld(DoggyItems.BIG_BONE);
+        handheld(DoggyItems.SHRINKING_MALLET);
+        handheld(DoggyItems.MAGNIFYING_BONE);
 
         handheld(DoggyItems.TRAINING_TREAT);
         handheld(DoggyItems.SUPER_TREAT);
