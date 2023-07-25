@@ -105,8 +105,6 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_soul_torch", has(Items.SOUL_TORCH))
             .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SUNGLASSES.get(), 1).pattern("S S").pattern("GSG").define('S', Items.STICK).define('G', Blocks.GLASS_PANE).unlockedBy("has_stick", has(Items.STICK)).save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.TINY_BONE.get(), 1).pattern("BI").pattern("IB").define('B', Items.BONE).define('I', Items.IRON_INGOT).unlockedBy("has_iron_ingot", has(Items.IRON_INGOT)).save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BIG_BONE.get(), 1).pattern("BI").pattern("IB").pattern("BI").define('B', Items.BONE).define('I', Items.IRON_INGOT).unlockedBy("has_iron_ingot", has(Items.IRON_INGOT)).save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.RADIO_COLLAR.get(), 1).pattern("XX").pattern("YX").define('X', Items.IRON_INGOT).define('Y', Items.REDSTONE).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.RADAR.get(), 1).requires(Items.MAP, 1).requires(Items.REDSTONE, 1).requires(DoggyItems.RADIO_COLLAR.get(), 1).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.CONAN_SUIT.get(), 1)
