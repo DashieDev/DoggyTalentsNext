@@ -7,8 +7,12 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
@@ -78,53 +82,29 @@ public class PuppyEyesTalent extends TalentInstance {
                 return;
             }
 
-            LivingEntity villager = this.getClosestVisibleVillager(dogIn, 5D);
+            Villager villager = this.getClosestVisibleVillager(dogIn, 5D);
 
             if (villager != null) {
-                int rewardId = dogIn.getRandom().nextInt(this.level()) + (this.level() >= 5 ? 1 : 0);
+                //Gone is the unecessary (and a bit Cringy?) villager dialog and gift mechanic,
+                //players already abuse villages too much 🥴
 
-                if (rewardId == 0) {
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.1.line.1", dogIn.getGenderPronoun()), net.minecraft.Util.NIL_UUID);
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.1.line.2", dogIn.getGenderSubject()), net.minecraft.Util.NIL_UUID);
-                    villager.spawnAtLocation(Items.PORKCHOP, 2);
-                } else if (rewardId == 1) {
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.2.line.1", dogIn.getGenderTitle()), net.minecraft.Util.NIL_UUID);
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.2.line.2", dogIn.getGenderTitle()), net.minecraft.Util.NIL_UUID);
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.2.line.3", dogIn.getGenderTitle()), net.minecraft.Util.NIL_UUID);
-                    villager.spawnAtLocation(Items.PORKCHOP, 5);
-                } else if (rewardId == 2) {
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.3.line.1"), net.minecraft.Util.NIL_UUID);
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.3.line.2"), net.minecraft.Util.NIL_UUID);
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.3.line.3"), net.minecraft.Util.NIL_UUID);
-                    villager.spawnAtLocation(Items.IRON_INGOT, 3);
-                } else if (rewardId == 3) {
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.4.line.1"), net.minecraft.Util.NIL_UUID);
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.4.line.2"), net.minecraft.Util.NIL_UUID);
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.4.line.3"), net.minecraft.Util.NIL_UUID);
-                    villager.spawnAtLocation(Items.GOLD_INGOT, 2);
-                } else if (rewardId == 4) {
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.5.line.1"), net.minecraft.Util.NIL_UUID);
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.5.line.2"), net.minecraft.Util.NIL_UUID);
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.5.line.3"), net.minecraft.Util.NIL_UUID);
-                    villager.spawnAtLocation(Items.DIAMOND, 1);
-                } else if (rewardId == 5) {
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.6.line.1"), net.minecraft.Util.NIL_UUID);
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.6.line.2"), net.minecraft.Util.NIL_UUID);
-                    owner.sendMessage(ComponentUtil.translatable("talent.doggytalents.puppy_eyes.msg.6.line.3"), net.minecraft.Util.NIL_UUID);
-                    villager.spawnAtLocation(Items.APPLE, 1);
-                    villager.spawnAtLocation(Blocks.CAKE, 1);
-                    villager.spawnAtLocation(Items.SLIME_BALL, 3);
-                    villager.spawnAtLocation(Items.PORKCHOP, 5);
+                int inc_time = this.level() >= 5 ? 2 : 1;
+                for (int i = 0; i < inc_time; ++i) {
+                    //Currently acts as if a villager has been cured.
+                    ((ServerLevel) owner.level)
+                        .onReputationEvent(ReputationEventType.ZOMBIE_VILLAGER_CURED, 
+                            dogIn, villager);
                 }
 
                 this.cooldown = dogIn.tickCount + (this.level() >= 5 ? 24000 : 48000);
             }
         }
     }
+    
 
-    public LivingEntity getClosestVisibleVillager(AbstractDog dogIn, double radiusIn) {
-        List<AbstractVillager> list = dogIn.level.getEntitiesOfClass(
-            AbstractVillager.class,
+    public Villager getClosestVisibleVillager(AbstractDog dogIn, double radiusIn) {
+        List<Villager> list = dogIn.level.getEntitiesOfClass(
+            Villager.class,
             dogIn.getBoundingBox().inflate(radiusIn, radiusIn, radiusIn),
             (village) -> village.hasLineOfSight(dogIn)
         );
