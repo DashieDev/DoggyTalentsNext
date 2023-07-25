@@ -55,8 +55,8 @@ public class ArtifactSlotElement extends AbstractElement {
         int startY = this.getRealY() + mY - ArtifactShowBox.WIDGET_SIZE/2;
         int pX = this.getRealX() + mX - totalSize/2;
         for (var holder : this.artifactBoxes) {
-            holder.x = pX;
-            holder.y = startY;
+            holder.setX(pX);
+            holder.setY(startY);
             this.addChildren(holder);
             pX += ArtifactShowBox.WIDGET_SIZE + BUTTON_SPACING;
         }

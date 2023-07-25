@@ -62,8 +62,8 @@ public class ArtifactEditElement extends AbstractElement {
         int startY = this.getRealY() + mY - ArtifactHolder.WIDGET_SIZE/2;
         int pX = this.getRealX() + mX - artifactHolderTotalsSize/2;
         for (var holder : this.artifactHolders) {
-            holder.x = pX;
-            holder.y = startY;
+            holder.setX(pX);
+            holder.setY(startY);
             this.addChildren(holder);
             pX += ArtifactHolder.WIDGET_SIZE + BUTTON_SPACING;
         }
