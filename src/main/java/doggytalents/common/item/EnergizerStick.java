@@ -13,9 +13,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class ChewStickItem extends Item implements IDogFoodHandler {
+public class EnergizerStick extends Item implements IDogFoodHandler {
 
-    public ChewStickItem(Properties properties) {
+    public EnergizerStick(Properties properties) {
         super(properties);
     }
 
@@ -39,7 +39,7 @@ public class ChewStickItem extends Item implements IDogFoodHandler {
 
             if (dog.level() instanceof ServerLevel) {
                 ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(
-                    dog, new ItemStack(DoggyItems.CHEW_STICK.get()));
+                    dog, new ItemStack(DoggyItems.ENERGIZER_STICK.get()));
             }
             dog.playSound(
                 SoundEvents.GENERIC_EAT, 
