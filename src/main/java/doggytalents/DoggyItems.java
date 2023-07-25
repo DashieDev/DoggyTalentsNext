@@ -45,7 +45,7 @@ public class DoggyItems {
     public static final RegistryObject<Item> CREATIVE_RADAR = registerWith("creative_radar", RadarItem::new, 1);
     public static final RegistryObject<WhistleItem> WHISTLE = registerWith("whistle", WhistleItem::new, 1);
     public static final RegistryObject<Item> TREAT_BAG = registerWith("treat_bag", TreatBagItem::new, 1);
-    public static final RegistryObject<Item> CHEW_STICK = register("chew_stick", ChewStickItem::new);
+    public static final RegistryObject<Item> ENERGIZER_STICK = register("energizer_stick", EnergizerStick::new);
     public static final RegistryObject<Item> EGG_SANDWICH = register("egg_sandwich", EggSandwichItem::new);
     public static final RegistryObject<Item> BANDAID = register("bandaid", BandaidItem::new);
     public static final RegistryObject<AccessoryItem> CAPE = registerAccessory("cape", DoggyAccessories.CAPE);
