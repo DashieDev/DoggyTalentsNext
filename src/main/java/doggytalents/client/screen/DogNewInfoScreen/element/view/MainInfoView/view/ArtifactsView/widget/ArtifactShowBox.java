@@ -14,6 +14,7 @@ import doggytalents.common.network.packet.data.ChangeAccessoriesData;
 import doggytalents.common.network.packet.data.ChangeArtifactData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.GameRenderer;
@@ -49,40 +50,39 @@ public class ArtifactShowBox extends AbstractWidget {
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
         this.active = !this.itemStack.isEmpty();
-        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, BKGCOL);
+        graphics.fill(this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, BKGCOL);
         if (!this.active) {
             var order_str = "" + (this.order + 1);
             int order_width = font.width(order_str);
-            font.draw(stack, order_str, 
+            graphics.drawString(font, order_str, 
                 this.getX() + this.width/2 - order_width/2,
                 this.getY() + this.height/2 - font.lineHeight/2, TXTCOL);
             return;
         }
         if (this.isHovered) {
             int bkg_col = BKGCOL_REM;
-            fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, bkg_col);
+            graphics.fill( this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, bkg_col);
         } else {
-            fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, BKGCOL);
+            graphics.fill( this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, BKGCOL);
         }
         
         var mvStack = RenderSystem.getModelViewStack();
         mvStack.pushPose();
         mvStack.scale(1.5f, 1.5f, 1.5f);
-        this.itemRenderer.renderGuiItem(stack, itemStack, Mth.floor((this.getX()+6)/1.5f), Mth.floor((this.getY()+6)/1.5f));
+        graphics.renderItem(itemStack, Mth.floor((this.getX()+6)/1.5f), Mth.floor((this.getY()+6)/1.5f));
         mvStack.popPose();
         RenderSystem.applyModelViewMatrix();
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, Resources.STYLE_ADD_REMOVE);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int iX = ICON_REM_X;
-        this.blit(stack, this.getX()+this.width - 2, getY()+this.height -2, iX, 0, 9, 9);
+        graphics.blit(Resources.STYLE_ADD_REMOVE, this.getX()+this.width - 2, getY()+this.height -2, iX, 0, 9, 9);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ArtifactShowBox extends AbstractWidget {
     }
 
     @Override
-    public void renderWidget(PoseStack p_268228_, int p_268034_, int p_268009_, float p_268085_) {
+    public void renderWidget(GuiGraphics p_268228_, int p_268034_, int p_268009_, float p_268085_) {
     }
 
     @Override
