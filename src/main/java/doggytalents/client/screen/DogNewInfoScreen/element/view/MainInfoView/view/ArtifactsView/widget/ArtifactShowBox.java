@@ -7,6 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.ChopinLogger;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
@@ -41,7 +42,7 @@ public class ArtifactShowBox extends AbstractWidget {
     private final Font font;
 
     public ArtifactShowBox(int x, int y, ItemRenderer renderer, Dog dog, int order) {
-        super(x, y, WIDGET_SIZE, WIDGET_SIZE, Component.empty());
+        super(x, y, WIDGET_SIZE, WIDGET_SIZE, ComponentUtil.empty());
         this.itemRenderer = renderer;
         this.dog = dog;
         this.order = order;

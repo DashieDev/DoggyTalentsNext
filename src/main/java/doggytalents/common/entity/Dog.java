@@ -158,7 +158,7 @@ public class Dog extends AbstractDog {
     private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BED_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BOWL_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<IncapacitatedSyncState>> DOG_INCAP_SYNC_STATE = Cache.make(() -> (EntityDataAccessor<IncapacitatedSyncState>) SynchedEntityData.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (EntityDataAccessor<List<DoggyArtifactItem>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get()));
+    private static final Cache<EntityDataAccessor<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (EntityDataAccessor<List<DoggyArtifactItem>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get().getSerializer()));
 
     public static final void initDataParameters() {
         ACCESSORIES.get();

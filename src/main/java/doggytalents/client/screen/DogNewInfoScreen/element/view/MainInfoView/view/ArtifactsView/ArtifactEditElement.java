@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.view.ArtifactsView.widget.ArtifactHolder;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
@@ -72,7 +73,7 @@ public class ArtifactEditElement extends AbstractElement {
         this.lastPage = new TextOnlyButton(
             this.getRealX() + mX - 80 - 9, 
             this.getRealY() + mY - 9, 18, 18,  
-            Component.literal("<"), b -> {
+            ComponentUtil.literal("<"), b -> {
                 startIndex -= artifactHolders.size();
             }, mc.font);
         this.addChildren(lastPage);
@@ -80,7 +81,7 @@ public class ArtifactEditElement extends AbstractElement {
         this.nextPage = new TextOnlyButton(
             this.getRealX() + mX + 80 - 9, 
             this.getRealY() + mY - 9, 18, 18, 
-            Component.literal(">"), b -> {
+            ComponentUtil.literal(">"), b -> {
                 startIndex += artifactHolders.size();
             }, mc.font);
         this.addChildren(nextPage);
@@ -116,7 +117,7 @@ public class ArtifactEditElement extends AbstractElement {
             } else {
                 int mX = this.getSizeX()/2;
                 int mY = this.getSizeY()/2;
-                var txt = Component.translatable("doggui.home.artifacts.no_artifacts_in_inv");
+                var txt = ComponentUtil.translatable("doggui.home.artifacts.no_artifacts_in_inv");
                 int tX = this.getRealX() + mX - mc.font.width(txt)/2;
                 int tY = this.getRealY() + mY - mc.font.lineHeight/2;
                 mc.font.draw(stack, txt, tX, tY, 0xffffffff);
