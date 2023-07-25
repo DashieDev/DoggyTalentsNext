@@ -61,8 +61,8 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> SMARTY_GLASSES = registerAccessory("smarty_glasses", DoggyAccessories.SMARTY_GLASSES);
     public static final RegistryObject<DyeableAccessoryItem> WIG = register("wig", () -> new Wig.WigItem(DoggyAccessories.WIG, createInitialProp()));
     public static final RegistryObject<AccessoryItem> LEATHER_JACKET = registerAccessory("leather_jacket", DoggyAccessories.LEATHER_JACKET_CLOTHING);
-    public static final RegistryObject<Item> TINY_BONE = registerSizeBone("tiny_bone", SizeBoneItem.Type.TINY);
-    public static final RegistryObject<Item> BIG_BONE = registerSizeBone("big_bone", SizeBoneItem.Type.BIG);
+    public static final RegistryObject<Item> SHRINKING_MALLET = registerSizeBone("shrinking_mallet", DogResizeItem.Type.TINY);
+    public static final RegistryObject<Item> MAGNIFYING_BONE = registerSizeBone("magnifying_bone", DogResizeItem.Type.BIG);
     public static final RegistryObject<Item> AMNESIA_BONE = registerWith("amnesia_bone", AmnesiaBoneItem::new, 1);
 
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
@@ -91,8 +91,8 @@ public class DoggyItems {
         return register(name, () -> new DroolBoneItem(THROW_STICK, createInitialProp().stacksTo(1)));
     }
 
-    private static RegistryObject<Item> registerSizeBone(final String name, final SizeBoneItem.Type typeIn) {
-        return register(name, () -> new SizeBoneItem(typeIn, createInitialProp()));
+    private static RegistryObject<Item> registerSizeBone(final String name, final DogResizeItem.Type typeIn) {
+        return register(name, () -> new DogResizeItem(typeIn, createInitialProp()));
     }
 
     private static RegistryObject<Item> registerTreat(final String name, final DogLevel.Type typeIn, int maxLevel) {
