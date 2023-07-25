@@ -31,7 +31,7 @@ public class FeatheredMantleArtifact extends DoggyArtifact {
 
     @Override
     public void tick(AbstractDog dogIn) {
-        if (dogIn.level.isClientSide) 
+        if (dogIn.level().isClientSide) 
             return;
         dogIn.fallDistance = 0;
     }
