@@ -134,7 +134,27 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
 
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.CONDUCTING_BONE.get(), 1).pattern(" B ").pattern("RBR").pattern("PEP").define('P', Items.SHULKER_SHELL).define('E', Items.END_CRYSTAL).define('B', Items.BONE).define('R', Items.NETHERITE_INGOT).unlockedBy("has_shulker_shell", has(Items.SHULKER_SHELL)).save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.CONDUCTING_BONE.get(), 1).pattern(" B ").pattern("RBR").pattern("PEP").define('P', Items.SHULKER_SHELL).define('E', Items.END_CRYSTAL).define('B', Items.BONE).define('R', Items.NETHERITE_INGOT).unlockedBy("has_shulker_shell", has(Items.SHULKER_SHELL)).save(consumer);  
+        
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.SHRINKING_MALLET.get(), 1)
+            .pattern(" G ")
+            .pattern("GFG")
+            .pattern(" B ")
+            .define('G', Items.GOLD_INGOT)
+            .define('F', Items.FIRE_CORAL)
+            .define('B', Items.BONE)
+            .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.MAGNIFYING_BONE.get(), 1)
+            .pattern(" GF")
+            .pattern("GPG")
+            .pattern("BG ")
+            .define('G', Items.GOLD_INGOT)
+            .define('F', Items.FIRE_CORAL)
+            .define('B', Items.BONE)
+            .define('P', Items.GLASS_PANE)
+            .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
+            .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.BANDAID.get(), 1)
             .requires(DoggyItems.TRAINING_TREAT.get())
