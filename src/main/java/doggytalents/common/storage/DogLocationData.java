@@ -164,7 +164,7 @@ public class DogLocationData implements IDogData {
     }
 
     public boolean shouldDisplay(Level worldIn, Player playerIn, InteractionHand handIn) {
-        return this.hasRadarCollar || playerIn.isCreative() || playerIn.getItemInHand(handIn).getItem() == DoggyItems.CREATIVE_RADAR.get();
+        return this.hasRadarCollar || playerIn.isCreative() || playerIn.getItemInHand(handIn).getItem() == DoggyItems.CREATIVE_CANINE_TRACKER.get();
     }
 
     @Nullable
