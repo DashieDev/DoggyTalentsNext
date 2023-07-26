@@ -16,25 +16,25 @@ import net.minecraft.world.entity.Entity;
 
 public class RenderUtil {
 
-    public static <T extends Entity> void renderLabelWithScale(T entity, EntityRenderer<T> renderer, EntityRenderDispatcher entityRenderDispatcher, Component text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yChange) {
-        renderLabelWithScale(!entity.isDiscrete(), renderer, entityRenderDispatcher, text, stack, buffer, packedLightIn, scale, yChange + entity.getBbHeight() + 0.5F);
+    public static <T extends Entity> void renderLabelWithScale(T entity, EntityRenderer<T> renderer, EntityRenderDispatcher entityRenderDispatcher, Component text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yChange, boolean renderBkg) {
+        renderLabelWithScale(!entity.isDiscrete(), renderer, entityRenderDispatcher, text, stack, buffer, packedLightIn, scale, yChange + entity.getBbHeight() + 0.5F, renderBkg);
     }
 
-    public static <T extends Entity> void renderLabelWithScale(T entity, EntityRenderer<T> renderer, EntityRenderDispatcher entityRenderDispatcher, String text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yChange) {
-        renderLabelWithScale(!entity.isDiscrete(), renderer, entityRenderDispatcher, Component.literal(text), stack, buffer, packedLightIn, scale, yChange + entity.getBbHeight() + 0.5F);
+    public static <T extends Entity> void renderLabelWithScale(T entity, EntityRenderer<T> renderer, EntityRenderDispatcher entityRenderDispatcher, String text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yChange, boolean renderBkg) {
+        renderLabelWithScale(!entity.isDiscrete(), renderer, entityRenderDispatcher, Component.literal(text), stack, buffer, packedLightIn, scale, yChange + entity.getBbHeight() + 0.5F, renderBkg);
     }
 
     // public static void renderLabelWithScale(boolean flag, EntityRenderer renderer, EntityRenderDispatcher entityRenderDispatcher, Component text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yOffset) {
     //     renderLabelWithScale(flag, renderer, entityRenderDispatcher, text.getString(), stack, buffer, packedLightIn, scale, yOffset);
     // }
 
-    public static void renderLabelWithScale(boolean flag, EntityRenderer renderer, EntityRenderDispatcher entityRenderDispatcher, Component text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yOffset) {
+    public static void renderLabelWithScale(boolean flag, EntityRenderer renderer, EntityRenderDispatcher entityRenderDispatcher, Component text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yOffset, boolean renderBkg) {
         stack.pushPose();
         stack.translate(0.0D, yOffset, 0.0D);
         stack.mulPose(entityRenderDispatcher.cameraOrientation());
         stack.scale(-scale, -scale, scale);
         Matrix4f matrix4f = stack.last().pose();
-        float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
+        float f1 = renderBkg ? Minecraft.getInstance().options.getBackgroundOpacity(0.25F) : 0;
         int j = (int) (f1 * 255.0F) << 24;
         Font fontrenderer = renderer.getFont();
         float f2 = -fontrenderer.width(text) / 2F;
