@@ -155,7 +155,15 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('P', Items.GLASS_PANE)
             .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
             .save(consumer);
-
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.CANINE_TRACKER.get(), 1)
+            .pattern(" GC")
+            .pattern("GMG")
+            .pattern(" G ")
+            .define('G', Items.GOLD_INGOT)
+            .define('C', DoggyItems.RADIO_COLLAR.get())
+            .define('M', Items.MAP)
+            .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
+            .save(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.BANDAID.get(), 1)
             .requires(DoggyItems.TRAINING_TREAT.get())
             .requires(Items.PAPER)
