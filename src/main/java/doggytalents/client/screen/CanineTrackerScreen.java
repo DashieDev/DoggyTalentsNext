@@ -15,7 +15,7 @@ import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.ConductingBoneData;
-import doggytalents.common.network.packet.data.RadarData;
+import doggytalents.common.network.packet.data.CanineTrackerData;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -31,7 +31,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.PacketDistributor;
 
-public class RadarScreen extends Screen {
+public class CanineTrackerScreen extends Screen {
 
     
     private Rect2i rect;
@@ -55,7 +55,7 @@ public class RadarScreen extends Screen {
     private int mouseX0;
     private int mouseY0;
 
-    public RadarScreen(Player player) {
+    public CanineTrackerScreen(Player player) {
         super(Component.translatable("doggytalents.screen.conducting_bone"));
         this.player = player;   
         this.dogNameList = new ArrayList<String>(4);
@@ -67,7 +67,7 @@ public class RadarScreen extends Screen {
 
     public static void open() { 
         Minecraft mc = Minecraft.getInstance();
-        var screen = new RadarScreen(mc.player);
+        var screen = new CanineTrackerScreen(mc.player);
         mc.setScreen(screen);
         screen.requestDogs();
     }
@@ -93,9 +93,9 @@ public class RadarScreen extends Screen {
                 list.add(Component.translatable("doggytalents.screen.radar.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
                 String str = I18n.get("doggytalents.screen.radar.help");
-                list.addAll(ScreenUtil.splitInto(str, 150, RadarScreen.this.font));
+                list.addAll(ScreenUtil.splitInto(str, 150, CanineTrackerScreen.this.font));
 
-                RadarScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                CanineTrackerScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
             }
         };
         
@@ -270,7 +270,7 @@ public class RadarScreen extends Screen {
     }
 
     private void requestDogs() {
-        PacketHandler.send(PacketDistributor.SERVER.noArg(), new RadarData.RequestDogsData());
+        PacketHandler.send(PacketDistributor.SERVER.noArg(), new CanineTrackerData.RequestDogsData());
     }
 
     public void assignResponse(List<Triple<UUID, String, BlockPos>> dogLs) {
@@ -288,7 +288,7 @@ public class RadarScreen extends Screen {
 
     private void startLocateDog(UUID uuid, String name, BlockPos pos) {
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
-            new RadarData.StartLocatingData(uuid, name, pos));
+            new CanineTrackerData.StartLocatingData(uuid, name, pos));
     }
 
 }

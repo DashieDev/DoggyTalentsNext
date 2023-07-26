@@ -12,7 +12,7 @@ import doggytalents.common.storage.DogLocationData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ClipContext.Block;
 
-public class RadarData {
+public class CanineTrackerData {
     public static class RequestDogsData {
     }
 

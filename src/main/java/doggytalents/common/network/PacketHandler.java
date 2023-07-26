@@ -37,11 +37,11 @@ public final class PacketHandler {
         registerPacket(new DogDismountPacket(), DogDismountData.class);
         registerPacket(new DogRegardTeamPlayersPacket(), DogRegardTeamPlayersData.class);
         registerPacket(new DogForceSitPacket(), DogForceSitData.class);
-        registerPacket(new RadarPackets.RequestDogsPacket(), RadarData.RequestDogsData.class);
-        registerPacket(new RadarPackets.ResponseDogsPackets(), RadarData.ResponseDogsData.class);
-        registerPacket(new RadarPackets.StartLocatingPacket(), RadarData.StartLocatingData.class);
-        registerPacket(new RadarPackets.RequestPosUpdatePacket(), RadarData.RequestPosUpdateData.class);
-        registerPacket(new RadarPackets.ResponsePosUpdatePacket(), RadarData.ResponsePosUpdateData.class);
+        registerPacket(new CanineTrackerPackets.RequestDogsPacket(), CanineTrackerData.RequestDogsData.class);
+        registerPacket(new CanineTrackerPackets.ResponseDogsPackets(), CanineTrackerData.ResponseDogsData.class);
+        registerPacket(new CanineTrackerPackets.StartLocatingPacket(), CanineTrackerData.StartLocatingData.class);
+        registerPacket(new CanineTrackerPackets.RequestPosUpdatePacket(), CanineTrackerData.RequestPosUpdateData.class);
+        registerPacket(new CanineTrackerPackets.ResponsePosUpdatePacket(), CanineTrackerData.ResponsePosUpdateData.class);
         registerPacket(new DogDeTrainPacket(), DogDeTrainData.class);
         registerPacket(new DogUntamePacket(), DogUntameData.class);
         registerPacket(new DogMigrateOwnerPacket(), DogMigrateOwnerData.class);
