@@ -130,14 +130,22 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
     protected void renderNameTag(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight) {
         double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
 
+        var player = Minecraft.getInstance().player;
+        boolean renderDiffOwnerName = 
+            ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_DIFFOWNER_NAME_DIFFERENT)
+            && dog != this.entityRenderDispatcher.crosshairPickEntity;
+        boolean isDiffOwner = 
+            (player == null || !player.getUUID().equals(dog.getOwnerUUID()));
+
         if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0))
-            renderMainName(dog, text, stack, buffer, packedLight, d0);
+            renderMainName(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner);
         if (d0 <= 64 * 64)
-            renderExtraInfo(dog, text, stack, buffer, packedLight, d0);
+            renderExtraInfo(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner);
         
     }
 
-    private void renderMainName(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight, double d0) {
+    private void renderMainName(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
+        int packedLight, double d0, boolean diffOwnerRender) {
         boolean flag = !dog.isDiscrete();
         float f = dog.getBbHeight() + 0.5F;
         int i = 0;
@@ -147,11 +155,12 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         stack.scale(-0.025F, -0.025F, 0.025F);
         var matrix4f = stack.last().pose();
         float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
+        if (diffOwnerRender) f1 = 0;
         int j = (int)(f1 * 255.0F) << 24;
         var font = this.getFont();
         float f2 = (float)(-font.width(text) / 2);
         
-        text = modifyText(dog, text);
+        text = modifyText(dog, text, diffOwnerRender);
         
         font.drawInBatch(text, f2, (float)i, 553648127, false, matrix4f, buffer, flag, j, packedLight);
         if (flag) {
@@ -161,7 +170,8 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         stack.popPose();
     }
 
-    private void renderExtraInfo(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight, double d0) {
+    private void renderExtraInfo(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
+        int packedLight, double d0, boolean diffOwnerRender) {
         String tip = dog.getMode().getTip();
         var hunger = Mth.ceil(
             (dog.isDefeated()?
@@ -183,18 +193,46 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
             label.append(Component.translatable(dog.getGender().getUnlocalisedTip()));
         }
 
-        RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, label, stack, buffer, packedLight, 0.01F, 0.12F);
+        final int TXTCLR_BKG = 0x574a4a4a;
+
+        if (diffOwnerRender) {
+            label = Component.literal(label.getString())
+            .withStyle(
+                Style.EMPTY
+                .withColor(TXTCLR_BKG)
+            );
+        }
+
+        RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, label, stack, buffer, packedLight, 0.01F, 0.12F, !diffOwnerRender);
 
         if (d0 <= 5 * 5 && this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()) {
-            RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, dog.getOwnersName().orElseGet(() -> this.getNameUnknown(dog)), stack, buffer, packedLight, 0.01F, -0.25F);
+            var ownerC0 = dog.getOwnersName().orElseGet(() -> this.getNameUnknown(dog));
+            if (diffOwnerRender) {
+               ownerC0 = Component.literal(ownerC0.getString())
+                .withStyle(
+                    Style.EMPTY
+                    .withColor(TXTCLR_BKG)
+                );
+            }
+
+            RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, ownerC0, stack, buffer, packedLight, 0.01F, -0.25F, !diffOwnerRender);
         }
     }
 
-     private Component modifyText(Dog dog, Component text) {
+     private Component modifyText(Dog dog, Component text, boolean diffOwnerRender) {
         final int TXTCLR_HEALTH_70_100 = 0x0aff43;
         final int TXTCLR_HEALTH_30_70 = 0xeffa55;
         final int TXTCLR_HEALTH_0_30 = 0xff3636;
         final int TXTCLR_BKG = 0x4a4a4a;
+        
+        if (diffOwnerRender) {
+            text = Component.literal(text.getString())
+                .withStyle(
+                    Style.EMPTY
+                    .withColor(TXTCLR_BKG)
+                );
+            return text;
+        }
 
         boolean flag1 = 
                 this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
