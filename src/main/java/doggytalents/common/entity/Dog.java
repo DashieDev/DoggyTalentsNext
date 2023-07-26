@@ -2233,12 +2233,6 @@ public class Dog extends AbstractDog {
     public List<AccessoryInstance> removeAccessories() {
         List<AccessoryInstance> removed = new ArrayList<>(this.getAccessories());
 
-        for (AccessoryInstance inst : removed) {
-            if (inst instanceof IDogAlteration) {
-                ((IDogAlteration) inst).remove(this);
-            }
-        }
-
         this.getAccessories().clear();
         this.markDataParameterDirty(ACCESSORIES.get());
         return removed;
