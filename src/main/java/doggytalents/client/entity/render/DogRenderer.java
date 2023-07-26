@@ -101,46 +101,6 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
 
         super.render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
-        if (this.shouldShowName(dog)) {
-
-            double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
-            if (d0 <= 64 * 64) {
-                String tip = dog.getMode().getTip();
-                var hunger = Mth.ceil(
-                    (dog.isDefeated()?
-                    (dog.getDogHunger() - dog.getMaxIncapacitatedHunger()) :
-                    dog.getDogHunger())
-                );
-
-                // String labelstr = String.format(ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) ? "%s(%d)%s" : "%s(%d)",
-                //         I18n.get(tip),
-                //         hunger,
-                //         I18n.get(dog.getGender().getUnlocalisedTip())
-                // );
-
-                boolean flag1 = 
-                    this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
-                    && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
-
-                var label = Component.translatable(tip);
-                var hunger_c1 = Component.literal("(" + hunger + ")");
-                if (dog.getDogHunger() <= 10 && flag1) {
-                    hunger_c1.withStyle(Style.EMPTY.withColor(0xff3636));
-                }
-                label.append(hunger_c1);
-                if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER)) {
-                    label.append(Component.translatable(dog.getGender().getUnlocalisedTip()));
-                }
-
-                RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, label, matrixStackIn, bufferIn, packedLightIn, 0.01F, 0.12F);
-
-                if (d0 <= 5 * 5 && this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()) {
-                    RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, dog.getOwnersName().orElseGet(() -> this.getNameUnknown(dog)), matrixStackIn, bufferIn, packedLightIn, 0.01F, -0.25F);
-                }
-            }
-        }
-
-
         if (dog.isDogWet()) {
             this.model.setColor(1.0F, 1.0F, 1.0F);
         }
@@ -169,32 +129,65 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
     protected void renderNameTag(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight) {
         double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
 
+        if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0))
+            renderMainName(dog, text, stack, buffer, packedLight, d0);
+        if (d0 <= 64 * 64)
+            renderExtraInfo(dog, text, stack, buffer, packedLight, d0);
         
+    }
 
-        if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0)) {
-           boolean flag = !dog.isDiscrete();
-           float f = dog.getBbHeight() + 0.5F;
-           int i = 0;
-           stack.pushPose();
-           stack.translate(0.0D, (double)f, 0.0D);
-           stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-           stack.scale(-0.025F, -0.025F, 0.025F);
-           var matrix4f = stack.last().pose();
-           float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
-           int j = (int)(f1 * 255.0F) << 24;
-           var font = this.getFont();
-           float f2 = (float)(-font.width(text) / 2);
-            
-           text = modifyText(dog, text);
-           
-           font.drawInBatch(text, f2, (float)i, 553648127, false, matrix4f, buffer, flag, j, packedLight);
-           if (flag) {
-              font.drawInBatch(text, f2, (float)i, -1, false, matrix4f, buffer, false, 0, packedLight);
-           }
-  
-           stack.popPose();
+    private void renderMainName(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight, double d0) {
+        boolean flag = !dog.isDiscrete();
+        float f = dog.getBbHeight() + 0.5F;
+        int i = 0;
+        stack.pushPose();
+        stack.translate(0.0D, (double)f, 0.0D);
+        stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
+        stack.scale(-0.025F, -0.025F, 0.025F);
+        var matrix4f = stack.last().pose();
+        float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
+        int j = (int)(f1 * 255.0F) << 24;
+        var font = this.getFont();
+        float f2 = (float)(-font.width(text) / 2);
+        
+        text = modifyText(dog, text);
+        
+        font.drawInBatch(text, f2, (float)i, 553648127, false, matrix4f, buffer, flag, j, packedLight);
+        if (flag) {
+            font.drawInBatch(text, f2, (float)i, -1, false, matrix4f, buffer, false, 0, packedLight);
         }
-     }
+
+        stack.popPose();
+    }
+
+    private void renderExtraInfo(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight, double d0) {
+        String tip = dog.getMode().getTip();
+        var hunger = Mth.ceil(
+            (dog.isDefeated()?
+            (dog.getDogHunger() - dog.getMaxIncapacitatedHunger()) :
+            dog.getDogHunger())
+        );
+
+        boolean flag1 = 
+            this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
+            && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
+
+        var label = Component.translatable(tip);
+        var hunger_c1 = Component.literal("(" + hunger + ")");
+        if (dog.getDogHunger() <= 10 && flag1) {
+            hunger_c1.withStyle(Style.EMPTY.withColor(0xff3636));
+        }
+        label.append(hunger_c1);
+        if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER)) {
+            label.append(Component.translatable(dog.getGender().getUnlocalisedTip()));
+        }
+
+        RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, label, stack, buffer, packedLight, 0.01F, 0.12F);
+
+        if (d0 <= 5 * 5 && this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()) {
+            RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, dog.getOwnersName().orElseGet(() -> this.getNameUnknown(dog)), stack, buffer, packedLight, 0.01F, -0.25F);
+        }
+    }
 
      private Component modifyText(Dog dog, Component text) {
         final int TXTCLR_HEALTH_70_100 = 0x0aff43;
