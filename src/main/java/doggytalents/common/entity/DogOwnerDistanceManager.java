@@ -68,6 +68,7 @@ public class DogOwnerDistanceManager {
         return 
             this.willGreet
             && dog.distanceToSqr(owner) <= OWNER_START_GREET_DISTANCE_SQR
+            && !owner.isSpectator()
             && !dog.isBusy();
     }
 
