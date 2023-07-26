@@ -62,6 +62,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue USE_LEGACY_DOGGUI;
         public ForgeConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
         public ForgeConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
+        public ForgeConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -117,7 +118,10 @@ public class ConfigHandler {
                 .comment("You can substitute this friendlier texture instead.")
                 .translation("doggytalents.config.client.render_incap_txt_less_graphic")
                 .define("render_incap_txt_less_graphic", false);
-
+            RENDER_DIFFOWNER_NAME_DIFFERENT = builder
+                .comment("Render dogs' name whose owner is not you with different color.")
+                .translation("doggytalents.config.client.render_diffowner_name_different")
+                .define("render_diffowner_name_different", true);
             builder.pop();
         }
 
