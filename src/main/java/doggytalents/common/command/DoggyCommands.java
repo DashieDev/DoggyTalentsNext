@@ -12,7 +12,7 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import doggytalents.common.command.arguments.UUIDArgument;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.item.RadarItem;
+import doggytalents.common.item.CanineTrackerItem;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.storage.*;
 import doggytalents.common.util.Util;
@@ -383,7 +383,7 @@ public class DoggyCommands {
         Player player = source.getPlayerOrException();
 
         if (locationData.getDimension().equals(player.level().dimension())) {
-            String translateStr = RadarItem.getDirectionTranslationKey(locationData, player);
+            String translateStr = CanineTrackerItem.getDirectionTranslationKey(locationData, player);
             int distance = Mth.ceil(locationData.getPos() != null ? locationData.getPos().distanceTo(player.position()) : -1);
 
             source.sendSuccess(() -> Component.translatable(translateStr, locationData.getName(player.level()), distance), false);
