@@ -10,17 +10,17 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 import doggytalents.ChopinLogger;
-import doggytalents.client.entity.render.world.RadarLocateRenderer;
+import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
 import doggytalents.client.screen.ConductingBoneScreen;
-import doggytalents.client.screen.RadarScreen;
-import doggytalents.common.item.RadarItem;
+import doggytalents.client.screen.CanineTrackerScreen;
+import doggytalents.common.item.CanineTrackerItem;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.PacketHandler;
-import doggytalents.common.network.packet.data.RadarData.RequestDogsData;
-import doggytalents.common.network.packet.data.RadarData.RequestPosUpdateData;
-import doggytalents.common.network.packet.data.RadarData.ResponseDogsData;
-import doggytalents.common.network.packet.data.RadarData.ResponsePosUpdateData;
-import doggytalents.common.network.packet.data.RadarData.StartLocatingData;
+import doggytalents.common.network.packet.data.CanineTrackerData.RequestDogsData;
+import doggytalents.common.network.packet.data.CanineTrackerData.RequestPosUpdateData;
+import doggytalents.common.network.packet.data.CanineTrackerData.ResponseDogsData;
+import doggytalents.common.network.packet.data.CanineTrackerData.ResponsePosUpdateData;
+import doggytalents.common.network.packet.data.CanineTrackerData.StartLocatingData;
 import doggytalents.common.storage.DogLocationStorage;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -32,7 +32,7 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 
-public class RadarPackets {
+public class CanineTrackerPackets {
     
     public static class RequestDogsPacket implements IPacket<RequestDogsData> {
 
@@ -122,7 +122,7 @@ public class RadarPackets {
 
                 if (ctx.get().getDirection().getReceptionSide().isClient()) { 
                     Minecraft mc = Minecraft.getInstance();
-                    if (mc.screen != null && mc.screen instanceof RadarScreen scr) {
+                    if (mc.screen != null && mc.screen instanceof CanineTrackerScreen scr) {
                         scr.assignResponse(data.entries);
                     }
                 }
@@ -158,7 +158,7 @@ public class RadarPackets {
                 if (!side.isServer()) return;
                 var player = ctx.get().getSender();
                 var stack = player.getMainHandItem();
-                if (!(stack.getItem() instanceof RadarItem)) return;
+                if (!(stack.getItem() instanceof CanineTrackerItem)) return;
                 if (!stack.hasTag()) {
                     stack.setTag(new CompoundTag());
                 }
@@ -201,7 +201,7 @@ public class RadarPackets {
                 var sender = ctx.get().getSender();
 
                 var stack = sender.getMainHandItem();
-                if (!(stack.getItem() instanceof RadarItem)) return;
+                if (!(stack.getItem() instanceof CanineTrackerItem)) return;
 
                 var storage = 
                     DogLocationStorage.get(sender.level);
@@ -255,7 +255,7 @@ public class RadarPackets {
                 LogicalSide side = ctx.get().getDirection().getReceptionSide();
                 if (!side.isClient()) return;
                 
-                RadarLocateRenderer.correctPos(data.uuid, data.correctPos);
+                CanineTrackerLocateRenderer.correctPos(data.uuid, data.correctPos);
             });
 
             ctx.get().setPacketHandled(true);
