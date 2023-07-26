@@ -10,10 +10,10 @@ import doggytalents.DoggyItems;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.entity.render.RenderUtil;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.item.RadarItem;
+import doggytalents.common.item.CanineTrackerItem;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
-import doggytalents.common.network.packet.data.RadarData.RequestPosUpdateData;
+import doggytalents.common.network.packet.data.CanineTrackerData.RequestPosUpdateData;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.font.FontManager;
@@ -35,7 +35,7 @@ import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.network.PacketDistributor;
 
-public class RadarLocateRenderer {
+public class CanineTrackerLocateRenderer {
 
     private static ResourceLocation DEFAULT_0 = new ResourceLocation("default/0");
 
@@ -126,16 +126,16 @@ public class RadarLocateRenderer {
     }
     
     public static int getHighlightColor(double distance) {
-        if (distance >= 84) return 0xffffffff;
-        distance -= 20;
-        if (distance <= 0) return 0xff00ff5e;
+        if (distance >= 160) return 0xffffffff;
+        distance -= 32;
+        if (distance <= 0) return 0xffffea2e; // 255, 234, 46
 
-        double progress = Mth.clamp((64-distance)/64d, 0, 1);
+        double progress = Mth.clamp((128d-distance)/128d, 0, 1);
 
         int[] color = {0xff, 0xff, 0xff};
-        color[0] += -255*progress;
-        //color[1] += 0;
-        color[2] += -161*progress;
+        //color[0] += -0*progress;
+        color[1] += -21*progress;
+        color[2] += -209*progress;
         
         return 0xff000000 | RenderUtil.rgbToInt(color);
     }
@@ -187,9 +187,9 @@ public class RadarLocateRenderer {
         var item_main = player.getItemInHand(InteractionHand.MAIN_HAND);
         var item_off = player.getItemInHand(InteractionHand.OFF_HAND);
         ItemStack radar = null;
-        if (item_main.getItem() instanceof RadarItem) 
+        if (item_main.getItem() instanceof CanineTrackerItem) 
             radar = item_main;
-        else if (item_off.getItem() instanceof RadarItem)
+        else if (item_off.getItem() instanceof CanineTrackerItem)
             radar = item_off;
         if (radar == null) return Optional.empty();
         if (!radar.hasTag()) return Optional.empty();
