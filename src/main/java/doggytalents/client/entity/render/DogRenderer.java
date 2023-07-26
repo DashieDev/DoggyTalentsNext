@@ -169,10 +169,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
     protected void renderNameTag(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight) {
         double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
 
-        final int TXTCLR_HEALTH_70_100 = 0x0aff43;
-        final int TXTCLR_HEALTH_30_70 = 0xeffa55;
-        final int TXTCLR_HEALTH_0_30 = 0xff3636;
-        final int TXTCLR_BKG = 0x4a4a4a;
+        
 
         if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0)) {
            boolean flag = !dog.isDiscrete();
@@ -187,35 +184,9 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
            int j = (int)(f1 * 255.0F) << 24;
            var font = this.getFont();
            float f2 = (float)(-font.width(text) / 2);
-           boolean flag1 = 
-                this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
-                && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
-           if (flag1) {
-                int noCharsInName = text.getString().length();
-                float healthPercentage = dog.getHealth()/dog.getMaxHealth();
-                int noCharHighlighted = Mth.ceil( noCharsInName * healthPercentage );
-                var hlPart = text.getString().substring(0, noCharHighlighted);
-                String nonHlPart = "";
-                if (noCharHighlighted <= noCharsInName) {
-                    nonHlPart = text.getString().substring(noCharHighlighted, noCharsInName);
-                }
-                int color = TXTCLR_HEALTH_0_30;
-                if (healthPercentage >= 0.7) {
-                    color = TXTCLR_HEALTH_70_100;
-                } else if (healthPercentage >= 0.3) {
-                    color = TXTCLR_HEALTH_30_70;
-                }
-                var newTxt = Component.literal(hlPart).withStyle(
-                    Style.EMPTY
-                    .withColor(color)
-                );
-                var restTxt = Component.literal(nonHlPart).withStyle(
-                    Style.EMPTY
-                    .withColor(TXTCLR_BKG)
-                );
-                newTxt.append(restTxt);
-                text = newTxt;
-           }
+            
+           text = modifyText(dog, text);
+           
            font.drawInBatch(text, f2, (float)i, 553648127, false, matrix4f, buffer, flag, j, packedLight);
            if (flag) {
               font.drawInBatch(text, f2, (float)i, -1, false, matrix4f, buffer, false, 0, packedLight);
@@ -223,5 +194,43 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
   
            stack.popPose();
         }
+     }
+
+     private Component modifyText(Dog dog, Component text) {
+        final int TXTCLR_HEALTH_70_100 = 0x0aff43;
+        final int TXTCLR_HEALTH_30_70 = 0xeffa55;
+        final int TXTCLR_HEALTH_0_30 = 0xff3636;
+        final int TXTCLR_BKG = 0x4a4a4a;
+
+        boolean flag1 = 
+                this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
+                && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
+        if (flag1) {
+            int noCharsInName = text.getString().length();
+            float healthPercentage = dog.getHealth()/dog.getMaxHealth();
+            int noCharHighlighted = Mth.ceil( noCharsInName * healthPercentage );
+            var hlPart = text.getString().substring(0, noCharHighlighted);
+            String nonHlPart = "";
+            if (noCharHighlighted <= noCharsInName) {
+                nonHlPart = text.getString().substring(noCharHighlighted, noCharsInName);
+            }
+            int color = TXTCLR_HEALTH_0_30;
+            if (healthPercentage >= 0.7) {
+                color = TXTCLR_HEALTH_70_100;
+            } else if (healthPercentage >= 0.3) {
+                color = TXTCLR_HEALTH_30_70;
+            }
+            var newTxt = Component.literal(hlPart).withStyle(
+                Style.EMPTY
+                .withColor(color)
+            );
+            var restTxt = Component.literal(nonHlPart).withStyle(
+                Style.EMPTY
+                .withColor(TXTCLR_BKG)
+            );
+            newTxt.append(restTxt);
+            text = newTxt;
+        }
+        return text;
      }
 }
