@@ -1,16 +1,17 @@
-// 1.19.2	2023-07-21T18:29:26.4891411	DoggyTalents Item Models
+// 1.19.2	2023-07-27T02:19:12.916669	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
 800b0dd973429034a05cbf92a314183d189700bb assets/doggytalents/models/item/beastars_uniform_female.json
 0b2cb480f564f26dea464bf88fa8dc72ef3976b4 assets/doggytalents/models/item/beastars_uniform_male.json
 3d9d5eecd0fd643f244fcbff0e632a1c69fe532f assets/doggytalents/models/item/bowtie.json
 e16db99d3f12eb93982beacb24a089aeea4a0139 assets/doggytalents/models/item/breeding_bone.json
+ab1f84f9e80f52a2d8cdd8bb0bfe8d6bc261fd65 assets/doggytalents/models/item/canine_tracker.json
 8930778c93f214896857d7fb0e6cb986b84365b8 assets/doggytalents/models/item/cape.json
 f4680c4abb5ae1f964c3a9d18c72867eda849841 assets/doggytalents/models/item/cape_coloured.json
 f52223bb5d6925b64f96598d718dc11355d78019 assets/doggytalents/models/item/conan_suit.json
 d4961b5956ecb514cc73fc4902995ee2dc1e4e76 assets/doggytalents/models/item/conducting_bone.json
+883caec86cd13a261438be08ca0f17c3936c8134 assets/doggytalents/models/item/creative_canine_tracker.json
 c32b03263dcdad77d9e68e3140b94f5d71fba4a5 assets/doggytalents/models/item/creative_collar.json
-3fa0d4c951a9f0caf9ab9a23bfca0d735e9185df assets/doggytalents/models/item/creative_radar.json
 86388a3f26ad0ad39a8943914a87b8bbb9936640 assets/doggytalents/models/item/death_hood.json
 ce0a82d69960e0bf608c4415dd2c93485cb7e81b assets/doggytalents/models/item/dire_treat.json
 ad0c76a4a4a7e72ea4214910a014102656cb3a7a assets/doggytalents/models/item/doggy_charm.json
@@ -26,7 +27,6 @@ bbbddd194d8bce956f46ef7e0e9c24bef18cf451 assets/doggytalents/models/item/guard_s
 c78372cc5d3fb956867a2378707fdf0de6287dd0 assets/doggytalents/models/item/master_treat.json
 2898b9dfb81537fc36b6033c98081737b04b1f80 assets/doggytalents/models/item/multicoloured_collar.json
 bc4344cde9b92b3d303523e9d15fe95482b486c4 assets/doggytalents/models/item/pianist_suit.json
-04168bd8a19365ad74e249c9e4443fddfb535b5e assets/doggytalents/models/item/radar.json
 6154f41cf2303fc6636ee83009cc983c95970804 assets/doggytalents/models/item/radio_collar.json
 846f55137451d54b108cb05be5a3f66ff601401a assets/doggytalents/models/item/shrinking_mallet.json
 aa2f1cb07f093298438c6384ff408f9474117585 assets/doggytalents/models/item/smarty_glasses.json
