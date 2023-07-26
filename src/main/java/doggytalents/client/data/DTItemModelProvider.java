@@ -42,8 +42,8 @@ public class DTItemModelProvider extends ItemModelProvider {
         handheld(DoggyItems.ENERGIZER_STICK);
         handheld(DoggyItems.CONDUCTING_BONE);
 
-        radar(DoggyItems.CREATIVE_RADAR);
-        radar(DoggyItems.RADAR);
+        generated(DoggyItems.CREATIVE_CANINE_TRACKER);
+        generated(DoggyItems.CANINE_TRACKER);
 
         generated(DoggyItems.CAPE);
         generated(DoggyItems.CAPE_COLOURED);

@@ -1,7 +1,7 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyItems;
-import doggytalents.client.screen.RadarScreen;
+import doggytalents.client.screen.CanineTrackerScreen;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
 import net.minecraft.Util;
@@ -26,9 +26,9 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class RadarItem extends Item {
+public class CanineTrackerItem extends Item {
 
-    public RadarItem(Properties properties) {
+    public CanineTrackerItem(Properties properties) {
         super(properties);
     }
 
@@ -95,7 +95,7 @@ public class RadarItem extends Item {
         //         playerIn.sendSystemMessage(Component.translatable("dogradar.errornull", noDogs.stream().map(ResourceKey::location).map(Objects::toString).collect(Collectors.joining(", "))));
         //     }
         // }
-            if (stack.getItem() instanceof RadarItem && stack.hasTag()) {
+            if (stack.getItem() instanceof CanineTrackerItem && stack.hasTag()) {
                 stack.setTag(null);
             }
         } else {
@@ -103,7 +103,7 @@ public class RadarItem extends Item {
                 return
                     new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
             if (!stack.hasTag())
-                RadarScreen.open();
+                CanineTrackerScreen.open();
         }
         return new InteractionResultHolder<ItemStack>(InteractionResult.FAIL, stack);
     }
@@ -143,7 +143,7 @@ public class RadarItem extends Item {
             if (tag != null && tag.contains("name", Tag.TAG_STRING)) {
                 return Component.translatable("item.doggytalents.radar.status", tag.getString("name"))
                     .withStyle(
-                        Style.EMPTY.withColor(0xff00ff5e)
+                        Style.EMPTY.withColor(0xffffea2e)
                     );
             }
         }
