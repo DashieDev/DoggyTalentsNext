@@ -23,7 +23,7 @@ public class BedFinderTalent extends TalentInstance {
 
     @Override
     public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
-        if (this.level() > 0) {
+        if (this.level() > 0 && !dogIn.level().isClientSide) {
             if (!playerIn.hasPassenger(dogIn)) {
                 if (playerIn.getItemInHand(handIn).getItem() == Items.BONE && dogIn.canInteract(playerIn)) {
 
