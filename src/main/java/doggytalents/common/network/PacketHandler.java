@@ -34,7 +34,7 @@ public final class PacketHandler {
         registerPacket(new ChangeAccessoryPacket(), ChangeAccessoriesData.class);
         registerPacket(new StatsSyncPackets.Request(), StatsSyncData.Request.class);
         registerPacket(new StatsSyncPackets.Response(), StatsSyncData.Response.class);
-        registerPacket(new DogDismountPacket(), DogDismountData.class);
+        registerPacket(new DogMountPacket(), DogMountData.class);
         registerPacket(new DogRegardTeamPlayersPacket(), DogRegardTeamPlayersData.class);
         registerPacket(new DogForceSitPacket(), DogForceSitData.class);
         registerPacket(new CanineTrackerPackets.RequestDogsPacket(), CanineTrackerData.RequestDogsData.class);
