@@ -11,6 +11,7 @@ import doggytalents.common.util.Util;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -37,12 +38,14 @@ public class DoggyItems {
     public static final RegistryObject<Item> DOGGY_CHARM = registerWith("doggy_charm", DoggyCharmItem::new, 1);
     public static final RegistryObject<AccessoryItem> RADIO_COLLAR = registerAccessory("radio_collar", DoggyAccessories.RADIO_BAND);
     public static final RegistryObject<DyeableAccessoryItem> WOOL_COLLAR = registerAccessoryDyed("wool_collar", DoggyAccessories.DYEABLE_COLLAR);
-    public static final RegistryObject<AccessoryItem> CREATIVE_COLLAR = registerAccessory("creative_collar", DoggyAccessories.GOLDEN_COLLAR);
+    public static final RegistryObject<AccessoryItem> CREATIVE_COLLAR = register("creative_collar",  () -> new AccessoryItem(DoggyAccessories.GOLDEN_COLLAR, createInitialProp()) 
+        { @Override public boolean isFoil(ItemStack stack) { return true; } } );
     public static final RegistryObject<AccessoryItem> SPOTTED_COLLAR = registerAccessory("spotted_collar", DoggyAccessories.SPOTTED_COLLAR);
     public static final RegistryObject<AccessoryItem> MULTICOLOURED_COLLAR = registerAccessory("multicoloured_collar", DoggyAccessories.MULTICOLORED_COLLAR);
     public static final RegistryObject<Item> CANINE_TRACKER = registerWith("canine_tracker", CanineTrackerItem::new, 1);
     public static final RegistryObject<Item> CONDUCTING_BONE = registerWithFireResistant("conducting_bone", ConductingBoneItem::new, 1);
-    public static final RegistryObject<Item> CREATIVE_CANINE_TRACKER = registerWith("creative_canine_tracker", CanineTrackerItem::new, 1);
+    public static final RegistryObject<Item> CREATIVE_CANINE_TRACKER = registerWith("creative_canine_tracker", props -> new CanineTrackerItem(props) 
+        { @Override public boolean isFoil(ItemStack stack) { return true; } }, 1);
     public static final RegistryObject<WhistleItem> WHISTLE = registerWith("whistle", WhistleItem::new, 1);
     public static final RegistryObject<Item> TREAT_BAG = registerWith("treat_bag", TreatBagItem::new, 1);
     public static final RegistryObject<Item> ENERGIZER_STICK = register("energizer_stick", EnergizerStick::new);
