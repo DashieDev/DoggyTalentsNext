@@ -35,7 +35,7 @@ import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.ParticlePackets.CritEmitterPacket;
-import doggytalents.common.network.packet.data.DogDismountData;
+import doggytalents.common.network.packet.data.DogMountData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.util.*;
@@ -850,15 +850,27 @@ public class Dog extends AbstractDog {
             var e0 = this.getVehicle();
             super.stopRiding();
             var e1 = this.getVehicle();
-            if (e0 != e1 && e0 instanceof Player) {
-                PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> this), 
-                    new DogDismountData(this.getId())
+            if (e0 != e1 && e0 instanceof ServerPlayer player) {
+                PacketHandler.send(PacketDistributor.PLAYER.with(() -> player), 
+                    new DogMountData(this.getId(), false)
                 );
             }
         } else {
             super.stopRiding();
         }
         
+    }
+
+    @Override
+    public boolean startRiding(Entity entity) {
+        if (!this.level.isClientSide) {
+            if (entity instanceof ServerPlayer player) {
+                PacketHandler.send(PacketDistributor.PLAYER.with(() -> player), 
+                    new DogMountData(this.getId(), true)
+                );
+            }
+        }
+        return super.startRiding(entity);
     }
 
     @Override

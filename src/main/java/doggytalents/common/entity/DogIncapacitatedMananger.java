@@ -120,7 +120,7 @@ public class DogIncapacitatedMananger {
             );
 
             this.recoveryMultiplier *= 2;
-        } else if (stack.getItem() == Items.BONE && !this.dog.isPassenger() && !player.isVehicle()) {
+        } else if (stack.getItem() == Items.BONE && !this.dog.level().isClientSide && !this.dog.isPassenger() && !player.isVehicle()) {
             if (this.dog.getOwner() == player) {
                 this.dog.startRiding(player);
             }
