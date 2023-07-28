@@ -1,5 +1,7 @@
 package doggytalents.api.feature;
 
+import net.minecraft.util.Mth;
+
 public class DogLevel {
 
     private int level;
@@ -45,6 +47,11 @@ public class DogLevel {
     @Deprecated
     public void incrementLevel(Type type) {
         this.setLevel(type, this.getLevel(type) + 1);
+    }
+
+    public float getMaxHealth() {
+        int hearts = 10 + (int) Math.ceil((1f/6f) * this.level + (1f/3f) * this.direLevel);
+        return 2*hearts;
     }
 
     public DogLevel copy() {
