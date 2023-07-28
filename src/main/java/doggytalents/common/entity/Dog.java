@@ -2046,6 +2046,9 @@ public class Dog extends AbstractDog {
                 this.getDogLevel().setLevel(Type.DIRE, compound.getInt("level_dire"));
                 this.markDataParameterDirty(DOG_LEVEL.get());
             }
+            float h = this.getDogLevel().getMaxHealth();
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
+            this.setHealth(h);
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load levels: " + e.getMessage());
             e.printStackTrace();
