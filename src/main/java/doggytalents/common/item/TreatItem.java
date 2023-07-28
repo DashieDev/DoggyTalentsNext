@@ -7,6 +7,7 @@ import doggytalents.common.lib.Constants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -55,6 +56,9 @@ public class TreatItem extends Item implements IDogItem {
                 }
 
                 dogIn.increaseLevel(this.type);
+                float h = dogIn.getDogLevel().getMaxHealth();
+                if (h != dogIn.getMaxHealth())
+                dogIn.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
                 dogIn.setHealth(dogIn.getMaxHealth());
                 dogIn.setOrderedToSit(true);
                 worldIn.broadcastEntityEvent(dogIn, Constants.EntityState.WOLF_HEARTS);
