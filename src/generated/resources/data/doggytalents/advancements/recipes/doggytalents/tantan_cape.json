@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:cape"
+        "recipe": "doggytalents:tantan_cape"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:cape"
+      "doggytalents:tantan_cape"
     ]
   }
 }
