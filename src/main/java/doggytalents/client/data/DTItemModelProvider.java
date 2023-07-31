@@ -45,7 +45,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.CREATIVE_CANINE_TRACKER);
         generated(DoggyItems.CANINE_TRACKER);
 
-        generated(DoggyItems.CAPE);
+        generated(DoggyItems.TANTAN_CAPE);
         generated(DoggyItems.CAPE_COLOURED);
         generated(DoggyItems.CREATIVE_COLLAR);
         generated(DoggyItems.DOGGY_CHARM);

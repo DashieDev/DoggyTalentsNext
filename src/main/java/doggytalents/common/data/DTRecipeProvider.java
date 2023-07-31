@@ -67,8 +67,23 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.WOOL_COLLAR.get(), 1).pattern("SSS").pattern("S S").pattern("SSS").define('S', Items.STRING).unlockedBy("has_stick", has(Items.STRING)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.TREAT_BAG.get(), 1).pattern("LCL").pattern("LLL").define('L', Items.LEATHER).define('C', DoggyItems.ENERGIZER_STICK.get()).unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
-        ShapedRecipeBuilder.shaped(DoggyItems.CAPE.get(), 1).pattern("S S").pattern("LWL").pattern("WLW").define('L', Items.LEATHER).define('S', Items.STRING).define('W', ItemTags.WOOL).unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
-        ShapedRecipeBuilder.shaped(DoggyItems.CAPE_COLOURED.get(), 1).pattern("S S").pattern("LLL").pattern("LLL").define('L', Items.LEATHER).define('S', Items.STRING).unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
+        ShapedRecipeBuilder.shaped(DoggyItems.TANTAN_CAPE.get(), 1)
+            .pattern("S S")
+            .pattern("RBR")
+            .pattern("BYB")
+            .define('R', Items.RED_WOOL)
+            .define('S', Items.STRING)
+            .define('B', Items.BLUE_WOOL)
+            .define('Y', Items.YELLOW_WOOL)
+            .unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
+        ShapedRecipeBuilder.shaped(DoggyItems.CAPE_COLOURED.get(), 1)
+            .pattern("S S")
+            .pattern("LWL")
+            .pattern("WLW")
+            .define('L', Items.LEATHER)
+            .define('W', Items.WHITE_WOOL)
+            .define('S', Items.STRING)
+            .unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.GUARD_SUIT.get(), 1).pattern("S S").pattern("BWB").pattern("BWB").define('S', Items.STRING).define('W', Blocks.WHITE_WOOL).define('B', Blocks.BLACK_WOOL).unlockedBy("has_string", has(Items.STRING)).save(consumer);
         ShapedRecipeBuilder.shaped(DoggyItems.PIANIST_SUIT.get(), 1)
             .pattern("GWG")
