@@ -19,6 +19,14 @@ import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
+import doggytalents.client.entity.model.dog.kusa.ChiModel;
+import doggytalents.client.entity.model.dog.kusa.HayabusaModel;
+import doggytalents.client.entity.model.dog.kusa.KoModel;
+import doggytalents.client.entity.model.dog.kusa.ReiModel;
+import doggytalents.client.entity.model.dog.kusa.ShinModel;
+import doggytalents.client.entity.model.dog.kusa.TakeModel;
+import doggytalents.client.entity.model.dog.kusa.TeiModel;
+import doggytalents.client.entity.model.dog.kusa.UmeModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.CollarRenderManager;
 import doggytalents.client.entity.render.DogScreenOverlays;
@@ -61,6 +69,15 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_JUNO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_juno"), "main");   
     public static final ModelLayerLocation DOG_ST_BERNARD = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_st_bernard"), "main");   
     public static final ModelLayerLocation OKAMI_AMATERASU = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "okami_amaterasu"), "main");   
+    public static final ModelLayerLocation KUSA_HAYABUSA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_hayabusa"), "main");   
+    public static final ModelLayerLocation KUSA_CHI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_chi"), "main");   
+    public static final ModelLayerLocation KUSA_KO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_ko"), "main");   
+    public static final ModelLayerLocation KUSA_REI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_rei"), "main");   
+    public static final ModelLayerLocation KUSA_SHIN = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_shin"), "main");   
+    public static final ModelLayerLocation KUSA_TAKE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_take"), "main");   
+    public static final ModelLayerLocation KUSA_TEI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_tei"), "main");   
+    public static final ModelLayerLocation KUSA_UME = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_ume"), "main");   
+    
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -87,6 +104,14 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_JUNO, JunoModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ST_BERNARD, StBernardModel::createBodyLayer);
         event.registerLayerDefinition(OKAMI_AMATERASU, AmaterasuModel::createBodyLayer);
+        event.registerLayerDefinition(KUSA_HAYABUSA, HayabusaModel::createBodyLayer);
+        event.registerLayerDefinition(KUSA_CHI, ChiModel::createBodyLayer);
+        event.registerLayerDefinition(KUSA_KO, KoModel::createBodyLayer);
+        event.registerLayerDefinition(KUSA_REI, ReiModel::createBodyLayer);
+        event.registerLayerDefinition(KUSA_SHIN, ShinModel::createBodyLayer);
+        event.registerLayerDefinition(KUSA_TAKE, TakeModel::createBodyLayer);
+        event.registerLayerDefinition(KUSA_TEI, TeiModel::createBodyLayer);
+        event.registerLayerDefinition(KUSA_UME, UmeModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createArmorLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
