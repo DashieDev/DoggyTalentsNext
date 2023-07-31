@@ -14,6 +14,62 @@
             "author" : "MashXP, DashieDev"
         },
         {
+            "skin_name" : "Hayabusa",
+            "skin_id" : "kusa_hayabusa",
+            "use_model" : "kusa_hayabusa",
+            "based_on" : "Hayabusa from the Canine Warriors from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Chi",
+            "skin_id" : "kusa_chi",
+            "use_model" : "kusa_chi",
+            "based_on" : "Chi from the Kusa 5 from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Ko",
+            "skin_id" : "kusa_ko",
+            "use_model" : "kusa_ko",
+            "based_on" : "Ko from the Kusa 5 from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Rei",
+            "skin_id" : "kusa_rei",
+            "use_model" : "kusa_rei",
+            "based_on" : "Rei from the Kusa 5 from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Shin",
+            "skin_id" : "kusa_shin",
+            "use_model" : "kusa_shin",
+            "based_on" : "Shin from the Kusa 5 from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Take",
+            "skin_id" : "kusa_take",
+            "use_model" : "kusa_take",
+            "based_on" : "Take from the Canine Warriors from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Tei",
+            "skin_id" : "kusa_tei",
+            "use_model" : "kusa_tei",
+            "based_on" : "Tei from the Kusa 5 from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Ume",
+            "skin_id" : "kusa_ume",
+            "use_model" : "kusa_ume",
+            "based_on" : "Ume from the Canine Warriors from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
             "skin_name" : "Iwanko (RockRuff)",
             "skin_id" : "iwanko",
             "use_model" : "iwanko",
