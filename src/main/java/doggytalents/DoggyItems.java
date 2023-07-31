@@ -53,7 +53,7 @@ public class DoggyItems {
     public static final RegistryObject<Item> ENERGIZER_STICK = register("energizer_stick", EnergizerStick::new);
     public static final RegistryObject<Item> EGG_SANDWICH = register("egg_sandwich", EggSandwichItem::new);
     public static final RegistryObject<Item> BANDAID = register("bandaid", BandaidItem::new);
-    public static final RegistryObject<AccessoryItem> CAPE = registerAccessory("cape", DoggyAccessories.CAPE);
+    public static final RegistryObject<AccessoryItem> TANTAN_CAPE = registerAccessory("tantan_cape", DoggyAccessories.TANTAN_CAPE);
     public static final RegistryObject<DyeableAccessoryItem> CAPE_COLOURED = registerAccessoryDyed("cape_coloured", DoggyAccessories.DYEABLE_CAPE);
     public static final RegistryObject<AccessoryItem> SUNGLASSES = registerAccessory("sunglasses", DoggyAccessories.SUNGLASSES);
     public static final RegistryObject<AccessoryItem> GUARD_SUIT = registerAccessory("guard_suit", DoggyAccessories.GUARD_SUIT);
