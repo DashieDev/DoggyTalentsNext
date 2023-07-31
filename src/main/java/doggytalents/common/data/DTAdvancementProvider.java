@@ -72,7 +72,7 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                     .save(consumer, Util.getResourcePath("default/level_talent"));
             Advancement advancement2 = Advancement.Builder.advancement()
                     .parent(advancement1)
-                    .display(DisplayInfoBuilder.create().icon(DoggyItems.CAPE).frame(FrameType.TASK).translate("dog.accessorise").build())
+                    .display(DisplayInfoBuilder.create().icon(DoggyItems.TANTAN_CAPE).frame(FrameType.TASK).translate("dog.accessorise").build())
                     .addCriterion("accessorise", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STONE_PICKAXE))
                     .save(consumer, Util.getResourcePath("default/accessorise"));
 

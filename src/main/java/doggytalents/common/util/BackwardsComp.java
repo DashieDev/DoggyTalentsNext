@@ -106,7 +106,7 @@ public class BackwardsComp {
             } else if (value >= -1) {
                 accessories.add(DoggyAccessories.DYEABLE_CAPE.get().getDefault());
             } else if (value == -3) {
-                accessories.add(DoggyAccessories.CAPE.get().getDefault());
+                accessories.add(DoggyAccessories.TANTAN_CAPE.get().getDefault());
             } else if (value == -4) {
                 accessories.add(DoggyAccessories.LEATHER_JACKET_CLOTHING.get().getDefault());
             }
