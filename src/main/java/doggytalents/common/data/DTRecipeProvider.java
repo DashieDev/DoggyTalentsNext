@@ -95,6 +95,14 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', DoggyItems.WOOL_COLLAR.get())
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
+        ShapedRecipeBuilder.shaped(DoggyItems.BACH_WIG.get(), 1)
+            .pattern("SSS")
+            .pattern("SBS")
+            .pattern("S S")
+            .define('S', Items.STRING)
+            .define('B', Items.BONE)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
         ShapelessRecipeBuilder.shapeless(DoggyItems.SMARTY_GLASSES.get(), 1)
             .requires(DoggyItems.SUNGLASSES.get())
             .requires(Items.REDSTONE)
