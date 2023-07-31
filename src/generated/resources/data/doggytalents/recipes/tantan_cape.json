@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:blue_wool"
+    },
+    "R": {
+      "item": "minecraft:red_wool"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "Y": {
+      "item": "minecraft:yellow_wool"
+    }
+  },
+  "pattern": [
+    "S S",
+    "RBR",
+    "BYB"
+  ],
+  "result": {
+    "item": "doggytalents:tantan_cape"
+  }
+}
