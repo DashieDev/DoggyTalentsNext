@@ -44,6 +44,7 @@ public class Resources {
     public static final ResourceLocation DYABLE_BOW_TIE = getEntity("dog", "bowtie_coloured");
     public static final ResourceLocation SMARTY_GLASSES = getEntity("dog", "smarty_glasses");
     public static final ResourceLocation WIG = getEntity("dog", "wig");
+    public static final ResourceLocation BACH_WIG = getEntity("dog", "bach_wig");
     public static final ResourceLocation BEASTARS_UNIFORM_MALE = getEntity("dog", "beastars_uniform_male");
     public static final ResourceLocation BEASTARS_UNIFORM_FEMALE = getEntity("dog", "beastars_uniform_female");
 
