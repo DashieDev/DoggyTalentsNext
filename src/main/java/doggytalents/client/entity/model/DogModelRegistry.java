@@ -16,6 +16,8 @@ import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
+import doggytalents.client.entity.model.dog.kusa.ChiModel;
+import doggytalents.client.entity.model.dog.kusa.HayabusaModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
@@ -46,6 +48,14 @@ public class DogModelRegistry {
         register("juno", ctx -> new JunoModel(ctx.bakeLayer(ClientSetup.DOG_JUNO)));
         register("st_bernard", ctx -> new StBernardModel(ctx.bakeLayer(ClientSetup.DOG_ST_BERNARD)));
         register("okami_amaterasu", ctx ->  new AmaterasuModel(ctx.bakeLayer(ClientSetup.OKAMI_AMATERASU)));
+        register("kusa_hayabusa", ctx ->  new HayabusaModel(ctx.bakeLayer(ClientSetup.KUSA_HAYABUSA)));
+        register("kusa_chi", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_CHI)));
+        register("kusa_ko", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_KO)));
+        register("kusa_rei", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_REI)));
+        register("kusa_shin", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_SHIN)));
+        register("kusa_take", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_TAKE)));
+        register("kusa_tei", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_TEI)));
+        register("kusa_ume", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_UME)));
     }
 
     public static class DogModelHolder<T extends AbstractDog> {
