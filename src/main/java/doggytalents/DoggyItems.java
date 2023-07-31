@@ -63,6 +63,7 @@ public class DoggyItems {
     public static final RegistryObject<DyeableAccessoryItem> BOWTIE = registerAccessoryDyed("bowtie", DoggyAccessories.BOWTIE);
     public static final RegistryObject<AccessoryItem> SMARTY_GLASSES = registerAccessory("smarty_glasses", DoggyAccessories.SMARTY_GLASSES);
     public static final RegistryObject<DyeableAccessoryItem> WIG = register("wig", () -> new Wig.WigItem(DoggyAccessories.WIG, createInitialProp()));
+    public static final RegistryObject<AccessoryItem> BACH_WIG = registerAccessory("bach_wig", DoggyAccessories.BACH_WIG);
     public static final RegistryObject<AccessoryItem> LEATHER_JACKET = registerAccessory("leather_jacket", DoggyAccessories.LEATHER_JACKET_CLOTHING);
     public static final RegistryObject<Item> SHRINKING_MALLET = registerSizeBone("shrinking_mallet", DogResizeItem.Type.TINY);
     public static final RegistryObject<Item> MAGNIFYING_BONE = registerSizeBone("magnifying_bone", DogResizeItem.Type.BIG);
