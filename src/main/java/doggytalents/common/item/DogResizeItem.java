@@ -36,8 +36,8 @@ public class DogResizeItem extends Item implements IDogItem {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
-        if (dogIn.getAge() < 0) {
+    public InteractionResult processInteract(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
+        if (dog.getAge() < 0) {
 
             if (!playerIn.level.isClientSide){
                 playerIn.sendMessage(ComponentUtil.translatable("treat."+this.type.getName()+".too_young")
@@ -47,12 +47,16 @@ public class DogResizeItem extends Item implements IDogItem {
             return InteractionResult.FAIL;
         }
         else {
-            if (!playerIn.getAbilities().instabuild) {
-                playerIn.getItemInHand(handIn).shrink(1);
-            }
+            var itemInHand = playerIn.getItemInHand(handIn);
 
             if (!playerIn.level.isClientSide) {
-                dogIn.setDogSize(dogIn.getDogSize() + (this.type == Type.BIG ? 1 : -1));
+                int size0 = dog.getDogSize();
+                dog.setDogSize(dog.getDogSize() + (this.type == Type.BIG ? 1 : -1));
+                int size1 = dog.getDogSize();
+                if (!playerIn.getAbilities().instabuild && size0 != size1)
+                itemInHand.hurtAndBreak(1, playerIn, (player_consume) -> {
+                    player_consume.broadcastBreakEvent(handIn);
+                });
             }
             return InteractionResult.SUCCESS;
         }
