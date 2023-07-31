@@ -97,7 +97,7 @@ public class DoggyItems {
     }
 
     private static RegistryObject<Item> registerSizeBone(final String name, final DogResizeItem.Type typeIn) {
-        return register(name, () -> new DogResizeItem(typeIn, createInitialProp()));
+        return register(name, () -> new DogResizeItem(typeIn, createInitialProp().stacksTo(1).durability(10)));
     }
 
     private static RegistryObject<Item> registerTreat(final String name, final DogLevel.Type typeIn, int maxLevel) {
