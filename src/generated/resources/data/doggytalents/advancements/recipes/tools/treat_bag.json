@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:treat_bag"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

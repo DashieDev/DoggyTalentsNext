@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:dog_bath"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

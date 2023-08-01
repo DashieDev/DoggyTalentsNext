@@ -34,5 +34,6 @@
     [
       "level_talent"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

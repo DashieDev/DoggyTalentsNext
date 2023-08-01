@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:breeding_bone"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:smarty_glasses"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

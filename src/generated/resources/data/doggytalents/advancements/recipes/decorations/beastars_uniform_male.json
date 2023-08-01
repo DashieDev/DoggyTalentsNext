@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:beastars_uniform_male"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -1,5 +1,5 @@
-// 1.19.4	2023-05-04T00:59:30.9589859	Loot Tables
-385518889d0547aa7ba06f3fe85920874fa864a9 data/doggytalents/loot_tables/blocks/dog_bath.json
-d7c0b21336d39eef61a47a7aed8ddb70ffa5c9f3 data/doggytalents/loot_tables/blocks/dog_bed.json
-aa0b97931019d61db8ca41851cc5ab06e65a537c data/doggytalents/loot_tables/blocks/food_bowl.json
-ef017fe8afbc1e704a7cfb4818ece7ba018f9c91 data/doggytalents/loot_tables/entities/dog.json
+// 1.20	2023-08-02T02:24:36.033069	Loot Tables
+ed7adaacd20a615f8c13de392b94c4416d1c7427 data/doggytalents/loot_tables/blocks/dog_bath.json
+c20855a76d06742dfc16cbd0ae1015036ce1d01b data/doggytalents/loot_tables/blocks/dog_bed.json
+4832af6582ca6062426b3cbaa7619a0ecb113a9e data/doggytalents/loot_tables/blocks/food_bowl.json
+92a218fe3eb8045713c2aab9553feeadbe23e152 data/doggytalents/loot_tables/entities/dog.json

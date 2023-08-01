@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:conan_suit"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

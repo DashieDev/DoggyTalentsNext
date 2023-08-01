@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:cape_coloured"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

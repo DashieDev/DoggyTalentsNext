@@ -35,5 +35,6 @@
     [
       "tame_dog"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

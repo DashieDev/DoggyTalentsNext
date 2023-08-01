@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:amnesia_bone"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:radio_collar"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

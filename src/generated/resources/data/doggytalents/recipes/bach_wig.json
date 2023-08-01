@@ -5,16 +5,17 @@
     "B": {
       "item": "minecraft:bone"
     },
-    "I": {
-      "item": "minecraft:iron_ingot"
+    "S": {
+      "item": "minecraft:string"
     }
   },
   "pattern": [
-    "BI",
-    "IB"
+    "SSS",
+    "SBS",
+    "S S"
   ],
   "result": {
-    "item": "doggytalents:tiny_bone"
+    "item": "doggytalents:bach_wig"
   },
   "show_notification": true
 }
