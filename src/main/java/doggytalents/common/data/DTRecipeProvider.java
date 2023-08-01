@@ -130,7 +130,6 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SUNGLASSES.get(), 1).pattern("S S").pattern("GSG").define('S', Items.STICK).define('G', Blocks.GLASS_PANE).unlockedBy("has_stick", has(Items.STICK)).save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.RADIO_COLLAR.get(), 1).pattern("XX").pattern("YX").define('X', Items.IRON_INGOT).define('Y', Items.REDSTONE).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.RADAR.get(), 1).requires(Items.MAP, 1).requires(Items.REDSTONE, 1).requires(DoggyItems.RADIO_COLLAR.get(), 1).unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.CONAN_SUIT.get(), 1)
             .requires(DoggyItems.CAPE_COLOURED.get())
             .requires(Items.PAPER)
