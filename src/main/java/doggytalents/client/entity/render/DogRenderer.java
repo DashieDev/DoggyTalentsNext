@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -185,20 +186,20 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
             this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
             && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
 
-        var label = Component.translatable(tip);
-        var hunger_c1 = Component.literal("(" + hunger + ")");
+        MutableComponent label = ComponentUtil.translatable(tip);
+        var hunger_c1 = ComponentUtil.literal("(" + hunger + ")");
         if (dog.getDogHunger() <= 10 && flag1) {
             hunger_c1.withStyle(Style.EMPTY.withColor(0xff3636));
         }
         label.append(hunger_c1);
         if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER)) {
-            label.append(Component.translatable(dog.getGender().getUnlocalisedTip()));
+            label.append(ComponentUtil.translatable(dog.getGender().getUnlocalisedTip()));
         }
 
         final int TXTCLR_BKG = 0x574a4a4a;
 
         if (diffOwnerRender) {
-            label = Component.literal(label.getString())
+            label = ComponentUtil.literal(label.getString())
             .withStyle(
                 Style.EMPTY
                 .withColor(TXTCLR_BKG)
@@ -210,7 +211,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         if (d0 <= 5 * 5 && this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()) {
             var ownerC0 = dog.getOwnersName().orElseGet(() -> this.getNameUnknown(dog));
             if (diffOwnerRender) {
-               ownerC0 = Component.literal(ownerC0.getString())
+               ownerC0 = ComponentUtil.literal(ownerC0.getString())
                 .withStyle(
                     Style.EMPTY
                     .withColor(TXTCLR_BKG)
@@ -228,7 +229,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         final int TXTCLR_BKG = 0x4a4a4a;
         
         if (diffOwnerRender) {
-            text = Component.literal(text.getString())
+            text = ComponentUtil.literal(text.getString())
                 .withStyle(
                     Style.EMPTY
                     .withColor(TXTCLR_BKG)
@@ -254,11 +255,11 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
             } else if (healthPercentage >= 0.3) {
                 color = TXTCLR_HEALTH_30_70;
             }
-            var newTxt = Component.literal(hlPart).withStyle(
+            var newTxt = ComponentUtil.literal(hlPart).withStyle(
                 Style.EMPTY
                 .withColor(color)
             );
-            var restTxt = Component.literal(nonHlPart).withStyle(
+            var restTxt = ComponentUtil.literal(nonHlPart).withStyle(
                 Style.EMPTY
                 .withColor(TXTCLR_BKG)
             );
