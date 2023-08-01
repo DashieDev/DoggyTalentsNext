@@ -1990,7 +1990,6 @@ public class Dog extends AbstractDog {
                 }
             }
         }
-        this.markArtifactsDirty();
 
         try {
             // Does what notifyDataManagerChange would have done but this way only does it once
