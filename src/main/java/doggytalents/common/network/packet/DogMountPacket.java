@@ -2,6 +2,7 @@ package doggytalents.common.network.packet;
 
 import java.util.function.Supplier;
 
+import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.DogMountData;
@@ -41,16 +42,7 @@ public class DogMountPacket implements IPacket<DogMountData> {
         ctx.get().enqueueWork(() -> {
 
             if (ctx.get().getDirection().getReceptionSide().isClient()) { 
-                Minecraft mc = Minecraft.getInstance();
-                Entity e = mc.level.getEntity(data.dogId);
-                var player = mc.player;
-                if (e instanceof Dog d) {
-                    if (data.mount && player != null) {
-                        d.startRiding(player);
-                    } else {
-                        d.stopRiding();
-                    }
-                }
+                ClientEventHandler.onDogMountEvent(data);
             }
 
         });
