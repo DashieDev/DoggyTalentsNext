@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_redstone": {
+    "has_string": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:redstone"
+              "minecraft:string"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:radar"
+        "recipe": "doggytalents:bach_wig"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_redstone",
+      "has_string",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:radar"
+      "doggytalents:bach_wig"
     ]
   }
 }

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "doggytalents:radio_collar"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "M": {
+      "item": "minecraft:map"
+    }
+  },
+  "pattern": [
+    " GC",
+    "GMG",
+    " G "
+  ],
+  "result": {
+    "item": "doggytalents:canine_tracker"
+  },
+  "show_notification": true
+}

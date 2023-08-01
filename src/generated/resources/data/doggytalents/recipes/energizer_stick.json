@@ -2,20 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:bone"
+    "S": {
+      "item": "minecraft:sugar"
     },
-    "I": {
-      "item": "minecraft:iron_ingot"
+    "W": {
+      "item": "minecraft:wheat"
     }
   },
   "pattern": [
-    "BI",
-    "IB",
-    "BI"
+    "SW",
+    "WS"
   ],
   "result": {
-    "item": "doggytalents:big_bone"
+    "item": "doggytalents:energizer_stick"
   },
   "show_notification": true
 }
