@@ -164,10 +164,10 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         
         text = modifyText(dog, text, diffOwnerRender);
         
-        font.drawInBatch(text, f2, (float)i, 553648127, false, matrix4f, buffer, flag, j, packedLight);
-        if (flag) {
-            font.drawInBatch(text, f2, (float)i, -1, false, matrix4f, buffer, false, 0, packedLight);
-        }
+        font.drawInBatch(text, f2, (float)i, 553648127, false, matrix4f, buffer, flag ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL, j, packedLight);
+           if (flag) {
+              font.drawInBatch(text, f2, (float)i, -1, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight);
+           }
 
         stack.popPose();
     }
