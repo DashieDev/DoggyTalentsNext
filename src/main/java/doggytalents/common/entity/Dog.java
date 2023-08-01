@@ -2730,6 +2730,7 @@ public class Dog extends AbstractDog {
             .map(goal -> { goal.stop(); return goal; } );
         this.setOrderedToSit(false);
         this.setHealth(8);
+        this.setCustomName(null);
 
         this.getTalentMap().clear();
         this.markDataParameterDirty(TALENTS.get());
