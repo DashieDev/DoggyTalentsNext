@@ -1,5 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IRI",
+    "II "
+  ],
   "key": {
     "I": {
       "item": "minecraft:iron_ingot"
@@ -8,10 +12,6 @@
       "item": "minecraft:redstone"
     }
   },
-  "pattern": [
-    "IRI",
-    "II "
-  ],
   "result": {
     "item": "doggytalents:whistle"
   }

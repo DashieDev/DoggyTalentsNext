@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "key": {
-    "B": {
-      "item": "minecraft:black_wool"
-    },
-    "S": {
-      "item": "minecraft:string"
-    },
-    "W": {
-      "item": "minecraft:white_wool"
-    }
-  },
   "pattern": [
     "S S",
     "BWB",
     "BWB"
   ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "W": {
+      "item": "minecraft:white_wool"
+    },
+    "B": {
+      "item": "minecraft:black_wool"
+    }
+  },
   "result": {
     "item": "doggytalents:guard_suit"
   }
