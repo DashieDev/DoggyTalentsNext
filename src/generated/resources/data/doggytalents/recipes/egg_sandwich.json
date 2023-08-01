@@ -1,5 +1,10 @@
 {
   "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " B ",
+    "EME",
+    " B "
+  ],
   "key": {
     "B": {
       "item": "minecraft:bread"
@@ -11,11 +16,6 @@
       "item": "minecraft:milk_bucket"
     }
   },
-  "pattern": [
-    " B ",
-    "EME",
-    " B "
-  ],
   "result": {
     "item": "doggytalents:egg_sandwich"
   }

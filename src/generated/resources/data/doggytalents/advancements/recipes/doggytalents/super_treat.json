@@ -1,7 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:super_treat"
+    ]
+  },
   "criteria": {
     "has_golden_apple": {
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -10,14 +16,13 @@
             ]
           }
         ]
-      },
-      "trigger": "minecraft:inventory_changed"
+      }
     },
     "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
       "conditions": {
         "recipe": "doggytalents:super_treat"
-      },
-      "trigger": "minecraft:recipe_unlocked"
+      }
     }
   },
   "requirements": [
@@ -25,10 +30,5 @@
       "has_golden_apple",
       "has_the_recipe"
     ]
-  ],
-  "rewards": {
-    "recipes": [
-      "doggytalents:super_treat"
-    ]
-  }
+  ]
 }

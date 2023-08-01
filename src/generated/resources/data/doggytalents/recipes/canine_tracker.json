@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " GC",
+    "GMG",
+    " G "
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "doggytalents:radio_collar"
+    },
+    "M": {
+      "item": "minecraft:map"
+    }
+  },
+  "result": {
+    "item": "doggytalents:canine_tracker"
+  }
+}
