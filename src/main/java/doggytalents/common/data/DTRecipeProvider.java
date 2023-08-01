@@ -194,7 +194,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(DoggyItems.FEATHERED_MANTLE.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.FEATHERED_MANTLE.get(), 1)
             .pattern(" F ")
             .pattern("FTF")
             .pattern(" F ")
