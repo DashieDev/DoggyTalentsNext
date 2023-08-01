@@ -110,7 +110,7 @@ public class WaterHolderTalent extends TalentInstance {
             //!dog.isInSittingPose() 
             dog.readyForNonTrivialAction()
             && (dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) 
-            && dog.isOnGround()
+            && dog.onGround()
             && --this.ticktillSearch <= 0
         ) {
             this.ticktillSearch = 10;

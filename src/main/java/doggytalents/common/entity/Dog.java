@@ -876,7 +876,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean startRiding(Entity entity) {
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             if (entity instanceof ServerPlayer player) {
                 PacketHandler.send(PacketDistributor.PLAYER.with(() -> player), 
                     new DogMountData(this.getId(), true)
