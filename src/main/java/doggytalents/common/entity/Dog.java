@@ -1978,8 +1978,7 @@ public class Dog extends AbstractDog {
         //this.markDataParameterDirty(ACCESSORIES.get(), false); // Mark dirty so data is synced to client
         this.entityData.set(ACCESSORIES.get(), newAccInstLs);
 
-        var artifactsList = this.getArtifactsList();
-        artifactsList.clear();
+        var artifactsList = new ArrayList<DoggyArtifactItem>(3);
         if (compound.contains("doggy_artifacts", Tag.TAG_LIST)) {
             var artifactsListTag = compound.getList("doggy_artifacts", Tag.TAG_COMPOUND);
             for (int i = 0; i < artifactsListTag.size(); ++i) {
@@ -1990,6 +1989,7 @@ public class Dog extends AbstractDog {
                 }
             }
         }
+        this.entityData.set(ARTIFACTS.get(), artifactsList);
 
         try {
             // Does what notifyDataManagerChange would have done but this way only does it once
