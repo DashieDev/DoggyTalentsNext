@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:super_treat"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:conducting_bone"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

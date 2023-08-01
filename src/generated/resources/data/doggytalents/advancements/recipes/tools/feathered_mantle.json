@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_ingot": {
+    "has_paper": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:iron_ingot"
+              "minecraft:paper"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:big_bone"
+        "recipe": "doggytalents:feathered_mantle"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_iron_ingot",
+      "has_paper",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:big_bone"
+      "doggytalents:feathered_mantle"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

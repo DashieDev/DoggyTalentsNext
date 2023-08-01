@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sugar": {
+    "has_leather": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:sugar"
+              "minecraft:leather"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:chew_stick"
+        "recipe": "doggytalents:tantan_cape"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_sugar",
+      "has_leather",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:chew_stick"
+      "doggytalents:tantan_cape"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:egg_sandwich"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

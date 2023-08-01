@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:wool_collar"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

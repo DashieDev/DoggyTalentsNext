@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:multicoloured_collar"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

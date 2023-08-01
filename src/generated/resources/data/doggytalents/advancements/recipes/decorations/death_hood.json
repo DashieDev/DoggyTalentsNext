@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:death_hood"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

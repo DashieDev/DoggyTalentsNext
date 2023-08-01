@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_leather": {
+    "has_sugar": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:leather"
+              "minecraft:sugar"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:cape"
+        "recipe": "doggytalents:energizer_stick"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_leather",
+      "has_sugar",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:cape"
+      "doggytalents:energizer_stick"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

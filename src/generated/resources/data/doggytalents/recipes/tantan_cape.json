@@ -2,23 +2,26 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "L": {
-      "item": "minecraft:leather"
+    "B": {
+      "item": "minecraft:blue_wool"
+    },
+    "R": {
+      "item": "minecraft:red_wool"
     },
     "S": {
       "item": "minecraft:string"
     },
-    "W": {
-      "tag": "minecraft:wool"
+    "Y": {
+      "item": "minecraft:yellow_wool"
     }
   },
   "pattern": [
     "S S",
-    "LWL",
-    "WLW"
+    "RBR",
+    "BYB"
   ],
   "result": {
-    "item": "doggytalents:cape"
+    "item": "doggytalents:tantan_cape"
   },
   "show_notification": true
 }

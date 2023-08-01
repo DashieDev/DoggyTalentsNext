@@ -22,7 +22,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "doggytalents:cape"
+      "item": "doggytalents:tantan_cape"
     },
     "show_toast": true,
     "title": {
@@ -33,5 +33,6 @@
     [
       "accessorise"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

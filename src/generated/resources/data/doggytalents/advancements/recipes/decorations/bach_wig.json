@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_ingot": {
+    "has_string": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:iron_ingot"
+              "minecraft:string"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:tiny_bone"
+        "recipe": "doggytalents:bach_wig"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_iron_ingot",
+      "has_string",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:tiny_bone"
+      "doggytalents:bach_wig"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

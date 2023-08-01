@@ -30,5 +30,6 @@
     "recipes": [
       "doggytalents:leather_jacket"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

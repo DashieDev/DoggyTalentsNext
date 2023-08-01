@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:bone"
+    },
+    "F": {
+      "item": "minecraft:fire_coral"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    " G ",
+    "GFG",
+    " B "
+  ],
+  "result": {
+    "item": "doggytalents:shrinking_mallet"
+  },
+  "show_notification": true
+}

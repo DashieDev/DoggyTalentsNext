@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_master_treat": {
+    "has_gold_ingot": {
       "conditions": {
         "items": [
           {
             "items": [
-              "doggytalents:super_treat"
+              "minecraft:gold_ingot"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:master_treat"
+        "recipe": "doggytalents:shrinking_mallet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_master_treat",
+      "has_gold_ingot",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:master_treat"
+      "doggytalents:shrinking_mallet"
     ]
   },
   "sends_telemetry_event": false
