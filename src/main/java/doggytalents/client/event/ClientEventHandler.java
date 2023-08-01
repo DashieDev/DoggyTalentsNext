@@ -17,6 +17,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem;
 import doggytalents.common.item.WhistleItem.WhistleMode;
 import doggytalents.common.network.PacketHandler;
+import doggytalents.common.network.packet.data.DogMountData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
@@ -296,6 +297,19 @@ public class ClientEventHandler {
         RenderSystem.disableBlend();
         //RenderSystem.enableAlphaTest();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    public static void onDogMountEvent(DogMountData data) {
+        Minecraft mc = Minecraft.getInstance();
+        Entity e = mc.level.getEntity(data.dogId);
+        var player = mc.player;
+        if (e instanceof Dog d) {
+            if (data.mount && player != null) {
+                d.startRiding(player);
+            } else {
+                d.stopRiding();
+            }
+        }
     }
 
 //    @SubscribeEvent
