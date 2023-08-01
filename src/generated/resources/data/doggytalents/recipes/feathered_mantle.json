@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "T": {
+      "item": "doggytalents:super_treat"
+    }
+  },
+  "pattern": [
+    " F ",
+    "FTF",
+    " F "
+  ],
+  "result": {
+    "item": "doggytalents:feathered_mantle"
+  }
+}
