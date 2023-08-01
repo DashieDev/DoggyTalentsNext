@@ -7,12 +7,15 @@
     },
     "S": {
       "item": "minecraft:string"
+    },
+    "W": {
+      "item": "minecraft:white_wool"
     }
   },
   "pattern": [
     "S S",
-    "LLL",
-    "LLL"
+    "LWL",
+    "WLW"
   ],
   "result": {
     "item": "doggytalents:cape_coloured"

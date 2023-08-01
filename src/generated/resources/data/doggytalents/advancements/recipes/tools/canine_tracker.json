@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sugar": {
+    "has_gold_ingot": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:sugar"
+              "minecraft:gold_ingot"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:chew_stick"
+        "recipe": "doggytalents:canine_tracker"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_sugar",
+      "has_gold_ingot",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:chew_stick"
+      "doggytalents:canine_tracker"
     ]
   }
 }

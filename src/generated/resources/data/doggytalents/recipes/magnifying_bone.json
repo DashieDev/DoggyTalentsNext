@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:bone"
+    },
+    "F": {
+      "item": "minecraft:fire_coral"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "P": {
+      "item": "minecraft:glass_pane"
+    }
+  },
+  "pattern": [
+    " GF",
+    "GPG",
+    "BG "
+  ],
+  "result": {
+    "item": "doggytalents:magnifying_bone"
+  },
+  "show_notification": true
+}
