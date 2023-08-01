@@ -3,6 +3,7 @@ package doggytalents.common.event;
 import doggytalents.DoggyAccessories;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
