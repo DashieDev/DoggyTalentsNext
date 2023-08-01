@@ -574,14 +574,17 @@ public class Dog extends AbstractDog {
                     }
                 }
 
-                if (this.hungerTick > 400) {
+                int tickPerDec = 
+                    ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.TICK_PER_HUNGER_DEC);
+
+                if (this.hungerTick > tickPerDec) {
                     if (this.hungerSaturation > 0) {
                         --this.hungerSaturation;
                     } else {
                         this.setDogHunger(this.getDogHunger() - 1);
                     }
                     
-                    this.hungerTick -= 400;
+                    this.hungerTick -= tickPerDec;
                 }
                 if (this.isZeroHunger)
                     this.handleZeroHunger();
