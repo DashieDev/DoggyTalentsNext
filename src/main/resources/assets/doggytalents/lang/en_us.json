@@ -420,6 +420,13 @@
    "dogbed.casing.missing": "Missing: %s",
    "dogbed.explain.missing": "This item has likely be spawned in directly!",
 
+   "doggytalents.music.bwv_849_fugue_kimiko": "J.S. Bach - WTC I: Fugue in C# Minor (Kimiko Ishizaka)",
+   "item.doggytalents.disc_bwv_849_fugue": "Music Disc",
+   "item.doggytalents.disc_bwv_849_fugue.desc": "J.S. Bach - WTC I: Fugue in C# Minor (Kimiko Ishizaka)",
+   "doggytalents.music.bwv_1080_fugue_11_kimiko": "J.S. Bach - Art Of Fugue: Contrapunctus XI (Kimiko Ishizaka)",
+   "item.doggytalents.disc_bwv_1080_fugue_11": "Music Disc",
+   "item.doggytalents.disc_bwv_1080_fugue_11.desc": "J.S. Bach - Art Of Fugue: Contrapunctus XI (Kimiko Ishizaka)",
+   
    "dogbed.bedding.minecraft.white_wool": "White Wool Bedding",
    "dogbed.bedding.minecraft.orange_wool": "Orange Wool Bedding",
    "dogbed.bedding.minecraft.magenta_wool": "Magenta Wool Bedding",
