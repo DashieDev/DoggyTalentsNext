@@ -199,6 +199,16 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('M', Items.MAP)
             .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
             .save(consumer);
+            
+        ShapedRecipeBuilder.shaped(DoggyItems.FEATHERED_MANTLE.get(), 1)
+            .pattern(" F ")
+            .pattern("FTF")
+            .pattern(" F ")
+            .define('F', Items.FEATHER)
+            .define('T', DoggyItems.SUPER_TREAT.get())
+            .unlockedBy("has_paper", has(Items.PAPER))
+            .save(consumer);
+
         SpecialRecipeBuilder.special(DoggyRecipeSerializers.DOG_BED.get()).save(consumer, Util.getResourcePath("dog_bed"));
     }
 
