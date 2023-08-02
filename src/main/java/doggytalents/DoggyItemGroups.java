@@ -51,6 +51,7 @@ public class DoggyItemGroups {
         = register("tabdogbed", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.doggytalents.dogbed"))
             .icon(DogBedUtil::createRandomBed)
+            .withTabsBefore(GENERAL.getKey())
             .displayItems((a, b) -> {
                 for (var beddingId : DoggyTalentsAPI.BEDDING_MATERIAL.get().getValues()) {
                     for (var casingId : DoggyTalentsAPI.CASING_MATERIAL.get().getValues()) {
