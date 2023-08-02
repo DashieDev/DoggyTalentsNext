@@ -77,12 +77,12 @@ public class DoggyItems {
         props -> new DoggyArtifactItem(
             () -> new FeatheredMantleArtifact(), props), 1);
 
-    public static final RegistryObject<Item> MUSIC_DISC_BWV_849_FUGUE_KIMIKO = register("disc_bwv_849_fugue", 
-        () -> new RecordItem(13, () -> DoggySounds.BWV_849_FUGUE_KIMIKO.get() , 
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 160));
     public static final RegistryObject<Item> MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO = register("disc_bwv_1080_fugue_11", 
         () -> new RecordItem(13, () -> DoggySounds.BWV_1080_FUGUE_11_KIMIKO.get() , 
         (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 292));
+    public static final RegistryObject<Item> MUSIC_DISC_BWV_849_FUGUE_KIMIKO = register("disc_bwv_849_fugue", 
+        () -> new RecordItem(13, () -> DoggySounds.BWV_849_FUGUE_KIMIKO.get() , 
+        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 160));
 
     //public static final RegistryObject<Item> PATROL = registerWith("patrol_item", PatrolItem::new, 1);
 
