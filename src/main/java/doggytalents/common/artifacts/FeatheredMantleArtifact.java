@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import doggytalents.ChopinLogger;
 import doggytalents.DoggyItems;
+import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -32,6 +33,8 @@ public class FeatheredMantleArtifact extends DoggyArtifact {
     @Override
     public void tick(AbstractDog dogIn) {
         if (dogIn.level().isClientSide) 
+            return;
+        if (dogIn.getDogLevel(DoggyTalents.PILLOW_PAW) < 5) 
             return;
         dogIn.fallDistance = 0;
     }
