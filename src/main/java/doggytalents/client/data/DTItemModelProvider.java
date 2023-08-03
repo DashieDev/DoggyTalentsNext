@@ -79,6 +79,7 @@ public class DTItemModelProvider extends ItemModelProvider {
 
         generated(DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO);
         generated(DoggyItems.MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO);
+        generated(DoggyItems.MUSIC_DISC_OKAMI_1);
 
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);

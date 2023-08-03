@@ -15,5 +15,9 @@
   "bwv_1080_fugue_11_kimiko" : {
     "subtitle": "doggytalents.music.bwv_1080_fugue_11_kimiko",
     "sounds": [ "doggytalents:music/kimiko_ishizaka_art_of_fugue_contrapunctus_11" ]
+  },
+  "okami_ryoshima_coast_arr" : {
+    "subtitle": "doggytalents.music.okami_ryoshima_coast_arr",
+    "sounds": [ "doggytalents:music/okami_ryoshima_coast_arr" ]
   }
 }
