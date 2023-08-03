@@ -1,4 +1,4 @@
-// 1.19.2	2023-08-01T22:50:56.5551554	DoggyTalents Item Models
+// 1.19.2	2023-08-03T14:18:14.4440658	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
@@ -16,6 +16,7 @@ c32b03263dcdad77d9e68e3140b94f5d71fba4a5 assets/doggytalents/models/item/creativ
 ce0a82d69960e0bf608c4415dd2c93485cb7e81b assets/doggytalents/models/item/dire_treat.json
 27cfbd51adf771e5e7adc06f79b7d66139b2a7c2 assets/doggytalents/models/item/disc_bwv_1080_fugue_11.json
 9b5c30a93518dc583317b811ecdf0e3dbc1ca61e assets/doggytalents/models/item/disc_bwv_849_fugue.json
+2dec9cdd315e206867ecbee0502a488cf6963b7a assets/doggytalents/models/item/disc_okami_ryoshima_coast_arr.json
 ad0c76a4a4a7e72ea4214910a014102656cb3a7a assets/doggytalents/models/item/doggy_charm.json
 d7d1edf4ba2e22a722df08baa0d660f52ab65240 assets/doggytalents/models/item/dog_bath.json
 aa0e5ccc2a5183ecdf5ba2c3fedc832eca34f39f assets/doggytalents/models/item/dog_bed.json
