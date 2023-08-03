@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "doggytalents:item/disc_okami_ryoshima_coast_arr"
+  }
+}
