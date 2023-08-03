@@ -34,6 +34,7 @@ public class DoggySounds {
     */
     public static final RegistryObject<SoundEvent> BWV_1080_FUGUE_11_KIMIKO = register("bwv_1080_fugue_11_kimiko");
 
+    public static final RegistryObject<SoundEvent> OKAMI_RYOSHIMA_COAST_ARR = register("okami_ryoshima_coast_arr");
 
     private static RegistryObject<SoundEvent> register(final String name) {
         //TODO 1.19.3 ??
