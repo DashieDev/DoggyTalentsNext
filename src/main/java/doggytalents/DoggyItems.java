@@ -82,10 +82,10 @@ public class DoggyItems {
         (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 292));
     public static final RegistryObject<Item> MUSIC_DISC_BWV_849_FUGUE_KIMIKO = register("disc_bwv_849_fugue", 
         () -> new RecordItem(13, () -> DoggySounds.BWV_849_FUGUE_KIMIKO.get() , 
-        (new Item.Properties()).stacksTo(1).tab(DoggyItemGroups.GENERAL).rarity(Rarity.RARE), 160));
+        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 160));
     public static final RegistryObject<Item> MUSIC_DISC_OKAMI_1 = register("disc_okami_ryoshima_coast_arr", 
         () -> new RecordItem(13, () -> DoggySounds.OKAMI_RYOSHIMA_COAST_ARR.get() , 
-        (new Item.Properties()).stacksTo(1).tab(DoggyItemGroups.GENERAL).rarity(Rarity.RARE), 111));
+        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 111));
     
     //public static final RegistryObject<Item> PATROL = registerWith("patrol_item", PatrolItem::new, 1);
 
