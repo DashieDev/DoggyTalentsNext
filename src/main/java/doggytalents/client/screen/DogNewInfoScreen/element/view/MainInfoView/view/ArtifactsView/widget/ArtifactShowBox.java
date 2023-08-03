@@ -6,7 +6,6 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
@@ -88,7 +87,6 @@ public class ArtifactShowBox extends AbstractWidget {
 
     @Override
     public void onClick(double x, double y) {
-        ChopinLogger.l("clicked items!");
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
             new ChangeArtifactData(this.dog.getId(), false, order));
     }
