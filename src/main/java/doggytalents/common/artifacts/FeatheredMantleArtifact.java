@@ -14,19 +14,26 @@ public class FeatheredMantleArtifact extends DoggyArtifact {
 
     private static final UUID PILLOW_PAW_BOOST_ID = UUID.fromString("1f002df0-9d35-49c6-a863-b8945caa4af4");
 
+    private boolean glide = false;
+
     public FeatheredMantleArtifact() {
         super(() -> DoggyItems.FEATHERED_MANTLE.get());
     }
 
     @Override
     public void init(AbstractDog dogIn) {
+        if (dogIn.getDogLevel(DoggyTalents.PILLOW_PAW) < 5) 
+            return;
         startGliding(dogIn);
+        glide = true;
         ChopinLogger.lwn((Dog) dogIn,"get glide!");
     }
 
     @Override
     public void remove(AbstractDog dogIn) {
+        if (!glide) return;
         stopGliding(dogIn);
+        glide = false;
         ChopinLogger.lwn((Dog) dogIn, "removed glide!");
     }
 
@@ -49,7 +56,7 @@ public class FeatheredMantleArtifact extends DoggyArtifact {
     }
 
     public AttributeModifier createSpeedModifier(AbstractDog dogIn, UUID uuidIn) {
-        return new AttributeModifier(uuidIn, "Pillow Paw", -0.065D, AttributeModifier.Operation.ADDITION);
+        return new AttributeModifier(uuidIn, "Pillow Paw", -0.8, AttributeModifier.Operation.MULTIPLY_BASE);
     }
     
 }
