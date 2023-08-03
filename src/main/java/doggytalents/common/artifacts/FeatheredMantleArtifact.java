@@ -2,7 +2,6 @@ package doggytalents.common.artifacts;
 
 import java.util.UUID;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
@@ -26,7 +25,6 @@ public class FeatheredMantleArtifact extends DoggyArtifact {
             return;
         startGliding(dogIn);
         glide = true;
-        ChopinLogger.lwn((Dog) dogIn,"get glide!");
     }
 
     @Override
@@ -34,7 +32,6 @@ public class FeatheredMantleArtifact extends DoggyArtifact {
         if (!glide) return;
         stopGliding(dogIn);
         glide = false;
-        ChopinLogger.lwn((Dog) dogIn, "removed glide!");
     }
 
     @Override
@@ -48,7 +45,6 @@ public class FeatheredMantleArtifact extends DoggyArtifact {
 
     private void startGliding(AbstractDog dog) {
         dog.setAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), PILLOW_PAW_BOOST_ID, this::createSpeedModifier);
-        ChopinLogger.lwn(dog, "start gliding");
     }
 
     private void stopGliding(AbstractDog dog) {
