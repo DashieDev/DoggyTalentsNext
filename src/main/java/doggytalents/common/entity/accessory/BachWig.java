@@ -1,5 +1,6 @@
 package doggytalents.common.entity.accessory;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 import doggytalents.DoggyAccessories;
@@ -16,8 +17,10 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AccessoryItem;
 import doggytalents.common.item.DyeableAccessoryItem;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.RegistryObject;
 
 public class BachWig extends Accessory implements IAccessoryHasModel {
 
@@ -36,6 +39,12 @@ public class BachWig extends Accessory implements IAccessoryHasModel {
 
     public static class Inst extends AccessoryInstance implements IDogAlteration {
 
+        public static final List<RegistryObject<Item>> DISC_LIST = List.of(
+            DoggyItems.MUSIC_DISC_OKAMI_1,
+            DoggyItems.MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO,
+            DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO
+        );
+
         public Inst(Accessory typeIn) {
             super(typeIn);
         }
@@ -50,9 +59,8 @@ public class BachWig extends Accessory implements IAccessoryHasModel {
             float r = dog.getRandom().nextFloat();
             final float chance = 0.15f;
             if (r > chance) return;
-            var diskItem = r >= (chance*0.5f) ? DoggyItems.MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO.get()
-                : DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO.get();
-            dog.spawnAtLocation(new ItemStack(diskItem), 0.0F);
+            int indx = dog.getRandom().nextInt(DISC_LIST.size());
+            dog.spawnAtLocation(new ItemStack(DISC_LIST.get(indx).get()), 0.0F);
         }
         
     }
