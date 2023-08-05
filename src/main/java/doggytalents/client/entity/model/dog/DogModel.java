@@ -1,13 +1,18 @@
 package doggytalents.client.entity.model.dog;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.client.entity.model.animation.DogAnimationRegistry;
+import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.ColorableAgeableListModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -41,7 +46,12 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
     public ModelPart earBoni;
     public ModelPart earSmall;
 
+    public ModelPart root;
+
+
+
     public DogModel(ModelPart box) {
+        this.root = box;
         this.head = box.getChild("head");
         this.realHead = this.head.getChild("real_head");
         this.earNormal = this.realHead.getChild("ear_normal");
@@ -122,6 +132,7 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
 
     public DogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
         super(renderType, false, 5.0F, 2.0F, 2.0F, 2.0F, 24.0F);
+        this.root = box;
         this.head = box.getChild("head");
         this.realHead = this.head.getChild("real_head");
         this.earNormal = this.realHead.getChild("ear_normal");
@@ -305,13 +316,67 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
 
     }
 
+    Vector3f vecObj = new Vector3f();
+
     @Override
     public void setupAnim(T dogIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (!(dogIn instanceof Dog)) return;
+        var dog = (Dog)dogIn;
+        var animationManager = dog.animationManager;
+        if (animationManager.needRefresh) {
+            animationManager.needRefresh = false;
+            this.resetAllPose();
+        }
 
         this.head.xRot = headPitch * ((float)Math.PI / 180F); 
         this.head.yRot = netHeadYaw * (dogIn.isInSittingPose() && dogIn.isLying() ? 0.005F : (float)Math.PI / 180F);
         this.tail.xRot = dog.getTailRotation();
 
+        var animState = animationManager.animationState;
+        var anim = dog.getAnim();
+        if (anim == DogAnimation.NONE) return;
+        var sequence = DogAnimationRegistry.getSequence(anim);
+        if (sequence == null) return;
+        
+        if (animState.isStarted()) {
+            animState.updateTime(ageInTicks, 1);
+            if (animState.getAccumulatedTime() > sequence.lengthInSeconds() * 1000) {
+                animState.stop();
+                return;
+            }
+            KeyframeAnimationsDelegate.animate(this, dog, sequence, animState.getAccumulatedTime(), 1.0F, vecObj);
+        }
+    }
+
+    private void resetAllPose() {
+        this.headParts().forEach(x -> x.resetPose());
+        this.bodyParts().forEach(x -> x.resetPose());
+    }
+
+    public void resetPart(ModelPart part, Dog dog) {
+        if (part == this.tail) {
+            this.tail.resetPose();
+            this.tail.xRot = dog.getTailRotation();
+            return;
+        }
+        part.resetPose();
+    }
+
+    public void adjustAnimatedPart(ModelPart part, Dog dog) {
+        if (part == this.tail) {
+            if (part.xRot > 3f) {
+                part.xRot = 3f;
+            }
+        }
+    }
+
+    public Optional<ModelPart> searchForPartWithName(String name) {
+        if (this.root.hasChild(name)) 
+            return Optional.of(this.root.getChild(name));
+        var partOptional = this.root.getAllParts()
+            .filter(part -> part.hasChild(name))
+            .findFirst();
+        return partOptional.map(part -> part.getChild(name));
     }
 
     public void setVisible(boolean visible) {
