@@ -434,11 +434,6 @@ public class Dog extends AbstractDog {
                 this.headRotationCourse += (0.0F - this.headRotationCourse) * 0.4F;
             }
 
-            if (this.getMaxHealth() != this.maxHealth0) {
-                this.maxHealth0 = this.getMaxHealth();
-                this.radPerHealthDecrease = Mth.HALF_PI / this.maxHealth0;
-            }
-
             boolean inWater = this.isInWater();
             // If inWater is false then isInRain is true in the or statement
             boolean inRain = inWater ? false : this.isInWaterOrRain();
@@ -497,29 +492,33 @@ public class Dog extends AbstractDog {
                     if (this.shakeFire && random.nextInt(6) == 0) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 }
             }
-
-            // On server side
-            if (!this.level.isClientSide) {
-
-                // Every 2 seconds
-                if (this.tickCount % 40 == 0) {
-                    DogLocationStorage.get(this.level).getOrCreateData(this).update(this);
-
-
-                    var owner = this.getOwner();
-                    if (owner != null) {
-                        this.setOwnersName(owner.getName());
-                    }
-                }
-            }
         }
 
         this.alterations.forEach((alter) -> alter.tick(this));
 
+        if (this.isAlive() && this.getMaxHealth() != this.maxHealth0) {
+            this.maxHealth0 = this.getMaxHealth();
+            this.radPerHealthDecrease = Mth.HALF_PI / this.maxHealth0;
+        }
+
+        // On server side
+        if (this.isAlive() && !this.level.isClientSide) {
+
+            // Every 2 seconds
+            if (this.tickCount % 40 == 0) {
+                DogLocationStorage.get(this.level).getOrCreateData(this).update(this);
+
+
+                var owner = this.getOwner();
+                if (owner != null) {
+                    this.setOwnersName(owner.getName());
+                }
+            }
+        }
+
         //Client
         if (this.level.isClientSide) {
             proccessCustomModelSkin();
-            
         }
     }
 
