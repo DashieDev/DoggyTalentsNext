@@ -44,7 +44,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
 
     @Override
     protected float getBob(Dog livingBase, float partialTicks) {
-        return livingBase.getTailRotation();
+        return super.getBob(livingBase, partialTicks);
     }
 
     @Override
