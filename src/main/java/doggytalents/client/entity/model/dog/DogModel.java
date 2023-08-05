@@ -307,9 +307,11 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
 
     @Override
     public void setupAnim(T dogIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.xRot = headPitch * ((float)Math.PI / 180F);
+
+        this.head.xRot = headPitch * ((float)Math.PI / 180F); 
         this.head.yRot = netHeadYaw * (dogIn.isInSittingPose() && dogIn.isLying() ? 0.005F : (float)Math.PI / 180F);
-        this.tail.xRot = ageInTicks;
+        this.tail.xRot = dog.getTailRotation();
+
     }
 
     public void setVisible(boolean visible) {
