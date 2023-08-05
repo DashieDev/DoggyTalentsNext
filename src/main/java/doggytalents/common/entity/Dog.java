@@ -25,6 +25,8 @@ import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.ai.triggerable.DogTriggerableGoal;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
+import doggytalents.common.entity.anim.DogAnimation;
+import doggytalents.common.entity.anim.DogAnimationManager;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.ai.*;
@@ -149,6 +151,8 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Byte> SIZE = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<ItemStack> BONE_VARIANT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.ITEM_STACK);
 
+    private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
+
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
     private static final Cache<EntityDataAccessor<List<AccessoryInstance>>> ACCESSORIES =  Cache.make(() -> (EntityDataAccessor<List<AccessoryInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<List<TalentInstance>>> TALENTS = Cache.make(() -> (EntityDataAccessor<List<TalentInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.TALENT_SERIALIZER.get()));
@@ -176,6 +180,7 @@ public class Dog extends AbstractDog {
     private final Cache<Integer> spendablePoints = Cache.make(this::getSpendablePointsInternal);
     private final List<IDogAlteration> alterations = new ArrayList<>(4);
     private final List<IDogFoodHandler> foodHandlers = new ArrayList<>(4);
+    public final DogAnimationManager animationManager = new DogAnimationManager(this);
     public final Map<Integer, Object> objects = new HashMap<>();
 
     private DogSkin clientSkin = DogSkin.CLASSICAL;
@@ -261,6 +266,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(ARTIFACTS.get(), new ArrayList<DoggyArtifactItem>(3));
         this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
         this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+        this.entityData.define(ANIMATION, 0);
     }
 
     @Override
@@ -301,6 +307,7 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogBreedGoal(this, 1.0D));
         ++p;
         this.goalSelector.addGoal(p, new DogRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(p, new DogRandomStrechGoal(this));
         ++p;
         this.goalSelector.addGoal(p, new DogBegGoal(this, 8.0F));
         ++p;
@@ -426,7 +433,7 @@ public class Dog extends AbstractDog {
     public void tick() {
         super.tick();
 
-        if (this.isAlive()) {
+        if (this.isAlive() && !this.animationManager.started()) {
             this.headRotationCourseOld = this.headRotationCourse;
             if (this.isBegging()) {
                 this.headRotationCourse += (1.0F - this.headRotationCourse) * 0.4F;
@@ -514,6 +521,10 @@ public class Dog extends AbstractDog {
                     this.setOwnersName(owner.getName());
                 }
             }
+        }
+        
+        if (this.isAlive()) {
+            this.animationManager.tick();
         }
 
         //Client
@@ -2161,6 +2172,10 @@ public class Dog extends AbstractDog {
                         this.entityData.get(CUSTOM_SKIN), 
                         DogTextureManager.INSTANCE::getCached));
         }
+
+        if (ANIMATION.equals(key)) {
+            this.animationManager.onAnimationChange(getAnim());
+        }
     }
 
     public void recalculateAlterations() {
@@ -3208,6 +3223,14 @@ public class Dog extends AbstractDog {
 
     public boolean isMiningCautious() {
         return this.dogMiningCautiousManager.isMiningCautious();
+    }
+
+    public void setAnim(DogAnimation animation) {
+        this.entityData.set(ANIMATION, animation.getId());
+    }
+
+    public DogAnimation getAnim() {
+        return DogAnimation.byId(this.entityData.get(ANIMATION));
     }
 
     //Client
