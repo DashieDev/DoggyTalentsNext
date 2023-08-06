@@ -323,10 +323,6 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         if (!(dogIn instanceof Dog)) return;
         var dog = (Dog)dogIn;
         var animationManager = dog.animationManager;
-        if (animationManager.needRefresh) {
-            animationManager.needRefresh = false;
-            this.resetAllPose();
-        }
 
         this.head.xRot = headPitch * ((float)Math.PI / 180F); 
         this.head.yRot = netHeadYaw * (dogIn.isInSittingPose() && dogIn.isLying() ? 0.005F : (float)Math.PI / 180F);
@@ -348,7 +344,7 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         }
     }
 
-    private void resetAllPose() {
+    public void resetAllPose() {
         this.headParts().forEach(x -> x.resetPose());
         this.bodyParts().forEach(x -> x.resetPose());
     }
