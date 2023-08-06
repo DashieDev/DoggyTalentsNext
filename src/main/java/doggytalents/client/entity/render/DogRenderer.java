@@ -12,6 +12,7 @@ import doggytalents.client.entity.render.layer.BoneLayer;
 import doggytalents.client.entity.render.layer.LayerFactory;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.ChatFormatting;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
@@ -110,6 +111,14 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
 
         if (this.model.hasAdditonalRendering())
             this.model.doAdditonalRendering(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+
+        if (modelNeedRefreshBeforeNextRender(dog)) {
+            this.model.resetAllPose();
+        }
+    }
+
+    private boolean modelNeedRefreshBeforeNextRender(Dog dog) {
+        return dog.getAnim() != DogAnimation.NONE;
     }
 
     private Component getNameUnknown(Dog dogIn) {
