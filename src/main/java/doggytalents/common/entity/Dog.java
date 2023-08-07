@@ -2899,6 +2899,11 @@ public class Dog extends AbstractDog {
         }
     }
 
+    @Override
+    public boolean canBeControlledByRider() {
+        return true;
+    }
+
     private void doDogRideFloat() {
         Vec3 vec3d = this.getDeltaMovement();
         this.setDeltaMovement(vec3d.x, 0.1, vec3d.z);
