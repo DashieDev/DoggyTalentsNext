@@ -587,3 +587,6 @@ is also included in the loot sets of dogs wearings Bach's Wig.
 
 1.15.1 - 10th August 2023
 * HOTFIX (1.20 only): Fix WolfMount dog speed up hunger depleting for no reason.
+
+1.15.2 - 12th August 2023
+* HOTFIX: Dogs improper water jump.
