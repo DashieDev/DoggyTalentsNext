@@ -530,3 +530,60 @@ Added Okami Amaterasu skin.
 + Smoother transition between Tamed Wolves and Trained.
 * Fix dog who is avoidiing fire constantly sit up and down in some case.
 * 1.20(.1) only: fix Pack Puppy Screen inappropriate label color.
+
+1.15.0 - 3th August 2023
++ Happy 11th Birthday DT !!! 🎉🎉🎉🎉
++ Added Doggy Artifact Sys:
+  + Each dog can have up to 3 artifacts equiped, each artifacts provides a temporary function
+  opposed to the permanent function that talents provide.
++ Removed Floating Effect from Pillow Paw 5.
++ Added Feathered Mantle Artifact :
+  + An extra step for Pillow Paw 5 dogs to float.
++ Added several items as a replacement to its predecessor:
+  + Shrinking Mallet: Replacing Tiny Bone
+  + Magnifying Bone: Replacing Big Bone
+  + Canine Tracker: Replacing Radar
+  + Energizer Stick: Replacing Chew Stick
++ New treat textures! Yum!
+* Fixed and improved dog run away from fire logic
++ Puppy Eyes now increase your reputation instead.
+* Fix Water Holder dog repeatedly extinguish themselves while jumping in lava.
++ (Configurable) Dog's Name Tag now renders completely grayed out if he does not belongs
+to the viewing player.
+* Fix dog greets spectator players.
+# Added glint to Creative Items
++ Dog's HP now increases with the level too.
++ Added Bach's Wig
+# Change recipe, id for the Tantan cape
+# Change recipe for the Classic Cape
+* Temporary disable accessory models rendering on young pup.
+# Untamed dogs now forget their name.
+# Made dog hunger unit decrease speed configurable. Finally! 
++ Ōkami 大神 (2006): =============================
+Added the Kusa 5 skins (and the rest of the Canine Warriors)
+Kusa 5:
++ Ko
++ Chi
++ Tei
++ Rei
++ Shin
+
+The rest:
++ Hayabusa
++ Ume
++ Take
+==================================================
++ Doggy Talents Music Discs ======================
++ Two Bach recordings performed by Kimiko Ishizaka. Dog who is wearing Bach's wig
+have a 0.15% chance of dropping a disc in this set after killing an entity. 
+Both recordings are provided into the CC0 - Public Domain by their author.
+1. J.S Bach - Art Of Fugue: Contrapunctus XI [BWV 1080] [Kimiko Ishizaka]
+2. J.S Bach - WTC I: Fugue in C# Minor [BWV 849] [Kimiko Ishizaka]
+
++ One Okami recordings arranged by DashieDev and played by MuseScore. This disc
+is also included in the loot sets of dogs wearings Bach's Wig.
+1. Okami - "Ryoshima Coast" (Arr. DashieDev for Orgran)
+==================================================
+
+1.15.2 - 12th August 2023
+* HOTFIX: Dogs improper water jump.
