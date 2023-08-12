@@ -237,7 +237,6 @@ public class Dog extends AbstractDog {
         this.setGender(EnumGender.random(this.getRandom()));
         this.setLowHealthStrategy(LowHealthStrategy.STICK_TO_OWNER);
 
-        this.navigation = new DogPathNavigation(this, worldIn);
         this.moveControl = new DogMoveControl(this);
 
         this.defaultNavigation = this.navigation;
@@ -3038,6 +3037,11 @@ public class Dog extends AbstractDog {
     public void resetMoveControl() {
         this.setMoveControl(this.defaultMoveControl);
         
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level p_21480_) {
+        return new DogPathNavigation(this, p_21480_);
     }
 
     public List<IDogAlteration> getAlterations() {
