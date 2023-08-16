@@ -23,6 +23,8 @@ public class DogAnimationRegistry {
     public static void init() {
         DEFINITION_MAP = Maps.newConcurrentMap();
         register(DogAnimation.STRETCH, DogAnimationSequences.STRETCH);
+        register(DogAnimation.FAINT, DogAnimationSequences.FAINT);
+        
     }
     
 }
