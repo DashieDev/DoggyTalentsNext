@@ -103,6 +103,10 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
             this.model.setColor(f, f, f);
         }
 
+        if (modelNeedRefreshBeforeCurrentRender(dog)) {
+            this.model.resetAllPose();
+        }
+
         super.render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
         if (dog.isDogWet()) {
@@ -118,7 +122,19 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
     }
 
     private boolean modelNeedRefreshBeforeNextRender(Dog dog) {
-        return dog.getAnim() != DogAnimation.NONE;
+        if (dog.getAnim() != DogAnimation.NONE)
+            return true;
+        if (dog.getDogPose().needRenderRefresh)
+            return true;
+        return false;
+    }
+
+    private boolean modelNeedRefreshBeforeCurrentRender(Dog dog) {
+        if (dog.getAnim() != DogAnimation.NONE)
+            return true;
+        if (dog.getDogPose().needRenderRefresh)
+            return true;
+        return false;
     }
 
     private Component getNameUnknown(Dog dogIn) {
