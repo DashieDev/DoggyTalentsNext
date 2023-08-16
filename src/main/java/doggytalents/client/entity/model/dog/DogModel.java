@@ -237,6 +237,8 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
 
         if (pose.canBeg)
         this.translateBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
+
+        
         /*
          * else if (dog.isLying() && false) {
                 
@@ -246,7 +248,6 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
     }
 
     public void setUpStandPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        this.tail.yRot = dog.getWagAngle(limbSwing, limbSwingAmount, partialTickTime);
 
         this.body.setPos(0.0F, 14.0F, 2.0F);
         this.body.xRot = ((float) Math.PI / 2F);
@@ -407,8 +408,8 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         }
         if (pose.freeTail) {
             this.tail.xRot = dog.getTailRotation();
+            this.tail.yRot = dog.getWagAngle(limbSwing, limbSwingAmount, ageInTicks);
         }
-        
 
         var animState = animationManager.animationState;
         var anim = dog.getAnim();
