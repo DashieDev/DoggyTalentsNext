@@ -215,105 +215,181 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
 
     @Override
     public void prepareMobModel(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        
+        var pose = dog.getDogPose();
+
+        switch (pose) {
+            case FAINTED:
+                this.setupFaintPose(dog, limbSwing, limbSwingAmount, partialTickTime);
+                break;
+            case SIT:
+                this.setUpSitPose(dog, limbSwing, limbSwingAmount, partialTickTime);
+                break;
+            case LYING:
+                this.setupLyingPose(dog, limbSwing, limbSwingAmount, partialTickTime);
+                break;
+            default:
+                this.setUpStandPose(dog, limbSwing, limbSwingAmount, partialTickTime);
+                break;
+        }
+        if (pose.canShake)
+        this.translateShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
+
+        if (pose.canBeg)
+        this.translateBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
+        /*
+         * else if (dog.isLying() && false) {
+                
+            }
+         */
+
+    }
+
+    public void setUpStandPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.tail.yRot = dog.getWagAngle(limbSwing, limbSwingAmount, partialTickTime);
 
-        if (dog.isInSittingPose()) {
-            if (dog.isLying()) {
-                this.head.setPos(-1, 19.5F, -7);
-                this.body.setPos(0, 20, 2);
-                this.body.xRot = (float)Math.PI / 2F;
-                this.mane.setPos(
-                    -1f + MANE_LYING_OFF[0],
-                    14f + MANE_LYING_OFF[1], 
-                    -3f + MANE_LYING_OFF[2]
-                );
-                this.mane.xRot = this.body.xRot;
-                this.tail.setPos(-1, 18, 8);
-                this.legBackRight.setPos(-4.5F, 23, 7);
-                this.legBackRight.xRot = -(float)Math.PI / 2F;
-                this.legBackLeft.setPos(2.5F, 23, 7);
-                this.legBackLeft.xRot = -(float)Math.PI / 2F;
-                this.legFrontRight.setPos(-4.5F, 23, -4);
-                this.legFrontRight.xRot = -(float)Math.PI / 2F;
-                this.legFrontLeft.setPos(2.5F, 23, -4);
-                this.legFrontLeft.xRot = -(float)Math.PI / 2F;
-            }  else {
-                this.head.setPos(-1.0F, 13.5F, -7.0F);
-                this.mane.setPos(
-                    -1f + MANE_SITTING_OFF[0],
-                    14f + MANE_SITTING_OFF[1], 
-                    -3f + MANE_SITTING_OFF[2]
-                );
-                this.mane.xRot = ((float)Math.PI * 2F / 5F);
-                this.mane.yRot = 0.0F;
-                this.body.setPos(0.0F, 18.0F, 0.0F);
-                this.body.xRot = ((float)Math.PI / 4F);
-                this.tail.setPos(-1F, 21.0F, 6.0F);
-                this.legBackRight.setPos(-2.5F, 22.0F, 2.0F);
-                this.legBackRight.xRot = ((float)Math.PI * 3F / 2F);
-                this.legBackLeft.setPos(0.5F, 22.0F, 2.0F);
-                this.legBackLeft.xRot = ((float)Math.PI * 3F / 2F);
-                this.legFrontRight.xRot = 5.811947F;
-                this.legFrontRight.setPos(-2.49F, 17.0F, -4.0F);
-                this.legFrontLeft.xRot = 5.811947F;
-                this.legFrontLeft.setPos(0.51F, 17.0F, -4.0F);
+        this.body.setPos(0.0F, 14.0F, 2.0F);
+        this.body.xRot = ((float) Math.PI / 2F);
+        this.mane.setPos(-1.0F, 14.0F, -3.0F);
+        this.mane.xRot = this.body.xRot;
+        this.tail.setPos(-1.0F, 12.0F, 8.0F);
+        this.legBackRight.setPos(-2.5F, 16.0F, 7.0F);
+        this.legBackLeft.setPos(0.5F, 16.0F, 7.0F);
+        this.legFrontRight.setPos(-2.5F, 16.0F, -4.0F);
+        this.legFrontLeft.setPos(0.5F, 16.0F, -4.0F);
+        this.legBackRight.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.legBackLeft.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+        this.legFrontRight.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+        this.legFrontLeft.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 
+        this.head.setPos(-1.0F, 13.5F, -7.0F);
+        this.legFrontRight.yRot = 0.0F;
+        this.legFrontLeft.yRot = 0.0F;
+    }
 
-                this.head.setPos(-1.0F, 13.5F, -7.0F);
-                this.legFrontRight.yRot = 0;
-                this.legFrontLeft.yRot = 0;
-            }
-        } else {
-            this.body.setPos(0.0F, 14.0F, 2.0F);
-            this.body.xRot = ((float)Math.PI / 2F);
-            this.mane.setPos(-1.0F, 14.0F, -3.0F);
-            this.mane.xRot = this.body.xRot;
-            this.tail.setPos(-1.0F, 12.0F, 8.0F);
-            this.legBackRight.setPos(-2.5F, 16.0F, 7.0F);
-            this.legBackLeft.setPos(0.5F, 16.0F, 7.0F);
-            this.legFrontRight.setPos(-2.5F, 16.0F, -4.0F);
-            this.legFrontLeft.setPos(0.5F, 16.0F, -4.0F);
-            this.legBackRight.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-            this.legBackLeft.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-            this.legFrontRight.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-            this.legFrontLeft.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+    public void setUpSitPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        this.head.setPos(-1.0F, 13.5F, -7.0F);
+        this.mane.setPos(
+                -1f + MANE_SITTING_OFF[0],
+                14f + MANE_SITTING_OFF[1],
+                -3f + MANE_SITTING_OFF[2]);
+        this.mane.xRot = ((float) Math.PI * 2F / 5F);
+        this.mane.yRot = 0.0F;
+        this.body.setPos(0.0F, 18.0F, 0.0F);
+        this.body.xRot = ((float) Math.PI / 4F);
+        this.tail.setPos(-1F, 21.0F, 6.0F);
+        this.legBackRight.setPos(-2.5F, 22.0F, 2.0F);
+        this.legBackRight.xRot = ((float) Math.PI * 3F / 2F);
+        this.legBackLeft.setPos(0.5F, 22.0F, 2.0F);
+        this.legBackLeft.xRot = ((float) Math.PI * 3F / 2F);
+        this.legFrontRight.xRot = 5.811947F;
+        this.legFrontRight.setPos(-2.49F, 17.0F, -4.0F);
+        this.legFrontLeft.xRot = 5.811947F;
+        this.legFrontLeft.setPos(0.51F, 17.0F, -4.0F);
 
-            this.head.setPos(-1.0F, 13.5F, -7.0F);
-            this.legFrontRight.yRot = 0.0F;
-            this.legFrontLeft.yRot = 0.0F;
-        }
+        this.head.setPos(-1.0F, 13.5F, -7.0F);
+        this.legFrontRight.yRot = 0;
+        this.legFrontLeft.yRot = 0;
+    }
 
-        this.realHead.zRot = dog.getInterestedAngle(partialTickTime) + dog.getShakeAngle(partialTickTime, 0.0F);
+    /*
+     * 
+     * this.legBackRight.setPos(-2.5F, 16.0F, 7.0F);
+        this.legBackLeft.setPos(0.5F, 16.0F, 7.0F);
+        this.legFrontRight.setPos(-2.5F, 16.0F, -4.0F);
+        this.legFrontLeft.setPos(0.5F, 16.0F, -4.0F);
+
+        this.legBackRight.setPos(-2.5F, 22.0F, 2.0F);
+         this.legBackLeft.setPos(0.5F, 22.0F, 2.0F);
+          this.legFrontRight.setPos(-2.49F, 17.0F, -4.0F);
+          this.legFrontLeft.setPos(0.51F, 17.0F, -4.0F);
+     */
+
+    public void setupFaintPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        this.head.zRot += 90 * Mth.DEG_TO_RAD;
+        this.head.x += 2;
+        this.head.y += 7;
+
+        this.body.zRot += 90 * Mth.DEG_TO_RAD;
+        this.body.x += 2;
+        this.body.y += 6.75;
+
+        this.legBackRight.zRot += 80 * Mth.DEG_TO_RAD;
+        this.legBackRight.x += 2;
+        this.legBackRight.y += 2.25;
+
+        this.legBackLeft.zRot += 90 * Mth.DEG_TO_RAD;
+        this.legBackLeft.x += -1;
+        this.legBackLeft.y += 5.75;
+
+        this.legFrontRight.zRot += 75 * Mth.DEG_TO_RAD;
+        this.legFrontRight.x += 2;
+        this.legFrontRight.y += 2;
+
+        this.legFrontLeft.zRot += 90 * Mth.DEG_TO_RAD;
+        this.legFrontLeft.x += -1;
+        this.legFrontLeft.y += 6;
+
+        this.tail.xRot += 62.5 * Mth.DEG_TO_RAD;
+        this.tail.x += 3.75;
+        this.tail.y += 8.25;
+        this.tail.z += -0.5;
+        
+        this.mane.zRot += 90 * Mth.DEG_TO_RAD;
+        this.mane.x += 2.5;
+        this.mane.y += 5.5;
+    }
+
+    public void setupLyingPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+         this.head.setPos(-1, 19.5F, -7);
+        this.body.setPos(0, 20, 2);
+        this.body.xRot = (float) Math.PI / 2F;
+        this.mane.setPos(
+                -1f + MANE_LYING_OFF[0],
+                14f + MANE_LYING_OFF[1],
+                -3f + MANE_LYING_OFF[2]);
+        this.mane.xRot = this.body.xRot;
+        this.tail.setPos(-1, 18, 8);
+        this.legBackRight.setPos(-4.5F, 23, 7);
+        this.legBackRight.xRot = -(float) Math.PI / 2F;
+        this.legBackLeft.setPos(2.5F, 23, 7);
+        this.legBackLeft.xRot = -(float) Math.PI / 2F;
+        this.legFrontRight.setPos(-4.5F, 23, -4);
+        this.legFrontRight.xRot = -(float) Math.PI / 2F;
+        this.legFrontLeft.setPos(2.5F, 23, -4);
+        this.legFrontLeft.xRot = -(float) Math.PI / 2F;
+        
+        // this.body.setPos(0.0F, 19.0F, 2.0F);
+        //         this.body.xRot = ((float)Math.PI / 2F);
+        //         this.mane.setPos(-1.0F, 19.0F, -3.0F);
+        //         this.mane.xRot = this.body.xRot;
+        //         this.head.setPos(-1.0F, 17.0F, -7.0F);
+
+        //         this.tail.setPos(-0.5F, 17.0F, 8.0F); // +4.0D
+        //         this.legBackRight.setPos(-4.5F, 20.0F, 7.0F);
+        //         this.legBackLeft.setPos(2.5F, 20.0F, 7.0F);
+        //         this.legFrontRight.setPos(-3.0F, 22.0F, -3.0F);
+        //         this.legFrontLeft.setPos(1.0F, 22.0F, -3.0F);
+
+        //         this.legBackRight.xRot = -(float)Math.PI / 2.6F;
+        //         this.legBackLeft.xRot = -(float)Math.PI / 2.6F;
+
+        //         this.legFrontRight.xRot = -(float)Math.PI / 2;
+        //         this.legFrontRight.yRot = (float)Math.PI / 10;
+        //         this.legFrontLeft.xRot = -(float)Math.PI / 2;
+        //         this.legFrontLeft.yRot = -(float)Math.PI / 10;
+    }
+
+    public void translateShakingDog(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.mane.zRot = dog.getShakeAngle(partialTickTime, -0.08F);
         this.body.zRot = dog.getShakeAngle(partialTickTime, -0.16F);
         this.realTail.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
         this.realTail2.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
         this.realTail3.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
+    }
 
-        /*
-         * else if (dog.isLying() && false) {
-                this.body.setPos(0.0F, 19.0F, 2.0F);
-                this.body.xRot = ((float)Math.PI / 2F);
-                this.mane.setPos(-1.0F, 19.0F, -3.0F);
-                this.mane.xRot = this.body.xRot;
-                this.head.setPos(-1.0F, 17.0F, -7.0F);
-
-                this.tail.setPos(-0.5F, 17.0F, 8.0F); // +4.0D
-                this.legBackRight.setPos(-4.5F, 20.0F, 7.0F);
-                this.legBackLeft.setPos(2.5F, 20.0F, 7.0F);
-                this.legFrontRight.setPos(-3.0F, 22.0F, -3.0F);
-                this.legFrontLeft.setPos(1.0F, 22.0F, -3.0F);
-
-                this.legBackRight.xRot = -(float)Math.PI / 2.6F;
-                this.legBackLeft.xRot = -(float)Math.PI / 2.6F;
-
-                this.legFrontRight.xRot = -(float)Math.PI / 2;
-                this.legFrontRight.yRot = (float)Math.PI / 10;
-                this.legFrontLeft.xRot = -(float)Math.PI / 2;
-                this.legFrontLeft.yRot = -(float)Math.PI / 10;
-            }
-         */
-
+    public void translateBeggingDog(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        this.realHead.zRot = dog.getInterestedAngle(partialTickTime) + dog.getShakeAngle(partialTickTime, 0.0F);
     }
 
     Vector3f vecObj = new Vector3f();
