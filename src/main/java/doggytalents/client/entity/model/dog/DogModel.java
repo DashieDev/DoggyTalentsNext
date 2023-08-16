@@ -234,9 +234,13 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         }
         if (pose.canShake)
         this.translateShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
+        else
+        this.resetShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
 
         if (pose.canBeg)
         this.translateBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
+         else
+        this.resetBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
 
         
         /*
@@ -389,8 +393,20 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         this.realTail3.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
     }
 
+    public void resetShakingDog(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        this.mane.zRot = 0;
+        this.body.zRot = 0;
+        this.realTail.zRot = 0;
+        this.realTail2.zRot = 0;
+        this.realTail3.zRot = 0;
+    }
+
     public void translateBeggingDog(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.realHead.zRot = dog.getInterestedAngle(partialTickTime) + dog.getShakeAngle(partialTickTime, 0.0F);
+    }
+
+    public void resetBeggingDog(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        this.realHead.zRot = 0;
     }
 
     Vector3f vecObj = new Vector3f();
@@ -430,6 +446,10 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
     public void resetAllPose() {
         this.headParts().forEach(x -> x.resetPose());
         this.bodyParts().forEach(x -> x.resetPose());
+        this.realHead.resetPose();
+        this.realTail.resetPose();
+        this.realTail2.resetPose();
+        this.realTail3.resetPose();
     }
 
     public void resetPart(ModelPart part, Dog dog) {
