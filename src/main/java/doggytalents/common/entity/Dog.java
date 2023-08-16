@@ -27,6 +27,7 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogAnimationManager;
+import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.ai.*;
@@ -499,6 +500,10 @@ public class Dog extends AbstractDog {
                     if (this.shakeFire && random.nextInt(6) == 0) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 }
             }
+        }
+
+        if (this.isAlive()) {
+            this.updateDogPose();
         }
 
         this.alterations.forEach((alter) -> alter.tick(this));
@@ -3231,6 +3236,32 @@ public class Dog extends AbstractDog {
 
     public DogAnimation getAnim() {
         return DogAnimation.byId(this.entityData.get(ANIMATION));
+    }
+
+    private DogPose activePose = DogPose.STAND;
+
+    @Override
+    public DogPose getDogPose() {
+        return activePose;
+    }
+    
+    private void setDogPose(DogPose pose) {
+        this.activePose = pose;
+    }
+
+    public void updateDogPose() {
+        if (this.isDefeated()) {
+            if (this.getAnim() == DogAnimation.NONE)
+                this.setDogPose(DogPose.FAINTED);
+            else
+                this.setDogPose(DogPose.STAND);
+            return;
+        }
+        if (this.isInSittingPose()) {
+            this.setDogPose(this.isLying() ? DogPose.LYING : DogPose.SIT);
+            return;
+        }
+        this.setDogPose(DogPose.STAND);
     }
 
     //Client
