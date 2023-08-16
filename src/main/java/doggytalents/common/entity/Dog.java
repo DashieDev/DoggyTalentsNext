@@ -436,72 +436,82 @@ public class Dog extends AbstractDog {
     public void tick() {
         super.tick();
 
-        if (this.isAlive() && !this.animationManager.started()) {
+        if (this.isAlive() && this.canUpdateClassicalAnim()) {
+            var pose = this.getDogPose();
             this.headRotationCourseOld = this.headRotationCourse;
-            if (this.isBegging()) {
+            if (this.isBegging() && pose.canBeg) {
                 this.headRotationCourse += (1.0F - this.headRotationCourse) * 0.4F;
             } else {
                 this.headRotationCourse += (0.0F - this.headRotationCourse) * 0.4F;
             }
 
-            boolean inWater = this.isInWater();
-            // If inWater is false then isInRain is true in the or statement
-            boolean inRain = inWater ? false : this.isInWaterOrRain();
-            boolean inBubbleColumn = this.isInWaterOrBubble(); //!!!!!
+            if (pose.canShake) {
+                boolean inWater = this.isInWater();
+                // If inWater is false then isInRain is true in the or statement
+                boolean inRain = inWater ? false : this.isInWaterOrRain();
+                boolean inBubbleColumn = this.isInWaterOrBubble(); //!!!!!
 
-            if (inWater || inRain || inBubbleColumn) {
-                if (this.wetSource == null) {
-                    this.wetSource = WetSource.of(inWater, inBubbleColumn, inRain);
-                }
-                if (this.isShaking && !this.level().isClientSide) {
-                    this.finishShaking();
-                    this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING);
-                }
-            } else if ((this.wetSource != null || this.isShaking) && this.isShaking) {
-                if (this.timeWolfIsShaking == 0.0F) {
-                    if (!this.shakeFire) this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-                }
+                if (inWater || inRain || inBubbleColumn) {
+                    if (this.wetSource == null) {
+                        this.wetSource = WetSource.of(inWater, inBubbleColumn, inRain);
+                    }
+                    if (this.isShaking && !this.level.isClientSide) {
+                        this.finishShaking();
+                        this.level.broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING);
+                    }
+                } else if ((this.wetSource != null || this.isShaking) && this.isShaking) {
+                    if (this.timeWolfIsShaking == 0.0F) {
+                        if (!this.shakeFire) this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                    }
 
-                this.prevTimeWolfIsShaking = this.timeWolfIsShaking;
-                this.timeWolfIsShaking += 0.05F;
-                if (this.prevTimeWolfIsShaking >= 2.0F) {
+                    this.prevTimeWolfIsShaking = this.timeWolfIsShaking;
+                    this.timeWolfIsShaking += 0.05F;
+                    if (this.prevTimeWolfIsShaking >= 2.0F) {
 
-                    //TODO check if only called server side
-                    if (this.wetSource != null) {
-                        for (IDogAlteration alter : this.alterations) {
-                            alter.onShakingDry(this, this.wetSource);
+                        //TODO check if only called server side
+                        if (this.wetSource != null) {
+                            for (IDogAlteration alter : this.alterations) {
+                                alter.onShakingDry(this, this.wetSource);
+                            }
+                        }
+
+                        this.wetSource = null;
+                        this.finishShaking();
+                    }
+
+                    if (this.timeWolfIsShaking > 0.4F) {
+                        float f = (float)this.getY();
+                        int i = (int)(Mth.sin((this.timeWolfIsShaking - 0.4F) * (float)Math.PI) * 7.0F);
+                        Vec3 vec3d = this.getDeltaMovement();
+
+                        for (int j = 0; j < i; ++j) {
+                            float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+                            float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+                            if (this.shakeFire) {
+                                byte r = (byte) this.getRandom().nextInt(3);
+                                if (r==0)
+                                    this.level.addParticle(ParticleTypes.LAVA, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                                else if (r==1)
+                                    this.level.addParticle(ParticleTypes.FLAME, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                                else if (r==2)
+                                    this.level.addParticle(ParticleTypes.SMOKE, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                            } else
+                            this.level.addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                         }
                     }
 
-                    this.wetSource = null;
-                    this.finishShaking();
-                }
-
-                if (this.timeWolfIsShaking > 0.4F) {
-                    float f = (float)this.getY();
-                    int i = (int)(Mth.sin((this.timeWolfIsShaking - 0.4F) * (float)Math.PI) * 7.0F);
-                    Vec3 vec3d = this.getDeltaMovement();
-
-                    for (int j = 0; j < i; ++j) {
-                        float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
-                        float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
-                        if (this.shakeFire) {
-                            byte r = (byte) this.getRandom().nextInt(3);
-                            if (r==0)
-                                this.level().addParticle(ParticleTypes.LAVA, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
-                            else if (r==1)
-                                this.level().addParticle(ParticleTypes.FLAME, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
-                            else if (r==2)
-                                this.level().addParticle(ParticleTypes.SMOKE, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
-                        } else
-                        this.level().addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                    if (this.timeWolfIsShaking > 0.8) {
+                        if (this.shakeFire && random.nextInt(6) == 0) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                     }
                 }
-
-                if (this.timeWolfIsShaking > 0.8) {
-                    if (this.shakeFire && random.nextInt(6) == 0) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-                }
+            } else {
+                if (this.isShaking) finishShaking();
             }
+        }
+        if (this.isAlive() && !this.canUpdateClassicalAnim() && this.isShaking) {
+            this.finishShaking();
+            this.headRotationCourseOld = this.headRotationCourse;
+            this.headRotationCourse += (0.0F - this.headRotationCourse) * 0.4F;
         }
 
         this.setMaxUpStep(this.isVehicle() ? 1f : 0.6f);
@@ -539,6 +549,16 @@ public class Dog extends AbstractDog {
         if (this.level().isClientSide) {
             proccessCustomModelSkin();
         }
+    }
+
+    public boolean canDoIdileAnim() {
+        return this.isAlive() && !this.isShaking;
+    }
+
+    private boolean canUpdateClassicalAnim() {
+        if (this.animationManager.started())
+            return false;
+        return true;
     }
 
     private void proccessCustomModelSkin() {
@@ -1715,6 +1735,7 @@ public class Dog extends AbstractDog {
         this.setDogHunger(0);
         this.incapacitatedMananger.onBeingDefeated();
         this.unRide();
+        this.setAnim(DogAnimation.FAINT);
         createIncapSyncState(source);
 
         var owner = this.getOwner();
