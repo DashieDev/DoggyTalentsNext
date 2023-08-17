@@ -478,6 +478,22 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         return partOptional.map(part -> part.getChild(name));
     }
 
+    public boolean modelNeedRefreshBeforeNextRender(Dog dog) {
+        if (dog.getAnim() != DogAnimation.NONE)
+            return true;
+        if (dog.getDogPose().needRenderRefresh)
+            return true;
+        return false;
+    }
+
+    public boolean modelNeedRefreshBeforeCurrentRender(Dog dog) {
+        if (dog.getAnim() != DogAnimation.NONE)
+            return true;
+        if (dog.getDogPose().needRenderRefresh)
+            return true;
+        return false;
+    }
+
     public void setVisible(boolean visible) {
         this.head.visible = visible;
         this.body.visible = visible;
