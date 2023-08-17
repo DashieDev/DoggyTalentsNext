@@ -41,7 +41,9 @@ public class DogAnimationManager {
                 this.animationTime = 0;
                 this.dog.setAnim(DogAnimation.NONE);
             }
+            this.dog.setXRot(0);
         }
+        
     }
 
     public boolean started() {
