@@ -434,7 +434,7 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         if (sequence == null) return;
         
         if (animState.isStarted()) {
-            animState.updateTime(ageInTicks, 1);
+            animState.updateTime(ageInTicks, anim.getSpeedModifier());
             if (animState.getAccumulatedTime() > sequence.lengthInSeconds() * 1000) {
                 animState.stop();
                 return;
