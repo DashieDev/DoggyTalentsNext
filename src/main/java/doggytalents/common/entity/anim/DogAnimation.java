@@ -10,10 +10,18 @@ public enum DogAnimation {
 
     private final int id;
     private final int lengthTicks;
+    private final int speedModifier;
     
     private DogAnimation(int id, int lengthTicks) {
         this.id = id;
         this.lengthTicks = lengthTicks;
+        this.speedModifier = 1;
+    }
+
+    private DogAnimation(int id, int lengthTicks, int speed) {
+        this.id = id;
+        this.lengthTicks = lengthTicks;
+        this.speedModifier = speed;
     }
 
     public static DogAnimation byId(int i) {
@@ -25,6 +33,6 @@ public enum DogAnimation {
 
     public int getId() { return this.id; }
     public int getLengthTicks() { return this.lengthTicks; }
-
+    public int getSpeedModifier() { return this.speedModifier; }
 
 }
