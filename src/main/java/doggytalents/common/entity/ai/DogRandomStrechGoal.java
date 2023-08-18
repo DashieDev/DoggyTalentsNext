@@ -43,7 +43,8 @@ public class DogRandomStrechGoal extends Goal {
 
     @Override
     public void stop() {
-        dog.setAnim(DogAnimation.NONE);
+        if (dog.getAnim() == DogAnimation.STRETCH)
+            dog.setAnim(DogAnimation.NONE);
     }
 
 }
