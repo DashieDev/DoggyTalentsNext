@@ -336,7 +336,7 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         this.legFrontLeft.x += -1;
         this.legFrontLeft.y += 6;
 
-        this.tail.xRot += 62.5 * Mth.DEG_TO_RAD;
+        this.tail.xRot = ((Dog) dog).getTailRotation() + 62.5f * Mth.DEG_TO_RAD;
         this.tail.x += 3.75;
         this.tail.y += 8.25;
         this.tail.z += -0.5;
