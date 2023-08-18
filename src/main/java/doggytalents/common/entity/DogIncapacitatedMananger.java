@@ -325,7 +325,7 @@ public class DogIncapacitatedMananger {
     }
 
     public boolean canMove() {
-        return this.bandagesCount >= 8;
+        return this.dog.getIncapSyncState().bandaid == BandaidState.FULL;
     }
 
     public void save(CompoundTag tag) {
