@@ -3281,7 +3281,7 @@ public class Dog extends AbstractDog {
     }
 
     public void updateDogPose() {
-        if (this.isDefeated()) {
+        if (this.isDefeated() && !this.incapacitatedMananger.canMove()) {
             this.setDogPose(DogPose.FAINTED);
             return;
         }
