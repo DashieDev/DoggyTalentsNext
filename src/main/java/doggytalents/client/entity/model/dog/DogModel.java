@@ -218,6 +218,12 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         
         var pose = dog.getDogPose();
 
+        if (!pose.canShake)
+        this.resetShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
+
+        if (!pose.canBeg)
+        this.resetBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
+
         switch (pose) {
             case FAINTED:
                 this.setupFaintPose(dog, limbSwing, limbSwingAmount, partialTickTime);
@@ -234,15 +240,10 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         }
         if (pose.canShake)
         this.translateShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
-        else
-        this.resetShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
 
         if (pose.canBeg)
         this.translateBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
-         else
-        this.resetBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
 
-        
         /*
          * else if (dog.isLying() && false) {
                 
