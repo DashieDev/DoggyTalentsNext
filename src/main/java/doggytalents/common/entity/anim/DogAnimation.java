@@ -6,11 +6,13 @@ public enum DogAnimation {
     
     NONE(0, 0), 
     STRETCH(1, 70),
-    FAINT(2, 80);
+    FAINT(2, 80),
+    SIT_DOWN(3, 25, 1.25f),
+    STAND_UP(4, 40, 1.25f);
 
     private final int id;
     private final int lengthTicks;
-    private final int speedModifier;
+    private final float speedModifier;
     
     private DogAnimation(int id, int lengthTicks) {
         this.id = id;
@@ -18,7 +20,7 @@ public enum DogAnimation {
         this.speedModifier = 1;
     }
 
-    private DogAnimation(int id, int lengthTicks, int speed) {
+    private DogAnimation(int id, int lengthTicks, float speed) {
         this.id = id;
         this.lengthTicks = lengthTicks;
         this.speedModifier = speed;
@@ -33,6 +35,6 @@ public enum DogAnimation {
 
     public int getId() { return this.id; }
     public int getLengthTicks() { return this.lengthTicks; }
-    public int getSpeedModifier() { return this.speedModifier; }
+    public float getSpeedModifier() { return this.speedModifier; }
 
 }
