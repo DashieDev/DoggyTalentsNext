@@ -3277,10 +3277,7 @@ public class Dog extends AbstractDog {
 
     public void updateDogPose() {
         if (this.isDefeated()) {
-            if (this.getAnim() == DogAnimation.NONE)
-                this.setDogPose(DogPose.FAINTED);
-            else
-                this.setDogPose(DogPose.STAND);
+            this.setDogPose(DogPose.FAINTED);
             return;
         }
         if (this.isInSittingPose()) {
