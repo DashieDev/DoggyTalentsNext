@@ -552,6 +552,10 @@ public class Dog extends AbstractDog {
     }
 
     public boolean canDoIdileAnim() {
+        return this.isAlive() && !this.isShaking && !this.animationManager.started();
+    }
+
+    public boolean canContinueDoIdileAnim() {
         return this.isAlive() && !this.isShaking;
     }
 
