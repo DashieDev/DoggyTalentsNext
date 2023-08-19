@@ -11,6 +11,8 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
+import doggytalents.common.entity.anim.DogAnimation;
+import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.ChatFormatting;
@@ -334,6 +336,7 @@ public class DogIncapacitatedMananger {
         var syncState = this.dog.getIncapSyncState();
         tg0.putInt("type", syncState.type.getId());
         tg0.putInt("bandaid", this.bandagesCount);
+        tg0.putInt("poseid", syncState.poseId);
         tag.put("doggyIncapacitated", tg0);
     }
 
@@ -341,9 +344,32 @@ public class DogIncapacitatedMananger {
         var tg0 = tag.getCompound("doggyIncapacitated");
         var type = DefeatedType.byId(tg0.getInt("type"));
         var bandaid_count = tg0.getInt("bandaid");
+        var poseId = tg0.getInt("poseid");
         this.bandagesCount = bandaid_count;
-        dog.setIncapSyncState(new IncapacitatedSyncState(type, BandaidState.getState(bandaid_count)));
+        dog.setIncapSyncState(new IncapacitatedSyncState(type, 
+            BandaidState.getState(bandaid_count), poseId));
     }
+
+    public DogPose getPose() {
+        int id = this.dog.getIncapSyncState().poseId;
+        switch (id) {
+        default:
+            return DogPose.FAINTED;
+        case 1:
+            return DogPose.FAINTED_2;
+        }
+    }
+
+    public DogAnimation getAnim() {
+        int id = this.dog.getIncapSyncState().poseId;
+        switch (id) {
+        default:
+            return DogAnimation.FAINT;
+        case 1:
+            return DogAnimation.FAINT_2;
+        }
+    }
+
 
     public static class IncapacitatedSyncState {
 
@@ -351,6 +377,7 @@ public class DogIncapacitatedMananger {
             new IncapacitatedSyncState(DefeatedType.NONE);
         public DefeatedType type = DefeatedType.NONE;
         public BandaidState bandaid = BandaidState.NONE;
+        public int poseId = 0;
 
         public IncapacitatedSyncState(DefeatedType type) {
             this.type = type;
@@ -361,8 +388,14 @@ public class DogIncapacitatedMananger {
             this.bandaid = bandaid;
         }
 
+        public IncapacitatedSyncState(DefeatedType type, BandaidState bandaid, int poseId) {
+            this.type = type;
+            this.bandaid = bandaid;
+            this.poseId = poseId;
+        }
+
         public IncapacitatedSyncState copy() {
-            return new IncapacitatedSyncState(type, bandaid);
+            return new IncapacitatedSyncState(type, bandaid, poseId);
         }
 
         public IncapacitatedSyncState updateBandaid(int bandaid_count) {
@@ -379,6 +412,9 @@ public class DogIncapacitatedMananger {
                 return false;
             if (this.bandaid != state.bandaid)
                 return false;
+            if (this.poseId != state.poseId) {
+                return false;
+            }
             return true;
         }
 

@@ -29,6 +29,7 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogAnimationManager;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.ai.*;
@@ -1727,8 +1728,8 @@ public class Dog extends AbstractDog {
         this.setDogHunger(0);
         this.incapacitatedMananger.onBeingDefeated();
         this.unRide();
-        this.setAnim(DogAnimation.FAINT);
         createIncapSyncState(source);
+        this.setAnim(this.incapacitatedMananger.getAnim());
 
         var owner = this.getOwner();
         if (owner != null) sendIncapacitatedMsg(owner, source);
@@ -1770,7 +1771,9 @@ public class Dog extends AbstractDog {
             type = DefeatedType.BLOOD;
         }
         
-        this.setIncapSyncState(new IncapacitatedSyncState(type));
+        int poseId = this.getRandom().nextInt(2);
+        
+        this.setIncapSyncState(new IncapacitatedSyncState(type, BandaidState.NONE, poseId));
     }
 
     @Override
@@ -3281,7 +3284,7 @@ public class Dog extends AbstractDog {
 
     public void updateDogPose() {
         if (this.isDefeated() && !this.incapacitatedMananger.canMove()) {
-            this.setDogPose(DogPose.FAINTED);
+            this.setDogPose(this.incapacitatedMananger.getPose());
             return;
         }
         if (this.isInSittingPose()) {
