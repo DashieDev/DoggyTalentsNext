@@ -13,13 +13,15 @@ public class IncapacitatedSyncSerializer implements EntityDataSerializer<Incapac
     public void write(FriendlyByteBuf buf, IncapacitatedSyncState state) {
         buf.writeInt(state.type.getId());
         buf.writeInt(state.bandaid.getId());
+        buf.writeInt(state.poseId);
     }
 
     @Override
     public IncapacitatedSyncState read(FriendlyByteBuf buf) {
         var type = DefeatedType.byId(buf.readInt());
         var bandaid = BandaidState.byId(buf.readInt());
-        return new IncapacitatedSyncState(type, bandaid);
+        var poseId = buf.readInt();
+        return new IncapacitatedSyncState(type, bandaid, poseId);
     }
 
     @Override
