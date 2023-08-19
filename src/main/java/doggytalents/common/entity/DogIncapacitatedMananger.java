@@ -341,7 +341,7 @@ public class DogIncapacitatedMananger {
         var type = DefeatedType.byId(tg0.getInt("type"));
         var bandaid_count = tg0.getInt("bandaid");
         this.bandagesCount = bandaid_count;
-        dog.setIncapSyncState(new IncapacitatedSyncState(type));
+        dog.setIncapSyncState(new IncapacitatedSyncState(type, BandaidState.getState(bandaid_count)));
     }
 
     public static class IncapacitatedSyncState {
