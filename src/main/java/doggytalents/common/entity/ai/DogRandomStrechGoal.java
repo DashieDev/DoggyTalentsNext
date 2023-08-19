@@ -27,7 +27,7 @@ public class DogRandomStrechGoal extends Goal {
     public boolean canContinueToUse() {
         if (!this.dog.isOnGround())
             return false;
-        if (!dog.canDoIdileAnim()) return false;
+        if (!dog.canContinueDoIdileAnim()) return false;
         return this.dog.tickCount < this.stopTick;
     }
 
