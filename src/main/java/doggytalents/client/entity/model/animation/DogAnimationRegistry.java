@@ -24,6 +24,7 @@ public class DogAnimationRegistry {
         DEFINITION_MAP = Maps.newConcurrentMap();
         register(DogAnimation.STRETCH, DogAnimationSequences.STRETCH);
         register(DogAnimation.FAINT, DogAnimationSequences.FAINT);
+        register(DogAnimation.FAINT_2, DogAnimationSequences.FAINT2);
         register(DogAnimation.SIT_DOWN, DogAnimationSequences.SIT2);
         register(DogAnimation.STAND_UP, DogAnimationSequences.STAND);
     }
