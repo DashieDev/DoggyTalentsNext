@@ -13,6 +13,7 @@ import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
+import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.ColorableAgeableListModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -228,6 +229,9 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
             case FAINTED:
                 this.setupFaintPose(dog, limbSwing, limbSwingAmount, partialTickTime);
                 break;
+            case FAINTED_2:
+                this.setupFaintPose2(dog, limbSwing, limbSwingAmount, partialTickTime);
+                break;
             case SIT:
                 this.setUpSitPose(dog, limbSwing, limbSwingAmount, partialTickTime);
                 break;
@@ -344,6 +348,33 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         this.mane.zRot += 90 * Mth.DEG_TO_RAD;
         this.mane.x += 2.5;
         this.mane.y += 5.5;
+    }
+
+    public void setupFaintPose2(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        this.head.offsetRotation(KeyframeAnimations.degreeVec(4.34f, -4.46f, 16.94f));
+        this.head.offsetPos(KeyframeAnimations.posVec(0, -7f, 0.25f));
+
+        this.body.offsetRotation(KeyframeAnimations.degreeVec(-7.5f, 0, 0));
+        this.body.offsetPos(KeyframeAnimations.posVec(0, -6.5f, -1.5f));
+
+        this.mane.offsetRotation(KeyframeAnimations.degreeVec(-5, 0, 0));
+        this.mane.offsetPos(KeyframeAnimations.posVec(0, -6.75f, 0));
+
+        this.legBackRight.offsetRotation(KeyframeAnimations.degreeVec(87.38f, -17.48f, 0.79f));
+        this.legBackRight.offsetPos(KeyframeAnimations.posVec(0, -7.5f, -1));
+
+        this.legBackLeft.offsetRotation(KeyframeAnimations.degreeVec(90, 22.5f, 0));
+        this.legBackLeft.offsetPos(KeyframeAnimations.posVec(0, -7.5f, -1.25f));
+
+        this.legFrontRight.offsetRotation(KeyframeAnimations.degreeVec(-88.01f, 24.9f, -2.33f));
+        this.legFrontRight.offsetPos(KeyframeAnimations.posVec(0, -6.75f, 0));
+
+        this.legFrontLeft.offsetRotation(KeyframeAnimations.degreeVec(-91.14f, -29.72f, 4.31f));
+        this.legFrontLeft.offsetPos(KeyframeAnimations.posVec(0, -7, 0));
+
+        this.tail.xRot = ((Dog) dog).getTailRotation();
+        this.tail.offsetRotation(KeyframeAnimations.degreeVec(62.36f, -4.65f, 2.29f));
+        this.tail.offsetPos(KeyframeAnimations.posVec(0.17f, -7.48f, -1.35f));
     }
 
     public void setupLyingPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
