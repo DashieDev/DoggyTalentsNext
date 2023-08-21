@@ -401,7 +401,7 @@ public class DogIncapacitatedMananger {
         public IncapacitatedSyncState updateBandaid(int bandaid_count) {
             var new_state = BandaidState.getState(bandaid_count);
             if (new_state == this.bandaid) return this;
-            return new IncapacitatedSyncState(type, new_state);
+            return new IncapacitatedSyncState(type, new_state, poseId);
         }
 
         @Override
