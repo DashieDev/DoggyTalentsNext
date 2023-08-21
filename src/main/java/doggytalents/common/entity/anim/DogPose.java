@@ -6,7 +6,8 @@ public enum DogPose {
     SIT(1, false, true, true, true, true),
     FAINTED(2, true),
     LYING(3, false),
-    FAINTED_2(4, true);
+    FAINTED_2(4, true),
+    LYING_2(5, true);
 
     private final int id;
     public final boolean needRenderRefresh;
