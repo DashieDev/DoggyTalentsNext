@@ -9,7 +9,8 @@ public enum DogAnimation {
     FAINT(2, 80),
     SIT_DOWN(3, 25, 1.25f),
     STAND_UP(4, 40, 1.25f),
-    FAINT_2(5, 80);
+    FAINT_2(5, 80),
+    LYING_DOWN(6, 80);
 
     private final int id;
     private final int lengthTicks;
