@@ -5,6 +5,7 @@ import java.util.List;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -85,7 +86,12 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
             dog.getMoveControl().setWantedPosition(targetBed.getX() + 0.5, 
             targetBed.getY(), targetBed.getZ() + 0.5, 1);
         }
-        this.dog.setInSittingPose(d_targetBed < 1);
+        if (d_targetBed < 1) {
+            if (!this.dog.isInSittingPose())
+            this.dog.setAnim(DogAnimation.LYING_DOWN);
+            this.dog.setInSittingPose(true);
+            
+        }   
     }
 
     private int tickTillValidateNeabyDogs = 5;

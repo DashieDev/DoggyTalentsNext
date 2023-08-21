@@ -238,6 +238,9 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
             case LYING:
                 this.setupLyingPose(dog, limbSwing, limbSwingAmount, partialTickTime);
                 break;
+            case LYING_2:
+                this.setupLyingPose2(dog, limbSwing, limbSwingAmount, partialTickTime);
+                break;
             default:
                 this.setUpStandPose(dog, limbSwing, limbSwingAmount, partialTickTime);
                 break;
@@ -375,6 +378,27 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
         this.tail.xRot = ((Dog) dog).getTailRotation();
         this.tail.offsetRotation(KeyframeAnimations.degreeVec(62.36f, -4.65f, 2.29f));
         this.tail.offsetPos(KeyframeAnimations.posVec(0.17f, -7.48f, -1.35f));
+    }
+
+    public void setupLyingPose2(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        
+        this.head.offsetRotation(KeyframeAnimations.degreeVec(0f, 0f, 27.5f));
+        this.head.offsetPos(KeyframeAnimations.posVec(0f, -6.75f, 2f));
+        this.body.offsetRotation(KeyframeAnimations.degreeVec(0.5f, 0f, 0f));
+        this.body.offsetPos(KeyframeAnimations.posVec(0f, -6.5f, 0f));
+        this.legBackRight.offsetRotation(KeyframeAnimations.degreeVec(-90f, 22.5f, 0f));
+        this.legBackRight.offsetPos(KeyframeAnimations.posVec(-0.5f, -7f, 1f));
+        this.legBackLeft.offsetRotation(KeyframeAnimations.degreeVec(-90f, -22.5f, 0f));
+        this.legBackLeft.offsetPos(KeyframeAnimations.posVec(0.5f, -7f, 1f));
+        this.legFrontRight.offsetRotation(KeyframeAnimations.degreeVec(-87.41193f, 14.98539f, 0.66963f));
+        this.legFrontRight.offsetPos(KeyframeAnimations.posVec(0f, -6.75f, 2f));
+        this.legFrontLeft.offsetRotation(KeyframeAnimations.degreeVec(-87.41193f, -14.98539f, -0.66963f));
+        this.legFrontLeft.offsetPos(KeyframeAnimations.posVec(0f, -6.75f, 2f));
+        this.tail.xRot = ((Dog) dog).getTailRotation();
+        this.tail.offsetRotation(KeyframeAnimations.degreeVec(0f, 0f, 0f));
+        this.tail.offsetPos(KeyframeAnimations.posVec(0f, -7f, -0.25f));
+        this.mane.offsetRotation(KeyframeAnimations.degreeVec(-2.5f, 0f, 0f));
+        this.mane.offsetPos(KeyframeAnimations.posVec(0f, -6.5f, 2f));
     }
 
     public void setupLyingPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
