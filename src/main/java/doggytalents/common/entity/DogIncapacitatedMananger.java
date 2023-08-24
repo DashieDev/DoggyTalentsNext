@@ -351,6 +351,8 @@ public class DogIncapacitatedMananger {
 
     public DogPose getPose() {
         int id = this.dog.getIncapSyncState().poseId;
+        if (this.dog.isInWater() || this.dog.isInLava())
+            return DogPose.DROWN;
         switch (id) {
         default:
             return DogPose.FAINTED;
@@ -361,6 +363,8 @@ public class DogIncapacitatedMananger {
 
     public DogAnimation getAnim() {
         int id = this.dog.getIncapSyncState().poseId;
+        if (this.dog.isInWater() || this.dog.isInLava())
+            return DogAnimation.DROWN;
         switch (id) {
         default:
             return DogAnimation.FAINT;
