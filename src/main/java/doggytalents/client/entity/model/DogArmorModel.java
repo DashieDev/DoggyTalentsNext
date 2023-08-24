@@ -115,10 +115,4 @@ public class DogArmorModel<T extends AbstractDog> extends DogModel<T> {
         this.bootFrontRight.visible = visible;
         this.bootFrontLeft.visible = visible;
     }
-
-    @Override
-    protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(this.body, this.legBackRight, this.legBackLeft, this.legFrontRight, this.legFrontLeft, this.tail, this.mane
-        );
-    }
 }
