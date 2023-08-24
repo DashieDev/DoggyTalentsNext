@@ -107,7 +107,7 @@ public class DogIncapacitatedMananger {
                     //Earraper.
                     //d.level.broadcastEntityEvent(d, (byte)35);
                 }
-                this.dog.level.broadcastEntityEvent(this.dog, (byte)35);
+                //this.dog.level.broadcastEntityEvent(this.dog, (byte)35);
             }
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.CAKE && recoveryMultiplier < 2) {

@@ -792,7 +792,7 @@ public class Dog extends AbstractDog {
         // })
 
         if (!this.level.isClientSide && stack.getItem() == Items.STONE_AXE) {
-            this.setAnim(this.isInSittingPose() ? DogAnimation.STAND_UP : DogAnimation.SIT_DOWN);
+            this.setAnim(this.isInSittingPose() ? DogAnimation.STAND_QUICK : DogAnimation.SIT_DOWN);
         }
 
         if (this.isDefeated()) 
