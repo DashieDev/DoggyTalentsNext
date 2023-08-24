@@ -49,6 +49,10 @@ public class ArmorAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         Optional<TalentInstance> inst = dog.getTalent(DoggyTalents.DOGGY_ARMOR);
         if (!inst.isPresent()) return;
 
+        if (this.model.modelNeedRefreshBeforeCurrentRender(dog)) {
+            this.model.resetAllPose();
+        }
+
         this.getParentModel().copyPropertiesTo(this.model);
         this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
         this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
@@ -94,6 +98,9 @@ public class ArmorAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
             this.model.bootHindLeft.visible = true;
             this.model.bootHindRight.visible = true;
             this.renderArmorCutout(this.model, HelmetInteractHandler.getMappedResource(itemStack.getItem()).get().getModelTexture(), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
+        }
+        if (this.model.modelNeedRefreshBeforeNextRender(dog)) {
+            this.model.resetAllPose();
         }
 
         // for (AccessoryInstance accessoryInst : dog.getAccessories()) {
