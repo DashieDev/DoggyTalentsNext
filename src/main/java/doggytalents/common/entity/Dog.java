@@ -1777,6 +1777,12 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public double getFluidJumpThreshold() {
+        float defeated_threshold = this.isInLava() ? 0.9f : 1;
+        return this.isDefeated() ? defeated_threshold : super.getFluidJumpThreshold();
+    }
+
+    @Override
     public void dropEquipment() {
         super.dropEquipment();
 
