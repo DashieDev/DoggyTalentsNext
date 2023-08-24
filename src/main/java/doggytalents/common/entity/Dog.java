@@ -21,6 +21,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.nav.DogMoveControl;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
+import doggytalents.common.entity.ai.triggerable.DogDrownAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.ai.triggerable.DogTriggerableGoal;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
@@ -1742,6 +1743,10 @@ public class Dog extends AbstractDog {
         this.incapacitatedMananger.onBeingDefeated();
         this.unRide();
         createIncapSyncState(source);
+        if (this.isInWater() || this.isInLava()) {
+            this.clearTriggerableAction();
+            this.triggerAction(new DogDrownAction(this));
+        } else
         this.setAnim(this.incapacitatedMananger.getAnim());
 
         var owner = this.getOwner();
