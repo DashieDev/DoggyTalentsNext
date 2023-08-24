@@ -206,12 +206,12 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
 
     @Override
     protected Iterable<ModelPart> headParts() {
-        return ImmutableList.of(this.head);
+        return ImmutableList.of();
     }
 
     @Override
     protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(this.body, this.legBackRight, this.legBackLeft, this.legFrontRight, this.legFrontLeft, this.tail, this.mane);
+        return ImmutableList.of(this.root);
     }
 
     @Override
@@ -501,7 +501,8 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
 
     public void resetAllPose() {
         this.headParts().forEach(x -> x.resetPose());
-        this.bodyParts().forEach(x -> x.resetPose());
+        this.root.resetPose();
+        this.root.getAllParts().forEach(x -> x.resetPose());
         this.realHead.resetPose();
         this.realTail.resetPose();
         this.realTail2.resetPose();
@@ -528,6 +529,8 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
     public Optional<ModelPart> searchForPartWithName(String name) {
         if (this.root.hasChild(name)) 
             return Optional.of(this.root.getChild(name));
+        if (name.equals("root"))
+            return Optional.of(this.root);
         var partOptional = this.root.getAllParts()
             .filter(part -> part.hasChild(name))
             .findFirst();
@@ -578,10 +581,36 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack p_102424_, VertexConsumer p_102425_, int p_102426_, int p_102427_, float p_102428_, float p_102429_, float p_102430_, float p_102431_) {
-        super.renderToBuffer(p_102424_, p_102425_, p_102426_, p_102427_, this.r * p_102428_, this.g * p_102429_, this.b * p_102430_, p_102431_);
-    }
+    public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, float p_102038_, float p_102039_, float p_102040_, float p_102041_) {
+        if (this.young) {
+
+            boolean headVisible0 = this.head.visible;
+            
+            this.head.visible = false;
+            p_102034_.pushPose();
+            float f1 = 1.0F / 2f;
+            p_102034_.scale(f1, f1, f1);
+            p_102034_.translate(0.0D, (double)(24 / 16.0F), 0.0D);
+            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
+            p_102034_.popPose();
+            
+            this.head.visible = headVisible0;
+            p_102034_.pushPose();
+            p_102034_.translate(0.0D, (double)(5f / 16.0F), (double)(2f / 16.0F));
+            this.head.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
+            p_102034_.popPose();            
+        } else {
+           this.headParts().forEach((p_102061_) -> {
+              p_102061_.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
+           });
+           this.bodyParts().forEach((p_102051_) -> {
+              p_102051_.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
+           });
+        }
+  
+     }
     //END
+    
 
 
 }
