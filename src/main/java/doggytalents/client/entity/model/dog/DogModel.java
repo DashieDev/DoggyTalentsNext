@@ -16,6 +16,7 @@ import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.ColorableAgeableListModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -24,7 +25,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
+public class DogModel<T extends AbstractDog> extends EntityModel<T> {
 
     public static final float[] MANE_LYING_OFF = {0f, 6f, 1f};
     public static final float[] MANE_SITTING_OFF = {0f, 2f, 0f};
@@ -132,7 +133,7 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
     }
 
     public DogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
-        super(renderType, false, 5.0F, 2.0F, 2.0F, 2.0F, 24.0F);
+        super(renderType);
         this.root = box;
         this.head = box.getChild("head");
         this.realHead = this.head.getChild("real_head");
@@ -203,17 +204,6 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
                 , PartPose.ZERO);
         return LayerDefinition.create(var0, 64, 32);
     }
-
-    @Override
-    protected Iterable<ModelPart> headParts() {
-        return ImmutableList.of();
-    }
-
-    @Override
-    protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(this.root);
-    }
-
     @Override
     public void prepareMobModel(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         
@@ -530,7 +520,6 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
     }
 
     public void resetAllPose() {
-        this.headParts().forEach(x -> x.resetPose());
         this.root.resetPose();
         this.root.getAllParts().forEach(x -> x.resetPose());
         this.realHead.resetPose();
@@ -630,17 +619,9 @@ public class DogModel<T extends AbstractDog> extends AgeableListModel<T> {
             this.head.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
             p_102034_.popPose();            
         } else {
-           this.headParts().forEach((p_102061_) -> {
-              p_102061_.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
-           });
-           this.bodyParts().forEach((p_102051_) -> {
-              p_102051_.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
-           });
+            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
         }
   
      }
     //END
-    
-
-
 }
