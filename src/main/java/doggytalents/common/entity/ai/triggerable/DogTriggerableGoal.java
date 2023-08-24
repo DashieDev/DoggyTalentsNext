@@ -8,6 +8,8 @@ import net.minecraft.world.entity.ai.goal.Goal;
 
 public class DogTriggerableGoal extends Goal {
 
+    private static final EnumSet<Flag> IDLE_FLAGS = EnumSet.of(Goal.Flag.LOOK);
+
     Dog dog;
     final boolean trivial;
 
@@ -84,6 +86,15 @@ public class DogTriggerableGoal extends Goal {
     @Override
     public boolean requiresUpdateEveryTick() {
         return true;
+    }
+
+    @Override
+    public EnumSet<Flag> getFlags() {
+        var action = dog.getTriggerableAction();
+        if (action != null && action.isIdleAction()) {
+            return IDLE_FLAGS;
+        }
+        return super.getFlags();
     }
         
 }
