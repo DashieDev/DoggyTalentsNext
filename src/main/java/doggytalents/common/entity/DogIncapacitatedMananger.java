@@ -85,6 +85,9 @@ public class DogIncapacitatedMananger {
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }
+                if (this.bandagesCount >= MAX_BANDAID_COUNT) {
+                    this.dog.setAnim(getFaintStandAnim());
+                }
             }
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.TOTEM_OF_UNDYING) {
@@ -277,6 +280,7 @@ public class DogIncapacitatedMananger {
         this.dog.setDogHunger(this.dog.getMaxHunger());
         this.dog.setOrderedToSit(true);
         this.dog.setIncapSyncState(IncapacitatedSyncState.NONE);
+        this.dog.setAnim(DogAnimation.STAND_QUICK);
 
         if (this.appliedIncapChanges) {
             this.appliedIncapChanges = false;
@@ -371,6 +375,18 @@ public class DogIncapacitatedMananger {
             return DogAnimation.FAINT;
         case 1:
             return DogAnimation.FAINT_2;
+        }
+    }
+
+    public DogAnimation getFaintStandAnim() {
+        int id = this.dog.getIncapSyncState().poseId;
+        if (this.dog.isInWater() || this.dog.isInLava())
+            return DogAnimation.NONE;
+        switch (id) {
+        default:
+            return DogAnimation.FAINT_STAND_1;
+        case 1:
+            return DogAnimation.FAINT_STAND_2;
         }
     }
 

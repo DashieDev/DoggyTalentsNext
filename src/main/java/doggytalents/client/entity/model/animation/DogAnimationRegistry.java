@@ -30,6 +30,10 @@ public class DogAnimationRegistry {
         register(DogAnimation.LYING_DOWN, DogAnimationSequences.LIE_DOWN);
         register(DogAnimation.STAND_QUICK, DogAnimationSequences.STAND_QUCK);
         register(DogAnimation.DROWN, DogAnimationSequences.DROWN);
+        register(DogAnimation.HURT_1, DogAnimationSequences.HURT_1);
+        register(DogAnimation.HURT_2, DogAnimationSequences.HURT_2);
+        register(DogAnimation.FAINT_STAND_1, DogAnimationSequences.FAINT_STAND_1);
+        register(DogAnimation.FAINT_STAND_2, DogAnimationSequences.FAINT_STAND_2);
     }
     
 }
