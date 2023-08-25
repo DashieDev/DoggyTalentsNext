@@ -49,6 +49,8 @@ public class BeastarsUniformMaleEntry implements AccessoryModelManager.Entry  {
         this.model.pMane.x = dogModel.mane.x;
         this.model.pMane.y = dogModel.mane.y;
         this.model.pMane.z = dogModel.mane.z;
+            
+        this.model.root.copyFrom(dogModel.root);
 
         if (inst instanceof IColoredObject coloredObject) {
             float[] color = coloredObject.getColor();
