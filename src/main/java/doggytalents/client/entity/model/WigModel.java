@@ -14,10 +14,12 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class WigModel extends ListModel<Dog> {
 
+	public ModelPart root;
     public ModelPart pHead;
     public ModelPart wig;
 
 	public WigModel(ModelPart root) {
+		this.root = root;
         this.pHead = root.getChild("phead");
         this.wig = pHead.getChild("pwig");
 	}
@@ -50,7 +52,7 @@ public class WigModel extends ListModel<Dog> {
 
     @Override
     public Iterable<ModelPart> parts() {
-        return ImmutableList.of(pHead);
+        return ImmutableList.of(root);
     }
 
     @Override

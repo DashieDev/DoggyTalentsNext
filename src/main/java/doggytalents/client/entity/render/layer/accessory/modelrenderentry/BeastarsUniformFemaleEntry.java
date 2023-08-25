@@ -75,6 +75,8 @@ public class BeastarsUniformFemaleEntry implements AccessoryModelManager.Entry {
         this.model.pRFLeg.y = dogModel.legFrontRight.y;
         this.model.pRFLeg.z = dogModel.legFrontRight.z;
 
+        this.model.root.copyFrom(dogModel.root);
+
         if (inst instanceof IColoredObject coloredObject) {
             float[] color = coloredObject.getColor();
             RenderLayer.renderColoredCutoutModel(this.model, Resources.BEASTARS_UNIFORM_FEMALE, poseStack, buffer, packedLight, dog, color[0], color[1], color[2]);

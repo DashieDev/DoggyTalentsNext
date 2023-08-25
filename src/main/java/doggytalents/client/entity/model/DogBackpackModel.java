@@ -12,10 +12,12 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class DogBackpackModel extends ListModel<Dog> {
 
+    public ModelPart root;
     public ModelPart rightChest;
     public ModelPart leftChest;
 
     public DogBackpackModel(ModelPart box) {
+        this.root = box;
         this.rightChest = box.getChild("right_chest");
         this.leftChest = box.getChild("left_chest");
         // TODO
@@ -39,7 +41,7 @@ public class DogBackpackModel extends ListModel<Dog> {
 
     @Override
     public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.rightChest, this.leftChest);
+        return ImmutableList.of(this.root);
     }
 
     @Override

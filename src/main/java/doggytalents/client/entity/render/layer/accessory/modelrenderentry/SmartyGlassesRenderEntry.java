@@ -48,6 +48,8 @@ public class SmartyGlassesRenderEntry implements AccessoryModelManager.Entry {
         this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
         this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
+        this.model.root.copyFrom(dogModel.root);
+
         this.model.pHead.xRot = dogModel.head.xRot;
         this.model.pHead.yRot = dogModel.head.yRot;
         this.model.pHead.zRot = dogModel.head.zRot;
