@@ -47,15 +47,7 @@ public class BowtieRenderEntry implements AccessoryModelManager.Entry {
         this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         
         this.model.root.copyFrom(dogModel.root);
-
-        this.model.pMane.xRot = dogModel.mane.xRot;
-        this.model.pMane.yRot = dogModel.mane.yRot;
-        this.model.pMane.zRot = dogModel.mane.zRot;
-
-        float pManeX = dogModel.mane.x;
-        float pManeY = dogModel.mane.y;
-        float pManeZ = dogModel.mane.z;
-        this.model.pMane.setPos(pManeX, pManeY, pManeZ);
+        this.model.pMane.copyFrom(dogModel.mane);
 
         if (inst instanceof IColoredObject coloredObject) {
             float[] color = coloredObject.getColor();

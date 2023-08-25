@@ -50,19 +50,9 @@ public class WigRenderEntry implements AccessoryModelManager.Entry {
         this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
         this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
-        this.model.pHead.xRot = dogModel.head.xRot;
-        this.model.pHead.yRot = dogModel.head.yRot;
-        this.model.pHead.zRot = dogModel.head.zRot;
-        
-        this.model.wig.xRot = dogModel.realHead.xRot;
-        this.model.wig.yRot = dogModel.realHead.yRot;
-        this.model.wig.zRot = dogModel.realHead.zRot;
-
-        float pHeadX = dogModel.head.x;
-        float pHeadY = dogModel.head.y;
-        float pHeadZ = dogModel.head.z;
-        this.model.pHead.setPos(pHeadX, pHeadY, pHeadZ);
         this.model.root.copyFrom(dogModel.root);
+        this.model.pHead.copyFrom(dogModel.head);
+        this.model.wig.copyFrom(dogModel.realHead);
 
         if (inst instanceof IColoredObject coloredObject) {
             float[] color = coloredObject.getColor();
