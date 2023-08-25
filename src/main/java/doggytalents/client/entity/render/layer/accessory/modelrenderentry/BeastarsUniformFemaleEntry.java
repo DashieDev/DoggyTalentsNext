@@ -43,39 +43,11 @@ public class BeastarsUniformFemaleEntry implements AccessoryModelManager.Entry {
         this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
         this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
-        this.model.pMane.xRot = dogModel.mane.xRot;
-        this.model.pMane.yRot = dogModel.mane.yRot;
-        this.model.pMane.zRot = dogModel.mane.zRot;
-
-        this.model.pMane.x = dogModel.mane.x;
-        this.model.pMane.y = dogModel.mane.y;
-        this.model.pMane.z = dogModel.mane.z;
-
-        this.model.pBody.xRot = dogModel.body.xRot;
-        this.model.pBody.yRot = dogModel.body.yRot;
-        this.model.pBody.zRot = dogModel.body.zRot;
-
-        this.model.pBody.x = dogModel.body.x;
-        this.model.pBody.y = dogModel.body.y;
-        this.model.pBody.z = dogModel.body.z;
-
-        this.model.pLFLeg.xRot = dogModel.legFrontLeft.xRot;
-        this.model.pLFLeg.yRot = dogModel.legFrontLeft.yRot;
-        this.model.pLFLeg.zRot = dogModel.legFrontLeft.zRot;
-
-        this.model.pLFLeg.x = dogModel.legFrontLeft.x;
-        this.model.pLFLeg.y = dogModel.legFrontLeft.y;
-        this.model.pLFLeg.z = dogModel.legFrontLeft.z;
-
-        this.model.pRFLeg.xRot = dogModel.legFrontRight.xRot;
-        this.model.pRFLeg.yRot = dogModel.legFrontRight.yRot;
-        this.model.pRFLeg.zRot = dogModel.legFrontRight.zRot;
-
-        this.model.pRFLeg.x = dogModel.legFrontRight.x;
-        this.model.pRFLeg.y = dogModel.legFrontRight.y;
-        this.model.pRFLeg.z = dogModel.legFrontRight.z;
-
         this.model.root.copyFrom(dogModel.root);
+        this.model.pMane.copyFrom(dogModel.mane);
+        this.model.pBody.copyFrom(dogModel.body);
+        this.model.pLFLeg.copyFrom(dogModel.legFrontLeft);
+        this.model.pRFLeg.copyFrom(dogModel.legFrontRight);
 
         if (inst instanceof IColoredObject coloredObject) {
             float[] color = coloredObject.getColor();
