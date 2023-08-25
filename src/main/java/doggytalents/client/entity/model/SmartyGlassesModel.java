@@ -14,10 +14,12 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class SmartyGlassesModel extends ListModel<Dog> {
 
+	public ModelPart root;
     public ModelPart pHead;
     public ModelPart glasses;
 
 	public SmartyGlassesModel(ModelPart root) {
+		this.root = root;
 		this.pHead = root.getChild("glasses");
         this.glasses = pHead.getChild("real_glasses");
 	}
@@ -78,7 +80,7 @@ public class SmartyGlassesModel extends ListModel<Dog> {
 
     @Override
     public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.pHead);
+        return ImmutableList.of(this.root);
     }
 
     @Override
