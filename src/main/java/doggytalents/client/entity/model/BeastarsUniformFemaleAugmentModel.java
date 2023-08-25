@@ -14,13 +14,14 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class BeastarsUniformFemaleAugmentModel extends ListModel<Dog> {
     
-
+	public ModelPart root;
     public ModelPart pMane;
     public ModelPart pBody;
     public ModelPart pLFLeg;
     public ModelPart pRFLeg;
 
     public BeastarsUniformFemaleAugmentModel(ModelPart part) {
+		this.root = part;
         this.pBody = part.getChild("body");
         this.pMane = part.getChild("upper_body");
         this.pLFLeg = part.getChild("pLFLeg");
@@ -88,7 +89,7 @@ public class BeastarsUniformFemaleAugmentModel extends ListModel<Dog> {
     
     @Override
     public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.pMane, this.pBody, this.pLFLeg, this.pRFLeg);
+        return ImmutableList.of(this.root);
     }
 
     @Override

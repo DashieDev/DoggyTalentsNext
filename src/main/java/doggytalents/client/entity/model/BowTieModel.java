@@ -17,12 +17,12 @@ public class BowTieModel extends ListModel<Dog> {
 
     public ModelPart pMane;
     public ModelPart bowTie;
+    public ModelPart root;
 
     public BowTieModel(ModelPart part) {
-        
+        this.root = part;
         this.pMane = part.getChild("upper_body");
         this.bowTie = pMane.getChild("bowtie");
-
     }
 
     public static LayerDefinition createBowtieLayer() {
@@ -42,7 +42,7 @@ public class BowTieModel extends ListModel<Dog> {
     
     @Override
     public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.pMane);
+        return ImmutableList.of(root);
     }
 
     @Override
