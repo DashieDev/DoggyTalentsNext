@@ -1193,6 +1193,7 @@ public class Dog extends AbstractDog {
             if (flag) return false;
         }
         
+        if (!this.level.isClientSide)
         if (this.isInSittingPose() || amount > 6.0f) {
             this.setAnim(DogAnimation.HURT_1);
         } else if (source.getEntity() != null) {
