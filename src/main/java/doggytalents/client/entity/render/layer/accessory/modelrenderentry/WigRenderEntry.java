@@ -62,6 +62,7 @@ public class WigRenderEntry implements AccessoryModelManager.Entry {
         float pHeadY = dogModel.head.y;
         float pHeadZ = dogModel.head.z;
         this.model.pHead.setPos(pHeadX, pHeadY, pHeadZ);
+        this.model.root.copyFrom(dogModel.root);
 
         if (inst instanceof IColoredObject coloredObject) {
             float[] color = coloredObject.getColor();

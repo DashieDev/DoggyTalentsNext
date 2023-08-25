@@ -45,6 +45,8 @@ public class BowtieRenderEntry implements AccessoryModelManager.Entry {
         dogModel.copyPropertiesTo(this.model);
         this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
         this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        
+        this.model.root.copyFrom(dogModel.root);
 
         this.model.pMane.xRot = dogModel.mane.xRot;
         this.model.pMane.yRot = dogModel.mane.yRot;

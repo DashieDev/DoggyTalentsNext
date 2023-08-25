@@ -16,10 +16,12 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class DogFrontLegsSeperate extends ListModel<Dog> {
 
+    public ModelPart root;
     public ModelPart legFrontRight;
     public ModelPart legFrontLeft;
 
     public DogFrontLegsSeperate(ModelPart box) {
+        this.root = box;
         this.legFrontRight = box.getChild("right_front_leg");
         this.legFrontLeft = box.getChild("left_front_leg");
     }
@@ -39,7 +41,7 @@ public class DogFrontLegsSeperate extends ListModel<Dog> {
 
     @Override
     public Iterable<ModelPart> parts() {
-        return List.of(this.legFrontLeft, this.legFrontRight);
+        return List.of(this.root);
     }
 
     public void syncFromDogModel(DogModel<? extends AbstractDog> dogModel) {
@@ -55,6 +57,7 @@ public class DogFrontLegsSeperate extends ListModel<Dog> {
         this.legFrontRight.yRot = dogModel.legFrontRight.yRot;
         this.legFrontLeft.zRot = dogModel.legFrontLeft.zRot;
         this.legFrontRight.zRot = dogModel.legFrontRight.zRot;
+        this.root.copyFrom(dogModel.root);
     }
 
     @Override
