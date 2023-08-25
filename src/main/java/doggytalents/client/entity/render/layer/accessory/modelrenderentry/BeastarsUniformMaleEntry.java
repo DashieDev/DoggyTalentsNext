@@ -42,15 +42,8 @@ public class BeastarsUniformMaleEntry implements AccessoryModelManager.Entry  {
         this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
         this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
-        this.model.pMane.xRot = dogModel.mane.xRot;
-        this.model.pMane.yRot = dogModel.mane.yRot;
-        this.model.pMane.zRot = dogModel.mane.zRot;
-
-        this.model.pMane.x = dogModel.mane.x;
-        this.model.pMane.y = dogModel.mane.y;
-        this.model.pMane.z = dogModel.mane.z;
-            
         this.model.root.copyFrom(dogModel.root);
+        this.model.pMane.copyFrom(dogModel.mane);
 
         if (inst instanceof IColoredObject coloredObject) {
             float[] color = coloredObject.getColor();
