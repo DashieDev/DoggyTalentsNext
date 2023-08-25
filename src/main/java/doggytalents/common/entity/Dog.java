@@ -578,7 +578,7 @@ public class Dog extends AbstractDog {
         if (!this.level.isClientSide && this.delayedActionStart > 0)
             --this.delayedActionStart; 
 
-        if (!this.level.isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.isOnGround()) {
+        if (!this.level.isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.isOnGround() && this.canUpdateClassicalAnim()) {
             this.startShakingAndBroadcast(false);
         }
 
