@@ -12,9 +12,11 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class DogRescueModel extends ListModel<Dog>{
 
+    public ModelPart root;
     public ModelPart rescueBox;
 
     public DogRescueModel(ModelPart box) {
+        this.root = box;
         this.rescueBox = box.getChild("rescue_box");
 //        this.rescueBox = new ModelPart(this, 0, 0);
 //        this.rescueBox.addBox(-1F, -4F, -4.5F, 4, 2, 2);
@@ -33,7 +35,7 @@ public class DogRescueModel extends ListModel<Dog>{
 
     @Override
     public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.rescueBox);
+        return ImmutableList.of(this.root);
     }
 
     @Override
