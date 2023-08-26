@@ -3200,7 +3200,7 @@ public class Dog extends AbstractDog {
 
 
     private DogAnimation sitAnim = DogAnimation.SIT_DOWN;
-    private DogAnimation standAnim = DogAnimation.STAND_UP;
+    private DogAnimation standAnim = DogAnimation.STAND_QUICK;
 
     @Override
     public void setInSittingPose(boolean sit) {
@@ -3208,7 +3208,9 @@ public class Dog extends AbstractDog {
             boolean sit0 = this.isInSittingPose();
             if (sit0 != sit) {
                 this.setAnim(sit ? this.getSitAnim() : this.getStandAnim());
-            }   
+            }
+            this.sitAnim = DogAnimation.SIT_DOWN;
+            this.standAnim = DogAnimation.STAND_QUICK;
         }
         super.setInSittingPose(sit);
     }
