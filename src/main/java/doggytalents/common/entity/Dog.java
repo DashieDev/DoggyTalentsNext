@@ -791,10 +791,6 @@ public class Dog extends AbstractDog {
         //     ChopinLogger.l("get random pos " + (stopTime-startTime) + " nanoseconds." );
         // })
 
-        if (!this.level.isClientSide && stack.getItem() == Items.STONE_AXE) {
-            this.setAnim(this.isInSittingPose() ? DogAnimation.STAND_QUICK : DogAnimation.SIT_DOWN);
-        }
-
         if (this.isDefeated()) 
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
@@ -3085,6 +3081,39 @@ public class Dog extends AbstractDog {
         }
 
         return false;
+    }
+
+
+    private DogAnimation sitAnim = DogAnimation.SIT_DOWN;
+    private DogAnimation standAnim = DogAnimation.STAND_UP;
+
+    @Override
+    public void setInSittingPose(boolean sit) {
+        if (!this.level.isClientSide) {
+            boolean sit0 = this.isInSittingPose();
+            if (sit0 != sit) {
+                this.setAnim(sit ? this.getSitAnim() : this.getStandAnim());
+            }   
+        }
+        super.setInSittingPose(sit);
+    }
+    
+    public void setSitAnim(DogAnimation anim) {
+        if (anim == null) this.sitAnim = DogAnimation.SIT_DOWN;
+        this.sitAnim = anim;
+    }
+
+    public DogAnimation getStandAnim() {
+        return this.standAnim;
+    }
+
+    public void setStandAnim(DogAnimation anim) {
+        if (anim == null) this.standAnim = DogAnimation.STAND_QUICK;
+        this.standAnim = anim;
+    }
+
+    public DogAnimation getSitAnim() {
+        return this.sitAnim;
     }
 
     @Override
