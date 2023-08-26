@@ -1,5 +1,7 @@
 package doggytalents.client.entity.model;
 
+import java.util.Optional;
+
 import com.google.common.collect.ImmutableList;
 
 import doggytalents.common.entity.Dog;
@@ -12,16 +14,16 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class SmartyGlassesModel extends ListModel<Dog> {
-
-	public ModelPart root;
-    public ModelPart pHead;
-    public ModelPart glasses;
+public class SmartyGlassesModel extends SyncedAccessoryModel {
 
 	public SmartyGlassesModel(ModelPart root) {
-		this.root = root;
-		this.pHead = root.getChild("glasses");
-        this.glasses = pHead.getChild("real_glasses");
+		super(root);
+	}
+
+	@Override
+	protected void populatePart(ModelPart box) {
+		this.head = Optional.of(box.getChild("glasses"));
+        this.realHead = Optional.of(head.get().getChild("real_glasses"));
 	}
 
 	public static LayerDefinition createGlassesLayer() {
@@ -77,19 +79,4 @@ public class SmartyGlassesModel extends ListModel<Dog> {
 
 		return LayerDefinition.create(meshdefinition, 16, 16);
 	}
-
-    @Override
-    public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.root);
-    }
-
-    @Override
-    public void  prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        
-    }
-
-    @Override
-    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-         
-    }
 }

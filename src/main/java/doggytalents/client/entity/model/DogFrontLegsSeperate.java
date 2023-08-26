@@ -1,6 +1,7 @@
 package doggytalents.client.entity.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.dog.DogModel;
@@ -14,16 +15,16 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class DogFrontLegsSeperate extends ListModel<Dog> {
-
-    public ModelPart root;
-    public ModelPart legFrontRight;
-    public ModelPart legFrontLeft;
+public class DogFrontLegsSeperate extends SyncedAccessoryModel {
 
     public DogFrontLegsSeperate(ModelPart box) {
-        this.root = box;
-        this.legFrontRight = box.getChild("right_front_leg");
-        this.legFrontLeft = box.getChild("left_front_leg");
+        super(box);
+    }
+
+    @Override
+    protected void populatePart(ModelPart box) {
+        this.legFrontRight = Optional.of(box.getChild("right_front_leg"));
+        this.legFrontLeft = Optional.of(box.getChild("left_front_leg"));
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -37,32 +38,6 @@ public class DogFrontLegsSeperate extends ListModel<Dog> {
         var1.addOrReplaceChild("right_front_leg", var4_1, PartPose.offset(-2.5F, 16.0F, -4.0F));
         var1.addOrReplaceChild("left_front_leg", var4_1, PartPose.offset(0.5F, 16.0F, -4.0F));
         return LayerDefinition.create(var0, 64, 32);
-    }
-
-    @Override
-    public Iterable<ModelPart> parts() {
-        return List.of(this.root);
-    }
-
-    public void syncFromDogModel(DogModel<? extends AbstractDog> dogModel) {
-        this.legFrontLeft.x = dogModel.legFrontLeft.x;
-        this.legFrontRight.x = dogModel.legFrontRight.x;
-        this.legFrontLeft.y = dogModel.legFrontLeft.y;
-        this.legFrontRight.y = dogModel.legFrontRight.y;
-        this.legFrontLeft.z = dogModel.legFrontLeft.z;
-        this.legFrontRight.z = dogModel.legFrontRight.z;
-        this.legFrontLeft.xRot = dogModel.legFrontLeft.xRot;
-        this.legFrontRight.xRot = dogModel.legFrontRight.xRot;
-        this.legFrontLeft.yRot = dogModel.legFrontLeft.yRot;
-        this.legFrontRight.yRot = dogModel.legFrontRight.yRot;
-        this.legFrontLeft.zRot = dogModel.legFrontLeft.zRot;
-        this.legFrontRight.zRot = dogModel.legFrontRight.zRot;
-        this.root.copyFrom(dogModel.root);
-    }
-
-    @Override
-    public void setupAnim(Dog p_102618_, float p_102619_, float p_102620_, float p_102621_, float p_102622_,
-            float p_102623_) {
     }
     
 }
