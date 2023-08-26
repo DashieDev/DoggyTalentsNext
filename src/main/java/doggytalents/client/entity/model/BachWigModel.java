@@ -1,5 +1,7 @@
 package doggytalents.client.entity.model;
 
+import java.util.Optional;
+
 import com.google.common.collect.ImmutableList;
 
 import doggytalents.common.entity.Dog;
@@ -12,16 +14,16 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class BachWigModel extends ListModel<Dog> {
-
-	public ModelPart root;
-    public ModelPart pHead;
-    public ModelPart wig;
+public class BachWigModel extends SyncedAccessoryModel {
 
 	public BachWigModel(ModelPart root) {
-		this.root = root;
-        this.pHead = root.getChild("phead");
-        this.wig = pHead.getChild("pwig");
+		super(root);
+	}
+
+	@Override
+	protected void populatePart(ModelPart box) {
+		this.head = Optional.of(box.getChild("phead"));
+		this.realHead = Optional.of(head.get().getChild("pwig"));
 	}
 
 	public static LayerDefinition createWigLayerDefinition() {
@@ -83,19 +85,4 @@ public class BachWigModel extends ListModel<Dog> {
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
-
-    @Override
-    public Iterable<ModelPart> parts() {
-        return ImmutableList.of(root);
-    }
-
-    @Override
-    public void  prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        
-    }
-
-    @Override
-    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-         
-    }
 }

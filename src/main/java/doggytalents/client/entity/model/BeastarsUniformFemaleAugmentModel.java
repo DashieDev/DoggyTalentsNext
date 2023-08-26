@@ -1,5 +1,7 @@
 package doggytalents.client.entity.model;
 
+import java.util.Optional;
+
 import com.google.common.collect.ImmutableList;
 
 import doggytalents.common.entity.Dog;
@@ -12,21 +14,20 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class BeastarsUniformFemaleAugmentModel extends ListModel<Dog> {
+public class BeastarsUniformFemaleAugmentModel extends SyncedAccessoryModel {
     
-	public ModelPart root;
-    public ModelPart pMane;
-    public ModelPart pBody;
-    public ModelPart pLFLeg;
-    public ModelPart pRFLeg;
+	
+	public BeastarsUniformFemaleAugmentModel(ModelPart root) {
+		super(root);
+	}
 
-    public BeastarsUniformFemaleAugmentModel(ModelPart part) {
-		this.root = part;
-        this.pBody = part.getChild("body");
-        this.pMane = part.getChild("upper_body");
-        this.pLFLeg = part.getChild("pLFLeg");
-        this.pRFLeg = part.getChild("pRFLeg");
-    }
+	@Override
+	protected void populatePart(ModelPart box) {
+		this.body = Optional.of(box.getChild("body"));
+		this.mane = Optional.of(box.getChild("upper_body"));
+		this.legFrontLeft = Optional.of(box.getChild("pLFLeg"));
+		this.legFrontRight = Optional.of(box.getChild("pRFLeg"));
+	}
 
     public static LayerDefinition createLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
@@ -85,20 +86,4 @@ public class BeastarsUniformFemaleAugmentModel extends ListModel<Dog> {
 
 		return LayerDefinition.create(meshdefinition, 64, 32);
     }
-
-    
-    @Override
-    public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.root);
-    }
-
-    @Override
-    public void prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
-    }
-
-    @Override
-    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
-    }
-
 }
