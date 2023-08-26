@@ -1,5 +1,7 @@
 package doggytalents.client.entity.model;
 
+import java.util.Optional;
+
 import com.google.common.collect.ImmutableList;
 
 import doggytalents.common.entity.Dog;
@@ -12,18 +14,15 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class BeastarsUniformMaleAugmentModel extends ListModel<Dog> {
+public class BeastarsUniformMaleAugmentModel extends SyncedAccessoryModel {
 
-    public ModelPart root;
-    public ModelPart pMane;
-    public ModelPart tie;
+    public BeastarsUniformMaleAugmentModel(ModelPart root) {
+        super(root);
+    }
 
-    public BeastarsUniformMaleAugmentModel(ModelPart part) {
-        
-        this.root = part;
-        this.pMane = part.getChild("upper_body");
-        this.tie = pMane.getChild("tie");
-
+    @Override
+    protected void populatePart(ModelPart box) {
+        this.mane = Optional.of(box.getChild("upper_body"));
     }
 
     public static LayerDefinition createLayer() {
@@ -50,21 +49,6 @@ public class BeastarsUniformMaleAugmentModel extends ListModel<Dog> {
 		
 
 		return LayerDefinition.create(meshdefinition, 64, 32);
-    }
-
-    
-    @Override
-    public Iterable<ModelPart> parts() {
-        return ImmutableList.of(this.root);
-    }
-
-    @Override
-    public void prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
-    }
-
-    @Override
-    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
     }
     
 }
