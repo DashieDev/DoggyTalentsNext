@@ -35,6 +35,7 @@ public class PackPuppyRenderer extends RenderLayer<Dog, DogModel<Dog>> {
             this.getParentModel().copyPropertiesTo(this.model);
             this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
             this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            this.model.sync(getParentModel());
 
             RenderLayer.renderColoredCutoutModel(this.model, Resources.TALENT_CHEST, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F);
         }

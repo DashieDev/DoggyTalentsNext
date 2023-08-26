@@ -7,6 +7,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.BowTieModel;
 import doggytalents.client.entity.model.SmartyGlassesModel;
+import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.model.WigModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
@@ -25,7 +26,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
-public class WigRenderEntry implements AccessoryModelManager.Entry {
+public class WigRenderEntry extends AccessoryModelManager.Entry {
 
     public static final ModelLayerLocation DOG_WIG = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_wig"), "main");
     
@@ -37,32 +38,22 @@ public class WigRenderEntry implements AccessoryModelManager.Entry {
     }
 
     @Override
-    public ListModel<Dog> getModel() {
+    public SyncedAccessoryModel getModel() {
         return this.model;
-    }
-
-    @Override
-    public void renderAccessory(RenderLayer<Dog, DogModel<Dog>> layer, PoseStack poseStack, MultiBufferSource buffer,
-            int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks,
-            float netHeadYaw, float headPitch, AccessoryInstance inst) {
-        var dogModel = layer.getParentModel();
-        dogModel.copyPropertiesTo(this.model);
-        this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-        this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-
-        this.model.root.copyFrom(dogModel.root);
-        this.model.pHead.copyFrom(dogModel.head);
-        this.model.wig.copyFrom(dogModel.realHead);
-
-        if (inst instanceof IColoredObject coloredObject) {
-            float[] color = coloredObject.getColor();
-            RenderLayer.renderColoredCutoutModel(this.model, Resources.WIG, poseStack, buffer, packedLight, dog, color[0], color[1], color[2]);
-        } else
-        RenderLayer.renderColoredCutoutModel(this.model, Resources.WIG, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F);
     }
 
     @Override
     public void registerLayerDef(RegisterLayerDefinitions event) {
         event.registerLayerDefinition(DOG_WIG, WigModel::createWigLayerDefinition);
+    }
+
+    @Override
+    public ResourceLocation getResources() {
+        return Resources.WIG;
+    }
+
+    @Override
+    public boolean isDyable() {
+        return true;
     }
 }
