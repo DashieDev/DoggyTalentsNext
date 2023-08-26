@@ -11,6 +11,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
+import doggytalents.common.entity.ai.triggerable.DogFaintStandAction;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.network.packet.ParticlePackets;
@@ -86,7 +87,8 @@ public class DogIncapacitatedMananger {
                     stack.shrink(1);
                 }
                 if (this.bandagesCount >= MAX_BANDAID_COUNT) {
-                    this.dog.setAnim(getFaintStandAnim());
+                    this.dog.updateControlFlags();
+                    this.dog.triggerAction(new DogFaintStandAction(dog, getFaintStandAnim()));
                 }
             }
             return InteractionResult.SUCCESS;
@@ -108,7 +110,7 @@ public class DogIncapacitatedMananger {
                     //Earraper.
                     //d.level.broadcastEntityEvent(d, (byte)35);
                 }
-                //this.dog.level.broadcastEntityEvent(this.dog, (byte)35);
+                this.dog.level.broadcastEntityEvent(this.dog, (byte)35);
             }
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.CAKE && recoveryMultiplier < 2) {
