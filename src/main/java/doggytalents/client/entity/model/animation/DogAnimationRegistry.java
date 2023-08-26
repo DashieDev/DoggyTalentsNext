@@ -34,6 +34,7 @@ public class DogAnimationRegistry {
         register(DogAnimation.HURT_2, DogAnimationSequences.HURT_2);
         register(DogAnimation.FAINT_STAND_1, DogAnimationSequences.FAINT_STAND_1);
         register(DogAnimation.FAINT_STAND_2, DogAnimationSequences.FAINT_STAND_2);
+        register(DogAnimation.BACKFLIP, DogAnimationSequences.BACKFLIP);
     }
     
 }
