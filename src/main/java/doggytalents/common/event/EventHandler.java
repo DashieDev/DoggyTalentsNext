@@ -6,7 +6,9 @@ import doggytalents.DoggyItems;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
+import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.talent.HunterDogTalent;
 import doggytalents.common.util.Util;
 import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
@@ -119,6 +121,9 @@ public class EventHandler {
 
         level.addFreshEntity(dog);
         wolf.discard();
+
+        dog.triggerAnimationAction(new DogBackFlipAction(dog));
+        dog.getJumpControl().jump();
     }
 
     @SubscribeEvent
