@@ -90,10 +90,12 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
         }
         if (d_targetBed < 1) {
             if (!this.dog.isInSittingPose())
-            this.dog.setAnim(DogAnimation.LYING_DOWN);
+            this.dog.setSitAnim(DogAnimation.LYING_DOWN);
             this.dog.setInSittingPose(true);
             
-        }   
+        } else {
+            this.dog.setInSittingPose(false);
+        }
     }
 
     private int tickTillValidateNeabyDogs = 5;
