@@ -23,5 +23,7 @@ public class DogBackFlipAction extends AnimationAction {
     public boolean blockMove() {
         return true;
     }
+
+    
     
 }
