@@ -87,14 +87,5 @@ public class DogTriggerableGoal extends Goal {
     public boolean requiresUpdateEveryTick() {
         return true;
     }
-
-    @Override
-    public EnumSet<Flag> getFlags() {
-        var action = dog.getTriggerableAction();
-        if (action != null && action.isIdleAction()) {
-            return IDLE_FLAGS;
-        }
-        return super.getFlags();
-    }
         
 }
