@@ -42,7 +42,7 @@ public class DogAnimationManager {
                 this.dog.setAnim(DogAnimation.NONE);
             }
             this.dog.setXRot(0);
-            this.dog.yHeadRot = this.dog.yBodyRot;
+            this.dog.yBodyRot = this.dog.yHeadRot;
         }
         
     }
