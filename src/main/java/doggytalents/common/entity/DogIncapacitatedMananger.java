@@ -281,6 +281,7 @@ public class DogIncapacitatedMananger {
         this.dog.setOrderedToSit(true);
         this.dog.setIncapSyncState(IncapacitatedSyncState.NONE);
         this.dog.setAnim(DogAnimation.STAND_QUICK);
+        this.dog.setSitAnim(DogAnimation.NONE);
 
         if (this.appliedIncapChanges) {
             this.appliedIncapChanges = false;
