@@ -3095,7 +3095,9 @@ public class Dog extends AbstractDog {
         if (!this.level.isClientSide) {
             boolean sit0 = this.isInSittingPose();
             if (sit0 != sit) {
-                this.setAnim(sit ? this.getSitAnim() : this.getStandAnim());
+                var anim = sit ? this.getSitAnim() : this.getStandAnim();
+                if (anim != DogAnimation.NONE)
+                    this.setAnim(anim);
             }
             this.sitAnim = DogAnimation.SIT_DOWN;
             this.standAnim = DogAnimation.STAND_QUICK;
