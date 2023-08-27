@@ -3341,8 +3341,10 @@ public class Dog extends AbstractDog {
         this.animAction = action;
         if (this.animAction != null) {
             this.animAction.onStart();
+            if (this.animAction.blockMove()) {
+                this.goalSelector.setControlFlag(Goal.Flag.MOVE, false);
+            }
         }
-            
     }
 
     protected void tickAnimAction() {
