@@ -18,7 +18,7 @@ public class DogRandomStrechGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (dog.tickCount - stopTick < 200) return false;
+        if (dog.tickCount - stopTick < 25*20) return false;
         if (!dog.canDoIdileAnim()) return false;
         return this.dog.getRandom().nextFloat() < 0.02;
     }
