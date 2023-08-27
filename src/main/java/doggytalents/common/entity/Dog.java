@@ -866,6 +866,13 @@ public class Dog extends AbstractDog {
 
         InteractionResult actionresulttype = super.mobInteract(player, hand);
         if ((!actionresulttype.consumesAction() || this.isBaby()) && this.canInteract(player)) {
+            if (!this.level.isClientSide && this.isOrderedToSit() 
+                && this.getRandom().nextFloat() <= 0.3
+                && this.level.getBlockState(this.blockPosition().above()).isAir()) {
+
+                this.setStandAnim(DogAnimation.NONE);
+                this.triggerAnimationAction(new DogBackFlipAction(this));
+            } 
             this.setOrderedToSit(!this.isOrderedToSit());
             this.jumping = false;
             this.navigation.stop();
