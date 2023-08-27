@@ -21,6 +21,8 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.nav.DogMoveControl;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
+import doggytalents.common.entity.ai.triggerable.AnimationAction;
+import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogDrownAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.ai.triggerable.DogTriggerableGoal;
@@ -545,6 +547,8 @@ public class Dog extends AbstractDog {
         
         if (this.isAlive()) {
             this.animationManager.tick();
+            if (!this.level.isClientSide)
+                this.tickAnimAction();
         }
 
         //Client
@@ -1747,8 +1751,7 @@ public class Dog extends AbstractDog {
         this.unRide();
         createIncapSyncState(source);
         if (this.isInWater() || this.isInLava()) {
-            this.clearTriggerableAction();
-            this.triggerAction(new DogDrownAction(this));
+            this.triggerAnimationAction(new DogDrownAction(this));
         } else
         this.setAnim(this.incapacitatedMananger.getAnim());
 
@@ -3361,9 +3364,11 @@ public class Dog extends AbstractDog {
     @Override
     protected void updateControlFlags() {
         boolean incapBlockedMove = this.isDefeated() && !this.incapacitatedMananger.canMove();
+        boolean animBlockedMove = this.animAction != null && this.animAction.blockMove();
         boolean notControlledByPlayer = !(this.getControllingPassenger() instanceof ServerPlayer);
         boolean notRidingBoat = !(this.getVehicle() instanceof Boat);
-        this.goalSelector.setControlFlag(Goal.Flag.MOVE, notControlledByPlayer && !incapBlockedMove);
+        this.goalSelector.setControlFlag(Goal.Flag.MOVE, 
+            notControlledByPlayer && !incapBlockedMove && !animBlockedMove);
         this.goalSelector.setControlFlag(Goal.Flag.JUMP, notControlledByPlayer && notRidingBoat);
         this.goalSelector.setControlFlag(Goal.Flag.LOOK, notControlledByPlayer);
     }
@@ -3439,6 +3444,31 @@ public class Dog extends AbstractDog {
 
     public DogAnimation getAnim() {
         return DogAnimation.byId(this.entityData.get(ANIMATION));
+    }
+
+    private AnimationAction animAction;
+    
+    public void triggerAnimationAction(AnimationAction action) {
+        if (animAction != null) 
+            animAction.onStop();
+        this.animAction = action;
+        if (this.animAction != null) {
+            this.animAction.onStart();
+        }
+            
+    }
+
+    protected void tickAnimAction() {
+        if (this.animAction == null)
+            return;
+        switch (animAction.getState()) {
+            case FINISHED:
+                this.triggerAnimationAction(null);
+                break;
+            default:
+                this.animAction.tick();
+                break;
+        }
     }
 
     private DogPose activePose = DogPose.STAND;
