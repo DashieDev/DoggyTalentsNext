@@ -46,10 +46,6 @@ public abstract class TriggerableAction {
         return this.state;
     }
 
-    public boolean isIdleAction() {
-        return false;
-    }
-
     public void setState(ActionState state) {
         this.state = state;
     }
