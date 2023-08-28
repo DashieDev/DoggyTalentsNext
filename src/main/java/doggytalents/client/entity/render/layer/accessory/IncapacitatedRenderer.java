@@ -48,8 +48,7 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         var dogModel = this.getParentModel();
         if (dogModel.useDefaultModelForAccessories()) {
             dogModel.copyPropertiesTo(defaultModel);
-            defaultModel.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-            defaultModel.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            defaultModel.copyFrom(dogModel);
             dogModel = defaultModel;
         }
         var sync_state = dog.getIncapSyncState();
