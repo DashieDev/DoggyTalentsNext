@@ -58,13 +58,10 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         DogModel<Dog> dogModel;
         if (parentModel.useDefaultModelForAccessories()) {
             dogModel = this.defaultModel;
+            parentModel.copyPropertiesTo(dogModel);
+            dogModel.copyFrom(dogModel);
         } else {
             dogModel = parentModel;
-        }
-        if (dogModel != parentModel) {
-            this.getParentModel().copyPropertiesTo(dogModel);
-            dogModel.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-            dogModel.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         }
         var texture_rl = accessoryInst.getModelTexture(dog);
         boolean isTranslucent = accessoryInst.getAccessory().renderTranslucent();
@@ -98,8 +95,7 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         }
         if (dogModel != parentModel) {
             this.getParentModel().copyPropertiesTo(dogModel);
-            dogModel.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-            dogModel.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            dogModel.copyFrom(parentModel);
         }
         var texture_rl = accessoryInst.getModelTexture(dog);
         boolean isTranslucent = accessoryInst.getAccessory().renderTranslucent();

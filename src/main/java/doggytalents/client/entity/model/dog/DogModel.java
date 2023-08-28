@@ -528,6 +528,22 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.realTail3.resetPose();
     }
 
+    public void copyFrom(DogModel<?> dogModel) {
+        this.root.copyFrom(dogModel.root);
+        this.head.copyFrom(dogModel.head);
+        this.realHead.copyFrom(dogModel.realHead);
+        this.body.copyFrom(dogModel.body);
+        this.mane.copyFrom(dogModel.mane);
+        this.legBackRight.copyFrom(dogModel.legBackRight);
+        this.legBackLeft.copyFrom(dogModel.legBackLeft);
+        this.legFrontRight.copyFrom(dogModel.legFrontRight);
+        this.legFrontLeft.copyFrom(dogModel.legFrontLeft);
+        this.tail.copyFrom(dogModel.tail);
+        this.realTail.copyFrom(dogModel.realTail);
+        this.realTail2.copyFrom(dogModel.realTail2);
+        this.realTail3.copyFrom(dogModel.realTail3);
+    }
+
     public void resetPart(ModelPart part, Dog dog) {
         if (part == this.tail) {
             this.tail.resetPose();
