@@ -1210,6 +1210,7 @@ public class Dog extends AbstractDog {
         } else if (source.getEntity() != null) {
             this.setAnim(DogAnimation.HURT_2);
         }
+        this.setStandAnim(DogAnimation.NONE);
         this.setOrderedToSit(false);
         
 
@@ -3094,6 +3095,8 @@ public class Dog extends AbstractDog {
             boolean sit0 = this.isInSittingPose();
             if (sit0 != sit) {
                 var anim = sit ? this.getSitAnim() : this.getStandAnim();
+                if (!sit0 && this.isLying())
+                    anim = DogAnimation.NONE;
                 if (anim != DogAnimation.NONE)
                     this.setAnim(anim);
             }
