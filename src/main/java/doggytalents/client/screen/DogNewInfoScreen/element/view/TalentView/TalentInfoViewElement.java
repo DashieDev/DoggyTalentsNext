@@ -3,11 +3,14 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.TalentView;
 import java.security.cert.PKIXReason;
 import java.util.List;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyTalents;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.Talent;
+import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
@@ -21,6 +24,7 @@ import doggytalents.common.network.packet.data.OpenDogScreenData;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -208,8 +212,13 @@ public class TalentInfoViewElement extends AbstractElement {
             pY += font.lineHeight + LINE_SPACING;
         }
 
-        //Point left:
+        //Kanji
         startX = this.getRealX() + PADDING_LEFT;
+        pY = this.getRealY() + this.getSizeY() - 60;
+        this.drawDogLevelKanji(stack, startX, pY, 50);
+
+        //Point left:
+        startX = this.getRealX() + PADDING_LEFT + 40;
         pY = this.getRealY() + this.getSizeY() - 45;
         var currentLevelStr = I18n.get("doggui.pointsleft");
         var currentLevelStr1 = "" + this.dog.getSpendablePoints();
@@ -218,7 +227,7 @@ public class TalentInfoViewElement extends AbstractElement {
         font.draw(stack, currentLevelStr1, startX, pY, 0xffffffff);
 
         //Current level:
-        startX = this.getRealX() + 80;
+        startX = this.getRealX() + 80 + 40;
         pY = this.getRealY() + this.getSizeY() - 45;
         currentLevelStr = I18n.get("doggui.talents.current_talent_level");
         currentLevelStr1 = this.dog.getDogLevel(talent) 
@@ -230,5 +239,19 @@ public class TalentInfoViewElement extends AbstractElement {
         
         
     }
+
+    private void drawDogLevelKanji(PoseStack stack, int x, int y, int size) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, DogStatusViewBoxElement.getKanjiDogLevel(this.dog));
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        int imgeSize = size;
+        blit(stack, x, 
+            y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
+        RenderSystem.disableBlend();
+    }
+
+
     
 }
