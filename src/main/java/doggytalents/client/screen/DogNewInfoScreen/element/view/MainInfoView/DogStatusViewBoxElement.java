@@ -2,17 +2,22 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView;
 
 import java.util.Random;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.entity.render.DogScreenOverlays;
+import doggytalents.api.feature.DogLevel.Type;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.lib.Resources;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 
@@ -31,6 +36,8 @@ public class DogStatusViewBoxElement extends AbstractElement {
     @Override
     public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
+        drawDogLevelKanji(stack, mouseX, mouseY, partialTicks);
+
         int e_mX = this.getRealX() + this.getSizeX()/2; 
         int e_mY = this.getRealY() + this.getSizeY()/2; 
 
@@ -39,7 +46,37 @@ public class DogStatusViewBoxElement extends AbstractElement {
         this.renderHealthBar(graphics, dog, e_mX - 41, this.getRealY() + this.getSizeY() - 10);
 
         var points = this.dog.getSpendablePoints();
-        graphics.drawString(font, "Pts: " + points, this.getRealX(), this.getRealY(), 0xffffffff);
+
+        this.font.draw(stack, "Pts: " + points, this.getRealX(), this.getRealY(), 0xffffffff);
+
+        
+    }
+
+    private void drawDogLevelKanji(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        int imgeSize = 128;
+        blit(stack, this.getRealX() + this.getSizeX()/2 - imgeSize/2, 
+            this.getRealY() + this.getSizeY()/2 - imgeSize/2, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
+        RenderSystem.disableBlend();
+    }
+
+    public static ResourceLocation getKanjiDogLevel(Dog dog) {
+        var dogLevel = dog.getDogLevel();
+        if (dogLevel.isDireDog())
+            return Resources.KANJI_DIRE;
+        int level_normal = dogLevel.getLevel(Type.NORMAL);
+        var ret = Resources.KANJI_NORMAL;
+        if (level_normal >= 20) 
+            ret = Resources.KANJI_SUPER;
+        if (level_normal >= 40)
+            ret = Resources.KANJI_MASTER;
+        if (level_normal >= 60)
+            ret = Resources.KANJI_DIRE;
+        return ret;
     }
 
     public static void renderDogInside(GuiGraphics graphics, Dog dog, 
