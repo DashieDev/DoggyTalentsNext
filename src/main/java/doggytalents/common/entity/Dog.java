@@ -565,7 +565,7 @@ public class Dog extends AbstractDog {
         return this.isAlive() && !this.isShaking;
     }
 
-    private boolean canUpdateClassicalAnim() {
+    public boolean canUpdateClassicalAnim() {
         if (this.animationManager.started())
             return false;
         return true;

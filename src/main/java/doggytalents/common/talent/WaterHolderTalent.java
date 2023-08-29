@@ -428,8 +428,10 @@ public class WaterHolderTalent extends TalentInstance {
                 }
             } else {
                 this.dog.getNavigation().stop();
-                this.dog.startShakingAndBroadcast(false);
-                this.talentInst.scheduleDelayedExtinguish(dog);
+                if (this.dog.canUpdateClassicalAnim()) {
+                    this.dog.startShakingAndBroadcast(false);
+                    this.talentInst.scheduleDelayedExtinguish(dog);
+                }
             }
         }
 
