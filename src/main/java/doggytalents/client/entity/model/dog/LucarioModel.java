@@ -38,15 +38,15 @@ public class LucarioModel extends DogModel<Dog> {
             CubeListBuilder.create().texOffs(43, 20)
             .addBox(-1.0F, -2.5F, -2.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.4F)), PartPose.offset(1f, 2.5f, -2.5f));
 
-		PartDefinition leg1 = partdefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE), PartPose.offset(-2.5F, 16.0F, 7.0F));
+		PartDefinition leg1 = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE), PartPose.offset(-2.5F, 16.0F, 7.0F));
 
-		PartDefinition leg2 = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE), PartPose.offset(0.5F, 16.0F, 7.0F));
+		PartDefinition leg2 = partdefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE), PartPose.offset(0.5F, 16.0F, 7.0F));
 
-		PartDefinition leg3 = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE)
+		PartDefinition leg3 = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE)
 		.texOffs(38, 15).addBox(-0.25F, -0.5F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.5F))
 		.texOffs(43, 20).addBox(0.0F, 5.25F, -2.25F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.4F)), PartPose.offset(-2.5F, 16.0F, -4.0F));
 
-		PartDefinition leg4 = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE)
+		PartDefinition leg4 = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE)
 		.texOffs(38, 15).addBox(0.25F, -0.5F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.5F))
 		.texOffs(43, 20).addBox(0.0F, 5.25F, -2.25F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.4F)), PartPose.offset(0.5F, 16.0F, -4.0F));
 
