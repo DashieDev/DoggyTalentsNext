@@ -3,6 +3,9 @@ package doggytalents.client.entity.model.animation;
 import com.mojang.math.Vector3f;
 
 import doggytalents.ChopinLogger;
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
+import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
+import doggytalents.api.enu.forward_imitate.anim.Keyframe;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
@@ -11,9 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import net.minecraft.client.animation.AnimationChannel;
-import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
@@ -31,7 +31,7 @@ public class KeyframeAnimationsDelegate {
             var partOptional = model.searchForPartWithName(entry.getKey());
             if (partOptional.isEmpty()) continue;
             var part = partOptional.get();
-            model.resetPart(part, dog);
+            model.resetPart((DogModelPart)part, dog);
             var channelList = entry.getValue();
             for (var channel : channelList) {
                 var keyframes = channel.keyframes();
@@ -48,8 +48,8 @@ public class KeyframeAnimationsDelegate {
                 0.0F, 1.0F);
                 nextKeyframe.interpolation()
                     .apply(current_pos, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
-                channel.target().apply(part, current_pos);
-                model.adjustAnimatedPart(part, dog);
+                channel.target().apply((DogModelPart)part, current_pos);
+                model.adjustAnimatedPart((DogModelPart)part, dog);
                 //ChopinLogger.l("Anim : " + current_pos);
             }
         }

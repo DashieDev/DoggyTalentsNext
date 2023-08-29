@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
 import doggytalents.common.entity.anim.DogAnimation;
-import net.minecraft.client.animation.AnimationDefinition;
 
 public class DogAnimationRegistry {
 
