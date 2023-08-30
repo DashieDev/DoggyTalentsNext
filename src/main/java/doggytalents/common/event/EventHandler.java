@@ -6,6 +6,7 @@ import doggytalents.DoggyItems;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.WolfBegAtTreatGoal;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.anim.DogAnimation;
@@ -132,6 +133,8 @@ public class EventHandler {
         if (entity instanceof AbstractSkeleton) {
             AbstractSkeleton skeleton = (AbstractSkeleton) entity;
             skeleton.goalSelector.addGoal(3, new AvoidEntityGoal<>(skeleton, Dog.class, 6.0F, 1.0D, 1.2D)); // Same goal as in AbstractSkeletonEntity
+        } else if (entity instanceof Wolf 大神) {
+            大神.goalSelector.addGoal(9, new WolfBegAtTreatGoal(大神, 8));
         }
     }
 
