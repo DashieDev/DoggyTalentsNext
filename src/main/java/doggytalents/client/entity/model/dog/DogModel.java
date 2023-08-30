@@ -8,8 +8,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 
+import doggytalents.ChopinLogger;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
+import doggytalents.client.entity.model.animation.DogAnimationSequences;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
@@ -253,6 +255,15 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
     }
 
     public void setUpStandPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+
+        if (((int)Mth.floor(limbSwingAmount*100)) > 0) {
+            this.resetAllPose();
+            KeyframeAnimationsDelegate.animate(this, (Dog)dog, DogAnimationSequences.WALKING, (long)((1000f/20f)*(dog.tickCount + partialTickTime)), 1.0F, vecObj);
+            return;
+            //ChopinLogger.l(" " + limbSwing);
+        } else {
+            this.resetAllPose();
+        }
 
         this.body.setPos(0.0F, 14.0F, 2.0F);
         this.body.xRot = ((float) Math.PI / 2F);
