@@ -101,6 +101,7 @@ public class DogIncapacitatedMananger {
                 
                 for (var d : defeatedDogs) {
                     d.setDogHunger(this.dog.getMaxIncapacitatedHunger());
+                    incapacitatedExit();
 
                     d.removeAllEffects();
                     d.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
@@ -110,6 +111,7 @@ public class DogIncapacitatedMananger {
                     //d.level.broadcastEntityEvent(d, (byte)35);
                 }
                 this.dog.level.broadcastEntityEvent(this.dog, (byte)35);
+                
             }
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.CAKE && recoveryMultiplier < 2) {
