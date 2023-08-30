@@ -44,5 +44,9 @@ public class AnimationAction extends TriggerableAction {
     public boolean blockMove() {
         return false;
     }
+
+    public boolean blockLook() {
+        return false;
+    }
     
 }
