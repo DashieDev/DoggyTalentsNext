@@ -28,7 +28,7 @@ public class DTItemTagsProvider extends ItemTagsProvider {
 
     @Override
     public void addTags() {
-        createTag(DoggyTags.BEG_ITEMS_TAMED, DoggyItems.BREEDING_BONE, DoggyItems.THROW_STICK, DoggyItems.THROW_BONE, () -> Items.BONE);
+        createTag(DoggyTags.BEG_ITEMS_TAMED, DoggyItems.THROW_STICK, DoggyItems.THROW_BONE, () -> Items.BONE);
         appendToTag(DoggyTags.TREATS);
         createTag(DoggyTags.BEG_ITEMS_UNTAMED, DoggyItems.TRAINING_TREAT, () -> Items.BONE);
         createTag(DoggyTags.BREEDING_ITEMS, DoggyItems.BREEDING_BONE);
