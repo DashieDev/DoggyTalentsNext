@@ -3260,12 +3260,13 @@ public class Dog extends AbstractDog {
     protected void updateControlFlags() {
         boolean incapBlockedMove = this.isDefeated() && !this.incapacitatedMananger.canMove();
         boolean animBlockedMove = this.animAction != null && this.animAction.blockMove();
+        boolean animBlockedLook = this.animAction != null && this.animAction.blockLook();
         boolean notControlledByPlayer = !(this.getControllingPassenger() instanceof ServerPlayer);
         boolean notRidingBoat = !(this.getVehicle() instanceof Boat);
         this.goalSelector.setControlFlag(Goal.Flag.MOVE, 
             notControlledByPlayer && !incapBlockedMove && !animBlockedMove);
         this.goalSelector.setControlFlag(Goal.Flag.JUMP, notControlledByPlayer && notRidingBoat);
-        this.goalSelector.setControlFlag(Goal.Flag.LOOK, notControlledByPlayer);
+        this.goalSelector.setControlFlag(Goal.Flag.LOOK, notControlledByPlayer && !animBlockedLook);
     }
 
     @Override
