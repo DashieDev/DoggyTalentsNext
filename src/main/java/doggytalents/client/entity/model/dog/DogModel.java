@@ -214,6 +214,11 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         
         var pose = dog.getDogPose();
 
+        if (dog instanceof Dog d) {
+            var anim = d.getAnim();
+            if (anim != DogAnimation.NONE) return;
+        }
+    
         if (!pose.canShake)
         this.resetShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
 
@@ -516,10 +521,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         
         if (animState.isStarted()) {
             animState.updateTime(ageInTicks, anim.getSpeedModifier());
-            if (animState.getAccumulatedTime() > sequence.lengthInSeconds() * 1000) {
-                animState.stop();
-                return;
-            }
             KeyframeAnimationsDelegate.animate(this, dog, sequence, animState.getAccumulatedTime(), 1.0F, vecObj);
         }
     }
