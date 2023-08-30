@@ -49,5 +49,10 @@ public class DogDrownAction extends AnimationAction {
     public boolean blockMove() {
         return true;
     }
+
+    @Override
+    public boolean blockLook() {
+        return true;
+    }
     
 }
