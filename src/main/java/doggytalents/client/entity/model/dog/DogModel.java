@@ -210,14 +210,15 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         return LayerDefinition.create(var0, 64, 32);
     }
     @Override
-    public void prepareMobModel(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void prepareMobModel(T d, float limbSwing, float limbSwingAmount, float partialTickTime) {
         
+        if (!(d instanceof Dog dog))
+            return;
+
         var pose = dog.getDogPose();
 
-        if (dog instanceof Dog d) {
-            var anim = d.getAnim();
-            if (anim != DogAnimation.NONE) return;
-        }
+        var anim = dog.getAnim();
+        if (anim != DogAnimation.NONE) return;
     
         if (!pose.canShake)
         this.resetShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
@@ -262,7 +263,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
 
     }
 
-    public void setUpStandPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void setUpStandPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
         this.body.setPos(0.0F, 14.0F, 2.0F);
         this.body.xRot = ((float) Math.PI / 2F);
@@ -283,7 +284,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.legFrontLeft.yRot = 0.0F;
     }
 
-    public void setUpSitPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void setUpSitPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.head.setPos(-1.0F, 13.5F, -7.0F);
         this.mane.setPos(
                 -1f + MANE_SITTING_OFF[0],
@@ -321,7 +322,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
           this.legFrontLeft.setPos(0.51F, 17.0F, -4.0F);
      */
 
-    public void setupFaintPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void setupFaintPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.head.zRot += 90 * Mth.DEG_TO_RAD;
         this.head.x += 2;
         this.head.y += 7;
@@ -356,7 +357,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.mane.y += 5.5;
     }
 
-    public void setupFaintPose2(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void setupFaintPose2(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.head.offsetRotation(KeyframeAnimations.degreeVec(4.34f, -4.46f, 16.94f));
         this.head.offsetPos(KeyframeAnimations.posVec(0, -7f, 0.25f));
 
@@ -383,7 +384,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.tail.offsetPos(KeyframeAnimations.posVec(0.17f, -7.48f, -1.35f));
     }
 
-    public void setupLyingPose2(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void setupLyingPose2(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         
         this.head.offsetRotation(KeyframeAnimations.degreeVec(0f, 0f, 27.5f));
         this.head.offsetPos(KeyframeAnimations.posVec(0f, -6.75f, 2f));
@@ -404,7 +405,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.mane.offsetPos(KeyframeAnimations.posVec(0f, -6.5f, 2f));
     }
 
-    public void setupDrownPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void setupDrownPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.head.offsetRotation(KeyframeAnimations.degreeVec(35, 0, 0));
         this.head.offsetPos(KeyframeAnimations.posVec(0, -0.5f, 0.25f));
 
@@ -431,7 +432,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.tail.offsetPos(KeyframeAnimations.posVec(0, -0.5f, -2f));
     }
 
-    public void setupLyingPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void setupLyingPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
          this.head.setPos(-1, 19.5F, -7);
         this.body.setPos(0, 20, 2);
         this.body.xRot = (float) Math.PI / 2F;
@@ -471,7 +472,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         //         this.legFrontLeft.yRot = -(float)Math.PI / 10;
     }
 
-    public void translateShakingDog(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void translateShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.mane.zRot = dog.getShakeAngle(partialTickTime, -0.08F);
         this.body.zRot = dog.getShakeAngle(partialTickTime, -0.16F);
         this.realTail.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
@@ -479,7 +480,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.realTail3.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
     }
 
-    public void resetShakingDog(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void resetShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.mane.zRot = 0;
         this.body.zRot = 0;
         this.realTail.zRot = 0;
@@ -487,11 +488,11 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.realTail3.zRot = 0;
     }
 
-    public void translateBeggingDog(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void translateBeggingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.realHead.zRot = dog.getInterestedAngle(partialTickTime) + dog.getShakeAngle(partialTickTime, 0.0F);
     }
 
-    public void resetBeggingDog(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void resetBeggingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.realHead.zRot = 0;
     }
 

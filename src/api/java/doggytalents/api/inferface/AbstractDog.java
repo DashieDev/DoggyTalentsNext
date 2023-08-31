@@ -11,7 +11,6 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.feature.IDog;
-import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -157,9 +156,6 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public abstract void resetMoveControl();
 
     public abstract boolean canSwimUnderwater();
-
-    //Client
-    public abstract DogPose getDogPose();
 
     //Start : Re-adjust armor behaviour
     //All dog start hurting Amrmor in armorItems regradless of anything.
