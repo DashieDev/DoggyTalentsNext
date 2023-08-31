@@ -3385,7 +3385,6 @@ public class Dog extends AbstractDog {
 
     private DogPose activePose = DogPose.STAND;
 
-    @Override
     public DogPose getDogPose() {
         return activePose;
     }
