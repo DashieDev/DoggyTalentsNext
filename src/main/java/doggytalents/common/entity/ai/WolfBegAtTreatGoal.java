@@ -25,7 +25,7 @@ public class WolfBegAtTreatGoal extends Goal {
 
    public WolfBegAtTreatGoal(Wolf p_25063_, float p_25064_) {
       this.wolf = p_25063_;
-      this.level = p_25063_.level;
+      this.level = p_25063_.level();
       this.lookDistance = p_25064_;
       this.begTargeting = TargetingConditions.forNonCombat().range((double)p_25064_);
       this.setFlags(EnumSet.of(Goal.Flag.LOOK));
