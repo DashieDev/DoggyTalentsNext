@@ -64,6 +64,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
         public ForgeConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
         public ForgeConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
+        public ForgeConfigSpec.BooleanValue USE_PROVIDED_COPY_FOR_CLASSICAL;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -130,6 +131,12 @@ public class ConfigHandler {
                 .comment("(Which they should). This option should only be used as the last resort.")
                 .translation("doggytalents.config.client.block_third_party_nametag")
                 .define("block_third_party_nametag", false);
+            USE_PROVIDED_COPY_FOR_CLASSICAL = builder
+                .comment("By defeault, the CLASSICAL skin directly references the")
+                .comment("in-game vanilla wolf texture for rendering. Turning this on")
+                .comment("will allow a copy of the vanilla wolf texture provided by the mod to be used instead.")
+                .translation("doggytalents.config.client.use_provided_copy_for_classical")
+                .define("use_provided_copy_for_classical", false);
             builder.pop();
         }
 
