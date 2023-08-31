@@ -136,12 +136,7 @@ public class DogIncapacitatedMananger {
         } else if (stack.getItem() == Items.STICK) {
 
             if (this.dog.level.isClientSide) {
-                boolean useLegacyDogGui = 
-                    ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.USE_LEGACY_DOGGUI); 
-
-                if (!useLegacyDogGui) {
-                    DogCannotInteractWithScreen.open(this.dog);
-                }
+                DogCannotInteractWithScreen.open(this.dog);
             }
 
             return InteractionResult.SUCCESS;
