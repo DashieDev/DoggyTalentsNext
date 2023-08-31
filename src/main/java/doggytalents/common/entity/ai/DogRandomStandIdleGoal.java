@@ -6,20 +6,22 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.world.entity.ai.goal.Goal;
 
-public class DogRandomStrechGoal extends Goal {
+public class DogRandomStandIdleGoal extends Goal {
     
     private Dog dog;
     private int stopTick;
 
-    public DogRandomStrechGoal(Dog dog) {
+    private DogAnimation currentAnimation = DogAnimation.NONE;
+
+    public DogRandomStandIdleGoal(Dog dog) {
         this.dog = dog;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
     @Override
     public boolean canUse() {
-        if (dog.tickCount - stopTick < 25*20) return false;
         if (!dog.canDoIdileAnim()) return false;
+        if (dog.isLowHunger()) return false;
         return this.dog.getRandom().nextFloat() < 0.02;
     }
 
@@ -27,14 +29,16 @@ public class DogRandomStrechGoal extends Goal {
     public boolean canContinueToUse() {
         if (!this.dog.isOnGround())
             return false;
+        if (dog.isLowHunger()) return false;
         if (!dog.canContinueDoIdileAnim()) return false;
         return this.dog.tickCount < this.stopTick;
     }
 
     @Override
     public void start() {
-        this.stopTick = dog.tickCount + DogAnimation.STRETCH.getLengthTicks();
-        this.dog.setAnim(DogAnimation.STRETCH);
+        this.currentAnimation = getIdleAnim();
+        this.stopTick = dog.tickCount + currentAnimation.getLengthTicks();
+        this.dog.setAnim(currentAnimation);
     }
 
     @Override
@@ -43,8 +47,20 @@ public class DogRandomStrechGoal extends Goal {
 
     @Override
     public void stop() {
-        if (dog.getAnim() == DogAnimation.STRETCH)
+        if (dog.getAnim() == currentAnimation)
             dog.setAnim(DogAnimation.NONE);
+    }
+
+    private DogAnimation getIdleAnim() {
+        float r = dog.getRandom().nextFloat();
+        if (r <= 0.10f) {
+            return DogAnimation.DIG;
+        } else if (r <= 0.35f) {
+            return DogAnimation.STRETCH;
+        } else {
+            return DogAnimation.STAND_IDLE_2;
+        }
+
     }
 
 }
