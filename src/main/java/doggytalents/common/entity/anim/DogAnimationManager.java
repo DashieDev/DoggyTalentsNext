@@ -42,6 +42,7 @@ public class DogAnimationManager {
                 this.dog.setAnim(DogAnimation.NONE);
             }
             this.dog.setXRot(0);
+            this.dog.xRotO = 0;
             this.dog.yBodyRot = this.dog.yHeadRot;
         }
         
