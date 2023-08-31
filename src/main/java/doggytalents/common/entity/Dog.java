@@ -315,7 +315,7 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogBreedGoal(this, 1.0D));
         ++p;
         this.goalSelector.addGoal(p, new DogRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(p, new DogRandomStrechGoal(this));
+        this.goalSelector.addGoal(p, new DogRandomStandIdleGoal(this));
         ++p;
         this.goalSelector.addGoal(p, new DogBegGoal(this, 8.0F));
         ++p;
