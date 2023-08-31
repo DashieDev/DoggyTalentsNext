@@ -63,6 +63,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
         public ForgeConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
         public ForgeConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
+        public ForgeConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -122,6 +123,13 @@ public class ConfigHandler {
                 .comment("Render dogs' name whose owner is not you with different color.")
                 .translation("doggytalents.config.client.render_diffowner_name_different")
                 .define("render_diffowner_name_different", true);
+            BLOCK_THIRD_PARTY_NAMETAG = builder
+                .comment("Attempt to block third parties from rendering overlays which may conflict")
+                .comment("with DT's built-in tag. It is recommended that this be achieved via the target third-party's")
+                .comment("configurations if they have the option to disable nametag overlay for certain mobs")
+                .comment("(Which they should). This option should only be used as the last resort.")
+                .translation("doggytalents.config.client.block_third_party_nametag")
+                .define("block_third_party_nametag", false);
             builder.pop();
         }
 
