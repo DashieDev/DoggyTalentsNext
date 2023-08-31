@@ -1,8 +1,9 @@
 package doggytalents.client.entity.render;
 
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
 
 import doggytalents.ChopinLogger;
 import doggytalents.client.ClientSetup;
@@ -302,9 +303,9 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
 
      public void MobRenderer_render(Dog p_115455_, float p_115456_, float p_115457_, PoseStack p_115458_, MultiBufferSource p_115459_, int p_115460_) {
         LivingEntityRenderer_render(p_115455_, p_115456_, p_115457_, p_115458_, p_115459_, p_115460_);
-        var entity = p_115455_.getLeashHolder();
+        Entity entity = p_115455_.getLeashHolder();
         if (entity != null) {
-           this.MobRenderer_renderLeash(p_115455_, p_115457_, p_115458_, p_115459_, entity);
+            MobRenderer_renderLeash(p_115455_, p_115457_, p_115458_, p_115459_, entity);
         }
      }
 
@@ -312,7 +313,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         p_115464_.pushPose();
         Vec3 vec3 = p_115466_.getRopeHoldPosition(p_115463_);
         double d0 = (double)(Mth.lerp(p_115463_, p_115462_.yBodyRotO, p_115462_.yBodyRot) * ((float)Math.PI / 180F)) + (Math.PI / 2D);
-        Vec3 vec31 = p_115462_.getLeashOffset();
+        Vec3 vec31 = p_115462_.getLeashOffset(p_115463_);
         double d1 = Math.cos(d0) * vec31.z + Math.sin(d0) * vec31.x;
         double d2 = Math.sin(d0) * vec31.z - Math.cos(d0) * vec31.x;
         double d3 = Mth.lerp((double)p_115463_, p_115462_.xo, p_115462_.getX()) + d1;
@@ -325,28 +326,28 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         float f3 = 0.025F;
         VertexConsumer vertexconsumer = p_115465_.getBuffer(RenderType.leash());
         Matrix4f matrix4f = p_115464_.last().pose();
-        float f4 = Mth.fastInvSqrt(f * f + f2 * f2) * 0.025F / 2.0F;
+        float f4 = Mth.invSqrt(f * f + f2 * f2) * 0.025F / 2.0F;
         float f5 = f2 * f4;
         float f6 = f * f4;
-        BlockPos blockpos = new BlockPos(p_115462_.getEyePosition(p_115463_));
-        BlockPos blockpos1 = new BlockPos(p_115466_.getEyePosition(p_115463_));
+        BlockPos blockpos = BlockPos.containing(p_115462_.getEyePosition(p_115463_));
+        BlockPos blockpos1 = BlockPos.containing(p_115466_.getEyePosition(p_115463_));
         int i = this.getBlockLightLevel(p_115462_, blockpos);
         int j = EntityRenderer_getBlockLightLevel(p_115466_, blockpos1);
-        int k = p_115462_.level.getBrightness(LightLayer.SKY, blockpos);
-        int l = p_115462_.level.getBrightness(LightLayer.SKY, blockpos1);
-
+        int k = p_115462_.level().getBrightness(LightLayer.SKY, blockpos);
+        int l = p_115462_.level().getBrightness(LightLayer.SKY, blockpos1);
+  
         for(int i1 = 0; i1 <= 24; ++i1) {
-            MobRenderer_addVertexPair(vertexconsumer, matrix4f, f, f1, f2, i, j, k, l, 0.025F, 0.025F, f5, f6, i1, false);
+           MobRenderer_addVertexPair(vertexconsumer, matrix4f, f, f1, f2, i, j, k, l, 0.025F, 0.025F, f5, f6, i1, false);
         }
-
+  
         for(int j1 = 24; j1 >= 0; --j1) {
-            MobRenderer_addVertexPair(vertexconsumer, matrix4f, f, f1, f2, i, j, k, l, 0.025F, 0.0F, f5, f6, j1, true);
+           MobRenderer_addVertexPair(vertexconsumer, matrix4f, f, f1, f2, i, j, k, l, 0.025F, 0.0F, f5, f6, j1, true);
         }
-
+  
         p_115464_.popPose();
     }
 
-    private static void MobRenderer_addVertexPair(VertexConsumer p_174308_, Matrix4f p_174309_, float p_174310_, float p_174311_, float p_174312_, int p_174313_, int p_174314_, int p_174315_, int p_174316_, float p_174317_, float p_174318_, float p_174319_, float p_174320_, int p_174321_, boolean p_174322_) {
+    private static void MobRenderer_addVertexPair(VertexConsumer p_174308_, Matrix4f p_254405_, float p_174310_, float p_174311_, float p_174312_, int p_174313_, int p_174314_, int p_174315_, int p_174316_, float p_174317_, float p_174318_, float p_174319_, float p_174320_, int p_174321_, boolean p_174322_) {
         float f = (float)p_174321_ / 24.0F;
         int i = (int)Mth.lerp(f, (float)p_174313_, (float)p_174314_);
         int j = (int)Mth.lerp(f, (float)p_174315_, (float)p_174316_);
@@ -358,19 +359,19 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         float f5 = p_174310_ * f;
         float f6 = p_174311_ > 0.0F ? p_174311_ * f * f : p_174311_ - p_174311_ * (1.0F - f) * (1.0F - f);
         float f7 = p_174312_ * f;
-        p_174308_.vertex(p_174309_, f5 - p_174319_, f6 + p_174318_, f7 + p_174320_).color(f2, f3, f4, 1.0F).uv2(k).endVertex();
-        p_174308_.vertex(p_174309_, f5 + p_174319_, f6 + p_174317_ - p_174318_, f7 - p_174320_).color(f2, f3, f4, 1.0F).uv2(k).endVertex();
-    }
+        p_174308_.vertex(p_254405_, f5 - p_174319_, f6 + p_174318_, f7 + p_174320_).color(f2, f3, f4, 1.0F).uv2(k).endVertex();
+        p_174308_.vertex(p_254405_, f5 + p_174319_, f6 + p_174317_ - p_174318_, f7 - p_174320_).color(f2, f3, f4, 1.0F).uv2(k).endVertex();
+     }
 
     private static int EntityRenderer_getBlockLightLevel(Entity p_114496_, BlockPos p_114497_) {
-        return p_114496_.isOnFire() ? 15 : p_114496_.level.getBrightness(LightLayer.BLOCK, p_114497_);
+        return p_114496_.isOnFire() ? 15 : p_114496_.level().getBrightness(LightLayer.BLOCK, p_114497_);
     }
 
     public void LivingEntityRenderer_render(Dog p_115308_, float p_115309_, float p_115310_, PoseStack p_115311_, MultiBufferSource p_115312_, int p_115313_) {
-       // if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Pre<Dog, DogModel<Dog>>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_))) return;
+        //if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Pre<T, M>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_))) return;
         p_115311_.pushPose();
         this.model.attackTime = this.getAttackAnim(p_115308_, p_115310_);
-
+  
         boolean shouldSit = p_115308_.isPassenger() && (p_115308_.getVehicle() != null && p_115308_.getVehicle().shouldRiderSit());
         this.model.riding = shouldSit;
         this.model.young = p_115308_.isBaby();
@@ -378,59 +379,59 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         float f1 = Mth.rotLerp(p_115310_, p_115308_.yHeadRotO, p_115308_.yHeadRot);
         float f2 = f1 - f;
         if (shouldSit && p_115308_.getVehicle() instanceof LivingEntity) {
-            LivingEntity livingentity = (LivingEntity)p_115308_.getVehicle();
-            f = Mth.rotLerp(p_115310_, livingentity.yBodyRotO, livingentity.yBodyRot);
-            f2 = f1 - f;
-            float f3 = Mth.wrapDegrees(f2);
-            if (f3 < -85.0F) {
-                f3 = -85.0F;
-            }
-
-            if (f3 >= 85.0F) {
-                f3 = 85.0F;
-            }
-
-            f = f1 - f3;
-            if (f3 * f3 > 2500.0F) {
-                f += f3 * 0.2F;
-            }
-
-            f2 = f1 - f;
+           LivingEntity livingentity = (LivingEntity)p_115308_.getVehicle();
+           f = Mth.rotLerp(p_115310_, livingentity.yBodyRotO, livingentity.yBodyRot);
+           f2 = f1 - f;
+           float f3 = Mth.wrapDegrees(f2);
+           if (f3 < -85.0F) {
+              f3 = -85.0F;
+           }
+  
+           if (f3 >= 85.0F) {
+              f3 = 85.0F;
+           }
+  
+           f = f1 - f3;
+           if (f3 * f3 > 2500.0F) {
+              f += f3 * 0.2F;
+           }
+  
+           f2 = f1 - f;
         }
-
+  
         float f6 = Mth.lerp(p_115310_, p_115308_.xRotO, p_115308_.getXRot());
-        // if (isEntityUpsideDown(p_115308_)) {
-        //     f6 *= -1.0F;
-        //     f2 *= -1.0F;
-        // }
-
+        if (isEntityUpsideDown(p_115308_)) {
+           f6 *= -1.0F;
+           f2 *= -1.0F;
+        }
+  
         // if (p_115308_.hasPose(Pose.SLEEPING)) {
-        //     Direction direction = p_115308_.getBedOrientation();
-        //     if (direction != null) {
-        //         float f4 = p_115308_.getEyeHeight(Pose.STANDING) - 0.1F;
-        //         p_115311_.translate((double)((float)(-direction.getStepX()) * f4), 0.0D, (double)((float)(-direction.getStepZ()) * f4));
-        //     }
+        //    Direction direction = p_115308_.getBedOrientation();
+        //    if (direction != null) {
+        //       float f4 = p_115308_.getEyeHeight(Pose.STANDING) - 0.1F;
+        //       p_115311_.translate((float)(-direction.getStepX()) * f4, 0.0F, (float)(-direction.getStepZ()) * f4);
+        //    }
         // }
-
+  
         float f7 = this.getBob(p_115308_, p_115310_);
         this.setupRotations(p_115308_, p_115311_, f7, f, p_115310_);
         p_115311_.scale(-1.0F, -1.0F, 1.0F);
         this.scale(p_115308_, p_115311_, p_115310_);
-        p_115311_.translate(0.0D, (double)-1.501F, 0.0D);
+        p_115311_.translate(0.0F, -1.501F, 0.0F);
         float f8 = 0.0F;
         float f5 = 0.0F;
         if (!shouldSit && p_115308_.isAlive()) {
-            f8 = Mth.lerp(p_115310_, p_115308_.animationSpeedOld, p_115308_.animationSpeed);
-            f5 = p_115308_.animationPosition - p_115308_.animationSpeed * (1.0F - p_115310_);
-            if (p_115308_.isBaby()) {
-                f5 *= 3.0F;
-            }
-
-            if (f8 > 1.0F) {
-                f8 = 1.0F;
-            }
+           f8 = p_115308_.walkAnimation.speed(p_115310_);
+           f5 = p_115308_.walkAnimation.position(p_115310_);
+           if (p_115308_.isBaby()) {
+              f5 *= 3.0F;
+           }
+  
+           if (f8 > 1.0F) {
+              f8 = 1.0F;
+           }
         }
-
+  
         this.model.prepareMobModel(p_115308_, f5, f8, p_115310_);
         this.model.setupAnim(p_115308_, f5, f8, f7, f2, f6);
         Minecraft minecraft = Minecraft.getInstance();
@@ -439,24 +440,22 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         boolean flag2 = minecraft.shouldEntityAppearGlowing(p_115308_);
         RenderType rendertype = this.getRenderType(p_115308_, flag, flag1, flag2);
         if (rendertype != null) {
-            VertexConsumer vertexconsumer = p_115312_.getBuffer(rendertype);
-            int i = getOverlayCoords(p_115308_, this.getWhiteOverlayProgress(p_115308_, p_115310_));
-            this.model.renderToBuffer(p_115311_, vertexconsumer, p_115313_, i, 1.0F, 1.0F, 1.0F, flag1 ? 0.15F : 1.0F);
+           VertexConsumer vertexconsumer = p_115312_.getBuffer(rendertype);
+           int i = getOverlayCoords(p_115308_, this.getWhiteOverlayProgress(p_115308_, p_115310_));
+           this.model.renderToBuffer(p_115311_, vertexconsumer, p_115313_, i, 1.0F, 1.0F, 1.0F, flag1 ? 0.15F : 1.0F);
         }
-
+  
         if (!p_115308_.isSpectator()) {
-            for(var renderlayer : this.layers) {
-                renderlayer.render(p_115311_, p_115312_, p_115313_, p_115308_, f5, f8, p_115310_, f7, f2, f6);
-            }
+           for(var renderlayer : this.layers) {
+              renderlayer.render(p_115311_, p_115312_, p_115313_, p_115308_, f5, f8, p_115310_, f7, f2, f6);
+           }
         }
-
+  
         p_115311_.popPose();
-
         if (this.shouldShowName(p_115308_)) {
             this.renderNameTag(p_115308_, p_115308_.getDisplayName(), p_115311_, p_115312_, p_115313_);
          }
-
-        //net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Post<Dog, DogModel<Dog>>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_));
+        //net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Post<T, M>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_));
     }
 
 
