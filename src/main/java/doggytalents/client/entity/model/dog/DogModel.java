@@ -3,10 +3,12 @@ package doggytalents.client.entity.model.dog;
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.joml.Vector3f;
+
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
@@ -640,15 +642,15 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
             p_102034_.pushPose();
             p_102034_.translate((double)(0 / 16.0F), (double)(15 / 16.0F), (double)(0 / 16.0F));
             if (root.zRot != 0.0F) {
-                p_102034_.mulPose(Vector3f.ZP.rotation(root.zRot));
+                p_102034_.mulPose(Axis.ZP.rotation(root.zRot));
             }
 
             if (root.yRot != 0.0F) {
-                p_102034_.mulPose(Vector3f.YP.rotation(root.yRot));
+                p_102034_.mulPose(Axis.YP.rotation(root.yRot));
             }
 
             if (root.xRot != 0.0F) {
-                p_102034_.mulPose(Vector3f.XP.rotation(root.xRot));
+                p_102034_.mulPose(Axis.XP.rotation(root.xRot));
             }
             float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
             root.xRot = 0; root.yRot = 0; root.zRot = 0;

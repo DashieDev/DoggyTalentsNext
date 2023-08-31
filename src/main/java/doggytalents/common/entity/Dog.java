@@ -461,9 +461,9 @@ public class Dog extends AbstractDog {
                     if (this.wetSource == null) {
                         this.wetSource = WetSource.of(inWater, inBubbleColumn, inRain);
                     }
-                    if (this.isShaking && !this.level.isClientSide) {
+                    if (this.isShaking && !this.level().isClientSide) {
                         this.finishShaking();
-                        this.level.broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING);
+                        this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING);
                     }
                 } else if ((this.wetSource != null || this.isShaking) && this.isShaking) {
                     if (this.timeWolfIsShaking == 0.0F) {
@@ -496,13 +496,13 @@ public class Dog extends AbstractDog {
                             if (this.shakeFire) {
                                 byte r = (byte) this.getRandom().nextInt(3);
                                 if (r==0)
-                                    this.level.addParticle(ParticleTypes.LAVA, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                                    this.level().addParticle(ParticleTypes.LAVA, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                                 else if (r==1)
-                                    this.level.addParticle(ParticleTypes.FLAME, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                                    this.level().addParticle(ParticleTypes.FLAME, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                                 else if (r==2)
-                                    this.level.addParticle(ParticleTypes.SMOKE, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                                    this.level().addParticle(ParticleTypes.SMOKE, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                             } else
-                            this.level.addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                            this.level().addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                         }
                     }
 
@@ -533,11 +533,11 @@ public class Dog extends AbstractDog {
         }
 
         // On server side
-        if (this.isAlive() && !this.level.isClientSide) {
+        if (this.isAlive() && !this.level().isClientSide) {
 
             // Every 2 seconds
             if (this.tickCount % 40 == 0) {
-                DogLocationStorage.get(this.level).getOrCreateData(this).update(this);
+                DogLocationStorage.get(this.level()).getOrCreateData(this).update(this);
 
 
                 var owner = this.getOwner();
@@ -549,7 +549,7 @@ public class Dog extends AbstractDog {
         
         if (this.isAlive()) {
             this.animationManager.tick();
-            if (!this.level.isClientSide)
+            if (!this.level().isClientSide)
                 this.tickAnimAction();
         }
 
@@ -587,7 +587,7 @@ public class Dog extends AbstractDog {
         if (!this.level().isClientSide && this.delayedActionStart > 0)
             --this.delayedActionStart; 
 
-        if (!this.level.isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.isOnGround() && this.canUpdateClassicalAnim()) {
+        if (!this.level().isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.onGround() && this.canUpdateClassicalAnim()) {
             this.startShakingAndBroadcast(false);
         }
 
@@ -862,13 +862,13 @@ public class Dog extends AbstractDog {
         int sit_interval = this.tickCount - this.lastOrderedToSitTick;
         float r = this.getRandom().nextFloat();
         if ((!actionresulttype.consumesAction() || this.isBaby()) && this.canInteract(player) && !this.isProtesting()) {
-            if (!this.level.isClientSide && this.isOrderedToSit() 
+            if (!this.level().isClientSide && this.isOrderedToSit() 
                 && checkRandomBackflip(r, sit_interval)
-                && this.level.getBlockState(this.blockPosition().above()).isAir()) {
+                && this.level().getBlockState(this.blockPosition().above()).isAir()) {
                 this.setStandAnim(DogAnimation.NONE);
                 this.triggerAnimationAction(new DogBackFlipAction(this));
             }
-            if (!this.level.isClientSide && !this.isOrderedToSit()) {
+            if (!this.level().isClientSide && !this.isOrderedToSit()) {
                 this.lastOrderedToSitTick = this.tickCount;
             }
             this.setOrderedToSit(!this.isOrderedToSit());
@@ -1225,7 +1225,7 @@ public class Dog extends AbstractDog {
             if (flag) return false;
         }
         
-        if (!this.level.isClientSide)
+        if (!this.level().isClientSide)
         if (this.isInSittingPose() || amount > 6.0f) {
             this.setAnim(DogAnimation.HURT_1);
         } else if (source.getEntity() != null) {
@@ -3224,7 +3224,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public void setInSittingPose(boolean sit) {
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             boolean sit0 = this.isInSittingPose();
             if (sit0 != sit) {
                 var anim = sit ? this.getSitAnim() : this.getStandAnim();

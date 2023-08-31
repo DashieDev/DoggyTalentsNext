@@ -1,6 +1,5 @@
 package doggytalents.client.entity.model.animation;
 
-import com.mojang.math.Vector3f;
 
 import doggytalents.ChopinLogger;
 import doggytalents.api.inferface.AbstractDog;
@@ -10,6 +9,8 @@ import doggytalents.common.entity.Dog;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.joml.Vector3f;
 
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;

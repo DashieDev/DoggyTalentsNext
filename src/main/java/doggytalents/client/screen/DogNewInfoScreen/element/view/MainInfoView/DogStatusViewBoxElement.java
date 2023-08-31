@@ -36,7 +36,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
     @Override
     public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
-        drawDogLevelKanji(stack, mouseX, mouseY, partialTicks);
+        drawDogLevelKanji(graphics, mouseX, mouseY, partialTicks);
 
         int e_mX = this.getRealX() + this.getSizeX()/2; 
         int e_mY = this.getRealY() + this.getSizeY()/2; 
@@ -47,19 +47,19 @@ public class DogStatusViewBoxElement extends AbstractElement {
 
         var points = this.dog.getSpendablePoints();
 
-        this.font.draw(stack, "Pts: " + points, this.getRealX(), this.getRealY(), 0xffffffff);
+        graphics.drawString(font, "Pts: " + points, this.getRealX(), this.getRealY(), 0xffffffff);
 
         
     }
 
-    private void drawDogLevelKanji(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    private void drawDogLevelKanji(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
+        //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = 128;
-        blit(stack, this.getRealX() + this.getSizeX()/2 - imgeSize/2, 
+        graphics.blit(getKanjiDogLevel(this.dog), this.getRealX() + this.getSizeX()/2 - imgeSize/2, 
             this.getRealY() + this.getSizeY()/2 - imgeSize/2, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         RenderSystem.disableBlend();
     }

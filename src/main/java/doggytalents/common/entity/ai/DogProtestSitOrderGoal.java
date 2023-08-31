@@ -24,7 +24,7 @@ public class DogProtestSitOrderGoal extends Goal {
     public boolean canUse() {
         updateDetectSpamSit();
 
-        if (!this.dog.isOnGround()) return false;
+        if (!this.dog.onGround()) return false;
         if (this.dog.isVehicle()) return false;
 
         if (spamTime >= spamTimeMax) {

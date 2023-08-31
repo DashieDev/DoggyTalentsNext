@@ -3,7 +3,6 @@ package doggytalents.client.entity.model.animation;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
-import com.mojang.math.Vector3f;
 
 import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.client.animation.AnimationChannel;

@@ -27,7 +27,7 @@ public class DogRandomStandIdleGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (!this.dog.isOnGround())
+        if (!this.dog.onGround())
             return false;
         if (dog.isLowHunger()) return false;
         if (!dog.canContinueDoIdileAnim()) return false;
