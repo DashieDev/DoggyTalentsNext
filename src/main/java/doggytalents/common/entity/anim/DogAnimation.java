@@ -18,7 +18,9 @@ public enum DogAnimation {
     FAINT_STAND_1(11, 80),
     FAINT_STAND_2(12, 80),
     BACKFLIP(13, 20),
-    PROTEST(14, 120);
+    PROTEST(14, 120),
+    STAND_IDLE_2(15, 80),
+    DIG(16, 120);
 
     private final int id;
     private final int lengthTicks;
