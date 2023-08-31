@@ -241,6 +241,8 @@ public class Dog extends AbstractDog {
     protected boolean isZeroHunger;
     protected int hungerDamageTick;
 
+    public int lastOrderedToSitTick;
+
     private static final UUID HUNGER_MOVEMENT = UUID.fromString("50671f49-1dfd-4397-242b-78bb6b178115");
 
     public Dog(EntityType<? extends Dog> type, Level worldIn) {
@@ -287,6 +289,7 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogGoAwayFromFireGoal(this));
         ++p;
         this.goalSelector.addGoal(p, new DogSitWhenOrderedGoal(this));
+        this.goalSelector.addGoal(p, new DogProtestSitOrderGoal(this));
         ++p;
         this.goalSelector.addGoal(p, new DogHungryGoal(this, 1.0f, 2.0f));
         ++p;
@@ -883,6 +886,11 @@ public class Dog extends AbstractDog {
     }
 
     
+
+    private boolean isProtesting = false;
+
+    public boolean isProtesting() { return isProtesting; }
+    public void setProtesting(boolean p) { this.isProtesting = p;  }
 
     private void displayToastIfNoPermission(Player player) {
         if (this.canInteract(player)) return;
