@@ -8,13 +8,21 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.DogModelRegistry.DogModelHolder;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.resources.ResourceLocation;
 
 public class DogSkin {
 
-    public static final DogSkin CLASSICAL = new DogSkin(Resources.ENTITY_WOLF).setName("Classical");
+    public static final DogSkin CLASSICAL = (new DogSkin(Resources.ENTITY_WOLF){
+        @Override
+        public ResourceLocation getPath() {
+            if (ConfigHandler.CLIENT.USE_PROVIDED_COPY_FOR_CLASSICAL.get())
+                return Resources.DOG_CLASSICAL;
+            return super.getPath();
+        }
+    }).setName("Classical");
     public static final DogSkin MISSING = new DogSkin(Resources.ENTITY_WOLF).setName("<Missing>");
 
     private String name = "";
