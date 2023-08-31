@@ -868,14 +868,18 @@ public class Dog extends AbstractDog {
         }
 
         InteractionResult actionresulttype = super.mobInteract(player, hand);
-        if ((!actionresulttype.consumesAction() || this.isBaby()) && this.canInteract(player)) {
+        int sit_interval = this.tickCount - this.lastOrderedToSitTick;
+        float r = this.getRandom().nextFloat();
+        if ((!actionresulttype.consumesAction() || this.isBaby()) && this.canInteract(player) && !this.isProtesting()) {
             if (!this.level.isClientSide && this.isOrderedToSit() 
-                && this.getRandom().nextFloat() <= 0.3
+                && checkRandomBackflip(r, sit_interval)
                 && this.level.getBlockState(this.blockPosition().above()).isAir()) {
-
                 this.setStandAnim(DogAnimation.NONE);
                 this.triggerAnimationAction(new DogBackFlipAction(this));
-            } 
+            }
+            if (!this.level.isClientSide && !this.isOrderedToSit()) {
+                this.lastOrderedToSitTick = this.tickCount;
+            }
             this.setOrderedToSit(!this.isOrderedToSit());
             this.jumping = false;
             this.navigation.stop();
@@ -888,7 +892,13 @@ public class Dog extends AbstractDog {
         return actionresulttype;
     }
 
-    
+    private boolean checkRandomBackflip(float r, int sit_interval) {
+        if (sit_interval <= 30) 
+            return false;
+        if (sit_interval >= 1200)
+            return r <= 0.7f;
+        return r <= 0.3f;
+    }
 
     private boolean isProtesting = false;
 
