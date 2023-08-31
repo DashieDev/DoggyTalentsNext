@@ -14,7 +14,6 @@ import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.api.registry.*;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.skin.DogSkin;
-import doggytalents.client.screen.DogInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.common.artifacts.DoggyArtifact;
@@ -797,18 +796,10 @@ public class Dog extends AbstractDog {
             if (stack.getItem() == Items.STICK) {
 
                 if (this.level.isClientSide) {
-                    boolean useLegacyDogGui = 
-                        ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.USE_LEGACY_DOGGUI); 
                     if (this.canInteract(player)) {
-                        if (!useLegacyDogGui) {
-                            DogNewInfoScreen.open(this);
-                        } else {
-                            DogInfoScreen.open(this);
-                        }
+                        DogNewInfoScreen.open(this);
                     } else {
-                        if (!useLegacyDogGui) {
-                            DogCannotInteractWithScreen.open(this);
-                        }
+                        DogCannotInteractWithScreen.open(this);
                     }
                 }
 

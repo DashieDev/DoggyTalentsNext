@@ -59,7 +59,6 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RENDER_WINGS;
         public ForgeConfigSpec.BooleanValue RENDER_INCAPACITATED_TEXTURE;
         public ForgeConfigSpec.BooleanValue RENDER_HEALTH_IN_NAME;
-        public ForgeConfigSpec.BooleanValue USE_LEGACY_DOGGUI;
         public ForgeConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
         public ForgeConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
         public ForgeConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
@@ -105,10 +104,6 @@ public class ConfigHandler {
                 .comment("and the length of the part is based on the health percentage the dog has left")
                 .translation("doggytalents.config.client.render_health_in_name")
                 .define("render_health_in_name", true);
-            USE_LEGACY_DOGGUI = builder
-                .comment("Turn this on to use the old Dog GUI instead.")
-                .translation("doggytalents.config.client.use_legacy_doggui")
-                .define("use_legacy_doggui", false);
             DOG_INV_BUTTON_IN_INV = builder
                 .comment("Render a universal dog inventory access button in your inventory gui.")
                 .comment("If this is turned off, you can still access the button via the dog's")
