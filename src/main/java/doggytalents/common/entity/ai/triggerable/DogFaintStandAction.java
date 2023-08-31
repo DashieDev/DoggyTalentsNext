@@ -12,7 +12,7 @@ public class DogFaintStandAction extends AnimationAction {
 
     @Override
     public boolean validateAnim() {
-        if (!this.dog.isOnGround()) {
+        if (!this.dog.onGround()) {
             return false;
         }
         return super.validateAnim();

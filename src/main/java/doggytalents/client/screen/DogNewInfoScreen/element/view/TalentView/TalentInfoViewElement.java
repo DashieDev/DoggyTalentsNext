@@ -218,7 +218,7 @@ public class TalentInfoViewElement extends AbstractElement {
         //Kanji
         startX = this.getRealX() + PADDING_LEFT;
         pY = this.getRealY() + this.getSizeY() - 60;
-        this.drawDogLevelKanji(stack, startX, pY, 50);
+        this.drawDogLevelKanji(graphics, startX, pY, 50);
 
         //Point left:
         startX = this.getRealX() + PADDING_LEFT + 40;
@@ -243,14 +243,14 @@ public class TalentInfoViewElement extends AbstractElement {
         
     }
 
-    private void drawDogLevelKanji(PoseStack stack, int x, int y, int size) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    private void drawDogLevelKanji(GuiGraphics graphics, int x, int y, int size) {
+        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, DogStatusViewBoxElement.getKanjiDogLevel(this.dog));
+        //RenderSystem.setShaderTexture(0, DogStatusViewBoxElement.getKanjiDogLevel(this.dog));
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = size;
-        blit(stack, x, 
+        graphics.blit(DogStatusViewBoxElement.getKanjiDogLevel(this.dog), x, 
             y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         RenderSystem.disableBlend();
     }

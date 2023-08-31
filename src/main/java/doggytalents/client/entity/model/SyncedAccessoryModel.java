@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.dog.DogModel;
@@ -58,15 +58,15 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
         stack.pushPose();
         stack.translate((double)(0 / 16.0F), (double)(15 / 16.0F), (double)(0 / 16.0F));
         if (root.zRot != 0.0F) {
-            stack.mulPose(Vector3f.ZP.rotation(root.zRot));
+            stack.mulPose(Axis.ZP.rotation(root.zRot));
         }
 
         if (root.yRot != 0.0F) {
-            stack.mulPose(Vector3f.YP.rotation(root.yRot));
+            stack.mulPose(Axis.YP.rotation(root.yRot));
         }
 
         if (root.xRot != 0.0F) {
-            stack.mulPose(Vector3f.XP.rotation(root.xRot));
+            stack.mulPose(Axis.XP.rotation(root.xRot));
         }
         float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
         root.xRot = 0; root.yRot = 0; root.zRot = 0;

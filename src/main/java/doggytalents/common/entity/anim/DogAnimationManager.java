@@ -29,7 +29,7 @@ public class DogAnimationManager {
         } else {
             started = false;
             animationState.stop();
-            if (dog.level.isClientSide)
+            if (dog.level().isClientSide)
                 this.needRefresh = true;
         }
     }
