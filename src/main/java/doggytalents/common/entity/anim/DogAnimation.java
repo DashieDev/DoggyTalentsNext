@@ -17,7 +17,9 @@ public enum DogAnimation {
     HURT_2(10, 10, 1.25f),
     FAINT_STAND_1(11, 80),
     FAINT_STAND_2(12, 80),
-    BACKFLIP(13, 20);
+    BACKFLIP(13, 20),
+    RUNNING(14, 10),
+    BREAK_FROM_RUNNING(15, 40);
 
     private final int id;
     private final int lengthTicks;

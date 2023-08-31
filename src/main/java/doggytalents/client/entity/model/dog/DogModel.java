@@ -256,15 +256,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
 
     public void setUpStandPose(T dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
-        if (((int)Mth.floor(limbSwingAmount*100)) > 0) {
-            this.resetAllPose();
-            KeyframeAnimationsDelegate.animate(this, (Dog)dog, DogAnimationSequences.WALKING, (long)((1000f/20f)*(dog.tickCount + partialTickTime)), 1.0F, vecObj);
-            return;
-            //ChopinLogger.l(" " + limbSwing);
-        } else {
-            this.resetAllPose();
-        }
-
         this.body.setPos(0.0F, 14.0F, 2.0F);
         this.body.xRot = ((float) Math.PI / 2F);
         this.mane.setPos(-1.0F, 14.0F, -3.0F);
@@ -522,10 +513,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         
         if (animState.isStarted()) {
             animState.updateTime(ageInTicks, anim.getSpeedModifier());
-            if (animState.getAccumulatedTime() > sequence.lengthInSeconds() * 1000) {
-                animState.stop();
-                return;
-            }
             KeyframeAnimationsDelegate.animate(this, dog, sequence, animState.getAccumulatedTime(), 1.0F, vecObj);
         }
     }
