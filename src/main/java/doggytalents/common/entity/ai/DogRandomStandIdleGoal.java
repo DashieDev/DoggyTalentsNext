@@ -22,6 +22,7 @@ public class DogRandomStandIdleGoal extends Goal {
     public boolean canUse() {
         if (!dog.canDoIdileAnim()) return false;
         if (dog.isLowHunger()) return false;
+        if (!this.dog.isOnGround()) return false;
         return this.dog.getRandom().nextFloat() < 0.02;
     }
 
