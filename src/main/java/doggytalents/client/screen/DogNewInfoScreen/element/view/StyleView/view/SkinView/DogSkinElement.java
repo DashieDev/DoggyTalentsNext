@@ -81,20 +81,20 @@ public class DogSkinElement extends AbstractElement {
         }
 
         
-        this.renderSkinAndDogModel(activeSkinId, true, graphics, 
-            mouseX, mouseY, e_mX, e_mY + 36, 64);
+        this.renderSkinAndDogModel(activeSkinId, true, stack, 
+            mouseX, mouseY, e_mX, e_mY + 36, 64, false);
         
         int prevId = this.activeSkinId - 1;
         int nextId = this.activeSkinId + 1;
 
         if (nextId < locList.size()) {
-            this.renderSkinAndDogModel(nextId, false, graphics, 
-                mouseX, mouseY, e_mX + 32 + 25 + 25, e_mY + 32, 50);
+            this.renderSkinAndDogModel(nextId, false, stack, 
+                mouseX, mouseY, e_mX + 32 + 25 + 25, e_mY + 32, 50, true);
         }
 
         if (prevId >= 0) {
-            this.renderSkinAndDogModel(prevId, false, graphics, 
-                mouseX, mouseY, e_mX - 32 - 25 - 25, e_mY + 32, 50);
+            this.renderSkinAndDogModel(prevId, false, stack, 
+                mouseX, mouseY, e_mX - 32 - 25 - 25, e_mY + 32, 50, true);
         }
     }
 
@@ -104,8 +104,8 @@ public class DogSkinElement extends AbstractElement {
         int e_mX = this.getRealX() + mX;
         int e_mY = this.getRealY() + mY - 10;
 
-        this.renderSkinAndDogModel(activeSkinId, true, graphics, 
-            mouseX, mouseY, this.getRealX() + 70, e_mY + 36, 64);
+        this.renderSkinAndDogModel(activeSkinId, true, stack, 
+            mouseX, mouseY, this.getRealX() + 70, e_mY + 36, 64, true);
 
         var manifestSkin = this.locList.get(activeSkinId);
     
@@ -169,15 +169,21 @@ public class DogSkinElement extends AbstractElement {
         graphics.drawString(font, c1, tX, tY, 0xffffffff);
     }
 
-    private void renderSkinAndDogModel(int indx, boolean followMouse, GuiGraphics graphics, int mouseX, 
-        int mouseY, int e_mX, int e_mY, int size) {
+    private void renderSkinAndDogModel(int indx, boolean followMouse, PoseStack stack, int mouseX, 
+        int mouseY, int e_mX, int e_mY, int size, boolean useDummy) {
         var oldSkin = dog.getClientSkin();
         var manifestSkin = this.locList.get(indx);
-        dog.setClientSkin(manifestSkin);
-        DogStatusViewBoxElement.renderDogInside(graphics, dog, e_mX, e_mY, size, 
-            followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
-        
-        dog.setClientSkin(oldSkin);
+        if (useDummy && ActiveSkinSlice.DUMMY_DOG_OBJ != null) {
+            ActiveSkinSlice.DUMMY_DOG_OBJ.setClientSkin(manifestSkin);
+            DogStatusViewBoxElement.renderDogInside(stack, 
+                ActiveSkinSlice.DUMMY_DOG_OBJ, e_mX, e_mY, size, 
+                followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
+        } else {   
+            dog.setClientSkin(manifestSkin);
+            DogStatusViewBoxElement.renderDogInside(stack, dog, e_mX, e_mY, size, 
+                followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
+            dog.setClientSkin(oldSkin);
+        }
         if (oldSkin == manifestSkin) {
             var font = Minecraft.getInstance().font;
             var c1 = Component.translatable("doggui.style.skins.selected");
