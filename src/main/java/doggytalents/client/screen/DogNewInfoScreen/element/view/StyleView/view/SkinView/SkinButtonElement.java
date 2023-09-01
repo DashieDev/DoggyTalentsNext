@@ -1,6 +1,9 @@
 package doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.view.SkinView;
 
 import java.util.List;
+import java.util.function.Consumer;
+
+import org.checkerframework.checker.units.qual.C;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -18,6 +21,7 @@ import doggytalents.common.network.packet.data.DogTextureData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -32,22 +36,23 @@ public class SkinButtonElement extends AbstractElement {
     Button applyButton;
     int activeSkinId;
     boolean showInfo;
+    Consumer<GuiEventListener> leftAction;
+    Consumer<GuiEventListener> rightAction;
 
-    public SkinButtonElement(AbstractElement parent, Screen screen, Dog dog, List<DogSkin> locList) {
+    public SkinButtonElement(AbstractElement parent, Screen screen, Dog dog, List<DogSkin> locList, int active_id,
+        Consumer<GuiEventListener> leftAction, Consumer<GuiEventListener> rightAction) {
         super(parent, screen);
         this.dog = dog;
         var mc = Minecraft.getInstance();
         this.font = mc.font;
+        this.activeSkinId = active_id;
         this.locList = locList;
+        this.leftAction = leftAction;
+        this.rightAction = rightAction;
     }
 
     @Override
     public AbstractElement init() {
-
-        activeSkinId = Store.get(getScreen())
-            .getStateOrDefault(ActiveSkinSlice.class,
-            ActiveSkinSlice.class, new ActiveSkinSlice())
-            .activeSkinId;
         showInfo = 
             Store.get(getScreen()).getStateOrDefault(
                 ActiveSkinSlice.class, ActiveSkinSlice.class, 
@@ -63,12 +68,7 @@ public class SkinButtonElement extends AbstractElement {
             this.getRealX() + 10, this.getRealY() + mY - 9,
             18, 18, Component.literal("<"), 
             b -> {
-                Store.get(getScreen()).dispatch(ActiveSkinSlice.class, 
-                    new UIAction(
-                        UIActionTypes.Skins.ACTIVE_DEC,
-                        new ActiveSkinSlice()
-                    ) 
-                );
+                this.leftAction.accept(b);
             }, this.font);
         prevSkinButton.active = activeSkinId > 0;
         
@@ -78,13 +78,7 @@ public class SkinButtonElement extends AbstractElement {
             this.getRealX() + 75, this.getRealY() + mY - 9,
             18, 18, Component.literal(">"), 
             b -> {
-                Store.get(getScreen()).dispatch(ActiveSkinSlice.class, 
-                    new UIAction(
-                        UIActionTypes.Skins.ACTIVE_INC,
-                        
-                        new ActiveSkinSlice()
-                    ) 
-                );
+                this.rightAction.accept(b);
             }, this.font);
             nextSkinButton.active = activeSkinId < this.locList.size() - 1;
 

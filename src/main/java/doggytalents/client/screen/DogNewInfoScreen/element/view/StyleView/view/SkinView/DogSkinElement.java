@@ -30,19 +30,16 @@ public class DogSkinElement extends AbstractElement {
     Font font;
     boolean showInfo;
 
-    public DogSkinElement(AbstractElement parent, Screen screen, Dog dog, List<DogSkin> locList) {
+    public DogSkinElement(AbstractElement parent, Screen screen, Dog dog, List<DogSkin> locList, int active_id) {
         super(parent, screen);
         this.dog = dog;
         this.locList = locList;
+        this.activeSkinId = active_id;
         this.font = Minecraft.getInstance().font;
     }
 
     @Override
     public AbstractElement init() {
-        this.activeSkinId = 
-            Store.get(getScreen()).getStateOrDefault(
-                ActiveSkinSlice.class, ActiveSkinSlice.class, 
-                new ActiveSkinSlice()).activeSkinId;
         this.showInfo = 
             Store.get(getScreen()).getStateOrDefault(
                 ActiveSkinSlice.class, ActiveSkinSlice.class, 
