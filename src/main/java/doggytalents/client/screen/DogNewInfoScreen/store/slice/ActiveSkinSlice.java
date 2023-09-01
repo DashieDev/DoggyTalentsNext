@@ -2,6 +2,7 @@ package doggytalents.client.screen.DogNewInfoScreen.store.slice;
 
 import java.util.List;
 
+import doggytalents.DoggyEntityTypes;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
@@ -11,12 +12,15 @@ import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Ta
 import doggytalents.client.screen.framework.AbstractSlice;
 import doggytalents.client.screen.framework.CleanableSlice;
 import doggytalents.client.screen.framework.UIAction;
+import doggytalents.common.entity.Dog;
 import doggytalents.client.screen.framework.CommonUIActionTypes;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 
 public class ActiveSkinSlice implements CleanableSlice {
 
     public static List<DogSkin> locList;
+    public static Dog DUMMY_DOG_OBJ;
 
     public int activeSkinId;
     public boolean showInfo;
@@ -74,11 +78,20 @@ public class ActiveSkinSlice implements CleanableSlice {
 
     public static void initLocList() {
         locList = DogTextureManager.INSTANCE.getAll();
+        setupDummyDog();
     }
 
     @Override
     public void cleanUpSlice() {
         locList = null;
+        DUMMY_DOG_OBJ = null;
+    }
+
+    public static void setupDummyDog() {
+        if (DUMMY_DOG_OBJ != null) return;
+        var level = Minecraft.getInstance().level;
+        var dog = DoggyEntityTypes.DOG.get().create(level);
+        DUMMY_DOG_OBJ = dog;
     }
     
 }
