@@ -3,6 +3,7 @@ package doggytalents.common.entity.anim;
 import org.checkerframework.checker.units.qual.s;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.triggerable.DogBrakeFromRunningAction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.AnimationState;
 
@@ -17,6 +18,7 @@ public class DogAnimationManager {
     private boolean started = false;
     private int animationTime;
     private boolean isRunning = false;
+    private int startRunningTick;
     private final Dog dog;
 
     public DogAnimationManager(Dog dog) { this.dog = dog; }
@@ -33,6 +35,7 @@ public class DogAnimationManager {
         }
         if (anim == DogAnimation.RUNNING) {
             this.isRunning = true;
+            startRunningTick = dog.tickCount;
         }
         
         started = true;
@@ -44,12 +47,22 @@ public class DogAnimationManager {
         if (!this.dog.level.isClientSide)
         if (this.isRunning) {
             if (this.dog.getNavigation().isDone() || !this.dog.isOnGround()) {
-                if (this.dog.getAnim() == DogAnimation.RUNNING)
-                    this.dog.setAnim(DogAnimation.BREAK_FROM_RUNNING);
+                if (this.dog.getAnim() == DogAnimation.RUNNING) {
+                    int interval = dog.tickCount - this.startRunningTick;
+                    // if (interval > 60) {
+                    //     this.dog.triggerAnimationAction(new DogBrakeFromRunningAction(dog));
+                    // } else {
+                    //     this.dog.setAnim(DogAnimation.NONE);
+                    // }
+                    this.dog.setAnim(DogAnimation.NONE);
+                    
+                }
+                    
             }
             return;
         } else {
             if (!this.dog.getNavigation().isDone() && this.dog.isOnGround()) {
+                if (this.dog.getAnim() != DogAnimation.ATTACK)
                 this.dog.setAnim(DogAnimation.RUNNING);
             }
         }

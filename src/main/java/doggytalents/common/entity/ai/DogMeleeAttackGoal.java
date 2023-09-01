@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.LowHealthStrategy;
+import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -293,6 +294,7 @@ public class DogMeleeAttackGoal extends Goal {
 
          this.dog.swing(InteractionHand.MAIN_HAND);
          this.dog.doHurtTarget(target);
+         this.dog.setAnim(DogAnimation.ATTACK);
          return true;
       }
       return false;
