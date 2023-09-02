@@ -38,6 +38,8 @@ public class DogAnimationRegistry {
         register(DogAnimation.PROTEST, DogAnimationSequences.PROTEST);
         register(DogAnimation.STAND_IDLE_2, DogAnimationSequences.STAND_IDLE_2);
         register(DogAnimation.DIG, DogAnimationSequences.DIG);
+        register(DogAnimation.SIT_IDLE, DogAnimationSequences.SIT_IDLE);
+        register(DogAnimation.SCRATCHIE, DogAnimationSequences.SCRATCHIE);
     }
     
 }
