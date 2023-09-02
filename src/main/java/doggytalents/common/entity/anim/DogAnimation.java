@@ -20,7 +20,9 @@ public enum DogAnimation {
     BACKFLIP(13, 20),
     PROTEST(14, 120),
     STAND_IDLE_2(15, 80),
-    DIG(16, 120);
+    DIG(16, 120),
+    SIT_IDLE(17, 90),
+    SCRATCHIE(18, 70);
 
     private final int id;
     private final int lengthTicks;
