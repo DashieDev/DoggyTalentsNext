@@ -65,7 +65,7 @@ public class SkinView extends AbstractElement {
         this.addChildren(skinSelect);
         
         filterBox.setX(this.getRealX() + 8);
-        filterBox.y=(this.getRealY() + 8);
+        filterBox.setY(this.getRealY() + 8);
         this.addChildren(filterBox);
         return this;
     }
