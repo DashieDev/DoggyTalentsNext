@@ -25,7 +25,7 @@ public class DogRandomSitIdleGoal extends Goal {
         if (!this.dog.isInSittingPose())
             return false;
         if (!dog.canDoIdileAnim()) return false;
-        if (!dog.isOnGround()) return false;
+        if (!dog.onGround()) return false;
 
         return this.dog.getRandom().nextFloat() < 0.02;
     }
@@ -36,7 +36,7 @@ public class DogRandomSitIdleGoal extends Goal {
             return false;
         if (!this.dog.isInSittingPose())
             return false;
-        if (!dog.isOnGround()) return false;
+        if (!dog.onGround()) return false;
 
         return this.dog.tickCount < this.stopTick;
     }
