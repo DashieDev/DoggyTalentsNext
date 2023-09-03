@@ -395,7 +395,7 @@ public class CachedSearchUtil {
         if (type == BlockPathTypes.OPEN) return OPEN;
         if (type.getDanger() != null) return DAMAGE;
         if (dog.getPathfindingMalus(type) < 0) return BLOCKED;
-        return OPEN;
+        return DANGER;
     }
 
     public static byte inferType(List<Dog> dogs, BlockPathTypes type) {
@@ -422,7 +422,7 @@ public class CachedSearchUtil {
         for (var dog : dogs) {
             if (dog.getPathfindingMalus(type) < 0) return BLOCKED;
         }
-        return OPEN;
+        return DANGER;
     }
 
     private static class WalkNodeEvaluatorDelegate extends WalkNodeEvaluator {
