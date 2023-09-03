@@ -400,10 +400,10 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         }
   
         float f6 = Mth.lerp(p_115310_, p_115308_.xRotO, p_115308_.getXRot());
-        if (isEntityUpsideDown(p_115308_)) {
-           f6 *= -1.0F;
-           f2 *= -1.0F;
-        }
+        // if (isEntityUpsideDown(p_115308_)) {
+        //    f6 *= -1.0F;
+        //    f2 *= -1.0F;
+        // }
   
         // if (p_115308_.hasPose(Pose.SLEEPING)) {
         //    Direction direction = p_115308_.getBedOrientation();
