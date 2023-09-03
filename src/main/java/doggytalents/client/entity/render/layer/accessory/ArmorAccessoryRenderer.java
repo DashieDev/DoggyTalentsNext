@@ -54,8 +54,7 @@ public class ArmorAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         }
 
         this.getParentModel().copyPropertiesTo(this.model);
-        this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-        this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        this.model.copyFrom(getParentModel());
 
         this.model.setVisible(false);
 
