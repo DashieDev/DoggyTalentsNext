@@ -239,6 +239,7 @@ public class Dog extends AbstractDog {
     protected int hungerDamageTick;
 
     public int lastOrderedToSitTick;
+    private int tickChopinTail;
 
     private static final UUID HUNGER_MOVEMENT = UUID.fromString("50671f49-1dfd-4397-242b-78bb6b178115");
 
@@ -691,6 +692,10 @@ public class Dog extends AbstractDog {
         this.alterations.forEach((alter) -> alter.livingTick(this));
 
         this.incapacitatedMananger.tick();
+
+        if (this.tickChopinTail > 0) {
+            --this.tickChopinTail;
+        }
     }
 
     public TriggerableAction getTriggerableAction() {
@@ -3132,6 +3137,14 @@ public class Dog extends AbstractDog {
 
     public DogAnimation getSitAnim() {
         return this.sitAnim;
+    }
+
+    public void setChopinTailFor(int ticks) {
+        this.tickChopinTail = ticks;
+    }
+
+    public boolean isChopinTail() {
+        return this.tickChopinTail > 0;
     }
 
     @Override

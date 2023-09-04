@@ -22,8 +22,9 @@ public class DogRandomStandIdleGoal extends Goal {
     public boolean canUse() {
         if (!dog.canDoIdileAnim()) return false;
         if (dog.isLowHunger()) return false;
-        if (!this.dog.isOnGround()) return false;
-        return this.dog.getRandom().nextFloat() < 0.02;
+        if (!this.dog.onGround()) return false;
+        double use_chance = this.dog.isChopinTail() ? 0.08 : 0.02;
+        return this.dog.getRandom().nextFloat() < use_chance;
     }
 
     @Override
@@ -54,6 +55,9 @@ public class DogRandomStandIdleGoal extends Goal {
 
     private DogAnimation getIdleAnim() {
         float r = dog.getRandom().nextFloat();
+        if (dog.isChopinTail()) {
+            return r <= 0.7f ? DogAnimation.CHOPIN_TAIL : DogAnimation.STAND_IDLE_2;
+        } 
         if (r <= 0.10f) {
             return DogAnimation.DIG;
         } else if (r <= 0.35f) {
