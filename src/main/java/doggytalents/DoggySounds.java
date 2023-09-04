@@ -36,6 +36,8 @@ public class DoggySounds {
 
     public static final RegistryObject<SoundEvent> OKAMI_RYOSHIMA_COAST_ARR = register("okami_ryoshima_coast_arr");
 
+    public static final RegistryObject<SoundEvent> CHOPIN_OP64_NO1 = register("chopin_op64_no1");
+
     private static RegistryObject<SoundEvent> register(final String name) {
         //TODO 1.19.3 ??
         return register(name, () -> SoundEvent.createVariableRangeEvent(Util.getResource(name)));
