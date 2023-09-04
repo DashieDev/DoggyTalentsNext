@@ -61,11 +61,11 @@ public class AccessoryModelManager {
             if (this.isDyable() && (inst instanceof IColoredObject coloredObject))
                 color = coloredObject.getColor();
             
-            RenderLayer.renderColoredCutoutModel(model, getResources(), 
+            RenderLayer.renderColoredCutoutModel(model, getResources(inst), 
                 poseStack, buffer, packedLight, dog, color[0], color[1], color[2]);
         };
         public abstract void registerLayerDef(final EntityRenderersEvent.RegisterLayerDefinitions event);
-        public abstract ResourceLocation getResources();
+        public abstract ResourceLocation getResources(AccessoryInstance inst);
         public boolean isDyable() { return false; }
         public boolean isTranslucent() { return false; }
     }

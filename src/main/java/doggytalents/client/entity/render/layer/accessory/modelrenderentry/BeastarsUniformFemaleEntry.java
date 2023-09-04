@@ -41,7 +41,7 @@ public class BeastarsUniformFemaleEntry extends AccessoryModelManager.Entry {
     }
 
     @Override
-    public ResourceLocation getResources() {
+    public ResourceLocation getResources(AccessoryInstance inst) {
         return Resources.BEASTARS_UNIFORM_FEMALE;
     }
 

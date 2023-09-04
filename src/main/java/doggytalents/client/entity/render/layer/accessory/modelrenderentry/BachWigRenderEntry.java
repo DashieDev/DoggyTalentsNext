@@ -49,7 +49,7 @@ public class BachWigRenderEntry extends AccessoryModelManager.Entry {
     }
 
     @Override
-    public ResourceLocation getResources() {
+    public ResourceLocation getResources(AccessoryInstance inst) {
         return Resources.BACH_WIG;
     }
 }
