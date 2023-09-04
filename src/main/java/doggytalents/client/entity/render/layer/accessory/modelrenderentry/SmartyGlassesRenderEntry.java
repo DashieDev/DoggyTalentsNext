@@ -46,7 +46,7 @@ public class SmartyGlassesRenderEntry extends AccessoryModelManager.Entry {
     }
 
     @Override
-    public ResourceLocation getResources() {
+    public ResourceLocation getResources(AccessoryInstance inst) {
         return Resources.SMARTY_GLASSES;
     }
 }
