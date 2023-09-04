@@ -30,7 +30,7 @@ public class ChiModel extends DogModel<Dog> {
 			.texOffs(24, 13).addBox(-2.0F, 2.75F, -2.0F, 6.0F, 1.0F, 4.0F, new CubeDeformation(-0.3F))
 			.texOffs(23, 0).addBox(-0.5F, -0.07F, -4.5F, 3.0F, 3.0F, 4.0F, new CubeDeformation(-0.1F)), 
         PartPose.ZERO);
-		var ear = head.addOrReplaceChild("ear", CubeListBuilder.create(), PartPose.offset(-0.6753F, -3.45F, -0.2839F));
+		var ear = real_head.addOrReplaceChild("ear", CubeListBuilder.create(), PartPose.offset(-0.6753F, -3.45F, -0.2839F));
 		ear.addOrReplaceChild("head_r1", CubeListBuilder.create().texOffs(0, 13).mirror().addBox(-1.15F, -1.2F, -1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false)
 		.texOffs(0, 13).mirror().addBox(-1.45F, -0.7F, -1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false)
 		.texOffs(0, 13).mirror().addBox(-0.85F, -0.7F, -1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false)
@@ -41,7 +41,7 @@ public class ChiModel extends DogModel<Dog> {
 		.texOffs(0, 13).addBox(-0.15F, -0.7F, -1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F))
 		.texOffs(18, 13).addBox(-1.25F, -1.4F, -1.25F, 3.0F, 3.0F, 1.0F, new CubeDeformation(-0.7F))
 		.texOffs(0, 0).addBox(-0.45F, 0.1F, -1.0F, 2.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(3.3506F, 0.0F, 0.0F, 0.0F, -0.5236F, 0.0F));
-		head.addOrReplaceChild("headfur", CubeListBuilder.create().texOffs(11, 10).addBox(3.0F, -8.55F, -8.25F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+		real_head.addOrReplaceChild("headfur", CubeListBuilder.create().texOffs(11, 10).addBox(3.0F, -8.55F, -8.25F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(11, 10).addBox(2.0F, -9.3F, -8.5F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(10, 9).addBox(2.75F, -10.3F, -8.75F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(11, 10).addBox(4.25F, -10.8F, -8.6F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.1F))
