@@ -41,10 +41,6 @@ public class TeiModel extends DogModel<Dog> {
 
         var body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
         var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-3.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
-		upper_body.addOrReplaceChild("scarf", CubeListBuilder.create().texOffs(0, 32).addBox(-4.0F, -13.0F, -1.0F, 8.0F, 13.0F, 7.0F, new CubeDeformation(0.1F))
-		.texOffs(28, 47).addBox(-4.0F, -13.7F, -7.0F, 8.0F, 6.0F, 10.0F, new CubeDeformation(-0.2F))
-		.texOffs(0, 28).addBox(-1.0F, -15.0F, -3.6F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.1F)), 
-        PartPose.offset(1.0F, 10F, -2F));
 
 		CubeListBuilder var4 = CubeListBuilder.create().texOffs(44, 19).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE);
         CubeListBuilder var4_1 = CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE);
