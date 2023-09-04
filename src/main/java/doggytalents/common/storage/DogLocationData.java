@@ -1,8 +1,10 @@
 package doggytalents.common.storage;
 
 import doggytalents.DoggyAccessories;
+import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyItems;
 import doggytalents.api.feature.EnumGender;
+import doggytalents.api.registry.AccessoryType;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.WorldUtil;
@@ -81,7 +83,7 @@ public class DogLocationData implements IDogData {
         this.name = dogIn.getName();
         this.ownerName = dogIn.getOwnersName().orElse(null);
         this.gender = dogIn.getGender();
-        this.hasRadarCollar = dogIn.getAccessory(DoggyAccessories.RADIO_BAND.get()).isPresent();
+        this.hasRadarCollar = dogIn.getAccessory(DoggyAccessoryTypes.BAND.get()).isPresent();
 
         this.dog = dogIn;
         this.storage.setDirty();
