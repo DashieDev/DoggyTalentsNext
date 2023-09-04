@@ -16,7 +16,7 @@ import net.minecraft.world.phys.AABB;
 
 public class ChopinRecordItem extends RecordItem {
 
-    public final int EFFECT_RADIUS = 12;
+    public final int EFFECT_RADIUS = 20;
 
     public ChopinRecordItem(int comparatorValue, Supplier<SoundEvent> soundSupplier, Properties builder,
             int lengthInTicks) {
