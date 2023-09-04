@@ -58,82 +58,21 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
     public DogModel(ModelPart box) {
         this.root = DogModelPart.recreateFromModelPart(box);
         box = this.root;
-        this.head = (DogModelPart)(box.getChild("head"));
-        this.realHead = (DogModelPart)(this.head.getChild("real_head"));
-        this.earNormal = (DogModelPart)(this.realHead.getChild("ear_normal"));
-        this.earBoni = (DogModelPart)(this.realHead.getChild("ear_boni"));
-        this.earSmall = (DogModelPart)(this.realHead.getChild("ear_small"));
-        this.body = (DogModelPart)(box.getChild("body"));
-        this.mane = (DogModelPart)(box.getChild("upper_body"));
-        this.legBackRight = (DogModelPart)(box.getChild("right_hind_leg"));
-        this.legBackLeft = (DogModelPart)(box.getChild("left_hind_leg"));
-        this.legFrontRight = (DogModelPart)(box.getChild("right_front_leg"));
-        this.legFrontLeft = (DogModelPart)(box.getChild("left_front_leg"));
-        this.tail = (DogModelPart)(box.getChild("tail"));
-        this.realTail = (DogModelPart)(this.tail.getChild("real_tail"));
-        this.realTail2 = (DogModelPart)(this.tail.getChild("real_tail_2"));
-        this.realTail3 = (DogModelPart)(this.tail.getChild("real_tail_bushy"));
-        // TODO
-//        float f1 = 13.5F;
-//
-//        // COORDS
-//        // x is left/right of the dog
-//        // y is back and forward
-//
-//        //Head
-//        this.head = new ModelPart(this, 0, 0);
-//        this.head.addBox(-2.0F, -3.0F, -2.0F, 6, 6, 4, scaleFactor);
-//        this.head.setPos(-1.0F, f1, -7.0F);
-//
-//        //Body
-//        this.body = new ModelPart(this, 18, 14);
-//        this.body.addBox(-3.0F, -2.0F, -3.0F, 6, 9, 6, scaleFactor);
-//        this.body.setPos(0.0F, 14.0F, 2.0F);
-//
-//        //Mane
-//        this.mane = new ModelPart(this, 21, 0);
-//        this.mane.addBox(-3.0F, -3.0F, -3.0F, 8, 6, 7, scaleFactor);
-//        this.mane.setPos(-1.0F, 14.0F, 2.0F);
-//
-//        //Limbs
-//        this.legBackRight = new ModelPart(this, 0, 18);
-//        this.legBackRight.addBox(0.0F, 0.0F, -1.0F, 2, 8, 2, scaleFactor);
-//        this.legBackRight.setPos(-2.5F, 16.0F, 7.0F);
-//        this.legBackLeft = new ModelPart(this, 0, 18);
-//        this.legBackLeft.addBox(0.0F, 0.0F, -1.0F, 2, 8, 2, scaleFactor);
-//        this.legBackLeft.setPos(0.5F, 16.0F, 7.0F);
-//        this.legFrontRight = new ModelPart(this, 0, 18);
-//        this.legFrontRight.addBox(0.0F, 0.0F, -1.0F, 2, 8, 2, scaleFactor);
-//        this.legFrontRight.setPos(-2.5F, 16.0F, -4.0F);
-//        this.legFrontLeft = new ModelPart(this, 0, 18);
-//        this.legFrontLeft.addBox(0.0F, 0.0F, -1.0F, 2, 8, 2, scaleFactor);
-//        this.legFrontLeft.setPos(0.5F, 16.0F, -4.0F);
-//
-//        //Tail1
-//        this.tail = new ModelPart(this, 9, 18);
-//        this.tail.addBox(-0.5F, 0.0F, -1.0F, 2, 8, 2, scaleFactor);
-//        this.tail.setPos(-0.5F, 12.0F, 8.0F);
-//
-//        //Tail2
-//        this.tail.texOffs(45, 0).addBox(0.0F, 0.0F, 0.0F, 2, 3, 1).setPos(90.0F, 0.0F, 0.0F);
-//
-//        //Tail3
-//        this.tail.texOffs(43, 19).addBox(-1.0F, 0F, -2F, 3, 10, 3).setPos(-1.0F, 12.0F, 8.0F);
-//
-//        //HeadMain EarsNormal
-//        this.head.texOffs(16, 14).addBox(-2.0F, -5.0F, 0.0F, 2, 2, 1, scaleFactor);
-//        this.head.texOffs(16, 14).addBox(2.0F, -5.0F, 0.0F, 2, 2, 1, scaleFactor);
-//
-//        //HeadMain EarsBoni
-//        this.head.texOffs(52, 0).addBox(-3.0F, -3.0F, -1.5F, 1, 5, 3, scaleFactor);
-//        this.head.texOffs(52, 0).addBox(4.0F, -3.0F, -1.5F, 1, 5, 3, scaleFactor);
-//
-//        //HeadMain EarsSmall
-//        this.head.texOffs(18, 0).addBox(-2.8F, -3.5F, -1.0F, 2, 1, 2, scaleFactor);
-//        this.head.texOffs(18, 0).addBox(2.8F, -3.5F, -1.0F, 2, 1, 2, scaleFactor);
-//
-//        //HeadMain Nose
-//        this.head.texOffs(0, 10).addBox(-0.5F, 0.0F, -5.0F, 3, 3, 4, scaleFactor);
+        this.head = (DogModelPart)box.getChild("head");
+        this.realHead = (DogModelPart)this.head.getChild("real_head");
+        this.earNormal = (DogModelPart)this.realHead.getChild("ear_normal");
+        this.earBoni = (DogModelPart)this.realHead.getChild("ear_boni");
+        this.earSmall = (DogModelPart)this.realHead.getChild("ear_small");
+        this.body = (DogModelPart)box.getChild("body");
+        this.mane = (DogModelPart)box.getChild("upper_body");
+        this.legBackRight = (DogModelPart)box.getChild("right_hind_leg");
+        this.legBackLeft = (DogModelPart)box.getChild("left_hind_leg");
+        this.legFrontRight = (DogModelPart)box.getChild("right_front_leg");
+        this.legFrontLeft = (DogModelPart)box.getChild("left_front_leg");
+        this.tail = (DogModelPart)box.getChild("tail");
+        this.realTail = (DogModelPart)this.tail.getChild("real_tail");
+        this.realTail2 = (DogModelPart)this.tail.getChild("real_tail_2");
+        this.realTail3 = (DogModelPart)this.tail.getChild("real_tail_bushy");
     }
 
     public DogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
