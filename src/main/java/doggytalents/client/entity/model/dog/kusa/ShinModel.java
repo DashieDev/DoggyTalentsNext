@@ -39,10 +39,6 @@ public class ShinModel extends DogModel<Dog> {
 		
         var body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 13).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
         var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
-		upper_body.addOrReplaceChild("scarf", CubeListBuilder.create().texOffs(0, 44).addBox(-4.0F, -13.0F, -1.0F, 8.0F, 13.0F, 7.0F, new CubeDeformation(0.1F))
-		.texOffs(28, 28).addBox(-4.0F, -13.2F, -7.0F, 8.0F, 6.0F, 10.0F, new CubeDeformation(-0.2F))
-		.texOffs(0, 39).addBox(-1.0F, -14.0F, -3.7F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.1F)), 
-        PartPose.offset(1.0F, 10F, -2F));
 
 		CubeListBuilder var4 = CubeListBuilder.create().texOffs(8, 28).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE);
         CubeListBuilder var4_1 = CubeListBuilder.create().texOffs(0, 28).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE);
