@@ -10,6 +10,8 @@ public class DogRandomStandIdleGoal extends Goal {
     
     private Dog dog;
     private int stopTick;
+    private int startTick;
+    private boolean jumped;
 
     private DogAnimation currentAnimation = DogAnimation.NONE;
 
@@ -29,7 +31,7 @@ public class DogRandomStandIdleGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (!this.dog.onGround())
+        if (!this.dog.onGround() && this.currentAnimation != DogAnimation.BACKFLIP)
             return false;
         if (dog.isLowHunger()) return false;
         if (!dog.canContinueDoIdileAnim()) return false;
@@ -40,11 +42,23 @@ public class DogRandomStandIdleGoal extends Goal {
     public void start() {
         this.currentAnimation = getIdleAnim();
         this.stopTick = dog.tickCount + currentAnimation.getLengthTicks();
+        this.startTick = dog.tickCount;
+        this.jumped = false;
         this.dog.setAnim(currentAnimation);
     }
 
     @Override
     public void tick() {
+        if (currentAnimation == DogAnimation.BACKFLIP) {
+            checkJumpIfBackfilip();
+        }
+    }
+
+    private void checkJumpIfBackfilip() {
+        if (!jumped && dog.tickCount - this.startTick >= 3) {
+            jumped = true;
+            this.dog.getJumpControl().jump();
+        }
     }
 
     @Override
@@ -56,7 +70,11 @@ public class DogRandomStandIdleGoal extends Goal {
     private DogAnimation getIdleAnim() {
         float r = dog.getRandom().nextFloat();
         if (dog.isChopinTail()) {
-            return r <= 0.7f ? DogAnimation.CHOPIN_TAIL : DogAnimation.STAND_IDLE_2;
+            if (r <= 0.1f) 
+                return DogAnimation.STAND_IDLE_2;
+            if (r <= 0.4f)
+                return DogAnimation.BACKFLIP;
+            return DogAnimation.CHOPIN_TAIL;
         } 
         if (r <= 0.10f) {
             return DogAnimation.DIG;
