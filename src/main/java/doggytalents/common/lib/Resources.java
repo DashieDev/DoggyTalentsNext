@@ -49,6 +49,15 @@ public class Resources {
     public static final ResourceLocation BACH_WIG = getEntity("dog", "bach_wig");
     public static final ResourceLocation BEASTARS_UNIFORM_MALE = getEntity("dog", "beastars_uniform_male");
     public static final ResourceLocation BEASTARS_UNIFORM_FEMALE = getEntity("dog", "beastars_uniform_female");
+    
+    public static final ResourceLocation CHI_ORB = getEntity("dog", "chi_orb");
+    public static final ResourceLocation CHU_ORB = getEntity("dog", "chu_orb");
+    public static final ResourceLocation KO_ORB = getEntity("dog", "ko_orb");
+    public static final ResourceLocation GI_ORB = getEntity("dog", "gi_orb");
+    public static final ResourceLocation TEI_ORB = getEntity("dog", "tei_orb");
+    public static final ResourceLocation REI_ORB = getEntity("dog", "rei_orb");
+    public static final ResourceLocation SHIN_ORB = getEntity("dog", "shin_orb");
+    public static final ResourceLocation JIN_ORB = getEntity("dog", "jin_orb");
 
     public static final ResourceLocation IRON_HELMET = getEntity("dog", "armor/iron_helmet");
     public static final ResourceLocation DIAMOND_HELMET = getEntity("dog", "armor/diamond_helmet");

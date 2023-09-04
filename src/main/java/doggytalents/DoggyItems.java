@@ -72,7 +72,16 @@ public class DoggyItems {
     public static final RegistryObject<Item> SHRINKING_MALLET = registerSizeBone("shrinking_mallet", DogResizeItem.Type.TINY);
     public static final RegistryObject<Item> MAGNIFYING_BONE = registerSizeBone("magnifying_bone", DogResizeItem.Type.BIG);
     public static final RegistryObject<Item> AMNESIA_BONE = registerWith("amnesia_bone", AmnesiaBoneItem::new, 1);
-
+    public static final RegistryObject<Item> EMPTY_LOCATOR_ORB = registerWith("empty_locator_orb", EmptyLocatorOrbItem::new, 64);
+    public static final RegistryObject<AccessoryItem> CHI_ORB = registerLocatorOrb("locator_orb_chi", DoggyAccessories.CHI_ORB);
+    public static final RegistryObject<AccessoryItem> CHU_ORB = registerLocatorOrb("locator_orb_chu", DoggyAccessories.CHU_ORB);
+    public static final RegistryObject<AccessoryItem> KO_ORB = registerLocatorOrb("locator_orb_ko", DoggyAccessories.KO_ORB);
+    public static final RegistryObject<AccessoryItem> GI_ORB = registerLocatorOrb("locator_orb_gi", DoggyAccessories.GI_ORB);
+    public static final RegistryObject<AccessoryItem> TEI_ORB = registerLocatorOrb("locator_orb_tei", DoggyAccessories.TEI_ORB);
+    public static final RegistryObject<AccessoryItem> REI_ORB = registerLocatorOrb("locator_orb_rei", DoggyAccessories.REI_ORB);
+    public static final RegistryObject<AccessoryItem> SHIN_ORB = registerLocatorOrb("locator_orb_shin", DoggyAccessories.SHIN_ORB);
+    public static final RegistryObject<AccessoryItem> JIN_ORB = registerLocatorOrb("locator_orb_jin", DoggyAccessories.JIN_ORB);
+    
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
             () -> new FeatheredMantleArtifact(), props), 1);
@@ -126,6 +135,10 @@ public class DoggyItems {
 
     private static RegistryObject<AccessoryItem> registerAccessory(final String name, Supplier<? extends Accessory> type) {
         return register(name, () -> new AccessoryItem(type, createInitialProp()));
+    }
+
+    private static RegistryObject<AccessoryItem> registerLocatorOrb(final String name, Supplier<? extends Accessory> type) {
+        return register(name, () -> new LocatorOrbItem(type, createInitialProp()));
     }
 
     private static <T extends Item> RegistryObject<T> registerWith(final String name, Function<Item.Properties, T> itemConstructor, int maxStackSize) {

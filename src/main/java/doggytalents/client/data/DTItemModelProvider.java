@@ -76,6 +76,16 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.EGG_SANDWICH);
         generated(DoggyItems.BANDAID);
         generated(DoggyItems.FEATHERED_MANTLE);
+        generated(DoggyItems.EMPTY_LOCATOR_ORB);
+
+        generated(DoggyItems.CHI_ORB);
+        generated(DoggyItems.CHU_ORB);
+        generated(DoggyItems.KO_ORB);
+        generated(DoggyItems.GI_ORB);
+        generated(DoggyItems.TEI_ORB);
+        generated(DoggyItems.REI_ORB);
+        generated(DoggyItems.SHIN_ORB);
+        generated(DoggyItems.JIN_ORB);
 
         generated(DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO);
         generated(DoggyItems.MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO);

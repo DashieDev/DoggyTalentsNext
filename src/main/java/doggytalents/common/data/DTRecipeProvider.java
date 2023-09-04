@@ -203,6 +203,58 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.EMPTY_LOCATOR_ORB.get(), 1)
+            .pattern(" C ")
+            .pattern("SRS")
+            .pattern(" G ")
+            .define('C', Items.WHITE_CARPET)
+            .define('G', Items.GLASS)
+            .define('R', DoggyItems.RADIO_COLLAR.get())
+            .define('S', Items.STRING)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.CHI_ORB.get(), 1)
+            .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
+            .requires(Items.MAGENTA_DYE)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.CHU_ORB.get(), 1)
+            .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
+            .requires(Items.LIGHT_BLUE_DYE)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.KO_ORB.get(), 1)
+            .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
+            .requires(Items.PURPLE_DYE)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.GI_ORB.get(), 1)
+            .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
+            .requires(Items.BLUE_DYE)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.TEI_ORB.get(), 1)
+            .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
+            .requires(Items.YELLOW_DYE)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.REI_ORB.get(), 1)
+            .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
+            .requires(Items.LIME_DYE)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.SHIN_ORB.get(), 1)
+            .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
+            .requires(Items.GREEN_DYE)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.JIN_ORB.get(), 1)
+            .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
+            .requires(Items.RED_DYE)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+
         SpecialRecipeBuilder.special(DoggyRecipeSerializers.DOG_BED.get()).save(consumer, Util.getResourcePath("dog_bed"));
     }
 
