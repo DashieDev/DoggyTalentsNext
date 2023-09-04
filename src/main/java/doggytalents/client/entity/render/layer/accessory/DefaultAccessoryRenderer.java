@@ -59,7 +59,7 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         if (parentModel.useDefaultModelForAccessories()) {
             dogModel = this.defaultModel;
             parentModel.copyPropertiesTo(dogModel);
-            dogModel.copyFrom(dogModel);
+            dogModel.copyFrom(parentModel);
         } else {
             dogModel = parentModel;
         }
