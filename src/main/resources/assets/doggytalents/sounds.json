@@ -19,5 +19,9 @@
   "okami_ryoshima_coast_arr" : {
     "subtitle": "doggytalents.music.okami_ryoshima_coast_arr",
     "sounds": [ "doggytalents:music/okami_ryoshima_coast_arr" ]
+  },
+  "chopin_op64_no1" : {
+    "subtitle": "doggytalents.music.chopin_op64_no1",
+    "sounds": [ "doggytalents:music/chopin_op64_no1" ]
   }
 }
