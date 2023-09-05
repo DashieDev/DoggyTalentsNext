@@ -4,6 +4,7 @@ import doggytalents.api.feature.DogLevel;
 import doggytalents.api.registry.Accessory;
 import doggytalents.common.artifacts.FeatheredMantleArtifact;
 import doggytalents.common.entity.accessory.DyeableAccessory;
+import doggytalents.common.entity.accessory.LocatorOrbAccessory;
 import doggytalents.common.entity.accessory.Wig;
 import doggytalents.common.item.*;
 import doggytalents.common.lib.Constants;
@@ -137,7 +138,7 @@ public class DoggyItems {
         return register(name, () -> new AccessoryItem(type, createInitialProp()));
     }
 
-    private static RegistryObject<AccessoryItem> registerLocatorOrb(final String name, Supplier<? extends Accessory> type) {
+    private static RegistryObject<AccessoryItem> registerLocatorOrb(final String name, Supplier<? extends LocatorOrbAccessory> type) {
         return register(name, () -> new LocatorOrbItem(type, createInitialProp()));
     }
 
