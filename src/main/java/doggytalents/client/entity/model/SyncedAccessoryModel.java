@@ -56,6 +56,7 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
     @Override
     public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, float p_103017_, float p_103018_, float p_103019_, float p_103020_) {
         stack.pushPose();
+        stack.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
         stack.translate((double)(0 / 16.0F), (double)(15 / 16.0F), (double)(0 / 16.0F));
         if (root.zRot != 0.0F) {
             stack.mulPose(Axis.ZP.rotation(root.zRot));
@@ -69,7 +70,10 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
             stack.mulPose(Axis.XP.rotation(root.xRot));
         }
         float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
+        float x0 = root.x, y0 = root.y, z0 = root.z;
         root.xRot = 0; root.yRot = 0; root.zRot = 0;
+        root.x = 0; root.y = 0; root.z = 0;
+
         stack.pushPose();
         stack.translate((double)(0 / 16.0F), (double)(-15 / 16.0F), (double)(0 / 16.0F));
         
@@ -101,6 +105,7 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
         stack.popPose();
         stack.popPose();
         root.xRot = xRot0; root.yRot = yRot0; root.zRot = zRot0;
+        root.x = x0; root.y = y0; root.z = z0;
     }
 
     @Override
