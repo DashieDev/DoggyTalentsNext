@@ -139,16 +139,12 @@ public class CanineTrackerPackets {
         @Override
         public void encode(StartLocatingData data, FriendlyByteBuf buf) {
             buf.writeUUID(data.uuid);
-            buf.writeUtf(data.name);
-            buf.writeBlockPos(data.pos);
         }
 
         @Override
         public StartLocatingData decode(FriendlyByteBuf buf) {
             var uuid = buf.readUUID();
-            var name = buf.readUtf();
-            var pos = buf.readBlockPos();
-            return new StartLocatingData(uuid, name, pos);
+            return new StartLocatingData(uuid);
         }
 
         @Override
@@ -160,20 +156,23 @@ public class CanineTrackerPackets {
                 var player = ctx.get().getSender();
                 var stack = player.getMainHandItem();
                 if (!(stack.getItem() instanceof CanineTrackerItem)) return;
+                
+                var storage = DogLocationStorage.get(player.level());
+                var dogData = storage.getData(data.uuid);
+                if (dogData == null) return;
+                
                 if (!stack.hasTag()) {
                     stack.setTag(new CompoundTag());
                 }
                 var tag = stack.getTag();
                 if (tag == null) return;
+
+                var pos = BlockPos.containing(dogData.getPos());
                 tag.putUUID("uuid", data.uuid);
-                tag.putString("name", data.name);
-                tag.putInt("posX", data.pos.getX());
-                tag.putInt("posY",  data.pos.getY());
-                tag.putInt("posZ",  data.pos.getZ());
-                
-                var storage = DogLocationStorage.get(player.level());
-                var dogData = storage.getData(data.uuid);
-                if (dogData != null)
+                tag.putString("name", dogData.getDogName());
+                tag.putInt("posX", pos.getX());
+                tag.putInt("posY",  pos.getY());
+                tag.putInt("posZ",  pos.getZ());
                 tag.putInt("locateColor", dogData.getLocateColor());
             });
 
