@@ -37,6 +37,7 @@ public class SkinView extends AbstractElement {
             this.activeSkinId = 0;
             this.init();
         });
+        this.activeSkinId = DogTextureManager.INSTANCE.getAll().indexOf(dog.getClientSkin());
     }
 
     @Override
@@ -45,6 +46,10 @@ public class SkinView extends AbstractElement {
         var searchMsg = this.filterBox.getValue();
         if (!searchMsg.isEmpty())
             this.textureList = filterDogSkin(textureList, searchMsg);
+        if (this.activeSkinId < 0) this.activeSkinId = 0;
+        else if (this.activeSkinId >= this.textureList.size() ) 
+            this.activeSkinId = 0;
+
         this.getPosition().setChildDirection(ChildDirection.COL);
 
         var dogSkinPreview = new DogSkinElement(this, getScreen(), this.dog, textureList, this.activeSkinId);
