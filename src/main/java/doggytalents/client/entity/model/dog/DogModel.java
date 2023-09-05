@@ -73,6 +73,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.realTail = (DogModelPart)this.tail.getChild("real_tail");
         this.realTail2 = (DogModelPart)this.tail.getChild("real_tail_2");
         this.realTail3 = (DogModelPart)this.tail.getChild("real_tail_bushy");
+        this.correctInitalPose();
     }
 
     public DogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
@@ -94,6 +95,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.realTail = (DogModelPart)(this.tail.getChild("real_tail"));
         this.realTail2 = (DogModelPart)(this.tail.getChild("real_tail_2"));
         this.realTail3 = (DogModelPart)(this.tail.getChild("real_tail_bushy"));
+        this.correctInitalPose();
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -516,6 +518,12 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
             .filter(part -> ((DogModelPart)part).hasChild(name))
             .findFirst();
         return partOptional.map(part -> (DogModelPart)part.getChild(name));
+    }
+
+    protected void correctInitalPose() {
+        var tailPose = this.tail.getInitialPose();
+        float tailX = tailPose.x, tailY = tailPose.y, tailZ = tailPose.z;
+        this.tail.setInitialPose(PartPose.offset(tailX, tailY, tailZ));
     }
 
     public boolean modelNeedRefreshBeforeNextRender(Dog dog) {
