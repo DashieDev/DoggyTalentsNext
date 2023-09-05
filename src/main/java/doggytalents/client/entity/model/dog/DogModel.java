@@ -560,6 +560,24 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
 
     @Override
     public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, float p_102038_, float p_102039_, float p_102040_, float p_102041_) {
+        p_102034_.pushPose();
+        p_102034_.translate((double)(0 / 16.0F), (double)(15 / 16.0F), (double)(0 / 16.0F));
+        if (root.zRot != 0.0F) {
+            p_102034_.mulPose(Axis.ZP.rotation(root.zRot));
+        }
+
+        if (root.yRot != 0.0F) {
+            p_102034_.mulPose(Axis.YP.rotation(root.yRot));
+        }
+
+        if (root.xRot != 0.0F) {
+            p_102034_.mulPose(Axis.XP.rotation(root.xRot));
+        }
+        float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
+        root.xRot = 0; root.yRot = 0; root.zRot = 0;
+        p_102034_.pushPose();
+        p_102034_.translate((double)(0 / 16.0F), (double)(-15 / 16.0F), (double)(0 / 16.0F));
+        
         if (this.young) {
 
             boolean headVisible0 = this.head.visible;
@@ -578,29 +596,13 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
             this.head.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
             p_102034_.popPose();            
         } else {
-            p_102034_.pushPose();
-            p_102034_.translate((double)(0 / 16.0F), (double)(15 / 16.0F), (double)(0 / 16.0F));
-            if (root.zRot != 0.0F) {
-                p_102034_.mulPose(Axis.ZP.rotation(root.zRot));
-            }
-
-            if (root.yRot != 0.0F) {
-                p_102034_.mulPose(Axis.YP.rotation(root.yRot));
-            }
-
-            if (root.xRot != 0.0F) {
-                p_102034_.mulPose(Axis.XP.rotation(root.xRot));
-            }
-            float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
-            root.xRot = 0; root.yRot = 0; root.zRot = 0;
-            p_102034_.pushPose();
-            p_102034_.translate((double)(0 / 16.0F), (double)(-15 / 16.0F), (double)(0 / 16.0F));
             this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
-            p_102034_.popPose();
-            p_102034_.popPose();
-            root.xRot = xRot0; root.yRot = yRot0; root.zRot = zRot0;
         }
+
+        p_102034_.popPose();
+        p_102034_.popPose();
+        root.xRot = xRot0; root.yRot = yRot0; root.zRot = zRot0;
   
-     }
+    }
     //END
 }
