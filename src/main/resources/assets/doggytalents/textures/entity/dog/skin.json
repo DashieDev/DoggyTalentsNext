@@ -77,6 +77,13 @@
             "author" : "MashXP, DashieDev"
         },
         {
+            "skin_name" : "Cheems",
+            "skin_id" : "cheems",
+            "use_model" : "kusa_ume",
+            "based_on" : "In honor of Baltze, the popular Shiba Inu. *bonk*",
+            "author" : "MashXP, DashieDev"
+        },
+        {
             "skin_name" : "Grey Wolf",
             "skin_id" : "grey_wolf",
             "use_model" : "default"
