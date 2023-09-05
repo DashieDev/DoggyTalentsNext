@@ -2,6 +2,7 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
+import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -60,8 +61,11 @@ public class DogRandomSitIdleGoal extends Goal {
 
     private DogAnimation getIdleAnim() {
         float r = dog.getRandom().nextFloat();
+        ChopinLogger.l(""+r);
         if (r <= 0.15f) {
             return DogAnimation.SCRATCHIE;
+        } else if (r <= 0.30f) {
+            return DogAnimation.BELLY_RUB;
         } else {
             return DogAnimation.SIT_IDLE;
         }

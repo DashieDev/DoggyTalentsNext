@@ -5,6 +5,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 import com.mojang.math.Vector3f;
 
+import doggytalents.client.entity.model.animation.biganim.BellyRubAnimation;
 import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -5278,4 +5279,6 @@ public class DogAnimationSequences {
                     AnimationChannel.Interpolations.CATMULLROM),
                 new Keyframe(10f, KeyframeAnimations.degreeVec(0f, -1800f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM))).build();
+    
+    public static final AnimationDefinition BELLY_RUB = BellyRubAnimation.build();
 }
