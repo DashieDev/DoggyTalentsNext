@@ -23,7 +23,8 @@ public enum DogAnimation {
     DIG(16, 120),
     SIT_IDLE(17, 90),
     SCRATCHIE(18, 70),
-    CHOPIN_TAIL(19, 200);
+    CHOPIN_TAIL(19, 200),
+    BELLY_RUB(20, 11*20, 1f, false);
 
     private final int id;
     private final int lengthTicks;
