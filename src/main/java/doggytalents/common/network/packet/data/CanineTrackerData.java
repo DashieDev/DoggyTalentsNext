@@ -25,12 +25,8 @@ public class CanineTrackerData {
 
     public static class StartLocatingData {
         public UUID uuid;
-        public String name;
-        public BlockPos pos;
-        public StartLocatingData(UUID uuid, String name, BlockPos pos) {
+        public StartLocatingData(UUID uuid) {
             this.uuid = uuid;
-            this.name = name;
-            this.pos = pos;
         }
     }
 
