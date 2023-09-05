@@ -486,7 +486,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
     }
 
     public void resetPart(ModelPart part, Dog dog) {
-        if (part == this.tail) {
+        if (part == this.tail && dog.getAnim().freeTail()) {
             this.tail.resetPose();
             this.tail.xRot = dog.getTailRotation();
             return;
@@ -495,7 +495,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
     }
 
     public void adjustAnimatedPart(ModelPart part, Dog dog) {
-        if (part == this.tail) {
+        if (part == this.tail && dog.getAnim().freeTail()) {
             if (part.xRot > 3f) {
                 part.xRot = 3f;
             }
