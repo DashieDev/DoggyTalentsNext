@@ -61,7 +61,6 @@ public class DogRandomSitIdleGoal extends Goal {
 
     private DogAnimation getIdleAnim() {
         float r = dog.getRandom().nextFloat();
-        ChopinLogger.l(""+r);
         if (r <= 0.15f) {
             return DogAnimation.SCRATCHIE;
         } else if (r <= 0.30f) {
