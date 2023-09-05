@@ -254,6 +254,15 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(Items.RED_DYE)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
+        
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.NON_LA.get(), 1)
+            .pattern("BBB")
+            .pattern("B B")
+            .pattern(" S ")
+            .define('B', Items.BAMBOO)
+            .define('S', Items.STRING)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
 
         SpecialRecipeBuilder.special(DoggyRecipeSerializers.DOG_BED.get()).save(consumer, Util.getResourcePath("dog_bed"));
     }

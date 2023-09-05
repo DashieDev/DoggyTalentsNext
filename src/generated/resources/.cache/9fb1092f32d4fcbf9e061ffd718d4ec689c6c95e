@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-05T00:05:55.919041	Recipes
+// 1.20.1	2023-09-05T22:59:57.2820423	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
 8b281a24da31fe1edd99746b8c20e4d2173333ec data/doggytalents/advancements/recipes/decorations/bach_wig.json
@@ -19,6 +19,7 @@ c804c400f96d5eaddf94bf042cdb606d677b12e7 data/doggytalents/advancements/recipes/
 190d6013b321a1124859594b5cbb11ecb9fdab0a data/doggytalents/advancements/recipes/decorations/locator_orb_shin.json
 7f9f82a5707ae02f74b01e96dc7ab9e1b262f0d7 data/doggytalents/advancements/recipes/decorations/locator_orb_tei.json
 b9f2fad680d40c03ed5ed14f24a2d3ce5692d7c4 data/doggytalents/advancements/recipes/decorations/multicoloured_collar.json
+9a43a4333a0f57b692bede10ca8743ed87eab2db data/doggytalents/advancements/recipes/decorations/non_la.json
 228934ccdbfdd775b0f9661e2d4a6b95d3e5a39e data/doggytalents/advancements/recipes/decorations/pianist_suit.json
 45b71e5a9d9e508d27e2b1b1bb61513d7d633c7d data/doggytalents/advancements/recipes/decorations/smarty_glasses.json
 6dbd5efa5eac77935b77a2cf22db7642b65699f3 data/doggytalents/advancements/recipes/decorations/spotted_collar.json
@@ -82,6 +83,7 @@ f748dab745d5dcacab5c899d158720bd3ce2e0c2 data/doggytalents/recipes/locator_orb_t
 c1418c076cb635911c92c7031e8a130a9fe3a753 data/doggytalents/recipes/magnifying_bone.json
 cce602e93f1b0f9f7ea8a00966421f11f8d7bbb5 data/doggytalents/recipes/master_treat.json
 62aad174f5cc14006b076c69e010c28302333e8d data/doggytalents/recipes/multicoloured_collar.json
+61f0beb0aff5504f55edf73c94727f80d87e549e data/doggytalents/recipes/non_la.json
 68c800604e9c2e7b10e21263301d5c3836d35f78 data/doggytalents/recipes/pianist_suit.json
 29c60c8d10b2e1655aaee7f3ccd20e224df528c1 data/doggytalents/recipes/radio_collar.json
 9d5c1e59e3e84491e33e2075c9bb0a4eb048584c data/doggytalents/recipes/shrinking_mallet.json

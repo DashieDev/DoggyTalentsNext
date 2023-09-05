@@ -2,6 +2,7 @@ package doggytalents;
 
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.Accessory.AccessoryRenderType;
+import doggytalents.client.entity.model.NonLaModel;
 import doggytalents.common.entity.accessory.*;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
@@ -45,8 +46,9 @@ public class DoggyAccessories {
     public static final RegistryObject<LocatorOrbAccessory> REI_ORB = register("locator_orb_rei", () -> new LocatorOrbAccessory(DoggyItems.REI_ORB, 0xfff0e33f).setModelTexture(Resources.REI_ORB).setAccessoryRenderType(AccessoryRenderType.MODEL).setRenderTranslucent(true));
     public static final RegistryObject<LocatorOrbAccessory> SHIN_ORB = register("locator_orb_shin", () -> new LocatorOrbAccessory(DoggyItems.SHIN_ORB, 0xffaec867).setModelTexture(Resources.SHIN_ORB).setAccessoryRenderType(AccessoryRenderType.MODEL).setRenderTranslucent(true));
     public static final RegistryObject<LocatorOrbAccessory> JIN_ORB = register("locator_orb_jin", () -> new LocatorOrbAccessory(DoggyItems.JIN_ORB, 0xffd1523a).setModelTexture(Resources.JIN_ORB).setAccessoryRenderType(AccessoryRenderType.MODEL).setRenderTranslucent(true));
-
     
+    public static final RegistryObject<NonLaAccessory> NON_LA = register("non_la", () -> new NonLaAccessory(DoggyItems.NON_LA).setModelTexture(Resources.NON_LA).setAccessoryRenderType(AccessoryRenderType.MODEL).setRenderTranslucent(true));
+
     public static final RegistryObject<Helmet> IRON_HELMET = registerHelmet("iron_helmet", () -> Items.IRON_HELMET, Resources.IRON_HELMET);
     public static final RegistryObject<Helmet> DIAMOND_HELMET = registerHelmet("diamond_helmet", () -> Items.DIAMOND_HELMET, Resources.DIAMOND_HELMET);
     public static final RegistryObject<Helmet> GOLDEN_HELMET = registerHelmet("golden_helmet", () -> Items.GOLDEN_HELMET, Resources.GOLDEN_HELMET);

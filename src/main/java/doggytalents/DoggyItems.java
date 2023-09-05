@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.registries.DeferredRegister;
@@ -99,6 +100,8 @@ public class DoggyItems {
     public static final RegistryObject<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
         () -> new ChopinRecordItem(13, () -> DoggySounds.CHOPIN_OP64_NO1.get() , 
         (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 117*20));
+
+    public static final RegistryObject<AccessoryItem> NON_LA = registerAccessory("non_la", DoggyAccessories.NON_LA);
     
     //public static final RegistryObject<Item> PATROL = registerWith("patrol_item", PatrolItem::new, 1);
 

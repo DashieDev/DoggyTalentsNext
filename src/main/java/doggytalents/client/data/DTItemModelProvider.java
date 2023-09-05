@@ -77,6 +77,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.BANDAID);
         generated(DoggyItems.FEATHERED_MANTLE);
         generated(DoggyItems.EMPTY_LOCATOR_ORB);
+        generated(DoggyItems.NON_LA);
 
         generated(DoggyItems.CHI_ORB);
         generated(DoggyItems.CHU_ORB);

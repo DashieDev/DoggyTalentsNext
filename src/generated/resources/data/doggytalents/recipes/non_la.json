@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bamboo"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "B B",
+    " S "
+  ],
+  "result": {
+    "item": "doggytalents:non_la"
+  },
+  "show_notification": true
+}

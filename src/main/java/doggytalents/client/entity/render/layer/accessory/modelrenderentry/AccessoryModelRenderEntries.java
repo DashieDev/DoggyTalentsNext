@@ -12,6 +12,7 @@ public class AccessoryModelRenderEntries {
     public static Entry BEASTARS_UNIFORM_MALE = new BeastarsUniformMaleEntry();
     public static Entry BEASTARS_UNIFORM_FEMALE = new BeastarsUniformFemaleEntry();
     public static Entry LOCATOR_ORB = new LocatorOrbRenderEntry();
+    public static Entry NON_LA = new NonLaRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -21,6 +22,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(BEASTARS_UNIFORM_MALE);
         AccessoryModelManager.register(BEASTARS_UNIFORM_FEMALE);
         AccessoryModelManager.register(LOCATOR_ORB);
+        AccessoryModelManager.register(NON_LA);
     }
 
 }

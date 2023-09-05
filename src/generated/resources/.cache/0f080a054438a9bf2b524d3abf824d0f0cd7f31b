@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-05T00:05:55.9170428	DoggyTalents Item Models
+// 1.20.1	2023-09-05T22:59:57.2461389	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
@@ -39,6 +39,7 @@ ad27b58fb356975677ba214fdf0851101b7d1622 assets/doggytalents/models/item/locator
 06a0e62363bace2c84c1e53fe38a76af334dddec assets/doggytalents/models/item/magnifying_bone.json
 c78372cc5d3fb956867a2378707fdf0de6287dd0 assets/doggytalents/models/item/master_treat.json
 2898b9dfb81537fc36b6033c98081737b04b1f80 assets/doggytalents/models/item/multicoloured_collar.json
+a53eec867cc22a393b7fccbff3ecea2306bdb1d0 assets/doggytalents/models/item/non_la.json
 bc4344cde9b92b3d303523e9d15fe95482b486c4 assets/doggytalents/models/item/pianist_suit.json
 6154f41cf2303fc6636ee83009cc983c95970804 assets/doggytalents/models/item/radio_collar.json
 846f55137451d54b108cb05be5a3f66ff601401a assets/doggytalents/models/item/shrinking_mallet.json
