@@ -26,7 +26,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.commands.EffectCommands;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -373,7 +375,7 @@ public class DoggyCommands {
         Player player = source.getPlayerOrException();
 
         if (locationData.getDimension().equals(player.level.dimension())) {
-            String translateStr = CanineTrackerItem.getDirectionTranslationKey(locationData, player);
+            String translateStr = getDirectionTranslationKey(locationData, player);
             int distance = Mth.ceil(locationData.getPos() != null ? locationData.getPos().distanceTo(player.position()) : -1);
 
             source.sendSuccess(ComponentUtil.translatable(translateStr, locationData.getName(player.level), distance), false);
@@ -382,5 +384,33 @@ public class DoggyCommands {
         }
         return 1;
 
+    }
+
+    public static String getDirectionTranslationKey(DogLocationData loc, Entity entity) {
+        if (loc.getPos() == null) {
+            return "dogradar.unknown";
+        }
+        Vec3 diff = loc.getPos().add(entity.position().reverse());
+        double angle = Mth.atan2(diff.x(), diff.z());
+
+        if (angle < -Math.PI + Math.PI / 8) {
+            return "dogradar.north";
+        } else if (angle < -Math.PI + 3 * Math.PI / 8) {
+            return "dogradar.north.west";
+        } else if (angle < -Math.PI + 5 * Math.PI / 8) {
+            return "dogradar.west";
+        } else if (angle < -Math.PI + 7 * Math.PI / 8) {
+            return "dogradar.south.west";
+        } else if (angle < -Math.PI + 9 * Math.PI / 8) {
+            return "dogradar.south";
+        } else if (angle < -Math.PI + 11 * Math.PI / 8) {
+            return "dogradar.south.east";
+        } else if (angle < -Math.PI + 13 * Math.PI / 8) {
+            return "dogradar.east";
+        } else if (angle < -Math.PI + 15 * Math.PI / 8) {
+            return "dogradar.north.east";
+        } else {
+            return "dogradar.north";
+        }
     }
 }
