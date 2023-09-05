@@ -9,6 +9,7 @@ import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
 import doggytalents.api.enu.forward_imitate.anim.Keyframe;
 import doggytalents.api.enu.forward_imitate.anim.KeyframeAnimations;
 import doggytalents.api.enu.forward_imitate.anim.AnimationChannel;
+import doggytalents.client.entity.model.animation.biganim.BellyRubAnimation;
 import doggytalents.common.entity.anim.DogAnimation;
 
 public class DogAnimationSequences {
@@ -5278,4 +5279,6 @@ public class DogAnimationSequences {
                     AnimationChannel.Interpolations.CATMULLROM),
                 new Keyframe(10f, KeyframeAnimations.degreeVec(0f, -1800f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM))).build();
+    
+    public static final AnimationDefinition BELLY_RUB = BellyRubAnimation.build();
 }
