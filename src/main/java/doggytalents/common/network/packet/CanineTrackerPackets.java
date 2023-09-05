@@ -169,6 +169,11 @@ public class CanineTrackerPackets {
                 tag.putInt("posX", data.pos.getX());
                 tag.putInt("posY",  data.pos.getY());
                 tag.putInt("posZ",  data.pos.getZ());
+                
+                var storage = DogLocationStorage.get(player.level());
+                var dogData = storage.getData(data.uuid);
+                if (dogData != null)
+                tag.putInt("locateColor", dogData.getLocateColor());
             });
 
             ctx.get().setPacketHandled(true);
