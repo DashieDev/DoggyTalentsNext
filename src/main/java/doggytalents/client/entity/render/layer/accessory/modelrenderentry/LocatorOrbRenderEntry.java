@@ -36,5 +36,10 @@ public class LocatorOrbRenderEntry extends Entry {
     public ResourceLocation getResources(AccessoryInstance inst) {
         return inst.getAccessory().getModelTexture();
     }
+
+    @Override
+    public boolean isTranslucent() {
+        return true;
+    }
     
 }
