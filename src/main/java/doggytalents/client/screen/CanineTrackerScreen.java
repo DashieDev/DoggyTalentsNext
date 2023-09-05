@@ -183,7 +183,7 @@ public class CanineTrackerScreen extends Screen {
         if (indx >= 0) {
             var uuid = this.dogIdFilterList.get(indx);
             var name = this.dogNameFilterList.get(indx);
-            this.startLocateDog(uuid, name, this.dogPosMap.getOrDefault(uuid, BlockPos.ZERO));
+            this.startLocateDog(uuid);
             Minecraft.getInstance().setScreen(null);
         }
         return ret;
@@ -201,7 +201,7 @@ public class CanineTrackerScreen extends Screen {
             if (this.dogIdFilterList.isEmpty()) return false; 
             var uuid = this.dogIdFilterList.get(hightlightDogName);
             var name = this.dogNameFilterList.get(hightlightDogName);
-            this.startLocateDog(uuid, name, this.dogPosMap.getOrDefault(uuid, BlockPos.ZERO));
+            this.startLocateDog(uuid);
             this.minecraft.setScreen(null);
         } else if (keyCode == 259) {
             this.popCharInText();
@@ -285,9 +285,9 @@ public class CanineTrackerScreen extends Screen {
         }
     }
 
-    private void startLocateDog(UUID uuid, String name, BlockPos pos) {
+    private void startLocateDog(UUID uuid) {
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
-            new CanineTrackerData.StartLocatingData(uuid, name, pos));
+            new CanineTrackerData.StartLocatingData(uuid));
     }
 
 }
