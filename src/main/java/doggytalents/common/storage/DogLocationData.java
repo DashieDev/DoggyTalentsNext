@@ -6,6 +6,7 @@ import doggytalents.DoggyItems;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.registry.AccessoryType;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.accessory.LocatorOrbAccessory;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.WorldUtil;
 import net.minecraft.core.Registry;
@@ -40,6 +41,7 @@ public class DogLocationData implements IDogData {
     private @Nullable Component ownerName;
     private @Nullable EnumGender gender;
     private boolean hasRadarCollar;
+    private int locateColor;
 
     // Cached objects
     private Dog dog;
@@ -83,10 +85,22 @@ public class DogLocationData implements IDogData {
         this.name = dogIn.getName();
         this.ownerName = dogIn.getOwnersName().orElse(null);
         this.gender = dogIn.getGender();
-        this.hasRadarCollar = dogIn.getAccessory(DoggyAccessoryTypes.BAND.get()).isPresent();
+
+        updateLocator(dogIn);
 
         this.dog = dogIn;
         this.storage.setDirty();
+    }
+
+    private void updateLocator(Dog dog) {
+        var locatorOptional = dog.getAccessory(DoggyAccessoryTypes.BAND.get());
+        this.hasRadarCollar = locatorOptional.isPresent();
+        if (!this.hasRadarCollar) 
+            return;
+        var locator = locatorOptional.get();
+        if (locator.getAccessory() instanceof LocatorOrbAccessory orb) {
+            this.locateColor = orb.getOrbColor();
+        }
     }
 
 
@@ -187,6 +201,10 @@ public class DogLocationData implements IDogData {
     @Nullable
     public ResourceKey<Level> getDimension() {
         return this.dimension;
+    }
+
+    public int getLocateColor() {
+        return this.locateColor;
     }
 
     @Override
