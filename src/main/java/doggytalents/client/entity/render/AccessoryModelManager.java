@@ -10,6 +10,7 @@ import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.model.ListModel;
@@ -61,6 +62,10 @@ public class AccessoryModelManager {
             if (this.isDyable() && (inst instanceof IColoredObject coloredObject))
                 color = coloredObject.getColor();
             
+            if (isTranslucent()) {
+                DefaultAccessoryRenderer.renderTranslucentModel(model, getResources(inst), 
+                    poseStack, buffer, packedLight, dog, color[0], color[1], color[2], 1f);
+            } else
             RenderLayer.renderColoredCutoutModel(model, getResources(inst), 
                 poseStack, buffer, packedLight, dog, color[0], color[1], color[2]);
         };
