@@ -19,7 +19,7 @@ public class NonLaModel extends SyncedAccessoryModel{
     @Override
     protected void populatePart(ModelPart box) {
         this.head = Optional.of(box.getChild("head"));
-        this.realHead = Optional.of(head.get().getChild("bone"));
+        this.realHead = Optional.of(head.get().getChild("real_head"));
     }
 
     public static LayerDefinition createNonLaLayerDefinition() {
@@ -28,7 +28,9 @@ public class NonLaModel extends SyncedAccessoryModel{
 
 		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(-1.0F, 13.5F, -7.0F));
 
-		PartDefinition bone = head.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(15, 42).addBox(-1.0F, -1.9F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+		PartDefinition realHead = head.addOrReplaceChild("real_head", CubeListBuilder.create(), PartPose.ZERO);
+
+		PartDefinition bone = realHead.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(15, 42).addBox(-1.0F, -1.9F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(15, 42).addBox(-1.0F, -2.4F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.2F))
 		.texOffs(15, 42).addBox(-1.0F, -3.2F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.6F)), PartPose.offsetAndRotation(0.9F, -2.5057F, 0.1F, -0.3491F, 0.0F, 0.0F));
 
