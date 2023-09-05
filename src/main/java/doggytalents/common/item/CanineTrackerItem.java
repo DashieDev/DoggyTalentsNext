@@ -6,6 +6,7 @@ import doggytalents.client.screen.CanineTrackerScreen;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
 import net.minecraft.Util;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -26,6 +27,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
 
 public class CanineTrackerItem extends Item {
 
@@ -140,14 +143,25 @@ public class CanineTrackerItem extends Item {
     @Override
     public Component getName(ItemStack stack) {
         if (stack.hasTag()) {
-            var tag = stack.getTag();
-            if (tag != null && tag.contains("name", Tag.TAG_STRING)) {
-                return ComponentUtil.translatable("item.doggytalents.radar.status", tag.getString("name"))
-                    .withStyle(
-                        Style.EMPTY.withColor(0xffffea2e)
-                    );
-            }
+            var text = getStatusText(stack.getTag());
+            if (text != null) return text;
         }
         return ComponentUtil.translatable(this.getDescriptionId(stack));
+    }
+
+    private @Nullable Component getStatusText(CompoundTag tag) {
+        if (tag == null)
+            return null;
+        if (!tag.contains("name", Tag.TAG_STRING))
+            return null;
+        var ret = Component.translatable("item.doggytalents.radar.status", tag.getString("name"));
+        int ret_color = 0xffffea2e;
+        if (tag.contains("locateColor", Tag.TAG_INT)) {
+            int tag_color = tag.getInt("locateColor");
+            ret_color = tag_color != 0 ? tag_color : ret_color;
+        }
+        return ret.withStyle(
+            Style.EMPTY.withColor(ret_color)
+        );
     }
 }

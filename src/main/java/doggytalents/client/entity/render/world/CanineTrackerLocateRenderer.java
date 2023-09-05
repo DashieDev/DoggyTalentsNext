@@ -14,6 +14,7 @@ import doggytalents.common.item.CanineTrackerItem;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.CanineTrackerData.RequestPosUpdateData;
+import doggytalents.common.util.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.font.FontManager;
@@ -43,6 +44,7 @@ public class CanineTrackerLocateRenderer {
     private static UUID locatingUUID;
     private static String locatingName;
     private static BlockPos locatingPos;
+    private static int locateColor;
 
     private static WeakReference<Dog> cachedDog = new WeakReference<Dog>(null);
     
@@ -126,16 +128,20 @@ public class CanineTrackerLocateRenderer {
     }
     
     public static int getHighlightColor(double distance) {
+        int main_color = locateColor == 0 ? 
+            0xffffea2e : locateColor;
+        int[] main_color3 = Util.rgbIntToIntArray(main_color);
+
         if (distance >= 160) return 0xffffffff;
         distance -= 32;
-        if (distance <= 0) return 0xffffea2e; // 255, 234, 46
+        if (distance <= 0) return main_color; // 255, 234, 46
 
         double progress = Mth.clamp((128d-distance)/128d, 0, 1);
 
         int[] color = {0xff, 0xff, 0xff};
-        //color[0] += -0*progress;
-        color[1] += -21*progress;
-        color[2] += -209*progress;
+        color[0] += (main_color3[0]-255)*progress;
+        color[1] += (main_color3[1]-255)*progress;
+        color[2] += (main_color3[2]-255)*progress;
         
         return 0xff000000 | RenderUtil.rgbToInt(color);
     }
@@ -221,15 +227,18 @@ public class CanineTrackerLocateRenderer {
         var posX = tag.getInt("posX");
         var posY = tag.getInt("posY");
         var posZ = tag.getInt("posZ");
-        setLocating(uuid, name, new BlockPos(posX, posY, posZ));
+        var color = tag.getInt("locateColor");
+        setLocating(uuid, name, new BlockPos(posX, posY, posZ), color);
     }
 
-    public static void setLocating(UUID id, String name, BlockPos pos) {
+    public static void setLocating(UUID id, String name, BlockPos pos, int color) {
         if (id == null || name == null || pos == null) return;
         locating = true;
         locatingUUID = id;
         locatingName = name;
         locatingPos = pos;
+        locateColor = color;
+        
         if (cachedDog.get() != null) {
             if (
                 cachedDog.get().isRemoved()
@@ -244,6 +253,7 @@ public class CanineTrackerLocateRenderer {
         locatingUUID = null;
         locatingName = null;
         locatingPos = null;
+        locateColor = 0;
     }
 
 }
