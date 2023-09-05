@@ -559,6 +559,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
     @Override
     public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, float p_102038_, float p_102039_, float p_102040_, float p_102041_) {
         p_102034_.pushPose();
+        p_102034_.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
         p_102034_.translate((double)(0 / 16.0F), (double)(15 / 16.0F), (double)(0 / 16.0F));
         if (root.zRot != 0.0F) {
             p_102034_.mulPose(Axis.ZP.rotation(root.zRot));
@@ -572,7 +573,9 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
             p_102034_.mulPose(Axis.XP.rotation(root.xRot));
         }
         float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
+        float x0 = root.x, y0 = root.y, z0 = root.z;
         root.xRot = 0; root.yRot = 0; root.zRot = 0;
+        root.x = 0; root.y = 0; root.z = 0;
         p_102034_.pushPose();
         p_102034_.translate((double)(0 / 16.0F), (double)(-15 / 16.0F), (double)(0 / 16.0F));
         
@@ -600,7 +603,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         p_102034_.popPose();
         p_102034_.popPose();
         root.xRot = xRot0; root.yRot = yRot0; root.zRot = zRot0;
-  
+        root.x = x0; root.y = y0; root.z = z0;
     }
     //END
 }
