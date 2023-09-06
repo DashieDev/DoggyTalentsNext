@@ -56,6 +56,8 @@ public final class PacketHandler {
         registerPacket(new DogLowHealthStrategyPacket(), DogLowHealthStrategyData.class);
         registerPacket(new CrossOriginTpPacket(), CrossOriginTpData.class);
         registerPacket(new ChangeArtifactPacket(), ChangeArtifactData.class);
+        registerPacket(new DogIncapMsgPackets.Request(), DogIncapMsgData.Request.class);
+        registerPacket(new DogIncapMsgPackets.Response(), DogIncapMsgData.Response.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {

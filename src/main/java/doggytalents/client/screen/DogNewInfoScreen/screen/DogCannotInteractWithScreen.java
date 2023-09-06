@@ -1,35 +1,68 @@
 package doggytalents.client.screen.DogNewInfoScreen.screen;
 
+import java.util.List;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.framework.Store;
+import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.network.PacketHandler;
+import doggytalents.common.network.packet.data.DogIncapMsgData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraftforge.network.PacketDistributor;
 
 public class DogCannotInteractWithScreen extends Screen {
 
     Dog dog;
-
+    private TextOnlyButton showIncapStrButton;
+    private Font font;
+        
     protected DogCannotInteractWithScreen(Dog dog) {
         super(Component.literal(""));
         this.dog = dog;
+        this.font = Minecraft.getInstance().font;
     }
 
     public static void open(Dog dog) {
         var mc = Minecraft.getInstance();
         var screen = new DogCannotInteractWithScreen(dog);
         mc.setScreen(screen);
+        PacketHandler.send(PacketDistributor.SERVER.noArg(), 
+            new DogIncapMsgData.Request(dog.getId()));
+    }
+
+    @Override
+    protected void init() {
+        var showCause = Component.translatable("doggui.invalid_dog.incapacitated.show_cause")
+            .withStyle(Style.EMPTY.withBold(true));
+        showIncapStrButton = new TextOnlyButton(0, 0, font.width(showCause) + 5, font.lineHeight + 3, 
+            showCause, 
+            b -> {}, font) {
+            @Override
+            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.render(graphics, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
+                var msg = dog.incapacitatedMananger.getIncapMsg();
+                var msgList = ScreenUtil.splitInto(msg, 150, font);
+                graphics.renderComponentTooltip(font, msgList, mouseX, mouseY);
+            }
+        };
+        this.addRenderableWidget(this.showIncapStrButton);
     }
 
     @Override
@@ -40,9 +73,11 @@ public class DogCannotInteractWithScreen extends Screen {
         Component title;
         String help;
         if (this.dog.isDefeated()) {
+            this.showIncapStrButton.visible = true;
             renderIncapScreen(graphics, mouseX, mouseY, pTicks);
             return;
         } else {
+            this.showIncapStrButton.visible = false;
             if (this.dog.canInteract(Minecraft.getInstance().player)) {
                 DogNewInfoScreen.open(dog);
                 return;
@@ -102,22 +137,13 @@ public class DogCannotInteractWithScreen extends Screen {
             "doggui.invalid_dog.incapacitated.subtitle", 
                 dog.getGenderSubject().getString()
             );
-        var dog_title = I18n.get(
-            "doggui.invalid_dog.info.dog",
-            dog.getName().getString()
-        );
-        var owner_title = I18n.get(
-            "doggui.invalid_dog.info.owner",
-            this.dog.getOwnersName().orElse(Component.literal("")).getString()
-        );
         var escToReturn = I18n.get("doggui.invalid_dog.esc_to_return");
         var lines1 = font.split(title, 120);
         var lines2 = font.split(Component.literal(help), 120);
 
         int sizeYtotal = lines1.size()*14
             + 10 + lines2.size()*(font.lineHeight+3)
-            + 10 + font.lineHeight + 3
-            + font.lineHeight;
+            + 12 + font.lineHeight + 3;
         pY = this.height/2 - sizeYtotal/2 + 1;
         
         for (var line : lines1) {
@@ -132,10 +158,9 @@ public class DogCannotInteractWithScreen extends Screen {
             graphics.drawString(font, line, pX, pY, 0xffffffff);
             pY += font.lineHeight + 3;
         }
-        pY += 10;
-        graphics.drawString(font, dog_title, pX, pY, 0xffffffff );
-        pY += font.lineHeight + 3;
-        graphics.drawString(font, owner_title, pX, pY, 0xffffffff );
+        pY += 12;
+        this.showIncapStrButton.setX(pX);
+        this.showIncapStrButton.setY(pY);  
 
         int escTX = this.width/2 - font.width(escToReturn)/2;
         int escTY = this.height/2 + 100; 
