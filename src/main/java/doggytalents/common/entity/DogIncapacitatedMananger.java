@@ -50,6 +50,7 @@ public class DogIncapacitatedMananger {
     private static final int MAX_BANDAID_COUNT = 8;
     private int bandagesCount = 0;
     private int bandageCooldown = 0;
+    private String defeatedMsg = "";
 
     public DogIncapacitatedMananger(Dog dog) {
         this.dog = dog;
@@ -218,6 +219,21 @@ public class DogIncapacitatedMananger {
                     float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
                     dog.level.addParticle(
                         new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(Items.NETHER_WART)),
+                        dog.getX() + f1,
+                        dog.getY() + 0.4,
+                        dog.getZ() + f2,
+                        0, -0.05 , 0 
+                    );
+                }
+            }
+            break;
+        case DROWN:
+            if (dog.getDogHunger() <= 10 && dog.tickCount % 8 == 0) {
+                for (int i = 0; i < 2; ++i) {
+                    float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
+                    float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
+                    dog.level().addParticle(
+                        ParticleTypes.SPLASH,
                         dog.getX() + f1,
                         dog.getY() + 0.4,
                         dog.getZ() + f2,
