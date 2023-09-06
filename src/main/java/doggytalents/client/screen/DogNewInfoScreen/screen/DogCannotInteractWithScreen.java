@@ -168,6 +168,8 @@ public class DogCannotInteractWithScreen extends Screen {
             return Resources.KANJI_INCAP_DROWN;
         case POISON:
             return Resources.KANJI_INCAP_POISON;
+        case STARVE:
+            return Resources.KANJI_INCAP_STARVE;
         default:
             return Resources.KANJI_INCAP_BLOOD;
         }
