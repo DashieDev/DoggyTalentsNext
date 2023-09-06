@@ -54,20 +54,34 @@ public class DogIncapacitatedMananger {
         this.dog = dog;
     }
 
-    public void onBeingDefeated() {
+
+    public void onModeUpdate(EnumMode mode) {
+        if (mode != EnumMode.INCAPACITATED
+            && this.appliedIncapChanges) {
+            this.appliedIncapChanges = false;
+            this.onExitingIncapMode();
+        } else if (mode == EnumMode.INCAPACITATED
+            && !this.appliedIncapChanges) {
+            this.appliedIncapChanges = true;
+            this.onEnteringIncapMode();
+        } 
+    }
+
+    private void onEnteringIncapMode() {
         recoveryMultiplier = 1;
+        this.bandagesCount = 0;
+        this.dog.setAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT,
+            (d, u) -> new AttributeModifier(u, "Defeated Slowness", -0.5f, Operation.MULTIPLY_TOTAL)
+        );
+    }
+
+    private void onExitingIncapMode() {
+        recoveryMultiplier = 1;
+        this.bandagesCount = 0;
+        this.dog.removeAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT);
     }
 
     public void tick() {
-        if (!this.dog.isDefeated()) {
-            if (this.appliedIncapChanges) {
-                this.appliedIncapChanges = false;
-                this.dog.removeAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT);
-                this.bandagesCount = 0;
-                recoveryMultiplier = 1;
-            }
-            return;
-        }
         if (this.dog.level().isClientSide) 
             incapacitatedClientTick();
         else
@@ -254,13 +268,6 @@ public class DogIncapacitatedMananger {
     public void incapacitatedTick() {
         // 3 days max 60 min = 72 000 ticks
 
-        if (!this.appliedIncapChanges) {
-            this.dog.setAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT,
-                (d, u) -> new AttributeModifier(u, "Defeated Slowness", -0.5f, Operation.MULTIPLY_TOTAL)
-            );
-            this.appliedIncapChanges = true;
-        }
-
         var incap_state = dog.getIncapSyncState();
         var new_incap_state = incap_state.updateBandaid(bandagesCount);
         if (new_incap_state != incap_state) {
@@ -295,13 +302,6 @@ public class DogIncapacitatedMananger {
         this.dog.setIncapSyncState(IncapacitatedSyncState.NONE);
         this.dog.setAnim(DogAnimation.STAND_QUICK);
         this.dog.setSitAnim(DogAnimation.NONE);
-
-        if (this.appliedIncapChanges) {
-            this.appliedIncapChanges = false;
-            this.dog.removeAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT);
-            this.bandagesCount = 0;
-            this.recoveryMultiplier = 1;
-        }
 
         if (this.dog.level() instanceof ServerLevel sL) {
             sL.sendParticles(
