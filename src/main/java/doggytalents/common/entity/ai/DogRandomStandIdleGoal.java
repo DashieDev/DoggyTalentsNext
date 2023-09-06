@@ -76,7 +76,9 @@ public class DogRandomStandIdleGoal extends Goal {
                 return DogAnimation.BACKFLIP;
             return DogAnimation.CHOPIN_TAIL;
         } 
-        if (r <= 0.10f) {
+        if (r <= 0.02f) {
+            return DogAnimation.CHOPIN_TAIL;
+        } else if (r <= 0.08f) {
             return DogAnimation.DIG;
         } else if (r <= 0.35f) {
             return DogAnimation.STRETCH;
