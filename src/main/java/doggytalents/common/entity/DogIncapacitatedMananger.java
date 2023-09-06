@@ -50,7 +50,6 @@ public class DogIncapacitatedMananger {
     private static final int MAX_BANDAID_COUNT = 8;
     private int bandagesCount = 0;
     private int bandageCooldown = 0;
-    private String defeatedMsg = "";
 
     public DogIncapacitatedMananger(Dog dog) {
         this.dog = dog;
