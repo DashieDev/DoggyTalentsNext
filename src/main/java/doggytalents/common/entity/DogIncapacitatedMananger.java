@@ -469,7 +469,7 @@ public class DogIncapacitatedMananger {
 
     }
     public static enum DefeatedType { 
-        NONE(0), BLOOD(1), BURN(2), POISON(3), DROWN(4);
+        NONE(0), BLOOD(1), BURN(2), POISON(3), DROWN(4), STARVE(5);
 
         private final int id;
         private DefeatedType(int id) {
