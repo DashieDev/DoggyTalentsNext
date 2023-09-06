@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
+import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 public class DogRandomSitIdleGoal extends Goal {
@@ -23,7 +24,7 @@ public class DogRandomSitIdleGoal extends Goal {
     public boolean canUse() {
         if (!this.dog.isOrderedToSit())
             return false;
-        if (!this.dog.isInSittingPose())
+        if (this.dog.getDogPose() != DogPose.SIT)
             return false;
         if (!dog.canDoIdileAnim()) return false;
         if (!dog.isOnGround()) return false;
