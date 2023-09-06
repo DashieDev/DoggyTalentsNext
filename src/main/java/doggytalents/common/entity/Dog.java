@@ -693,6 +693,7 @@ public class Dog extends AbstractDog {
 
         this.alterations.forEach((alter) -> alter.livingTick(this));
 
+        if (this.isDefeated())
         this.incapacitatedMananger.tick();
 
         if (this.tickChopinTail > 0) {
@@ -1675,14 +1676,11 @@ public class Dog extends AbstractDog {
 
     @Override
     protected void tickDeath() {
-        if (this.deathTime == 19) { // 1 second after death
-            if (this.level() != null && !this.level().isClientSide) {
-//                DogRespawnStorage.get(this.world).putData(this);
-//                DoggyTalents.LOGGER.debug("Saved dog as they died {}", this);
-//
-//                DogLocationStorage.get(this.world).remove(this);
-//                DoggyTalents.LOGGER.debug("Removed dog location as they were removed from the world {}", this);
-            }
+        //Defeated dogs don't tick Death....
+        if (this.isDefeated()) {
+            this.deathTime = 0;
+            this.setHealth(1);
+            return;
         }
 
         super.tickDeath();
@@ -1769,7 +1767,6 @@ public class Dog extends AbstractDog {
         this.setHealth(1);
         this.setMode(EnumMode.INCAPACITATED);
         this.setDogHunger(0);
-        this.incapacitatedMananger.onBeingDefeated();
         this.unRide();
         createIncapSyncState(source);
         if (this.isInWater() || this.isInLava()) {
@@ -2264,6 +2261,14 @@ public class Dog extends AbstractDog {
 
         if (ANIMATION.equals(key)) {
             this.animationManager.onAnimationChange(getAnim());
+        }
+
+        if (!this.level().isClientSide && MODE.get().equals(key)) {
+            var mode = getMode();
+            this.incapacitatedMananger.onModeUpdate(mode);
+            if (mode == EnumMode.INCAPACITATED) {
+                this.removeAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT);
+            }
         }
     }
 
