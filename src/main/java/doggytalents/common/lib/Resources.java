@@ -84,6 +84,7 @@ public class Resources {
     public static final ResourceLocation INCAPACITATED_BLOOD = getEntity("dog", "doggy_hurt/blood");
     public static final ResourceLocation INCAPACITATED_BURN = getEntity("dog", "doggy_hurt/burn");
     public static final ResourceLocation INCAPACITATED_POISON = getEntity("dog", "doggy_hurt/poison");
+    public static final ResourceLocation INCAPACITATED_DROWN = getEntity("dog", "doggy_hurt/drown");
     public static final ResourceLocation INCAPACITATED_LESS_GRAPHIC = getEntity("dog", "doggy_hurt/less_graphic");
 
     public static final ResourceLocation KANJI_NORMAL = getGui("levelkanji/normal");
