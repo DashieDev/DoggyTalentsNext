@@ -96,6 +96,7 @@ public class Resources {
     public static final ResourceLocation KANJI_INCAP_BURN = getGui("fatalkanji/burnt");
     public static final ResourceLocation KANJI_INCAP_POISON = getGui("fatalkanji/poison");
     public static final ResourceLocation KANJI_INCAP_DROWN = getGui("fatalkanji/drown");
+    public static final ResourceLocation KANJI_INCAP_STARVE = getGui("fatalkanji/starve");
 
     public static final ResourceLocation BANDAID_OVERLAY_HALF = getEntity("dog", "doggy_hurt/bandaid/overlay_half");
     public static final ResourceLocation BANDAID_OVERLAY_FULL = getEntity("dog", "doggy_hurt/bandaid/overlay_full");
