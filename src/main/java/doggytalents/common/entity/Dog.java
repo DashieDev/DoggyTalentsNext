@@ -1779,9 +1779,6 @@ public class Dog extends AbstractDog {
 
         var owner = this.getOwner();
         if (owner != null) sendIncapacitatedMsg(owner, source);
-    
-        //TODO Maybe need to find somewhere more appropriate to do this.
-        this.removeAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT);
     }
 
     private void sendIncapacitatedMsg(LivingEntity owner, DamageSource source) {
