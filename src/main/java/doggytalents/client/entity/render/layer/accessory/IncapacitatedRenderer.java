@@ -67,6 +67,9 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         case DROWN:
             texture_rl = Resources.INCAPACITATED_DROWN;
             break;
+        case STARVE:
+            texture_rl = null;
+            break;
         default:
             break; 
         }
