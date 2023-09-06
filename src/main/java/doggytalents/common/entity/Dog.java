@@ -297,7 +297,6 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogLowHealthGoal.RunAway(this));
         //this.goalSelector.addGoal(4, new DogLeapAtTargetGoal(this, 0.4F));
         ++p;
-        this.goalSelector.addGoal(p, new DogEatFromChestDogGoal(this, 1.0));
         this.goalSelector.addGoal(p, new DogTriggerableGoal(this, false));
         ++p; //Prioritize Talent Action
         //All mutex by nature
