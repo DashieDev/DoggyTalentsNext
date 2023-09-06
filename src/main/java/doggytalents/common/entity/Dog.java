@@ -1779,6 +1779,9 @@ public class Dog extends AbstractDog {
 
         var owner = this.getOwner();
         if (owner != null) sendIncapacitatedMsg(owner, source);
+        this.incapacitatedMananger.setIncapMsg(
+            source.getLocalizedDeathMessage(this).getString()
+        );
     }
 
     private void sendIncapacitatedMsg(LivingEntity owner, DamageSource source) {
