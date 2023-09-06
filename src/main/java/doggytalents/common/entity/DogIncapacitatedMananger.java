@@ -50,6 +50,9 @@ public class DogIncapacitatedMananger {
     private static final int MAX_BANDAID_COUNT = 8;
     private int bandagesCount = 0;
     private int bandageCooldown = 0;
+    
+    public static final int MAX_INCAP_MSG_LEN = 256;
+    private String incapMsg = "";
 
     public DogIncapacitatedMananger(Dog dog) {
         this.dog = dog;
@@ -80,6 +83,7 @@ public class DogIncapacitatedMananger {
         recoveryMultiplier = 1;
         this.bandagesCount = 0;
         this.dog.removeAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT);
+        this.incapMsg = "";
     }
 
     public void tick() {
@@ -356,6 +360,7 @@ public class DogIncapacitatedMananger {
         tg0.putInt("type", syncState.type.getId());
         tg0.putInt("bandaid", this.bandagesCount);
         tg0.putInt("poseid", syncState.poseId);
+        tg0.putString("incapMsg", incapMsg);
         tag.put("doggyIncapacitated", tg0);
     }
 
@@ -364,6 +369,7 @@ public class DogIncapacitatedMananger {
         var type = DefeatedType.byId(tg0.getInt("type"));
         var bandaid_count = tg0.getInt("bandaid");
         var poseId = tg0.getInt("poseid");
+        this.incapMsg = tg0.getString("incapMsg");
         this.bandagesCount = bandaid_count;
         dog.setIncapSyncState(new IncapacitatedSyncState(type, 
             BandaidState.getState(bandaid_count), poseId));
@@ -403,6 +409,19 @@ public class DogIncapacitatedMananger {
         case 1:
             return DogAnimation.FAINT_STAND_2;
         }
+    }
+
+    public void setIncapMsg(String s) {
+        if (s == null) return;
+        if (s.isEmpty()) return;
+        if (s.length() > MAX_INCAP_MSG_LEN) {
+            s = s.substring(0, MAX_INCAP_MSG_LEN - 6) + "..";
+        }
+        this.incapMsg = s;
+    }
+
+    public String getIncapMsg() {
+        return this.incapMsg;
     }
 
 
