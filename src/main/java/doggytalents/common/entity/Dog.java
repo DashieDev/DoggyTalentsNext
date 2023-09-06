@@ -1816,6 +1816,8 @@ public class Dog extends AbstractDog {
             type = DefeatedType.BURN;
         } else if (source.is(DamageTypes.MAGIC)) {
             type = DefeatedType.POISON;
+        } else if (source.is(DamageTypes.DROWN))  {
+            type = DefeatedType.DROWN;
         } else {
             type = DefeatedType.BLOOD;
         }
