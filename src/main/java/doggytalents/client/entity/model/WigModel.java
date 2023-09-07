@@ -30,7 +30,7 @@ public class WigModel extends SyncedAccessoryModel {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition head = partdefinition.addOrReplaceChild("phead", CubeListBuilder.create(), PartPose.offset(-1.0F, 13.5F, -7.0F));
+		PartDefinition head = partdefinition.addOrReplaceChild("phead", CubeListBuilder.create(), PartPose.offset(0F, 13.5F, -7.0F));
 
         var pwig = head.addOrReplaceChild("pwig", CubeListBuilder.create(), PartPose.ZERO);
 
@@ -47,7 +47,7 @@ public class WigModel extends SyncedAccessoryModel {
 		.texOffs(0, 0).addBox(-4.85F, -10.3F, -9.1F, 1.0F, -1.0F, 4.0F, CubeDeformation.NONE)
 		.texOffs(0, 0).addBox(-3.5F, -13.0F, -9.6F, 7.0F, -1.0F, 4.0F, CubeDeformation.NONE)
 		.texOffs(0, 0).addBox(-2.25F, -14.5F, -9.1F, 5.0F, -1.0F, 3.0F, CubeDeformation.NONE)
-		.texOffs(0, 0).addBox(-3.0F, -12.75F, -9.35F, 6.0F, -2.0F, 4.0F, CubeDeformation.NONE), PartPose.offset(0.9F, 11.05F, 7.0F));
+		.texOffs(0, 0).addBox(-3.0F, -12.75F, -9.35F, 6.0F, -2.0F, 4.0F, CubeDeformation.NONE), PartPose.offset(-0.1F, 11.05F, 7.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
