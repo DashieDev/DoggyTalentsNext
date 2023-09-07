@@ -43,10 +43,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
     public ModelPart tail;
     public ModelPart realTail;
     
-
     public ModelPart root;
-
-
 
     public DogModel(ModelPart box) {
         this.root = box;
