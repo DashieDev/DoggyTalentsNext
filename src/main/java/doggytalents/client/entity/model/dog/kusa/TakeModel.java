@@ -56,14 +56,6 @@ public class TakeModel extends DogModel<Dog> {
 		.texOffs(42, 25).addBox(0.0F, 7.0F, 0.75F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.3F))
 		.texOffs(33, 25).addBox(0.0F, 3.0F, 0.0F, 2.0F, 6.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.ZERO);
         
-		tail.addOrReplaceChild("real_tail_2", CubeListBuilder.create(), PartPose.ZERO);
-        
-        tail.addOrReplaceChild("real_tail_bushy", CubeListBuilder.create(), PartPose.ZERO);
-
-		real_head.addOrReplaceChild("ear_normal", CubeListBuilder.create(),PartPose.ZERO);
-        real_head.addOrReplaceChild("ear_boni", CubeListBuilder.create(),PartPose.ZERO);
-    	real_head.addOrReplaceChild("ear_small", CubeListBuilder.create(),PartPose.ZERO);
-
 		return LayerDefinition.create(meshdefinition, 64, 64);
 
     }

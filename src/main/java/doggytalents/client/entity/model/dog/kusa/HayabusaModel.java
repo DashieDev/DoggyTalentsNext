@@ -57,14 +57,6 @@ public class HayabusaModel extends DogModel<Dog> {
 		.texOffs(16, 28).addBox(0.0F, 4.4F, 2.3F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.45F))
 		.texOffs(16, 28).addBox(0.0F, 3.5F, 2.8F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.65F)), PartPose.ZERO);
 		
-		tail.addOrReplaceChild("real_tail_2", CubeListBuilder.create(), PartPose.ZERO);
-        
-        tail.addOrReplaceChild("real_tail_bushy", CubeListBuilder.create(), PartPose.ZERO);
-
-		real_head.addOrReplaceChild("ear_normal", CubeListBuilder.create(),PartPose.ZERO);
-        real_head.addOrReplaceChild("ear_boni", CubeListBuilder.create(),PartPose.ZERO);
-    	real_head.addOrReplaceChild("ear_small", CubeListBuilder.create(),PartPose.ZERO);
-
 		return LayerDefinition.create(meshdefinition, 64, 64);
 
     }

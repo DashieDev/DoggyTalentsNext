@@ -74,14 +74,6 @@ public class AmaterasuModel extends DogModel<Dog> {
 		.texOffs(33, 24).mirror().addBox(-0.15F, -0.3F, -1.4F, 1.0F, 8.0F, 7.0F, new CubeDeformation(0.0F)).mirror(false)
 		.texOffs(33, 24).mirror().addBox(2.1F, -0.3F, -1.4F, 1.0F, 8.0F, 7.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.ZERO);
 		
-		tail.addOrReplaceChild("real_tail_2", CubeListBuilder.create(), PartPose.ZERO);
-        
-        tail.addOrReplaceChild("real_tail_bushy", CubeListBuilder.create(), PartPose.ZERO);
-
-		real_head.addOrReplaceChild("ear_normal", CubeListBuilder.create(),PartPose.ZERO);
-        real_head.addOrReplaceChild("ear_boni", CubeListBuilder.create(),PartPose.ZERO);
-    	real_head.addOrReplaceChild("ear_small", CubeListBuilder.create(),PartPose.ZERO);
-
 		return LayerDefinition.create(meshdefinition, 64, 64);
 
     }
