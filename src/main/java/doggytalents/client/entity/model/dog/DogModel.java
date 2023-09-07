@@ -1,5 +1,6 @@
 package doggytalents.client.entity.model.dog;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -47,6 +48,10 @@ public class DogModel extends EntityModel<Dog> {
     
     public ModelPart root;
 
+    //Optional parts
+    public Optional<ModelPart> earLeft;
+    public Optional<ModelPart> earRight;
+
     public DogModel(ModelPart box) {
         this.root = box;
         this.head = box.getChild("head");
@@ -59,6 +64,8 @@ public class DogModel extends EntityModel<Dog> {
         this.legFrontLeft = box.getChild("left_front_leg");
         this.tail = box.getChild("tail");
         this.realTail = this.tail.getChild("real_tail");
+
+        this.addOptionalParts(box);
         this.correctInitalPose();
     }
 
@@ -76,7 +83,13 @@ public class DogModel extends EntityModel<Dog> {
         this.tail = box.getChild("tail");
         this.realTail = this.tail.getChild("real_tail");
         
+        this.addOptionalParts(box);
         this.correctInitalPose();
+    }
+
+    protected void addOptionalParts(ModelPart box) {
+        this.earLeft = getChildIfPresent(this.realHead, "ear_left");
+        this.earRight = getChildIfPresent(this.realHead, "ear_right");
     }
 
     protected Optional<ModelPart> getChildIfPresent(ModelPart box, String name) {
@@ -104,10 +117,13 @@ public class DogModel extends EntityModel<Dog> {
                 // Nose
                 .texOffs(0, 10).addBox(-1.5F, -0.001F, -5.0F, 3.0F, 3.0F, 4.0F, scale)
                 , PartPose.ZERO);
-        var ear_normal = real_head.addOrReplaceChild("ear_normal", CubeListBuilder.create()
-            .texOffs(16, 14).addBox(-3.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
-            .texOffs(16, 14).addBox(1.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
-        ,PartPose.ZERO);
+        real_head.addOrReplaceChild("ear_right", CubeListBuilder.create()
+            .texOffs(16, 14).addBox(-1.0F, -2.0F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), 
+                PartPose.offset(-2.0F, -3.0F, 0.5F));
+        real_head.addOrReplaceChild("ear_left", CubeListBuilder.create()
+            .texOffs(16, 14).addBox(-1.0F, -2.0F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), 
+                PartPose.offset(2.0F, -3.0F, 0.5F));
+    
         var1.addOrReplaceChild("body", CubeListBuilder.create()
                 .texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, scale)
         , PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5707964F, 0.0F, 0.0F));
