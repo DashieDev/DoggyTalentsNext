@@ -35,15 +35,15 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
     public static final float[] TAIL_SITTING_OFF = {0, 9f, -2f};
 
     public ModelPart head;
-    public ModelPart realHead; //
+    public ModelPart realHead;
     public ModelPart body;
-    public ModelPart mane; //
+    public ModelPart mane;
     public ModelPart legBackRight;
     public ModelPart legBackLeft;
     public ModelPart legFrontRight;
     public ModelPart legFrontLeft;
     public ModelPart tail;
-    public ModelPart realTail; //
+    public ModelPart realTail;
     
 
     public ModelPart root;
@@ -172,12 +172,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         if (pose.canBeg)
         this.translateBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
 
-        /*
-         * else if (dog.isLying() && false) {
-                
-            }
-         */
-
     }
 
     public void setUpStandPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
@@ -225,19 +219,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.legFrontRight.yRot = 0;
         this.legFrontLeft.yRot = 0;
     }
-
-    /*
-     * 
-     * this.legBackRight.setPos(-2.5F, 16.0F, 7.0F);
-        this.legBackLeft.setPos(0.5F, 16.0F, 7.0F);
-        this.legFrontRight.setPos(-2.5F, 16.0F, -4.0F);
-        this.legFrontLeft.setPos(0.5F, 16.0F, -4.0F);
-
-        this.legBackRight.setPos(-2.5F, 22.0F, 2.0F);
-         this.legBackLeft.setPos(0.5F, 22.0F, 2.0F);
-          this.legFrontRight.setPos(-2.49F, 17.0F, -4.0F);
-          this.legFrontLeft.setPos(0.51F, 17.0F, -4.0F);
-     */
 
     public void setupFaintPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.head.zRot += 90 * Mth.DEG_TO_RAD;
@@ -367,26 +348,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.legFrontRight.xRot = -(float) Math.PI / 2F;
         this.legFrontLeft.setPos(2.5F, 23, -4);
         this.legFrontLeft.xRot = -(float) Math.PI / 2F;
-        
-        // this.body.setPos(0.0F, 19.0F, 2.0F);
-        //         this.body.xRot = ((float)Math.PI / 2F);
-        //         this.mane.setPos(-1.0F, 19.0F, -3.0F);
-        //         this.mane.xRot = this.body.xRot;
-        //         this.head.setPos(-1.0F, 17.0F, -7.0F);
-
-        //         this.tail.setPos(-0.5F, 17.0F, 8.0F); // +4.0D
-        //         this.legBackRight.setPos(-4.5F, 20.0F, 7.0F);
-        //         this.legBackLeft.setPos(2.5F, 20.0F, 7.0F);
-        //         this.legFrontRight.setPos(-3.0F, 22.0F, -3.0F);
-        //         this.legFrontLeft.setPos(1.0F, 22.0F, -3.0F);
-
-        //         this.legBackRight.xRot = -(float)Math.PI / 2.6F;
-        //         this.legBackLeft.xRot = -(float)Math.PI / 2.6F;
-
-        //         this.legFrontRight.xRot = -(float)Math.PI / 2;
-        //         this.legFrontRight.yRot = (float)Math.PI / 10;
-        //         this.legFrontLeft.xRot = -(float)Math.PI / 2;
-        //         this.legFrontLeft.yRot = -(float)Math.PI / 10;
     }
 
     public void translateShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
@@ -536,6 +497,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.g = p_102421_;
         this.b = p_102422_;
     }
+    //END
 
     @Override
     public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, float p_102038_, float p_102039_, float p_102040_, float p_102041_) {
@@ -586,5 +548,4 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         root.xRot = xRot0; root.yRot = yRot0; root.zRot = zRot0;
         root.x = x0; root.y = y0; root.z = z0;
     }
-    //END
 }
