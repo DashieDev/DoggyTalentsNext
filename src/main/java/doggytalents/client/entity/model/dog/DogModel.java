@@ -90,8 +90,8 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     protected void addOptionalParts(ModelPart box) {
-        this.earLeft = getChildIfPresent(this.realHead, "ear_left");
-        this.earRight = getChildIfPresent(this.realHead, "ear_right");
+        this.earLeft = getChildIfPresent(this.realHead, "left_ear");
+        this.earRight = getChildIfPresent(this.realHead, "right_ear");
     }
 
     protected Optional<ModelPart> getChildIfPresent(ModelPart box, String name) {
@@ -119,10 +119,10 @@ public class DogModel extends EntityModel<Dog> {
                 // Nose
                 .texOffs(0, 10).addBox(-1.5F, -0.001F, -5.0F, 3.0F, 3.0F, 4.0F, scale)
                 , PartPose.ZERO);
-        real_head.addOrReplaceChild("ear_right", CubeListBuilder.create()
+        real_head.addOrReplaceChild("right_ear", CubeListBuilder.create()
             .texOffs(16, 14).addBox(-1.0F, -2.0F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), 
                 PartPose.offset(-2.0F, -3.0F, 0.5F));
-        real_head.addOrReplaceChild("ear_left", CubeListBuilder.create()
+        real_head.addOrReplaceChild("left_ear", CubeListBuilder.create()
             .texOffs(16, 14).addBox(-1.0F, -2.0F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), 
                 PartPose.offset(2.0F, -3.0F, 0.5F));
     
