@@ -67,44 +67,6 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         } else {
             this.model = this.defaultModel;
         }
-
-        this.model.realTail.visible = true;
-        this.model.realTail2.visible = false;
-        this.model.realTail3.visible = false;
-        byte tailIndx = skin.getTail();
-        if (tailIndx != 0) {
-            switch (tailIndx) {
-                case 1 :
-                    this.model.realTail.visible = false;
-                    this.model.realTail2.visible = true;
-                    this.model.realTail3.visible = false;
-                    break;
-                case 2 :
-                    this.model.realTail.visible = false;
-                    this.model.realTail2.visible = false;
-                    this.model.realTail3.visible = true;
-                    break;
-            }
-        }
-
-        this.model.earNormal.visible = true;
-        this.model.earBoni.visible = false;
-        this.model.earSmall.visible = false;
-        byte earIndx = skin.getEar();
-        if (earIndx != 0) {
-            switch (earIndx) {
-                case 1 :
-                    this.model.earNormal.visible = false;
-                    this.model.earBoni.visible = true;
-                    this.model.earSmall.visible = false;
-                    break; 
-                case 2 :
-                    this.model.earNormal.visible = false;
-                    this.model.earBoni.visible = false;
-                    this.model.earSmall.visible = true;
-                    break;
-            }
-        }
         
         if (dog.isDogWet()) {
             float f = dog.getShadingWhileWet(partialTicks);

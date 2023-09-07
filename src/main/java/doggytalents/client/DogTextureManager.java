@@ -341,6 +341,11 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             DogSkin skin;
             if (use_model == null || use_model.equals("default") || use_model.equals("")) {
                 skin = new DogSkin(text_rl).setName(name);
+            } else if (use_model.equals("variant")) {
+                var dogModel = DogModelRegistry.getDogModelHolder(use_model);
+                skin = (dogModel == null) ?
+                    new DogSkin(text_rl).setName(name)
+                    : new DogSkin(text_rl, dogModel).setName(name);
                 var tailOptional = skinObject.get("tail_id");
                 if (tailOptional != null) {
                     skin.setTail(tailOptional.getAsByte());
