@@ -49,14 +49,6 @@ public class ShinModel extends DogModel<Dog> {
 		var tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 12.0F, 8.0F, 1.8326F, 0.0F, 0.0F));
 
 		tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(16, 31).addBox(0.0F, 0.0F, -1.0F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.ZERO);
-        
-		tail.addOrReplaceChild("real_tail_2", CubeListBuilder.create(), PartPose.ZERO);
-        
-        tail.addOrReplaceChild("real_tail_bushy", CubeListBuilder.create(), PartPose.ZERO);
-
-		real_head.addOrReplaceChild("ear_normal", CubeListBuilder.create(),PartPose.ZERO);
-        real_head.addOrReplaceChild("ear_boni", CubeListBuilder.create(),PartPose.ZERO);
-    	real_head.addOrReplaceChild("ear_small", CubeListBuilder.create(),PartPose.ZERO);
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 
