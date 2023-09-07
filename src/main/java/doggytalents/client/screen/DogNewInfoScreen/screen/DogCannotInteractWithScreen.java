@@ -143,8 +143,8 @@ public class DogCannotInteractWithScreen extends Screen {
         var lines2 = font.split(Component.literal(help), 120);
 
         int sizeYtotal = lines1.size()*14
-            + 10 + lines2.size()*(font.lineHeight+3)
-            + 12 + font.lineHeight + 3;
+            + 7 + font.lineHeight + 3
+            + 15 + lines2.size()*(font.lineHeight+3);
         pY = this.height/2 - sizeYtotal/2 + 1;
         
         for (var line : lines1) {
@@ -154,14 +154,18 @@ public class DogCannotInteractWithScreen extends Screen {
             stack.popPose();
             pY += 14;
         }
-        pY += 10;
+        pY += 7;
+        
+        this.showIncapStrButton.setX(pX);
+        this.showIncapStrButton.setY(pY);  
+        pY += font.lineHeight + 3;
+        pY += 15;
+
         for (var line : lines2) {
             graphics.drawString(font, line, pX, pY, 0xffffffff);
             pY += font.lineHeight + 3;
         }
-        pY += 12;
-        this.showIncapStrButton.setX(pX);
-        this.showIncapStrButton.setY(pY);  
+        
 
         int escTX = this.width/2 - font.width(escToReturn)/2;
         int escTY = this.height/2 + 100; 
