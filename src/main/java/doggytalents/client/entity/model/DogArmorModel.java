@@ -9,7 +9,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class DogArmorModel<T extends AbstractDog> extends DogModel<T> {
+public class DogArmorModel<T extends AbstractDog> extends DogModel {
 
     public ModelPart leggingHindRight;
     public ModelPart leggingHindLeft;

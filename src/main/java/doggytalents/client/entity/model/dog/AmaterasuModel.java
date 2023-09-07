@@ -12,7 +12,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.particles.ParticleTypes;
 
-public class AmaterasuModel extends DogModel<Dog> {
+public class AmaterasuModel extends DogModel {
 
 	
 

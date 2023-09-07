@@ -28,7 +28,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class DogModel<T extends AbstractDog> extends EntityModel<T> {
+public class DogModel extends EntityModel<Dog> {
 
     public static final float[] MANE_LYING_OFF = {0f, 6f, 1f};
     public static final float[] MANE_SITTING_OFF = {0f, 2f, 0f};
@@ -126,7 +126,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         return LayerDefinition.create(var0, 64, 32);
     }
     @Override
-    public void prepareMobModel(T d, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void prepareMobModel(Dog d, float limbSwing, float limbSwingAmount, float partialTickTime) {
         
         if (!(d instanceof Dog dog))
             return;
@@ -372,15 +372,13 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
     Vector3f vecObj = new Vector3f();
 
     @Override
-    public void setupAnim(T dogIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!(dogIn instanceof Dog)) return;
-        var dog = (Dog)dogIn;
+    public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         var pose = dog.getDogPose();
         var animationManager = dog.animationManager;
 
         if (pose.freeHead) {
             this.head.xRot = headPitch * ((float)Math.PI / 180F); 
-            this.head.yRot = netHeadYaw * (dogIn.isInSittingPose() && dogIn.isLying() ? 0.005F : (float)Math.PI / 180F);
+            this.head.yRot = netHeadYaw * (dog.isInSittingPose() && dog.isLying() ? 0.005F : (float)Math.PI / 180F);
         }
         if (pose.freeTail) {
             this.tail.xRot = dog.getTailRotation();
@@ -406,7 +404,7 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.realTail.resetPose();
     }
 
-    public void copyFrom(DogModel<?> dogModel) {
+    public void copyFrom(DogModel dogModel) {
         this.root.copyFrom(dogModel.root);
         this.head.copyFrom(dogModel.head);
         this.realHead.copyFrom(dogModel.realHead);

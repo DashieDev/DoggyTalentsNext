@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
-public class AccessoryModelRenderer extends RenderLayer<Dog, DogModel<Dog>>  {
+public class AccessoryModelRenderer extends RenderLayer<Dog, DogModel>  {
 
     public AccessoryModelRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);

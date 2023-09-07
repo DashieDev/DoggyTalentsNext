@@ -11,7 +11,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 
-public class ChiModel extends DogModel<Dog> {
+public class ChiModel extends DogModel {
 
     public ChiModel(ModelPart box) {
 		super(box);

@@ -46,7 +46,7 @@ public class AccessoryModelManager {
         
         public abstract void initModel(EntityRendererProvider.Context ctx);
         public abstract SyncedAccessoryModel getModel();
-        public void renderAccessory(RenderLayer<Dog, DogModel<Dog>> layer, 
+        public void renderAccessory(RenderLayer<Dog, DogModel> layer, 
             PoseStack poseStack, MultiBufferSource buffer, int packedLight, 
             Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, 
             float ageInTicks, float netHeadYaw, float headPitch, AccessoryInstance inst) {
