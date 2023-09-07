@@ -128,13 +128,13 @@
         {
             "skin_name" : "Pug",
             "skin_id" : "pug",
-            "use_model" : "default",
+            "use_model" : "variant",
             "ear_id" : 2
         },
         {
             "skin_name" : "English Bulldog",
             "skin_id" : "english_bulldog",
-            "use_model" : "default",
+            "use_model" : "variant",
             "ear_id" : 2
         },
         {
@@ -155,13 +155,13 @@
         {
             "skin_name" : "Fox",
             "skin_id" : "fox",
-            "use_model" : "default",
+            "use_model" : "variant",
             "tail_id" : 2
         },
         {
             "skin_name" : "Arctic Dog",
             "skin_id" : "arctic_dog",
-            "use_model" : "default",
+            "use_model" : "variant",
             "tail_id" : 2
         },
         {
@@ -181,7 +181,7 @@
         {
             "skin_name" : "Racoon",
             "skin_id" : "racoon",
-            "use_model" : "default",
+            "use_model" : "variant",
             "tail_id" : 2
         },
         {
@@ -192,19 +192,19 @@
         {
             "skin_name" : "Noname #2",
             "skin_id" : "noname_2",
-            "use_model" : "default",
+            "use_model" : "variant",
             "ear_id" : 1
         },
         {
             "skin_name" : "Noname #3",
             "skin_id" : "noname_3",
-            "use_model" : "default",
+            "use_model" : "variant",
             "ear_id" : 1
         },
         {
             "skin_name" : "Noname #4",
             "skin_id" : "noname_4",
-            "use_model" : "default",
+            "use_model" : "variant",
             "ear_id" : 2
         },
         {
