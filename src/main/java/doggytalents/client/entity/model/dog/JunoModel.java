@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class JunoModel extends DogModel<Dog> {
+public class JunoModel extends DogModel {
 
     public JunoModel(ModelPart box) {
         super(box);

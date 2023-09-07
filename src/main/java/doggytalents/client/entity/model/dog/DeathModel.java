@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class DeathModel extends DogModel<Dog> {
+public class DeathModel extends DogModel {
     
     public DeathModel(ModelPart box) {
         super(box);

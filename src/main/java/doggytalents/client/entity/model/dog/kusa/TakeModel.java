@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class TakeModel extends DogModel<Dog> {
+public class TakeModel extends DogModel {
 
     public TakeModel(ModelPart box) {
 		super(box);

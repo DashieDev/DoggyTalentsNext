@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
 import java.util.Optional;
 
-public class RescueDogRenderer extends RenderLayer<Dog, DogModel<Dog>> {
+public class RescueDogRenderer extends RenderLayer<Dog, DogModel> {
 
     private DogRescueModel model;
 

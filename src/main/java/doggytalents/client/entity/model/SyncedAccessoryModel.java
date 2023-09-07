@@ -35,7 +35,7 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
 
     protected abstract void populatePart(ModelPart box);
 
-    public void sync(DogModel<? extends AbstractDog> dogModel) {
+    public void sync(DogModel dogModel) {
         root.copyFrom(dogModel.root);
 
         syncPart(this.head, dogModel.head);

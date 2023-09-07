@@ -12,7 +12,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
 @Deprecated
-public class VariantDogModel extends DogModel<Dog> {
+public class VariantDogModel extends DogModel {
 
     public ModelPart realTail2;
     public ModelPart realTail3;
@@ -147,7 +147,7 @@ public class VariantDogModel extends DogModel<Dog> {
     }
     
     @Override
-    public void copyFrom(DogModel<?> dogModel) {
+    public void copyFrom(DogModel dogModel) {
         super.copyFrom(dogModel);
         this.realTail2.copyFrom(this.realTail);
         this.realTail3.copyFrom(this.realTail);
