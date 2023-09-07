@@ -21,9 +21,9 @@ public class JunoModel extends DogModel {
         MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(-1.0F, 13.5F, -7.0F));
-		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 10).addBox(-0.5F, -0.12F, -4.75F, 3.0F, 3.0F, 4.0F, new CubeDeformation(-0.35F)), PartPose.ZERO);
+        PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0F, 13.5F, -7.0F));
+		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 10).addBox(-1.5F, -0.12F, -4.75F, 3.0F, 3.0F, 4.0F, new CubeDeformation(-0.35F)), PartPose.ZERO);
 
 		real_head.addOrReplaceChild("ear", CubeListBuilder.create().texOffs(18, 15).addBox(-3.4F, -14.75F, -8.5F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.1F))
 		.texOffs(11, 5).addBox(-3.25F, -13.75F, -8.5F, 1.0F, 2.0F, 2.0F, new CubeDeformation(-0.05F))
@@ -42,7 +42,7 @@ public class JunoModel extends DogModel {
 		.texOffs(14, 5).mirror().addBox(3.5F, -15.0F, -7.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
 		.texOffs(14, 5).mirror().addBox(4.0F, -14.75F, -7.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
 		.texOffs(14, 5).mirror().addBox(4.0F, -14.95F, -8.4F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false)
-		.texOffs(14, 5).mirror().addBox(3.75F, -15.15F, -9.15F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offset(1.0F, 10.5F, 7.0F));
+		.texOffs(14, 5).mirror().addBox(3.75F, -15.15F, -9.15F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offset(0F, 10.5F, 7.0F));
 
 	    real_head.addOrReplaceChild("facefur", CubeListBuilder.create().texOffs(12, 4).addBox(2.75F, -13.05F, -8.65F, 1.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(12, 6).addBox(2.75F, -12.05F, -8.5F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
@@ -64,7 +64,7 @@ public class JunoModel extends DogModel {
 		.texOffs(10, 7).mirror().addBox(-5.0F, -10.8F, -8.6F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.1F)).mirror(false)
 		.texOffs(9, 6).mirror().addBox(-5.5F, -10.3F, -8.75F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false)
 		.texOffs(9, 6).mirror().addBox(-4.5F, -12.8F, -8.5F, 3.0F, 1.0F, 2.0F, new CubeDeformation(-0.2F)).mirror(false)
-		.texOffs(9, 6).mirror().addBox(-4.75F, -9.55F, -8.5F, 3.0F, 1.0F, 2.0F, new CubeDeformation(-0.2F)).mirror(false), PartPose.offset(1.0F, 10.5F, 7.0F));
+		.texOffs(9, 6).mirror().addBox(-4.75F, -9.55F, -8.5F, 3.0F, 1.0F, 2.0F, new CubeDeformation(-0.2F)).mirror(false), PartPose.offset(0F, 10.5F, 7.0F));
 
         partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
 
