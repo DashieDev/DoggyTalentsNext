@@ -126,6 +126,7 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel> {
         dogModel.legFrontLeft.visible = leftFrontLegVisible0;
 
         //Render the front leg overlay afterwards
+        dogModel.copyPropertiesTo(hindLegDiffTextModel);
         hindLegDiffTextModel.sync(dogModel);
         if (accessoryInst instanceof IColoredObject coloredObject) {
             float[] color = coloredObject.getColor();
