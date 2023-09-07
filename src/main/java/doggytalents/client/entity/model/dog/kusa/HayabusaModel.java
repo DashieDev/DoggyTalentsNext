@@ -11,7 +11,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 
-public class HayabusaModel extends DogModel<Dog> {
+public class HayabusaModel extends DogModel {
 
     public HayabusaModel(ModelPart box) {
 		super(box);
@@ -56,7 +56,7 @@ public class HayabusaModel extends DogModel<Dog> {
 		.texOffs(8, 28).addBox(0.0F, 3.3F, -0.1F, 2.0F, 5.0F, 2.0F, new CubeDeformation(-0.25F))
 		.texOffs(16, 28).addBox(0.0F, 4.4F, 2.3F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.45F))
 		.texOffs(16, 28).addBox(0.0F, 3.5F, 2.8F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.65F)), PartPose.ZERO);
-		
+
 		return LayerDefinition.create(meshdefinition, 64, 64);
 
     }

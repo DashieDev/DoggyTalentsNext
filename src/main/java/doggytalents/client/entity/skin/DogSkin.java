@@ -28,7 +28,7 @@ public class DogSkin {
     private String name = "";
     private ResourceLocation texturePath;
     private boolean useCustomModel;
-    private DogModelHolder<Dog> customModelHolder;
+    private DogModelHolder customModelHolder;
     private byte tail = 0, ear = 0;
 
     //Extra info
@@ -42,7 +42,7 @@ public class DogSkin {
         this.useCustomModel = false;
     }
 
-    public DogSkin(ResourceLocation path, @Nonnull DogModelHolder<Dog> model) {
+    public DogSkin(ResourceLocation path, @Nonnull DogModelHolder model) {
         this.texturePath = path;
         this.useCustomModel = true;
         this.customModelHolder = model;
@@ -78,7 +78,7 @@ public class DogSkin {
         return this.useCustomModel;
     }
 
-    public DogModelHolder<Dog> getCustomModel() {
+    public DogModelHolder getCustomModel() {
         return this.customModelHolder;
     }
 

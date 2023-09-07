@@ -25,9 +25,9 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
-public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel<Dog>> {
+public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
 
-    private DogModel<Dog> defaultModel;
+    private DogModel defaultModel;
 
     public IncapacitatedRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);

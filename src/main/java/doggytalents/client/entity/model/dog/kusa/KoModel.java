@@ -11,7 +11,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 
-public class KoModel extends DogModel<Dog> {
+public class KoModel extends DogModel {
 
     public KoModel(ModelPart box) {
 		super(box);
