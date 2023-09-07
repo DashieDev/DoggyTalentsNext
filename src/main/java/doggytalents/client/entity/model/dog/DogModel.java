@@ -45,10 +45,8 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
     public DogModelPart legFrontLeft;
     public DogModelPart tail;
     public DogModelPart realTail;
-
+    
     public DogModelPart root;
-
-
 
     public DogModel(ModelPart box) {
         this.root = DogModelPart.recreateFromModelPart(box);
