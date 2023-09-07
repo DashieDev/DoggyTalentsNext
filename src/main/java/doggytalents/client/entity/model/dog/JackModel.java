@@ -27,13 +27,13 @@ public class JackModel extends DogModel {
 		.texOffs(0, 0).addBox(-3.0F, -3.65F, -2.0F, 6.0F, 1.0F, 4.0F, new CubeDeformation(-0.35F))
 		.texOffs(0, 10).addBox(-1.5F, -0.02F, -5.0F, 3.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.ZERO);
 
-		real_head.addOrReplaceChild("ear_right", CubeListBuilder.create().texOffs(15, 15).addBox(-1.5F, 0.0F, -2.25F, 2.0F, 2.0F, 3.0F, new CubeDeformation(-0.3F))
+		real_head.addOrReplaceChild("right_ear", CubeListBuilder.create().texOffs(15, 15).addBox(-1.5F, 0.0F, -2.25F, 2.0F, 2.0F, 3.0F, new CubeDeformation(-0.3F))
 		.texOffs(16, 12).addBox(-1.7F, 0.6F, -2.25F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.04F))
 		.texOffs(16, 12).addBox(-2.3F, 0.85F, -2.25F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F))
 		.texOffs(16, 12).addBox(-3.05F, 2.0F, -2.25F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F))
 		.texOffs(16, 12).addBox(-2.55F, 1.5F, -2.5F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)), PartPose.offset(-2.25F, -3.0F, 0.5F));
 
-		real_head.addOrReplaceChild("ear_left", CubeListBuilder.create().texOffs(16, 12).mirror().addBox(1.8F, 1.5F, -2.5F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false)
+		real_head.addOrReplaceChild("left_ear", CubeListBuilder.create().texOffs(16, 12).mirror().addBox(1.8F, 1.5F, -2.5F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false)
 		.texOffs(16, 12).mirror().addBox(2.3F, 2.0F, -2.25F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false)
 		.texOffs(16, 12).mirror().addBox(1.55F, 0.85F, -2.25F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false)
 		.texOffs(16, 12).mirror().addBox(0.95F, 0.6F, -2.25F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.04F)).mirror(false)

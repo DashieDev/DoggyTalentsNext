@@ -5570,7 +5570,7 @@ public class DogAnimationSequences {
                     AnimationChannel.Interpolations.CATMULLROM),
                 new Keyframe(5f, KeyframeAnimations.degreeVec(-18f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM)))
-        .addAnimation("ear_left",
+        .addAnimation("left_ear",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
                 new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM), 
@@ -5588,7 +5588,7 @@ public class DogAnimationSequences {
                     AnimationChannel.Interpolations.CATMULLROM), 
                 new Keyframe(5f, KeyframeAnimations.posVec(0f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM)))
-        .addAnimation("ear_left",
+        .addAnimation("left_ear",
             new AnimationChannel(AnimationChannel.Targets.ROTATION,
                 new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM),
@@ -5616,7 +5616,7 @@ public class DogAnimationSequences {
                     AnimationChannel.Interpolations.CATMULLROM),
                 new Keyframe(5f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM)))
-        .addAnimation("ear_right",
+        .addAnimation("right_ear",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
                 new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM), 
@@ -5630,7 +5630,7 @@ public class DogAnimationSequences {
                     AnimationChannel.Interpolations.CATMULLROM), 
                 new Keyframe(5f, KeyframeAnimations.posVec(0f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM)))
-        .addAnimation("ear_right",
+        .addAnimation("right_ear",
             new AnimationChannel(AnimationChannel.Targets.ROTATION,
                 new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM),
