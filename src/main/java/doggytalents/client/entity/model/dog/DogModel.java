@@ -45,11 +45,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
     public DogModelPart legFrontLeft;
     public DogModelPart tail;
     public DogModelPart realTail; //
-    public DogModelPart realTail2; //
-    public DogModelPart realTail3; //
-    public DogModelPart earNormal;
-    public DogModelPart earBoni;
-    public DogModelPart earSmall;
 
     public DogModelPart root;
 
@@ -60,9 +55,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         box = this.root;
         this.head = (DogModelPart)box.getChild("head");
         this.realHead = (DogModelPart)this.head.getChild("real_head");
-        this.earNormal = (DogModelPart)this.realHead.getChild("ear_normal");
-        this.earBoni = (DogModelPart)this.realHead.getChild("ear_boni");
-        this.earSmall = (DogModelPart)this.realHead.getChild("ear_small");
         this.body = (DogModelPart)box.getChild("body");
         this.mane = (DogModelPart)box.getChild("upper_body");
         this.legBackRight = (DogModelPart)box.getChild("right_hind_leg");
@@ -71,8 +63,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.legFrontLeft = (DogModelPart)box.getChild("left_front_leg");
         this.tail = (DogModelPart)box.getChild("tail");
         this.realTail = (DogModelPart)this.tail.getChild("real_tail");
-        this.realTail2 = (DogModelPart)this.tail.getChild("real_tail_2");
-        this.realTail3 = (DogModelPart)this.tail.getChild("real_tail_bushy");
         this.correctInitalPose();
     }
 
@@ -80,22 +70,23 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         super(renderType);
         this.root = DogModelPart.recreateFromModelPart(box);
         box = this.root;
-        this.head = (DogModelPart)(box.getChild("head"));
-        this.realHead = (DogModelPart)(this.head.getChild("real_head"));
-        this.earNormal = (DogModelPart)(this.realHead.getChild("ear_normal"));
-        this.earBoni = (DogModelPart)(this.realHead.getChild("ear_boni"));
-        this.earSmall = (DogModelPart)(this.realHead.getChild("ear_small"));
-        this.body = (DogModelPart)(box.getChild("body"));
-        this.mane = (DogModelPart)(box.getChild("upper_body"));
-        this.legBackRight = (DogModelPart)(box.getChild("right_hind_leg"));
-        this.legBackLeft = (DogModelPart)(box.getChild("left_hind_leg"));
-        this.legFrontRight = (DogModelPart)(box.getChild("right_front_leg"));
-        this.legFrontLeft = (DogModelPart)(box.getChild("left_front_leg"));
-        this.tail = (DogModelPart)(box.getChild("tail"));
-        this.realTail = (DogModelPart)(this.tail.getChild("real_tail"));
-        this.realTail2 = (DogModelPart)(this.tail.getChild("real_tail_2"));
-        this.realTail3 = (DogModelPart)(this.tail.getChild("real_tail_bushy"));
+        this.head = (DogModelPart)box.getChild("head");
+        this.realHead = (DogModelPart)this.head.getChild("real_head");
+        this.body = (DogModelPart)box.getChild("body");
+        this.mane = (DogModelPart)box.getChild("upper_body");
+        this.legBackRight = (DogModelPart)box.getChild("right_hind_leg");
+        this.legBackLeft = (DogModelPart)box.getChild("left_hind_leg");
+        this.legFrontRight = (DogModelPart)box.getChild("right_front_leg");
+        this.legFrontLeft = (DogModelPart)box.getChild("left_front_leg");
+        this.tail = (DogModelPart)box.getChild("tail");
+        this.realTail = (DogModelPart)this.tail.getChild("real_tail");
         this.correctInitalPose();
+    }
+
+    protected Optional<ModelPart> getChildIfPresent(ModelPart box, String name) {
+        if (!box.hasChild(name))
+            return Optional.empty();
+        return Optional.of(box.getChild(name));
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -121,14 +112,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
             .texOffs(16, 14).addBox(-2.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
             .texOffs(16, 14).addBox(2.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
         ,PartPose.ZERO);
-        var ear_boni = real_head.addOrReplaceChild("ear_boni", CubeListBuilder.create()
-            .texOffs(52, 0).addBox(-3.0F, -3.0F, -1.5F, 1, 5, 3, scale)
-            .texOffs(52, 0).addBox(4.0F, -3.0F, -1.5F, 1, 5, 3, scale)
-        ,PartPose.ZERO);
-        var ear_small = real_head.addOrReplaceChild("ear_small", CubeListBuilder.create()
-            .texOffs(18, 0).addBox(-2.8F, -3.5F, -1.0F, 2, 1, 2, scale)
-            .texOffs(18, 0).addBox(2.8F, -3.5F, -1.0F, 2, 1, 2, scale)
-        ,PartPose.ZERO);
         var1.addOrReplaceChild("body", CubeListBuilder.create()
                 .texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, scale)
         , PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5707964F, 0.0F, 0.0F));
@@ -142,12 +125,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         var5.addOrReplaceChild("real_tail", CubeListBuilder.create()
                 .texOffs(9, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, scale)
         , PartPose.ZERO);
-        var5.addOrReplaceChild("real_tail_2", CubeListBuilder.create()
-                .texOffs(45, 0).addBox(0.0F, 0.0F, 0.0F, 2, 3, 1, scale)
-        , PartPose.offset(0.0F, -2.0F, 0.0F));
-        var5.addOrReplaceChild("real_tail_bushy", CubeListBuilder.create()
-                .texOffs(43, 19).addBox(-1.0F, 0F, -2F, 3, 10, 3, scale)
-                , PartPose.ZERO);
         return LayerDefinition.create(var0, 64, 32);
     }
     @Override
@@ -417,16 +394,12 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.mane.zRot = dog.getShakeAngle(partialTickTime, -0.08F);
         this.body.zRot = dog.getShakeAngle(partialTickTime, -0.16F);
         this.realTail.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
-        this.realTail2.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
-        this.realTail3.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
     }
 
     public void resetShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.mane.zRot = 0;
         this.body.zRot = 0;
         this.realTail.zRot = 0;
-        this.realTail2.zRot = 0;
-        this.realTail3.zRot = 0;
     }
 
     public void translateBeggingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
@@ -472,8 +445,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.root.getAllParts().forEach(x -> ((DogModelPart)x).resetPose());
         this.realHead.resetPose();
         this.realTail.resetPose();
-        this.realTail2.resetPose();
-        this.realTail3.resetPose();
     }
 
     public void copyFrom(DogModel<?> dogModel) {
@@ -488,8 +459,6 @@ public class DogModel<T extends AbstractDog> extends EntityModel<T> {
         this.legFrontLeft.copyFrom(dogModel.legFrontLeft);
         this.tail.copyFrom(dogModel.tail);
         this.realTail.copyFrom(dogModel.realTail);
-        this.realTail2.copyFrom(dogModel.realTail2);
-        this.realTail3.copyFrom(dogModel.realTail3);
     }
 
     public void resetPart(DogModelPart part, Dog dog) {

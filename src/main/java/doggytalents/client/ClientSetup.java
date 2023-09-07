@@ -20,6 +20,7 @@ import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
+import doggytalents.client.entity.model.dog.VariantDogModel;
 import doggytalents.client.entity.model.dog.kusa.ChiModel;
 import doggytalents.client.entity.model.dog.kusa.HayabusaModel;
 import doggytalents.client.entity.model.dog.kusa.KoModel;
@@ -62,6 +63,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientSetup {
 
     public static final ModelLayerLocation DOG = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "main");
+    public static final ModelLayerLocation DOG_LEGACY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_legacy"), "main");
     public static final ModelLayerLocation DOG_IWANKO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_iwanko"), "main");
     public static final ModelLayerLocation DOG_LUCARIO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_lucario"), "main");
     public static final ModelLayerLocation DOG_DEATH = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_death"), "main");    
@@ -97,6 +99,7 @@ public class ClientSetup {
 
     public static void setupEntityRenderers(final EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(DOG, DogModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_LEGACY, VariantDogModel::createBodyLayer);
         event.registerLayerDefinition(DOG_IWANKO, IwankoModel::createBodyLayer);
         event.registerLayerDefinition(DOG_LUCARIO, LucarioModel::createBodyLayer);
         event.registerLayerDefinition(DOG_DEATH, DeathModel::createBodyLayer);

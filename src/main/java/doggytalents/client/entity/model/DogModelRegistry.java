@@ -16,6 +16,7 @@ import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
+import doggytalents.client.entity.model.dog.VariantDogModel;
 import doggytalents.client.entity.model.dog.kusa.ChiModel;
 import doggytalents.client.entity.model.dog.kusa.HayabusaModel;
 import doggytalents.common.entity.Dog;
@@ -40,6 +41,7 @@ public class DogModelRegistry {
     public static void init() {
         MODEL_MAP = Maps.newConcurrentMap();
         register("default", ctx -> new DogModel<Dog>(ctx.bakeLayer(ClientSetup.DOG)));
+        register("variant", ctx -> new VariantDogModel(ctx.bakeLayer(ClientSetup.DOG_LEGACY)));
         register("iwanko", ctx -> new IwankoModel(ctx.bakeLayer(ClientSetup.DOG_IWANKO)));
         register("lucario", ctx -> new LucarioModel(ctx.bakeLayer(ClientSetup.DOG_LUCARIO)));
         register("death", ctx -> new DeathModel(ctx.bakeLayer(ClientSetup.DOG_DEATH)));
