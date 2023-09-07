@@ -30,7 +30,7 @@ public class BachWigModel extends SyncedAccessoryModel {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition head = partdefinition.addOrReplaceChild("phead", CubeListBuilder.create(), PartPose.offset(-1.0F, 13.5F, -7.0F));
+		PartDefinition head = partdefinition.addOrReplaceChild("phead", CubeListBuilder.create(), PartPose.offset(0F, 13.5F, -7.0F));
 
         var pwig = head.addOrReplaceChild("pwig", CubeListBuilder.create(), PartPose.ZERO);
 
@@ -81,7 +81,7 @@ public class BachWigModel extends SyncedAccessoryModel {
 		.texOffs(0, 36).addBox(-3.8F, 0.2F, -1.55F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 36).addBox(-3.55F, -0.3F, 0.2F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 36).addBox(-3.85F, 1.9F, -1.1F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 36).mirror().addBox(3.85F, 1.9F, -1.1F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(0.0F, 0.0F, 0.0F));
+		.texOffs(0, 36).mirror().addBox(3.85F, 1.9F, -1.1F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-1.0F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
