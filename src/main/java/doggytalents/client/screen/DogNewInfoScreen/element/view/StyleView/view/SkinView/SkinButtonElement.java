@@ -106,13 +106,8 @@ public class SkinButtonElement extends AbstractElement {
                 applyAndRequestSkinChange(activeSkinId);
             }  
         );
-        applyButton.active = !(
-            (activeSkinId == 0 && dog.getSkinHash().equals("")) 
-            || DogTextureManager.INSTANCE
-            .getTextureHash((locList.get(activeSkinId))).equals(
-                dog.getSkinHash()
-            )
-       );
+        applyButton.active = (locList.get(activeSkinId))
+            != dog.getClientSkin();
 
         this.addChildren(prevSkinButton);
         this.addChildren(nextSkinButton);
@@ -136,8 +131,11 @@ public class SkinButtonElement extends AbstractElement {
     public void applyAndRequestSkinChange(int id) {
         int size = locList.size();
         if (id >= size || id < 0) return;
+        var selectedSkin = locList.get(id);
         String requestHash = null;
-        if (id == 0) requestHash = "";
+        if (selectedSkin == DogSkin.CLASSICAL 
+            || selectedSkin == DogSkin.MISSING) 
+            requestHash = "";
         else {
             requestHash = DogTextureManager.INSTANCE.getTextureHash((locList.get(id)));
         }
