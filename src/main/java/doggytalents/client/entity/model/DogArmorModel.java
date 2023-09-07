@@ -41,16 +41,16 @@ public class DogArmorModel<T extends AbstractDog> extends DogModel {
         MeshDefinition var0 = new MeshDefinition();
         PartDefinition var1 = var0.getRoot();
         float var2 = 13.5F;
-        PartDefinition var3 = var1.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(-1.0F, 13.5F, -7.0F));
+        PartDefinition var3 = var1.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0F, 13.5F, -7.0F));
         var real_head = var3.addOrReplaceChild("real_head", CubeListBuilder.create()
                 // Head
-                .texOffs(0, 0).addBox(-2.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, scale)
+                .texOffs(0, 0).addBox(-3.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, scale)
                 // Nose
-                .texOffs(0, 10).addBox(-0.5F, 0.0F, -5.0F, 3.0F, 3.0F, 4.0F, scale)
+                .texOffs(0, 10).addBox(-1.5F, 0.0F, -5.0F, 3.0F, 3.0F, 4.0F, scale)
                 , PartPose.ZERO);
         var ear_normal = real_head.addOrReplaceChild("ear_normal", CubeListBuilder.create()
-            .texOffs(16, 14).addBox(-2.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
-            .texOffs(16, 14).addBox(2.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
+            .texOffs(16, 14).addBox(-3.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
+            .texOffs(16, 14).addBox(1.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
         ,PartPose.ZERO);
         var body = var1.addOrReplaceChild("body", CubeListBuilder.create()
                 .texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, scale)
