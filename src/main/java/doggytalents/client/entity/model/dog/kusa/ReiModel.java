@@ -22,13 +22,12 @@ public class ReiModel extends DogModel {
 		var partdefinition = meshdefinition.getRoot();
 
 		var head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), 
-            PartPose.offset(-1.0F, 13.5F, -7.0F));
-        var real_head = head.addOrReplaceChild("real_head", 
-		CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, new CubeDeformation(-0.1F))
-			.texOffs(1, 1).addBox(-2.0F, -3.95F, -2.0F, 6.0F, 2.0F, 3.0F, new CubeDeformation(-0.35F))
-			.texOffs(0, 10).addBox(-0.5F, -0.22F, -5.0F, 3.0F, 3.0F, 4.0F, new CubeDeformation(-0.2F)),
-        PartPose.ZERO);
-		real_head.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(15, 15).addBox(-3.75F, -13.5F, -8.75F, 2.0F, 2.0F, 3.0F, new CubeDeformation(-0.1F))
+            PartPose.offset(0F, 13.5F, -7.0F));
+		var real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, new CubeDeformation(-0.1F))
+		.texOffs(1, 1).addBox(-3.0F, -3.95F, -2.0F, 6.0F, 2.0F, 3.0F, new CubeDeformation(-0.35F))
+		.texOffs(0, 10).addBox(-1.5F, -0.22F, -5.0F, 3.0F, 3.0F, 4.0F, new CubeDeformation(-0.2F)), PartPose.ZERO);
+
+		var bone = real_head.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(15, 15).addBox(-3.75F, -13.5F, -8.75F, 2.0F, 2.0F, 3.0F, new CubeDeformation(-0.1F))
 		.texOffs(16, 12).addBox(-3.95F, -12.9F, -8.75F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.05F))
 		.texOffs(16, 12).addBox(-4.55F, -12.65F, -8.75F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F))
 		.texOffs(16, 12).addBox(-5.3F, -11.5F, -8.75F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F))
@@ -37,7 +36,7 @@ public class ReiModel extends DogModel {
 		.texOffs(16, 12).mirror().addBox(2.95F, -12.9F, -8.75F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.05F)).mirror(false)
 		.texOffs(16, 12).mirror().addBox(3.55F, -12.65F, -8.75F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false)
 		.texOffs(16, 12).mirror().addBox(4.3F, -11.5F, -8.75F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false)
-		.texOffs(16, 12).mirror().addBox(3.8F, -12.0F, -9.0F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false), PartPose.offset(1.0F, 10.5F, 7.0F));
+		.texOffs(16, 12).mirror().addBox(3.8F, -12.0F, -9.0F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false), PartPose.offset(0.0F, 10.5F, 7.0F));
 
         var body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
         var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-3.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
