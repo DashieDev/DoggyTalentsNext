@@ -38,7 +38,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
-public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
+public class DogRenderer extends MobRenderer<Dog, DogModel> {
 
     private DogModel defaultModel;
 
@@ -50,7 +50,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         this.model = DogModelRegistry.getDogModelHolder("default").getValue();
         this.defaultModel = this.model;
         this.addLayer(new BoneLayer(this, ctx.getItemInHandRenderer()));
-        for (LayerFactory<Dog, DogModel<Dog>> layer : CollarRenderManager.getLayers()) {
+        for (LayerFactory<Dog, DogModel> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
         }
         ChopinLogger.l("creation of dog renderer.");
@@ -71,7 +71,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel<Dog>> {
         } else {
             this.model = this.defaultModel;
         }
-        
+
         if (dog.isDogWet()) {
             float f = dog.getShadingWhileWet(partialTicks);
             this.model.setColor(f, f, f);

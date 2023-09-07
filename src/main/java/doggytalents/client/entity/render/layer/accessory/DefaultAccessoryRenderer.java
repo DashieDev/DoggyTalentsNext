@@ -22,9 +22,9 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
-public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
+public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel> {
 
-    private DogModel<Dog> defaultModel;
+    private DogModel defaultModel;
     private DogFrontLegsSeperate hindLegDiffTextModel;
 
     public DefaultAccessoryRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
@@ -55,7 +55,7 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
     private void renderNormalAccessory(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, AccessoryInstance accessoryInst) {
         var parentModel = this.getParentModel();
 
-        DogModel<Dog> dogModel;
+        DogModel dogModel;
         if (parentModel.useDefaultModelForAccessories()) {
             dogModel = this.defaultModel;
             parentModel.copyPropertiesTo(dogModel);
@@ -87,7 +87,7 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel<Dog>> {
     private void renderHindLegDifferentAccessory(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, AccessoryInstance accessoryInst) {
         var parentModel = this.getParentModel();
 
-        DogModel<Dog> dogModel;
+        DogModel dogModel;
         if (parentModel.useDefaultModelForAccessories()) {
             dogModel = this.defaultModel;
         } else {

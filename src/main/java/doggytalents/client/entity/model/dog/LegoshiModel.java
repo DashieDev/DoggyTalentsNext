@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class LegoshiModel extends DogModel<Dog> {
+public class LegoshiModel extends DogModel {
 
     public LegoshiModel(ModelPart box) {
         super(box);

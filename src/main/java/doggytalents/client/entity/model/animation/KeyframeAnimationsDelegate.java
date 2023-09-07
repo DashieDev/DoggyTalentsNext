@@ -23,7 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class KeyframeAnimationsDelegate {
-   public static void animate(DogModel<? extends AbstractDog> model, Dog dog,
+   public static void animate(DogModel model, Dog dog,
         AnimationDefinition animation, long elapsed_in_millis, float interpolation_scale, 
         Vector3f current_pos) {
         float elapsed_in_seconds = getElapsedSeconds(animation, elapsed_in_millis);

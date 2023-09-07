@@ -11,20 +11,20 @@ import java.util.List;
 
 public class CollarRenderManager {
 
-    private static final List<LayerFactory<Dog, DogModel<Dog>>> backer = new ArrayList<>();
-    private static final List<LayerFactory<Dog, DogModel<Dog>>> accessoryRendererMap = Collections.synchronizedList(backer);
+    private static final List<LayerFactory<Dog, DogModel>> backer = new ArrayList<>();
+    private static final List<LayerFactory<Dog, DogModel>> accessoryRendererMap = Collections.synchronizedList(backer);
 
     /**
      * Register a renderer for a collar type
      * Call this during {@link net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent}.
      * This method is safe to call during parallel mod loading.
      */
-    public static void registerLayer(LayerFactory<Dog, DogModel<Dog>> shader) {
+    public static void registerLayer(LayerFactory<Dog, DogModel> shader) {
         accessoryRendererMap.add(shader);
     }
 
     @Nullable
-    public static List<LayerFactory<Dog, DogModel<Dog>>> getLayers() {
+    public static List<LayerFactory<Dog, DogModel>> getLayers() {
         return Collections.unmodifiableList(backer);
     }
 }

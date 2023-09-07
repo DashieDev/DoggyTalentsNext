@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class LucarioModel extends DogModel<Dog> {
+public class LucarioModel extends DogModel {
     
     public LucarioModel(ModelPart box) {
         super(box);

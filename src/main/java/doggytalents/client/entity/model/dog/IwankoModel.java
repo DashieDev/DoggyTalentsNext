@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class IwankoModel extends DogModel<Dog> {
+public class IwankoModel extends DogModel {
 
     public IwankoModel(ModelPart box) {
         super(box);

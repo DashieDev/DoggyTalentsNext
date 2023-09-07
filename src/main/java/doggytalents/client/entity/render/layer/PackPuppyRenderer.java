@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
 import java.util.Optional;
 
-public class PackPuppyRenderer extends RenderLayer<Dog, DogModel<Dog>> {
+public class PackPuppyRenderer extends RenderLayer<Dog, DogModel> {
 
     private DogBackpackModel model;
 

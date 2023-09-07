@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.entity.layers.PlayerItemInHandLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.item.ItemDisplayContext;
 
-public class BoneLayer extends RenderLayer<Dog, DogModel<Dog>> {
+public class BoneLayer extends RenderLayer<Dog, DogModel> {
 
     private ItemInHandRenderer itemInHandRenderer;
 
@@ -30,7 +30,7 @@ public class BoneLayer extends RenderLayer<Dog, DogModel<Dog>> {
         if (dog.hasBone()) {
 
             matrixStack.pushPose();
-            DogModel<Dog> model = this.getParentModel();
+            DogModel model = this.getParentModel();
             if (model.young) {
                 // derived from AgeableModel head offset
                 matrixStack.translate(0.0F, 5.0F / 16.0F, 2.0F / 16.0F);

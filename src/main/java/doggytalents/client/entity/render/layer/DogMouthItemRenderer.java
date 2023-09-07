@@ -18,7 +18,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.SwordItem;
 
-public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel<Dog>> {
+public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
     
     private ItemInHandRenderer itemInHandRenderer;
 
@@ -35,7 +35,7 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel<Dog>> {
         if (stack == null || stack.isEmpty()) return;
 
         matrixStack.pushPose();
-        DogModel<Dog> model = this.getParentModel();
+        DogModel model = this.getParentModel();
         if (model.young) {
             // derived from AgeableModel head offset
             matrixStack.translate(0.0F, 5.0F / 16.0F, 2.0F / 16.0F);
