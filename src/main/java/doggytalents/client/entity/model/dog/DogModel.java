@@ -142,10 +142,7 @@ public class DogModel extends EntityModel<Dog> {
         return LayerDefinition.create(var0, 64, 32);
     }
     @Override
-    public void prepareMobModel(Dog d, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        
-        if (!(d instanceof Dog dog))
-            return;
+    public void prepareMobModel(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
         var pose = dog.getDogPose();
 
