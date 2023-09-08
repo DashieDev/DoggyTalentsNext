@@ -829,6 +829,24 @@ public class Dog extends AbstractDog {
             } else
             this.setFreezePose();
             return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.PINK_DYE) {
+            this.setAnim(DogAnimation.BACKFLIP);
+        } else if (stack.getItem() == Items.BLUE_DYE) {
+            this.setAnim(DogAnimation.STRETCH);
+        }else if (stack.getItem() == Items.GREEN_DYE) {
+            this.setAnim(DogAnimation.SIT_IDLE_2);
+        }else if (stack.getItem() == Items.PURPLE_DYE) {
+            this.setAnim(DogAnimation.SCRATCHIE);
+        }else if (stack.getItem() == Items.YELLOW_DYE) {
+            this.setAnim(DogAnimation.LYING_DOWN);
+        }else if (stack.getItem() == Items.RED_DYE) {
+            this.setAnim(DogAnimation.DIG);
+        }else if (stack.getItem() == Items.ORANGE_DYE) {
+            this.setAnim(DogAnimation.CHOPIN_TAIL);
+        }else if (stack.getItem() == Items.BROWN_DYE) {
+            this.setAnim(DogAnimation.BELLY_RUB);
+        }else if (stack.getItem() == Items.BLACK_DYE) {
+            this.setAnim(DogAnimation.BACKFLIP);
         }
 
         if (this.isDefeated()) 
