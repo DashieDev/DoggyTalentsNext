@@ -70,6 +70,13 @@
             "author" : "MashXP, DashieDev"
         },
         {
+            "skin_name" : "Windie (Arcanine)",
+            "skin_id" : "arcanine_shiro",
+            "use_model" : "arcanine",
+            "based_on" : "Arcanine from Pokemon Gen 1",
+            "author" : "MashXP, DashieDev"
+        },
+        {
             "skin_name" : "Iwanko (RockRuff)",
             "skin_id" : "iwanko",
             "use_model" : "iwanko",
