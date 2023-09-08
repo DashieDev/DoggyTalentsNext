@@ -440,6 +440,8 @@ public class DogModel extends EntityModel<Dog> {
         this.root.getAllParts().forEach(x -> x.resetPose());
         this.realHead.resetPose();
         this.realTail.resetPose();
+        this.earLeft.ifPresent(ear -> ear.resetPose());
+        this.earRight.ifPresent(ear -> ear.resetPose());
     }
 
     public void copyFrom(DogModel dogModel) {
