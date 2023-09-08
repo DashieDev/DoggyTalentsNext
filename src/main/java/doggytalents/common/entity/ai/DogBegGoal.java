@@ -3,6 +3,7 @@ package doggytalents.common.entity.ai;
 import doggytalents.DoggyTags;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -32,7 +33,13 @@ public class DogBegGoal extends Goal {
     @Override
     public boolean canUse() {
         this.player = this.world.getNearestPlayer(this.playerPredicate, this.dog);
-        return this.player == null ? false : this.hasTemptationItemInHand(this.player);
+        if (this.player == null) 
+            return false;
+        if (!this.hasTemptationItemInHand(player))
+            return false;
+        if (this.dog.getAnim() != DogAnimation.NONE)
+            return false;
+        return true;
     }
 
     @Override
