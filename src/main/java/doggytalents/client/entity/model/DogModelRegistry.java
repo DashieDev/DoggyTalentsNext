@@ -8,6 +8,7 @@ import com.google.common.collect.Maps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
+import doggytalents.client.entity.model.dog.ArcanineModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
@@ -58,6 +59,7 @@ public class DogModelRegistry {
         register("kusa_take", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_TAKE)));
         register("kusa_tei", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_TEI)));
         register("kusa_ume", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_UME)));
+        register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)));
     }
 
     public static class DogModelHolder {
