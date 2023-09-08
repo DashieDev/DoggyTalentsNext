@@ -27,7 +27,7 @@ public class TakeModel extends DogModel {
 
 		var bone = real_head.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offset(1.6753F, -3.35F, -0.2839F));
 
-		bone.addOrReplaceChild("head_r1", CubeListBuilder.create().texOffs(0, 0).addBox(-0.7F, -0.3F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F))
+		bone.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-0.7F, -0.3F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F))
 		.texOffs(18, 13).addBox(-1.5F, -1.5F, -0.75F, 3.0F, 3.0F, 1.0F, new CubeDeformation(-0.7F))
 		.texOffs(0, 13).addBox(-0.4F, -0.7F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F))
 		.texOffs(0, 13).addBox(0.2F, -0.7F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F))
