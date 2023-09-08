@@ -206,6 +206,41 @@ public class DogModel extends EntityModel<Dog> {
         this.head.setPos(0F, 13.5F, -7.0F);
         this.legFrontRight.yRot = 0.0F;
         this.legFrontLeft.yRot = 0.0F;
+        animateStandWalking(dog, limbSwing, limbSwingAmount, partialTickTime);
+    }
+
+    public void animateStandWalking(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        float w = Mth.cos(limbSwing * 0.6662F);
+        float swing = Mth.clamp(limbSwingAmount, 0, 1);
+        float modifier = 2.5f;
+        this.body.xRot += getAnimateWalkingValue(w, swing, modifier * -5f*Mth.DEG_TO_RAD);
+        this.body.y += getAnimateWalkingValue(w, swing, -0.25f*modifier);
+        this.body.z +=  getAnimateWalkingValue(w, swing, -0.25f*modifier);
+
+        this.mane.xRot += getAnimateWalkingValue(w, swing, modifier * 2.5f*Mth.DEG_TO_RAD );
+        this.mane.y += getAnimateWalkingValue(w, swing, -0.25f*modifier);
+
+        this.head.y += getAnimateWalkingValue(w, swing, -0.25f*modifier);
+
+        this.tail.y += getAnimateWalkingValue(w, swing, 0.5f*modifier);
+        this.tail.z += getAnimateWalkingValue(w, swing, -0.5f*modifier);
+
+        if (this.earRight.isPresent()) {
+            this.earRight.get().xRot = getAnimateWalkingValue(w, swing, -40f*Mth.DEG_TO_RAD );
+            this.earRight.get().zRot = getAnimateWalkingValue(w, swing, -27.5f*Mth.DEG_TO_RAD );
+            this.earRight.get().y += getAnimateWalkingValue(w, swing, 0.5f );
+        }
+        if (this.earLeft.isPresent()) {
+            this.earLeft.get().xRot = getAnimateWalkingValue(w, swing, -40f*Mth.DEG_TO_RAD );
+            this.earLeft.get().zRot = getAnimateWalkingValue(w, swing, 27.5f*Mth.DEG_TO_RAD );
+            this.earLeft.get().y += getAnimateWalkingValue(w, swing, 0.5f );
+        }
+    }
+
+    private float getAnimateWalkingValue(float w, float swingAmount, float amplitude) {
+        int sign = Mth.sign(amplitude);
+        amplitude = Math.abs(amplitude);
+        return sign*Math.abs(amplitude * swingAmount * w);
     }
 
     public void setUpSitPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
