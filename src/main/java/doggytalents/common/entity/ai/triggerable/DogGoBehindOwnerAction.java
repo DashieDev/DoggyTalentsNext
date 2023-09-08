@@ -26,6 +26,10 @@ public class DogGoBehindOwnerAction extends TriggerableAction {
 
     @Override
     public void onStart() {
+        if (!this.owner.isAlive() 
+            || this.owner.distanceToSqr(dog) > 16*16) {
+            this.setState(ActionState.FINISHED); return;
+        }
         getBehindOwnerPos();
         if (this.targetPos == null) {
             this.setState(ActionState.FINISHED); return;
