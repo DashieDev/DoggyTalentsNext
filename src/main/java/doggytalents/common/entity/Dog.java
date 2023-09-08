@@ -211,6 +211,7 @@ public class Dog extends AbstractDog {
     protected TriggerableAction stashedAction;
     protected TriggerableAction activeAction;
     protected int delayedActionStart = 0;
+    protected int actionPendingTime = 0;
 
     private int hungerTick;
     private int prevHungerTick;  
@@ -586,7 +587,11 @@ public class Dog extends AbstractDog {
         super.aiStep();
 
         if (!this.level().isClientSide && this.delayedActionStart > 0)
-            --this.delayedActionStart; 
+            --this.delayedActionStart;
+
+        if (!this.level().isClientSide) {
+            updateAndInvalidatePendingAction();
+        }   
 
         if (!this.level().isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.onGround() && this.canUpdateClassicalAnim()) {
             this.startShakingAndBroadcast(false);
@@ -792,6 +797,22 @@ public class Dog extends AbstractDog {
         if (triggered)
             this.delayedActionStart = delay;
         return triggered;
+    }
+
+    protected void updateAndInvalidatePendingAction() {
+        if (this.activeAction == null) {
+            this.actionPendingTime = 0;
+            return;
+        }
+        if (this.activeAction.getState() != ActionState.PENDING) {
+            this.actionPendingTime = 0;
+            return;
+        }
+        if (++this.actionPendingTime >= 20) {
+            ChopinLogger.sendToOwner(this, "action waited too long!");
+            this.actionPendingTime = 0;
+            this.clearTriggerableAction();
+        }
     }
 
     @Override
