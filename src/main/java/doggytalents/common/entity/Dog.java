@@ -831,22 +831,31 @@ public class Dog extends AbstractDog {
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.PINK_DYE) {
             this.setAnim(DogAnimation.BACKFLIP);
+            return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.BLUE_DYE) {
             this.setAnim(DogAnimation.STRETCH);
+            return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.GREEN_DYE) {
             this.setAnim(DogAnimation.SIT_IDLE_2);
+            return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.PURPLE_DYE) {
             this.setAnim(DogAnimation.SCRATCHIE);
+            return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.YELLOW_DYE) {
             this.setAnim(DogAnimation.LYING_DOWN);
+            return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.RED_DYE) {
             this.setAnim(DogAnimation.DIG);
+            return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.ORANGE_DYE) {
             this.setAnim(DogAnimation.CHOPIN_TAIL);
+            return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.BROWN_DYE) {
             this.setAnim(DogAnimation.BELLY_RUB);
+            return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.BLACK_DYE) {
             this.setAnim(DogAnimation.BACKFLIP);
+            return InteractionResult.SUCCESS;
         }
 
         if (this.isDefeated()) 
