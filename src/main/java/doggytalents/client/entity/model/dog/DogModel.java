@@ -419,6 +419,13 @@ public class DogModel extends EntityModel<Dog> {
         var pose = dog.getDogPose();
         var animationManager = dog.animationManager;
 
+        if (dog.getFreezeAnim() != DogAnimation.NONE) {
+            this.resetAllPose();
+            var sequence = DogAnimationRegistry.getSequence(dog.getFreezeAnim());
+            KeyframeAnimationsDelegate.animate(this, dog, sequence, dog.freezeTime(), 1.0F, vecObj);
+            return;
+        }
+
         if (pose.freeHead) {
             this.head.xRot = headPitch * ((float)Math.PI / 180F); 
             this.head.yRot = netHeadYaw * (dog.isInSittingPose() && dog.isLying() ? 0.005F : (float)Math.PI / 180F);
