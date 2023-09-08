@@ -12,6 +12,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
 import doggytalents.common.entity.Dog;
@@ -545,6 +546,14 @@ public class DogModel extends EntityModel<Dog> {
         if (dog.getDogPose().needRenderRefresh)
             return true;
         return false;
+    }
+
+    public boolean acessoryShouldRender(Dog dog, AccessoryInstance inst) {
+        return true;
+    }
+
+    public boolean incapShouldRender(Dog dog) {
+        return true;
     }
 
     public void setVisible(boolean visible) {

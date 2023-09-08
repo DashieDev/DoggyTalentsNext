@@ -1,5 +1,7 @@
 package doggytalents.client.entity.model.dog;
 
+import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -174,6 +176,11 @@ public class ArcanineModel extends DogModel {
     @Override
     public boolean useDefaultModelForAccessories() {
         return true;
+    }
+
+    @Override
+    public boolean acessoryShouldRender(Dog dog, AccessoryInstance inst) {
+        return false;
     }
     
 }

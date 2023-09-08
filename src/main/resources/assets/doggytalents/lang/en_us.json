@@ -357,6 +357,7 @@
    "doggui.invalid_dog.info.dog" : "Dog: %s",
    "doggui.invalid_dog.info.owner" : "Owner: %s",
    "doggui.invalid_dog.esc_to_return" : "Esc to return.",
+   "doggui.invalid_dog.accessory_no_render_warn" : "Some Accessories is not compatible and will not be rendered!",
 
    "doggui.prevpage": "Previous Page",
    "doggui.nextpage": "Next Page",

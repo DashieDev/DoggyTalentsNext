@@ -34,6 +34,13 @@ public class AccessoryModelRenderer extends RenderLayer<Dog, DogModel>  {
         }
 
         for (var accessoryInst : dog.getAccessories()) {
+            var skin = dog.getClientSkin();
+            if (skin.useCustomModel()) {
+                var model = skin.getCustomModel().getValue();
+                if (!model.acessoryShouldRender(dog, accessoryInst)) {
+                    continue;
+                }
+            }
             var accessory = accessoryInst.getAccessory();
             if (!(accessory instanceof IAccessoryHasModel)) continue;
             var hasModelAccessory = (IAccessoryHasModel) accessory;
