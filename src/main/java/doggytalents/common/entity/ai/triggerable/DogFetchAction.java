@@ -26,6 +26,7 @@ public class DogFetchAction extends TriggerableAction {
     private float oldWaterCost;
 
     private double oldRangeSense;
+    private boolean initFetch;
 
     public DogFetchAction(Dog dog, @Nonnull LivingEntity owner, @Nonnull ItemEntity fetchTarget) {
         super(dog, true, true);
@@ -82,9 +83,11 @@ public class DogFetchAction extends TriggerableAction {
         if (attrib == null) return;
         this.oldRangeSense = attrib.getValue();
         attrib.setBaseValue(this.MAX_DIST);
+        this.initFetch = true;
     }
 
     private void finishFetch() {
+        if (!this.initFetch) return;
         this.dog.getNavigation().stop();
         this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
         var attrib = this.dog.getAttribute(Attributes.FOLLOW_RANGE);
