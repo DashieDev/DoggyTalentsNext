@@ -140,6 +140,9 @@ public class DogModel extends EntityModel<Dog> {
     @Override
     public void prepareMobModel(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
+        this.earLeft.ifPresent(ear -> ear.resetPose());
+        this.earRight.ifPresent(ear -> ear.resetPose());
+
         var pose = dog.getDogPose();
 
         var anim = dog.getAnim();
