@@ -8,6 +8,10 @@ public class DogSitWhenOrderedGoal extends SitWhenOrderedToGoal {
 
     Dog dog;
 
+    //Fix dog repeatedly sitting and standing if
+    //owner logged out without orderingDogToSit.
+    private boolean ownerOffline;
+
     public DogSitWhenOrderedGoal(Dog dog) {
         super(dog);
         this.dog = dog;
@@ -38,6 +42,10 @@ public class DogSitWhenOrderedGoal extends SitWhenOrderedToGoal {
         if (action != null && !action.shouldPersistAfterSit()) {
             dog.triggerAction(null);
         }
+
+        //Fix dog repeatedly sitting and standing if
+        //owner logged out without orderingDogToSit.
+        this.ownerOffline = this.dog.getOwner() == null;
     }
 
     @Override
@@ -46,7 +54,16 @@ public class DogSitWhenOrderedGoal extends SitWhenOrderedToGoal {
         if (action != null && action.canPreventSit() && !dog.forceSit()) {
             return false;
         }
-        return super.canContinueToUse();
+        if (this.dog.isOrderedToSit()) {
+            return true;
+        }
+
+        //Fix dog repeatedly sitting and standing if
+        //owner logged out without orderingDogToSit.
+        if (this.ownerOffline) {
+            this.ownerOffline = this.dog.getOwner() == null;
+        }
+        return ownerOffline;
     }
     
 }
