@@ -42,6 +42,13 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel> {
         }
 
         for (AccessoryInstance accessoryInst : dog.getClientSortedAccessories()) {
+            var skin = dog.getClientSkin();
+            if (skin.useCustomModel()) {
+                var model = skin.getCustomModel().getValue();
+                if (!model.acessoryShouldRender(dog, accessoryInst)) {
+                    continue;
+                }
+            }
             var accessory = accessoryInst.getAccessory();
             if (!isOverlay(accessory)) continue;               
             if (accessory.hasHindLegDiffTex()) {
