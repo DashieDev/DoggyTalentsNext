@@ -167,8 +167,13 @@ public class ArcanineModel extends DogModel {
 		.texOffs(24, 40).addBox(-2.125F, 3.475F, 5.125F, 4.0F, 7.0F, 4.0F, new CubeDeformation(0.0F))
 		.texOffs(23, 30).addBox(-2.625F, 6.475F, 2.575F, 5.0F, 4.0F, 3.0F, new CubeDeformation(0.45F))
 		.texOffs(23, 30).addBox(-2.625F, 5.475F, 3.875F, 5.0F, 4.0F, 3.0F, new CubeDeformation(0.25F)), PartPose.offsetAndRotation(1.125F, -3.725F, 7.875F, -1.5708F, 0.0F, 0.0F));
-
+        
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
+
+    @Override
+    public boolean useDefaultModelForAccessories() {
+        return true;
+    }
     
 }
