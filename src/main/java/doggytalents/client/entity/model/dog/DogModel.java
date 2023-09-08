@@ -263,6 +263,16 @@ public class DogModel extends EntityModel<Dog> {
         this.mane.zRot += 90 * Mth.DEG_TO_RAD;
         this.mane.x += 2.5;
         this.mane.y += 5.5;
+
+        if (this.earLeft.isPresent()) {
+            this.earLeft.get().offsetRotation(KeyframeAnimations.degreeVec(0f, 0f, 40f));
+            this.earLeft.get().offsetPos(KeyframeAnimations.posVec(0f, -0.75f, 0f));
+        }
+
+        if (this.earRight.isPresent()) {
+            this.earRight.get().offsetRotation(KeyframeAnimations.degreeVec(9.64f, -8f, 39.32f));
+            this.earRight.get().offsetPos(KeyframeAnimations.posVec(0f, -0.5f, 0f));
+        }
     }
 
     public void setupFaintPose2(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
@@ -290,6 +300,17 @@ public class DogModel extends EntityModel<Dog> {
         this.tail.xRot = ((Dog) dog).getTailRotation();
         this.tail.offsetRotation(KeyframeAnimations.degreeVec(62.36f, -4.65f, 2.29f));
         this.tail.offsetPos(KeyframeAnimations.posVec(0.17f, -7.48f, -1.35f));
+
+        
+        
+        if (this.earRight.isPresent()) {
+            this.earRight.get().offsetRotation(KeyframeAnimations.degreeVec(51.29f, 23.61f, -14.74f));
+            this.earRight.get().offsetPos(KeyframeAnimations.posVec(0f, -0.5f, 0f));
+        }
+        if (this.earLeft.isPresent()) {
+            this.earLeft.get().offsetRotation(KeyframeAnimations.degreeVec(53.71f, -14.26f, 10.25f));
+            this.earLeft.get().offsetPos(KeyframeAnimations.posVec(0f, -0.5f, 0f));
+        }
     }
 
     public void setupLyingPose2(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
@@ -311,6 +332,15 @@ public class DogModel extends EntityModel<Dog> {
         this.tail.offsetPos(KeyframeAnimations.posVec(0f, -7f, -0.25f));
         this.mane.offsetRotation(KeyframeAnimations.degreeVec(-2.5f, 0f, 0f));
         this.mane.offsetPos(KeyframeAnimations.posVec(0f, -6.5f, 2f));
+        if (this.earRight.isPresent()) {
+            this.earRight.get().offsetRotation(KeyframeAnimations.degreeVec(26.57f, 14.48f, -26.57f));
+            this.earRight.get().offsetPos(KeyframeAnimations.posVec(0f, -0.5f, 0f));
+        }
+        if (this.earLeft.isPresent()) {
+            this.earLeft.get().offsetRotation(KeyframeAnimations.degreeVec(26.57f, -14.48f, 26.57f));
+            this.earLeft.get().offsetPos(KeyframeAnimations.posVec(0f, -0.5f, 0f));
+        }
+        
     }
 
     public void setupDrownPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
