@@ -438,7 +438,6 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public void resetAllPose() {
-        this.root.resetPose();
         this.root.getAllParts().forEach(x -> x.resetPose());
         this.realHead.resetPose();
         this.realTail.resetPose();
