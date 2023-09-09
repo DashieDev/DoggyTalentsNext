@@ -7,7 +7,7 @@ public enum DogAnimation {
     NONE(0, 0), 
     STRETCH(1, 70),
     FAINT(2, 80),
-    SIT_DOWN(3, 25, 1.25f),
+    SIT_DOWN(3, 25, 1.75f),
     STAND_UP(4, 40, 1.25f),
     FAINT_2(5, 80),
     LYING_DOWN(6, 80),
