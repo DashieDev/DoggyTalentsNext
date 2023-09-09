@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 public class DoggyItemGroups {
 
-    public static final CreativeModeTab GENERAL = new CustomItemGroup("doggytalents", () -> new ItemStack(DoggyItems.TRAINING_TREAT.get()));
+    public static final CreativeModeTab GENERAL = new CustomItemGroup("doggytalents", () -> new ItemStack(DoggyItems.DOGGY_CHARM.get()));
     public static final CreativeModeTab DOG_BED = new CustomItemGroup("doggytalents.dogbed", DogBedUtil::createRandomBed);
 
     public static class CustomItemGroup extends CreativeModeTab {
