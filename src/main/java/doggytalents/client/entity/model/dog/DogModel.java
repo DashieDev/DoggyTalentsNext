@@ -166,7 +166,8 @@ public class DogModel extends EntityModel<Dog> {
                 this.setUpSitPose(dog, limbSwing, limbSwingAmount, partialTickTime);
                 break;
             case LYING:
-                this.setupLyingPose(dog, limbSwing, limbSwingAmount, partialTickTime);
+                //Reserved.
+                this.setupLyingPose2(dog, limbSwing, limbSwingAmount, partialTickTime);
                 break;
             case LYING_2:
                 this.setupLyingPose2(dog, limbSwing, limbSwingAmount, partialTickTime);
@@ -397,26 +398,6 @@ public class DogModel extends EntityModel<Dog> {
         this.tail.xRot = ((Dog) dog).getTailRotation();
         this.tail.offsetRotation(KeyframeAnimations.degreeVec(10, 0, 0));
         this.tail.offsetPos(KeyframeAnimations.posVec(0, -0.5f, -2f));
-    }
-
-    public void setupLyingPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-         this.head.setPos(0, 19.5F, -7);
-        this.body.setPos(0, 20, 2);
-        this.body.xRot = (float) Math.PI / 2F;
-        this.mane.setPos(
-                -1f + MANE_LYING_OFF[0],
-                14f + MANE_LYING_OFF[1],
-                -3f + MANE_LYING_OFF[2]);
-        this.mane.xRot = this.body.xRot;
-        this.tail.setPos(-1, 18, 8);
-        this.legBackRight.setPos(-4.5F, 23, 7);
-        this.legBackRight.xRot = -(float) Math.PI / 2F;
-        this.legBackLeft.setPos(2.5F, 23, 7);
-        this.legBackLeft.xRot = -(float) Math.PI / 2F;
-        this.legFrontRight.setPos(-4.5F, 23, -4);
-        this.legFrontRight.xRot = -(float) Math.PI / 2F;
-        this.legFrontLeft.setPos(2.5F, 23, -4);
-        this.legFrontLeft.xRot = -(float) Math.PI / 2F;
     }
 
     public void translateShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
