@@ -44,6 +44,10 @@ public class DoggyBedMaterials {
     public static final RegistryObject<IBeddingMaterial> RED_WOOL = registerBedding(() -> Blocks.RED_WOOL);
     public static final RegistryObject<IBeddingMaterial> BLACK_WOOL = registerBedding(() -> Blocks.BLACK_WOOL);
 
+    //1.20+
+    public static final RegistryObject<ICasingMaterial> CHERRY_PLANKS = registerCasing(() -> Blocks.CHERRY_PLANKS);
+    public static final RegistryObject<ICasingMaterial> MANGROVE_PLANKS = registerCasing(() -> Blocks.MANGROVE_PLANKS);
+
     private static RegistryObject<ICasingMaterial> registerCasing(final Supplier<Block> sup) {
         return CASINGS.register( ForgeRegistries.BLOCKS.getKey(sup.get()).getPath(), () -> new CasingMaterial(sup));
     }
