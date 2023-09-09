@@ -197,16 +197,12 @@ public class DogModel extends EntityModel<Dog> {
         this.legFrontLeft.resetPose();
         this.head.resetPose();
 
-        
-        this.legBackRight.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.legBackLeft.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-        this.legFrontRight.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-        this.legFrontLeft.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         animateStandWalking(dog, limbSwing, limbSwingAmount, partialTickTime);
     }
 
     public void animateStandWalking(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         float w = Mth.cos(limbSwing * 0.6662F);
+        float w1 = Mth.cos(limbSwing * 0.6662F + (float) Math.PI);
         float swing = Mth.clamp(limbSwingAmount, 0, 1);
         float modifier = 2.5f;
         this.body.xRot += getAnimateWalkingValue(w, swing, modifier * -5f*Mth.DEG_TO_RAD);
@@ -231,6 +227,11 @@ public class DogModel extends EntityModel<Dog> {
             this.earLeft.get().zRot = getAnimateWalkingValue(w, swing, 27.5f*Mth.DEG_TO_RAD );
             this.earLeft.get().y += getAnimateWalkingValue(w, swing, 0.5f );
         }
+
+        this.legBackRight.xRot = w * 1.4F * limbSwingAmount;
+        this.legBackLeft.xRot = w1 * 1.4F * limbSwingAmount;
+        this.legFrontRight.xRot = w1 * 1.4F * limbSwingAmount;
+        this.legFrontLeft.xRot = w * 1.4F * limbSwingAmount;
     }
 
     private float getAnimateWalkingValue(float w, float swingAmount, float amplitude) {
