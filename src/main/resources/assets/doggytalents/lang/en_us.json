@@ -108,7 +108,7 @@
    "container.doggytalents.dog_armor" : "Dog Armor",
    "container.doggytalents.doggy_tools": "Doggy Tools",
 
-   "itemGroup.doggytalents": "Doggy Talents",
+   "itemGroup.doggytalents": "Doggy Talents Next",
    "itemGroup.doggytalents.dogbed": "Dog Bed Variants",
 
    "treat.dire_treat.low_level": "Your dog can't possibly handle the awesome power contained in these treats.",
@@ -401,7 +401,7 @@
    "doggui.migrate_owner.confirm": "Confirm",
    "doggui.migrate_owner.show_uuid": "Show New Owner UUID",
 
-   "key.categories.doggy_talents": "Doggy Talents",
+   "key.categories.doggy_talents": "Doggy Talents Next",
    "key.whistle.1": "Whistle #1",
    "key.whistle.2": "Whistle #2",
    "key.whistle.3": "Whistle #3",
