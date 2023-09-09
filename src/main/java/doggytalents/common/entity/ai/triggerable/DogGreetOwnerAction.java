@@ -69,6 +69,10 @@ public class DogGreetOwnerAction extends TriggerableAction {
             this.setState(ActionState.FINISHED);
             return;
         }
+        if (!this.owner.isAlive() || this.owner.isSpectator()) {
+            this.setState(ActionState.FINISHED);
+            return;
+        }
 
         var d0 = this.dog.distanceToSqr(this.owner);
         this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
