@@ -33,7 +33,7 @@ public class DoggyItemGroups {
         = register("tabgeneral", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.doggytalents"))
             .icon(() -> {
-                return new ItemStack(DoggyItems.TRAINING_TREAT.get());
+                return new ItemStack(DoggyItems.DOGGY_CHARM.get());
             })
             .displayItems((a, b) -> {
                 var allDTItemsIter = DoggyItems.ITEMS.getEntries();
