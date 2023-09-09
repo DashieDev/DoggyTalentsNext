@@ -35,6 +35,9 @@ public class DogResizeItem extends Item implements IDogItem {
 
     @Override
     public InteractionResult processInteract(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
+        if (!dog.canInteract(playerIn))
+            return InteractionResult.FAIL;
+        
         if (dog.getAge() < 0) {
 
             if (!playerIn.level.isClientSide){
