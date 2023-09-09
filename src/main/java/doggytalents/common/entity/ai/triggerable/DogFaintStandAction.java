@@ -1,6 +1,5 @@
 package doggytalents.common.entity.ai.triggerable;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
 

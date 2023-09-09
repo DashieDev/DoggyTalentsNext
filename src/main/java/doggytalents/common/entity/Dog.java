@@ -804,7 +804,6 @@ public class Dog extends AbstractDog {
             return;
         }
         if (++this.actionPendingTime >= 20) {
-            ChopinLogger.sendToOwner(this, "action waited too long!");
             this.actionPendingTime = 0;
             this.clearTriggerableAction();
         }
