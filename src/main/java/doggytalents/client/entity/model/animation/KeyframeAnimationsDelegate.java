@@ -1,7 +1,5 @@
 package doggytalents.client.entity.model.animation;
 
-
-import doggytalents.ChopinLogger;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
