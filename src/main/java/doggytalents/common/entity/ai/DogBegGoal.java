@@ -35,6 +35,9 @@ public class DogBegGoal extends Goal {
         this.player = this.world.getNearestPlayer(this.playerPredicate, this.dog);
         if (this.player == null) 
             return false;
+        if (!this.player.isAlive() || this.player.isSpectator()) {
+            return false;
+        }
         if (!this.hasTemptationItemInHand(player))
             return false;
         if (this.dog.getAnim() != DogAnimation.NONE)
@@ -44,7 +47,7 @@ public class DogBegGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (!this.player.isAlive()) {
+        if (!this.player.isAlive() || this.player.isSpectator()) {
             return false;
         } else if (this.dog.distanceToSqr(this.player) > this.minPlayerDistance * this.minPlayerDistance) {
             return false;
