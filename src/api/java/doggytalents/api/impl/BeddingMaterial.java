@@ -49,11 +49,12 @@ public class BeddingMaterial extends IBeddingMaterial {
      */
     @Override
     public Component getTooltip() {
-        if (this.translationKey == null) {
-            this.translationKey = Util.makeDescriptionId("dogbed.bedding", DoggyTalentsAPI.BEDDING_MATERIAL.get().getKey(this));
+        var block = this.block.get();
+        if (block == null) {
+            return Component.empty();
         }
 
-        return ComponentUtil.translatable(this.translationKey);
+        return ComponentUtil.translatable(block.asItem().getDescriptionId());
     }
 
     /**

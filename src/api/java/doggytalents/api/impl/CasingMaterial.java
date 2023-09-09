@@ -51,11 +51,12 @@ public class CasingMaterial extends ICasingMaterial {
      */
     @Override
     public Component getTooltip() {
-        if (this.translationKey == null) {
-            this.translationKey = Util.makeDescriptionId("dogbed.casing", DoggyTalentsAPI.CASING_MATERIAL.get().getKey(this));
+        var block = this.block.get();
+        if (block == null) {
+            return Component.empty();
         }
 
-        return ComponentUtil.translatable(this.translationKey);
+        return ComponentUtil.translatable(block.asItem().getDescriptionId());
     }
 
     /**
