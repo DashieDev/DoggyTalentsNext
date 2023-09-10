@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
@@ -13,11 +14,15 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 
 public class AccessoryModelManager {
@@ -66,7 +71,7 @@ public class AccessoryModelManager {
                 DefaultAccessoryRenderer.renderTranslucentModel(model, getResources(inst), 
                     poseStack, buffer, packedLight, dog, color[0], color[1], color[2], 1f);
             } else
-            RenderLayer.renderColoredCutoutModel(model, getResources(inst), 
+            AccessoryModelManager.renderColoredCutoutModel(model, getResources(inst), 
                 poseStack, buffer, packedLight, dog, color[0], color[1], color[2]);
         };
         public abstract void registerLayerDef(final EntityRenderersEvent.RegisterLayerDefinitions event);
@@ -75,5 +80,9 @@ public class AccessoryModelManager {
         public boolean isTranslucent() { return false; }
     }
 
+    public static void renderColoredCutoutModel(SyncedAccessoryModel p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, Dog p_117382_, float p_117383_, float p_117384_, float p_117385_) {
+        VertexConsumer vertexconsumer = p_117380_.getBuffer(RenderType.entityCutoutNoCull(p_117378_));
+        p_117377_.renderToBuffer(p_117379_, vertexconsumer, p_117381_, LivingEntityRenderer.getOverlayCoords(p_117382_, 0.0F), p_117383_, p_117384_, p_117385_, 1.0F);
+    }
 
 }
