@@ -55,9 +55,8 @@ public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
             if (inventory.getFreeSlot() < 0) return;
 
             inventory.add(toRemove.getReturnItem());
-            accessories.remove(toRemove);
-            dog.markAccessoriesDirty();
-            
+            final var toRemoveFinal = toRemove;
+            dog.modifyAccessory(x -> x.remove(toRemoveFinal));
         }
     }
     

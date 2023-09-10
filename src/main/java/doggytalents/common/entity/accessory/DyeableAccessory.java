@@ -111,27 +111,6 @@ public class DyeableAccessory extends Accessory {
             return new DyeableAccessoryInstance(this.color);
         }
 
-        @Override
-        public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
-            ItemStack stack = playerIn.getItemInHand(handIn);
-
-            DyeColor dyeColor = DyeColor.getColor(stack);
-            if (dyeColor != null) {
-                int colorNew = Util.colorDye(this.color.get(), dyeColor);
-
-                // No change
-                if (this.color.is(colorNew)) {
-                    return InteractionResult.FAIL;
-                }
-
-                this.color = ColourCache.make(colorNew);
-                dogIn.consumeItemFromStack(playerIn, stack);
-                // Make sure to sync change with client
-                dogIn.markAccessoriesDirty();
-                return InteractionResult.SUCCESS;
-            }
-            return InteractionResult.PASS;
-        }
     }
 
 }
