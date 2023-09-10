@@ -623,3 +623,8 @@ They can now Beg, Lie down, or do a little Scratchie… and a lot more waiting f
 * Baby Dogs can now wear Accessories!
 * Fixed: Chest Dogs occasionally freeze for no reason.
 * Fixed: Doggy Artifacts GUI made an oopsie.
+
+1.16.1 - 11th September 2023 
+# Make Skin search case insensitive
+* Fix DoggyToolsScreen
+* HOTFIX: Talents sync
