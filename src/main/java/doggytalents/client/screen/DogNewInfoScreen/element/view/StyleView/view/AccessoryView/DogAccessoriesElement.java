@@ -122,6 +122,11 @@ public class DogAccessoriesElement extends AbstractElement {
                     var holder = this.accessoryHolders.get(holderIndx);
                     holder.setStack(item);
                     holder.setInventorySlotId(i);
+                    holder.warning = false;
+                    if (skin.useCustomModel()) {
+                        var model = skin.getCustomModel().getValue();
+                        holder.warning = model.warnAccessory(dog, accessory.getAccessory());
+                    }
                     ++holderIndx;
                 }
             }

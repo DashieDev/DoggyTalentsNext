@@ -1,6 +1,7 @@
 package doggytalents.client.entity.model.dog;
 
 import doggytalents.DoggyAccessoryTypes;
+import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
@@ -187,5 +188,11 @@ public class ArcanineModel extends DogModel {
     public boolean acessoryShouldRender(Dog dog, AccessoryInstance inst) {
         return true;
     }
+
+	@Override
+	public boolean warnAccessory(Dog dog, Accessory inst)  {
+        return inst.getType() == DoggyAccessoryTypes.HEAD.get();
+    }
+
     
 }

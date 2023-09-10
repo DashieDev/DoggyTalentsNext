@@ -9,7 +9,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 
+import doggytalents.DoggyAccessoryTypes;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
@@ -526,6 +528,10 @@ public class DogModel extends EntityModel<Dog> {
 
     public boolean incapShouldRender(Dog dog) {
         return true;
+    }
+
+    public boolean warnAccessory(Dog dog, Accessory inst)  {
+        return false;
     }
 
     public void setVisible(boolean visible) {
