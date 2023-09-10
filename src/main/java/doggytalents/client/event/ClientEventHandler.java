@@ -11,6 +11,7 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.screen.widget.DogInventoryButton;
+import doggytalents.client.screen.widget.DoggySpin;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem;
@@ -22,6 +23,7 @@ import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -61,6 +63,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.antlr.v4.parse.ANTLRParser.sync_return;
 import org.jetbrains.annotations.Nullable;
 
 public class ClientEventHandler {
@@ -151,6 +154,17 @@ public class ClientEventHandler {
 
             event.addListener(this.activeInventoryButton);
         }
+    }
+
+    private DoggySpin spinWidget = new DoggySpin(0, 0, 128);
+    @SubscribeEvent
+    public void onScreenDrawForeground(final ScreenEvent.Render.Post event) {
+        if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
+            return;
+        if (!(event.getScreen() instanceof LevelLoadingScreen))
+            return;
+        spinWidget.setY(event.getScreen().height - 128);
+        spinWidget.render(event.getGuiGraphics(), event.getMouseX(), 0, 0);
     }
 
     // No need more
