@@ -122,12 +122,13 @@ public class DoggySpin extends AbstractWidget {
             this.style = Style.CHOPIN;
             break;
         case 0:
+        case 1:
             this.style = Style.BACKFLIP;
             break;
-        case 1:
+        case 2:
             this.style = Style.SIT;
             break;
-        case 2:
+        case 3:
             this.style = Style.AMMY;
             break;
         }
