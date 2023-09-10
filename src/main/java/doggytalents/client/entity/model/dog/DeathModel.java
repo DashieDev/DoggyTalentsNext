@@ -1,5 +1,7 @@
 package doggytalents.client.entity.model.dog;
 
+import doggytalents.DoggyAccessoryTypes;
+import doggytalents.api.registry.Accessory;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -96,4 +98,8 @@ public class DeathModel extends DogModel {
 		return LayerDefinition.create(meshdefinition, 64, 32);
 	}
 
+	@Override
+	public boolean warnAccessory(Dog dog, Accessory inst)  {
+        return inst.getType() == DoggyAccessoryTypes.HEAD.get();
+    }
 }

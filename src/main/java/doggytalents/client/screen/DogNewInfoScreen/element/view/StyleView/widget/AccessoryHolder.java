@@ -31,6 +31,7 @@ public class AccessoryHolder extends AbstractWidget {
     public static final int WIDGET_SIZE = 18;
     public static final int ICON_ADD_X = 11;
     public static final int ICON_REM_X = 0;
+    public static final int ICON_WARN_X = 22;
     
     private static final int BKGCOL_ADD = 0x57009e05;
     private static final int BKGCOL_REM = 0x579c0202;
@@ -38,6 +39,7 @@ public class AccessoryHolder extends AbstractWidget {
     ItemStack itemStack = ItemStack.EMPTY;
     boolean add;
     int inventorySlotId = 0;
+    public boolean warning;
 
     public AccessoryHolder(int x, int y, ItemRenderer renderer, Dog dog, boolean add) {
         super(x, y, WIDGET_SIZE, WIDGET_SIZE, Component.empty());
@@ -63,6 +65,7 @@ public class AccessoryHolder extends AbstractWidget {
         RenderSystem.defaultBlendFunc();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int iX = add ? ICON_ADD_X : ICON_REM_X;
+        if (warning) iX = ICON_WARN_X;
         graphics.blit(Resources.STYLE_ADD_REMOVE, getX()+14, getY()+14, iX, 0, 9, 9);
     }
 
