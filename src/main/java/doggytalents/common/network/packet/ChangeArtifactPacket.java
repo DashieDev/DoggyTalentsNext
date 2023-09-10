@@ -52,7 +52,6 @@ public class ChangeArtifactPacket extends DogPacket<ChangeArtifactData> {
         
             inventory.add(retItem);
             dog.removeArtifact(data.slotId);
-            dog.markArtifactsDirty();
         }
 
     }

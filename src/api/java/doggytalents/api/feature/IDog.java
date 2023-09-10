@@ -61,7 +61,6 @@ public interface IDog {
     public boolean addAccessory(AccessoryInstance inst);
     public List<AccessoryInstance> getAccessories();
     public List<AccessoryInstance> removeAccessories();
-    public void markAccessoriesDirty();
 
     public float getWagAngle(float limbSwing, float limbSwingAmount, float partialTickTime);
     public float getShakeAngle(float partialTicks, float offset);
