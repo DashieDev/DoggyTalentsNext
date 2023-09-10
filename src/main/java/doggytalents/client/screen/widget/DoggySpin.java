@@ -15,7 +15,7 @@ import net.minecraft.util.Mth;
 public class DoggySpin extends AbstractWidget {
 
     private int size;
-    private static enum Style { CHOPIN, BACKFLIP, SIT }
+    private static enum Style { CHOPIN, BACKFLIP, SIT, AMMY }
     private Style style = Style.CHOPIN;
 
     public DoggySpin(int x, int y, int size) {
@@ -34,6 +34,9 @@ public class DoggySpin extends AbstractWidget {
             break;
         case SIT:
             drawSpin3(graphics, this.getX(), this.getY(), size);
+            break;
+        case AMMY:
+            drawAmmy(graphics, this.getX(), this.getY(), size);
             break;
         }
     }
@@ -91,12 +94,29 @@ public class DoggySpin extends AbstractWidget {
         RenderSystem.disableBlend();
     }
 
+    private void drawAmmy(GuiGraphics graphics, int x, int y, int size)  {
+        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        int imgeSize = 7 * size;
+        if (System.currentTimeMillis() - lastRender > 50) {
+            lastRender = System.currentTimeMillis();
+            indx = (indx + 1) % 50;
+        }
+        int uvX = ((int)Mth.floor(indx%7));
+        int uvY =  ((int)Mth.floor(indx/7));
+        graphics.blit(Resources.SPIN4, x, y, 0, uvX * size, uvY* size, size , size, 7 * size, 8 * size);
+        RenderSystem.disableBlend();
+    }
+
     @Override
     protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
     }
 
     public void chooseStyle() {
-        int r = new Random().nextInt(7);
+        int r = new Random().nextInt(8);
         switch (r) {
         default:
             this.style = Style.CHOPIN;
@@ -106,6 +126,9 @@ public class DoggySpin extends AbstractWidget {
             break;
         case 1:
             this.style = Style.SIT;
+            break;
+        case 2:
+            this.style = Style.AMMY;
             break;
         }
         indx = 0;
