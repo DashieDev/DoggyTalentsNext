@@ -590,3 +590,36 @@ is also included in the loot sets of dogs wearings Bach's Wig.
 
 1.15.2 - 12th August 2023
 * HOTFIX: Dogs improper water jump.
+
+1.16.0 - 10th September 2023 
+狼才能次
+===========
+アニメションヾ(☆▽☆)!!!
++ **ANIMATIONS!!!** Your dogs are more delightful than ever! 
+They can now Beg, Lie down, or do a little Scratchie… and a lot more waiting for you to discover!
+===========
++ Added a cute doggy at the loading screen to wait along with you.
++ Added Kanji Background to indicate Dog’s level: 常 (Normal) 、高 (Super) 、特 (Master) 、神 (Dire). 
++ Added Kanji Background to defeated screen 敗 (Regular Incap) 、Burn/Lava (焼) 、溺 (Drown) 、毒 (Poison) 、餓 (Starve).
++ Option to attempt to disable third party nametag.
++ Option to use a provided copy for classical (For Fresh Animation users).
++ Added a Search bar for Skins tab.
++ Added a music disc: F. Chopin - Valse Du Petit Chien (Placeholder recording).
++ Added The 8 Satomi Power Orbs (recipe in wiki) works extremely well with Canine Tracker.
++ Added “Cheems” *(so long pal…rest in peace)*
++ Added Windie - Arcanine.
+===========
+- Remove the old DoggyTalent info screen.
+===========
+# Revamp the icons for adding, removing accessories, plus adding a warning icon for visually incompatible accessories.
+# non-Swimmer dogs tp-ing to the Ocean floor.
+# Remove the Orbs from the KUSA, instead making them as separate accessories.
+# Defeated Menu now show causes of death.
+# Feathered Mantle is now Yellow
+# Fix Dog Bed description.
+# Creative Tab icon is now a Doggy Charm.* Incap Texture fix 
+# Tartan Cape’s id: tantan_cape.
+===========
+* Baby Dogs can now wear Accessories!
+* Fixed: Chest Dogs occasionally freeze for no reason.
+* Fixed: Doggy Artifacts GUI made an oopsie.
