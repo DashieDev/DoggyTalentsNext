@@ -2721,12 +2721,13 @@ public class Dog extends AbstractDog {
             inst.set(this, previousLevel);
 
             if (level <= 0) {
-                //Safely remove the talents.
-                final int isnt2_id = selected_id;
                 inst.remove(this);
-                this.modifyTalent(x -> {
-                    if (isnt2_id >= 0) x.remove(isnt2_id);
+                final int remove_id = selected_id;
+                modifyTalent(x -> {
+                    if (remove_id >= 0) x.remove(remove_id);
                 });
+            } else {
+                forceSyncTalents();
             }
         }
         return InteractionResult.SUCCESS;
@@ -2761,6 +2762,12 @@ public class Dog extends AbstractDog {
             artifacts.remove(indx);
         });
         return new ItemStack(removedArtifact);
+    }
+
+    public void forceSyncTalents() {
+        var copy_list = new ArrayList<>(this.getTalentMap());
+        this.getTalentMap().clear();
+        this.modifyTalent(x -> x.addAll(copy_list));
     }
 
     public void modifyTalent(Consumer<List<TalentInstance>> modify) {
