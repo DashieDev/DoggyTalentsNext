@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 
 public class CasingMaterial extends ICasingMaterial {
 
@@ -56,7 +57,10 @@ public class CasingMaterial extends ICasingMaterial {
             return Component.empty();
         }
 
-        return ComponentUtil.translatable(block.asItem().getDescriptionId());
+        return Component.translatable(block.asItem().getDescriptionId()).withStyle(
+            Style.EMPTY.withItalic(true)
+                .withColor(block.defaultMapColor().col)
+        );
     }
 
     /**
