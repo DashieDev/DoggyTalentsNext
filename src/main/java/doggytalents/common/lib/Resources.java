@@ -99,6 +99,8 @@ public class Resources {
     public static final ResourceLocation KANJI_INCAP_STARVE = getGui("fatalkanji/starve");
 
     public static final ResourceLocation SPIN = getGui("spin");
+    public static final ResourceLocation SPIN2 = getGui("spin2");
+    public static final ResourceLocation SPIN3 = getGui("spin3");
 
     public static final ResourceLocation BANDAID_OVERLAY_HALF = getEntity("dog", "doggy_hurt/bandaid/overlay_half");
     public static final ResourceLocation BANDAID_OVERLAY_FULL = getEntity("dog", "doggy_hurt/bandaid/overlay_full");
