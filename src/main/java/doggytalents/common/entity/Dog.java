@@ -2695,9 +2695,12 @@ public class Dog extends AbstractDog {
         var activeTalents = this.getTalentMap();
 
         TalentInstance inst = null;
-        for (TalentInstance activeInst : activeTalents) {
+        int selected_id = -1;
+        for (int i = 0; i < activeTalents.size(); ++i) {
+            var activeInst = activeTalents.get(i);
             if (activeInst.of(talent)) {
                 inst = activeInst;
+                selected_id = i;
                 break;
             }
         }
@@ -2723,10 +2726,10 @@ public class Dog extends AbstractDog {
 
             if (level <= 0) {
                 //Safely remove the talents.
-                final var inst2 = inst;
+                final int isnt2_id = selected_id;
+                inst.remove(this);
                 this.modifyTalent(x -> {
-                    inst2.remove(this);
-                    x.remove(inst2);
+                    if (isnt2_id >= 0) x.remove(isnt2_id);
                 });
             }
         }
