@@ -127,6 +127,10 @@ public class ClientEventHandler {
                 btn.active = false;
             }));
         }
+        if (event.getScreen() instanceof LevelLoadingScreen) {
+            spinWidget.chooseStyle();
+        }
+            
     }
 
     private DoggySpin spinWidget = new DoggySpin(0, 0, 128);
