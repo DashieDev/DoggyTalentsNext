@@ -30,17 +30,10 @@ public class DoggyToolsScreen extends AbstractContainerScreen<DoggyToolsMenu> {
     }
 
     @Override
-    protected void renderLabels(GuiGraphics graphics, int var1, int var2) {
-        graphics.drawString(font, this.title.getString(), 10, 8, 4210752);
-    }
-
-    @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        graphics.fill( x, y, 0, 0, this.imageWidth, this.imageHeight);
+        graphics.blit(Resources.DOGGY_TOOLS_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
         
         //blit slots
         int slotTexX = 1, slotTexY = 128;
