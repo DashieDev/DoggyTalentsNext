@@ -129,6 +129,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -2354,9 +2355,9 @@ public class Dog extends AbstractDog {
             return false;
         }
 
-        accessories.add(accessoryInst);
-
-        this.markDataParameterDirty(ACCESSORIES.get());
+        this.modifyAccessory(x -> {
+            x.add(accessoryInst);
+        });
 
         return true;
     }
@@ -2365,8 +2366,9 @@ public class Dog extends AbstractDog {
     public List<AccessoryInstance> removeAccessories() {
         List<AccessoryInstance> removed = new ArrayList<>(this.getAccessories());
 
-        this.getAccessories().clear();
-        this.markDataParameterDirty(ACCESSORIES.get());
+        this.modifyAccessory(x -> {
+            x.clear();
+        });
         return removed;
     }
 
@@ -2560,8 +2562,9 @@ public class Dog extends AbstractDog {
 
     @Override
     public void increaseLevel(DogLevel.Type typeIn) {
-        this.getDogLevel().incrementLevel(typeIn);
-        this.markDataParameterDirty(DOG_LEVEL.get());
+        var copy = this.getDogLevel().copy();
+        copy.incrementLevel(typeIn);
+        this.setLevel(copy);
     }
 
     @Override
@@ -2676,7 +2679,7 @@ public class Dog extends AbstractDog {
             return InteractionResult.FAIL;
         }
 
-        List<TalentInstance> activeTalents = this.getTalentMap();
+        var activeTalents = this.getTalentMap();
 
         TalentInstance inst = null;
         for (TalentInstance activeInst : activeTalents) {
@@ -2691,9 +2694,11 @@ public class Dog extends AbstractDog {
                 return InteractionResult.PASS;
             }
 
-            inst = talent.getDefault(level);
-            activeTalents.add(inst);
-            inst.init(this);
+            this.modifyTalent(x -> {
+                var newTalent = talent.getDefault(level);
+                x.add(newTalent);
+                newTalent.init(this);
+            });            
         } else {
             int previousLevel = inst.level();
             if (previousLevel == level) {
@@ -2705,12 +2710,13 @@ public class Dog extends AbstractDog {
 
             if (level <= 0) {
                 //Safely remove the talents.
-                inst.remove(this);
-                activeTalents.remove(inst);
+                final var inst2 = inst;
+                this.modifyTalent(x -> {
+                    inst2.remove(this);
+                    x.remove(inst2);
+                });
             }
         }
-
-        this.markDataParameterDirty(TALENTS.get());
         return InteractionResult.SUCCESS;
     }
 
@@ -2722,48 +2728,45 @@ public class Dog extends AbstractDog {
     public boolean addArtifact(DoggyArtifactItem artifact) {
         if (artifact == null)
             return false;
-        var array = this.entityData.get(ARTIFACTS.get());
+        var array = this.getArtifactsList();
         if (array.size() >= DoggyArtifact.ARTIFACTS_LIMIT) {
             return false;
         }
         if (array.contains(artifact)) 
             return false;
-        array.add(artifact);
-        this.markDataParameterDirty(ARTIFACTS.get());
+        this.modifyArtifact(artifacts -> {
+            artifacts.add(artifact);
+        });
         return true;
     }
 
     public ItemStack removeArtifact(int indx) {
-        var array = this.entityData.get(ARTIFACTS.get());
+        var array = this.getArtifactsList();
         if (indx < 0 || indx >= array.size())
             return null;
-        var removedArtifact = array.remove(indx);
-        this.markDataParameterDirty(ARTIFACTS.get());
+        var removedArtifact = array.get(indx);
+        this.modifyArtifact(artifacts -> {
+            artifacts.remove(indx);
+        });
         return new ItemStack(removedArtifact);
     }
 
-    public <T> void markDataParameterDirty(EntityDataAccessor<T> key) {
-        this.markDataParameterDirty(key, true);
+    public void modifyTalent(Consumer<List<TalentInstance>> modify) {
+        this.modifySyncedData(TALENTS.get(), modify);
     }
 
-    public <T> void markDataParameterDirty(EntityDataAccessor<T> key, boolean notify) {
-        if (notify) {
-            this.onSyncedDataUpdated(key);
-        }
-
-        // Force the entry to update
-        DataItem<T> dataentry = this.entityData.getItem(key);
-        dataentry.setDirty(true);
-        this.entityData.isDirty = true;
+    public void modifyAccessory(Consumer<List<AccessoryInstance>> modify) {
+        this.modifySyncedData(ACCESSORIES.get(), modify);
     }
 
-    @Override
-    public void markAccessoriesDirty() {
-        this.markDataParameterDirty(ACCESSORIES.get());
+    public void modifyArtifact(Consumer<List<DoggyArtifactItem>> modify) {
+        this.modifySyncedData(ARTIFACTS.get(), modify);
     }
 
-    public void markArtifactsDirty() {
-        this.markDataParameterDirty(ARTIFACTS.get());
+    public <T> void modifySyncedData(EntityDataAccessor<T> key, Consumer<T> modify) {
+        var result = key.getSerializer().copy(this.entityData.get(key));
+        modify.accept(result);
+        this.entityData.set(key, result);
     }
 
     @Override
@@ -2839,8 +2842,7 @@ public class Dog extends AbstractDog {
         this.setHealth(8);
         this.setCustomName(null);
 
-        this.getTalentMap().clear();
-        this.markDataParameterDirty(TALENTS.get());
+        this.modifyTalent(x -> x.clear());
 
         this.setTame(false);
         this.setOwnerUUID(null);
