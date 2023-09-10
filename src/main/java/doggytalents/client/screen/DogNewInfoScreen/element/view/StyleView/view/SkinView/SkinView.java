@@ -3,6 +3,8 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.view.
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.DogTextureManager;
@@ -92,7 +94,7 @@ public class SkinView extends AbstractElement {
      private static List<DogSkin> filterDogSkin(List<DogSkin> locList, String s) {
         var ret = new ArrayList<DogSkin>();
         for (var x : locList) {
-            if (x.getName().contains(s)) {
+            if (StringUtils.containsIgnoreCase(x.getName(), s)) {
                 ret.add(x);
             }
         }
