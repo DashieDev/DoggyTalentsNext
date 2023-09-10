@@ -97,6 +97,7 @@ public class AccessoryEditElement extends AbstractElement {
         this.nextPage.active = false;
         this.startIndex = Math.max(0, startIndex);
         int tillStart = startIndex;
+        var skin = dog.getClientSkin();
         for (int i = 0; i < items.size(); ++i) {
             var item = items.get(i);
             if (item == null || !this.eligibleAccessory(item)) continue;
@@ -108,6 +109,11 @@ public class AccessoryEditElement extends AbstractElement {
                 var holder = this.accessoryHolders.get(holderIndx);
                 holder.setStack(item);
                 holder.setInventorySlotId(i);
+                holder.warning = false;
+                if (skin.useCustomModel() && (item.getItem() instanceof AccessoryItem accessory)) {
+                    var model = skin.getCustomModel().getValue();
+                    holder.warning = model.warnAccessory(dog, accessory.type.get());
+                }
                 ++holderIndx;
             }
         }

@@ -1,5 +1,7 @@
 package doggytalents.client.entity.model.dog.kusa;
 
+import doggytalents.DoggyAccessoryTypes;
+import doggytalents.api.registry.Accessory;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
@@ -80,5 +82,10 @@ public class ChiModel extends DogModel {
 	@Override
     public boolean useDefaultModelForAccessories() {
         return true;
+    }
+
+	@Override
+	public boolean warnAccessory(Dog dog, Accessory inst)  {
+        return inst.getType() == DoggyAccessoryTypes.HEAD.get();
     }
 }
