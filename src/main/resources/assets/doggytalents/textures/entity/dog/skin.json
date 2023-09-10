@@ -96,6 +96,11 @@
             "use_model" : "default"
         },
         {
+            "skin_name" : "Classical II",
+            "skin_id" : "wolf_var1",
+            "use_model" : "default"
+        },
+        {
             "skin_name" : "Legoshi",
             "skin_id" : "legoshi",
             "use_model" : "legoshi",
@@ -232,6 +237,11 @@
         {
             "skin_name" : "Noname #8",
             "skin_id" : "noname_8",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Classical III",
+            "skin_id" : "wolf_var2",
             "use_model" : "default"
         }
         
