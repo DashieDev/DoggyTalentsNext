@@ -11,6 +11,7 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.screen.widget.DogInventoryButton;
+import doggytalents.client.screen.widget.DoggySpin;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem;
@@ -22,7 +23,7 @@ import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -57,6 +58,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+
+import org.jetbrains.annotations.Nullable;
 
 public class ClientEventHandler {
 
@@ -125,44 +129,15 @@ public class ClientEventHandler {
         }
     }
 
+    private DoggySpin spinWidget = new DoggySpin(0, 0, 128);
     @SubscribeEvent
-    public void onScreenDrawForeground(final ScreenEvent.DrawScreenEvent event) {
-        Screen screen = event.getScreen();
-        if (screen instanceof InventoryScreen || screen instanceof CreativeModeInventoryScreen) {
-            boolean creative = screen instanceof CreativeModeInventoryScreen;
-
-            if (!ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV)) 
-                return;
-            DogInventoryButton btn = null;
-
-            //TODO just create a static variable in this class
-            for (Widget widget : screen.renderables) {
-                if (widget instanceof DogInventoryButton) {
-                    btn = (DogInventoryButton) widget;
-                    break;
-                }
-            }
-
-            if (btn.visible && btn.isHoveredOrFocused()) {
-                Minecraft mc = Minecraft.getInstance();
-                int width = mc.getWindow().getGuiScaledWidth();
-                int height = mc.getWindow().getGuiScaledHeight();
-                int sizeX = creative ? 195 : 176;
-                int sizeY = creative ? 136 : 166;
-                int guiLeft = (width - sizeX) / 2;
-                int guiTop = (height - sizeY) / 2;
-                if (!creative) {
-                    RecipeBookComponent recipeBook = ((InventoryScreen) screen).getRecipeBookComponent();
-                    if (recipeBook.isVisible()) {
-                        guiLeft += 76;
-                    }
-                }
-
-                //event.getPoseStack().translate(-guiLeft, -guiTop, 0);
-                btn.renderToolTip(event.getPoseStack(), event.getMouseX(), event.getMouseY());
-                //event.getPoseStack().translate(guiLeft, guiTop, 0);
-            }
-        }
+    public void onScreenDrawForeground(final ScreenEvent.Render.Post event) {
+        if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
+            return;
+        if (!(event.getScreen() instanceof LevelLoadingScreen))
+            return;
+        spinWidget.setY(event.getScreen().height - 128);
+        spinWidget.render(event.getGuiGraphics(), event.getMouseX(), 0, 0);
     }
 
     @SubscribeEvent

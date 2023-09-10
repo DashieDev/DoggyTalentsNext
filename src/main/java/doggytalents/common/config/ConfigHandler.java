@@ -64,6 +64,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
         public ForgeConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
         public ForgeConfigSpec.BooleanValue USE_PROVIDED_COPY_FOR_CLASSICAL;
+        public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -132,6 +133,10 @@ public class ConfigHandler {
                 .comment("will allow a copy of the vanilla wolf texture provided by the mod to be used instead.")
                 .translation("doggytalents.config.client.use_provided_copy_for_classical")
                 .define("use_provided_copy_for_classical", false);
+            WORD_LOAD_ICON = builder
+                .comment("Show a fun icon on world loading screen.")
+                .translation("doggytalents.config.client.world_load_icon")
+                .define("world_load_icon", true);
             builder.pop();
         }
 
