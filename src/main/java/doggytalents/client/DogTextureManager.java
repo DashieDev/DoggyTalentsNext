@@ -86,8 +86,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
     public File getClientFolder() {
         Minecraft mc = Minecraft.getInstance();
-        SkinManager skinManager = mc.getSkinManager();
-        return new File(skinManager.skinsDirectory.getParentFile(), "skins_dog");
+        return new File(mc.gameDirectory, "skins_dog");
     }
 
     @Nullable
