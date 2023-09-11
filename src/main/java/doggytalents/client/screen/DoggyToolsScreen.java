@@ -30,6 +30,11 @@ public class DoggyToolsScreen extends AbstractContainerScreen<DoggyToolsMenu> {
     }
 
     @Override
+    protected void renderLabels(GuiGraphics p_281635_, int p_282681_, int p_283686_) {
+        p_281635_.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
+    }
+
+    @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
