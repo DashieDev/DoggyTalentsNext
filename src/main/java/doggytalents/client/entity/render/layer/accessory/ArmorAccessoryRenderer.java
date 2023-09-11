@@ -12,6 +12,7 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.DogArmorModel;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.HelmetInteractHandler;
 import doggytalents.common.entity.accessory.ArmourAccessory;
@@ -45,6 +46,9 @@ public class ArmorAccessoryRenderer extends RenderLayer<Dog, DogModel> {
         if (!dog.isTame() || dog.isInvisible()) {
             return;
         }
+
+        if (!ConfigHandler.CLIENT.RENDER_ARMOR.get())
+            return;
 
         Optional<TalentInstance> inst = dog.getTalent(DoggyTalents.DOGGY_ARMOR);
         if (!inst.isPresent()) return;
