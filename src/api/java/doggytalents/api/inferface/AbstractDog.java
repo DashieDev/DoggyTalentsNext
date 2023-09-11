@@ -215,4 +215,8 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public boolean isDogLowHealth() {
         return false;
     }
+
+    public boolean canStillEat() {
+        return false;
+    }
 }
