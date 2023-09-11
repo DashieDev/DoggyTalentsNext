@@ -2771,19 +2771,23 @@ public class Dog extends AbstractDog {
     }
 
     public void modifyTalent(Consumer<List<TalentInstance>> modify) {
-        this.modifySyncedData(TALENTS.get(), modify);
+        this.modifyListSyncedData(TALENTS.get(), modify);
     }
 
     public void modifyAccessory(Consumer<List<AccessoryInstance>> modify) {
-        this.modifySyncedData(ACCESSORIES.get(), modify);
+        this.modifyListSyncedData(ACCESSORIES.get(), modify);
     }
 
     public void modifyArtifact(Consumer<List<DoggyArtifactItem>> modify) {
-        this.modifySyncedData(ARTIFACTS.get(), modify);
+        this.modifyListSyncedData(ARTIFACTS.get(), modify);
     }
 
-    public <T> void modifySyncedData(EntityDataAccessor<T> key, Consumer<T> modify) {
-        var result = key.getSerializer().copy(this.entityData.get(key));
+    public <T> void modifyListSyncedData(EntityDataAccessor<List<T>> key, Consumer<List<T>> modify) {
+        modifySyncedData(key, modify, x -> new ArrayList<>(x));
+    }
+
+    public <T> void modifySyncedData(EntityDataAccessor<T> key, Consumer<T> modify, Function<T, T> copyFunc) {
+        var result = copyFunc.apply(this.entityData.get(key));
         modify.accept(result);
         this.entityData.set(key, result);
     }
