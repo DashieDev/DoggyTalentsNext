@@ -1,104 +1,142 @@
 package doggytalents.client.entity.model;
 
+import java.util.Optional;
+
 import net.minecraft.client.model.geom.ModelPart;
-import com.google.common.collect.ImmutableList;
-import doggytalents.api.inferface.AbstractDog;
-import doggytalents.client.entity.model.dog.DogModel;
-import net.minecraft.client.model.ColorableAgeableListModel;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.util.Mth;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class DogArmorModel<T extends AbstractDog> extends DogModel {
+public class DogArmorModel extends SyncedAccessoryModel {
 
-    public ModelPart leggingHindRight;
-    public ModelPart leggingHindLeft;
-    public ModelPart leggingFrontRight;
-    public ModelPart leggingFrontLeft;
-    public ModelPart bootHindRight;
-    public ModelPart bootHindLeft;
-    public ModelPart bootFrontRight;
-    public ModelPart bootFrontLeft;
+    private ModelPart bootHindLeft;
+    private ModelPart bootHindRight;
+    private ModelPart bootFrontLeft;
+    private ModelPart bootFrontRight;
+    private ModelPart leggingHindLeft;
+    private ModelPart leggingHindRight;
+    private ModelPart leggingFrontLeft;
+    private ModelPart leggingFrontRight;
+    private ModelPart leggingCube;
+    private ModelPart chestCube;
 
-    public DogArmorModel(ModelPart box) {
-        super(box);
-        leggingHindRight = this.legBackRight.getChild("right_hind_leggings");
-        leggingHindLeft = this.legBackLeft.getChild("left_hind_leggings");
-        leggingFrontRight = this.legFrontRight.getChild("right_front_leggings");
-        leggingFrontLeft = this.legFrontLeft.getChild("left_front_leggings");
-        bootHindRight = this.legBackRight.getChild("right_hind_boots");
-        bootHindLeft = this.legBackLeft.getChild("left_hind_boots");
-        bootFrontRight = this.legFrontRight.getChild("right_front_boots");
-        bootFrontLeft = this.legFrontLeft.getChild("left_front_boots");
+    public DogArmorModel(ModelPart root) {
+        super(root);
+    }
+
+    @Override
+    protected void populatePart(ModelPart box) {
+        this.head = Optional.of(box.getChild("head"));
+        this.realHead = Optional.of(head.get().getChild("real_head"));
+        this.body = Optional.of(box.getChild("body"));
+        this.mane = Optional.of(box.getChild("upper_body"));
+        this.legBackLeft = Optional.of(box.getChild("left_hind_leg"));
+        this.legBackRight = Optional.of(box.getChild("right_hind_leg"));
+        this.legFrontLeft = Optional.of(box.getChild("left_front_leg"));
+        this.legFrontRight = Optional.of(box.getChild("right_front_leg"));
+        this.tail = Optional.of(box.getChild("tail"));
+        this.realTail = Optional.of(tail.get().getChild("real_tail"));
+        
+        this.bootFrontLeft = this.legFrontLeft.get().getChild("boot");
+        this.leggingFrontLeft = this.legFrontLeft.get().getChild("leg");
+        this.bootFrontRight = this.legFrontRight.get().getChild("boot");
+        this.leggingFrontRight = this.legFrontRight.get().getChild("leg");
+        this.bootHindLeft = this.legBackLeft.get().getChild("boot");
+        this.leggingHindLeft = this.legBackLeft.get().getChild("leg");
+        this.bootHindRight = this.legBackRight.get().getChild("boot");
+        this.leggingHindRight = this.legBackRight.get().getChild("leg");
+        this.chestCube = this.body.get().getChild("chestplates");
+        this.leggingCube = this.body.get().getChild("leggings");
+    }
+
+    private void resetVisible() {
+        this.head.get().visible = false;
+        this.realHead.get().visible = false;
+        this.body.get().visible = true;
+        this.mane.get().visible = false;
+        this.legBackLeft.get().visible = true;
+        this.legBackRight.get().visible = true;
+        this.legFrontLeft.get().visible = true;
+        this.legFrontRight.get().visible = true;
+        this.tail.get().visible = false;
+        this.realTail.get().visible = false;
+
+        this.bootFrontLeft.visible = false;
+        this.bootFrontRight.visible = false;
+        this.bootHindLeft.visible = false;
+        this.bootHindRight.visible = false;
+
+        this.leggingFrontLeft.visible = false;
+        this.leggingFrontRight.visible = false;
+        this.leggingHindLeft.visible = false;
+        this.leggingHindRight.visible = false;
+
+        this.leggingCube.visible = false;
+        this.chestCube.visible = false;
+    }
+
+    public void setHelmet() {
+        resetVisible();
+        this.head.get().visible = true;
+        this.realHead.get().visible = true;
+    }
+
+    public void setChestplate() {
+        resetVisible();
+        this.mane.get().visible = true;
+        this.chestCube.visible = true;
+    }
+
+    public void setLeggings() {
+        resetVisible();
+        this.leggingFrontLeft.visible = true;
+        this.leggingFrontRight.visible = true;
+        this.leggingHindLeft.visible = true;
+        this.leggingHindRight.visible = true;
+
+        this.leggingCube.visible = true;
+        this.tail.get().visible = true;
+        this.realTail.get().visible = true;
+    }
+
+    public void setBoot() {
+        resetVisible();
+        this.bootFrontLeft.visible = true;
+        this.bootFrontRight.visible = true;
+        this.bootHindLeft.visible = true;
+        this.bootHindRight.visible = true;
     }
     
-    public static LayerDefinition createArmorLayer() {
-        return createArmorLayerInternal(new CubeDeformation(0.4F, 0.4F, 0.4F));
-    }
+    public static LayerDefinition createBodyLayer() {
+		var meshdefinition = new MeshDefinition();
+		var partdefinition = meshdefinition.getRoot();
+
+        var head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 13.5F, -7.0F));
+		var real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.6F, -2.0F, 6.0F, 6.0F, 4.0F, new CubeDeformation(0.3F)), PartPose.ZERO);
+		var body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
+        var leggings = body.addOrReplaceChild("leggings", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, 1.5F, -3.5F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.3F)), PartPose.ZERO);
+		var chestplates = body.addOrReplaceChild("chestplates", CubeListBuilder.create().texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, new CubeDeformation(0.15F)), PartPose.ZERO);
+        var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-3.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, new CubeDeformation(0.05F)), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		var right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create(), PartPose.offset(-2.5F, 16.0F, 7.0F));
+		var leg = right_hind_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(30, 21).mirror().addBox(0.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)).mirror(false), PartPose.ZERO);
+		var boot = right_hind_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).addBox(0.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.ZERO);
+		var left_hind_leg = partdefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create(), PartPose.offset(0.5F, 16.0F, 7.0F));
+		var leg2 = left_hind_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(30, 21).addBox(0.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.ZERO);
+		var boot2 = left_hind_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).mirror().addBox(3.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)).mirror(false), PartPose.offset(-3.0F, 0.0F, 0.0F));
+		var right_front_leg = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create(), PartPose.offset(-2.5F, 16.0F, -4.0F));
+		var boot3 = right_front_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).addBox(0.0F, 6.0F, -12.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(0.0F, 0.0F, 11.0F));
+		var leg3 = right_front_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(34, 20).mirror().addBox(-3.0F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)).mirror(false), PartPose.offset(3.0F, 0.0F, 11.0F));
+		var left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create(), PartPose.offset(0.5F, 16.0F, -4.0F));
+		var boot4 = left_front_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).mirror().addBox(3.0F, 6.0F, -12.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)).mirror(false), PartPose.offset(-3.0F, 0.0F, 11.0F));
+		var leg4 = left_front_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(34, 20).addBox(0.0F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 11.0F));
+		var tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(-1.0F, 12.0F, 8.0F));
+        tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(31, 7).addBox(0.0F, 0.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.45F)), PartPose.ZERO);
+
+		return LayerDefinition.create(meshdefinition, 64, 32);
+	}
 
     
-    private static LayerDefinition createArmorLayerInternal(CubeDeformation scale) {
-        MeshDefinition var0 = new MeshDefinition();
-        PartDefinition var1 = var0.getRoot();
-        float var2 = 13.5F;
-        PartDefinition var3 = var1.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0F, 13.5F, -7.0F));
-        var real_head = var3.addOrReplaceChild("real_head", CubeListBuilder.create()
-                // Head
-                .texOffs(0, 0).addBox(-3.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, scale)
-                // Nose
-                .texOffs(0, 10).addBox(-1.5F, 0.0F, -5.0F, 3.0F, 3.0F, 4.0F, scale)
-                , PartPose.ZERO);
-        var ear_normal = real_head.addOrReplaceChild("ear_normal", CubeListBuilder.create()
-            .texOffs(16, 14).addBox(-3.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
-            .texOffs(16, 14).addBox(1.0F, -5.0F, 0.0F, 2.0F, 2.0F, 1.0F, scale)
-        ,PartPose.ZERO);
-        var body = var1.addOrReplaceChild("body", CubeListBuilder.create()
-                .texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, scale)
-        , PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5707964F, 0.0F, 0.0F));
-
-        var1.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-3.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, scale), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
-        
-        CubeListBuilder var4 = CubeListBuilder.create();
-
-        var leg1 = var1.addOrReplaceChild("right_hind_leg", var4, PartPose.offset(-2.5F, 16.0F, 7.0F));
-        var leg2 = var1.addOrReplaceChild("left_hind_leg", var4, PartPose.offset(0.5F, 16.0F, 7.0F));
-        var leg3 = var1.addOrReplaceChild("right_front_leg", var4, PartPose.offset(-2.5F, 16.0F, -4.0F));
-        var leg4 = var1.addOrReplaceChild("left_front_leg", var4, PartPose.offset(0.5F, 16.0F, -4.0F));
-        
-        leg1.addOrReplaceChild("right_hind_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(3.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(-3.0F, 0.0F, 0.0F));
-		leg1.addOrReplaceChild("right_hind_boots", CubeListBuilder.create().texOffs(34, 20).addBox(3.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(-3.0F, 0.0F, 0.0F));
-        
-        leg2.addOrReplaceChild("left_hind_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(0.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 0.0F));
-		leg2.addOrReplaceChild("left_hind_boots", CubeListBuilder.create().texOffs(34, 20).addBox(0.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(0.0F, 0.0F, 0.0F));       
-
-		leg3.addOrReplaceChild("right_front_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(3.0F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(-3.0F, 0.0F, 11.0F));
-		leg3.addOrReplaceChild("right_front_boots", CubeListBuilder.create().texOffs(34, 20).addBox(3.0F, 6.0F, -12.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(-3.0F, 0.0F, 11.0F));
-
-		leg4.addOrReplaceChild("left_front_leggings", CubeListBuilder.create().texOffs(30, 21).addBox(0.0F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 11.0F));
-		leg4.addOrReplaceChild("left_front_boots", CubeListBuilder.create().texOffs(34, 20).addBox(0.0F, 6.0F, -12.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(0.0F, 0.0F, 11.0F));
-
-
-        PartDefinition var5 = var1.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 12.0F, 8.0F, 0.62831855F, 0.0F, 0.0F));
-        
-        var5.addOrReplaceChild("real_tail", CubeListBuilder.create()
-                .texOffs(9, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, scale)
-        , PartPose.ZERO);
-        return LayerDefinition.create(var0, 64, 32);
-    }
-
-
-    public void setVisible(boolean visible) {
-        this.head.visible = visible;
-        this.body.visible = visible;
-        this.tail.visible = visible;
-        this.mane.visible = visible;
-        this.leggingHindRight.visible = visible;
-        this.leggingHindLeft.visible = visible;
-        this.leggingFrontRight.visible = visible;
-        this.leggingFrontLeft.visible = visible;
-        this.bootHindRight.visible = visible;
-        this.bootHindLeft.visible = visible;
-        this.bootFrontRight.visible = visible;
-        this.bootFrontLeft.visible = visible;
-    }
 }
