@@ -898,6 +898,18 @@ public class Dog extends AbstractDog {
         return actionresulttype;
     }
 
+    @Override
+    public boolean canStillEat() {
+        if (this.level().isClientSide)
+            return false;
+        if (ConfigHandler.SERVER.DISABLE_HUNGER.get()) {
+            return this.getHealth() < this.getMaxHealth()
+                && this.hungerSaturation <= 0;
+        }
+        
+        return this.getDogHunger() < this.getMaxHunger();
+    }
+
     private boolean checkRandomBackflip(float r, int sit_interval) {
         if (sit_interval <= 30) 
             return false;

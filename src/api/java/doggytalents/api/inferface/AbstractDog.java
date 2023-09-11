@@ -218,4 +218,8 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
 
     //Syntactic Sugar to imitate 1.20.
     public Level level() { return this.level; }
+
+    public boolean canStillEat() {
+        return false;
+    }
 }
