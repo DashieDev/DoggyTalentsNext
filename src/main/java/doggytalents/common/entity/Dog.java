@@ -1694,19 +1694,7 @@ public class Dog extends AbstractDog {
             }
         }
     }
-
-    @Override
-    protected void tickDeath() {
-        //Defeated dogs don't tick Death....
-        if (this.isDefeated()) {
-            this.deathTime = 0;
-            this.setHealth(1);
-            return;
-        }
-
-        super.tickDeath();
-    }
-
+    
     private void startShaking() {
         if (this.isShaking) return; // don't shake if already shaking
         this.isShaking = true;
