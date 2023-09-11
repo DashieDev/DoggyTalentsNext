@@ -54,7 +54,6 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue DIRE_PARTICLES;
         public ForgeConfigSpec.BooleanValue RENDER_CHEST;
         public ForgeConfigSpec.BooleanValue USE_DT_TEXTURES;
-        public ForgeConfigSpec.BooleanValue RENDER_ARMOUR;
         public ForgeConfigSpec.BooleanValue RENDER_SADDLE;
         public ForgeConfigSpec.BooleanValue RENDER_WINGS;
         public ForgeConfigSpec.BooleanValue RENDER_INCAPACITATED_TEXTURE;
@@ -65,6 +64,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
         public ForgeConfigSpec.BooleanValue USE_PROVIDED_COPY_FOR_CLASSICAL;
         public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON;
+        public ForgeConfigSpec.BooleanValue RENDER_ARMOR;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -84,10 +84,6 @@ public class ConfigHandler {
                     .comment("If disabled will use the default minecraft wolf skin for all dog textures.")
                     .translation("doggytalents.config.client.enable_dt_textures")
                     .define("enable_dt_textures", true);
-            RENDER_ARMOUR = builder
-                    .comment("When enabled, dogs with points in guard dog will have armour.")
-                    .translation("doggytalents.config.client.render_armour")
-                    .define("render_armour", false);
             RENDER_SADDLE = builder
                     .comment("When enabled, dogs with points in wolf mount will have a saddle on.")
                     .translation("doggytalents.config.client.render_saddle")
@@ -137,6 +133,10 @@ public class ConfigHandler {
                 .comment("Show a fun icon on world loading screen.")
                 .translation("doggytalents.config.client.world_load_icon")
                 .define("world_load_icon", true);
+            RENDER_ARMOR = builder
+                .comment("Determine if dogs will render their armor.")
+                .translation("doggytalents.config.client.render_armor")
+                .define("render_armor", true);
             builder.pop();
         }
 
