@@ -39,7 +39,7 @@ import doggytalents.client.entity.render.layer.DogMouthItemRenderer;
 import doggytalents.client.entity.render.layer.PackPuppyRenderer;
 import doggytalents.client.entity.render.layer.RescueDogRenderer;
 import doggytalents.client.entity.render.layer.accessory.AccessoryModelRenderer;
-import doggytalents.client.entity.render.layer.accessory.ArmorAccessoryRenderer;
+import doggytalents.client.entity.render.layer.accessory.DoggyArmorRenderer;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
 import doggytalents.client.entity.render.layer.accessory.IncapacitatedRenderer;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.AccessoryModelRenderEntries;
@@ -119,7 +119,7 @@ public class ClientSetup {
         event.registerLayerDefinition(KUSA_UME, UmeModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ARCANINE, ArcanineModel::createBodyLayer);
 
-        event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createArmorLayer);
+        event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
         event.registerLayerDefinition(DOG_BACKPACK, DogBackpackModel::createChestLayer);
         event.registerLayerDefinition(DOG_RESCUE_BOX, DogRescueModel::createRescueBoxLayer);
@@ -141,7 +141,7 @@ public class ClientSetup {
         
         CollarRenderManager.registerLayer(DefaultAccessoryRenderer::new);
         CollarRenderManager.registerLayer(IncapacitatedRenderer::new);
-        CollarRenderManager.registerLayer(ArmorAccessoryRenderer::new);
+        CollarRenderManager.registerLayer(DoggyArmorRenderer::new);
         CollarRenderManager.registerLayer(PackPuppyRenderer::new);
         CollarRenderManager.registerLayer(RescueDogRenderer::new);
         CollarRenderManager.registerLayer(AccessoryModelRenderer::new);
