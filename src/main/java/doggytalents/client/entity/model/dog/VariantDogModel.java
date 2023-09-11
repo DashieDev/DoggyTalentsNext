@@ -92,6 +92,7 @@ public class VariantDogModel extends DogModel {
             this.realTail.visible = true;
             this.realTail2.visible = false;
             this.realTail3.visible = false;
+            break;
         case 1 :
             this.realTail.visible = false;
             this.realTail2.visible = true;
