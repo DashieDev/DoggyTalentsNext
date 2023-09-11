@@ -39,7 +39,7 @@ public class StatsGeneralView extends AbstractElement {
         graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, startX
             + font.width(draw), pY - 1, 16, 0 ,9, 9);
         graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, startX
-            + font.width(draw), pY - 1, 16 + 36, 0 ,9, 9);
+            + font.width(draw), pY - 1, 16 + 45, 0 ,9, 9);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceInWater") + ": " + formatDistance(stats.getDistanceInWater());
         graphics.drawString(font, draw, startX, pY, 0xffffffff);
