@@ -616,3 +616,19 @@ They can now Beg, Lie down, or do a little Scratchie… and a lot more waiting f
 # Make Skin search case insensitive
 * Fix DoggyToolsScreen
 * HOTFIX: Talents sync
+
+1.16.2 - 11th September 2023 
+# Clean up Legoshi, Death texture
+# Fix Death Model offset
+* Fix Doggy Tools Inventory Title still rendering.
+* HOTFIX: Incap dog cant die regardless if source is bypass vulnerability.
+* Fix VariantDogModel wrongly pick the tail for rendering. (Classy forgot-to-break-in-switch programming error)
++ Option to disable armor rendering
+* Fix Ammy Model
++ Handle case when hunger is disabled:
+You can continue to feed dog till dog health is full, you only have to wait till the saturation runs out
+Dog will not render the hunger number.
+# Stat units are human readable now.
+# Completely redo Dog Armor:
++ Added a cube to cover dog's bottom.
+* HOTFIX: Doggy Tools Inventory reset when a talent is added.
