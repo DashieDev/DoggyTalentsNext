@@ -2,12 +2,14 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView.view;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.stats.StatsTracker;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.stats.StatFormatter;
 
 public class StatsGeneralView extends AbstractElement {
 
@@ -32,28 +34,40 @@ public class StatsGeneralView extends AbstractElement {
         int pY = this.getRealY() + PADDING_TOP;
         String i18nPrefix = "doggui.stats.general.";
         String draw;
-        draw = I18n.get(i18nPrefix + "damageDealt") + ": " + stats.getDamageDealt();
+        draw = I18n.get(i18nPrefix + "damageDealt") + ": " + formatHealth(stats.getDamageDealt()) + " ";
+        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, startX
+            + font.width(draw), pY - 1, 16, 0 ,9, 9);
+        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, startX
+            + font.width(draw), pY - 1, 16 + 36, 0 ,9, 9);
+        pY += font.lineHeight + LINE_SPACING;
+        draw = I18n.get(i18nPrefix + "distanceInWater") + ": " + formatDistance(stats.getDistanceInWater());
         graphics.drawString(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
-        draw = I18n.get(i18nPrefix + "distanceInWater") + ": " + stats.getDistanceInWater();
+        draw = I18n.get(i18nPrefix + "distanceOnWater") + ": "+ formatDistance(stats.getDistanceOnWater());
         graphics.drawString(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
-        draw = I18n.get(i18nPrefix + "distanceOnWater") + ": "+ stats.getDistanceOnWater();
+        draw = I18n.get(i18nPrefix + "distanceRidden") + ": "+ formatDistance(stats.getDistanceRidden());
         graphics.drawString(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
-        draw = I18n.get(i18nPrefix + "distanceRidden") + ": "+ stats.getDistanceRidden();
+        draw = I18n.get(i18nPrefix + "distanceSneaking") + ": " + formatDistance(stats.getDistanceSneaking());
         graphics.drawString(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
-        draw = I18n.get(i18nPrefix + "distanceSneaking") + ": " + stats.getDistanceSneaking();
+        draw = I18n.get(i18nPrefix + "distanceSprinting") + ": " + formatDistance(stats.getDistanceSprint());
         graphics.drawString(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
-        draw = I18n.get(i18nPrefix + "distanceSprinting") + ": " + stats.getDistanceSprint();
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
-        pY += font.lineHeight + LINE_SPACING;
-        draw = I18n.get(i18nPrefix + "distanceWalking") + ": " + stats.getDistanceWalk();
+        draw = I18n.get(i18nPrefix + "distanceWalking") + ": " + formatDistance(stats.getDistanceWalk());
         graphics.drawString(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
 
+    }
+
+    private String formatDistance(int x_cm) {
+        return StatFormatter.DISTANCE.format(x_cm);
+    }
+
+    private String formatHealth(float h) {
+        return StatFormatter.DECIMAL_FORMAT.format(h);
     }
     
 }
