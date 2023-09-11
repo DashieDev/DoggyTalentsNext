@@ -125,7 +125,9 @@ public class DogStatusViewBoxElement extends AbstractElement {
             
             String healthStr = " x " + dog.getHealth() + "/" + dogMaxHealth;
             pX += (80 - (8 + font.width(healthStr)))/2; 
-            blit(stack, pX, pY, 16 + 36, 0 ,9, 9);
+            
+            graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
+            graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
             pX += 9;
             pY += 1;
             this.font.draw(stack, healthStr, pX, pY, 0xffffffff);
