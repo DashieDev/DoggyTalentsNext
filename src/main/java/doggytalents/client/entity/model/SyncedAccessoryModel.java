@@ -27,6 +27,7 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
     public Optional<ModelPart> legFrontRight = Optional.empty();
     public Optional<ModelPart> legFrontLeft = Optional.empty();
     public Optional<ModelPart> tail = Optional.empty();
+    public Optional<ModelPart> realTail = Optional.empty();
 
     public SyncedAccessoryModel(ModelPart root) {
         this.root = root;
@@ -47,6 +48,7 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
         syncPart(this.legFrontRight, dogModel.legFrontRight);
         syncPart(this.legFrontLeft, dogModel.legFrontLeft);
         syncPart(this.tail, dogModel.tail);
+        syncPart(this.realTail, dogModel.realTail);
     }
 
     private void syncPart(Optional<ModelPart> part, ModelPart dogPart) {
