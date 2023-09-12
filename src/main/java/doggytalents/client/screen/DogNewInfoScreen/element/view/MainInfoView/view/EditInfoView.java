@@ -2,6 +2,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.vi
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.DogRandomNameRegistry;
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.GroupsListElement;
 import doggytalents.client.screen.DogNewInfoScreen.widget.LowHealthStrategySwitch;
@@ -12,6 +13,7 @@ import doggytalents.client.screen.framework.element.ElementPosition.ChildDirecti
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.CrossOriginTpData;
 import doggytalents.common.network.packet.data.DogForceSitData;
@@ -230,6 +232,7 @@ public class EditInfoView extends AbstractElement {
         private Dog dog;
         private EditBox nameEdit;
         private FlatButton applyButton;
+        private FlatButton randomButton;
 
         public NewnameEntry(AbstractElement parent, Screen screen, Dog dog) {
             super(parent, screen);
@@ -257,8 +260,29 @@ public class EditInfoView extends AbstractElement {
                     requestNameChange(this.dog, newName);
                     b.active = false;
                 });
+            this.randomButton = new FlatButton(startX + this.nameEdit.getWidth() + 15,
+            pY, 20, 20, Component.empty(), b -> {
+                var newName = DogRandomNameRegistry.getInstance().getRandomName(dog);
+                requestNameChange(this.dog, newName);
+                this.nameEdit.setValue(newName);
+                this.applyButton.active = false;
+                this.randomButton.active = true;
+            }) {
+                @Override
+                public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                    if (!this.active)
+                        return;
+                    if (this.isHovered) {
+                        graphics.fill( this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, 0x835e5d5d);
+                    }
+                    graphics.blit(Resources.HAMBURGER, this.getX(), this.getY(), 20, 0, 20, 20);
+                }
+            };
             this.applyButton.active = false;
+            this.randomButton.active = true;
+            this.addChildren(randomButton);
             this.addChildren(applyButton);
+        
 
             return this;
         }
@@ -284,6 +308,7 @@ public class EditInfoView extends AbstractElement {
                     : "";
                 if (!s.equals(dogName)) {
                     this.applyButton.active = true;
+                    this.randomButton.active = false;
                 }
             });
     
