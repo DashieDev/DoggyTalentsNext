@@ -169,7 +169,7 @@ public class ClientEventHandler {
         if (!(event.getScreen() instanceof LevelLoadingScreen))
             return;
         spinWidget.setY(event.getScreen().height - 128);
-        spinWidget.render(event.getGuiGraphics(), event.getMouseX(), 0, 0);
+        spinWidget.render(event.getGuiGraphics(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
     }
 
     // No need more
