@@ -156,5 +156,6 @@ public class ClientSetup {
 
     public static void addClientReloadListeners(final RegisterClientReloadListenersEvent event) {
         event.registerReloadListener(DogTextureManager.INSTANCE);
+        event.registerReloadListener(DogRandomNameRegistry.getInstance());
     }
 }
