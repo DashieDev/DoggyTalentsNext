@@ -1,6 +1,5 @@
 package doggytalents.common.event;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyAccessories;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
