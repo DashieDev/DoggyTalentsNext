@@ -24,8 +24,6 @@ public class DoggyRegistries {
         DoggyTalentsAPI.TALENTS = event.create(makeRegistry(Keys.TALENTS_REGISTRY, Talent.class));
         DoggyTalentsAPI.ACCESSORIES = event.create(makeRegistry(Keys.ACCESSORIES_REGISTRY, Accessory.class));
         DoggyTalentsAPI.ACCESSORY_TYPE = event.create(makeRegistry(Keys.ACCESSORY_TYPE_REGISTRY, AccessoryType.class).disableSync());
-        DoggyTalentsAPI.BEDDING_MATERIAL = event.create(makeRegistry(Keys.BEDDING_REGISTRY, IBeddingMaterial.class).addCallback(BeddingCallbacks.INSTANCE));
-        DoggyTalentsAPI.CASING_MATERIAL = event.create(makeRegistry(Keys.CASING_REGISTRY, ICasingMaterial.class).addCallback(CasingCallbacks.INSTANCE)); //TODO ADD holder object
     }
 
     private static <T> RegistryBuilder<T> makeRegistry(final ResourceLocation rl, Class<T> type) {

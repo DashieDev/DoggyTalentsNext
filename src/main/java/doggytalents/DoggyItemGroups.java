@@ -2,6 +2,7 @@ package doggytalents;
 
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.common.block.DogBedBlock;
+import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogBedUtil;
 import doggytalents.common.util.Util;
@@ -18,9 +19,12 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import static doggytalents.DoggyItems.*;
 import static doggytalents.DoggyBlocks.*;
@@ -53,8 +57,18 @@ public class DoggyItemGroups {
             .icon(DogBedUtil::createRandomBed)
             .withTabsBefore(GENERAL.getKey())
             .displayItems((a, b) -> {
-                for (var beddingId : DoggyTalentsAPI.BEDDING_MATERIAL.get().getValues()) {
-                    for (var casingId : DoggyTalentsAPI.CASING_MATERIAL.get().getValues()) {
+                final int maxBeddingEntries = 13;
+                final int maxCasingEntries = 13;
+                var beddingList = DogBedMaterialManager.getBeddings().entrySet().stream()
+                    .map(x -> x.getValue()).collect(Collectors.toList());
+                var casingList = DogBedMaterialManager.getCasings().entrySet().stream()
+                    .map(x -> x.getValue()).collect(Collectors.toList());
+                Collections.shuffle(beddingList);
+                Collections.shuffle(casingList);
+                for (int i = 0; i < Math.min(maxCasingEntries, casingList.size()); ++i) {
+                    for (int j = 0; j < Math.min(maxBeddingEntries, beddingList.size()); ++j) {
+                        var beddingId = beddingList.get(j);
+                        var casingId = casingList.get(i);
                         b.accept(DogBedUtil.createItemStack(casingId, beddingId));
                     }
                 }

@@ -1,11 +1,11 @@
 package doggytalents.common.block.tileentity;
 
-import doggytalents.DoggyBedMaterials;
 import doggytalents.DoggyRegistries;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
+import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
@@ -47,8 +47,8 @@ public class DogBedTileEntity extends PlacedTileEntity {
     public void load(CompoundTag compound) {
         super.load(compound);
 
-        this.casingType = NBTUtil.getRegistryValue(compound, "casingId", DoggyTalentsAPI.CASING_MATERIAL.get());
-        this.beddingType = NBTUtil.getRegistryValue(compound, "beddingId", DoggyTalentsAPI.BEDDING_MATERIAL.get());
+        this.casingType = DogBedMaterialManager.getCasing(compound, "casingId");
+        this.beddingType = DogBedMaterialManager.getBedding(compound, "beddingId");
 
         this.dogUUID = NBTUtil.getUniqueId(compound, "ownerId");
         this.name = NBTUtil.getTextComponent(compound, "name");
@@ -60,8 +60,8 @@ public class DogBedTileEntity extends PlacedTileEntity {
     public void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
 
-        NBTUtil.putRegistryValue(compound, "casingId", DoggyTalentsAPI.CASING_MATERIAL.get().getKey( this.casingType) );
-        NBTUtil.putRegistryValue(compound, "beddingId", DoggyTalentsAPI.BEDDING_MATERIAL.get().getKey( this.beddingType) );
+        NBTUtil.putRegistryValue(compound, "casingId", DogBedMaterialManager.getKey( this.casingType) );
+        NBTUtil.putRegistryValue(compound, "beddingId", DogBedMaterialManager.getKey( this.beddingType) );
 
         NBTUtil.putUniqueId(compound, "ownerId", this.dogUUID);
         NBTUtil.putTextComponent(compound, "name", this.name);

@@ -25,6 +25,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;
 import doggytalents.common.util.BackwardsComp;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.tags.BlockTags;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.data.event.GatherDataEvent;
 import org.apache.logging.log4j.LogManager;
@@ -80,8 +82,6 @@ public class DoggyTalentsNext {
         DoggyTalents.TALENTS.register(modEventBus);
         DoggyAccessories.ACCESSORIES.register(modEventBus);
         DoggyAccessoryTypes.ACCESSORY_TYPES.register(modEventBus);
-        DoggyBedMaterials.BEDDINGS.register(modEventBus);
-        DoggyBedMaterials.CASINGS.register(modEventBus);
         DoggyAttributes.ATTRIBUTES.register(modEventBus);
         DoggyItemGroups.ITEM_GROUP.register(modEventBus);
 
