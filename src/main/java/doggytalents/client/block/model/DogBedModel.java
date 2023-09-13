@@ -6,6 +6,7 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.DogBedBlock;
+import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
 import doggytalents.common.lib.Constants;
 import net.minecraft.client.particle.TerrainParticle;
@@ -126,10 +127,10 @@ public class DogBedModel implements BakedModel {
 
     private ResourceLocation createResourceVariant(@Nonnull IRegistryDelegate<ICasingMaterial> casingResource, @Nonnull IRegistryDelegate<IBeddingMaterial> beddingResource, @Nonnull Direction facing) {
         String beddingKey = beddingResource != null
-                ? beddingResource.name().toString().replace(':', '.')
+                ? DogBedMaterialManager.getKey(beddingResource).toString().replace(':', '.')
                 : "doggytalents.dogbed.bedding.missing";
         String casingKey = beddingResource != null
-                ? casingResource.name().toString().replace(':', '.')
+                ? DogBedMaterialManager.getKey(casingResource).toString().replace(':', '.')
                 : "doggytalents.dogbed.casing.missing";
         return new ModelResourceLocation(Constants.MOD_ID, "block/dog_bed#bedding=" + beddingKey + ",casing=" + casingKey + ",facing=" + facing.getName());
     }
