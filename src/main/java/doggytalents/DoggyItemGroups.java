@@ -5,6 +5,8 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Supplier;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class DoggyItemGroups {
 
@@ -12,14 +14,13 @@ public class DoggyItemGroups {
     public static final CreativeModeTab DOG_BED = new CustomItemGroup("doggytalents.dogbed", DogBedUtil::createRandomBed);
 
     public static class CustomItemGroup extends CreativeModeTab {
-
         private Supplier<ItemStack> icon;
 
         public CustomItemGroup(String label, Supplier<ItemStack> iconIn) {
             super(label);
             this.icon = iconIn;
         }
-
+        
         @Override
         public ItemStack makeIcon() {
             return this.icon.get();

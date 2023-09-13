@@ -20,8 +20,6 @@ public class DoggyTalentsAPI {
     public static Supplier<IForgeRegistry<Talent>> TALENTS;
     public static Supplier<IForgeRegistry<Accessory>> ACCESSORIES;
     public static Supplier<IForgeRegistry<AccessoryType>> ACCESSORY_TYPE;
-    public static Supplier<IForgeRegistry<IBeddingMaterial>> BEDDING_MATERIAL;
-    public static Supplier<IForgeRegistry<ICasingMaterial>> CASING_MATERIAL;
-
+    
     public static final Logger LOGGER = LogManager.getLogger("doggytalents");
 }
