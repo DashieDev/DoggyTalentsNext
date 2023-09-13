@@ -6,7 +6,6 @@ import java.util.Random;
 
 import com.google.common.collect.Maps;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.impl.BeddingMaterial;
 import doggytalents.api.impl.CasingMaterial;
 import doggytalents.api.impl.MissingBeddingMaterial;
@@ -77,7 +76,7 @@ public class DogBedMaterialManager {
         }
         return list.get(RANDOM.nextInt(list.size())).getValue();
     }
-    
+
     public static ICasingMaterial randomCasing() {
         var list = new ArrayList<>(casingMap.entrySet());
         if (list.isEmpty()) {
@@ -116,7 +115,6 @@ public class DogBedMaterialManager {
 
     public static void onTagsUpdated(TagsUpdatedEvent event) {
         refresh();
-        ChopinLogger.l("bed refreshed!");
     }
     
 }
