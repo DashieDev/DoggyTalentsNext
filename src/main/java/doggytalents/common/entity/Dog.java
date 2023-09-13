@@ -320,7 +320,7 @@ public class Dog extends AbstractDog {
         ++p;
         this.goalSelector.addGoal(p, new DogBegGoal(this, 8.0F));
         ++p;
-        this.goalSelector.addGoal(p, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(p, new DogLookAtPlayerGoal(this));
         this.goalSelector.addGoal(p, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(p, new DogRandomSitIdleGoal(this));
         
