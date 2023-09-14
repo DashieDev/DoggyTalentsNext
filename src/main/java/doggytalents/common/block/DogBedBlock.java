@@ -64,6 +64,7 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class DogBedBlock extends BaseEntityBlock {
 
@@ -267,8 +268,19 @@ public class DogBedBlock extends BaseEntityBlock {
 
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        for (IBeddingMaterial beddingId : DoggyTalentsAPI.BEDDING_MATERIAL.get().getValues()) {
-            for (ICasingMaterial casingId : DoggyTalentsAPI.CASING_MATERIAL.get().getValues()) {
+        final int maxBedding = 13;
+        final int maxCasing = 13;
+        var beddingList = DogBedMaterialManager.getBeddings().entrySet()
+            .stream().map(x -> x.getValue())
+            .collect(Collectors.toList());
+        var casingList = DogBedMaterialManager.getCasings().entrySet()
+            .stream().map(x -> x.getValue())
+            .collect(Collectors.toList());
+        Collections.shuffle(beddingList);
+        Collections.shuffle(casingList);
+
+        for (var beddingId : beddingList) {
+            for (var casingId : casingList) {
                 items.add(DogBedUtil.createItemStack(casingId, beddingId));
             }
         }

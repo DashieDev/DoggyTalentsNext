@@ -68,7 +68,7 @@ public class ArtifactShowBox extends AbstractWidget {
             fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, BKGCOL);
         }
         
-        graphics.renderItem(itemStack, Mth.floor((this.getX() + this.width/2 - 8)), Mth.floor((this.getY() + this.height/2 - 8)));
+        this.itemRenderer.renderGuiItem(itemStack, Mth.floor((this.x + this.width/2 - 8)), Mth.floor((this.y + this.height/2 - 8)));
         RenderSystem.applyModelViewMatrix();
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);

@@ -1,5 +1,6 @@
 package doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView.view;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.entity.render.DogScreenOverlays;
@@ -35,29 +36,30 @@ public class StatsGeneralView extends AbstractElement {
         String draw;
 
         draw = I18n.get(i18nPrefix + "damageDealt") + ": " + formatHealth(stats.getDamageDealt()) + " ";
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, startX
+        font.draw(stack, draw, startX, pY, 0xffffffff);
+        RenderSystem.setShaderTexture(0, Screen.GUI_ICONS_LOCATION);
+        blit(stack, startX
             + font.width(draw), pY - 1, 16, 0 ,9, 9);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, startX
+        blit(stack, startX
             + font.width(draw), pY - 1, 16 + 45, 0 ,9, 9);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceInWater") + ": " + formatDistance(stats.getDistanceInWater());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        font.draw(stack, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceOnWater") + ": "+ formatDistance(stats.getDistanceOnWater());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        font.draw(stack, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceRidden") + ": "+ formatDistance(stats.getDistanceRidden());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        font.draw(stack, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceSneaking") + ": " + formatDistance(stats.getDistanceSneaking());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        font.draw(stack, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceSprinting") + ": " + formatDistance(stats.getDistanceSprint());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        font.draw(stack, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceWalking") + ": " + formatDistance(stats.getDistanceWalk());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        font.draw(stack, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
 
     }

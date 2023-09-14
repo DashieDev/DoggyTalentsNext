@@ -8,6 +8,7 @@ import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.IBeddingMaterial;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
@@ -57,7 +58,7 @@ public class BeddingMaterial extends IBeddingMaterial {
         
         return Component.translatable(block.asItem().getDescriptionId()).withStyle(
             Style.EMPTY.withItalic(true)
-                .withColor(block.defaultMapColor().col)
+                .withColor(block.defaultMaterialColor().col)
         );
     }
 

@@ -572,15 +572,15 @@ public class DogModel extends EntityModel<Dog> {
         p_102034_.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
         p_102034_.translate((double)(0 / 16.0F), (double)(15 / 16.0F), (double)(0 / 16.0F));
         if (root.zRot != 0.0F) {
-            p_102034_.mulPose(Axis.ZP.rotation(root.zRot));
+            p_102034_.mulPose(Vector3f.ZP.rotation(root.zRot));
         }
 
         if (root.yRot != 0.0F) {
-            p_102034_.mulPose(Axis.YP.rotation(root.yRot));
+            p_102034_.mulPose(Vector3f.YP.rotation(root.yRot));
         }
 
         if (root.xRot != 0.0F) {
-            p_102034_.mulPose(Axis.XP.rotation(root.xRot));
+            p_102034_.mulPose(Vector3f.XP.rotation(root.xRot));
         }
         float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
         float x0 = root.x, y0 = root.y, z0 = root.z;
