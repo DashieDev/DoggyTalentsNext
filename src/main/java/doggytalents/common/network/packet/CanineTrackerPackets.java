@@ -155,7 +155,7 @@ public class CanineTrackerPackets {
                 var stack = player.getMainHandItem();
                 if (!(stack.getItem() instanceof CanineTrackerItem)) return;
                 
-                var storage = DogLocationStorage.get(player.level());
+                var storage = DogLocationStorage.get(player.level);
                 var dogData = storage.getData(data.uuid);
                 if (dogData == null) return;
                 
@@ -165,7 +165,7 @@ public class CanineTrackerPackets {
                 var tag = stack.getTag();
                 if (tag == null) return;
 
-                var pos = BlockPos.containing(dogData.getPos());
+                var pos = new BlockPos(dogData.getPos());
                 tag.putUUID("uuid", data.uuid);
                 tag.putString("name", dogData.getDogName());
                 tag.putInt("posX", pos.getX());

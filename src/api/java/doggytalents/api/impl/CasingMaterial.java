@@ -57,7 +57,7 @@ public class CasingMaterial extends ICasingMaterial {
         }
         return Component.translatable(block.asItem().getDescriptionId()).withStyle(
             Style.EMPTY.withItalic(true)
-                .withColor(block.defaultMapColor().col)
+                .withColor(block.defaultMaterialColor().col)
         );
     }
 

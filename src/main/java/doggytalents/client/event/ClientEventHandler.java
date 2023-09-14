@@ -29,6 +29,8 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.BlockModelRotation;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -123,8 +125,8 @@ public class ClientEventHandler {
             return;
         if (!(event.getScreen() instanceof LevelLoadingScreen))
             return;
-        spinWidget.setY(event.getScreen().height - 128);
-        spinWidget.render(event.getGuiGraphics(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
+        spinWidget.y = (event.getScreen().height - 128);
+        spinWidget.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
     }
 
     @SubscribeEvent

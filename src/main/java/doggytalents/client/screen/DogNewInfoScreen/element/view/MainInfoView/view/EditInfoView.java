@@ -1,5 +1,6 @@
 package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.view;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.DogRandomNameRegistry;
@@ -269,13 +270,14 @@ public class EditInfoView extends AbstractElement {
                 this.randomButton.active = true;
             }) {
                 @Override
-                public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
                     if (!this.active)
                         return;
                     if (this.isHovered) {
-                        graphics.fill( this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, 0x835e5d5d);
+                        fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, 0x835e5d5d);
                     }
-                    graphics.blit(Resources.HAMBURGER, this.getX(), this.getY(), 20, 0, 20, 20);
+                    RenderSystem.setShaderTexture(0, Resources.HAMBURGER);
+                    blit(stack, this.x, this.y, 20, 0, 20, 20);
                 }
             };
             this.applyButton.active = false;

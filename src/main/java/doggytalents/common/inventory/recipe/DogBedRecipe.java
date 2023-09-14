@@ -61,8 +61,8 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
 
     @Override
     public ItemStack assemble(CraftingContainer inv) {
-        IBeddingMaterial beddingId = DogBedUtil.getBeddingFromStack(DoggyTalentsAPI.BEDDING_MATERIAL.get(), inv.getItem(1));
-        ICasingMaterial casingId = DogBedUtil.getCasingFromStack(DoggyTalentsAPI.CASING_MATERIAL.get(), inv.getItem(0));
+        IBeddingMaterial beddingId = DogBedUtil.getBeddingFromStack(inv.getItem(1));
+        ICasingMaterial casingId = DogBedUtil.getCasingFromStack(inv.getItem(0));
 
         return DogBedUtil.createItemStack(casingId, beddingId);
     }

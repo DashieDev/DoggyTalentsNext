@@ -17,8 +17,8 @@ import doggytalents.common.network.packet.data.DogIncapMsgData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -54,27 +54,27 @@ public class DogCannotInteractWithScreen extends Screen {
             showCause, 
             b -> {}, font) {
             @Override
-            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, pTicks);
+            public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+                super.render(stack, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 var msg = dog.incapacitatedMananger.getIncapMsg();
                 var msgList = ScreenUtil.splitInto(msg, 150, font);
-                graphics.renderComponentTooltip(font, msgList, mouseX, mouseY);
+                renderComponentTooltip(stack, msgList, mouseX, mouseY);
             }
         };
         this.addRenderableWidget(this.showIncapStrButton);
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-        var stack = graphics.pose();
-        this.renderBackground(graphics);
-        super.render(graphics, mouseX, mouseY, pTicks);
+    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+        //var stack = graphics.pose();
+        this.renderBackground(stack);
+        super.render(stack, mouseX, mouseY, pTicks);
         Component title;
         String help;
         if (this.dog.isDefeated()) {
             this.showIncapStrButton.visible = true;
-            renderIncapScreen(graphics, mouseX, mouseY, pTicks);
+            renderIncapScreen(stack, mouseX, mouseY, pTicks);
             return;
         } else {
             this.showIncapStrButton.visible = false;
@@ -121,8 +121,8 @@ public class DogCannotInteractWithScreen extends Screen {
 
     }
 
-    private void renderIncapScreen(GuiGraphics graphics, int mouseX, int mouseY, float pTicks)  {
-        var stack = graphics.pose();
+    private void renderIncapScreen(PoseStack stack, int mouseX, int mouseY, float pTicks)  {
+        //var stack = graphics.pose();
         int pX = this.width/2;
         int mY = this.height/2; 
 
@@ -149,39 +149,39 @@ public class DogCannotInteractWithScreen extends Screen {
         for (var line : lines1) {
             stack.pushPose();
             stack.scale(1.2f, 1.2f, 1.2f);
-            graphics.drawString(font, line, Mth.floor(pX/1.2f), Mth.floor(pY/1.2f), 0xffffffff);
+            font.draw(stack, line, Mth.floor(pX/1.2f), Mth.floor(pY/1.2f), 0xffffffff);
             stack.popPose();
             pY += 14;
         }
         pY += 7;
         
-        this.showIncapStrButton.setX(pX);
-        this.showIncapStrButton.setY(pY);  
+        this.showIncapStrButton.x = (pX);
+        this.showIncapStrButton.y = (pY);  
         pY += font.lineHeight + 3;
         pY += 15;
 
         for (var line : lines2) {
-            graphics.drawString(font, line, pX, pY, 0xffffffff);
+            font.draw(stack, line, pX, pY, 0xffffffff);
             pY += font.lineHeight + 3;
         }
         
 
         int escTX = this.width/2 - font.width(escToReturn)/2;
         int escTY = this.height/2 + 100; 
-        graphics.drawString(font, escToReturn, escTX, escTY, 0xffffffff );
+        font.draw(stack, escToReturn, escTX, escTY, 0xffffffff );
         
-        drawDefeatedKanji(graphics, pX - 135, mY - 64, 128);
+        drawDefeatedKanji(stack, pX - 135, mY - 64, 128);
 
     }
 
-    private void drawDefeatedKanji(GuiGraphics graphics, int x, int y, int size)  {
-        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    private void drawDefeatedKanji(PoseStack stack, int x, int y, int size)  {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
+        RenderSystem.setShaderTexture(0, getDefeatedKanji(this.dog));
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = size;
-        graphics.blit(getDefeatedKanji(this.dog), x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
+        blit(stack, x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         RenderSystem.disableBlend();
     }
 

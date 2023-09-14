@@ -66,7 +66,7 @@ public class AccessoryHolder extends AbstractWidget {
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int iX = add ? ICON_ADD_X : ICON_REM_X;
         if (warning) iX = ICON_WARN_X;
-        graphics.blit(Resources.STYLE_ADD_REMOVE, getX()+14, getY()+14, iX, 0, 9, 9);
+        blit(stack, this.x+14, this.y+14, iX, 0, 9, 9);
     }
 
     @Override

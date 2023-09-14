@@ -1822,9 +1822,9 @@ public class Dog extends AbstractDog {
             type = DefeatedType.BURN;
         } else if (source == DamageSource.MAGIC) {
             type = DefeatedType.POISON;
-        } else if (source.is(DamageTypes.DROWN))  {
+        } else if (source == (DamageSource.DROWN))  {
             type = DefeatedType.DROWN;
-        } else if (source.is(DamageTypes.STARVE))  {
+        } else if (source == (DamageSource.STARVE))  {
             type = DefeatedType.STARVE;
         }  else {
             type = DefeatedType.BLOOD;
@@ -2041,8 +2041,7 @@ public class Dog extends AbstractDog {
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
 
-        List<TalentInstance> talentMap = this.getTalentMap();
-        talentMap.clear();
+        var talentMap = new ArrayList<TalentInstance>();
 
         if (compound.contains("talents", Tag.TAG_LIST)) {
             ListTag talentList = compound.getList("talents", Tag.TAG_COMPOUND);
@@ -2056,10 +2055,9 @@ public class Dog extends AbstractDog {
             BackwardsComp.readTalentMapping(compound, talentMap);
         }
 
-        this.markDataParameterDirty(TALENTS.get(), false); // Mark dirty so data is synced to client
+        this.entityData.set(TALENTS.get(), talentMap);
 
-        List<AccessoryInstance> accessories = this.getAccessories();
-        accessories.clear();
+        var accessories = new ArrayList<AccessoryInstance>();
 
         if (compound.contains("accessories", Tag.TAG_LIST)) {
             ListTag accessoryList = compound.getList("accessories", Tag.TAG_COMPOUND);
@@ -2073,10 +2071,9 @@ public class Dog extends AbstractDog {
             BackwardsComp.readAccessories(compound, accessories);
         }
 
-        this.markDataParameterDirty(ACCESSORIES.get(), false); // Mark dirty so data is synced to client
+        this.entityData.set(ACCESSORIES.get(), accessories);
 
-        var artifactsList = this.getArtifactsList();
-        artifactsList.clear();
+        var artifactsList = new ArrayList<DoggyArtifactItem>();
         if (compound.contains("doggy_artifacts", Tag.TAG_LIST)) {
             var artifactsListTag = compound.getList("doggy_artifacts", Tag.TAG_COMPOUND);
             for (int i = 0; i < artifactsListTag.size(); ++i) {
@@ -2087,7 +2084,7 @@ public class Dog extends AbstractDog {
                 }
             }
         }
-        this.markArtifactsDirty();
+        this.entityData.set(ARTIFACTS.get(), artifactsList);
 
         try {
             // Does what notifyDataManagerChange would have done but this way only does it once
@@ -2139,13 +2136,15 @@ public class Dog extends AbstractDog {
 
         try {
             if (compound.contains("level_normal", Tag.TAG_ANY_NUMERIC)) {
-                this.getDogLevel().setLevel(Type.NORMAL, compound.getInt("level_normal"));
-                this.markDataParameterDirty(DOG_LEVEL.get());
+                var lvl = this.getDogLevel().copy();
+                lvl.setLevel(Type.NORMAL, compound.getInt("level_normal"));
+                this.entityData.set(DOG_LEVEL.get(), lvl);
             }
 
             if (compound.contains("level_dire", Tag.TAG_ANY_NUMERIC)) {
-                this.getDogLevel().setLevel(Type.DIRE, compound.getInt("level_dire"));
-                this.markDataParameterDirty(DOG_LEVEL.get());
+                var lvl = this.getDogLevel().copy();
+                lvl.setLevel(Type.DIRE, compound.getInt("level_dire"));
+                this.entityData.set(DOG_LEVEL.get(), lvl);
             }
             float h = this.getDogLevel().getMaxHealth();
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
@@ -3523,8 +3522,7 @@ public class Dog extends AbstractDog {
             if (i < 0) {
                 i = VALUES.length - 1;
             }
-            return VALUES[i];
-        }
+            return VALUES[i];        }
     
         public LowHealthStrategy next() {
             int i = this.getId() + 1;
