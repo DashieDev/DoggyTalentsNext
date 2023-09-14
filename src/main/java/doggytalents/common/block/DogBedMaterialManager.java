@@ -141,7 +141,7 @@ public class DogBedMaterialManager {
     }
 
     public static void onTagsUpdated(TagsUpdatedEvent event) {
-        ChopinLogger.l("bed refreshed!");
+        refresh();
     }
 
     public static class NaniCasing extends ICasingMaterial {
