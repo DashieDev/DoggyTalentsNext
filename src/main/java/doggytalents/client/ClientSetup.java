@@ -20,6 +20,7 @@ import doggytalents.client.entity.model.dog.JackModel;
 import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
+import doggytalents.client.entity.model.dog.PochitaModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
 import doggytalents.client.entity.model.dog.VariantDogModel;
 import doggytalents.client.entity.model.dog.kusa.ChiModel;
@@ -81,7 +82,8 @@ public class ClientSetup {
     public static final ModelLayerLocation KUSA_TAKE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_take"), "main");   
     public static final ModelLayerLocation KUSA_TEI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_tei"), "main");   
     public static final ModelLayerLocation KUSA_UME = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_ume"), "main");   
-    public static final ModelLayerLocation DOG_ARCANINE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_arcanine"), "main");   
+    public static final ModelLayerLocation DOG_ARCANINE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_arcanine"), "main");
+    public static final ModelLayerLocation DOG_POCHITA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "pochita"), "main");   
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -118,6 +120,7 @@ public class ClientSetup {
         event.registerLayerDefinition(KUSA_TEI, TeiModel::createBodyLayer);
         event.registerLayerDefinition(KUSA_UME, UmeModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ARCANINE, ArcanineModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_POCHITA, PochitaModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
