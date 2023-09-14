@@ -8,6 +8,7 @@ import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -60,7 +61,7 @@ public class DogBedUtil {
     public static ICasingMaterial getCasingFromStack(ItemStack stack) {
         for (var e : DogBedMaterialManager.getCasings().entrySet()) {
             var m = e.getValue();
-            if (m.getIngredient().test(stack)) {
+            if (m.getIngredient() != Ingredient.EMPTY && m.getIngredient().test(stack)) {
                 return m;
             }
         }
@@ -71,7 +72,7 @@ public class DogBedUtil {
     public static IBeddingMaterial getBeddingFromStack(ItemStack stack) {
         for (var e : DogBedMaterialManager.getBeddings().entrySet()) {
             var m = e.getValue();
-            if (m.getIngredient().test(stack)) {
+            if (m.getIngredient() != Ingredient.EMPTY && m.getIngredient().test(stack)) {
                 return m;
             }
         }
