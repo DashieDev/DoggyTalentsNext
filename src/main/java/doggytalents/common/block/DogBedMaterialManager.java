@@ -1,9 +1,11 @@
 package doggytalents.common.block;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
 
@@ -19,6 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TagsUpdatedEvent.UpdateCause;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -122,7 +125,7 @@ public class DogBedMaterialManager {
     }
 
     private static void populateBedding(UpdateCause cause) {
-        var blocks = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.WOOL);
+        var blocks = fetchBeddingBlocks();
         for (var block : blocks) {
             var id = ForgeRegistries.BLOCKS.getKey(block);
             var value = (IBeddingMaterial) new BeddingMaterial(() -> block);
@@ -136,7 +139,7 @@ public class DogBedMaterialManager {
     }
 
     private static void populateCasing(UpdateCause cause) {
-        var blocks = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.PLANKS);
+        var blocks = fetchCasingBlocks();
         for (var block : blocks) {
             var id = ForgeRegistries.BLOCKS.getKey(block);
             var value = (ICasingMaterial) new CasingMaterial(() -> block);
@@ -147,6 +150,27 @@ public class DogBedMaterialManager {
             casingMap.put(id, value);
             casingKeyMap.put(value, id);
         }
+    }
+
+    private static List<Block> fetchCasingBlocks() {
+        var tags = ForgeRegistries.BLOCKS.tags();
+        var planks = tags.getTag(BlockTags.PLANKS)
+            .stream().collect(Collectors.toList());
+        var logs = tags.getTag(BlockTags.LOGS)
+            .stream().collect(Collectors.toList());
+        var ret = new ArrayList<Block>(planks.size() + logs.size());
+        ret.addAll(planks);
+        ret.addAll(logs);
+        return ret;
+    }
+
+    private static List<Block> fetchBeddingBlocks() {
+        var tags = ForgeRegistries.BLOCKS.tags();
+        var wools = tags.getTag(BlockTags.WOOL)
+            .stream().collect(Collectors.toList());
+        var ret = new ArrayList<Block>(wools.size());
+        ret.addAll(wools);
+        return ret;
     }
 
     public static void onTagsUpdated(TagsUpdatedEvent event) {
