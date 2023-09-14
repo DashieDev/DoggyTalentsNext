@@ -1,8 +1,6 @@
 package doggytalents;
 
 import doggytalents.api.DoggyTalentsAPI;
-import doggytalents.api.impl.MissingBeddingMaterial;
-import doggytalents.api.impl.MissingCasingMissing;
 import doggytalents.api.registry.*;
 import doggytalents.common.util.Util;
 import net.minecraft.resources.ResourceLocation;
