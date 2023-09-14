@@ -2,27 +2,32 @@ package doggytalents.common.block;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import com.google.common.collect.Maps;
 
 import doggytalents.api.impl.BeddingMaterial;
 import doggytalents.api.impl.CasingMaterial;
-import doggytalents.api.impl.MissingBeddingMaterial;
-import doggytalents.api.impl.MissingCasingMissing;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.util.NBTUtil;
+import doggytalents.common.util.Util;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.event.TagsUpdatedEvent;
+import net.minecraftforge.event.TagsUpdatedEvent.UpdateCause;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class DogBedMaterialManager {
 
     private static final Random RANDOM = new Random(System.currentTimeMillis());
-    
+    public static final ResourceLocation NANI_KEY = Util.getResource("textures/block/dog_bed_nani");
+    public static final ResourceLocation NANI_TEXTURE = Util.getResource("minecraft", "block/bedrock");
+
     private static final Map<ResourceLocation, IBeddingMaterial> beddingMap = Maps.newConcurrentMap();
     private static final Map<ResourceLocation, ICasingMaterial> casingMap = Maps.newConcurrentMap();
     private static final Map<IBeddingMaterial, ResourceLocation> beddingKeyMap = Maps.newConcurrentMap();
@@ -38,14 +43,14 @@ public class DogBedMaterialManager {
     public static IBeddingMaterial getBedding(ResourceLocation loc) {
         var ret = beddingMap.get(loc);
         if (ret == null)
-            return MissingBeddingMaterial.NULL;
+            return new NaniBedding(loc);
         return ret;
     }
 
     public static ICasingMaterial getCasing(ResourceLocation loc) {
         var ret = casingMap.get(loc);
         if (ret == null)
-            return MissingCasingMissing.NULL;
+            return new NaniCasing(loc);
         return ret;
     }
 
@@ -60,19 +65,41 @@ public class DogBedMaterialManager {
     }
 
     public static ResourceLocation getKey(IBeddingMaterial loc) {
+        if (loc == null) {
+            return NANI_KEY;
+        }
+        if (loc instanceof NaniBedding nani) {
+            return nani.missingLoc().isPresent() ?
+                nani.missingLoc().get()
+                : NANI_KEY;
+        } 
         var ret = beddingKeyMap.get(loc);
+        if (ret == null) {
+            return NANI_KEY;
+        }
         return ret;
     }
 
     public static ResourceLocation getKey(ICasingMaterial loc) {
+        if (loc == null) {
+            return NANI_KEY;
+        }
+        if (loc instanceof NaniCasing nani) {
+            return nani.missingLoc().isPresent() ?
+                nani.missingLoc().get()
+                : NANI_KEY;
+        } 
         var ret = casingKeyMap.get(loc);
+        if (ret == null) {
+            return NANI_KEY;
+        }
         return ret;
     }
 
     public static IBeddingMaterial randomBedding() {
         var list = new ArrayList<>(beddingMap.entrySet());
         if (list.isEmpty()) {
-            return MissingBeddingMaterial.NULL;
+            return NaniBedding.NULL;
         }
         return list.get(RANDOM.nextInt(list.size())).getValue();
     }
@@ -80,7 +107,7 @@ public class DogBedMaterialManager {
     public static ICasingMaterial randomCasing() {
         var list = new ArrayList<>(casingMap.entrySet());
         if (list.isEmpty()) {
-            return MissingCasingMissing.NULL;
+            return NaniCasing.NULL;
         }
         return list.get(RANDOM.nextInt(list.size())).getValue();
     }
@@ -114,7 +141,83 @@ public class DogBedMaterialManager {
     }
 
     public static void onTagsUpdated(TagsUpdatedEvent event) {
-        refresh();
+        ChopinLogger.l("bed refreshed!");
+    }
+
+    public static class NaniCasing extends ICasingMaterial {
+
+        public static final NaniCasing NULL = new NaniCasing(null);
+
+        private Optional<ResourceLocation> missingLoc;
+
+        public NaniCasing(ResourceLocation loc) {
+            if (loc == null)
+                this.missingLoc = Optional.empty();
+            else
+                this.missingLoc = Optional.of(loc);
+        }
+
+        @Override
+        public ResourceLocation getTexture() {
+            return NANI_TEXTURE;
+        }
+
+        @Override
+        public Component getTooltip() {
+            String retStr = "nani?";
+            if (missingLoc.isPresent()) {
+                retStr = missingLoc.get().toString();
+            }
+            return Component.translatable("dogbed.casing.missing", retStr);
+        }
+
+        @Override
+        public Ingredient getIngredient() {
+            return Ingredient.EMPTY;
+        }
+
+        public Optional<ResourceLocation> missingLoc() {
+            return this.missingLoc;
+        }
+        
+    }
+
+    public static class NaniBedding extends IBeddingMaterial {
+
+        public static final NaniBedding NULL = new NaniBedding(null);
+
+        private Optional<ResourceLocation> missingLoc;
+
+        public NaniBedding(ResourceLocation loc) {
+            if (loc == null)
+                this.missingLoc = Optional.empty();
+            else
+                this.missingLoc = Optional.of(loc);
+        }
+
+        @Override
+        public ResourceLocation getTexture() {
+            return NANI_TEXTURE;
+        }
+
+        @Override
+        public Component getTooltip() {
+            String retStr = "nani?";
+            if (missingLoc.isPresent()) {
+                retStr = missingLoc.get().toString();
+            }
+            return Component.translatable("dogbed.bedding.missing", retStr);
+        }
+
+        @Override
+        public Ingredient getIngredient() {
+            return Ingredient.EMPTY;
+        }
+
+        public Optional<ResourceLocation> missingLoc() {
+            return this.missingLoc;
+        }
+        
     }
     
 }
