@@ -60,9 +60,14 @@ public class DoggyItemGroups {
                 final int maxBeddingEntries = 13;
                 final int maxCasingEntries = 13;
                 var beddingList = DogBedMaterialManager.getBeddings().entrySet().stream()
-                    .map(x -> x.getValue()).collect(Collectors.toList());
+                    .map(x -> x.getValue())
+                    .filter(x -> !(x instanceof DogBedMaterialManager.NaniBedding))
+                    .collect(Collectors.toList());
                 var casingList = DogBedMaterialManager.getCasings().entrySet().stream()
-                    .map(x -> x.getValue()).collect(Collectors.toList());
+                    .map(x -> x.getValue())
+                    .filter(x -> !(x instanceof DogBedMaterialManager.NaniCasing))
+                    .collect(Collectors.toList());
+                
                 Collections.shuffle(beddingList);
                 Collections.shuffle(casingList);
                 for (int i = 0; i < Math.min(maxCasingEntries, casingList.size()); ++i) {
