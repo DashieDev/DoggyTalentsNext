@@ -109,11 +109,6 @@ public class DogBedBlock extends BaseEntityBlock {
     }
 
     @Override
-    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
-        return Block.canSupportCenter(worldIn, pos.below(), Direction.UP);
-    }
-
-    @Override
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         state = state.setValue(FACING, placer.getDirection().getOpposite());
 
