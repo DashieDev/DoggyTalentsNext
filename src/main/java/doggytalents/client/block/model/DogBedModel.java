@@ -127,10 +127,10 @@ public class DogBedModel implements BakedModel {
 
     private ResourceLocation createResourceVariant(@Nonnull IRegistryDelegate<ICasingMaterial> casingResource, @Nonnull IRegistryDelegate<IBeddingMaterial> beddingResource, @Nonnull Direction facing) {
         String beddingKey = beddingResource != null
-                ? DogBedMaterialManager.getKey(beddingResource).toString().replace(':', '.')
+                ? DogBedMaterialManager.getKey(beddingResource.get()).toString().replace(':', '.')
                 : "doggytalents.dogbed.bedding.missing";
         String casingKey = beddingResource != null
-                ? DogBedMaterialManager.getKey(casingResource).toString().replace(':', '.')
+                ? DogBedMaterialManager.getKey(casingResource.get()).toString().replace(':', '.')
                 : "doggytalents.dogbed.casing.missing";
         return new ModelResourceLocation(Constants.MOD_ID, "block/dog_bed#bedding=" + beddingKey + ",casing=" + casingKey + ",facing=" + facing.getName());
     }

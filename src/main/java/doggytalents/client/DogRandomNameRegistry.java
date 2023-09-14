@@ -54,8 +54,8 @@ public class DogRandomNameRegistry extends SimplePreparableReloadListener<DogRan
         InputStream istream = null;
         var prep = new Prep(new ArrayList<String>());
         try {
-            var res = resMan.getResource(NAME_RES).get();
-            istream = res.open();
+            var res = resMan.getResource(NAME_RES);
+            istream = res.getInputStream();
             var jsonElement = GSON.fromJson(new InputStreamReader(istream, StandardCharsets.UTF_8), JsonElement.class);
             var jsonArray = jsonElement.getAsJsonArray();
             for (var e : jsonArray) {

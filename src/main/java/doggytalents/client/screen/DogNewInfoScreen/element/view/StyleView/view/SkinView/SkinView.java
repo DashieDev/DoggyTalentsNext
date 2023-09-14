@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.framework.element.AbstractElement;
@@ -32,7 +33,7 @@ public class SkinView extends AbstractElement {
         super(parent, screen);
         this.dog = dog;
         filterBox = new EditBox(Minecraft.getInstance().font, 
-        0, 0, 100, 16, Component.empty());
+        0, 0, 100, 16, ComponentUtil.empty());
         filterBox.setResponder(str -> {
             this.children().clear();
             this.activeSkinId = 0;

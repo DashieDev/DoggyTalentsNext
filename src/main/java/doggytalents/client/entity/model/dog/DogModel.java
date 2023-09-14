@@ -53,8 +53,8 @@ public class DogModel extends EntityModel<Dog> {
     public DogModelPart root;
 
     //Optional parts
-    public Optional<ModelPart> earLeft;
-    public Optional<ModelPart> earRight;
+    public Optional<DogModelPart> earLeft;
+    public Optional<DogModelPart> earRight;
 
     public DogModel(ModelPart box) {
         this.root = DogModelPart.recreateFromModelPart(box);
@@ -97,10 +97,10 @@ public class DogModel extends EntityModel<Dog> {
         this.earRight = getChildIfPresent(this.realHead, "right_ear");
     }
 
-    protected Optional<ModelPart> getChildIfPresent(ModelPart box, String name) {
+    protected Optional<DogModelPart> getChildIfPresent(DogModelPart box, String name) {
         if (!box.hasChild(name))
             return Optional.empty();
-        return Optional.of(box.getChild(name));
+        return Optional.of((DogModelPart)box.getChild(name));
     }
 
     public static LayerDefinition createBodyLayer() {

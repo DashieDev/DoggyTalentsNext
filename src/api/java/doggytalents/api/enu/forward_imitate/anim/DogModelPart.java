@@ -58,8 +58,11 @@ public class DogModelPart extends ModelPart {
         this.loadPose(this.initialPose);
     }
 
-    private void setInitialPose(PartPose pose) {
+    public void setInitialPose(PartPose pose) {
         this.initialPose = pose;
+    }
+    public PartPose getInitialPose() {
+        return this.initialPose;
     }
 
     public boolean hasChild(String child) {

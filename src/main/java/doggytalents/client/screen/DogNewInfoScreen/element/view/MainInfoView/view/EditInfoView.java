@@ -263,7 +263,7 @@ public class EditInfoView extends AbstractElement {
                     b.active = false;
                 });
             this.randomButton = new FlatButton(startX + this.nameEdit.getWidth() + 15,
-            pY, 20, 20, Component.empty(), b -> {
+            pY, 20, 20, ComponentUtil.empty(), b -> {
                 var newName = DogRandomNameRegistry.getInstance().getRandomName(dog);
                 requestNameChange(this.dog, newName);
                 this.nameEdit.setValue(newName);

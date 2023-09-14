@@ -20,7 +20,7 @@ public class ChopinRecordItem extends RecordItem {
 
     public ChopinRecordItem(int comparatorValue, Supplier<SoundEvent> soundSupplier, Properties builder,
             int lengthInTicks) {
-        super(comparatorValue, soundSupplier, builder, lengthInTicks);
+        super(comparatorValue, soundSupplier, builder);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ChopinRecordItem extends RecordItem {
                 pos.offset(EFFECT_RADIUS, 5, EFFECT_RADIUS)),
                 d -> canDoChopinTail(d));
         for (var dog : dogs) {
-            dog.setChopinTailFor(this.getLengthInTicks());
+            dog.setChopinTailFor(60*20);
         }
     }
 

@@ -51,6 +51,7 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
+import java.util.Map;
 public class ClientEventHandler {
 
     public static void onModelBakeEvent(final ModelBakeEvent event) {
@@ -124,13 +125,13 @@ public class ClientEventHandler {
 
     private DoggySpin spinWidget = new DoggySpin(0, 0, 128);
     @SubscribeEvent
-    public void onScreenDrawForeground(final ScreenEvent.Render.Post event) {
+    public void onScreenDrawForeground(final ScreenEvent.DrawScreenEvent.Post event) {
         if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
             return;
         if (!(event.getScreen() instanceof LevelLoadingScreen))
             return;
         spinWidget.y = (event.getScreen().height - 128);
-        spinWidget.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
+        spinWidget.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTicks());
     }
 
     @SubscribeEvent

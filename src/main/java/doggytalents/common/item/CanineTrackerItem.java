@@ -78,7 +78,7 @@ public class CanineTrackerItem extends Item {
             return null;
         if (!tag.contains("name", Tag.TAG_STRING))
             return null;
-        var ret = Component.translatable("item.doggytalents.radar.status", tag.getString("name"));
+        var ret = ComponentUtil.translatable("item.doggytalents.radar.status", tag.getString("name"));
         int ret_color = 0xffffea2e;
         if (tag.contains("locateColor", Tag.TAG_INT)) {
             int tag_color = tag.getInt("locateColor");

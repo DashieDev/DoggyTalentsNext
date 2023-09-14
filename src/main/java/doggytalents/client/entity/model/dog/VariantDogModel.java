@@ -2,6 +2,7 @@ package doggytalents.client.entity.model.dog;
 
 import java.util.Optional;
 
+import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -14,19 +15,19 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 @Deprecated
 public class VariantDogModel extends DogModel {
 
-    public ModelPart realTail2;
-    public ModelPart realTail3;
-    public ModelPart earNormal;
-    public ModelPart earBoni;
-    public ModelPart earSmall;
+    public DogModelPart realTail2;
+    public DogModelPart realTail3;
+    public DogModelPart earNormal;
+    public DogModelPart earBoni;
+    public DogModelPart earSmall;
 
     public VariantDogModel(ModelPart box) {
         super(box);
-        this.realTail2 = this.tail.getChild("real_tail_2");
-        this.realTail3 = this.tail.getChild("real_tail_bushy");
-        this.earNormal = this.realHead.getChild("ear_normal");
-        this.earBoni = this.realHead.getChild("ear_boni");
-        this.earSmall = this.realHead.getChild("ear_small");
+        this.realTail2 = (DogModelPart)this.tail.getChild("real_tail_2");
+        this.realTail3 = (DogModelPart)this.tail.getChild("real_tail_bushy");
+        this.earNormal = (DogModelPart)this.realHead.getChild("ear_normal");
+        this.earBoni = (DogModelPart)this.realHead.getChild("ear_boni");
+        this.earSmall = (DogModelPart)this.realHead.getChild("ear_small");
     }
     
     public static LayerDefinition createBodyLayer() {

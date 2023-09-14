@@ -53,10 +53,10 @@ public class BeddingMaterial extends IBeddingMaterial {
     public Component getTooltip() {
         var block = this.block.get();
         if (block == null) {
-            return Component.empty();
+            return ComponentUtil.empty();
         }
         
-        return Component.translatable(block.asItem().getDescriptionId()).withStyle(
+        return ComponentUtil.translatable(block.asItem().getDescriptionId()).withStyle(
             Style.EMPTY.withItalic(true)
                 .withColor(block.defaultMaterialColor().col)
         );

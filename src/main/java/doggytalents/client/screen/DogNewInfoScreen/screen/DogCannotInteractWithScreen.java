@@ -49,7 +49,7 @@ public class DogCannotInteractWithScreen extends Screen {
 
     @Override
     protected void init() {
-        var showCause = Component.translatable("doggui.invalid_dog.incapacitated.show_cause")
+        var showCause = ComponentUtil.translatable("doggui.invalid_dog.incapacitated.show_cause")
             .withStyle(Style.EMPTY.withBold(true));
         showIncapStrButton = new TextOnlyButton(0, 0, font.width(showCause) + 5, font.lineHeight + 3, 
             showCause, 
@@ -128,7 +128,7 @@ public class DogCannotInteractWithScreen extends Screen {
         int mY = this.height/2; 
 
         int pY = mY - 44;
-        var title = Component.translatable("doggui.invalid_dog.incapacitated.title")
+        var title = ComponentUtil.translatable("doggui.invalid_dog.incapacitated.title")
                 .withStyle(
                     Style.EMPTY
                     .withBold(true)
@@ -140,7 +140,7 @@ public class DogCannotInteractWithScreen extends Screen {
             );
         var escToReturn = I18n.get("doggui.invalid_dog.esc_to_return");
         var lines1 = font.split(title, 120);
-        var lines2 = font.split(Component.literal(help), 120);
+        var lines2 = font.split(ComponentUtil.literal(help), 120);
 
         int sizeYtotal = lines1.size()*14
             + 7 + font.lineHeight + 3

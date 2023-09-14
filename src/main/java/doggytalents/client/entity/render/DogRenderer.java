@@ -181,7 +181,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             hunger_c1.withStyle(Style.EMPTY.withColor(0xff3636));
         }
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get() && !dog.isDefeated())
-            hunger_c1 = Component.empty();
+            hunger_c1 = ComponentUtil.empty();
         label.append(hunger_c1);
         if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER)) {
             label.append(ComponentUtil.translatable(dog.getGender().getUnlocalisedTip()));

@@ -3458,10 +3458,7 @@ public class Dog extends AbstractDog {
     }
 
     public boolean showDrownPose() {
-        var type = this.getMaxHeightFluidType();
-        if (type.isAir()) return false;
-        double height = this.getFluidTypeHeight(type);
-        return height > 0.5;
+        return this.isInLava() || this.isInWater();
     }
 
     //Client

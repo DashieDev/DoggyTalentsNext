@@ -1,9 +1,9 @@
 package doggytalents.client.entity.model.animation.biganim;
 
-import net.minecraft.client.animation.AnimationChannel;
-import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.client.animation.Keyframe;
-import net.minecraft.client.animation.KeyframeAnimations;
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
+import doggytalents.api.enu.forward_imitate.anim.Keyframe;
+import doggytalents.api.enu.forward_imitate.anim.KeyframeAnimations;
+import doggytalents.api.enu.forward_imitate.anim.AnimationChannel;
 
 public class DrownAnimation {
     

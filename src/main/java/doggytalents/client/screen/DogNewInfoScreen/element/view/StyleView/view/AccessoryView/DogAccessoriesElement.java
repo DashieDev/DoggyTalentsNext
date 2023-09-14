@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.widget.AccessoryHolder;
 import doggytalents.client.screen.framework.element.AbstractElement;
@@ -142,7 +143,7 @@ public class DogAccessoriesElement extends AbstractElement {
     }
 
     private void drawNoRenderAccessoryWarning(PoseStack stack, int mouseX, int mouseY, float partialTicks)  {
-        var txt = Component.translatable("doggui.invalid_dog.accessory_no_render_warn");
+        var txt = ComponentUtil.translatable("doggui.invalid_dog.accessory_no_render_warn");
         var lines = font.split(txt, this.getSizeX() - 30);
         int pX = this.getRealX() + this.getSizeX()/2;
         int pY = this.getRealY() + this.getSizeY() - font.lineHeight - 3;

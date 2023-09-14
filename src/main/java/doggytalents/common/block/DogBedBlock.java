@@ -232,14 +232,14 @@ public class DogBedBlock extends BaseEntityBlock {
 
         Pair<ICasingMaterial, IBeddingMaterial> materials = DogBedUtil.getMaterials(stack);
 
-        tooltip.add(Component.translatable("dogbed.casing.title"));
+        tooltip.add(ComponentUtil.translatable("dogbed.casing.title"));
         tooltip.add(materials.getLeft() != null
                 ? materials.getLeft().getTooltip()
-                : Component.translatable("dogbed.casing.null").withStyle(ChatFormatting.RED));
-        tooltip.add(Component.translatable("dogbed.bedding.title"));
+                : ComponentUtil.translatable("dogbed.casing.null").withStyle(ChatFormatting.RED));
+        tooltip.add(ComponentUtil.translatable("dogbed.bedding.title"));
         tooltip.add(materials.getRight() != null
             ? materials.getRight().getTooltip()
-            : Component.translatable("dogbed.bedding.null").withStyle(ChatFormatting.RED));
+            : ComponentUtil.translatable("dogbed.bedding.null").withStyle(ChatFormatting.RED));
 
         if (materials.getLeft() == null && materials.getRight() == null) {
             tooltip.add(ComponentUtil.translatable("dogbed.explain.missing").withStyle(ChatFormatting.ITALIC));

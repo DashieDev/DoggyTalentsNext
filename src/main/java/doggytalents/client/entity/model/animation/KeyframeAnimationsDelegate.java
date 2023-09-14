@@ -2,7 +2,6 @@ package doggytalents.client.entity.model.animation;
 
 import com.mojang.math.Vector3f;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
 import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
 import doggytalents.api.enu.forward_imitate.anim.Keyframe;
