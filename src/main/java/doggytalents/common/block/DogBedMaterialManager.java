@@ -12,6 +12,7 @@ import doggytalents.api.impl.BeddingMaterial;
 import doggytalents.api.impl.CasingMaterial;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
+import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +28,7 @@ public class DogBedMaterialManager {
 
     private static final Random RANDOM = new Random(System.currentTimeMillis());
     public static final ResourceLocation NANI_KEY = Util.getResource("textures/block/dog_bed_nani");
-    public static final ResourceLocation NANI_TEXTURE = Util.getResource("minecraft", "block/bedrock");
+    public static final ResourceLocation NANI_TEXTURE = Util.getResource("block/dog_bed_casing_nani");
 
     private static final Map<ResourceLocation, IBeddingMaterial> beddingMap = Maps.newConcurrentMap();
     private static final Map<ResourceLocation, ICasingMaterial> casingMap = Maps.newConcurrentMap();
@@ -113,36 +114,44 @@ public class DogBedMaterialManager {
         return list.get(RANDOM.nextInt(list.size())).getValue();
     }
 
-    public static void refresh() {
+    public static void refresh(UpdateCause cause) {
         beddingMap.clear();
         casingMap.clear();
         
-        populateBedding();
-        populateCasing();
+        populateBedding(cause);
+        populateCasing(cause);
     }
 
-    private static void populateBedding() {
+    private static void populateBedding(UpdateCause cause) {
         var blocks = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.WOOL);
         for (var block : blocks) {
             var id = ForgeRegistries.BLOCKS.getKey(block);
-            var value = new BeddingMaterial(() -> block);
+            var value = (IBeddingMaterial) new BeddingMaterial(() -> block);
+            if (cause == UpdateCause.CLIENT_PACKET_RECEIVED) {
+                if (!ClientEventHandler.vertifyBlockTexture(value.getTexture()))
+                    value = new NaniBedding(id);
+            }
             beddingMap.put(id, value);
             beddingKeyMap.put(value, id);
         }
     }
 
-    private static void populateCasing() {
+    private static void populateCasing(UpdateCause cause) {
         var blocks = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.PLANKS);
         for (var block : blocks) {
             var id = ForgeRegistries.BLOCKS.getKey(block);
-            var value = new CasingMaterial(() -> block);
+            var value = (ICasingMaterial) new CasingMaterial(() -> block);
+            if (cause == UpdateCause.CLIENT_PACKET_RECEIVED) {
+                if (!ClientEventHandler.vertifyBlockTexture(value.getTexture()))
+                    value = new NaniCasing(id);
+            }
             casingMap.put(id, value);
             casingKeyMap.put(value, id);
         }
     }
 
     public static void onTagsUpdated(TagsUpdatedEvent event) {
-        refresh();
+        refresh(event.getUpdateCause());
     }
 
     public static class NaniCasing extends ICasingMaterial {

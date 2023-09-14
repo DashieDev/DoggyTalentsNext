@@ -245,4 +245,16 @@ public class ClientEventHandler {
             }
         }
     }
+
+    public static boolean vertifyBlockTexture(ResourceLocation loc) {
+        var path = getAbsoluteBlockTexture(loc);
+        var res = Minecraft.getInstance().getResourceManager()
+            .getResource(path);
+        return res.isPresent();
+    }
+
+    public static ResourceLocation getAbsoluteBlockTexture(ResourceLocation loc) {
+        return new ResourceLocation(loc.getNamespace(), "textures/" + loc.getPath() + ".png");
+    }
+
 }
