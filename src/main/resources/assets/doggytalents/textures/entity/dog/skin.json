@@ -122,6 +122,13 @@
             "author" : "MashXP, DashieDev"
         },
         {
+            "skin_name" : "Pochita",
+            "skin_id" : "pochita",
+            "use_model" : "pochita",
+            "based_on" : "Pochita from Chainsaw Man",
+            "author" : "MashXP, DashieDev"
+        },
+        {
             "skin_name" : "St Bernard",
             "skin_id" : "st_bernard",
             "use_model" : "st_bernard",
