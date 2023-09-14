@@ -16,6 +16,7 @@ import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.Util;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -201,7 +202,8 @@ public class DogBedMaterialManager {
             if (missingLoc.isPresent()) {
                 retStr = missingLoc.get().toString();
             }
-            return Component.translatable("dogbed.casing.missing", retStr);
+            return Component.translatable(retStr)
+                .withStyle(ChatFormatting.RED);
         }
 
         @Override
@@ -239,7 +241,8 @@ public class DogBedMaterialManager {
             if (missingLoc.isPresent()) {
                 retStr = missingLoc.get().toString();
             }
-            return Component.translatable("dogbed.bedding.missing", retStr);
+            return Component.translatable(retStr)
+                .withStyle(ChatFormatting.RED);
         }
 
         @Override
