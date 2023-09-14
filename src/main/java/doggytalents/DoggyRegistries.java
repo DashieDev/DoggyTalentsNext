@@ -1,8 +1,6 @@
 package doggytalents;
 
 import doggytalents.api.DoggyTalentsAPI;
-import doggytalents.api.impl.MissingBeddingMaterial;
-import doggytalents.api.impl.MissingCasingMissing;
 import doggytalents.api.registry.*;
 import doggytalents.common.util.Util;
 import net.minecraft.resources.ResourceLocation;
@@ -29,27 +27,6 @@ public class DoggyRegistries {
     private static <T> RegistryBuilder<T> makeRegistry(final ResourceLocation rl, Class<T> type) {
         return new RegistryBuilder<T>().setName(rl);
     }
-
-    private static class BeddingCallbacks implements IForgeRegistry.DummyFactory<IBeddingMaterial> {
-
-        static final BeddingCallbacks INSTANCE = new BeddingCallbacks();
-
-        @Override
-        public IBeddingMaterial createDummy(ResourceLocation key) {
-            return new MissingBeddingMaterial();
-        }
-    }
-
-    private static class CasingCallbacks implements IForgeRegistry.DummyFactory<ICasingMaterial> {
-
-        static final CasingCallbacks INSTANCE = new CasingCallbacks();
-
-        @Override
-        public ICasingMaterial createDummy(ResourceLocation key) {
-            return new MissingCasingMissing().setRegistryName(key);
-        }
-    }
-
 //
 //    private static class AccessoryCallbacks implements IForgeRegistry.DummyFactory<Accessory> {
 //
