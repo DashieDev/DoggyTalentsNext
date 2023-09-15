@@ -9,6 +9,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
+import doggytalents.client.entity.model.dog.DachshundModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
@@ -17,6 +18,7 @@ import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.client.entity.model.dog.PochitaModel;
+import doggytalents.client.entity.model.dog.PugModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
 import doggytalents.client.entity.model.dog.VariantDogModel;
 import doggytalents.client.entity.model.dog.kusa.ChiModel;
@@ -62,7 +64,8 @@ public class DogModelRegistry {
         register("kusa_ume", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_UME)));
         register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)));
         register("pochita", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_POCHITA)));
-        register("dachshund", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_DACHSHUND)));
+        register("dachshund", ctx ->  new DachshundModel(ctx.bakeLayer(ClientSetup.DOG_DACHSHUND)));
+        register("pug", ctx ->  new PugModel(ctx.bakeLayer(ClientSetup.DOG_PUG)));
     }
 
     public static class DogModelHolder {
