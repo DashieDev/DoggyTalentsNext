@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "doggytalents:item/disc_chopin_op64_no1"
+  }
+}
