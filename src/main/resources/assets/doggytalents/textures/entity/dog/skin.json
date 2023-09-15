@@ -145,6 +145,18 @@
             "use_model" : "default"
         },
         {
+            "skin_name" : "Dachsund #1",
+            "skin_id" : "dachshund",
+            "use_model" : "dachshund",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Dachsund #2",
+            "skin_id" : "dachshund2",
+            "use_model" : "dachshund",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Pug",
             "skin_id" : "pug",
             "use_model" : "variant",
