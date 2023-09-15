@@ -230,9 +230,8 @@ public class ClientEventHandler {
 
     public static boolean vertifyBlockTexture(ResourceLocation loc) {
         var path = getAbsoluteBlockTexture(loc);
-        var res = Minecraft.getInstance().getResourceManager()
-            .getResource(path);
-        return res.isPresent();
+        return Minecraft.getInstance().getResourceManager()
+            .hasResource(path);
     }
 
     public static ResourceLocation getAbsoluteBlockTexture(ResourceLocation loc) {

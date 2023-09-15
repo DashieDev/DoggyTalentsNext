@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.impl.BeddingMaterial;
 import doggytalents.api.impl.CasingMaterial;
 import doggytalents.api.registry.IBeddingMaterial;
@@ -202,7 +203,7 @@ public class DogBedMaterialManager {
             if (missingLoc.isPresent()) {
                 retStr = missingLoc.get().toString();
             }
-            return Component.translatable(retStr)
+            return ComponentUtil.translatable(retStr)
                 .withStyle(ChatFormatting.RED);
         }
 
@@ -241,7 +242,7 @@ public class DogBedMaterialManager {
             if (missingLoc.isPresent()) {
                 retStr = missingLoc.get().toString();
             }
-            return Component.translatable(retStr)
+            return ComponentUtil.translatable(retStr)
                 .withStyle(ChatFormatting.RED);
         }
 
