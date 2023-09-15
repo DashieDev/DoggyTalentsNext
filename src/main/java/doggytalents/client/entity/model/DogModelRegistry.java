@@ -62,6 +62,7 @@ public class DogModelRegistry {
         register("kusa_ume", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_UME)));
         register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)));
         register("pochita", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_POCHITA)));
+        register("dachshund", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_DACHSHUND)));
     }
 
     public static class DogModelHolder {
