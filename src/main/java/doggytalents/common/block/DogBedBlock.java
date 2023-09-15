@@ -262,19 +262,23 @@ public class DogBedBlock extends BaseEntityBlock {
 
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        final int maxBedding = 13;
-        final int maxCasing = 13;
-        var beddingList = DogBedMaterialManager.getBeddings().entrySet()
-            .stream().map(x -> x.getValue())
+        final int maxBeddingEntries = 13;
+        final int maxCasingEntries = 13;
+        var beddingList = DogBedMaterialManager.getBeddings().entrySet().stream()
+            .map(x -> x.getValue())
+            .filter(x -> !(x instanceof DogBedMaterialManager.NaniBedding))
             .collect(Collectors.toList());
-        var casingList = DogBedMaterialManager.getCasings().entrySet()
-            .stream().map(x -> x.getValue())
+        var casingList = DogBedMaterialManager.getCasings().entrySet().stream()
+            .map(x -> x.getValue())
+            .filter(x -> !(x instanceof DogBedMaterialManager.NaniCasing))
             .collect(Collectors.toList());
+        
         Collections.shuffle(beddingList);
         Collections.shuffle(casingList);
-
-        for (var beddingId : beddingList) {
-            for (var casingId : casingList) {
+        for (int i = 0; i < Math.min(maxCasingEntries, casingList.size()); ++i) {
+            for (int j = 0; j < Math.min(maxBeddingEntries, beddingList.size()); ++j) {
+                var beddingId = beddingList.get(j);
+                var casingId = casingList.get(i);
                 items.add(DogBedUtil.createItemStack(casingId, beddingId));
             }
         }
