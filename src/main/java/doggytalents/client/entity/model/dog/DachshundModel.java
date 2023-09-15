@@ -52,9 +52,9 @@ public class DachshundModel extends DogModel {
 
 		PartDefinition left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(8, 42).addBox(0.0F, 2.85F, -0.5F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.5F, 16.0F, -4.0F));
 
-		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(0.0F, 13.5F, 8.5F));
+		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 14.0F, 7.5F, 2.0071F, 0.0F, 0.0F));
 
-		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(0, 40).addBox(0.0F, -0.5F, -0.1F, 2.0F, 8.0F, 2.0F, new CubeDeformation(-0.3F)), PartPose.offset(-1.0F, 0.0F, -3.0F));
+		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(0, 40).addBox(0.0F, -1.2396F, 1.314F, 2.0F, 8.0F, 2.0F, new CubeDeformation(-0.3F)), PartPose.offset(-1.0F, 1.1176F, -2.9695F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
