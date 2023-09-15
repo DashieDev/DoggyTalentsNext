@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Component;
 
-public abstract class ICasingMaterial extends ForgeRegistryEntry<ICasingMaterial> {
+public abstract class ICasingMaterial {
 
     /**
      * Texture location that for material, eg 'minecraft:block/white_wool'

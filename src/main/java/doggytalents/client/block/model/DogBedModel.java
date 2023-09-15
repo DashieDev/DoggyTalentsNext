@@ -28,7 +28,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.ForgeModelBakery;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.registries.IRegistryDelegate;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -46,7 +45,7 @@ public class DogBedModel implements BakedModel {
     private BlockModel model;
     private BakedModel bakedModel;
 
-    private final Map<Triple<IRegistryDelegate<ICasingMaterial>, IRegistryDelegate<IBeddingMaterial>, Direction>, BakedModel> cache = Maps.newHashMap();
+    private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BakedModel> cache = Maps.newHashMap();
 
     public DogBedModel(ForgeModelBakery modelLoader, BlockModel model, BakedModel bakedModel) {
         this.modelLoader = modelLoader;
@@ -59,8 +58,8 @@ public class DogBedModel implements BakedModel {
     }
 
     public BakedModel getModelVariant(ICasingMaterial casing, IBeddingMaterial bedding, Direction facing) {
-        Triple<IRegistryDelegate<ICasingMaterial>, IRegistryDelegate<IBeddingMaterial>, Direction> key =
-                ImmutableTriple.of(casing != null ? casing.delegate : null, bedding != null ? bedding.delegate : null, facing != null ? facing : Direction.NORTH);
+        Triple<ICasingMaterial, IBeddingMaterial, Direction> key =
+                ImmutableTriple.of(casing != null ? casing : null, bedding != null ? bedding : null, facing != null ? facing : Direction.NORTH);
 
         return this.cache.computeIfAbsent(key, (k) -> bakeModelVariant(k.getLeft(), k.getMiddle(), k.getRight()));
     }
@@ -103,7 +102,7 @@ public class DogBedModel implements BakedModel {
         return tileData;
     }
 
-    public BakedModel bakeModelVariant(@Nullable IRegistryDelegate<ICasingMaterial> casingResource, @Nullable IRegistryDelegate<IBeddingMaterial> beddingResource, @Nonnull Direction facing) {
+    public BakedModel bakeModelVariant(@Nullable ICasingMaterial casingResource, @Nullable IBeddingMaterial beddingResource, @Nonnull Direction facing) {
         List<BlockElement> parts = this.model.getElements();
         List<BlockElement> elements = new ArrayList<>(parts.size()); //We have to duplicate this so we can edit it below.
         for (BlockElement part : parts) {
@@ -125,22 +124,22 @@ public class DogBedModel implements BakedModel {
         return newModel.bake(this.modelLoader, newModel, ForgeModelBakery.defaultTextureGetter(), getModelRotation(facing), createResourceVariant(casingResource, beddingResource, facing), true);
     }
 
-    private ResourceLocation createResourceVariant(@Nonnull IRegistryDelegate<ICasingMaterial> casingResource, @Nonnull IRegistryDelegate<IBeddingMaterial> beddingResource, @Nonnull Direction facing) {
+    private ResourceLocation createResourceVariant(@Nonnull ICasingMaterial casingResource, @Nonnull IBeddingMaterial beddingResource, @Nonnull Direction facing) {
         String beddingKey = beddingResource != null
-                ? DogBedMaterialManager.getKey(beddingResource.get()).toString().replace(':', '.')
+                ? DogBedMaterialManager.getKey(beddingResource).toString().replace(':', '.')
                 : "doggytalents.dogbed.bedding.missing";
         String casingKey = beddingResource != null
-                ? DogBedMaterialManager.getKey(casingResource.get()).toString().replace(':', '.')
+                ? DogBedMaterialManager.getKey(casingResource).toString().replace(':', '.')
                 : "doggytalents.dogbed.casing.missing";
         return new ModelResourceLocation(Constants.MOD_ID, "block/dog_bed#bedding=" + beddingKey + ",casing=" + casingKey + ",facing=" + facing.getName());
     }
 
-    private Either<Material, String> findCasingTexture(@Nullable IRegistryDelegate<ICasingMaterial> resource) {
-        return findTexture(resource != null ? resource.get().getTexture() : null);
+    private Either<Material, String> findCasingTexture(@Nullable ICasingMaterial resource) {
+        return findTexture(resource != null ? resource.getTexture() : null);
     }
 
-    private Either<Material, String> findBeddingTexture(@Nullable IRegistryDelegate<IBeddingMaterial> resource) {
-        return findTexture(resource != null ? resource.get().getTexture() : null);
+    private Either<Material, String> findBeddingTexture(@Nullable IBeddingMaterial resource) {
+        return findTexture(resource != null ? resource.getTexture() : null);
     }
 
     private Either<Material, String> findTexture(@Nullable ResourceLocation resource) {
