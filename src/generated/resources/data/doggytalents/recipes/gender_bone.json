@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " LB",
+    "MAL",
+    "PM "
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "B": {
+      "item": "minecraft:blue_dye"
+    },
+    "A": {
+      "item": "doggytalents:amnesia_bone"
+    },
+    "P": {
+      "item": "minecraft:pink_dye"
+    },
+    "M": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "result": {
+    "item": "doggytalents:gender_bone"
+  }
+}
