@@ -254,7 +254,17 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(Items.RED_DYE)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
-
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DoggyItems.GENDER_BONE.get(), 1)
+            .pattern(" LB")
+            .pattern("MAL")
+            .pattern("PM ")
+            .define('L', Items.LAPIS_LAZULI)
+            .define('B', Items.BLUE_DYE)
+            .define('A', DoggyItems.AMNESIA_BONE.get())
+            .define('P', Items.PINK_DYE)
+            .define('M', Items.AMETHYST_SHARD)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
         SpecialRecipeBuilder.special(DoggyRecipeSerializers.DOG_BED.get()).save(consumer, Util.getResourcePath("dog_bed"));
     }
 
