@@ -68,9 +68,9 @@ public class PochitaModel extends DogModel {
 
 		PartDefinition right_front_leg = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, -0.5F, 0.0F, 2.0F, 8.5F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(-2.5F, 16.0F, -4.0F));
 
-		PartDefinition left_hind_leg = partdefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.25F, -2.5F, -2.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.5F)), PartPose.offset(2.5F, 18.0F, 6.0F));
+		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-0.5F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.5F)), PartPose.offset(-2.5F, 16.5F, 5.0F));
 
-		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-0.5F, -2.5F, -2.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.5F)), PartPose.offset(-2.5F, 18.0F, 6.0F));
+		PartDefinition left_hind_leg = partdefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.25F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.5F)), PartPose.offset(2.5F, 16.5F, 5.0F));
 
 		var tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(-1.0F, 12.0F, 8.0F));
         PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create(), PartPose.ZERO);
