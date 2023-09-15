@@ -159,8 +159,8 @@
         {
             "skin_name" : "Pug",
             "skin_id" : "pug",
-            "use_model" : "variant",
-            "ear_id" : 2
+            "use_model" : "pug",
+            "author" : "MashXP"
         },
         {
             "skin_name" : "English Bulldog",
