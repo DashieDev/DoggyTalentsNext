@@ -18,11 +18,11 @@ public class DachshundModel extends DogModel {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 13.0F, -7.0F));
+		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 17.5F, -5.75F));
 
 		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(24, 13).addBox(-3.0F, -11.5F, -9.0F, 6.0F, 6.0F, 4.0F, new CubeDeformation(-0.1F))
 		.texOffs(26, 43).addBox(-1.5F, -8.52F, -12.25F, 3.0F, 3.0F, 4.0F, new CubeDeformation(-0.1F))
-		.texOffs(23, 0).addBox(-3.0F, -11.95F, -9.0F, 6.0F, 1.0F, 4.0F, new CubeDeformation(-0.25F)), PartPose.offset(0.0F, 11.0F, 7.0F));
+		.texOffs(23, 0).addBox(-3.0F, -11.95F, -9.0F, 6.0F, 1.0F, 4.0F, new CubeDeformation(-0.25F)), PartPose.offset(0.0F, 7.25F, 6.0F));
 
 		PartDefinition right_ear = real_head.addOrReplaceChild("right_ear", CubeListBuilder.create().texOffs(18, 49).addBox(-3.3F, 0.2F, -2.25F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.05F))
 		.texOffs(18, 49).addBox(-2.8F, -0.3F, -2.5F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.05F))
