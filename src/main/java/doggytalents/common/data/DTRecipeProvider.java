@@ -258,7 +258,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(Items.RED_DYE)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DoggyItems.GENDER_BONE.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.GENDER_BONE.get(), 1)
             .pattern(" LB")
             .pattern("MAL")
             .pattern("PM ")
