@@ -157,8 +157,14 @@
             "author" : "MashXP"
         },
         {
-            "skin_name" : "Pug",
+            "skin_name" : "Pug #1",
             "skin_id" : "pug",
+            "use_model" : "pug",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Pug #2",
+            "skin_id" : "pug2",
             "use_model" : "pug",
             "author" : "MashXP"
         },
