@@ -80,6 +80,7 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> REI_ORB = registerLocatorOrb("locator_orb_rei", DoggyAccessories.REI_ORB);
     public static final RegistryObject<AccessoryItem> SHIN_ORB = registerLocatorOrb("locator_orb_shin", DoggyAccessories.SHIN_ORB);
     public static final RegistryObject<AccessoryItem> JIN_ORB = registerLocatorOrb("locator_orb_jin", DoggyAccessories.JIN_ORB);
+    public static final RegistryObject<Item> GENDER_BONE = registerWith("gender_bone", GenderBoneItem::new, 1);
     
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
