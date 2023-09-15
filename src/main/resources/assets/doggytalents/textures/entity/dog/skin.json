@@ -145,13 +145,13 @@
             "use_model" : "default"
         },
         {
-            "skin_name" : "Dachsund #1",
+            "skin_name" : "Dachshund #1",
             "skin_id" : "dachshund",
             "use_model" : "dachshund",
             "author" : "MashXP"
         },
         {
-            "skin_name" : "Dachsund #2",
+            "skin_name" : "Dachshund #2",
             "skin_id" : "dachshund2",
             "use_model" : "dachshund",
             "author" : "MashXP"
