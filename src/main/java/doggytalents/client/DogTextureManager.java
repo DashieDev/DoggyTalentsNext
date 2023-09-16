@@ -30,6 +30,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.network.PacketDistributor;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nullable;
 import java.io.*;
@@ -199,24 +200,33 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         }
     }
 
-    private synchronized void loadDogSkinResourceWithMetadata(DogTextureManager.Preparations prep, Resource resource, DogSkin dogSkin) {
+    private byte[] getHashPayloadFromSkin(Resource resource, DogSkin skin) {
         InputStream inputstream = null;
+        byte[] namePayload = new byte[] { 0x00 };
+        byte[] contentPayload = new byte[] { 0x00 };
+        if (skin != null && skin.getPath() != null) {
+            namePayload = skin.getPath().getPath().toString().getBytes();
+        }
         try {
             inputstream = resource.open();
-            String hash = DogTextureServer.INSTANCE.getHash(IOUtils.toByteArray(inputstream));
-
-            if (prep.skinHashToLoc.containsKey(hash)) {
-                DoggyTalentsNext.LOGGER.warn("The loaded resource packs contained a duplicate custom dog skin ({} & {})", dogSkin, this.skinHashToLoc.get(hash));
-            } else {
-                DoggyTalentsNext.LOGGER.info("Found custom dog skin at {} with hash {}", dogSkin, hash);
-                prep.skinHashToLoc.put(hash, dogSkin);
-                prep.locToSkinHash.put(dogSkin, hash);
-                prep.customSkinLoc.add(dogSkin);
-            }
+            contentPayload = IOUtils.toByteArray(inputstream);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             IOUtils.closeQuietly(inputstream);
+        }
+        return ArrayUtils.addAll(namePayload, contentPayload);
+    }
+
+    private synchronized void loadDogSkinResourceWithMetadata(DogTextureManager.Preparations prep, Resource resource, DogSkin dogSkin) {
+        String hash = DogTextureServer.INSTANCE.getHash(getHashPayloadFromSkin(resource, dogSkin));
+        if (prep.skinHashToLoc.containsKey(hash)) {
+            DoggyTalentsNext.LOGGER.warn("The loaded resource packs contained a duplicate custom dog skin ({} & {})", dogSkin, this.skinHashToLoc.get(hash));
+        } else {
+            DoggyTalentsNext.LOGGER.info("Found custom dog skin at {} with hash {}", dogSkin, hash);
+            prep.skinHashToLoc.put(hash, dogSkin);
+            prep.locToSkinHash.put(dogSkin, hash);
+            prep.customSkinLoc.add(dogSkin);
         }
     }
 
