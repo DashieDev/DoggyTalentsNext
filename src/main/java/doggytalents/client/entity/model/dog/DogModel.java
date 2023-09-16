@@ -595,15 +595,17 @@ public class DogModel extends EntityModel<Dog> {
             
             this.head.visible = false;
             p_102034_.pushPose();
-            float f1 = 1.0F / 2f;
-            p_102034_.scale(f1, f1, f1);
-            p_102034_.translate(0.0D, (double)(24 / 16.0F), 0.0D);
+            //float f1 = 1.0F / 2f;
+            //p_102034_.scale(f1, f1, f1);
+            //p_102034_.translate(0.0D, (double)(24 / 16.0F), 0.0D);
             this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
             p_102034_.popPose();
             
             this.head.visible = headVisible0;
             p_102034_.pushPose();
-            p_102034_.translate(0.0D, (double)(5f / 16.0F), (double)(2f / 16.0F));
+            //p_102034_.translate(0.0D, (double)(5f / 16.0F), (double)(2f / 16.0F));
+            p_102034_.scale(2, 2, 2);
+            p_102034_.translate(0, -0.5, 0.15);
             this.head.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
             p_102034_.popPose();            
         } else {
