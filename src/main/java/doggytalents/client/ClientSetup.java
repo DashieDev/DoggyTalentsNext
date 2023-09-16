@@ -13,6 +13,8 @@ import doggytalents.client.entity.model.WigModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
+import doggytalents.client.entity.model.dog.BorzoiLongModel;
+import doggytalents.client.entity.model.dog.BorzoiModel;
 import doggytalents.client.entity.model.dog.DachshundModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
@@ -88,7 +90,9 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_POCHITA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "pochita"), "main");   
     public static final ModelLayerLocation DOG_DACHSHUND = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dachshund"), "main");
     public static final ModelLayerLocation DOG_PUG = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "pug"), "main");
-
+    public static final ModelLayerLocation DOG_BORZOI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "borzoi"), "main");
+    public static final ModelLayerLocation DOG_BORZOI_LONG = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "borzoi_long"), "main");
+    
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
     public static final ModelLayerLocation DOG_BACKPACK = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_backpack"), "main");
@@ -127,6 +131,8 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_POCHITA, PochitaModel::createBodyLayer);
         event.registerLayerDefinition(DOG_DACHSHUND, DachshundModel::createBodyLayer);
         event.registerLayerDefinition(DOG_PUG, PugModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_BORZOI, BorzoiModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_BORZOI_LONG, BorzoiLongModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
