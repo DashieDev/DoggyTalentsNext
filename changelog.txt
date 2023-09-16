@@ -632,3 +632,30 @@ Dog will not render the hunger number.
 # Completely redo Dog Armor:
 + Added a cube to cover dog's bottom.
 * HOTFIX: Doggy Tools Inventory reset when a talent is added.
+
+1.16.3 - 17th September 2023
+* Fix missing rottweiler texture.
++ Added a name Randomizer to suggest a random name from resource-pack-based database to help the Owner
+choosing their dog's name.
++ EVERY PLANKS/WOOLS both from vanilla and modded are now Supported as Bed Variant by default.
+However, the textures only render if the woods/wool texture is placed in normal blocks style 
+(Having the file placing at the <namespace>:textures/block path and its name is the block's id)
+Otherwise, a nani texture is rendered instead, variants like that can be explicitly supported via resource packs
+by placing the textures representing the block at the <namespace>:textures/block folder of that resources packs
+and name the file the same as the block's id.
+* Faint Animation Ear Fix
+# Incapacitated dog no longer look at player.
+# Bed no longer breaks if the block underneath it is broken.
++ LOGS BED !!!!!
+# Missing bed variant text changes.
+==================================================
++ Added some INTERESTING Model:
++ Pochita from Chainsaw Man
++ Finally, DACHSUND !!!
++ actual PUGS !!!
++ BORZOI!!!
+==================================================
++ Added Gender Bone: You can now change your dog's gender.
+# Dogs can now be set to be Baby Wolf forever using Shrinking Mallet.
+* Fix Baby Dog's root pivot point.
+# Dog will show burn textures when is on fire while suffer from the fatal blow.
