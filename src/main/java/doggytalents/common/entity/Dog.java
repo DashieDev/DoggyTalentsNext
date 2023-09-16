@@ -2587,6 +2587,13 @@ public class Dog extends AbstractDog {
         return this.entityData.get(DOG_SIZE.get());
     }
 
+    @Override
+    public boolean isBaby() {
+        if (this.getDogSize() == DogSize.PPP)
+            return true;
+        return super.isBaby();
+    }
+
     public void setBoneVariant(ItemStack stack) {
         this.entityData.set(BONE_VARIANT, stack);
     }
