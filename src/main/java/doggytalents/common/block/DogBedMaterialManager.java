@@ -31,7 +31,7 @@ public class DogBedMaterialManager {
 
     private static final Random RANDOM = new Random(System.currentTimeMillis());
     public static final ResourceLocation NANI_KEY = Util.getResource("textures/block/dog_bed_nani");
-    public static final ResourceLocation NANI_TEXTURE = Util.getResource("block/dog_bed_casing_nani");
+    public static final ResourceLocation NANI_TEXTURE = Util.getResource("minecraft", "block/oak_planks");
 
     private static final Map<ResourceLocation, IBeddingMaterial> beddingMap = Maps.newConcurrentMap();
     private static final Map<ResourceLocation, ICasingMaterial> casingMap = Maps.newConcurrentMap();
