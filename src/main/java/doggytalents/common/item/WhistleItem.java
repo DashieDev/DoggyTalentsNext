@@ -169,6 +169,7 @@ public class WhistleItem extends Item {
             if (successful) {
                 player.sendSystemMessage(Component.translatable("dogcommand.come"));
             }
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         case HEEL:
             if (world.isClientSide) return;
@@ -214,6 +215,7 @@ public class WhistleItem extends Item {
             if (successful) {
                 player.sendSystemMessage(Component.translatable("dogcommand.stay"));
             }
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         case OKAY:
             if (world.isClientSide) return;
@@ -228,8 +230,10 @@ public class WhistleItem extends Item {
             if (successful) {
                 player.sendSystemMessage(Component.translatable("dogcommand.ok"));
             }
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         case SHELPERD:
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         case TACTICAL:
             if (world.isClientSide) return;
@@ -260,9 +264,7 @@ public class WhistleItem extends Item {
                     dog.triggerActionDelayed(2, new DogMoveToBedAction(dog, bedPos, false));
                 }
             }
-            if (!noDogs) {
-                player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
-            }
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         }
         case GO_BEHIND:
@@ -279,9 +281,7 @@ public class WhistleItem extends Item {
                 dog.triggerAction(new DogGoBehindOwnerAction(dog, owner));
                 noDogs = false;
             }
-            if (!noDogs) {
-                player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
-            }
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         }
         case HEEL_BY_GROUP:
