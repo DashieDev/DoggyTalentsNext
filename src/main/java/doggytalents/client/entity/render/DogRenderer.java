@@ -111,7 +111,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
 
     @Override
     protected void scale(Dog dogIn, PoseStack matrixStackIn, float partialTickTime) {
-        float size = dogIn.getDogSize() * 0.3F + 0.1F;
+        float size = dogIn.getDogSize().getScale();
         matrixStackIn.scale(size, size, size);
         this.shadowRadius = size * 0.5F;
     }
