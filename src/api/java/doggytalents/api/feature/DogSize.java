@@ -6,7 +6,7 @@ import java.util.Comparator;
 import net.minecraft.util.Mth;
 
 public enum DogSize {
-    PPP(0, 1),
+    PPP(0, 0.5f),
     PIANISSIMO(1, 1 * 0.3F + 0.1F),
     PIANO(2, 2 * 0.3F + 0.1F),
     MODERATO(3, 1),
