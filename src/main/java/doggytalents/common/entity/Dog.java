@@ -1832,7 +1832,7 @@ public class Dog extends AbstractDog {
 
     private void createIncapSyncState(DamageSource source) {
         DefeatedType type;
-        if (source.is(DamageTypeTags.IS_FIRE)) {
+        if (source.is(DamageTypeTags.IS_FIRE) || (this.isOnFire() && !this.fireImmune())) {
             type = DefeatedType.BURN;
         } else if (source.is(DamageTypes.MAGIC)) {
             type = DefeatedType.POISON;
