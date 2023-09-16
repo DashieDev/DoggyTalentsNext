@@ -170,6 +170,7 @@ public class WhistleItem extends Item {
             if (successful) {
                 player.sendMessage(ComponentUtil.translatable("dogcommand.come"), net.minecraft.Util.NIL_UUID);
             }
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         case HEEL:
             if (world.isClientSide) return;
@@ -215,6 +216,7 @@ public class WhistleItem extends Item {
             if (successful) {
                 player.sendMessage(ComponentUtil.translatable("dogcommand.stay"), net.minecraft.Util.NIL_UUID);
             }
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         case OKAY:
             if (world.isClientSide) return;
@@ -229,8 +231,10 @@ public class WhistleItem extends Item {
             if (successful) {
                 player.sendMessage(ComponentUtil.translatable("dogcommand.ok"), net.minecraft.Util.NIL_UUID);
             }
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         case SHELPERD:
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         case TACTICAL:
             if (world.isClientSide) return;
@@ -261,9 +265,7 @@ public class WhistleItem extends Item {
                     dog.triggerActionDelayed(2, new DogMoveToBedAction(dog, bedPos, false));
                 }
             }
-            if (!noDogs) {
-                player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
-            }
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         }
         case GO_BEHIND:
@@ -280,9 +282,7 @@ public class WhistleItem extends Item {
                 dog.triggerAction(new DogGoBehindOwnerAction(dog, owner));
                 noDogs = false;
             }
-            if (!noDogs) {
-                player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
-            }
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         }
         case HEEL_BY_GROUP:
