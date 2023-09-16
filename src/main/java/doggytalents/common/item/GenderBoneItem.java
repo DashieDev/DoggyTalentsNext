@@ -41,7 +41,7 @@ public class GenderBoneItem extends Item implements IDogItem{
             EnumGender.FEMALE
             : EnumGender.MALE);
         playerIn.getCooldowns().addCooldown(DoggyItems.GENDER_BONE.get(), 40);
-        dog.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
+        dog.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1, 1);
         if (dog.level() instanceof ServerLevel sL) {
             var item = dog.getGender() == EnumGender.MALE ? 
                 Items.LIGHT_BLUE_WOOL : Items.PINK_WOOL;
