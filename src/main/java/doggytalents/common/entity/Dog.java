@@ -153,7 +153,6 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Float> HUNGER_INT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<String> CUSTOM_SKIN = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.STRING);
 
-    private static final EntityDataAccessor<Byte> SIZE = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<ItemStack> BONE_VARIANT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.ITEM_STACK);
 
     private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
@@ -168,6 +167,7 @@ public class Dog extends AbstractDog {
     private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BOWL_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<IncapacitatedSyncState>> DOG_INCAP_SYNC_STATE = Cache.make(() -> (EntityDataAccessor<IncapacitatedSyncState>) SynchedEntityData.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (EntityDataAccessor<List<DoggyArtifactItem>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get().getSerializer()));
+    private static final Cache<EntityDataAccessor<DogSize>> DOG_SIZE = Cache.make(() -> (EntityDataAccessor<DogSize>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER.get().getSerializer()));
 
     public static final void initDataParameters() {
         ACCESSORIES.get();
@@ -179,6 +179,7 @@ public class Dog extends AbstractDog {
         DOG_BOWL_LOCATION.get();
         DOG_INCAP_SYNC_STATE.get();
         ARTIFACTS.get();
+        DOG_SIZE.get();
     }
 
     // Cached values
@@ -270,7 +271,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(CUSTOM_SKIN, "");
         this.entityData.define(DOG_LEVEL.get(), new DogLevel(0, 0));
         this.entityData.define(DOG_INCAP_SYNC_STATE.get(), IncapacitatedSyncState.NONE);
-        this.entityData.define(SIZE, (byte) 3);
+        this.entityData.define(DOG_SIZE.get(), DogSize.MODERATO);
         this.entityData.define(BONE_VARIANT, ItemStack.EMPTY);
         this.entityData.define(ARTIFACTS.get(), new ArrayList<DoggyArtifactItem>(3));
         this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
@@ -1619,7 +1620,7 @@ public class Dog extends AbstractDog {
         if (this.isBaby()) {
             return 0.5F;
         } else {
-            return this.getDogSize() * 0.3F + 0.1F;
+            return this.getDogSize().getScale();
         }
     }
 
@@ -1903,7 +1904,7 @@ public class Dog extends AbstractDog {
         compound.putBoolean("forceSit", this.forceSit());
         compound.putByte("lowHealthStrategy", this.getLowHealthStrategy().getId());
         compound.putBoolean("crossOriginTp", this.crossOriginTp());
-        compound.putInt("dogSize", this.getDogSize());
+        compound.putInt("dogSize", this.getDogSize().getId());
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
         compound.putInt("level_dire", this.getDogLevel().getLevel(Type.DIRE));
         NBTUtil.writeItemStack(compound, "fetchItem", this.getBoneVariant());
@@ -2127,7 +2128,7 @@ public class Dog extends AbstractDog {
             var low_health_strategy_id = compound.getByte("lowHealthStrategy");
             this.setLowHealthStrategy(LowHealthStrategy.fromId(low_health_strategy_id));
             if (compound.contains("dogSize", Tag.TAG_ANY_NUMERIC)) {
-                this.setDogSize(compound.getInt("dogSize"));
+                this.setDogSize(DogSize.fromId(compound.getInt("dogSize")));
             }
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load levels: " + e.getMessage());
@@ -2258,7 +2259,7 @@ public class Dog extends AbstractDog {
             }
         }
 
-        if (SIZE.equals(key)) {
+        if (DOG_SIZE.get().equals(key)) {
             this.refreshDimensions();
         }
 
@@ -2567,13 +2568,13 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public void setDogSize(int value) {
-        this.entityData.set(SIZE, (byte)Math.min(5, Math.max(1, value)));
+    public void setDogSize(DogSize size) {
+        this.entityData.set(DOG_SIZE.get(), size);
     }
 
     @Override
-    public int getDogSize() {
-        return this.entityData.get(SIZE);
+    public DogSize getDogSize() {
+        return this.entityData.get(DOG_SIZE.get());
     }
 
     public void setBoneVariant(ItemStack stack) {

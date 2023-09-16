@@ -575,7 +575,7 @@ public class DogUtil {
         if (dogs.isEmpty()) return null;
         var biggest_dog = dogs.get(0);
         for (var dog : dogs) {
-            if (dog.getDogSize() > biggest_dog.getDogSize()) {
+            if (dog.getDogSize().getId() > biggest_dog.getDogSize().getId()) {
                 biggest_dog = dog;
             }
         }
