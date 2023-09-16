@@ -169,17 +169,11 @@
             "author" : "MashXP"
         },
         {
-        "skin_name" : "Borzoi",
+            "skin_name" : "Borzoi",
             "skin_id" : "borzoi",
             "use_model" : "borzoi",
             "author" : "MashXP"
         },
-        {
-            "skin_name" : "LONG BORZOI",
-                "skin_id" : "borzoi_long",
-                "use_model" : "borzoi_long",
-                "author" : "MashXP (lemme do it for you~)"
-            },
         {
             "skin_name" : "English Bulldog",
             "skin_id" : "english_bulldog",
@@ -280,7 +274,12 @@
             "skin_name" : "Classical III",
             "skin_id" : "wolf_var2",
             "use_model" : "default"
+        },
+        {
+            "skin_name" : "LONG BORZOI",
+            "skin_id" : "borzoi_long",
+            "use_model" : "borzoi_long",
+            "author" : "MashXP (lemme do it for you~)"
         }
-        
     ]
 }
