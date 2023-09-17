@@ -47,8 +47,8 @@ public interface IDog {
 
     public Optional<TalentInstance> getTalent(Talent talentIn);
 
-    public int getDogSize();
-    public void setDogSize(int size);
+    public DogSize getDogSize();
+    public void setDogSize(DogSize size);
 
     public float getMaxHunger();
     public float getDogHunger();

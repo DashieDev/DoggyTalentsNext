@@ -1,5 +1,6 @@
 package doggytalents.common.item;
 
+import doggytalents.api.feature.DogSize;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import net.minecraft.network.chat.Component;
@@ -50,9 +51,9 @@ public class DogResizeItem extends Item implements IDogItem {
             var itemInHand = playerIn.getItemInHand(handIn);
 
             if (!playerIn.level().isClientSide) {
-                int size0 = dog.getDogSize();
-                dog.setDogSize(dog.getDogSize() + (this.type == Type.BIG ? 1 : -1));
-                int size1 = dog.getDogSize();
+                DogSize size0 = dog.getDogSize();
+                DogSize size1 = (this.type == Type.BIG ? size0.grow() : size0.shrink());
+                dog.setDogSize(size1);
                 if (!playerIn.getAbilities().instabuild && size0 != size1)
                 itemInHand.hurtAndBreak(1, playerIn, (player_consume) -> {
                     player_consume.broadcastBreakEvent(handIn);

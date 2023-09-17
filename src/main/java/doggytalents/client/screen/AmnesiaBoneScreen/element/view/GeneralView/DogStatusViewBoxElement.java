@@ -5,6 +5,7 @@ import java.util.Random;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.feature.DogSize;
 import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
@@ -44,10 +45,10 @@ public class DogStatusViewBoxElement extends AbstractElement {
 
     public static void renderDogInside(GuiGraphics graphics, Dog dog, 
         int dog_mX, int dog_mY, int size, int lookX, int lookY) {
-        int currentDogSize = dog.getDogSize();
-        boolean dogTooBig = currentDogSize > 3;
+        var currentDogSize = dog.getDogSize();
+        boolean dogTooBig = currentDogSize.getId() > DogSize.MODERATO.getId();
         if (dogTooBig) {
-            dog.setDogSize(3);
+            dog.setDogSize(DogSize.MODERATO);
         }
 
         var currentDogName = dog.getCustomName();

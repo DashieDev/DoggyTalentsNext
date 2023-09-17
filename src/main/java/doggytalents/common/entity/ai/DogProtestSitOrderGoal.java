@@ -81,7 +81,7 @@ public class DogProtestSitOrderGoal extends Goal {
         }
     }
 
-    private int getSpamInterval() {return 30;}
+    private int getSpamInterval() {return 45;}
 
     
 }
