@@ -757,7 +757,7 @@ public class Dog extends AbstractDog {
     }
 
     public boolean isBusy() {
-        if (!this.isDoingFine()) return false;
+        if (!this.isDoingFine()) return true;
         if (this.isInSittingPose() && this.forceSit()) return true;
         return this.activeAction != null;
     }
