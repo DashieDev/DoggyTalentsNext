@@ -42,9 +42,9 @@ public class RescueDogRenderer extends RenderLayer<Dog, DogModel> {
 
         Optional<TalentInstance> inst = dog.getTalent(DoggyTalents.RESCUE_DOG);
         if (inst.isPresent() && inst.get().level() >= 5) {
-            this.getParentModel().copyPropertiesTo(this.model);
-            this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-            this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            var dogModel = this.getParentModel();
+            dogModel.copyPropertiesTo(this.model);
+            this.model.sync(dogModel);
 
             RenderLayer.renderColoredCutoutModel(this.model, Resources.TALENT_RESCUE, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F);
         }
