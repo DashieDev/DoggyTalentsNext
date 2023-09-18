@@ -564,11 +564,20 @@ public class Dog extends AbstractDog {
     }
 
     public boolean canDoIdileAnim() {
-        return this.isAlive() && !this.isShaking && !this.animationManager.started();
+        if (this.isAlive())
+            return false;
+        if (this.isOnFire())
+            return false;
+        for (var alt : this.alterations) {
+            if (alt.blockIdleAnim(this).shouldSwing()) {
+                return false;
+            }
+        }
+        return !this.isShaking && !this.animationManager.started();
     }
 
     public boolean canContinueDoIdileAnim() {
-        return this.isAlive() && !this.isShaking;
+        return this.isAlive() && !this.isShaking && !this.isOnFire();
     }
 
     public boolean canUpdateClassicalAnim() {
