@@ -249,9 +249,9 @@ public class DogModel extends EntityModel<Dog> {
         this.resetAllPose();
         this.tail.offsetPos(KeyframeAnimations.posVec(0f, -9f, -2f));
         this.legFrontLeft.offsetRotation(KeyframeAnimations.degreeVec(-27f, 0f, 0f));
-        this.legFrontLeft.offsetPos(KeyframeAnimations.posVec(0f, -1f, 0f));
+        this.legFrontLeft.offsetPos(KeyframeAnimations.posVec(0.01f, -1f, 0f));
         this.legFrontRight.offsetRotation(KeyframeAnimations.degreeVec(-27f, 0f, 0f));
-        this.legFrontRight.offsetPos(KeyframeAnimations.posVec(0f, -1f, 0f));
+        this.legFrontRight.offsetPos(KeyframeAnimations.posVec(0.01f, -1f, 0f));
         this.legBackLeft.offsetRotation(KeyframeAnimations.degreeVec(-90f, 0f, 0f));
         this.legBackLeft.offsetPos(KeyframeAnimations.posVec(0f, -6f, -5f));
         this.legBackRight.offsetRotation(KeyframeAnimations.degreeVec(-90f, 0f, 0f));
