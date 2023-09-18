@@ -266,8 +266,18 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
         SpecialRecipeBuilder.special(DoggyRecipeSerializers.DOG_BED.get()).save(consumer, Util.getResourcePath("dog_bed"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.HOT_DOG.get(), 1)
+            .pattern("RTY")
+            .pattern("BCB")
+            .define('R', Items.RED_DYE)
+            .define('Y', Items.YELLOW_DYE)
+            .define('B', Items.BREAD)
+            .define('C', Items.COOKED_PORKCHOP)
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .unlockedBy("has_bread", has(Items.BREAD))
+            .save(consumer);
     }
-
+    
     // @Override
     // protected void saveAdvancement(HashCache cache, JsonObject advancementJson, Path pathIn) {
     //     //NOOP - We dont replace any of the advancement things yet...

@@ -78,6 +78,8 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.FEATHERED_MANTLE);
         generated(DoggyItems.EMPTY_LOCATOR_ORB);
 
+        generated(DoggyItems.HOT_DOG);
+
         generated(DoggyItems.CHI_ORB);
         generated(DoggyItems.CHU_ORB);
         generated(DoggyItems.KO_ORB);
