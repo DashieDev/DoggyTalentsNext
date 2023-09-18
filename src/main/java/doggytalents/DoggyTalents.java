@@ -42,6 +42,7 @@ public class DoggyTalents {
     public static final RegistryObject<Talent> WATER_HOLDER = register("water_holder", () -> new Talent(WaterHolderTalent::new));
     public static final RegistryObject<Talent> DOGGY_TOOLS = register("doggy_tools", () -> new Talent(DoggyToolsTalent::new));
     public static final RegistryObject<Talent> SHOCK_ABSORBER = register("shock_absorber", () -> new Talent(ShockAbsorberTalent::new));
+    public static final RegistryObject<Talent> MOB_RETRIEVER = register("mob_retriever", () -> new Talent(MobRetrieverTalent::new));
 
     private static <T extends Talent> RegistryObject<Talent> registerInst(final String name, final BiFunction<Talent, Integer, TalentInstance> sup) {
         return register(name, () -> new Talent(sup));
