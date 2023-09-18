@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-15T14:29:52.499159	Recipes
+// 1.20.1	2023-09-18T21:14:00.8158313	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
 8b281a24da31fe1edd99746b8c20e4d2173333ec data/doggytalents/advancements/recipes/decorations/bach_wig.json
@@ -9,6 +9,7 @@ c8449eeff76762f9eef09df4956b9b3aa9d7b7de data/doggytalents/advancements/recipes/
 dd7a9d14455e2b7333e3dff451789b3bb309695c data/doggytalents/advancements/recipes/decorations/conan_suit.json
 1759b63c8cc7e2e0ba60a1763ddad25e15f7397c data/doggytalents/advancements/recipes/decorations/death_hood.json
 266e52cca9ccd985671b26e7363add87987c0104 data/doggytalents/advancements/recipes/decorations/guard_suit.json
+aa131b7d60c85a09467ae658a2e36fb0dca943a8 data/doggytalents/advancements/recipes/decorations/hot_dog.json
 8f70cbc4fe82627446ef11d7ae0590d105e313a7 data/doggytalents/advancements/recipes/decorations/leather_jacket.json
 635884e0cfca82b49677f1062306dd8ef50ca566 data/doggytalents/advancements/recipes/decorations/locator_orb_chi.json
 c804c400f96d5eaddf94bf042cdb606d677b12e7 data/doggytalents/advancements/recipes/decorations/locator_orb_chu.json
@@ -72,6 +73,7 @@ f805ba63f7dcff5dbcaec3f6a2dfeb5be45a61ba data/doggytalents/recipes/feathered_man
 1711b359cad6337e498226a36768c0c4ea15c967 data/doggytalents/recipes/food_bowl.json
 a2eabaa2febce54bfefd5e285b3abd80c8e952d8 data/doggytalents/recipes/gender_bone.json
 54259a268f52754c75af485a8683e627b9967411 data/doggytalents/recipes/guard_suit.json
+e0ef8e63a84e2144f7998e274416563b7bc2fa29 data/doggytalents/recipes/hot_dog.json
 9187e94ec445a098a93f744fa3b4ae29ea8cad8c data/doggytalents/recipes/leather_jacket.json
 ff7127678e5541e454472c54f044ab7d8039af8f data/doggytalents/recipes/locator_orb_chi.json
 66dda46e3368c0af8391c263d193a1c04ac9331b data/doggytalents/recipes/locator_orb_chu.json

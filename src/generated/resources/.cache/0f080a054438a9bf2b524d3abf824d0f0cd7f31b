@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-15T14:29:52.4493073	DoggyTalents Item Models
+// 1.20.1	2023-09-18T21:14:00.8138114	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
@@ -28,6 +28,7 @@ fcce3621bda79bfb2c94031ae8ab9eabef319edc assets/doggytalents/models/item/feather
 7cdb64b50b71c47cea28a9126f474fa5795001a3 assets/doggytalents/models/item/food_bowl.json
 4589fc682d17c442a91272bf3c12ab74b2fe6a27 assets/doggytalents/models/item/gender_bone.json
 bbbddd194d8bce956f46ef7e0e9c24bef18cf451 assets/doggytalents/models/item/guard_suit.json
+5e01abe4d77e9e394d987932d9f4daaa2488cac8 assets/doggytalents/models/item/hot_dog.json
 483e3ff3b100e7bd5a29b802982385f35d98c5cb assets/doggytalents/models/item/leather_jacket.json
 c9f1c6aa2c62f96cfd81d4e652589c5207ccf090 assets/doggytalents/models/item/locator_orb_chi.json
 2448084f2a0ebc26b6ac74c58a7810c77493ffd3 assets/doggytalents/models/item/locator_orb_chu.json
