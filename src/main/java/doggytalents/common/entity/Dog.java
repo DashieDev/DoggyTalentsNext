@@ -439,7 +439,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public double getMyRidingOffset() {
-        return this.getVehicle() instanceof Player ? 0.5D : 0.0D;
+        return this.getVehicle() instanceof Player ? 0.5D : 0.2D;
     }
 
     @Override
