@@ -6,6 +6,8 @@ import doggytalents.DoggySounds;
 import doggytalents.DoggyTalents;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.EnumMode;
+import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.screen.HeelByGroupScreen;
 import doggytalents.client.screen.HeelByNameScreen;
 import doggytalents.client.screen.WhistleScreen;
@@ -48,7 +50,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WhistleItem extends Item {
+public class WhistleItem extends Item implements IDogItem {
 
     public static enum WhistleMode {
         STAND(0, WhistleSound.LONG),
@@ -98,6 +100,22 @@ public class WhistleItem extends Item {
 
     public WhistleItem(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player player,
+            InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);  
+        byte id_mode = 0;
+
+        if (stack.hasTag() && stack.getTag().contains("mode", Tag.TAG_ANY_NUMERIC)) {
+            id_mode = stack.getTag().getByte("mode");
+        }
+        if (id_mode >= WhistleMode.VALUES.length) id_mode = 0;
+        var mode = WhistleMode.VALUES[id_mode];
+
+        return mode == WhistleMode.MOB_RETRIEVER ? 
+            InteractionResult.FAIL : InteractionResult.PASS;
     }
 
     @Override
