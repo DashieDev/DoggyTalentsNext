@@ -140,7 +140,7 @@ public class WaterHolderTalent extends TalentInstance {
         if (stack.getItem() instanceof BucketItem) {
             if (!dog.level().isClientSide) {
                 if (player.isShiftKeyDown()) {
-                    var c1 = Component.translatable("talent.doggytalents.water_holder.amount");
+                    var c1 = Component.translatable("talent.doggytalents.water_holder.amount", dog.getName().getString());
                     c1.append(Component.literal(": "));
                     if (this.level < this.talent.getMaxLevel()) {
                         c1.append(Component.literal("" +this.getWaterUnitleft())

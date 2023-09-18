@@ -945,7 +945,7 @@ public class Dog extends AbstractDog {
     private void displayToastIfNoPermission(Player player) {
         if (this.canInteract(player)) return;
         player.displayClientMessage(
-            Component.translatable("doggui.invalid_dog.no_permission.title")
+            Component.translatable("doggui.invalid_dog.no_permission.title", this.getName().getString())
             .withStyle(ChatFormatting.RED) 
         , true);
     }

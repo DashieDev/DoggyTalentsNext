@@ -132,7 +132,7 @@ public class DogMigrateOwnerScreen extends Screen {
         );
         help = I18n.get(
             "doggui.migrate_owner.confirm.subtitle",
-            dog.getGenderPronoun()
+            dog.getName().getString()
         );
         var dog_title = I18n.get(
             "doggui.migrate_owner.info.dog",
