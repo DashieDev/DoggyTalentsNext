@@ -10,6 +10,9 @@ import doggytalents.common.item.*;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.client.color.item.ItemColors;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeableLeatherItem;
@@ -83,6 +86,14 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> SHIN_ORB = registerLocatorOrb("locator_orb_shin", DoggyAccessories.SHIN_ORB);
     public static final RegistryObject<AccessoryItem> JIN_ORB = registerLocatorOrb("locator_orb_jin", DoggyAccessories.JIN_ORB);
     public static final RegistryObject<Item> GENDER_BONE = registerTool("gender_bone", GenderBoneItem::new, 10);
+
+    public static final RegistryObject<AccessoryItem> HOT_DOG = register("hot_dog",() -> new AccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp().food(
+        (new FoodProperties.Builder())
+                    .nutrition(8)
+                    .saturationMod(1F)
+                    .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 60, 1), 1)
+                    .build()
+    )));
     
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
