@@ -2,6 +2,7 @@ package doggytalents.api.inferface;
 
 import doggytalents.api.enu.WetSource;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -157,6 +158,11 @@ public interface IDogAlteration {
     default InteractionResultHolder<Integer> determineNextAir(AbstractDog dogIn, int currentAir) {
         return InteractionResultHolder.pass(currentAir);
     }
+
+    default InteractionResult canStandOnFluid(AbstractDog dogIn, FluidState state) {
+        return InteractionResult.PASS;
+    }
+
 
     default InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int second) {
         return InteractionResultHolder.pass(second);
