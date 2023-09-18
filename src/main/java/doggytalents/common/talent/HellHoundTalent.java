@@ -6,8 +6,10 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -17,7 +19,14 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
 
@@ -33,6 +42,9 @@ public class HellHoundTalent extends TalentInstance {
 
     private final int SEARCH_RANGE = 3;
     private int tickUntilSearch = 0;
+
+    private HellHoundNavigation navigation;
+    private boolean swimming;
 
     public HellHoundTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -50,6 +62,7 @@ public class HellHoundTalent extends TalentInstance {
         dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0f);
         if (dog instanceof Dog) {
             this.dog = (Dog) dog;
+            this.navigation = new HellHoundNavigation(this.dog, this.dog.level());
         }
     }
 
@@ -68,6 +81,15 @@ public class HellHoundTalent extends TalentInstance {
         dog.setPathfindingMalus(BlockPathTypes.LAVA, this.oldLavaCost);
         dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, this.oldFireCost);
         dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, this.oldDangerFireCost);
+        this.stopSwimming();
+    }
+
+    @Override
+    public InteractionResultHolder<Float> calculateFallDistance(AbstractDog dogIn, float distance) {
+        if (this.level() >= 5 && dogIn.isInLava()) {
+            return InteractionResultHolder.success(0f);
+        }
+        return super.calculateFallDistance(dogIn, distance);
     }
 
     @Override
@@ -109,12 +131,16 @@ public class HellHoundTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog dog) {
+        if (dog.level().isClientSide)
+            return;
         if (this.level() < 5) return;
-        if (dog.isInLava()) {
-            this.applySwimAttributes(dog);
-        } else {
-            this.removeSwimAttributes(dog);
+        if (dog.isInLava() && !this.swimming) {
+            this.startSwimming();  
+        } 
+        if (!dog.isInLava() && this.swimming) {
+            this.stopSwimming();
         }
+        floatHellhound(dog);
         if (this.dog != null) {
             if (this.dog.isShakingLava()) {
                 if (this.dog.getTimeDogIsShaking() > 0.8) {
@@ -125,6 +151,26 @@ public class HellHoundTalent extends TalentInstance {
                 }
             }
         }
+    }
+
+    private void floatHellhound(AbstractDog dog) {
+        if (!dog.isInLava()) return;
+        var collisioncontext = CollisionContext.of(dog);
+        if (collisioncontext.isAbove(LiquidBlock.STABLE_SHAPE, 
+            dog.blockPosition(), true) 
+            && !dog.level().getFluidState(dog.blockPosition().above()).is(FluidTags.LAVA)) {
+            dog.setOnGround(true);
+        } else {
+            dog.setDeltaMovement(dog.getDeltaMovement().add(0.0D, 0.085D, 0.0D));
+        }
+    }
+
+    @Override
+    public InteractionResult canStandOnFluid(AbstractDog dogIn, FluidState state) {
+        if (this.level() >= 5 && state.is(FluidTags.LAVA)) {
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.PASS;
     }
 
     private void fireSpreadToEnermies() {
@@ -166,5 +212,59 @@ public class HellHoundTalent extends TalentInstance {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    public void startSwimming() {
+        this.dog.resetMoveControl();
+        this.dog.setNavigation(navigation);
+        this.dog.setDogSwimming(true);
+        swimming = true;
+    }
+
+    public void stopSwimming() {
+        this.dog.resetMoveControl();
+        this.dog.resetNavigation();
+        this.dog.setDogSwimming(false);
+        swimming = false;
+    }
+
+    public static class HellHoundNavigation extends DogPathNavigation {
+
+        public HellHoundNavigation(Dog dog, Level level) {
+            super(dog, level);
+        }
+
+        @Override
+        protected boolean hasValidPathType(BlockPathTypes type) {
+            if (type == BlockPathTypes.LAVA)
+                return true;
+            if (type == BlockPathTypes.DAMAGE_FIRE)
+                return true;
+            if (type == BlockPathTypes.DANGER_FIRE)
+                return true;
+            return super.hasValidPathType(type);
+         }
+   
+        @Override
+        public boolean isStableDestination(BlockPos pos) {
+            if (this.level.getBlockState(pos).is(Blocks.LAVA))
+                return true;
+            return super.isStableDestination(pos);
+        }
+
+        protected PathFinder createPathFinder(int p_26453_) {
+            this.nodeEvaluator = new WalkNodeEvaluator() {
+                @Override
+                protected double getFloorLevel(BlockPos pos) {
+                    if (this.level.getFluidState(pos).is(FluidTags.LAVA)) {
+                        return pos.getY();
+                    }
+                    return super.getFloorLevel(pos);
+                }
+            };
+            this.nodeEvaluator.setCanPassDoors(true);
+            return new PathFinder(this.nodeEvaluator, p_26453_);
+        }
+        
     }
 }
