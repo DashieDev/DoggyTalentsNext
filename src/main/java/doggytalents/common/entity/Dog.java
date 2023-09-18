@@ -114,6 +114,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -1109,6 +1110,20 @@ public class Dog extends AbstractDog {
 
         return super.decreaseAirSupply(air);
     }
+
+    @Override
+    public boolean canStandOnFluid(FluidState state) {
+        for (var alter : this.alterations) {
+            var result = alter.canStandOnFluid(this, state);
+
+            if (result.shouldSwing()) {
+                return true;
+            }
+        }
+
+        return super.canStandOnFluid(state);
+    }
+
 
     @Override
     protected int increaseAirSupply(int currentAir) {
