@@ -83,7 +83,8 @@ public class DogCannotInteractWithScreen extends Screen {
                 DogNewInfoScreen.open(dog);
                 return;
             };
-            title = ComponentUtil.translatable("doggui.invalid_dog.no_permission.title")
+
+            title = Component.translatable("doggui.invalid_dog.no_permission.title", dog.getName().getString())
             .withStyle(
                 Style.EMPTY
                 .withBold(true)
