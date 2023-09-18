@@ -63,7 +63,7 @@ public class DogUntameConfirmScreen extends Screen {
         );
         help = I18n.get(
             "doggui.detrain.confirm.subtitle",
-            dog.getGenderPronoun()
+            dog.getName().getString()
         );
         var dog_title = I18n.get(
             "doggui.invalid_dog.info.dog",
