@@ -63,7 +63,8 @@ public class WhistleItem extends Item implements IDogItem {
         TO_BED(8, WhistleSound.LONG),
         GO_BEHIND(9, WhistleSound.SHORT),
         HEEL_BY_GROUP(10, WhistleSound.NONE),
-        MOB_RETRIEVER(11, WhistleSound.SHORT);
+        MOB_RETRIEVER(11, WhistleSound.SHORT),
+        HEEL_BY_LOOK(12, WhistleSound.SHORT);
         
         
         public static final WhistleMode[] VALUES = 
@@ -113,7 +114,7 @@ public class WhistleItem extends Item implements IDogItem {
         if (id_mode >= WhistleMode.VALUES.length) id_mode = 0;
         var mode = WhistleMode.VALUES[id_mode];
 
-        return mode == WhistleMode.MOB_RETRIEVER ? 
+        return mode == WhistleMode.MOB_RETRIEVER? 
             InteractionResult.FAIL : InteractionResult.PASS;
     }
 
@@ -341,7 +342,34 @@ public class WhistleItem extends Item implements IDogItem {
                 return;
             talentInst.setTarget(retriever, (LivingEntity) entity);
             return;
+        case HEEL_BY_LOOK:
+            heelByLook(world, player);
+            return;
         }
+    }
+
+    private void heelByLook(Level level, Player player) {
+        if (level.isClientSide)
+            return;
+        final int reach_range = 30;
+        var eye_pos = player.getEyePosition();
+        var view_vec = player.getViewVector(1);
+        var max_reach_vec = view_vec.scale(reach_range);
+        var max_pos = eye_pos.add(max_reach_vec);
+        var search_area = player.getBoundingBox().expandTowards(max_reach_vec).inflate(1.0D, 1.0D, 1.0D);
+        var hitResult = ProjectileUtil.getEntityHitResult(
+            player, eye_pos, max_pos, search_area, e -> {
+                return (e instanceof Dog);
+            }, reach_range*reach_range);
+        if (hitResult == null)
+            return;
+        var entity = hitResult.getEntity();
+        if (entity == null)
+            return;
+        if (!(entity instanceof Dog dog))
+            return;
+        DogUtil.dynamicSearchAndTeleportToOwnwer(dog, player, 2);
+        dog.setOrderedToSit(false);
     }
 
     @Override
