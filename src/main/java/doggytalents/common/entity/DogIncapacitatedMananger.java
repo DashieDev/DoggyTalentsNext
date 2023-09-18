@@ -161,7 +161,7 @@ public class DogIncapacitatedMananger {
         } else if (this.dog.isPassenger()) {
             if(!this.dog.level().isClientSide) this.dog.stopRiding();
             return InteractionResult.SUCCESS;
-        } else if (owner_uuid != null && owner_uuid.equals(player.getUUID())) {
+        } else if (this.canMove() && owner_uuid != null && owner_uuid.equals(player.getUUID())) {
             this.dog.setOrderedToSit(!this.dog.isOrderedToSit());
             this.dog.getNavigation().stop();
             return InteractionResult.SUCCESS;
