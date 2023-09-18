@@ -139,26 +139,6 @@ public class PackPuppyTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
-        ItemStack stack = playerIn.getItemInHand(handIn);
-
-        if (dogIn.isTame() && this.level() > 0) { // Dog requirements
-            if (playerIn.isShiftKeyDown() && stack.isEmpty()) { // Player requirements
-
-                if (dogIn.canInteract(playerIn)) {
-
-                    if (!playerIn.level().isClientSide) {
-                        playerIn.displayClientMessage(Component.translatable("talent.doggytalents.pack_puppy.version_migration"), false);
-                    }
-                    return InteractionResult.SUCCESS;
-                }
-            }
-        }
-
-        return InteractionResult.PASS;
-    }
-
-    @Override
     public void set(AbstractDog dog, int preLevel) {
         // No need to drop anything if dog didn't have pack puppy
         if (preLevel > 0 && this.level == 0) {
