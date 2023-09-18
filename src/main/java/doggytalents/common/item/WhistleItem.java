@@ -1,5 +1,6 @@
 package doggytalents.common.item;
 
+import doggytalents.ChopinLogger;
 import doggytalents.DoggyItems;
 import doggytalents.DoggySounds;
 import doggytalents.DoggyTalents;
@@ -12,6 +13,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DoggyBeamEntity;
 import doggytalents.common.entity.ai.triggerable.DogGoBehindOwnerAction;
 import doggytalents.common.entity.ai.triggerable.DogMoveToBedAction;
+import doggytalents.common.talent.MobRetrieverTalent;
 import doggytalents.common.talent.RoaringGaleTalent;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
@@ -31,6 +33,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -57,7 +60,8 @@ public class WhistleItem extends Item {
         HEEL_BY_NAME(7, WhistleSound.NONE),
         TO_BED(8, WhistleSound.LONG),
         GO_BEHIND(9, WhistleSound.SHORT),
-        HEEL_BY_GROUP(10, WhistleSound.NONE);
+        HEEL_BY_GROUP(10, WhistleSound.NONE),
+        MOB_RETRIEVER(11, WhistleSound.SHORT);
         
         
         public static final WhistleMode[] VALUES = 
@@ -287,6 +291,37 @@ public class WhistleItem extends Item {
         case HEEL_BY_GROUP:
             if (world.isClientSide) 
                 HeelByGroupScreen.open();
+            return;
+        case MOB_RETRIEVER:
+            if (world.isClientSide)
+                return;
+            var retrieverOptional = MobRetrieverTalent.chooseNearestDog(player, world);
+            if (retrieverOptional.isEmpty())
+                return;
+            var retriever = retrieverOptional.get();
+            var talentOptional = retriever.getTalent(DoggyTalents.MOB_RETRIEVER.get());
+            if (talentOptional.isEmpty())
+                return;
+            var talentInst = (MobRetrieverTalent) talentOptional.get();
+            
+            final int reach_range = MobRetrieverTalent.getSelectTargetRange();
+            var eye_pos = player.getEyePosition();
+            var view_vec = player.getViewVector(1);
+            var max_reach_vec = view_vec.scale(reach_range);
+            var max_pos = eye_pos.add(max_reach_vec);
+            var search_area = player.getBoundingBox().expandTowards(max_reach_vec).inflate(1.0D, 1.0D, 1.0D);
+            var hitResult = ProjectileUtil.getEntityHitResult(
+                player, eye_pos, max_pos, search_area, e -> {
+                    if (!(e instanceof LivingEntity living))
+                        return false; 
+                    return talentInst.isValidTarget(retriever, living);
+                }, reach_range*reach_range);
+            if (hitResult == null)
+                return;
+            var entity = hitResult.getEntity();
+            if (entity == null)
+                return;
+            talentInst.setTarget(retriever, (LivingEntity) entity);
             return;
         }
     }

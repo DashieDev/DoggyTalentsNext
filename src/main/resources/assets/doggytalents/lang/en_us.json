@@ -36,6 +36,8 @@
    "item.doggytalents.whistle.8": "Whistle: Command To Bed",
    "item.doggytalents.whistle.9": "Whistle: Command Go Behind",
    "item.doggytalents.whistle.10": "Heel By Group Whistle",
+   "item.doggytalents.whistle.11": "Mob Retriever Whistle",
+
    "item.doggytalents.treat_bag": "Treat Bag",
    "item.doggytalents.energizer_stick": "Energizer Stick",
    "item.doggytalents.egg_sandwich": "Egg Sandwich",
@@ -151,6 +153,7 @@
    "talent.doggytalents.water_holder": "Water Holder",
    "talent.doggytalents.doggy_tools": "Doggy Tools",
    "talent.doggytalents.shock_absorber": "Shock Absorber",
+   "talent.doggytalents.mob_retriever": "Mob Retriever",
 
    "talent.doggytalents.bed_finder.description": "While a dog with this skill is on your head, your bed will be highlighted in a black outline. To get the dog on you head, right click on them with a bone in hand. The range at which it can do this is equal to 200 blocks per level, but becomes infinite at level 5.",
    "talent.doggytalents.black_pelt.description": "Improves critical hit rate 1/2 a heart for every level plus an extra heart when you master it",
@@ -177,6 +180,7 @@
    "talent.doggytalents.water_holder.description": "Notice the dog's fur, it loves absorbing water. And the dog loves shaking it dry. This talent allows your dog to store water. When you, your other wolves or dogs is on fire, he will run to each and shake his fur, reduce the burning time or completely extinguish you. The higher the level, the more water the dog can store, so as the burning time the dog can reduce! You can either use a water bucket on the dog to refil or the dog will automatically absorb water when in contact with rain or water source. You can check the amount of water left by using any bucket on the dog while holding shift.",
    "talent.doggytalents.doggy_tools.description": "Allows your dog to utilize certains tools to help you with specific tasks. Tools can be added to the dog's toolbar which can be accessed via right-clicking your dog with any variants of the pickaxe. The higher the level, the bigger the toolbar's capacity. For example: dogs with a hoe inside the toolbar will help his owner farm/harvest crops. When attacking, dogs with any weapon in their toolbar will find the neareast weapon from the left and equip it.",
    "talent.doggytalents.shock_absorber.description": "Increase your dog knockback resistance. Mastering this grants the dog complete immunity to knockback.",
+   "talent.doggytalents.mob_retriever.description": "Allow your dog to retrieve mobs by forcing them onto its back. To start, have a dog with this ability nearby. You can then use a Mob Retriever Whistle by pointing at the target you want the dog to pick up and pressing Use. The dog will go and retrieve the target. The target will continue to ride the dog until the dog sits down.",
 
    "talent.doggytalents.roaring_gale.cooldown": "Roaring gale is on cooldown.",
    "talent.doggytalents.roaring_gale.level": "Put some points in roaring gale to use!",
