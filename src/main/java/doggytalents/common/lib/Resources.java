@@ -59,6 +59,8 @@ public class Resources {
     public static final ResourceLocation SHIN_ORB = getEntity("dog", "shin_orb");
     public static final ResourceLocation JIN_ORB = getEntity("dog", "jin_orb");
 
+    public static final ResourceLocation HOT_DOG = getEntity("dog", "hot_dog");
+
     public static final ResourceLocation IRON_HELMET = getEntity("dog", "armor/iron_helmet");
     public static final ResourceLocation DIAMOND_HELMET = getEntity("dog", "armor/diamond_helmet");
     public static final ResourceLocation GOLDEN_HELMET = getEntity("dog", "armor/golden_helmet");

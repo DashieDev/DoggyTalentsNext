@@ -62,6 +62,9 @@
    "item.doggytalents.beastars_uniform_male": "Beastars's Male Uniform",
    "item.doggytalents.empty_locator_orb": "Empty Locator Orb",
    
+   "item.doggytalents.hot_dog": "Hot Dog",
+   "item.doggytalents.hot_dog.description": "It tastes...funny?",
+
    "item.doggytalents.locator_orb_chi": "Chi Orb",
    "item.doggytalents.locator_orb_chi.description": "The Orb of Wisdom and Knowledge.",
    "item.doggytalents.locator_orb_chu": "Chu Orb",
