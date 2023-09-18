@@ -196,6 +196,7 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         case HEEL:
             if (world.isClientSide) return;
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             int max_heel_count = ConfigHandler.ServerConfig.getConfig(
                 ConfigHandler.SERVER.MAX_HEEL_LIMIT
             );
@@ -220,7 +221,6 @@ public class WhistleItem extends Item implements IDogItem {
             DogUtil.dynamicSearchAndTeleportToOwnwerInBatch(
                 world, heel_list, player, 3);
 
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             player.sendSystemMessage(Component.translatable("dogcommand.heel"));
             return;
         case STAY:
@@ -274,6 +274,7 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         case TO_BED: 
         {
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             if (dogsList.isEmpty()) return;
             if (player.level().isClientSide) return;
             boolean noDogs = true;
@@ -287,7 +288,6 @@ public class WhistleItem extends Item implements IDogItem {
                     dog.triggerActionDelayed(2, new DogMoveToBedAction(dog, bedPos, false));
                 }
             }
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         }
         case GO_BEHIND:
@@ -314,6 +314,7 @@ public class WhistleItem extends Item implements IDogItem {
         case MOB_RETRIEVER:
             if (world.isClientSide)
                 return;
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             var retrieverOptional = MobRetrieverTalent.chooseNearestDog(player, world);
             if (retrieverOptional.isEmpty())
                 return;
@@ -344,6 +345,7 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         case HEEL_BY_LOOK:
             heelByLook(world, player);
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         }
     }
