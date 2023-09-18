@@ -159,7 +159,7 @@ public class MobRetrieverTalent extends TalentInstance {
     }
 
     public static int getSelectTargetRange() {
-        return 16;
+        return 20;
     }
 
     public static class DogRetrieveMobAction extends TriggerableAction {
