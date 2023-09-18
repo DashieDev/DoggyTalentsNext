@@ -209,6 +209,10 @@ public interface IDogAlteration {
         return InteractionResult.PASS;
     }
 
+    default InteractionResult blockIdleAnim(AbstractDog dogIn) {
+        return InteractionResult.PASS;
+    }
+
     /**
      * Return success when the block type can substitute walakable.
      * For example: 
