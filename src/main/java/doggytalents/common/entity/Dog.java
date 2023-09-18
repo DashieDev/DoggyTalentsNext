@@ -1091,8 +1091,6 @@ public class Dog extends AbstractDog {
 
             if (result.shouldSwing()) {
                 return true;
-            } else if (result == InteractionResult.FAIL) {
-                return false;
             }
         }
 
