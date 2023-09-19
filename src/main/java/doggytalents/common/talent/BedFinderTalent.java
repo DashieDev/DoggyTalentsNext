@@ -41,6 +41,8 @@ public class BedFinderTalent extends TalentInstance {
         var item = player.getItemInHand(hand).getItem();
         if (item != Items.BONE)
             return InteractionResult.PASS;
+        if (dog.isVehicle())
+            return InteractionResult.PASS;
         if (!dog.canInteract(player))
             return InteractionResult.PASS;
         if (!dog.level().isClientSide) {
