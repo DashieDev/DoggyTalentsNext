@@ -155,7 +155,10 @@ public class MobRetrieverTalent extends TalentInstance {
 
     @Override
     public InteractionResult blockIdleAnim(AbstractDog dogIn) {
-        return InteractionResult.SUCCESS;
+        if (dogIn.isVehicle()) {
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.PASS;
     }
 
     public static int getSelectTargetRange() {
