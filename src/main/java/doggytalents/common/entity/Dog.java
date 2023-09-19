@@ -1749,8 +1749,6 @@ public class Dog extends AbstractDog {
 
     @Override
     public void remove(Entity.RemovalReason removalReason) {
-        super.remove(removalReason);
-
         if (removalReason == RemovalReason.DISCARDED || removalReason == RemovalReason.KILLED) {
             if (this.level != null && !this.level.isClientSide) {                
                 DogLocationStorage.get(this.level).remove(this);
@@ -1758,6 +1756,8 @@ public class Dog extends AbstractDog {
                     DogRespawnStorage.get(this.level).putData(this);
             }
         }
+        
+        super.remove(removalReason);
     }
     
     private void startShaking() {
