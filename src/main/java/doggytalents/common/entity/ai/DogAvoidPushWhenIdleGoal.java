@@ -25,6 +25,8 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
     public boolean canUse() {
         if (!this.dog.onGround()) return false;
 
+        if (!this.dog.isDoingFine()) return false;
+
         if (this.dog.isVehicle()) return false;
 
         if (this.dog.isPathFinding()) return false;
