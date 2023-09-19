@@ -257,4 +257,13 @@ public class ClientEventHandler {
         return new ResourceLocation(loc.getNamespace(), "textures/" + loc.getPath() + ".png");
     }
 
+    public static boolean shouldClientBlockPick(Dog dog) {
+        var player = Minecraft.getInstance().player;
+        if (player == null)
+            return false;
+        if (player.getVehicle() != dog) 
+            return false;
+        return true;
+    }
+
 }
