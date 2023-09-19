@@ -214,12 +214,12 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult isBlockTypeWalkable(AbstractDog dog, BlockPathTypes type) {
+    public InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type) {
         //This allows the owner to help the dog to reach the surface.
         if (type == BlockPathTypes.WATER) {
-            return InteractionResult.SUCCESS;
+            return InteractionResultHolder.success(BlockPathTypes.WALKABLE);
         }
-        return InteractionResult.PASS;
+        return super.inferType(dog, type);
     }
 
     //TODO Maybe incoproate this into tick()
