@@ -13,6 +13,7 @@ import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.api.registry.*;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.skin.DogSkin;
+import doggytalents.client.event.ClientEventHandler;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.common.artifacts.DoggyArtifact;
@@ -2990,6 +2991,10 @@ public class Dog extends AbstractDog {
     //TODO
     @Override
     public boolean isPickable() {
+        if (this.level().isClientSide) {
+            if (ClientEventHandler.shouldClientBlockPick(this))
+                return false;
+        }
         return super.isPickable();
     }
 
