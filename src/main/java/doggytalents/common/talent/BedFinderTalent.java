@@ -17,30 +17,39 @@ public class BedFinderTalent extends TalentInstance {
     }
 
     @Override
+    public void set(AbstractDog dog, int levelBefore) {
+        if (dog.level().isClientSide) return;
+        if (levelBefore > 0 && this.level() <= 0) {
+            dog.unRide();
+        }
+    }
+
+    @Override
     public void livingTick(AbstractDog dog) {
 
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
-        if (this.level() > 0 && !dogIn.level().isClientSide) {
-            if (!playerIn.hasPassenger(dogIn)) {
-                if (playerIn.getItemInHand(handIn).getItem() == Items.BONE && dogIn.canInteract(playerIn)) {
-
-                    if (dogIn.startRiding(playerIn)) {
-                        if (!dogIn.level().isClientSide) {
-                            dogIn.setOrderedToSit(true);
-                        }
-
-                        playerIn.displayClientMessage(Component.translatable("talent.doggytalents.bed_finder.dog_mount", dogIn.getGenderPronoun()), true);
-                        return InteractionResult.SUCCESS;
-                    }
-                }
-            } else {
-                if (!dogIn.level().isClientSide) dogIn.stopRiding();
-                return InteractionResult.SUCCESS;
-            }
+    public InteractionResult processInteract(AbstractDog dog, Level level, Player player, InteractionHand hand) {
+        if (this.level() <= 0)
+            return InteractionResult.PASS;
+        if (player.hasPassenger(dog)) {
+            if (!dog.level().isClientSide)
+                dog.unRide();
+            return InteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        var item = player.getItemInHand(hand).getItem();
+        if (item != Items.BONE)
+            return InteractionResult.PASS;
+        if (!dog.canInteract(player))
+            return InteractionResult.PASS;
+        if (!dog.level().isClientSide) {
+            dog.startRiding(player);
+            player.displayClientMessage(
+                Component.translatable(
+                    "talent.doggytalents.bed_finder.dog_mount", 
+                    dog.getGenderPronoun()), true);
+        }
+        return InteractionResult.SUCCESS;
     }
 }
