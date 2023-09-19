@@ -177,8 +177,12 @@
         {
             "skin_name" : "English Bulldog",
             "skin_id" : "english_bulldog",
-            "use_model" : "variant",
-            "ear_id" : 2
+            "use_model" : "english_bulldog"
+        },
+        {
+            "skin_name" : "Spike",
+            "skin_id" : "english_bulldog2",
+            "use_model" : "english_bulldog"
         },
         {
             "skin_name" : "Rottweiler",

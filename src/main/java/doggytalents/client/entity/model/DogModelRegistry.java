@@ -76,6 +76,7 @@ public class DogModelRegistry {
         register("pug", ctx ->  new PugModel(ctx.bakeLayer(ClientSetup.DOG_PUG)));
         register("borzoi", ctx ->  new BorzoiModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI)));
         register("borzoi_long", ctx ->  new BorzoiLongModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI_LONG)));
+        register("english_bulldog", ctx ->  new BorzoiLongModel(ctx.bakeLayer(ClientSetup.DOG_ENGLISH_BULLDOG)));
     }
 
     public static class DogModelHolder {
