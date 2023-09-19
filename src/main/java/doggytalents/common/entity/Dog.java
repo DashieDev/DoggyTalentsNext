@@ -457,7 +457,6 @@ public class Dog extends AbstractDog {
 
     @Override
     public EntityDimensions getDimensions(Pose p_19975_) {
-        ChopinLogger.sendToOwner(this, "Refreshing dim");
         var self_dim = super.getDimensions(p_19975_);
         if (this.isVehicle() && !this.getPassengers().isEmpty())
             self_dim = computeRidingDimension(self_dim);
