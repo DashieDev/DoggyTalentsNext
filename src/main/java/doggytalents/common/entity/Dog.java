@@ -444,6 +444,45 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    protected void addPassenger(Entity passanger) {
+        super.addPassenger(passanger);
+        this.refreshDimensions();
+    }
+
+    @Override
+    protected void removePassenger(Entity passanger) {
+        super.removePassenger(passanger);
+        this.refreshDimensions();
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose p_19975_) {
+        var self_dim = super.getDimensions(p_19975_);
+        if (this.isVehicle() && !this.getPassengers().isEmpty())
+            self_dim = computeRidingDimension(self_dim);
+        return self_dim;
+    }
+
+    @Override
+    public double getPassengersRidingOffset() {
+        return (double)this.getRealDimensions().height * 0.75D;
+    }
+
+    public EntityDimensions getRealDimensions() {
+        return super.getDimensions(getPose());
+    }
+
+    public EntityDimensions computeRidingDimension(EntityDimensions self_dim) {
+        float total_width = self_dim.width;
+        float total_height = (float) this.getPassengersRidingOffset();
+        for (var e : this.getPassengers()) {
+            total_width = Math.max(total_width, e.getBbWidth());
+            total_height += e.getBbHeight() + e.getMyRidingOffset();
+        }
+        return new EntityDimensions(total_width, total_height, self_dim.fixed);
+    }
+
+    @Override
     public void tick() {
         super.tick();
 
