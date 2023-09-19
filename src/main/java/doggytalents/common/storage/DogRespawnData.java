@@ -6,6 +6,7 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -28,7 +29,7 @@ public class DogRespawnData implements IDogData {
     private static final List<String> TAGS_TO_REMOVE = Lists.newArrayList(
             "Pos", "Health", "Motion", "Rotation", "FallDistance", "Fire", "Air", "OnGround",
             "Dimension", "PortalCooldown", "Passengers", "Leash", "InLove", "Leash", "HurtTime",
-            "HurtByTimestamp", "DeathTime", "AbsorptionAmount", "FallFlying", "Brain", "Sitting"); // Remove dog mode
+            "HurtByTimestamp", "DeathTime", "AbsorptionAmount", "FallFlying", "Brain", "Sitting", "ActiveEffects"); // Remove dog mode
 
     protected DogRespawnData(DogRespawnStorage storageIn, UUID uuid) {
         this.storage = storageIn;
@@ -88,6 +89,7 @@ public class DogRespawnData implements IDogData {
         
         dog.setMode(EnumMode.DOCILE);
         dog.setOrderedToSit(true);
+        dog.setAnim(DogAnimation.STAND_QUICK);
 
         return dog;
     }
