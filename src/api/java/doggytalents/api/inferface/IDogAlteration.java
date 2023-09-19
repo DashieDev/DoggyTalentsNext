@@ -221,18 +221,17 @@ public interface IDogAlteration {
     }
 
     /**
-     * Return success when the block type can substitute walakable.
-     * For example: 
-     * FlameDog 5 : LAVA = WALKABLE
-     * SwimmerDog 5 : WATER = WALKABLE
-     * since both instances can breathe indefinitly under each substance.
+     * Re-infer the type to be a safer type if possible.
+     * Noticed that this function here doesnt serve to
+     * "dangerify" a path type, only to substitude a safer type
+     * to show that the dog can handle that type. 
      * 
      * @param dog
      * @param pos
      * @return
      */
-    default InteractionResult isBlockTypeWalkable(AbstractDog dog, BlockPathTypes type) {
-        return InteractionResult.PASS;
+    default InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type) {
+        return InteractionResultHolder.pass(type);
     }
 
     /**
