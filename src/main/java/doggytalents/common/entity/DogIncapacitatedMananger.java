@@ -10,6 +10,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
+import doggytalents.common.entity.ai.triggerable.DogBounceAction;
 import doggytalents.common.entity.ai.triggerable.DogFaintStandAction;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogPose;
@@ -113,7 +114,7 @@ public class DogIncapacitatedMananger {
             return InteractionResult.SUCCESS;
         if (proccessSitStandOrder(player).shouldSwing())
             return InteractionResult.SUCCESS;
-            
+
         if (this.dog.level().isClientSide) 
             this.displayToastIncapacitated(player);
         return InteractionResult.FAIL;
@@ -348,8 +349,7 @@ public class DogIncapacitatedMananger {
         this.dog.setDogHunger(this.dog.getMaxHunger());
         this.dog.setOrderedToSit(true);
         this.dog.setIncapSyncState(IncapacitatedSyncState.NONE);
-        this.dog.setAnim(DogAnimation.STAND_QUICK);
-        this.dog.setSitAnim(DogAnimation.NONE);
+        this.dog.triggerAnimationAction(new DogBounceAction(dog));
 
         if (this.dog.level() instanceof ServerLevel sL) {
             sL.sendParticles(
