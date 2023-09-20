@@ -62,6 +62,8 @@ public class WolfMountTalent extends TalentInstance {
             return InteractionResult.PASS;
         if (this.level() <= 0)
             return InteractionResult.PASS;
+        if (dog.isVehicle() || dog.isPassenger())
+            return InteractionResult.PASS;
         if (!dog.canInteract(player))
             return InteractionResult.PASS;
         
@@ -69,7 +71,7 @@ public class WolfMountTalent extends TalentInstance {
             return InteractionResult.PASS;
         if (player.onGround())
             return InteractionResult.PASS;
-            
+
         if (!dog.level().isClientSide) {
             dog.setOrderedToSit(false);
             player.setYRot(dog.getYRot());
