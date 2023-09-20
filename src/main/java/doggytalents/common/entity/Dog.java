@@ -3586,27 +3586,27 @@ public class Dog extends AbstractDog {
 
     @Override
     protected void doPush(Entity pushTarget) {
-        boolean pushEachOther = 
-            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER);
-        if (
-            pushEachOther
-            && pushTarget instanceof Dog dog
-            && !dog.getNavigation().isDone()
-            && !dog.onGround()
-        )
-            return;
-        if (
-            pushEachOther
-            && pushTarget instanceof Player player
-            && !player.isShiftKeyDown()
-            && this.isDoingFine()
-        )
+        if (shouldBlockPush(pushTarget))
             return;
         if (pushTarget.getVehicle() == this
             || this.getVehicle() == pushTarget) {
             return;        
         }
         super.doPush(pushTarget);
+    }
+
+    protected boolean shouldBlockPush(Entity target) {
+        boolean avoidPush = 
+            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER);
+        if (!avoidPush)
+            return false;
+        if (!(target instanceof Dog otherDog)) {
+            return false;
+        }
+        boolean oneDogStillNotOnGround =
+            !this.onGround()
+            || !otherDog.onGround();
+        return oneDogStillNotOnGround;
     }
 
     @Override
@@ -3654,15 +3654,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean canCollideWith(Entity otherEntity) {
-        //TODO should this be dog of the same team ?
-        boolean pushEachOther = ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER);
-        if (
-            pushEachOther
-            && otherEntity instanceof Dog dog
-            && !dog.getNavigation().isDone()
-            && !dog.onGround()
-        ) {
-            ChopinLogger.l("Colliding with dog!");
+        if (shouldBlockPush(otherEntity)) {
             return false;
         }
 
