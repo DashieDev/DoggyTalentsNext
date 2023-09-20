@@ -3578,7 +3578,19 @@ public class Dog extends AbstractDog {
             && this.isDoingFine()
         )
             return;
+        if (pushTarget.getVehicle() == this
+            || this.getVehicle() == pushTarget) {
+            return;        
+        }
         super.doPush(pushTarget);
+    }
+
+    @Override
+    public void push(Entity source) {
+        if (source.getVehicle() == this
+            || this.getVehicle() == source)
+            return;
+        super.push(source);
     }
 
     @Override
@@ -3593,7 +3605,10 @@ public class Dog extends AbstractDog {
         ) {
             return false;
         }
-            
+
+        if (otherEntity.getVehicle() == this
+            || this.getVehicle() == otherEntity)
+            return false;
         return super.canCollideWith(otherEntity);
     }
 
