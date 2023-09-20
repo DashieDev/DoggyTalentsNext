@@ -3006,8 +3006,13 @@ public class Dog extends AbstractDog {
 
     @Override
     public LivingEntity getControllingPassenger() {
-        // Gets the first passenger which is the controlling passenger
-        return this.getPassengers().isEmpty() ? null : (LivingEntity) this.getPassengers().get(0);
+        var passengers = this.getPassengers();
+        if (passengers.isEmpty())
+            return null;
+        var first_passenger = passengers.get(0);
+        if (!(first_passenger instanceof Player player))
+            return null;
+        return this.canInteract(player) ? player : null;
     }
 
     // @Override
