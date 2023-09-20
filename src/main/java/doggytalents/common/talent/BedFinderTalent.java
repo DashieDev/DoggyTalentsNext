@@ -46,7 +46,7 @@ public class BedFinderTalent extends TalentInstance {
         if (!dog.canInteract(player))
             return InteractionResult.PASS;
         if (!dog.level().isClientSide) {
-            dog.startRiding(player);
+            if (dog.startRiding(player))
             player.displayClientMessage(
                 Component.translatable(
                     "talent.doggytalents.bed_finder.dog_mount", 
