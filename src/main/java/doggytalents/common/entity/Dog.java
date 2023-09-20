@@ -1613,13 +1613,17 @@ public class Dog extends AbstractDog {
         super.setTame(tamed);
         if (tamed) {
            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D);
-           this.setHealth(20.0F);
+           this.maxHealth();
         } else {
            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(8.0D);
         }
 
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(4.0D);
      }
+
+    public void maxHealth() {
+        this.setHealth(this.getMaxHealth());
+    }
 
     @Override
     public void setOwnerUUID(@Nullable UUID uuid) {
@@ -2249,7 +2253,7 @@ public class Dog extends AbstractDog {
             this.entityData.set(DOG_LEVEL.get(), new DogLevel(level_normal, level_dire));
             float h = this.getDogLevel().getMaxHealth();
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
-            this.setHealth(h);
+            this.maxHealth();
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load levels: " + e.getMessage());
             e.printStackTrace();
