@@ -300,7 +300,7 @@ public class DogIncapacitatedMananger {
         
 
     private void incapacitatedExit() {
-        this.dog.setHealth(20);
+        this.dog.maxHealth();
         this.dog.setMode(EnumMode.DOCILE);
         this.dog.setDogHunger(this.dog.getMaxHunger());
         this.dog.setOrderedToSit(true);
