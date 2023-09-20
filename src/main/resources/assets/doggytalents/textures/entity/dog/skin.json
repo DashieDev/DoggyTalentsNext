@@ -171,6 +171,18 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Poodle #1",
+            "skin_id" : "poodle",
+            "use_model" : "poodle",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Poodle #2",
+            "skin_id" : "poodle2",
+            "use_model" : "poodle",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Borzoi",
             "skin_id" : "borzoi",
             "use_model" : "borzoi",
