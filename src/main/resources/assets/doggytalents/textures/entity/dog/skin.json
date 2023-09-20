@@ -148,13 +148,15 @@
             "skin_name" : "Dachshund #1",
             "skin_id" : "dachshund",
             "use_model" : "dachshund",
-            "author" : "MashXP"
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
         },
         {
             "skin_name" : "Dachshund #2",
             "skin_id" : "dachshund2",
             "use_model" : "dachshund",
-            "author" : "MashXP"
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
         },
         {
             "skin_name" : "Pug #1",
@@ -177,12 +179,37 @@
         {
             "skin_name" : "English Bulldog",
             "skin_id" : "english_bulldog",
-            "use_model" : "english_bulldog"
+            "use_model" : "english_bulldog",
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
         },
         {
             "skin_name" : "Spike",
             "skin_id" : "english_bulldog2",
-            "use_model" : "english_bulldog"
+            "use_model" : "english_bulldog",
+            "based_on" : "Spike from Tom and Jerry",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "French Bulldog #1",
+            "skin_id" : "french_bulldog",
+            "use_model" : "french_bulldog",
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
+        },
+        {
+            "skin_name" : "French Bulldog #2",
+            "skin_id" : "french_bulldog2",
+            "use_model" : "french_bulldog",
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
+        },
+        {
+            "skin_name" : "French Bulldog #3",
+            "skin_id" : "french_bulldog3",
+            "use_model" : "french_bulldog",
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
         },
         {
             "skin_name" : "Rottweiler",
