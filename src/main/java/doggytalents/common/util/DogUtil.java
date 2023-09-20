@@ -434,10 +434,7 @@ public class DogUtil {
         );
         var dog_b1 = new BlockPos(dog_p01);
 
-        var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(
-            dog.level, 
-            dog_b1.mutable()
-        );
+        var blockType = dog.getBlockPathTypeViaAlterations(dog_b1);
 
         if (blockType.getDanger() != null)
             return true;
@@ -447,10 +444,7 @@ public class DogUtil {
         
         boolean noWalkable = true;
         for (int i = 1; i <= dog.getMaxFallDistance(); ++i) {
-            var type = WalkNodeEvaluator.getBlockPathTypeStatic(
-                dog.level(), 
-                dog_b1.below(i).mutable()
-            );
+            var type = dog.getBlockPathTypeViaAlterations(dog_b1);
             if (type == BlockPathTypes.OPEN)
                 continue;
             else {
