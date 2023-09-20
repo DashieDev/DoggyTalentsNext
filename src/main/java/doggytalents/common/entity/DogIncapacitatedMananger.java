@@ -93,82 +93,126 @@ public class DogIncapacitatedMananger {
     }
 
     public InteractionResult interact(ItemStack stack, Player player, InteractionHand hand) {
-        var owner_uuid = dog.getOwnerUUID();
-        if (stack.getItem() == DoggyItems.BANDAID.get()) {
-            if (!this.dog.level().isClientSide && this.bandageCooldown <= 0
-                && this.bandagesCount < MAX_BANDAID_COUNT) {
-                this.bandageCooldown = 10;
-                player.getCooldowns().addCooldown(DoggyItems.BANDAID.get(), 11);
-                ++this.bandagesCount;
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
-                if (this.bandagesCount >= MAX_BANDAID_COUNT) {
-                    this.dog.triggerAnimationAction(new DogFaintStandAction(dog, getFaintStandAnim()));
-                    this.dog.updateControlFlags();
-                }
-            }
+        var item = stack.getItem();
+        if (item == DoggyItems.BANDAID.get()) {
+            useBandage(stack, player);
             return InteractionResult.SUCCESS;
-        } else if (stack.getItem() == Items.TOTEM_OF_UNDYING) {
-            if (!this.dog.level().isClientSide) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
-
-                var defeatedDogs = DogUtil.getOtherIncapacitatedDogNearby(this.dog);
-                
-                for (var d : defeatedDogs) {
-                    d.setDogHunger(this.dog.getMaxIncapacitatedHunger());
-                    incapacitatedExit();
-
-                    d.removeAllEffects();
-                    d.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
-                    d.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
-                    d.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
-                    //Earraper.
-                    //d.level.broadcastEntityEvent(d, (byte)35);
-                }
-                this.dog.level().broadcastEntityEvent(this.dog, (byte)35);
-                
-            }
+        } else if (item == Items.TOTEM_OF_UNDYING) {
+            useTotem(stack, player);
             return InteractionResult.SUCCESS;
-        } else if (stack.getItem() == Items.CAKE && recoveryMultiplier < 2) {
-
-            if (this.dog.level() instanceof ServerLevel) {
-                ParticlePackets.DogEatingParticlePacket
-                    .sendDogEatingParticlePacketToNearby(this.dog, new ItemStack(Items.CAKE));
-            }
-            this.dog.consumeItemFromStack(player, stack);
-            this.dog.playSound(
-                SoundEvents.GENERIC_EAT, 
-                this.dog.getSoundVolume(), 
-                (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.2F + 1.0F
-            );
-
-            this.recoveryMultiplier *= 2;
-        } else if (stack.getItem() == Items.BONE && !this.dog.level().isClientSide && !this.dog.isPassenger() && !player.isVehicle()) {
-            if (this.dog.getOwner() == player) {
-                this.dog.startRiding(player);
-            }
+        } else if (item == Items.CAKE) {
+            tryEatCake(stack, player);
             return InteractionResult.SUCCESS;
-        } else if (stack.getItem() == Items.STICK) {
-
-            if (this.dog.level().isClientSide) {
+        } else if (item == Items.STICK) {
+            if (this.dog.level().isClientSide)
                 DogCannotInteractWithScreen.open(this.dog);
-            }
-
             return InteractionResult.SUCCESS;
-        } else if (this.dog.isPassenger()) {
-            if(!this.dog.level().isClientSide) this.dog.stopRiding();
-            return InteractionResult.SUCCESS;
-        } else if (this.canMove() && owner_uuid != null && owner_uuid.equals(player.getUUID())) {
-            this.dog.setOrderedToSit(!this.dog.isOrderedToSit());
-            this.dog.getNavigation().stop();
-            return InteractionResult.SUCCESS;
-        } else {
-            if (this.dog.level().isClientSide) this.displayToastIncapacitated(player);
         }
+
+        if (handleOwnerRide(stack, player).shouldSwing())
+            return InteractionResult.SUCCESS;
+        if (proccessSitStandOrder(player).shouldSwing())
+            return InteractionResult.SUCCESS;
+            
+        if (this.dog.level().isClientSide) 
+            this.displayToastIncapacitated(player);
         return InteractionResult.FAIL;
+    }
+
+    private void useBandage(ItemStack stack, Player player) {
+        if (this.dog.level().isClientSide)
+            return;
+        if (this.bandageCooldown > 0f)
+            return;
+        if (this.bandagesCount >= MAX_BANDAID_COUNT)
+            return;
+
+        this.bandageCooldown = 10;
+        player.getCooldowns().addCooldown(DoggyItems.BANDAID.get(), 11);
+        ++this.bandagesCount;
+        if (!player.getAbilities().instabuild) {
+            stack.shrink(1);
+        }
+        if (this.bandagesCount >= MAX_BANDAID_COUNT) {
+            this.dog.triggerAnimationAction(new DogFaintStandAction(dog, getFaintStandAnim()));
+            this.dog.updateControlFlags();
+        }
+    }
+
+    private void useTotem(ItemStack stack, Player player) {
+        if (this.dog.level().isClientSide)
+            return;
+        if (!player.getAbilities().instabuild) {
+            stack.shrink(1);
+        }
+
+        var defeatedDogs = DogUtil.getOtherIncapacitatedDogNearby(this.dog);
+        
+        for (var d : defeatedDogs) {
+            d.setDogHunger(this.dog.getMaxIncapacitatedHunger());
+            incapacitatedExit();
+
+            d.removeAllEffects();
+            d.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
+            d.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
+            d.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
+            //Earraper.
+            //d.level.broadcastEntityEvent(d, (byte)35);
+        }
+        this.dog.level().broadcastEntityEvent(this.dog, (byte)35);
+    }
+
+    private void tryEatCake(ItemStack stack, Player player) {
+        if (recoveryMultiplier >= 2)
+            return;
+        if (this.dog.level() instanceof ServerLevel) {
+            ParticlePackets.DogEatingParticlePacket
+                .sendDogEatingParticlePacketToNearby(this.dog, new ItemStack(Items.CAKE));
+        }
+        this.dog.consumeItemFromStack(player, stack);
+        this.dog.playSound(
+            SoundEvents.GENERIC_EAT, 
+            this.dog.getSoundVolume(), 
+            (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.2F + 1.0F
+        );
+
+        this.recoveryMultiplier *= 2;
+    }
+
+    private InteractionResult handleOwnerRide(ItemStack stack, Player player) {
+        if (player.hasPassenger(dog)) {
+            if (!dog.level().isClientSide)
+                dog.unRide();
+            return InteractionResult.SUCCESS;
+        }
+        var item = stack.getItem();
+        if (item != Items.BONE)
+            return InteractionResult.PASS;
+        if (dog.isVehicle())
+            return InteractionResult.PASS;
+        if (dog.getOwner() != player)
+            return InteractionResult.PASS;
+        if (!dog.level().isClientSide) {
+            if (dog.startRiding(player))
+            player.displayClientMessage(
+                Component.translatable(
+                    "talent.doggytalents.bed_finder.dog_mount", 
+                    dog.getGenderPronoun()), true);
+        }
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult proccessSitStandOrder(Player player) {
+        if (!this.canMove())
+            return InteractionResult.PASS;
+        var owner_uuid = this.dog.getOwnerUUID();
+        if (owner_uuid == null)
+            return InteractionResult.PASS;
+        if (!owner_uuid.equals(player.getUUID()))
+            return InteractionResult.PASS;
+        this.dog.setOrderedToSit(!this.dog.isOrderedToSit());
+        this.dog.getNavigation().stop();
+        return InteractionResult.SUCCESS;
     }
 
     public void onHurt() {
