@@ -291,6 +291,7 @@
    "dogcommand.heel": "Heel!",
    "dogcommand.heel_by_name": "%s, Heel!",
    "dogcommand.heel_by_group": "%s, Heel!",
+   "dogcommand.ride_with_me": "%s, Get on Buddy!",
 
    "doggytalents.screen.whistler.screen.help_title" : "Whistle Mode Select",
    "doggytalents.screen.whistler.screen.help" : "Use the Up and Down arrow to select the mode you want to set the Whistle to. You can also type to search. Press Enter to finish the command. Additionally, you can quick select a mode by pressing its corresponding number key shown before the name in Orange. Esc to Cancel.", 
