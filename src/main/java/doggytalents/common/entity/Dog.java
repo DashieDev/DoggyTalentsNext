@@ -104,6 +104,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -1013,10 +1014,19 @@ public class Dog extends AbstractDog {
         }
         
     }
+    private boolean ridingAuthorized = false;
 
     @Override
     public boolean startRiding(Entity entity) {
-        var result = super.startRiding(entity);
+        var result = false;
+        boolean not_authorized = 
+            requireRidingAuthorization(entity)
+            && !isRidingAuthorized();
+        if (!not_authorized) {   
+            result = super.startRiding(entity);
+        }
+        ridingAuthorized = false;
+
         if (!this.level().isClientSide && result) {
             if (entity instanceof ServerPlayer player) {
                 PacketHandler.send(PacketDistributor.PLAYER.with(() -> player), 
@@ -1025,6 +1035,19 @@ public class Dog extends AbstractDog {
             }
         }
         return result;
+    }
+
+    public boolean isRidingAuthorized() {
+        return this.ridingAuthorized;
+    }
+
+    public void authorizeRiding() {
+        this.ridingAuthorized = true;
+    }
+
+    public boolean requireRidingAuthorization(Entity entity) {
+        return entity instanceof AbstractMinecart
+            || entity instanceof Boat;
     }
 
     @Override
