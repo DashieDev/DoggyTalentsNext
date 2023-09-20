@@ -1025,14 +1025,15 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean startRiding(Entity entity) {
-        if (!this.level().isClientSide) {
+        var result = super.startRiding(entity);
+        if (!this.level().isClientSide && result) {
             if (entity instanceof ServerPlayer player) {
                 PacketHandler.send(PacketDistributor.PLAYER.with(() -> player), 
                     new DogMountData(this.getId(), true)
                 );
             }
         }
-        return super.startRiding(entity);
+        return result;
     }
 
     @Override
