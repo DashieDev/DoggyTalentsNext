@@ -3037,7 +3037,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean isPushable() {
-        return !this.isVehicle() && super.isPushable();
+        return !(this.isVehicle() && this.hasControllingPassenger()) && super.isPushable();
     }
 
     // @Override
@@ -3594,7 +3594,42 @@ public class Dog extends AbstractDog {
         if (source.getVehicle() == this
             || this.getVehicle() == source)
             return;
-        super.push(source);
+        if (this.isVehicle() && !this.hasControllingPassenger())
+            Entity_push(source);
+        else
+            super.push(source);
+    }
+
+    private void Entity_push(Entity source) {
+        if (this.isPassengerOfSameVehicle(source)) 
+            return;
+        if (source.noPhysics || this.noPhysics)
+            return;
+        double dx_vec = source.getX() - this.getX();
+        double dz_vec = source.getZ() - this.getZ();
+        double max_magnitude = Mth.absMax(dx_vec, dz_vec);
+        if (max_magnitude < 0.01)
+            return;
+
+        max_magnitude = Math.sqrt(max_magnitude);
+        dx_vec /= max_magnitude;
+        dz_vec /= max_magnitude;
+        double max_magnitude_inv = 1.0D / max_magnitude;
+        if (max_magnitude_inv > 1.0D) {
+            max_magnitude_inv = 1.0D;
+        }
+
+        dx_vec *= max_magnitude_inv;
+        dz_vec *= max_magnitude_inv;
+        dx_vec *= 0.05;
+        dz_vec *= 0.05;
+        if (this.isPushable()) {
+            this.push(-dx_vec, 0.0D, -dz_vec);
+        }
+
+        if (source.isPushable()) {
+            source.push(dx_vec, 0.0D, dz_vec);
+        }
     }
 
     @Override
