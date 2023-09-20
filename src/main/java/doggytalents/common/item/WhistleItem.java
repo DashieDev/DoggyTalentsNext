@@ -385,9 +385,11 @@ public class WhistleItem extends Item implements IDogItem {
         if (vehicle == null) {
             return;
         }
-
+        
         dog.authorizeRiding();
-        dog.startRiding(vehicle);
+        var result = dog.startRiding(vehicle);
+        if (result)
+        player.sendSystemMessage(Component.translatable("dogcommand.ride_with_me", dog.getName().getString()));
     }
 
     private void heelByLook(Level level, Player player) {
@@ -411,6 +413,7 @@ public class WhistleItem extends Item implements IDogItem {
         if (!(entity instanceof Dog dog))
             return;
         DogUtil.dynamicSearchAndTeleportToOwnwer(dog, player, 2);
+        player.sendSystemMessage(Component.translatable("dogcommand.heel_by_name", dog.getName().getString()));
         dog.setOrderedToSit(false);
     }
 
