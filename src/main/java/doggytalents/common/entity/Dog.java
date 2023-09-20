@@ -3397,7 +3397,8 @@ public class Dog extends AbstractDog {
 
     @Override
     public void setInSittingPose(boolean sit) {
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide
+            && !this.animAction.blockSitStandAnim()) {
             boolean sit0 = this.isInSittingPose();
             if (sit0 != sit) {
                 var anim = sit ? this.getSitAnim() : this.getStandAnim();
