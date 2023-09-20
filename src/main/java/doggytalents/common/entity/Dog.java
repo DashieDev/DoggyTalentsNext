@@ -117,6 +117,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -3013,6 +3015,23 @@ public class Dog extends AbstractDog {
         if (!(first_passenger instanceof Player player))
             return null;
         return this.canInteract(player) ? player : null;
+    }
+
+    @Override
+    public Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
+        var a1 = this.getYRot();
+        var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
+        var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
+        
+        var newX = this.getX() + dx1;
+        var newZ = this.getZ() + dz1;
+        var newPos = new Vec3(newX, this.getY() + 0.5, newZ);
+        var b0 = BlockPos.containing(newPos);
+        var type = WalkNodeEvaluator.getBlockPathTypeStatic(this.level(), b0.mutable());
+        if (type == BlockPathTypes.WALKABLE) {
+            return newPos;
+        }
+        return super.getDismountLocationForPassenger(passenger);
     }
 
     // @Override
