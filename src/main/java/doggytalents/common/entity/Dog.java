@@ -3672,6 +3672,22 @@ public class Dog extends AbstractDog {
         return super.canCollideWith(otherEntity);
     }
 
+    public BlockPathTypes getBlockPathTypeViaAlterations(BlockPos pos) {
+        var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(
+            this.level(), 
+            pos.mutable()
+        );
+
+        for (var alt : this.alterations) {
+            var result = alt.inferType(this, blockType);
+            if (result.getResult().shouldSwing()) {
+                blockType = result.getObject();
+                break;
+            }
+        }
+        return blockType;
+    }
+
     public float getTimeDogIsShaking() {
         return this.timeWolfIsShaking;
     }
