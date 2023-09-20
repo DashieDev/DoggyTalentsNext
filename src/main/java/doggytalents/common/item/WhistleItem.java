@@ -385,6 +385,7 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         }
 
+        dog.authorizeRiding();
         dog.startRiding(vehicle);
     }
 
