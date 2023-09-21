@@ -15,6 +15,8 @@ import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
 import doggytalents.client.entity.model.dog.BorzoiLongModel;
 import doggytalents.client.entity.model.dog.BorzoiModel;
+import doggytalents.client.entity.model.dog.BoxerFloppyModel;
+import doggytalents.client.entity.model.dog.BoxerPointyModel;
 import doggytalents.client.entity.model.dog.ChihuahuaModel;
 import doggytalents.client.entity.model.dog.DachshundModel;
 import doggytalents.client.entity.model.dog.DeathModel;
@@ -101,6 +103,8 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_FRENCH_BULLDOG = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "french_bulldog"), "main");
     public static final ModelLayerLocation DOG_POODLE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "poodle"), "main");
     public static final ModelLayerLocation DOG_CHIHUAHUA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "chihuahua"), "main");
+    public static final ModelLayerLocation DOG_BOXER_FLOPPY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "boxer_floppy"), "main");
+    public static final ModelLayerLocation DOG_BOXER_POINTY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "boxer_pointy"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -138,7 +142,6 @@ public class ClientSetup {
         event.registerLayerDefinition(KUSA_UME, UmeModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ARCANINE, ArcanineModel::createBodyLayer);
 
-        
         event.registerLayerDefinition(DOG_POCHITA, PochitaModel::createBodyLayer);
         event.registerLayerDefinition(DOG_DACHSHUND, DachshundModel::createBodyLayer);
         event.registerLayerDefinition(DOG_PUG, PugModel::createBodyLayer);
@@ -148,6 +151,8 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_FRENCH_BULLDOG, FrenchBulldogModel::createBodyLayer);
         event.registerLayerDefinition(DOG_POODLE, PoodleModel::createBodyLayer);
         event.registerLayerDefinition(DOG_CHIHUAHUA, ChihuahuaModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_BOXER_FLOPPY, BoxerFloppyModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_BOXER_POINTY, BoxerPointyModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
