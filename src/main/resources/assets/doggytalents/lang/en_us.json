@@ -35,6 +35,7 @@
    "item.doggytalents.whistle.10": "Heel By Group Whistle",
    "item.doggytalents.whistle.11": "Mob Retriever Whistle",
    "item.doggytalents.whistle.12": "Heel By Look Whistle",
+   "item.doggytalents.whistle.13": "Ride With Me Whistle",
 
    "item.doggytalents.treat_bag": "Treat Bag",
    "item.doggytalents.energizer_stick": "Energizer Stick",
@@ -290,6 +291,7 @@
    "dogcommand.heel": "Heel!",
    "dogcommand.heel_by_name": "%s, Heel!",
    "dogcommand.heel_by_group": "%s, Heel!",
+   "dogcommand.ride_with_me": "%s, Get on Buddy!",
 
    "doggytalents.screen.whistler.screen.help_title" : "Whistle Mode Select",
    "doggytalents.screen.whistler.screen.help" : "Use the Up and Down arrow to select the mode you want to set the Whistle to. You can also type to search. Press Enter to finish the command. Additionally, you can quick select a mode by pressing its corresponding number key shown before the name in Orange. Esc to Cancel.", 

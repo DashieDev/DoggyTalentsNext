@@ -36,6 +36,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -64,8 +65,8 @@ public class WhistleItem extends Item implements IDogItem {
         GO_BEHIND(9, WhistleSound.SHORT),
         HEEL_BY_GROUP(10, WhistleSound.NONE),
         MOB_RETRIEVER(11, WhistleSound.SHORT),
-        HEEL_BY_LOOK(12, WhistleSound.SHORT);
-        
+        HEEL_BY_LOOK(12, WhistleSound.SHORT),
+        RIDE_WITH_ME(13, WhistleSound.SHORT);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -114,7 +115,8 @@ public class WhistleItem extends Item implements IDogItem {
         if (id_mode >= WhistleMode.VALUES.length) id_mode = 0;
         var mode = WhistleMode.VALUES[id_mode];
 
-        return mode == WhistleMode.MOB_RETRIEVER? 
+        return mode == WhistleMode.MOB_RETRIEVER
+            || mode == WhistleMode.RIDE_WITH_ME ? 
             InteractionResult.FAIL : InteractionResult.PASS;
     }
 
@@ -347,7 +349,46 @@ public class WhistleItem extends Item implements IDogItem {
             heelByLook(world, player);
             player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
+        case RIDE_WITH_ME:
+            rideWithMe(world, player);
+            return;
         }
+    }
+
+    private void rideWithMe(Level level, Player player) {
+        if (level.isClientSide)
+            return;
+        final int reach_range = 30;
+        var eye_pos = player.getEyePosition();
+        var view_vec = player.getViewVector(1);
+        var max_reach_vec = view_vec.scale(reach_range);
+        var max_pos = eye_pos.add(max_reach_vec);
+        var search_area = player.getBoundingBox().expandTowards(max_reach_vec).inflate(1.0D, 1.0D, 1.0D);
+        var hitResult = ProjectileUtil.getEntityHitResult(
+            player, eye_pos, max_pos, search_area, e -> {
+                return (e instanceof Dog);
+            }, reach_range*reach_range);
+        if (hitResult == null)
+            return;
+        var entity = hitResult.getEntity();
+        if (entity == null)
+            return;
+        if (!(entity instanceof Dog dog))
+            return;
+        
+        if (dog.isPassenger()) {
+            dog.unRide();
+            return;
+        }
+        var vehicle = player.getVehicle();
+        if (vehicle == null) {
+            return;
+        }
+        
+        dog.authorizeRiding();
+        var result = dog.startRiding(vehicle);
+        if (result)
+        player.sendSystemMessage(Component.translatable("dogcommand.ride_with_me", dog.getName().getString()));
     }
 
     private void heelByLook(Level level, Player player) {
@@ -371,6 +412,7 @@ public class WhistleItem extends Item implements IDogItem {
         if (!(entity instanceof Dog dog))
             return;
         DogUtil.dynamicSearchAndTeleportToOwnwer(dog, player, 2);
+        player.sendSystemMessage(Component.translatable("dogcommand.heel_by_name", dog.getName().getString()));
         dog.setOrderedToSit(false);
     }
 

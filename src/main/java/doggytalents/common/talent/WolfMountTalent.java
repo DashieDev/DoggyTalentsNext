@@ -54,24 +54,30 @@ public class WolfMountTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
-        ItemStack stack = playerIn.getItemInHand(handIn);
+    public InteractionResult processInteract(AbstractDog dog, Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
 
-        if (stack.isEmpty()) { // Held item
-            if (dogIn.canInteract(playerIn) && this.level() > 0) { // Dog
-                if (playerIn.getVehicle() == null && !playerIn.onGround()) { // Player
-                    if (!dogIn.level().isClientSide) {
-                        dogIn.setOrderedToSit(false);
-                        playerIn.setYRot(dogIn.getYRot());
-                        playerIn.setXRot(dogIn.getXRot());
-                        playerIn.startRiding(dogIn);
-                    }
-                    return InteractionResult.SUCCESS;
-                }
-            }
+        if (!stack.isEmpty())
+            return InteractionResult.PASS;
+        if (this.level() <= 0)
+            return InteractionResult.PASS;
+        if (dog.isVehicle() || dog.isPassenger())
+            return InteractionResult.PASS;
+        if (!dog.canInteract(player))
+            return InteractionResult.PASS;
+        
+        if (player.isPassenger())
+            return InteractionResult.PASS;
+        if (player.onGround())
+            return InteractionResult.PASS;
+
+        if (!dog.level().isClientSide) {
+            dog.setOrderedToSit(false);
+            player.setYRot(dog.getYRot());
+            player.setXRot(dog.getXRot());
+            player.startRiding(dog);
         }
-
-        return InteractionResult.PASS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override

@@ -106,6 +106,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -116,6 +117,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -1026,17 +1029,40 @@ public class Dog extends AbstractDog {
         }
         
     }
+    private boolean ridingAuthorized = false;
 
     @Override
     public boolean startRiding(Entity entity) {
-        if (!this.level().isClientSide) {
+        var result = false;
+        boolean not_authorized = 
+            requireRidingAuthorization(entity)
+            && !isRidingAuthorized();
+        if (!not_authorized) {   
+            result = super.startRiding(entity);
+        }
+        ridingAuthorized = false;
+
+        if (!this.level().isClientSide && result) {
             if (entity instanceof ServerPlayer player) {
                 PacketHandler.send(PacketDistributor.PLAYER.with(() -> player), 
                     new DogMountData(this.getId(), true)
                 );
             }
         }
-        return super.startRiding(entity);
+        return result;
+    }
+
+    public boolean isRidingAuthorized() {
+        return this.ridingAuthorized;
+    }
+
+    public void authorizeRiding() {
+        this.ridingAuthorized = true;
+    }
+
+    public boolean requireRidingAuthorization(Entity entity) {
+        return entity instanceof AbstractMinecart
+            || entity instanceof Boat;
     }
 
     @Override
@@ -1589,13 +1615,17 @@ public class Dog extends AbstractDog {
         super.setTame(tamed);
         if (tamed) {
            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D);
-           this.setHealth(20.0F);
+           this.maxHealth();
         } else {
            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(8.0D);
         }
 
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(4.0D);
      }
+
+    public void maxHealth() {
+        this.setHealth(this.getMaxHealth());
+    }
 
     @Override
     public void setOwnerUUID(@Nullable UUID uuid) {
@@ -2225,7 +2255,7 @@ public class Dog extends AbstractDog {
             this.entityData.set(DOG_LEVEL.get(), new DogLevel(level_normal, level_dire));
             float h = this.getDogLevel().getMaxHealth();
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
-            this.setHealth(h);
+            this.maxHealth();
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load levels: " + e.getMessage());
             e.printStackTrace();
@@ -2982,8 +3012,30 @@ public class Dog extends AbstractDog {
 
     @Override
     public LivingEntity getControllingPassenger() {
-        // Gets the first passenger which is the controlling passenger
-        return this.getPassengers().isEmpty() ? null : (LivingEntity) this.getPassengers().get(0);
+        var passengers = this.getPassengers();
+        if (passengers.isEmpty())
+            return null;
+        var first_passenger = passengers.get(0);
+        if (!(first_passenger instanceof Player player))
+            return null;
+        return this.canInteract(player) ? player : null;
+    }
+
+    @Override
+    public Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
+        var a1 = this.getYRot();
+        var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
+        var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
+        
+        var newX = this.getX() + dx1;
+        var newZ = this.getZ() + dz1;
+        var newPos = new Vec3(newX, this.getY() + 0.5, newZ);
+        var b0 = BlockPos.containing(newPos);
+        var type = WalkNodeEvaluator.getBlockPathTypeStatic(this.level(), b0.mutable());
+        if (type == BlockPathTypes.WALKABLE) {
+            return newPos;
+        }
+        return super.getDismountLocationForPassenger(passenger);
     }
 
     // @Override
@@ -3004,7 +3056,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean isPushable() {
-        return !this.isVehicle() && super.isPushable();
+        return !(this.isVehicle() && this.hasControllingPassenger()) && super.isPushable();
     }
 
     // @Override
@@ -3349,7 +3401,8 @@ public class Dog extends AbstractDog {
 
     @Override
     public void setInSittingPose(boolean sit) {
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide
+            && !(this.animAction != null && this.animAction.blockSitStandAnim())) {
             boolean sit0 = this.isInSittingPose();
             if (sit0 != sit) {
                 var anim = sit ? this.getSitAnim() : this.getStandAnim();
@@ -3533,40 +3586,98 @@ public class Dog extends AbstractDog {
 
     @Override
     protected void doPush(Entity pushTarget) {
-        boolean pushEachOther = 
-            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER);
-        if (
-            pushEachOther
-            && pushTarget instanceof Dog dog
-            && !dog.getNavigation().isDone()
-            && !dog.onGround()
-        )
+        if (shouldBlockPush(pushTarget))
             return;
-        if (
-            pushEachOther
-            && pushTarget instanceof Player player
-            && !player.isShiftKeyDown()
-            && this.isDoingFine()
-        )
-            return;
+        if (pushTarget.getVehicle() == this
+            || this.getVehicle() == pushTarget) {
+            return;        
+        }
         super.doPush(pushTarget);
+    }
+
+    protected boolean shouldBlockPush(Entity target) {
+        boolean avoidPush = 
+            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER);
+        if (!avoidPush)
+            return false;
+        if (!(target instanceof Dog otherDog)) {
+            return false;
+        }
+        boolean oneDogStillNotOnGround =
+            !this.onGround()
+            || !otherDog.onGround();
+        return oneDogStillNotOnGround;
+    }
+
+    @Override
+    public void push(Entity source) {
+        if (source.getVehicle() == this
+            || this.getVehicle() == source)
+            return;
+        if (this.isVehicle() && !this.hasControllingPassenger())
+            Entity_push(source);
+        else
+            super.push(source);
+    }
+
+    private void Entity_push(Entity source) {
+        if (this.isPassengerOfSameVehicle(source)) 
+            return;
+        if (source.noPhysics || this.noPhysics)
+            return;
+        double dx_vec = source.getX() - this.getX();
+        double dz_vec = source.getZ() - this.getZ();
+        double max_magnitude = Mth.absMax(dx_vec, dz_vec);
+        if (max_magnitude < 0.01)
+            return;
+
+        max_magnitude = Math.sqrt(max_magnitude);
+        dx_vec /= max_magnitude;
+        dz_vec /= max_magnitude;
+        double max_magnitude_inv = 1.0D / max_magnitude;
+        if (max_magnitude_inv > 1.0D) {
+            max_magnitude_inv = 1.0D;
+        }
+
+        dx_vec *= max_magnitude_inv;
+        dz_vec *= max_magnitude_inv;
+        dx_vec *= 0.05;
+        dz_vec *= 0.05;
+        if (this.isPushable()) {
+            this.push(-dx_vec, 0.0D, -dz_vec);
+        }
+
+        if (source.isPushable()) {
+            source.push(dx_vec, 0.0D, dz_vec);
+        }
     }
 
     @Override
     public boolean canCollideWith(Entity otherEntity) {
-        //TODO should this be dog of the same team ?
-        boolean pushEachOther = ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER);
-        if (
-            pushEachOther
-            && otherEntity instanceof Dog dog
-            && !dog.getNavigation().isDone()
-            && !dog.onGround()
-        ) {
-            ChopinLogger.l("Colliding with dog!");
+        if (shouldBlockPush(otherEntity)) {
             return false;
         }
-            
+
+        if (otherEntity.getVehicle() == this
+            || this.getVehicle() == otherEntity)
+            return false;
         return super.canCollideWith(otherEntity);
+    }
+
+    public BlockPathTypes getBlockPathTypeViaAlterations(BlockPos pos) {
+        var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(
+            this.level(), 
+            pos.mutable()
+        );
+
+        for (var alt : this.alterations) {
+            var result = alt.inferType(this, blockType);
+            if (result.getResult().shouldSwing()) {
+                blockType = result.getObject();
+                break;
+            }
+        }
+        return blockType;
     }
 
     public float getTimeDogIsShaking() {
