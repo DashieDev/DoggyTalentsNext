@@ -3593,7 +3593,10 @@ public class Dog extends AbstractDog {
             || this.getVehicle() == pushTarget) {
             return;        
         }
-        super.doPush(pushTarget);
+        if (this.isVehicle() && !this.hasControllingPassenger())
+            Entity_push(pushTarget);
+        else
+            super.doPush(pushTarget);
     }
 
     protected boolean shouldBlockPush(Entity target) {
