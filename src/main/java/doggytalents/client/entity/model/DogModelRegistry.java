@@ -15,13 +15,22 @@ import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
 import doggytalents.client.entity.model.dog.CustomDogModel;
+import doggytalents.client.entity.model.dog.BorzoiLongModel;
+import doggytalents.client.entity.model.dog.BorzoiModel;
+import doggytalents.client.entity.model.dog.ChihuahuaModel;
+import doggytalents.client.entity.model.dog.DachshundModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.model.dog.EnglishBulldogModel;
+import doggytalents.client.entity.model.dog.FrenchBulldogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
 import doggytalents.client.entity.model.dog.JackModel;
 import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
+import doggytalents.client.entity.model.dog.PochitaModel;
+import doggytalents.client.entity.model.dog.PoodleModel;
+import doggytalents.client.entity.model.dog.PugModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
 import doggytalents.client.entity.model.dog.VariantDogModel;
 import doggytalents.client.entity.model.dog.kusa.ChiModel;
@@ -88,6 +97,16 @@ public class DogModelRegistry {
         register("kusa_tei", ctx ->  new TeiModel(ctx.bakeLayer(ClientSetup.KUSA_TEI)));
         register("kusa_ume", ctx ->  new UmeModel(ctx.bakeLayer(ClientSetup.KUSA_UME)));
         register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)));
+
+        register("pochita", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_POCHITA)));
+        register("dachshund", ctx ->  new DachshundModel(ctx.bakeLayer(ClientSetup.DOG_DACHSHUND)));
+        register("pug", ctx ->  new PugModel(ctx.bakeLayer(ClientSetup.DOG_PUG)));
+        register("borzoi", ctx ->  new BorzoiModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI)));
+        register("borzoi_long", ctx ->  new BorzoiLongModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI_LONG)));
+        register("english_bulldog", ctx ->  new EnglishBulldogModel(ctx.bakeLayer(ClientSetup.DOG_ENGLISH_BULLDOG)));
+        register("french_bulldog", ctx ->  new FrenchBulldogModel(ctx.bakeLayer(ClientSetup.DOG_FRENCH_BULLDOG)));
+        register("poodle", ctx ->  new PoodleModel(ctx.bakeLayer(ClientSetup.DOG_POODLE)));
+        register("chihuahua", ctx ->  new ChihuahuaModel(ctx.bakeLayer(ClientSetup.DOG_CHIHUAHUA)));
         registerFromEvent();
     }
 
