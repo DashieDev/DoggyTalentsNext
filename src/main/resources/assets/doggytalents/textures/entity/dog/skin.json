@@ -238,6 +238,20 @@
             "requested by" : "SilverstarShiro"
         },
         {
+            "skin_name" : "Boxer #1",
+            "skin_id" : "boxer",
+            "use_model" : "boxer_floppy",
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
+        },
+        {
+            "skin_name" : "Boxer #2",
+            "skin_id" : "boxer2",
+            "use_model" : "boxer_pointy",
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
+        },
+        {
             "skin_name" : "Rottweiler",
             "skin_id" : "rottweiler",
             "use_model" : "default"
