@@ -33,6 +33,7 @@ import doggytalents.client.entity.model.dog.JackModel;
 import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
+import doggytalents.client.entity.model.dog.MiniaturePinscherModel;
 import doggytalents.client.entity.model.dog.PochitaModel;
 import doggytalents.client.entity.model.dog.PoodleModel;
 import doggytalents.client.entity.model.dog.PugModel;
@@ -111,6 +112,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_CHIHUAHUA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "chihuahua"), "main");
     public static final ModelLayerLocation DOG_BOXER_FLOPPY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "boxer_floppy"), "main");
     public static final ModelLayerLocation DOG_BOXER_POINTY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "boxer_pointy"), "main");
+    public static final ModelLayerLocation DOG_MINIATURE_PINSCHER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "miniature_pinscher"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -161,6 +163,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_CHIHUAHUA, ChihuahuaModel::createBodyLayer);
         event.registerLayerDefinition(DOG_BOXER_FLOPPY, BoxerFloppyModel::createBodyLayer);
         event.registerLayerDefinition(DOG_BOXER_POINTY, BoxerPointyModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_MINIATURE_PINSCHER, MiniaturePinscherModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
