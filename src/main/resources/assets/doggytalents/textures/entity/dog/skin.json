@@ -238,6 +238,20 @@
             "requested by" : "SilverstarShiro"
         },
         {
+            "skin_name" : "Miniature Pinscher #1",
+            "skin_id" : "miniature_pinscher",
+            "use_model" : "miniature_pinscher",
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
+        },
+        {
+            "skin_name" : "Miniature Pinscher #2",
+            "skin_id" : "miniature_pinscher2",
+            "use_model" : "miniature_pinscher",
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
+        },
+        {
             "skin_name" : "Boxer #1",
             "skin_id" : "boxer",
             "use_model" : "boxer_floppy",
