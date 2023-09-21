@@ -224,6 +224,27 @@
             "requested by" : "SilverstarShiro"
         },
         {
+            "skin_name" : "Chihuahua #1",
+            "skin_id" : "chihuahua",
+            "use_model" : "chihuahua",
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
+        },
+        {
+            "skin_name" : "Chihuahua #2",
+            "skin_id" : "chihuahua2",
+            "use_model" : "chihuahua",
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
+        },
+        {
+            "skin_name" : "Chihuahua #3",
+            "skin_id" : "chihuahua3",
+            "use_model" : "chihuahua",
+            "author" : "MashXP",
+            "requested by" : "SilverstarShiro"
+        },
+        {
             "skin_name" : "Rottweiler",
             "skin_id" : "rottweiler",
             "use_model" : "default"
