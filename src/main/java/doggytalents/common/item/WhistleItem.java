@@ -14,6 +14,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DoggyBeamEntity;
 import doggytalents.common.entity.ai.triggerable.DogGoBehindOwnerAction;
+import doggytalents.common.entity.ai.triggerable.DogHowlAction;
 import doggytalents.common.entity.ai.triggerable.DogMoveToBedAction;
 import doggytalents.common.talent.MobRetrieverTalent;
 import doggytalents.common.talent.RoaringGaleTalent;
@@ -66,7 +67,8 @@ public class WhistleItem extends Item implements IDogItem {
         HEEL_BY_GROUP(10, WhistleSound.NONE),
         MOB_RETRIEVER(11, WhistleSound.SHORT),
         HEEL_BY_LOOK(12, WhistleSound.SHORT),
-        RIDE_WITH_ME(13, WhistleSound.SHORT);
+        RIDE_WITH_ME(13, WhistleSound.SHORT),
+        HOWL(14, WhistleSound.SHORT);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -116,7 +118,8 @@ public class WhistleItem extends Item implements IDogItem {
         var mode = WhistleMode.VALUES[id_mode];
 
         return mode == WhistleMode.MOB_RETRIEVER
-            || mode == WhistleMode.RIDE_WITH_ME ? 
+            || mode == WhistleMode.RIDE_WITH_ME 
+            || mode == WhistleMode.HOWL ? 
             InteractionResult.FAIL : InteractionResult.PASS;
     }
 
@@ -352,6 +355,9 @@ public class WhistleItem extends Item implements IDogItem {
         case RIDE_WITH_ME:
             rideWithMe(world, player);
             return;
+        case HOWL:
+            howl(world, player);
+            return;
         }
     }
 
@@ -414,6 +420,31 @@ public class WhistleItem extends Item implements IDogItem {
         DogUtil.dynamicSearchAndTeleportToOwnwer(dog, player, 2);
         player.sendSystemMessage(Component.translatable("dogcommand.heel_by_name", dog.getName().getString()));
         dog.setOrderedToSit(false);
+    }
+
+    private void howl(Level level, Player player) {
+        if (level.isClientSide)
+            return;
+        final int reach_range = 30;
+        var eye_pos = player.getEyePosition();
+        var view_vec = player.getViewVector(1);
+        var max_reach_vec = view_vec.scale(reach_range);
+        var max_pos = eye_pos.add(max_reach_vec);
+        var search_area = player.getBoundingBox().expandTowards(max_reach_vec).inflate(1.0D, 1.0D, 1.0D);
+        var hitResult = ProjectileUtil.getEntityHitResult(
+            player, eye_pos, max_pos, search_area, e -> {
+                return (e instanceof Dog);
+            }, reach_range*reach_range);
+        if (hitResult == null)
+            return;
+        var entity = hitResult.getEntity();
+        if (entity == null)
+            return;
+        if (!(entity instanceof Dog dog))
+            return;
+        if (dog.isBusy())
+            return;
+        dog.triggerAction(new DogHowlAction(dog));
     }
 
     @Override
