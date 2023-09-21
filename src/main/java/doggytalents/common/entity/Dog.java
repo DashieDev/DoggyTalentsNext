@@ -376,6 +376,14 @@ public class Dog extends AbstractDog {
         return SoundEvents.WOLF_DEATH;
     }
 
+    protected SoundEvent getHowlSound() {
+        return SoundEvents.WOLF_HOWL;
+    }
+
+    public void howl() {
+        this.playSound(this.getHowlSound(), 1, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F);
+    }
+
     @Override
     public float getSoundVolume() {
         return 0.4F;
