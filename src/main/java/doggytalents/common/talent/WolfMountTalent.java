@@ -19,6 +19,7 @@ import java.util.UUID;
 public class WolfMountTalent extends TalentInstance {
 
     private static final UUID WOLF_MOUNT_JUMP = UUID.fromString("7f338124-f223-4630-8515-70ee0bfbc653");
+    private int lastClickTick;
 
     public WolfMountTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -65,11 +66,14 @@ public class WolfMountTalent extends TalentInstance {
             return InteractionResult.PASS;
         if (!dog.canInteract(player))
             return InteractionResult.PASS;
-        
         if (player.isPassenger())
             return InteractionResult.PASS;
-        if (player.onGround())
+
+        int lastClickTick0 = this.lastClickTick;
+        lastClickTick = player.tickCount;
+        if (lastClickTick - lastClickTick0 > 5) {
             return InteractionResult.PASS;
+        }
 
         if (!dog.level().isClientSide) {
             dog.setOrderedToSit(false);
