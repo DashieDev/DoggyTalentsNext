@@ -154,8 +154,13 @@ public class Dog extends AbstractDog {
      *     5               32                  LOW_HEALTH_STRATEGY_MSB
      *     6               64                  CROSS_ORIGIN_TP
      *     7               128                 REGARD_TEAM_PLAYERS
+     *     8               256                 <Reserved>
+     *     9               512                 <Reserved>
+     *     .
+     *     .
+     *     31              2^31                <Reserved>
      */
-    private static final EntityDataAccessor<Byte> DOG_FLAGS = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Integer> DOG_FLAGS = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
 
     private static final EntityDataAccessor<Float> HUNGER_INT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<String> CUSTOM_SKIN = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.STRING);
@@ -271,7 +276,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(ACCESSORIES.get(), new ArrayList<>());
         this.entityData.define(TALENTS.get(), new ArrayList<>());
         this.entityData.define(LAST_KNOWN_NAME, Optional.empty());
-        this.entityData.define(DOG_FLAGS, (byte) 0);
+        this.entityData.define(DOG_FLAGS, 0);
         this.entityData.define(GENDER.get(), EnumGender.UNISEX);
         this.entityData.define(MODE.get(), EnumMode.DOCILE);
         this.entityData.define(HUNGER_INT, 60F);
@@ -2713,8 +2718,8 @@ public class Dog extends AbstractDog {
     }
 
     private void setDogFlag(int bits, boolean flag) {
-        byte c = this.entityData.get(DOG_FLAGS);
-        this.entityData.set(DOG_FLAGS, (byte)(flag ? c | bits : c & ~bits));
+        int c = this.entityData.get(DOG_FLAGS);
+        this.entityData.set(DOG_FLAGS, (flag ? c | bits : c & ~bits));
     }
 
     public void setBegging(boolean begging) {
