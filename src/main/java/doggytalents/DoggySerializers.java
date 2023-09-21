@@ -13,7 +13,6 @@ import java.util.function.Supplier;
 
 public class DoggySerializers {
 
-    //REFERENCE DIRECTLY THE SERIALIZER! 
     public static final DeferredRegister<EntityDataSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, Constants.MOD_ID);
 
     public static final RegistryObject<EntityDataSerializer> TALENT_SERIALIZER = register2("talents", TalentListSerializer::new);
