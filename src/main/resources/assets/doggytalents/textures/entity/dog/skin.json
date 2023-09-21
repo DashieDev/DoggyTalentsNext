@@ -273,6 +273,12 @@
             "requested by" : "SilverstarShiro"
         },
         {
+            "skin_name" : "Borzoi - Better Dogs",
+            "skin_id" : "borzoi_bd",
+            "use_model" : "borzoi_bd",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Rottweiler",
             "skin_id" : "rottweiler",
             "use_model" : "default"
