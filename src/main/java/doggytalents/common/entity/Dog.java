@@ -934,6 +934,9 @@ public class Dog extends AbstractDog {
             } 
         }
 
+        if (dogCheckAndRidePlayer(player, stack).shouldSwing())
+            return InteractionResult.SUCCESS;
+
         Optional<IDogFoodHandler> foodHandler = FoodHandler.getMatch(this, stack, player);
 
         if (foodHandler.isPresent()) {
@@ -976,6 +979,30 @@ public class Dog extends AbstractDog {
         }
 
         return actionresulttype;
+    }
+
+    public InteractionResult dogCheckAndRidePlayer(Player player, ItemStack stack) {
+        if (player.hasPassenger(this)) {
+            if (!this.level().isClientSide)
+                this.unRide();
+            return InteractionResult.SUCCESS;
+        }
+        if (stack.getItem() != Items.BONE)
+            return InteractionResult.PASS;
+        if (!player.isShiftKeyDown())
+            return InteractionResult.PASS;
+        if (this.isVehicle())
+            return InteractionResult.PASS;
+        if (!this.canInteract(player))
+            return InteractionResult.PASS;
+        if (!this.level().isClientSide) {
+            if (this.startRiding(player))
+            player.displayClientMessage(
+                Component.translatable(
+                    "talent.doggytalents.bed_finder.dog_mount", 
+                    this.getGenderPronoun()), true);
+        }
+        return InteractionResult.SUCCESS;
     }
 
     @Override
