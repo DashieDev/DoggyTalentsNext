@@ -122,13 +122,6 @@
             "author" : "MashXP, DashieDev"
         },
         {
-            "skin_name" : "Pochita",
-            "skin_id" : "pochita",
-            "use_model" : "pochita",
-            "based_on" : "Pochita from Chainsaw Man",
-            "author" : "MashXP, DashieDev"
-        },
-        {
             "skin_name" : "St Bernard",
             "skin_id" : "st_bernard",
             "use_model" : "st_bernard",
@@ -143,85 +136,6 @@
             "skin_name" : "German Shepherd #2",
             "skin_id" : "german_shepherd_2",
             "use_model" : "default"
-        },
-        {
-            "skin_name" : "Dachshund #1",
-            "skin_id" : "dachshund",
-            "use_model" : "dachshund",
-            "author" : "MashXP",
-            "requested by" : "SilverstarShiro"
-        },
-        {
-            "skin_name" : "Dachshund #2",
-            "skin_id" : "dachshund2",
-            "use_model" : "dachshund",
-            "author" : "MashXP",
-            "requested by" : "SilverstarShiro"
-        },
-        {
-            "skin_name" : "Pug #1",
-            "skin_id" : "pug",
-            "use_model" : "pug",
-            "author" : "MashXP"
-        },
-        {
-            "skin_name" : "Pug #2",
-            "skin_id" : "pug2",
-            "use_model" : "pug",
-            "author" : "MashXP"
-        },
-        {
-            "skin_name" : "Poodle #1",
-            "skin_id" : "poodle",
-            "use_model" : "poodle",
-            "author" : "MashXP"
-        },
-        {
-            "skin_name" : "Poodle #2",
-            "skin_id" : "poodle2",
-            "use_model" : "poodle",
-            "author" : "MashXP"
-        },
-        {
-            "skin_name" : "Borzoi",
-            "skin_id" : "borzoi",
-            "use_model" : "borzoi",
-            "author" : "MashXP"
-        },
-        {
-            "skin_name" : "English Bulldog",
-            "skin_id" : "english_bulldog",
-            "use_model" : "english_bulldog",
-            "author" : "MashXP",
-            "requested by" : "SilverstarShiro"
-        },
-        {
-            "skin_name" : "Spike",
-            "skin_id" : "english_bulldog2",
-            "use_model" : "english_bulldog",
-            "based_on" : "Spike from Tom and Jerry",
-            "author" : "MashXP"
-        },
-        {
-            "skin_name" : "French Bulldog #1",
-            "skin_id" : "french_bulldog",
-            "use_model" : "french_bulldog",
-            "author" : "MashXP",
-            "requested by" : "SilverstarShiro"
-        },
-        {
-            "skin_name" : "French Bulldog #2",
-            "skin_id" : "french_bulldog2",
-            "use_model" : "french_bulldog",
-            "author" : "MashXP",
-            "requested by" : "SilverstarShiro"
-        },
-        {
-            "skin_name" : "French Bulldog #3",
-            "skin_id" : "french_bulldog3",
-            "use_model" : "french_bulldog",
-            "author" : "MashXP",
-            "requested by" : "SilverstarShiro"
         },
         {
             "skin_name" : "Rottweiler",
@@ -317,12 +231,6 @@
             "skin_name" : "Classical III",
             "skin_id" : "wolf_var2",
             "use_model" : "default"
-        },
-        {
-            "skin_name" : "LONG BORZOI",
-            "skin_id" : "borzoi_long",
-            "use_model" : "borzoi_long",
-            "author" : "MashXP (lemme do it for you~)"
         }
     ]
 }
