@@ -19,6 +19,7 @@ import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.EnglishBulldogModel;
 import doggytalents.client.entity.model.dog.FrenchBulldogModel;
+import doggytalents.client.entity.model.dog.HungarianPuliModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
 import doggytalents.client.entity.model.dog.JackModel;
 import doggytalents.client.entity.model.dog.JunoModel;
@@ -81,6 +82,7 @@ public class DogModelRegistry {
 
         register("pochita", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_POCHITA)));
         register("dachshund", ctx ->  new DachshundModel(ctx.bakeLayer(ClientSetup.DOG_DACHSHUND)));
+         register("doberman", ctx ->  new DachshundModel(ctx.bakeLayer(ClientSetup.DOG_DOBERMAN)));
         register("pug", ctx ->  new PugModel(ctx.bakeLayer(ClientSetup.DOG_PUG)));
         register("borzoi", ctx ->  new BorzoiModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI)));
         register("borzoi_long", ctx ->  new BorzoiLongModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI_LONG)));
@@ -91,7 +93,7 @@ public class DogModelRegistry {
         register("boxer_floppy", ctx ->  new BoxerFloppyModel(ctx.bakeLayer(ClientSetup.DOG_BOXER_FLOPPY)));
         register("boxer_pointy", ctx ->  new BoxerPointyModel(ctx.bakeLayer(ClientSetup.DOG_BOXER_POINTY)));
         register("miniature_pinscher", ctx ->  new MiniaturePinscherModel(ctx.bakeLayer(ClientSetup.DOG_MINIATURE_PINSCHER)));
-
+        register("hungarian_puli", ctx ->  new HungarianPuliModel(ctx.bakeLayer(ClientSetup.DOG_HUNGARIAN_PULI)));
     }
 
     public static class DogModelHolder {

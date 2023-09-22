@@ -157,6 +157,24 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Doberman #1",
+            "skin_id" : "doberman",
+            "use_model" : "doberman",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Doberman #2",
+            "skin_id" : "doberman2",
+            "use_model" : "doberman",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Doberman #3",
+            "skin_id" : "doberman3",
+            "use_model" : "doberman",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Pug #1",
             "skin_id" : "pug",
             "use_model" : "pug",
@@ -257,6 +275,18 @@
             "skin_name" : "Boxer #2",
             "skin_id" : "boxer2",
             "use_model" : "boxer_pointy",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Hungarian Puli #1",
+            "skin_id" : "hungarian_puli",
+            "use_model" : "hungarian_puli",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Hungarian Puli #2",
+            "skin_id" : "hungarian_puli2",
+            "use_model" : "hungarian_puli",
             "author" : "MashXP"
         },
         {

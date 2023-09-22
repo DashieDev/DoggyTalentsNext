@@ -20,9 +20,11 @@ import doggytalents.client.entity.model.dog.BoxerPointyModel;
 import doggytalents.client.entity.model.dog.ChihuahuaModel;
 import doggytalents.client.entity.model.dog.DachshundModel;
 import doggytalents.client.entity.model.dog.DeathModel;
+import doggytalents.client.entity.model.dog.DobermanModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.EnglishBulldogModel;
 import doggytalents.client.entity.model.dog.FrenchBulldogModel;
+import doggytalents.client.entity.model.dog.HungarianPuliModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
 import doggytalents.client.entity.model.dog.JackModel;
 import doggytalents.client.entity.model.dog.JunoModel;
@@ -97,6 +99,7 @@ public class ClientSetup {
     
     public static final ModelLayerLocation DOG_POCHITA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "pochita"), "main");   
     public static final ModelLayerLocation DOG_DACHSHUND = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dachshund"), "main");
+    public static final ModelLayerLocation DOG_DOBERMAN = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "doberman"), "main");
     public static final ModelLayerLocation DOG_PUG = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "pug"), "main");
     public static final ModelLayerLocation DOG_BORZOI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "borzoi"), "main");
     public static final ModelLayerLocation DOG_BORZOI_LONG = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "borzoi_long"), "main");
@@ -107,6 +110,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_BOXER_FLOPPY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "boxer_floppy"), "main");
     public static final ModelLayerLocation DOG_BOXER_POINTY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "boxer_pointy"), "main");
     public static final ModelLayerLocation DOG_MINIATURE_PINSCHER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "miniature_pinscher"), "main");
+    public static final ModelLayerLocation DOG_HUNGARIAN_PULI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "hungarian_puli"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -146,6 +150,7 @@ public class ClientSetup {
 
         event.registerLayerDefinition(DOG_POCHITA, PochitaModel::createBodyLayer);
         event.registerLayerDefinition(DOG_DACHSHUND, DachshundModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_DOBERMAN, DobermanModel::createBodyLayer);
         event.registerLayerDefinition(DOG_PUG, PugModel::createBodyLayer);
         event.registerLayerDefinition(DOG_BORZOI, BorzoiModel::createBodyLayer);
         event.registerLayerDefinition(DOG_BORZOI_LONG, BorzoiLongModel::createBodyLayer);
@@ -156,6 +161,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_BOXER_FLOPPY, BoxerFloppyModel::createBodyLayer);
         event.registerLayerDefinition(DOG_BOXER_POINTY, BoxerPointyModel::createBodyLayer);
         event.registerLayerDefinition(DOG_MINIATURE_PINSCHER, MiniaturePinscherModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_HUNGARIAN_PULI, HungarianPuliModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
