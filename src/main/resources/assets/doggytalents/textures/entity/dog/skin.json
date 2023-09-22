@@ -253,24 +253,6 @@
             "author" : "MashXP"
         },
         {
-            "skin_name" : "Doberman #1",
-            "skin_id" : "doberman",
-            "use_model" : "doberman",
-            "author" : "MashXP"
-        },
-        {
-            "skin_name" : "Doberman #2",
-            "skin_id" : "doberman2",
-            "use_model" : "doberman",
-            "author" : "MashXP"
-        },
-        {
-            "skin_name" : "Doberman #3",
-            "skin_id" : "doberman3",
-            "use_model" : "doberman",
-            "author" : "MashXP"
-        },
-        {
             "skin_name" : "Rottweiler",
             "skin_id" : "rottweiler",
             "use_model" : "default"
