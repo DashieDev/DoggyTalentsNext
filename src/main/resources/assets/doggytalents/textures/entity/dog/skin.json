@@ -295,12 +295,36 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Collie Smooth #1",
+            "skin_id" : "collie_smooth",
+            "use_model" : "collie_smooth",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Collie Smooth #2",
+            "skin_id" : "collie_smooth2",
+            "use_model" : "collie_smooth",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Collie Rough",
+            "skin_id" : "collie_rough",
+            "use_model" : "collie_rough",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Border Collie",
+            "skin_id" : "collie_border",
+            "use_model" : "collie_border",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Rottweiler",
             "skin_id" : "rottweiler",
             "use_model" : "default"
         },
         {
-            "skin_name" : "Border Collie",
+            "skin_name" : "Border Collie (Legacy)",
             "skin_id" : "border_collie",
             "use_model" : "default"
         },
