@@ -4,6 +4,7 @@ import doggytalents.api.feature.DogLevel;
 import doggytalents.api.registry.Accessory;
 import doggytalents.common.artifacts.FeatheredMantleArtifact;
 import doggytalents.common.entity.accessory.DyeableAccessory;
+import doggytalents.common.entity.accessory.GiantStick;
 import doggytalents.common.entity.accessory.LocatorOrbAccessory;
 import doggytalents.common.entity.accessory.Wig;
 import doggytalents.common.item.*;
@@ -88,6 +89,7 @@ public class DoggyItems {
     public static final RegistryObject<Item> GENDER_BONE = registerTool("gender_bone", GenderBoneItem::new, 10);
 
     public static final RegistryObject<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
+    public static final RegistryObject<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
     
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
