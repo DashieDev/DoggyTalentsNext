@@ -283,6 +283,18 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Basset Hound #1",
+            "skin_id" : "basset_hound",
+            "use_model" : "basset_hound",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Basset Hound #2",
+            "skin_id" : "basset_hound2",
+            "use_model" : "basset_hound",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Rottweiler",
             "skin_id" : "rottweiler",
             "use_model" : "default"
