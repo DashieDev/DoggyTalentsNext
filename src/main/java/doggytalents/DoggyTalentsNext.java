@@ -45,10 +45,6 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * @author ProPercivalalb
- * previously DoggyTalent2
- */
 @Mod(Constants.MOD_ID)
 public class DoggyTalentsNext {
 
