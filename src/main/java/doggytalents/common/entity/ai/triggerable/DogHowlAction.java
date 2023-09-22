@@ -30,7 +30,7 @@ public class DogHowlAction extends TriggerableAction {
         if (tickTillHowl == 0) {
             dog.howl();
         } else if (tickTillHowl == 30) {
-            this.dog.playSound(SoundEvents.WOLF_GROWL, 0.3F, (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F);
+            this.dog.playSound(SoundEvents.WOLF_GROWL, 0.3F, dog.getVoicePitch());
         }
     }
 
