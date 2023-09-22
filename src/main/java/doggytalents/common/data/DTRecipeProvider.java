@@ -276,6 +276,14 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_bread", has(Items.BREAD))
             .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.GIANT_STICK.get(), 1)
+            .pattern(" S ")
+            .pattern(" S ")
+            .pattern(" S ")
+            .define('S', Items.STICK)
+            .unlockedBy("has_stick", has(Items.STICK))
+            .save(consumer);
+
     }
     
     // @Override
