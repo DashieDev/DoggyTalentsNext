@@ -261,9 +261,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         DogTextureManager.Preparations prep = new DogTextureManager.Preparations();
 
         profiler.startTick();
-
-        DogModelRegistry.init();
-
+        
         //TODO parse and load model files from resource here.
 
         if (this.getSkinFromSkinJsonAllPack(resourceManager, prep)) {
