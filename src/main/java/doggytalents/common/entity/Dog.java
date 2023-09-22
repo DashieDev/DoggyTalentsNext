@@ -381,7 +381,7 @@ public class Dog extends AbstractDog {
     }
 
     public void howl() {
-        this.playSound(this.getHowlSound(), 1, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F);
+        this.playSound(this.getHowlSound(), 1, this.getVoicePitch());
     }
 
     @Override
