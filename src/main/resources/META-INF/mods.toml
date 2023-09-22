@@ -11,7 +11,7 @@ logoFile="dt_background.png"
     displayName="Doggy Talents Next"
     credits="dashiedev, mashxp"
     authors="dashiedev, mashxp"
-    description="The next generation of the beloved-by-many DoggyTalents. Turning your wolves into fun, playful, skillful dogs."
+    description="Minecraft Wolf, reimagined."
 [[dependencies.doggytalents]] #optional
     modId="forge"
     mandatory=true
