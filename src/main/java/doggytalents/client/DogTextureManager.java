@@ -339,7 +339,13 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             var id = skinObject.get("skin_id").getAsString();
             var use_model = skinObject.get("use_model").getAsString();
             ChopinLogger.l("Found : " + name + " " + id + " " + use_model);
-            var text_rl = Util.getResource("textures/entity/dog/custom/" + id + ".png");
+            
+            ResourceLocation text_rl;
+            if (id.indexOf(':') >= 0) {
+                text_rl = new ResourceLocation(id + ".png");
+            } else {
+                text_rl = Util.getResource("textures/entity/dog/custom/" + id + ".png");
+            }
             DogSkin skin;
             if (use_model == null || use_model.equals("default") || use_model.equals("")) {
                 skin = new DogSkin(text_rl).setName(name);
