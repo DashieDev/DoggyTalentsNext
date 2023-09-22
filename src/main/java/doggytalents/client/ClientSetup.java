@@ -7,6 +7,7 @@ import doggytalents.client.entity.model.BowTieModel;
 import doggytalents.client.entity.model.DogArmorModel;
 import doggytalents.client.entity.model.DogBackpackModel;
 import doggytalents.client.entity.model.DogFrontLegsSeperate;
+import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.DogRescueModel;
 import doggytalents.client.entity.model.SmartyGlassesModel;
 import doggytalents.client.entity.model.WigModel;
@@ -128,6 +129,8 @@ public class ClientSetup {
         AccessoryModelManager.registerLayerDef(event);
 
         DogAnimationRegistry.init();
+        DogModelRegistry.init();
+
         // TODO: RenderingRegistry.registerEntityRenderingHandler(DoggyEntityTypes.DOG_BEAM.get(), manager -> new DoggyBeamRenderer<>(manager, event.getMinecraftSupplier().get().getItemRenderer()));
     }
 
