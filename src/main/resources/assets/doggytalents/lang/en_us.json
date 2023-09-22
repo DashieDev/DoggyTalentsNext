@@ -65,6 +65,9 @@
    
    "item.doggytalents.hot_dog": "Hot Dog",
    "item.doggytalents.hot_dog.description": "It tastes...funny?",
+   "item.doggytalents.giant_stick": "Giant Stick",
+   "item.doggytalents.giant_stick.description": "Feels like a broom stick?",
+
 
    "item.doggytalents.locator_orb_chi": "Chi Orb",
    "item.doggytalents.locator_orb_chi.description": "The Orb of Wisdom and Knowledge.",
