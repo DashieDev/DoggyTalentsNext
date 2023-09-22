@@ -21,6 +21,9 @@ import doggytalents.client.entity.model.dog.BorzoiModel;
 import doggytalents.client.entity.model.dog.BoxerFloppyModel;
 import doggytalents.client.entity.model.dog.BoxerPointyModel;
 import doggytalents.client.entity.model.dog.ChihuahuaModel;
+import doggytalents.client.entity.model.dog.CollieBorderModel;
+import doggytalents.client.entity.model.dog.CollieRoughModel;
+import doggytalents.client.entity.model.dog.CollieSmoothModel;
 import doggytalents.client.entity.model.dog.DachshundModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
@@ -119,6 +122,9 @@ public class DogModelRegistry {
         register("miniature_pinscher", ctx ->  new MiniaturePinscherModel(ctx.bakeLayer(ClientSetup.DOG_MINIATURE_PINSCHER)));
         register("hungarian_puli", ctx ->  new HungarianPuliModel(ctx.bakeLayer(ClientSetup.DOG_HUNGARIAN_PULI)));
         register("basset_hound", ctx ->  new BassetHoundModel(ctx.bakeLayer(ClientSetup.DOG_BASSET_HOUND)));
+        register("collie_smooth", ctx ->  new CollieSmoothModel(ctx.bakeLayer(ClientSetup.DOG_COLLIE_SMOOTH)));
+        register("collie_rough", ctx ->  new CollieRoughModel(ctx.bakeLayer(ClientSetup.DOG_COLLIE_ROUGH)));
+        register("collie_border", ctx ->  new CollieBorderModel(ctx.bakeLayer(ClientSetup.DOG_COLLIE_BORDER)));
         registerFromEvent();
     }
 
