@@ -40,5 +40,10 @@ public class DogHowlAction extends TriggerableAction {
             dog.setAnim(DogAnimation.NONE);
         }
     }
+
+    @Override
+    public boolean canOverrideSit() {
+        return true;
+    }
     
 }
