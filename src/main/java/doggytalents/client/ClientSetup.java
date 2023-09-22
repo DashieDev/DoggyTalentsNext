@@ -19,6 +19,9 @@ import doggytalents.client.entity.model.dog.BorzoiModel;
 import doggytalents.client.entity.model.dog.BoxerFloppyModel;
 import doggytalents.client.entity.model.dog.BoxerPointyModel;
 import doggytalents.client.entity.model.dog.ChihuahuaModel;
+import doggytalents.client.entity.model.dog.CollieBorderModel;
+import doggytalents.client.entity.model.dog.CollieRoughModel;
+import doggytalents.client.entity.model.dog.CollieSmoothModel;
 import doggytalents.client.entity.model.dog.DachshundModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DobermanModel;
@@ -113,6 +116,9 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_MINIATURE_PINSCHER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "miniature_pinscher"), "main");
     public static final ModelLayerLocation DOG_HUNGARIAN_PULI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "hungarian_puli"), "main");
     public static final ModelLayerLocation DOG_BASSET_HOUND = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "basset_hound"), "main");
+    public static final ModelLayerLocation DOG_COLLIE_SMOOTH = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "collie_smooth"), "main");
+    public static final ModelLayerLocation DOG_COLLIE_ROUGH = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "collie_rough"), "main");
+    public static final ModelLayerLocation DOG_COLLIE_BORDER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "collie_border"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -165,6 +171,9 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_MINIATURE_PINSCHER, MiniaturePinscherModel::createBodyLayer);
         event.registerLayerDefinition(DOG_HUNGARIAN_PULI, HungarianPuliModel::createBodyLayer);
         event.registerLayerDefinition(DOG_BASSET_HOUND, BassetHoundModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_COLLIE_SMOOTH, CollieSmoothModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_COLLIE_ROUGH, CollieRoughModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_COLLIE_BORDER, CollieBorderModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
