@@ -68,7 +68,7 @@ public class WhistleItem extends Item implements IDogItem {
         MOB_RETRIEVER(11, WhistleSound.SHORT),
         HEEL_BY_LOOK(12, WhistleSound.SHORT),
         RIDE_WITH_ME(13, WhistleSound.SHORT),
-        HOWL(14, WhistleSound.SHORT);
+        HOWL(14, WhistleSound.NONE);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -354,6 +354,7 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         case RIDE_WITH_ME:
             rideWithMe(world, player);
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
         case HOWL:
             howl(world, player);
@@ -445,6 +446,12 @@ public class WhistleItem extends Item implements IDogItem {
         if (dog.isBusy())
             return;
         dog.triggerAction(new DogHowlAction(dog));
+        player.level().playSound(null, player.blockPosition(),
+            DoggySounds.WHISTLE_SHORT.get(), 
+            SoundSource.PLAYERS, 
+            0.6F + player.level().random.nextFloat() * 0.1F, 
+            0.8F + player.level().random.nextFloat() * 0.2F
+        );
     }
 
     @Override
