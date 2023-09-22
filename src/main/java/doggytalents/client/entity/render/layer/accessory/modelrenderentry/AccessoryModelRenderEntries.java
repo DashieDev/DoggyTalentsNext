@@ -13,6 +13,7 @@ public class AccessoryModelRenderEntries {
     public static Entry BEASTARS_UNIFORM_FEMALE = new BeastarsUniformFemaleEntry();
     public static Entry LOCATOR_ORB = new LocatorOrbRenderEntry();
     public static Entry HOT_DOG = new HotDogRenderEntry();
+    public static Entry GIANT_STICK = new GiantStickRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -23,6 +24,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(BEASTARS_UNIFORM_FEMALE);
         AccessoryModelManager.register(LOCATOR_ORB);
         AccessoryModelManager.register(HOT_DOG);
+        AccessoryModelManager.register(GIANT_STICK);
     }
 
 }
