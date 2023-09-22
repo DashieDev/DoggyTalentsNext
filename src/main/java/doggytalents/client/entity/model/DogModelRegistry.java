@@ -28,17 +28,26 @@ import doggytalents.client.entity.model.dog.kusa.TeiModel;
 import doggytalents.client.entity.model.dog.kusa.UmeModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
 
 public class DogModelRegistry {
     
-    private static Map<String, DogModelHolder> MODEL_MAP;
+    private static Map<ResourceLocation, DogModelHolder> MODEL_MAP;
 
-    public static <T extends AbstractDog> void register(String name, Function<EntityRendererProvider.Context, DogModel>  getter) {
-        MODEL_MAP.putIfAbsent(name, new DogModelHolder(getter));
+    public static <T extends AbstractDog> void register(ResourceLocation id, Function<EntityRendererProvider.Context, DogModel>  getter) {
+        MODEL_MAP.putIfAbsent(id, new DogModelHolder(getter));
+    }
+
+    public static void register(String name, Function<EntityRendererProvider.Context, DogModel>  getter) {
+        register(new ResourceLocation("doggytalents", name), getter);
+    }
+
+    public static DogModelHolder getDogModelHolder(ResourceLocation id) {
+        return MODEL_MAP.get(id);
     }
 
     public static DogModelHolder getDogModelHolder(String name) {
-        return MODEL_MAP.get(name);
+        return getDogModelHolder(new ResourceLocation("doggytalents", name));
     }
 
     public static void resolve(EntityRendererProvider.Context ctx) {
