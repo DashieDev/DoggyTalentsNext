@@ -1,14 +1,20 @@
 package doggytalents.client.entity.model;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.checkerframework.checker.units.qual.cd;
+
 import com.google.common.collect.Maps;
 
+import doggytalents.api.events.RegisterCustomDogModelsEvent;
+import doggytalents.api.events.RegisterCustomDogModelsEvent.Entry;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
+import doggytalents.client.entity.model.dog.CustomDogModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
@@ -29,6 +35,7 @@ import doggytalents.client.entity.model.dog.kusa.UmeModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fml.ModLoader;
 
 public class DogModelRegistry {
     
@@ -75,6 +82,26 @@ public class DogModelRegistry {
         register("kusa_tei", ctx ->  new TeiModel(ctx.bakeLayer(ClientSetup.KUSA_TEI)));
         register("kusa_ume", ctx ->  new UmeModel(ctx.bakeLayer(ClientSetup.KUSA_UME)));
         register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)));
+        registerFromEvent();
+    }
+
+    private static void registerFromEvent() {
+        var entries = new ArrayList<Entry>(); 
+        ModLoader.get().postEvent(new RegisterCustomDogModelsEvent(entries));
+        if (entries.isEmpty())
+            return;
+        for (var entry : entries) {
+            if (entry.id == null)
+                continue;
+            if (entry.layer == null)
+                continue;
+            if (MODEL_MAP.containsKey(entry.id)) 
+                continue;
+            final boolean a = entry.shouldRenderAccessories;
+            final boolean b = entry.shouldRenderIncapacitated;
+            register(entry.id, ctx -> new CustomDogModel(ctx.bakeLayer(entry.layer), 
+                a, b));
+        }
     }
 
     public static class DogModelHolder {
