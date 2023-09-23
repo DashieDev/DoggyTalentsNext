@@ -325,8 +325,34 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                 IOUtils.closeQuietly(istream);
             }
         }
+        
+        getSkinJsonFromOtherMods(resMan, prep);
+
         prep.customSkinLoc.add(0, DogSkin.CLASSICAL);
         return true;
+    }
+
+    public void getSkinJsonFromOtherMods(ResourceManager resMan, DogTextureManager.Preparations prep) {
+        var paths = ClientSetup.OTHER_MOD_SKIN_JSONS;
+        if (paths.isEmpty())
+            return;
+
+        for (var path : paths) {
+            InputStream istream = null;
+            try {
+                var res = resMan.getResource(path);
+                if (res.isEmpty()) continue;
+                istream = res.get().open();
+                var jsonElement = GSON.fromJson(new InputStreamReader(istream, StandardCharsets.UTF_8), JsonElement.class);
+                var jsonObject = jsonElement.getAsJsonObject();
+                getSkinFromSkinJson(resMan, prep, jsonObject);
+            } catch(Exception e) {
+                e.printStackTrace();
+            } finally {
+                IOUtils.closeQuietly(istream);
+            }
+        }
+
     }
 
     public void getSkinFromSkinJson(ResourceManager resMan, DogTextureManager.Preparations prep, JsonObject jsonObject) {
