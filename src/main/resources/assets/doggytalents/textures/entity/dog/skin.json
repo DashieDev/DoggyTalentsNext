@@ -199,6 +199,12 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Bichon Maltais",
+            "skin_id" : "bichon_maltais",
+            "use_model" : "bichon_maltais",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Borzoi",
             "skin_id" : "borzoi",
             "use_model" : "borzoi",

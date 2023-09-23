@@ -14,6 +14,7 @@ import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
 import doggytalents.client.entity.model.dog.BassetHoundModel;
+import doggytalents.client.entity.model.dog.BichonMaltaisModel;
 import doggytalents.client.entity.model.dog.BorzoiLongModel;
 import doggytalents.client.entity.model.dog.BorzoiModel;
 import doggytalents.client.entity.model.dog.BoxerFloppyModel;
@@ -119,6 +120,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_COLLIE_SMOOTH = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "collie_smooth"), "main");
     public static final ModelLayerLocation DOG_COLLIE_ROUGH = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "collie_rough"), "main");
     public static final ModelLayerLocation DOG_COLLIE_BORDER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "collie_border"), "main");
+    public static final ModelLayerLocation DOG_BICHON_MALTAIS = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "bichon_maltais"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -174,6 +176,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_COLLIE_SMOOTH, CollieSmoothModel::createBodyLayer);
         event.registerLayerDefinition(DOG_COLLIE_ROUGH, CollieRoughModel::createBodyLayer);
         event.registerLayerDefinition(DOG_COLLIE_BORDER, CollieBorderModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_BICHON_MALTAIS, BichonMaltaisModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
