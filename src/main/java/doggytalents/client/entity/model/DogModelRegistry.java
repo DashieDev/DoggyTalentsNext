@@ -54,7 +54,13 @@ public class DogModelRegistry {
     }
 
     public static DogModelHolder getDogModelHolder(String name) {
-        return getDogModelHolder(new ResourceLocation("doggytalents", name));
+        ResourceLocation loc;
+        if (name.indexOf(':') >= 0) {
+            loc = new ResourceLocation(name);
+        } else {
+            loc = new ResourceLocation("doggytalents", name);
+        }
+        return getDogModelHolder(loc);
     }
 
     public static void resolve(EntityRendererProvider.Context ctx) {
