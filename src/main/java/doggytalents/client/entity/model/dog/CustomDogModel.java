@@ -23,5 +23,10 @@ public class CustomDogModel extends DogModel {
     public boolean incapShouldRender(Dog dog) {
         return incap;
     }
+
+    @Override
+    public boolean scaleBabyDog() {
+        return false;
+    }
     
 }
