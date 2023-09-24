@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import javax.annotation.Nullable;
+
 import org.joml.Vector3f;
 
 import com.google.common.collect.ImmutableList;
@@ -37,6 +39,8 @@ public class DogModel extends EntityModel<Dog> {
     public static final float[] MANE_SITTING_OFF = {0f, 2f, 0f};
     public static final float[] TAIL_LYING_OFF = {0, 6f, 0};
     public static final float[] TAIL_SITTING_OFF = {0, 9f, -2f};
+
+    public static final Vector3f DEFAULT_ROOT_PIVOT = new Vector3f(0, 15, 0);
 
     public ModelPart head;
     public ModelPart realHead;
@@ -540,6 +544,16 @@ public class DogModel extends EntityModel<Dog> {
         return false;
     }
 
+    /**
+     * Custom pivot point <b>in Minecraft format</b>
+     * to convert from Blockbench, simply negate x, y
+     * then add 24 to y.
+     * @return
+     */
+    public @Nullable Vector3f getCustomRootPivotPoint() {
+        return null;
+    }
+
     public void setVisible(boolean visible) {
         this.head.visible = visible;
         this.body.visible = visible;
@@ -577,9 +591,14 @@ public class DogModel extends EntityModel<Dog> {
 
     @Override
     public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, float p_102038_, float p_102039_, float p_102040_, float p_102041_) {
+        var pivot = DEFAULT_ROOT_PIVOT;
+        var custom_pivot = getCustomRootPivotPoint();
+        if (custom_pivot != null) {
+            pivot = custom_pivot;
+        }
         p_102034_.pushPose();
         p_102034_.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
-        p_102034_.translate((double)(0 / 16.0F), (double)(15 / 16.0F), (double)(0 / 16.0F));
+        p_102034_.translate((double)(pivot.x / 16.0F), (double)(pivot.y / 16.0F), (double)(pivot.z / 16.0F));
         if (root.zRot != 0.0F) {
             p_102034_.mulPose(Axis.ZP.rotation(root.zRot));
         }
@@ -596,7 +615,7 @@ public class DogModel extends EntityModel<Dog> {
         root.xRot = 0; root.yRot = 0; root.zRot = 0;
         root.x = 0; root.y = 0; root.z = 0;
         p_102034_.pushPose();
-        p_102034_.translate((double)(0 / 16.0F), (double)(-15 / 16.0F), (double)(0 / 16.0F));
+        p_102034_.translate((double)(-pivot.x / 16.0F), (double)(-pivot.y / 16.0F), (double)(-pivot.z / 16.0F));
         
         if (this.young && this.scaleBabyDog()) {
 
