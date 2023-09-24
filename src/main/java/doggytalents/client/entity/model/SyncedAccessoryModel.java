@@ -3,6 +3,8 @@ package doggytalents.client.entity.model;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import org.joml.Vector3f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -17,6 +19,7 @@ import net.minecraft.client.model.geom.ModelPart;
 public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
 
     public final ModelPart root;
+    private Vector3f pivot = DogModel.DEFAULT_ROOT_PIVOT;
     
     public Optional<ModelPart> head = Optional.empty();
     public Optional<ModelPart> realHead = Optional.empty();
@@ -49,6 +52,11 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
         syncPart(this.legFrontLeft, dogModel.legFrontLeft);
         syncPart(this.tail, dogModel.tail);
         syncPart(this.realTail, dogModel.realTail);
+        pivot = DogModel.DEFAULT_ROOT_PIVOT;
+        var custom_pivot = dogModel.getCustomRootPivotPoint();
+        if (custom_pivot != null) {
+            pivot = custom_pivot;
+        }
     }
 
     private void syncPart(Optional<ModelPart> part, ModelPart dogPart) {
@@ -59,7 +67,7 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
     public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, float p_103017_, float p_103018_, float p_103019_, float p_103020_) {
         stack.pushPose();
         stack.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
-        stack.translate((double)(0 / 16.0F), (double)(15 / 16.0F), (double)(0 / 16.0F));
+        stack.translate((double)(pivot.x / 16.0F), (double)(pivot.y / 16.0F), (double)(pivot.z / 16.0F));
         if (root.zRot != 0.0F) {
             stack.mulPose(Axis.ZP.rotation(root.zRot));
         }
@@ -77,7 +85,7 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
         root.x = 0; root.y = 0; root.z = 0;
 
         stack.pushPose();
-        stack.translate((double)(0 / 16.0F), (double)(-15 / 16.0F), (double)(0 / 16.0F));
+        stack.translate((double)(-pivot.x / 16.0F), (double)(-pivot.y / 16.0F), (double)(-pivot.z / 16.0F));
         
         if (this.young) {
             boolean headSync = this.head.isPresent();
