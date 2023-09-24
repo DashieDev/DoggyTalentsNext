@@ -3,7 +3,9 @@ package doggytalents.common.network.packet;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.client.DogTextureManager;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.entity.texture.DogTextureServer;
+import doggytalents.common.entity.texture.DogSkinData.Version;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.SendSkinData;
 import net.minecraft.network.FriendlyByteBuf;
@@ -76,7 +78,7 @@ public class SendSkinPacket implements IPacket<SendSkinData> {
                 }
 
                 String hash = DogTextureServer.INSTANCE.getHash(data.image);
-                dog.setSkinHash(hash);
+                dog.setDogSkinData(new DogSkinData(hash, Version.VERSION_0));
             }
         });
 

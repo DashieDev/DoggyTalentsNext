@@ -25,6 +25,7 @@ public class DoggySerializers {
     public static final RegistryObject<DataSerializerEntry> INCAP_SYNC_SERIALIZER = register2("incap_sync", IncapacitatedSyncSerializer::new);
     public static final RegistryObject<DataSerializerEntry> ARTIFACTS_SERIALIZER = register2("doggy_artifacts", DoggyArtifactsSerializer::new);
     public static final RegistryObject<DataSerializerEntry> DOG_SIZE_SERIALIZER = register2("dog_size", DogSizeSerializer::new);
+    public static final RegistryObject<DataSerializerEntry> DOG_SKIN_DATA_SERIALIZER = register2("dog_skin_data", DogSkinDataSerializer::new);
 
     private static <X extends EntityDataSerializer<?>> RegistryObject<DataSerializerEntry> register2(final String name, final Supplier<X> factory) {
         return register(name, () -> new DataSerializerEntry(factory.get()));
