@@ -1,6 +1,8 @@
 package doggytalents.common.network.packet;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.texture.DogSkinData;
+import doggytalents.common.entity.texture.DogSkinData.Version;
 import doggytalents.common.network.packet.data.DogTextureData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent.Context;
@@ -28,6 +30,6 @@ public class DogTexturePacket extends DogPacket<DogTextureData> {
             return;
         }
 
-        dogIn.setSkinHash(data.hash);
+        dogIn.setDogSkinData(new DogSkinData(data.hash, Version.VERSION_0));
     }
 }
