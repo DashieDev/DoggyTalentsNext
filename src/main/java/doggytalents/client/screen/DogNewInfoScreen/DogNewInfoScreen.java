@@ -285,8 +285,11 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         //Dropdown manager
         var dropdownMananger = DropdownMenuManager.get(this);
         if (dropdownMananger.hasDropdownMenu()) {
+            graphics.pose().pushPose();
+            graphics.pose().translate(0, 0, 200);
             dropdownMananger.getDropdownMenu()
                 .render(graphics, mouseX, mouseY, pTicks);
+            graphics.pose().popPose();
         }
 
         if (!this.dog.isAlive()) {
