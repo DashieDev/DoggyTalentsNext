@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.joml.Vector3f;
+
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -32,12 +34,17 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
         public final ModelLayerLocation layer;
         public final boolean shouldRenderAccessories;
         public final boolean shouldRenderIncapacitated;
+        public Vector3f customRootPivot = null;
 
         public Entry(ResourceLocation id, ModelLayerLocation layer, boolean accessory, boolean incap) {
             this.id = id;
             this.layer = layer;
             this.shouldRenderAccessories = accessory;
             this.shouldRenderIncapacitated = incap;
+        }
+
+        public void setCustomPivot(Vector3f pivot) {
+            this.customRootPivot = pivot;
         }
     }
 }
