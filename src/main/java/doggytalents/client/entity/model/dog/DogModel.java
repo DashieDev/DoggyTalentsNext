@@ -530,6 +530,10 @@ public class DogModel extends EntityModel<Dog> {
         return true;
     }
 
+    public boolean scaleBabyDog() {
+        return true;
+    }
+
     public boolean warnAccessory(Dog dog, Accessory inst)  {
         return false;
     }
@@ -543,6 +547,13 @@ public class DogModel extends EntityModel<Dog> {
         this.legFrontLeft.visible = visible;
         this.tail.visible = visible;
         this.mane.visible = visible;
+    }
+
+    @Override
+    public void copyPropertiesTo(EntityModel<Dog> model) {
+        super.copyPropertiesTo(model);
+        if (!this.scaleBabyDog())
+            model.young = false;
     }
 
     public boolean tickClient() { return false; }
@@ -585,7 +596,7 @@ public class DogModel extends EntityModel<Dog> {
         p_102034_.pushPose();
         p_102034_.translate((double)(0 / 16.0F), (double)(-15 / 16.0F), (double)(0 / 16.0F));
         
-        if (this.young) {
+        if (this.young && this.scaleBabyDog()) {
 
             boolean headVisible0 = this.head.visible;
             
