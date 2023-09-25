@@ -25,6 +25,7 @@ import doggytalents.client.entity.model.dog.BorzoiLongModel;
 import doggytalents.client.entity.model.dog.BorzoiModel;
 import doggytalents.client.entity.model.dog.BoxerFloppyModel;
 import doggytalents.client.entity.model.dog.BoxerPointyModel;
+import doggytalents.client.entity.model.dog.BullTerrierModel;
 import doggytalents.client.entity.model.dog.ChihuahuaModel;
 import doggytalents.client.entity.model.dog.CollieBorderModel;
 import doggytalents.client.entity.model.dog.CollieRoughModel;
@@ -133,6 +134,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_BELGIAN_MALINOIS = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "belgian_malinois"), "main");
     public static final ModelLayerLocation DOG_GERMAN_SHEPHERD = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "german_shepherd"), "main");
     public static final ModelLayerLocation DOG_OTTER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "otter"), "main");
+    public static final ModelLayerLocation DOG_BULL_TERRIER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "bull_terrier"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -194,6 +196,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_BELGIAN_MALINOIS, BelgianMalinoisModel::createBodyLayer);
         event.registerLayerDefinition(DOG_GERMAN_SHEPHERD, GermanShepherdModel::createBodyLayer);
         event.registerLayerDefinition(DOG_OTTER, OtterModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_BULL_TERRIER, BullTerrierModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
