@@ -16,6 +16,7 @@ import doggytalents.client.entity.model.dog.BorzoiLongModel;
 import doggytalents.client.entity.model.dog.BorzoiModel;
 import doggytalents.client.entity.model.dog.BoxerFloppyModel;
 import doggytalents.client.entity.model.dog.BoxerPointyModel;
+import doggytalents.client.entity.model.dog.BullTerrierModel;
 import doggytalents.client.entity.model.dog.ChihuahuaModel;
 import doggytalents.client.entity.model.dog.CollieBorderModel;
 import doggytalents.client.entity.model.dog.CollieRoughModel;
@@ -110,6 +111,7 @@ public class DogModelRegistry {
         register("belgian_malinois", ctx ->  new BelgianMalinoisModel(ctx.bakeLayer(ClientSetup.DOG_BELGIAN_MALINOIS)));
         register("german_shepherd", ctx ->  new GermanShepherdModel(ctx.bakeLayer(ClientSetup.DOG_GERMAN_SHEPHERD)));
         register("otter", ctx ->  new OtterModel(ctx.bakeLayer(ClientSetup.DOG_OTTER)));
+        register("bull_terrier", ctx ->  new BullTerrierModel(ctx.bakeLayer(ClientSetup.DOG_BULL_TERRIER)));
     }
 
     public static class DogModelHolder {
