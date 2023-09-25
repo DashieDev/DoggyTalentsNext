@@ -18,8 +18,6 @@ public final class PacketHandler {
         registerPacket(new DogTalentPacket(), DogTalentData.class);
         //registerPacket(new DogTexturePacket(), DogTextureData.class);
         registerPacket(new FriendlyFirePacket(), FriendlyFireData.class);
-        registerPacket(new SendSkinPacket(), SendSkinData.class);
-        registerPacket(new RequestSkinPacket(), RequestSkinData.class);
         registerPacket(new OpenDogScreenPacket(), OpenDogScreenData.class);
         registerPacket(new DogInventoryPagePacket(), DogInventoryPageData.class);
         registerPacket(new DogTexturePacket(), DogTextureData.class);
