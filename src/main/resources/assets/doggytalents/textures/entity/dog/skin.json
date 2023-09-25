@@ -128,14 +128,20 @@
             "author" : "MashXP, DashieDev"
         },
         {
-            "skin_name" : "German Shepherd",
+            "skin_name" : "German Shepherd (Legacy)",
             "skin_id" : "german_shepherd",
             "use_model" : "default"
         },
         {
-            "skin_name" : "German Shepherd #2",
+            "skin_name" : "German Shepherd #2 (Legacy)",
             "skin_id" : "german_shepherd_2",
             "use_model" : "default"
+        },
+        {
+            "skin_name" : "German Shepherd",
+            "skin_id" : "german_shepherd3",
+            "use_model" : "german_shepherd",
+            "author" : "MashXP"
         },
         {
             "skin_name" : "Dachshund #1",
