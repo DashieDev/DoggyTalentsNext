@@ -43,7 +43,6 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
         root.copyFrom(dogModel.root);
 
         syncPart(this.head, dogModel.head);
-        syncPart(this.realHead, dogModel.realHead);
         syncPart(this.body, dogModel.body);
         syncPart(this.mane, dogModel.mane);
         syncPart(this.legBackRight, dogModel.legBackRight);
@@ -51,7 +50,6 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
         syncPart(this.legFrontRight, dogModel.legFrontRight);
         syncPart(this.legFrontLeft, dogModel.legFrontLeft);
         syncPart(this.tail, dogModel.tail);
-        syncPart(this.realTail, dogModel.realTail);
         pivot = DogModel.DEFAULT_ROOT_PIVOT;
         var custom_pivot = dogModel.getCustomRootPivotPoint();
         if (custom_pivot != null) {

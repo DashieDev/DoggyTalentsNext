@@ -94,13 +94,14 @@ public class DogModel extends EntityModel<Dog> {
         this.legFrontLeft = (DogModelPart)box.getChild("left_front_leg");
         this.tail = (DogModelPart)box.getChild("tail");
         this.realTail = (DogModelPart)this.tail.getChild("real_tail");
+
         this.addOptionalParts(box);
         this.correctInitalPose();
     }
 
     protected void addOptionalParts(ModelPart box) {
-        this.earLeft = getChildIfPresent(this.realHead, "left_ear");
-        this.earRight = getChildIfPresent(this.realHead, "right_ear");
+        this.earLeft = getChildIfPresent(this.head, "left_ear");
+        this.earRight = getChildIfPresent(this.head, "right_ear");
     }
 
     protected Optional<DogModelPart> getChildIfPresent(DogModelPart box, String name) {
@@ -471,7 +472,6 @@ public class DogModel extends EntityModel<Dog> {
     public void copyFrom(DogModel dogModel) {
         this.root.copyFrom(dogModel.root);
         this.head.copyFrom(dogModel.head);
-        this.realHead.copyFrom(dogModel.realHead);
         this.body.copyFrom(dogModel.body);
         this.mane.copyFrom(dogModel.mane);
         this.legBackRight.copyFrom(dogModel.legBackRight);
@@ -479,7 +479,6 @@ public class DogModel extends EntityModel<Dog> {
         this.legFrontRight.copyFrom(dogModel.legFrontRight);
         this.legFrontLeft.copyFrom(dogModel.legFrontLeft);
         this.tail.copyFrom(dogModel.tail);
-        this.realTail.copyFrom(dogModel.realTail);
     }
 
     public void resetPart(DogModelPart part, Dog dog) {
