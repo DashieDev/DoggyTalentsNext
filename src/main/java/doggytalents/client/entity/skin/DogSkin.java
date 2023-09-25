@@ -23,7 +23,14 @@ public class DogSkin {
             return super.getPath();
         }
     }).setName("Classical");
-    public static final DogSkin MISSING = new DogSkin(Resources.ENTITY_WOLF).setName("<Missing>");
+    public static final DogSkin MISSING = (new DogSkin(Resources.ENTITY_WOLF){
+        @Override
+        public ResourceLocation getPath() {
+            if (ConfigHandler.CLIENT.USE_PROVIDED_COPY_FOR_CLASSICAL.get())
+                return Resources.DOG_CLASSICAL;
+            return super.getPath();
+        }
+    }).setName("<Missing>");
 
     private String name = "";
     private ResourceLocation texturePath;
