@@ -17,19 +17,19 @@ public class BelgianMalinoisModel extends DogModel{
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(-1.0F, 13.25F, 7.0F));
+		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(-1.0F, 13.75F, 7.0F));
 
 		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create(), PartPose.offset(0.0F, -2.0F, 0.0F));
 
-		PartDefinition tail2 = real_tail.addOrReplaceChild("tail2", CubeListBuilder.create().texOffs(0, 47).addBox(0.0F, 1.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.1F)), PartPose.offset(0.0F, 1.0F, 0.0F));
+		PartDefinition tail2 = real_tail.addOrReplaceChild("tail2", CubeListBuilder.create().texOffs(0, 47).addBox(0.0F, 1.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 1.0F, 0.0F));
 
-		PartDefinition tail_r1 = tail2.addOrReplaceChild("tail_r1", CubeListBuilder.create().texOffs(8, 46).addBox(-1.0F, -4.0654F, 0.2782F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.45F)), PartPose.offsetAndRotation(1.0F, 6.8154F, 1.5218F, -1.2654F, 0.0F, 0.0F));
+		PartDefinition tail_r1 = tail2.addOrReplaceChild("tail_r1", CubeListBuilder.create().texOffs(8, 46).addBox(-1.0F, -3.3154F, 0.5282F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.35F)), PartPose.offsetAndRotation(1.0F, 6.8154F, 1.5218F, -1.2654F, 0.0F, 0.0F));
 
-		PartDefinition tail_r2 = tail2.addOrReplaceChild("tail_r2", CubeListBuilder.create().texOffs(5, 46).addBox(-1.0F, -3.2212F, -0.8005F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.25F)), PartPose.offsetAndRotation(1.0F, 6.8154F, 1.5218F, -1.7453F, 0.0F, 0.0F));
+		PartDefinition tail_r2 = tail2.addOrReplaceChild("tail_r2", CubeListBuilder.create().texOffs(5, 46).addBox(-1.0F, -1.9212F, -0.1005F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.25F)), PartPose.offsetAndRotation(1.0F, 6.8154F, 1.5218F, -1.7453F, 0.0F, 0.0F));
 
-		PartDefinition tail_r3 = tail2.addOrReplaceChild("tail_r3", CubeListBuilder.create().texOffs(0, 47).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offsetAndRotation(1.0F, 5.3F, 0.4F, 0.3491F, 0.0F, 0.0F));
+		PartDefinition tail_r3 = tail2.addOrReplaceChild("tail_r3", CubeListBuilder.create().texOffs(0, 47).addBox(-1.0F, -1.0F, -1.25F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.05F)), PartPose.offsetAndRotation(1.0F, 5.3F, 0.4F, 0.3491F, 0.0F, 0.0F));
 
-		PartDefinition tail_r4 = tail2.addOrReplaceChild("tail_r4", CubeListBuilder.create().texOffs(6, 47).addBox(-1.0F, -1.5F, -1.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(1.0F, 6.7F, 1.7F, -2.2689F, 0.0F, 0.0F));
+		PartDefinition tail_r4 = tail2.addOrReplaceChild("tail_r4", CubeListBuilder.create().texOffs(6, 47).addBox(-1.0F, -1.0F, -0.25F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(1.0F, 6.7F, 1.7F, -2.2689F, 0.0F, 0.0F));
 
 		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.5F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.5F, 16.0F, 7.0F));
 
