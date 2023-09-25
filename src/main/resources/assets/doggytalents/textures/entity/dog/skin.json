@@ -241,6 +241,24 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Bull Terrier #1",
+            "skin_id" : "bull_terrier",
+            "use_model" : "bull_terrier",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Bull Terrier #2",
+            "skin_id" : "bull_terrier2",
+            "use_model" : "bull_terrier",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Bull Terrier #3",
+            "skin_id" : "bull_terrier3",
+            "use_model" : "bull_terrier",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Chihuahua #1",
             "skin_id" : "chihuahua",
             "use_model" : "chihuahua",
@@ -451,6 +469,12 @@
             "skin_id" : "otter",
             "use_model" : "otter",
             "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Nelson",
+            "skin_id" : "bull_terrier_nelson",
+            "use_model" : "bull_terrier",
+            "author" : "MashXP *stares"
         },
         {
             "skin_name" : "LONG BORZOI",
