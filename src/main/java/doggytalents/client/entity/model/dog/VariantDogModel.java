@@ -14,6 +14,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 @Deprecated
 public class VariantDogModel extends DogModel {
 
+    public ModelPart realTail1;
     public ModelPart realTail2;
     public ModelPart realTail3;
     public ModelPart earNormal;
@@ -22,11 +23,13 @@ public class VariantDogModel extends DogModel {
 
     public VariantDogModel(ModelPart box) {
         super(box);
+        this.realTail1 = this.tail.getChild("real_tail");
         this.realTail2 = this.tail.getChild("real_tail_2");
         this.realTail3 = this.tail.getChild("real_tail_bushy");
-        this.earNormal = this.realHead.getChild("ear_normal");
-        this.earBoni = this.realHead.getChild("ear_boni");
-        this.earSmall = this.realHead.getChild("ear_small");
+        var realHead = this.head.getChild("real_head");
+        this.earNormal = realHead.getChild("ear_normal");
+        this.earBoni = realHead.getChild("ear_boni");
+        this.earSmall = realHead.getChild("ear_small");
     }
     
     public static LayerDefinition createBodyLayer() {
@@ -89,17 +92,17 @@ public class VariantDogModel extends DogModel {
     protected void pickTail(int tail_id) {
         switch (tail_id) {
         default:
-            this.realTail.visible = true;
+            this.realTail1.visible = true;
             this.realTail2.visible = false;
             this.realTail3.visible = false;
             break;
         case 1 :
-            this.realTail.visible = false;
+            this.realTail1.visible = false;
             this.realTail2.visible = true;
             this.realTail3.visible = false;
             break;
         case 2 :
-            this.realTail.visible = false;
+            this.realTail1.visible = false;
             this.realTail2.visible = false;
             this.realTail3.visible = true;
             break;
@@ -124,34 +127,6 @@ public class VariantDogModel extends DogModel {
             this.earSmall.visible = true;
             break;
         }
-    }
-
-    @Override
-    public void translateShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        super.translateShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
-        this.realTail2.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
-        this.realTail3.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
-    }
-
-    @Override
-    public void resetShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        super.resetShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
-        this.realTail2.zRot = 0;
-        this.realTail3.zRot = 0;
-    }
-
-    @Override
-    public void resetAllPose() {
-        super.resetAllPose();
-        this.realTail2.resetPose();
-        this.realTail3.resetPose();
-    }
-    
-    @Override
-    public void copyFrom(DogModel dogModel) {
-        super.copyFrom(dogModel);
-        this.realTail2.copyFrom(this.realTail);
-        this.realTail3.copyFrom(this.realTail);
     }
 
     @Override
