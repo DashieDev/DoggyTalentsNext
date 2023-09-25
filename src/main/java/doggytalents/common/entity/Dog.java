@@ -2411,9 +2411,8 @@ public class Dog extends AbstractDog {
         if (this.level().isClientSide && CUSTOM_SKIN.get().equals(key)) {
             this.setClientSkin(
                 DogTextureManager.INSTANCE
-                    .getLocFromHashOrGet(
-                        this.getSkinData().getHash(), 
-                        DogTextureManager.INSTANCE::getCached));
+                    .getDogSkin(
+                        this.getSkinData().getHash()));
         }
 
         if (ANIMATION.equals(key)) {
