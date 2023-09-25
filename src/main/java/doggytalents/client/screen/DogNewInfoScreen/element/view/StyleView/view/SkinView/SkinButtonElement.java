@@ -138,7 +138,7 @@ public class SkinButtonElement extends AbstractElement {
             || selectedSkin == DogSkin.MISSING) 
             requestHash = "";
         else {
-            requestHash = DogTextureManager.INSTANCE.getTextureHash((locList.get(id)));
+            requestHash = DogTextureManager.INSTANCE.getHash((locList.get(id)));
         }
 
         applyButton.active = false;
