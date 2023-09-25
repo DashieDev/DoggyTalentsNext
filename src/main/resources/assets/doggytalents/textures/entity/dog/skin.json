@@ -284,6 +284,12 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Belgian Malinois",
+            "skin_id" : "belgian_malinois",
+            "use_model" : "belgian_malinois",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Hungarian Puli #1",
             "skin_id" : "hungarian_puli",
             "use_model" : "hungarian_puli",
