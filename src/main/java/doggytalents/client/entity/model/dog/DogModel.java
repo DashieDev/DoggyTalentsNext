@@ -62,7 +62,6 @@ public class DogModel extends EntityModel<Dog> {
     public DogModel(ModelPart box) {
         this.root = box;
         this.head = box.getChild("head");
-        this.realHead = this.head.getChild("real_head");
         this.body = box.getChild("body");
         this.mane = box.getChild("upper_body");
         this.legBackRight = box.getChild("right_hind_leg");
@@ -70,7 +69,6 @@ public class DogModel extends EntityModel<Dog> {
         this.legFrontRight = box.getChild("right_front_leg");
         this.legFrontLeft = box.getChild("left_front_leg");
         this.tail = box.getChild("tail");
-        this.realTail = this.tail.getChild("real_tail");
 
         this.addOptionalParts(box);
         this.correctInitalPose();
@@ -411,21 +409,21 @@ public class DogModel extends EntityModel<Dog> {
     public void translateShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.mane.zRot = dog.getShakeAngle(partialTickTime, -0.08F);
         this.body.zRot = dog.getShakeAngle(partialTickTime, -0.16F);
-        this.realTail.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
+        this.tail.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
     }
 
     public void resetShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.mane.zRot = 0;
         this.body.zRot = 0;
-        this.realTail.zRot = 0;
+        this.tail.zRot = 0;
     }
 
     public void translateBeggingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        this.realHead.zRot = dog.getInterestedAngle(partialTickTime) + dog.getShakeAngle(partialTickTime, 0.0F);
+        this.head.zRot = dog.getInterestedAngle(partialTickTime) + dog.getShakeAngle(partialTickTime, 0.0F);
     }
 
     public void resetBeggingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        this.realHead.zRot = 0;
+        this.head.zRot = 0;
     }
 
     Vector3f vecObj = new Vector3f();
