@@ -231,6 +231,21 @@
             "skin_name" : "Classical III",
             "skin_id" : "wolf_var2",
             "use_model" : "default"
+        },
+        {
+            "skin_name" : "Classical IV",
+            "skin_id" : "wolf_old",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Classical V",
+            "skin_id" : "wolf_old_1",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Classical VI",
+            "skin_id" : "wolf_old_2",
+            "use_model" : "default"
         }
     ]
 }
