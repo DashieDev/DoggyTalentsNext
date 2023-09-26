@@ -13,6 +13,13 @@ import doggytalents.api.events.RegisterCustomDogModelsEvent.Entry;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
+import doggytalents.client.entity.model.dog.AmmyChiModel;
+import doggytalents.client.entity.model.dog.AmmyJinModel;
+import doggytalents.client.entity.model.dog.AmmyRebirthModel;
+import doggytalents.client.entity.model.dog.AmmyReiModel;
+import doggytalents.client.entity.model.dog.AmmyShinModel;
+import doggytalents.client.entity.model.dog.AmmyRebirthModel;
+import doggytalents.client.entity.model.dog.AmmyTeiModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
 import doggytalents.client.entity.model.dog.CustomDogModel;
 import doggytalents.client.entity.model.dog.BassetHoundModel;
@@ -100,7 +107,16 @@ public class DogModelRegistry {
         register("jack", ctx -> new JackModel(ctx.bakeLayer(ClientSetup.DOG_JACK)));
         register("juno", ctx -> new JunoModel(ctx.bakeLayer(ClientSetup.DOG_JUNO)));
         register("st_bernard", ctx -> new StBernardModel(ctx.bakeLayer(ClientSetup.DOG_ST_BERNARD)));
+
         register("okami_amaterasu", ctx ->  new AmaterasuModel(ctx.bakeLayer(ClientSetup.OKAMI_AMATERASU)));
+        register("ammy_divine_chi", ctx ->  new AmmyChiModel(ctx.bakeLayer(ClientSetup.AMMY_CHI)));
+        register("ammy_divine_jin", ctx ->  new AmmyJinModel(ctx.bakeLayer(ClientSetup.AMMY_JIN)));
+        register("ammy_divine_rei", ctx ->  new AmmyReiModel(ctx.bakeLayer(ClientSetup.AMMY_REI)));
+        register("ammy_divine_shin", ctx ->  new AmmyShinModel(ctx.bakeLayer(ClientSetup.AMMY_SHIN)));
+        register("ammy_divine_shiranui", ctx ->  new AmmyRebirthModel(ctx.bakeLayer(ClientSetup.AMMY_SHIRANUI)));
+        register("ammy_divine_rebirth", ctx ->  new AmmyRebirthModel(ctx.bakeLayer(ClientSetup.AMMY_REBIRTH)));        
+        register("ammy_divine_tei", ctx ->  new AmmyTeiModel(ctx.bakeLayer(ClientSetup.AMMY_TEI)));
+        
         register("kusa_hayabusa", ctx ->  new HayabusaModel(ctx.bakeLayer(ClientSetup.KUSA_HAYABUSA)));
         register("kusa_chi", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_CHI)));
         register("kusa_ko", ctx ->  new KoModel(ctx.bakeLayer(ClientSetup.KUSA_KO)));
