@@ -7,9 +7,79 @@
             "author" : "MashXP, DashieDev"
         },
         {
-            "skin_name" : "Okami Amaterasu",
-            "skin_id" : "okami_amaterasu",
+            "skin_name" : "Okami Amaterasu #1",
+            "skin_id" : "ammy_divine_mouthopen",
             "use_model" : "okami_amaterasu",
+            "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Okami Amaterasu #2",
+            "skin_id" : "ammy_mouthshut",
+            "use_model" : "okami_amaterasu",
+            "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Okami Amaterasu (Plain)",
+            "skin_id" : "ammy_mouthopen",
+            "use_model" : "okami_amaterasu",
+            "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Okami Amaterasu (Statue)",
+            "skin_id" : "ammy_divine_statue",
+            "use_model" : "okami_amaterasu",
+            "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Okami Amaterasu (Chi Form)",
+            "skin_id" : "ammy_divine_chi",
+            "use_model" : "ammy_divine_chi",
+            "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Okami Amaterasu (Jin Form)",
+            "skin_id" : "ammy_divine_jin",
+            "use_model" : "ammy_divine_jin",
+            "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Okami Amaterasu (Shin Form)",
+            "skin_id" : "ammy_divine_shin",
+            "use_model" : "ammy_divine_shin",
+            "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Okami Amaterasu (Tei Form)",
+            "skin_id" : "ammy_divine_tei",
+            "use_model" : "ammy_divine_tei",
+            "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Okami Amaterasu (Rei Form)",
+            "skin_id" : "ammy_divine_rei",
+            "use_model" : "ammy_divine_rei",
+            "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Okami Amaterasu (Shiranui)",
+            "skin_id" : "ammy_divine_shiranui",
+            "use_model" : "ammy_divine_shiranui",
+            "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Okami Amaterasu (Rebirth)",
+            "skin_id" : "ammy_divine_rebirth",
+            "use_model" : "ammy_divine_rebirth",
             "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
             "author" : "MashXP, DashieDev"
         },
