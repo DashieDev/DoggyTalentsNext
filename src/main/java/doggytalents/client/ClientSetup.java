@@ -12,6 +12,14 @@ import doggytalents.client.entity.model.SmartyGlassesModel;
 import doggytalents.client.entity.model.WigModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
+import doggytalents.client.entity.model.dog.AmmyChiModel;
+import doggytalents.client.entity.model.dog.AmmyJinModel;
+import doggytalents.client.entity.model.dog.AmmyRebirthModel;
+import doggytalents.client.entity.model.dog.AmmyReiModel;
+import doggytalents.client.entity.model.dog.AmmyShinModel;
+import doggytalents.client.entity.model.dog.AmmyShiranuiModel;
+import doggytalents.client.entity.model.dog.AmmyRebirthModel;
+import doggytalents.client.entity.model.dog.AmmyTeiModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
 import doggytalents.client.entity.model.dog.BassetHoundModel;
 import doggytalents.client.entity.model.dog.BelgianMalinoisModel;
@@ -95,7 +103,16 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_JACK = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_jack"), "main");   
     public static final ModelLayerLocation DOG_JUNO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_juno"), "main");   
     public static final ModelLayerLocation DOG_ST_BERNARD = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_st_bernard"), "main");   
-    public static final ModelLayerLocation OKAMI_AMATERASU = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "okami_amaterasu"), "main");   
+
+    public static final ModelLayerLocation OKAMI_AMATERASU = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "okami_amaterasu"), "main");
+    public static final ModelLayerLocation AMMY_CHI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ammy_divine_chi"), "main");
+    public static final ModelLayerLocation AMMY_JIN = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ammy_divine_jin"), "main");
+    public static final ModelLayerLocation AMMY_REBIRTH = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ammy_divine_rebirth"), "main");
+    public static final ModelLayerLocation AMMY_REI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ammy_divine_rei"), "main");
+    public static final ModelLayerLocation AMMY_SHIN = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ammy_divine_shin"), "main");
+    public static final ModelLayerLocation AMMY_SHIRANUI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ammy_divine_shiranui"), "main");
+    public static final ModelLayerLocation AMMY_TEI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ammy_divine_tei"), "main");
+
     public static final ModelLayerLocation KUSA_HAYABUSA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_hayabusa"), "main");   
     public static final ModelLayerLocation KUSA_CHI = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_chi"), "main");   
     public static final ModelLayerLocation KUSA_KO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "kusa_ko"), "main");   
@@ -155,7 +172,16 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_JACK, JackModel::createBodyLayer);
         event.registerLayerDefinition(DOG_JUNO, JunoModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ST_BERNARD, StBernardModel::createBodyLayer);
+
         event.registerLayerDefinition(OKAMI_AMATERASU, AmaterasuModel::createBodyLayer);
+        event.registerLayerDefinition(AMMY_CHI, AmmyChiModel::createBodyLayer);
+        event.registerLayerDefinition(AMMY_JIN, AmmyJinModel::createBodyLayer);
+        event.registerLayerDefinition(AMMY_REBIRTH, AmmyRebirthModel::createBodyLayer);
+        event.registerLayerDefinition(AMMY_REI, AmmyReiModel::createBodyLayer);
+        event.registerLayerDefinition(AMMY_SHIN, AmmyShinModel::createBodyLayer);
+        event.registerLayerDefinition(AMMY_SHIRANUI, AmmyShiranuiModel::createBodyLayer);
+        event.registerLayerDefinition(AMMY_TEI, AmmyTeiModel::createBodyLayer);
+
         event.registerLayerDefinition(KUSA_HAYABUSA, HayabusaModel::createBodyLayer);
         event.registerLayerDefinition(KUSA_CHI, ChiModel::createBodyLayer);
         event.registerLayerDefinition(KUSA_KO, KoModel::createBodyLayer);
