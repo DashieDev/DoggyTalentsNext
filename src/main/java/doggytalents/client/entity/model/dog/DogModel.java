@@ -416,21 +416,21 @@ public class DogModel extends EntityModel<Dog> {
     public void translateShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.mane.zRot = dog.getShakeAngle(partialTickTime, -0.08F);
         this.body.zRot = dog.getShakeAngle(partialTickTime, -0.16F);
-        this.tail.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
+        this.realTail.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
     }
 
     public void resetShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.mane.zRot = 0;
         this.body.zRot = 0;
-        this.tail.zRot = 0;
+        this.realTail.zRot = 0;
     }
 
     public void translateBeggingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        this.head.zRot = dog.getInterestedAngle(partialTickTime) + dog.getShakeAngle(partialTickTime, 0.0F);
+        this.realHead.zRot = dog.getInterestedAngle(partialTickTime) + dog.getShakeAngle(partialTickTime, 0.0F);
     }
 
     public void resetBeggingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        this.head.zRot = 0;
+        this.realHead.zRot = 0;
     }
 
     Vector3f vecObj = new Vector3f();
