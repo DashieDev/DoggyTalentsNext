@@ -42,7 +42,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     }
 
     public String getHash(DogSkin loc) {
-        return this.locToSkinHash.getOrDefault(loc, "MISSING_MAPPING");
+        return this.locToSkinHash.getOrDefault(loc, "");
     }
 
     public ResourceLocation getTexture(Dog dog) {
