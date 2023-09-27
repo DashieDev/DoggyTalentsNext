@@ -554,6 +554,14 @@ public class DogModel extends EntityModel<Dog> {
         return null;
     }
 
+    public boolean hasDefaultScale() {
+        return false;
+    }
+
+    public float getDefaultScale() {
+        return 1f;
+    }
+
     public void setVisible(boolean visible) {
         this.head.visible = visible;
         this.body.visible = visible;
