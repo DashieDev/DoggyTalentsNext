@@ -1232,6 +1232,17 @@ public class Dog extends AbstractDog {
         return super.canStandOnFluid(state);
     }
 
+    @Override
+    public boolean ignoreExplosion() {
+        for (var alter : this.alterations) {
+            var result = alter.negateExplosion(this);
+            if (result.shouldSwing()) {
+                return true;
+            }
+        }
+        return super.ignoreExplosion();
+    }
+
 
     @Override
     protected int increaseAirSupply(int currentAir) {

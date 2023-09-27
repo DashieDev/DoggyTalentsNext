@@ -234,6 +234,10 @@ public interface IDogAlteration {
         return InteractionResultHolder.pass(type);
     }
 
+    default InteractionResult negateExplosion(AbstractDog dog) {
+        return InteractionResult.PASS;
+    }
+
     /**
      * Only called serverside
      * @param dogIn The dog
