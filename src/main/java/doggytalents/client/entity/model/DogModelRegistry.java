@@ -166,11 +166,7 @@ public class DogModelRegistry {
                 continue;
             if (MODEL_MAP.containsKey(entry.id)) 
                 continue;
-            final boolean a = entry.shouldRenderAccessories;
-            final boolean b = entry.shouldRenderIncapacitated;
-            var c = entry.customRootPivot;
-            register(entry.id, ctx -> new CustomDogModel(ctx.bakeLayer(entry.layer), 
-                a, b, c));
+            register(entry.id, ctx -> new CustomDogModel(ctx.bakeLayer(entry.layer), entry));
         }
     }
 
