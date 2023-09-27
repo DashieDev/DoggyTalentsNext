@@ -205,6 +205,8 @@ public class DogModel extends EntityModel<Dog> {
         this.legFrontRight.resetPose();
         this.legFrontLeft.resetPose();
         this.head.resetPose();
+        this.earLeft.ifPresent(ear -> ear.resetPose());
+        this.earRight.ifPresent(ear -> ear.resetPose());
 
         animateStandWalking(dog, limbSwing, limbSwingAmount, partialTickTime);
     }
@@ -227,20 +229,20 @@ public class DogModel extends EntityModel<Dog> {
         this.tail.z += getAnimateWalkingValue(w, swing, -0.5f*modifier);
 
         if (this.earRight.isPresent()) {
-            this.earRight.get().xRot = getAnimateWalkingValue(w, swing, -40f*Mth.DEG_TO_RAD );
-            this.earRight.get().zRot = getAnimateWalkingValue(w, swing, -27.5f*Mth.DEG_TO_RAD );
+            this.earRight.get().xRot += getAnimateWalkingValue(w, swing, -40f*Mth.DEG_TO_RAD );
+            this.earRight.get().zRot += getAnimateWalkingValue(w, swing, -27.5f*Mth.DEG_TO_RAD );
             this.earRight.get().y += getAnimateWalkingValue(w, swing, 0.5f );
         }
         if (this.earLeft.isPresent()) {
-            this.earLeft.get().xRot = getAnimateWalkingValue(w, swing, -40f*Mth.DEG_TO_RAD );
-            this.earLeft.get().zRot = getAnimateWalkingValue(w, swing, 27.5f*Mth.DEG_TO_RAD );
+            this.earLeft.get().xRot += getAnimateWalkingValue(w, swing, -40f*Mth.DEG_TO_RAD );
+            this.earLeft.get().zRot += getAnimateWalkingValue(w, swing, 27.5f*Mth.DEG_TO_RAD );
             this.earLeft.get().y += getAnimateWalkingValue(w, swing, 0.5f );
         }
 
-        this.legBackRight.xRot = w * 1.4F * limbSwingAmount;
-        this.legBackLeft.xRot = w1 * 1.4F * limbSwingAmount;
-        this.legFrontRight.xRot = w1 * 1.4F * limbSwingAmount;
-        this.legFrontLeft.xRot = w * 1.4F * limbSwingAmount;
+        this.legBackRight.xRot += w * 1.4F * limbSwingAmount;
+        this.legBackLeft.xRot += w1 * 1.4F * limbSwingAmount;
+        this.legFrontRight.xRot += w1 * 1.4F * limbSwingAmount;
+        this.legFrontLeft.xRot += w * 1.4F * limbSwingAmount;
     }
 
     private float getAnimateWalkingValue(float w, float swingAmount, float amplitude) {
