@@ -36,6 +36,7 @@
    "item.doggytalents.whistle.11": "Mob Retriever Whistle",
    "item.doggytalents.whistle.12": "Heel By Look Whistle",
    "item.doggytalents.whistle.13": "Ride With Me Whistle",
+   "item.doggytalents.whistle.14": "Whistle: Command Howl!",
 
    "item.doggytalents.treat_bag": "Treat Bag",
    "item.doggytalents.energizer_stick": "Energizer Stick",
@@ -161,7 +162,7 @@
    "talent.doggytalents.guard_dog.description": "Increases the chance that your Dog, will completely block a physical attack.",
    "talent.doggytalents.hunter_dog.description": "Each level gives a 10%% chance that anything your Dog kills will drop its loot twice, Level 5 grants an extra 10%%, bringing the chance up to 60%%.",
    "talent.doggytalents.hell_hound.description": "Allows your Dog to set things on fire while attacking. The higher the level, the longer the fire lasts. Mastering this skill grants your  Dogog immunity to fire.",
-   "talent.doggytalents.wolf_mount.description": "Allows you to ride your Dog anywhere at speed. Every level allows your Dog to jump higher. To get on your Dog have an Empty Hand, Right-click the Dog while being airbourne to get on.",
+   "talent.doggytalents.wolf_mount.description": "Allows you to ride your Dog anywhere at speed. Every level allows your Dog to jump higher. To being riding your Dog, have an Empty Hand then Rapidly Right-click the Dog Twice to get on.",
    "talent.doggytalents.pack_puppy.description": "Each level gives your Dog 3 inventory slots in its PackPuppy GUI. To access GUI, Sneak + Right Click on your Dog! At level 5, your Dog will, also automatically pick up any nearby items if it has room in its inventory",
    "talent.doggytalents.pillow_paw.description": "Each level allows your Dog to fall 3 more blocks before taking damage. Mastering this skill will allow your Dog to completely negate fall damage.",
    "talent.doggytalents.quick_healer.description": "Improves the speed at which your Dog heals without resting. Mastering this skill will make your Dog heal 50%% faster while sitting.",

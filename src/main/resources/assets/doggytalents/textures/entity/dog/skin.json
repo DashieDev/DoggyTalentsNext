@@ -192,13 +192,6 @@
             "author" : "MashXP, DashieDev"
         },
         {
-            "skin_name" : "Pochita",
-            "skin_id" : "pochita",
-            "use_model" : "pochita",
-            "based_on" : "Pochita from Chainsaw Man",
-            "author" : "MashXP, DashieDev"
-        },
-        {
             "skin_name" : "St Bernard",
             "skin_id" : "st_bernard",
             "use_model" : "st_bernard",
@@ -524,6 +517,21 @@
         {
             "skin_name" : "Classical III",
             "skin_id" : "wolf_var2",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Classical IV",
+            "skin_id" : "wolf_old",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Classical V",
+            "skin_id" : "wolf_old_1",
+            "use_model" : "default"
+        },
+        {
+            "skin_name" : "Classical VI",
+            "skin_id" : "wolf_old_2",
             "use_model" : "default"
         },
         {

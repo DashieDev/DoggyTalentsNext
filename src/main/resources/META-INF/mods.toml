@@ -9,9 +9,9 @@ logoFile="dt_background.png"
     version="${file.jarVersion}"
     updateJSONURL="https://raw.githubusercontent.com/DashieDev/DoggyTalentsNext/master/check_for_update/update.json"
     displayName="Doggy Talents Next"
-    credits="dashiedev, mashxp"
+    credits="silverstarshiro, stefanbech and the DTN Discord Server."
     authors="dashiedev, mashxp"
-    description="The next generation of the beloved-by-many DoggyTalents. Turning your wolves into fun, playful, skillful dogs."
+    description="Minecraft Wolf, reimagined."
 [[dependencies.doggytalents]] #optional
     modId="forge"
     mandatory=true

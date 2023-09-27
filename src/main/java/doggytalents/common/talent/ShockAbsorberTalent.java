@@ -4,6 +4,7 @@ package doggytalents.common.talent;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class ShockAbsorberTalent extends TalentInstance {
@@ -34,6 +35,14 @@ public class ShockAbsorberTalent extends TalentInstance {
             dogIn.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
         if (attrib == null) return;
         attrib.setBaseValue(0.25);
+    }
+
+    @Override
+    public InteractionResult negateExplosion(AbstractDog dog) {
+        if (this.level() >= this.talent.getMaxLevel()) {
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.PASS;
     }
 
     public double getKnockbackResist() {

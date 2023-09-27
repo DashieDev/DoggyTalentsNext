@@ -1,12 +1,17 @@
 package doggytalents.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTileEntityTypes;
+import doggytalents.api.events.RegisterDogSkinJsonPathEvent;
 import doggytalents.client.entity.model.BowTieModel;
 import doggytalents.client.entity.model.DogArmorModel;
 import doggytalents.client.entity.model.DogBackpackModel;
 import doggytalents.client.entity.model.DogFrontLegsSeperate;
+import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.DogRescueModel;
 import doggytalents.client.entity.model.SmartyGlassesModel;
 import doggytalents.client.entity.model.WigModel;
@@ -90,6 +95,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.fml.ModLoader;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ClientSetup {
@@ -152,6 +158,8 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_BACKPACK = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_backpack"), "main");
     public static final ModelLayerLocation DOG_RESCUE_BOX = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_rescue_box"), "main");
     public static final ModelLayerLocation DOG_BEAM = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "main");
+
+    public static final List<ResourceLocation> OTHER_MOD_SKIN_JSONS = new ArrayList<ResourceLocation>();
 
     public static void setupScreenManagers(final FMLClientSetupEvent event) {
         MenuScreens.register(DoggyContainerTypes.FOOD_BOWL.get(), FoodBowlScreen::new);
@@ -225,7 +233,19 @@ public class ClientSetup {
         AccessoryModelManager.registerLayerDef(event);
 
         DogAnimationRegistry.init();
+        DogModelRegistry.init();
+
+        gatherSkinJsonFromOtherMods();
         // TODO: RenderingRegistry.registerEntityRenderingHandler(DoggyEntityTypes.DOG_BEAM.get(), manager -> new DoggyBeamRenderer<>(manager, event.getMinecraftSupplier().get().getItemRenderer()));
+    }
+
+    private static void gatherSkinJsonFromOtherMods() {
+        OTHER_MOD_SKIN_JSONS.clear();
+        var paths = new ArrayList<ResourceLocation>();
+        ModLoader.get().postEvent(new RegisterDogSkinJsonPathEvent(paths));
+        if (paths.isEmpty())
+            return;
+        OTHER_MOD_SKIN_JSONS.addAll(paths);
     }
 
     public static void setupTileEntityRenderers(final EntityRenderersEvent.RegisterRenderers event) {

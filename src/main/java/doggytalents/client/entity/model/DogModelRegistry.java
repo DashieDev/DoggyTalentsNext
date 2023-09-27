@@ -1,10 +1,15 @@
 package doggytalents.client.entity.model;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.checkerframework.checker.units.qual.cd;
+
 import com.google.common.collect.Maps;
 
+import doggytalents.api.events.RegisterCustomDogModelsEvent;
+import doggytalents.api.events.RegisterCustomDogModelsEvent.Entry;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
@@ -16,6 +21,7 @@ import doggytalents.client.entity.model.dog.AmmyShinModel;
 import doggytalents.client.entity.model.dog.AmmyRebirthModel;
 import doggytalents.client.entity.model.dog.AmmyTeiModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
+import doggytalents.client.entity.model.dog.CustomDogModel;
 import doggytalents.client.entity.model.dog.BassetHoundModel;
 import doggytalents.client.entity.model.dog.BelgianMalinoisModel;
 import doggytalents.client.entity.model.dog.BichonMaltaisModel;
@@ -57,17 +63,33 @@ import doggytalents.client.entity.model.dog.kusa.TeiModel;
 import doggytalents.client.entity.model.dog.kusa.UmeModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fml.ModLoader;
 
 public class DogModelRegistry {
     
-    private static Map<String, DogModelHolder> MODEL_MAP;
+    private static Map<ResourceLocation, DogModelHolder> MODEL_MAP;
 
-    public static <T extends AbstractDog> void register(String name, Function<EntityRendererProvider.Context, DogModel>  getter) {
-        MODEL_MAP.putIfAbsent(name, new DogModelHolder(getter));
+    public static <T extends AbstractDog> void register(ResourceLocation id, Function<EntityRendererProvider.Context, DogModel>  getter) {
+        MODEL_MAP.putIfAbsent(id, new DogModelHolder(getter));
+    }
+
+    public static void register(String name, Function<EntityRendererProvider.Context, DogModel>  getter) {
+        register(new ResourceLocation("doggytalents", name), getter);
+    }
+
+    public static DogModelHolder getDogModelHolder(ResourceLocation id) {
+        return MODEL_MAP.get(id);
     }
 
     public static DogModelHolder getDogModelHolder(String name) {
-        return MODEL_MAP.get(name);
+        ResourceLocation loc;
+        if (name.indexOf(':') >= 0) {
+            loc = new ResourceLocation(name);
+        } else {
+            loc = new ResourceLocation("doggytalents", name);
+        }
+        return getDogModelHolder(loc);
     }
 
     public static void resolve(EntityRendererProvider.Context ctx) {
@@ -115,6 +137,7 @@ public class DogModelRegistry {
         register("french_bulldog", ctx ->  new FrenchBulldogModel(ctx.bakeLayer(ClientSetup.DOG_FRENCH_BULLDOG)));
         register("poodle", ctx ->  new PoodleModel(ctx.bakeLayer(ClientSetup.DOG_POODLE)));
         register("chihuahua", ctx ->  new ChihuahuaModel(ctx.bakeLayer(ClientSetup.DOG_CHIHUAHUA)));
+
         register("boxer_floppy", ctx ->  new BoxerFloppyModel(ctx.bakeLayer(ClientSetup.DOG_BOXER_FLOPPY)));
         register("boxer_pointy", ctx ->  new BoxerPointyModel(ctx.bakeLayer(ClientSetup.DOG_BOXER_POINTY)));
         register("miniature_pinscher", ctx ->  new MiniaturePinscherModel(ctx.bakeLayer(ClientSetup.DOG_MINIATURE_PINSCHER)));
@@ -128,6 +151,28 @@ public class DogModelRegistry {
         register("german_shepherd", ctx ->  new GermanShepherdModel(ctx.bakeLayer(ClientSetup.DOG_GERMAN_SHEPHERD)));
         register("otter", ctx ->  new OtterModel(ctx.bakeLayer(ClientSetup.DOG_OTTER)));
         register("bull_terrier", ctx ->  new BullTerrierModel(ctx.bakeLayer(ClientSetup.DOG_BULL_TERRIER)));
+
+        registerFromEvent();
+    }
+
+    private static void registerFromEvent() {
+        var entries = new ArrayList<Entry>(); 
+        ModLoader.get().postEvent(new RegisterCustomDogModelsEvent(entries));
+        if (entries.isEmpty())
+            return;
+        for (var entry : entries) {
+            if (entry.id == null)
+                continue;
+            if (entry.layer == null)
+                continue;
+            if (MODEL_MAP.containsKey(entry.id)) 
+                continue;
+            final boolean a = entry.shouldRenderAccessories;
+            final boolean b = entry.shouldRenderIncapacitated;
+            var c = entry.customRootPivot;
+            register(entry.id, ctx -> new CustomDogModel(ctx.bakeLayer(entry.layer), 
+                a, b, c));
+        }
     }
 
     public static class DogModelHolder {
