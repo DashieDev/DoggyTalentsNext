@@ -954,6 +954,10 @@ public class Dog extends AbstractDog {
             }
         }
 
+        if (handleBreeding(player, hand, stack).shouldSwing()) {
+            return InteractionResult.SUCCESS;
+        }
+
         InteractionResult actionresulttype = super.mobInteract(player, hand);
         int sit_interval = this.tickCount - this.lastOrderedToSitTick;
         float r = this.getRandom().nextFloat();
@@ -999,6 +1003,27 @@ public class Dog extends AbstractDog {
                 Component.translatable(
                     "talent.doggytalents.bed_finder.dog_mount", 
                     this.getGenderPronoun()), true);
+        }
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleBreeding(Player player, InteractionHand hand, ItemStack stack) {
+        if (!stack.is(DoggyTags.BREEDING_ITEMS))
+            return InteractionResult.PASS;
+        if (!canInteract(player))
+            return InteractionResult.PASS;
+        
+
+        if (this.level().isClientSide)
+            return InteractionResult.SUCCESS;
+
+        int age = this.getAge();
+        if (age == 0 && this.canFallInLove()) {
+            this.usePlayerItem(player, hand, stack);
+            this.setInLove(player);
+        } else if (this.isBaby()) {
+            this.usePlayerItem(player, hand, stack);
+            this.ageUp(getSpeedUpSecondsWhenFeeding(-age), true);
         }
         return InteractionResult.SUCCESS;
     }
@@ -1720,7 +1745,8 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.is(DoggyTags.BREEDING_ITEMS);
+        //Only authorized breeding!
+        return false;
     }
 
     @Override
