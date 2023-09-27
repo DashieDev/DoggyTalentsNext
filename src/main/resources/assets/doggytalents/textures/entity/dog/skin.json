@@ -1,12 +1,6 @@
 {
     "dog_skins" : [
         {
-            "skin_name" : "Akita Inu",
-            "skin_id" : "akita_inu",
-            "use_model" : "default",
-            "author" : "MashXP, DashieDev"
-        },
-        {
             "skin_name" : "Okami Amaterasu #1",
             "skin_id" : "ammy_divine_mouthopen",
             "use_model" : "okami_amaterasu",
@@ -456,6 +450,12 @@
             "skin_id" : "lucario",
             "use_model" : "lucario",
             "based_on" : "Lucario from Pokemon",
+            "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Akita Inu",
+            "skin_id" : "akita_inu",
+            "use_model" : "default",
             "author" : "MashXP, DashieDev"
         },
         {
