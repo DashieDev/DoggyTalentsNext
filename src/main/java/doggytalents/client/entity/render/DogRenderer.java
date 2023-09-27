@@ -115,6 +115,12 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     protected void scale(Dog dogIn, PoseStack matrixStackIn, float partialTickTime) {
         float size = dogIn.isBaby() ? 0.5f 
             : dogIn.getDogSize().getScale();
+        var skin = dogIn.getClientSkin();
+        if (skin.useCustomModel()) {
+            var model = skin.getCustomModel().getValue();
+            if (model.hasDefaultScale())
+                size *= model.getDefaultScale();
+        }
         matrixStackIn.scale(size, size, size);
         this.shadowRadius = size * 0.5F;
     }
