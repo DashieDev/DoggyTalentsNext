@@ -4,30 +4,28 @@ import javax.annotation.Nullable;
 
 import org.joml.Vector3f;
 
+import doggytalents.api.events.RegisterCustomDogModelsEvent.DogModelProps;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 
 public class CustomDogModel extends DogModel {
 
-    private boolean accessory, incap;
-    private Vector3f customRootPivot = null;
+    private final DogModelProps props;
 
-    public CustomDogModel(ModelPart box, boolean accessory, boolean incap, Vector3f pivot) {
+    public CustomDogModel(ModelPart box, DogModelProps props) {
         super(box);
-        this.accessory = accessory;
-        this.incap = incap;
-        this.customRootPivot = pivot;
+        this.props = props;
     }
 
     @Override
     public boolean acessoryShouldRender(Dog dog, AccessoryInstance inst) {
-        return accessory;
+        return props.shouldRenderAccessories;
     }
 
     @Override
     public boolean incapShouldRender(Dog dog) {
-        return incap;
+        return props.shouldRenderIncapacitated;
     }
 
     @Override
@@ -37,7 +35,17 @@ public class CustomDogModel extends DogModel {
 
     @Override
     public @Nullable Vector3f getCustomRootPivotPoint() {
-        return this.customRootPivot;
+        return this.props.customRootPivot;
+    }
+
+    @Override
+    public boolean hasDefaultScale() {
+        return this.props.hasDefaultScale;
+    }
+
+    @Override
+    public float getDefaultScale() {
+        return this.props.defaultScale;
     }
     
 }
