@@ -14,14 +14,14 @@ import net.minecraftforge.fml.event.IModBusEvent;
 
 public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent {
 
-    private List<Entry> entries;
+    private List<DogModelProps> entries;
 
-    public RegisterCustomDogModelsEvent(List<Entry> entries) {
+    public RegisterCustomDogModelsEvent(List<DogModelProps> entries) {
         this.entries = entries;
     }
 
-    public void register(Entry entry) {
-        this.entries.add(entry);
+    public void register(DogModelProps.Builder builder) {
+        this.entries.add(builder.build());
     }
 
     @Override
@@ -29,22 +29,62 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
         return false;
     }
 
-    public static class Entry {
+    public static class DogModelProps {
         public final ResourceLocation id;
         public final ModelLayerLocation layer;
         public final boolean shouldRenderAccessories;
         public final boolean shouldRenderIncapacitated;
-        public Vector3f customRootPivot = null;
+        public final boolean hasDefaultScale;
+        public final Vector3f customRootPivot;
+        public final float defaultScale;
 
-        public Entry(ResourceLocation id, ModelLayerLocation layer, boolean accessory, boolean incap) {
+        private DogModelProps(ResourceLocation id, ModelLayerLocation layer, boolean accessory, boolean incap,
+            Vector3f customPivot, float defaulScale) {
             this.id = id;
             this.layer = layer;
             this.shouldRenderAccessories = accessory;
             this.shouldRenderIncapacitated = incap;
+            this.defaultScale = defaulScale;
+            this.hasDefaultScale = this.defaultScale != 1f;
+            this.customRootPivot = customPivot;
         }
 
-        public void setCustomPivot(Vector3f pivot) {
-            this.customRootPivot = pivot;
+        public static class Builder {
+            public final ResourceLocation id;
+            public final ModelLayerLocation layer;
+            private boolean accessory = false, incap = false;
+            private Vector3f customRootPivot = null;
+            private float defaultScale = 1f;
+
+            public Builder(ResourceLocation id, ModelLayerLocation layer) {
+                this.id = id;
+                this.layer = layer;
+            }
+
+            public Builder withAccessory() {
+                this.accessory = true;
+                return this;
+            }
+
+            public Builder withIncap() {
+                this.incap = true;
+                return this;
+            }
+
+            public Builder withCustomRootPivot(Vector3f pivot) {
+                this.customRootPivot = pivot;
+                return this;
+            }
+
+            public Builder withDefaultScale(float scale) {
+                this.defaultScale = scale;
+                return this;
+            }
+
+            public DogModelProps build() {
+                return new DogModelProps(id, layer, accessory, incap, customRootPivot, defaultScale);
+            }
+
         }
     }
 }

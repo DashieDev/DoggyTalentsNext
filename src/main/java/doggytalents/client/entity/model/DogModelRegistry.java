@@ -9,7 +9,7 @@ import org.checkerframework.checker.units.qual.cd;
 import com.google.common.collect.Maps;
 
 import doggytalents.api.events.RegisterCustomDogModelsEvent;
-import doggytalents.api.events.RegisterCustomDogModelsEvent.Entry;
+import doggytalents.api.events.RegisterCustomDogModelsEvent.DogModelProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
@@ -155,7 +155,7 @@ public class DogModelRegistry {
     }
 
     private static void registerFromEvent() {
-        var entries = new ArrayList<Entry>(); 
+        var entries = new ArrayList<DogModelProps>(); 
         ModLoader.get().postEvent(new RegisterCustomDogModelsEvent(entries));
         if (entries.isEmpty())
             return;
