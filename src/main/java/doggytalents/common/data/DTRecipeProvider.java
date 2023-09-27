@@ -283,9 +283,16 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('S', Items.STICK)
             .unlockedBy("has_stick", has(Items.STICK))
             .save(consumer);
-
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.GOLDEN_A_FIVE_WAGYU.get(), 1)
+            .pattern(" GT")
+            .pattern("GSG")
+            .pattern(" G ")
+            .define('G', Items.GOLD_NUGGET)
+            .define('S', Items.COOKED_BEEF)
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .unlockedBy("has_cooked_beef", has(Items.COOKED_BEEF))
+            .save(consumer);        
     }
-    
     // @Override
     // protected void saveAdvancement(HashCache cache, JsonObject advancementJson, Path pathIn) {
     //     //NOOP - We dont replace any of the advancement things yet...

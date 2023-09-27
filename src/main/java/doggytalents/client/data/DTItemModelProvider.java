@@ -80,6 +80,7 @@ public class DTItemModelProvider extends ItemModelProvider {
 
         generated(DoggyItems.HOT_DOG);
         generated(DoggyItems.GIANT_STICK);
+        generated(DoggyItems.GOLDEN_A_FIVE_WAGYU);
 
 
         generated(DoggyItems.CHI_ORB);
