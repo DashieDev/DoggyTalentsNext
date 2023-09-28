@@ -185,6 +185,10 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         if (author != null) skin.setAuthor(author.getAsString());
         var based_on = skinJsonObject.get("based_on");
         if (based_on != null) skin.setBasedOn(based_on.getAsString());
+        var desc = skinJsonObject.get("description");
+        if (desc != null) skin.setDesc(desc.getAsString());
+        var tags = skinJsonObject.get("tags");
+        if (tags != null) skin.setTags(tags.getAsString());
     }
 
     @Override
