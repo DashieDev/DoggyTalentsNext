@@ -47,7 +47,8 @@ public class DoggyAccessories {
     public static final RegistryObject<LocatorOrbAccessory> JIN_ORB = register("locator_orb_jin", () -> new LocatorOrbAccessory(DoggyItems.JIN_ORB, 0xffd1523a).setModelTexture(Resources.JIN_ORB).setAccessoryRenderType(AccessoryRenderType.MODEL).setRenderTranslucent(true));
     public static final RegistryObject<Clothing> HOT_DOG = register("hot_dog", () -> new HotDog(DoggyItems.HOT_DOG).setModelTexture(Resources.HOT_DOG).setAccessoryRenderType(AccessoryRenderType.MODEL).setRenderTranslucent(true));
     public static final RegistryObject<Clothing> GIANT_STICK = register("giant_stick", () -> new GiantStick(DoggyItems.GIANT_STICK).setModelTexture(Resources.GIANT_STICK).setAccessoryRenderType(AccessoryRenderType.MODEL).setRenderTranslucent(true));
-    
+    public static final RegistryObject<Glasses> SNORKEL = register("snorkel", () -> new Snorkel(DoggyItems.SNORKEL).setModelTexture(Resources.SNORKEL).setAccessoryRenderType(AccessoryRenderType.MODEL));
+
     public static final RegistryObject<Helmet> IRON_HELMET = registerHelmet("iron_helmet", () -> Items.IRON_HELMET, Resources.IRON_HELMET);
     public static final RegistryObject<Helmet> DIAMOND_HELMET = registerHelmet("diamond_helmet", () -> Items.DIAMOND_HELMET, Resources.DIAMOND_HELMET);
     public static final RegistryObject<Helmet> GOLDEN_HELMET = registerHelmet("golden_helmet", () -> Items.GOLDEN_HELMET, Resources.GOLDEN_HELMET);

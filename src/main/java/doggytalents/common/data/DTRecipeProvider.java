@@ -299,7 +299,15 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('I', Items.IRON_INGOT)
             .define('S', Items.STICK)
             .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-            .save(consumer);         
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SNORKEL.get(), 1)
+            .pattern("  B")
+            .pattern("GIG")
+            .define('I', Items.IRON_INGOT)
+            .define('G', Items.GLASS_PANE)
+            .define('B', Items.BAMBOO)            
+            .unlockedBy("has_bamboo", has(Items.BAMBOO))
+            .save(consumer);        
     }
     // @Override
     // protected void saveAdvancement(HashCache cache, JsonObject advancementJson, Path pathIn) {
