@@ -73,7 +73,13 @@ public class DogSkinElement extends AbstractElement {
             Component.literal(manifestSkin.getBasedOn())).init());
         if (!manifestSkin.getAuthor().isEmpty()) 
         scroll.addChildren(new SkinStrEntry(scroll, getScreen(), Component.literal("Author: "), 
-            Component.literal(manifestSkin.getAuthor())).init()); 
+            Component.literal(manifestSkin.getAuthor())).init());
+        if (!manifestSkin.getDesc().isEmpty()) 
+        scroll.addChildren(new SkinStrEntry(scroll, getScreen(), Component.literal("Desciption: "), 
+            Component.literal(manifestSkin.getDesc())).init()); 
+        if (!manifestSkin.getTags().isEmpty()) 
+        scroll.addChildren(new SkinStrEntry(scroll, getScreen(), Component.literal("Tags: "), 
+            Component.literal(manifestSkin.getTags())).init());
         
         return this;
     }
