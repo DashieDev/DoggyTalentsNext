@@ -37,6 +37,6 @@ public class SnorkelRenderEntry extends AccessoryModelManager.Entry {
     }
     @Override
     public boolean isTranslucent() {
-        return super.isTranslucent();
+        return true;
     }    
 }
