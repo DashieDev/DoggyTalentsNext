@@ -2,6 +2,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.view.
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -129,13 +130,25 @@ public class SkinView extends AbstractElement {
     }
 
      private static List<DogSkin> filterDogSkin(List<DogSkin> locList, String s) {
+        var tag_strs = s.split(Pattern.quote(" "));
         var ret = new ArrayList<DogSkin>();
         for (var x : locList) {
             if (StringUtils.containsIgnoreCase(x.getName(), s)) {
                 ret.add(x);
+            } else if (isTagMatch(x, tag_strs)) {
+                ret.add(x);
             }
         }
         return ret;
+    }
+
+    private static boolean isTagMatch(DogSkin skin, String[] tag_strs) {
+        for (var str : tag_strs) {
+            if (!StringUtils.containsIgnoreCase(skin.getTags(), str)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void decreaseActiveId(GuiEventListener b) {
