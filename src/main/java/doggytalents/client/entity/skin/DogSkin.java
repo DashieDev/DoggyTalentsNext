@@ -31,6 +31,10 @@ public class DogSkin {
         public String getDesc() {
             return "The Default Skin. Mhmmmm! Classy!";
         }
+        @Override
+        public String getTags() {
+            return "default, classical";
+        }
     }).setName("Classical");
     public static final DogSkin MISSING = (new DogSkin(Resources.ENTITY_WOLF){
         @Override
