@@ -65,10 +65,13 @@ public class DogSkinElement extends AbstractElement {
         
         var scroll = scrollView.getContainer();
         scroll.addChildren(new DivElement(scroll, getScreen()).setSize(1f, Math.max(10, this.getSizeY()/2 - 40)).init()); 
+        if (!manifestSkin.getName().isEmpty())
         scroll.addChildren(new SkinStrEntry(scroll, getScreen(), Component.literal("Name: "), 
             Component.literal(manifestSkin.getName())).init()); 
+        if (!manifestSkin.getBasedOn().isEmpty())
         scroll.addChildren(new SkinStrEntry(scroll, getScreen(), Component.literal("Based On: "), 
-            Component.literal(manifestSkin.getBasedOn())).init()); 
+            Component.literal(manifestSkin.getBasedOn())).init());
+        if (!manifestSkin.getAuthor().isEmpty()) 
         scroll.addChildren(new SkinStrEntry(scroll, getScreen(), Component.literal("Author: "), 
             Component.literal(manifestSkin.getAuthor())).init()); 
         
