@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "III",
+    " SI",
+    "S  "
+  ],
+  "result": {
+    "item": "doggytalents:sussy_sickle"
+  },
+  "show_notification": true
+}
