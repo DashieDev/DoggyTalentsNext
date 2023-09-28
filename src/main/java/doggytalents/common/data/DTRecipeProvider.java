@@ -291,6 +291,22 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('S', Items.COOKED_BEEF)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_cooked_beef", has(Items.COOKED_BEEF))
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, DoggyItems.SUSSY_SICKLE.get(), 1)
+            .pattern("III")
+            .pattern(" SI")
+            .pattern("S  ")
+            .define('I', Items.IRON_INGOT)
+            .define('S', Items.STICK)
+            .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SNORKEL.get(), 1)
+            .pattern("  B")
+            .pattern("GIG")
+            .define('I', Items.IRON_INGOT)
+            .define('G', Items.GLASS_PANE)
+            .define('B', Items.BAMBOO)            
+            .unlockedBy("has_bamboo", has(Items.BAMBOO))
             .save(consumer);        
     }
     // @Override
