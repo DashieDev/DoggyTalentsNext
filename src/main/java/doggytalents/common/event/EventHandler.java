@@ -159,8 +159,7 @@ public class EventHandler {
             if (!persistTag.getBoolean("gotDTStartingItems")) {
                 persistTag.putBoolean("gotDTStartingItems", true);
 
-                player.getInventory().add(new ItemStack(DoggyItems.DOGGY_CHARM.get()));
-                player.getInventory().add(new ItemStack(DoggyItems.WHISTLE.get()));
+                player.getInventory().add(new ItemStack(DoggyItems.STARTER_BUNDLE.get()));
             }
         }
     }
