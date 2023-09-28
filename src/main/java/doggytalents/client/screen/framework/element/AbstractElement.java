@@ -77,7 +77,7 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     /**
      * Never call render() here!!!
      */
-    public abstract void renderElement(GuiGraphics stack, int mouseX, int mouseY, float partialTicks);
+    public void renderElement(GuiGraphics stack, int mouseX, int mouseY, float partialTicks) {};
 
     public AbstractElement setPosition(ElementPosition.PosType type, int left, int top) {
         this.position = new ElementPosition(this, left, top, type);
