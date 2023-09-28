@@ -22,6 +22,7 @@
    "item.doggytalents.multicoloured_collar": "Multicolored Collar",
    "item.doggytalents.canine_tracker": "Canine Tracker",
    "item.doggytalents.creative_canine_tracker": "Creative Canine Tracker",
+   "item.doggytalents.whistle": "Whistle",
    "item.doggytalents.whistle.0": "Whistle: Command Stand",
    "item.doggytalents.whistle.1": "Whistle: Command Heel",
    "item.doggytalents.whistle.2": "Whistle: Command Stay",
@@ -74,7 +75,10 @@
    "item.doggytalents.sussy_sickle.description": "I just love the smell of FEAR!",
    "item.doggytalents.snorkel": "Snorkel",
    "item.doggytalents.snorkel.description": "Helu, I'm under the water~",
-
+   "item.doggytalents.starter_bundle": "Starter Bundle",
+   "item.doggytalents.starter_bundle.description": "Contains Items which assists you in starting with Doggy Talents Next. These includes: ",
+   "item.doggytalents.starter_bundle.contains": "- %dx %s",
+   "item.doggytalents.starter_bundle.fail": "Not enough space in inventory!",
 
    "item.doggytalents.locator_orb_chi": "Chi Orb",
    "item.doggytalents.locator_orb_chi.description": "The Orb of Wisdom and Knowledge.",

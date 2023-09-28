@@ -91,7 +91,7 @@ public class DoggyItems {
     public static final RegistryObject<Item> GOLDEN_A_FIVE_WAGYU = register("golden_a_five_wagyu", GoldenAFiveWagyuItem::new);
     public static final RegistryObject<SwordItem> SUSSY_SICKLE = register("sussy_sickle", SussySickleItem::new);
     public static final RegistryObject<AccessoryItem> SNORKEL = registerSnorkel("snorkel", DoggyAccessories.SNORKEL);
-
+    public static final RegistryObject<Item> STARTER_BUNDLE = registerWith("starter_bundle", StarterBundleItem::new, 1);
 
     public static final RegistryObject<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
     public static final RegistryObject<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
