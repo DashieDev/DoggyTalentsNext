@@ -12,6 +12,8 @@ import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
+import doggytalents.client.screen.framework.widget.ScrollBar;
+import doggytalents.client.screen.framework.widget.ScrollBar.Direction;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.Minecraft;
@@ -21,13 +23,16 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class SkinView extends AbstractElement {
 
     Dog dog;
     List<DogSkin> textureList;
     EditBox filterBox;
+    ScrollBar scrollBar;
     int activeSkinId;
+    boolean offsetBarToDog;
     
     public SkinView(AbstractElement parent, Screen screen, Dog dog) {
         super(parent, screen);
@@ -39,7 +44,14 @@ public class SkinView extends AbstractElement {
             this.activeSkinId = 0;
             this.init();
         });
+        scrollBar = new ScrollBar(0, 0, 0, 0, Direction.HORIZONTAL, 0) {
+            @Override
+            public void onValueUpdated() {
+                calulateAndSetActiveId(this.getProgressValue());
+            }
+        };
         this.activeSkinId = DogTextureManager.INSTANCE.getAll().indexOf(dog.getClientSkin());
+        offsetBarToDog = true;
     }
 
     @Override
@@ -74,7 +86,31 @@ public class SkinView extends AbstractElement {
         filterBox.setX(this.getRealX() + 8);
         filterBox.setY(this.getRealY() + 8);
         this.addChildren(filterBox);
+
+        this.scrollBar.setX(this.getRealX());
+        this.scrollBar.setY(this.getRealY() + this.getSizeY() - 8);
+        this.scrollBar.setWidth(this.getSizeX());
+        this.scrollBar.setHeight(8);
+        int barsize = Mth.floor(scrollBar.getWidth()/this.textureList.size());
+        barsize = Math.max(barsize, 20);
+        this.scrollBar.setBarSize(barsize);
+        if (offsetBarToDog) {
+            offsetBarToDog = false;
+            moveBarToDog();
+        }
+
+        this.addChildren(scrollBar);
+        
+
         return this;
+    }
+
+    private void moveBarToDog() {
+        if (this.textureList.isEmpty())
+            return;
+        double progress = (double)this.activeSkinId/ (double) (textureList.size()-1);
+        double barOffset = progress * this.scrollBar.getMaxOffsetValue();
+        this.scrollBar.setBarOffset(barOffset);
     }
 
     @Override
@@ -112,6 +148,14 @@ public class SkinView extends AbstractElement {
         this.activeSkinId = Math.min(textureList.size() - 1, this.activeSkinId + 1);
         this.children().clear();
         this.init();
-    } 
+    }
+    
+    private void calulateAndSetActiveId(double progress) {
+        int id = Mth.floor(progress * (this.textureList.size()-1));
+        if (this.activeSkinId == id) return;
+        this.activeSkinId = id;
+        this.children().clear();
+        this.init();
+    }
     
 }
