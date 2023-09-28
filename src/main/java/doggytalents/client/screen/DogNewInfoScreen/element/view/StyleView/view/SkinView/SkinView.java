@@ -31,7 +31,7 @@ public class SkinView extends AbstractElement {
     EditBox filterBox;
     ScrollBar scrollBar;
     int activeSkinId;
-    boolean offsetBarToDog;
+    boolean skipReOffset;
     
     public SkinView(AbstractElement parent, Screen screen, Dog dog) {
         super(parent, screen);
@@ -50,7 +50,6 @@ public class SkinView extends AbstractElement {
             }
         };
         this.activeSkinId = DogTextureManager.INSTANCE.getAll().indexOf(dog.getClientSkin());
-        offsetBarToDog = true;
     }
 
     @Override
@@ -93,8 +92,9 @@ public class SkinView extends AbstractElement {
         int barsize = Mth.floor(scrollBar.getWidth()/this.textureList.size());
         barsize = Math.max(barsize, 20);
         this.scrollBar.setBarSize(barsize);
-        if (offsetBarToDog) {
-            offsetBarToDog = false;
+        if (skipReOffset) {
+            skipReOffset = false;
+        } else {
             moveBarToDog();
         }
 
@@ -153,6 +153,7 @@ public class SkinView extends AbstractElement {
         int id = Mth.floor(progress * (this.textureList.size()-1));
         if (this.activeSkinId == id) return;
         this.activeSkinId = id;
+        this.skipReOffset = true;
         this.children().clear();
         this.init();
     }
