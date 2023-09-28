@@ -95,7 +95,7 @@ public class DogSkinElement extends AbstractElement {
         public AbstractElement init() {
             this.setPosition(PosType.RELATIVE, 0, 0);
             title = title.copy().withStyle(Style.EMPTY.withBold(true));
-            components = this.font.split(content, this.getParent().getSizeX() - 5);
+            components = this.font.split(content, this.getParent().getSizeX() - 20);
             int totalH = LINE_SPACING + font.lineHeight + LINE_SPACING + components.size()*(LINE_SPACING + font.lineHeight)
                 + LINE_SPACING;
             this.setSize(1f, totalH);
