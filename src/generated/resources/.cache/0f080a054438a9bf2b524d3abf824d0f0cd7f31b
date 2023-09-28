@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-28T16:19:17.4442848	DoggyTalents Item Models
+// 1.20.1	2023-09-28T23:50:58.7743023	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
@@ -49,6 +49,7 @@ bc4344cde9b92b3d303523e9d15fe95482b486c4 assets/doggytalents/models/item/pianist
 aa2f1cb07f093298438c6384ff408f9474117585 assets/doggytalents/models/item/smarty_glasses.json
 290198f286e62ba744a59e69a573202e99a86fb9 assets/doggytalents/models/item/snorkel.json
 37e58be2f484f704505648796db525c00a615a1f assets/doggytalents/models/item/spotted_collar.json
+c940178a658a57efa71c4e2f657f4383832f15e7 assets/doggytalents/models/item/starter_bundle.json
 312d0f2de8dba6bad821639ad26b9c5c8a7347fb assets/doggytalents/models/item/sunglasses.json
 d49794ca31255fe0e821fd5b5bff9a7312654eda assets/doggytalents/models/item/super_treat.json
 d73bbebe9c0d42ae66f902e144f2f955e25bc0f1 assets/doggytalents/models/item/sussy_sickle.json
