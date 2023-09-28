@@ -91,7 +91,9 @@ public class SkinView extends AbstractElement {
         this.scrollBar.setY(this.getRealY() + this.getSizeY() - 8);
         this.scrollBar.setWidth(this.getSizeX());
         this.scrollBar.setHeight(8);
-        int barsize = Mth.floor(scrollBar.getWidth()/this.textureList.size());
+        int barsize = scrollBar.getWidth();
+        if (!this.textureList.isEmpty())
+            barsize = Mth.floor(scrollBar.getWidth()/this.textureList.size());
         barsize = Math.max(barsize, 20);
         this.scrollBar.setBarSize(barsize);
         if (skipReOffset) {
