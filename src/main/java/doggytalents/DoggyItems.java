@@ -90,7 +90,7 @@ public class DoggyItems {
     public static final RegistryObject<Item> GENDER_BONE = registerTool("gender_bone", GenderBoneItem::new, 10);
     public static final RegistryObject<Item> GOLDEN_A_FIVE_WAGYU = register("golden_a_five_wagyu", GoldenAFiveWagyuItem::new);
     public static final RegistryObject<SwordItem> SUSSY_SICKLE = register("sussy_sickle", SussySickleItem::new);
-    public static final RegistryObject<AccessoryItem> SNORKEL = registerAccessory("snorkel", DoggyAccessories.SNORKEL);
+    public static final RegistryObject<AccessoryItem> SNORKEL = registerSnorkel("snorkel", DoggyAccessories.SNORKEL);
 
 
     public static final RegistryObject<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
@@ -149,6 +149,10 @@ public class DoggyItems {
 
     private static RegistryObject<AccessoryItem> registerAccessory(final String name, Supplier<? extends Accessory> type) {
         return register(name, () -> new AccessoryItem(type, createInitialProp()));
+    }
+
+    private static RegistryObject<AccessoryItem> registerSnorkel(final String name, Supplier<? extends Accessory> type) {
+        return register(name, () -> new SnorkelAccessoryItem(type, createInitialProp()));
     }
 
     private static RegistryObject<AccessoryItem> registerLocatorOrb(final String name, Supplier<? extends LocatorOrbAccessory> type) {
