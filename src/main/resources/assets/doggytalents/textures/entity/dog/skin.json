@@ -582,7 +582,8 @@
             "skin_name" : "LONG BORZOI",
             "skin_id" : "borzoi_long",
             "use_model" : "borzoi_long",
-            "author" : "MashXP (lemme do it for you~)"
+            "author" : "MashXP (lemme do it for you~)",
+            "mystery" : true
         }
     ]
 }

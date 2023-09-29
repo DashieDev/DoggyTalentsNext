@@ -44,6 +44,8 @@ public class DogSkin {
             return super.getPath();
         }
     }).setName("<Missing>");
+    public static final DogSkin MYSTERY = (new DogSkin(Resources.DOG_MYSTERY){
+    }).setName("<Mystery>");
 
     private String name = "";
     private ResourceLocation texturePath;
@@ -58,6 +60,7 @@ public class DogSkin {
     private String fromPack = "";
     private String description = "";
     private String tags = "";
+    private boolean mystery = false;
 
     public DogSkin(ResourceLocation path) {
         this.texturePath = path;
@@ -138,11 +141,16 @@ public class DogSkin {
         else this.fromPack = fromPack;
     }
 
+    public void setMystery(boolean val) {
+        this.mystery = val;
+    }
+
     public boolean hasExtraInfo() { return this.hasExtraInfo; }
     public String getBasedOn() { return this.basedOn; }
     public String getAuthor() { return this.author; }
     public String getPack() { return this.fromPack; }
     public String getDesc() { return this.description; }
     public String getTags() { return this.tags; }
+    public boolean mystery() { return this.mystery; }
 
 }
