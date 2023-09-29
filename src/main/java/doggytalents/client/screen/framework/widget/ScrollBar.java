@@ -13,12 +13,15 @@ public class ScrollBar extends AbstractWidget {
     private int barSize;
     private double barOffset;
     private Direction dir;
+    private Screen screen;
+    private boolean holdInflate;
 
-    public ScrollBar(int x, int y, int w, int h, Direction dir, int barsize) {
+    public ScrollBar(int x, int y, int w, int h, Direction dir, int barsize, Screen screen) {
         super(x, y, w, h, Component.empty());
         this.barSize = dir == Direction.VERTICAL ? Math.min(h, barsize)
             : Math.min(w, barsize);
         this.dir = dir;
+        this.screen = screen;
     }
 
     public static enum Direction { VERTICAL, HORIZONTAL }
@@ -26,7 +29,10 @@ public class ScrollBar extends AbstractWidget {
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         int barOffset = Mth.floor(this.barOffset);
-        if (!this.isHovered) {
+        if (this.holdInflate) {
+            this.holdInflate = screen.isDragging();
+        }
+        if (!this.isHovered && !holdInflate) {
             final int thick = 3;
             if (this.dir == Direction.VERTICAL) 
                 graphics.fill(this.getX() + this.width - thick, this.getY(), this.getX()+this.width, this.getY()+this.height, 0x87363636);
@@ -58,6 +64,7 @@ public class ScrollBar extends AbstractWidget {
         if (offset == 0) 
             return;
         offsetBar(offset);
+        holdInflate = true;
         onValueUpdated();
     }
 
