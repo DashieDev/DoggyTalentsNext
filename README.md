@@ -56,6 +56,6 @@ For more informations, please consult the [wiki](https://github.com/DashieDev/Do
    **A:** Use a **Training Treat** to turn him into a **DoggyTalents Dog**. Visit the [Getting Started wiki](https://github.com/DashieDev/DoggyTalentsNext/wiki/Getting-Started) for more info.
 
 -----------------
-### Licenses
+### Additional Licenses
 DoggyTalentsNext API
  - [![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
