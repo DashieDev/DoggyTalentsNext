@@ -174,7 +174,7 @@
             "use_model" : "kusa_ume",
             "based_on" : "In honor of Baltze, the popular Shiba Inu. *bonk*",
             "author" : "MashXP, DashieDev",
-            "tags" : "shiba"
+            "tags" : "shiba, meme"
         },
         {
             "skin_name" : "Grey Wolf",
@@ -575,7 +575,8 @@
             "skin_name" : "Nelson",
             "skin_id" : "bull_terrier_nelson",
             "use_model" : "bull_terrier",
-            "author" : "MashXP *stares"
+            "author" : "MashXP *stares",
+            "tags" : "meme"
         },
         {
             "skin_name" : "LONG BORZOI",
