@@ -14,6 +14,7 @@
 
 
 A Big Thanks to everyone that has contributed. This includes but is not limited to...
+ * ❤️**MashXP** my friend, the co-author of the mod.
  * ❤️**ProPercivalalb** for the outstanding work of re-coding and perfecting the mod from the old and relatively buggy version and for continuing the developement until 1.18.2
  * ❤️**RaustBlackDragon** for creating the original mod and ideas back in 2013
  * ❤️**NovaViper** for coding help and maintaining order in the DoggyTalents Project until 1.18.2
@@ -23,14 +24,8 @@ For more informations, please consult the [wiki](https://github.com/DashieDev/Do
 
 -----------------
 
-#### A Note From DashieDev
- * This project purpose is to continue the developement of the beloved mod **DoggyTalents**, which the current author
- **ProPercivalalb** no longer have the time to work on as he emailed me in a pull request, which is [here](https://github.com/percivalalb/DoggyTalents/pull/402#issuecomment-1152874076).
- * My vision for the mod is to make the dogs Harmonize with the player throughout the game, like two hands on the piano, when the two sound come together, it produce a harmony, which is pleasant to the ear, the Player and the Dogs is like the two hands, the dog should be able to be an accompaniment to the player well while not be overpowered in the context, although when on-demand, the Dog can have those abilities, but he should work to get it, and you, the Player, should help training him to achieve the abilities.
- * **I DO NOT OWN THE CORE IDEAS** , the original ideas belongs to **RaustBlackDragon** back in 2013, and most of the code is still
- belongs to **ProPercivalalb** 's DoggyTalents2 repository, while i was copying it over, i make some big changes which involves
- upgrading the mod to Minecraft newest version at that time, which is **1.19.2**. 
- * **EVERYTHING ELSE ASIDE, HAVE FUN WITH THE MOD! ❤️🐶🦴⛏️🎹❤️**
+#### Our Vision
+ * Our vision is to make the dogs Harmonize with the player throughout the game, like two hands on the piano, when the two sound come together, it produce a harmony, which is pleasant to the ear, the Player and the Dogs is like the two hands, the dog should be able to be an accompaniment to the player well while not be overpowered in the context, although when on-demand, the Dog can have those abilities, but he should work to get it, and you, the Player, should help training him to achieve the abilities.
 
 -----------------
 
