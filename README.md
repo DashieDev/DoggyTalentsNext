@@ -56,12 +56,6 @@ For more informations, please consult the [wiki](https://github.com/DashieDev/Do
    **A:** Use a **Training Treat** to turn him into a **DoggyTalents Dog**. Visit the [Getting Started wiki](https://github.com/DashieDev/DoggyTalentsNext/wiki/Getting-Started) for more info.
 
 -----------------
-
-<!-- ### Licenses
-DoggyTalents API
- - 2017 - 2021
- - [![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](http://opensource.org/licenses/MIT)
-
-DoggyTalents
- - 2013 - 2021
- - [![License](https://img.shields.io/badge/License-GNU-blue.svg?style=flat-square)](https://opensource.org/licenses/GPL-3.0) -->
+### Licenses
+DoggyTalentsNext API
+ - [![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
