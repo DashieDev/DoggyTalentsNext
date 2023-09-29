@@ -48,7 +48,7 @@ public class SkinView extends AbstractElement {
             this.activeSkinId = 0;
             this.init();
         });
-        scrollBar = new ScrollBar(0, 0, 0, 0, Direction.HORIZONTAL, 0) {
+        scrollBar = new ScrollBar(0, 0, 0, 0, Direction.HORIZONTAL, 0, getScreen()) {
             @Override
             public void onValueUpdated() {
                 calulateAndSetActiveId(this.getProgressValue());
