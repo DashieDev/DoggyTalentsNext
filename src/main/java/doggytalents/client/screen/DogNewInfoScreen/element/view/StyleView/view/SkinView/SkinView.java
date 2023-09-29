@@ -13,6 +13,7 @@ import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
+import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.framework.widget.ScrollBar;
 import doggytalents.client.screen.framework.widget.ScrollBar.Direction;
 import doggytalents.common.entity.Dog;
@@ -32,6 +33,8 @@ public class SkinView extends AbstractElement {
     List<DogSkin> textureList;
     EditBox filterBox;
     ScrollBar scrollBar;
+    FlatButton searchModeButton;
+    boolean searchByTag;
     int activeSkinId;
     boolean skipReOffset;
     
@@ -52,6 +55,14 @@ public class SkinView extends AbstractElement {
             }
         };
         this.activeSkinId = DogTextureManager.INSTANCE.getAll().indexOf(dog.getClientSkin());
+        searchByTag = false;
+        this.searchModeButton = new FlatButton(0, 0, 100, 20, Component.translatable("doggui.style.skins.search_by_name"),
+            b -> {
+                searchByTag = !searchByTag;
+                b.setMessage(searchByTag ? Component.translatable("doggui.style.skins.search_by_tags")
+                    : Component.translatable("doggui.style.skins.search_by_name"));
+            }
+        );
     }
 
     @Override
@@ -105,6 +116,9 @@ public class SkinView extends AbstractElement {
 
         this.addChildren(scrollBar);
         
+        this.searchModeButton.setX(this.getRealX() + this.getSizeX() - 107);
+        this.searchModeButton.setY(this.getRealY() + 7);
+        this.addChildren(searchModeButton);
 
         return this;
     }
@@ -132,20 +146,30 @@ public class SkinView extends AbstractElement {
         // dog.setSkinHash(oldHash);
     }
 
-     private static List<DogSkin> filterDogSkin(List<DogSkin> locList, String s) {
-        var tag_strs = s.split(Pattern.quote(" "));
+    private List<DogSkin> filterDogSkin(List<DogSkin> locList, String s) {
+        if (this.searchByTag)
+            return filterDogSkinByTag(locList, s);
         var ret = new ArrayList<DogSkin>();
         for (var x : locList) {
             if (StringUtils.containsIgnoreCase(x.getName(), s)) {
-                ret.add(x);
-            } else if (isTagMatch(x, tag_strs)) {
                 ret.add(x);
             }
         }
         return ret;
     }
 
-    private static boolean isTagMatch(DogSkin skin, String[] tag_strs) {
+    private List<DogSkin> filterDogSkinByTag(List<DogSkin> locList, String s) {
+        var tag_strs = s.split(Pattern.quote(" "));
+        var ret = new ArrayList<DogSkin>();
+        for (var x : locList) {
+            if (isTagMatch(x, tag_strs)) {
+                ret.add(x);
+            }
+        }
+        return ret;
+    } 
+
+    private boolean isTagMatch(DogSkin skin, String[] tag_strs) {
         for (var str : tag_strs) {
             if (!StringUtils.containsIgnoreCase(skin.getTags(), str)) {
                 return false;
