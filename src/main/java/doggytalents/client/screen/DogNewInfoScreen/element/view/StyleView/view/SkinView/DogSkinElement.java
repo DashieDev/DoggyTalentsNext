@@ -2,6 +2,8 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.view.
 
 import java.util.List;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.DogTextureManager;
@@ -14,6 +16,7 @@ import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.client.screen.framework.element.ScrollView;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.lib.Resources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -207,7 +210,14 @@ public class DogSkinElement extends AbstractElement {
         int mouseY, int e_mX, int e_mY, int size, boolean useDummy) {
         var oldSkin = dog.getClientSkin();
         var manifestSkin = this.locList.get(indx);
-        if (useDummy && ActiveSkinSlice.DUMMY_DOG_OBJ != null) {
+        if (manifestSkin.mystery()) {
+            manifestSkin = DogSkin.MYSTERY;
+            renderMysteriousKanji(graphics, e_mX, e_mY);
+            ActiveSkinSlice.DUMMY_DOG_OBJ.setClientSkin(manifestSkin);
+            DogStatusViewBoxElement.renderDogInside(graphics, 
+                ActiveSkinSlice.DUMMY_DOG_OBJ, e_mX, e_mY, size, 
+                followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
+        } else if (useDummy && ActiveSkinSlice.DUMMY_DOG_OBJ != null) {
             ActiveSkinSlice.DUMMY_DOG_OBJ.setClientSkin(manifestSkin);
             DogStatusViewBoxElement.renderDogInside(graphics, 
                 ActiveSkinSlice.DUMMY_DOG_OBJ, e_mX, e_mY, size, 
@@ -235,4 +245,16 @@ public class DogSkinElement extends AbstractElement {
         }
     }
     
+    private void renderMysteriousKanji(GuiGraphics graphics, int x, int y) {
+        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        int imgeSize = 100;
+        graphics.blit(Resources.KANJI_MYSTERY, x - imgeSize/2, 
+            y - imgeSize/2 - 27, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
+        RenderSystem.disableBlend();
+    }
+
 }
