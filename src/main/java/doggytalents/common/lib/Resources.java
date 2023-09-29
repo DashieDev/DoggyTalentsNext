@@ -25,6 +25,7 @@ public class Resources {
     public static final ResourceLocation ENTITY_WOLF_COLLAR = Util.getResource(Constants.VANILLA_ID, "textures/entity/wolf/wolf_collar.png");
 
     public static final ResourceLocation DOG_CLASSICAL = getEntity("dog", "custom/classical/wolf");
+    public static final ResourceLocation DOG_MYSTERY = getEntity("dog", "custom/classical/wolf_nani");
 
     public static final ResourceLocation COLLAR_DEFAULT = getEntity("dog", "doggy_collar");
     public static final ResourceLocation COLLAR_GOLDEN = getEntity("dog", "doggy_collar_0");
@@ -102,6 +103,7 @@ public class Resources {
     public static final ResourceLocation KANJI_INCAP_POISON = getGui("fatalkanji/poison");
     public static final ResourceLocation KANJI_INCAP_DROWN = getGui("fatalkanji/drown");
     public static final ResourceLocation KANJI_INCAP_STARVE = getGui("fatalkanji/starve");
+    public static final ResourceLocation KANJI_MYSTERY = getGui("kanji/mystery");
 
     public static final ResourceLocation SPIN = getGui("spin");
     public static final ResourceLocation SPIN2 = getGui("spin2");
