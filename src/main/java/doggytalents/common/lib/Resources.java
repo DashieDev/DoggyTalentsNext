@@ -103,7 +103,8 @@ public class Resources {
     public static final ResourceLocation KANJI_INCAP_POISON = getGui("fatalkanji/poison");
     public static final ResourceLocation KANJI_INCAP_DROWN = getGui("fatalkanji/drown");
     public static final ResourceLocation KANJI_INCAP_STARVE = getGui("fatalkanji/starve");
-    public static final ResourceLocation KANJI_MYSTERY = getGui("kanji/mystery");
+    public static final ResourceLocation KANJI_MYSTERY = getGui("kanji/mystery/kanji");
+    public static final ResourceLocation KANJI_MYSTERY_BKG = getGui("kanji/mystery/background");
 
     public static final ResourceLocation SPIN = getGui("spin");
     public static final ResourceLocation SPIN2 = getGui("spin2");
