@@ -2,6 +2,7 @@ package doggytalents.client.entity.model;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 
 import org.checkerframework.checker.units.qual.cd;
@@ -93,7 +94,14 @@ public class DogModelRegistry {
     }
 
     public static void resolve(EntityRendererProvider.Context ctx) {
-        for (var holder : MODEL_MAP.entrySet()) holder.getValue().resolve(ctx);
+        for (var holder : MODEL_MAP.entrySet()) {
+            try {
+                holder.getValue().resolve(ctx);
+            } catch (NoSuchElementException e) {
+                var msg = "Dog Model [" + holder.getKey() + "] is missing crucial parts! [" + e.getMessage() + "]";
+                throw new NoSuchElementException(msg);
+            }   
+        }
     }
 
     public static void init() {
