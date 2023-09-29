@@ -360,6 +360,8 @@
    "doggui.style.accessories.no_accessories_in_inv" : "Your Accessories will show up here.",
    "doggui.style.skins" : "Skins",
    "doggui.style.skins.selected" : "Selected",
+   "doggui.style.skins.search_by_tags" : "Search By Tags",
+   "doggui.style.skins.search_by_name" : "Search By Name",
 
    "doggui.stats.general" : "General",
    "doggui.stats.general.damageDealt" : "Damage dealt",
