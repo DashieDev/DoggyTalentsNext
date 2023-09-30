@@ -7,6 +7,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.WorldUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 
 public class DogMoveToBedAction extends TriggerableAction {
 
@@ -25,6 +26,10 @@ public class DogMoveToBedAction extends TriggerableAction {
     @Override
     public void onStart() {
         this.timeOut = 400;
+        if (dog.distanceToSqr(Vec3.atBottomCenterOf(targetBedPos)) >= 400) {
+            this.setState(ActionState.FINISHED);
+            return;
+        }
         this.dog.getNavigation().moveTo(
             (targetBedPos.getX()) + 0.5D, 
             targetBedPos.getY() + 1, 
