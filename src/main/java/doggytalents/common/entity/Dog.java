@@ -3804,6 +3804,7 @@ public class Dog extends AbstractDog {
             this.animAction.onStart();
             if (this.animAction.blockMove()) {
                 this.goalSelector.setControlFlag(Goal.Flag.MOVE, false);
+                this.getNavigation().stop();
             }
         }
     }
