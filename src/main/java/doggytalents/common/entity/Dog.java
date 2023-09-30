@@ -1635,12 +1635,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean canBeLeashed(Player player) {
-        if (!this.isTame())
-            return true;
-        var owner_uuid = this.getOwnerUUID();
-        if (owner_uuid == null)
-            return true;
-        return Objects.equals(player.getUUID(), owner_uuid);
+        return false;
     }
 
     @Override
