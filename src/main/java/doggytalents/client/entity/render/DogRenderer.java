@@ -1,5 +1,7 @@
 package doggytalents.client.entity.render;
 
+import java.util.Objects;
+
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -136,7 +138,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_DIFFOWNER_NAME_DIFFERENT)
             && dog != this.entityRenderDispatcher.crosshairPickEntity;
         boolean isDiffOwner = 
-            (player == null || !player.getUUID().equals(dog.getOwnerUUID()));
+            (player == null || !Objects.equals(player.getUUID(), dog.getOwnerUUID()));
 
         if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0))
             renderMainName(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner);
