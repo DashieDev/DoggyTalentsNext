@@ -121,12 +121,11 @@ public class SkinButtonElement extends AbstractElement {
     @Override
     public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         
-        int tX = this.getRealX() + 38;
+        int tX = this.getRealX() + 52;
         int tY = this.getRealY() + this.getSizeY()/2 - font.lineHeight/2;
-        if (this.activeSkinId+1 < 10) tX += 2;  
         String str = (this.activeSkinId+1) + "/" + this.locList.size();
+        tX -= font.width(str)/2;
         graphics.drawString(font, str, tX, tY, 0xffffffff);
-        
     }
 
     public void applyAndRequestSkinChange(int id) {
