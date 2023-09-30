@@ -95,11 +95,12 @@ public class DogIncapacitatedMananger {
     }
 
     public InteractionResult interact(ItemStack stack, Player player, InteractionHand hand) {
-        var item = stack.getItem();
-        if (item == DoggyItems.BANDAID.get()) {
-            useBandage(stack, player);
+        
+        if (proccessBandage(stack, player).shouldSwing())
             return InteractionResult.SUCCESS;
-        } else if (item == Items.TOTEM_OF_UNDYING) {
+
+        var item = stack.getItem();
+        if (item == Items.TOTEM_OF_UNDYING) {
             useTotem(stack, player);
             return InteractionResult.SUCCESS;
         } else if (item == Items.CAKE) {
@@ -121,6 +122,18 @@ public class DogIncapacitatedMananger {
         return InteractionResult.FAIL;
     }
 
+    private InteractionResult proccessBandage(ItemStack stack, Player player) {
+        boolean wagyu = needWagyu();
+        boolean isBandage =
+            (wagyu && stack.getItem() == DoggyItems.GOLDEN_A_FIVE_WAGYU.get())
+            || (!wagyu && stack.getItem() == DoggyItems.BANDAID.get());
+        if (isBandage) {
+            useBandage(stack, player);
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.PASS;
+    }
+
     private void useBandage(ItemStack stack, Player player) {
         if (this.dog.level().isClientSide)
             return;
@@ -130,7 +143,7 @@ public class DogIncapacitatedMananger {
             return;
 
         this.bandageCooldown = 10;
-        player.getCooldowns().addCooldown(DoggyItems.BANDAID.get(), 11);
+        player.getCooldowns().addCooldown(stack.getItem(), 11);
         ++this.bandagesCount;
         if (!player.getAbilities().instabuild) {
             stack.shrink(1);
@@ -230,6 +243,8 @@ public class DogIncapacitatedMananger {
     }
 
     private void dropBandages() {
+        if (this.needWagyu())
+            return;
         float keep_precentage = 
             0.8f - dog.getRandom().nextInt(4)*0.1f;
         int keep_amount = Mth.floor(keep_precentage*this.bandagesCount);
@@ -466,6 +481,10 @@ public class DogIncapacitatedMananger {
 
     public String getIncapMsg() {
         return this.incapMsg;
+    }
+
+    private boolean needWagyu() {
+        return this.dog.getIncapSyncState().type == DefeatedType.STARVE;
     }
 
 
