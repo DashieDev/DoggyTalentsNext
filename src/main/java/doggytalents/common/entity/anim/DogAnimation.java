@@ -1,5 +1,6 @@
 package doggytalents.common.entity.anim;
 
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 public enum DogAnimation {
@@ -42,14 +43,14 @@ public enum DogAnimation {
 
     private DogAnimation(int id, int lengthTicks, float speed) {
         this.id = id;
-        this.lengthTicks = lengthTicks;
+        this.lengthTicks = Mth.floor(((float)lengthTicks)/speed);
         this.speedModifier = speed;
         freeTail = true;
     }
 
     private DogAnimation(int id, int lengthTicks, float speed, boolean freeTail) {
         this.id = id;
-        this.lengthTicks = lengthTicks;
+        this.lengthTicks = Mth.floor(((float)lengthTicks)/speed);
         this.speedModifier = speed;
         this.freeTail = freeTail;
     }
