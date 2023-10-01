@@ -298,6 +298,7 @@ public class Dog extends AbstractDog {
     @Override
     protected void registerGoals() {
         int trivial_p = 0, non_trivial_p = 0;
+        DogSitWhenOrderedGoal sitGoal = null;
         
         int p = 1;
         this.goalSelector.addGoal(p, new DogFloatGoal(this));
@@ -307,7 +308,8 @@ public class Dog extends AbstractDog {
         ++p;
         this.goalSelector.addGoal(p, new DogGoAwayFromFireGoal(this));
         ++p;
-        this.goalSelector.addGoal(p, new DogSitWhenOrderedGoal(this));
+        sitGoal = new DogSitWhenOrderedGoal(this);
+        this.goalSelector.addGoal(p, sitGoal);
         this.goalSelector.addGoal(p, new DogProtestSitOrderGoal(this));
         ++p;
         this.goalSelector.addGoal(p, new DogHungryGoal(this, 1.0f, 2.0f));
@@ -353,18 +355,26 @@ public class Dog extends AbstractDog {
         this.targetSelector.addGoal(6, new GuardModeGoal(this));
         //this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5D)); //Stooopid...
 
-        populateActionBlockingGoals(trivial_p, non_trivial_p);
+        populateActionBlockingGoals(trivial_p, non_trivial_p, sitGoal);
     }
 
-    private void populateActionBlockingGoals(int trivialP, int nonTrivialP) {
+    private void populateActionBlockingGoals(int trivialP, int nonTrivialP, DogSitWhenOrderedGoal sitGoal) {
         nonTrivialBlocking = new ArrayList<WrappedGoal>();
         trivialBlocking = new ArrayList<WrappedGoal>();
 
         var trivial = this.goalSelector.getAvailableGoals()
-            .stream().filter(x -> (x.getPriority() <= trivialP))
+            .stream().filter(x -> (
+                x.getGoal() != sitGoal 
+                && x.getPriority() <= trivialP
+                && x.getFlags().contains(Goal.Flag.MOVE)    
+            ))
             .collect(Collectors.toList());
         var nonTrivial = this.goalSelector.getAvailableGoals()
-            .stream().filter(x -> (x.getPriority() <= nonTrivialP))
+            .stream().filter(x -> (
+                x.getGoal() != sitGoal
+                && x.getPriority() <= nonTrivialP
+                && x.getFlags().contains(Goal.Flag.MOVE)    
+            ))
             .collect(Collectors.toList());
         nonTrivialBlocking.addAll(nonTrivial);
         trivialBlocking.addAll(trivial);
