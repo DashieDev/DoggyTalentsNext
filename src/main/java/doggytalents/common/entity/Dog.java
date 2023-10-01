@@ -225,6 +225,9 @@ public class Dog extends AbstractDog {
     protected TriggerableAction activeAction;
     protected int delayedActionStart = 0;
     protected int actionPendingTime = 0;
+    protected List<WrappedGoal> trivialBlocking;
+    protected List<WrappedGoal> nonTrivialBlocking;
+    
 
     private int hungerTick;
     private int prevHungerTick;  
@@ -294,6 +297,8 @@ public class Dog extends AbstractDog {
 
     @Override
     protected void registerGoals() {
+        int trivial_p = 0, non_trivial_p = 0;
+        
         int p = 1;
         this.goalSelector.addGoal(p, new DogFloatGoal(this));
         this.goalSelector.addGoal(p, new DogFindWaterGoal(this));
@@ -311,6 +316,7 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogLowHealthGoal.RunAway(this));
         //this.goalSelector.addGoal(4, new DogLeapAtTargetGoal(this, 0.4F));
         ++p;
+        non_trivial_p = p;
         this.goalSelector.addGoal(p, new DogTriggerableGoal(this, false));
         ++p; //Prioritize Talent Action
         //All mutex by nature
@@ -321,6 +327,7 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
         this.goalSelector.addGoal(p, new DogGoRestOnBedGoalDefeated(this));
         ++p;
+        trivial_p = p;
         //Dog greet owner goal here
         this.goalSelector.addGoal(p, new DogTriggerableGoal(this, true));
         //this.goalSelector.addGoal(p, new FetchGoal(this, 1.0D, 32.0F));
@@ -345,6 +352,22 @@ public class Dog extends AbstractDog {
         this.targetSelector.addGoal(6, new BerserkerModeGoal(this));
         this.targetSelector.addGoal(6, new GuardModeGoal(this));
         //this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5D)); //Stooopid...
+
+        populateActionBlockingGoals(trivial_p, non_trivial_p);
+    }
+
+    private void populateActionBlockingGoals(int trivialP, int nonTrivialP) {
+        nonTrivialBlocking = new ArrayList<WrappedGoal>();
+        trivialBlocking = new ArrayList<WrappedGoal>();
+
+        var trivial = this.goalSelector.getAvailableGoals()
+            .stream().filter(x -> (x.getPriority() <= trivialP))
+            .collect(Collectors.toList());
+        var nonTrivial = this.goalSelector.getAvailableGoals()
+            .stream().filter(x -> (x.getPriority() <= nonTrivialP))
+            .collect(Collectors.toList());
+        nonTrivialBlocking.addAll(nonTrivial);
+        trivialBlocking.addAll(trivial);
     }
 
     @Override
@@ -827,14 +850,28 @@ public class Dog extends AbstractDog {
     public boolean isBusy() {
         if (!this.isDoingFine()) return true;
         if (this.isInSittingPose() && this.forceSit()) return true;
-        return this.activeAction != null;
+        if (this.activeAction != null) return true;
+        for (var x : this.trivialBlocking) {
+            if (x.isRunning())
+                return true;
+        }
+        if (this.hasControllingPassenger())
+            return true;
+        return false;
     }
 
     public boolean readyForNonTrivialAction() {
         if (!this.isDoingFine()) return false;
         if (this.isInSittingPose() && this.forceSit()) return false;
-        if (this.activeAction == null) return true;
-        return this.activeAction.isTrivial();
+        if (this.activeAction != null && !this.activeAction.isTrivial())
+            return false;
+        for (var x : this.nonTrivialBlocking) {
+            if (x.isRunning())
+                return false;
+        }
+        if (this.hasControllingPassenger())
+            return false;
+        return true;
     }
 
     public TriggerableAction getStashedTriggerableAction() {
