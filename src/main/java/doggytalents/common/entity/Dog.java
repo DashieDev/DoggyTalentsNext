@@ -1489,7 +1489,13 @@ public class Dog extends AbstractDog {
             amount = (amount + 1.0F) / 2.0F;
         }
 
-        return super.hurt(source, amount);
+        boolean ret = super.hurt(source, amount);
+        if (this.level().isClientSide
+            && ConfigHandler.CLIENT.BLOCK_RED_OVERLAY_WHEN_HURT.get()) {
+            this.hurtTime = 0;
+            this.hurtDuration = 0;
+        }
+        return ret;
     }
 
     public boolean checkIfAttackedFromOwnerOrTeam(LivingEntity owner, Entity attacker) {
