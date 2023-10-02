@@ -13,6 +13,7 @@ import doggytalents.api.events.RegisterCustomDogModelsEvent;
 import doggytalents.api.events.RegisterCustomDogModelsEvent.DogModelProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.entity.model.dog.AkitaModel;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.AmmyChiModel;
 import doggytalents.client.entity.model.dog.AmmyJinModel;
@@ -52,6 +53,8 @@ import doggytalents.client.entity.model.dog.OtterModel;
 import doggytalents.client.entity.model.dog.PochitaModel;
 import doggytalents.client.entity.model.dog.PoodleModel;
 import doggytalents.client.entity.model.dog.PugModel;
+import doggytalents.client.entity.model.dog.ShibaModel;
+import doggytalents.client.entity.model.dog.ShikokuModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
 import doggytalents.client.entity.model.dog.VariantDogModel;
 import doggytalents.client.entity.model.dog.kusa.ChiModel;
@@ -145,7 +148,6 @@ public class DogModelRegistry {
         register("french_bulldog", ctx ->  new FrenchBulldogModel(ctx.bakeLayer(ClientSetup.DOG_FRENCH_BULLDOG)));
         register("poodle", ctx ->  new PoodleModel(ctx.bakeLayer(ClientSetup.DOG_POODLE)));
         register("chihuahua", ctx ->  new ChihuahuaModel(ctx.bakeLayer(ClientSetup.DOG_CHIHUAHUA)));
-
         register("boxer_floppy", ctx ->  new BoxerFloppyModel(ctx.bakeLayer(ClientSetup.DOG_BOXER_FLOPPY)));
         register("boxer_pointy", ctx ->  new BoxerPointyModel(ctx.bakeLayer(ClientSetup.DOG_BOXER_POINTY)));
         register("miniature_pinscher", ctx ->  new MiniaturePinscherModel(ctx.bakeLayer(ClientSetup.DOG_MINIATURE_PINSCHER)));
@@ -159,6 +161,10 @@ public class DogModelRegistry {
         register("german_shepherd", ctx ->  new GermanShepherdModel(ctx.bakeLayer(ClientSetup.DOG_GERMAN_SHEPHERD)));
         register("otter", ctx ->  new OtterModel(ctx.bakeLayer(ClientSetup.DOG_OTTER)));
         register("bull_terrier", ctx ->  new BullTerrierModel(ctx.bakeLayer(ClientSetup.DOG_BULL_TERRIER)));
+        register("akita_inu", ctx ->  new AkitaModel(ctx.bakeLayer(ClientSetup.INU_AKITA)));
+        register("shiba_inu", ctx ->  new ShibaModel(ctx.bakeLayer(ClientSetup.INU_SHIBA)));
+        register("shikoku_inu", ctx ->  new ShikokuModel(ctx.bakeLayer(ClientSetup.INU_SHIKOKU)));
+
         registerFromEvent();
     }
 

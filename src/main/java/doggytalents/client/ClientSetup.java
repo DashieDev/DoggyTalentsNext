@@ -16,6 +16,7 @@ import doggytalents.client.entity.model.DogRescueModel;
 import doggytalents.client.entity.model.SmartyGlassesModel;
 import doggytalents.client.entity.model.WigModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
+import doggytalents.client.entity.model.dog.AkitaModel;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.AmmyChiModel;
 import doggytalents.client.entity.model.dog.AmmyJinModel;
@@ -56,6 +57,8 @@ import doggytalents.client.entity.model.dog.OtterModel;
 import doggytalents.client.entity.model.dog.PochitaModel;
 import doggytalents.client.entity.model.dog.PoodleModel;
 import doggytalents.client.entity.model.dog.PugModel;
+import doggytalents.client.entity.model.dog.ShibaModel;
+import doggytalents.client.entity.model.dog.ShikokuModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
 import doggytalents.client.entity.model.dog.VariantDogModel;
 import doggytalents.client.entity.model.dog.kusa.ChiModel;
@@ -152,6 +155,9 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_GERMAN_SHEPHERD = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "german_shepherd"), "main");
     public static final ModelLayerLocation DOG_OTTER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "otter"), "main");
     public static final ModelLayerLocation DOG_BULL_TERRIER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "bull_terrier"), "main");
+    public static final ModelLayerLocation INU_AKITA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "akita_inu"), "main");
+    public static final ModelLayerLocation INU_SHIBA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "shiba_inu"), "main");
+    public static final ModelLayerLocation INU_SHIKOKU = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "shikoku_inu"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -223,6 +229,9 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_GERMAN_SHEPHERD, GermanShepherdModel::createBodyLayer);
         event.registerLayerDefinition(DOG_OTTER, OtterModel::createBodyLayer);
         event.registerLayerDefinition(DOG_BULL_TERRIER, BullTerrierModel::createBodyLayer);
+        event.registerLayerDefinition(INU_AKITA, AkitaModel::createBodyLayer);
+        event.registerLayerDefinition(INU_SHIBA, ShibaModel::createBodyLayer);
+        event.registerLayerDefinition(INU_SHIKOKU, ShikokuModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
