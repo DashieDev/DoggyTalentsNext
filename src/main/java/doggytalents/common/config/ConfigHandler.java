@@ -65,6 +65,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue USE_PROVIDED_COPY_FOR_CLASSICAL;
         public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON;
         public ForgeConfigSpec.BooleanValue RENDER_ARMOR;
+        public ForgeConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -137,6 +138,12 @@ public class ConfigHandler {
                 .comment("Determine if dogs will render their armor.")
                 .translation("doggytalents.config.client.render_armor")
                 .define("render_armor", true);
+            BLOCK_RED_OVERLAY_WHEN_HURT = builder
+                .comment("Determine if dogs still render with a red overlay upon hurt like they usually do.")
+                .comment("This can be toggled on if user prefer to not having the red overlay and rely on the animation")
+                .comment("to indicate hurting.")
+                .translation("doggytalents.config.client.block_red_overlay_when_hurt")
+                .define("block_red_overlay_when_hurt", false);
             builder.pop();
         }
 
