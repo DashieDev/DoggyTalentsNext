@@ -264,6 +264,13 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Pochita",
+            "skin_id" : "pochita",
+            "use_model" : "pochita",
+            "based_on" : "Pochita from Chainsaw Man",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Pug #1",
             "skin_id" : "pug",
             "use_model" : "pug",
@@ -480,10 +487,46 @@
             "tags" :"pokemon"
         },
         {
-            "skin_name" : "Akita Inu",
-            "skin_id" : "akita_inu",
+            "skin_name" : "Akita Inu (Legacy)",
+            "skin_id" : "akita_inu_old",
             "use_model" : "default",
             "author" : "MashXP, DashieDev"
+        },
+        {
+            "skin_name" : "Akita Inu #1",
+            "skin_id" : "akita_inu",
+            "use_model" : "akita_inu",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Akita Inu #2",
+            "skin_id" : "akita_inu2",
+            "use_model" : "akita_inu",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Shiba Inu #1",
+            "skin_id" : "shiba_inu",
+            "use_model" : "shiba_inu",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Shiba Inu #2",
+            "skin_id" : "shiba_inu2",
+            "use_model" : "shiba_inu",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Shiba Inu #3",
+            "skin_id" : "shiba_inu3",
+            "use_model" : "shiba_inu",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Shikoku Inu ",
+            "skin_id" : "shikoku_inu",
+            "use_model" : "shikoku_inu",
+            "author" : "MashXP"
         },
         {
             "skin_name" : "Death",
