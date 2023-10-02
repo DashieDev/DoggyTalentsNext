@@ -190,8 +190,12 @@ public class FaintStand1Animation {
             new Keyframe(3.2916765f, KeyframeAnimations.degreeVec(117.42f, 12.29f, -87.6f),
                 AnimationChannel.Interpolations.CATMULLROM),
             new Keyframe(4f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
-                AnimationChannel.Interpolations.CATMULLROM)))
-    .addAnimation("upper_body",
+                AnimationChannel.Interpolations.CATMULLROM)));
+    }
+
+    
+    public static void build2(AnimationDefinition.Builder builder) {
+        builder.addAnimation("upper_body",
         new AnimationChannel(AnimationChannel.Targets.POSITION, 
             new Keyframe(0f, KeyframeAnimations.posVec(0f, -1f, 0.75f),
                 AnimationChannel.Interpolations.CATMULLROM), 
@@ -252,12 +256,8 @@ public class FaintStand1Animation {
             new Keyframe(3.8343335f, KeyframeAnimations.posVec(0f, -0.51f, 0f),
                 AnimationChannel.Interpolations.CATMULLROM), 
             new Keyframe(4f, KeyframeAnimations.posVec(0f, 0f, 0f),
-                AnimationChannel.Interpolations.CATMULLROM)));
-    }
-
-    
-    public static void build2(AnimationDefinition.Builder builder) {
-        builder.addAnimation("left_ear",
+                AnimationChannel.Interpolations.CATMULLROM)))
+    .addAnimation("left_ear",
         new AnimationChannel(AnimationChannel.Targets.ROTATION,
             new Keyframe(0f, KeyframeAnimations.degreeVec(38.75f, -4.34f, 12.34f),
                 AnimationChannel.Interpolations.CATMULLROM),
