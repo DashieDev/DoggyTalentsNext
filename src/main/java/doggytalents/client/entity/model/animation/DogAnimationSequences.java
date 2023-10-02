@@ -191,7 +191,7 @@ public class DogAnimationSequences {
       .build();
 
   
-    public static final AnimationDefinition FAINT = AnimationDefinition.Builder.withLength(4f)
+      public static final AnimationDefinition FAINT = AnimationDefinition.Builder.withLength(4f)
         .addAnimation("head",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
                 new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
