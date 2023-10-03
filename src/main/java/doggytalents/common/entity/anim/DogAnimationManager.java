@@ -36,16 +36,17 @@ public class DogAnimationManager {
 
     public void tick() {
         if (started) {
+            this.dog.xRotO = 0;
+            this.dog.yBodyRot = this.dog.yHeadRot;
+            this.dog.setXRot(0);
+        }
+        if (started && (!this.dog.level().isClientSide)) {
             --this.animationTime;
             if (this.animationTime <= 0) {
                 this.animationTime = 0;
                 this.dog.setAnim(DogAnimation.NONE);
             }
-            this.dog.setXRot(0);
-            this.dog.xRotO = 0;
-            this.dog.yBodyRot = this.dog.yHeadRot;
         }
-        
     }
 
     public boolean started() {
