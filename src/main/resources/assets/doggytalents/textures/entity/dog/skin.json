@@ -219,6 +219,56 @@
             "skin_name" : "Noname #8",
             "skin_id" : "noname_8",
             "use_model" : "default"
+        },
+        {
+            "skin_name" : "Classical III",
+            "skin_id" : "wolf_var2",
+            "use_model" : "default",
+            "tags" : "classical"
+        },
+        {
+            "skin_name" : "Classical IV",
+            "skin_id" : "wolf_old",
+            "use_model" : "default",
+            "tags" : "classical"
+        },
+        {
+            "skin_name" : "Classical V",
+            "skin_id" : "wolf_old_1",
+            "use_model" : "default",
+            "tags" : "classical"
+        },
+        {
+            "skin_name" : "Classical VI",
+            "skin_id" : "wolf_old_2",
+            "use_model" : "default",
+            "tags" : "classical"
+        },
+        {
+            "skin_name" : "Otter",
+            "skin_id" : "otter",
+            "use_model" : "otter",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Nelson",
+            "skin_id" : "bull_terrier_nelson",
+            "use_model" : "bull_terrier",
+            "author" : "MashXP *stares",
+            "tags" : "meme"
+        },
+        {
+            "skin_name" : "LONG BORZOI",
+            "skin_id" : "borzoi_long",
+            "use_model" : "borzoi_long",
+            "author" : "MashXP (lemme do it for you~)",
+            "mystery" : true
+        },
+        {
+            "skin_name" : "Brown Heeler Mix",
+            "skin_id" : "brown_heeler_mix",
+            "use_model" : "brown_heeler_mix",
+            "author" : "a."
         }
         
     ]
