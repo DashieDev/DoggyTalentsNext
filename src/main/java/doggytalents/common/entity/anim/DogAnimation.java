@@ -44,14 +44,14 @@ public enum DogAnimation {
 
     private DogAnimation(int id, int lengthTicks, float speed) {
         this.id = id;
-        this.lengthTicks = Mth.floor(((float)lengthTicks)/speed);
+        this.lengthTicks = Mth.ceil(((float)lengthTicks)/speed);
         this.speedModifier = speed;
         freeTail = true;
     }
 
     private DogAnimation(int id, int lengthTicks, float speed, boolean freeTail) {
         this.id = id;
-        this.lengthTicks = Mth.floor(((float)lengthTicks)/speed);
+        this.lengthTicks = Mth.ceil(((float)lengthTicks)/speed);
         this.speedModifier = speed;
         this.freeTail = freeTail;
     }
