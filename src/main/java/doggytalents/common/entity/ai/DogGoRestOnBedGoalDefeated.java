@@ -67,10 +67,14 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
     public void stop() {
         this.dog.getNavigation().stop();
         this.dog.setInSittingPose(false);
+        if (dog.getAnim() == DogAnimation.LIE_DOWN_IDLE) {
+            dog.setAnim(DogAnimation.NONE);
+        }
     }
 
     @Override
     public void tick() {
+        idleIfLyingElseInvalidate();
         validateTarget();
         if (this.targetBed == null)
             return;
@@ -94,11 +98,19 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
                 this.dog.setSitAnim(DogAnimation.LYING_DOWN);
                 this.dog.setInSittingPose(true);
             }
-            if (this.dog.getDogPose() == DogPose.LYING_2 && this.dog.getAnim() == DogAnimation.NONE ) {
-                this.dog.setAnim(DogAnimation.LIE_DOWN_IDLE);
-            } 
         } else {
             this.dog.setInSittingPose(false);
+        }
+    }
+
+    private void idleIfLyingElseInvalidate() {
+        if (dog.getDogPose() == DogPose.LYING_2 && dog.getAnim() == DogAnimation.NONE) {
+            this.dog.setAnim(DogAnimation.LIE_DOWN_IDLE);
+            return;
+        }
+        if (dog.getDogPose() != DogPose.LYING_2 && dog.getAnim() == DogAnimation.LIE_DOWN_IDLE) {
+            this.dog.setAnim(DogAnimation.NONE);
+            return;
         }
     }
 
