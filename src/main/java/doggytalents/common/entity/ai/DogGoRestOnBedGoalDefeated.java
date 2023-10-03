@@ -6,6 +6,7 @@ import java.util.List;
 import doggytalents.DoggyBlocks;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
+import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -91,6 +92,9 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
                 this.dog.setSitAnim(DogAnimation.LYING_DOWN);
                 this.dog.setInSittingPose(true);
             }
+            if (this.dog.getDogPose() == DogPose.LYING_2 && this.dog.getAnim() == DogAnimation.NONE ) {
+                this.dog.setAnim(DogAnimation.LIE_DOWN_IDLE);
+            } 
         } else {
             this.dog.setInSittingPose(false);
         }

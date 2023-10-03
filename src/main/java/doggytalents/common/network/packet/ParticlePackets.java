@@ -82,6 +82,7 @@ public class ParticlePackets {
                     Entity e = mc.level.getEntity(data.dogId);
                     if (e != null && data.food != null) {
                         var dog = e;
+                        e.getViewVector(1);
                         var a1 = dog.getYRot();
                         var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
                         var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
