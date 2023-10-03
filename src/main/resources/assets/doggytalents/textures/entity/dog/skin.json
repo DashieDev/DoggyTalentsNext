@@ -627,6 +627,12 @@
             "use_model" : "borzoi_long",
             "author" : "MashXP (lemme do it for you~)",
             "mystery" : true
+        },
+        {
+            "skin_name" : "Brown Heeler Mix",
+            "skin_id" : "brown_heeler_mix",
+            "use_model" : "brown_heeler_mix",
+            "author" : "a."
         }
     ]
 }

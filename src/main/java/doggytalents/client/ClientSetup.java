@@ -34,6 +34,7 @@ import doggytalents.client.entity.model.dog.BorzoiLongModel;
 import doggytalents.client.entity.model.dog.BorzoiModel;
 import doggytalents.client.entity.model.dog.BoxerFloppyModel;
 import doggytalents.client.entity.model.dog.BoxerPointyModel;
+import doggytalents.client.entity.model.dog.BrownHeelerMixModel;
 import doggytalents.client.entity.model.dog.BullTerrierModel;
 import doggytalents.client.entity.model.dog.ChihuahuaModel;
 import doggytalents.client.entity.model.dog.CollieBorderModel;
@@ -159,6 +160,8 @@ public class ClientSetup {
     public static final ModelLayerLocation INU_SHIBA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "shiba_inu"), "main");
     public static final ModelLayerLocation INU_SHIKOKU = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "shikoku_inu"), "main");
 
+    public static final ModelLayerLocation DOG_BROWN_HEELER_MIX = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "brown_heeler_mix"), "main");
+
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
     public static final ModelLayerLocation DOG_BACKPACK = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_backpack"), "main");
@@ -232,6 +235,8 @@ public class ClientSetup {
         event.registerLayerDefinition(INU_AKITA, AkitaModel::createBodyLayer);
         event.registerLayerDefinition(INU_SHIBA, ShibaModel::createBodyLayer);
         event.registerLayerDefinition(INU_SHIKOKU, ShikokuModel::createBodyLayer);
+
+        event.registerLayerDefinition(DOG_BROWN_HEELER_MIX, BrownHeelerMixModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
