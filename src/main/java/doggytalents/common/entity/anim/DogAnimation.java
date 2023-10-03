@@ -28,12 +28,13 @@ public enum DogAnimation {
     BELLY_RUB(20, 11*20, 1f, false),
     SIT_IDLE_2(21, 100),
     HOWL(22, 165),
-    LIE_DOWN_IDLE(23, 40, 0.5f);
+    LIE_DOWN_IDLE(23, 20, 0.5f, true, true);
 
     private final int id;
     private final int lengthTicks;
     private final float speedModifier;
     private final boolean freeTail;
+    private boolean looping = false;
     
     private DogAnimation(int id, int lengthTicks) {
         this.id = id;
@@ -56,6 +57,14 @@ public enum DogAnimation {
         this.freeTail = freeTail;
     }
 
+    private DogAnimation(int id, int lengthTicks, float speed, boolean freeTail, boolean looping) {
+        this.id = id;
+        this.lengthTicks = Mth.ceil(((float)lengthTicks)/speed);
+        this.speedModifier = speed;
+        this.freeTail = freeTail;
+        this.looping = looping;
+    }
+
     public static DogAnimation byId(int i) {
         var values = DogAnimation.values();
         if (i < 0) return NONE;
@@ -67,6 +76,6 @@ public enum DogAnimation {
     public int getLengthTicks() { return this.lengthTicks; }
     public float getSpeedModifier() { return this.speedModifier; }
     public boolean freeTail() { return this.freeTail; }
-
+    public boolean looping() { return this.looping; }
 
 }
