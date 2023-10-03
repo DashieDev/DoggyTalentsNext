@@ -3038,7 +3038,7 @@ public class DogAnimationSequences {
                 new Keyframe(2f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM))).build();
     
-    public static final AnimationDefinition DIG = AnimationDefinition.Builder.withLength(6.5f).looping()
+    public static final AnimationDefinition DIG = AnimationDefinition.Builder.withLength(6.5f)
         .addAnimation("right_ear",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
                 new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
