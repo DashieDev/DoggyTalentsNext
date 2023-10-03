@@ -27,7 +27,8 @@ public enum DogAnimation {
     CHOPIN_TAIL(19, 200),
     BELLY_RUB(20, 11*20, 1f, false),
     SIT_IDLE_2(21, 100),
-    HOWL(22, 165);
+    HOWL(22, 165),
+    LIE_DOWN_IDLE(23, 40, 0.5f);
 
     private final int id;
     private final int lengthTicks;
