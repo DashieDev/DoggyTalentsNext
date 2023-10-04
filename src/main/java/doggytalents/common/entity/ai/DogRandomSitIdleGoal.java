@@ -36,7 +36,7 @@ public class DogRandomSitIdleGoal extends Goal {
     public boolean canContinueToUse() {
         if (!this.dog.isOrderedToSit())
             return false;
-        if (!this.dog.isInSittingPose())
+        if (this.dog.getDogPose() != DogPose.SIT)
             return false;
         if (!dog.onGround()) return false;
 
