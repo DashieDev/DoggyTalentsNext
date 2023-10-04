@@ -153,7 +153,7 @@ public class Dog extends AbstractDog {
      *     5               32                  LOW_HEALTH_STRATEGY_MSB
      *     6               64                  CROSS_ORIGIN_TP
      *     7               128                 REGARD_TEAM_PLAYERS
-     *     8               256                 <Reserved>
+     *     8               256                 RESTING
      *     9               512                 <Reserved>
      *     .
      *     .
@@ -240,6 +240,7 @@ public class Dog extends AbstractDog {
     private boolean isShaking;
     private float timeWolfIsShaking;
     private float prevTimeWolfIsShaking;
+    private int tickUntilRest;
 
     private boolean wasInLava = false;
     private boolean shakeFire = false;
@@ -265,6 +266,7 @@ public class Dog extends AbstractDog {
         this.setTame(false);
         this.setGender(EnumGender.random(this.getRandom()));
         this.setLowHealthStrategy(LowHealthStrategy.STICK_TO_OWNER);
+        this.resetTickTillRest();
 
         this.moveControl = new DogMoveControl(this);
 
@@ -344,6 +346,7 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogLookAtPlayerGoal(this));
         this.goalSelector.addGoal(p, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(p, new DogRandomSitIdleGoal(this));
+        this.goalSelector.addGoal(p, new DogRestWhenSitGoal(this));
         
         this.targetSelector.addGoal(1, new DogOwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new DogOwnerHurtTargetGoal(this));
@@ -802,6 +805,12 @@ public class Dog extends AbstractDog {
 
         if (this.tickChopinTail > 0) {
             --this.tickChopinTail;
+        }
+
+        
+
+        if (!this.level().isClientSide && this.isInSittingPose() && !this.resting() && this.tickUntilRest > 0 ) {
+            --this.tickUntilRest;
         }
     }
 
@@ -2892,6 +2901,22 @@ public class Dog extends AbstractDog {
         this.setDogFlag(64, val);
     }
 
+    public boolean resting() {
+        return this.getDogFlag(256);
+    }
+
+    public void setResting(boolean val) {
+        this.setDogFlag(256, val);
+    }
+
+    public boolean wantsToRest() {
+        return this.tickUntilRest <= 0 && this.getRandom().nextFloat() < 0.02f;
+    }
+
+    public void resetTickTillRest() {
+        this.tickUntilRest = 100 + this.getRandom().nextInt(26) * 20; 
+    }
+
     public List<TalentInstance> getTalentMap() {
         return this.entityData.get(TALENTS.get());
     }
@@ -3763,6 +3788,10 @@ public class Dog extends AbstractDog {
             return;
         }
         if (this.isInSittingPose()) {
+            if (this.resting()) {
+                this.setDogPose(DogPose.REST);
+                return;
+            }
             this.setDogPose(this.isLying() ? DogPose.LYING_2 : DogPose.SIT);
             return;
         }
