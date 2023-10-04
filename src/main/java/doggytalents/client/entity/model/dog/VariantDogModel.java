@@ -127,26 +127,19 @@ public class VariantDogModel extends DogModel {
     }
 
     @Override
+    public void resetAllPose() {
+        super.resetAllPose();
+        this.realTail2.resetPose();
+        this.realTail3.resetPose();
+    }
+
+    @Override
     public void translateShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         super.translateShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
         this.realTail2.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
         this.realTail3.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
     }
 
-    @Override
-    public void resetShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        super.resetShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
-        this.realTail2.zRot = 0;
-        this.realTail3.zRot = 0;
-    }
-
-    @Override
-    public void resetAllPose() {
-        super.resetAllPose();
-        this.realTail2.resetPose();
-        this.realTail3.resetPose();
-    }
-    
     @Override
     public void copyFrom(DogModel dogModel) {
         super.copyFrom(dogModel);
