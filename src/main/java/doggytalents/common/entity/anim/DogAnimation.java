@@ -1,7 +1,6 @@
 package doggytalents.common.entity.anim;
 
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.goal.Goal;
 
 public enum DogAnimation {
     
