@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 
+import org.apache.commons.lang3.ObjectUtils.Null;
 import org.checkerframework.checker.units.qual.cd;
 
 import com.google.common.collect.Maps;
@@ -50,6 +51,7 @@ import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.client.entity.model.dog.MiniaturePinscherModel;
+import doggytalents.client.entity.model.dog.NullModel;
 import doggytalents.client.entity.model.dog.OtterModel;
 import doggytalents.client.entity.model.dog.PochitaModel;
 import doggytalents.client.entity.model.dog.PoodleModel;
@@ -112,6 +114,8 @@ public class DogModelRegistry {
         MODEL_MAP = Maps.newConcurrentMap();
         register("default", ctx -> new DogModel(ctx.bakeLayer(ClientSetup.DOG)));
         register("variant", ctx -> new VariantDogModel(ctx.bakeLayer(ClientSetup.DOG_LEGACY)));
+        register("null", ctx ->  new NullModel(ctx.bakeLayer(ClientSetup.DOG_NULL)));
+
         register("iwanko", ctx -> new IwankoModel(ctx.bakeLayer(ClientSetup.DOG_IWANKO)));
         register("lucario", ctx -> new LucarioModel(ctx.bakeLayer(ClientSetup.DOG_LUCARIO)));
         register("death", ctx -> new DeathModel(ctx.bakeLayer(ClientSetup.DOG_DEATH)));
