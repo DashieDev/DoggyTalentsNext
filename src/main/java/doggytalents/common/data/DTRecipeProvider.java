@@ -307,8 +307,16 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('G', Items.GLASS_PANE)
             .define('B', Items.BAMBOO)            
             .unlockedBy("has_bamboo", has(Items.BAMBOO))
-            .save(consumer);        
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.HEAD_BAND_BLANK.get(), 1)
+            .pattern("L")
+            .pattern("P")
+            .define('L', Items.LEAD)
+            .define('P', Items.PAPER)
+            .unlockedBy("has_paper", has(Items.PAPER))
+            .save(consumer);    
     }
+    
     // @Override
     // protected void saveAdvancement(HashCache cache, JsonObject advancementJson, Path pathIn) {
     //     //NOOP - We dont replace any of the advancement things yet...
