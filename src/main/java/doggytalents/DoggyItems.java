@@ -5,6 +5,7 @@ import doggytalents.api.registry.Accessory;
 import doggytalents.common.artifacts.FeatheredMantleArtifact;
 import doggytalents.common.entity.accessory.DyeableAccessory;
 import doggytalents.common.entity.accessory.GiantStick;
+import doggytalents.common.entity.accessory.HeadBandAccessory;
 import doggytalents.common.entity.accessory.LocatorOrbAccessory;
 import doggytalents.common.entity.accessory.Wig;
 import doggytalents.common.item.*;
@@ -93,9 +94,9 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> SNORKEL = registerSnorkel("snorkel", DoggyAccessories.SNORKEL);
     public static final RegistryObject<Item> STARTER_BUNDLE = registerWith("starter_bundle", StarterBundleItem::new, 1);
     
-    public static final RegistryObject<AccessoryItem> HEAD_BAND_BLANK = registerAccessory("head_band_blank", DoggyAccessories.HEAD_BAND_BlANK);
-    public static final RegistryObject<AccessoryItem> HEAD_BAND_MYSTERY = registerAccessory("head_band_mystery", DoggyAccessories.HEAD_BAND_MYSTERY);
-    public static final RegistryObject<AccessoryItem> HEAD_BAND_HIGHHH = registerAccessory("head_band_highhh", DoggyAccessories.HEAD_BAND_HIGHHH);
+    public static final RegistryObject<AccessoryItem> HEAD_BAND_BLANK = registerHeadBand("head_band_blank", DoggyAccessories.HEAD_BAND_BlANK);
+    public static final RegistryObject<AccessoryItem> HEAD_BAND_MYSTERY = registerHeadBand("head_band_mystery", DoggyAccessories.HEAD_BAND_MYSTERY);
+    public static final RegistryObject<AccessoryItem> HEAD_BAND_HIGHHH = registerHeadBand("head_band_highhh", DoggyAccessories.HEAD_BAND_HIGHHH);
 
     public static final RegistryObject<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
     public static final RegistryObject<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
@@ -161,6 +162,10 @@ public class DoggyItems {
 
     private static RegistryObject<AccessoryItem> registerLocatorOrb(final String name, Supplier<? extends LocatorOrbAccessory> type) {
         return register(name, () -> new LocatorOrbItem(type, createInitialProp()));
+    }
+
+    private static RegistryObject<AccessoryItem> registerHeadBand(final String name, Supplier<? extends HeadBandAccessory> type) {
+        return register(name, () -> new HeadBandItem(type, createInitialProp()));
     }
 
     private static <T extends Item> RegistryObject<T> registerWith(final String name, Function<Item.Properties, T> itemConstructor, int maxStackSize) {
