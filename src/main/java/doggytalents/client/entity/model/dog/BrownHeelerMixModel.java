@@ -33,21 +33,22 @@ public class BrownHeelerMixModel extends DogModel{
 
 		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(32, 48).addBox(-3.0F, -3.0F, -1.5F, 6.0F, 6.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, 14.0F, 1.5F));
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(40, 3).addBox(-3.0F, -4.0F, -3.25F, 6.0F, 6.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(22, 5).mirror().addBox(-3.0F, -3.5F, -2.25F, 6.0F, 7.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-1.0F, 13.5F, -3.75F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(22, 5).mirror().addBox(-3.0F, -3.5F, -2.25F, 6.0F, 7.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-1.0F, 13.5F, -3.75F));
 
-		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(-1.0F, 11.0F, -9.0F));
+		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(-1.0F, 12.25F, -7.75F));
 
-		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 5).addBox(-3.0F, -3.7422F, -0.5F, 6.0F, 6.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 15).addBox(-1.5F, -0.7578F, -3.5F, 3.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 1.2422F, -1.5F));
+		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 5).addBox(-3.0F, -5.7422F, -3.5F, 6.0F, 6.0F, 4.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 15).addBox(-1.5F, -2.7578F, -6.5F, 3.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 1.9922F, 0.25F));
 
-		PartDefinition right_ear = real_head.addOrReplaceChild("right_ear", CubeListBuilder.create().texOffs(18, 20).addBox(-0.75F, -2.3157F, -0.3311F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.25F, -3.4265F, 1.8311F));
+		PartDefinition cube_r1 = real_head.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(0, 44).addBox(-2.5F, -3.5F, -4.9779F, 5.0F, 4.5F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.2687F, 1.9779F, -0.6545F, 0.0F, 0.0F));
 
-		PartDefinition cube_r1 = right_ear.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -1.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.25F, -2.3157F, 0.1689F, 0.7418F, 0.0F, 0.0F));
+		PartDefinition right_ear = real_head.addOrReplaceChild("right_ear", CubeListBuilder.create().texOffs(18, 20).addBox(-0.75F, -2.3157F, -0.3311F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.25F, -5.4265F, -1.1689F));
 
-		PartDefinition left_ear = real_head.addOrReplaceChild("left_ear", CubeListBuilder.create().texOffs(18, 20).addBox(-1.25F, -2.3157F, -0.3311F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(2.25F, -3.4265F, 1.8311F));
+		PartDefinition cube_r2 = right_ear.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -1.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.25F, -2.3157F, 0.1689F, 0.7418F, 0.0F, 0.0F));
 
-		PartDefinition cube_r2 = left_ear.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(0, 0).addBox(4.0F, -1.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.25F, -2.3157F, 0.1689F, 0.7418F, 0.0F, 0.0F));
+		PartDefinition left_ear = real_head.addOrReplaceChild("left_ear", CubeListBuilder.create().texOffs(18, 20).addBox(-1.25F, -2.3157F, -0.3311F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(2.25F, -5.4265F, -1.1689F));
+
+		PartDefinition cube_r3 = left_ear.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(0, 0).addBox(4.0F, -1.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.25F, -2.3157F, 0.1689F, 0.7418F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 65);
 	}
