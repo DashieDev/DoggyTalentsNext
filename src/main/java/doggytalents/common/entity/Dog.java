@@ -660,15 +660,14 @@ public class Dog extends AbstractDog {
             return false;
         if (this.isOnFire())
             return false;
-        for (var alt : this.alterations) {
-            if (alt.blockIdleAnim(this).shouldSwing()) {
-                return false;
-            }
-        }
+        if (this.isPassenger() || this.isVehicle())
+            return false;
         return !this.isShaking && !this.animationManager.started();
     }
 
     public boolean canContinueDoIdileAnim() {
+        if (this.isPassenger() || this.isVehicle())
+            return false;
         return this.isAlive() && !this.isShaking && !this.isOnFire();
     }
 
