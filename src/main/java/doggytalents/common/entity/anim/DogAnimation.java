@@ -30,7 +30,7 @@ public enum DogAnimation {
     LIE_DOWN_IDLE(23, 20, 0.5f, true, true),
     SIT_TO_REST(24, 40, 0.5f),
     REST_IDLE(25, 20, 0.75f, true, true),
-    REST_TO_SIT(26, 65);
+    REST_TO_SIT(26, 60);
 
     private final int id;
     private final int lengthTicks;

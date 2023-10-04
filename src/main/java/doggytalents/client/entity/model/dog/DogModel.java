@@ -338,7 +338,7 @@ public class DogModel extends EntityModel<Dog> {
 
     public void setupRestPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.head.offsetRotation(KeyframeAnimations.degreeVec(-7.54f, 0.76f, 2.5f));
-        this.head.offsetPos(KeyframeAnimations.posVec(0f, -4f, 2f));
+        this.head.offsetPos(KeyframeAnimations.posVec(0f, -5f, 2f));
         this.body.offsetRotation(KeyframeAnimations.degreeVec(0.5f, 0f, 0f));
         this.body.offsetPos(KeyframeAnimations.posVec(0f, -6.5f, 0f));
         this.legBackRight.offsetRotation(KeyframeAnimations.degreeVec(-90f, 22.5f, 0f));
