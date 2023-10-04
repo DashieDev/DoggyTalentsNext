@@ -1,9 +1,7 @@
 package doggytalents.common.entity.anim;
 
-import org.checkerframework.checker.units.qual.s;
 
 import doggytalents.common.entity.Dog;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.AnimationState;
 
 public class DogAnimationManager {
