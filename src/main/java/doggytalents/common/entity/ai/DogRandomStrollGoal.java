@@ -27,6 +27,9 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
     public boolean canUse() {
         if (!dog.isDoingFine())
             return false;
+        if (this.dog.isOnFire() && this.dog.getRandom().nextFloat() < 0.1f) {
+            this.forceTrigger = true;
+        }
         return super.canUse();
     }
 
