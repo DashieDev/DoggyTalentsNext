@@ -16,6 +16,8 @@ public class AccessoryModelRenderEntries {
     public static Entry GIANT_STICK = new GiantStickRenderEntry();
     public static Entry SNORKEL = new SnorkelRenderEntry();
     public static Entry HEAD_BAND = new HeadBandRenderEntry();
+    public static Entry KITSUNE_FRONT = new KitsuneFrontRenderEntry();
+    public static Entry KITSUNE_SIDE = new KitsuneSideRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -29,6 +31,9 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(GIANT_STICK);
         AccessoryModelManager.register(SNORKEL);
         AccessoryModelManager.register(HEAD_BAND);
+        AccessoryModelManager.register(KITSUNE_FRONT);
+        AccessoryModelManager.register(KITSUNE_SIDE);
+
     }
 
 }
