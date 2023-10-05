@@ -51,6 +51,8 @@ public class DoggyAccessories {
     public static final RegistryObject<HeadBandAccessory> HEAD_BAND_BlANK = register("head_band_blank", () -> new HeadBandAccessory(DoggyItems.HEAD_BAND_BLANK).setModelTexture(Resources.HEAD_BAND_BLANK).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<HeadBandAccessory> HEAD_BAND_MYSTERY = register("head_band_mystery", () -> new HeadBandAccessory(DoggyItems.HEAD_BAND_MYSTERY).setModelTexture(Resources.HEAD_BAND_MYSTERY).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<HeadBandAccessory> HEAD_BAND_HIGHHH = register("head_band_highhh", () -> new HeadBandAccessory(DoggyItems.HEAD_BAND_HIGHHH).setModelTexture(Resources.HEAD_BAND_HIGHHH).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<KitsuneFrontAccessory> KITSUNE_FRONT = register("kitsune_front", () -> new KitsuneFrontAccessory(DoggyItems.KITSUNE_FRONT).setModelTexture(Resources.KITSUNE_FRONT).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<KitsuneSideAccessory> KITSUNE_SIDE = register("kitsune_side", () -> new KitsuneSideAccessory(DoggyItems.KITSUNE_SIDE).setModelTexture(Resources.KITSUNE_SIDE).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
 
     public static final RegistryObject<Helmet> IRON_HELMET = registerHelmet("iron_helmet", () -> Items.IRON_HELMET, Resources.IRON_HELMET);
