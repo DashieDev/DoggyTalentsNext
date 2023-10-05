@@ -66,6 +66,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON;
         public ForgeConfigSpec.BooleanValue RENDER_ARMOR;
         public ForgeConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
+        public ForgeConfigSpec.BooleanValue DISPLAY_SMOKE_WHEN_ON_FIRE;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -144,6 +145,10 @@ public class ConfigHandler {
                 .comment("to indicate hurting.")
                 .translation("doggytalents.config.client.block_red_overlay_when_hurt")
                 .define("block_red_overlay_when_hurt", false);
+            DISPLAY_SMOKE_WHEN_ON_FIRE = builder
+                .comment("Display extra smoke when dog is on fire.")
+                .translation("doggytalents.config.client.display_smoke_when_on_fire")
+                .define("display_smoke_when_on_fire", true);
             builder.pop();
         }
 
