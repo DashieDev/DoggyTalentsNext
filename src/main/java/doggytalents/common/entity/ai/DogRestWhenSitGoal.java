@@ -75,5 +75,8 @@ public class DogRestWhenSitGoal extends Goal {
     public void stop() {
         this.dog.resetTickTillRest();
         this.dog.setResting(false);
+        if (this.dog.getAnim() == DogAnimation.REST_IDLE) {
+            this.dog.setAnim(DogAnimation.NONE);
+        }
     }
 }
