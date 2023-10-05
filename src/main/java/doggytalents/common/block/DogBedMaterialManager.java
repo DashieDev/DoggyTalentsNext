@@ -103,7 +103,7 @@ public class DogBedMaterialManager {
 
     public static IBeddingMaterial randomBedding() {
         var list = beddingMap.entrySet().stream()
-            .filter(x -> !(x instanceof NaniBedding))
+            .filter(x -> !(x.getValue() instanceof NaniBedding))
             .collect(Collectors.toList());
         if (list.isEmpty()) {
             return NaniBedding.NULL;
@@ -114,7 +114,7 @@ public class DogBedMaterialManager {
 
     public static ICasingMaterial randomCasing() {
         var list = casingMap.entrySet().stream()
-            .filter(x -> !(x instanceof NaniCasing))
+            .filter(x -> !(x.getValue() instanceof NaniCasing))
             .collect(Collectors.toList());
         if (list.isEmpty()) {
             return NaniCasing.NULL;
