@@ -53,6 +53,7 @@ public class DogRestWhenSitGoal extends Goal {
     @Override
     public void start() {
         restPeriod = 40 + this.dog.getRandom().nextInt(9) * 20;
+        reSitTime = 0;
         this.dog.setResting(true);
         this.dog.setAnim(DogAnimation.SIT_TO_REST);
     }
