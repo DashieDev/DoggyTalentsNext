@@ -47,12 +47,12 @@ public class DogRestWhenSitGoal extends Goal {
             return false;
         if (!this.dog.onGround())
             return false;
-        return (--restPeriod > 0 ? true : ++this.reSitTime <= DogAnimation.REST_TO_SIT.getLengthTicks());
+        return this.reSitTime <= DogAnimation.REST_TO_SIT.getLengthTicks();
     }
 
     @Override
     public void start() {
-        restPeriod = 40 + this.dog.getRandom().nextInt(9) * 20;
+        restPeriod = 100 + this.dog.getRandom().nextInt(11) * 20;
         reSitTime = 0;
         this.dog.setResting(true);
         this.dog.setAnim(DogAnimation.SIT_TO_REST);
@@ -60,15 +60,19 @@ public class DogRestWhenSitGoal extends Goal {
 
     @Override
     public void tick() {
-        if (this.restPeriod > 0)
-        if (this.dog.getAnim() == DogAnimation.NONE && this.dog.getDogPose() == DogPose.REST) {
-            this.dog.setAnim(DogAnimation.REST_IDLE);
+        if (this.restPeriod > 0) {
+            if (this.dog.getAnim() == DogAnimation.NONE && this.dog.getDogPose() == DogPose.REST) {
+                this.dog.setAnim(DogAnimation.REST_IDLE);
+            }
+            --this.restPeriod;
         }
+        
         if (this.restPeriod <= 0) {
             if (this.dog.getAnim() == DogAnimation.REST_IDLE) {
                 this.dog.setResting(false);
                 this.dog.setAnim(DogAnimation.REST_TO_SIT);
-            }   
+            }
+            ++this.reSitTime;
         }
     }
 
@@ -79,5 +83,10 @@ public class DogRestWhenSitGoal extends Goal {
         if (this.dog.getAnim() == DogAnimation.REST_IDLE) {
             this.dog.setAnim(DogAnimation.NONE);
         }
+    }
+
+    @Override
+    public boolean requiresUpdateEveryTick() {
+        return true;
     }
 }
