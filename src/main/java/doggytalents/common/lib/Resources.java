@@ -67,6 +67,8 @@ public class Resources {
     public static final ResourceLocation HEAD_BAND_BLANK = getEntity("dog", "head_band_blank");
     public static final ResourceLocation HEAD_BAND_MYSTERY = getEntity("dog", "head_band_mystery");
     public static final ResourceLocation HEAD_BAND_HIGHHH = getEntity("dog", "head_band_highhh");
+    public static final ResourceLocation KITSUNE_FRONT = getEntity("dog", "kitsune_front");
+    public static final ResourceLocation KITSUNE_SIDE = getEntity("dog", "kitsune_side");
 
     public static final ResourceLocation IRON_HELMET = getEntity("dog", "armor/iron_helmet");
     public static final ResourceLocation DIAMOND_HELMET = getEntity("dog", "armor/diamond_helmet");

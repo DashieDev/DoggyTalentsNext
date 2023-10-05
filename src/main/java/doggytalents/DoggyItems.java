@@ -6,6 +6,8 @@ import doggytalents.common.artifacts.FeatheredMantleArtifact;
 import doggytalents.common.entity.accessory.DyeableAccessory;
 import doggytalents.common.entity.accessory.GiantStick;
 import doggytalents.common.entity.accessory.HeadBandAccessory;
+import doggytalents.common.entity.accessory.KitsuneFrontAccessory;
+import doggytalents.common.entity.accessory.KitsuneSideAccessory;
 import doggytalents.common.entity.accessory.LocatorOrbAccessory;
 import doggytalents.common.entity.accessory.Wig;
 import doggytalents.common.item.*;
@@ -97,6 +99,8 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> HEAD_BAND_BLANK = registerHeadBand("head_band_blank", DoggyAccessories.HEAD_BAND_BlANK);
     public static final RegistryObject<AccessoryItem> HEAD_BAND_MYSTERY = registerHeadBand("head_band_mystery", DoggyAccessories.HEAD_BAND_MYSTERY);
     public static final RegistryObject<AccessoryItem> HEAD_BAND_HIGHHH = registerHeadBand("head_band_highhh", DoggyAccessories.HEAD_BAND_HIGHHH);
+    public static final RegistryObject<AccessoryItem> KITSUNE_FRONT = registerKitsuneFront("kitsune_front", DoggyAccessories.KITSUNE_FRONT);
+    public static final RegistryObject<AccessoryItem> KITSUNE_SIDE = registerKitsuneSide("kitsune_side", DoggyAccessories.KITSUNE_SIDE);
 
     public static final RegistryObject<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
     public static final RegistryObject<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
@@ -167,6 +171,13 @@ public class DoggyItems {
     private static RegistryObject<AccessoryItem> registerHeadBand(final String name, Supplier<? extends HeadBandAccessory> type) {
         return register(name, () -> new HeadBandItem(type, createInitialProp()));
     }
+    private static RegistryObject<AccessoryItem> registerKitsuneFront(final String name, Supplier<? extends KitsuneFrontAccessory> type) {
+        return register(name, () -> new KitsuneFrontItem(type, createInitialProp()));
+    }
+    private static RegistryObject<AccessoryItem> registerKitsuneSide(final String name, Supplier<? extends KitsuneSideAccessory> type) {
+        return register(name, () -> new KitsuneSideItem(type, createInitialProp()));
+    }
+
 
     private static <T extends Item> RegistryObject<T> registerWith(final String name, Function<Item.Properties, T> itemConstructor, int maxStackSize) {
         return register(name, () -> itemConstructor.apply(createInitialProp().stacksTo(maxStackSize)));
