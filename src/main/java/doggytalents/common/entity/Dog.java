@@ -2928,7 +2928,7 @@ public class Dog extends AbstractDog {
     }
 
     public void resetTickTillRest() {
-        this.tickUntilRest = 100 + this.getRandom().nextInt(26) * 20; 
+        this.tickUntilRest = 30 * 20 + this.getRandom().nextInt(271) * 20; 
     }
 
     public List<TalentInstance> getTalentMap() {
