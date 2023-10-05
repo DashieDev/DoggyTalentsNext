@@ -656,6 +656,19 @@ public class Dog extends AbstractDog {
         if (this.level().isClientSide) {
             proccessCustomModelSkin();
         }
+
+        if (this.level().isClientSide && this.isOnFire() 
+            && ConfigHandler.CLIENT.DISPLAY_SMOKE_WHEN_ON_FIRE.get()) {
+            if (this.getRandom().nextInt(3) == 0) {
+                float f1 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+                float f2 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+                this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                this.getX() + f1,
+                this.getY() + this.getEyeHeight(),
+                this.getZ() + f2,
+                0, 0.05 , 0 );
+            }
+        }
     }
 
     public boolean canDoIdileAnim() {
