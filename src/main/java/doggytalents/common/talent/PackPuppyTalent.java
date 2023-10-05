@@ -230,7 +230,7 @@ public class PackPuppyTalent extends TalentInstance {
         @Override
         public void onStart() {
             ChopinLogger.sendToOwner(dog, "Started Eating from chestDog");
-            this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
+            //this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
         }
 
         @Override
