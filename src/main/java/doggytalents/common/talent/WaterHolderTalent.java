@@ -400,7 +400,7 @@ public class WaterHolderTalent extends TalentInstance {
 
         @Override
         public void onStart() {
-            this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
+            //this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
             ticksUntilPathRecalc = 0;
         }
 
