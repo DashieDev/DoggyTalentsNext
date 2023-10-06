@@ -635,6 +635,19 @@
             "author" : "AuthenticEmma"
         },
         {
+            "skin_name" : "Heeler (Red Solid)",
+            "skin_id" : "heeler_redsolid",
+            "use_model" : "heeler",
+            "author" : "AuthenticEmma"
+        },
+        {
+            "skin_name" : "Heeler (Red White)",
+            "skin_id" : "heeler_redwhite",
+            "use_model" : "heeler",
+            "author" : "AuthenticEmma"
+        },
+        {
+            
             "skin_name" : "Charlie aka. Chuckle",
             "skin_id" : "chuckle",
             "use_model" : "chuckle",
