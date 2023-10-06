@@ -12,6 +12,7 @@ import doggytalents.client.entity.model.dog.BrownHeelerMixModel;
 import doggytalents.client.entity.model.dog.ChuckleModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.model.dog.HeelerModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
 import doggytalents.client.entity.model.dog.JackModel;
 import doggytalents.client.entity.model.dog.JunoModel;
@@ -61,6 +62,7 @@ public class DogModelRegistry {
 
         register("brown_heeler_mix", ctx ->  new BrownHeelerMixModel(ctx.bakeLayer(ClientSetup.DOG_BROWN_HEELER_MIX)));
         register("chuckle", ctx ->  new ChuckleModel(ctx.bakeLayer(ClientSetup.DOG_CHUCKLE)));
+        register("heeler", ctx ->  new HeelerModel(ctx.bakeLayer(ClientSetup.DOG_HEELER)));
 
     }
 
