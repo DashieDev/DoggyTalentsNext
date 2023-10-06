@@ -40,6 +40,7 @@ public class DogAnimationManager {
             this.dog.xRotO = 0;
             this.dog.yBodyRot = this.dog.yHeadRot;
             this.dog.setXRot(0);
+            this.dog.resetBeggingRotation();
         }
         if (started && (!this.dog.level().isClientSide) && !looping) {
             --this.animationTime;
