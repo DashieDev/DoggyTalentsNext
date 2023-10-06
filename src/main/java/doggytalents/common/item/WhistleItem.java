@@ -443,7 +443,7 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         if (!(entity instanceof Dog dog))
             return;
-        if (dog.isBusy())
+        if (!dog.readyForNonTrivialAction())
             return;
         dog.triggerAction(new DogHowlAction(dog));
         player.level().playSound(null, player.blockPosition(),
