@@ -2002,6 +2002,11 @@ public class Dog extends AbstractDog {
         return this.isShaking && this.shakeFire;
     }
 
+    public void resetBeggingRotation() {
+        this.headRotationCourse = 0;
+        this.headRotationCourseOld = 0;
+    }
+
     @Override
     public void die(DamageSource cause) {
         if (checkAndHandleIncapacitated(cause))
