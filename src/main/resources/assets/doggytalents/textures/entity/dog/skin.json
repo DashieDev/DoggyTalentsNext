@@ -268,7 +268,13 @@
             "skin_name" : "Brown Heeler Mix",
             "skin_id" : "brown_heeler_mix",
             "use_model" : "brown_heeler_mix",
-            "author" : "Emma"
+            "author" : "AuthenticEmma"
+        },
+        {
+            "skin_name" : "Charlie aka. Chuckle",
+            "skin_id" : "chuckle",
+            "use_model" : "chuckle",
+            "author" : "AuthenticEmma"
         }
         
     ]

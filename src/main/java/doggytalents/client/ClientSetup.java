@@ -13,6 +13,7 @@ import doggytalents.client.entity.model.WigModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.BrownHeelerMixModel;
+import doggytalents.client.entity.model.dog.ChuckleModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
@@ -81,6 +82,7 @@ public class ClientSetup {
     
 
     public static final ModelLayerLocation DOG_BROWN_HEELER_MIX = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "brown_heeler_mix"), "main");
+    public static final ModelLayerLocation DOG_CHUCKLE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "chuckle"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -119,6 +121,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createArmorLayer);
 
         event.registerLayerDefinition(DOG_BROWN_HEELER_MIX, BrownHeelerMixModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_CHUCKLE, ChuckleModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
