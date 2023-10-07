@@ -3,6 +3,7 @@ package doggytalents;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.Accessory.AccessoryRenderType;
 import doggytalents.common.entity.accessory.*;
+import doggytalents.common.item.TenguAccessory;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
 import net.minecraft.resources.ResourceLocation;
@@ -53,6 +54,7 @@ public class DoggyAccessories {
     public static final RegistryObject<HeadBandAccessory> HEAD_BAND_HIGHHH = register("head_band_highhh", () -> new HeadBandAccessory(DoggyItems.HEAD_BAND_HIGHHH).setModelTexture(Resources.HEAD_BAND_HIGHHH).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<KitsuneFrontAccessory> KITSUNE_FRONT = register("kitsune_front", () -> new KitsuneFrontAccessory(DoggyItems.KITSUNE_FRONT).setModelTexture(Resources.KITSUNE_FRONT).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<KitsuneSideAccessory> KITSUNE_SIDE = register("kitsune_side", () -> new KitsuneSideAccessory(DoggyItems.KITSUNE_SIDE).setModelTexture(Resources.KITSUNE_SIDE).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<TenguAccessory> TENGU = register("tengu", () -> new TenguAccessory(DoggyItems.TENGU).setModelTexture(Resources.TENGU).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
 
     public static final RegistryObject<Helmet> IRON_HELMET = registerHelmet("iron_helmet", () -> Items.IRON_HELMET, Resources.IRON_HELMET);
