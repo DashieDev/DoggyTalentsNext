@@ -20,6 +20,7 @@ import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithS
 import doggytalents.common.artifacts.DoggyArtifact;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
+import doggytalents.common.entity.ai.nav.DogBodyRotationControl;
 import doggytalents.common.entity.ai.nav.DogMoveControl;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import doggytalents.common.entity.ai.triggerable.AnimationAction;
@@ -87,6 +88,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
@@ -3331,6 +3333,11 @@ public class Dog extends AbstractDog {
     @Override
     public boolean canBeControlledByRider() {
         return true;
+    }
+
+    @Override
+    protected BodyRotationControl createBodyControl() {
+        return new DogBodyRotationControl(this);
     }
 
     private void doDogRideFloat() {
