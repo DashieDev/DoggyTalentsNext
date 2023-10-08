@@ -50,6 +50,7 @@ public class DogIncapacitatedMananger {
     private static final int MAX_BANDAID_COUNT = 8;
     private int bandagesCount = 0;
     private int bandageCooldown = 0;
+    private int drownPoseTick = 0;
     
     public static final int MAX_INCAP_MSG_LEN = 256;
     private String incapMsg = "";
@@ -262,6 +263,12 @@ public class DogIncapacitatedMananger {
     }
 
     public void incapacitatedClientTick() {
+        if (this.isDogDeepInFluid()) {
+            ++drownPoseTick;
+        } else {
+            drownPoseTick = 0;
+        }
+
         var sync_state = this.dog.getIncapSyncState();
         var type = sync_state.type;
         switch (type) {
@@ -435,7 +442,7 @@ public class DogIncapacitatedMananger {
 
     public DogPose getPose() {
         int id = this.dog.getIncapSyncState().poseId;
-        if (this.dog.showDrownPose())
+        if (this.showDrownPose())
             return DogPose.DROWN;
         switch (id) {
         default:
@@ -447,7 +454,7 @@ public class DogIncapacitatedMananger {
 
     public DogAnimation getAnim() {
         int id = this.dog.getIncapSyncState().poseId;
-        if (this.dog.showDrownPose())
+        if (showDrownPose())
             return DogAnimation.DROWN;
         switch (id) {
         default:
@@ -455,6 +462,17 @@ public class DogIncapacitatedMananger {
         case 1:
             return DogAnimation.FAINT_2;
         }
+    }
+
+    private boolean isDogDeepInFluid() {
+        var type = this.dog.getMaxHeightFluidType();
+        if (type.isAir()) return false;
+        double height = this.dog.getFluidTypeHeight(type);
+        return height > 0.5;
+    }
+
+    private boolean showDrownPose() {
+        return this.drownPoseTick > 20;
     }
 
     public DogAnimation getFaintStandAnim() {

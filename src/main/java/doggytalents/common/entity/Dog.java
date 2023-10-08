@@ -3950,13 +3950,6 @@ public class Dog extends AbstractDog {
         this.setDogPose(DogPose.STAND);
     }
 
-    public boolean showDrownPose() {
-        var type = this.getMaxHeightFluidType();
-        if (type.isAir()) return false;
-        double height = this.getFluidTypeHeight(type);
-        return height > 0.5;
-    }
-
     //Client
     public DogSkin getClientSkin() {
         return this.clientSkin;
