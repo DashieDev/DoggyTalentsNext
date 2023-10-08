@@ -50,6 +50,13 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
         if (!ConfigHandler.CLIENT.RENDER_ARMOR.get())
             return;
 
+        var skin = dog.getClientSkin();
+        if (skin.useCustomModel()) {
+            var model = skin.getCustomModel().getValue();
+            if (!model.armorShouldRender(dog))
+                return;
+        }
+
         Optional<TalentInstance> inst = dog.getTalent(DoggyTalents.DOGGY_ARMOR);
         if (!inst.isPresent()) return;
 

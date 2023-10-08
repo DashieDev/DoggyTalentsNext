@@ -498,6 +498,10 @@ public class DogModel extends EntityModel<Dog> {
         return true;
     }
 
+    public boolean armorShouldRender(Dog dog) {
+        return true;
+    }
+
     public boolean incapShouldRender(Dog dog) {
         return true;
     }
