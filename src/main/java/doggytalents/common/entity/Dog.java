@@ -3828,10 +3828,6 @@ public class Dog extends AbstractDog {
         this.setDogPose(DogPose.STAND);
     }
 
-    public boolean showDrownPose() {
-        return this.isInLava() || this.isInWater();
-    }
-
     //Client
     public DogSkin getClientSkin() {
         return this.clientSkin;
