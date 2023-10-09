@@ -170,6 +170,8 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<ItemStack> BONE_VARIANT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.ITEM_STACK);
 
     private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> FREEZE_ANIM = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Long> FREEZE_ANIM_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.LONG);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
     private static final Cache<EntityDataAccessor<List<AccessoryInstance>>> ACCESSORIES =  Cache.make(() -> (EntityDataAccessor<List<AccessoryInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get()));
@@ -297,6 +299,8 @@ public class Dog extends AbstractDog {
         this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
         this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
         this.entityData.define(ANIMATION, 0);
+        this.entityData.define(FREEZE_ANIM_TIME, 0L);
+        this.entityData.define(FREEZE_ANIM, 0);
     }
 
     @Override
@@ -956,19 +960,21 @@ public class Dog extends AbstractDog {
     }
 
     private DogAnimation freezeAnim = DogAnimation.NONE;
-    private long freezeTime;
     public void setFreezePose() {
-        freezeAnim = this.getAnim();
-        freezeTime = this.animationManager.animationState.getAccumulatedTime();
+        this.entityData.set(FREEZE_ANIM, this.getAnim().getId());
+        if (!this.level().isClientSide)
+        this.animationManager.animationState.updateTime(this.tickCount, this.getAnim().getSpeedModifier());
+        this.entityData.set(FREEZE_ANIM_TIME, this.animationManager.animationState.getAccumulatedTime());
     }
 
     public long freezeTime() {
-        return freezeTime;
+        return this.entityData.get(FREEZE_ANIM_TIME);
     }
 
     public DogAnimation getFreezeAnim() {
         return freezeAnim;
     }
+
     //End Client
     
     @Override
@@ -984,8 +990,8 @@ public class Dog extends AbstractDog {
         // })
 
         if (stack.getItem() == Items.STONE_PICKAXE) {
-            if (this.getFreezeAnim() != DogAnimation.NONE) {
-                this.freezeAnim = DogAnimation.NONE;
+            if (this.freezeAnim != DogAnimation.NONE) {
+                this.entityData.set(FREEZE_ANIM, 0);
             } else
             this.setFreezePose();
             return InteractionResult.SUCCESS;
@@ -1015,6 +1021,9 @@ public class Dog extends AbstractDog {
             return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.BLACK_DYE) {
             this.setAnim(DogAnimation.BACKFLIP);
+            return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.RED_WOOL) {
+            this.setAnim(DogAnimation.HOWL);
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.TORCH) {
             this.getLookControl().setLookAt(this.getOwner(), 10.0F, this.getMaxHeadXRot());
@@ -2179,6 +2188,13 @@ public class Dog extends AbstractDog {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
 
+        try {
+            compound.putInt("freeze_anim", this.entityData.get(FREEZE_ANIM));
+            compound.putLong("freeze_anim_time", this.entityData.get(FREEZE_ANIM_TIME));
+        } catch (Exception e) {
+
+        }
+
         ListTag talentList = new ListTag();
         List<TalentInstance> talents = this.getTalentMap();
 
@@ -2361,6 +2377,13 @@ public class Dog extends AbstractDog {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+
+        try {
+            this.entityData.set(FREEZE_ANIM, compound.getInt("freeze_anim"));
+            this.entityData.set(FREEZE_ANIM_TIME, compound.getLong("freeze_anim_time"));
+        } catch (Exception e) {
+            
+        }
 
         var newTlInstLs = new ArrayList<TalentInstance>();
 
@@ -2598,6 +2621,10 @@ public class Dog extends AbstractDog {
             if (mode == EnumMode.INCAPACITATED) {
                 this.removeAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT);
             }
+        }
+
+        if (FREEZE_ANIM.equals(key)) {
+            this.freezeAnim = DogAnimation.byId(this.entityData.get(FREEZE_ANIM));
         }
     }
 
