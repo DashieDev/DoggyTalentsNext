@@ -159,7 +159,7 @@ public class ClientSetup {
     public static final ModelLayerLocation INU_AKITA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "akita_inu"), "main");
     public static final ModelLayerLocation INU_SHIBA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "shiba_inu"), "main");
     public static final ModelLayerLocation INU_SHIKOKU = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "shikoku_inu"), "main");
-    public static final ModelLayerLocation DOG_HOUNDSTONE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "houndstone"), "main");
+    //public static final ModelLayerLocation DOG_HOUNDSTONE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "houndstone"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -234,7 +234,7 @@ public class ClientSetup {
         event.registerLayerDefinition(INU_AKITA, AkitaModel::createBodyLayer);
         event.registerLayerDefinition(INU_SHIBA, ShibaModel::createBodyLayer);
         event.registerLayerDefinition(INU_SHIKOKU, ShikokuModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_HOUNDSTONE, HoundstoneModel::createBodyLayer);
+        //event.registerLayerDefinition(DOG_HOUNDSTONE, HoundstoneModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
