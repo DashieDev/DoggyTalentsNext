@@ -149,20 +149,13 @@ public class DogModel extends EntityModel<Dog> {
     @Override
     public void prepareMobModel(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
-        this.earLeft.ifPresent(ear -> ear.resetPose());
-        this.earRight.ifPresent(ear -> ear.resetPose());
+        this.resetAllPose();
 
         var pose = dog.getDogPose();
 
         var anim = dog.getAnim();
         if (anim != DogAnimation.NONE) return;
-    
-        if (!pose.canShake)
-        this.resetShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
-
-        if (!pose.canBeg)
-        this.resetBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
-
+        
         switch (pose) {
             case FAINTED:
                 this.setupFaintPose(dog, limbSwing, limbSwingAmount, partialTickTime);
@@ -195,18 +188,6 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public void setUpStandPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-
-        this.body.resetPose();
-        this.mane.resetPose();
-        this.tail.resetPose();
-        this.legBackRight.resetPose();
-        this.legBackLeft.resetPose();
-        this.legFrontRight.resetPose();
-        this.legFrontLeft.resetPose();
-        this.head.resetPose();
-        this.earLeft.ifPresent(ear -> ear.resetPose());
-        this.earRight.ifPresent(ear -> ear.resetPose());
-
         animateStandWalking(dog, limbSwing, limbSwingAmount, partialTickTime);
     }
 
@@ -251,7 +232,6 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public void setUpSitPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        this.resetAllPose();
         this.tail.offsetPos(KeyframeAnimations.posVec(0f, -9f, -2f));
         this.legFrontLeft.offsetRotation(KeyframeAnimations.degreeVec(-27f, 0f, 0f));
         this.legFrontLeft.offsetPos(KeyframeAnimations.posVec(0.01f, -1f, 0f));
@@ -338,7 +318,7 @@ public class DogModel extends EntityModel<Dog> {
 
     public void setupRestPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.head.offsetRotation(KeyframeAnimations.degreeVec(-7.54f, 0.76f, 2.5f));
-        this.head.offsetPos(KeyframeAnimations.posVec(0f, -4f, 2f));
+        this.head.offsetPos(KeyframeAnimations.posVec(0f, -5f, 2f));
         this.body.offsetRotation(KeyframeAnimations.degreeVec(0.5f, 0f, 0f));
         this.body.offsetPos(KeyframeAnimations.posVec(0f, -6.5f, 0f));
         this.legBackRight.offsetRotation(KeyframeAnimations.degreeVec(-90f, 22.5f, 0f));
@@ -426,18 +406,8 @@ public class DogModel extends EntityModel<Dog> {
         this.realTail.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
     }
 
-    public void resetShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        this.mane.zRot = 0;
-        this.body.zRot = 0;
-        this.realTail.zRot = 0;
-    }
-
     public void translateBeggingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.realHead.zRot = dog.getInterestedAngle(partialTickTime) + dog.getShakeAngle(partialTickTime, 0.0F);
-    }
-
-    public void resetBeggingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        this.realHead.zRot = 0;
     }
 
     Vector3f vecObj = new Vector3f();
@@ -524,23 +494,11 @@ public class DogModel extends EntityModel<Dog> {
         this.tail.setInitialPose(PartPose.offset(tailX, tailY, tailZ));
     }
 
-    public boolean modelNeedRefreshBeforeNextRender(Dog dog) {
-        if (dog.getAnim() != DogAnimation.NONE)
-            return true;
-        if (dog.getDogPose().needRenderRefresh)
-            return true;
-        return false;
-    }
-
-    public boolean modelNeedRefreshBeforeCurrentRender(Dog dog) {
-        if (dog.getAnim() != DogAnimation.NONE)
-            return true;
-        if (dog.getDogPose().needRenderRefresh)
-            return true;
-        return false;
-    }
-
     public boolean acessoryShouldRender(Dog dog, AccessoryInstance inst) {
+        return true;
+    }
+
+    public boolean armorShouldRender(Dog dog) {
         return true;
     }
 

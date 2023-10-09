@@ -42,6 +42,7 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.EnglishBulldogModel;
 import doggytalents.client.entity.model.dog.FrenchBulldogModel;
 import doggytalents.client.entity.model.dog.GermanShepherdModel;
+import doggytalents.client.entity.model.dog.HoundstoneModel;
 import doggytalents.client.entity.model.dog.HungarianPuliModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
 import doggytalents.client.entity.model.dog.JackModel;
@@ -164,6 +165,7 @@ public class DogModelRegistry {
         register("akita_inu", ctx ->  new AkitaModel(ctx.bakeLayer(ClientSetup.INU_AKITA)));
         register("shiba_inu", ctx ->  new ShibaModel(ctx.bakeLayer(ClientSetup.INU_SHIBA)));
         register("shikoku_inu", ctx ->  new ShikokuModel(ctx.bakeLayer(ClientSetup.INU_SHIKOKU)));
+        register("houndstone", ctx ->  new HoundstoneModel(ctx.bakeLayer(ClientSetup.DOG_HOUNDSTONE)));
 
         registerFromEvent();
     }

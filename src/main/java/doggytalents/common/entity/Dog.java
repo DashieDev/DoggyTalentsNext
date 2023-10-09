@@ -19,6 +19,7 @@ import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithS
 import doggytalents.common.artifacts.DoggyArtifact;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
+import doggytalents.common.entity.ai.nav.DogBodyRotationControl;
 import doggytalents.common.entity.ai.nav.DogMoveControl;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import doggytalents.common.entity.ai.triggerable.AnimationAction;
@@ -88,6 +89,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
@@ -655,6 +657,19 @@ public class Dog extends AbstractDog {
         //Client
         if (this.level().isClientSide) {
             proccessCustomModelSkin();
+        }
+
+        if (this.level().isClientSide && this.isOnFire() 
+            && ConfigHandler.CLIENT.DISPLAY_SMOKE_WHEN_ON_FIRE.get()) {
+            if (this.getRandom().nextInt(3) == 0) {
+                float f1 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+                float f2 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+                this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                this.getX() + f1,
+                this.getY() + this.getEyeHeight(),
+                this.getZ() + f2,
+                0, 0.05 , 0 );
+            }
         }
     }
 
@@ -1989,6 +2004,11 @@ public class Dog extends AbstractDog {
         return this.isShaking && this.shakeFire;
     }
 
+    public void resetBeggingRotation() {
+        this.headRotationCourse = 0;
+        this.headRotationCourseOld = 0;
+    }
+
     @Override
     public void die(DamageSource cause) {
         if (checkAndHandleIncapacitated(cause))
@@ -2928,7 +2948,7 @@ public class Dog extends AbstractDog {
     }
 
     public void resetTickTillRest() {
-        this.tickUntilRest = 100 + this.getRandom().nextInt(26) * 20; 
+        this.tickUntilRest = 30 * 20 + this.getRandom().nextInt(271) * 20; 
     }
 
     public List<TalentInstance> getTalentMap() {
@@ -3390,6 +3410,11 @@ public class Dog extends AbstractDog {
         // this.walkAnimation.update(f4, 0.4f);
 
         this.addMovementStat(this.getX() - this.xo, this.getY() - this.yo, this.getZ() - this.zo);
+    }
+
+    @Override
+    protected BodyRotationControl createBodyControl() {
+        return new DogBodyRotationControl(this);
     }
 
     private void checkAndJumpWhenBeingRidden(LivingEntity rider) {
@@ -3923,13 +3948,6 @@ public class Dog extends AbstractDog {
             return;
         }
         this.setDogPose(DogPose.STAND);
-    }
-
-    public boolean showDrownPose() {
-        var type = this.getMaxHeightFluidType();
-        if (type.isAir()) return false;
-        double height = this.getFluidTypeHeight(type);
-        return height > 0.5;
     }
 
     //Client

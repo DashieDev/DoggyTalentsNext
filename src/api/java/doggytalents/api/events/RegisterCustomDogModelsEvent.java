@@ -37,9 +37,10 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
         public final boolean hasDefaultScale;
         public final Vector3f customRootPivot;
         public final float defaultScale;
+        public final boolean glowingEyes;
 
         private DogModelProps(ResourceLocation id, ModelLayerLocation layer, boolean accessory, boolean incap,
-            Vector3f customPivot, float defaulScale) {
+            Vector3f customPivot, float defaulScale, boolean glowingEyes) {
             this.id = id;
             this.layer = layer;
             this.shouldRenderAccessories = accessory;
@@ -47,6 +48,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
             this.defaultScale = defaulScale;
             this.hasDefaultScale = this.defaultScale != 1f;
             this.customRootPivot = customPivot;
+            this.glowingEyes = glowingEyes;
         }
 
         public static class Builder {
@@ -55,6 +57,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
             private boolean accessory = false, incap = false;
             private Vector3f customRootPivot = null;
             private float defaultScale = 1f;
+            private boolean glowingEyes = false;
 
             public Builder(ResourceLocation id, ModelLayerLocation layer) {
                 this.id = id;
@@ -81,8 +84,13 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
                 return this;
             }
 
+            public Builder withGlowingEyes() {
+                this.glowingEyes = true;
+                return this;
+            }
+
             public DogModelProps build() {
-                return new DogModelProps(id, layer, accessory, incap, customRootPivot, defaultScale);
+                return new DogModelProps(id, layer, accessory, incap, customRootPivot, defaultScale, glowingEyes);
             }
 
         }
