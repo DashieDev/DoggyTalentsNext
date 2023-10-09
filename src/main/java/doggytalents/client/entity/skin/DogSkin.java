@@ -15,11 +15,11 @@ import net.minecraft.resources.ResourceLocation;
 
 public class DogSkin {
 
-    public static final DogSkin CLASSICAL = (new DogSkin(Resources.ENTITY_WOLF){
+    public static final DogSkin CLASSICAL = (new DogSkin(Resources.DOG_CLASSICAL){
         @Override
         public ResourceLocation getPath() {
-            if (ConfigHandler.CLIENT.USE_PROVIDED_COPY_FOR_CLASSICAL.get())
-                return Resources.DOG_CLASSICAL;
+            if (ConfigHandler.CLIENT.USE_VANILLA_RES_FOR_CLASSICAL.get())
+                return Resources.ENTITY_WOLF;
             return super.getPath();
         }
 
@@ -36,11 +36,11 @@ public class DogSkin {
             return "default, classical";
         }
     }).setName("Classical");
-    public static final DogSkin MISSING = (new DogSkin(Resources.ENTITY_WOLF){
+    public static final DogSkin MISSING = (new DogSkin(Resources.DOG_CLASSICAL){
         @Override
         public ResourceLocation getPath() {
-            if (ConfigHandler.CLIENT.USE_PROVIDED_COPY_FOR_CLASSICAL.get())
-                return Resources.DOG_CLASSICAL;
+            if (ConfigHandler.CLIENT.USE_VANILLA_RES_FOR_CLASSICAL.get())
+                return Resources.ENTITY_WOLF;
             return super.getPath();
         }
     }).setName("<Missing>");
