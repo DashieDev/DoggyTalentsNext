@@ -84,6 +84,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.SUSSY_SICKLE);
         generated(DoggyItems.SNORKEL);
         generated(DoggyItems.SUSHI_SAKE_NIGIRI);
+        generated(DoggyItems.ONIGIRI);
 
         generated(DoggyItems.KITSUNE_FRONT);
         generated(DoggyItems.KITSUNE_SIDE);

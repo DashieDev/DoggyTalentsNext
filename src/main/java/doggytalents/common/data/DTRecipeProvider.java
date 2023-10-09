@@ -338,8 +338,15 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("S")
             .pattern("R")
             .define('S', Items.SALMON)
-            .define('R', Items.WHEAT)
+            .define('R', Items.WHEAT) //replace WHEAT with RICE
             .unlockedBy("has_salmon", has(Items.SALMON))
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.ONIGIRI.get(), 1)
+            .pattern("R")
+            .pattern("N")
+            .define('N', Items.DRIED_KELP)
+            .define('R', Items.WHEAT) //replace WHEAT with RICE
+            .unlockedBy("has_dried_kelp", has(Items.DRIED_KELP))
             .save(consumer);     
     }
     
