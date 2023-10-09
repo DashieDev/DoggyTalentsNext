@@ -350,7 +350,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SAUSAGE.get(), 3)
             .pattern("PPP")
-            .define('N', Items.COOKED_PORKCHOP)
+            .define('P', Items.COOKED_PORKCHOP)
             .unlockedBy("has_cooked_porkchop", has(Items.COOKED_PORKCHOP))
             .save(consumer);       
     }
