@@ -29,7 +29,7 @@ public class DogRandomSitIdleGoal extends Goal {
         if (!dog.canDoIdileAnim()) return false;
         if (!dog.onGround()) return false;
 
-        return this.dog.getRandom().nextFloat() < 0.02;
+        return true;
     }
 
     @Override
