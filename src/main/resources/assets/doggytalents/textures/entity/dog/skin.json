@@ -169,14 +169,6 @@
             "tags" : "pokemon"
         },
         {
-            "skin_name" : "Houndstone (Hakadoggu)",
-            "skin_id" : "houndstone",
-            "use_model" : "houndstone",
-            "based_on" : "Houndstone from Pokemon Gen 9",
-            "author" : "MashXP",
-            "tags" : "pokemon"
-        },
-        {
             "skin_name" : "Cheems",
             "skin_id" : "cheems",
             "use_model" : "kusa_ume",
