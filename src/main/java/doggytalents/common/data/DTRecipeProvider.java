@@ -272,7 +272,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('R', Items.RED_DYE)
             .define('Y', Items.YELLOW_DYE)
             .define('B', Items.BREAD)
-            .define('C', Items.COOKED_PORKCHOP)
+            .define('C', DoggyItems.SAUSAGE.get())
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_bread", has(Items.BREAD))
             .save(consumer);
@@ -347,7 +347,12 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('N', Items.DRIED_KELP)
             .define('R', Items.WHEAT) //replace WHEAT with RICE
             .unlockedBy("has_dried_kelp", has(Items.DRIED_KELP))
-            .save(consumer);     
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SAUSAGE.get(), 3)
+            .pattern("PPP")
+            .define('N', Items.COOKED_PORKCHOP)
+            .unlockedBy("has_cooked_porkchop", has(Items.COOKED_PORKCHOP))
+            .save(consumer);       
     }
     
     
