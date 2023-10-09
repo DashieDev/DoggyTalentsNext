@@ -62,7 +62,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
         public ForgeConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
         public ForgeConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
-        public ForgeConfigSpec.BooleanValue USE_PROVIDED_COPY_FOR_CLASSICAL;
+        public ForgeConfigSpec.BooleanValue USE_VANILLA_RES_FOR_CLASSICAL;
         public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON;
         public ForgeConfigSpec.BooleanValue RENDER_ARMOR;
         public ForgeConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
@@ -125,12 +125,13 @@ public class ConfigHandler {
                 .comment("(Which they should). This option should only be used as the last resort.")
                 .translation("doggytalents.config.client.block_third_party_nametag")
                 .define("block_third_party_nametag", false);
-            USE_PROVIDED_COPY_FOR_CLASSICAL = builder
-                .comment("By defeault, the CLASSICAL skin directly references the")
-                .comment("in-game vanilla wolf texture for rendering. Turning this on")
-                .comment("will allow a copy of the vanilla wolf texture provided by the mod to be used instead.")
-                .translation("doggytalents.config.client.use_provided_copy_for_classical")
-                .define("use_provided_copy_for_classical", false);
+            USE_VANILLA_RES_FOR_CLASSICAL = builder
+                .comment("By defeault, a copy of the Classical (Vanilla Wolf Texture) provided by the mod")
+                .comment("is used to render The Classical Skin, this is to avoid conflicts with resources packs")
+                .comment("like Fresh Animations which are directly using the in-game wolf texture. Turning this on")
+                .comment("will make DTN directly reference the in-game texture.")
+                .translation("doggytalents.config.client.use_vanilla_res_for_classical")
+                .define("use_vanilla_res_for_classical", false);
             WORD_LOAD_ICON = builder
                 .comment("Show a fun icon on world loading screen.")
                 .translation("doggytalents.config.client.world_load_icon")
