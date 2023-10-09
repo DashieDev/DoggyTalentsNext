@@ -12,6 +12,7 @@ public class DoggyTags {
     public static TagKey<Item> BREEDING_ITEMS = tag("breeding_items");
     public static TagKey<Item> PACK_PUPPY_BLACKLIST = tag("pack_puppy_blacklist");
     public static TagKey<Item> TREATS = tag("treats");
+    public static TagKey<Item> DOG_BOOSTING_FOOD = tag("dog_boosting_food");
 
     private static TagKey<Item> tag(String name) {
         return ItemTags.create(Util.getResource(name));
