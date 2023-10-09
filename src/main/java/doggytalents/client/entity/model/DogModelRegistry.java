@@ -165,7 +165,7 @@ public class DogModelRegistry {
         register("akita_inu", ctx ->  new AkitaModel(ctx.bakeLayer(ClientSetup.INU_AKITA)));
         register("shiba_inu", ctx ->  new ShibaModel(ctx.bakeLayer(ClientSetup.INU_SHIBA)));
         register("shikoku_inu", ctx ->  new ShikokuModel(ctx.bakeLayer(ClientSetup.INU_SHIKOKU)));
-        register("houndstone", ctx ->  new HoundstoneModel(ctx.bakeLayer(ClientSetup.DOG_HOUNDSTONE)));
+        //register("houndstone", ctx ->  new HoundstoneModel(ctx.bakeLayer(ClientSetup.DOG_HOUNDSTONE)));
 
         registerFromEvent();
     }
