@@ -319,11 +319,11 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(DoggyItems.KITSUNE_SIDE.get(),1)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.KITSUNE_FRONT.get(), 1)
-            .requires(DoggyItems.HEAD_BAND_BLANK.get(),1)
-            .requires(Items.RED_DYE)  
-            .requires(Items.WHITE_DYE)              
-            .save(consumer);
+        // ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.KITSUNE_FRONT.get(), 1)
+        //     .requires(DoggyItems.HEAD_BAND_BLANK.get(),1)
+        //     .requires(Items.RED_DYE)  
+        //     .requires(Items.WHITE_DYE)              
+        //     .save(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.KITSUNE_SIDE.get(), 1)
             .requires(DoggyItems.KITSUNE_FRONT.get(),1)
             .unlockedBy("has_string", has(Items.STRING))
