@@ -955,6 +955,22 @@ public class Dog extends AbstractDog {
         }
     }
 
+    private DogAnimation freezeAnim = DogAnimation.NONE;
+    private long freezeTime;
+    public void setFreezePose() {
+        freezeAnim = this.getAnim();
+        freezeTime = this.animationManager.animationState.getAccumulatedTime();
+    }
+
+    public long freezeTime() {
+        return freezeTime;
+    }
+
+    public DogAnimation getFreezeAnim() {
+        return freezeAnim;
+    }
+    //End Client
+    
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
 
@@ -966,6 +982,41 @@ public class Dog extends AbstractDog {
         //     long stopTime = System.nanoTime();
         //     ChopinLogger.l("get random pos " + (stopTime-startTime) + " nanoseconds." );
         // })
+
+        if (stack.getItem() == Items.STONE_PICKAXE) {
+            if (this.getFreezeAnim() != DogAnimation.NONE) {
+                this.freezeAnim = DogAnimation.NONE;
+            } else
+            this.setFreezePose();
+            return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.PINK_DYE) {
+            this.setAnim(DogAnimation.BACKFLIP);
+            return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.BLUE_DYE) {
+            this.setAnim(DogAnimation.STRETCH);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.GREEN_DYE) {
+            this.setAnim(DogAnimation.SIT_IDLE_2);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.PURPLE_DYE) {
+            this.setAnim(DogAnimation.SCRATCHIE);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.YELLOW_DYE) {
+            this.setAnim(DogAnimation.LYING_DOWN);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.RED_DYE) {
+            this.setAnim(DogAnimation.DIG);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.ORANGE_DYE) {
+            this.setAnim(DogAnimation.CHOPIN_TAIL);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.BROWN_DYE) {
+            this.setAnim(DogAnimation.BELLY_RUB);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.BLACK_DYE) {
+            this.setAnim(DogAnimation.BACKFLIP);
+            return InteractionResult.SUCCESS;
+        }
 
         if (this.isDefeated()) 
             return this.incapacitatedMananger
@@ -3754,12 +3805,13 @@ public class Dog extends AbstractDog {
         boolean incapBlockedMove = this.isDefeated() && !this.incapacitatedMananger.canMove();
         boolean animBlockedMove = this.animAction != null && this.animAction.blockMove();
         boolean animBlockedLook = this.animAction != null && this.animAction.blockLook();
+        boolean animFreeze = this.getFreezeAnim() != DogAnimation.NONE;
         boolean notControlledByPlayer = !(this.getControllingPassenger() instanceof ServerPlayer);
         boolean notRidingBoat = !(this.getVehicle() instanceof Boat);
         this.goalSelector.setControlFlag(Goal.Flag.MOVE, 
-            notControlledByPlayer && !incapBlockedMove && !animBlockedMove);
+            notControlledByPlayer && !incapBlockedMove && !animBlockedMove && !animFreeze);
         this.goalSelector.setControlFlag(Goal.Flag.JUMP, notControlledByPlayer && notRidingBoat);
-        this.goalSelector.setControlFlag(Goal.Flag.LOOK, notControlledByPlayer && !animBlockedLook);
+        this.goalSelector.setControlFlag(Goal.Flag.LOOK, notControlledByPlayer && !animBlockedLook && !animFreeze);
     }
 
     @Override
