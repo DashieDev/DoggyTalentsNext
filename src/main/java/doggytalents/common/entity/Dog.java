@@ -221,6 +221,9 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<DogSize> DOG_SIZE = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER);
     private static final EntityDataAccessor<DogSkinData> CUSTOM_SKIN = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER);
     private static final EntityDataAccessor<DogPettingState> DOG_PETTING_STATE = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_PETTING_STATE);
+    private static final EntityDataAccessor<Integer> FREEZE_ANIM = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Long> FREEZE_ANIM_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.LONG);
+    private static final EntityDataAccessor<Float> FREEZE_YROT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.FLOAT);
 
     // Cached values
     private final Cache<Integer> spendablePoints = Cache.make(this::getSpendablePointsInternal);
@@ -342,6 +345,9 @@ public class Dog extends AbstractDog {
         builder.define(ANIMATION, 0);
         builder.define(ANIM_SYNC_TIME, 0);
         builder.define(DOG_PETTING_STATE, DogPettingState.NULL);
+        builder.define(FREEZE_ANIM_TIME, 0L);
+        builder.define(FREEZE_ANIM, 0);
+        builder.define(FREEZE_YROT, 0f);
     }
 
     @Override
@@ -584,6 +590,14 @@ public class Dog extends AbstractDog {
         super.tick();
 
         updateClassicalAnim();
+        if (this.freezeAnim != DogAnimation.NONE) {
+            this.yBodyRot = this.getFreezeYRot();
+            this.yHeadRot = this.yBodyRot;
+            this.setYRot(this.yBodyRot);
+            this.yBodyRotO = this.yBodyRot;
+            this.yHeadRotO = this.yHeadRot;
+            this.yRotO = this.getYRot();
+        }
 
         //this.setMaxUpStep(this.isVehicle() ? 1f : 0.6f);
         if (this.isAlive()) {
@@ -1017,11 +1031,113 @@ public class Dog extends AbstractDog {
         return !this.isImmobile() && this.isEffectiveAi();
     }
 
+    private DogAnimation freezeAnim = DogAnimation.NONE;
+    public void setFreezePose() {
+        this.entityData.set(FREEZE_ANIM, this.getAnim().getId());
+        if (!this.level().isClientSide)
+        this.animationManager.animationState.updateTime(this.tickCount, this.getAnim().getSpeedModifier());
+        this.entityData.set(FREEZE_ANIM_TIME, this.animationManager.animationState.getAccumulatedTimeMillis());
+    }
+
+    public long freezeTime() {
+        return this.entityData.get(FREEZE_ANIM_TIME);
+    }
+
+    public DogAnimation getFreezeAnim() {
+        return freezeAnim;
+    }
+
+    public void setFreezeYRot(float yRot) {
+        this.entityData.set(FREEZE_YROT, yRot);
+    }
+
+    public float getFreezeYRot() {
+        return this.entityData.get(FREEZE_YROT);
+    }
+
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
 
         var stack = player.getItemInHand(hand);
-        
+
+        if (stack.getItem() == Items.STONE_PICKAXE) {
+            if (this.freezeAnim != DogAnimation.NONE) {
+                this.entityData.set(FREEZE_ANIM, 0);
+            } else
+            this.setFreezePose();
+            return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.PINK_DYE) {
+            if (player.isShiftKeyDown())
+                this.setAnim(DogAnimation.SNIFF_NEUTRAL);
+            else
+            this.setAnim(DogAnimation.BACKFLIP);
+            return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.BLUE_DYE) {
+            if (player.isShiftKeyDown())
+                this.setAnim(DogAnimation.SNIFF_HOT);
+            else
+            this.setAnim(DogAnimation.STRETCH);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.GREEN_DYE) {
+            if (player.isShiftKeyDown())
+                this.setAnim(DogAnimation.SNIFF_SNEEZE);
+            else
+            this.setAnim(DogAnimation.SIT_LOOK_AROUND);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.PURPLE_DYE) {
+            if (player.isShiftKeyDown())
+                this.setAnim(DogAnimation.TOUCHY_TOUCH);
+            else
+            this.setAnim(DogAnimation.SCRATCHIE);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.YELLOW_DYE) {
+            if (player.isShiftKeyDown())
+                this.setAnim(DogAnimation.DOWN_THE_HOLE);
+            else
+            this.setAnim(DogAnimation.LYING_DOWN);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.RED_DYE) {
+            this.setAnim(DogAnimation.DIG);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.ORANGE_DYE) {
+            this.setAnim(DogAnimation.CHOPIN_TAIL);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.BROWN_DYE) {
+            this.setAnim(DogAnimation.BELLY_RUB);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.BLACK_DYE) {
+            this.setAnim(DogAnimation.HOWL);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.WHITE_DYE) {
+            this.setAnim(DogAnimation.HURT_1);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.LIGHT_GRAY_DYE) {
+            this.setAnim(DogAnimation.HURT_2);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.CYAN_DYE) {
+            this.setAnim(DogAnimation.FAINT);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.LIGHT_BLUE_DYE) {
+            this.setAnim(DogAnimation.FAINT_2);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.GRAY_DYE) {
+            this.setAnim(DogAnimation.FAINT_STAND_1);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.MAGENTA_DYE) {
+            this.setAnim(DogAnimation.FAINT_STAND_2);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.LIME_DYE) {
+            if (player.isShiftKeyDown()) {
+                this.setAnim(DogAnimation.DROWN);
+                return InteractionResult.SUCCESS;
+            }
+            this.setAnim(DogAnimation.REST_BELLY_LOOP);
+            return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.SOUL_TORCH) {
+            this.setFreezeYRot(player.yHeadRot);
+            return InteractionResult.SUCCESS;
+        }
+
         if (this.isDefeated()) 
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
@@ -2619,6 +2735,14 @@ public class Dog extends AbstractDog {
     }
 
     public void addDTNAdditionalSavedData(CompoundTag compound) {
+        try {
+            compound.putInt("freeze_anim", this.entityData.get(FREEZE_ANIM));
+            compound.putLong("freeze_anim_time", this.entityData.get(FREEZE_ANIM_TIME));
+            compound.putFloat("freeze_anim_yrot", this.getFreezeYRot());
+        } catch (Exception e) {
+
+        }
+
         ListTag talentList = new ListTag();
         List<TalentInstance> talents = this.getTalentMap();
 
@@ -2763,6 +2887,14 @@ public class Dog extends AbstractDog {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+
+        try {
+            this.entityData.set(FREEZE_ANIM, compound.getInt("freeze_anim"));
+            this.entityData.set(FREEZE_ANIM_TIME, compound.getLong("freeze_anim_time"));
+            this.setFreezeYRot(compound.getFloat("freeze_anim_yrot"));
+        } catch (Exception e) {
+            
+        }
 
         var newTlInstLs = new ArrayList<TalentInstance>();
 
@@ -3231,6 +3363,9 @@ public class Dog extends AbstractDog {
         if (DOG_PETTING_STATE.equals(key)) {
             if (this.level().isClientSide)
                 DTNClientPettingManager.get().onPettingUpdate(this, getPettingState());
+        }
+        if (FREEZE_ANIM.equals(key)) {
+            this.freezeAnim = DogAnimation.byId(this.entityData.get(FREEZE_ANIM));
         }
     }
 
@@ -4955,12 +5090,13 @@ public class Dog extends AbstractDog {
         boolean incapBlockedMove = this.isDefeated() && !this.incapacitatedMananger.canMove();
         boolean animBlockedMove = this.animAction != null;
         boolean animBlockedLook = this.animAction != null;
+        boolean animFreeze = this.getFreezeAnim() != DogAnimation.NONE;
         boolean notControlledByPlayer = !(this.getControllingPassenger() instanceof ServerPlayer);
         boolean notRidingBoat = !(this.getVehicle() instanceof Boat);
         this.dogAi.setLockedFlag(Goal.Flag.MOVE, 
-            notControlledByPlayer && !incapBlockedMove && !animBlockedMove);
+            notControlledByPlayer && !incapBlockedMove && !animBlockedMove && !animFreeze);
         this.dogAi.setLockedFlag(Goal.Flag.JUMP, notControlledByPlayer && notRidingBoat);
-        this.dogAi.setLockedFlag(Goal.Flag.LOOK, notControlledByPlayer && !animBlockedLook);
+        this.dogAi.setLockedFlag(Goal.Flag.LOOK, notControlledByPlayer && !animBlockedLook && !animFreeze);
     }
 
     @Override
