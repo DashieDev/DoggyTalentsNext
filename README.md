@@ -3,7 +3,7 @@
 
 ![DT Logo](https://github.com/DashieDev/DoggyTalentsNext/blob/225f4b95d39e4890046bcf6ac30ad8e6b467a9a5/images/logo_curse4.png?raw=true)
 
-**Doggy Talents Next** - the next generation of the beloved mod **Doggy Talents** 
+**Doggy Talents Next** - Minecraft Wolf, reimagined.
 
 
 * 🦴 Enhancements to the experience of having dogs as companions throughout the game 
