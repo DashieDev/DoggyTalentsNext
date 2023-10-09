@@ -3,6 +3,7 @@ package doggytalents.common.entity;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyItems;
+import doggytalents.DoggyTags;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
@@ -12,17 +13,12 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 public class BoostingFoodHandler implements IDogFoodHandler  {
 
     @Override
     public boolean isFood(ItemStack stackIn) {
-        var item = stackIn.getItem();
-        return item == Items.GOLDEN_APPLE
-            || item == Items.ENCHANTED_GOLDEN_APPLE
-            || item == Items.GOLDEN_CARROT
-            || item == DoggyItems.EGG_SANDWICH.get();
+        return stackIn.is(DoggyTags.DOG_BOOSTING_FOOD);
     }
 
     @Override
