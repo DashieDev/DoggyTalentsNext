@@ -334,6 +334,13 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(Items.BLACK_DYE)            
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SUSHI_SAKE_NIGIRI.get(), 1)
+            .pattern("S")
+            .pattern("R")
+            .define('S', Items.SALMON)
+            .define('R', Items.WHEAT)
+            .unlockedBy("has_salmon", has(Items.SALMON))
+            .save(consumer);     
     }
     
     
