@@ -10,6 +10,7 @@ import net.minecraft.data.HashCache;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
@@ -338,21 +339,29 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("S")
             .pattern("R")
             .define('S', Items.SALMON)
-            .define('R', Items.WHEAT) //replace WHEAT with RICE
+            .define('R', DoggyItems.RICE_BOWL.get()) //replace WHEAT with RICE
             .unlockedBy("has_salmon", has(Items.SALMON))
             .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.ONIGIRI.get(), 1)
             .pattern("R")
             .pattern("N")
             .define('N', Items.DRIED_KELP)
-            .define('R', Items.WHEAT) //replace WHEAT with RICE
+            .define('R', DoggyItems.RICE_BOWL.get()) //replace WHEAT with RICE
             .unlockedBy("has_dried_kelp", has(Items.DRIED_KELP))
             .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SAUSAGE.get(), 3)
             .pattern("PPP")
             .define('P', Items.COOKED_PORKCHOP)
             .unlockedBy("has_cooked_porkchop", has(Items.COOKED_PORKCHOP))
-            .save(consumer);       
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.RICE_BOWL.get(), 1)
+            .pattern("W")
+            .pattern("B")
+            .define('W', Items.WHEAT)
+            .define('B', Items.BOWL)
+            .unlockedBy("has_wheat", has(Items.WHEAT))
+            .save(consumer);
+      
     }
     
     
