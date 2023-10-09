@@ -1016,6 +1016,9 @@ public class Dog extends AbstractDog {
         }else if (stack.getItem() == Items.BLACK_DYE) {
             this.setAnim(DogAnimation.BACKFLIP);
             return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.TORCH) {
+            this.getLookControl().setLookAt(this.getOwner(), 10.0F, this.getMaxHeadXRot());
+            return InteractionResult.SUCCESS;
         }
 
         if (this.isDefeated()) 
