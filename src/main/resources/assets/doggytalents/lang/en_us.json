@@ -2,6 +2,7 @@
    "block.doggytalents.dog_bed": "Dog Bed",
    "block.doggytalents.dog_bed.set_owner_help": "Sneak + Right click with your Dog nearby with BOTH hands empty and they will come and make the bed their own. If the unthinkable happens and they die, right-click on the bed to revive them.",
    "block.doggytalents.dog_bed.owner": "This bed is owned by %s.",
+   "block.doggytalents.dog_bed.reclaim": "%s has reclaimed %s bed.",
    "block.doggytalents.food_bowl": "Food Bowl", 
    "block.doggytalents.dog_bath": "Dog Bath",
 

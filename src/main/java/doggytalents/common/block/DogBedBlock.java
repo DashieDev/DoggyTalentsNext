@@ -205,6 +205,11 @@ public class DogBedBlock extends BaseEntityBlock {
                         dog.setBedPos(dog.level().dimension(), pos);
                         return InteractionResult.SUCCESS;
                     } else {
+                        if (player.isShiftKeyDown() 
+                            && reclaimBed(player, (ServerLevel) worldIn, dogBedTileEntity, pos)) {
+                            return InteractionResult.FAIL;
+                        }  
+
                         Component name = dogBedTileEntity.getOwnerName();
                         player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.owner", name != null ? name : "someone"));
                         return InteractionResult.FAIL;
@@ -216,6 +221,25 @@ public class DogBedBlock extends BaseEntityBlock {
             }
             return InteractionResult.SUCCESS;
         }
+    }
+
+    private boolean reclaimBed(Player player, ServerLevel level, DogBedTileEntity bedEntity, BlockPos pos) {
+        var e = level.getEntity(bedEntity.getOwnerUUID());
+        if (!(e instanceof Dog dog))
+            return false;
+        var bedPosOptional = dog.getBedPos();
+        if (!bedPosOptional.isPresent())
+            return false;
+        var bedPos = bedPosOptional.get();
+        if (bedPos.equals(pos))
+            return false;
+        
+        dog.setBedPos(pos);
+        player.sendSystemMessage(
+            Component.translatable("block.doggytalents.dog_bed.reclaim", 
+                dog.getName().getString(), 
+                dog.getGenderPossessiveAdj()));
+        return true;
     }
 
     @Override
