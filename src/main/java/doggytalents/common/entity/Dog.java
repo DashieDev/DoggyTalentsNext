@@ -172,6 +172,7 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> FREEZE_ANIM = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Long> FREEZE_ANIM_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.LONG);
+    private static final EntityDataAccessor<Float> FREEZE_YROT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.FLOAT);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
     private static final Cache<EntityDataAccessor<List<AccessoryInstance>>> ACCESSORIES =  Cache.make(() -> (EntityDataAccessor<List<AccessoryInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get()));
@@ -301,6 +302,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(ANIMATION, 0);
         this.entityData.define(FREEZE_ANIM_TIME, 0L);
         this.entityData.define(FREEZE_ANIM, 0);
+        this.entityData.define(FREEZE_YROT, 0f);
     }
 
     @Override
@@ -675,6 +677,15 @@ public class Dog extends AbstractDog {
                 0, 0.05 , 0 );
             }
         }
+
+        if (this.freezeAnim != DogAnimation.NONE) {
+            this.yBodyRot = this.getFreezeYRot();
+            this.yHeadRot = this.yBodyRot;
+            this.setYRot(this.yBodyRot);
+            this.yBodyRotO = this.yBodyRot;
+            this.yHeadRotO = this.yHeadRot;
+            this.yRotO = this.getYRot();
+        }
     }
 
     public boolean canDoIdileAnim() {
@@ -975,6 +986,14 @@ public class Dog extends AbstractDog {
         return freezeAnim;
     }
 
+    public void setFreezeYRot(float yRot) {
+        this.entityData.set(FREEZE_YROT, yRot);
+    }
+
+    public float getFreezeYRot() {
+        return this.entityData.get(FREEZE_YROT);
+    }
+
     //End Client
     
     @Override
@@ -988,7 +1007,7 @@ public class Dog extends AbstractDog {
         //     long stopTime = System.nanoTime();
         //     ChopinLogger.l("get random pos " + (stopTime-startTime) + " nanoseconds." );
         // })
-
+    
         if (stack.getItem() == Items.STONE_PICKAXE) {
             if (this.freezeAnim != DogAnimation.NONE) {
                 this.entityData.set(FREEZE_ANIM, 0);
@@ -1026,7 +1045,7 @@ public class Dog extends AbstractDog {
             this.setAnim(DogAnimation.HOWL);
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.TORCH) {
-            this.getLookControl().setLookAt(this.getOwner(), 10.0F, this.getMaxHeadXRot());
+            this.setFreezeYRot(player.yBodyRot);
             return InteractionResult.SUCCESS;
         }
 
@@ -2191,6 +2210,7 @@ public class Dog extends AbstractDog {
         try {
             compound.putInt("freeze_anim", this.entityData.get(FREEZE_ANIM));
             compound.putLong("freeze_anim_time", this.entityData.get(FREEZE_ANIM_TIME));
+            compound.putFloat("freeze_anim_yrot", this.getFreezeYRot());
         } catch (Exception e) {
 
         }
@@ -2381,6 +2401,7 @@ public class Dog extends AbstractDog {
         try {
             this.entityData.set(FREEZE_ANIM, compound.getInt("freeze_anim"));
             this.entityData.set(FREEZE_ANIM_TIME, compound.getLong("freeze_anim_time"));
+            this.setFreezeYRot(compound.getFloat("freeze_anim_yrot"));
         } catch (Exception e) {
             
         }
