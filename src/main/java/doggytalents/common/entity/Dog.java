@@ -1045,7 +1045,7 @@ public class Dog extends AbstractDog {
             this.setAnim(DogAnimation.HOWL);
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.TORCH) {
-            this.setFreezeYRot(player.yBodyRot);
+            this.setFreezeYRot(player.yHeadRot);
             return InteractionResult.SUCCESS;
         }
 
