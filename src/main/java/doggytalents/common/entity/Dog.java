@@ -1107,8 +1107,9 @@ public class Dog extends AbstractDog {
         if (this.level().isClientSide)
             return false;
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get()) {
-            return this.getHealth() < this.getMaxHealth()
-                && this.hungerSaturation <= 0;
+            if(this.getHealth() < this.getMaxHealth()
+                && this.hungerSaturation <= 0)
+                return true;
         }
         
         return this.getDogHunger() < this.getMaxHunger();
