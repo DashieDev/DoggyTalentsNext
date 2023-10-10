@@ -17,11 +17,11 @@ public class AkitaModel extends DogModel{
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 13.75F, 7.0F, 0.8727F, 0.0F, 0.0F));
+		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 13.75F, 7.0F, 0.8727F, 0.0F, 0.0F));
 
 		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition tail2 = tail.addOrReplaceChild("tail2", CubeListBuilder.create(), PartPose.offset(1.0F, 1.1F, -1.0F));
+		PartDefinition tail2 = tail.addOrReplaceChild("tail2", CubeListBuilder.create(), PartPose.offset(0.0F, 1.1F, -1.0F));
 
 		PartDefinition real_tail2 = tail2.addOrReplaceChild("real_tail2", CubeListBuilder.create(), PartPose.offset(-1.0F, -1.35F, -3.0F));
 
@@ -53,7 +53,7 @@ public class AkitaModel extends DogModel{
 
 		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 10.5F, -7.5F));
 
-		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, new CubeDeformation(0.001F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		PartDefinition head_r1 = real_head.addOrReplaceChild("head_r1", CubeListBuilder.create().texOffs(36, 14).addBox(-1.5F, -0.15F, -2.45F, 3.0F, 1.0F, 5.0F, new CubeDeformation(-0.2F))
 		.texOffs(0, 12).addBox(-1.5F, 0.05F, -1.7F, 3.0F, 1.0F, 4.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(0.0F, 1.73F, -2.0F, 0.5672F, 0.0F, 0.0F));
@@ -93,7 +93,11 @@ public class AkitaModel extends DogModel{
 		.texOffs(52, 27).addBox(-3.5F, -14.75F, -5.55F, 3.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(52, 27).addBox(-4.25F, -13.75F, -5.8F, 3.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(43, 27).addBox(0.5F, -14.75F, -5.55F, 3.0F, 3.0F, 2.0F, new CubeDeformation(0.1F))
-		.texOffs(47, 24).addBox(-1.0F, -15.8F, -6.95F, 2.0F, 4.0F, 4.0F, new CubeDeformation(-0.25F)), PartPose.offset(0.0F, 12.5F, 7.3F));
+		.texOffs(47, 24).addBox(-1.0F, -15.8F, -6.95F, 2.0F, 4.0F, 4.0F, new CubeDeformation(-0.25F))
+		.texOffs(52, 27).addBox(-3.0F, -11.75F, -6.05F, 3.0F, 3.0F, 2.0F, new CubeDeformation(-0.25F))
+		.texOffs(52, 27).addBox(-2.25F, -12.75F, -5.8F, 3.0F, 3.0F, 2.0F, new CubeDeformation(-0.25F))
+		.texOffs(47, 24).addBox(-0.75F, -12.75F, -7.05F, 2.0F, 4.0F, 4.0F, new CubeDeformation(-0.5F))
+		.texOffs(47, 24).addBox(0.25F, -13.8F, -7.2F, 2.0F, 4.0F, 4.0F, new CubeDeformation(-0.5F)), PartPose.offset(0.0F, 12.5F, 7.3F));
 
 		PartDefinition right_ear = real_head.addOrReplaceChild("right_ear", CubeListBuilder.create().texOffs(16, 14).mirror().addBox(-1.25F, -0.75F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.1F)).mirror(false), PartPose.offset(-2.5F, -3.0F, 0.5F));
 
