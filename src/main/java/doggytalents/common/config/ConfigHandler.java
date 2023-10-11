@@ -182,6 +182,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.IntValue MAX_HEEL_LIMIT;
         public ForgeConfigSpec.BooleanValue PREVENT_DOGS_PUSHING_EACH_OTHER;
         public ForgeConfigSpec.IntValue TICK_PER_HUNGER_DEC;
+        public ForgeConfigSpec.BooleanValue PRESERVE_UUID;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -279,6 +280,11 @@ public class ConfigHandler {
                 .comment("Configure how many ticks it usually take for the dog to drop one hunger unit.")
                 .translation("doggytalents.tick_per_hunger_dec")
                 .defineInRange("tick_per_hunger_dec", 400, 10, Integer.MAX_VALUE);
+            PRESERVE_UUID = builder
+                .comment("Determine if the UUIDs of the dogs are being kept when training from vanilla")
+                .comment("and when they respawn on bed.")
+                .translation("doggytalents.preserve_uuid")
+                .define("preserve_uuid", true);
             builder.pop();
 
             

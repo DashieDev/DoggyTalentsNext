@@ -74,8 +74,8 @@ public class DogRespawnData implements IDogData {
 
     @Nullable
     public Dog respawn(ServerLevel worldIn, Player playerIn, BlockPos pos) {
-        Dog dog = DoggyEntityTypes.DOG.get().spawn(worldIn, (CompoundTag) null, (Component) null, playerIn, pos, MobSpawnType.TRIGGERED, true, false);
-
+        Dog dog = DoggyEntityTypes.DOG.get().create(worldIn, null, null, pos, MobSpawnType.TRIGGERED, true, false);
+        
         // Failed for some reason
         if (dog == null) {
             return null;
@@ -85,8 +85,13 @@ public class DogRespawnData implements IDogData {
         UUID uuid = dog.getUUID();
         compoundnbt.merge(this.data);
         dog.load(compoundnbt);
-        dog.setUUID(uuid);
+        boolean useOldUUID = 
+            ConfigHandler.SERVER.PRESERVE_UUID.get()
+            && worldIn.getEntity(this.uuid) == null;
+        dog.setUUID(useOldUUID ? this.uuid : uuid);
         
+        worldIn.addFreshEntityWithPassengers(dog);
+
         dog.setMode(EnumMode.DOCILE);
         dog.setOrderedToSit(true);
         dog.setAnim(DogAnimation.STAND_QUICK);
