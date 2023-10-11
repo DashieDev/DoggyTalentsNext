@@ -1039,12 +1039,30 @@ public class Dog extends AbstractDog {
             this.setAnim(DogAnimation.BELLY_RUB);
             return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.BLACK_DYE) {
-            this.setAnim(DogAnimation.BACKFLIP);
-            return InteractionResult.SUCCESS;
-        } else if (stack.getItem() == Items.RED_WOOL) {
             this.setAnim(DogAnimation.HOWL);
             return InteractionResult.SUCCESS;
-        } else if (stack.getItem() == Items.TORCH) {
+        }else if (stack.getItem() == Items.WHITE_DYE) {
+            this.setAnim(DogAnimation.HURT_1);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.LIGHT_GRAY_DYE) {
+            this.setAnim(DogAnimation.HURT_2);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.CYAN_DYE) {
+            this.setAnim(DogAnimation.FAINT);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.LIGHT_BLUE_DYE) {
+            this.setAnim(DogAnimation.FAINT_2);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.GRAY_DYE) {
+            this.setAnim(DogAnimation.FAINT_STAND_1);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.MAGENTA_DYE) {
+            this.setAnim(DogAnimation.FAINT_STAND_2);
+            return InteractionResult.SUCCESS;
+        }else if (stack.getItem() == Items.LIME_DYE) {
+            this.setAnim(DogAnimation.DROWN);
+            return InteractionResult.SUCCESS;
+        } else if (stack.getItem() == Items.BLAZE_ROD) {
             this.setFreezeYRot(player.yHeadRot);
             return InteractionResult.SUCCESS;
         }
