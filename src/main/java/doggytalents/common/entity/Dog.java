@@ -1949,7 +1949,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public void remove(Entity.RemovalReason removalReason) {
-        if (removalReason == RemovalReason.DISCARDED || removalReason == RemovalReason.KILLED) {
+        if (removalReason.shouldDestroy()) {
             if (this.level() != null && !this.level().isClientSide) {                
                 DogLocationStorage.get(this.level()).remove(this);
                 if (this.getOwnerUUID() != null)
