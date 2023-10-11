@@ -123,12 +123,23 @@ public class EventHandler {
         if (wolf.hasCustomName()) {
             dog.setCustomName(wolf.getCustomName());
         }
+        if (level instanceof ServerLevel sLevel)
+            migrateUUID(wolf, dog, sLevel);
 
-        level.addFreshEntity(dog);
         wolf.discard();
+        level.addFreshEntity(dog);
 
         dog.triggerAnimationAction(new DogBackFlipAction(dog));
         dog.getJumpControl().jump();
+    }
+
+    private void migrateUUID(Wolf wolf, Dog dog, ServerLevel level) {
+        if (!ConfigHandler.SERVER.PRESERVE_UUID.get())
+            return;
+        var wolf_uuid = wolf.getUUID();
+        if (level.getEntity(wolf_uuid) != null)
+            return;
+        dog.setUUID(wolf_uuid);
     }
 
     @SubscribeEvent
