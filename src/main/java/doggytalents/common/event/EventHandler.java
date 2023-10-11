@@ -1,5 +1,7 @@
 package doggytalents.common.event;
 
+import java.util.UUID;
+
 import doggytalents.DoggyAccessories;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
@@ -123,23 +125,25 @@ public class EventHandler {
         if (wolf.hasCustomName()) {
             dog.setCustomName(wolf.getCustomName());
         }
-        if (level instanceof ServerLevel sLevel)
-            migrateUUID(wolf, dog, sLevel);
-
+        
+        var wolf_uuid = wolf.getUUID();
         wolf.discard();
+
+        if (level instanceof ServerLevel sL)
+            migrateUUID(wolf_uuid, dog, sL);
+
         level.addFreshEntity(dog);
 
         dog.triggerAnimationAction(new DogBackFlipAction(dog));
         dog.getJumpControl().jump();
     }
 
-    private void migrateUUID(Wolf wolf, Dog dog, ServerLevel level) {
+    private void migrateUUID(UUID uuid, Dog dog, ServerLevel level) {
         if (!ConfigHandler.SERVER.PRESERVE_UUID.get())
             return;
-        var wolf_uuid = wolf.getUUID();
-        if (level.getEntity(wolf_uuid) != null)
+        if (level.getEntity(uuid) != null)
             return;
-        dog.setUUID(wolf_uuid);
+        dog.setUUID(uuid);
     }
 
     @SubscribeEvent
