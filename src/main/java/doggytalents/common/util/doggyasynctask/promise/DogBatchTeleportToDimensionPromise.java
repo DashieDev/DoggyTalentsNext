@@ -82,6 +82,7 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
 
         for (var dog : tp_dogs) {
             int index = dog.getRandom().nextInt(safePosList.size());
+            dog.unRide();
             teleportDog(dog, targetLevel, safePosList.get(index));
         }
 
@@ -114,7 +115,6 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
         dog.setPortalCooldown();
         targetLevel.addDuringTeleport(dog);
         
-        dog0.unRide();
         dog0.remove(RemovalReason.CHANGED_DIMENSION);
         targetLevel.resetEmptyTime();
         if (dog0.level() instanceof ServerLevel sLevel) 
