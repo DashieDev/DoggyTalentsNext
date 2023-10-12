@@ -58,11 +58,8 @@ public class ModeSwitch extends AbstractWidget {
         } else {
             mode = this.dog.getMode().nextMode();
         }
-        if (mode == EnumMode.WANDERING && !this.dog.getBowlPos().isPresent()) {
-            this.setMessage(ComponentUtil.translatable(mode.getUnlocalisedName()).withStyle(ChatFormatting.RED));
-        } else {
-            this.setMessage(ComponentUtil.translatable(mode.getUnlocalisedName()));
-        }
+
+        this.setMessage(Component.translatable(mode.getUnlocalisedName()));
 
         PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(this.dog.getId(), mode));
     }
@@ -111,7 +108,13 @@ public class ModeSwitch extends AbstractWidget {
         var mode_c1 = this.getMessage();
         int mode_tX = mX - this.font.width(mode_c1)/2;
         int mode_tY = mY - this.font.lineHeight/2;
-        this.font.draw(stack, mode_c1, mode_tX, mode_tY, 0xffffffff);
+        var mode = this.dog.getMode();
+        if (mode == EnumMode.WANDERING && !this.dog.getBowlPos().isPresent()) {
+            mode_c1 = mode_c1.copy().withStyle(
+                Style.EMPTY.withColor(0xffcda700)
+            );
+        }
+        graphics.drawString(font, mode_c1, mode_tX, mode_tY, 0xffffffff);
 
         if (this.stillHovered) {
             if (this.dog.tickCount - this.tickCount0 >= 1) {
@@ -153,17 +156,16 @@ public class ModeSwitch extends AbstractWidget {
         list.addAll(ScreenUtil.splitInto(str, 150, this.font));
         if (this.dog.getMode() == EnumMode.WANDERING) {
 
-
             if (this.dog.getBowlPos().isPresent()) {
                 double distance = this.dog.blockPosition().distSqr(this.dog.getBowlPos().get());
 
                 if (distance > 256D) {
-                    list.add(ComponentUtil.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(ChatFormatting.RED));
+                    list.add(Component.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(Style.EMPTY.withColor(0xffcda700)));
                 } else {
                     list.add(ComponentUtil.translatable("dog.mode.docile.bowl", (int) Math.sqrt(distance)).withStyle(ChatFormatting.GREEN));
                 }
             } else {
-                list.add(ComponentUtil.translatable("dog.mode.docile.nobowl").withStyle(ChatFormatting.RED));
+                list.add(Component.translatable("dog.mode.docile.nobowl").withStyle(Style.EMPTY.withColor(0xffcda700)));
             }
         }
 
