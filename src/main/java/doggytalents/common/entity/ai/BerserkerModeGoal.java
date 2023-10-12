@@ -41,7 +41,7 @@ public class BerserkerModeGoal extends NearestAttackableTargetGoal<Mob> {
     @Override
     public boolean canUse() {
         return (
-            this.dog.isMode(EnumMode.BERSERKER, EnumMode.BERSERKER_MINOR)
+            this.dog.isMode(EnumMode.BERSERKER, EnumMode.BERSERKER_MINOR, EnumMode.PATROL)
         ) && super.canUse();
     }
 }
