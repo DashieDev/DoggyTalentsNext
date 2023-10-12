@@ -38,6 +38,8 @@ public class DogBegGoal extends Goal {
         if (!this.player.isAlive() || this.player.isSpectator()) {
             return false;
         }
+        if (dog.resting())
+            return false;
         if (!this.hasTemptationItemInHand(player))
             return false;
         if (this.dog.getAnim() != DogAnimation.NONE)
