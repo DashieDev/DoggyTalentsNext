@@ -237,6 +237,8 @@ public class Dog extends AbstractDog {
     private int hungerSaturationHealingTick;   
     private int healingTick;  
     private int prevHealingTick;
+    private int wanderRestTime = 0;
+    private int wanderCooldown = 0;
 
     private float headRotationCourse;
     private float headRotationCourseOld;
@@ -328,9 +330,9 @@ public class Dog extends AbstractDog {
         //All mutex by nature
         this.goalSelector.addGoal(p, new GuardModeGoal.Minor(this));
         this.goalSelector.addGoal(p, new GuardModeGoal.Major(this));
+        this.goalSelector.addGoal(p, new DogMoveBackToRestrictGoal(this));
         ++p;
         this.goalSelector.addGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
-        this.goalSelector.addGoal(p, new DogWanderGoal(this, 1.0D));
         this.goalSelector.addGoal(p, new DogGoRestOnBedGoalDefeated(this));
         ++p;
         trivial_p = p;
@@ -811,6 +813,9 @@ public class Dog extends AbstractDog {
 
             // If the dog has a food bowl in this dimension then check if it is still there
             // Only check if the chunk it is in is loaded
+            if (bowlPos.isPresent() && this.distanceToSqr(Vec3.atBottomCenterOf(bowlPos.get())) >= 64) {
+                this.setBowlPos(dimKey, Optional.empty());
+            }
             if (bowlPos.isPresent() && this.level().hasChunkAt(bowlPos.get()) && !this.level().getBlockState(bowlPos.get()).is(DoggyBlocks.FOOD_BOWL.get())) {
                 this.setBowlPos(dimKey, Optional.empty());
             }
@@ -825,7 +830,14 @@ public class Dog extends AbstractDog {
             --this.tickChopinTail;
         }
 
-        
+        if (!this.level().isClientSide && !this.getMode().shouldFollowOwner()) {
+            if (!this.getMode().shouldAttack())
+                updateWanderRestState();
+            boolean invalidated = invalidateWanderCenter(25*25);
+            if (invalidated) {
+                this.restrictTo(this.blockPosition(), 12);
+            }
+        }
 
         if (!this.level().isClientSide && this.isInSittingPose() && !this.resting() && this.tickUntilRest > 0 ) {
             --this.tickUntilRest;
@@ -2214,6 +2226,19 @@ public class Dog extends AbstractDog {
         if (this.isDefeated()) 
             this.incapacitatedMananger.save(compound);
 
+        if (!this.getMode().shouldFollowOwner() && this.hasRestriction()) {
+            var restrict = this.getRestrictCenter();
+            int restrict_r = (int) this.getRestrictRadius();
+            if (restrict != null) {
+                var wanderTg = new CompoundTag();
+                wanderTg.putInt("wanderX", restrict.getX());
+                wanderTg.putInt("wanderY", restrict.getY());
+                wanderTg.putInt("wanderZ", restrict.getZ());
+                wanderTg.putInt("wanderR", restrict_r);
+                compound.put("dogWanderCenter", wanderTg);
+            }
+        }
+
         //Never save these entry, these will be loaded by the talents itself.
         compound.remove("HandItems");
         compound.remove("ArmorItems");
@@ -2494,6 +2519,23 @@ public class Dog extends AbstractDog {
 
         }
 
+        try {
+            if (!this.getMode().shouldFollowOwner() 
+                && compound.contains("dogWanderCenter", Tag.TAG_COMPOUND)) {
+                var wanderTg = compound.getCompound("dogWanderCenter");
+                var restrictPos = new BlockPos(
+                    wanderTg.getInt("wanderX"),
+                    wanderTg.getInt("wanderY"),
+                    wanderTg.getInt("wanderZ")
+                );
+                int restrict_r = wanderTg.getInt("wanderR");
+                restrict_r = Math.max(0, restrict_r);
+                this.restrictTo(restrictPos, restrict_r);
+            }
+        } catch (Exception e) {
+            
+        }
+
     }
 
     @Override
@@ -2544,7 +2586,66 @@ public class Dog extends AbstractDog {
             if (mode == EnumMode.INCAPACITATED) {
                 this.removeAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT);
             }
+            updateWanderState(mode);
         }
+    }
+
+    private void updateWanderState(EnumMode mode) {
+        if (mode.shouldFollowOwner() || mode == EnumMode.INCAPACITATED) {
+            this.clearRestriction();
+            return;
+        }
+        this.resetWanderRestTime();
+        var restrictPos = this.blockPosition();
+        int restrictRadius = 12;
+        var bowlPosOptional = this.getBowlPos();
+        if (bowlPosOptional.isPresent()) {
+            var bowlPos = bowlPosOptional.get();
+            if (bowlPos.distSqr(this.blockPosition()) < 64) {
+                restrictRadius = 5;
+                restrictPos = bowlPos;
+            }
+        }
+        this.restrictTo(restrictPos, restrictRadius);
+    }
+
+    private boolean invalidateWanderCenter(int distanceSqr) {
+        if (!this.hasRestriction())
+            return false;
+        var restrict_pos = this.getRestrictCenter();
+        if (restrict_pos == null)
+            return false;
+        if (restrict_pos.distSqr(this.blockPosition()) >= distanceSqr) {
+            this.clearRestriction();
+            return true;
+        }
+        return false;
+    }
+
+    private void updateWanderRestState() {
+        if (this.wanderRestTime > 0) {
+            --this.wanderRestTime;
+            if (this.wanderRestTime <= 0) {
+                resetWanderRestTime();
+            }
+            return;
+        }
+        if (this.wanderCooldown > 0) {
+            --this.wanderCooldown;
+            return;
+        }
+        if (this.tickCount % 2 == 0 && this.getRandom().nextFloat() < 0.02f) {
+            this.wanderRestTime = 15*20 + this.getRandom().nextInt(16) * 20;
+        }
+    }
+
+    public boolean isWanderResting() {
+        return this.wanderRestTime > 0;
+    }
+
+    private void resetWanderRestTime() {
+        this.wanderCooldown = 15*20 + this.getRandom().nextInt(46) * 20;
+        this.wanderRestTime = 0;
     }
 
     public void recalculateAlterations() {
