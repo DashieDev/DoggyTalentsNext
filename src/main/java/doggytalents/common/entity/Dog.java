@@ -828,7 +828,7 @@ public class Dog extends AbstractDog {
             --this.tickChopinTail;
         }
 
-        if (!this.level().isClientSide && !this.getMode().shouldFollowOwner()) {
+        if (!this.level().isClientSide && this.getMode().canWander()) {
             if (!this.getMode().shouldAttack())
                 updateWanderRestState();
             boolean invalidated = invalidateWanderCenter(25*25);
@@ -2215,7 +2215,7 @@ public class Dog extends AbstractDog {
         if (this.isDefeated()) 
             this.incapacitatedMananger.save(compound);
 
-        if (!this.getMode().shouldFollowOwner() && this.hasRestriction()) {
+        if (this.getMode().canWander() && this.hasRestriction()) {
             var restrict = this.getRestrictCenter();
             int restrict_r = (int) this.getRestrictRadius();
             if (restrict != null) {
@@ -2509,7 +2509,7 @@ public class Dog extends AbstractDog {
         }
 
         try {
-            if (!this.getMode().shouldFollowOwner() 
+            if (this.getMode().canWander() 
                 && compound.contains("dogWanderCenter", Tag.TAG_COMPOUND)) {
                 var wanderTg = compound.getCompound("dogWanderCenter");
                 var restrictPos = new BlockPos(
@@ -2580,7 +2580,7 @@ public class Dog extends AbstractDog {
     }
 
     private void updateWanderState(EnumMode mode) {
-        if (mode.shouldFollowOwner() || mode == EnumMode.INCAPACITATED) {
+        if (!mode.canWander()) {
             this.clearRestriction();
             return;
         }
