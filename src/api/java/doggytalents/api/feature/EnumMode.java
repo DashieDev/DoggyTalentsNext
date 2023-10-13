@@ -9,12 +9,12 @@ public enum EnumMode {
 
     INCAPACITATED(-1, "incapacitated", false, false),
     DOCILE(0, "docile", true, false),
-    WANDERING(1, "wandering", false, false),
+    WANDERING(1, "wandering", false, false, true),
     AGGRESIVE(2, "aggressive"),
     BERSERKER(3, "berserker"),
     BERSERKER_MINOR(4, "berserker_minor"),
     TACTICAL(5, "tactical"),
-    PATROL(6, "patrol", false, true),
+    PATROL(6, "patrol", false, true, true),
     GUARD(7, "guard"),
     GUARD_FLAT(8, "guard_flat"),
     GUARD_MINOR(9, "guard_minor");
@@ -22,6 +22,7 @@ public enum EnumMode {
     private int index;
     private boolean shouldFollowOwner = true;
     private boolean shouldAttack = true;
+    private boolean canWander = false;
     private String saveName;
     private String unlocalisedTip;
     private String unlocalisedName;
@@ -39,9 +40,13 @@ public enum EnumMode {
         this(index, name, true, true);
     }
     
-    
     private EnumMode(int index, String name, boolean shouldFollowOwner, boolean shouldAttack) {
         this(index, name, "dog.mode." + name, "dog.mode." + name + ".indicator", "dog.mode." + name + ".description", shouldFollowOwner, shouldAttack);
+    }
+
+    private EnumMode(int index, String name, boolean shouldFollowOwner, boolean shouldAttack, boolean canWander) {
+        this(index, name, "dog.mode." + name, "dog.mode." + name + ".indicator", "dog.mode." + name + ".description", shouldFollowOwner, shouldAttack);
+        this.canWander = canWander;
     }
 
     private EnumMode(int index, String mode, String unlocalisedName, String tip, String info, boolean shouldFollowOwner, boolean shouldAttack) {
@@ -106,6 +111,10 @@ public enum EnumMode {
 
     public boolean shouldAttack() {
         return shouldAttack;
+    }
+
+    public boolean canWander() {
+        return canWander;
     }
 
     public static EnumMode byIndex(int i) {

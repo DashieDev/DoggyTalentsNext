@@ -187,6 +187,8 @@ public class DogLowHealthGoal {
                 this.owner = owner;
                 this.type = Type.OWNER;
             } else {
+                if (!this.dog.getMode().canWander())
+                    return false;
                 if (!this.dog.hasRestriction() || this.dog.getRestrictCenter() == null)
                     return false;
                 this.restrictPos = this.dog.getRestrictCenter();
@@ -216,7 +218,7 @@ public class DogLowHealthGoal {
                 if (!this.owner.canBeSeenByAnyone())
                     return false;
             } else {
-                if (this.dog.getMode().shouldFollowOwner())
+                if (!this.dog.getMode().canWander())
                     return false;
                 if (!this.dog.hasRestriction() || this.dog.getRestrictCenter() == null)
                     return false;
