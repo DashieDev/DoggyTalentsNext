@@ -145,11 +145,15 @@ public class DogLowHealthGoal {
 
         public static final int CAUTIOUS_RADIUS = 6;
 
+        private static enum Type { OWNER, RESTRICT }
+        private Type type = Type.OWNER;
+
         private Dog dog;
         private float oldWaterCost;
         private int tickTillMoveAwayRecalc = 0;
         private int tickTillCheckTeleport = 0;
         private LivingEntity owner;
+        private BlockPos restrictPos;
         private Vec3 moveAwayPos;
         private List<Mob> enemies = List.of();
 
@@ -176,10 +180,19 @@ public class DogLowHealthGoal {
             if (this.dog.isMode(EnumMode.GUARD, EnumMode.GUARD_FLAT, EnumMode.GUARD_MINOR))
                 return false;
 
-            var owner = this.dog.getOwner();
-            if (owner == null) return false;
+            if (this.dog.getMode().shouldFollowOwner()) {
+                var owner = this.dog.getOwner();
+                if (owner == null) return false;
 
-            this.owner = owner;
+                this.owner = owner;
+                this.type = Type.OWNER;
+            } else {
+                if (!this.dog.hasRestriction() || this.dog.getRestrictCenter() == null)
+                    return false;
+                this.restrictPos = this.dog.getRestrictCenter();
+                this.type = Type.RESTRICT;
+            }
+            
 
             this.enemies = List.of();
 
@@ -197,6 +210,20 @@ public class DogLowHealthGoal {
         public boolean canContinueToUse() {
             if (this.enemies.isEmpty()) return false;
 
+            if (this.type == Type.OWNER) {
+                if (!this.dog.getMode().shouldFollowOwner())
+                    return false;
+                if (!this.owner.canBeSeenByAnyone())
+                    return false;
+            } else {
+                if (this.dog.getMode().shouldFollowOwner())
+                    return false;
+                if (!this.dog.hasRestriction() || this.dog.getRestrictCenter() == null)
+                    return false;
+                if (!this.restrictPos.equals(dog.getRestrictCenter()))
+                    return false;
+            }
+
             return this.dog.isDogLowHealth();
         }
 
@@ -205,7 +232,7 @@ public class DogLowHealthGoal {
             this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
             this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
             this.dog.getNavigation().stop();
-            this.moveAwayPos = this.findMoveAwayPos(owner);
+            this.moveAwayPos = this.findMoveAwayPos();
             if (this.moveAwayPos != null) {
                 this.tickTillMoveAwayRecalc = 5;
                 dog.getNavigation().moveTo(
@@ -221,7 +248,7 @@ public class DogLowHealthGoal {
             var dogNav = dog.getNavigation();
             if (--this.tickTillMoveAwayRecalc <= 0) {
                 tickTillMoveAwayRecalc = 3 + dog.getRandom().nextInt(3);
-                updateMoveAway(owner);
+                updateMoveAway();
                 if (this.moveAwayPos != null) {
                     dogNav.moveTo(
                         moveAwayPos.x, moveAwayPos.y, moveAwayPos.z, 
@@ -233,7 +260,7 @@ public class DogLowHealthGoal {
 
             if (--this.tickTillCheckTeleport <= 0) {
                 this.tickTillCheckTeleport = 5;
-                if (this.dog.distanceToSqr(owner) > 400) {
+                if (this.type == Type.OWNER && this.dog.getMode().shouldFollowOwner() && this.dog.distanceToSqr(owner) > 400) {
                     DogUtil.dynamicSearchAndTeleportToOwnwer(dog, owner, 4);
                 }
             }
@@ -247,16 +274,17 @@ public class DogLowHealthGoal {
             );
         }
 
-        private void updateMoveAway(LivingEntity owner) {
+        private void updateMoveAway() {
             this.moveAwayPos = null;
             this.updateEnemies(CAUTIOUS_RADIUS);
-            this.moveAwayPos = findMoveAwayPos(owner);
+            this.moveAwayPos = findMoveAwayPos();
         }
 
-        private Vec3 findMoveAwayPos(LivingEntity owner) {
+        private Vec3 findMoveAwayPos() {
             var centerPos = findAverageCenterOfAllTargetingEnemies();
             if (centerPos == null) return null;
-            var ownerPos = owner.position();
+            var ownerPos = this.type == Type.OWNER ? this.owner.position()
+                : Vec3.atBottomCenterOf(restrictPos);
             var dogPos = dog.position();
             var avoid_offset = dogPos
                 .subtract(centerPos)
