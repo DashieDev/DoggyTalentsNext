@@ -58,6 +58,8 @@ public class DogProtestSitOrderGoal extends Goal {
         if (this.dog.getAnim() == DogAnimation.PROTEST) {
             this.dog.setAnim(DogAnimation.NONE);
         }
+        if (this.dog.getSitAnim() == DogAnimation.NONE)
+            this.dog.setSitAnim(null); 
         this.dog.setProtesting(false);
         this.spamTimeMax = MIN_TOLERABLE_SPAM_TIME + dog.getRandom().nextInt(4);
     }
