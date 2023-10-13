@@ -71,6 +71,8 @@ public class Resources {
     public static final ResourceLocation KITSUNE_SIDE = getEntity("dog", "kitsune_side");
     public static final ResourceLocation TENGU = getEntity("dog", "tengu");
     public static final ResourceLocation DEMON_HORNS = getEntity("dog", "demon_horns");
+    public static final ResourceLocation BD_HAT_RED_WHITE = getEntity("dog", "bd_hat_red_white");
+    public static final ResourceLocation BD_HAT_YELLOW_BLUE = getEntity("dog", "bd_hat_yellow_blue");
 
     public static final ResourceLocation IRON_HELMET = getEntity("dog", "armor/iron_helmet");
     public static final ResourceLocation DIAMOND_HELMET = getEntity("dog", "armor/diamond_helmet");

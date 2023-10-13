@@ -116,7 +116,11 @@
    "item.doggytalents.kitsune_side.description": "Side",
    "item.doggytalents.tengu": "Tengu",
    "item.doggytalents.demon_horns": "Demon Horns",
-   "item.doggytalents.demon_horns.description": "Who's a Bad Boy~? You are~!",
+   "item.doggytalents.demon_horns.description": "Who's a Bad Boy? You are!",
+   "item.doggytalents.bd_hat_red_white": "Birth Day Hat",
+   "item.doggytalents.bd_hat_red_white.description": "Red - White",
+   "item.doggytalents.bd_hat_yellow_blue": "Birth Day Hat",
+   "item.doggytalents.bd_hat_yellow_blue.description": "Yellow - Blue",
 
    "item.doggytalents.gender_bone": "Gender Bone",
 

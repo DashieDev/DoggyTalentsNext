@@ -104,6 +104,8 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> KITSUNE_SIDE = registerKitsuneSide("kitsune_side", DoggyAccessories.KITSUNE_SIDE);
     public static final RegistryObject<AccessoryItem> TENGU = registerTengu("tengu", DoggyAccessories.TENGU);
     public static final RegistryObject<AccessoryItem> DEMON_HORNS = registerDemonHorns("demon_horns", DoggyAccessories.DEMON_HORNS);
+    public static final RegistryObject<AccessoryItem> BD_HAT_RED_WHITE = registerBDHat("bd_hat_red_white", DoggyAccessories.BD_HAT_RED_WHITE);
+    public static final RegistryObject<AccessoryItem> BD_HAT_YELLOW_BLUE = registerBDHat("bd_hat_yellow_blue", DoggyAccessories.BD_HAT_YELLOW_BLUE);
 
     public static final RegistryObject<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
     public static final RegistryObject<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
@@ -189,6 +191,9 @@ public class DoggyItems {
     }
     private static RegistryObject<AccessoryItem> registerDemonHorns(final String name, Supplier<? extends DemonHornsAccessory> type) {
         return register(name, () -> new DemonHornsItem(type, createInitialProp()));
+    }
+    private static RegistryObject<AccessoryItem> registerBDHat(final String name, Supplier<? extends BDHatAccessory> type) {
+        return register(name, () -> new BDHatItem(type, createInitialProp()));
     }
 
 

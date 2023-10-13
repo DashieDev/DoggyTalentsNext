@@ -3,6 +3,7 @@ package doggytalents;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.Accessory.AccessoryRenderType;
 import doggytalents.common.entity.accessory.*;
+import doggytalents.common.item.BDHatAccessory;
 import doggytalents.common.item.TenguAccessory;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
@@ -56,6 +57,8 @@ public class DoggyAccessories {
     public static final RegistryObject<KitsuneSideAccessory> KITSUNE_SIDE = register("kitsune_side", () -> new KitsuneSideAccessory(DoggyItems.KITSUNE_SIDE).setModelTexture(Resources.KITSUNE_SIDE).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<TenguAccessory> TENGU = register("tengu", () -> new TenguAccessory(DoggyItems.TENGU).setModelTexture(Resources.TENGU).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<DemonHornsAccessory> DEMON_HORNS = register("demon_horns", () -> new DemonHornsAccessory(DoggyItems.DEMON_HORNS).setModelTexture(Resources.DEMON_HORNS).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<BDHatAccessory> BD_HAT_RED_WHITE = register("bd_hat_red_white", () -> new BDHatAccessory(DoggyItems.BD_HAT_RED_WHITE, 0xffFF5555).setModelTexture(Resources.BD_HAT_RED_WHITE).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<BDHatAccessory> BD_HAT_YELLOW_BLUE = register("bd_hat_yellow_blue", () -> new BDHatAccessory(DoggyItems.BD_HAT_YELLOW_BLUE, 0xffFFFF55).setModelTexture(Resources.BD_HAT_YELLOW_BLUE).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
 
     public static final RegistryObject<Helmet> IRON_HELMET = registerHelmet("iron_helmet", () -> Items.IRON_HELMET, Resources.IRON_HELMET);

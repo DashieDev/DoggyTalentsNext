@@ -560,6 +560,14 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', Items.LEATHER_HELMET)
             .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
             .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DEMON_HORNS.get(), 1)
+            .pattern(" O ")
+            .pattern(" P ")
+            .pattern("P P")
+            .define('O', ItemTags.FLOWERS)
+            .define('P', Items.PAPER)
+            .unlockedBy("has_paper", has(Items.PAPER))
+            .save(consumer);
       
     }
     
