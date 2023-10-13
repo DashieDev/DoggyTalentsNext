@@ -19,13 +19,13 @@ public class CollieRoughModel extends DogModel {
 
 		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 8.75F, -7.25F));
 
-		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, -0.75F, 6.0F, 6.0F, 4.0F, new CubeDeformation(-0.3F))
-		.texOffs(0, 0).addBox(-3.0F, -3.55F, -0.75F, 6.0F, 2.0F, 4.0F, new CubeDeformation(-0.4F)), PartPose.offset(0.0F, -0.25F, -1.0F));
+		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.25F, -1.75F, 6.0F, 6.0F, 4.0F, new CubeDeformation(-0.3F))
+		.texOffs(0, 0).addBox(-3.0F, -3.8F, -1.75F, 6.0F, 2.0F, 4.0F, new CubeDeformation(-0.4F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		PartDefinition head_r1 = real_head.addOrReplaceChild("head_r1", CubeListBuilder.create().texOffs(0, 11).addBox(-1.5F, -0.5F, -2.5F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.25F))
-		.texOffs(0, 10).addBox(-1.5F, -1.5F, -2.75F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.05F)), PartPose.offsetAndRotation(0.0F, 1.48F, -1.25F, 0.2182F, 0.0F, 0.0F));
+		.texOffs(0, 10).addBox(-1.5F, -1.5F, -2.75F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.05F)), PartPose.offsetAndRotation(0.0F, 1.23F, -2.25F, 0.2182F, 0.0F, 0.0F));
 
-		PartDefinition head_r2 = real_head.addOrReplaceChild("head_r2", CubeListBuilder.create().texOffs(29, 36).addBox(-3.0F, -1.25F, -2.0F, 6.0F, 4.0F, 4.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(0.0F, 1.0F, 2.25F, 0.4363F, 0.0F, 0.0F));
+		PartDefinition head_r2 = real_head.addOrReplaceChild("head_r2", CubeListBuilder.create().texOffs(29, 36).addBox(-3.0F, -1.25F, -2.0F, 6.0F, 4.0F, 4.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(0.0F, 0.75F, 1.25F, 0.4363F, 0.0F, 0.0F));
 
 		PartDefinition bone4 = real_head.addOrReplaceChild("bone4", CubeListBuilder.create().texOffs(24, 55).addBox(2.0F, -2.43F, 5.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.2F))
 		.texOffs(19, 54).addBox(-4.0F, -1.73F, 2.25F, 8.0F, 3.0F, 3.0F, new CubeDeformation(-0.1F))
@@ -39,7 +39,7 @@ public class CollieRoughModel extends DogModel {
 		.texOffs(23, 55).addBox(-2.75F, -3.78F, 1.1F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.25F))
 		.texOffs(23, 55).addBox(1.0F, -2.98F, 0.5F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.25F))
 		.texOffs(19, 54).addBox(-2.75F, -2.98F, 0.5F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.25F))
-		.texOffs(18, 59).addBox(1.25F, -1.73F, 1.75F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offsetAndRotation(0.0F, 0.23F, 0.0F, -0.3491F, 0.0F, 0.0F));
+		.texOffs(18, 59).addBox(1.25F, -1.73F, 1.75F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offsetAndRotation(0.0F, -0.02F, -1.0F, -0.3491F, 0.0F, 0.0F));
 
 		PartDefinition mane_rotation_r1 = bone4.addOrReplaceChild("mane_rotation_r1", CubeListBuilder.create().texOffs(18, 55).addBox(-2.75F, -6.75F, 11.75F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.55F))
 		.texOffs(19, 54).addBox(-2.75F, -6.25F, 12.0F, 6.0F, 5.0F, 4.0F, new CubeDeformation(-0.45F))
@@ -56,9 +56,9 @@ public class CollieRoughModel extends DogModel {
 		.texOffs(29, 24).mirror().addBox(-5.25F, -15.3F, -8.35F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.2F)).mirror(false)
 		.texOffs(31, 23).mirror().addBox(-4.75F, -16.55F, -8.5F, 2.0F, 2.0F, 3.0F, new CubeDeformation(0.1F)).mirror(false)
 		.texOffs(31, 21).mirror().addBox(-3.75F, -17.55F, -8.65F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.1F)).mirror(false)
-		.texOffs(28, 23).mirror().addBox(-4.5F, -17.3F, -8.5F, 3.0F, 1.0F, 3.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offset(0.0F, 15.5F, 8.55F));
+		.texOffs(28, 23).mirror().addBox(-4.5F, -17.3F, -8.5F, 3.0F, 1.0F, 3.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offset(0.0F, 15.25F, 7.55F));
 
-		PartDefinition right_ear = real_head.addOrReplaceChild("right_ear", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.5F, -2.5F, -0.25F, 0.0F, 0.0F, -0.1745F));
+		PartDefinition right_ear = real_head.addOrReplaceChild("right_ear", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.5F, -2.75F, -1.25F, 0.0F, 0.0F, -0.1745F));
 
 		PartDefinition head_r3 = right_ear.addOrReplaceChild("head_r3", CubeListBuilder.create().texOffs(45, 3).addBox(-1.9587F, -1.9214F, -0.9505F, 1.0F, 2.0F, 2.0F, new CubeDeformation(-0.15F)), PartPose.offsetAndRotation(-1.1885F, -0.4974F, 0.375F, -1.3552F, 0.0612F, 1.0574F));
 
@@ -67,7 +67,7 @@ public class CollieRoughModel extends DogModel {
 		PartDefinition head_r5 = right_ear.addOrReplaceChild("head_r5", CubeListBuilder.create().texOffs(45, 0).addBox(-2.9988F, -1.1934F, -1.4275F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.1F))
 		.texOffs(45, 0).addBox(-2.3498F, -1.228F, -1.4429F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.2F)), PartPose.offsetAndRotation(-1.1885F, -0.4974F, 0.375F, -0.7854F, 1.4835F, 2.0944F));
 
-		PartDefinition left_ear = real_head.addOrReplaceChild("left_ear", CubeListBuilder.create(), PartPose.offsetAndRotation(1.5F, -2.5F, -0.25F, 0.0F, 0.0F, 0.1745F));
+		PartDefinition left_ear = real_head.addOrReplaceChild("left_ear", CubeListBuilder.create(), PartPose.offsetAndRotation(1.5F, -2.75F, -1.25F, 0.0F, 0.0F, 0.1745F));
 
 		PartDefinition head_r6 = left_ear.addOrReplaceChild("head_r6", CubeListBuilder.create().texOffs(45, 3).mirror().addBox(0.9587F, -1.9214F, -0.9505F, 1.0F, 2.0F, 2.0F, new CubeDeformation(-0.15F)).mirror(false), PartPose.offsetAndRotation(1.2319F, -0.2512F, 0.375F, -1.3552F, -0.0612F, -1.0574F));
 
@@ -76,11 +76,15 @@ public class CollieRoughModel extends DogModel {
 		PartDefinition head_r8 = left_ear.addOrReplaceChild("head_r8", CubeListBuilder.create().texOffs(45, 0).mirror().addBox(1.9988F, -1.1934F, -1.4275F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.1F)).mirror(false)
 		.texOffs(45, 0).mirror().addBox(1.3498F, -1.228F, -1.4429F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.2F)).mirror(false), PartPose.offsetAndRotation(1.2319F, -0.2512F, 0.375F, -0.7854F, -1.4835F, -2.0944F));
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offset(0.0F, 11.0781F, -3.8749F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -4.0F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition mane_rotation_r2 = upper_body.addOrReplaceChild("mane_rotation_r2", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, -1.8941F, -2.3884F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.3F)), PartPose.offsetAndRotation(0.0F, 3.7689F, -0.2835F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition bone10 = upper_body.addOrReplaceChild("bone10", CubeListBuilder.create(), PartPose.offsetAndRotation(1.0F, 0.0781F, 3.1251F, -1.5708F, 0.0F, 0.0F));
 
-		PartDefinition bone = upper_body.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(1, 62).addBox(-2.75F, -5.847F, 6.1584F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.6F))
+		PartDefinition mane_rotation_r2 = bone10.addOrReplaceChild("mane_rotation_r2", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, -1.8941F, -2.3884F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.3F)), PartPose.offsetAndRotation(0.0F, 3.7689F, -0.2835F, 1.5708F, 0.0F, 0.0F));
+
+		PartDefinition bone8 = bone10.addOrReplaceChild("bone8", CubeListBuilder.create(), PartPose.offset(0.0F, 3.7689F, -0.2835F));
+
+		PartDefinition bone = bone8.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(1, 62).addBox(-2.75F, -5.847F, 6.1584F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.6F))
 		.texOffs(1, 62).addBox(0.5F, -5.847F, 6.1584F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.6F))
 		.texOffs(0, 61).addBox(-1.25F, -6.847F, 5.6584F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.35F))
 		.texOffs(0, 57).addBox(1.0F, -4.697F, 2.7584F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.35F))
@@ -95,9 +99,9 @@ public class CollieRoughModel extends DogModel {
 		.texOffs(0, 57).mirror().addBox(-2.75F, -5.397F, 0.7584F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false)
 		.texOffs(0, 55).addBox(-1.25F, -4.897F, 0.2584F, 2.0F, 2.0F, 6.0F, new CubeDeformation(0.25F))
 		.texOffs(0, 57).addBox(0.25F, -5.397F, 0.7584F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 57).addBox(1.0F, -4.697F, 1.5084F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 8.0189F, 2.2165F, 1.5708F, 0.0F, 0.0F));
+		.texOffs(0, 57).addBox(1.0F, -4.697F, 1.5084F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 4.25F, 2.5F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition bone2 = upper_body.addOrReplaceChild("bone2", CubeListBuilder.create().texOffs(1, 62).addBox(-2.75F, -5.847F, 5.9084F, 2.0F, 1.0F, 1.0F, new CubeDeformation(1.1F))
+		PartDefinition bone2 = bone8.addOrReplaceChild("bone2", CubeListBuilder.create().texOffs(1, 62).addBox(-2.75F, -5.847F, 5.9084F, 2.0F, 1.0F, 1.0F, new CubeDeformation(1.1F))
 		.texOffs(1, 62).addBox(0.5F, -5.847F, 6.1584F, 2.0F, 1.0F, 1.0F, new CubeDeformation(1.1F))
 		.texOffs(0, 61).addBox(-1.25F, -6.847F, 4.9084F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.85F))
 		.texOffs(0, 57).addBox(1.0F, -4.697F, 2.7584F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.85F))
@@ -112,9 +116,9 @@ public class CollieRoughModel extends DogModel {
 		.texOffs(0, 57).mirror().addBox(-2.75F, -5.397F, 0.7584F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.5F)).mirror(false)
 		.texOffs(0, 55).addBox(-1.25F, -4.897F, 0.2584F, 2.0F, 2.0F, 6.0F, new CubeDeformation(0.75F))
 		.texOffs(0, 57).addBox(0.25F, -5.397F, 0.7584F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.5F))
-		.texOffs(0, 57).addBox(1.0F, -4.697F, 1.5084F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.6F)), PartPose.offsetAndRotation(2.25F, 8.5189F, -0.0335F, 1.5708F, 1.5708F, 0.0F));
+		.texOffs(0, 57).addBox(1.0F, -4.697F, 1.5084F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.6F)), PartPose.offsetAndRotation(2.25F, 4.75F, 0.25F, 1.5708F, 1.5708F, 0.0F));
 
-		PartDefinition bone3 = upper_body.addOrReplaceChild("bone3", CubeListBuilder.create().texOffs(1, 62).mirror().addBox(0.75F, -5.847F, 7.4084F, 2.0F, 1.0F, 1.0F, new CubeDeformation(1.1F)).mirror(false)
+		PartDefinition bone3 = bone8.addOrReplaceChild("bone3", CubeListBuilder.create().texOffs(1, 62).mirror().addBox(0.75F, -5.847F, 7.4084F, 2.0F, 1.0F, 1.0F, new CubeDeformation(1.1F)).mirror(false)
 		.texOffs(1, 62).mirror().addBox(-2.5F, -5.847F, 6.1584F, 2.0F, 1.0F, 1.0F, new CubeDeformation(1.1F)).mirror(false)
 		.texOffs(0, 61).mirror().addBox(-0.75F, -6.847F, 4.9084F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.85F)).mirror(false)
 		.texOffs(0, 57).mirror().addBox(-3.0F, -4.697F, 2.7584F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.85F)).mirror(false)
@@ -129,13 +133,17 @@ public class CollieRoughModel extends DogModel {
 		.texOffs(0, 57).addBox(0.75F, -5.397F, 0.7584F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.5F))
 		.texOffs(0, 55).mirror().addBox(-0.75F, -4.897F, 0.0084F, 2.0F, 2.0F, 6.0F, new CubeDeformation(0.75F)).mirror(false)
 		.texOffs(0, 57).mirror().addBox(-2.25F, -5.397F, 0.7584F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.5F)).mirror(false)
-		.texOffs(0, 57).mirror().addBox(-3.0F, -4.697F, 1.5084F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.6F)).mirror(false), PartPose.offsetAndRotation(-2.25F, 8.5189F, -0.0335F, 1.5708F, -1.5708F, 0.0F));
+		.texOffs(0, 57).mirror().addBox(-3.0F, -4.697F, 1.5084F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.6F)).mirror(false), PartPose.offsetAndRotation(-2.25F, 4.75F, 0.25F, 1.5708F, -1.5708F, 0.0F));
 
-		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 14.0F, 2.0F));
+		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition body_rotation_r1 = body.addOrReplaceChild("body_rotation_r1", CubeListBuilder.create().texOffs(20, 14).addBox(-3.0F, -12.75F, -2.25F, 6.0F, 9.0F, 6.0F, new CubeDeformation(0.05F)), PartPose.offsetAndRotation(0.0F, 2.0F, 10.0F, 1.5272F, 0.0F, 0.0F));
+		PartDefinition bone11 = body.addOrReplaceChild("bone11", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.5708F, 0.0F, 0.0F));
 
-		PartDefinition bone7 = body.addOrReplaceChild("bone7", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -5.27F, -10.25F, -0.3491F, 0.0F, 0.0F));
+		PartDefinition body_rotation_r1 = bone11.addOrReplaceChild("body_rotation_r1", CubeListBuilder.create().texOffs(20, 14).addBox(-3.0F, -12.75F, -2.25F, 6.0F, 9.0F, 6.0F, new CubeDeformation(0.05F)), PartPose.offsetAndRotation(0.0F, 2.0F, 10.0F, 1.5272F, 0.0F, 0.0F));
+
+		PartDefinition bone9 = bone11.addOrReplaceChild("bone9", CubeListBuilder.create(), PartPose.offset(0.0F, 2.0F, 10.0F));
+
+		PartDefinition bone7 = bone9.addOrReplaceChild("bone7", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -7.27F, -20.25F, -0.3491F, 0.0F, 0.0F));
 
 		PartDefinition head_r9 = bone7.addOrReplaceChild("head_r9", CubeListBuilder.create().texOffs(0, 40).addBox(1.25F, -0.9F, -2.75F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.25F))
 		.texOffs(48, 54).addBox(-2.5F, -2.15F, -7.25F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.1F))
@@ -160,23 +168,23 @@ public class CollieRoughModel extends DogModel {
 
 		PartDefinition mane_rotation_r4 = bone7.addOrReplaceChild("mane_rotation_r4", CubeListBuilder.create().texOffs(3, 35).addBox(-3.0F, -1.5F, -1.75F, 6.0F, 5.0F, 4.0F, new CubeDeformation(-0.45F)), PartPose.offsetAndRotation(0.25F, -1.2539F, 16.5585F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition bone5 = body.addOrReplaceChild("bone5", CubeListBuilder.create().texOffs(46, 59).mirror().addBox(1.5938F, -0.6875F, -0.175F, 3.0F, 1.0F, 2.0F, new CubeDeformation(1.0F)).mirror(false)
+		PartDefinition bone5 = bone9.addOrReplaceChild("bone5", CubeListBuilder.create().texOffs(46, 59).mirror().addBox(1.5938F, -0.6875F, -0.175F, 3.0F, 1.0F, 2.0F, new CubeDeformation(1.0F)).mirror(false)
 		.texOffs(31, 37).mirror().addBox(0.8438F, -0.5375F, -2.825F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.85F)).mirror(false)
 		.texOffs(46, 55).mirror().addBox(3.8409F, -0.6684F, -2.575F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.85F)).mirror(false)
 		.texOffs(33, 37).mirror().addBox(-1.6563F, -0.2875F, -2.075F, 2.0F, 2.0F, 4.0F, new CubeDeformation(1.0F)).mirror(false)
 		.texOffs(31, 37).mirror().addBox(-2.4063F, -0.7875F, -2.825F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.65F)).mirror(false)
 		.texOffs(47, 60).mirror().addBox(2.8438F, -0.9875F, 1.575F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.85F)).mirror(false)
 		.texOffs(32, 42).mirror().addBox(-2.6563F, -0.9875F, 1.075F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.65F)).mirror(false)
-		.texOffs(12, 40).mirror().addBox(-1.6563F, -0.6875F, -0.175F, 1.0F, 1.0F, 2.0F, new CubeDeformation(1.1F)).mirror(false), PartPose.offsetAndRotation(-1.8438F, 1.075F, 3.9875F, 1.5708F, 1.5272F, 0.0F));
+		.texOffs(12, 40).mirror().addBox(-1.6563F, -0.6875F, -0.175F, 1.0F, 1.0F, 2.0F, new CubeDeformation(1.1F)).mirror(false), PartPose.offsetAndRotation(-1.8438F, -0.925F, -6.0125F, 1.5708F, 1.5272F, 0.0F));
 
-		PartDefinition bone6 = body.addOrReplaceChild("bone6", CubeListBuilder.create().texOffs(46, 59).addBox(-4.5938F, -0.6875F, -0.175F, 3.0F, 1.0F, 2.0F, new CubeDeformation(1.0F))
+		PartDefinition bone6 = bone9.addOrReplaceChild("bone6", CubeListBuilder.create().texOffs(46, 59).addBox(-4.5938F, -0.6875F, -0.175F, 3.0F, 1.0F, 2.0F, new CubeDeformation(1.0F))
 		.texOffs(31, 37).addBox(-2.8438F, -0.7875F, -2.575F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.85F))
 		.texOffs(46, 55).addBox(-5.8409F, -0.9184F, -2.325F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.75F))
 		.texOffs(33, 37).addBox(-0.3438F, -0.2875F, -2.075F, 2.0F, 2.0F, 4.0F, new CubeDeformation(1.0F))
 		.texOffs(31, 37).addBox(0.4063F, -0.7875F, -2.825F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.65F))
 		.texOffs(47, 60).addBox(-4.5938F, -0.9875F, 1.575F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.85F))
 		.texOffs(32, 42).addBox(0.6563F, -0.9875F, 1.075F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.65F))
-		.texOffs(31, 41).addBox(0.6563F, -0.6875F, -0.175F, 1.0F, 1.0F, 2.0F, new CubeDeformation(1.1F)), PartPose.offsetAndRotation(1.8438F, 1.075F, 3.9875F, 1.5708F, -1.5272F, 0.0F));
+		.texOffs(31, 41).addBox(0.6563F, -0.6875F, -0.175F, 1.0F, 1.0F, 2.0F, new CubeDeformation(1.1F)), PartPose.offsetAndRotation(1.8438F, -0.925F, -6.0125F, 1.5708F, -1.5272F, 0.0F));
 
 		PartDefinition right_front_leg = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(44, 18).addBox(-1.5F, -2.0F, -2.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(-0.1F)), PartPose.offset(-1.5F, 18.0F, -3.0F));
 
@@ -188,13 +196,13 @@ public class CollieRoughModel extends DogModel {
 
 		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(0.0F, 13.1F, 7.0F));
 
-		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create(), PartPose.offset(-1.0F, -1.35F, -3.0F));
+		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		PartDefinition tail2 = real_tail.addOrReplaceChild("tail2", CubeListBuilder.create().texOffs(9, 20).addBox(0.0F, 0.0F, -1.0F, 2.0F, 6.0F, 2.0F, new CubeDeformation(0.5F))
 		.texOffs(10, 23).addBox(0.0F, 6.2F, 0.7F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.2F))
 		.texOffs(10, 22).addBox(0.0F, 3.3F, -0.1F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.25F))
 		.texOffs(10, 23).addBox(0.0F, 7.4F, 1.3F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.05F))
-		.texOffs(9, 23).addBox(0.0F, 8.5F, 1.8F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.15F)), PartPose.offset(0.0F, 1.0F, 3.0F));
+		.texOffs(9, 23).addBox(0.0F, 8.5F, 1.8F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.15F)), PartPose.offset(-1.0F, -0.35F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
