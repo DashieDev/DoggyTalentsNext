@@ -65,5 +65,5 @@ For more informations, please consult the [wiki](https://github.com/DashieDev/Do
 
 -----------------
 ### Additional Licenses
-DoggyTalentsNext API
+DoggyTalentsNext API - Anything under **src/api**.
  - [![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
