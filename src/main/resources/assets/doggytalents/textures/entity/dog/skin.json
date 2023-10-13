@@ -169,14 +169,6 @@
             "tags" : "pokemon"
         },
         {
-            "skin_name" : "Houndstone (Hakadoggu)",
-            "skin_id" : "houndstone",
-            "use_model" : "houndstone",
-            "based_on" : "Houndstone from Pokemon Gen 9",
-            "author" : "MashXP",
-            "tags" : "pokemon"
-        },
-        {
             "skin_name" : "Cheems",
             "skin_id" : "cheems",
             "use_model" : "kusa_ume",
@@ -191,7 +183,7 @@
         },
         {
             "skin_name" : "Classical II",
-            "skin_id" : "wolf_var1",
+            "skin_id" : "wolf_var_1",
             "use_model" : "default",
             "tags" : "classical"
         },
@@ -237,7 +229,7 @@
         },
         {
             "skin_name" : "German Shepherd",
-            "skin_id" : "german_shepherd3",
+            "skin_id" : "german_shepherd_3",
             "use_model" : "german_shepherd",
             "author" : "MashXP"
         },
@@ -249,7 +241,7 @@
         },
         {
             "skin_name" : "Dachshund #2",
-            "skin_id" : "dachshund2",
+            "skin_id" : "dachshund_2",
             "use_model" : "dachshund",
             "author" : "MashXP"
         },
@@ -261,13 +253,13 @@
         },
         {
             "skin_name" : "Doberman #2",
-            "skin_id" : "doberman2",
+            "skin_id" : "doberman_2",
             "use_model" : "doberman",
             "author" : "MashXP"
         },
         {
             "skin_name" : "Doberman #3",
-            "skin_id" : "doberman3",
+            "skin_id" : "doberman_3",
             "use_model" : "doberman",
             "author" : "MashXP"
         },
@@ -286,7 +278,7 @@
         },
         {
             "skin_name" : "Pug #2",
-            "skin_id" : "pug2",
+            "skin_id" : "pug_2",
             "use_model" : "pug",
             "author" : "MashXP"
         },
@@ -298,7 +290,7 @@
         },
         {
             "skin_name" : "Poodle #2",
-            "skin_id" : "poodle2",
+            "skin_id" : "poodle_2",
             "use_model" : "poodle",
             "author" : "MashXP"
         },
@@ -335,13 +327,13 @@
         },
         {
             "skin_name" : "French Bulldog #2",
-            "skin_id" : "french_bulldog2",
+            "skin_id" : "french_bulldog_2",
             "use_model" : "french_bulldog",
             "author" : "MashXP"
         },
         {
             "skin_name" : "French Bulldog #3",
-            "skin_id" : "french_bulldog3",
+            "skin_id" : "french_bulldog_3",
             "use_model" : "french_bulldog",
             "author" : "MashXP"
         },
@@ -353,13 +345,13 @@
         },
         {
             "skin_name" : "Bull Terrier #2",
-            "skin_id" : "bull_terrier2",
+            "skin_id" : "bull_terrier_2",
             "use_model" : "bull_terrier",
             "author" : "MashXP"
         },
         {
             "skin_name" : "Bull Terrier #3",
-            "skin_id" : "bull_terrier3",
+            "skin_id" : "bull_terrier_3",
             "use_model" : "bull_terrier",
             "author" : "MashXP"
         },
@@ -371,13 +363,13 @@
         },
         {
             "skin_name" : "Chihuahua #2",
-            "skin_id" : "chihuahua2",
+            "skin_id" : "chihuahua_2",
             "use_model" : "chihuahua",
             "author" : "MashXP"
         },
         {
             "skin_name" : "Chihuahua #3",
-            "skin_id" : "chihuahua3",
+            "skin_id" : "chihuahua_3",
             "use_model" : "chihuahua",
             "author" : "MashXP"
         },
@@ -389,7 +381,7 @@
         },
         {
             "skin_name" : "Miniature Pinscher #2",
-            "skin_id" : "miniature_pinscher2",
+            "skin_id" : "miniature_pinscher_2",
             "use_model" : "miniature_pinscher",
             "author" : "MashXP"
         },
@@ -401,7 +393,7 @@
         },
         {
             "skin_name" : "Boxer #2",
-            "skin_id" : "boxer2",
+            "skin_id" : "boxer_2",
             "use_model" : "boxer_pointy",
             "author" : "MashXP"
         },
@@ -419,7 +411,7 @@
         },
         {
             "skin_name" : "Hungarian Puli #2",
-            "skin_id" : "hungarian_puli2",
+            "skin_id" : "hungarian_puli_2",
             "use_model" : "hungarian_puli",
             "author" : "MashXP"
         },
@@ -431,7 +423,7 @@
         },
         {
             "skin_name" : "Basset Hound #2",
-            "skin_id" : "basset_hound2",
+            "skin_id" : "basset_hound_2",
             "use_model" : "basset_hound",
             "author" : "MashXP"
         },
@@ -443,7 +435,7 @@
         },
         {
             "skin_name" : "Collie Smooth #2",
-            "skin_id" : "collie_smooth2",
+            "skin_id" : "collie_smooth_2",
             "use_model" : "collie_smooth",
             "author" : "MashXP"
         },
@@ -508,7 +500,7 @@
         },
         {
             "skin_name" : "Akita Inu #2",
-            "skin_id" : "akita_inu2",
+            "skin_id" : "akita_inu_2",
             "use_model" : "akita_inu",
             "author" : "MashXP"
         },
@@ -520,13 +512,13 @@
         },
         {
             "skin_name" : "Shiba Inu #2",
-            "skin_id" : "shiba_inu2",
+            "skin_id" : "shiba_inu_2",
             "use_model" : "shiba_inu",
             "author" : "MashXP"
         },
         {
             "skin_name" : "Shiba Inu #3",
-            "skin_id" : "shiba_inu3",
+            "skin_id" : "shiba_inu_3",
             "use_model" : "shiba_inu",
             "author" : "MashXP"
         },
@@ -594,7 +586,7 @@
         },
         {
             "skin_name" : "Classical III",
-            "skin_id" : "wolf_var2",
+            "skin_id" : "wolf_var_2",
             "use_model" : "default",
             "tags" : "classical"
         },
