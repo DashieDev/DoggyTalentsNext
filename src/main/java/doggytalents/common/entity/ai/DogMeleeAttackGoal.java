@@ -68,6 +68,7 @@ public class DogMeleeAttackGoal extends Goal {
 
       if (this.dog.fallDistance > 7) return false;
       
+      boolean restriction = false;
       if (this.dog.getMode().shouldFollowOwner()) {
          var owner = this.dog.getOwner();
 
@@ -75,6 +76,8 @@ public class DogMeleeAttackGoal extends Goal {
             if (this.dog.distanceToSqr(owner) > this.getMaxDistanceAwayFromOwner()) 
                return false;
          }
+      } else {
+         restriction = !this.dog.patrolTargetLock();
       }
 
       LivingEntity target = this.dog.getTarget();
@@ -82,6 +85,8 @@ public class DogMeleeAttackGoal extends Goal {
          return false;
       } else if (!target.isAlive()) {
          this.dog.setTarget(null); // Disacrd dead target no matter what
+         return false;
+      } else if (restriction && !this.dog.isWithinRestriction(target.blockPosition())) {
          return false;
       }
 
@@ -136,6 +141,7 @@ public class DogMeleeAttackGoal extends Goal {
 
       if (this.dog.fallDistance > 7) return false;
 
+      boolean restriction = false;
       if (this.dog.getMode().shouldFollowOwner()) {
          var owner = this.dog.getOwner();
 
@@ -143,6 +149,8 @@ public class DogMeleeAttackGoal extends Goal {
             if (this.dog.distanceToSqr(owner) > this.getMaxDistanceAwayFromOwner()) 
                return false;
          }
+      } else {
+         restriction = !this.dog.patrolTargetLock();
       }
       
 
@@ -156,6 +164,8 @@ public class DogMeleeAttackGoal extends Goal {
          return false;
       } else if (!this.followingTargetEvenIfNotSeen) {
          return !this.dog.getNavigation().isDone();
+      } else if (restriction && !this.dog.isWithinRestriction(livingentity.blockPosition())) {
+         return false;
       } else {
          return !(livingentity instanceof Player)
                || !livingentity.isSpectator() && !((Player) livingentity).isCreative();
