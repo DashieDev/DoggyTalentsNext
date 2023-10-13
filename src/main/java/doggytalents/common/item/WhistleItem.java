@@ -1,6 +1,5 @@
 package doggytalents.common.item;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyItems;
 import doggytalents.DoggySounds;
 import doggytalents.DoggyTalents;
