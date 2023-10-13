@@ -158,7 +158,7 @@ public class Dog extends AbstractDog {
      *     6               64                  CROSS_ORIGIN_TP
      *     7               128                 REGARD_TEAM_PLAYERS
      *     8               256                 RESTING
-     *     9               512                 <Reserved>
+     *     9               512                 PATROL_TARGET_LOCK
      *     .
      *     .
      *     31              2^31                <Reserved>
@@ -360,6 +360,7 @@ public class Dog extends AbstractDog {
         this.targetSelector.addGoal(5, new DogNearestToOwnerAttackableTargetGoal<>(this, AbstractSkeleton.class, false));
         this.targetSelector.addGoal(6, new BerserkerModeGoal(this));
         this.targetSelector.addGoal(6, new GuardModeGoal(this));
+        this.targetSelector.addGoal(6, new PatrolAssistTargetGoal(this));
         //this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5D)); //Stooopid...
 
         populateActionBlockingGoals(trivial_p, non_trivial_p, sitGoal);
@@ -830,7 +831,7 @@ public class Dog extends AbstractDog {
             --this.tickChopinTail;
         }
 
-        if (!this.level().isClientSide && !this.getMode().shouldFollowOwner()) {
+        if (!this.level().isClientSide && this.getMode().canWander()) {
             if (!this.getMode().shouldAttack())
                 updateWanderRestState();
             boolean invalidated = invalidateWanderCenter(25*25);
@@ -2182,6 +2183,7 @@ public class Dog extends AbstractDog {
         compound.putBoolean("forceSit", this.forceSit());
         compound.putByte("lowHealthStrategy", this.getLowHealthStrategy().getId());
         compound.putBoolean("crossOriginTp", this.crossOriginTp());
+        compound.putBoolean("patrolTargetLock", this.patrolTargetLock());
         compound.putInt("dogSize", this.getDogSize().getId());
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
         compound.putInt("level_dire", this.getDogLevel().getLevel(Type.DIRE));
@@ -2226,7 +2228,7 @@ public class Dog extends AbstractDog {
         if (this.isDefeated()) 
             this.incapacitatedMananger.save(compound);
 
-        if (!this.getMode().shouldFollowOwner() && this.hasRestriction()) {
+        if (this.getMode().canWander() && this.hasRestriction()) {
             var restrict = this.getRestrictCenter();
             int restrict_r = (int) this.getRestrictRadius();
             if (restrict != null) {
@@ -2414,7 +2416,8 @@ public class Dog extends AbstractDog {
             this.setCanPlayersAttack(compound.getBoolean("friendlyFire"));
             this.setRegardTeamPlayers(compound.getBoolean("regardTeamPlayers"));
             this.setForceSit(compound.getBoolean("forceSit"));
-            this.setCrossOriginTp(compound.getBoolean("crossOriginTp")); 
+            this.setCrossOriginTp(compound.getBoolean("crossOriginTp"));
+            this.setPatrolTargetLock(compound.getBoolean("patrolTargetLock")); 
             var low_health_strategy_id = compound.getByte("lowHealthStrategy");
             this.setLowHealthStrategy(LowHealthStrategy.fromId(low_health_strategy_id));
             if (compound.contains("dogSize", Tag.TAG_ANY_NUMERIC)) {
@@ -2520,7 +2523,7 @@ public class Dog extends AbstractDog {
         }
 
         try {
-            if (!this.getMode().shouldFollowOwner() 
+            if (this.getMode().canWander() 
                 && compound.contains("dogWanderCenter", Tag.TAG_COMPOUND)) {
                 var wanderTg = compound.getCompound("dogWanderCenter");
                 var restrictPos = new BlockPos(
@@ -2591,7 +2594,7 @@ public class Dog extends AbstractDog {
     }
 
     private void updateWanderState(EnumMode mode) {
-        if (mode.shouldFollowOwner() || mode == EnumMode.INCAPACITATED) {
+        if (!mode.canWander()) {
             this.clearRestriction();
             return;
         }
@@ -3043,6 +3046,14 @@ public class Dog extends AbstractDog {
 
     public void setResting(boolean val) {
         this.setDogFlag(256, val);
+    }
+
+    public boolean patrolTargetLock() {
+        return this.getDogFlag(512);
+    }
+
+    public void setPatrolTargetLock(boolean val) {
+        this.setDogFlag(512, val);
     }
 
     public boolean wantsToRest() {

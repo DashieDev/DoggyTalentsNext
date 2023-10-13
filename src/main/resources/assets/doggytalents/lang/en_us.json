@@ -418,6 +418,8 @@
    "doggui.force_sit.help": "This prevent some actions that may cause the Dog to stand up. Ex: Greet Owner, Extinguish...",
    "doggui.cross_origin_tp": "Cross-Origin Teleport?",
    "doggui.cross_origin_tp.help": "Should this Dog automatically teleports to you when you switch dimension or distant teleport?",
+   "doggui.patrol_target_lock": "Patrol Target Lock",
+   "doggui.patrol_target_lock.help": "By default, patrol dogs will stop attacking target if they left the patrol area. Turning this on will force this dog to keep attacking in that case.",
    "doggui.friendlyfire": "Friendly Fire?",
    "doggui.health": "Health:",
    "doggui.speed": "Speed:",
