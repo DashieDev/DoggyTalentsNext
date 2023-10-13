@@ -16,7 +16,7 @@ public class DogMoveBackToRestrictGoal extends MoveTowardsRestrictionGoal {
     public boolean canUse() {
         if (this.dog.isDefeated())
             return false;
-        if (this.dog.getMode().shouldFollowOwner())
+        if (!this.dog.getMode().canWander())
             return false;
         return super.canUse();
     }
