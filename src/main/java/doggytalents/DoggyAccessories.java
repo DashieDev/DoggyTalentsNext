@@ -55,6 +55,7 @@ public class DoggyAccessories {
     public static final RegistryObject<KitsuneFrontAccessory> KITSUNE_FRONT = register("kitsune_front", () -> new KitsuneFrontAccessory(DoggyItems.KITSUNE_FRONT).setModelTexture(Resources.KITSUNE_FRONT).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<KitsuneSideAccessory> KITSUNE_SIDE = register("kitsune_side", () -> new KitsuneSideAccessory(DoggyItems.KITSUNE_SIDE).setModelTexture(Resources.KITSUNE_SIDE).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<TenguAccessory> TENGU = register("tengu", () -> new TenguAccessory(DoggyItems.TENGU).setModelTexture(Resources.TENGU).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<DemonHornsAccessory> DEMON_HORNS = register("demon_horns", () -> new DemonHornsAccessory(DoggyItems.DEMON_HORNS).setModelTexture(Resources.DEMON_HORNS).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
 
     public static final RegistryObject<Helmet> IRON_HELMET = registerHelmet("iron_helmet", () -> Items.IRON_HELMET, Resources.IRON_HELMET);

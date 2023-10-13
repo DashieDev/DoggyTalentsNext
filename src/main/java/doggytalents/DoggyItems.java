@@ -3,6 +3,7 @@ package doggytalents;
 import doggytalents.api.feature.DogLevel;
 import doggytalents.api.registry.Accessory;
 import doggytalents.common.artifacts.FeatheredMantleArtifact;
+import doggytalents.common.entity.accessory.DemonHornsAccessory;
 import doggytalents.common.entity.accessory.DyeableAccessory;
 import doggytalents.common.entity.accessory.GiantStick;
 import doggytalents.common.entity.accessory.HeadBandAccessory;
@@ -102,6 +103,7 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> KITSUNE_FRONT = registerKitsuneFront("kitsune_front", DoggyAccessories.KITSUNE_FRONT);
     public static final RegistryObject<AccessoryItem> KITSUNE_SIDE = registerKitsuneSide("kitsune_side", DoggyAccessories.KITSUNE_SIDE);
     public static final RegistryObject<AccessoryItem> TENGU = registerTengu("tengu", DoggyAccessories.TENGU);
+    public static final RegistryObject<AccessoryItem> DEMON_HORNS = registerDemonHorns("demon_horns", DoggyAccessories.DEMON_HORNS);
 
     public static final RegistryObject<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
     public static final RegistryObject<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
@@ -184,6 +186,9 @@ public class DoggyItems {
     }
     private static RegistryObject<AccessoryItem> registerTengu(final String name, Supplier<? extends TenguAccessory> type) {
         return register(name, () -> new TenguItem(type, createInitialProp()));
+    }
+    private static RegistryObject<AccessoryItem> registerDemonHorns(final String name, Supplier<? extends DemonHornsAccessory> type) {
+        return register(name, () -> new DemonHornsItem(type, createInitialProp()));
     }
 
 

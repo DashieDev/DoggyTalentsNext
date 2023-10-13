@@ -13,6 +13,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.data.ForgeItemTagsProvider;
 
 import java.nio.file.Path;
 import java.util.function.Consumer;
@@ -360,6 +361,14 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('W', Items.WHEAT)
             .define('B', Items.BOWL)
             .unlockedBy("has_wheat", has(Items.WHEAT))
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DEMON_HORNS.get(), 1)
+            .pattern("SRS")
+            .pattern(" C ")
+            .define('S', Items.STICK)
+            .define('R', Items.RED_DYE)
+            .define('C', Items.LEATHER_HELMET)
+            .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
             .save(consumer);
       
     }

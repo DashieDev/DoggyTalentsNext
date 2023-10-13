@@ -19,6 +19,7 @@ public class AccessoryModelRenderEntries {
     public static Entry KITSUNE_FRONT = new KitsuneFrontRenderEntry();
     public static Entry KITSUNE_SIDE = new KitsuneSideRenderEntry();
     public static Entry TENGU = new TenguRenderEntry();
+    public static Entry DEMON_HORNS = new DemonHornsRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -35,6 +36,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(KITSUNE_FRONT);
         AccessoryModelManager.register(KITSUNE_SIDE);
         AccessoryModelManager.register(TENGU);
+        AccessoryModelManager.register(DEMON_HORNS);
 
     }
 
