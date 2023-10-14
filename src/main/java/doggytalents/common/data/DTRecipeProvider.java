@@ -498,6 +498,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Items.BAMBOO)            
             .unlockedBy("has_bamboo", has(Items.BAMBOO))
             .save(consumer);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.HEAD_BAND_BLANK.get(), 1)
             .pattern("L")
             .pattern("P")
@@ -505,10 +506,19 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('P', Items.PAPER)
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.KITSUNE_FRONT.get(), 1)
             .requires(DoggyItems.KITSUNE_SIDE.get(),1)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
+
+        // ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.KITSUNE_FRONT.get(), 1)
+        //     .requires(DoggyItems.HEAD_BAND_BLANK.get(),1)
+        //     .requires(Items.RED_DYE)
+        //     .requires(Items.WHITE_DYE)
+        //     .unlockedBy("has_string", has(Items.STRING))
+        //     .save(consumer);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.KITSUNE_SIDE.get(), 1)
             .requires(DoggyItems.KITSUNE_FRONT.get(),1)
             .unlockedBy("has_string", has(Items.STRING))
