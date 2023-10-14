@@ -641,3 +641,101 @@ Dog will not render the hunger number.
 # Completely redo Dog Armor:
 + Added a cube to cover dog's bottom.
 * HOTFIX: Doggy Tools Inventory reset when a talent is added.
+
+1.16.3 - 17th September 2023
+* Fix missing rottweiler texture.
++ Added a name Randomizer to suggest a random name from resource-pack-based database to help the Owner
+choosing their dog's name.
++ EVERY PLANKS/WOOLS both from vanilla and modded are now Supported as Bed Variant by default.
+However, the textures only render if the woods/wool texture is placed in normal blocks style 
+(Having the file placing at the <namespace>:textures/block path and its name is the block's id)
+Otherwise, a nani texture is rendered instead, variants like that can be explicitly supported via resource packs
+by placing the textures representing the block at the <namespace>:textures/block folder of that resources packs
+and name the file the same as the block's id.
+* Faint Animation Ear Fix
+# Incapacitated dog no longer look at player.
+# Bed no longer breaks if the block underneath it is broken.
++ LOGS BED !!!!!
+# Missing bed variant text changes.
+==================================================
++ Added some INTERESTING Model:
++ Pochita from Chainsaw Man
++ Finally, DACHSUND !!!
++ actual PUGS !!!
++ BORZOI!!!
+==================================================
++ Added Gender Bone: You can now change your dog's gender.
+# Dogs can now be set to be Baby Wolf forever using Shrinking Mallet.
+* Fix Baby Dog's root pivot point.
+# Dog will show burn textures when is on fire while suffer from the fatal blow.
+
+**1.17.0 - 13th October 2023**
+# THE VARIATIONS UPDATE! ft. BetterDogs Resource Pack! 
+===========
+A TON of new dog breeds just waiting for your discovery!
+===========
++ Added new Accessory: Hot Dog Costume. (Hold Right-click when you're hungry).
++ Added new Accessory: Giant Broom Stick.
++ Added new Accessory: Snorkel. (More functions coming soon!)
++ Added new Item: Starter Bundle.
++ Added new Food: GOLDEN A5 WAGYU!
++ Added new Weapon: Suspicious-looking Sickle.
+
++ Added new Talent: Mob Retriever. Use with the Whistle.
+
++ Added new Whistle mode: Heel by Look.
++ Added new Whistle mode: Ride with Me.
++ Added new Whistle mode: Howl. (More functions coming soon!)
+
++ Added new skins: Legacy (3 variants).
++ Added new skins: Bulldogs (1 + 1 special variant).
++ Added new skins: French Bulldogs (3 variants).
++ Added new skins: Poodles (2 variants).
++ Added new skins: Chihuahua (3 variants).
++ Added new skins: Boxer (2 variants).
++ Added new skins: Miniature Pinscher (2 variants).
++ Added new skins: Doberman (3 variants).
++ Added new skins: Hungarian Puli (2 variants).
++ Added new skins: Basset Hound (2 variants).
++ Added new skins: Basset Hound (2 variants).
++ Added new skins: Collies (4 variants).
++ Added new skins: Bichon Maltais (1 variant).
++ Added new skins: Belgian Malinois (1 variant).
++ Added new skins: German Shepherd (1 variant).
++ Added new skins: Otter! (req. by Stefanbech).
++ Added new skins: Bull Terrier (3 variants + 1).
++ Added new skins: Amaterasu Karmic Transformation (11 variants).
++ Added new skins: Akita Inu (2 variants).
++ Added new skins: Shiba Inu (3 variants).
++ Added new skins: Shikoku Inu (1 variant).
+
++ Added a Scroll Bar to the Skin Tab.
++ Added Search by Tags to the Skin Tab.
+  
++ Added new Option to disable red overlay when hurting.
++ Added new Option to enable smoke column when dog is on fire.
+  
++ Added new Animation: Sit Idle - Lie down.
++ Supports model that has glowing eyes on Optifine.
+  
+===========
+#Fixed Borzoi to make it look more real.
+#Fixed Pug and Pochita weird missing textures.
+#Gender Bone texture change.
+#Players while riding Wolf Mount now can get stuck if the ceiling is too low instead of suffocating.
+#Player will now double-click to ride Dog Mount instead of being in the air while right-clicking.
+#Change slogan to "Minecraft Wolf, Reimagined".
+#Shock Absorber 5 will completely negate Explosion knockbacks.
+#Doggy Blocks will now break significantly faster.
+#Dogs can reclaim Dog Beds after being broken
+#Dog Food Bowl recipe now uses a Bowl instead of a Bone in the middle.
+#Rework Patrol mode and Wandering Mode.
+
+===========
+* Big Baby Dogs.
+
+**1.17.1 - 14th October 2023**
++ Fix several skins and models
++ Append an underscore before the number to avoid confliction.
++ Faster dog bath, food bowl breaking.
++ HOTFIX: Fix Training Hellhound max bug causing the world to freeze.
