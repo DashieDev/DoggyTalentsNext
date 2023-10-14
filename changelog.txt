@@ -736,3 +736,9 @@ A TON of new dog breeds just waiting for your discovery!
 
 ===========
 * Big Baby Dogs.
+
+**1.17.1 - 14th October 2023**
++ Fix several skins and models
++ Append an underscore before the number to avoid confliction.
++ Faster dog bath, food bowl breaking.
++ HOTFIX: Fix Training Hellhound max bug causing the world to freeze.
