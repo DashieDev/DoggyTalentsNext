@@ -37,8 +37,6 @@ public class HellHoundTalent extends TalentInstance {
     private float oldFireCost;
     private float oldDangerFireCost;
 
-    private Dog dog;
-
     private final int SEARCH_RANGE = 3;
     private int tickUntilSearch = 0;
 
@@ -52,6 +50,8 @@ public class HellHoundTalent extends TalentInstance {
     @Override
     public void init(AbstractDog dog) {
         if (this.level() < 5) return; //HOTFIX!🔥🔥🔥
+        if (dog.level().isClientSide)
+            return;
         this.oldLavaCost = dog.getPathfindingMalus(BlockPathTypes.LAVA);
         this.oldFireCost = dog.getPathfindingMalus(BlockPathTypes.DAMAGE_FIRE);
         this.oldDangerFireCost = dog.getPathfindingMalus(BlockPathTypes.DANGER_FIRE);
@@ -60,13 +60,14 @@ public class HellHoundTalent extends TalentInstance {
         dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0f);
         dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0f);
         if (dog instanceof Dog) {
-            this.dog = (Dog) dog;
-            this.navigation = new HellHoundNavigation(this.dog, this.dog.level());
+            this.navigation = new HellHoundNavigation((Dog)dog, dog.level());
         }
     }
 
     @Override
     public void set(AbstractDog dog, int levelBefore) {
+        if (dog.level().isClientSide)
+            return;
         if (levelBefore >= 5 && this.level() < 5) {
             dog.setPathfindingMalus(BlockPathTypes.LAVA, this.oldLavaCost);
             dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, this.oldFireCost);
@@ -77,10 +78,12 @@ public class HellHoundTalent extends TalentInstance {
     @Override
     public void remove(AbstractDog dog) {
         if (this.level() < 5) return;
+        if (dog.level().isClientSide)
+            return;
         dog.setPathfindingMalus(BlockPathTypes.LAVA, this.oldLavaCost);
         dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, this.oldFireCost);
         dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, this.oldDangerFireCost);
-        this.stopSwimming();
+        this.stopSwimming(dog);
     }
 
     @Override
@@ -126,23 +129,25 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public void tick(AbstractDog dog) {
-        if (dog.level().isClientSide)
+    public void tick(AbstractDog d) {
+        if (d.level().isClientSide)
             return;
         if (this.level() < 5) return;
+        if (!(d instanceof Dog dog))
+            return;
         if (dog.isInLava() && !this.swimming) {
-            this.startSwimming();  
+            this.startSwimming(dog);  
         } 
         if (!dog.isInLava() && this.swimming) {
-            this.stopSwimming();
+            this.stopSwimming(dog);
         }
         floatHellhound(dog);
-        if (this.dog != null) {
-            if (this.dog.isShakingLava()) {
-                if (this.dog.getTimeDogIsShaking() > 0.8) {
+        if (dog != null) {
+            if (dog.isShakingLava()) {
+                if (dog.getTimeDogIsShaking() > 0.8) {
                     if (--this.tickUntilSearch <= 0) {
                         this.tickUntilSearch = 10;
-                        this.fireSpreadToEnermies();
+                        this.fireSpreadToEnermies(dog);
                     }
                 }
             }
@@ -169,11 +174,11 @@ public class HellHoundTalent extends TalentInstance {
         return InteractionResult.PASS;
     }
 
-    private void fireSpreadToEnermies() {
+    private void fireSpreadToEnermies(AbstractDog dog) {
         var targets = 
-            this.dog.level.getEntitiesOfClass(
+            dog.level().getEntitiesOfClass(
                 LivingEntity.class, 
-                this.dog.getBoundingBox().inflate(SEARCH_RANGE, 2, SEARCH_RANGE)
+                dog.getBoundingBox().inflate(SEARCH_RANGE, 2, SEARCH_RANGE)
             );
         for (var x : targets) {
             if (x instanceof Enemy) {
@@ -210,17 +215,17 @@ public class HellHoundTalent extends TalentInstance {
         return super.inferType(dog, type);
     }
 
-    public void startSwimming() {
-        this.dog.resetMoveControl();
-        this.dog.setNavigation(navigation);
-        this.dog.setDogSwimming(true);
+    public void startSwimming(AbstractDog dog) {
+        dog.resetMoveControl();
+        dog.setNavigation(navigation);
+        dog.setDogSwimming(true);
         swimming = true;
     }
 
-    public void stopSwimming() {
-        this.dog.resetMoveControl();
-        this.dog.resetNavigation();
-        this.dog.setDogSwimming(false);
+    public void stopSwimming(AbstractDog dog) {
+        dog.resetMoveControl();
+        dog.resetNavigation();
+        dog.setDogSwimming(false);
         swimming = false;
     }
 

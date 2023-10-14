@@ -3663,6 +3663,7 @@ public class Dog extends AbstractDog {
         return this.getHealth() < 6;
     }
 
+    @Override
     public void setDogSwimming(boolean s) {
         this.isDogSwimming = s;
     }
