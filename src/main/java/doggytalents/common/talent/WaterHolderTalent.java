@@ -109,7 +109,7 @@ public class WaterHolderTalent extends TalentInstance {
         if (
             //!dog.isInSittingPose() 
             dog.readyForNonTrivialAction()
-            && (dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) 
+            && (!dog.getMode().shouldAttack()) 
             && dog.onGround()
             && --this.ticktillSearch <= 0
         ) {
@@ -407,7 +407,7 @@ public class WaterHolderTalent extends TalentInstance {
         @Override
         public void tick() {
 
-            if (!this.dog.isMode(EnumMode.DOCILE, EnumMode.GUARD_MINOR)) {
+            if (this.dog.getMode().shouldAttack()) {
                 this.setState(ActionState.FINISHED); return;
             }
 
