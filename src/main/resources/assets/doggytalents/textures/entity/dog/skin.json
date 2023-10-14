@@ -314,7 +314,7 @@
         },
         {
             "skin_name" : "Spike",
-            "skin_id" : "english_bulldog2",
+            "skin_id" : "english_bulldog_2",
             "use_model" : "english_bulldog",
             "based_on" : "Spike from Tom and Jerry",
             "author" : "MashXP"
