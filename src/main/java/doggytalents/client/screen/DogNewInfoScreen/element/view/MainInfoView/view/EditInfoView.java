@@ -140,7 +140,7 @@ public class EditInfoView extends AbstractElement {
                         }
                     }
                 },
-                I18n.get(I18n.get("doggui.force_sit"))
+                I18n.get("doggui.force_sit")
             )
             .init()
         );
@@ -164,7 +164,7 @@ public class EditInfoView extends AbstractElement {
                         }
                     }
                 },
-                I18n.get(I18n.get("doggui.cross_origin_tp"))
+                I18n.get("doggui.cross_origin_tp")
             )
             .init()
         );
