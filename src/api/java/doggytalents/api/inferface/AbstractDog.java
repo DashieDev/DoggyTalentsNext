@@ -156,6 +156,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public abstract void resetMoveControl();
 
     public abstract boolean canSwimUnderwater();
+    public abstract void setDogSwimming(boolean val);
 
     //Start : Re-adjust armor behaviour
     //All dog start hurting Amrmor in armorItems regradless of anything.
