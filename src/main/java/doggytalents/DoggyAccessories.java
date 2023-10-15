@@ -49,6 +49,8 @@ public class DoggyAccessories {
     public static final RegistryObject<Clothing> GIANT_STICK = register("giant_stick", () -> new GiantStick(DoggyItems.GIANT_STICK).setModelTexture(Resources.GIANT_STICK).setAccessoryRenderType(AccessoryRenderType.MODEL).setRenderTranslucent(true));
     public static final RegistryObject<Glasses> SNORKEL = register("snorkel", () -> new Snorkel(DoggyItems.SNORKEL).setModelTexture(Resources.SNORKEL).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
+    public static final RegistryObject<TenguMask> TENGU_MASK = register("tengu_mask", () -> new TenguMask(DoggyItems.TENGU_MASK).setModelTexture(Resources.TENGU_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
+
     public static final RegistryObject<Helmet> IRON_HELMET = registerHelmet("iron_helmet", () -> Items.IRON_HELMET, Resources.IRON_HELMET);
     public static final RegistryObject<Helmet> DIAMOND_HELMET = registerHelmet("diamond_helmet", () -> Items.DIAMOND_HELMET, Resources.DIAMOND_HELMET);
     public static final RegistryObject<Helmet> GOLDEN_HELMET = registerHelmet("golden_helmet", () -> Items.GOLDEN_HELMET, Resources.GOLDEN_HELMET);
