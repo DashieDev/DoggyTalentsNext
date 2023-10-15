@@ -46,7 +46,7 @@ public class AccessoryInstance {
     //TODO may recheck in the future, but it is actually good for now
 
     public AccessoryInstance copy() {
-        return new AccessoryInstance(this.accessory);
+        return this.getAccessory().getDefault();
     }
 
     public ItemStack getReturnItem() {
