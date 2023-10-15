@@ -15,7 +15,8 @@ public class AccessoryModelRenderEntries {
     public static Entry HOT_DOG = new HotDogRenderEntry();
     public static Entry GIANT_STICK = new GiantStickRenderEntry();
     public static Entry SNORKEL = new SnorkelRenderEntry();
-
+    public static Entry TENGU_MASK = new TenguMaskRenderEmtry();
+    
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
         AccessoryModelManager.register(SMARTY_GLASSES);
@@ -27,6 +28,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(HOT_DOG);
         AccessoryModelManager.register(GIANT_STICK);
         AccessoryModelManager.register(SNORKEL);
+        AccessoryModelManager.register(TENGU_MASK);
     }
 
 }
