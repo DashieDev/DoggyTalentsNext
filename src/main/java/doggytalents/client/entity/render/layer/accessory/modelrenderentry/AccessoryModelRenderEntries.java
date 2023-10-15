@@ -16,6 +16,7 @@ public class AccessoryModelRenderEntries {
     public static Entry GIANT_STICK = new GiantStickRenderEntry();
     public static Entry SNORKEL = new SnorkelRenderEntry();
     public static Entry TENGU_MASK = new TenguMaskRenderEmtry();
+    public static Entry KITSUNE_MASK = new KitsuneMaskRenderEntry();
     
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -29,6 +30,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(GIANT_STICK);
         AccessoryModelManager.register(SNORKEL);
         AccessoryModelManager.register(TENGU_MASK);
+        AccessoryModelManager.register(KITSUNE_MASK);
     }
 
 }
