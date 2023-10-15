@@ -97,6 +97,10 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.GENDER_BONE);
         generated(DoggyItems.STARTER_BUNDLE);
 
+        generated(DoggyItems.HEAD_BAND_BLANK);
+        generated(DoggyItems.HEAD_BAND_MYSTERY);
+        generated(DoggyItems.HEAD_BAND_HIGHHH);
+
         generated(DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO);
         generated(DoggyItems.MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO);
         generated(DoggyItems.MUSIC_DISC_OKAMI_1);
