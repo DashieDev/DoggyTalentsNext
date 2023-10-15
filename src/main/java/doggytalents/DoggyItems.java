@@ -95,6 +95,7 @@ public class DoggyItems {
 
     public static final RegistryObject<AccessoryItem> TENGU_MASK = registerAccessory("tengu_mask", DoggyAccessories.TENGU_MASK);
     public static final RegistryObject<AccessoryItem> DEMON_HORNS = registerAccessory("demon_horns", DoggyAccessories.DEMON_HORNS);
+    public static final RegistryObject<AccessoryItem> KITSUNE_MASK = registerAccessory("kitsune_mask", DoggyAccessories.KITSUNE_MASK);
 
     public static final RegistryObject<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
     public static final RegistryObject<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));

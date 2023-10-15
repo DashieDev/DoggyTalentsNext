@@ -51,6 +51,7 @@ public class Resources {
     public static final ResourceLocation BEASTARS_UNIFORM_MALE = getEntity("dog", "beastars_uniform_male");
     public static final ResourceLocation BEASTARS_UNIFORM_FEMALE = getEntity("dog", "beastars_uniform_female");
     public static final ResourceLocation TENGU_MASK = getEntity("dog", "tengu_mask");
+    public static final ResourceLocation KITSUNE_MASK = getEntity("dog", "kitsune_mask");
 
     public static final ResourceLocation DEMON_HORNS = getEntity("dog", "demon_horns");
 
