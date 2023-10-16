@@ -53,6 +53,9 @@ public class Resources {
     public static final ResourceLocation TENGU_MASK = getEntity("dog", "tengu_mask");
     public static final ResourceLocation KITSUNE_MASK = getEntity("dog", "kitsune_mask");
 
+    public static final ResourceLocation BIRTHDAY_HAT_RED_WHITE = getEntity("dog", "birthday_hat_red_white");
+    public static final ResourceLocation BIRTHDAY_HAT_YELLOW_BLUE = getEntity("dog", "birthday_hat_yellow_blue");
+    
     public static final ResourceLocation DEMON_HORNS = getEntity("dog", "demon_horns");
 
 
