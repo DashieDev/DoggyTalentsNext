@@ -50,14 +50,14 @@ public class Resources {
     public static final ResourceLocation BACH_WIG = getEntity("dog", "bach_wig");
     public static final ResourceLocation BEASTARS_UNIFORM_MALE = getEntity("dog", "beastars_uniform_male");
     public static final ResourceLocation BEASTARS_UNIFORM_FEMALE = getEntity("dog", "beastars_uniform_female");
+    
     public static final ResourceLocation TENGU_MASK = getEntity("dog", "tengu_mask");
     public static final ResourceLocation KITSUNE_MASK = getEntity("dog", "kitsune_mask");
-
     public static final ResourceLocation BIRTHDAY_HAT_RED_WHITE = getEntity("dog", "birthday_hat_red_white");
     public static final ResourceLocation BIRTHDAY_HAT_YELLOW_BLUE = getEntity("dog", "birthday_hat_yellow_blue");
-    
     public static final ResourceLocation DEMON_HORNS = getEntity("dog", "demon_horns");
     public static final ResourceLocation WITCH_HAT = getEntity("dog", "witch_hat");
+    public static final ResourceLocation PLAGUE_DOC_MASK = getEntity("dog", "plague_doctor_mask");
 
 
     public static final ResourceLocation CHI_ORB = getEntity("dog", "chi_orb");
