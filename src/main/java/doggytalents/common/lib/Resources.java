@@ -57,6 +57,7 @@ public class Resources {
     public static final ResourceLocation BIRTHDAY_HAT_YELLOW_BLUE = getEntity("dog", "birthday_hat_yellow_blue");
     
     public static final ResourceLocation DEMON_HORNS = getEntity("dog", "demon_horns");
+    public static final ResourceLocation WITCH_HAT = getEntity("dog", "witch_hat");
 
 
     public static final ResourceLocation CHI_ORB = getEntity("dog", "chi_orb");

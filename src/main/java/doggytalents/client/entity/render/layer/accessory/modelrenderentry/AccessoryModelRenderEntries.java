@@ -20,6 +20,7 @@ public class AccessoryModelRenderEntries {
     public static Entry DEMON_HORNS = new DemonHornsRenderEntry();
     public static Entry KITSUNE_MASK = new KitsuneMaskRenderEntry();
     public static Entry BIRTHDAY_HAT = new BirthdayHatRenderEntry();
+    public static Entry WITCH_HAT = new WitchHatRenderEntry();
     
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -37,6 +38,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(DEMON_HORNS);
         AccessoryModelManager.register(KITSUNE_MASK);
         AccessoryModelManager.register(BIRTHDAY_HAT);
+        AccessoryModelManager.register(WITCH_HAT);
     }
 
 }
