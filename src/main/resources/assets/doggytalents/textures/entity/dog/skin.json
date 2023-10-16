@@ -623,6 +623,14 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Zero",
+            "skin_id" : "zero",
+            "use_model" : "zero",
+            "author" : "MashXP",
+            "based_on" : "Zero from Tim Burton's film, The Nightmare Before Christmas.",
+            "tags" : "halloween"
+        },
+        {
             "skin_name" : "Nelson",
             "skin_id" : "bull_terrier_nelson",
             "use_model" : "bull_terrier",
