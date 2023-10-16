@@ -6,6 +6,10 @@ import com.mojang.math.Axis;
 
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
+
+import java.util.function.Function;
 
 public class GlowingEyeDogModel extends DogModel {
 
@@ -14,6 +18,11 @@ public class GlowingEyeDogModel extends DogModel {
 
     public GlowingEyeDogModel(ModelPart box) {
         super(box);
+        setupGlowingEyes();
+    }
+
+    public GlowingEyeDogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
+        super(box, renderType);
         setupGlowingEyes();
     }
 
