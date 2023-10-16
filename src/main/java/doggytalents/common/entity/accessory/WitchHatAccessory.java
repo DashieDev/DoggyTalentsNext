@@ -8,7 +8,7 @@ import doggytalents.client.entity.render.layer.accessory.modelrenderentry.Access
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;
 import net.minecraft.world.level.ItemLike;
 
-public class WitchHatAccessory extends Helmet implements IAccessoryHasModel{
+public class WitchHatAccessory extends Glasses implements IAccessoryHasModel{
     public WitchHatAccessory(Supplier<? extends ItemLike> itemIn) {
         super(itemIn);
     }
