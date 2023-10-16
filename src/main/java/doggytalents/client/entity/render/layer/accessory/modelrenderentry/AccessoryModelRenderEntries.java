@@ -2,6 +2,7 @@ package doggytalents.client.entity.render.layer.accessory.modelrenderentry;
 
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
+import doggytalents.common.entity.accessory.BirthdayHatAccessory;
 
 public class AccessoryModelRenderEntries {
     
@@ -18,6 +19,7 @@ public class AccessoryModelRenderEntries {
     public static Entry TENGU_MASK = new TenguMaskRenderEmtry();
     public static Entry KITSUNE_MASK = new KitsuneMaskRenderEntry();
     public static Entry DEMON_HORNS = new DemonHornsRenderEntry();
+    public static Entry BIRTHDAY_HAT = new BirthdayHatRenderEntry();
     
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -33,6 +35,8 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(TENGU_MASK);
         AccessoryModelManager.register(KITSUNE_MASK);
         AccessoryModelManager.register(DEMON_HORNS);
+        AccessoryModelManager.register(KITSUNE_MASK);
+        AccessoryModelManager.register(BIRTHDAY_HAT);
     }
 
 }
