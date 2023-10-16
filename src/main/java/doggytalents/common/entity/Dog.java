@@ -330,7 +330,6 @@ public class Dog extends AbstractDog {
         //All mutex by nature
         this.goalSelector.addGoal(p, new GuardModeGoal.Minor(this));
         this.goalSelector.addGoal(p, new GuardModeGoal.Major(this));
-        this.goalSelector.addGoal(p, new DogMoveBackToRestrictGoal(this));
         ++p;
         this.goalSelector.addGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
         this.goalSelector.addGoal(p, new DogGoRestOnBedGoalDefeated(this));
@@ -342,6 +341,7 @@ public class Dog extends AbstractDog {
         this.goalSelector.addGoal(p, new DogFollowOwnerGoalDefeated(this));
         this.goalSelector.addGoal(p, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
         ++p;
+        this.goalSelector.addGoal(p, new DogMoveBackToRestrictGoal(this));
         this.goalSelector.addGoal(p, new DogBreedGoal(this, 1.0D));
         ++p;
         this.goalSelector.addGoal(p, new DogRandomStrollGoal(this, 1.0D));
