@@ -53,6 +53,9 @@ public class DoggyAccessories {
     public static final RegistryObject<KitsuneMask> KITSUNE_MASK = register("kitsune_mask", () -> new KitsuneMask(DoggyItems.KITSUNE_MASK).setModelTexture(Resources.KITSUNE_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<DemonHornsAccessory> DEMON_HORNS = register("demon_horns", () -> new DemonHornsAccessory(DoggyItems.DEMON_HORNS).setModelTexture(Resources.DEMON_HORNS).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
+    public static final RegistryObject<BirthdayHatAccessory> BIRTHDAY_HAT_RED_WHITE = register("birthday_hat_red_white", () -> new BirthdayHatAccessory(DoggyItems.BIRTHDAY_HAT_RED_WHITE).setModelTexture(Resources.BIRTHDAY_HAT_RED_WHITE).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<BirthdayHatAccessory> BIRTHDAY_HAT_YELLOW_BLUE = register("birthday_hat_yellow_blue", () -> new BirthdayHatAccessory(DoggyItems.BIRTHDAY_HAT_YELLOW_BLUE).setModelTexture(Resources.BIRTHDAY_HAT_YELLOW_BLUE).setAccessoryRenderType(AccessoryRenderType.MODEL));
+
     public static final RegistryObject<Helmet> IRON_HELMET = registerHelmet("iron_helmet", () -> Items.IRON_HELMET, Resources.IRON_HELMET);
     public static final RegistryObject<Helmet> DIAMOND_HELMET = registerHelmet("diamond_helmet", () -> Items.DIAMOND_HELMET, Resources.DIAMOND_HELMET);
     public static final RegistryObject<Helmet> GOLDEN_HELMET = registerHelmet("golden_helmet", () -> Items.GOLDEN_HELMET, Resources.GOLDEN_HELMET);
