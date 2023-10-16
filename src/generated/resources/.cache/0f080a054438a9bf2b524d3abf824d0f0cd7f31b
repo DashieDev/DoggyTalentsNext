@@ -1,4 +1,4 @@
-// 1.20.1	2023-10-16T17:06:52.8508613	DoggyTalents Item Models
+// 1.20.1	2023-10-16T17:26:12.8255472	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
@@ -33,6 +33,9 @@ fcce3621bda79bfb2c94031ae8ab9eabef319edc assets/doggytalents/models/item/feather
 ef520dd816cdadca205239f47708c42b2d3e818b assets/doggytalents/models/item/giant_stick.json
 daaaeb5312e241ac287f000bf92a2a39e95e5758 assets/doggytalents/models/item/golden_a_five_wagyu.json
 bbbddd194d8bce956f46ef7e0e9c24bef18cf451 assets/doggytalents/models/item/guard_suit.json
+79e52c0e6f1a9fb7797c8c76bbff52744a3a861b assets/doggytalents/models/item/head_band_blank.json
+6434f8e2713a4f3f9c63793e2877a575434f8cb9 assets/doggytalents/models/item/head_band_highhh.json
+8cf873b2ed8380d259a3ef9e917a83d5fef907b8 assets/doggytalents/models/item/head_band_mystery.json
 5e01abe4d77e9e394d987932d9f4daaa2488cac8 assets/doggytalents/models/item/hot_dog.json
 aa33e960ae4ad371e6ebdeac093a6630364761c8 assets/doggytalents/models/item/kitsune_mask.json
 483e3ff3b100e7bd5a29b802982385f35d98c5cb assets/doggytalents/models/item/leather_jacket.json
