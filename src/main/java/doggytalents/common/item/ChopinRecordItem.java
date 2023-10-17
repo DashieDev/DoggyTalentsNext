@@ -49,7 +49,7 @@ public class ChopinRecordItem extends RecordItem {
     private boolean canDoChopinTail(Dog dog) {
         if (!dog.isDoingFine())
             return false;
-        if (dog.getMode() != EnumMode.DOCILE)
+        if (!dog.isMode(EnumMode.DOCILE, EnumMode.WANDERING))
             return false;
         return true;
     }
