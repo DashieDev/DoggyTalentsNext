@@ -832,11 +832,12 @@ public class Dog extends AbstractDog {
         }
 
         if (!this.level().isClientSide && this.getMode().canWander()) {
-            if (!this.getMode().shouldAttack())
+            if (!this.getMode().shouldAttack()) {
                 updateWanderRestState();
-            boolean invalidated = invalidateWanderCenter(25*25);
-            if (invalidated) {
-                this.restrictTo(this.blockPosition(), 12);
+                boolean invalidated = invalidateWanderCenter(25*25);
+                if (invalidated) {
+                    this.restrictTo(this.blockPosition(), 12);
+                }
             }
         }
 
