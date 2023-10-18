@@ -127,7 +127,7 @@ public class DoggyItems {
         (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 111*20));
     public static final RegistryObject<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
         () -> new ChopinRecordItem(13, () -> DoggySounds.CHOPIN_OP64_NO1.get() , 
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 117*20));
+        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 132*20));
     
     //public static final RegistryObject<Item> PATROL = registerWith("patrol_item", PatrolItem::new, 1);
 

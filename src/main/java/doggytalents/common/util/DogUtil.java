@@ -255,6 +255,23 @@ public class DogUtil {
         return false;
     }
 
+    public static boolean guessAndTryToTeleportToBlockPos(Dog dog, BlockPos pos, int radius) {
+
+        for (int i = 0; i < 10; ++i) {
+            int randX = pos.getX() + EntityUtil.getRandomNumber(dog, -radius, radius);
+            int randY= pos.getY() + EntityUtil.getRandomNumber(dog, -1, 1);
+            int randZ = pos.getZ() + EntityUtil.getRandomNumber(dog, -radius, radius);
+            var b0 = new BlockPos(randX, randY, randZ);
+
+            if (isTeleportSafeBlock(dog, b0)) {
+                teleportInternal(dog, b0);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     
     /**
      * this function returns whether the position is eligible for the dog or not

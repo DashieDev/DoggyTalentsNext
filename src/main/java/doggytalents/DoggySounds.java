@@ -36,6 +36,11 @@ public class DoggySounds {
 
     public static final RegistryObject<SoundEvent> OKAMI_RYOSHIMA_COAST_ARR = register("okami_ryoshima_coast_arr");
 
+    /*
+        Performed and recorded by DashieDev (one of the authors of the mod) 
+        himself on his Kawai Upright Piano. Recorded using his smartphone. 
+        Audio post-processing by MashXP (the other author).
+    */
     public static final RegistryObject<SoundEvent> CHOPIN_OP64_NO1 = register("chopin_op64_no1");
 
     private static RegistryObject<SoundEvent> register(final String name) {
