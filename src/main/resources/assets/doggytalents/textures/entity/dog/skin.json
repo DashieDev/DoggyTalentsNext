@@ -623,11 +623,11 @@
             "author" : "MashXP"
         },
         {
-            "skin_name" : "Zero",
-            "skin_id" : "zero",
-            "use_model" : "zero",
+            "skin_name" : "Sparky",
+            "skin_id" : "sparky",
+            "use_model" : "sparky",
             "author" : "MashXP",
-            "based_on" : "Zero from Tim Burton's film, The Nightmare Before Christmas.",
+            "based_on" : "Sparky from Tim Burton's film, Frankenweenie.",
             "tags" : "halloween"
         },
         {
@@ -636,6 +636,14 @@
             "use_model" : "scraps",
             "author" : "MashXP",
             "based_on" : "Scraps from Tim Burton's film, Corpse Bride.",
+            "tags" : "halloween"
+        },
+        {
+            "skin_name" : "Zero",
+            "skin_id" : "zero",
+            "use_model" : "zero",
+            "author" : "MashXP",
+            "based_on" : "Zero from Tim Burton's film, The Nightmare Before Christmas.",
             "tags" : "halloween"
         },
         {
