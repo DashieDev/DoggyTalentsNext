@@ -61,6 +61,7 @@ import doggytalents.client.entity.model.dog.PugModel;
 import doggytalents.client.entity.model.dog.ScrapsModel;
 import doggytalents.client.entity.model.dog.ShibaModel;
 import doggytalents.client.entity.model.dog.ShikokuModel;
+import doggytalents.client.entity.model.dog.SparkyModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
 import doggytalents.client.entity.model.dog.VariantDogModel;
 import doggytalents.client.entity.model.dog.ZeroModel;
@@ -97,6 +98,7 @@ import doggytalents.common.lib.Constants;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.particle.FireworkParticles.SparkProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
@@ -164,6 +166,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_HOUNDSTONE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "houndstone"), "main");
     public static final ModelLayerLocation DOG_ZERO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "zero"), "main");
     public static final ModelLayerLocation DOG_SCRAPS = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "scraps"), "main");
+    public static final ModelLayerLocation DOG_SPARKY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "sparky"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -241,6 +244,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_HOUNDSTONE, HoundstoneModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ZERO, ZeroModel::createBodyLayer);
         event.registerLayerDefinition(DOG_SCRAPS, ScrapsModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_SPARKY, SparkyModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
