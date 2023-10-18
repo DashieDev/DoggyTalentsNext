@@ -58,6 +58,7 @@ import doggytalents.client.entity.model.dog.OtterModel;
 import doggytalents.client.entity.model.dog.PochitaModel;
 import doggytalents.client.entity.model.dog.PoodleModel;
 import doggytalents.client.entity.model.dog.PugModel;
+import doggytalents.client.entity.model.dog.ScrapsModel;
 import doggytalents.client.entity.model.dog.ShibaModel;
 import doggytalents.client.entity.model.dog.ShikokuModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
@@ -162,6 +163,7 @@ public class ClientSetup {
     public static final ModelLayerLocation INU_SHIKOKU = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "shikoku_inu"), "main");
     public static final ModelLayerLocation DOG_HOUNDSTONE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "houndstone"), "main");
     public static final ModelLayerLocation DOG_ZERO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "zero"), "main");
+    public static final ModelLayerLocation DOG_SCRAPS = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "scraps"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -238,6 +240,7 @@ public class ClientSetup {
         event.registerLayerDefinition(INU_SHIKOKU, ShikokuModel::createBodyLayer);
         event.registerLayerDefinition(DOG_HOUNDSTONE, HoundstoneModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ZERO, ZeroModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_SCRAPS, ScrapsModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);

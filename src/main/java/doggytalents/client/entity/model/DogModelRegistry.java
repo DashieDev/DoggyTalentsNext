@@ -54,6 +54,7 @@ import doggytalents.client.entity.model.dog.OtterModel;
 import doggytalents.client.entity.model.dog.PochitaModel;
 import doggytalents.client.entity.model.dog.PoodleModel;
 import doggytalents.client.entity.model.dog.PugModel;
+import doggytalents.client.entity.model.dog.ScrapsModel;
 import doggytalents.client.entity.model.dog.ShibaModel;
 import doggytalents.client.entity.model.dog.ShikokuModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
@@ -168,6 +169,7 @@ public class DogModelRegistry {
         register("shikoku_inu", ctx ->  new ShikokuModel(ctx.bakeLayer(ClientSetup.INU_SHIKOKU)));
         register("houndstone", ctx ->  new HoundstoneModel(ctx.bakeLayer(ClientSetup.DOG_HOUNDSTONE)));
         register("zero", ctx ->  new ZeroModel(ctx.bakeLayer(ClientSetup.DOG_ZERO)));
+        register("scraps", ctx ->  new ScrapsModel(ctx.bakeLayer(ClientSetup.DOG_SCRAPS)));
 
         registerFromEvent();
     }

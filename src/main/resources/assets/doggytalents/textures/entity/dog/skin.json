@@ -631,6 +631,14 @@
             "tags" : "halloween"
         },
         {
+            "skin_name" : "Scraps",
+            "skin_id" : "scraps",
+            "use_model" : "scraps",
+            "author" : "MashXP",
+            "based_on" : "Scraps from Tim Burton's film, Corpse Bride.",
+            "tags" : "halloween"
+        },
+        {
             "skin_name" : "Nelson",
             "skin_id" : "bull_terrier_nelson",
             "use_model" : "bull_terrier",
