@@ -23,6 +23,7 @@ public class AccessoryModelRenderEntries {
     public static Entry WITCH_HAT = new WitchHatRenderEntry();
     public static Entry PLAGUE_DOC_MASK = new PlagueDoctorMaskRenderEntry();
     public static Entry HEAD_BAND = new HeadBandRenderEntry();
+    public static Entry BAKER_HAT = new BakerHatRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -43,6 +44,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(WITCH_HAT);
         AccessoryModelManager.register(PLAGUE_DOC_MASK);
         AccessoryModelManager.register(HEAD_BAND);
+        AccessoryModelManager.register(BAKER_HAT);
     }
 
 }
