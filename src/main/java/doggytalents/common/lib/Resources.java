@@ -59,6 +59,7 @@ public class Resources {
     public static final ResourceLocation WITCH_HAT = getEntity("dog", "witch_hat");
     public static final ResourceLocation PLAGUE_DOC_MASK = getEntity("dog", "plague_doctor_mask");
     public static final ResourceLocation BAKER_HAT = getEntity("dog", "baker_hat");
+    public static final ResourceLocation CHEF_HAT = getEntity("dog", "chef_hat");
 
 
     public static final ResourceLocation CHI_ORB = getEntity("dog", "chi_orb");
