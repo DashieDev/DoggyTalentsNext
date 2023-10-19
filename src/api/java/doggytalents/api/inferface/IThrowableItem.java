@@ -1,5 +1,7 @@
 package doggytalents.api.inferface;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.world.item.ItemStack;
 
 public interface IThrowableItem {
@@ -15,5 +17,5 @@ public interface IThrowableItem {
      * The stack the dog renders in mouth
      * @param stack The stack the dog fetched
      */
-    public ItemStack getRenderStack(ItemStack stack);
+    public @Nullable ItemStack getCustomRenderStack(ItemStack stack);
 }
