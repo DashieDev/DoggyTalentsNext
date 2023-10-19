@@ -1,4 +1,4 @@
-// 1.20.1	2023-10-16T17:26:12.8255472	DoggyTalents Item Models
+// 1.20.1	2023-10-19T10:57:59.1634117	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
@@ -29,6 +29,8 @@ aa0e5ccc2a5183ecdf5ba2c3fedc832eca34f39f assets/doggytalents/models/item/dog_bed
 2b241a97c7a75299f0df2a8b38a741693e92e5b2 assets/doggytalents/models/item/energizer_stick.json
 fcce3621bda79bfb2c94031ae8ab9eabef319edc assets/doggytalents/models/item/feathered_mantle.json
 7cdb64b50b71c47cea28a9126f474fa5795001a3 assets/doggytalents/models/item/food_bowl.json
+d9ec650c08c3440406bc3653fa92dd165d4045aa assets/doggytalents/models/item/frisbee.json
+434cca210e06344a30d5feaff1cfbb288fa640be assets/doggytalents/models/item/frisbee_wet.json
 4589fc682d17c442a91272bf3c12ab74b2fe6a27 assets/doggytalents/models/item/gender_bone.json
 ef520dd816cdadca205239f47708c42b2d3e818b assets/doggytalents/models/item/giant_stick.json
 daaaeb5312e241ac287f000bf92a2a39e95e5758 assets/doggytalents/models/item/golden_a_five_wagyu.json
@@ -50,9 +52,12 @@ ad27b58fb356975677ba214fdf0851101b7d1622 assets/doggytalents/models/item/locator
 06a0e62363bace2c84c1e53fe38a76af334dddec assets/doggytalents/models/item/magnifying_bone.json
 c78372cc5d3fb956867a2378707fdf0de6287dd0 assets/doggytalents/models/item/master_treat.json
 2898b9dfb81537fc36b6033c98081737b04b1f80 assets/doggytalents/models/item/multicoloured_collar.json
+1cf383b2f9a0e986a264fb2eadafe9b599a0c426 assets/doggytalents/models/item/onigiri.json
 bc4344cde9b92b3d303523e9d15fe95482b486c4 assets/doggytalents/models/item/pianist_suit.json
 9a6b2e26e6696561a2c685026102d3d2f0eed92e assets/doggytalents/models/item/plague_doctor_mask.json
 6154f41cf2303fc6636ee83009cc983c95970804 assets/doggytalents/models/item/radio_collar.json
+51f80f4460906792ce9bbeae011a91b7b7cdc24b assets/doggytalents/models/item/rice_bowl.json
+8bb09e6e2e958ee4dbf81e03c86931b1b0b68e55 assets/doggytalents/models/item/salmon_sushi.json
 846f55137451d54b108cb05be5a3f66ff601401a assets/doggytalents/models/item/shrinking_mallet.json
 aa2f1cb07f093298438c6384ff408f9474117585 assets/doggytalents/models/item/smarty_glasses.json
 290198f286e62ba744a59e69a573202e99a86fb9 assets/doggytalents/models/item/snorkel.json
