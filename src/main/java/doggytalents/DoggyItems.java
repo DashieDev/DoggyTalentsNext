@@ -116,6 +116,9 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
     public static final RegistryObject<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
     
+    public static final RegistryObject<Item> FRISBEE = registerFrisbee("frisbee");
+    public static final RegistryObject<Item> FRISBEE_WET = registerFrisbeeWet("frisbee_wet");
+
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
             () -> new FeatheredMantleArtifact(), props), 1);
@@ -147,12 +150,20 @@ public class DoggyItems {
         return register(name, () -> new ThrowableItem(THROW_STICK_WET, THROW_STICK, createInitialProp().stacksTo(8)));
     }
 
+    private static RegistryObject<Item> registerFrisbee(final String name) {
+        return register(name, () -> new FrisbeeItem(FRISBEE_WET, FRISBEE, createInitialProp().stacksTo(1)));
+    }
+
     private static RegistryObject<Item> registerThrowBoneWet(final String name) {
         return register(name, () -> new DroolBoneItem(THROW_BONE, createInitialProp().stacksTo(1)));
     }
 
     private static RegistryObject<Item> registerThrowStickWet(final String name) {
         return register(name, () -> new DroolBoneItem(THROW_STICK, createInitialProp().stacksTo(1)));
+    }
+
+    private static RegistryObject<Item> registerFrisbeeWet(final String name) {
+        return register(name, () -> new FrisbeeDroolItem(FRISBEE, createInitialProp().stacksTo(1)));
     }
 
     private static RegistryObject<Item> registerSizeBone(final String name, final DogResizeItem.Type typeIn) {
@@ -234,6 +245,18 @@ public class DoggyItems {
 
         Util.acceptOrElse(DoggyItems.WIG, (item) -> {
             itemColors.register((stack, tintIndex) -> {
+                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
+             }, item);
+        }, DoggyBlocks::logError);
+
+        Util.acceptOrElse(DoggyItems.FRISBEE, (item) -> {
+            event.register((stack, tintIndex) -> {
+                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
+             }, item);
+        }, DoggyBlocks::logError);
+
+        Util.acceptOrElse(DoggyItems.FRISBEE_WET, (item) -> {
+            event.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);

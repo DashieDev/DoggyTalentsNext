@@ -8,6 +8,7 @@ import doggytalents.common.util.Util;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.HashCache;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -504,7 +505,14 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('L', Items.LEAD)
             .define('P', Items.PAPER)
             .unlockedBy("has_paper", has(Items.PAPER))
-            .save(consumer);    
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.HEAD_BAND_BLANK.get(), 1)
+            .pattern("SBS")
+            .define('S', ItemTags.SLABS)
+            .define('B', DoggyItems.THROW_BONE.get())
+            .unlockedBy("has_slime_ball", has(Items.SLIME_BALL))
+            .save(consumer); 
     }
     
     // @Override
