@@ -508,7 +508,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.HEAD_BAND_BLANK.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.FRISBEE.get(), 1)
             .pattern("SBS")
             .define('S', ItemTags.SLABS)
             .define('B', DoggyItems.THROW_BONE.get())
