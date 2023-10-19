@@ -117,6 +117,9 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.MUSIC_DISC_OKAMI_1);
         generated(DoggyItems.MUSIC_DISC_CHOPIN_OP64_NO1);
 
+        generated(DoggyItems.FRISBEE);
+        wetFrisbee(DoggyItems.FRISBEE_WET);
+
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);
         blockItem(DoggyBlocks.FOOD_BOWL);
@@ -153,6 +156,16 @@ public class DTItemModelProvider extends ItemModelProvider {
 
     private ItemModelBuilder generated(Supplier<? extends ItemLike> item, ResourceLocation texture) {
         return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/generated")).texture("layer0", texture);
+    }
+
+    private ItemModelBuilder wetFrisbee(Supplier<? extends ItemLike> item) {
+        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/frisbee"), modLoc(ModelProvider.ITEM_FOLDER + "/frisbee_overlay"));
+    }
+
+    private ItemModelBuilder generated2(Supplier<? extends ItemLike> item, ResourceLocation tex0, ResourceLocation tex1) {
+        return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/generated"))
+            .texture("layer0", tex0)
+            .texture("layer1", tex1);
     }
 
     private ItemModelBuilder handheld(Supplier<? extends ItemLike> item) {
