@@ -1,4 +1,4 @@
-// 1.20.1	2023-10-16T17:26:12.8305339	Recipes
+// 1.20.1	2023-10-19T10:57:59.1634117	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
 5fa2b90280c7ce432e0d89b8c15209c40f72b6a7 data/doggytalents/advancements/recipes/combat/sussy_sickle.json
@@ -9,6 +9,7 @@ c8e3a44a60770cbded622a26d9313ee14fc2f449 data/doggytalents/advancements/recipes/
 c8449eeff76762f9eef09df4956b9b3aa9d7b7de data/doggytalents/advancements/recipes/decorations/cape_coloured.json
 dd7a9d14455e2b7333e3dff451789b3bb309695c data/doggytalents/advancements/recipes/decorations/conan_suit.json
 1759b63c8cc7e2e0ba60a1763ddad25e15f7397c data/doggytalents/advancements/recipes/decorations/death_hood.json
+1bd2032198f49b0cf6c75e858dadb9188b8f54e1 data/doggytalents/advancements/recipes/decorations/frisbee.json
 b4c13cd4b61bc83787fd93900620e4a2154a8a64 data/doggytalents/advancements/recipes/decorations/giant_stick.json
 266e52cca9ccd985671b26e7363add87987c0104 data/doggytalents/advancements/recipes/decorations/guard_suit.json
 364178afe87ec211dc193686576caac7b6103608 data/doggytalents/advancements/recipes/decorations/head_band_blank.json
@@ -76,6 +77,7 @@ d274cda52e8f79403fc620a304302e251a64eae5 data/doggytalents/recipes/egg_sandwich.
 c7d54cf94dd40012ef9ee2a5e8c25eb59efefdc0 data/doggytalents/recipes/energizer_stick.json
 f805ba63f7dcff5dbcaec3f6a2dfeb5be45a61ba data/doggytalents/recipes/feathered_mantle.json
 22fe7810044be19d7ac4ad631c55618ad3e7a85a data/doggytalents/recipes/food_bowl.json
+4db73deff8150568bd90f06189a29e751c7f39a5 data/doggytalents/recipes/frisbee.json
 a2eabaa2febce54bfefd5e285b3abd80c8e952d8 data/doggytalents/recipes/gender_bone.json
 14b376f9f30e7fa7097ecb07b91e02800836a0dc data/doggytalents/recipes/giant_stick.json
 1c22ce605f02f82b36162cbdb8469738228a49d8 data/doggytalents/recipes/golden_a_five_wagyu.json

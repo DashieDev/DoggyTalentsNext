@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "doggytalents:throw_bone"
+    },
+    "S": {
+      "tag": "minecraft:slabs"
+    }
+  },
+  "pattern": [
+    "SBS"
+  ],
+  "result": {
+    "item": "doggytalents:frisbee"
+  },
+  "show_notification": true
+}
