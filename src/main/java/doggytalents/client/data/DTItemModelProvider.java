@@ -90,6 +90,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.DEMON_HORNS);
         generated(DoggyItems.WITCH_HAT);
         generated(DoggyItems.PLAGUE_DOC_MASK);
+        generated(DoggyItems.BAKER_HAT);
 
         
         generated(DoggyItems.RICE_BOWL);
