@@ -41,8 +41,14 @@ public class BoneLayer extends RenderLayer<Dog, DogModel> {
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(45.0F));
             matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
 
-            IThrowableItem throwableItem = dog.getThrowableItem();
-            this.itemInHandRenderer.renderItem(dog, throwableItem != null ? throwableItem.getRenderStack(dog.getBoneVariant()) : dog.getBoneVariant(), ItemTransforms.TransformType.GROUND, false, matrixStack, bufferSource, packedLight);
+            var renderStack = dog.getBoneVariant();
+            var throwableItem = dog.getThrowableItem();
+            if (throwableItem != null) {
+                var customStack = throwableItem.getCustomRenderStack(renderStack);
+                if (customStack != null)
+                    renderStack = customStack;
+            }
+            this.itemInHandRenderer.renderItem(dog, renderStack, ItemDisplayContext.GROUND, false, matrixStack, bufferSource, packedLight);
             matrixStack.popPose();
         }
     }

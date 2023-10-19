@@ -48,7 +48,7 @@ public class ThrowableItem extends Item implements IThrowableItem {
     }
 
     @Override
-    public ItemStack getRenderStack(ItemStack stack) {
+    public ItemStack getCustomRenderStack(ItemStack stack) {
         return new ItemStack(this.renderBone.get());
     }
 
