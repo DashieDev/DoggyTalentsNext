@@ -92,6 +92,9 @@
    "item.doggytalents.starter_bundle.description": "Contains Items which assists you in starting with Doggy Talents Next. These includes: ",
    "item.doggytalents.starter_bundle.contains": "- %dx %s",
    "item.doggytalents.starter_bundle.fail": "Not enough space in inventory!",
+   "item.doggytalents.rice_bowl": "Rice Bowl",
+   "item.doggytalents.salmon_sushi": "Sake Nigiri Sushi",
+   "item.doggytalents.onigiri": "Onigiri",
 
    "item.doggytalents.locator_orb_chi": "Chi Orb",
    "item.doggytalents.locator_orb_chi.description": "The Orb of Wisdom and Knowledge.",
