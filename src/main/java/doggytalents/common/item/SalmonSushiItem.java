@@ -9,8 +9,8 @@ public class SalmonSushiItem extends Item {
         super(
             (new Properties()).food(
                 (new FoodProperties.Builder())
-                    .nutrition(6)
-                    .saturationMod(0.6F)
+                    .nutrition(5)
+                    .saturationMod(0.5F)
                     .meat()
                     .build()
             )

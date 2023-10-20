@@ -15,7 +15,7 @@ public class RiceBowlItem extends BowlFoodItem {
             (new Properties()).food(
                 (new FoodProperties.Builder())
                     .nutrition(3)
-                    .saturationMod(0.6F)
+                    .saturationMod(0.5F)
                     .build()
             ).stacksTo(1).craftRemainder(Items.BOWL)
         ); 
