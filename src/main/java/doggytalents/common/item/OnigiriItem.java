@@ -9,8 +9,8 @@ public class OnigiriItem extends Item {
         super(
             (new Properties()).food(
                 (new FoodProperties.Builder())
-                    .nutrition(6)
-                    .saturationMod(0.6F)
+                    .nutrition(4)
+                    .saturationMod(0.5F)
                     .meat()
                     .build()
             )
