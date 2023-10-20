@@ -66,6 +66,7 @@ public class DoggyItems {
     public static final RegistryObject<Item> RICE_BOWL = register("rice_bowl", RiceBowlItem::new);
     public static final RegistryObject<Item> SALMON_SUSHI = register("salmon_sushi", SalmonSushiItem::new);
     public static final RegistryObject<Item> ONIGIRI = register("onigiri", OnigiriItem::new);
+    public static final RegistryObject<Item> SAUSAGE = register("sausage", SausageItem::new);
     public static final RegistryObject<Item> BANDAID = register("bandaid", BandaidItem::new);
     public static final RegistryObject<AccessoryItem> TANTAN_CAPE = registerAccessory("tantan_cape", DoggyAccessories.TANTAN_CAPE);
     public static final RegistryObject<DyeableAccessoryItem> CAPE_COLOURED = registerAccessoryDyed("cape_coloured", DoggyAccessories.DYEABLE_CAPE);

@@ -458,7 +458,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('R', Items.RED_DYE)
             .define('Y', Items.YELLOW_DYE)
             .define('B', Items.BREAD)
-            .define('C', Items.COOKED_PORKCHOP)
+            .define('C', DoggyItems.SAUSAGE.get())
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_bread", has(Items.BREAD))
             .save(consumer);
@@ -512,6 +512,12 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('S', ItemTags.SLABS)
             .define('B', DoggyItems.THROW_BONE.get())
             .unlockedBy("has_slime_ball", has(Items.SLIME_BALL))
+            .save(consumer); 
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SAUSAGE.get(), 3)
+            .pattern("SSS")
+            .define('S', Items.COOKED_PORKCHOP)
+            .unlockedBy("has_cooked_porkchop", has(Items.COOKED_PORKCHOP))
             .save(consumer); 
     }
     
