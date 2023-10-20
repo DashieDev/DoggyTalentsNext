@@ -1,4 +1,4 @@
-// 1.20.1	2023-10-19T10:57:59.1634117	Recipes
+// 1.20.1	2023-10-20T20:15:56.5142833	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
 5fa2b90280c7ce432e0d89b8c15209c40f72b6a7 data/doggytalents/advancements/recipes/combat/sussy_sickle.json
@@ -39,6 +39,7 @@ c10bce103653d0dff30f37296d406505b55f6e54 data/doggytalents/advancements/recipes/
 6b499f9aa11905c05bb1521d2ed9e760d8eadac4 data/doggytalents/advancements/recipes/food/energizer_stick.json
 f9d54f04f545ea4cdbd068559fb7fd5d11d2ec6d data/doggytalents/advancements/recipes/food/golden_a_five_wagyu.json
 672a16663f0fde095528ddc5abc7928aa54c9fd5 data/doggytalents/advancements/recipes/food/master_treat.json
+c67e08ff2145b794443293405c3587766c1d0557 data/doggytalents/advancements/recipes/food/sausage.json
 6ab6a9e392fdafa214e284576174db88f7681a0c data/doggytalents/advancements/recipes/food/super_treat.json
 112ff0916eb05ba6c574d4f8e2ed8eb2d7f0d9a6 data/doggytalents/advancements/recipes/food/training_treat.json
 79a56f06b66d5f0e918993d86fa3251ac8dc0c00 data/doggytalents/advancements/recipes/misc/amnesia_bone.json
@@ -83,7 +84,7 @@ a2eabaa2febce54bfefd5e285b3abd80c8e952d8 data/doggytalents/recipes/gender_bone.j
 1c22ce605f02f82b36162cbdb8469738228a49d8 data/doggytalents/recipes/golden_a_five_wagyu.json
 54259a268f52754c75af485a8683e627b9967411 data/doggytalents/recipes/guard_suit.json
 de15355e85b7a8d08cf90646c764f8fefe77fce6 data/doggytalents/recipes/head_band_blank.json
-e0ef8e63a84e2144f7998e274416563b7bc2fa29 data/doggytalents/recipes/hot_dog.json
+d61477d5baad6dedaf1a01a51fe78a75fba7f21b data/doggytalents/recipes/hot_dog.json
 9187e94ec445a098a93f744fa3b4ae29ea8cad8c data/doggytalents/recipes/leather_jacket.json
 ff7127678e5541e454472c54f044ab7d8039af8f data/doggytalents/recipes/locator_orb_chi.json
 66dda46e3368c0af8391c263d193a1c04ac9331b data/doggytalents/recipes/locator_orb_chu.json
@@ -98,6 +99,7 @@ cce602e93f1b0f9f7ea8a00966421f11f8d7bbb5 data/doggytalents/recipes/master_treat.
 62aad174f5cc14006b076c69e010c28302333e8d data/doggytalents/recipes/multicoloured_collar.json
 68c800604e9c2e7b10e21263301d5c3836d35f78 data/doggytalents/recipes/pianist_suit.json
 29c60c8d10b2e1655aaee7f3ccd20e224df528c1 data/doggytalents/recipes/radio_collar.json
+13679fd396df877ce47294565028eda46315ce55 data/doggytalents/recipes/sausage.json
 9d5c1e59e3e84491e33e2075c9bb0a4eb048584c data/doggytalents/recipes/shrinking_mallet.json
 c48095f87528ac9ba496417ef5a65af5161298c7 data/doggytalents/recipes/smarty_glasses.json
 088be877f1ee6a054b0062711ba057464926444b data/doggytalents/recipes/snorkel.json
