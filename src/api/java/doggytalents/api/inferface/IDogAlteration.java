@@ -237,6 +237,10 @@ public interface IDogAlteration {
         return InteractionResult.PASS;
     }
 
+    default InteractionResult canFly(AbstractDog dog) {
+        return InteractionResult.PASS;
+    }
+
     /**
      * Only called serverside
      * @param dogIn The dog

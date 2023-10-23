@@ -157,7 +157,7 @@ public class Dog extends AbstractDog {
      *     7               128                 REGARD_TEAM_PLAYERS
      *     8               256                 RESTING
      *     9               512                 PATROL_TARGET_LOCK
-     *     .
+     *     10              1024                FLYING
      *     .
      *     31              2^31                <Reserved>
      */
@@ -3440,6 +3440,23 @@ public class Dog extends AbstractDog {
                  super.travel(positionIn);
              }
 
+             if (this.isDogFlying()) {
+                var moveVec = this.getDeltaMovement();
+                double down = moveVec.y;
+                
+                double gravity = -0.112102;
+                var attrib = this.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+                if (attrib != null)
+                    gravity = -attrib.getValue();
+                
+                if (down < 0 ) {
+                    down = Math.min(down * 0.7, gravity);
+                } else {
+                    down *= 0.7;
+                }
+                this.setDeltaMovement(moveVec.x*0.67, down, moveVec.z*0.67);
+            }
+
             this.addMovementStat(this.getX() - this.xo, this.getY() - this.yo, this.getZ() - this.zo);
         }
     }
@@ -3447,6 +3464,23 @@ public class Dog extends AbstractDog {
     @Override
     public boolean canBeControlledByRider() {
         return true;
+    }
+
+    @Override
+    protected float getFlyingSpeed() {
+        return this.isDogFlying() ? 0.49f : super.getFlyingSpeed();
+    }
+
+    public boolean canDogFly() {
+        for (var alter : this.alterations) {
+            var result = alter.canFly(this);
+
+            if (result.shouldSwing()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -3683,6 +3717,15 @@ public class Dog extends AbstractDog {
         return this.isDogSwimming;
     }
 
+    @Override
+    public void setDogFlying(boolean s) {
+        this.setDogFlag(1024, s);
+    }
+
+    public boolean isDogFlying() {
+        return this.getDogFlag(1024);
+    }
+
     private void hungerHighToLow() {
         if (!this.isDefeated())
         this.setAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT,
@@ -3786,6 +3829,8 @@ public class Dog extends AbstractDog {
         if (!(target instanceof Dog otherDog)) {
             return false;
         }
+        if (otherDog.isDogFlying() && this.isDogFlying())
+            return false;
         boolean oneDogStillNotOnGround =
             !this.onGround()
             || !otherDog.onGround();
@@ -3948,6 +3993,10 @@ public class Dog extends AbstractDog {
                 return;
             }
             this.setDogPose(this.isLying() ? DogPose.LYING_2 : DogPose.SIT);
+            return;
+        }
+        if (this.isDogFlying() && !this.onGround()) {
+            this.setDogPose(DogPose.FLYING);
             return;
         }
         this.setDogPose(DogPose.STAND);
