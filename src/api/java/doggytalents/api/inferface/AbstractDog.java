@@ -154,6 +154,9 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
 
     public abstract void resetMoveControl();
 
+    public abstract MoveControl getDefaultMoveControl();
+    public abstract PathNavigation getDefaultNavigation();
+
     public abstract boolean canSwimUnderwater();
     public abstract void setDogSwimming(boolean val);
 
