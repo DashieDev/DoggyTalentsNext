@@ -58,6 +58,7 @@ public class SwimmerDogTalent extends TalentInstance {
                 dog.getMaxHeadYRot(), 1, 1, false);
         this.navigator = 
             new DogWaterBoundNavigation(dog, dog.level());
+        swimming = false;
         // if (!(dogIn instanceof Dog)) return;
         // if (!dogIn.hasData(SWIM_AI)) {
         //     SwimmerDogGoal swimmerDogGoal = new SwimmerDogGoal((Dog)dogIn);
@@ -94,6 +95,7 @@ public class SwimmerDogTalent extends TalentInstance {
     @Override
     public void remove(AbstractDog abstractDog) {
         if (this.swimming && abstractDog instanceof Dog dog) {
+            this.swimming = false;
             stopSwimming(dog);
         }
     }
