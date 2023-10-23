@@ -175,6 +175,9 @@ public class DogModel extends EntityModel<Dog> {
             case DROWN:
                 this.setupDrownPose(dog, limbSwing, limbSwingAmount, partialTickTime);
                 break;
+            case FLYING:
+                this.setupFlyPose(dog, limbSwing, limbSwingAmount, partialTickTime);
+                break;
             default:
                 this.setUpStandPose(dog, limbSwing, limbSwingAmount, partialTickTime);
                 break;
@@ -369,6 +372,37 @@ public class DogModel extends EntityModel<Dog> {
         if (this.earLeft.isPresent()) {
             this.earLeft.get().offsetRotation(KeyframeAnimations.degreeVec(26.57f, -14.48f, 26.57f));
             this.earLeft.get().offsetPos(KeyframeAnimations.posVec(0f, -0.5f, 0f));
+        }
+        
+    }
+
+    public void setupFlyPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        this.tail.offsetRotation(KeyframeAnimations.degreeVec(84.84f, -5.13f, -5.65f));
+        this.tail.offsetPos(KeyframeAnimations.posVec(0f, -1.18f, -1.63f));
+        this.legFrontLeft.offsetRotation(KeyframeAnimations.degreeVec(-84.33f, 0f, 0f));
+        this.legFrontLeft.offsetPos(KeyframeAnimations.posVec(0f, -1.21f, 0f));
+        this.legFrontRight.offsetRotation(KeyframeAnimations.degreeVec(-100.98f, 0f, 0f));
+        this.legFrontRight.offsetPos(KeyframeAnimations.posVec(0f, -1.21f, 0f));
+        this.legBackLeft.offsetRotation(KeyframeAnimations.degreeVec(78.49f, 0f, 0f));
+        this.legBackLeft.offsetPos(KeyframeAnimations.posVec(0f, 0f, -1.85f));
+        this.legBackRight.offsetRotation(KeyframeAnimations.degreeVec(59.61f, 0f, 0f));
+        this.legBackRight.offsetPos(KeyframeAnimations.posVec(0f, 0f, -1.85f));
+        this.mane.offsetRotation(KeyframeAnimations.degreeVec(-9.67f, 0f, 0f));
+        this.mane.offsetPos(KeyframeAnimations.posVec(0f, -1.21f, 0.46f));
+        this.head.offsetRotation(KeyframeAnimations.degreeVec(-13.12f, 0f, 0f));
+        this.head.offsetPos(KeyframeAnimations.posVec(0f, 0f, 0f));
+        this.root.offsetRotation(KeyframeAnimations.degreeVec(0f, 0f, 0f));
+        this.root.offsetPos(KeyframeAnimations.posVec(0f, 2.03f, 0f));
+        this.body.offsetRotation(KeyframeAnimations.degreeVec(1.02f, 0f, 0f));
+        this.body.offsetPos(KeyframeAnimations.posVec(0f, -1.03f, -1.32f));
+
+        if (this.earRight.isPresent()) {
+            this.earRight.get().offsetRotation(KeyframeAnimations.degreeVec(-55.69f, 2.98f, -3.43f));
+            this.earRight.get().offsetPos(KeyframeAnimations.posVec(0f, -0.6f, 0f));    
+        }
+        if (this.earLeft.isPresent()) {
+            this.earLeft.get().offsetRotation(KeyframeAnimations.degreeVec(-55.69f, -2.98f, 3.43f));
+            this.earLeft.get().offsetPos(KeyframeAnimations.posVec(0f, -0.6f, 0f));
         }
         
     }

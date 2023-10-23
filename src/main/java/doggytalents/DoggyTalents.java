@@ -43,6 +43,22 @@ public class DoggyTalents {
     public static final RegistryObject<Talent> DOGGY_TOOLS = register("doggy_tools", () -> new Talent(DoggyToolsTalent::new));
     public static final RegistryObject<Talent> SHOCK_ABSORBER = register("shock_absorber", () -> new Talent(ShockAbsorberTalent::new));
     public static final RegistryObject<Talent> MOB_RETRIEVER = register("mob_retriever", () -> new Talent(MobRetrieverTalent::new));
+    public static final RegistryObject<Talent> FLYING_FURBALL = register("flying_furball", () -> 
+        new Talent(FlyingFurballTalent::new) {
+            @Override
+            public int getLevelCost(int toGoToLevel) {
+                if (toGoToLevel == 1)
+                    return 5;
+                return super.getLevelCost(toGoToLevel);
+            };
+
+            @Override
+            public int getCummulativeCost(int level) {
+                if (level <= 0)
+                    return 0;
+                return level * (level + 1) / 2 + 4;
+            }
+        });
 
     private static <T extends Talent> RegistryObject<Talent> registerInst(final String name, final BiFunction<Talent, Integer, TalentInstance> sup) {
         return register(name, () -> new Talent(sup));
