@@ -61,6 +61,7 @@ public class HellHoundTalent extends TalentInstance {
         dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0f);
         if (dog instanceof Dog) {
             this.navigation = new HellHoundNavigation((Dog)dog, dog.level());
+            swimming = false;
         }
     }
 
