@@ -3751,6 +3751,16 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public PathNavigation getDefaultNavigation() {
+        return this.defaultNavigation;
+    }
+
+    @Override
+    public MoveControl getDefaultMoveControl() {
+        return this.defaultMoveControl;
+    }
+
+    @Override
     protected PathNavigation createNavigation(Level p_21480_) {
         return new DogPathNavigation(this, p_21480_);
     }
