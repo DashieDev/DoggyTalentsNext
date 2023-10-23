@@ -53,6 +53,7 @@ public class DoggyEntityTypes {
                  .add(DoggyAttributes.JUMP_POWER.get(), 0.42D)
                  .add(DoggyAttributes.CRIT_CHANCE.get(), 0.01D)
                  .add(DoggyAttributes.CRIT_BONUS.get(), 1D)
+                 .add(Attributes.FLYING_SPEED, 0.3D)
                  .build()
          );
      }
