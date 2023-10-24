@@ -106,6 +106,7 @@ public class DoggyItems {
     public static final RegistryObject<DyeableAccessoryItem> BAKER_HAT = register("baker_hat", () -> new BakerHat.BakerHatItem(DoggyAccessories.BAKER_HAT, createInitialProp()));
     public static final RegistryObject<DyeableAccessoryItem> CHEF_HAT = register("chef_hat", () -> new ChefHat.ChefHatItem(DoggyAccessories.CHEF_HAT, createInitialProp()));
 
+    public static final RegistryObject<AccessoryItem> SUPERDOG_CAPE = registerAccessory("superdog_cape", DoggyAccessories.SUPERDOG_CAPE);
 
     public static final RegistryObject<AccessoryItem> TENGU_MASK = registerAccessory("tengu_mask", DoggyAccessories.TENGU_MASK);
 
