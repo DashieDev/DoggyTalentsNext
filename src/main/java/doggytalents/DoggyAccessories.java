@@ -54,7 +54,7 @@ public class DoggyAccessories {
     public static final RegistryObject<BakerHat> BAKER_HAT = register("baker_hat", () -> new BakerHat(DoggyItems.BAKER_HAT).setModelTexture(Resources.BAKER_HAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<ChefHat> CHEF_HAT = register("chef_hat", () -> new ChefHat(DoggyItems.CHEF_HAT).setModelTexture(Resources.CHEF_HAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
-    public static final RegistryObject<Clothing> SUPERDOG_CAPE = register("superdog_cape", () -> new SuperDogCape(DoggyItems.SUPERDOG_CAPE).setModelTexture(Resources.SUPERDOG_OVERLAY).setHasHindLegDiffTex(true).setAccessoryRenderType(AccessoryRenderType.OVERLAY_AND_MODEL).setRenderTranslucent(true));
+    public static final RegistryObject<Clothing> SUPERDOG_SUIT = register("superdog_suit", () -> new Clothing(DoggyItems.SUPERDOG_SUIT).setModelTexture(Resources.SUPERDOG_SUIT).setHasHindLegDiffTex(true).setAccessoryRenderType(AccessoryRenderType.OVERLAY).setRenderTranslucent(true));
 
     public static final RegistryObject<TenguMask> TENGU_MASK = register("tengu_mask", () -> new TenguMask(DoggyItems.TENGU_MASK).setModelTexture(Resources.TENGU_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<KitsuneMask> KITSUNE_MASK = register("kitsune_mask", () -> new KitsuneMask(DoggyItems.KITSUNE_MASK).setModelTexture(Resources.KITSUNE_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));

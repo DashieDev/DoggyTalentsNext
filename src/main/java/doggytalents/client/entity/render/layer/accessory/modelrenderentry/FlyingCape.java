@@ -11,15 +11,15 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
-public class ElytraCapeRenderEntry extends Entry {
+public class FlyingCape extends Entry {
 
-    public static final ModelLayerLocation ELYTRA_CAPE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "elytra_and_cape"), "main");
+    public static final ModelLayerLocation FLYING_CAPE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "elytra_and_cape"), "main");
 
     private ElytraCapeModel model;
 
     @Override
     public void initModel(Context ctx) {
-        this.model = new ElytraCapeModel(ctx.bakeLayer(ELYTRA_CAPE));
+        this.model = new ElytraCapeModel(ctx.bakeLayer(FLYING_CAPE));
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ElytraCapeRenderEntry extends Entry {
     
     @Override
     public void registerLayerDef(RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ELYTRA_CAPE, ElytraCapeModel::createLayer);
+        event.registerLayerDefinition(FLYING_CAPE, ElytraCapeModel::createLayer);
     }
 
     @Override
