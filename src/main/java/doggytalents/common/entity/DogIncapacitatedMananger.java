@@ -168,7 +168,6 @@ public class DogIncapacitatedMananger {
             d.setDogHunger(this.dog.getMaxIncapacitatedHunger());
             incapacitatedExit();
 
-            d.removeAllEffects();
             d.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
             d.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
             d.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
@@ -373,6 +372,7 @@ public class DogIncapacitatedMananger {
         this.dog.setOrderedToSit(true);
         this.dog.setIncapSyncState(IncapacitatedSyncState.NONE);
         this.dog.triggerAnimationAction(new DogBounceAction(dog));
+        this.dog.removeAllEffects();
 
         if (this.dog.level() instanceof ServerLevel sL) {
             sL.sendParticles(
