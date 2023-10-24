@@ -25,7 +25,7 @@ public class AccessoryModelRenderEntries {
     public static Entry HEAD_BAND = new HeadBandRenderEntry();
     public static Entry BAKER_HAT = new BakerHatRenderEntry();
     public static Entry CHEF_HAT = new ChefHatRenderEntry();
-    public static Entry ELYTRA_CAPE = new ElytraCapeRenderEntry();
+    public static Entry FLYING_CAPE = new FlyingCape();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -47,7 +47,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(HEAD_BAND);
         AccessoryModelManager.register(BAKER_HAT);
         AccessoryModelManager.register(CHEF_HAT);
-        AccessoryModelManager.register(ELYTRA_CAPE);
+        AccessoryModelManager.register(FLYING_CAPE);
     }
 
 }
