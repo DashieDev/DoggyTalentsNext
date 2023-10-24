@@ -7,15 +7,15 @@ import doggytalents.client.entity.render.layer.accessory.modelrenderentry.Access
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;
 import net.minecraft.world.level.ItemLike;
 
-public class SuperDogCape extends Clothing implements IAccessoryHasModel {
+public class FlyingCape extends Clothing implements IAccessoryHasModel {
 
-    public SuperDogCape(Supplier<? extends ItemLike> itemIn) {
+    public FlyingCape(Supplier<? extends ItemLike> itemIn) {
         super(itemIn);
     }
 
     @Override
     public Entry getRenderEntry() {
-        return AccessoryModelRenderEntries.ELYTRA_CAPE;
+        return AccessoryModelRenderEntries.FLYING_CAPE;
     }
     
 }
