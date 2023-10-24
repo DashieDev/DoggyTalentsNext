@@ -2892,6 +2892,20 @@ public class Dog extends AbstractDog {
         this.updateLowHunger();
     }
 
+    @Override
+    public void heal(float add) {
+        //🥴
+        if (add <= 0)
+            return;
+        var add1 = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(this, add);
+        add = Math.max(add1, add);
+        
+        float h = this.getHealth();
+        if (h > 0.0F) {
+           this.setHealth(h + add);
+        }
+     }
+
     public boolean hasCustomSkin() {
         return !Strings.isNullOrEmpty(this.getSkinData().getHash());
     }
