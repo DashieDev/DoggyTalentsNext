@@ -57,13 +57,13 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
         }
     }
     
-    public static LayerDefinition createLayer() {
+    public static LayerDefinition cape() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition elytra_rot = upper_body.addOrReplaceChild("elytra_rot", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -3.75F, -0.25F, -1.5708F, 0.0F, 0.0F));
+		PartDefinition elytra_rot = upper_body.addOrReplaceChild("elytra_rot", CubeListBuilder.create(), PartPose.offsetAndRotation(1.0F, -3.75F, -0.25F, -1.5708F, 0.0F, 0.0F));
 
 		PartDefinition elytra = elytra_rot.addOrReplaceChild("elytra", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -76,6 +76,31 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
 		PartDefinition left_wing = elytra.addOrReplaceChild("left_wing", CubeListBuilder.create(), PartPose.offset(2.0F, 1.0F, 2.0F));
 
 		PartDefinition left_r1 = left_wing.addOrReplaceChild("left_r1", CubeListBuilder.create().texOffs(0, 42).mirror().addBox(-2.8914F, 3.8079F, 2.3224F, 10.0F, 20.0F, 2.0F, new CubeDeformation(0.001F)).mirror(false), PartPose.offsetAndRotation(0.0F, -1.0F, -3.0F, 1.6144F, 0.0873F, 0.0F));
+
+		return LayerDefinition.create(meshdefinition, 64, 64);
+	}
+
+    public static LayerDefinition bat() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
+
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+
+		PartDefinition elytra_rot = upper_body.addOrReplaceChild("elytra_rot", CubeListBuilder.create(), PartPose.offsetAndRotation(1.0F, -3.75F, -0.25F, -1.5708F, 0.0F, 0.0F));
+
+		PartDefinition elytra = elytra_rot.addOrReplaceChild("elytra", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+		PartDefinition cape_r1 = elytra.addOrReplaceChild("cape_r1", CubeListBuilder.create().texOffs(40, 42).mirror().addBox(-2.8914F, 3.8079F, 2.3224F, 10.0F, 20.0F, 2.0F, new CubeDeformation(0.001F)).mirror(false), PartPose.offsetAndRotation(-2.0F, 0.0F, -1.0F, 1.6144F, 0.0F, 0.0F));
+
+		PartDefinition left_wing = elytra.addOrReplaceChild("left_wing", CubeListBuilder.create(), PartPose.offset(2.0F, 1.0F, 2.0F));
+
+		PartDefinition left_wing_r1 = left_wing.addOrReplaceChild("left_wing_r1", CubeListBuilder.create().texOffs(20, 47).mirror().addBox(0.6329F, -8.4717F, 18.5F, 10.0F, 16.0F, 1.0F, new CubeDeformation(0.001F)).mirror(false)
+		.texOffs(0, 51).mirror().addBox(10.6329F, -7.4717F, 18.5F, 8.0F, 12.0F, 1.0F, new CubeDeformation(0.001F)).mirror(false), PartPose.offsetAndRotation(-2.0F, 12.75F, 1.25F, 1.5708F, -1.1345F, 0.0F));
+
+		PartDefinition right_wing = elytra.addOrReplaceChild("right_wing", CubeListBuilder.create(), PartPose.offset(-2.0F, 1.0F, 2.0F));
+
+		PartDefinition right_wing_r1 = right_wing.addOrReplaceChild("right_wing_r1", CubeListBuilder.create().texOffs(20, 47).addBox(-10.6329F, -8.4717F, 18.5F, 10.0F, 16.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 51).addBox(-18.6329F, -7.4717F, 18.5F, 8.0F, 12.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.0F, 12.75F, 1.25F, 1.5708F, 1.1345F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}

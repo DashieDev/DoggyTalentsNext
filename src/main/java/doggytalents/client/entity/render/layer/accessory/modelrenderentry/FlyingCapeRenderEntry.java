@@ -11,9 +11,9 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
-public class FlyingCape extends Entry {
+public class FlyingCapeRenderEntry extends Entry {
 
-    public static final ModelLayerLocation FLYING_CAPE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "elytra_and_cape"), "main");
+    public static final ModelLayerLocation FLYING_CAPE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "flying_cape"), "main");
 
     private ElytraCapeModel model;
 
@@ -29,12 +29,17 @@ public class FlyingCape extends Entry {
     
     @Override
     public void registerLayerDef(RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(FLYING_CAPE, ElytraCapeModel::createLayer);
+        event.registerLayerDefinition(FLYING_CAPE, ElytraCapeModel::cape);
     }
 
     @Override
     public ResourceLocation getResources(AccessoryInstance inst) {
-        return Resources.SUPERDOG_MODEL;
+        return Resources.FLYING_CAPE;
+    }
+
+    @Override
+    public boolean isDyable() {
+        return true;
     }
     
 }
