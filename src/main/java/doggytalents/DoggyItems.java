@@ -109,6 +109,7 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> SUPERDOG_SUIT = registerAccessory("superdog_suit", DoggyAccessories.SUPERDOG_SUIT);
     public static final RegistryObject<DyeableAccessoryItem> FLYING_CAPE = registerAccessoryDyed("flying_cape", DoggyAccessories.FLYING_CAPE);
     public static final RegistryObject<AccessoryItem> BAT_WINGS = registerAccessory("bat_wings", DoggyAccessories.BAT_WINGS);
+    public static final RegistryObject<AccessoryItem> CROW_WINGS = registerAccessory("crow_wings", DoggyAccessories.CROW_WINGS);
 
     public static final RegistryObject<AccessoryItem> TENGU_MASK = registerAccessory("tengu_mask", DoggyAccessories.TENGU_MASK);
 

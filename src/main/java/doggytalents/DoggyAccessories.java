@@ -57,6 +57,7 @@ public class DoggyAccessories {
     public static final RegistryObject<Clothing> SUPERDOG_SUIT = register("superdog_suit", () -> new Clothing(DoggyItems.SUPERDOG_SUIT).setModelTexture(Resources.SUPERDOG_SUIT).setHasHindLegDiffTex(true).setAccessoryRenderType(AccessoryRenderType.OVERLAY).setRenderTranslucent(true));
     public static final RegistryObject<DyeableAccessory> FLYING_CAPE = register("flying_cape", () -> new FlyingCape(DoggyItems.FLYING_CAPE).setModelTexture(Resources.FLYING_CAPE).setRenderTranslucent(true));
     public static final RegistryObject<Accessory> BAT_WINGS = register("bat_wings", () -> new BatWings(DoggyItems.BAT_WINGS).setModelTexture(Resources.BAT_WINGS).setRenderTranslucent(true));
+    public static final RegistryObject<Accessory> CROW_WINGS = register("crow_wings", () -> new CrowWings(DoggyItems.CROW_WINGS).setModelTexture(Resources.CROW_WINGS).setRenderTranslucent(true));
 
     public static final RegistryObject<TenguMask> TENGU_MASK = register("tengu_mask", () -> new TenguMask(DoggyItems.TENGU_MASK).setModelTexture(Resources.TENGU_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<KitsuneMask> KITSUNE_MASK = register("kitsune_mask", () -> new KitsuneMask(DoggyItems.KITSUNE_MASK).setModelTexture(Resources.KITSUNE_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
