@@ -18,10 +18,10 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
 
-    private ModelPart flyingParts;
-    private ModelPart rWing;
-    private ModelPart lWing;
-    private ModelPart elytra;
+    public ModelPart flyingParts;
+    public ModelPart rWing;
+    public ModelPart lWing;
+    public ModelPart elytra;
 
     public ElytraCapeModel(ModelPart root) {
         super(root);
