@@ -24,6 +24,7 @@ public class DogRespawnData implements IDogData {
 
     private final DogRespawnStorage storage;
     private final UUID uuid;
+    private UUID ownerUUID;
     private CompoundTag data;
 
     //TODO Make it list you can only add too
@@ -50,8 +51,7 @@ public class DogRespawnData implements IDogData {
 
     @Override
     public UUID getOwnerId() {
-        String str = data.getString("OwnerUUID");
-        return "".equals(str) ? null : UUID.fromString(str);
+        return this.ownerUUID;
     }
 
     @Override
@@ -63,6 +63,7 @@ public class DogRespawnData implements IDogData {
     public void populate(Dog dogIn) {
         this.data = new CompoundTag();
         dogIn.saveWithoutId(this.data);
+        this.ownerUUID = dogIn.getOwnerUUID();
 
         // Remove tags that don't need to be saved
         for (String tag : TAGS_TO_REMOVE) {
