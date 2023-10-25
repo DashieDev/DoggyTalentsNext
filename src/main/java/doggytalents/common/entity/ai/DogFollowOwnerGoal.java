@@ -98,7 +98,7 @@ public class DogFollowOwnerGoal extends Goal {
     public void tick() {
         this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
         if (--this.timeToRecalcPath <= 0) {
-            this.timeToRecalcPath = 10;
+            this.timeToRecalcPath = this.dog.isDogFlying() ? 5 : 10;
             DogUtil.moveToOwnerOrTeleportIfFarAway(
                 dog, owner, this.followSpeed,
                 144, 
