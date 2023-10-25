@@ -1,8 +1,9 @@
-// 1.20.1	2023-10-24T17:10:51.3595103	DoggyTalents Item Models
+// 1.20.1	2023-10-24T23:28:10.1869235	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
 b5e90b9e4c73e4e830dfa769f25fa806aa5dab8c assets/doggytalents/models/item/baker_hat.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
+44aeaa5c10bf763221970c8ceaac61b2b7feb930 assets/doggytalents/models/item/bat_wings.json
 800b0dd973429034a05cbf92a314183d189700bb assets/doggytalents/models/item/beastars_uniform_female.json
 0b2cb480f564f26dea464bf88fa8dc72ef3976b4 assets/doggytalents/models/item/beastars_uniform_male.json
 bae70a927faa7d6ccdfc26a148f8b2ae480ce34a assets/doggytalents/models/item/birthday_hat_red_white.json
@@ -30,6 +31,7 @@ aa0e5ccc2a5183ecdf5ba2c3fedc832eca34f39f assets/doggytalents/models/item/dog_bed
 0807828e53bd3d57eb4fc8e23fbdf4e3f6f35a52 assets/doggytalents/models/item/empty_locator_orb.json
 2b241a97c7a75299f0df2a8b38a741693e92e5b2 assets/doggytalents/models/item/energizer_stick.json
 fcce3621bda79bfb2c94031ae8ab9eabef319edc assets/doggytalents/models/item/feathered_mantle.json
+fd14db626434a2c48c8ee30395f56f64c64879c8 assets/doggytalents/models/item/flying_cape.json
 7cdb64b50b71c47cea28a9126f474fa5795001a3 assets/doggytalents/models/item/food_bowl.json
 d9ec650c08c3440406bc3653fa92dd165d4045aa assets/doggytalents/models/item/frisbee.json
 434cca210e06344a30d5feaff1cfbb288fa640be assets/doggytalents/models/item/frisbee_wet.json
@@ -67,7 +69,7 @@ aa2f1cb07f093298438c6384ff408f9474117585 assets/doggytalents/models/item/smarty_
 37e58be2f484f704505648796db525c00a615a1f assets/doggytalents/models/item/spotted_collar.json
 c940178a658a57efa71c4e2f657f4383832f15e7 assets/doggytalents/models/item/starter_bundle.json
 312d0f2de8dba6bad821639ad26b9c5c8a7347fb assets/doggytalents/models/item/sunglasses.json
-3d6554e204496056a9d15a838d085224086cd695 assets/doggytalents/models/item/superdog_cape.json
+a8bdbfc433a4eb2f4c3788599f58d2c64cd53ca6 assets/doggytalents/models/item/superdog_suit.json
 d49794ca31255fe0e821fd5b5bff9a7312654eda assets/doggytalents/models/item/super_treat.json
 d73bbebe9c0d42ae66f902e144f2f955e25bc0f1 assets/doggytalents/models/item/sussy_sickle.json
 668a43f7a3a3dd17312e1633782882089f581ab5 assets/doggytalents/models/item/tantan_cape.json
