@@ -26,4 +26,11 @@ public abstract class AnimatedSyncedAccessoryModel extends SyncedAccessoryModel 
         part.resetPose();
     }
 
+    @Override
+    public void prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        resetAllPose();
+    }
+
+    abstract void resetAllPose();
+
 }

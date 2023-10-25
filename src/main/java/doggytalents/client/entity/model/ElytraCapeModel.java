@@ -19,6 +19,9 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
 
     private ModelPart flyingParts;
+    private ModelPart rWing;
+    private ModelPart lWing;
+    private ModelPart elytra;
 
     public ElytraCapeModel(ModelPart root) {
         super(root);
@@ -28,6 +31,9 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
     protected void populatePart(ModelPart box) {
         this.mane = Optional.of(box.getChild("upper_body"));
         flyingParts = this.mane.get().getChild("elytra_rot");
+        elytra = flyingParts.getChild("elytra");
+        lWing = elytra.getChild("left_wing");
+        rWing = elytra.getChild("right_wing");
     }
 
     @Override
@@ -55,6 +61,13 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
         if (animState.isStarted()) {
             KeyframeAnimationsDelegate.animate(this, dog, sequence, animState.getAccumulatedTime(), 1.0F, vecObj);
         }
+    }
+
+    @Override
+    void resetAllPose() {
+        elytra.resetPose();
+        lWing.resetPose();
+        rWing.resetPose();
     }
     
     public static LayerDefinition cape() {
