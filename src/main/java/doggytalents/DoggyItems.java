@@ -110,6 +110,7 @@ public class DoggyItems {
     public static final RegistryObject<DyeableAccessoryItem> FLYING_CAPE = registerAccessoryDyed("flying_cape", DoggyAccessories.FLYING_CAPE);
     public static final RegistryObject<AccessoryItem> BAT_WINGS = registerAccessory("bat_wings", DoggyAccessories.BAT_WINGS);
     public static final RegistryObject<AccessoryItem> CROW_WINGS = registerAccessory("crow_wings", DoggyAccessories.CROW_WINGS);
+    public static final RegistryObject<AccessoryItem> DIVINE_RETRIBUTON = registerAccessory("divine_retribution", DoggyAccessories.DIVINE_RETRIBUTION);
 
     public static final RegistryObject<AccessoryItem> TENGU_MASK = registerAccessory("tengu_mask", DoggyAccessories.TENGU_MASK);
     public static final RegistryObject<AccessoryItem> DEMON_HORNS = register("demon_horns", () -> new DemonHornsItem(DoggyAccessories.DEMON_HORNS, createInitialProp()));
