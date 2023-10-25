@@ -56,7 +56,7 @@ public class EventHandler {
     @SubscribeEvent
     public void onServerTickEnd(final ServerTickEvent event) {
 
-        if (event.phase != Phase.END || !event.haveTime()) return;
+        if (event.phase != Phase.END) return;
 
         DogAsyncTaskManager.tick();
     }
