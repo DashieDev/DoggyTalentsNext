@@ -183,6 +183,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue PREVENT_DOGS_PUSHING_EACH_OTHER;
         public ForgeConfigSpec.IntValue TICK_PER_HUNGER_DEC;
         public ForgeConfigSpec.BooleanValue PRESERVE_UUID;
+        public ForgeConfigSpec.IntValue DUPLICATION_RESOLVE_STRATEGY;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -285,9 +286,16 @@ public class ConfigHandler {
                 .comment("and when they respawn on bed.")
                 .translation("doggytalents.preserve_uuid")
                 .define("preserve_uuid", true);
+            DUPLICATION_RESOLVE_STRATEGY = builder
+                .comment("Specify what to do when a Duplication is detected when third parties are trying")
+                .comment("to load the dog from their own copy while the dog is still available in")
+                .comment("DTN's respawn storage. Option are specified via the follwing Integer values")
+                .comment("0 - Throw an exception out, this may produce a crash. However, this is the recommended way.")
+                .comment("1 - Silently remove the dog.")
+                .comment("Other - Do nothing.")
+                .translation("doggytalents.duplication_resolve_strategy")
+                .defineInRange("duplication_resolve_strategy", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
             builder.pop();
-
-            
         }
 
         public static<T> T getConfig(ConfigValue<T> config) {

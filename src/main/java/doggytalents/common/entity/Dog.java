@@ -137,6 +137,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
@@ -2241,6 +2244,16 @@ public class Dog extends AbstractDog {
         //Never save these entry, these will be loaded by the talents itself.
         compound.remove("HandItems");
         compound.remove("ArmorItems");
+
+        //Duplication Detection
+        var uuid = this.getUUID();
+        var ownerUUID = this.getOwnerUUID();
+        if (uuid != null && ownerUUID != null) {
+            var backupUUIDTag = new CompoundTag();
+            backupUUIDTag.putUUID("dtn_uuid_owner", ownerUUID);
+            backupUUIDTag.putUUID("dtn_uuid_self", uuid);
+            compound.put("DTN_DupeDetect_UUID", backupUUIDTag);
+        }
     }
 
     @Override
@@ -2536,6 +2549,65 @@ public class Dog extends AbstractDog {
             
         }
 
+        //Duplication Detection
+        boolean duplicate_detected = false;
+        if (!this.level().isClientSide) {
+            try {
+                duplicate_detected = detectDuplicate(compound);
+            } catch (Exception e) {
+
+            }
+        }
+        if (duplicate_detected) {
+            int strategy = ConfigHandler.SERVER.DUPLICATION_RESOLVE_STRATEGY.get();
+            if (strategy == 0 || strategy == 1) {
+                this.untame();  
+                this.remove(RemovalReason.DISCARDED);
+            }
+            if (strategy == 0)
+                throw new IllegalStateException(
+                    "Dog is loaded from third-party storage while still being respawnable!"
+                );
+        }
+    }
+
+    private boolean detectDuplicate(CompoundTag tag) {
+        if (!tag.contains("DTN_DupeDetect_UUID", Tag.TAG_COMPOUND))
+            return false;
+        var backupUUIDTag = tag.getCompound("DTN_DupeDetect_UUID");
+        var uuid = backupUUIDTag.getUUID("dtn_uuid_self");
+        var ownerUUID = backupUUIDTag.getUUID("dtn_uuid_owner");
+        if (uuid == null || ownerUUID == null)
+            return false;
+        
+        if (!checkRespawnStorageForDuplicate(uuid, ownerUUID))
+            return false;
+        
+        DoggyTalentsNext.LOGGER.warn(
+            "Duplicated Dog Detected! dog_uuid=[" 
+            + uuid.toString()
+            + "] owner_uuid=["
+            + ownerUUID.toString()
+            + "]"
+        );
+        return true;
+    }
+
+    private boolean checkRespawnStorageForDuplicate(UUID uuid, UUID ownerUUID) {
+        var storage = DogRespawnStorage.get(this.level());
+        if (storage == null)
+            return false;
+        var data = storage.getData(uuid);
+        if (data == null)
+            return false;
+        var ownerUUID0 = data.getOwnerId();
+        if (ownerUUID0 == null)
+            return false;
+
+        if (ObjectUtils.notEqual(ownerUUID0, ownerUUID))        
+            return false;
+        
+        return true;
     }
 
     @Override
