@@ -39,8 +39,6 @@ public class DogMoveBackToRestrictGoal extends MoveTowardsRestrictionGoal {
     }
 
     private boolean teleportBackIfNeeded() {
-        if (!this.dog.getMode().shouldAttack())
-            return false;
         if (!dog.hasRestriction())
             return false;
         var center = dog.getRestrictCenter();

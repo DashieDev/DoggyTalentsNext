@@ -834,15 +834,15 @@ public class Dog extends AbstractDog {
             --this.tickChopinTail;
         }
 
-        if (!this.level().isClientSide && this.getMode().canWander()) {
-            if (!this.getMode().shouldAttack()) {
-                updateWanderRestState();
-                boolean invalidated = invalidateWanderCenter(25*25);
-                if (invalidated) {
-                    this.restrictTo(this.blockPosition(), 12);
-                }
-            }
-        }
+        // if (!this.level().isClientSide && this.getMode().canWander()) {
+        //     if (!this.getMode().shouldAttack()) {
+        //         updateWanderRestState();
+        //         boolean invalidated = invalidateWanderCenter(25*25);
+        //         if (invalidated) {
+        //             this.restrictTo(this.blockPosition(), 12);
+        //         }
+        //     }
+        // }
 
         if (!this.level().isClientSide && this.isInSittingPose() && !this.resting() && this.tickUntilRest > 0 ) {
             --this.tickUntilRest;
