@@ -71,6 +71,9 @@ public class DogRespawnData implements IDogData {
 
         this.data.remove("UUID");
         this.data.remove("LoveCause");
+
+        //Duplication Detection
+        this.data.remove("DTN_DupeDetect_UUID");
     }
 
     @Nullable
