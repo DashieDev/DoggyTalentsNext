@@ -107,6 +107,8 @@ public class DoggyItems {
     public static final RegistryObject<DyeableAccessoryItem> CHEF_HAT = register("chef_hat", () -> new ChefHat.ChefHatItem(DoggyAccessories.CHEF_HAT, createInitialProp()));
 
     public static final RegistryObject<AccessoryItem> SUPERDOG_SUIT = registerAccessory("superdog_suit", DoggyAccessories.SUPERDOG_SUIT);
+    public static final RegistryObject<DyeableAccessoryItem> FLYING_CAPE = registerAccessoryDyed("flying_cape", DoggyAccessories.FLYING_CAPE);
+    public static final RegistryObject<AccessoryItem> BAT_WINGS = registerAccessory("bat_wings", DoggyAccessories.BAT_WINGS);
 
     public static final RegistryObject<AccessoryItem> TENGU_MASK = registerAccessory("tengu_mask", DoggyAccessories.TENGU_MASK);
 
@@ -275,6 +277,12 @@ public class DoggyItems {
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.FRISBEE_WET, (item) -> {
+            event.register((stack, tintIndex) -> {
+                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
+             }, item);
+        }, DoggyBlocks::logError);
+
+        Util.acceptOrElse(DoggyItems.FLYING_CAPE, (item) -> {
             event.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
