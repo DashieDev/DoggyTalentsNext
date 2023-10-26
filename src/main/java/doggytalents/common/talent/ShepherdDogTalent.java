@@ -87,6 +87,8 @@ public class ShepherdDogTalent extends TalentInstance {
                             && nbt.getInt("mode") == 4)
             ) {
                 this.triggerShepherdAction(dog, owner);
+            } else {
+                this.targets.clear();
             }
         }
     }

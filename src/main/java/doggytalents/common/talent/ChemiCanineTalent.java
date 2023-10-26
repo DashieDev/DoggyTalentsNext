@@ -66,6 +66,7 @@ public class ChemiCanineTalent extends TalentInstance {
             this.tickTillSearch = 10;
             this.refreshTargetsToAbsorb(dog);
             var target = this.selectAbsorbTarget(dog);
+            this.absorbTargets.clear();
             if (target != null && this.stillValidTarget(dog, target)) {
                 this.triggerAbsorbAction(dog, target);
             }
