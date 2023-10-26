@@ -1454,6 +1454,14 @@ public class Dog extends AbstractDog {
 //        return predicateIn.canTarget(this, livingentityIn);
 //     }
 
+    protected boolean stillSitWhenHurt(DamageSource source, float amount) {
+        for (var alt : this.alterations) {
+            if (alt.stillSitWhenHurt(this, source, amount).shouldSwing())
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
 
@@ -1507,16 +1515,17 @@ public class Dog extends AbstractDog {
                 this.checkIfAttackedFromOwnerOrTeam(owner, attacker);
             if (flag) return false;
         }
-        
-        if (!this.level.isClientSide)
-        if (this.isInSittingPose() || amount > 6.0f) {
-            this.setAnim(DogAnimation.HURT_1);
-        } else if (source.getEntity() != null) {
-            this.setAnim(DogAnimation.HURT_2);
+
+        if (!this.level().isClientSide)
+        if (!(this.isInSittingPose() && this.stillSitWhenHurt(source, amount))) {
+            if (this.isInSittingPose() || amount > 6.0f) {
+                this.setAnim(DogAnimation.HURT_1);
+            } else if (source.getEntity() != null) {
+                this.setAnim(DogAnimation.HURT_2);
+            }
+            this.setStandAnim(DogAnimation.NONE);
+            this.setOrderedToSit(false);
         }
-        this.setStandAnim(DogAnimation.NONE);
-        this.setOrderedToSit(false);
-        
 
         if (attacker != null && !(attacker instanceof Player) && !(attacker instanceof AbstractArrow)) {
             amount = (amount + 1.0F) / 2.0F;
