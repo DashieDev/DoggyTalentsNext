@@ -373,7 +373,6 @@ public class DogModel extends EntityModel<Dog> {
             this.earLeft.get().offsetRotation(KeyframeAnimations.degreeVec(26.57f, -14.48f, 26.57f));
             this.earLeft.get().offsetPos(KeyframeAnimations.posVec(0f, -0.5f, 0f));
         }
-        
     }
 
     public void setupFlyPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
@@ -398,11 +397,11 @@ public class DogModel extends EntityModel<Dog> {
 
         if (this.earRight.isPresent()) {
             this.earRight.get().offsetRotation(KeyframeAnimations.degreeVec(-55.69f, 2.98f, -3.43f));
-            this.earRight.get().offsetPos(KeyframeAnimations.posVec(0f, -0.6f, 0f));    
+            this.earRight.get().offsetPos(KeyframeAnimations.posVec(0f, -0.35f, 0f));
         }
         if (this.earLeft.isPresent()) {
             this.earLeft.get().offsetRotation(KeyframeAnimations.degreeVec(-55.69f, -2.98f, 3.43f));
-            this.earLeft.get().offsetPos(KeyframeAnimations.posVec(0f, -0.6f, 0f));
+            this.earLeft.get().offsetPos(KeyframeAnimations.posVec(0f, -0.35f, 0f));
         }
         
     }
