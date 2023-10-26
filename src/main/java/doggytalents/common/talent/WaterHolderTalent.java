@@ -115,6 +115,7 @@ public class WaterHolderTalent extends TalentInstance {
             this.ticktillSearch = 10;
             this.refreshOnFireTargets(abstractDog);
             var target = this.selectOnFireTarget(abstractDog);
+            targets.clear();
             if (target != null && this.stillValidTarget(dog, target)) {
                 this.triggerExtinguishAction(dog, target);
             }
