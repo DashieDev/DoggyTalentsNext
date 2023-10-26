@@ -46,7 +46,7 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
             return;
         }
 
-        if (!ConfigHandler.CLIENT.RENDER_ARMOR.get())
+        if (!ConfigHandler.CLIENT.RENDER_ARMOR.get() || dog.hideArmor())
             return;
 
         var skin = dog.getClientSkin();
