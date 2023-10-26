@@ -8,6 +8,8 @@ import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
+import doggytalents.common.entity.anim.DogPose;
+import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -44,6 +46,20 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
             .filter(part -> part.hasChild(name))
             .findFirst();
         return partOptional.map(part -> part.getChild(name));
+    }
+
+    @Override
+    public void prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        super.prepareMobModel(dogIn, limbSwing, limbSwingAmount, partialTickTime);
+        var pose = dogIn.getDogPose();
+        if (pose == DogPose.FLYING) {
+            this.elytra.offsetRotation(KeyframeAnimations.degreeVec(24.59f, 0f, 0f));
+            this.elytra.offsetPos(KeyframeAnimations.posVec(0f, -0.24f, 1.45f));
+            this.rWing.offsetRotation(KeyframeAnimations.degreeVec(-15.18f, -46.68f, 11.36f));
+            this.rWing.offsetPos(KeyframeAnimations.posVec(0f, 0f, 0f));
+            this.lWing.offsetRotation(KeyframeAnimations.degreeVec(-15.18f, 46.68f, -11.36f));
+            this.lWing.offsetPos(KeyframeAnimations.posVec(0f, 0f, 0f));
+        }
     }
 
     private Vector3f vecObj = new Vector3f(0, 0, 0);
