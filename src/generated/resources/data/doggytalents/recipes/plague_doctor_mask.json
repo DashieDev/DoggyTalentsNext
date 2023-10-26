@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:black_carpet"
+    },
+    "F": {
+      "tag": "minecraft:flowers"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "S": {
+      "item": "doggytalents:snorkel"
+    },
+    "W": {
+      "item": "minecraft:black_wool"
+    }
+  },
+  "pattern": [
+    "CWC",
+    " S ",
+    "LFL"
+  ],
+  "result": {
+    "item": "doggytalents:plague_doctor_mask"
+  },
+  "show_notification": true
+}
