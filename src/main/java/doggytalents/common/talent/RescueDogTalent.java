@@ -69,6 +69,7 @@ public class RescueDogTalent extends TalentInstance {
             this.tickTillSearch = 10;
             this.refreshTargetsToHeal(dog);
             var target = this.selectHealTarget(dog);
+            this.healTargets.clear();
             if (target != null && this.stillValidTarget(dog, target)) {
                 this.triggerRescueAction(dog, target);
             }

@@ -91,6 +91,8 @@ public class ShepherdDogTalent extends TalentInstance {
             ) {
                 ChopinLogger.l("Triggering shepherd action.");
                 this.triggerShepherdAction(dog, owner);
+            } else {
+                this.targets.clear();
             }
         }
     }
