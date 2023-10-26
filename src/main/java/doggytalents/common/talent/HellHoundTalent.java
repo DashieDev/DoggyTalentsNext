@@ -10,9 +10,11 @@ import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -39,6 +41,8 @@ public class HellHoundTalent extends TalentInstance {
 
     private final int SEARCH_RANGE = 3;
     private int tickUntilSearch = 0;
+    private int fireDamageAccumulate;
+    private int lavaDamageAccumulate;
 
     private HellHoundNavigation navigation;
     private boolean swimming;
@@ -97,7 +101,24 @@ public class HellHoundTalent extends TalentInstance {
 
     @Override
     public InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int second) {
-        return InteractionResultHolder.success(this.level() > 0 ? second / this.level() : second);
+        return InteractionResultHolder.success(Mth.floor(second * this.getFireDecreasePercentage()));
+    }
+
+    private float getFireDecreasePercentage() {
+        if (this.level() <= 0 || this.level() >= 5)
+            return 1f;
+        switch (this.level()) {
+        default:
+            return 1f;
+        case 1:
+            return 0.9f;
+        case 2:
+            return 0.8f;
+        case 3:
+            return 0.5f;
+        case 4:
+            return 0.25f;
+        }
     }
 
     @Override
@@ -127,6 +148,34 @@ public class HellHoundTalent extends TalentInstance {
             return InteractionResult.SUCCESS;
 
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public InteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
+        if (!source.is(DamageTypeTags.IS_FIRE)) {
+            return InteractionResultHolder.pass(damage);
+        }
+        if (!source.is(DamageTypes.LAVA)) {
+            ++this.fireDamageAccumulate;
+            if (this.fireDamageAccumulate >= this.level() + 1) {
+                this.fireDamageAccumulate = 0;
+                return InteractionResultHolder.pass(1f);
+            }
+        } else {
+            ++this.lavaDamageAccumulate;
+            if (this.lavaDamageAccumulate >= 10 * this.level()) {
+                this.lavaDamageAccumulate = 0;
+                return InteractionResultHolder.pass(Math.max(0, 1- (this.level()*0.25f)) * damage);
+            }
+        }
+        return InteractionResultHolder.fail(0f);
+    }
+
+    @Override
+    public InteractionResult stillSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
+        if (source.is(DamageTypes.ON_FIRE))
+            return InteractionResult.SUCCESS;
+        return InteractionResult.PASS;    
     }
 
     @Override

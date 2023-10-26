@@ -118,6 +118,10 @@ public interface IDogAlteration {
         return InteractionResult.PASS;
     }
 
+    default InteractionResult stillSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
+        return InteractionResult.PASS;
+    }
+
     default void doAdditionalAttackEffects(AbstractDog dogIn, Entity target) {
     }
 
