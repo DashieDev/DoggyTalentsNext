@@ -163,6 +163,7 @@ public class Dog extends AbstractDog {
      *     8               256                 RESTING
      *     9               512                 PATROL_TARGET_LOCK
      *     10              1024                FLYING
+     *     11              2048                SHOW_ARMOR
      *     .
      *     31              2^31                <Reserved>
      */
@@ -3137,6 +3138,14 @@ public class Dog extends AbstractDog {
 
     public void setPatrolTargetLock(boolean val) {
         this.setDogFlag(512, val);
+    }
+
+    public boolean hideArmor() {
+        return this.getDogFlag(2048);
+    }
+
+    public void setHideArmor(boolean val) {
+        this.setDogFlag(2048, val);
     }
 
     public boolean wantsToRest() {
