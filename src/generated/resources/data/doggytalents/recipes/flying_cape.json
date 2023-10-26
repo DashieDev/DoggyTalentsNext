@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "minecraft:elytra"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    " W ",
+    "WEW",
+    " W "
+  ],
+  "result": {
+    "item": "doggytalents:flying_cape"
+  },
+  "show_notification": true
+}
