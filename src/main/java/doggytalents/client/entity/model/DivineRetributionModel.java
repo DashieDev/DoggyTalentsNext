@@ -30,6 +30,7 @@ public class DivineRetributionModel extends ElytraCapeModel {
     @Override
     public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
             float headPitch) {
+        super.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         this.reflector.yRot = 6*ageInTicks % 360 * Mth.DEG_TO_RAD;
     }
 
