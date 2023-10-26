@@ -11,6 +11,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
@@ -519,7 +520,154 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("SSS")
             .define('S', Items.COOKED_PORKCHOP)
             .unlockedBy("has_cooked_porkchop", has(Items.COOKED_PORKCHOP))
-            .save(consumer); 
+            .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.KITSUNE_MASK.get(), 1)
+            .requires(DoggyItems.HEAD_BAND_BLANK.get())
+            .requires(Items.RED_DYE)
+            .requires(Items.WHITE_DYE)
+            .requires(Items.WHITE_DYE)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.TENGU_MASK.get(), 1)
+            .requires(DoggyItems.HEAD_BAND_BLANK.get())
+            .requires(Items.RED_DYE)
+            .requires(Items.RED_DYE)
+            .requires(Items.BLACK_DYE)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BAKER_HAT.get(), 1)
+            .pattern("WWW")
+            .pattern("WCW")
+            .define('C', Items.LEATHER_HELMET)
+            .define('W', ItemTags.WOOL)
+            .unlockedBy("has_bread", has(Items.BREAD))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CHEF_HAT.get(), 1)
+            .pattern("WWW")
+            .pattern("WWW")
+            .pattern("WCW")
+            .define('C', Items.LEATHER_HELMET)
+            .define('W', ItemTags.WOOL)
+            .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DEMON_HORNS.get(), 1)
+            .pattern("SRS")
+            .pattern("BCB")
+            .define('C', Items.LEATHER_HELMET)
+            .define('S', Items.STICK)
+            .define('R', Items.NETHER_WART)
+            .define('B', Items.BLACK_DYE)
+            .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
+            .save(consumer);
+        
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.RICE_BOWL.get(), 1)
+            .requires(Items.BOWL)
+            .requires(Items.WHEAT)
+            .requires(Items.WATER_BUCKET)
+            .unlockedBy("has_bowl", has(Items.BOWL))
+            .save(consumer);
+            
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.PLAGUE_DOC_MASK.get(), 1)
+            .pattern("CWC")
+            .pattern(" S ")
+            .pattern("LFL")
+            .define('C', Items.BLACK_CARPET)
+            .define('W', Items.BLACK_WOOL)
+            .define('L', Items.LEATHER)
+            .define('F', ItemTags.FLOWERS)
+            .define('S', DoggyItems.SNORKEL.get())
+            .unlockedBy("has_leather", has(Items.LEATHER))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SALMON_SUSHI.get(), 1)
+            .pattern("S")
+            .pattern("R")
+            .define('S', Items.SALMON)
+            .define('R', DoggyItems.RICE_BOWL.get())
+            .unlockedBy("has_salmon", has(Items.SALMON))
+            .save(consumer);
+        
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CROW_WINGS.get(), 1)
+            .pattern("FBF")
+            .pattern("BEB")
+            .pattern("FBF")
+            .define('F', Items.FEATHER)
+            .define('B', Items.BLACK_DYE)
+            .define('E', Items.ELYTRA)
+            .unlockedBy("has_elytra", has(Items.ELYTRA))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CROW_WINGS.get(), 1)
+            .pattern("FBF")
+            .pattern("BEB")
+            .pattern("FBF")
+            .define('B', Items.FEATHER)
+            .define('F', Items.BLACK_DYE)
+            .define('E', Items.ELYTRA)
+            .unlockedBy("has_elytra", has(Items.ELYTRA))
+            .save(consumer, Util.getResource("crow_wings_alt"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.FLYING_CAPE.get(), 1)
+            .pattern(" W ")
+            .pattern("WEW")
+            .pattern(" W ")
+            .define('W', ItemTags.WOOL)
+            .define('E', Items.ELYTRA)
+            .unlockedBy("has_elytra", has(Items.ELYTRA))
+            .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.SUPERDOG_SUIT.get(), 1)
+            .requires(Items.YELLOW_DYE)
+            .requires(Items.RED_DYE)
+            .requires(Items.BLUE_DYE)
+            .requires(Items.IRON_INGOT)
+            .requires(DoggyItems.LEATHER_JACKET.get())
+            .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BAT_WINGS.get(), 1)
+            .pattern("BLB")
+            .pattern("LEL")
+            .pattern("BLB")
+            .define('B', Items.BROWN_DYE)
+            .define('L', Items.LEATHER)
+            .define('E', Items.ELYTRA)
+            .unlockedBy("has_elytra", has(Items.ELYTRA))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.WITCH_HAT.get(), 1)
+            .pattern(" W ")
+            .pattern("WPW")
+            .pattern("CCC")
+            .define('W', Items.BLACK_WOOL)
+            .define('C', Items.BLACK_CARPET)
+            .define('P', Items.POTION)
+            .unlockedBy("has_potion", has(Items.POTION))
+            .save(consumer);
+        
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.ONIGIRI.get(), 1)
+            .pattern("R")
+            .pattern("K")
+            .define('R', DoggyItems.RICE_BOWL.get())
+            .define('K', Items.DRIED_KELP)
+            .unlockedBy("has_dried_kelp", has(Items.DRIED_KELP))
+            .save(consumer);
+            
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DIVINE_RETRIBUTON.get(), 1)
+            .pattern("MPM")
+            .pattern("CCC")
+            .pattern("BPB")
+            .define('C', Items.COPPER_INGOT)
+            .define('P', Items.PHANTOM_MEMBRANE)
+            .define('M', Items.MAGMA_CREAM)
+            .define('B', Items.BLAZE_POWDER)
+            .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+            .save(consumer);
     }
     
     // @Override
