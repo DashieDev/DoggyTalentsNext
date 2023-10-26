@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:leather_helmet"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "WWW",
+    "WCW"
+  ],
+  "result": {
+    "item": "doggytalents:chef_hat"
+  },
+  "show_notification": true
+}
