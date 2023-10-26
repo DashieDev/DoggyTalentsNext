@@ -23,6 +23,7 @@ import doggytalents.common.network.packet.data.DogObeyData;
 import doggytalents.common.network.packet.data.DogRegardTeamPlayersData;
 import doggytalents.common.network.packet.data.FriendlyFireData;
 import doggytalents.common.network.packet.data.PatrolTargetLockData;
+import doggytalents.common.network.packet.data.HideArmorData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -195,6 +196,22 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
+                new FlatButton(
+                    0, 0,
+                    40, 20, Component.literal("" + this.dog.hideArmor()), 
+                    b -> {
+                        Boolean newVal = !this.dog.hideArmor();
+                        b.setMessage(Component.literal("" + newVal));
+                        this.requestShowArmor(newVal);
+                    }     
+                ),
+                I18n.get("doggui.hide_armor")
+            )
+            .init()
+        );
+
+        scroll.addChildren(
+            new ButtonOptionEntry(scroll, getScreen(), 
                 new LowHealthStrategySwitch(
                     0, 0, 
                     100, 20, dog, font, getScreen()
@@ -256,6 +273,12 @@ public class EditInfoView extends AbstractElement {
         PacketHandler
             .send(PacketDistributor.SERVER.noArg(), 
             new PatrolTargetLockData(this.dog.getId(), val));
+    }
+
+    private void requestShowArmor(boolean val) {
+        PacketHandler
+            .send(PacketDistributor.SERVER.noArg(), 
+            new HideArmorData(this.dog.getId(), val));
     }
 
     private static class NewnameEntry extends AbstractElement {
