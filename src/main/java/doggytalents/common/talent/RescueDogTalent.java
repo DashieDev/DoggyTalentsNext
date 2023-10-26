@@ -126,11 +126,14 @@ public class RescueDogTalent extends TalentInstance {
         dog.setDogHunger(
             dog.getDogHunger() - this.healCost(dog, e)
         );
-        e.heal(
-            this.healAmount(dog, e)
-        );
-        if (dog.level instanceof ServerLevel) {
-            ((ServerLevel) dog.level).sendParticles(
+        if (this.level() >= 5) {
+            forceHealTarget(dog, e, this.healAmount(dog, e));
+        } else
+            e.heal(
+                this.healAmount(dog, e)
+            );
+        if (dog.level() instanceof ServerLevel) {
+            ((ServerLevel) dog.level()).sendParticles(
                 ParticleTypes.HEART, 
                 e.getX(), e.getY(), e.getZ(), 
                 this.level*8, 
@@ -139,7 +142,20 @@ public class RescueDogTalent extends TalentInstance {
             );
         }
         this.healCooldown = dog.getRandom().nextInt(3) * 20; // Between 2 seconds
-    } 
+    }
+
+    private void forceHealTarget(AbstractDog dog, LivingEntity e, float add) {
+        //🥴
+        if (add <= 0)
+            return;
+        var add1 = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(e, add);
+        add = Math.max(add1, add);
+        
+        float h = e.getHealth();
+        if (h > 0.0F) {
+            e.setHealth(h + add);
+        }
+    }
 
     private boolean isTargetLowHealth(AbstractDog dog, LivingEntity e) {
         return e.getHealth() <= 8.0;
