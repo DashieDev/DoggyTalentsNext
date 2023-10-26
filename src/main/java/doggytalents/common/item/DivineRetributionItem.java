@@ -26,6 +26,10 @@ public class DivineRetributionItem extends AccessoryItem {
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
+        var desc_id2 = this.getDescriptionId(stack) + ".description2";
+        components.add(Component.translatable(desc_id2).withStyle(
+            Style.EMPTY.withItalic(true)
+        ));
     }
     
 }
