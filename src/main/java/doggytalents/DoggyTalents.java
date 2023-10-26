@@ -59,6 +59,22 @@ public class DoggyTalents {
                 return level * (level + 1) / 2 + 4;
             }
         });
+    public static final RegistryObject<Talent> CHEMI_CANINE = register("chemi_canine", () -> 
+        new Talent(ChemiCanineTalent::new) {
+            @Override
+            public int getLevelCost(int toGoToLevel) {
+                if (toGoToLevel == 1)
+                    return 5;
+                return super.getLevelCost(toGoToLevel);
+            };
+
+            @Override
+            public int getCummulativeCost(int level) {
+                if (level <= 0)
+                    return 0;
+                return level * (level + 1) / 2 + 4;
+            }
+        });
 
     private static <T extends Talent> RegistryObject<Talent> registerInst(final String name, final BiFunction<Talent, Integer, TalentInstance> sup) {
         return register(name, () -> new Talent(sup));
