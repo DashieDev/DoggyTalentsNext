@@ -453,6 +453,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
 
         SpecialRecipeBuilder.special(DoggyRecipeSerializers.DOG_BED.get()).save(consumer, Util.getResourcePath("dog_bed"));
+        SpecialRecipeBuilder.special(DoggyRecipeSerializers.BIRTHDAY_HAT.get()).save(consumer, Util.getResourcePath("birthday_hat"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.HOT_DOG.get(), 1)
             .pattern("RTY")
