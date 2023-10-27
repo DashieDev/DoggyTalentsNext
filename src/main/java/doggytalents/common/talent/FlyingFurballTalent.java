@@ -39,6 +39,7 @@ public class FlyingFurballTalent extends TalentInstance {
             new DogFlyingMoveControl(d, this);
         this.navigation = 
             new FlyingPathNavigation(dog, dog.level());
+        startGliding(dog);
     }
 
     @Override
@@ -75,20 +76,24 @@ public class FlyingFurballTalent extends TalentInstance {
         if (dog.isDogFlying() && dog.getNavigation() != this.navigation) {
             dog.setDogFlying(false);
             dog.setNoGravity(false);
-            stopGliding(dog);
         }
 
-        if (dog.isDogFlying() && dog.onGround())  {
+        if (dog.isDogFlying() && !willFly(dog))  {
             dog.setDogFlying(false);
             dog.setNoGravity(false);
-            stopGliding(dog);
             if (dog.getAnim() == DogAnimation.FLY_AIR_BOURNE) {
                 dog.setAnim(DogAnimation.FLY_LANDING);
             }
         }
 
-        if (dog.isDogFlying() && !dog.onGround() && dog.getAnim() == DogAnimation.NONE) {
+        if (dog.isDogFlying() && dog.getAnim() == DogAnimation.NONE) {
             dog.setAnim(DogAnimation.FLY_AIR_BOURNE);
+        }
+
+        if (!dog.isDogFlying() && willFly(dog)) {
+            dog.setDogFlying(true);
+            if (dog.getAnim() != DogAnimation.FLY_AIR_BOURNE)
+                dog.setAnim(DogAnimation.FLY_JUMP_START);
         }
 
         if (!dog.isDogFlying() && dog.getAnim() == DogAnimation.FLY_AIR_BOURNE) {
@@ -96,6 +101,10 @@ public class FlyingFurballTalent extends TalentInstance {
         }
 
         dogIn.fallDistance = 0;
+    }
+
+    private boolean willFly(AbstractDog dog) {
+        return !dog.onGround() && !dog.isInSittingPose() && !dog.isPassenger();
     }
 
     @Override
