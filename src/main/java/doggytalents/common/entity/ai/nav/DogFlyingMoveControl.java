@@ -41,12 +41,12 @@ public class DogFlyingMoveControl extends FlyingMoveControl {
                 && dog.onGround()
                 && dy > 0
             ) {
+                if (dog.getAnim() == DogAnimation.NONE)
                 dog.setAnim(DogAnimation.FLY_JUMP_START);
             }
 
             if (!dog.getNavigation().isDone() && !dog.isDogFlying()) {
                 dog.setDogFlying(true);
-                talentInst.startGliding(dog);
                 this.dog.setNoGravity(true);
             }
    
