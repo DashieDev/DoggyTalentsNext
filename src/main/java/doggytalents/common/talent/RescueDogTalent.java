@@ -24,8 +24,6 @@ import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
 
 public class RescueDogTalent extends TalentInstance {
-
-    private final ArrayList<LivingEntity> healTargets = new ArrayList<LivingEntity>();
     private final int SEARCH_RADIUS = 12; //const ?? maybe can improve thru talents
     private int tickTillSearch = 0;
 
@@ -67,9 +65,7 @@ public class RescueDogTalent extends TalentInstance {
             && --this.tickTillSearch <= 0
         ) {
             this.tickTillSearch = 10;
-            this.refreshTargetsToHeal(dog);
-            var target = this.selectHealTarget(dog);
-            this.healTargets.clear();
+            var target = findHealTarget(abstractDog);
             if (target != null && this.stillValidTarget(dog, target)) {
                 this.triggerRescueAction(dog, target);
             }
@@ -174,19 +170,19 @@ public class RescueDogTalent extends TalentInstance {
         );
     }
 
-    private void refreshTargetsToHeal(AbstractDog dog) {
-        this.healTargets.clear();
+    private LivingEntity findHealTarget(AbstractDog dog) {
+        var healTargets = new ArrayList<LivingEntity>();
         Predicate<LivingEntity> lowHealthAndInWitness =
             e -> this.isTargetLowHealth(dog, e) 
                 && (dog.hasLineOfSight(e));
         
         //Get owner 
         var owner = dog.getOwner();
-        if (owner == null) return;
+        if (owner == null) return null;
 
         //Check owner first
         if (lowHealthAndInWitness.test(owner)) {
-            this.healTargets.add(owner);
+            healTargets.add(owner);
         }
         
         //Get Dogs of the same owner
@@ -199,7 +195,7 @@ public class RescueDogTalent extends TalentInstance {
                 )
             );
         if (!dogs.isEmpty()) {
-            this.healTargets.addAll(dogs);
+            healTargets.addAll(dogs);
         }
 
         //Get Wolves of the same owner
@@ -212,7 +208,7 @@ public class RescueDogTalent extends TalentInstance {
                 )
             );
         if (!wolves.isEmpty()) {
-            this.healTargets.addAll(wolves);
+            healTargets.addAll(wolves);
         }
 
         if (dog instanceof Dog ddog && ddog.regardTeamPlayers()) {
@@ -225,21 +221,21 @@ public class RescueDogTalent extends TalentInstance {
                     )
                 );
             if (!teamPlayers.isEmpty()) {
-                this.healTargets.addAll(teamPlayers);
+                healTargets.addAll(teamPlayers);
             }
         }
-
+        return selectHealTarget(dog, healTargets);
     }
 
-    private LivingEntity selectHealTarget(AbstractDog dog) {
-        if (this.healTargets.isEmpty()) return null;
+    private LivingEntity selectHealTarget(AbstractDog dog, ArrayList<LivingEntity> healTargets) {
+        if (healTargets.isEmpty()) return null;
 
-        var target = this.healTargets.get(0); 
+        var target = healTargets.get(0); 
         double mindistanceSqr = target.distanceToSqr(dog);
 
         var owner = dog.getOwner();
         
-        for (var i : this.healTargets) {
+        for (var i : healTargets) {
             if (owner == i) return i;
             else {
                 var d = i.distanceToSqr(dog);
