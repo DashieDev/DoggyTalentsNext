@@ -360,6 +360,8 @@ public class DogUtil {
                 break;
             }
         }
+        if (dog.canDogFly() && pathnodetype == BlockPathTypes.OPEN)
+            alterationWalkable = true;
         if (pathnodetype != BlockPathTypes.WALKABLE && !alterationWalkable) {
             return false;
         } else {
