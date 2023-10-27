@@ -7,6 +7,7 @@ import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.pathfinder.Path;
 
 /**
  * @author DashieDev
@@ -20,6 +21,7 @@ public class DogFindWaterGoal extends Goal {
     private int tickUntilPathRecalc;
 
     private BlockPos waterPos;
+    private Path tempPath;
 
     public DogFindWaterGoal(Dog dog) {
         this.dog = dog;
@@ -41,6 +43,14 @@ public class DogFindWaterGoal extends Goal {
         }
         if (this.waterPos == null) return false;
 
+        var path = dog.getNavigation().createPath(this.waterPos, 1);
+        if (path == null || 
+            !DogUtil.canPathReachTargetBlock(dog, path, waterPos, 1, 1)) {
+            this.tickUntilSearch += 10;
+            return false;
+        }
+        this.tempPath = path;
+
         return true;
     }
 
@@ -55,7 +65,14 @@ public class DogFindWaterGoal extends Goal {
 
     @Override
     public void start() {
-        this.tickUntilPathRecalc = 0;
+        this.dog.getNavigation().moveTo(tempPath, dog.getUrgentSpeedModifier());
+        this.tickUntilPathRecalc = 10;
+        this.tempPath = null;
+    }
+
+    @Override
+    public void stop() {
+        this.tempPath = null;
     }
 
     @Override
