@@ -1,5 +1,6 @@
 package doggytalents;
 
+import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.lib.Constants;
@@ -27,7 +28,12 @@ public class DoggyTalents {
     public static final RegistryObject<Talent> HUNTER_DOG = registerInst("hunter_dog", null);
     public static final RegistryObject<Talent> PACK_PUPPY = registerInst("pack_puppy", PackPuppyTalent::new);
     public static final RegistryObject<Talent> PEST_FIGHTER = registerInst("pest_fighter", PestFighterTalent::new);
-    public static final RegistryObject<Talent> PILLOW_PAW = registerInst("pillow_paw", PillowPawTalent::new);
+    public static final RegistryObject<Talent> PILLOW_PAW = register("pillow_paw", () -> new Talent(PillowPawTalent::new) {
+        @Override
+        public boolean isDogEligible(AbstractDog dog) {
+            return PillowPawTalent.isDogEligible(dog);
+        }
+    });
     public static final RegistryObject<Talent> POISON_FANG = registerInst("poison_fang", PoisonFangTalent::new);
     public static final RegistryObject<Talent> PUPPY_EYES = registerInst("puppy_eyes", PuppyEyesTalent::new);
     public static final RegistryObject<Talent> QUICK_HEALER = registerInst("quick_healer", QuickHealerTalent::new);
@@ -57,6 +63,11 @@ public class DoggyTalents {
                 if (level <= 0)
                     return 0;
                 return level * (level + 1) / 2 + 4;
+            }
+
+            @Override
+            public boolean isDogEligible(AbstractDog dog) {
+                return dog.getDogLevel(DoggyTalents.PILLOW_PAW) <= 0;
             }
         });
     public static final RegistryObject<Talent> CHEMI_CANINE = register("chemi_canine", () -> 

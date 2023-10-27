@@ -397,6 +397,7 @@
    "doggui.talents.max_level" : "Max Level!",
    "doggui.talents.train" : "Train",
    "doggui.talents.invalid.disabled": "This talents is disabled.",
+   "doggui.talents.invalid.not_eligible": "This talent is not eligible.",
 
    "doggui.style.accessories" : "Accessories",
    "doggui.style.accessories.your_accessories" : "Your Accessories",
