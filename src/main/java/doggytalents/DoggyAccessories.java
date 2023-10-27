@@ -68,6 +68,7 @@ public class DoggyAccessories {
 
     public static final RegistryObject<BirthdayHatAccessory> BIRTHDAY_HAT_RED_WHITE = register("birthday_hat_red_white", () -> new BirthdayHatAccessory(DoggyItems.BIRTHDAY_HAT_RED_WHITE).setModelTexture(Resources.BIRTHDAY_HAT_RED_WHITE).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<BirthdayHatAccessory> BIRTHDAY_HAT_YELLOW_BLUE = register("birthday_hat_yellow_blue", () -> new BirthdayHatAccessory(DoggyItems.BIRTHDAY_HAT_YELLOW_BLUE).setModelTexture(Resources.BIRTHDAY_HAT_YELLOW_BLUE).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<BirthdayHatAccessory> BIRTHDAY_HAT = register("birthday_hat", () -> new BirthdayHatAccessory(DoggyItems.BIRTHDAY_HAT).setModelTexture(Resources.BIRTHDAY_HAT_BG).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
     private static <T extends Accessory> RegistryObject<T> register(final String name, final Supplier<T> sup) {
         return ACCESSORIES.register(name, sup);
