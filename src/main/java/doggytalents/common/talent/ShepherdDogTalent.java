@@ -89,7 +89,7 @@ public class ShepherdDogTalent extends TalentInstance {
             ) {
                 this.triggerShepherdAction(dog, owner);
             } else {
-                this.targets.clear();
+                this.targets = List.of();
             }
         }
     }
@@ -271,7 +271,7 @@ public class ShepherdDogTalent extends TalentInstance {
 
         @Override
         public void onStop() {
-            
+            talentInst.targets = List.of();
         }
 
         @Override
