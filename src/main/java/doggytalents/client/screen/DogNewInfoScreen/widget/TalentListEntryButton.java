@@ -69,7 +69,7 @@ public class TalentListEntryButton extends AbstractButton {
         //Ex : disable talent (or mutual talent)
         int talentMaxLvl = 0;
         float talentLvlPercent = 0;
-        if (!ConfigHandler.TALENT.getFlag(talent)) {
+        if (!ConfigHandler.TALENT.getFlag(talent) || !talent.isDogEligible(dog)) {
             lvlcl = 0;
             cl = this.isHovered ? DEFAULT_INVALID_HLCOLOR : DEFAULT_INVALID_COLOR;
         } else {

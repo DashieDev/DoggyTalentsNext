@@ -62,7 +62,7 @@ public class TalentInfoViewElement extends AbstractElement {
             return this;
         }
 
-        if (!ConfigHandler.TALENT.getFlag(talent)) {
+        if (!ConfigHandler.TALENT.getFlag(talent) || !talent.isDogEligible(dog)) {
             return this;
         }
 
@@ -189,6 +189,19 @@ public class TalentInfoViewElement extends AbstractElement {
             int tX = this.getRealX() + mX - this.font.width(txt)/2;
             int tY = this.getRealY() + mY - this.font.lineHeight/2;
             this.font.draw(stack, txt, tX, tY, 0xffffffff);
+            return;
+        } else if (!talent.isDogEligible(dog)) {
+            int mX = this.getSizeX()/2;
+            int mY = this.getSizeY()/2;
+            var txt = Component.translatable("doggui.talents.invalid.not_eligible");
+            txt.setStyle(
+                Style.EMPTY
+                .withColor(0xffB20000)
+                .withBold(true)
+            );
+            int tX = this.getRealX() + mX - this.font.width(txt)/2;
+            int tY = this.getRealY() + mY - this.font.lineHeight/2;
+            graphics.drawString(font, txt, tX, tY, 0xffffffff);
             return;
         }
 

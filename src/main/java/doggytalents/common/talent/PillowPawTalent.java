@@ -1,5 +1,6 @@
 package doggytalents.common.talent;
 
+import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -36,4 +37,8 @@ public class PillowPawTalent extends TalentInstance {
 
         return InteractionResultHolder.pass(0F);
     }
+
+    public static boolean isDogEligible(AbstractDog dog) {
+        return dog.getDogLevel(DoggyTalents.FLYING_FURBALL) <= 0;
+    } 
 }
