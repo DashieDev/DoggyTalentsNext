@@ -118,9 +118,6 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> DEMON_HORNS = register("demon_horns", () -> new DemonHornsItem(DoggyAccessories.DEMON_HORNS, createInitialProp()));
     public static final RegistryObject<AccessoryItem> WITCH_HAT = register("witch_hat", () -> new WitchHatItem(DoggyAccessories.WITCH_HAT, createInitialProp()));
     public static final RegistryObject<AccessoryItem> PLAGUE_DOC_MASK = register("plague_doctor_mask", () -> new PlagueDoctorMaskItem(DoggyAccessories.PLAGUE_DOC_MASK, createInitialProp()));
-
-    public static final RegistryObject<AccessoryItem> BIRTHDAY_HAT_RED_WHITE = register("birthday_hat_red_white", () -> new BirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT_RED_WHITE, createInitialProp()));
-    public static final RegistryObject<AccessoryItem> BIRTHDAY_HAT_YELLOW_BLUE = register("birthday_hat_yellow_blue", () -> new BirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT_YELLOW_BLUE, createInitialProp()));
     public static final RegistryObject<AccessoryItem> BIRTHDAY_HAT = register("birthday_hat", () -> new DyableBirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT, createInitialProp()));
 
     public static final RegistryObject<AccessoryItem> KITSUNE_MASK = registerAccessory("kitsune_mask", DoggyAccessories.KITSUNE_MASK);
