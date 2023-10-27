@@ -84,8 +84,6 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.SNORKEL);
         generated(DoggyItems.TENGU_MASK);
         generated(DoggyItems.KITSUNE_MASK);
-        generated(DoggyItems.BIRTHDAY_HAT_YELLOW_BLUE);
-        generated(DoggyItems.BIRTHDAY_HAT_RED_WHITE);
         generated(DoggyItems.DEMON_HORNS);
         generated(DoggyItems.WITCH_HAT);
         generated(DoggyItems.PLAGUE_DOC_MASK);
