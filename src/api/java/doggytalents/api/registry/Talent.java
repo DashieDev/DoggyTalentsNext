@@ -5,6 +5,7 @@ import java.util.function.BiFunction;
 import javax.annotation.Nullable;
 
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.inferface.AbstractDog;
 import net.minecraft.Util;
 
 /**
@@ -66,6 +67,9 @@ public class Talent {
         return this.getDefault(1);
     }
 
+    public boolean isDogEligible(AbstractDog dog) {
+        return true;
+    }
 
     public boolean hasRenderer() {
         return false;

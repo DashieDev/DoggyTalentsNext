@@ -39,6 +39,9 @@ public class DogTalentPacket extends DogPacket<DogTalentData> {
             return;
         }
 
+        if (!data.talent.isDogEligible(dogIn))
+            return;
+
         int level = dogIn.getDogLevel(data.talent);
 
         if (level < data.talent.getMaxLevel() && dogIn.canSpendPoints(data.talent.getLevelCost(level + 1))) {
