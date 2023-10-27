@@ -91,41 +91,14 @@ public class DogMeleeAttackGoal extends Goal {
       }
 
       if (--this.detectReachPenalty > 0) return false;
-      
-      this.detectReachPenalty = 5;
-      
-      /*
-       * Only begin attacking if the dog can ACTUALLY reach the entity
-       * 
-       * Although in vanilla TargetGoal there is already an option to require that
-       * the entity must be in reach, which COINCIDENTALLY determined using 
-       * the exact same procedure. But in order to enable that, the 
-       * Goal (ex. OwnerAttack or OwnerBeingAttack) may have to be REIMPLEMENTED, DECOUPLED,
-       * and any parent class code (still the child of TargetGoal)
-       * must be physically copied over cause almost every of them have the super 
-       * constructor to TargetGoal mustSee parameter fixed to false, or 
-       * to a parent class which the preceding condition applies. That produce a bunch of
-       * BOILERPLATES which we don't want. And also the vanilla code also for some reason, 
-       * cache the result of the entity after the code executed so every other entities
-       * checked before the tickUntilCodeReExecution runs out would also give the same result.
-       * Which means that the dog may consider a non-reachable nearest target to be reached
-       * right after he check the other actually reachable target.
-       * 
-       * The code below, which is the procedure to determine if the dog can reach 
-       * (which is relatively expensive)
-       * is only executed when the dog actually have a target to attack, instead of all the time
-       * when finding targets, hence its potiental efficency gain. Also the dog should only 
-       * attack entities that is in reach regardless of any conditions. Otherwise, the result is kinda
-       * stoopid. Also when target is not qualified, it will set it to null so that the target goal can 
-       * refind targets.
-       *  
-       */
-      var p = dog.getNavigation().createPath(target, 1);
+
       double d0 = dog.distanceToSqr(target);
       
-      if (p == null) return false;
-
+      this.detectReachPenalty = 5;
       this.detectReachPenalty += (d0 > 256 ? 10 : 5);
+      
+      var p = dog.getNavigation().createPath(target, 1);
+      if (p == null) return false;
 
       if (!DogUtil.canPathReachTargetBlock(dog, p, target.blockPosition(), 1, dog.getMaxFallDistance())) { 
          this.dog.setTarget(null);
