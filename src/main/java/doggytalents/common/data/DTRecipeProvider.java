@@ -669,6 +669,23 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Items.BLAZE_POWDER)
             .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
             .save(consumer);
+        
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.LAB_COAT.get(), 1)
+            .pattern(" C ")
+            .pattern(" W ")
+            .pattern("WWW")
+            .define('C', DoggyItems.CAPE_COLOURED.get())
+            .define('W', ItemTags.WOOL)
+            .unlockedBy("has_wool", has(ItemTags.WOOL))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BIRTHDAY_HAT.get(), 1)
+            .pattern(" P ")
+            .pattern("PTP")
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .define('P', Items.PAPER)
+            .unlockedBy("has_paper", has(Items.PAPER))
+            .save(consumer, Util.getResource("birthday_hat_alt"));
     }
     
     // @Override
