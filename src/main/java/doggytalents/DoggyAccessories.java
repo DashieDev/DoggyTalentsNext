@@ -53,6 +53,7 @@ public class DoggyAccessories {
     public static final RegistryObject<HeadBandAccessory> HEAD_BAND_HIGHHH = register("head_band_highhh", () -> new HeadBandAccessory(DoggyItems.HEAD_BAND_HIGHHH).setModelTexture(Resources.HEAD_BAND_HIGHHH).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<BakerHat> BAKER_HAT = register("baker_hat", () -> new BakerHat(DoggyItems.BAKER_HAT).setModelTexture(Resources.BAKER_HAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<ChefHat> CHEF_HAT = register("chef_hat", () -> new ChefHat(DoggyItems.CHEF_HAT).setModelTexture(Resources.CHEF_HAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<LabCoat> LAB_COAT = register("lab_coat", () -> new LabCoat(DoggyItems.LAB_COAT).setModelTexture(Resources.LAB_COAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
     public static final RegistryObject<Clothing> SUPERDOG_SUIT = register("superdog_suit", () -> new Clothing(DoggyItems.SUPERDOG_SUIT).setModelTexture(Resources.SUPERDOG_SUIT).setHasHindLegDiffTex(true).setAccessoryRenderType(AccessoryRenderType.OVERLAY).setRenderTranslucent(true));
     public static final RegistryObject<DyeableAccessory> FLYING_CAPE = register("flying_cape", () -> new FlyingCape(DoggyItems.FLYING_CAPE).setModelTexture(Resources.FLYING_CAPE).setRenderTranslucent(true));

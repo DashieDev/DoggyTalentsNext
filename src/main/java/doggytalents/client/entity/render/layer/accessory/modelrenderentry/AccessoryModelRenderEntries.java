@@ -29,6 +29,7 @@ public class AccessoryModelRenderEntries {
     public static Entry BAT_WINGS = new BatWingsRenderEntry();
     public static Entry CROW_WINGS = new CrowWingsRenderEntry();
     public static Entry DIVINE_RETRIB = new DivineRetributionRenderEntry();
+    public static Entry LAB_COAT = new LabCoatRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -55,6 +56,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(BAT_WINGS);
         AccessoryModelManager.register(CROW_WINGS);
         AccessoryModelManager.register(DIVINE_RETRIB);
+        AccessoryModelManager.register(LAB_COAT);
     }
 
 }
