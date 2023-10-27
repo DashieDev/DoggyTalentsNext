@@ -8,6 +8,7 @@ import doggytalents.common.entity.accessory.ChefHat;
 import doggytalents.common.entity.accessory.DyeableAccessory;
 import doggytalents.common.entity.accessory.GiantStick;
 import doggytalents.common.entity.accessory.HeadBandAccessory;
+import doggytalents.common.entity.accessory.LabCoat;
 import doggytalents.common.entity.accessory.LocatorOrbAccessory;
 import doggytalents.common.entity.accessory.Wig;
 import doggytalents.common.item.*;
@@ -105,6 +106,7 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> HEAD_BAND_HIGHHH = registerHeadBand("head_band_highhh", DoggyAccessories.HEAD_BAND_HIGHHH);
     public static final RegistryObject<DyeableAccessoryItem> BAKER_HAT = register("baker_hat", () -> new BakerHat.BakerHatItem(DoggyAccessories.BAKER_HAT, createInitialProp()));
     public static final RegistryObject<DyeableAccessoryItem> CHEF_HAT = register("chef_hat", () -> new ChefHat.ChefHatItem(DoggyAccessories.CHEF_HAT, createInitialProp()));
+    public static final RegistryObject<DyeableAccessoryItem> LAB_COAT = register("lab_coat", () -> new LabCoat.LabCoatItem(DoggyAccessories.LAB_COAT, createInitialProp()));
 
     public static final RegistryObject<AccessoryItem> SUPERDOG_SUIT = registerAccessory("superdog_suit", DoggyAccessories.SUPERDOG_SUIT);
     public static final RegistryObject<DyeableAccessoryItem> FLYING_CAPE = registerAccessoryDyed("flying_cape", DoggyAccessories.FLYING_CAPE);
@@ -273,6 +275,12 @@ public class DoggyItems {
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.CHEF_HAT, (item) -> {
+            event.register((stack, tintIndex) -> {
+                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
+             }, item);
+        }, DoggyBlocks::logError);
+
+        Util.acceptOrElse(DoggyItems.LAB_COAT, (item) -> {
             event.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
