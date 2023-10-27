@@ -60,10 +60,6 @@
    "item.doggytalents.bowtie": "Bowtie",
    "item.doggytalents.smarty_glasses": "Smarty Glasses",
    "item.doggytalents.tengu_mask": "Tengu Mask",
-   "item.doggytalents.birthday_hat_red_white": "Birthday Hat",
-   "item.doggytalents.birthday_hat_red_white.description": "Red - White",
-   "item.doggytalents.birthday_hat_yellow_blue": "Birthday Hat",
-   "item.doggytalents.birthday_hat_yellow_blue.description": "Yellow - Blue",
    "item.doggytalents.birthday_hat": "Birthday Hat",
    "item.doggytalents.witch_hat": "Witch Hat",
    "item.doggytalents.witch_hat.description": "It smells funky...",
@@ -106,6 +102,7 @@
    "item.doggytalents.baker_hat.description": "Hot Dachshbuns comin' up!.",
    "item.doggytalents.chef_hat": "Chef's Hat",
    "item.doggytalents.chef_hat.description": "Finally, some good sushi...",
+   "item.doggytalents.lab_coat": "Lab Coat",
 
    "item.doggytalents.locator_orb_chi": "Chi Orb",
    "item.doggytalents.locator_orb_chi.description": "The Orb of Wisdom and Knowledge.",

@@ -53,8 +53,6 @@ public class Resources {
     
     public static final ResourceLocation TENGU_MASK = getEntity("dog", "tengu_mask");
     public static final ResourceLocation KITSUNE_MASK = getEntity("dog", "kitsune_mask");
-    public static final ResourceLocation BIRTHDAY_HAT_RED_WHITE = getEntity("dog", "birthday_hat_red_white");
-    public static final ResourceLocation BIRTHDAY_HAT_YELLOW_BLUE = getEntity("dog", "birthday_hat_yellow_blue");
     public static final ResourceLocation BIRTHDAY_HAT_BG = getEntity("dog", "birthday_hat_bg");
     public static final ResourceLocation BIRTHDAY_HAT_FG = getEntity("dog", "birthday_hat_fg");
 
@@ -63,6 +61,7 @@ public class Resources {
     public static final ResourceLocation PLAGUE_DOC_MASK = getEntity("dog", "plague_doctor_mask");
     public static final ResourceLocation BAKER_HAT = getEntity("dog", "baker_hat");
     public static final ResourceLocation CHEF_HAT = getEntity("dog", "chef_hat");
+    public static final ResourceLocation LAB_COAT = getEntity("dog", "lab_coat");
 
     public static final ResourceLocation SUPERDOG_SUIT = getEntity("dog", "superdog_suit");
     public static final ResourceLocation FLYING_CAPE = getEntity("dog", "flying_cape");

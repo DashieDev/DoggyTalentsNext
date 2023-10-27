@@ -53,6 +53,7 @@ public class DoggyAccessories {
     public static final RegistryObject<HeadBandAccessory> HEAD_BAND_HIGHHH = register("head_band_highhh", () -> new HeadBandAccessory(DoggyItems.HEAD_BAND_HIGHHH).setModelTexture(Resources.HEAD_BAND_HIGHHH).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<BakerHat> BAKER_HAT = register("baker_hat", () -> new BakerHat(DoggyItems.BAKER_HAT).setModelTexture(Resources.BAKER_HAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<ChefHat> CHEF_HAT = register("chef_hat", () -> new ChefHat(DoggyItems.CHEF_HAT).setModelTexture(Resources.CHEF_HAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<LabCoat> LAB_COAT = register("lab_coat", () -> new LabCoat(DoggyItems.LAB_COAT).setModelTexture(Resources.LAB_COAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
     public static final RegistryObject<Clothing> SUPERDOG_SUIT = register("superdog_suit", () -> new Clothing(DoggyItems.SUPERDOG_SUIT).setModelTexture(Resources.SUPERDOG_SUIT).setHasHindLegDiffTex(true).setAccessoryRenderType(AccessoryRenderType.OVERLAY).setRenderTranslucent(true));
     public static final RegistryObject<DyeableAccessory> FLYING_CAPE = register("flying_cape", () -> new FlyingCape(DoggyItems.FLYING_CAPE).setModelTexture(Resources.FLYING_CAPE).setRenderTranslucent(true));
@@ -65,9 +66,6 @@ public class DoggyAccessories {
     public static final RegistryObject<KitsuneMask> KITSUNE_MASK = register("kitsune_mask", () -> new KitsuneMask(DoggyItems.KITSUNE_MASK).setModelTexture(Resources.KITSUNE_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<WitchHatAccessory> WITCH_HAT = register("witch_hat", () -> new WitchHatAccessory(DoggyItems.WITCH_HAT).setModelTexture(Resources.WITCH_HAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<PlagueDoctorMaskAccessory> PLAGUE_DOC_MASK = register("plague_doctor_mask", () -> new PlagueDoctorMaskAccessory(DoggyItems.PLAGUE_DOC_MASK).setModelTexture(Resources.PLAGUE_DOC_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
-
-    public static final RegistryObject<BirthdayHatAccessory> BIRTHDAY_HAT_RED_WHITE = register("birthday_hat_red_white", () -> new BirthdayHatAccessory(DoggyItems.BIRTHDAY_HAT_RED_WHITE).setModelTexture(Resources.BIRTHDAY_HAT_RED_WHITE).setAccessoryRenderType(AccessoryRenderType.MODEL));
-    public static final RegistryObject<BirthdayHatAccessory> BIRTHDAY_HAT_YELLOW_BLUE = register("birthday_hat_yellow_blue", () -> new BirthdayHatAccessory(DoggyItems.BIRTHDAY_HAT_YELLOW_BLUE).setModelTexture(Resources.BIRTHDAY_HAT_YELLOW_BLUE).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<BirthdayHatAccessory> BIRTHDAY_HAT = register("birthday_hat", () -> new BirthdayHatAccessory(DoggyItems.BIRTHDAY_HAT).setModelTexture(Resources.BIRTHDAY_HAT_BG).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
     private static <T extends Accessory> RegistryObject<T> register(final String name, final Supplier<T> sup) {
