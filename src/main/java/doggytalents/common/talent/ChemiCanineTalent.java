@@ -27,7 +27,6 @@ import net.minecraft.world.entity.player.Player;
 public class ChemiCanineTalent extends TalentInstance {
 
     private final ArrayList<MobEffectInstance> storedEffects = new ArrayList<>();
-    private final ArrayList<LivingEntity> absorbTargets = new ArrayList<>();
     private final int SEARCH_RADIUS = 12; //const ?? maybe can improve thru talents
     private int absorbEffectCooldown;
     private int tickTillSearch;
@@ -114,19 +113,19 @@ public class ChemiCanineTalent extends TalentInstance {
         dog.triggerAction(new AbsorbAction(dog, this, target));
     }
 
-    private void refreshTargetsToAbsorb(AbstractDog dog) {
-        this.absorbTargets.clear();
+    private LivingEntity findTargetToAbsorb(AbstractDog dog) {
+        var absorbTargets = new ArrayList<LivingEntity>();
         Predicate<LivingEntity> harmfulEffectAndWitness =
             e -> this.isTargetHaveNegativeEffect(dog, e) 
                 && (dog.hasLineOfSight(e));
         
         //Get owner 
         var owner = dog.getOwner();
-        if (owner == null) return;
+        if (owner == null) return null;
 
         //Check owner first
         if (harmfulEffectAndWitness.test(owner)) {
-            this.absorbTargets.add(owner);
+            absorbTargets.add(owner);
         }
         
         //Get Dogs of the same owner
@@ -139,7 +138,7 @@ public class ChemiCanineTalent extends TalentInstance {
                 )
             );
         if (!dogs.isEmpty()) {
-            this.absorbTargets.addAll(dogs);
+            absorbTargets.addAll(dogs);
         }
 
         //Get Wolves of the same owner
@@ -152,7 +151,7 @@ public class ChemiCanineTalent extends TalentInstance {
                 )
             );
         if (!wolves.isEmpty()) {
-            this.absorbTargets.addAll(wolves);
+            absorbTargets.addAll(wolves);
         }
 
         if (dog instanceof Dog ddog && ddog.regardTeamPlayers()) {
@@ -165,10 +164,10 @@ public class ChemiCanineTalent extends TalentInstance {
                     )
                 );
             if (!teamPlayers.isEmpty()) {
-                this.absorbTargets.addAll(teamPlayers);
+                absorbTargets.addAll(teamPlayers);
             }
         }
-
+        return selectAbsorbTarget(dog, absorbTargets);
     }
 
     private boolean isTargetHaveNegativeEffect(AbstractDog dog, LivingEntity e) {
@@ -184,15 +183,15 @@ public class ChemiCanineTalent extends TalentInstance {
         return effectInst.getEffect().getCategory() == MobEffectCategory.HARMFUL;
     }
 
-    private LivingEntity selectAbsorbTarget(AbstractDog dog) {
-        if (this.absorbTargets.isEmpty()) return null;
+    private LivingEntity selectAbsorbTarget(AbstractDog dog, ArrayList<LivingEntity> absorbTargets) {
+        if (absorbTargets.isEmpty()) return null;
 
-        var target = this.absorbTargets.get(0); 
+        var target = absorbTargets.get(0); 
         double mindistanceSqr = target.distanceToSqr(dog);
 
         var owner = dog.getOwner();
         
-        for (var i : this.absorbTargets) {
+        for (var i : absorbTargets) {
             if (owner == i) return i;
             else {
                 var d = i.distanceToSqr(dog);

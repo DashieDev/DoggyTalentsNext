@@ -50,8 +50,6 @@ public class WaterHolderTalent extends TalentInstance {
     private int tickScheduledForExtinguish = 0;
     private boolean scheduledExtinguish = false;
 
-    private final ArrayList<LivingEntity> targets = new ArrayList<LivingEntity>();
-
     public WaterHolderTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
     }
@@ -113,9 +111,7 @@ public class WaterHolderTalent extends TalentInstance {
             && --this.ticktillSearch <= 0
         ) {
             this.ticktillSearch = 10;
-            this.refreshOnFireTargets(abstractDog);
-            var target = this.selectOnFireTarget(abstractDog);
-            targets.clear();
+            var target = this.findOnFireTarget(abstractDog);
             if (target != null && this.stillValidTarget(dog, target)) {
                 this.triggerExtinguishAction(dog, target);
             }
@@ -284,19 +280,19 @@ public class WaterHolderTalent extends TalentInstance {
         );
     } 
 
-    private void refreshOnFireTargets(AbstractDog dog) {
-        this.targets.clear();
+    private LivingEntity findOnFireTarget(AbstractDog dog) {
+        var targets = new ArrayList<LivingEntity>();
         Predicate<LivingEntity> onFireAndWitness =
             e -> e.isOnFire()
                 && (dog.hasLineOfSight(e));
         
         //Get owner 
         var owner = dog.getOwner();
-        if (owner == null) return;
+        if (owner == null) return null;
 
         //Check owner first
         if (onFireAndWitness.test(owner)) {
-            this.targets.add(owner);
+            targets.add(owner);
         }
         
         //Get Dogs of the same owner
@@ -309,7 +305,7 @@ public class WaterHolderTalent extends TalentInstance {
                 )
             );
         if (!dogs.isEmpty()) {
-            this.targets.addAll(dogs);
+            targets.addAll(dogs);
         }
 
         //Get Wolves of the same owner
@@ -322,7 +318,7 @@ public class WaterHolderTalent extends TalentInstance {
                 )
             );
         if (!wolves.isEmpty()) {
-            this.targets.addAll(wolves);
+            targets.addAll(wolves);
         }
 
         if (dog instanceof Dog ddog && ddog.regardTeamPlayers()) {
@@ -335,21 +331,22 @@ public class WaterHolderTalent extends TalentInstance {
                     )
                 );
             if (!teamPlayers.isEmpty()) {
-                this.targets.addAll(teamPlayers);
+                targets.addAll(teamPlayers);
             }
         }
+        return selectOnFireTarget(dog, targets);
 
     }
 
-    private LivingEntity selectOnFireTarget(AbstractDog dog) {
-        if (this.targets.isEmpty()) return null;
+    private LivingEntity selectOnFireTarget(AbstractDog dog, List<LivingEntity> targets) {
+        if (targets.isEmpty()) return null;
 
-        var target = this.targets.get(0); 
+        var target = targets.get(0); 
         double mindistanceSqr = target.distanceToSqr(dog);
         
         var owner = dog.getOwner();
 
-        for (var i : this.targets) {
+        for (var i : targets) {
             if (owner == i) return i;
             else {
                 var d = i.distanceToSqr(dog);
