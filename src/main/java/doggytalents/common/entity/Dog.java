@@ -979,10 +979,6 @@ public class Dog extends AbstractDog {
         //     ChopinLogger.l("get random pos " + (stopTime-startTime) + " nanoseconds." );
         // })
 
-        if (stack.getItem() == Items.STONE_AXE && !this.level().isClientSide) {
-            ObjectSiz
-        } 
-
         if (this.isDefeated()) 
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
