@@ -1,4 +1,4 @@
-// 1.20.1	2023-10-26T09:24:19.1070521	DoggyTalents Item Models
+// 1.20.1	2023-10-27T09:44:09.5477004	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
 b5e90b9e4c73e4e830dfa769f25fa806aa5dab8c assets/doggytalents/models/item/baker_hat.json
@@ -6,6 +6,7 @@ b5e90b9e4c73e4e830dfa769f25fa806aa5dab8c assets/doggytalents/models/item/baker_h
 44aeaa5c10bf763221970c8ceaac61b2b7feb930 assets/doggytalents/models/item/bat_wings.json
 800b0dd973429034a05cbf92a314183d189700bb assets/doggytalents/models/item/beastars_uniform_female.json
 0b2cb480f564f26dea464bf88fa8dc72ef3976b4 assets/doggytalents/models/item/beastars_uniform_male.json
+b6860f6c2d9962310d27d5ba8f1de51d7f4673e6 assets/doggytalents/models/item/birthday_hat.json
 bae70a927faa7d6ccdfc26a148f8b2ae480ce34a assets/doggytalents/models/item/birthday_hat_red_white.json
 3da177045a594a74eee5b181157c424c18188618 assets/doggytalents/models/item/birthday_hat_yellow_blue.json
 3d9d5eecd0fd643f244fcbff0e632a1c69fe532f assets/doggytalents/models/item/bowtie.json
