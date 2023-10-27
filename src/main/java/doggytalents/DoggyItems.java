@@ -119,7 +119,7 @@ public class DoggyItems {
 
     public static final RegistryObject<AccessoryItem> BIRTHDAY_HAT_RED_WHITE = register("birthday_hat_red_white", () -> new BirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT_RED_WHITE, createInitialProp()));
     public static final RegistryObject<AccessoryItem> BIRTHDAY_HAT_YELLOW_BLUE = register("birthday_hat_yellow_blue", () -> new BirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT_YELLOW_BLUE, createInitialProp()));
-
+    public static final RegistryObject<AccessoryItem> BIRTHDAY_HAT = register("birthday_hat", () -> new DyableBirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT, createInitialProp()));
 
     public static final RegistryObject<AccessoryItem> KITSUNE_MASK = registerAccessory("kitsune_mask", DoggyAccessories.KITSUNE_MASK);
 
@@ -279,6 +279,15 @@ public class DoggyItems {
 
         Util.acceptOrElse(DoggyItems.FRISBEE_WET, (item) -> {
             event.register((stack, tintIndex) -> {
+                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
+             }, item);
+        }, DoggyBlocks::logError);
+
+        Util.acceptOrElse(DoggyItems.BIRTHDAY_HAT, (item) -> {
+            event.register((stack, tintIndex) -> {
+                if (tintIndex == 1) {
+                    return ((DyableBirthdayHatItem) stack.getItem()).getForegroundColor(stack);
+                }
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);
