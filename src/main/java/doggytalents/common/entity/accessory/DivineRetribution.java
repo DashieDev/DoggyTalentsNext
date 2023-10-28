@@ -69,7 +69,6 @@ public class DivineRetribution extends Accessory implements IAccessoryHasModel {
         }
 
         private void addFlameParticles(AbstractDog dog) {
-            if (dog.getRandom().nextInt(2) == 0) {
                 var a1 = dog.yBodyRot;
                 var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
                 var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
@@ -80,7 +79,6 @@ public class DivineRetribution extends Accessory implements IAccessoryHasModel {
                 dog.getY() + dog.getBbHeight() + 0.24,
                 dog.getZ() + f2 - dz1*(dog.getBbWidth() * 1.8),
                 -dx1*0.05, -0.01, -dz1*0.05);
-            }
         }
 
         private void populateCooking(AbstractDog dog) {
