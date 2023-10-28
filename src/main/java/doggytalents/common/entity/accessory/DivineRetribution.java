@@ -8,6 +8,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.AccessoryModelRenderEntries;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;
+import doggytalents.client.event.ClientEventHandler;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -69,9 +70,9 @@ public class DivineRetribution extends Accessory implements IAccessoryHasModel {
         }
 
         private void addFlameParticles(AbstractDog dog) {
-                var a1 = dog.yBodyRot;
-                var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
-                var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
+                var a1 = dog.getClientAnimatedYBodyRotInRadians();
+                var dx1 = -Mth.sin(a1);
+                var dz1 = Mth.cos(a1);
                 float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
                 float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
                 dog.level().addParticle(ParticleTypes.FLAME,

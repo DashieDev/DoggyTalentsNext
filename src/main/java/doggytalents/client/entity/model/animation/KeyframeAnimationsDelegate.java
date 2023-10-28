@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import com.mojang.math.Vector3f;
 
+import net.minecraft.client.animation.AnimationChannel.Targets;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
@@ -89,6 +90,40 @@ public class KeyframeAnimationsDelegate {
             }
         }
 
+   }
+
+   public static float getCurrentAnimatedYRot(Dog dog,
+        AnimationDefinition animation, long elapsed_in_millis, float interpolation_scale) {
+        float elapsed_in_seconds = getElapsedSeconds(animation, elapsed_in_millis);
+
+        var rootChannelList = animation.boneAnimations().get("root");
+        if (rootChannelList == null || rootChannelList.isEmpty())
+            return 0f;
+        
+        AnimationChannel rotationChannel = null;
+        for (var channel : rootChannelList) {
+            if (channel.target() == Targets.ROTATION)
+                rotationChannel = channel;
+        }
+        if (rotationChannel == null)
+            return 0f;
+
+        var keyframes = rotationChannel.keyframes();
+        int currentKeyframeIndx = Math.max(0, Mth.binarySearch(0, keyframes.length, (p_232315_) -> {
+            return elapsed_in_seconds <= keyframes[p_232315_].timestamp();
+        }) - 1);
+        int nextKeyframeIndx = Math.min(keyframes.length - 1, currentKeyframeIndx + 1);
+        Keyframe currentKeyframe = keyframes[currentKeyframeIndx];
+        Keyframe nextKeyframe = keyframes[nextKeyframeIndx];
+        float passed_time_since_current = elapsed_in_seconds - currentKeyframe.timestamp();
+        float duration_between = nextKeyframe.timestamp() - currentKeyframe.timestamp();
+        float passed_progress = Mth.clamp(
+            passed_time_since_current / duration_between, 
+        0.0F, 1.0F);
+        var result = new Vector3f(0, 0, 0);
+        nextKeyframe.interpolation()
+            .apply(result, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
+        return result.y;
    }
 
    private static float getElapsedSeconds(AnimationDefinition animation, long raw_seconds) {
