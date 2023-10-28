@@ -80,11 +80,10 @@ public class ParticlePackets {
                 if (ctx.get().getDirection().getReceptionSide().isClient()) { 
                     Minecraft mc = Minecraft.getInstance();
                     Entity e = mc.level.getEntity(data.dogId);
-                    if (e != null && data.food != null) {
-                        var dog = e;
-                        var a1 = dog.getYRot();
-                        var dx1 = -Mth.sin(a1*Mth.DEG_TO_RAD);
-                        var dz1 = Mth.cos(a1*Mth.DEG_TO_RAD);
+                    if (e instanceof Dog dog && data.food != null) {
+                        var a1 = dog.getClientAnimatedYBodyRotInRadians();
+                        var dx1 = -Mth.sin(a1) * (dog.getBbWidth() * 1.5);
+                        var dz1 = Mth.cos(a1) * (dog.getBbWidth() * 1.5);
 
                         for(int i = 0; i < 15; ++i) {
                             double d1 = mc.level.getRandom().nextGaussian() * (double)0.5;
