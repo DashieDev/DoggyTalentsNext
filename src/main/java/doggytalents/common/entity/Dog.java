@@ -233,7 +233,7 @@ public class Dog extends AbstractDog {
     protected int actionPendingTime = 0;
     protected List<WrappedGoal> trivialBlocking;
     protected List<WrappedGoal> nonTrivialBlocking;
-    
+    protected int switchNavCooldown = 0;
 
     private int hungerTick;
     private int prevHungerTick;  
@@ -834,6 +834,10 @@ public class Dog extends AbstractDog {
             --this.tickChopinTail;
         }
 
+        if (this.switchNavCooldown > 0) {
+            --this.switchNavCooldown;
+        }
+
         // if (!this.level().isClientSide && this.getMode().canWander()) {
         //     if (!this.getMode().shouldAttack()) {
         //         updateWanderRestState();
@@ -967,6 +971,10 @@ public class Dog extends AbstractDog {
             this.actionPendingTime = 0;
             this.clearTriggerableAction();
         }
+    }
+
+    public boolean isOnSwitchNavCooldown() {
+        return this.switchNavCooldown > 0;
     }
 
     @Override
@@ -3786,6 +3794,12 @@ public class Dog extends AbstractDog {
     public void resetMoveControl() {
         this.setMoveControl(this.defaultMoveControl);
         
+    }
+
+    @Override
+    public void setNavigation(PathNavigation p) {
+        super.setNavigation(p);
+        this.switchNavCooldown = 5;
     }
 
     @Override
