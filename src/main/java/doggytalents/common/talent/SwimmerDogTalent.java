@@ -9,6 +9,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -33,8 +34,8 @@ public class SwimmerDogTalent extends TalentInstance {
     
     //private SwimmerDogGoal goal;
 
-    private SmoothSwimmingMoveControl moveControl;
-    private WaterBoundPathNavigation navigator;
+    private DogSwimMoveControl moveControl;
+    private DogWaterBoundNavigation navigator;
 
     private static final UUID SWIM_BOOST_ID = UUID.fromString("50671e42-1ded-4f97-9e2b-78bbeb1e8772");
 
@@ -49,10 +50,10 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     @Override
-    public void init(AbstractDog dog) {
+    public void init(AbstractDog dogIn) {
+        if (!(dogIn instanceof Dog dog)) return;
         this.moveControl = 
-            new SmoothSwimmingMoveControl(dog, dog.getMaxHeadXRot(), 
-                dog.getMaxHeadYRot(), 1, 1, false);
+            new DogSwimMoveControl(dog);
         this.navigator = 
             new DogWaterBoundNavigation(dog, dog.level());
         swimming = false;
