@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.Dog.CombatReturnStrategy;
 import doggytalents.common.entity.Dog.LowHealthStrategy;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
@@ -72,7 +73,8 @@ public class DogMeleeAttackGoal extends Goal {
       if (this.dog.fallDistance > 7) return false;
       
       boolean restriction = false;
-      if (this.dog.getMode().shouldFollowOwner()) {
+      if (this.dog.getMode().shouldFollowOwner() 
+         && this.dog.getCombatReturnStrategy() != CombatReturnStrategy.NONE) {
          var owner = this.dog.getOwner();
 
          if (owner != null) {
@@ -118,7 +120,8 @@ public class DogMeleeAttackGoal extends Goal {
       if (this.dog.fallDistance > 7) return false;
 
       boolean restriction = false;
-      if (this.dog.getMode().shouldFollowOwner()) {
+      if (this.dog.getMode().shouldFollowOwner() 
+         && this.dog.getCombatReturnStrategy() != CombatReturnStrategy.NONE) {
          var owner = this.dog.getOwner();
 
          if (owner != null) {
@@ -319,6 +322,8 @@ public class DogMeleeAttackGoal extends Goal {
    }
 
    protected double getMaxDistanceAwayFromOwner() {
-      return this.awayFromOwnerDistance*this.awayFromOwnerDistance;
+      if (this.dog.getCombatReturnStrategy() == CombatReturnStrategy.FAR)
+         return 32*32;
+      return 20*20;
    }
 }
