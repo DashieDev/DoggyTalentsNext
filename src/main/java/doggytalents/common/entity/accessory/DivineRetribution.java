@@ -9,6 +9,8 @@ import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.AccessoryModelRenderEntries;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;
 import doggytalents.client.event.ClientEventHandler;
+import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -66,22 +68,27 @@ public class DivineRetribution extends Accessory implements IAccessoryHasModel {
             invalidateCooking(dogIn);
             cookAllCooking(dogIn);
             if (dogIn.level().isClientSide) {
-                addFlameParticles(dogIn);
+                if (dogIn instanceof Dog dog)
+                    addFlameParticles(dog);
                 playSizzleSound(dogIn);
             }
         }
 
-        private void addFlameParticles(AbstractDog dog) {
-                var a1 = dog.getClientAnimatedYBodyRotInRadians();
-                var dx1 = -Mth.sin(a1);
-                var dz1 = Mth.cos(a1);
-                float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
-                float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
-                dog.level().addParticle(ParticleTypes.FLAME,
-                dog.getX() + f1 - dx1*(dog.getBbWidth() * 1.8),
-                dog.getY() + dog.getBbHeight() + 0.24,
-                dog.getZ() + f2 - dz1*(dog.getBbWidth() * 1.8),
-                -dx1*0.05, -0.01, -dz1*0.05);
+        private void addFlameParticles(Dog dog) {
+            float offsetY = 0.24f;
+            var pose = dog.getDogPose();
+            if (pose == DogPose.STAND || pose == DogPose.FLYING)
+                offsetY += dog.getBbHeight();
+            var a1 = dog.getClientAnimatedYBodyRotInRadians();
+            var dx1 = -Mth.sin(a1);
+            var dz1 = Mth.cos(a1);
+            float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
+            float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
+            dog.level().addParticle(ParticleTypes.FLAME,
+            dog.getX() + f1 - dx1*(dog.getBbWidth() * 1.8),
+            dog.getY() + offsetY,
+            dog.getZ() + f2 - dz1*(dog.getBbWidth() * 1.8),
+            -dx1*0.05, -0.01, -dz1*0.05);
         }
 
         private void playSizzleSound(AbstractDog dog) {
