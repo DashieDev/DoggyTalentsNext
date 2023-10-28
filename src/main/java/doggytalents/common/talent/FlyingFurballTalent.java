@@ -5,11 +5,11 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogFlyingMoveControl;
+import doggytalents.common.entity.ai.nav.DogFlyingNavigation;
 import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraftforge.common.ForgeMod;
 
 import java.util.UUID;
@@ -20,7 +20,7 @@ public class FlyingFurballTalent extends TalentInstance {
     private static UUID FLYING_FURBALL_GRAVITY_UUID = UUID.fromString("76390e7e-e38d-4de5-8fce-83af09b03a3e");
 
     private DogFlyingMoveControl moveControl;
-    private FlyingPathNavigation navigation;
+    private DogFlyingNavigation navigation;
     
     private boolean isFlying = false;
     
@@ -38,7 +38,7 @@ public class FlyingFurballTalent extends TalentInstance {
         this.moveControl = 
             new DogFlyingMoveControl(d, this);
         this.navigation = 
-            new FlyingPathNavigation(dog, dog.level());
+            new DogFlyingNavigation(d, dog.level());
         startGliding(dog);
     }
 

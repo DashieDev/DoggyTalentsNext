@@ -44,7 +44,7 @@ public class HellHoundTalent extends TalentInstance {
     private int fireDamageAccumulate;
     private int lavaDamageAccumulate;
 
-    private HellHoundNavigation navigation;
+    private DogLavaNavigation navigation;
     private boolean swimming;
 
     public HellHoundTalent(Talent talentIn, int levelIn) {
@@ -64,7 +64,7 @@ public class HellHoundTalent extends TalentInstance {
         dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0f);
         dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0f);
         if (dog instanceof Dog) {
-            this.navigation = new HellHoundNavigation((Dog)dog, dog.level());
+            this.navigation = new DogLavaNavigation((Dog)dog, dog.level());
             swimming = false;
         }
     }
@@ -279,10 +279,13 @@ public class HellHoundTalent extends TalentInstance {
         swimming = false;
     }
 
-    public static class HellHoundNavigation extends DogPathNavigation {
+    public static class DogLavaNavigation extends DogPathNavigation {
 
-        public HellHoundNavigation(Dog dog, Level level) {
+        private Dog dog;
+
+        public DogLavaNavigation(Dog dog, Level level) {
             super(dog, level);
+            this.dog = dog;
         }
 
         @Override
@@ -315,6 +318,11 @@ public class HellHoundTalent extends TalentInstance {
             };
             this.nodeEvaluator.setCanPassDoors(true);
             return new PathFinder(this.nodeEvaluator, p_26453_);
+        }
+
+        @Override
+        protected boolean canUpdatePath() {
+            return super.canUpdatePath() && !dog.isOnSwitchNavCooldown();
         }
         
     }
