@@ -325,6 +325,15 @@
    "dog.low_health_strategy.1.help" : "Your Dog starts becoming alerted to any enemies targeting the Dog and try to avoid them.",
    "dog.low_health_strategy.2.help" : "Your Dog stays close to its owner while being low on health. It also whines to notify the owner.",
 
+   "dog.combat_return_strategy" : "Combat Return Strategy",
+   "dog.combat_return_strategy.0" : "Standard",
+   "dog.combat_return_strategy.1" : "Far",
+   "dog.combat_return_strategy.2" : "None",
+
+   "dog.combat_return_strategy.0.help" : "When fighting enemies, this dog will return to you if it is being too far away.",
+   "dog.combat_return_strategy.1.help" : "Same as Standard but the dog will keep fighting several blocks further.",
+   "dog.combat_return_strategy.2.help" : "Your dog will keep pursuing the target regardless of how far away it is from you.",
+
    "dog.msg.greet_owner.0": "%s: Where have you been?",
    "dog.msg.greet_owner.1": "%s: You don't know how long I have been waiting for you!",
    "dog.msg.greet_owner.2": "%s: I missed you!",
