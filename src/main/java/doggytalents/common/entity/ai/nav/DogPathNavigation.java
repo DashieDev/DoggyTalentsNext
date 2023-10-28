@@ -96,5 +96,10 @@ public class DogPathNavigation extends GroundPathNavigation {
             .getBlockPathTypeStatic(level, check_b0.mutable());
         return type == BlockPathTypes.WALKABLE;
     }
+
+    @Override
+    protected boolean canUpdatePath() {
+        return super.canUpdatePath() && !dog.isOnSwitchNavCooldown();
+    }
     
 }
