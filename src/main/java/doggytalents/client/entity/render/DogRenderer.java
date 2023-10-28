@@ -6,6 +6,7 @@ import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
@@ -413,6 +414,24 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             this.renderNameTag(p_115308_, p_115308_.getDisplayName(), p_115311_, p_115312_, p_115313_);
          }
         //net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Post<T, M>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_));
+    }
+
+    @Override
+    protected void setupRotations(Dog p_115317_, PoseStack p_115318_, float p_115319_, float p_115320_,
+            float p_115321_) {
+        if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
+            if (p_115317_.deathTime > 0) {
+                float f = ((float)p_115317_.deathTime + p_115321_ - 1.0F) / 20.0F * 1.6F;
+                f = Mth.sqrt(f);
+                if (f > 1.0F) {
+                   f = 1.0F;
+                }
+       
+                p_115318_.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees(p_115317_)));
+            }
+            return;
+        }
+        super.setupRotations(p_115317_, p_115318_, p_115319_, p_115320_, p_115321_);
     }
 
 
