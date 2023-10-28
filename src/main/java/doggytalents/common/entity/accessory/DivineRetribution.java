@@ -65,8 +65,10 @@ public class DivineRetribution extends Accessory implements IAccessoryHasModel {
             }
             invalidateCooking(dogIn);
             cookAllCooking(dogIn);
-            if (dogIn.level().isClientSide)
+            if (dogIn.level().isClientSide) {
                 addFlameParticles(dogIn);
+                playSizzleSound(dogIn);
+            }
         }
 
         private void addFlameParticles(AbstractDog dog) {
@@ -80,6 +82,21 @@ public class DivineRetribution extends Accessory implements IAccessoryHasModel {
                 dog.getY() + dog.getBbHeight() + 0.24,
                 dog.getZ() + f2 - dz1*(dog.getBbWidth() * 1.8),
                 -dx1*0.05, -0.01, -dz1*0.05);
+        }
+
+        private void playSizzleSound(AbstractDog dog) {
+            var r = dog.getRandom();
+            if (r.nextInt(24) == 0) {
+                dog.level().playLocalSound(
+                    dog.getX(), 
+                    dog.getY() + dog.getBbHeight() + 0.24, 
+                    dog.getZ(), 
+                    SoundEvents.FIRE_AMBIENT, SoundSource.AMBIENT, 
+                    0.6f * r.nextFloat(), 
+                    r.nextFloat() * 0.7F + 0.3F,
+                    false
+                );
+            }
         }
 
         private void populateCooking(AbstractDog dog) {
