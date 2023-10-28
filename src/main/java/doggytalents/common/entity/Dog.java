@@ -162,6 +162,8 @@ public class Dog extends AbstractDog {
      *     9               512                 PATROL_TARGET_LOCK
      *     10              1024                FLYING
      *     11              2048                SHOW_ARMOR
+     *     12              4096                COMBAT_RETURN_STRATEGY_LSB
+     *     13              8192                COMBAT_RETURN_STRATEGY_MSB
      *     .
      *     31              2^31                <Reserved>
      */
@@ -2190,6 +2192,7 @@ public class Dog extends AbstractDog {
         compound.putBoolean("regardTeamPlayers", this.regardTeamPlayers());
         compound.putBoolean("forceSit", this.forceSit());
         compound.putByte("lowHealthStrategy", this.getLowHealthStrategy().getId());
+        compound.putByte("combatReturnStrategy", this.getCombatReturnStrategy().getId());
         compound.putBoolean("crossOriginTp", this.crossOriginTp());
         compound.putBoolean("patrolTargetLock", this.patrolTargetLock());
         compound.putInt("dogSize", this.getDogSize().getId());
@@ -2436,6 +2439,8 @@ public class Dog extends AbstractDog {
             this.setPatrolTargetLock(compound.getBoolean("patrolTargetLock")); 
             var low_health_strategy_id = compound.getByte("lowHealthStrategy");
             this.setLowHealthStrategy(LowHealthStrategy.fromId(low_health_strategy_id));
+            var combat_return_strategy_id = compound.getByte("combatReturnStrategy");
+            this.setCombatReturnStrategy(CombatReturnStrategy.fromId(combat_return_strategy_id));
             if (compound.contains("dogSize", Tag.TAG_ANY_NUMERIC)) {
                 this.setDogSize(DogSize.fromId(compound.getInt("dogSize")));
             }
@@ -3112,6 +3117,20 @@ public class Dog extends AbstractDog {
         boolean msb = ((id >> 1) & 1) == 1;
         this.setDogFlag(32, msb);
         this.setDogFlag(16, lsb);
+    }
+
+    public CombatReturnStrategy getCombatReturnStrategy() {
+        int msb = this.getDogFlag(8192) ? 1 : 0;
+        int lsb = this.getDogFlag(4096) ? 1 : 0;
+        return CombatReturnStrategy.fromId(msb * 2 + lsb);
+    }
+
+    public void setCombatReturnStrategy(CombatReturnStrategy strategy) {
+        int id = strategy.getId();
+        boolean lsb = (id & 1) == 1;
+        boolean msb = ((id >> 1) & 1) == 1;
+        this.setDogFlag(8192, msb);
+        this.setDogFlag(4096, lsb);
     }
 
     public void setRegardTeamPlayers(boolean val) {
@@ -4179,6 +4198,62 @@ public class Dog extends AbstractDog {
             return VALUES[i];        }
     
         public LowHealthStrategy next() {
+            int i = this.getId() + 1;
+            if (i >= VALUES.length) {
+                i = 0;
+            }
+            return VALUES[i];
+        }
+    }
+
+    /**
+     * 2 bit for strategy
+     */
+    public static enum CombatReturnStrategy {
+        STANDARD(0),
+        FAR(1),
+        NONE(2);
+
+        public static final CombatReturnStrategy[] VALUES = 
+            Arrays.stream(CombatReturnStrategy.values())
+            .sorted(
+                Comparator.comparingInt(CombatReturnStrategy::getId)
+            ).toArray(size -> {
+                return new CombatReturnStrategy[size];
+            });
+
+        private final byte id;
+
+        private CombatReturnStrategy(int id) {
+            this.id = (byte) id;
+        }
+
+        public byte getId() {
+            return this.id;
+        }
+
+        public String getUnlocalisedTitle() {
+            return "dog.combat_return_strategy." + this.getId();
+        }
+
+        public String getUnlocalisedInfo() {
+            return "dog.combat_return_strategy." + this.getId() + ".help";
+        }
+
+        public static CombatReturnStrategy fromId(int id) {
+            if (!(0 <= id && id <= 2)) return NONE;
+            return VALUES[id];
+        }
+
+        public CombatReturnStrategy prev() {
+            int i = this.getId() - 1;
+            if (i < 0) {
+                i = VALUES.length - 1;
+            }
+            return VALUES[i];
+        }
+    
+        public CombatReturnStrategy next() {
             int i = this.getId() + 1;
             if (i >= VALUES.length) {
                 i = 0;

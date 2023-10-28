@@ -7,6 +7,7 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.DogRandomNameRegistry;
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.GroupsListElement;
+import doggytalents.client.screen.DogNewInfoScreen.widget.CombatReturnSwitch;
 import doggytalents.client.screen.DogNewInfoScreen.widget.LowHealthStrategySwitch;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.client.screen.framework.element.AbstractElement;
@@ -218,6 +219,17 @@ public class EditInfoView extends AbstractElement {
                     100, 20, dog, font, getScreen()
                 ),
                 I18n.get("dog.low_health_strategy")
+            )
+            .init()
+        );
+
+        scroll.addChildren(
+            new ButtonOptionEntry(scroll, getScreen(), 
+                new CombatReturnSwitch(
+                    0, 0, 
+                    100, 20, dog, font, getScreen()
+                ),
+                I18n.get("dog.combat_return_strategy")
             )
             .init()
         );
