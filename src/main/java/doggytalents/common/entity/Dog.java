@@ -4246,6 +4246,12 @@ public class Dog extends AbstractDog {
         this.setDogPose(DogPose.STAND);
     }
 
+    public float getClientAnimatedYBodyRotInRadians() {
+        if (!this.level().isClientSide)
+            return this.yBodyRot * Mth.DEG_TO_RAD;
+        return this.yBodyRot * Mth.DEG_TO_RAD + ClientEventHandler.getAnimatedYRot(this);
+    }
+
     //Client
     public DogSkin getClientSkin() {
         return this.clientSkin;

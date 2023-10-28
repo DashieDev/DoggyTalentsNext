@@ -10,10 +10,13 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.block.model.DogBedModel;
+import doggytalents.client.entity.model.animation.DogAnimationRegistry;
+import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
 import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.client.screen.widget.DoggySpin;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.item.WhistleItem.WhistleMode;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogMountData;
@@ -264,6 +267,15 @@ public class ClientEventHandler {
         if (player.getVehicle() != dog) 
             return false;
         return true;
+    }
+
+    public static float getAnimatedYRot(Dog dog) {
+        if (dog.getAnim() == DogAnimation.NONE)
+            return 0f;
+        var anim = dog.getAnim();
+        var animSeq = DogAnimationRegistry.getSequence(anim);
+        var animState = dog.animationManager.animationState;
+        return KeyframeAnimationsDelegate.getCurrentAnimatedYRot(dog, animSeq, animState.getAccumulatedTime(), 1);
     }
 
 }
