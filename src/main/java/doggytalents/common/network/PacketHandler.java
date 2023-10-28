@@ -58,6 +58,7 @@ public final class PacketHandler {
         registerPacket(new DogIncapMsgPackets.Response(), DogIncapMsgData.Response.class);
         registerPacket(new PatrolTargetLockPacket(), PatrolTargetLockData.class);
         registerPacket(new HideArmorPacket(), HideArmorData.class);
+        registerPacket(new CombatReturnStrategyPacket(), CombatReturnStrategyData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
