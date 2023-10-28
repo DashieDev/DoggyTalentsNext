@@ -35,6 +35,7 @@ public class DogFlyingMoveControl extends FlyingMoveControl {
                this.dog.setNoGravity(false);
                return;
             }
+            double l_xz = Math.sqrt(dx * dx + dz * dz);
             
             if (
                 !dog.getNavigation().isDone()
@@ -49,19 +50,26 @@ public class DogFlyingMoveControl extends FlyingMoveControl {
                 dog.setDogFlying(true);
                 this.dog.setNoGravity(true);
             }
-   
-            float wantedYRot = (float)(Mth.atan2(dz, dx) * Mth.RAD_TO_DEG) - 90.0F;
-            float approachingYRot = this.rotlerp(this.dog.getYRot(), wantedYRot, 90.0F);
-            this.dog.setYRot(approachingYRot);
-            float speed;
+
+            float speed = 0f;
             if (this.dog.onGround()) {
                speed = (float)(this.speedModifier * this.dog.getAttributeValue(Attributes.MOVEMENT_SPEED));
             } else {
                speed = (float)(this.speedModifier * this.dog.getAttributeValue(Attributes.FLYING_SPEED));
             }
-   
             this.dog.setSpeed(speed);
-            double l_xz = Math.sqrt(dx * dx + dz * dz);
+
+            float dy_abs = Mth.abs((float)dy);
+            if (dy_abs / l_xz >= 6) {
+                this.dog.yya = Mth.sign(dy) * speed;
+                this.dog.zza = 0;
+                return;
+            }
+   
+            float wantedYRot = (float)(Mth.atan2(dz, dx) * Mth.RAD_TO_DEG) - 90.0F;
+            float approachingYRot = this.rotlerp(this.dog.getYRot(), wantedYRot, 90.0F);
+            this.dog.setYRot(approachingYRot);
+
             if (Math.abs(dy) > (double)1.0E-5F || Math.abs(l_xz) > (double)1.0E-5F) {
                float wantedXRot = (float)(-(Mth.atan2(dy, l_xz) * (double)(180F / (float)Math.PI)));
                float approachingXRot = this.rotlerp(this.dog.getXRot(), wantedXRot, this.dog.getMaxHeadXRot());
