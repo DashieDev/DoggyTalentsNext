@@ -11,6 +11,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ConfigHandler {
@@ -18,9 +19,11 @@ public class ConfigHandler {
     public static ClientConfig CLIENT;
     public static ServerConfig SERVER;
     public static TalentConfig TALENT;
+    public static RespawnTagConfig RESPAWN_TAGS;
     private static ForgeConfigSpec CONFIG_SERVER_SPEC;
     private static ForgeConfigSpec CONFIG_CLIENT_SPEC;
     private static ForgeConfigSpec CONFIG_TALENT_SPEC;
+    private static ForgeConfigSpec CONFIG_RESPAWN_TAG_SPEC;
 
     public static final boolean ALWAYS_SHOW_DOG_NAME = true;
     public static final float DEFAULT_MAX_HUNGER = 120F;
@@ -38,7 +41,8 @@ public class ConfigHandler {
         DoggyTalentsNext.LOGGER.debug("Register configs");
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_SERVER_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC);
+ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC);
+        initRespawnTagsConfig();
     }
 
     public static void initTalentConfig() {
@@ -47,6 +51,14 @@ public class ConfigHandler {
         TALENT = talentPair.getLeft();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_TALENT_SPEC, "doggytalents-talents.toml");
+    }
+
+    public static void initRespawnTagsConfig() {
+        var respawnPair = new ForgeConfigSpec.Builder().configure(RespawnTagConfig::new);
+        CONFIG_RESPAWN_TAG_SPEC = respawnPair.getRight();
+        RESPAWN_TAGS = respawnPair.getLeft();
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_RESPAWN_TAG_SPEC, "doggytalents-respawn_tags_to_remove.toml");
     }
 
     public static class ClientConfig {
@@ -325,6 +337,23 @@ public class ConfigHandler {
 
         public static<T> T getConfig(ConfigValue<T> config) {
                 return config.get();
+        }
+    }
+
+    public static class RespawnTagConfig {
+
+        public ConfigValue<List<? extends String>> TAGS_TO_REMOVE;
+
+        public RespawnTagConfig(ForgeConfigSpec.Builder builder) {
+            builder.comment("Extra tags to be removed when a dog is respawned.");
+
+            TAGS_TO_REMOVE = builder
+                .translation("doggytalents.respawn_removal_tags")    
+                .<String>defineList("respawn_removal_tags", List.of(), 
+                    obj -> {
+                        return obj instanceof String;
+                    }
+                );
         }
     }
 }
