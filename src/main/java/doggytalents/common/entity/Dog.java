@@ -994,7 +994,7 @@ public class Dog extends AbstractDog {
         //     long stopTime = System.nanoTime();
         //     ChopinLogger.l("get random pos " + (stopTime-startTime) + " nanoseconds." );
         // })
-
+        
         if (this.isDefeated()) 
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
