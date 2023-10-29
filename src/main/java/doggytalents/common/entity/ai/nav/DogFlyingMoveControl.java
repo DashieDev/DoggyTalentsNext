@@ -56,6 +56,8 @@ public class DogFlyingMoveControl extends FlyingMoveControl {
                speed = (float)(this.speedModifier * this.dog.getAttributeValue(Attributes.MOVEMENT_SPEED));
             } else {
                speed = (float)(this.speedModifier * this.dog.getAttributeValue(Attributes.FLYING_SPEED));
+               if (dog.isDefeated())
+                speed = 0.2f;
             }
             this.dog.setSpeed(speed);
 
