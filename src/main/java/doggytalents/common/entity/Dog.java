@@ -1541,6 +1541,8 @@ public class Dog extends AbstractDog {
                 this.setAnim(DogAnimation.HURT_1);
             } else if (source.getEntity() != null) {
                 this.setAnim(DogAnimation.HURT_2);
+            } else {
+                this.setAnim(DogAnimation.NONE);
             }
             this.setStandAnim(DogAnimation.NONE);
             this.setOrderedToSit(false);
