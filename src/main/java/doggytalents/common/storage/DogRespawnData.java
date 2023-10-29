@@ -69,6 +69,11 @@ public class DogRespawnData implements IDogData {
             this.data.remove(tag);
         }
 
+        var extraTagsToRemove = ConfigHandler.RESPAWN_TAGS.TAGS_TO_REMOVE.get();
+        for (String tag : extraTagsToRemove) {
+            this.data.remove(tag);
+        }
+
         this.data.remove("UUID");
         this.data.remove("LoveCause");
 
