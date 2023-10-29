@@ -4281,6 +4281,27 @@ public class Dog extends AbstractDog {
         return this.clientAccessories;
     }
 
+    //Client
+    public Optional<ItemStack> getMouthItemForRender() {
+        if (this.hasBone()) {
+            var renderStack = this.getBoneVariant();
+            var throwableItem = this.getThrowableItem();
+            if (throwableItem != null) {
+                var customStack = throwableItem.getCustomRenderStack(renderStack);
+                if (customStack != null)
+                    renderStack = customStack;
+            }
+            return Optional.of(renderStack);
+        }
+
+        var stack = this.getMainHandItem();
+        if (stack != null && !stack.isEmpty()) {
+            return Optional.of(stack);
+        }
+
+        return Optional.empty();
+    }
+
     /**
      * 2 bit for strategy
      */
