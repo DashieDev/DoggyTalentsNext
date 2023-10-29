@@ -5,6 +5,8 @@ import com.mojang.math.Axis;
 
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.IThrowableItem;
+import doggytalents.client.ClientSetup;
+import doggytalents.client.entity.model.SyncedItemModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.common.entity.Dog;
@@ -16,43 +18,32 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
 
 public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
     
     private ItemInHandRenderer itemInHandRenderer;
+    private SyncedItemModel itemSyncer;
 
     public DogMouthItemRenderer(RenderLayerParent dogRendererIn, EntityRendererProvider.Context ctx) {
         super(dogRendererIn);
         this.itemInHandRenderer = ctx.getItemInHandRenderer();
+        itemSyncer = new SyncedItemModel(ctx.bakeLayer(ClientSetup.DOG_MOUTH_ITEM), itemInHandRenderer);
     }
 
     @Override
     public void render(PoseStack matrixStack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (dog.getDogLevel(DoggyTalents.DOGGY_TOOLS.get()) <= 0) return;
+        var stackOptional = dog.getMouthItemForRender();
+        if (!stackOptional.isPresent())
+            return;
+        var stack = stackOptional.get();
 
-        var stack = dog.getItemInHand(InteractionHand.MAIN_HAND);
-        if (stack == null || stack.isEmpty()) return;
+        var model = this.getParentModel();
 
-        matrixStack.pushPose();
-        DogModel model = this.getParentModel();
-        if (model.young) {
-            // derived from AgeableModel head offset
-            matrixStack.translate(0.0F, 5.0F / 16.0F, 2.0F / 16.0F);
-        }
-
-        model.head.translateAndRotate(matrixStack);
-
-        matrixStack.translate(-0.025F, 0.125F, -0.32F);
-        var item = stack.getItem();
-
-        if (item instanceof SwordItem) {
-            matrixStack.translate(0.25, 0, 0);
-        }
-        matrixStack.mulPose(Axis.YP.rotationDegrees(45.0F));
-        matrixStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-
-        this.itemInHandRenderer.renderItem(dog, stack, ItemDisplayContext.GROUND, false, matrixStack, bufferSource, packedLight);
-        matrixStack.popPose();
-    }
+        model.copyPropertiesTo(itemSyncer);
+        itemSyncer.sync(model);
+        itemSyncer.startRenderFromRoot(matrixStack, bufferSource, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
+    }   
 }
