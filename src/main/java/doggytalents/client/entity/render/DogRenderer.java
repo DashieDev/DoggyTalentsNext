@@ -15,7 +15,6 @@ import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
-import doggytalents.client.entity.render.layer.BoneLayer;
 import doggytalents.client.entity.render.layer.LayerFactory;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -53,7 +52,6 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         DogModelRegistry.resolve(ctx);
         this.model = DogModelRegistry.getDogModelHolder("default").getValue();
         this.defaultModel = this.model;
-        this.addLayer(new BoneLayer(this, Minecraft.getInstance().getItemInHandRenderer()));
         for (LayerFactory<Dog, DogModel> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
         }
