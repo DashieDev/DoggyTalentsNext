@@ -241,9 +241,10 @@ public class ClientEventHandler {
         var player = Minecraft.getInstance().player;
         if (player == null)
             return false;
-        if (player.getVehicle() != dog) 
+        if (!dog.isVehicle())
             return false;
-        return true;
+        return player.getVehicle() == dog
+            || player.isShiftKeyDown();
     }
 
     public static float getAnimatedYRot(Dog dog) {
