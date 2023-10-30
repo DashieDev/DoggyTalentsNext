@@ -2,6 +2,8 @@ package doggytalents.common.talent;
 
 import java.util.Optional;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -79,6 +81,9 @@ public class MobRetrieverTalent extends TalentInstance {
         if (target instanceof Player)
             return false;
         if (target instanceof Enemy)
+            return false;
+        if (target instanceof Dog otherDog 
+            && ObjectUtils.notEqual(otherDog.getOwnerUUID(), dog.getOwnerUUID()))
             return false;
         if (!canLevelRideTarget(dog, target))
             return false;
