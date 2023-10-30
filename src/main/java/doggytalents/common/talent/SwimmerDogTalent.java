@@ -82,9 +82,9 @@ public class SwimmerDogTalent extends TalentInstance {
 
         if (this.level() >= 5 && dog.isVehicle()) {
             // canBeSteered checks entity is LivingEntity
-            LivingEntity rider = (LivingEntity) dog.getControllingPassenger();
-            if (rider.isInWater()) {
-                rider.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 80, 1, true, false));
+            var control = dog.getControllingPassenger();
+            if (control != null && control.isInWater()) {
+                control.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 80, 1, true, false));
             }
         }
 
