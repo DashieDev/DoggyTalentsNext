@@ -87,7 +87,9 @@ public class WolfMountTalent extends TalentInstance {
     @Override
     public void livingTick(AbstractDog dog) {
         if (dog.isVehicle() && dog.getDogHunger() < 1) {
-            dog.getControllingPassenger().sendSystemMessage(Component.translatable("talent.doggytalents.wolf_mount.exhausted", dog.getName()));
+            var control = dog.getControllingPassenger();
+            if (control != null)
+                control.sendSystemMessage(Component.translatable("talent.doggytalents.wolf_mount.exhausted", dog.getName()));
 
             dog.ejectPassengers();
         }
