@@ -730,3 +730,49 @@ A TON of new dog breeds just waiting for your discovery!
 + Append an underscore before the number to avoid confliction.
 + Faster dog bath, food bowl breaking.
 + HOTFIX: Fix Training Hellhound max bug causing the world to freeze.
+
+**1.17.2 - 30th October 2023**
+# THE HALLOWEEN UPDATE! 👻🦇🎃🦴💀
+===========
++ Added new Skin: Houndstone 🪦(Hakadoggu). 
++ Added new Skin: Zero 👻
++ Added new Skin: Scraps💀
++ Added new Skin: Sparky. ⚡🔌🧵🐕
+
++ Added new Food: Rice Bowl 🍚
++ Added new Food: Onigiri 🍙
++ Added new Food: Salmon Sushi🍣
++ Added new Food: Sausage
+
++ Added new Accessory: Headbands (2 variants + 1 craftable).
++ Added new Accessory: Tengu Mask 👺
++ Added new Accessory: Kitsune Mask 🦊
++ Added new Accessory: Demon Horns 😈
++ Added new Accessory: Birthday Hat 🎂(double-dyeable)
++ Added new Accessory: Witch Hat🧙
++ Added new Accessory: Plague Doctor Mask
++ Added new Accessory: Baker's Hat 🥯(dyeable)
++ Added new Accessory: Chef's Hat 🧑‍🍳(dyeable)
++ Added new Accessory: Flying Cape (dyeable)
++ Added new Accessory: Superdog Suit 🦸
++ Added new Accessory: Bat Wings 🦇
++ Added new Accessory: Crow Wings 
++ Added new Accessory: Lab Coats (dyeable)
++ Added new Accessory: Divine Retribution (might accidentally cook your food)
+
++ Added new Throwable Item: Frisbee 🥏 (ft. Canid) (dyeable)
+
++ Added new Talent: Flying Furball! Let your dog conquer the skies!
++ Added new Talent: Chemi Canine! 🧑‍🔬⚗️🧪 (my favorite)
+
+
++ Added a new system that "partially" detects duplicated dogs.
++ Added an in-game option to hide armor.
++ Added new Combat Return Strategy option
+===========
+#Improved the kanji on the Tracking Orbs.
+#Improved fire/lava resistance on Hellhound Talent.
+#Improved Rescue Dog Talent healing system.
+#Eating particles now look better.
+#Improve Swimming and Flying navigation.
+#Dogs can now drink Milk.
