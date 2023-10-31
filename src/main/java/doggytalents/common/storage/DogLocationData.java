@@ -71,6 +71,7 @@ public class DogLocationData implements IDogData {
 
     public void setSessionUUID(UUID sessionUUID) {
         this.sessionUUID = sessionUUID;
+        this.storage.setDirty();
     }
 
     @Override
