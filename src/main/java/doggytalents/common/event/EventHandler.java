@@ -14,6 +14,7 @@ import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.talent.HunterDogTalent;
+import doggytalents.common.util.DogLocationStorageMigration;
 import doggytalents.common.util.Util;
 import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
 import doggytalents.common.util.doggyasynctask.promise.DogHoldChunkToTeleportPromise;
@@ -45,6 +46,7 @@ import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -319,5 +321,20 @@ public class EventHandler {
     public void onTagsUpdated(TagsUpdatedEvent event) {
         DogBedMaterialManager.onTagsUpdated(event);
     }
+
+    @SubscribeEvent
+    public void onLevelLoad(LevelEvent.Load event) {
+        var level = event.getLevel();
+        if (level == null)
+            return;
+        var server = level.getServer();
+        if (server == null)
+            return;
+        var level_overworld = server.getLevel(Level.OVERWORLD);
+        if (level != level_overworld)
+            return;
+        DogLocationStorageMigration.checkAndMigrate(level_overworld);
+    }
+
 
 }
