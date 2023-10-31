@@ -127,6 +127,7 @@ public class DogLocationData implements IDogData {
         if (compound.hasUUID("sessionUUID")) {
             this.sessionUUID = compound.getUUID("sessionUUID");
         }
+        this.locateColor = compound.getInt("locateOrbColor");
     }
 
     public CompoundTag write(CompoundTag compound) {
@@ -141,6 +142,7 @@ public class DogLocationData implements IDogData {
         if (this.sessionUUID != null) {
             compound.putUUID("sessionUUID", this.sessionUUID);
         }
+        compound.putInt("locateOrbColor", locateColor);
         return compound;
     }
 
