@@ -25,6 +25,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -359,7 +360,8 @@ public class DogIncapacitatedMananger {
 
         if (dog_b0_block == Blocks.AIR) {
             this.dog.addHunger(0.001f*this.recoveryMultiplier);
-        } else if (dog_b0_block == DoggyBlocks.DOG_BED.get()) {
+        } else if (dog_b0_block == DoggyBlocks.DOG_BED.get()
+            || dog_b0_state.is(BlockTags.BEDS)) {
             incapacitatedHealWithBed(owner);
         }
     }
