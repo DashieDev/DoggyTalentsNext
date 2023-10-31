@@ -296,9 +296,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .translation("doggytalents.preserve_uuid")
                 .define("preserve_uuid", true);
             DUPLICATION_RESOLVE_STRATEGY = builder
+                .comment("Duplication Detection")
                 .comment("Specify what to do when a Duplication is detected when third parties are trying")
-                .comment("to load the dog from their own copy while the dog is still available in")
-                .comment("DTN's respawn storage. Option are specified via the follwing Integer values")
+                .comment("to load the dog from their own copy.")
+                .comment("Option are specified via the follwing Integer values")
                 .comment("0 - Throw an exception out, this may produce a crash. However, this is the recommended way.")
                 .comment("1 - Silently remove the dog.")
                 .comment("Other - Do nothing.")
