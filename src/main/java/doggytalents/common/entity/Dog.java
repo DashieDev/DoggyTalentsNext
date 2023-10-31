@@ -2679,7 +2679,10 @@ public class Dog extends AbstractDog {
             cachedSessionUUID = null;
             return;
         }
-        var storage = DogLocationStorage.get(this.level());
+        var level = this.level();
+        if (level == null)
+            return;
+        var storage = DogLocationStorage.get(level);
         if (storage == null) 
             return;
         var data = storage.getData(uuid);
@@ -2693,7 +2696,10 @@ public class Dog extends AbstractDog {
 
     private void cacheSessionUUID() {
         var uuid = this.getUUID();
-        var storage = DogLocationStorage.get(this.level());
+        var level = this.level();
+        if (level == null)
+            return;
+        var storage = DogLocationStorage.get(level);
         if (storage == null) 
             return;
         var data = storage.getData(uuid);
