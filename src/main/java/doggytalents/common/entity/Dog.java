@@ -2279,8 +2279,7 @@ public class Dog extends AbstractDog {
             var backupUUIDTag = new CompoundTag();
             backupUUIDTag.putUUID("dtn_uuid_owner", ownerUUID);
             backupUUIDTag.putUUID("dtn_uuid_self", uuid);
-            if (this.sessionUUID != null)
-                backupUUIDTag.putUUID("session_uuid", this.sessionUUID);
+            writeSessionUUIDToCompound(uuid, backupUUIDTag);
             compound.put("DTN_DupeDetect_UUID", backupUUIDTag);
         }
     }
@@ -2671,12 +2670,17 @@ public class Dog extends AbstractDog {
         return ObjectUtils.notEqual(correctSessionUUID, sessionUUID);
     }
 
-    private UUID sessionUUID = null;
-    public @Nullable UUID getLocateStorageSessionUUID() {
-        return sessionUUID;
-    }
-    public void setLocateStorageSessionUUID(UUID sessionUUID) {
-        this.sessionUUID = sessionUUID;
+    private void writeSessionUUIDToCompound(UUID uuid, CompoundTag tag) {
+        var storage = DogLocationStorage.get(this.level());
+        if (storage == null) 
+            return;
+        var data = storage.getData(uuid);
+        if (data == null)
+            return;
+        var sessionUUID = data.getSessionUUID();
+        if (sessionUUID == null)
+            return;
+        tag.putUUID("session_uuid", sessionUUID);
     }
 
     @Override

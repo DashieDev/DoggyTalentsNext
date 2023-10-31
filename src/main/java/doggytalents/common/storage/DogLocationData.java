@@ -70,6 +70,10 @@ public class DogLocationData implements IDogData {
         return this.sessionUUID;
     }
 
+    public void setSessionUUID(UUID sessionUUID) {
+        this.sessionUUID = sessionUUID;
+    }
+
     @Override
     public String getDogName() {
         return this.name == null ? "" : this.name.getString();
@@ -92,7 +96,6 @@ public class DogLocationData implements IDogData {
         this.name = dogIn.getName();
         this.ownerName = dogIn.getOwnersName().orElse(null);
         this.gender = dogIn.getGender();
-        this.sessionUUID = dogIn.getLocateStorageSessionUUID();
 
         updateLocator(dogIn);
 
@@ -110,7 +113,6 @@ public class DogLocationData implements IDogData {
             this.locateColor = orb.getOrbColor();
         }
     }
-
 
     public void read(CompoundTag compound) {
         this.ownerId = NBTUtil.getUniqueId(compound, "ownerId");
