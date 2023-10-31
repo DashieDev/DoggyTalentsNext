@@ -292,7 +292,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .defineInRange("tick_per_hunger_dec", 400, 10, Integer.MAX_VALUE);
             PRESERVE_UUID = builder
                 .comment("Determine if the UUIDs of the dogs are being kept when training from vanilla")
-                .comment("and when they respawn on bed.")
+                .comment("and when they respawn on bed. This also allows Duplication Detection.")
                 .translation("doggytalents.preserve_uuid")
                 .define("preserve_uuid", true);
             DUPLICATION_RESOLVE_STRATEGY = builder

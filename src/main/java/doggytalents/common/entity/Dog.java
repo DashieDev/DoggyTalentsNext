@@ -2596,6 +2596,8 @@ public class Dog extends AbstractDog {
     }
 
     private boolean detectDuplicate(CompoundTag tag) {
+        if (!ConfigHandler.SERVER.PRESERVE_UUID.get())
+            return false;
         if (!tag.contains("DTN_DupeDetect_UUID", Tag.TAG_COMPOUND))
             return false;
         var backupUUIDTag = tag.getCompound("DTN_DupeDetect_UUID");
