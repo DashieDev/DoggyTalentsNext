@@ -2279,6 +2279,8 @@ public class Dog extends AbstractDog {
             var backupUUIDTag = new CompoundTag();
             backupUUIDTag.putUUID("dtn_uuid_owner", ownerUUID);
             backupUUIDTag.putUUID("dtn_uuid_self", uuid);
+            if (this.sessionUUID != null)
+                backupUUIDTag.putUUID("session_uuid", this.sessionUUID);
             compound.put("DTN_DupeDetect_UUID", backupUUIDTag);
         }
     }
@@ -2606,10 +2608,20 @@ public class Dog extends AbstractDog {
         var backupUUIDTag = tag.getCompound("DTN_DupeDetect_UUID");
         var uuid = backupUUIDTag.getUUID("dtn_uuid_self");
         var ownerUUID = backupUUIDTag.getUUID("dtn_uuid_owner");
+        UUID sessionUUID = null;
+        if (backupUUIDTag.hasUUID("session_uuid")) {
+            sessionUUID = backupUUIDTag.getUUID("session_uuid");
+        }
         if (uuid == null || ownerUUID == null)
             return false;
         
-        if (!checkRespawnStorageForDuplicate(uuid, ownerUUID))
+        boolean isDuplicate = false;
+        
+        if (!isDuplicate && checkRespawnStorageForDuplicate(uuid, ownerUUID))
+            isDuplicate = true;
+        if (!isDuplicate && checkLocationStorageForDuplicate(uuid, ownerUUID, sessionUUID))
+            isDuplicate = true;
+        if (!isDuplicate)
             return false;
         
         DoggyTalentsNext.LOGGER.warn(
@@ -2637,6 +2649,34 @@ public class Dog extends AbstractDog {
             return false;
         
         return true;
+    }
+
+    private boolean checkLocationStorageForDuplicate(UUID uuid, UUID ownerUUID, UUID sessionUUID) {
+        var storage = DogLocationStorage.get(this.level());
+        if (storage == null) 
+            return false;
+        var data = storage.getData(uuid);
+        if (data == null)
+            return false;
+        var ownerUUID0 = data.getOwnerId();
+        if (ownerUUID0 == null) 
+            return false;
+        
+        if (ObjectUtils.notEqual(ownerUUID0, ownerUUID))        
+            return false;
+        
+        var correctSessionUUID = data.getSessionUUID();
+        if (correctSessionUUID == null)
+            return false;
+        return ObjectUtils.notEqual(correctSessionUUID, sessionUUID);
+    }
+
+    private UUID sessionUUID = null;
+    public @Nullable UUID getLocateStorageSessionUUID() {
+        return sessionUUID;
+    }
+    public void setLocateStorageSessionUUID(UUID sessionUUID) {
+        this.sessionUUID = sessionUUID;
     }
 
     @Override
