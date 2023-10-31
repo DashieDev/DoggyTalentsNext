@@ -169,4 +169,14 @@ public class DogLocationStorage extends SavedData {
         return compound;
     }
 
+    public static void setSessionUUIDFor(Dog dog, UUID sessionUUID) {
+        var storage = DogLocationStorage.get(dog.level());
+        if (storage == null)
+            return;
+        var data = storage.getData(dog);
+        if (data == null)
+            return;
+        data.setSessionUUID(sessionUUID);
+    }
+
 }
