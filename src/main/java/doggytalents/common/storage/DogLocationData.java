@@ -31,6 +31,7 @@ public class DogLocationData implements IDogData {
     private final DogLocationStorage storage;
     private final UUID uuid;
     private @Nullable UUID ownerId;
+    private @Nullable UUID sessionUUID;
 
     // Location data
     private @Nullable Vec3 position;
@@ -61,6 +62,15 @@ public class DogLocationData implements IDogData {
     @Nullable
     public UUID getOwnerId() {
         return this.ownerId;
+    }
+
+    @Nullable
+    public UUID getSessionUUID() {
+        return this.sessionUUID;
+    }
+
+    public void setSessionUUID(UUID sessionUUID) {
+        this.sessionUUID = sessionUUID;
     }
 
     @Override
@@ -113,6 +123,9 @@ public class DogLocationData implements IDogData {
             this.gender = EnumGender.bySaveName(compound.getString("gender"));
         }
         this.hasRadarCollar = compound.getBoolean("collar");
+        if (compound.hasUUID("sessionUUID")) {
+            this.sessionUUID = compound.getUUID("sessionUUID");
+        }
     }
 
     public CompoundTag write(CompoundTag compound) {
@@ -124,6 +137,9 @@ public class DogLocationData implements IDogData {
             compound.putString("gender", this.gender.getSaveName());
         }
         compound.putBoolean("collar", this.hasRadarCollar);
+        if (this.sessionUUID != null) {
+            compound.putUUID("sessionUUID", this.sessionUUID);
+        }
         return compound;
     }
 
