@@ -99,8 +99,9 @@ public class DogRespawnData implements IDogData {
             ConfigHandler.SERVER.PRESERVE_UUID.get()
             && worldIn.getEntity(this.uuid) == null;
         dog.setUUID(useOldUUID ? this.uuid : uuid);
-        
+
         worldIn.addFreshEntityWithPassengers(dog);
+        DogLocationStorage.setSessionUUIDFor(dog, uuid);
 
         dog.setMode(EnumMode.DOCILE);
         dog.setOrderedToSit(true);
