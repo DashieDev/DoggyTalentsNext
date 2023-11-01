@@ -9,6 +9,7 @@ import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.SyncedItemModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.DogRenderer;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -35,6 +36,15 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
 
     @Override
     public void render(PoseStack matrixStack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (!ConfigHandler.CLIENT.MOUTH_ITEM_FORCE_RENDER.get()) {
+            var skin = dog.getClientSkin();
+            if (skin.useCustomModel()) {
+                var model = skin.getCustomModel().getValue();
+                if (!model.armorShouldRender(dog))
+                    return;
+            }
+        }
+        
         var stackOptional = dog.getMouthItemForRender();
         if (!stackOptional.isPresent())
             return;
