@@ -32,6 +32,13 @@ public class RescueDogRenderer extends RenderLayer<Dog, DogModel> {
             return;
         }
 
+        var dogSkin = dog.getClientSkin();
+        if (dogSkin.useCustomModel()) {
+            var model = dogSkin.getCustomModel().getValue();
+            if (!model.armorShouldRender(dog))
+                return;
+        }
+
         //dont render when bowtie is present
         var accessories = dog.getAccessories();
         for (var acc : accessories) {
