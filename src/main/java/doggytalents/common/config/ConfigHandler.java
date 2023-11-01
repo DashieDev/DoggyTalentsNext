@@ -79,6 +79,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue RENDER_ARMOR;
         public ForgeConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
         public ForgeConfigSpec.BooleanValue DISPLAY_SMOKE_WHEN_ON_FIRE;
+        public ForgeConfigSpec.BooleanValue MOUTH_ITEM_FORCE_RENDER;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -162,6 +163,12 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Display extra smoke when dog is on fire.")
                 .translation("doggytalents.config.client.display_smoke_when_on_fire")
                 .define("display_smoke_when_on_fire", true);
+            MOUTH_ITEM_FORCE_RENDER = builder
+                .comment("By default, dogs will render item in their mouth, regardless of models.")
+                .comment("This can be disabled if you prefer not to render it on some")
+                .comment("less compatible model.")
+                .translation("doggytalents.config.client.mouth_item_force_render")
+                .define("mouth_item_force_render", true);
             builder.pop();
         }
 

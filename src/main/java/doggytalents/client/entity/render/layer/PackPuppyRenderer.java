@@ -6,6 +6,7 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.DogBackpackModel;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -28,6 +29,16 @@ public class PackPuppyRenderer extends RenderLayer<Dog, DogModel> {
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (dog.isInvisible()) {
             return;
+        }
+
+        if (!ConfigHandler.CLIENT.RENDER_CHEST.get())
+            return;
+
+        var dogSkin = dog.getClientSkin();
+        if (dogSkin.useCustomModel()) {
+            var model = dogSkin.getCustomModel().getValue();
+            if (!model.armorShouldRender(dog))
+                return;
         }
 
         Optional<TalentInstance> inst = dog.getTalent(DoggyTalents.PACK_PUPPY);
