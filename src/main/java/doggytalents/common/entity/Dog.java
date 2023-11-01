@@ -864,7 +864,7 @@ public class Dog extends AbstractDog {
         if (this.activeAction == action) {
             return false;
         }
-        //Trigger Action cancel.
+        //Trigger Action cancel.p@
         //If dog have stashed action then will push the action back instead.
         if (action == null) {
             if (activeAction != null) this.activeAction.onStop();
@@ -2589,7 +2589,12 @@ public class Dog extends AbstractDog {
             int strategy = ConfigHandler.SERVER.DUPLICATION_RESOLVE_STRATEGY.get();
             if (strategy == 0 || strategy == 1) {
                 this.untame();  
-                this.remove(RemovalReason.DISCARDED);
+
+                if (!this.isAddedToWorld()) {
+                    this.setRemoved(RemovalReason.DISCARDED);
+                } else {
+                    this.remove(RemovalReason.DISCARDED);
+                }
             }
             if (strategy == 0)
                 throw new IllegalStateException(
