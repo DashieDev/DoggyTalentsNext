@@ -2614,6 +2614,12 @@ public class Dog extends AbstractDog {
         }
         if (uuid == null || ownerUUID == null)
             return false;
+
+        // Only detect if dog is not added to world while having the same uuid
+        // for now. This is a pretty unlikely case though.
+        if (this.isAddedToWorld() && uuid.equals(this.getUUID())) {
+            return false;
+        }
         
         boolean isDuplicate = false;
         
