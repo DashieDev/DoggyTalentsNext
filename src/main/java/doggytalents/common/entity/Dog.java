@@ -2595,7 +2595,7 @@ public class Dog extends AbstractDog {
             }
             if (strategy == 0)
                 throw new IllegalStateException(
-                    "Dog is loaded from third-party storage while still being respawnable!"
+                    "This dog has been restored from third-party storage which may leads to duplications."
                 );
         }
     }
