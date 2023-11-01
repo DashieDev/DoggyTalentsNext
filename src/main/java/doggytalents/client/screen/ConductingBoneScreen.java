@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
@@ -35,10 +36,16 @@ public class ConductingBoneScreen extends Screen {
     private final ArrayList<UUID> dogIdList;
     private final ArrayList<String> dogNameFilterList;
     private final ArrayList<UUID> dogIdFilterList;
-    private int hightlightDogName;
+    //private int hightlightDogName;
+    private int hightLightDogNamePerPage;
     private boolean showUuid = false;
     private String value = "";
     private boolean toBed = false;
+    private int maxPages = 1;
+    private int pageNumber = 0;
+    private final int MAX_PAGES_ENTRIES = 19;
+    private TextOnlyButton prevPageButton;
+    private TextOnlyButton nextPageButton;
     
     private final int HLC_HEEL_NO_SIT = 0xFF10F9; 
     private final int HLC_HEEL_AND_SIT = 0xff6f00; 
@@ -57,7 +64,7 @@ public class ConductingBoneScreen extends Screen {
         this.dogIdList = new ArrayList<UUID>(4);
         this.dogIdFilterList = new ArrayList<UUID>(4);
         this.dogNameFilterList = new ArrayList<String>(4);
-        this.hightlightDogName = 0;
+        this.hightLightDogNamePerPage = 0;
     }
 
     public static void open() { 
@@ -111,8 +118,30 @@ public class ConductingBoneScreen extends Screen {
         this.addRenderableWidget(showUuid);
         this.addRenderableWidget(help);
         this.addRenderableWidget(toBedButton);
+
+        addPageButtons();
     }
 
+    private void addPageButtons() {
+        int half_width = this.width >> 1;
+        int half_height = this.height >> 1; 
+        var prevPage = new TextOnlyButton(half_width - 120, 
+            half_height - 10, 20, 20, Component.literal("<"), b -> {
+                this.pageNumber = Math.max(0, this.pageNumber - 1);
+                this.hightLightDogNamePerPage = 0;
+            }, font);
+        var nextPage = new TextOnlyButton(half_width + 100, 
+            half_height - 10, 20, 20, Component.literal(">"), b -> {
+                this.pageNumber = Math.min(maxPages - 1, this.pageNumber + 1);
+                this.hightLightDogNamePerPage = 0;
+            }, font);
+        prevPage.active = this.pageNumber > 0;
+        nextPage.active = this.pageNumber < maxPages - 1;
+        this.prevPageButton = prevPage;
+        this.nextPageButton = nextPage;
+        this.addRenderableWidget(prevPage);
+        this.addRenderableWidget(nextPage);
+    }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
@@ -139,9 +168,12 @@ public class ConductingBoneScreen extends Screen {
                 textx, texty + offset, 0xf50a0a);
         }
 
-        for (int i = 0; i < this.dogNameFilterList.size(); ++i) {
+        int startIndx = this.pageNumber * MAX_PAGES_ENTRIES;
+        int drawNo = 0;
+        for (int i = startIndx; i < this.dogNameFilterList.size(); ++i) {
             int color = 0xffffffff;
-            if (i == this.hightlightDogName) color = this.hightlightTextColor;
+            if (i == this.pageNumber*MAX_PAGES_ENTRIES +  this.hightLightDogNamePerPage) 
+                color = this.hightlightTextColor;
             String text = this.dogNameFilterList.get(i) + (
                 this.showUuid ? 
                 " ( " + this.dogIdFilterList.get(i) + " ) " :
@@ -149,7 +181,7 @@ public class ConductingBoneScreen extends Screen {
             );
             graphics.drawString(font, text, textx, texty + offset, color);
             offset+=10;
-            if (offset > 190) break;
+            if (++drawNo >= MAX_PAGES_ENTRIES) break;
         }
 
         int txtorgx = half_width - 90;
@@ -157,6 +189,12 @@ public class ConductingBoneScreen extends Screen {
         
         graphics.drawString(font, this.value + "_", txtorgx, txtorgy,  0xffffffff);
         
+        var pageStr = (pageNumber + 1) + "/" + maxPages;
+        var pageStrWidth = font.width(pageStr);
+        graphics.drawString(font, pageStr, half_width - pageStrWidth/2, 
+            half_height - 110, 0xffffffff);
+        prevPageButton.active = this.pageNumber > 0;
+        nextPageButton.active = this.pageNumber < maxPages - 1;
     }
 
     private int getHoveredIndex(double x, double y, int entry_size) {
@@ -171,9 +209,9 @@ public class ConductingBoneScreen extends Screen {
     }
 
     private void onMouseMoved(double x, double y) {
-        int newIndx = getHoveredIndex(x, y, this.dogIdFilterList.size());
+        int newIndx = getHoveredIndex(x, y, getCurrentPageEntries());
         if (newIndx < 0) return;
-        this.hightlightDogName = newIndx;
+        this.hightLightDogNamePerPage = newIndx;
     }
 
     @Override
@@ -183,8 +221,9 @@ public class ConductingBoneScreen extends Screen {
         int mY = this.height/2;
         if (Math.abs(x - mX) > 100) return ret;
         if (Math.abs(y - mY) > 100) return ret;
-        int indx = getHoveredIndex(x, y, this.dogIdFilterList.size());
-        if (indx >= 0) {
+        int indx = getHoveredIndex(x, y, getCurrentPageEntries());
+        indx += pageNumber * MAX_PAGES_ENTRIES;
+        if (indx >= 0 && indx < this.dogIdFilterList.size()) {
             this.requestDistantTeleport(this.dogIdFilterList.get(indx));
             Minecraft.getInstance().setScreen(null);
         }
@@ -196,18 +235,47 @@ public class ConductingBoneScreen extends Screen {
         InputConstants.Key mouseKey = InputConstants.getKey(keyCode, scanCode);
 
         if (keyCode == 264) {
-            this.hightlightDogName = Mth.clamp(this.hightlightDogName +1, 0, this.dogNameFilterList.size()-1);
+            int currentPageEntries = getCurrentPageEntries() - 1;
+            this.hightLightDogNamePerPage = 
+                Mth.clamp(this.hightLightDogNamePerPage + 1, 0, currentPageEntries);
+            return true;
         } else if (keyCode == 265) {
-            this.hightlightDogName = Mth.clamp(this.hightlightDogName -1, 0, this.dogNameFilterList.size()-1);
-        } else if (keyCode == 257) {
+            int currentPageEntries = getCurrentPageEntries() - 1;
+            this.hightLightDogNamePerPage = 
+                Mth.clamp(this.hightLightDogNamePerPage - 1, 0, currentPageEntries);
+            return true;
+        } else if (keyCode == 263) {
+            if (this.prevPageButton.active)
+            this.prevPageButton.onClick(0, 0);
+            return true;
+        } else if (keyCode == 262) {
+            if (this.nextPageButton.active)
+            this.nextPageButton.onClick(0, 0);
+            return true;
+        }  else if (keyCode == 257) {
             if (this.dogIdFilterList.isEmpty()) return false; 
-            this.requestDistantTeleport(this.dogIdFilterList.get(this.hightlightDogName));
-            this.minecraft.setScreen(null);
+            var selectedId = getSelectedId();
+            if (selectedId >= 0 && selectedId < this.dogIdFilterList.size()) { 
+                this.requestDistantTeleport(this.dogIdFilterList.get(selectedId));
+                this.minecraft.setScreen(null);
+            }
+            return true;
         } else if (keyCode == 259) {
             this.popCharInText();
         }
         
         return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    private int getCurrentPageEntries() {
+        if (this.pageNumber >= this.maxPages - 1) {
+            return this.dogIdFilterList.size() % MAX_PAGES_ENTRIES;
+        }
+        return MAX_PAGES_ENTRIES;
+    }
+
+    private int getSelectedId() {
+        return this.pageNumber * MAX_PAGES_ENTRIES + this.hightLightDogNamePerPage;
     }
 
     @Override
@@ -224,7 +292,7 @@ public class ConductingBoneScreen extends Screen {
     private void updateFilter() {
         this.dogNameFilterList.clear();
         this.dogIdFilterList.clear();
-        this.hightlightDogName =0;
+        this.hightLightDogNamePerPage =0;
 
         if (this.value == "") {
             for (var i : this.dogNameList) {
@@ -242,7 +310,15 @@ public class ConductingBoneScreen extends Screen {
                 }
             }
         }
+        updatePages();
     } 
+
+    private void updatePages() {
+        int dogNumbers = this.dogIdFilterList.size();
+        this.maxPages = 1 + dogNumbers / MAX_PAGES_ENTRIES;
+        this.pageNumber = 0;
+        this.hightLightDogNamePerPage = 0;
+    }
 
     private void insertText(String x) {
         if (this.value.length() < MAX_BUFFER_SIZE) {
@@ -286,6 +362,7 @@ public class ConductingBoneScreen extends Screen {
             this.dogIdList.add(entry.getLeft());
             this.dogIdFilterList.add(entry.getLeft());
         } 
+        updatePages();
     }
 
 }
