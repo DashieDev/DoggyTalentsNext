@@ -1619,6 +1619,11 @@ public class Dog extends AbstractDog {
         for (IDogAlteration alter : this.alterations) {
             alter.doAdditionalAttackEffects(this, target);
         }
+        
+        if (target instanceof LivingEntity living
+            && living.isDeadOrDying()) {
+            this.statsTracker.incrementKillCount(living);
+        }
 
         return true;
     }
@@ -1648,12 +1653,6 @@ public class Dog extends AbstractDog {
         }
 
         super.doEnchantDamageEffects(dog, target);
-    }
-
-    @Override
-    public void awardKillScore(Entity killed, int scoreValue, DamageSource damageSource) {
-        super.awardKillScore(killed, scoreValue, damageSource);
-        this.statsTracker.incrementKillCount(killed);
     }
 
     @Override
