@@ -788,3 +788,19 @@ A TON of new dog breeds just waiting for your discovery!
 #Eating particles now look better.
 #Improve Swimming and Flying navigation.
 #Dogs can now drink Milk.
+
+**1.17.3 - 2nd November 2023**
+
+#Rework the Dupe Detection System.
+#Allow Incapacitated Dogs to rest on Beds.
+#Implements multipages for Heel By Name/ Conducting Bone/ Canine Tracker screen.
+==================
+#Replace placeholder Valse Du Petit Chien Musescore Recording.
+Replaced by a recording of the same piece performed by DashieDev himself on his Kawai
+upright piano, recorded using his phone and post-processed by MashXP.
+==================
+
+* Fixed: conflict between Swimmer Dog and Mob Retreiver.
+* Fixed: Wolf Mount and its hunger goes down to zero when carrying a mob retriever, it will also cause a crash.
+* Fixed: Contents of the menu breaking when you have too many dogs.
+* Fixed: Kill count works properly now.
