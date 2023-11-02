@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "doggytalents:rice_bowl"
+    },
+    "S": {
+      "item": "minecraft:salmon"
+    }
+  },
+  "pattern": [
+    "S",
+    "R"
+  ],
+  "result": {
+    "item": "doggytalents:salmon_sushi"
+  }
+}

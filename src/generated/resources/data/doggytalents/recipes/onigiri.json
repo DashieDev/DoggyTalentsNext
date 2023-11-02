@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "K": {
+      "item": "minecraft:dried_kelp"
+    },
+    "R": {
+      "item": "doggytalents:rice_bowl"
+    }
+  },
+  "pattern": [
+    "R",
+    "K"
+  ],
+  "result": {
+    "item": "doggytalents:onigiri"
+  }
+}

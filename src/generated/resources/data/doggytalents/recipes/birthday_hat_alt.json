@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
+    }
+  },
+  "pattern": [
+    " P ",
+    "PTP"
+  ],
+  "result": {
+    "item": "doggytalents:birthday_hat"
+  }
+}

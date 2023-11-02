@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "key": {
-    "X": {
+    "I": {
       "item": "minecraft:iron_ingot"
     },
-    "Y": {
-      "item": "minecraft:bowl"
+    "S": {
+      "item": "minecraft:stick"
     }
   },
   "pattern": [
-    "XXX",
-    "XYX",
-    "XXX"
+    "III",
+    " SI",
+    "S  "
   ],
   "result": {
-    "item": "doggytalents:food_bowl"
+    "item": "doggytalents:sussy_sickle"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:brown_dye"
+    },
+    "E": {
+      "item": "minecraft:elytra"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    "BLB",
+    "LEL",
+    "BLB"
+  ],
+  "result": {
+    "item": "doggytalents:bat_wings"
+  }
+}

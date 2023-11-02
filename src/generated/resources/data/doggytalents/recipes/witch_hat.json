@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "minecraft:black_carpet"
+    },
+    "P": {
+      "item": "minecraft:potion"
+    },
+    "W": {
+      "item": "minecraft:black_wool"
+    }
+  },
+  "pattern": [
+    " W ",
+    "WPW",
+    "CCC"
+  ],
+  "result": {
+    "item": "doggytalents:witch_hat"
+  }
+}
