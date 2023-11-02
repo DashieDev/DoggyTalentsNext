@@ -201,7 +201,7 @@ public class TalentInfoViewElement extends AbstractElement {
             );
             int tX = this.getRealX() + mX - this.font.width(txt)/2;
             int tY = this.getRealY() + mY - this.font.lineHeight/2;
-            graphics.drawString(font, txt, tX, tY, 0xffffffff);
+            font.draw(stack, txt, tX, tY, 0xffffffff);
             return;
         }
 

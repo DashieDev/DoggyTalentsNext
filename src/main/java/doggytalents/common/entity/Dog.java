@@ -3526,7 +3526,7 @@ public class Dog extends AbstractDog {
         var newX = this.getX() + dx1;
         var newZ = this.getZ() + dz1;
         var newPos = new Vec3(newX, this.getY() + 0.5, newZ);
-        var b0 = BlockPos.containing(newPos);
+        var b0 = new BlockPos(newPos);
         var type = WalkNodeEvaluator.getBlockPathTypeStatic(this.level(), b0.mutable());
         if (type == BlockPathTypes.WALKABLE) {
             return newPos;
@@ -3660,7 +3660,7 @@ public class Dog extends AbstractDog {
                 }
              } else {
                  this.maxUpStep = 0.5F; // Default
-                 this.flyingSpeed = 0.02F; // Default
+                 this.flyingSpeed = this.isDogFlying() ? 0.49f : 0.02F; // Default
                  super.travel(positionIn);
              }
 
@@ -3683,16 +3683,6 @@ public class Dog extends AbstractDog {
 
             this.addMovementStat(this.getX() - this.xo, this.getY() - this.yo, this.getZ() - this.zo);
         }
-    }
-
-    @Override
-    public boolean canBeControlledByRider() {
-        return true;
-    }
-
-    @Override
-    protected float getFlyingSpeed() {
-        return this.isDogFlying() ? 0.49f : super.getFlyingSpeed();
     }
 
     public boolean canDogFly() {

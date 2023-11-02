@@ -11,7 +11,6 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
-import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem;
 import doggytalents.common.network.PacketHandler;
@@ -233,11 +232,11 @@ public class HeelByNameScreen extends Screen {
         int txtorgx = half_width - 90;
         int txtorgy = half_height + 107;
         
-        graphics.drawString(font, this.value + "_", txtorgx, txtorgy,  0xffffffff);
+        font.draw(stack, this.value + "_", txtorgx, txtorgy,  0xffffffff);
 
         var pageStr = (pageNumber + 1) + "/" + maxPages;
         var pageStrWidth = font.width(pageStr);
-        graphics.drawString(font, pageStr, half_width - pageStrWidth/2, 
+        font.draw(stack, pageStr, half_width - pageStrWidth/2, 
             half_height - 110, 0xffffffff);
         prevPageButton.active = this.pageNumber > 0;
         nextPageButton.active = this.pageNumber < maxPages - 1;

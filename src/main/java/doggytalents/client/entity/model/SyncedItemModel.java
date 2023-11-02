@@ -2,11 +2,9 @@ package doggytalents.client.entity.model;
 
 import java.util.Optional;
 
-import org.joml.Vector3f;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
@@ -20,7 +18,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
@@ -76,17 +74,17 @@ public class SyncedItemModel extends SyncedAccessoryModel {
     public void startRenderFromRoot(PoseStack stack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack itemStack) {
         stack.pushPose();
         stack.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
-        stack.translate((double)(pivot.x / 16.0F), (double)(pivot.y / 16.0F), (double)(pivot.z / 16.0F));
+        stack.translate((double)(pivot.x() / 16.0F), (double)(pivot.y() / 16.0F), (double)(pivot.z() / 16.0F));
         if (root.zRot != 0.0F) {
-            stack.mulPose(Axis.ZP.rotation(root.zRot));
+            stack.mulPose(Vector3f.ZP.rotation(root.zRot));
         }
 
         if (root.yRot != 0.0F) {
-            stack.mulPose(Axis.YP.rotation(root.yRot));
+            stack.mulPose(Vector3f.YP.rotation(root.yRot));
         }
 
         if (root.xRot != 0.0F) {
-            stack.mulPose(Axis.XP.rotation(root.xRot));
+            stack.mulPose(Vector3f.XP.rotation(root.xRot));
         }
         float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
         float x0 = root.x, y0 = root.y, z0 = root.z;
@@ -94,7 +92,7 @@ public class SyncedItemModel extends SyncedAccessoryModel {
         root.x = 0; root.y = 0; root.z = 0;
 
         stack.pushPose();
-        stack.translate((double)(-pivot.x / 16.0F), (double)(-pivot.y / 16.0F), (double)(-pivot.z / 16.0F));
+        stack.translate((double)(-pivot.x() / 16.0F), (double)(-pivot.y() / 16.0F), (double)(-pivot.z() / 16.0F));
         
         if (this.young) {
             stack.pushPose();
@@ -130,10 +128,10 @@ public class SyncedItemModel extends SyncedAccessoryModel {
         if (item instanceof SwordItem) {
             matrixStack.translate(0.25, 0, 0);
         }
-        matrixStack.mulPose(Axis.YP.rotationDegrees(45.0F));
-        matrixStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(45.0F));
+        matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
 
-        this.itemRenderer.renderItem(dog, stack, ItemDisplayContext.GROUND, false, matrixStack, bufferSource, packedLight);
+        this.itemRenderer.renderItem(dog, stack, TransformType.GROUND, false, matrixStack, bufferSource, packedLight);
     }
 
 }

@@ -2,7 +2,7 @@ package doggytalents.client.entity.model;
 
 import java.util.Optional;
 
-import org.joml.Vector3f;
+import com.mojang.math.Vector3f;
 
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;

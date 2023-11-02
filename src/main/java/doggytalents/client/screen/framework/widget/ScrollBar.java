@@ -1,7 +1,8 @@
 package doggytalents.client.screen.framework.widget;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import doggytalents.client.screen.framework.element.AbstractElement;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -27,7 +28,7 @@ public class ScrollBar extends AbstractWidget {
     public static enum Direction { VERTICAL, HORIZONTAL }
 
     @Override
-    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
         int barOffset = Mth.floor(this.barOffset);
         if (this.holdInflate) {
             this.holdInflate = screen.isDragging();
@@ -35,24 +36,24 @@ public class ScrollBar extends AbstractWidget {
         if (!this.isHovered && !holdInflate) {
             final int thick = 3;
             if (this.dir == Direction.VERTICAL) 
-                graphics.fill(this.getX() + this.width - thick, this.getY(), this.getX()+this.width, this.getY()+this.height, 0x87363636);
+                fill(stack,this.getX() + this.width - thick, this.getY(), this.getX()+this.width, this.getY()+this.height, 0x87363636);
             else
-                graphics.fill( this.getX(), this.getY() + this.height - thick, this.getX()+this.width, this.getY()+this.height, 0x87363636);
+                fill(stack, this.getX(), this.getY() + this.height - thick, this.getX()+this.width, this.getY()+this.height, 0x87363636);
             if (this.dir == Direction.VERTICAL) {
-                graphics.fill(this.getX() + this.getWidth() - thick, this.getY() + barOffset, 
+                fill(stack,this.getX() + this.getWidth() - thick, this.getY() + barOffset, 
                     this.getX()+this.getWidth(), this.getY() + barOffset+this.barSize, 0xffffffff);
             } else {
-                graphics.fill(this.getX() + barOffset, this.getY() + this.getHeight() - thick, 
+                fill(stack,this.getX() + barOffset, this.getY() + this.getHeight() - thick, 
                     this.getX() + barOffset + this.barSize, this.getY() + this.getHeight(), 0xffffffff);
             }
             return;
         }
-        graphics.fill( this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, 0x87363636);
+        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, 0x87363636);
         if (this.dir == Direction.VERTICAL) {
-            graphics.fill(this.getX(), this.getY() + barOffset, 
+            fill(stack,this.getX(), this.getY() + barOffset, 
                 this.getX()+this.getWidth(), this.getY() + barOffset+this.barSize, 0xffffffff);
         } else {
-            graphics.fill(this.getX() + barOffset, this.getY(), 
+            fill(stack,this.getX() + barOffset, this.getY(), 
                 this.getX() + barOffset + this.barSize, this.getY() + this.getHeight(), 0xffffffff);
         }
     }
@@ -98,8 +99,16 @@ public class ScrollBar extends AbstractWidget {
         this.barSize = size;
     }
 
+    //Imitate
+    private int getX() {
+        return this.x;
+    }
+
+    private int getY() {
+        return this.y;
+    }
+
     @Override
-    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
-        
+    public void updateNarration(NarrationElementOutput p_169152_) {
     }
 }

@@ -124,7 +124,7 @@ public class SkinButtonElement extends AbstractElement {
         int tY = this.getRealY() + this.getSizeY()/2 - font.lineHeight/2;
         String str = (this.activeSkinId+1) + "/" + this.locList.size();
         tX -= font.width(str)/2;
-        graphics.drawString(font, str, tX, tY, 0xffffffff);
+        font.draw(stack, str, tX, tY, 0xffffffff);
     }
 
     public void applyAndRequestSkinChange(int id) {

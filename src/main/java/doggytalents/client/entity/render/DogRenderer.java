@@ -2,12 +2,11 @@ package doggytalents.client.entity.render;
 
 import java.util.Objects;
 
-import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.ClientSetup;
@@ -367,7 +366,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
                    f = 1.0F;
                 }
        
-                p_115318_.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees(p_115317_)));
+                p_115318_.mulPose(Vector3f.ZP.rotationDegrees(f * this.getFlipDegrees(p_115317_)));
             }
             return;
         }

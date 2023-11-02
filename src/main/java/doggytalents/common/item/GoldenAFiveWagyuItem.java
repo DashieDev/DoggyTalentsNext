@@ -29,6 +29,7 @@ public class GoldenAFiveWagyuItem extends Item {
                     .effect(() -> new MobEffectInstance(MobEffects.SATURATION, 1200, 1), 1)
                     .build()
             )
+            .tab(DoggyItemGroups.GENERAL)
         );
     }
     @Override

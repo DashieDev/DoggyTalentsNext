@@ -10,7 +10,6 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
-import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.ConductingBoneData;
@@ -187,7 +186,7 @@ public class ConductingBoneScreen extends Screen {
         
         var pageStr = (pageNumber + 1) + "/" + maxPages;
         var pageStrWidth = font.width(pageStr);
-        graphics.drawString(font, pageStr, half_width - pageStrWidth/2, 
+        this.font.draw(stack, pageStr, half_width - pageStrWidth/2, 
             half_height - 110, 0xffffffff);
         prevPageButton.active = this.pageNumber > 0;
         nextPageButton.active = this.pageNumber < maxPages - 1;
