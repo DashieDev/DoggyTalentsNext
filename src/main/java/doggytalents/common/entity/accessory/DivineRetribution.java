@@ -185,7 +185,7 @@ public class DivineRetribution extends Accessory implements IAccessoryHasModel {
             if (recipe == null)
                 return;
             var cookedItem = recipe
-                .getResultItem(dog.level().registryAccess()).copy();
+                .getResultItem().copy();
             var cookedItemEntity = new ItemEntity(dog.level(), 
                 e.getX(), e.getY(), e.getZ(), cookedItem);
             cookedItemEntity.setDefaultPickUpDelay();

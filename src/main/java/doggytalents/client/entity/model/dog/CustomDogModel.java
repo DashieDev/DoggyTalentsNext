@@ -2,11 +2,10 @@ package doggytalents.client.entity.model.dog;
 
 import javax.annotation.Nullable;
 
-import org.joml.Vector3f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 
 import doggytalents.api.events.RegisterCustomDogModelsEvent.DogModelProps;
 import doggytalents.api.registry.AccessoryInstance;
@@ -88,24 +87,24 @@ public class CustomDogModel extends DogModel {
         }
         p_102034_.pushPose();
         p_102034_.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
-        p_102034_.translate((double)(pivot.x / 16.0F), (double)(pivot.y / 16.0F), (double)(pivot.z / 16.0F));
+        p_102034_.translate((double)(pivot.x() / 16.0F), (double)(pivot.y() / 16.0F), (double)(pivot.z() / 16.0F));
         if (root.zRot != 0.0F) {
-            p_102034_.mulPose(Axis.ZP.rotation(root.zRot));
+            p_102034_.mulPose(Vector3f.ZP.rotation(root.zRot));
         }
 
         if (root.yRot != 0.0F) {
-            p_102034_.mulPose(Axis.YP.rotation(root.yRot));
+            p_102034_.mulPose(Vector3f.YP.rotation(root.yRot));
         }
 
         if (root.xRot != 0.0F) {
-            p_102034_.mulPose(Axis.XP.rotation(root.xRot));
+            p_102034_.mulPose(Vector3f.XP.rotation(root.xRot));
         }
         float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
         float x0 = root.x, y0 = root.y, z0 = root.z;
         root.xRot = 0; root.yRot = 0; root.zRot = 0;
         root.x = 0; root.y = 0; root.z = 0;
         p_102034_.pushPose();
-        p_102034_.translate((double)(-pivot.x / 16.0F), (double)(-pivot.y / 16.0F), (double)(-pivot.z / 16.0F));
+        p_102034_.translate((double)(-pivot.x() / 16.0F), (double)(-pivot.y() / 16.0F), (double)(-pivot.z() / 16.0F));
         
         if (this.young && this.scaleBabyDog()) {
 

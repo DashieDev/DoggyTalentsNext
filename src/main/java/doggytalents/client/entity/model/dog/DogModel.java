@@ -6,8 +6,6 @@ import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
-import org.joml.Vector3f;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -609,7 +607,7 @@ public class DogModel extends EntityModel<Dog> {
         }
         p_102034_.pushPose();
         p_102034_.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
-        p_102034_.translate((double)(pivot.x / 16.0F), (double)(pivot.y / 16.0F), (double)(pivot.z / 16.0F));
+        p_102034_.translate((double)(pivot.x() / 16.0F), (double)(pivot.y() / 16.0F), (double)(pivot.z() / 16.0F));
         if (root.zRot != 0.0F) {
             p_102034_.mulPose(Vector3f.ZP.rotation(root.zRot));
         }
@@ -626,7 +624,7 @@ public class DogModel extends EntityModel<Dog> {
         root.xRot = 0; root.yRot = 0; root.zRot = 0;
         root.x = 0; root.y = 0; root.z = 0;
         p_102034_.pushPose();
-        p_102034_.translate((double)(-pivot.x / 16.0F), (double)(-pivot.y / 16.0F), (double)(-pivot.z / 16.0F));
+        p_102034_.translate((double)(-pivot.x() / 16.0F), (double)(-pivot.y() / 16.0F), (double)(-pivot.z() / 16.0F));
         
         if (this.young && this.scaleBabyDog()) {
 

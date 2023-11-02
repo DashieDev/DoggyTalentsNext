@@ -445,11 +445,11 @@ public class WhistleItem extends Item implements IDogItem {
         if (!dog.readyForNonTrivialAction())
             return;
         dog.triggerAction(new DogHowlAction(dog));
-        player.level().playSound(null, player.blockPosition(),
+        player.level.playSound(null, player.blockPosition(),
             DoggySounds.WHISTLE_SHORT.get(), 
             SoundSource.PLAYERS, 
-            0.6F + player.level().random.nextFloat() * 0.1F, 
-            0.8F + player.level().random.nextFloat() * 0.2F
+            0.6F + player.level.random.nextFloat() * 0.1F, 
+            0.8F + player.level.random.nextFloat() * 0.2F
         );
     }
 

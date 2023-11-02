@@ -1,5 +1,6 @@
 package doggytalents.common.item;
 
+import doggytalents.DoggyItemGroups;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 
@@ -13,6 +14,7 @@ public class SausageItem extends Item {
                     .meat()
                     .build()
             )
+            .tab(DoggyItemGroups.GENERAL)
         );
     }
     

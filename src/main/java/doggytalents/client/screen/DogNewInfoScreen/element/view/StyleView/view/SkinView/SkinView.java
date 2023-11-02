@@ -97,8 +97,8 @@ public class SkinView extends AbstractElement {
         filterBox.y=(this.getRealY() + 8);
         this.addChildren(filterBox);
 
-        this.scrollBar.setX(this.getRealX());
-        this.scrollBar.setY(this.getRealY() + this.getSizeY() - 8);
+        this.scrollBar.x = (this.getRealX());
+        this.scrollBar.y = (this.getRealY() + this.getSizeY() - 8);
         this.scrollBar.setWidth(this.getSizeX());
         this.scrollBar.setHeight(8);
         int barsize = 0;
@@ -115,8 +115,8 @@ public class SkinView extends AbstractElement {
 
         this.addChildren(scrollBar);
         
-        this.searchModeButton.setX(this.getRealX() + this.getSizeX() - 107);
-        this.searchModeButton.setY(this.getRealY() + 7);
+        this.searchModeButton.x = (this.getRealX() + this.getSizeX() - 107);
+        this.searchModeButton.y = (this.getRealY() + 7);
         this.addChildren(searchModeButton);
 
         return this;

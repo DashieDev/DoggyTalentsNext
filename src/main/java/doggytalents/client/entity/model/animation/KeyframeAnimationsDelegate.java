@@ -121,7 +121,7 @@ public class KeyframeAnimationsDelegate {
         var result = new Vector3f(0, 0, 0);
         nextKeyframe.interpolation()
             .apply(result, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
-        return result.y;
+        return result.y();
    }
 
    private static float getElapsedSeconds(AnimationDefinition animation, long raw_seconds) {

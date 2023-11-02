@@ -112,7 +112,7 @@ public class ModeSwitch extends AbstractWidget {
                 Style.EMPTY.withColor(0xffcda700)
             );
         }
-        graphics.drawString(font, mode_c1, mode_tX, mode_tY, 0xffffffff);
+        font.draw(stack, mode_c1, mode_tX, mode_tY, 0xffffffff);
 
         if (this.stillHovered) {
             if (this.dog.tickCount - this.tickCount0 >= 1) {

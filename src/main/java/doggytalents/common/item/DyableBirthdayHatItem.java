@@ -54,7 +54,8 @@ public class DyableBirthdayHatItem extends AccessoryItem implements IDyeableArmo
     }
 
     public static ItemStack dyeForegroundColorStack(ItemStack stack, List<DyeColor> dye) {
-        var newStack = stack.copyWithCount(1);
+        var newStack = stack.copy();
+        newStack.setCount(1);
         var item = stack.getItem();
         if (!(item instanceof DyableBirthdayHatItem birthdayHat))
             return ItemStack.EMPTY;

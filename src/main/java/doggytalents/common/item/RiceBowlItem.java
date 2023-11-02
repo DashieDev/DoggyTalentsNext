@@ -1,5 +1,6 @@
 package doggytalents.common.item;
 
+import doggytalents.DoggyItemGroups;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BowlFoodItem;
@@ -18,6 +19,7 @@ public class RiceBowlItem extends BowlFoodItem {
                     .saturationMod(0.5F)
                     .build()
             ).stacksTo(1).craftRemainder(Items.BOWL)
+            .tab(DoggyItemGroups.GENERAL)
         ); 
     }
 

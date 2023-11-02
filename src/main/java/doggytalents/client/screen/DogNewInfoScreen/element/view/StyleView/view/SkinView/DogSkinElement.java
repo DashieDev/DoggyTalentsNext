@@ -112,14 +112,14 @@ public class DogSkinElement extends AbstractElement {
         }
 
         @Override
-        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
             int pX = this.getRealX();
             int pY = this.getRealY() + LINE_SPACING;
-            graphics.drawString(font, title, pX, pY, 0xffffffff);
+            font.draw(stack, title, pX, pY, 0xffffffff);
             
             pY += font.lineHeight + LINE_SPACING;
             for (var line : components) {
-                graphics.drawString(font, line, pX, pY, 0xffffffff);
+                font.draw(stack, line, pX, pY, 0xffffffff);
                 pY += font.lineHeight + LINE_SPACING;
             }
         }
@@ -210,9 +210,9 @@ public class DogSkinElement extends AbstractElement {
         var manifestSkin = this.locList.get(indx);
         if (manifestSkin.mystery()) {
             manifestSkin = DogSkin.MYSTERY;
-            renderMysteriousKanji(graphics, e_mX, e_mY);
+            renderMysteriousKanji(stack, e_mX, e_mY);
             ActiveSkinSlice.DUMMY_DOG_OBJ.setClientSkin(manifestSkin);
-            DogStatusViewBoxElement.renderDogInside(graphics, 
+            DogStatusViewBoxElement.renderDogInside(stack, 
                 ActiveSkinSlice.DUMMY_DOG_OBJ, e_mX, e_mY, size, 
                 followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
         } else if (useDummy && ActiveSkinSlice.DUMMY_DOG_OBJ != null) {
@@ -244,19 +244,20 @@ public class DogSkinElement extends AbstractElement {
         }
     }
     
-    private void renderMysteriousKanji(GuiGraphics graphics, int x, int y) {
+    private void renderMysteriousKanji(PoseStack stack, int x, int y) {
         //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = 100;
-        graphics.blit(Resources.KANJI_MYSTERY_BKG, x - imgeSize/2, 
+        RenderSystem.setShaderTexture(0, Resources.SMALL_WIDGETS);
+        blit(stack, x - imgeSize/2, 
             y - imgeSize/2 - 27, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
-        var stack = graphics.pose();
         stack.pushPose();
         stack.translate(0, 0, 400);
-        graphics.blit(Resources.KANJI_MYSTERY, x - imgeSize/2, 
+        RenderSystem.setShaderTexture(0, Resources.KANJI_MYSTERY);
+        blit(stack, x - imgeSize/2, 
             y - imgeSize/2 - 27, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         stack.popPose();
         RenderSystem.disableBlend();

@@ -183,7 +183,7 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                    public void render(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
                         super.render(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.patrol_target_lock.help"), 150, font));

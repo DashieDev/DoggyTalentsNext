@@ -8,13 +8,11 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -156,10 +154,10 @@ public class HellHoundTalent extends TalentInstance {
 
     @Override
     public InteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
-        if (!source.is(DamageTypeTags.IS_FIRE)) {
+        if (!source.isFire()) {
             return InteractionResultHolder.pass(damage);
         }
-        if (!source.is(DamageTypes.LAVA)) {
+        if (source != DamageSource.LAVA) {
             ++this.fireDamageAccumulate;
             if (this.fireDamageAccumulate >= this.level() + 1) {
                 this.fireDamageAccumulate = 0;
@@ -177,7 +175,7 @@ public class HellHoundTalent extends TalentInstance {
 
     @Override
     public InteractionResult stillSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
-        if (source.is(DamageTypes.ON_FIRE))
+        if (source.isFire())
             return InteractionResult.SUCCESS;
         return InteractionResult.PASS;    
     }
