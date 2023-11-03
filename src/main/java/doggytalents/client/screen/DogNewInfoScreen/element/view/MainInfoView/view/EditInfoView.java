@@ -176,10 +176,10 @@ public class EditInfoView extends AbstractElement {
             new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0,
-                    40, 20, Component.literal("" + this.dog.patrolTargetLock()), 
+                    40, 20, ComponentUtil.literal("" + this.dog.patrolTargetLock()), 
                     b -> {
                         Boolean newVal = !this.dog.patrolTargetLock();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setMessage(ComponentUtil.literal("" + newVal));
                         this.requestPatrolTargetLock(newVal);
                     }     
                 ) {
@@ -200,10 +200,10 @@ public class EditInfoView extends AbstractElement {
             new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0,
-                    40, 20, Component.literal("" + this.dog.hideArmor()), 
+                    40, 20, ComponentUtil.literal("" + this.dog.hideArmor()), 
                     b -> {
                         Boolean newVal = !this.dog.hideArmor();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setMessage(ComponentUtil.literal("" + newVal));
                         this.requestShowArmor(newVal);
                     }     
                 ),

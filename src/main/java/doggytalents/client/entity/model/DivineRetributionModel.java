@@ -3,6 +3,7 @@ package doggytalents.client.entity.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -15,7 +16,7 @@ import net.minecraft.util.Mth;
 
 public class DivineRetributionModel extends ElytraCapeModel {
 
-    public ModelPart reflector;
+    public DogModelPart reflector;
 
     public DivineRetributionModel(ModelPart root) {
         super(root);
@@ -24,7 +25,7 @@ public class DivineRetributionModel extends ElytraCapeModel {
     @Override
     protected void populatePart(ModelPart box) {
         super.populatePart(box);
-        this.reflector = this.elytra.getChild("disc");
+        this.reflector = (DogModelPart)this.elytra.getChild("disc");
     }
 
     @Override

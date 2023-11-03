@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class HeadBandItem extends AccessoryItem{
     public HeadBandItem(Supplier<? extends HeadBandAccessory> type, Properties properties) {
@@ -25,7 +26,7 @@ public class HeadBandItem extends AccessoryItem{
         if (this == DoggyItems.HEAD_BAND_BLANK.get())
             return;
         var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id));
+        components.add(ComponentUtil.translatable(desc_id));
     }
 
 }

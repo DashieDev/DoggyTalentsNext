@@ -2,6 +2,7 @@ package doggytalents.client.entity.model;
 
 import java.util.Optional;
 
+import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 
@@ -11,18 +12,18 @@ public abstract class AnimatedSyncedAccessoryModel extends SyncedAccessoryModel 
         super(root);
     }
 
-    public Optional<ModelPart> searchForPartWithName(String name) {
-        if (this.root.hasChild(name)) 
-            return Optional.of(this.root.getChild(name));
+    public Optional<DogModelPart> searchForPartWithName(String name) {
+        if (((DogModelPart)this.root).hasChild(name)) 
+            return Optional.of((DogModelPart)this.root.getChild(name));
         if (name.equals("root"))
-            return Optional.of(this.root);
+            return Optional.of((DogModelPart)this.root);
         var partOptional = this.root.getAllParts()
-            .filter(part -> part.hasChild(name))
+            .filter(part -> ((DogModelPart)part).hasChild(name))
             .findFirst();
-        return partOptional.map(part -> part.getChild(name));
+        return partOptional.map(part -> (DogModelPart)part.getChild(name));
     }
 
-    public void resetPart(ModelPart part, Dog dog) {
+    public void resetPart(DogModelPart part, Dog dog) {
         part.resetPose();
     }
 

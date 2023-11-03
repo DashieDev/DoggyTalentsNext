@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class DivineRetributionItem extends AccessoryItem {
 
@@ -23,11 +24,11 @@ public class DivineRetributionItem extends AccessoryItem {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        components.add(ComponentUtil.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
         var desc_id2 = this.getDescriptionId(stack) + ".description2";
-        components.add(Component.translatable(desc_id2).withStyle(
+        components.add(ComponentUtil.translatable(desc_id2).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }

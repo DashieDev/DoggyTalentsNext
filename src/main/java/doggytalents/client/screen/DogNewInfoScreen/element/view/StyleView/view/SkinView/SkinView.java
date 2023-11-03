@@ -56,11 +56,11 @@ public class SkinView extends AbstractElement {
         };
         this.activeSkinId = DogTextureManager.INSTANCE.getAll().indexOf(dog.getClientSkin());
         searchByTag = false;
-        this.searchModeButton = new FlatButton(0, 0, 100, 20, Component.translatable("doggui.style.skins.search_by_name"),
+        this.searchModeButton = new FlatButton(0, 0, 100, 20, ComponentUtil.translatable("doggui.style.skins.search_by_name"),
             b -> {
                 searchByTag = !searchByTag;
-                b.setMessage(searchByTag ? Component.translatable("doggui.style.skins.search_by_tags")
-                    : Component.translatable("doggui.style.skins.search_by_name"));
+                b.setMessage(searchByTag ? ComponentUtil.translatable("doggui.style.skins.search_by_tags")
+                    : ComponentUtil.translatable("doggui.style.skins.search_by_name"));
             }
         );
     }

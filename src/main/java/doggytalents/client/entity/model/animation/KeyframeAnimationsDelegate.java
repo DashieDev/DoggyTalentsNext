@@ -2,9 +2,11 @@ package doggytalents.client.entity.model.animation;
 
 import com.mojang.math.Vector3f;
 
+import doggytalents.api.enu.forward_imitate.anim.AnimationChannel;
 import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
 import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
 import doggytalents.api.enu.forward_imitate.anim.Keyframe;
+import doggytalents.api.enu.forward_imitate.anim.AnimationChannel.Targets;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.AnimatedSyncedAccessoryModel;
 import doggytalents.client.entity.model.dog.DogModel;
@@ -16,7 +18,6 @@ import java.util.Optional;
 
 import com.mojang.math.Vector3f;
 
-import net.minecraft.client.animation.AnimationChannel.Targets;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;

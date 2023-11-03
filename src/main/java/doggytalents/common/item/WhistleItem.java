@@ -226,7 +226,7 @@ public class WhistleItem extends Item implements IDogItem {
             DogUtil.dynamicSearchAndTeleportToOwnwerInBatch(
                 world, heel_list, player, 3);
 
-            player.sendSystemMessage(Component.translatable("dogcommand.heel"));
+            player.sendMessage(ComponentUtil.translatable("dogcommand.heel"), Util.NIL_UUID);
             return;
         case STAY:
             if (world.isClientSide) return;
@@ -395,7 +395,7 @@ public class WhistleItem extends Item implements IDogItem {
         dog.authorizeRiding();
         var result = dog.startRiding(vehicle);
         if (result)
-        player.sendSystemMessage(Component.translatable("dogcommand.ride_with_me", dog.getName().getString()));
+        player.sendMessage(ComponentUtil.translatable("dogcommand.ride_with_me", dog.getName().getString()), Util.NIL_UUID);
     }
 
     private void heelByLook(Level level, Player player) {
@@ -419,7 +419,7 @@ public class WhistleItem extends Item implements IDogItem {
         if (!(entity instanceof Dog dog))
             return;
         DogUtil.dynamicSearchAndTeleportToOwnwer(dog, player, 2);
-        player.sendSystemMessage(Component.translatable("dogcommand.heel_by_name", dog.getName().getString()));
+        player.sendMessage(ComponentUtil.translatable("dogcommand.heel_by_name", dog.getName().getString()), Util.NIL_UUID);
         dog.setOrderedToSit(false);
     }
 

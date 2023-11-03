@@ -237,10 +237,10 @@ public class DogBedBlock extends BaseEntityBlock {
             return false;
         
         dog.setBedPos(pos);
-        player.sendSystemMessage(
-            Component.translatable("block.doggytalents.dog_bed.reclaim", 
+        player.sendMessage(
+            ComponentUtil.translatable("block.doggytalents.dog_bed.reclaim", 
                 dog.getName().getString(), 
-                dog.getGenderPossessiveAdj()));
+                dog.getGenderPossessiveAdj()), Util.NIL_UUID);
         return true;
     }
 

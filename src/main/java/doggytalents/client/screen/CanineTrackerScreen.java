@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
@@ -114,12 +115,12 @@ public class CanineTrackerScreen extends Screen {
         int half_width = this.width >> 1;
         int half_height = this.height >> 1; 
         var prevPage = new TextOnlyButton(half_width - 120, 
-            half_height - 10, 20, 20, Component.literal("<"), b -> {
+            half_height - 10, 20, 20, ComponentUtil.literal("<"), b -> {
                 this.pageNumber = Math.max(0, this.pageNumber - 1);
                 this.hightLightDogNamePerPage = 0;
             }, font);
         var nextPage = new TextOnlyButton(half_width + 100, 
-            half_height - 10, 20, 20, Component.literal(">"), b -> {
+            half_height - 10, 20, 20, ComponentUtil.literal(">"), b -> {
                 this.pageNumber = Math.min(maxPages - 1, this.pageNumber + 1);
                 this.hightLightDogNamePerPage = 0;
             }, font);

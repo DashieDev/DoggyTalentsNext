@@ -59,7 +59,7 @@ public class ModeSwitch extends AbstractWidget {
             mode = this.dog.getMode().nextMode();
         }
 
-        this.setMessage(Component.translatable(mode.getUnlocalisedName()));
+        this.setMessage(ComponentUtil.translatable(mode.getUnlocalisedName()));
 
         PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(this.dog.getId(), mode));
     }
@@ -160,12 +160,12 @@ public class ModeSwitch extends AbstractWidget {
                 double distance = this.dog.blockPosition().distSqr(this.dog.getBowlPos().get());
 
                 if (distance > 256D) {
-                    list.add(Component.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(Style.EMPTY.withColor(0xffcda700)));
+                    list.add(ComponentUtil.translatable("dog.mode.docile.distance", (int) Math.sqrt(distance)).withStyle(Style.EMPTY.withColor(0xffcda700)));
                 } else {
                     list.add(ComponentUtil.translatable("dog.mode.docile.bowl", (int) Math.sqrt(distance)).withStyle(ChatFormatting.GREEN));
                 }
             } else {
-                list.add(Component.translatable("dog.mode.docile.nobowl").withStyle(Style.EMPTY.withColor(0xffcda700)));
+                list.add(ComponentUtil.translatable("dog.mode.docile.nobowl").withStyle(Style.EMPTY.withColor(0xffcda700)));
             }
         }
 

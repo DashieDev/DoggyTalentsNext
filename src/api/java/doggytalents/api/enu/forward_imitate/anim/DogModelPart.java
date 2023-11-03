@@ -36,6 +36,7 @@ public class DogModelPart extends ModelPart {
             }, Object2ObjectArrayMap::new));
         var ret = new DogModelPart(part.cubes, newChildrenMap);
         ret.setInitialPose(part.storePose());
+        ret.loadPose(ret.getInitialPose());
         return ret;
     }
 

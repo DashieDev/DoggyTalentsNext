@@ -51,7 +51,7 @@ public class KitsuneMaskModel extends SyncedAccessoryModel {
 	}
 
     public void wear() {
-        this.rotator.resetPose();
+        this.rotator.setPos(0, 0, 0);
     }
 
     public void unWear() {

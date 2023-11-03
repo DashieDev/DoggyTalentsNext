@@ -4,12 +4,13 @@ import java.util.Optional;
 
 import com.mojang.math.Vector3f;
 
+import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogPose;
-import net.minecraft.client.animation.KeyframeAnimations;
+import doggytalents.api.enu.forward_imitate.anim.KeyframeAnimations;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -20,32 +21,32 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
 
-    public ModelPart flyingParts;
-    public ModelPart rWing;
-    public ModelPart lWing;
-    public ModelPart elytra;
+    public DogModelPart flyingParts;
+    public DogModelPart rWing;
+    public DogModelPart lWing;
+    public DogModelPart elytra;
 
     public ElytraCapeModel(ModelPart root) {
-        super(root);
+        super(DogModelPart.recreateFromModelPart(root));
     }
 
     @Override
     protected void populatePart(ModelPart box) {
         this.mane = Optional.of(box.getChild("upper_body"));
-        flyingParts = this.mane.get().getChild("elytra_rot");
-        elytra = flyingParts.getChild("elytra");
-        lWing = elytra.getChild("left_wing");
-        rWing = elytra.getChild("right_wing");
+        flyingParts = (DogModelPart)(this.mane.get().getChild("elytra_rot"));
+        elytra = (DogModelPart)(flyingParts.getChild("elytra"));
+        lWing = (DogModelPart)(elytra.getChild("left_wing"));
+        rWing = (DogModelPart)(elytra.getChild("right_wing"));
     }
 
     @Override
-    public Optional<ModelPart> searchForPartWithName(String name) {
+    public Optional<DogModelPart> searchForPartWithName(String name) {
         if (this.flyingParts.hasChild(name)) 
-            return Optional.of(this.flyingParts.getChild(name));
+            return Optional.of((DogModelPart)this.flyingParts.getChild(name));
         var partOptional = this.flyingParts.getAllParts()
-            .filter(part -> part.hasChild(name))
+            .filter(part -> ((DogModelPart)part).hasChild(name))
             .findFirst();
-        return partOptional.map(part -> part.getChild(name));
+        return partOptional.map(part -> (DogModelPart)part.getChild(name));
     }
 
     @Override
@@ -80,7 +81,7 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
     }
 
     @Override
-    void resetAllPose() {
+    void resetAllPose() {;
         elytra.resetPose();
         lWing.resetPose();
         rWing.resetPose();

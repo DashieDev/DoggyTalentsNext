@@ -4,6 +4,7 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
+import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
@@ -120,7 +121,7 @@ public class DogHungryGoal extends Goal {
         }  else {
             this.dog.setBegging(true);
             if (this.looktime == 0) {
-                this.owner.sendSystemMessage(Component.translatable("dog.msg.low_hunger." + this.dog.getRandom().nextInt(5), this.dog.getName()));
+                this.owner.sendMessage(ComponentUtil.translatable("dog.msg.low_hunger." + this.dog.getRandom().nextInt(5), this.dog.getName()), Util.NIL_UUID);
                 this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
             }
             this.dog.getLookControl().setLookAt(this.owner);

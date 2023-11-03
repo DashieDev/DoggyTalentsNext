@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -53,7 +54,7 @@ public class StarterBundleItem extends Item {
         }
         if (!hasEnoughSpace) {
             player.displayClientMessage(
-                Component.translatable("item.doggytalents.starter_bundle.fail")
+                ComponentUtil.translatable("item.doggytalents.starter_bundle.fail")
                     .withStyle(ChatFormatting.RED) 
                 , true);
             return InteractionResultHolder.success(stack);
@@ -73,12 +74,12 @@ public class StarterBundleItem extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        components.add(ComponentUtil.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
         for (var item : STARTER_ITEMS) {
-            var c1 = Component.translatable("item.doggytalents.starter_bundle.contains", 
-                1, Component.translatable(item.get().getDescriptionId()));
+            var c1 = ComponentUtil.translatable("item.doggytalents.starter_bundle.contains", 
+                1, ComponentUtil.translatable(item.get().getDescriptionId()));
             components.add(c1);
         }
     }

@@ -1096,7 +1096,7 @@ public class Dog extends AbstractDog {
         if (!this.level().isClientSide) {
             if (this.startRiding(player))
             player.displayClientMessage(
-                Component.translatable(
+                ComponentUtil.translatable(
                     "talent.doggytalents.bed_finder.dog_mount", 
                     this.getGenderPronoun()), true);
         }
@@ -1118,8 +1118,8 @@ public class Dog extends AbstractDog {
             this.usePlayerItem(player, hand, stack);
             this.setInLove(player);
         } else if (this.isBaby()) {
-            this.usePlayerItem(player, hand, stack);
-            this.ageUp(getSpeedUpSecondsWhenFeeding(-age), true);
+            //this.usePlayerItem(player, hand, stack);
+            //this.ageUp(getSpeedUpSecondsWhenFeeding(-age), true);
         }
         return InteractionResult.SUCCESS;
     }
@@ -1153,7 +1153,7 @@ public class Dog extends AbstractDog {
     private void displayToastIfNoPermission(Player player) {
         if (this.canInteract(player)) return;
         player.displayClientMessage(
-            Component.translatable("doggui.invalid_dog.no_permission.title", this.getName().getString())
+            ComponentUtil.translatable("doggui.invalid_dog.no_permission.title", this.getName().getString())
             .withStyle(ChatFormatting.RED) 
         , true);
     }
@@ -3683,6 +3683,10 @@ public class Dog extends AbstractDog {
 
             this.addMovementStat(this.getX() - this.xo, this.getY() - this.yo, this.getZ() - this.zo);
         }
+    }
+
+    private boolean hasControllingPassenger() {
+        return this.getControllingPassenger() != null;
     }
 
     public boolean canDogFly() {

@@ -211,7 +211,7 @@ public class DogIncapacitatedMananger {
         if (!dog.level().isClientSide) {
             if (dog.startRiding(player))
             player.displayClientMessage(
-                Component.translatable(
+                ComponentUtil.translatable(
                     "talent.doggytalents.bed_finder.dog_mount", 
                     dog.getGenderPronoun()), true);
         }
@@ -468,10 +468,7 @@ public class DogIncapacitatedMananger {
     }
 
     private boolean isDogDeepInFluid() {
-        var type = this.dog.getMaxHeightFluidType();
-        if (type.isAir()) return false;
-        double height = this.dog.getFluidTypeHeight(type);
-        return height > 0.5;
+        return this.dog.isInWater() || this.dog.isInLava();
     }
 
     private boolean showDrownPose() {

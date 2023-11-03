@@ -46,8 +46,8 @@ import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -323,8 +323,8 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void onLevelLoad(LevelEvent.Load event) {
-        var level = event.getLevel();
+    public void onLevelLoad(WorldEvent.Load event) {
+        var level = event.getWorld();
         if (level == null)
             return;
         var server = level.getServer();

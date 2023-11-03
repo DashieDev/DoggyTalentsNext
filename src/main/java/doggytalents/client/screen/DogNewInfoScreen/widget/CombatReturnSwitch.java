@@ -19,6 +19,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraftforge.network.PacketDistributor;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class CombatReturnSwitch extends AbstractWidget {
  
@@ -39,7 +40,7 @@ public class CombatReturnSwitch extends AbstractWidget {
     long tickCount0;
 
     public CombatReturnSwitch(int x, int y, int width, int height, Dog dog, Font font, Screen screen) {
-        super(x, y, width, height, Component.translatable(
+        super(x, y, width, height, ComponentUtil.translatable(
             dog.getCombatReturnStrategy().getUnlocalisedTitle()
         ));
         this.dog = dog;
@@ -58,7 +59,7 @@ public class CombatReturnSwitch extends AbstractWidget {
         } else {
             strategy = this.dog.getCombatReturnStrategy().next();
         }
-        this.setMessage(Component.translatable(strategy.getUnlocalisedTitle()));
+        this.setMessage(ComponentUtil.translatable(strategy.getUnlocalisedTitle()));
 
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
             new CombatReturnStrategyData(this.dog.getId(), strategy));
@@ -89,7 +90,7 @@ public class CombatReturnSwitch extends AbstractWidget {
         int mX = this.getX() + this.width/2;
         int mY = this.getY() + this.height/2;
 
-        var back_c1 = Component.literal("<");
+        var back_c1 = ComponentUtil.literal("<");
         back_c1.withStyle(
             Style.EMPTY.withBold(hoveredLeft)
         );
@@ -97,7 +98,7 @@ public class CombatReturnSwitch extends AbstractWidget {
         int back_tY = mY - font.lineHeight/2;
         font.draw(stack, back_c1, back_tX, back_tY, hoveredLeft ? 0xffffffff : 0xa5ffffff);
 
-        var next_c1 = Component.literal(">");
+        var next_c1 = ComponentUtil.literal(">");
         next_c1.withStyle(
             Style.EMPTY.withBold(hoveredRight)
         );

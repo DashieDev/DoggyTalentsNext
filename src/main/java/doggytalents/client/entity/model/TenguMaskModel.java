@@ -47,7 +47,7 @@ public class TenguMaskModel extends SyncedAccessoryModel {
 	}
 
     public void wear() {
-        this.rotator.resetPose();
+        this.rotator.setRotation(0, 0, 0);;
     }
 
     public void unWear() {

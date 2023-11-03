@@ -259,37 +259,37 @@ public class DoggyItems {
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.FRISBEE, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.BAKER_HAT, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.CHEF_HAT, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.LAB_COAT, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.FRISBEE_WET, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.BIRTHDAY_HAT, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 if (tintIndex == 1) {
                     return ((DyableBirthdayHatItem) stack.getItem()).getForegroundColor(stack);
                 }
@@ -298,7 +298,7 @@ public class DoggyItems {
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.FLYING_CAPE, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);

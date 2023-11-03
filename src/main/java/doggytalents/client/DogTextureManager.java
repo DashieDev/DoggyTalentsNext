@@ -50,10 +50,12 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         return skin.getPath();
     }
 
-    private synchronized void registerDogSkin(DogTextureManager.Preparations prep, Resource resource, DogSkin dogSkin) {
+    private synchronized void registerDogSkin(DogTextureManager.Preparations prep, ResourceManager resMan, ResourceLocation text_rl, DogSkin dogSkin) {
+        if (!resMan.hasResource(text_rl))
+            return;
         InputStream inputstream = null;
         try {
-            inputstream = resource.open();
+            inputstream = resMan.getResource(text_rl).getInputStream();
             String hash = computeHash(IOUtils.toByteArray(inputstream));
 
             if (prep.skinHashToLoc.containsKey(hash)) {
@@ -116,11 +118,13 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             return;
 
         for (var path : paths) {
+            if (!resMan.hasResource(path))
+                continue;
             InputStream istream = null;
             try {
-                var res = resMan.getResource(path);
-                if (res.isEmpty()) continue;
-                istream = res.get().open();
+                // var res = resMan.getResource(path);
+                // if (res.isEmpty()) continue;
+                istream = resMan.getResource(path).getInputStream();
                 var jsonElement = GSON.fromJson(new InputStreamReader(istream, StandardCharsets.UTF_8), JsonElement.class);
                 var jsonObject = jsonElement.getAsJsonObject();
                 getSkinFromSkinJson(resMan, prep, jsonObject);
@@ -171,9 +175,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
             readSkinExtraInfo(skin, skinObject);
 
-            var res = resMan.getResource(text_rl);
-            if (res.isPresent())
-            registerDogSkin(prep, res.get(), skin);
+            registerDogSkin(prep, resMan, text_rl, skin);
         }
     }
 

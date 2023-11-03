@@ -2,6 +2,7 @@ package doggytalents.client.screen.framework.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -18,7 +19,7 @@ public class ScrollBar extends AbstractWidget {
     private boolean holdInflate;
 
     public ScrollBar(int x, int y, int w, int h, Direction dir, int barsize, Screen screen) {
-        super(x, y, w, h, Component.empty());
+        super(x, y, w, h, ComponentUtil.empty());
         this.barSize = dir == Direction.VERTICAL ? Math.min(h, barsize)
             : Math.min(w, barsize);
         this.dir = dir;
