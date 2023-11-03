@@ -8,6 +8,8 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
@@ -80,4 +82,14 @@ public class CreeperSweeperTalent extends TalentInstance {
     public InteractionResult shouldAttackEntity(AbstractDog dog, LivingEntity target, LivingEntity owner) {
         return target instanceof Creeper && this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
      }
+
+    @Override
+    public void doAdditionalAttackEffects(AbstractDog dogIn, Entity target) {
+        if (this.level() < 5)
+            return;
+        if (!(target instanceof Creeper creeper))
+            return;
+        creeper.setHealth(0);
+        creeper.die(dogIn.damageSources().mobAttack(dogIn));
+    }
 }
