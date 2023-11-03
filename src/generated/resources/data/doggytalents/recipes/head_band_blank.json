@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "L",
+    "P"
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:lead"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "doggytalents:head_band_blank"
+  }
+}

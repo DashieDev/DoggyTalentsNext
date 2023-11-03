@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:salmon_sushi"
+    ]
+  },
+  "criteria": {
+    "has_salmon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:salmon"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:salmon_sushi"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_salmon",
+      "has_the_recipe"
+    ]
+  ]
+}

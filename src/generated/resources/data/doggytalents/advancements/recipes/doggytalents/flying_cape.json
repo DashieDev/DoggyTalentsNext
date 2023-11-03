@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:flying_cape"
+    ]
+  },
+  "criteria": {
+    "has_elytra": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:elytra"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:flying_cape"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_elytra",
+      "has_the_recipe"
+    ]
+  ]
+}

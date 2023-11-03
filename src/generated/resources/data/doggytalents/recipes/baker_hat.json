@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "WCW"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:leather_helmet"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "result": {
+    "item": "doggytalents:baker_hat"
+  }
+}

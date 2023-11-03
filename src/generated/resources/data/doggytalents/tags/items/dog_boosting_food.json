@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:golden_apple",
+    "minecraft:enchanted_golden_apple",
+    "minecraft:golden_carrot",
+    "doggytalents:egg_sandwich",
+    "doggytalents:golden_a_five_wagyu",
+    "doggytalents:onigiri",
+    "doggytalents:salmon_sushi",
+    "doggytalents:sausage"
+  ]
+}

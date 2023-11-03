@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:crow_wings_alt"
+    ]
+  },
+  "criteria": {
+    "has_elytra": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:elytra"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:crow_wings_alt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_elytra",
+      "has_the_recipe"
+    ]
+  ]
+}

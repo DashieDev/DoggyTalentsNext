@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FBF",
+    "BEB",
+    "FBF"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:feather"
+    },
+    "F": {
+      "item": "minecraft:black_dye"
+    },
+    "E": {
+      "item": "minecraft:elytra"
+    }
+  },
+  "result": {
+    "item": "doggytalents:crow_wings"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:chef_hat"
+    ]
+  },
+  "criteria": {
+    "has_leather_helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:leather_helmet"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:chef_hat"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_leather_helmet",
+      "has_the_recipe"
+    ]
+  ]
+}

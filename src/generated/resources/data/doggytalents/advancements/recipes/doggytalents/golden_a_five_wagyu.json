@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:golden_a_five_wagyu"
+    ]
+  },
+  "criteria": {
+    "has_cooked_beef": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:cooked_beef"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:golden_a_five_wagyu"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_cooked_beef",
+      "has_the_recipe"
+    ]
+  ]
+}

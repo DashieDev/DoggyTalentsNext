@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " C ",
+    " W ",
+    "WWW"
+  ],
+  "key": {
+    "C": {
+      "item": "doggytalents:cape_coloured"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "result": {
+    "item": "doggytalents:lab_coat"
+  }
+}
