@@ -100,12 +100,12 @@ dependencies {
 //     from sourceSets.api.allJava
 // }
 
-// task apiJar(type: Jar) {
-//     duplicatesStrategy(DuplicatesStrategy.FAIL)
-//     archiveClassifier = 'api'
-//     from sourceSets.api.output
-//     from sourceSets.api.allJava
-// }
+task apiJar(type: Jar) {
+    duplicatesStrategy(DuplicatesStrategy.FAIL)
+    archiveClassifier = 'api'
+    from sourceSets.api.output
+    from sourceSets.api.allJava
+}
 
 // artifacts {
 //     archives sourcesJar
