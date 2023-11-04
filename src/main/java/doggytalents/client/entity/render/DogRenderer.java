@@ -367,6 +367,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
        
                 p_115318_.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees(p_115317_)));
             }
+            p_115318_.mulPose(Axis.YP.rotationDegrees(180.0F - p_115320_));
             return;
         }
         super.setupRotations(p_115317_, p_115318_, p_115319_, p_115320_, p_115321_);
