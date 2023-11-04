@@ -15,6 +15,8 @@ public class DogDrownAction extends AnimationAction {
     @Override
     public void tick() {
         super.tick();
+        if (this.getState() == ActionState.FINISHED)
+            return;
         if (this.tickTillShink <= 0 && !this.dog.isDogSwimming()) {
             this.dog.setDogSwimming(true);
         }
