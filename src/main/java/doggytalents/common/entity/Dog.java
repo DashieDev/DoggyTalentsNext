@@ -3819,10 +3819,10 @@ public class Dog extends AbstractDog {
         float forward = rider.zza;
         double downward = rideVec.y; 
         
-        if (this.isInWater() && forward > 0 && this.canSwimUnderwater() ) {
+        if (forward > 0 && !isDogRidingConstraintToGround()) {
             float l = forward;
-            downward = -l*Mth.sin(this.getXRot() * ((float)Math.PI / 180F));
-            forward = l*Mth.cos(this.getXRot() * ((float)Math.PI / 180F));
+            downward = -l*Mth.sin(rider.getXRot() * ((float)Math.PI / 180F));
+            forward = l*Mth.cos(rider.getXRot() * ((float)Math.PI / 180F));
         } 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
         // If moving backwards half  the speed
@@ -3831,6 +3831,14 @@ public class Dog extends AbstractDog {
         }
         
         return new Vec3(straf, downward, forward);
+    }
+
+    protected boolean isDogRidingConstraintToGround() {
+        if (this.isInWater() && this.canSwimUnderwater())
+            return false;
+        if (this.canDogFly())
+            return false;
+        return true;
     }
 
     @Override
