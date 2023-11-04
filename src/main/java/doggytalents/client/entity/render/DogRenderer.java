@@ -1,5 +1,7 @@
 package doggytalents.client.entity.render;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -52,6 +54,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         for (LayerFactory<Dog, DogModel> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
         }
+        this.originalDogLayers = new ArrayList<>(this.layers);
     }
 
     @Override
@@ -256,6 +259,8 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     //Super call Inlined without broastcasting any render event as an attempt to resolve render conflict, 
     //if users opt for it.
 
+    private List<RenderLayer<Dog, DogModel>> originalDogLayers = List.of();
+
      public void MobRenderer_render(Dog p_115455_, float p_115456_, float p_115457_, PoseStack p_115458_, MultiBufferSource p_115459_, int p_115460_) {
         LivingEntityRenderer_render(p_115455_, p_115456_, p_115457_, p_115458_, p_115459_, p_115460_);
      }
@@ -339,7 +344,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         }
 
         if (!p_115308_.isSpectator()) {
-            for(var renderlayer : this.layers) {
+            for(var renderlayer : this.originalDogLayers) {
                 renderlayer.render(p_115311_, p_115312_, p_115313_, p_115308_, f5, f8, p_115310_, f7, f2, f6);
             }
         }
