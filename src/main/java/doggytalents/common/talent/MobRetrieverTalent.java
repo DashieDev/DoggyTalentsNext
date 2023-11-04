@@ -11,8 +11,11 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -90,6 +93,8 @@ public class MobRetrieverTalent extends TalentInstance {
         return true;
     }
 
+    
+
     private boolean canStillRideTarget(Dog dog, Entity target) {
         if (!target.isAlive())
             return false;
@@ -99,7 +104,28 @@ public class MobRetrieverTalent extends TalentInstance {
             return false;
         if (dog.isInSittingPose())
             return false;
+        if (!dog.isDoingFine())
+            return false;
         return true;
+    }
+
+    @Override
+    public InteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
+        maybeDropRiding(dog);
+        return super.gettingAttackedFrom(dog, source, damage);
+    }
+
+    private void maybeDropRiding(AbstractDog dog) {
+        if (!dog.isVehicle())
+            return;
+        var passenger = dog.getFirstPassenger();
+        if (passenger == null)
+            return;
+        if ((passenger instanceof TamableAnimal otherDog) 
+            && otherDog.getOwner() == dog.getOwner()) {
+            return;
+        }
+        dog.unRide();
     }
 
     private boolean canLevelRideTarget(Dog dog, Entity target) {
