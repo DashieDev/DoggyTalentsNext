@@ -14,6 +14,8 @@ public class DogBackFlipAction extends AnimationAction {
     @Override
     public void tick() {
         super.tick();
+        if (this.getState() == ActionState.FINISHED)
+            return;
         if (--this.tickTillJump == 0) {
             this.dog.getJumpControl().jump();
         }
