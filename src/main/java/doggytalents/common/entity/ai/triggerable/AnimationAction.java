@@ -42,6 +42,8 @@ public class AnimationAction extends TriggerableAction {
     }
 
     public boolean validateAnim() {
+        if (dog.getAnim() != anim)
+            return false;
         return this.dog.getNavigation().isDone();
     }
 
