@@ -2228,6 +2228,7 @@ public class Dog extends AbstractDog {
         compound.putByte("combatReturnStrategy", this.getCombatReturnStrategy().getId());
         compound.putBoolean("crossOriginTp", this.crossOriginTp());
         compound.putBoolean("patrolTargetLock", this.patrolTargetLock());
+        compound.putBoolean("hideDogArmor", this.hideArmor());
         compound.putInt("dogSize", this.getDogSize().getId());
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
         compound.putInt("level_dire", this.getDogLevel().getLevel(Type.DIRE));
@@ -2473,6 +2474,7 @@ public class Dog extends AbstractDog {
             this.setForceSit(compound.getBoolean("forceSit"));
             this.setCrossOriginTp(compound.getBoolean("crossOriginTp"));
             this.setPatrolTargetLock(compound.getBoolean("patrolTargetLock")); 
+            this.setHideArmor(compound.getBoolean("hideDogArmor"));
             var low_health_strategy_id = compound.getByte("lowHealthStrategy");
             this.setLowHealthStrategy(LowHealthStrategy.fromId(low_health_strategy_id));
             var combat_return_strategy_id = compound.getByte("combatReturnStrategy");
