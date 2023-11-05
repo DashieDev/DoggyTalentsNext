@@ -55,7 +55,7 @@ public class DogRestWhenSitGoal extends Goal {
         restPeriod = 100 + this.dog.getRandom().nextInt(11) * 20;
         reSitTime = 0;
         this.dog.setResting(true);
-        this.dog.setAnim(DogAnimation.SIT_TO_REST);
+        this.dog.setAnimForIdle(DogAnimation.SIT_TO_REST);
     }
 
     @Override
