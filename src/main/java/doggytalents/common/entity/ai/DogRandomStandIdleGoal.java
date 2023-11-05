@@ -44,7 +44,7 @@ public class DogRandomStandIdleGoal extends Goal {
         this.stopTick = dog.tickCount + currentAnimation.getLengthTicks();
         this.startTick = dog.tickCount;
         this.jumped = false;
-        this.dog.setAnim(currentAnimation);
+        this.dog.setAnimForIdle(currentAnimation);
     }
 
     @Override
