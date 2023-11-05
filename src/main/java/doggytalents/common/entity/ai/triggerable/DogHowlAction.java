@@ -22,6 +22,10 @@ public class DogHowlAction extends TriggerableAction {
 
     @Override
     public void tick() {
+        if (dog.getAnim() != DogAnimation.HOWL) {
+            this.setState(ActionState.FINISHED);
+            return;
+        }
         if (dog.tickCount >= stopTick) {
             this.setState(ActionState.FINISHED);
             return;
