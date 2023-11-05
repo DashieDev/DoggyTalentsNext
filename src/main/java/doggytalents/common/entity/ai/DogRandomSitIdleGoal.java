@@ -38,6 +38,8 @@ public class DogRandomSitIdleGoal extends Goal {
             return false;
         if (this.dog.getDogPose() != DogPose.SIT)
             return false;
+        if (!this.dog.canContinueDoIdileAnim())
+            return false;
         if (!dog.onGround()) return false;
 
         return this.dog.tickCount < this.stopTick;
@@ -47,7 +49,7 @@ public class DogRandomSitIdleGoal extends Goal {
     public void start() {
         this.currentAnimation = getIdleAnim();
         this.stopTick = dog.tickCount + currentAnimation.getLengthTicks();
-        this.dog.setAnim(currentAnimation);
+        this.dog.setAnimForIdle(currentAnimation);
     }
 
     @Override
