@@ -1571,7 +1571,10 @@ public class Dog extends AbstractDog {
             } else {
                 this.setAnim(DogAnimation.NONE);
             }
-            this.setStandAnim(DogAnimation.NONE);
+            if (this.isInSittingPose()) {
+                this.setStandAnim(DogAnimation.NONE);
+                this.setInSittingPose(false);
+            }
             this.setOrderedToSit(false);
             this.dogAnimHurtImpules = true;
         }
