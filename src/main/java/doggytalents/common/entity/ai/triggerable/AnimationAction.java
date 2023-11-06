@@ -15,11 +15,11 @@ public class AnimationAction extends TriggerableAction {
 
     @Override
     public void onStart() {
+        this.dog.setAnim(anim);
         if (!this.validateAnim()) {
             this.setState(ActionState.FINISHED);
             return;
         }
-        this.dog.setAnim(anim);
     }
 
     @Override
