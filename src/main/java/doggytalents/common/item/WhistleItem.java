@@ -409,7 +409,7 @@ public class WhistleItem extends Item implements IDogItem {
         var search_area = player.getBoundingBox().expandTowards(max_reach_vec).inflate(1.0D, 1.0D, 1.0D);
         var hitResult = ProjectileUtil.getEntityHitResult(
             player, eye_pos, max_pos, search_area, e -> {
-                return (e instanceof Dog);
+                return (e instanceof Dog dog) && dog.isDoingFine();
             }, reach_range*reach_range);
         if (hitResult == null)
             return;
