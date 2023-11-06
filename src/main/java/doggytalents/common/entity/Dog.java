@@ -4101,6 +4101,15 @@ public class Dog extends AbstractDog {
         return this.isDogSwimming;
     }
 
+    private boolean isDogCurious;
+    public boolean isDogCurious() {
+        return isDogCurious;
+    }
+
+    public void setDogCurious(boolean val) {
+        this.isDogCurious = val;
+    }
+
     @Override
     public void setDogFlying(boolean s) {
         this.setDogFlag(1024, s);
