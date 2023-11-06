@@ -94,6 +94,7 @@ public class DTLootTableProvider extends LootTableProvider {
             dropsSelf(DoggyBlocks.DOG_BATH);
             dropDogBed(DoggyBlocks.DOG_BED);
             dropsSelf(DoggyBlocks.FOOD_BOWL); // Drop with the name of the dog bowl
+            dropsSelf(DoggyBlocks.WATER_BOWL);
         }
     }
 

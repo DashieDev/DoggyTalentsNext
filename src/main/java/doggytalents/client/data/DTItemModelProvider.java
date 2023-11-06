@@ -130,6 +130,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         birthdayHat(DoggyItems.BIRTHDAY_HAT);
 
         blockItem(DoggyBlocks.DOG_BATH);
+        blockItem(DoggyBlocks.WATER_BOWL);
         blockItem(DoggyBlocks.DOG_BED);
         blockItem(DoggyBlocks.FOOD_BOWL);
     }
