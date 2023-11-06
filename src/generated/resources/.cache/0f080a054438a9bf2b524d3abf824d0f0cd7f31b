@@ -1,4 +1,4 @@
-// 1.20.1	2023-10-27T14:54:34.8282764	DoggyTalents Item Models
+// 1.20.1	2023-11-06T14:48:46.3851151	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
 b5e90b9e4c73e4e830dfa769f25fa806aa5dab8c assets/doggytalents/models/item/baker_hat.json
@@ -82,6 +82,7 @@ ed79374f62fcbaf72da014a75b6f8115f75fb640 assets/doggytalents/models/item/throw_s
 24bd519cf07ab7a043047f19698cc65478bdf4fd assets/doggytalents/models/item/throw_stick_wet.json
 adc09642854ad0854ae5d3f97bcc2bcdbd7da8d0 assets/doggytalents/models/item/training_treat.json
 1149d5f23768a62627d782d1d6a66c1f0a1dd02f assets/doggytalents/models/item/treat_bag.json
+72dfc056f7df39dafbf6954e0cf694e7142d0b33 assets/doggytalents/models/item/water_bowl.json
 7463378ef868b9e2a5743e3fc7837c28e1c8222e assets/doggytalents/models/item/whistle.json
 272f446b0708c9066160b62935c82364ebcffd02 assets/doggytalents/models/item/wig.json
 edfc173f2dcf439d7e9a9fb9cc54e18261ca75d6 assets/doggytalents/models/item/witch_hat.json
