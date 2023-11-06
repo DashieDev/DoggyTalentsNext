@@ -85,7 +85,8 @@ public class MobRetrieverTalent extends TalentInstance {
             return false;
         if (target instanceof Enemy)
             return false;
-        if (target instanceof Dog otherDog 
+        if (target instanceof TamableAnimal otherDog 
+            && dog.getOwnerUUID() != null
             && ObjectUtils.notEqual(otherDog.getOwnerUUID(), dog.getOwnerUUID()))
             return false;
         if (!canLevelRideTarget(dog, target))
@@ -130,19 +131,17 @@ public class MobRetrieverTalent extends TalentInstance {
 
     private boolean canLevelRideTarget(Dog dog, Entity target) {
         int lvl = this.level();
-        if (lvl >= 5)
-            return true;
-        var target_bb = target.getBoundingBox();
-        double target_volume = target_bb.getXsize() * target_bb.getYsize() * target_bb.getZsize();
-        if (lvl <= 2) {
-            return target_volume <= 0.3;
-        } else if (lvl <= 3) {
-            return target_volume <= 0.6;
-        } else if (lvl <= 4) {
-            return target_volume <= 1;
-        } else {
+        float target_bbW = target.getBbWidth();
+        float target_bbH = target.getBbHeight();
+        float w_ratio = target_bbW / dog.getDogVisualBbWidth();
+        float h_ratio = target_bbH / dog.getDogVisualBbHeight();
+        if (w_ratio > 1.2)
             return false;
-        }
+        if (lvl >= 5)
+            return h_ratio <= 2;
+        if (lvl >= 3)
+            return h_ratio <= 1.5;
+        return h_ratio <= 1;
     }
 
     private boolean readyForNewRider(Dog dog) {
