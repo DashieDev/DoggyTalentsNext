@@ -19,7 +19,7 @@ public enum DogAnimation {
     FAINT_STAND_2(12, 80),
     BACKFLIP(13, 20),
     PROTEST(14, 120),
-    STAND_IDLE_2(15, 80),
+    STAND_IDLE_2(15, 80, 1f, true, false, true),
     DIG(16, 120),
     SIT_IDLE(17, 90),
     SCRATCHIE(18, 70),
@@ -43,6 +43,7 @@ public enum DogAnimation {
     private final int lengthTicks;
     private final float speedModifier;
     private final boolean freeTail;
+    private final boolean freeHead;
     private boolean looping = false;
     
     private DogAnimation(int id, int lengthTicks) {
@@ -50,6 +51,7 @@ public enum DogAnimation {
         this.lengthTicks = lengthTicks;
         this.speedModifier = 1;
         freeTail = true;
+        freeHead = false;
     }
 
     private DogAnimation(int id, int lengthTicks, float speed) {
@@ -57,6 +59,7 @@ public enum DogAnimation {
         this.lengthTicks = Mth.ceil(((float)lengthTicks)/speed);
         this.speedModifier = speed;
         freeTail = true;
+        freeHead = false;
     }
 
     private DogAnimation(int id, int lengthTicks, float speed, boolean freeTail) {
@@ -64,6 +67,7 @@ public enum DogAnimation {
         this.lengthTicks = Mth.ceil(((float)lengthTicks)/speed);
         this.speedModifier = speed;
         this.freeTail = freeTail;
+        freeHead = false;
     }
 
     private DogAnimation(int id, int lengthTicks, float speed, boolean freeTail, boolean looping) {
@@ -72,6 +76,16 @@ public enum DogAnimation {
         this.speedModifier = speed;
         this.freeTail = freeTail;
         this.looping = looping;
+        freeHead = false;
+    }
+
+    private DogAnimation(int id, int lengthTicks, float speed, boolean freeTail, boolean looping, boolean freeHead) {
+        this.id = id;
+        this.lengthTicks = Mth.ceil(((float)lengthTicks)/speed);
+        this.speedModifier = speed;
+        this.freeTail = freeTail;
+        this.looping = looping;
+        this.freeHead = freeHead;
     }
 
     public static DogAnimation byId(int i) {
@@ -85,6 +99,7 @@ public enum DogAnimation {
     public int getLengthTicks() { return this.lengthTicks; }
     public float getSpeedModifier() { return this.speedModifier; }
     public boolean freeTail() { return this.freeTail; }
+    public boolean freeHead () { return this.freeHead; }
     public boolean looping() { return this.looping; }
 
 }

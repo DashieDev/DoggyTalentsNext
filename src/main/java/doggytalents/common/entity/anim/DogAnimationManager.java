@@ -36,7 +36,7 @@ public class DogAnimationManager {
     }
 
     public void tick() {
-        if (started) {
+        if (started && !this.dog.getAnim().freeHead()) {
             this.dog.xRotO = 0;
             this.dog.yBodyRot = this.dog.yHeadRot;
             this.dog.setXRot(0);

@@ -154,7 +154,11 @@ public class DogModel extends EntityModel<Dog> {
         var pose = dog.getDogPose();
 
         var anim = dog.getAnim();
-        if (anim != DogAnimation.NONE) return;
+        if (anim != DogAnimation.NONE) {
+            if (anim.freeHead() && pose.canBeg)
+                this.translateBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
+            return;
+        };
         
         switch (pose) {
             case FAINTED:
@@ -445,6 +449,7 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     Vector3f vecObj = new Vector3f();
+    private float headXRot0 = 0, headYRot0 = 0, realHeadZRot0 = 0;
 
     @Override
     public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
@@ -465,6 +470,11 @@ public class DogModel extends EntityModel<Dog> {
         if (anim == DogAnimation.NONE) return;
         var sequence = DogAnimationRegistry.getSequence(anim);
         if (sequence == null) return;
+        if (pose.freeHead && anim.freeHead()) {
+            headXRot0 = this.head.xRot;
+            headYRot0 = this.head.yRot;
+            realHeadZRot0 = this.realHead.zRot;
+        }
         
         if (animState.isStarted()) {
             animState.updateTime(ageInTicks, anim.getSpeedModifier());
@@ -498,6 +508,14 @@ public class DogModel extends EntityModel<Dog> {
         if (part == this.tail && dog.getAnim().freeTail()) {
             this.tail.resetPose();
             this.tail.xRot = dog.getTailRotation();
+            return;
+        }
+        if (part == this.head && dog.getAnim().freeHead() && dog.getDogPose().freeHead) {
+            this.head.resetPose();
+            this.head.xRot = headXRot0;
+            this.head.yRot = headYRot0;
+            this.realHead.resetPose();
+            this.realHead.zRot = realHeadZRot0;
             return;
         }
         part.resetPose();
