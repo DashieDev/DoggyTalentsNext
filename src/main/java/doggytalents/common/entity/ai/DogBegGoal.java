@@ -42,7 +42,7 @@ public class DogBegGoal extends Goal {
             return false;
         if (!this.hasTemptationItemInHand(player))
             return false;
-        if (this.dog.getAnim() != DogAnimation.NONE)
+        if (!this.dog.getAnim().freeHead() && this.dog.getAnim() != DogAnimation.NONE)
             return false;
         return true;
     }
