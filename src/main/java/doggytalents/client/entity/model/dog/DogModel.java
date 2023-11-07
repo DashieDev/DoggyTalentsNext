@@ -607,20 +607,22 @@ public class DogModel extends EntityModel<Dog> {
     public boolean hasAdditonalRendering() { return false; }
     public void doAdditonalRendering(Dog dog, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {}
 
-    //Decoupled from ColorableAgeableListModel
-    private float r = 1.0F;
-    private float g = 1.0F;
-    private float b = 1.0F;
+    protected float wetShade = 1f;
 
-    public void setColor(float p_102420_, float p_102421_, float p_102422_) {
-        this.r = p_102420_;
-        this.g = p_102421_;
-        this.b = p_102422_;
+    public void setWetShade(float shade) {
+        this.wetShade = shade;
     }
-    //END
+    
+    public void resetWetShade() {
+        wetShade = 1f;
+    }
 
     @Override
     public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, float p_102038_, float p_102039_, float p_102040_, float p_102041_) {
+        p_102038_ *= this.wetShade;
+        p_102039_ *= this.wetShade;
+        p_102040_ *= this.wetShade;
+        
         var pivot = DEFAULT_ROOT_PIVOT;
         var custom_pivot = getCustomRootPivotPoint();
         if (custom_pivot != null) {
