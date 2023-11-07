@@ -51,6 +51,10 @@ public class DogAnimationRegistry {
         register(DogAnimation.FLY_JUMP_START, DogAnimationSequences2.FLY_JUMP_START);
         register(DogAnimation.FLY_AIR_BOURNE, DogAnimationSequences2.FLY_AIR_BOURNE);
         register(DogAnimation.FLY_LANDING, DogAnimationSequences2.FLY_LANDING);
+        register(DogAnimation.TOUCH_RETREAT, DogAnimationSequences2.TOUCH_RETREAT);
+        register(DogAnimation.SNIFF_HOT, DogAnimationSequences2.SNIFF_HOT);
+        register(DogAnimation.SNIFF_NEUTRAL, DogAnimationSequences2.SNIFF_NEUTRAL);
+        register(DogAnimation.SNIFF_SNEEZE, DogAnimationSequences2.SNIFF_SNEEZE);
     }
     
 }
