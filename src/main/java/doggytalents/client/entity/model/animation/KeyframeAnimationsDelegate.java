@@ -47,9 +47,12 @@ public class KeyframeAnimationsDelegate {
                 Keyframe nextKeyframe = keyframes[nextKeyframeIndx];
                 float passed_time_since_current = elapsed_in_seconds - currentKeyframe.timestamp();
                 float duration_between = nextKeyframe.timestamp() - currentKeyframe.timestamp();
-                float passed_progress = Mth.clamp(
-                    passed_time_since_current / duration_between, 
-                0.0F, 1.0F);
+                float passed_progress = 0;
+                if (duration_between > 0) {
+                    passed_progress = Mth.clamp(
+                        passed_time_since_current / duration_between, 
+                        0.0F, 1.0F);
+                }
                 nextKeyframe.interpolation()
                     .apply(current_pos, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
                 channel.target().apply((DogModelPart)part, current_pos);
@@ -81,9 +84,12 @@ public class KeyframeAnimationsDelegate {
                 Keyframe nextKeyframe = keyframes[nextKeyframeIndx];
                 float passed_time_since_current = elapsed_in_seconds - currentKeyframe.timestamp();
                 float duration_between = nextKeyframe.timestamp() - currentKeyframe.timestamp();
-                float passed_progress = Mth.clamp(
-                    passed_time_since_current / duration_between, 
-                0.0F, 1.0F);
+                float passed_progress = 0;
+                if (duration_between > 0) {
+                    passed_progress = Mth.clamp(
+                        passed_time_since_current / duration_between, 
+                        0.0F, 1.0F);
+                }
                 nextKeyframe.interpolation()
                     .apply(current_pos, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
                 channel.target().apply(part, current_pos);
@@ -118,9 +124,12 @@ public class KeyframeAnimationsDelegate {
         Keyframe nextKeyframe = keyframes[nextKeyframeIndx];
         float passed_time_since_current = elapsed_in_seconds - currentKeyframe.timestamp();
         float duration_between = nextKeyframe.timestamp() - currentKeyframe.timestamp();
-        float passed_progress = Mth.clamp(
-            passed_time_since_current / duration_between, 
-        0.0F, 1.0F);
+        float passed_progress = 0;
+        if (duration_between > 0) {
+            passed_progress = Mth.clamp(
+                passed_time_since_current / duration_between, 
+                0.0F, 1.0F);
+        }
         var result = new Vector3f(0, 0, 0);
         nextKeyframe.interpolation()
             .apply(result, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
