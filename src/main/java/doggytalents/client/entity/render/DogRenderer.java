@@ -73,19 +73,16 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             this.model = this.defaultModel;
         }
 
+        this.model.resetWetShade();
         if (dog.isDogWet()) {
             float f = dog.getShadingWhileWet(partialTicks);
-            this.model.setColor(f, f, f);
+            this.model.setWetShade(f);
         }
 
         if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
             MobRenderer_render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         } else
             super.render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-
-        if (dog.isDogWet()) {
-            this.model.setColor(1.0F, 1.0F, 1.0F);
-        }
 
         if (this.model.hasAdditonalRendering())
             this.model.doAdditonalRendering(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
