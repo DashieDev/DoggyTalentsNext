@@ -69,9 +69,9 @@ public class DogRestWhenSitGoal extends Goal {
         
         if (this.restPeriod <= 0) {
             if (this.dog.getAnim() == DogAnimation.REST_IDLE) {
-                this.dog.setResting(false);
                 this.dog.setAnim(DogAnimation.REST_TO_SIT);
             }
+            this.dog.setResting(false);
             ++this.reSitTime;
         }
     }
