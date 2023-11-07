@@ -33,7 +33,11 @@ public enum DogAnimation {
     REST_TO_SIT(26, 65),
     FLY_JUMP_START(27, 10, 1f, false),
     FLY_AIR_BOURNE(28, 40, 1f, false, true),
-    FLY_LANDING(29, 10, 1f, false);
+    FLY_LANDING(29, 10, 1f, false),
+    TOUCH_RETREAT(30, 11*20, 1f, true),
+    SNIFF_HOT(31, 80, 1f, true),
+    SNIFF_NEUTRAL(32, 80, 1f, true),
+    SNIFF_SNEEZE(33, 50, 1f, true);
 
     private final int id;
     private final int lengthTicks;
