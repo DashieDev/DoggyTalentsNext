@@ -18,7 +18,8 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
@@ -125,7 +126,7 @@ public class SyncedItemModel extends SyncedAccessoryModel {
         matrixStack.translate(-0.025F, 0.125F, -0.32F);
         var item = stack.getItem();
 
-        if (item instanceof SwordItem) {
+        if (item instanceof SwordItem || item instanceof DiggerItem) {
             matrixStack.translate(0.25, 0, 0);
         }
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(45.0F));
