@@ -1,40 +1,31 @@
 package doggytalents.common.entity.ai;
 
-import java.util.EnumSet;
-
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.world.entity.ai.goal.Goal;
 
-public class DogRandomSitIdleGoal extends Goal {
+public class DogCommonSitIdleGoal extends Goal {
 
     private Dog dog;
     private int stopTick;
 
-    private DogAnimation currentAnimation = DogAnimation.NONE;
-
-    public DogRandomSitIdleGoal(Dog dog) {
+    public DogCommonSitIdleGoal(Dog dog) {
         this.dog = dog;
-        this.setFlags(EnumSet.of(Goal.Flag.LOOK));
     }
-
+ 
     @Override
     public boolean canUse() {
         if (!this.dog.isOrderedToSit())
             return false;
         if (this.dog.getDogPose() != DogPose.SIT)
             return false;
+        if (!this.dog.getAnim().freeHead() && this.dog.getAnim() != DogAnimation.NONE)
+            return false;
         if (!dog.canDoIdileAnim()) return false;
-        if (!dog.isOnGround()) return false;
+        if (!dog.onGround()) return false;
 
-        if (this.dog.getRandom().nextFloat() >= 0.02)
-            return false;
-        
-        this.currentAnimation = getIdleAnim();
-        if (this.currentAnimation == DogAnimation.NONE)
-            return false;
-        return true;
+        return this.dog.getRandom().nextFloat() < 0.02;
     }
 
     @Override
@@ -42,6 +33,8 @@ public class DogRandomSitIdleGoal extends Goal {
         if (!this.dog.isOrderedToSit())
             return false;
         if (this.dog.getDogPose() != DogPose.SIT)
+            return false;
+        if (this.dog.getAnim() != DogAnimation.SIT_IDLE)
             return false;
         if (!this.dog.canContinueDoIdileAnim())
             return false;
@@ -52,32 +45,16 @@ public class DogRandomSitIdleGoal extends Goal {
 
     @Override
     public void start() {
+        var currentAnimation = DogAnimation.SIT_IDLE;
         this.stopTick = dog.tickCount + currentAnimation.getLengthTicks();
         this.dog.setAnimForIdle(currentAnimation);
     }
 
     @Override
-    public void tick() {
-    }
-
-    @Override
     public void stop() {
-        if (dog.getAnim() == currentAnimation)
+        if (dog.getAnim() == DogAnimation.SIT_IDLE)
             dog.setAnim(DogAnimation.NONE);
     }
 
-    private DogAnimation getIdleAnim() {
-        float r = dog.getRandom().nextFloat();
-        if (r <= 0.10f) {
-            return DogAnimation.SCRATCHIE;
-        } else if (r <= 0.20f) {
-            return DogAnimation.SIT_IDLE_2;
-        } else if (r <= 0.30f) {
-            return DogAnimation.BELLY_RUB;
-        } else {
-            return DogAnimation.NONE;
-        }
-
-    }
-    
 }
+
