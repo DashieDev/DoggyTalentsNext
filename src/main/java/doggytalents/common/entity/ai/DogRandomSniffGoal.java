@@ -117,7 +117,7 @@ public class DogRandomSniffGoal extends Goal {
             WalkNodeEvaluator.isBurningBlock(sniffUnderState))
             return DogAnimation.SNIFF_HOT;
         var atBlock = sniffAtState.getBlock();
-        if (atBlock instanceof FlowerBlock)
+        if (atBlock instanceof FlowerBlock || atBlock instanceof TorchBlock)
             return DogAnimation.SNIFF_SNEEZE;
         if (atBlock instanceof FireBlock)
             return DogAnimation.SNIFF_HOT;
