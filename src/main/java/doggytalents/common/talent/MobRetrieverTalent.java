@@ -112,7 +112,8 @@ public class MobRetrieverTalent extends TalentInstance {
 
     @Override
     public InteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
-        maybeDropRiding(dog);
+        if (!dog.level().isClientSide)
+            maybeDropRiding(dog);
         return super.gettingAttackedFrom(dog, source, damage);
     }
 
@@ -121,6 +122,8 @@ public class MobRetrieverTalent extends TalentInstance {
             return;
         var passenger = dog.getFirstPassenger();
         if (passenger == null)
+            return;
+        if (passenger instanceof Player)
             return;
         if ((passenger instanceof TamableAnimal otherDog) 
             && otherDog.getOwner() == dog.getOwner()) {
