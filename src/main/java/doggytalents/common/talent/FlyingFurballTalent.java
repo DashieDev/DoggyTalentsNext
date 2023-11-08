@@ -68,7 +68,7 @@ public class FlyingFurballTalent extends TalentInstance {
         if (!(dogIn instanceof Dog dog))
             return;
 
-        if (dog.getNavigation() == dog.getDefaultNavigation()) {
+        if (dog.getNavigation() != navigation && willFly(dog)) {
             dog.setMoveControl(moveControl);
             dog.setNavigation(navigation);
         }
@@ -104,7 +104,8 @@ public class FlyingFurballTalent extends TalentInstance {
     }
 
     private boolean willFly(AbstractDog dog) {
-        return !dog.onGround() && !dog.isInSittingPose() && !dog.isPassenger();
+        return !dog.onGround() && !dog.isInSittingPose() && !dog.isPassenger()
+            && !dog.isInWater();
     }
 
     @Override
