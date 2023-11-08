@@ -32,7 +32,7 @@ public enum DogAnimation {
     REST_IDLE(25, 20, 0.75f, true, true),
     REST_TO_SIT(26, 65),
     FLY_JUMP_START(27, 10, 1f, false),
-    FLY_AIR_BOURNE(28, 40, 1f, false, true),
+    FLY_AIR_BOURNE(28, 40, 1f, false, true, true),
     FLY_LANDING(29, 10, 1f, false),
     TOUCH_RETREAT(30, 11*20, 1f, true),
     SNIFF_HOT(31, 80, 1f, true),
