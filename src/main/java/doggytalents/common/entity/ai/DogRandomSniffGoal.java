@@ -76,7 +76,7 @@ public class DogRandomSniffGoal extends Goal {
         this.dog.getLookControl().setLookAt(Vec3.atBottomCenterOf(sniffAtPos));
         if (this.currentAnimation == DogAnimation.SNIFF_HOT) {
             var d_sqr = this.dog.distanceToSqr(sniffAtPos.getX(), this.dog.getY(), sniffAtPos.getZ());
-            if (tickAnim < 20 && d_sqr > 0.25 && sniffAtState.isAir()) {
+            if (tickAnim < 20 && d_sqr > 0.35 && sniffAtState.isAir()) {
                 this.dog.getMoveControl().setWantedPosition(sniffAtPos.getX(), this.dog.getY(),
                 sniffAtPos.getZ(), 0.5f);
             }
