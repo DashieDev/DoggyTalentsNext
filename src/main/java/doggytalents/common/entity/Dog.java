@@ -4022,7 +4022,10 @@ public class Dog extends AbstractDog {
     }
     
     public void setSitAnim(DogAnimation anim) {
-        if (anim == null) this.sitAnim = DogAnimation.SIT_DOWN;
+        if (anim == null) {
+            this.sitAnim = DogAnimation.SIT_DOWN;
+            return;
+        } 
         this.sitAnim = anim;
     }
 
@@ -4031,7 +4034,10 @@ public class Dog extends AbstractDog {
     }
 
     public void setStandAnim(DogAnimation anim) {
-        if (anim == null) this.standAnim = DogAnimation.STAND_QUICK;
+        if (anim == null) {
+            this.standAnim = DogAnimation.STAND_QUICK;
+            return;
+        }
         this.standAnim = anim;
     }
 
