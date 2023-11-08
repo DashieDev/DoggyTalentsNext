@@ -86,7 +86,8 @@
             "use_model" : "ammy_divine_rebirth",
             "based_on" : "(Okami) Amaterasu from Okami(2006) by Clover Studio",
             "author" : "MashXP, DashieDev",
-            "tags" : "okami, amaterasu, ammy"
+            "tags" : "okami, amaterasu, ammy",
+            "mystery" : true
         },
         {
             "skin_name" : "Hayabusa",
