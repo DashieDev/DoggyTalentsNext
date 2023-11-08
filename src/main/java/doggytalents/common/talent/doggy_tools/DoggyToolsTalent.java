@@ -21,6 +21,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -115,6 +117,10 @@ public class DoggyToolsTalent extends TalentInstance  {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
             }
+            if (item instanceof AxeItem) {
+                dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
+                break;
+            }
         }
     }
 
@@ -174,11 +180,9 @@ public class DoggyToolsTalent extends TalentInstance  {
     public void doAdditionalAttackEffects(AbstractDog dogIn, Entity target) {
         var stack = dogIn.getMainHandItem();
         var item = stack.getItem();
-        if (!(item instanceof SwordItem sword)) 
-            return;
         if (!(target instanceof LivingEntity living))
             return;
-        sword.hurtEnemy(stack, living, dogIn);
+        item.hurtEnemy(stack, living, dogIn);
     }
 
     public int getMaxOwnerDistSqr() {
