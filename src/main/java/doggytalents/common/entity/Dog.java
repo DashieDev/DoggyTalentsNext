@@ -730,7 +730,7 @@ public class Dog extends AbstractDog {
         }
         if (this.isPassenger() || this.isVehicle())
             return false;
-        return this.isAlive() && !this.isShaking && !this.isOnFire();
+        return this.isAlive() && !this.isShaking;
     }
 
     public void setAnimForIdle(DogAnimation anim) {
