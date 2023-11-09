@@ -718,8 +718,6 @@ public class Dog extends AbstractDog {
     public boolean canDoIdileAnim() {
         if (!this.isAlive())
             return false;
-        if (this.isOnFire())
-            return false;
         if (this.isPassenger() || this.isVehicle())
             return false;
         return !this.isShaking && !this.animationManager.started();
