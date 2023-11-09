@@ -24,8 +24,12 @@ public class DogRandomSniffGoal extends Goal {
     private BlockPos sniffUnderPos;
     private BlockState sniffAtState;
     private BlockState sniffUnderState;
+    private BlockPos currentPos;
     private DogAnimation currentAnimation = DogAnimation.NONE;
     private int tickAnim = 0;
+
+    private boolean isDoingAnim = false;
+    private final int EXPLORE_RADIUS = 6;
 
     public DogRandomSniffGoal(Dog dog) {
         this.dog = dog;
@@ -37,32 +41,50 @@ public class DogRandomSniffGoal extends Goal {
         if (!dog.canDoIdileAnim()) return false;
         if (dog.isLowHunger()) return false;
         if (!this.dog.onGround()) return false;
-        if (this.dog.getRandom().nextFloat() >= 0.007f)
+        if (this.dog.getRandom().nextFloat() >= 0.01f)
             return false;
-        int xOffset = this.dog.getRandom().nextInt(3) - 1;
-        int zOffset = this.dog.getRandom().nextInt(3) - 1;
-        var sniffPos = this.dog.blockPosition().offset(xOffset, 0, zOffset);
-        var sniffState = this.dog.level().getBlockState(sniffPos);
-        if (!isBlockSniffable(sniffPos, sniffState))
-            return false;
-        sniffAtState = sniffState;
-        var sniffUnderPos = sniffPos.below();
-        sniffUnderState = this.dog.level().getBlockState(sniffUnderPos);
-        this.sniffAtPos = sniffPos;
-        this.sniffUnderPos = sniffUnderPos;
         return true;
     }
 
     @Override
     public boolean canContinueToUse() {
         if (dog.isLowHunger()) return false;
+        if (!this.isDoingAnim) {
+            return true;
+        }
         if (!dog.canContinueDoIdileAnim()) return false;
-        if (!this.validateSniff()) return false;
+        validateSniff();
+        if (sniffAtPos == null) 
+            return false;
         return this.dog.tickCount < this.stopTick;
     }
 
     @Override
     public void start() {
+        this.isDoingAnim = false;
+        var moveToPos = this.findMoveToPos();
+        this.dog.getNavigation().moveTo(moveToPos.getX(),
+            moveToPos.getY(), moveToPos.getZ(), 1f);
+    }
+
+    @Override
+    public void tick() {
+        if (this.isDoingAnim)
+            tickDoingAnim();
+        else {
+            tickMoveTo();
+        }
+    }
+
+    @Override
+    public void stop() {
+        if (dog.getAnim() == currentAnimation && currentAnimation != DogAnimation.NONE)
+            dog.setAnim(DogAnimation.NONE);
+        dog.setDogCurious(false);
+        resetSniffPos();
+    }
+
+    private void startDoingAnim() {
         this.currentAnimation = getSniffAnim();
         this.stopTick = dog.tickCount + currentAnimation.getLengthTicks();
         this.dog.setAnimForIdle(currentAnimation);
@@ -71,38 +93,69 @@ public class DogRandomSniffGoal extends Goal {
             this.dog.setDogCurious(true);
     }
 
-    @Override
-    public void tick() {
+    private void tickDoingAnim() {
+        if (sniffAtPos == null)
+            return;
         this.dog.getLookControl().setLookAt(Vec3.atBottomCenterOf(sniffAtPos));
-        if (this.currentAnimation == DogAnimation.SNIFF_HOT) {
-            var d_sqr = this.dog.distanceToSqr(sniffAtPos.getX(), this.dog.getY(), sniffAtPos.getZ());
-            if (tickAnim < 20 && d_sqr > 0.35 && sniffAtState.isAir()) {
+        switch (this.currentAnimation) {
+        default:
+            break;
+        case SNIFF_HOT: 
+        {
+            var current_center = Vec3.atBottomCenterOf(currentPos);
+            var d_sqr = this.dog.distanceToSqr(current_center);
+            if (tickAnim < 20 && d_sqr < 0.35f && sniffAtState.isAir()) {
                 this.dog.getMoveControl().setWantedPosition(sniffAtPos.getX(), this.dog.getY(),
                 sniffAtPos.getZ(), 0.5f);
             }
             if (tickAnim == 25) {
-                var a1 = dog.yBodyRot;
-                var dx1 = -Mth.sin(a1 * Mth.DEG_TO_RAD);
-                var dz1 = Mth.cos(a1 * Mth.DEG_TO_RAD);
-                this.dog.push(-dx1 * 0.3, 0, -dz1 * 0.3);
+                var pushBackVec = current_center.subtract(this.dog.position())
+                    .normalize();
+                this.dog.push(pushBackVec.x() * 0.3, 0, pushBackVec.z() * 0.3);
                 this.dog.playSound(SoundEvents.WOLF_HURT, 0.6f, this.dog.getVoicePitch());
                 this.dog.playSound(SoundEvents.GENERIC_BURN, 0.3F, 2.0F + this.dog.getRandom().nextFloat() * 0.4F);
             }
             ++tickAnim;
+            break;
         }
-        if (this.currentAnimation == DogAnimation.SNIFF_SNEEZE) {
+        case SNIFF_SNEEZE:
+        {
             if (this.tickAnim == 25) {
                 this.dog.playSound(SoundEvents.WOLF_AMBIENT, 1, (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.2F + 1.5F);
             }
             ++tickAnim;
+            break;
+        } 
         }
     }
 
-    @Override
-    public void stop() {
-        if (dog.getAnim() == currentAnimation)
-            dog.setAnim(DogAnimation.NONE);
-        dog.setDogCurious(false);
+    private void tickMoveTo() {
+        if (this.dog.getNavigation().isDone()) {
+            this.isDoingAnim = true;
+            findSniffPos();
+            if (sniffAtPos != null)
+                startDoingAnim();
+        }
+    }
+
+    private BlockPos findMoveToPos() {
+        var r = this.dog.getRandom();
+        int offX = r.nextIntBetweenInclusive(-EXPLORE_RADIUS, EXPLORE_RADIUS);
+        int offY = r.nextIntBetweenInclusive(-1, 1);
+        int offZ = r.nextIntBetweenInclusive(-EXPLORE_RADIUS, EXPLORE_RADIUS);
+        return this.dog.blockPosition().offset(offX, offY, offZ);
+    }
+
+    private boolean findSniffPos() {
+        int xOffset = this.dog.getRandom().nextInt(3) - 1;
+        int zOffset = this.dog.getRandom().nextInt(3) - 1;
+        var currentPos = this.dog.blockPosition();
+        var sniffPos = currentPos.offset(xOffset, 0, zOffset);
+        var sniffState = this.dog.level().getBlockState(sniffPos);
+        if (!isBlockSniffable(sniffPos, sniffState))
+            return false;
+        populateSniffPos(currentPos, sniffPos, sniffState);
+        return true;
     }
 
     private boolean isBlockSniffable(BlockPos pos, BlockState state) {
@@ -124,14 +177,48 @@ public class DogRandomSniffGoal extends Goal {
         return DogAnimation.SNIFF_NEUTRAL;
     }
 
-    private boolean validateSniff() {
-        var newAtState = dog.level().getBlockState(sniffAtPos);
-        if (newAtState.getBlock() != sniffAtState.getBlock())
-            return false;
-        var newUnderState = dog.level().getBlockState(sniffUnderPos);
-        if (newUnderState.getBlock() != sniffUnderState.getBlock())
-            return false;    
-        return true;
+    private void validateSniff() {
+        boolean invalidated = false;
+        if (sniffAtPos == null)
+            invalidated = true;
+
+        if (!invalidated) {
+            var newAtState = dog.level().getBlockState(sniffAtPos);
+            if (newAtState.getBlock() != sniffAtState.getBlock())
+                invalidated = true;
+        }
+        
+        if (!invalidated) {
+            var newUnderState = dog.level().getBlockState(sniffUnderPos);
+            if (newUnderState.getBlock() != sniffUnderState.getBlock())
+                invalidated = true;
+        }
+
+        if (invalidated) {
+            resetSniffPos();
+            return;
+        }
+        
+        return;
+    }
+
+    private void populateSniffPos(BlockPos current, BlockPos sniffPos, BlockState sniffState) {
+        if (sniffPos == null || sniffState == null) 
+            return;
+        sniffAtState = sniffState;
+        var sniffUnderPos = sniffPos.below();
+        sniffUnderState = this.dog.level().getBlockState(sniffUnderPos);
+        this.sniffAtPos = sniffPos;
+        this.sniffUnderPos = sniffUnderPos;
+        this.currentPos = current;
+    }
+
+    private void resetSniffPos() {
+        this.sniffAtPos = null;
+        this.sniffAtState = null;
+        this.sniffUnderPos = null;
+        this.sniffUnderState = null;
+        this.currentPos = null;
     }
 
     @Override
