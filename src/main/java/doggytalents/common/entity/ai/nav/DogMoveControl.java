@@ -28,7 +28,7 @@ public class DogMoveControl extends MoveControl {
         }
         if (
             this.operation == MoveControl.Operation.MOVE_TO
-            && dy > 0.75
+            && (dy > 0.75 || dog.isDogCurious())
         ) {
             final float SNEAK_SPEED_1 = 0.35f;
             final float SNEAK_SPEED_2 = 0.25f;
@@ -48,6 +48,9 @@ public class DogMoveControl extends MoveControl {
             float speed_cap = dy > 1.75 ? SNEAK_SPEED_2 : SNEAK_SPEED_1;
             float speed = Math.min(speed_cap, 
                 (float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
+            if (this.dog.isDogCurious()) {
+                speed = (float) speedModifier * SNEAK_SPEED_2;
+            }
             this.mob.setSpeed(speed);
             BlockPos blockpos = this.mob.blockPosition();
             BlockState blockstate = this.mob.level().getBlockState(blockpos);
