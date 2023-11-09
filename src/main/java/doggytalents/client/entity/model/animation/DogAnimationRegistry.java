@@ -55,6 +55,7 @@ public class DogAnimationRegistry {
         register(DogAnimation.SNIFF_HOT, DogAnimationSequences2.SNIFF_HOT);
         register(DogAnimation.SNIFF_NEUTRAL, DogAnimationSequences2.SNIFF_NEUTRAL);
         register(DogAnimation.SNIFF_SNEEZE, DogAnimationSequences2.SNIFF_SNEEZE);
+        register(DogAnimation.STOP_DROP_ROLL, DogAnimationSequences2.STOP_DROP_ROLL);
     }
     
 }

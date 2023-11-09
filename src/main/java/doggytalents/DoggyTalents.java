@@ -7,6 +7,7 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.talent.*;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import doggytalents.common.talent.talentclass.LowCostTalent;
+import doggytalents.common.talent.talentclass.SingleLevelTalent;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 
@@ -86,6 +87,8 @@ public class DoggyTalents {
                 return level * (level + 1) / 2 + 4;
             }
         });
+    public static final RegistryObject<Talent> FIRE_DRILL = register("fire_drill", () ->
+        new SingleLevelTalent(FireDrillTalent::new));
 
     private static <T extends Talent> RegistryObject<Talent> registerInst(final String name, final BiFunction<Talent, Integer, TalentInstance> sup) {
         return register(name, () -> new Talent(sup));
