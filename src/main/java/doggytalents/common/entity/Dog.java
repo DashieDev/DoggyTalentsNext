@@ -494,6 +494,9 @@ public class Dog extends AbstractDog {
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+        if (this.isVehicle()) {
+            return this.getDogVisualBbHeight() * 0.8F;
+        }
         return sizeIn.height * 0.8F;
     }
 
