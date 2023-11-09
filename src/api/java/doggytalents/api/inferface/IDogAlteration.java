@@ -119,7 +119,7 @@ public interface IDogAlteration {
         return InteractionResult.PASS;
     }
 
-    default InteractionResult stillSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
+    default InteractionResult stillIdleOrSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
         return InteractionResult.PASS;
     }
 

@@ -1527,9 +1527,9 @@ public class Dog extends AbstractDog {
 //        return predicateIn.canTarget(this, livingentityIn);
 //     }
 
-    protected boolean stillSitWhenHurt(DamageSource source, float amount) {
+    protected boolean stillIdleOrSitWhenHurt(DamageSource source, float amount) {
         for (var alt : this.alterations) {
-            if (alt.stillSitWhenHurt(this, source, amount).shouldSwing())
+            if (alt.stillIdleOrSitWhenHurt(this, source, amount).shouldSwing())
                 return true;
         }
         return false;
@@ -1590,7 +1590,7 @@ public class Dog extends AbstractDog {
         }
 
         if (!this.level().isClientSide)
-        if (!(this.isInSittingPose() && this.stillSitWhenHurt(source, amount))) {
+        if (!this.stillIdleOrSitWhenHurt(source, amount)) {
             if (this.isInSittingPose() || amount > 6.0f) {
                 this.setAnim(DogAnimation.HURT_1);
             } else if (source.getEntity() != null) {
