@@ -23,6 +23,7 @@ public class DogRandomStandIdleGoal extends Goal {
     @Override
     public boolean canUse() {
         if (!dog.canDoIdileAnim()) return false;
+        if (dog.isOnFire()) return false;
         if (dog.isLowHunger()) return false;
         if (!this.dog.onGround()) return false;
         double use_chance = this.dog.isChopinTail() ? 0.08 : 0.02;

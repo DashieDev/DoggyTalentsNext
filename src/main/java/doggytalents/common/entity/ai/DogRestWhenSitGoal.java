@@ -26,6 +26,8 @@ public class DogRestWhenSitGoal extends Goal {
             return false;
         if (!this.dog.canDoIdileAnim())
             return false;
+        if (dog.isOnFire())
+            return false;
         if (this.dog.getDogPose() != DogPose.SIT)
             return false;
         if (!this.dog.onGround())
