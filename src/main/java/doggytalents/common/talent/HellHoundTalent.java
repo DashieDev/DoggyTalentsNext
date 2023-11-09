@@ -176,7 +176,7 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult stillSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
+    public InteractionResult stillIdleOrSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
         if (source.is(DamageTypes.ON_FIRE))
             return InteractionResult.SUCCESS;
         return InteractionResult.PASS;    
