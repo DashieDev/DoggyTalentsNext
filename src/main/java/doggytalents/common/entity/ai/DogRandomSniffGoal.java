@@ -53,6 +53,7 @@ public class DogRandomSniffGoal extends Goal {
             return true;
         }
         if (!dog.canContinueDoIdileAnim()) return false;
+        if (dog.getAnim() != currentAnimation) return false;
         validateSniff();
         if (sniffAtPos == null) 
             return false;
