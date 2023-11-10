@@ -5,8 +5,11 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.inventory.PackPuppyItemHandler;
+import doggytalents.common.network.packet.data.DoggyTorchPlacingTorchData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -15,13 +18,15 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class DoggyTorchTalent extends TalentInstance {
 
+    private boolean placingTorch = true;
+
     public DoggyTorchTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
     }
 
     @Override
     public void tick(AbstractDog dogIn) {
-        if (dogIn.tickCount % 10 == 0 && dogIn.isTame()) {
+        if (placingTorch && dogIn.tickCount % 10 == 0 && dogIn.isTame()) {
 
             BlockPos pos = dogIn.blockPosition();
             BlockState torchState = Blocks.TORCH.defaultBlockState();
@@ -46,4 +51,32 @@ public class DoggyTorchTalent extends TalentInstance {
             }
         }
     }
+
+    @Override
+    public void onRead(AbstractDog dogIn, CompoundTag compound) {
+        compound.putBoolean("DoggyTorchTalent_placingTorch", placingTorch);
+    }
+
+    @Override
+    public void onWrite(AbstractDog dogIn, CompoundTag compound) {
+        this.placingTorch = compound.getBoolean("DoggyTorchTalent_placingTorch");
+    }
+
+    @Override
+    public void writeToBuf(FriendlyByteBuf buf) {
+        buf.writeBoolean(placingTorch);
+    }
+
+    @Override
+    public void readFromBuf(FriendlyByteBuf buf) {
+        placingTorch = buf.readBoolean();
+    }
+
+    public void updateFromPacket(DoggyTorchPlacingTorchData data) {
+        placingTorch = data.val;
+    }
+
+    public boolean placingTorch() { return this.placingTorch; }
+    public void setPlacingTorch(boolean torch) { this.placingTorch = torch; }
+    
 }

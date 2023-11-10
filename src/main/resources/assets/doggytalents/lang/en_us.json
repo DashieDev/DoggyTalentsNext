@@ -245,6 +245,8 @@
    "talent.doggytalents.wolf_mount.exhausted": "%s: I can't carry you anymore... Gimme FOOD!",
    "talent.doggytalents.water_holder.amount": "Current amount of water in %s's fur",
    "talent.doggytalents.water_holder.amount.unlim": "Unlimited",
+   "talent.doggytalents.doggy_tools.placing_torch.set": "Allow Placing Torch",
+   "talent.doggytalents.doggy_tools.placing_torch.unset": "Stop Placing Torch",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",
 
