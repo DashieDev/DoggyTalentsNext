@@ -18,12 +18,15 @@ import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.client.screen.framework.element.ScrollView;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
+import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogTalentData;
+import doggytalents.common.network.packet.data.DoggyTorchPlacingTorchData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
+import doggytalents.common.talent.DoggyTorchTalent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
@@ -121,7 +124,39 @@ public class TalentInfoViewElement extends AbstractElement {
             });
             packPuppyButtonDiv.addChildren(dogInvButton);
         } else if (talent == DoggyTalents.DOGGY_TORCH.get()) {
-
+            var talentInstOptional = dog.getTalent(DoggyTalents.DOGGY_TORCH);
+            if (!talentInstOptional.isPresent())
+                return;
+            var talentInst = talentInstOptional.get();
+            if (!(talentInst instanceof DoggyTorchTalent torchTalent))
+                return;
+            var torchButtonDiv = new DivElement(container, getScreen())
+                .setPosition(PosType.RELATIVE, 0, 0)
+                .setSize(1f, 30)
+                .init();
+            container.addChildren(torchButtonDiv);
+            var torchButtonStr = Component.translatable(
+                torchTalent.placingTorch() ?
+                "talent.doggytalents.doggy_tools.placing_torch.unset"
+                : "talent.doggytalents.doggy_tools.placing_torch.set"
+            );
+            var torchButton = new FlatButton(
+                torchButtonDiv.getRealX() + PADDING_LEFT,
+                torchButtonDiv.getRealY() + 5, 120, 20, torchButtonStr,
+                b -> {
+                    boolean newVal = !torchTalent.placingTorch();
+                    b.setMessage(Component.translatable(
+                        newVal ?
+                        "talent.doggytalents.doggy_tools.placing_torch.unset"
+                        : "talent.doggytalents.doggy_tools.placing_torch.set"
+                    ));
+                    torchTalent.setPlacingTorch(newVal);
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new DoggyTorchPlacingTorchData(
+                        dog.getId(), newVal
+                    ));
+                }
+            );
+            torchButtonDiv.addChildren(torchButton);
         }
     }
 
