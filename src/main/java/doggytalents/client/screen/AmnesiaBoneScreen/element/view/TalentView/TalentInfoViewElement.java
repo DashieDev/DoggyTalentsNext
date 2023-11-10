@@ -174,9 +174,15 @@ public class TalentInfoViewElement extends AbstractElement {
         pY += 2*LINE_SPACING + this.font.lineHeight;
         var desc = Component.translatable(this.talent.getInfoTranslationKey());
         var desc_lines = this.font.split(desc, this.getSizeX() - (PADDING_LEFT + PADDING_RIGHT));
+        var lines_cnt = 0;
         for (var line : desc_lines) {
+            if (lines_cnt >= 6) {
+                graphics.drawString(font, ".. (View more in Dog's Menu)", pX, pY, 0xffffffff);
+                break;
+            }
             graphics.drawString(font, line, pX, pY, 0xffffffff);
             pY += font.lineHeight + LINE_SPACING;
+            ++lines_cnt;
         }
 
         //Point left:

@@ -15,12 +15,15 @@ import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.framework.element.AbstractElement;
+import doggytalents.client.screen.framework.element.ScrollView;
+import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -30,6 +33,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.network.PacketDistributor;
 
 public class TalentInfoViewElement extends AbstractElement {
@@ -76,9 +80,20 @@ public class TalentInfoViewElement extends AbstractElement {
             this.addDogInventoryButton();
         }
 
-        
+        addTitleAndDescriptionView(talent);
 
         return this;
+    }
+
+    private void addTitleAndDescriptionView(Talent talent) {
+        var scrollView = new ScrollView(this, getScreen());
+        scrollView
+            .setPosition(PosType.ABSOLUTE, PADDING_LEFT, 0)
+            .setSize(1f, this.getSizeY() - 65)
+            .init();
+        this.addChildren(scrollView);
+        var container = scrollView.getContainer();
+        container.addChildren(new TalentTitleAndDescEntry(container, getScreen(), talent).init());
     }
 
     private void addTrainButton(Dog dog) {
@@ -213,20 +228,20 @@ public class TalentInfoViewElement extends AbstractElement {
         int startY = this.getRealY() + PADDING_TOP;
         int pX = startX;
         int pY = startY;
-        var title = Component.translatable(this.talent.getTranslationKey())
-            .withStyle(
-                Style.EMPTY
-                .withBold(true)
-                .withColor(0xffF4FF00)
-            );
-        graphics.drawString(font, title, pX, pY, 0xffffffff);
-        pY += 2*LINE_SPACING + this.font.lineHeight;
-        var desc = Component.translatable(this.talent.getInfoTranslationKey());
-        var desc_lines = this.font.split(desc, this.getSizeX() - (PADDING_LEFT + PADDING_RIGHT));
-        for (var line : desc_lines) {
-            graphics.drawString(font, line, pX, pY, 0xffffffff);
-            pY += font.lineHeight + LINE_SPACING;
-        }
+        // var title = Component.translatable(this.talent.getTranslationKey())
+        //     .withStyle(
+        //         Style.EMPTY
+        //         .withBold(true)
+        //         .withColor(0xffF4FF00)
+        //     );
+        // graphics.drawString(font, title, pX, pY, 0xffffffff);
+        // pY += 2*LINE_SPACING + this.font.lineHeight;
+        // var desc = Component.translatable(this.talent.getInfoTranslationKey());
+        // var desc_lines = this.font.split(desc, this.getSizeX() - (PADDING_LEFT + PADDING_RIGHT));
+        // for (var line : desc_lines) {
+        //     graphics.drawString(font, line, pX, pY, 0xffffffff);
+        //     pY += font.lineHeight + LINE_SPACING;
+        // }
 
         //Kanji
         startX = this.getRealX() + PADDING_LEFT;
@@ -268,6 +283,51 @@ public class TalentInfoViewElement extends AbstractElement {
         RenderSystem.disableBlend();
     }
 
+    public static class TalentTitleAndDescEntry extends AbstractElement {
 
+        private Talent talent;
+        
+        private Component title;
+        private List<FormattedCharSequence> descriptionLines;
+        private Font font;
+
+        public TalentTitleAndDescEntry(AbstractElement parent, Screen screen, Talent talent) {
+            super(parent, screen);
+            this.talent = talent;
+            font = Minecraft.getInstance().font;
+        }
+
+        @Override
+        public AbstractElement init() {
+            this.setPosition(PosType.RELATIVE, 0, 0);
+            title = Component.translatable(this.talent.getTranslationKey())
+            .withStyle(
+                Style.EMPTY
+                .withBold(true)
+                .withColor(0xffF4FF00)
+            );
+            var content = Component.translatable(this.talent.getInfoTranslationKey());
+            descriptionLines = this.font.split(content, this.getParent().getSizeX() - 20);
+            int totalH = LINE_SPACING + font.lineHeight + LINE_SPACING + descriptionLines.size()*(LINE_SPACING + font.lineHeight)
+                + LINE_SPACING;
+            this.setSize(1f, totalH);
+
+            return this;
+        }
+
+        @Override
+        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+            int pX = this.getRealX();
+            int pY = this.getRealY() + LINE_SPACING;
+            graphics.drawString(font, title, pX, pY, 0xffffffff);
+            
+            pY += font.lineHeight + LINE_SPACING;
+            for (var line : descriptionLines) {
+                graphics.drawString(font, line, pX, pY, 0xffffffff);
+                pY += font.lineHeight + LINE_SPACING;
+            }
+        }
+
+    }
     
 }
