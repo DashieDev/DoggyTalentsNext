@@ -59,6 +59,7 @@ public final class PacketHandler {
         registerPacket(new PatrolTargetLockPacket(), PatrolTargetLockData.class);
         registerPacket(new HideArmorPacket(), HideArmorData.class);
         registerPacket(new CombatReturnStrategyPacket(), CombatReturnStrategyData.class);
+        registerPacket(new DoggyTorchPlacingTorchPacket(), DoggyTorchPlacingTorchData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
