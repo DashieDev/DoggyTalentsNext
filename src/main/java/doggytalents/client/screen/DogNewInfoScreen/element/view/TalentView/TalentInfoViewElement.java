@@ -15,6 +15,7 @@ import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescS
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.framework.element.AbstractElement;
+import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.client.screen.framework.element.ScrollView;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.widget.DogInventoryButton;
@@ -72,13 +73,6 @@ public class TalentInfoViewElement extends AbstractElement {
 
         this.addTrainButton(dog);
 
-        if (
-            talent == DoggyTalents.PACK_PUPPY.get()
-            && !ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV) 
-        ) {
-            this.addDogInventoryButton();
-        }
-
         addTitleAndDescriptionView(talent);
 
         return this;
@@ -93,6 +87,42 @@ public class TalentInfoViewElement extends AbstractElement {
         this.addChildren(scrollView);
         var container = scrollView.getContainer();
         container.addChildren(new TalentTitleAndDescEntry(container, getScreen(), talent).init());
+        addTalentSpecificOptions(container, talent);
+    }
+
+    private void addTalentSpecificOptions(AbstractElement container, Talent talent) {
+        /*
+         * var dogInvButton = new DogInventoryButton(
+            0, 0, getScreen(), (btn) -> {
+                PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
+                btn.active = false;
+            });
+        int dogInvButtonX = this.getRealX() + PADDING_LEFT;
+        int dogInvButtonY = this.getRealY() + this.getSizeY() - 60;
+
+        dogInvButton.setX(dogInvButtonX);
+        dogInvButton.setY(dogInvButtonY);
+        this.addChildren(dogInvButton);
+         */
+
+        if (talent == DoggyTalents.PACK_PUPPY.get()) {
+            if (ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV.get())
+                return;
+            var packPuppyButtonDiv = new DivElement(container, getScreen())
+                .setPosition(PosType.RELATIVE, 0, 0)
+                .setSize(1f, 20)
+                .init();
+            container.addChildren(packPuppyButtonDiv);
+            var dogInvButton = new DogInventoryButton(
+                packPuppyButtonDiv.getRealX() + PADDING_LEFT, 
+                packPuppyButtonDiv.getRealY() + 5, getScreen(), (btn) -> {
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
+                    btn.active = false;
+            });
+            packPuppyButtonDiv.addChildren(dogInvButton);
+        } else if (talent == DoggyTalents.DOGGY_TORCH.get()) {
+
+        }
     }
 
     private void addTrainButton(Dog dog) {
@@ -159,20 +189,6 @@ public class TalentInfoViewElement extends AbstractElement {
         trainButton.y = trainButtonY;
 
         this.addChildren(trainButton);
-    }
-
-    private void addDogInventoryButton() {
-        var dogInvButton = new DogInventoryButton(
-            0, 0, getScreen(), (btn) -> {
-                PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
-                btn.active = false;
-            });
-        int dogInvButtonX = this.getRealX() + PADDING_LEFT;
-        int dogInvButtonY = this.getRealY() + this.getSizeY() - 60;
-
-        dogInvButton.x = dogInvButtonX;
-        dogInvButton.y = dogInvButtonY;
-        this.addChildren(dogInvButton);
     }
 
     private void requestTrain() {
