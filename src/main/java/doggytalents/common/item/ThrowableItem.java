@@ -94,6 +94,7 @@ public class ThrowableItem extends Item implements IThrowableItem {
                 d -> d.canInteract(player)
                     && !d.isBusy()
                     && !d.hasBone()
+                    && !d.isOrderedToSit()
                     && d.getMode() == EnumMode.DOCILE
             );
         for (var dog : dogs) {
