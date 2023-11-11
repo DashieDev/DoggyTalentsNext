@@ -105,7 +105,6 @@ public class DogOwnerDistanceManager {
             if (getGreetCountForOwner(owner) >= greetOwnerLimit) return;
         }
         dog.triggerAction(new DogGreetOwnerAction(dog, owner, ownerLeftInterval));
-        incGreetCountForOwner(owner);
     }
 
     public static int getGreetCountForOwner(LivingEntity owner) {
