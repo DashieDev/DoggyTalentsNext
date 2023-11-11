@@ -76,7 +76,8 @@ public class ShepherdDogTalent extends TalentInstance {
 
         if (
             dog.readyForNonTrivialAction() 
-            && (dog.getMode() == EnumMode.DOCILE) 
+            && (dog.getMode() == EnumMode.DOCILE)
+            && !dog.isOrderedToSit()
             && --this.tickTillSearch <= 0
         ) {
             this.tickTillSearch = 10;

@@ -300,6 +300,7 @@ public class WhistleItem extends Item implements IDogItem {
             boolean noDogs = true;
             for (var dog : dogsList) {
                 if (!dog.getMode().shouldFollowOwner()) continue;
+                if (dog.isOrderedToSit()) continue;
                 var owner = dog.getOwner();
                 if (owner == null) continue;
                 if (dog.distanceToSqr(owner) > 400) continue;
