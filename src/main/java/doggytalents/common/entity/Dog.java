@@ -922,7 +922,7 @@ public class Dog extends AbstractDog {
         //Trigger Action cancel.p@
         //If dog have stashed action then will push the action back instead.
         if (action == null) {
-            if (activeAction != null) this.activeAction.onStop();
+            if (activeAction != null) this.activeAction.stop();
             this.activeAction = null;
             if (this.stashedAction != null) {
                 this.activeAction = this.stashedAction;
@@ -946,12 +946,12 @@ public class Dog extends AbstractDog {
         if (activeAction != null) {
             if (this.activeAction.canPause()) {
                 if (this.stashedAction != null) {
-                    this.stashedAction.onStop();
+                    this.stashedAction.stop();
                 }
                 this.activeAction.setState(ActionState.PAUSED);
                 this.stashedAction = this.activeAction;
             } else {
-                this.activeAction.onStop();
+                this.activeAction.stop();
             }
         }
         //Set.
@@ -992,7 +992,7 @@ public class Dog extends AbstractDog {
 
     public void clearTriggerableAction() {
         if (this.stashedAction != null) {
-            this.stashedAction.onStop();
+            this.stashedAction.stop();
             this.stashedAction = null;
         }
         this.triggerAction(null);
@@ -1000,7 +1000,7 @@ public class Dog extends AbstractDog {
 
     public void setStashedTriggerableAction(TriggerableAction action) {
         if (action == this.stashedAction) return;
-        if (this.stashedAction != null) this.stashedAction.onStop();
+        if (this.stashedAction != null) this.stashedAction.stop();
         this.stashedAction = action;
     }
 
@@ -4372,10 +4372,10 @@ public class Dog extends AbstractDog {
 
     public void triggerAnimationAction(AnimationAction action) {
         if (animAction != null) 
-            animAction.onStop();
+            animAction.stop();
         this.animAction = action;
         if (this.animAction != null) {
-            this.animAction.onStart();
+            this.animAction.start();
             if (this.animAction.blockMove()) {
                 this.goalSelector.setControlFlag(Goal.Flag.MOVE, false);
                 this.getNavigation().stop();

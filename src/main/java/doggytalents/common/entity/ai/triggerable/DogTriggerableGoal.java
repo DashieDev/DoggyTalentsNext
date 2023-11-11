@@ -46,7 +46,7 @@ public class DogTriggerableGoal extends Goal {
             case PENDING :
                 action.setState(ActionState.RUNNING);
                 //Allow checks on start.
-                action.onStart();
+                action.start();
                 break;
             case PAUSED :
                 action.setState(ActionState.RUNNING);
