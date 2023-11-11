@@ -8,11 +8,26 @@ public abstract class TriggerableAction {
     private ActionState state = ActionState.PENDING;
     private final boolean isTrivial;
     private final boolean canPause;
+    private boolean started;
 
     public TriggerableAction(Dog dog, boolean trivial, boolean canPause) {
         this.dog = dog;
         this.isTrivial = trivial;
         this.canPause = canPause;
+    }
+
+    public final void start() {
+        onStart();
+        started = true;
+    }
+
+    public final void stop() {
+        onStop();
+        started = false;
+    }
+
+    public boolean isStarted() {
+        return started;
     }
     
     public abstract void onStart();
