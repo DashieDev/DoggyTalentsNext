@@ -50,27 +50,30 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         return skin.getPath();
     }
 
-    private synchronized void registerDogSkin(DogTextureManager.Preparations prep, ResourceManager resMan, ResourceLocation text_rl, DogSkin dogSkin) {
-        if (!resMan.hasResource(text_rl))
-            return;
+    private static enum RegisterState { SUCCESS, DUPLICATE, FAIL }
+
+    private synchronized RegisterState registerDogSkin(DogTextureManager.Preparations prep, Resource resource, DogSkin dogSkin) {        
+        var state = RegisterState.FAIL;
+
         InputStream inputstream = null;
         try {
             inputstream = resMan.getResource(text_rl).getInputStream();
             String hash = computeHash(IOUtils.toByteArray(inputstream));
 
             if (prep.skinHashToLoc.containsKey(hash)) {
-                DoggyTalentsNext.LOGGER.warn("The loaded resource packs contained a duplicate custom dog skin ({} & {})", dogSkin, this.skinHashToLoc.get(hash));
+                state = RegisterState.DUPLICATE;
             } else {
-                DoggyTalentsNext.LOGGER.info("Found custom dog skin at {} with hash {}", dogSkin, hash);
                 prep.skinHashToLoc.put(hash, dogSkin);
                 prep.locToSkinHash.put(dogSkin, hash);
-                prep.customSkinLoc.add(dogSkin);
+                prep.customSkinLoc.add(dogSkin);    
+                state = RegisterState.SUCCESS;
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             IOUtils.closeQuietly(inputstream);
         }
+        return state;
     }
 
     public String computeHash(byte[] targetArray) {
@@ -98,7 +101,24 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                 istream = jsonSkinPack.getResource(PackType.CLIENT_RESOURCES, SKIN_JSON_RES);
                 var jsonElement = GSON.fromJson(new InputStreamReader(istream, StandardCharsets.UTF_8), JsonElement.class);
                 var jsonObject = jsonElement.getAsJsonObject();
-                getSkinFromSkinJson(resMan, prep, jsonObject);
+                var result = getSkinFromSkinJson(resMan, prep, jsonObject);
+                if (result.success > 0) {
+                    DoggyTalentsNext.LOGGER.info(
+                        "Successfully registered "
+                        + result.success + " entries from " + 
+                        "pack ["
+                        + jsonSkinPack.packId()
+                        + "]"
+                    );
+                }
+                if (result.duplicates > 0) {
+                    DoggyTalentsNext.LOGGER.warn(
+                        "Pack ["
+                        + jsonSkinPack.packId()
+                        + "] contains "
+                        + result.duplicates + " duplicated entries. All of them will be omitted."
+                    );
+                }
             } catch(Exception e) {
                 e.printStackTrace();
             } finally {
@@ -127,7 +147,23 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                 istream = resMan.getResource(path).getInputStream();
                 var jsonElement = GSON.fromJson(new InputStreamReader(istream, StandardCharsets.UTF_8), JsonElement.class);
                 var jsonObject = jsonElement.getAsJsonObject();
-                getSkinFromSkinJson(resMan, prep, jsonObject);
+                var result = getSkinFromSkinJson(resMan, prep, jsonObject);
+                if (result.success > 0) {
+                    DoggyTalentsNext.LOGGER.info(
+                        "Successfully registered "
+                        + result.success + " entries from path ["
+                        + path
+                        + "]"    
+                    );
+                }
+                if (result.duplicates > 0) {
+                    DoggyTalentsNext.LOGGER.warn(
+                        "Path ["
+                        + path
+                        + "] contains "
+                        + result.duplicates + " duplicated entries. All of them will be omitted."
+                    );
+                }
             } catch(Exception e) {
                 e.printStackTrace();
             } finally {
@@ -137,7 +173,13 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
     }
 
-    public void getSkinFromSkinJson(ResourceManager resMan, DogTextureManager.Preparations prep, JsonObject jsonObject) {
+    private static record RegsiterResult(int success, int duplicates, int fail) {}
+
+    public RegsiterResult getSkinFromSkinJson(ResourceManager resMan, DogTextureManager.Preparations prep, JsonObject jsonObject) {
+        int success_cnt = 0;
+        int duplicate_cnt = 0;
+        int failed_cnt = 0;
+
         var skinEntries = jsonObject.get("dog_skins").getAsJsonArray();
         for (var skinEntry : skinEntries) {
             var skinObject = skinEntry.getAsJsonObject();
@@ -175,8 +217,23 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
             readSkinExtraInfo(skin, skinObject);
 
-            registerDogSkin(prep, resMan, text_rl, skin);
+            var state = RegisterState.FAIL;
+            var res = resMan.getResource(text_rl);
+            if (res.isPresent())
+            state = registerDogSkin(prep, res.get(), skin);
+            switch (state) {
+            case SUCCESS:
+                ++success_cnt;
+                break;
+            case DUPLICATE:
+                ++duplicate_cnt;
+                break;
+            default:
+                ++failed_cnt;
+                break;
+            }
         }
+        return new RegsiterResult(success_cnt, duplicate_cnt, failed_cnt);
     }
 
     private void readSkinExtraInfo(DogSkin skin, JsonObject skinJsonObject) {
