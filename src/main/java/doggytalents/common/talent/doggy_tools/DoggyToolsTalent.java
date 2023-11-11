@@ -83,14 +83,24 @@ public class DoggyToolsTalent extends TalentInstance  {
         
         if (!(d instanceof Dog dog)) return;
 
-        if (dog.isBusy() || dog.isOrderedToSit() || !dog.isDoingFine()) return;
+        if (dog.isOrderedToSit() || !dog.isDoingFine())  {
+            var mainHandItem = dog.getMainHandItem();
+            if (mainHandItem != null && !mainHandItem.isEmpty())
+                dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+            return;
+        };
+
+        if (dog.isBusy())
+            return;
 
         if (dog.getTarget() != null) {
             pickTargetTool(dog);
             return;
         }
 
-        dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        var mainHandItem = dog.getMainHandItem();
+        if (mainHandItem != null && !mainHandItem.isEmpty())
+            dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
         
         var owner = dog.getOwner();
         if (owner == null || dog.distanceToSqr(owner) > getMaxOwnerDistSqr()) {
