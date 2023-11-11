@@ -59,6 +59,7 @@ public class DogGreetOwnerAction extends TriggerableAction {
         this.greetTime = 0;
         this.tickTillWhine = this.dog.getRandom().nextInt(5)*10;
         this.tellOwner = true;
+        DogOwnerDistanceManager.incGreetCountForOwner(owner);
     }
 
     @Override
@@ -134,9 +135,7 @@ public class DogGreetOwnerAction extends TriggerableAction {
 
     @Override
     public void onStop() {
-        int greetOwnerLimit = 
-            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GREET_OWNER_LIMIT);
-        if (greetOwnerLimit < 0) return;
+        if (isStarted())
         DogOwnerDistanceManager.decGreetCountForOwner(owner);
     }
 
