@@ -39,15 +39,14 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
     public boolean canConsume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
         if (dogIn.isDefeated()) return false;
         
-        if (this.level() >= 3) {
+        Item item = stackIn.getItem();
 
-            Item item = stackIn.getItem();
+        if (this.level() >= 2 && item.isEdible() && stackIn.is(ItemTags.FISHES)) {
+            return true;
+        }
 
+        if (this.level() >= 5) {
             if (item == Items.ROTTEN_FLESH) {
-                return true;
-            }
-
-            if (this.level() >= 5 && item.isEdible() && stackIn.is(ItemTags.FISHES)) {
                 return true;
             }
         }
@@ -57,21 +56,18 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
 
     @Override
     public InteractionResult consume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
-        if (this.level() >= 3) {
+        Item item = stackIn.getItem();
 
-            Item item = stackIn.getItem();
+        if (this.level() >= 5 && item == Items.ROTTEN_FLESH) {
+            dogIn.addHunger(30);
+            dogIn.consumeItemFromStack(entityIn, stackIn);
+            return InteractionResult.SUCCESS;
+        }
 
-            if (item == Items.ROTTEN_FLESH) {
-                dogIn.addHunger(30);
-                dogIn.consumeItemFromStack(entityIn, stackIn);
-                return InteractionResult.SUCCESS;
-            }
-
-            if (this.level() >= 5 && item.isEdible() && stackIn.is(ItemTags.FISHES)) {
-                dogIn.addHunger(item.getFoodProperties().getNutrition() * 5);
-                dogIn.consumeItemFromStack(entityIn, stackIn);
-                return InteractionResult.SUCCESS;
-            }
+        if (this.level() >= 2 && item.isEdible() && stackIn.is(ItemTags.FISHES)) {
+            dogIn.addHunger(item.getFoodProperties().getNutrition() * 5);
+            dogIn.consumeItemFromStack(entityIn, stackIn);
+            return InteractionResult.SUCCESS;
         }
 
         return InteractionResult.FAIL;
