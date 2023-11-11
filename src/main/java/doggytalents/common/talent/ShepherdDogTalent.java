@@ -91,16 +91,20 @@ public class ShepherdDogTalent extends TalentInstance {
                             && nbt.getInt("mode") == 4)
             ) {
                 ChopinLogger.l("Triggering shepherd action.");
-                this.triggerShepherdAction(dog, owner);
+                
+                if (!this.triggerShepherdAction(dog, owner)) {
+                    this.targets = List.of();
+                }
             } else {
                 this.targets = List.of();
             }
         }
     }
 
-    private void triggerShepherdAction(Dog dog, LivingEntity owner) {
+    private boolean triggerShepherdAction(Dog dog, LivingEntity owner) {
         if (owner instanceof ServerPlayer sP)
-        dog.triggerAction(new ShepherdAction(dog, sP, this));
+            return dog.triggerAction(new ShepherdAction(dog, sP, this));
+        return false;    
     }
 
     public static int getMaxFollowers(int level) {
