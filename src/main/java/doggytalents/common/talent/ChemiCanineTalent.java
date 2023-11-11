@@ -355,6 +355,11 @@ public class ChemiCanineTalent extends TalentInstance {
         @Override
         public void onStop() {
         }
+
+        @Override
+        public boolean canOverrideSit() {
+            return true;
+        }
         
     }
 
