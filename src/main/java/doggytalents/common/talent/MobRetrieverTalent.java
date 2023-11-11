@@ -57,6 +57,8 @@ public class MobRetrieverTalent extends TalentInstance {
             return;
         if (dog.isBusy() || !readyForNewRider(dog))
             return;
+        if (dog.isOrderedToSit())
+            return;
         dog.triggerAction(new DogRetrieveMobAction(dog, target, this));
     }
 
