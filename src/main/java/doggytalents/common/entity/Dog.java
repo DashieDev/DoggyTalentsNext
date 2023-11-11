@@ -391,7 +391,8 @@ public class Dog extends AbstractDog {
             .stream().filter(x -> (
                 x.getGoal() != sitGoal
                 && x.getPriority() <= nonTrivialP
-                && x.getFlags().contains(Goal.Flag.MOVE)    
+                && (x.getFlags().contains(Goal.Flag.MOVE)
+                    || x.getFlags().contains(Goal.Flag.LOOK)) 
             ))
             .collect(Collectors.toList());
         nonTrivialBlocking.addAll(nonTrivial);
