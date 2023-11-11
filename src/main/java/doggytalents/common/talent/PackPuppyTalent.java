@@ -122,6 +122,8 @@ public class PackPuppyTalent extends TalentInstance {
             return;
         if (target.isInSittingPose())
             return;
+        if (target.isOrderedToSit())
+            return;
         target.triggerAction(
             new DogEatFromChestDogAction(target, dog)
         );

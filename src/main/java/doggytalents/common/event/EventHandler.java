@@ -207,6 +207,7 @@ public class EventHandler {
                 projectileOnwer == dogOwner
                 && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PLAY_TAG_WITH_DOG)
                 && !dog.isBusy()
+                && !dog.isOrderedToSit()
             ) 
                 dog.triggerAction(new DogPlayTagAction(dog, dogOwner));
             return;
