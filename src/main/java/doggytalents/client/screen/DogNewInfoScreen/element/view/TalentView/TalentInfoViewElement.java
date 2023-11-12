@@ -157,6 +157,50 @@ public class TalentInfoViewElement extends AbstractElement {
                 }
             );
             torchButtonDiv.addChildren(torchButton);
+        } else if (talent == DoggyTalents.DOGGY_TOOLS.get()) {
+            if (dog.getDogLevel(DoggyTalents.DOGGY_TOOLS) <= 0)
+                return;
+            var toolsButtonDiv = new DivElement(container, getScreen())
+                .setPosition(PosType.RELATIVE, 0, 0)
+                .setSize(1f, 30)
+                .init();
+            container.addChildren(toolsButtonDiv);
+            var toolButtonStr = Component.translatable(
+                "talent.doggytalents.doggy_tools.open_tools"
+            );
+            var toolButton = new FlatButton(
+                toolsButtonDiv.getRealX() + PADDING_LEFT,
+                toolsButtonDiv.getRealY() + 5, 120, 20, toolButtonStr,
+                b -> {
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData(
+                        OpenDogScreenData.ScreenType.TOOL,
+                        dog.getId()
+                    ));
+                }
+            );
+            toolsButtonDiv.addChildren(toolButton);
+        } else if (talent == DoggyTalents.DOGGY_ARMOR.get()) {
+            if (dog.getDogLevel(DoggyTalents.DOGGY_ARMOR) <= 0)
+                return;
+            var armorButtonDiv = new DivElement(container, getScreen())
+                .setPosition(PosType.RELATIVE, 0, 0)
+                .setSize(1f, 30)
+                .init();
+            container.addChildren(armorButtonDiv);
+            var armorButtonStr = Component.translatable(
+                "talent.doggytalents.doggy_armor.open_armor"
+            );
+            var armorButton = new FlatButton(
+                armorButtonDiv.getRealX() + PADDING_LEFT,
+                armorButtonDiv.getRealY() + 5, 120, 20, armorButtonStr,
+                b -> {
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData(
+                        OpenDogScreenData.ScreenType.ARMOR,
+                        dog.getId()
+                    ));
+                }
+            );
+            armorButtonDiv.addChildren(armorButton);
         }
     }
 
