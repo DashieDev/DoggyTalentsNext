@@ -68,17 +68,12 @@ public class FlyingFurballTalent extends TalentInstance {
         if (!(dogIn instanceof Dog dog))
             return;
 
-        if (dog.getNavigation() != navigation && willFly(dog)) {
+        if (dog.getNavigation() != navigation && shouldSwitchToFlying(dog)) {
             dog.setMoveControl(moveControl);
             dog.setNavigation(navigation);
         }
 
-        if (dog.isDogFlying() && dog.getNavigation() != this.navigation) {
-            dog.setDogFlying(false);
-            dog.setNoGravity(false);
-        }
-
-        if (dog.isDogFlying() && !willFly(dog))  {
+        if (dog.isDogFlying() && !shouldBeFlying(dog))  {
             dog.setDogFlying(false);
             dog.setNoGravity(false);
             if (dog.getAnim() == DogAnimation.FLY_AIR_BOURNE) {
@@ -86,14 +81,14 @@ public class FlyingFurballTalent extends TalentInstance {
             }
         }
 
-        if (dog.isDogFlying() && dog.getAnim() == DogAnimation.NONE) {
-            dog.setAnim(DogAnimation.FLY_AIR_BOURNE);
-        }
-
-        if (!dog.isDogFlying() && willFly(dog)) {
+        if (!dog.isDogFlying() && shouldBeFlying(dog)) {
             dog.setDogFlying(true);
             if (dog.getAnim() != DogAnimation.FLY_AIR_BOURNE)
                 dog.setAnim(DogAnimation.FLY_JUMP_START);
+        }
+
+        if (dog.isDogFlying() && dog.getAnim() == DogAnimation.NONE) {
+            dog.setAnim(DogAnimation.FLY_AIR_BOURNE);
         }
 
         if (!dog.isDogFlying() && dog.getAnim() == DogAnimation.FLY_AIR_BOURNE) {
@@ -103,8 +98,13 @@ public class FlyingFurballTalent extends TalentInstance {
         dogIn.fallDistance = 0;
     }
 
-    private boolean willFly(AbstractDog dog) {
+    private boolean shouldBeFlying(AbstractDog dog) {
         return !dog.onGround() && !dog.isInSittingPose() && !dog.isPassenger()
+            && !dog.isInWater() && dog.getNavigation() == this.navigation;
+    }
+
+    private boolean shouldSwitchToFlying(AbstractDog dog) {
+        return !dog.isInSittingPose() && !dog.isPassenger()
             && !dog.isInWater();
     }
 
