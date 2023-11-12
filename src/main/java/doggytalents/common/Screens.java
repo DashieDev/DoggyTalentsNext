@@ -1,6 +1,7 @@
 package doggytalents.common;
 
 import doggytalents.DoggyItems;
+import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.block.tileentity.FoodBowlTileEntity;
 import doggytalents.common.entity.Dog;
@@ -157,7 +158,7 @@ public class Screens {
     }
 
     public static void openArmorScreen(ServerPlayer player, Dog dogIn) {
-        if (dogIn.isDoingFine()) {
+        if (dogIn.isDoingFine() && dogIn.getDogLevel(DoggyTalents.DOGGY_ARMOR) > 0) {
             NetworkHooks.openScreen(player, new DogArmorContainerProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
             });
@@ -165,7 +166,7 @@ public class Screens {
     }
 
     public static void openDoggyToolsScreen(ServerPlayer player, Dog dogIn) {
-        if (dogIn.isDoingFine()) {
+        if (dogIn.isDoingFine() && dogIn.getDogLevel(DoggyTalents.DOGGY_TOOLS) > 0) {
             NetworkHooks.openScreen(player, new DoggyToolsMenuProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
             });
