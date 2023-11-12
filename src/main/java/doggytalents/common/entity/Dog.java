@@ -164,6 +164,7 @@ public class Dog extends AbstractDog {
      *     11              2048                SHOW_ARMOR
      *     12              4096                COMBAT_RETURN_STRATEGY_LSB
      *     13              8192                COMBAT_RETURN_STRATEGY_MSB
+     *     14              16384               AUTO_MOUNT
      *     .
      *     31              2^31                <Reserved>
      */
@@ -1276,8 +1277,18 @@ public class Dog extends AbstractDog {
     }
 
     public boolean requireRidingAuthorization(Entity entity) {
-        return entity instanceof AbstractMinecart
-            || entity instanceof Boat;
+        if (this.dogAutoMount())
+            return false;
+        var ownerUUID = this.getOwnerUUID();
+        if (ownerUUID == null)
+            return false;
+        if (!ObjectUtils.notEqual(ownerUUID, entity.getUUID()))
+            return false;
+        if (entity instanceof Dog otherDog
+            && !ObjectUtils.notEqual(ownerUUID, otherDog.getOwnerUUID())) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -3326,6 +3337,14 @@ public class Dog extends AbstractDog {
 
     public void setHideArmor(boolean val) {
         this.setDogFlag(2048, val);
+    }
+
+    public boolean dogAutoMount() {
+        return this.getDogFlag(16384);
+    }
+
+    public void setDogAutoMount(boolean val) {
+        this.setDogFlag(16384, val);
     }
 
     public boolean wantsToRest() {

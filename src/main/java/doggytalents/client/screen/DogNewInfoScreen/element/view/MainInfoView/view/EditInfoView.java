@@ -19,6 +19,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.CrossOriginTpData;
+import doggytalents.common.network.packet.data.DogAutoMountData;
 import doggytalents.common.network.packet.data.DogForceSitData;
 import doggytalents.common.network.packet.data.DogNameData;
 import doggytalents.common.network.packet.data.DogObeyData;
@@ -214,6 +215,22 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
+                new FlatButton(
+                    0, 0,
+                    40, 20, Component.literal("" + this.dog.dogAutoMount()), 
+                    b -> {
+                        Boolean newVal = !this.dog.dogAutoMount();
+                        b.setMessage(Component.literal("" + newVal));
+                        this.requestAutoMount(newVal);
+                    }     
+                ),
+                I18n.get("doggui.auto_mount")
+            )
+            .init()
+        );
+
+        scroll.addChildren(
+            new ButtonOptionEntry(scroll, getScreen(), 
                 new LowHealthStrategySwitch(
                     0, 0, 
                     100, 20, dog, font, getScreen()
@@ -292,6 +309,12 @@ public class EditInfoView extends AbstractElement {
         PacketHandler
             .send(PacketDistributor.SERVER.noArg(), 
             new HideArmorData(this.dog.getId(), val));
+    }
+
+    private void requestAutoMount(boolean val) {
+        PacketHandler
+            .send(PacketDistributor.SERVER.noArg(), 
+            new DogAutoMountData(this.dog.getId(), val));
     }
 
     private static class NewnameEntry extends AbstractElement {
