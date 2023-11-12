@@ -460,6 +460,7 @@
    "doggui.patrol_target_lock.help": "By default, patrol dogs will stop attacking target if they left the patrol area. Turning this on will force this dog to keep attacking in that case.",
    "doggui.friendlyfire": "Friendly Fire?",
    "doggui.hide_armor": "Hide Armor",
+   "doggui.auto_mount": "Auto Mount",
    "doggui.health": "Health:",
    "doggui.speed": "Speed:",
    "doggui.owner": "Owner:",
