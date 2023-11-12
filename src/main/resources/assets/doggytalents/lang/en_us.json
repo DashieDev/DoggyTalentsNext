@@ -247,6 +247,8 @@
    "talent.doggytalents.water_holder.amount.unlim": "Unlimited",
    "talent.doggytalents.doggy_tools.placing_torch.set": "Allow Placing Torch",
    "talent.doggytalents.doggy_tools.placing_torch.unset": "Stop Placing Torch",
+   "talent.doggytalents.doggy_tools.open_tools": "Open Dog's ToolBar",
+   "talent.doggytalents.doggy_armor.open_armor": "Open Dog's Armor",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",
 

@@ -21,13 +21,17 @@ public class OpenDogScreenPacket implements IPacket<OpenDogScreenData>  {
 
     @Override
     public OpenDogScreenData decode(FriendlyByteBuf buf) {
-        return new OpenDogScreenData();
+        var type = OpenDogScreenData.ScreenType
+            .byId(buf.readInt());
+        var dogId = buf.readInt();
+        return new OpenDogScreenData(type, dogId);
     }
 
 
     @Override
     public void encode(OpenDogScreenData data, FriendlyByteBuf buf) {
-
+        buf.writeInt(data.type.getId());
+        buf.writeInt(data.dogId);
     }
 
     @Override
@@ -35,19 +39,43 @@ public class OpenDogScreenPacket implements IPacket<OpenDogScreenData>  {
         ctx.get().enqueueWork(() -> {
             if (ctx.get().getDirection().getReceptionSide() == LogicalSide.SERVER) {
                 ServerPlayer player = ctx.get().getSender();
-                List<Dog> dogs = player.level().getEntitiesOfClass(Dog.class, player.getBoundingBox().inflate(12D, 12D, 12D),
-                    (dog) -> dog.canInteract(player) && PackPuppyTalent.hasInventory(dog)
-                );
-                Collections.sort(dogs, new EntityUtil.Sorter(player.position()));
-                if (dogs.size() > PackPuppyTalent.MAX_DOG_INV_VIEW) {
-                    dogs = dogs.subList(0, PackPuppyTalent.MAX_DOG_INV_VIEW);
-                }
-				if (!dogs.isEmpty()) {
-				    Screens.openDogInventoriesScreen(player, dogs);
-				}
+                selectAndOpenDogScreen(data, player);
             }
         });
 
         ctx.get().setPacketHandled(true);
     }
+
+    public void selectAndOpenDogScreen(OpenDogScreenData data, ServerPlayer player) {
+        switch (data.type) {
+        case TOOL:
+        {
+            var e = player.level().getEntity(data.dogId);
+            if (e instanceof Dog dog)
+                Screens.openDoggyToolsScreen(player, dog);
+            break;
+        }
+        case ARMOR:
+        {
+            var e = player.level().getEntity(data.dogId);
+            if (e instanceof Dog dog)
+                Screens.openArmorScreen(player, dog);
+            break;
+        }
+        default:
+        {
+            List<Dog> dogs = player.level().getEntitiesOfClass(Dog.class, player.getBoundingBox().inflate(12D, 12D, 12D),
+                (dog) -> dog.canInteract(player) && PackPuppyTalent.hasInventory(dog)
+            );
+            Collections.sort(dogs, new EntityUtil.Sorter(player.position()));
+            if (dogs.size() > PackPuppyTalent.MAX_DOG_INV_VIEW) {
+                dogs = dogs.subList(0, PackPuppyTalent.MAX_DOG_INV_VIEW);
+            }
+            if (!dogs.isEmpty()) {
+                Screens.openDogInventoriesScreen(player, dogs);
+            }
+            break;
+        }
+        }
+    } 
 }
