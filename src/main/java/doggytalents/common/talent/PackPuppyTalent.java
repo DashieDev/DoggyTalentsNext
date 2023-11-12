@@ -45,6 +45,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class PackPuppyTalent extends TalentInstance {
 
+    public static final int MAX_DOG_INV_VIEW = 8;
+
     public static Capability<PackPuppyItemHandler> PACK_PUPPY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});;
 
     private PackPuppyItemHandler packPuppyHandler;
