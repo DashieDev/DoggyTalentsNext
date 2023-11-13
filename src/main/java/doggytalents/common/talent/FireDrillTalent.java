@@ -34,7 +34,7 @@ public class FireDrillTalent extends TalentInstance {
         if (this.rollCooldown > 0)
             --this.rollCooldown;
 
-        if (dog.getRemainingFireTicks() >= DogAnimation.STOP_DROP_ROLL.getLengthTicks()) {
+        if (dog.getRemainingFireTicks() >= 20) {
             updateInFire(dog);
             if (canRoll(dog)) {
                 dog.triggerAction(new DogStopDropRollAction(dog, this));
@@ -101,7 +101,7 @@ public class FireDrillTalent extends TalentInstance {
     public static class DogStopDropRollAction extends TriggerableAction {
 
         private int stopTick;
-        private int tickTillExtinguish = 90;        
+        private int tickTillExtinguish = 60;        
         private FireDrillTalent talentInst;
 
         public DogStopDropRollAction(Dog dog, FireDrillTalent talentInst) {
