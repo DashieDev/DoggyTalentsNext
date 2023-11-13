@@ -35,20 +35,8 @@ public class DogFlyingMoveControl extends FlyingMoveControl {
                return;
             }
             double l_xz = Math.sqrt(dx * dx + dz * dz);
-            
-            if (
-                !dog.getNavigation().isDone()
-                && dog.onGround()
-                && dy > 0
-            ) {
-                if (dog.getAnim() == DogAnimation.NONE)
-                dog.setAnim(DogAnimation.FLY_JUMP_START);
-            }
 
-            if (!dog.getNavigation().isDone() && !dog.isDogFlying()) {
-                dog.setDogFlying(true);
-            }
-
+            dog.setDogFlying(true);
             this.dog.setNoGravity(true);
 
             float speed = 0f;
