@@ -7,12 +7,14 @@ import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import doggytalents.common.util.CachedSearchUtil.DogGreedyFireSafeSearchPath;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class DogGoAwayFromFireGoal extends Goal {
@@ -109,11 +111,15 @@ public class DogGoAwayFromFireGoal extends Goal {
             var state = dog.level.getBlockState(x);
             var isBurning = WalkNodeEvaluator.isBurningBlock(state);
 
-            if (isBurning) {
-                ret = 0; //Definitly not safe
-                if (state.is(Blocks.LAVA)) {
-                    return 1; //if lava then return 1;
-                }
+            if (state.is(Blocks.LAVA)) {
+                return 1;
+            }
+            if (state.is(BlockTags.FIRE) && !dog.isDogCurious())
+                return 1;
+            var blockBb = new AABB(Vec3.atLowerCornerOf(x),Vec3.atLowerCornerWithOffset(x, 1, 1, 1));
+
+            if (isBurning && dog.getBoundingBox().intersects(blockBb)) {
+                return 1;
             }
         }
 
