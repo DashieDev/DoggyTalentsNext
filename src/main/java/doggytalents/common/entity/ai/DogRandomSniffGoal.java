@@ -68,6 +68,7 @@ public class DogRandomSniffGoal extends Goal {
         var moveToPos = this.findMoveToPos();
         this.dog.getNavigation().moveTo(moveToPos.getX(),
             moveToPos.getY(), moveToPos.getZ(), 1f);
+        this.dog.setDogCurious(true);
     }
 
     @Override
@@ -92,8 +93,6 @@ public class DogRandomSniffGoal extends Goal {
         this.stopTick = dog.tickCount + currentAnimation.getLengthTicks();
         this.dog.setAnimForIdle(currentAnimation);
         tickAnim = 0;
-        if (this.currentAnimation == DogAnimation.SNIFF_HOT)
-            this.dog.setDogCurious(true);
     }
 
     private void tickDoingAnim() {
