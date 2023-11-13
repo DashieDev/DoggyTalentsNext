@@ -22,7 +22,7 @@ public class FlyingFurballTalent extends TalentInstance {
     private DogFlyingMoveControl moveControl;
     private DogFlyingNavigation navigation;
     
-    private boolean isFlying = false;
+    private boolean wasFlying = false;
     
     public FlyingFurballTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -68,31 +68,35 @@ public class FlyingFurballTalent extends TalentInstance {
         if (!(dogIn instanceof Dog dog))
             return;
 
+        boolean isDogFlying = dog.isDogFlying();
+
         if (dog.getNavigation() != navigation && shouldSwitchToFlying(dog)) {
             dog.setMoveControl(moveControl);
             dog.setNavigation(navigation);
         }
 
-        if (dog.isDogFlying() && !shouldBeFlying(dog))  {
+        if (isDogFlying && !shouldBeFlying(dog))  {
             dog.setDogFlying(false);
             dog.setNoGravity(false);
-            if (dog.getAnim() == DogAnimation.FLY_AIR_BOURNE) {
-                dog.setAnim(DogAnimation.FLY_LANDING);
-            }
         }
 
-        if (!dog.isDogFlying() && shouldBeFlying(dog)) {
+        if (!isDogFlying && shouldBeFlying(dog)) {
             dog.setDogFlying(true);
-            if (dog.getAnim() != DogAnimation.FLY_AIR_BOURNE)
-                dog.setAnim(DogAnimation.FLY_JUMP_START);
         }
 
-        if (dog.isDogFlying() && dog.getAnim() == DogAnimation.NONE) {
-            dog.setAnim(DogAnimation.FLY_AIR_BOURNE);
+        if (isDogFlying)
+        if (this.wasFlying) {
+            if (dog.getAnim() == DogAnimation.NONE)
+                dog.setAnim(DogAnimation.FLY_AIR_BOURNE);
+        } else {
+            dog.setAnim(DogAnimation.FLY_JUMP_START);
+            this.wasFlying = true;
         }
 
-        if (!dog.isDogFlying() && dog.getAnim() == DogAnimation.FLY_AIR_BOURNE) {
-            dog.setAnim(DogAnimation.NONE);
+        if (!isDogFlying){
+            if (dog.getAnim() == DogAnimation.FLY_AIR_BOURNE || wasFlying)
+                dog.setAnim(DogAnimation.FLY_LANDING);
+            this.wasFlying = false;
         }
 
         dogIn.fallDistance = 0;
