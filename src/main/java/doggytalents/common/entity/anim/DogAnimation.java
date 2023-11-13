@@ -38,7 +38,9 @@ public enum DogAnimation {
     SNIFF_HOT(31, 80, 1f, true),
     SNIFF_NEUTRAL(32, 80, 1f, true),
     SNIFF_SNEEZE(33, 50, 1f, true),
-    STOP_DROP_ROLL(34, 170, 1f, false);
+    STOP_DROP_ROLL(34, 170, 1f, false),
+    TOUCHY_TOUCH(35, 100, 1f, true),
+    DOWN_THE_HOLE(36, 70, 1f, true);
 
     private final int id;
     private final int lengthTicks;
