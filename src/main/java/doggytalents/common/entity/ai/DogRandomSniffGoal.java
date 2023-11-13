@@ -134,6 +134,8 @@ public class DogRandomSniffGoal extends Goal {
     private void tickMoveTo() {
         if (this.dog.getNavigation().isDone()) {
             this.isDoingAnim = true;
+            if (!this.dog.onGround())
+                return;
             findSniffPos();
             if (sniffAtPos != null)
                 startDoingAnim();
