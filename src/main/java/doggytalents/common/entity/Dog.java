@@ -254,6 +254,7 @@ public class Dog extends AbstractDog {
     private float timeWolfIsShaking;
     private float prevTimeWolfIsShaking;
     private int tickUntilRest;
+    private int onFireSmokeTick;
 
     private boolean wasInLava = false;
     private boolean shakeFire = false;
@@ -630,6 +631,18 @@ public class Dog extends AbstractDog {
                 float f1 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
                 float f2 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
                 this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                this.getX() + f1,
+                this.getY() + this.getEyeHeight(),
+                this.getZ() + f2,
+                0, 0.05 , 0 );
+            }
+            onFireSmokeTick = 100;
+        } else if (onFireSmokeTick > 0) {
+            --onFireSmokeTick;
+            if (this.getRandom().nextInt(3) == 0) {
+                float f1 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
+                float f2 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
+                this.level().addParticle(ParticleTypes.SMOKE,
                 this.getX() + f1,
                 this.getY() + this.getEyeHeight(),
                 this.getZ() + f2,
@@ -1613,8 +1626,6 @@ public class Dog extends AbstractDog {
                 this.setAnim(DogAnimation.HURT_1);
             } else if (source.getEntity() != null) {
                 this.setAnim(DogAnimation.HURT_2);
-            } else {
-                this.setAnim(DogAnimation.NONE);
             }
             if (this.isInSittingPose()) {
                 this.setStandAnim(DogAnimation.NONE);
