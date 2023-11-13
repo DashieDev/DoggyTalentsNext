@@ -29,6 +29,7 @@ public class DogRandomSniffGoal extends Goal {
     private int tickAnim = 0;
 
     private boolean isDoingAnim = false;
+    private boolean shouldMoveSignificantly = false;
     private final int EXPLORE_RADIUS = 6;
 
     public DogRandomSniffGoal(Dog dog) {
@@ -104,9 +105,12 @@ public class DogRandomSniffGoal extends Goal {
             break;
         case SNIFF_HOT: 
         {
+            float maxAwayDist = shouldMoveSignificantly ? 0.35f : 0.1f;
             var current_center = Vec3.atBottomCenterOf(currentPos);
             var d_sqr = this.dog.distanceToSqr(current_center);
-            if (tickAnim < 20 && d_sqr < 0.35f && sniffAtState.isAir()) {
+            var d_sqr_2 = this.dog.distanceToSqr(sniffAtPos.getX() + 0.5f, 
+                this.dog.getY(), sniffAtPos.getZ() + 0.5f);
+            if (tickAnim < 20 && (d_sqr < maxAwayDist || d_sqr_2 > 1) && sniffAtState.isAir()) {
                 this.dog.getMoveControl().setWantedPosition(sniffAtPos.getX(), this.dog.getY(),
                 sniffAtPos.getZ(), 0.5f);
             }
@@ -127,7 +131,27 @@ public class DogRandomSniffGoal extends Goal {
             }
             ++tickAnim;
             break;
-        } 
+        }
+        case TOUCHY_TOUCH:
+        {
+            if (this.tickAnim == 35) {
+                this.dog.playSound(SoundEvents.WOLF_HURT, 0.6f, this.dog.getVoicePitch());
+                this.dog.playSound(SoundEvents.GENERIC_BURN, 0.3F, 2.0F + this.dog.getRandom().nextFloat() * 0.4F);
+            }
+            ++tickAnim;
+        }
+        case DOWN_THE_HOLE:
+        {
+            float maxAwayDist = 0.1f;
+            var current_center = Vec3.atBottomCenterOf(currentPos);
+            var d_sqr = this.dog.distanceToSqr(current_center);
+            var d_sqr_2 = this.dog.distanceToSqr(sniffAtPos.getX() + 0.5f, 
+                this.dog.getY(), sniffAtPos.getZ() + 0.5f);
+            if ((d_sqr < maxAwayDist || d_sqr_2 > 1) && sniffAtState.isAir()) {
+                this.dog.getMoveControl().setWantedPosition(sniffAtPos.getX(), this.dog.getY(),
+                sniffAtPos.getZ(), 0.5f);
+            }
+        }
         }
     }
 
@@ -151,10 +175,12 @@ public class DogRandomSniffGoal extends Goal {
     }
 
     private boolean findSniffPos() {
-        int xOffset = this.dog.getRandom().nextInt(3) - 1;
-        int zOffset = this.dog.getRandom().nextInt(3) - 1;
+        int offset = this.dog.getRandom().nextBoolean() ? 1 : -1;
+        boolean offsetX = this.dog.getRandom().nextBoolean();
         var currentPos = this.dog.blockPosition();
-        var sniffPos = currentPos.offset(xOffset, 0, zOffset);
+        var sniffPos = offsetX ?
+            currentPos.offset(offset, 0, 0)
+            : currentPos.offset(0, 0, offset);
         var sniffState = this.dog.level().getBlockState(sniffPos);
         if (!isBlockSniffable(sniffPos, sniffState))
             return false;
@@ -170,14 +196,20 @@ public class DogRandomSniffGoal extends Goal {
 
     private DogAnimation getSniffAnim() {
         boolean fireImmune = this.dog.fireImmune();
+        shouldMoveSignificantly = !sniffUnderState.isCollisionShapeFullBlock(dog.level(), sniffUnderPos);
         if (!fireImmune && 
-            WalkNodeEvaluator.isBurningBlock(sniffUnderState))
+            WalkNodeEvaluator.isBurningBlock(sniffUnderState)
+            && sniffAtState.isAir())
             return DogAnimation.SNIFF_HOT;
         var atBlock = sniffAtState.getBlock();
         if (atBlock instanceof FlowerBlock || atBlock instanceof TorchBlock)
             return DogAnimation.SNIFF_SNEEZE;
-        if (atBlock instanceof FireBlock)
-            return DogAnimation.SNIFF_HOT;
+        if (!fireImmune && 
+            WalkNodeEvaluator.isBurningBlock(sniffAtState))
+            return DogAnimation.TOUCHY_TOUCH;
+        if (sniffAtState.isAir() && sniffUnderState.isAir()) {
+            return DogAnimation.DOWN_THE_HOLE;
+        }
         return DogAnimation.SNIFF_NEUTRAL;
     }
 
