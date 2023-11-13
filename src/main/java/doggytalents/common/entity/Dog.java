@@ -271,6 +271,7 @@ public class Dog extends AbstractDog {
     public int lastOrderedToSitTick;
     private int tickChopinTail;
     private boolean dogAnimHurtImpules = false;
+    private int idleAnimHurtCooldown = 0;
 
     private static final UUID HUNGER_MOVEMENT = UUID.fromString("50671f49-1dfd-4397-242b-78bb6b178115");
 
@@ -738,12 +739,15 @@ public class Dog extends AbstractDog {
             return false;
         if (this.isPassenger() || this.isVehicle())
             return false;
+        if (this.idleAnimHurtCooldown > 0)
+            return false;
         return !this.isShaking && !this.animationManager.started();
     }
 
     public boolean canContinueDoIdileAnim() {
         if (this.dogAnimHurtImpules) {
             this.dogAnimHurtImpules = false;
+            this.idleAnimHurtCooldown = 20;
             return false;
         }
         if (this.isPassenger() || this.isVehicle())
@@ -911,6 +915,10 @@ public class Dog extends AbstractDog {
 
         if (this.switchNavCooldown > 0) {
             --this.switchNavCooldown;
+        }
+
+        if (this.idleAnimHurtCooldown > 0) {
+            --this.idleAnimHurtCooldown;
         }
 
         // if (!this.level().isClientSide && this.getMode().canWander()) {
