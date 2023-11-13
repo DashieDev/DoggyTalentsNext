@@ -618,8 +618,14 @@ public class Dog extends AbstractDog {
             proccessCustomModelSkin();
         }
 
-        if (this.level().isClientSide && this.isOnFire() 
+        if (this.level().isClientSide 
             && ConfigHandler.CLIENT.DISPLAY_SMOKE_WHEN_ON_FIRE.get()) {
+            addAdditionalOnFireEffect();
+        }
+    }
+
+    private void addAdditionalOnFireEffect() {
+        if (this.isOnFire()) {
             if (this.getRandom().nextInt(3) == 0) {
                 float f1 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
                 float f2 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
