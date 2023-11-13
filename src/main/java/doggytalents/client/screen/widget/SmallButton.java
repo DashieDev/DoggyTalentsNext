@@ -28,7 +28,7 @@ public class SmallButton extends Button {
        RenderSystem.enableBlend();
        RenderSystem.defaultBlendFunc();
        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-       graphics.blit(Resources.SMALL_WIDGETS, this.getX(), this.getY(), 0, i * 12, this.width, this.height);
+       graphics.blit(Resources.SMALL_WIDGETS, this.getX(), this.getY(), 0, i, this.width, this.height);
        //TODO 1.19.4 ??? 
        //this.renderBg(stack, mc, mouseX, mouseY);
        int j = getFGColor();
@@ -42,7 +42,7 @@ public class SmallButton extends Button {
            i = 2;
         }
   
-        return 46 + i * 20;
+        return i * 12;
     }
 
 }
