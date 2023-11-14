@@ -84,6 +84,8 @@ public class FlyingFurballTalent extends TalentInstance {
             dog.setDogFlying(true);
         }
 
+        isDogFlying = dog.isDogFlying();
+
         if (isDogFlying)
         if (this.wasFlying) {
             if (dog.getAnim() == DogAnimation.NONE)
