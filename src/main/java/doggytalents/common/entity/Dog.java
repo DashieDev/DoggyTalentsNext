@@ -4467,7 +4467,7 @@ public class Dog extends AbstractDog {
             this.setDogPose(this.isLying() ? DogPose.LYING_2 : DogPose.SIT);
             return;
         }
-        if (this.isDogFlying() && !this.onGround()) {
+        if (this.isDogFlying()) {
             this.setDogPose(DogPose.FLYING);
             return;
         }
