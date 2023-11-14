@@ -8,9 +8,11 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.Screens;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.inventory.DoggyToolsItemHandler;
+import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.talent.doggy_tools.tool_actions.ToolAction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
@@ -34,6 +36,7 @@ public class DoggyToolsTalent extends TalentInstance  {
 
     private DoggyToolsItemHandler tools;
     private Map<Item, ToolAction> TOOL_ACTION_MAP;
+    private boolean alwaysPickSlot0;
 
     public DoggyToolsTalent(Talent talentIn, int level) {
         super(talentIn, level);
@@ -82,6 +85,16 @@ public class DoggyToolsTalent extends TalentInstance  {
         validateAndSync(d);
         
         if (!(d instanceof Dog dog)) return;
+
+        if (this.alwaysPickSlot0) {
+            var firstTool = this.tools.getStackInSlot(0);
+            if (!firstTool.isEmpty()) {
+                if (dog.getMainHandItem() != firstTool) {
+                    dog.setItemInHand(InteractionHand.MAIN_HAND, firstTool);
+                }
+                return;
+            }
+        }
 
         if (dog.isOrderedToSit() || !dog.isDoingFine())  {
             var mainHandItem = dog.getMainHandItem();
@@ -172,6 +185,7 @@ public class DoggyToolsTalent extends TalentInstance  {
         super.writeToNBT(dogIn, compound);
         var tag = new CompoundTag();
         tag.put("tool_inv", tools.serializeNBT());
+        tag.putBoolean("pickFirstTool", this.alwaysPickSlot0);
         compound.put("doggy_tools", tag);
     }
 
@@ -180,6 +194,7 @@ public class DoggyToolsTalent extends TalentInstance  {
         super.readFromNBT(dogIn, compound);
         var tag = compound.getCompound("doggy_tools");
         if (tag == null) return;
+        alwaysPickSlot0 = tag.getBoolean("pickFirstTool");
         var inv_tag = tag.getCompound("tool_inv");
         if (inv_tag != null) {
             this.tools.deserializeNBT(inv_tag);
@@ -198,4 +213,32 @@ public class DoggyToolsTalent extends TalentInstance  {
     public int getMaxOwnerDistSqr() {
         return 8*8;
     } 
+
+
+    @Override
+    public void writeToBuf(FriendlyByteBuf buf) {
+        buf.writeBoolean(this.alwaysPickSlot0);
+    }
+
+    @Override
+    public void readFromBuf(FriendlyByteBuf buf) {
+        alwaysPickSlot0 = buf.readBoolean();
+    }
+
+    @Override
+    public TalentInstance copy() {
+        var ret = super.copy();
+        if (!(ret instanceof DoggyToolsTalent tools))
+            return ret;
+        tools.setPickFirstTool(this.alwaysPickSlot0);
+        return tools;
+    }
+
+    public void updateFromPacket(DoggyToolsPickFirstData data) {
+        alwaysPickSlot0 = data.val;
+    }
+
+    public boolean pickFirstTool() { return this.alwaysPickSlot0; }
+    public void setPickFirstTool(boolean val) { this.alwaysPickSlot0 = val; }
+    
 }
