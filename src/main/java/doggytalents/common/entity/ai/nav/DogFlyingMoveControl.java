@@ -34,9 +34,7 @@ public class DogFlyingMoveControl extends FlyingMoveControl {
                this.dog.setNoGravity(false);
                return;
             }
-            double l_xz = Math.sqrt(dx * dx + dz * dz);
-
-            this.dog.setNoGravity(true);
+            double l_xz = Math.sqrt(dx * dx + dz * dz);            
 
             float speed = 0f;
             if (this.dog.onGround()) {
@@ -53,6 +51,10 @@ public class DogFlyingMoveControl extends FlyingMoveControl {
                 this.dog.yya = Mth.sign(dy) * speed;
                 this.dog.zza = 0;
                 return;
+            }
+
+            if (dy_abs >= 0.1f) {
+                this.dog.setNoGravity(true);
             }
    
             float wantedYRot = (float)(Mth.atan2(dz, dx) * Mth.RAD_TO_DEG) - 90.0F;
