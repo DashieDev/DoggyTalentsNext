@@ -61,6 +61,8 @@ public class DivineRetribution extends Accessory implements IAccessoryHasModel {
 
         @Override
         public void tick(AbstractDog dogIn) {
+            if (!dogIn.isDoingFine())
+                return;
             if (--tickTillRefresh <= 0) {
                 tickTillRefresh = 5;
                 populateCooking(dogIn);
