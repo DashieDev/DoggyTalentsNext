@@ -23,9 +23,11 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogTalentData;
+import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.network.packet.data.DoggyTorchPlacingTorchData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.talent.DoggyTorchTalent;
+import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
@@ -157,8 +159,31 @@ public class TalentInfoViewElement extends AbstractElement {
             );
             torchButtonDiv.addChildren(torchButton);
         } else if (talent == DoggyTalents.DOGGY_TOOLS.get()) {
-            if (dog.getDogLevel(DoggyTalents.DOGGY_TOOLS) <= 0)
+            var talentOptional = dog.getTalent(DoggyTalents.DOGGY_TOOLS);
+            if (!talentOptional.isPresent())
                 return;
+            var talentInst = talentOptional.get();
+            if (!(talentInst instanceof DoggyToolsTalent toolsTalent))
+                return;
+
+            container.addChildren(
+                new ButtonOptionEntry(container, getScreen(), 
+                    new FlatButton(
+                        0, 0,
+                        40, 20, Component.literal("" + toolsTalent.pickFirstTool()), 
+                        b -> {
+                            Boolean newVal = !toolsTalent.pickFirstTool();
+                            b.setMessage(Component.literal("" + newVal));
+                            toolsTalent.setPickFirstTool(newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new DoggyToolsPickFirstData(
+                                dog.getId(), newVal
+                            ));
+                        }     
+                    ),
+                    I18n.get("talent.doggytalents.doggy_tools.pick_first_tool")
+                )
+                .init()
+            );
             var toolsButtonDiv = new DivElement(container, getScreen())
                 .setPosition(PosType.RELATIVE, 0, 0)
                 .setSize(1f, 30)
@@ -420,5 +445,67 @@ public class TalentInfoViewElement extends AbstractElement {
         }
 
     }
+
+    private static class ButtonOptionEntry extends AbstractElement {
+
+        private AbstractWidget button;
+        private String label;
+        private Font font;
+
+        private boolean newline = false;
+
+        public ButtonOptionEntry(AbstractElement parent, Screen screen, AbstractWidget button, String label) {
+            super(parent, screen);
+            this.font = Minecraft.getInstance().font;
+            this.button = button;
+            this.label = label;
+        }
+
+        @Override
+        public AbstractElement init() {
+            this.setPosition(PosType.RELATIVE, 0, 0);
+            this.setSize(1f, 20 + LINE_SPACING);
+
+            int buttonX_offset = PADDING_LEFT + 130;
+            int buttonY_offset = this.getSizeY()/2
+                - this.button.getHeight()/2 + 1;
+
+            var p = this.getParent();
+            if (
+                p != null
+                && buttonX_offset + this.button.getWidth() > p.getSizeX()
+            ) {
+                this.newline = true; 
+                buttonX_offset = PADDING_LEFT; 
+                buttonY_offset += 14;
+            }
+
+            if (newline)
+            this.setSize(1f, 20 + LINE_SPACING + 14);
+
+            this.button.setX(this.getRealX() + buttonX_offset);
+            this.button.setY(this.getRealY() + buttonY_offset);
+
+            this.addChildren(button);
+            return this;
+        }
+
+        @Override
+        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+            if (newline) {
+                int startX = this.getRealX() + PADDING_LEFT;
+                int pY = this.getRealY() + 3;
+                graphics.drawString(font, this.label, startX, pY, 0xffffffff);
+                
+                return;
+            } 
+
+            int startX = this.getRealX() + PADDING_LEFT;
+            int pY = this.getRealY() + this.getSizeY()/2
+                - font.lineHeight/2;
+            graphics.drawString(font, this.label, startX, pY, 0xffffffff);
+        }
+    }
+
     
 }
