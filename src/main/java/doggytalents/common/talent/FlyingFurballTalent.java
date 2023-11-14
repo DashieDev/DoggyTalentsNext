@@ -103,6 +103,11 @@ public class FlyingFurballTalent extends TalentInstance {
     }
 
     private boolean shouldBeFlying(AbstractDog dog) {
+        if (!dog.isDoingFine()) {
+            if (dog instanceof Dog ddog && !ddog.incapacitatedMananger.canMove())
+            return false;
+        }
+
         return !dog.onGround() && !dog.isInSittingPose() && !dog.isPassenger()
             && !dog.isInWater() && dog.getNavigation() == this.navigation;
     }
