@@ -29,7 +29,7 @@ public class DoggySpin extends AbstractWidget {
     public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
         switch(this.style) {
         default:
-            drawSpin(stack, this.x, this.y, size);
+            drawAmmy(graphics, this.getX(), this.getY(), size);
             break;
         case BACKFLIP:
             drawSpin2(stack, this.x, this.y, size);
@@ -51,14 +51,14 @@ public class DoggySpin extends AbstractWidget {
         RenderSystem.setShaderTexture(0, Resources.SPIN);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        int imgeSize = 7 * size;
+        int imgeSize = 6 * size;
         if (System.currentTimeMillis() - lastRender > 50) {
             lastRender = System.currentTimeMillis();
-            indx = (indx + 1) % 40;
+            indx = (indx + 1) % 35;
         }
-        int uvX = ((int)Mth.floor(indx%7));
-        int uvY =  ((int)Mth.floor(indx/7));
-        blit(stack, x, y, 0, uvX * size, uvY* size, size , size, 7 * size, 6 * size);
+        int uvX = ((int)Mth.floor(indx%6));
+        int uvY =  ((int)Mth.floor(indx/6));
+        graphics.blit(Resources.SPIN, x, y, 0, uvX * size, uvY* size, size , size, 6 * size, 6 * size);
         RenderSystem.disableBlend();
     }
 
@@ -71,7 +71,7 @@ public class DoggySpin extends AbstractWidget {
         int imgeSize = 7 * size;
         if (System.currentTimeMillis() - lastRender > 50) {
             lastRender = System.currentTimeMillis();
-            indx = (indx + 1) % 35;
+            indx = (indx + 1) % 30;
         }
         int uvX = ((int)Mth.floor(indx%7));
         int uvY =  ((int)Mth.floor(indx/7));
@@ -85,14 +85,14 @@ public class DoggySpin extends AbstractWidget {
         RenderSystem.setShaderTexture(0, Resources.SPIN3);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        int imgeSize = 7 * size;
+        int imgeSize = 9 * size;
         if (System.currentTimeMillis() - lastRender > 50) {
             lastRender = System.currentTimeMillis();
-            indx = (indx + 1) % 120;
+            indx = (indx + 1) % 100;
         }
-        int uvX = ((int)Mth.floor(indx%7));
-        int uvY =  ((int)Mth.floor(indx/7));
-        blit(stack, x, y, 0, uvX * size, uvY* size, size , size, 7 * size, 18 * size);
+        int uvX = ((int)Mth.floor(indx%9));
+        int uvY =  ((int)Mth.floor(indx/9));
+        graphics.blit(Resources.SPIN3, x, y, 0, uvX * size, uvY* size, size , size, 9 * size, 12 * size);
         RenderSystem.disableBlend();
     }
 
@@ -102,14 +102,15 @@ public class DoggySpin extends AbstractWidget {
         RenderSystem.setShaderTexture(0, Resources.SPIN4);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        int imgeSize = 7 * size;
+        int imgeSize = 6 * size;
         if (System.currentTimeMillis() - lastRender > 50) {
             lastRender = System.currentTimeMillis();
-            indx = (indx + 1) % 50;
+            indx = (indx + 1) % 40;
         }
-        int uvX = ((int)Mth.floor(indx%7));
-        int uvY =  ((int)Mth.floor(indx/7));
-        blit(stack, x, y, 0, uvX * size, uvY* size, size , size, 7 * size, 8 * size);
+
+        int uvX = ((int)Mth.floor(indx%6));
+        int uvY =  ((int)Mth.floor(indx/6));
+        graphics.blit(Resources.SPIN4, x, y, 0, uvX * size, uvY* size, size , size, 6 * size, 7 * size);
         RenderSystem.disableBlend();
     }
 
