@@ -115,8 +115,6 @@ public class DogGoAwayFromFireGoal extends Goal {
             if (state.is(Blocks.LAVA)) {
                 return 1;
             }
-            if (state.is(BlockTags.FIRE) && !dog.isDogCurious())
-                return 1;
             var blockBb = new AABB(Vec3.atLowerCornerOf(x),Vec3.atLowerCornerWithOffset(x, 1, 1, 1));
 
             if (isBurning && dog.getBoundingBox().intersects(blockBb)) {
