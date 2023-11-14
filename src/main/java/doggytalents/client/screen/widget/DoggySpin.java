@@ -29,7 +29,7 @@ public class DoggySpin extends AbstractWidget {
     public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
         switch(this.style) {
         default:
-            drawAmmy(graphics, this.getX(), this.getY(), size);
+            drawSpin(graphics, this.getX(), this.getY(), size);
             break;
         case BACKFLIP:
             drawSpin2(stack, this.x, this.y, size);
