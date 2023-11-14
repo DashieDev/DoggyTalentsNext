@@ -59,7 +59,7 @@ public class ChemiCanineTalent extends TalentInstance {
         
         if (
             dog.readyForNonTrivialAction() 
-            && !dog.getMode().shouldAttack() 
+            && !dog.isOrderedToSit()
             && --this.tickTillSearch <= 0
         ) {
             this.tickTillSearch = 10;
@@ -325,10 +325,6 @@ public class ChemiCanineTalent extends TalentInstance {
 
         @Override
         public void tick() {
-            if (this.dog.getMode().shouldAttack()) {
-                this.setState(ActionState.FINISHED); return;
-            }
-
             if (!this.talentInst.stillValidTarget(dog, target)) {
                 this.setState(ActionState.FINISHED); return;
             }
@@ -354,11 +350,6 @@ public class ChemiCanineTalent extends TalentInstance {
 
         @Override
         public void onStop() {
-        }
-
-        @Override
-        public boolean canOverrideSit() {
-            return true;
         }
         
     }
