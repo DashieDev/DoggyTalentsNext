@@ -16,6 +16,9 @@ import net.minecraft.util.Mth;
 public class DivineRetributionModel extends ElytraCapeModel {
 
     public ModelPart reflector;
+    public ModelPart divineCape;
+
+    private boolean incapacitated;
 
     public DivineRetributionModel(ModelPart root) {
         super(root);
@@ -25,6 +28,16 @@ public class DivineRetributionModel extends ElytraCapeModel {
     protected void populatePart(ModelPart box) {
         super.populatePart(box);
         this.reflector = this.elytra.getChild("disc");
+        this.divineCape = this.elytra.getChild("divine_cape");
+    }
+
+    @Override
+    public void prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        super.prepareMobModel(dogIn, limbSwing, limbSwingAmount, partialTickTime);
+        incapacitated = !dogIn.isDoingFine();
+        lWing.visible = !incapacitated;
+        rWing.visible = !incapacitated;
+        divineCape.visible = !incapacitated;
     }
 
     @Override
@@ -44,7 +57,7 @@ public class DivineRetributionModel extends ElytraCapeModel {
 
 		PartDefinition elytra = elytra_rot.addOrReplaceChild("elytra", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition cape_r1 = elytra.addOrReplaceChild("cape_r1", CubeListBuilder.create().texOffs(30, 42).mirror().addBox(-5.8914F, 3.8079F, 2.3224F, 15.0F, 20.0F, 2.0F, new CubeDeformation(0.001F)).mirror(false), PartPose.offsetAndRotation(-2.0F, 0.0F, -1.0F, 1.6144F, 0.0F, 0.0F));
+		PartDefinition divine_cape = elytra.addOrReplaceChild("divine_cape", CubeListBuilder.create().texOffs(30, 42).mirror().addBox(-5.8914F, 3.8079F, 2.3224F, 15.0F, 20.0F, 2.0F, new CubeDeformation(0.001F)).mirror(false), PartPose.offsetAndRotation(-2.0F, 0.0F, -1.0F, 1.6144F, 0.0F, 0.0F));
 
 		PartDefinition disc = elytra.addOrReplaceChild("disc", CubeListBuilder.create().texOffs(24, 29).addBox(-5.0F, -0.35F, -5.15F, 10.0F, 1.0F, 10.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 29).addBox(-5.0F, -0.35F, -5.15F, 10.0F, 1.0F, 10.0F, new CubeDeformation(-0.099F))
@@ -67,7 +80,7 @@ public class DivineRetributionModel extends ElytraCapeModel {
     @Override
     public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, float p_103017_,
             float p_103018_, float p_103019_, float p_103020_) {
-        super.renderToBuffer(stack, p_103014_, 15728880, p_103016_, p_103017_, p_103018_, p_103019_, p_103020_);
+        super.renderToBuffer(stack, p_103014_, incapacitated ? p_103015_ :15728880, p_103016_, p_103017_, p_103018_, p_103019_, p_103020_);
     }
     
 }
