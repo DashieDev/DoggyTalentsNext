@@ -15,6 +15,28 @@ public class DogFlyingNavigation extends FlyingPathNavigation {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        dashToTargetIfNeeded();
+    }
+
+    private void dashToTargetIfNeeded() {
+        var target = dog.getTarget();
+        if (target == null)
+            return;
+        var d_sqr = dog.distanceToSqr(target);
+        if (d_sqr > 16)
+            return;
+        if (dog.tickCount % 5 != 0)
+            return;
+        if (!canMoveDirectly(dog.position(), target.position()))
+            return;
+        this.stop();
+        dog.getMoveControl().setWantedPosition(target.position().x, 
+            target.position().y, target.position().z, 2f);
+    }
+
+    @Override
     protected boolean canUpdatePath() {
         return super.canUpdatePath() && !dog.isOnSwitchNavCooldown();
     }
