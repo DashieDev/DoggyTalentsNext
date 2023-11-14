@@ -8,6 +8,7 @@ import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.CombatReturnStrategy;
 import doggytalents.common.entity.Dog.LowHealthStrategy;
+import doggytalents.common.entity.ai.nav.DogFlyingNavigation;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -186,6 +187,11 @@ public class DogMeleeAttackGoal extends Goal {
       var dog_bp = this.dog.blockPosition();
       var target_bp = e.blockPosition();
 
+      if (this.dog.isDogFlying()) {
+         if (flyingDogDashToTargetIfNeeded(e))
+            return;
+      }
+
       if (dog_bp.equals(this.dogPos0)) {
          ++this.waitingTick;
       } else {
@@ -240,6 +246,22 @@ public class DogMeleeAttackGoal extends Goal {
 
       this.dog.setDeltaMovement(vec31.x, (double)this.LEAP_YD, vec31.z);
    }
+
+   private boolean flyingDogDashToTargetIfNeeded(LivingEntity target) {
+      var d_sqr = dog.distanceToSqr(target);
+      if (d_sqr > 16)
+          return false;
+      if (dog.tickCount % 5 != 0)
+          return false;
+      if (!(dog.getNavigation() instanceof DogFlyingNavigation flyNav))
+         return false;
+      if (!flyNav.canDashToTarget(target))
+         return false;
+      flyNav.stop();
+      dog.getMoveControl().setWantedPosition(target.position().x, 
+          target.position().y, target.position().z, 2f);
+      return true;
+  }
 
    protected boolean canLeapAtTarget(@NotNull LivingEntity target) {
 
