@@ -116,7 +116,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                         "Pack ["
                         + jsonSkinPack.packId()
                         + "] contains "
-                        + result.duplicates + " duplicated entries. All of them will be omitted."
+                        + result.duplicates + " duplicated entries. Those will be omitted."
                     );
                 }
             } catch(Exception e) {
@@ -159,7 +159,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                         "Path ["
                         + path
                         + "] contains "
-                        + result.duplicates + " duplicated entries. All of them will be omitted."
+                        + result.duplicates + " duplicated entries. Those will be omitted."
                     );
                 }
             } catch(Exception e) {
