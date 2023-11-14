@@ -54,12 +54,12 @@ public class DoggyTorchTalent extends TalentInstance {
 
     @Override
     public void onRead(AbstractDog dogIn, CompoundTag compound) {
-        compound.putBoolean("DoggyTorchTalent_placingTorch", placingTorch);
+        this.placingTorch = compound.getBoolean("DoggyTorchTalent_placingTorch");
     }
 
     @Override
     public void onWrite(AbstractDog dogIn, CompoundTag compound) {
-        this.placingTorch = compound.getBoolean("DoggyTorchTalent_placingTorch");
+        compound.putBoolean("DoggyTorchTalent_placingTorch", placingTorch);
     }
 
     @Override
@@ -74,6 +74,15 @@ public class DoggyTorchTalent extends TalentInstance {
 
     public void updateFromPacket(DoggyTorchPlacingTorchData data) {
         placingTorch = data.val;
+    }
+
+    @Override
+    public TalentInstance copy() {
+        var ret = super.copy();
+        if (!(ret instanceof DoggyTorchTalent torch))
+            return ret;
+        torch.setPlacingTorch(this.placingTorch);
+        return torch;
     }
 
     public boolean placingTorch() { return this.placingTorch; }
