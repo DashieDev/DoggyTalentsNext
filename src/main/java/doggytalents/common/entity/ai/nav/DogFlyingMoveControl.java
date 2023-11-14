@@ -36,7 +36,6 @@ public class DogFlyingMoveControl extends FlyingMoveControl {
             }
             double l_xz = Math.sqrt(dx * dx + dz * dz);
 
-            dog.setDogFlying(true);
             this.dog.setNoGravity(true);
 
             float speed = 0f;
