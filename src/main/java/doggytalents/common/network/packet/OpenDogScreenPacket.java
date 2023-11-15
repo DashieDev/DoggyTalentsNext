@@ -50,21 +50,21 @@ public class OpenDogScreenPacket implements IPacket<OpenDogScreenData>  {
         switch (data.type) {
         case TOOL:
         {
-            var e = player.level().getEntity(data.dogId);
+            var e = player.level.getEntity(data.dogId);
             if (e instanceof Dog dog)
                 Screens.openDoggyToolsScreen(player, dog);
             break;
         }
         case ARMOR:
         {
-            var e = player.level().getEntity(data.dogId);
+            var e = player.level.getEntity(data.dogId);
             if (e instanceof Dog dog)
                 Screens.openArmorScreen(player, dog);
             break;
         }
         default:
         {
-            List<Dog> dogs = player.level().getEntitiesOfClass(Dog.class, player.getBoundingBox().inflate(12D, 12D, 12D),
+            List<Dog> dogs = player.level.getEntitiesOfClass(Dog.class, player.getBoundingBox().inflate(12D, 12D, 12D),
                 (dog) -> dog.canInteract(player) && PackPuppyTalent.hasInventory(dog)
             );
             Collections.sort(dogs, new EntityUtil.Sorter(player.position()));

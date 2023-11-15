@@ -6,11 +6,11 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.anim.DogAnimation;
+import doggytalents.common.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.level.block.FireBlock;
 
 public class FireDrillTalent extends TalentInstance {
@@ -50,8 +50,8 @@ public class FireDrillTalent extends TalentInstance {
         tickTillUpdateInFire = 10;
         isInFire = false;
         var bb = dog.getBoundingBox();
-        var startPos = BlockPos.containing(bb.minX, bb.minY, bb.minZ);
-        var endPos = BlockPos.containing(bb.maxX, bb.maxY, bb.maxZ);
+        var startPos = Util.containing(bb.minX, bb.minY, bb.minZ);
+        var endPos = Util.containing(bb.maxX, bb.maxY, bb.maxZ);
         for (var pos : BlockPos.betweenClosed(startPos, endPos)) {
             var state = dog.level().getBlockState(pos);
             if (state.getBlock() instanceof FireBlock) {
@@ -93,7 +93,7 @@ public class FireDrillTalent extends TalentInstance {
 
     @Override
     public InteractionResult stillIdleOrSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
-        if (isRolling && source.is(DamageTypes.ON_FIRE))
+        if (isRolling && source.isFire())
             return InteractionResult.SUCCESS;
         return InteractionResult.PASS;    
     }

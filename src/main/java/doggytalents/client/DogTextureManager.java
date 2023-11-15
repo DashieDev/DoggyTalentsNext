@@ -107,14 +107,14 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                         "Successfully registered "
                         + result.success + " entries from " + 
                         "pack ["
-                        + jsonSkinPack.packId()
+                        + jsonSkinPack.getName()
                         + "]"
                     );
                 }
                 if (result.duplicates > 0) {
                     DoggyTalentsNext.LOGGER.warn(
                         "Pack ["
-                        + jsonSkinPack.packId()
+                        + jsonSkinPack.getName()
                         + "] contains "
                         + result.duplicates + " duplicated entries. Those will be omitted."
                     );

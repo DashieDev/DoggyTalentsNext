@@ -90,6 +90,6 @@ public class CreeperSweeperTalent extends TalentInstance {
         if (!(target instanceof Creeper creeper))
             return;
         creeper.setHealth(0);
-        creeper.die(dogIn.damageSources().mobAttack(dogIn));
+        creeper.die(DamageSource.mobAttack(dogIn));
     }
 }

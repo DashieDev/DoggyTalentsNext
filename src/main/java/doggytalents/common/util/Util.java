@@ -5,9 +5,12 @@ import com.google.common.collect.Lists;
 import doggytalents.common.block.DogBathBlock;
 import doggytalents.common.lib.Constants;
 import io.netty.buffer.Unpooled;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -247,6 +250,14 @@ public class Util {
 
 
         return null;
+    }
+
+    public static BlockPos containing(double x, double y, double z) {
+        return new BlockPos(x, y, z);
+    }
+    
+    public static Vec3 atLowerCornerWithOffset(Vec3i iVec, double offX, double offY, double offZ) {
+        return Vec3.atLowerCornerOf(iVec).add(offX, offY, offZ);
     }
 
 }

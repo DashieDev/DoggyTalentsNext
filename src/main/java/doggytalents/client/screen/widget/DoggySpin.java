@@ -29,7 +29,7 @@ public class DoggySpin extends AbstractWidget {
     public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
         switch(this.style) {
         default:
-            drawSpin(graphics, this.getX(), this.getY(), size);
+            drawSpin(stack, this.x, this.y, size);
             break;
         case BACKFLIP:
             drawSpin2(stack, this.x, this.y, size);
@@ -58,7 +58,7 @@ public class DoggySpin extends AbstractWidget {
         }
         int uvX = ((int)Mth.floor(indx%6));
         int uvY =  ((int)Mth.floor(indx/6));
-        graphics.blit(Resources.SPIN, x, y, 0, uvX * size, uvY* size, size , size, 6 * size, 6 * size);
+        blit(stack, x, y, 0, uvX * size, uvY* size, size , size, 6 * size, 6 * size);
         RenderSystem.disableBlend();
     }
 
@@ -92,7 +92,7 @@ public class DoggySpin extends AbstractWidget {
         }
         int uvX = ((int)Mth.floor(indx%9));
         int uvY =  ((int)Mth.floor(indx/9));
-        graphics.blit(Resources.SPIN3, x, y, 0, uvX * size, uvY* size, size , size, 9 * size, 12 * size);
+        blit(stack, x, y, 0, uvX * size, uvY* size, size , size, 9 * size, 12 * size);
         RenderSystem.disableBlend();
     }
 
@@ -110,7 +110,7 @@ public class DoggySpin extends AbstractWidget {
 
         int uvX = ((int)Mth.floor(indx%6));
         int uvY =  ((int)Mth.floor(indx/6));
-        graphics.blit(Resources.SPIN4, x, y, 0, uvX * size, uvY* size, size , size, 6 * size, 7 * size);
+        blit(stack, x, y, 0, uvX * size, uvY* size, size , size, 6 * size, 7 * size);
         RenderSystem.disableBlend();
     }
 
