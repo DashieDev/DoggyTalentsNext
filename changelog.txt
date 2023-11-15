@@ -804,3 +804,29 @@ upright piano, recorded using his phone and post-processed by MashXP.
 * Fixed: Wolf Mount and its hunger goes down to zero when carrying a mob retriever, it will also cause a crash.
 * Fixed: Contents of the menu breaking when you have too many dogs.
 * Fixed: Kill count works properly now.
+
+1.17.4 - 14th November 2023
+
++ Added Flying Wolf Mount! You can smoothly changes direction when flying!
++ Added new Option to hide Doggy Armor.
++ Added new Option to disable Torch Placement of Doggy Torch on Talents Menu.
++ Added new Sniffing animations!
++ Added new Talent: Fire Drill. Stop, Drop and Roll!
++ Added new Option to access specific talents GUI in Talents Menu. (Pack Puppy, Doggy Tools, Doggy Armor)
++ More random names!
++ Added new Option to enable Auto-Mount (boats, minecarts,...) in Dog Option Menu.
++ Added Option to force dog to always equip the tool in the first slots of its hotbar in Doggy Tools.
+==================
+#Mob Retriever now drops entity upon taking damage.
+#Mob Retriever cannot take other players tamed animals.
+#Mob Retriever debuff, stricter size limit.
+#Hide Ammy Rebirth
+#ChemiCanine now absorb in every mode.
+#Doggy Tools can use Axe to attack enemies!
+#Dogs can look around while flying.
+#Nerf Hellhound Talent: Can only set enemies on fire at level 4+.
+#Tuned Howl Animation
+#Tune Happy Eater Talent: Lvl 2: Fishes, Lvl 5: Rotten Flesh
+#Dogs are now a bit more curious about fire. 🔥🔥🔥
+#Updated visuals of loading menu spinning doggos.
+==================
