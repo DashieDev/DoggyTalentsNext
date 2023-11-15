@@ -82,8 +82,8 @@ public class ParticlePackets {
                     Entity e = mc.level.getEntity(data.dogId);
                     if (e instanceof Dog dog && data.food != null) {
                         var a1 = dog.getClientAnimatedYBodyRotInRadians();
-                        var dx1 = -Mth.sin(a1) * (dog.getBbWidth() * 1.5);
-                        var dz1 = Mth.cos(a1) * (dog.getBbWidth() * 1.5);
+                        var dx1 = -Mth.sin(a1) * (dog.getDogVisualBbWidth() * 1.5);
+                        var dz1 = Mth.cos(a1) * (dog.getDogVisualBbWidth() * 1.5);
 
                         for(int i = 0; i < 15; ++i) {
                             double d1 = mc.level.getRandom().nextGaussian() * (double)0.5;

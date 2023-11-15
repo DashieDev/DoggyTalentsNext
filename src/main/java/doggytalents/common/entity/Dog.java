@@ -518,11 +518,16 @@ public class Dog extends AbstractDog {
         this.refreshDimensions();
     }
 
+    private EntityDimensions visualDimension = null;
+
     @Override
     public EntityDimensions getDimensions(Pose p_19975_) {
         var self_dim = super.getDimensions(p_19975_);
-        if (this.isVehicle() && !this.getPassengers().isEmpty())
+        visualDimension = null;
+        if (this.isVehicle() && !this.getPassengers().isEmpty()) {
+            visualDimension = self_dim;
             self_dim = computeRidingDimension(self_dim);
+        }
         return self_dim;
     }
 
@@ -533,6 +538,18 @@ public class Dog extends AbstractDog {
 
     public EntityDimensions getRealDimensions() {
         return super.getDimensions(getPose());
+    }
+
+    public float getDogVisualBbHeight() {
+        if (this.visualDimension != null)
+            return this.visualDimension.height;
+        return this.getBbHeight();
+    }
+
+    public float getDogVisualBbWidth() {
+        if (this.visualDimension != null)
+            return this.visualDimension.width;
+        return this.getBbWidth();
     }
 
     private EntityDimensions computeRidingDimension(EntityDimensions self_dim) {
@@ -599,8 +616,8 @@ public class Dog extends AbstractDog {
                         Vec3 vec3d = this.getDeltaMovement();
 
                         for (int j = 0; j < i; ++j) {
-                            float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
-                            float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+                            float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
+                            float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
                             if (this.shakeFire) {
                                 byte r = (byte) this.getRandom().nextInt(3);
                                 if (r==0)
@@ -668,8 +685,8 @@ public class Dog extends AbstractDog {
         if (this.level().isClientSide && this.isOnFire() 
             && ConfigHandler.CLIENT.DISPLAY_SMOKE_WHEN_ON_FIRE.get()) {
             if (this.getRandom().nextInt(3) == 0) {
-                float f1 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
-                float f2 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+                float f1 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
+                float f2 = (this.getRandom().nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
                 this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
                 this.getX() + f1,
                 this.getY() + this.getEyeHeight(),
