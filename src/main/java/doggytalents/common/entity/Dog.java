@@ -84,6 +84,7 @@ import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -3660,11 +3661,11 @@ public class Dog extends AbstractDog {
         return !(this.isVehicle() && this.hasControllingPassenger()) && super.isPushable();
     }
 
-    @Override
-    public boolean isControlledByLocalInstance() {
-        // Super calls canBeSteered so controlling passenger can be guaranteed to be LivingEntity
-        return super.isControlledByLocalInstance() && this.canInteract((LivingEntity) this.getControllingPassenger());
-    }
+    // @Override
+    // public boolean isControlledByLocalInstance() {
+    //     // Super calls canBeSteered so controlling passenger can be guaranteed to be LivingEntity
+    //     return super.isControlledByLocalInstance() && this.canInteract((LivingEntity) this.getControllingPassenger());
+    // }
 
     public boolean isDogJumping() {
         return this.dogJumping;
@@ -3695,7 +3696,7 @@ public class Dog extends AbstractDog {
     @Override
     public void travel(Vec3 positionIn) {
         if (this.isAlive()) {
-            if (this.isVehicle() && !this.isDefeated()) {
+            if (this.isVehicle() && !this.isDefeated() && this.hasControllingPassenger()) {
                 LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
 
                 // Face the dog in the direction of the controlling passenger
@@ -3730,7 +3731,7 @@ public class Dog extends AbstractDog {
                         this.doDogRideJump(forward);
                 }
 
-                this.flyingSpeed = this.getSpeed() * 0.1F;
+                this.flyingSpeed = this.isDogFlying() ? 0.49f : getSpeed() * 0.1F; // Default
                 if (this.isControlledByLocalInstance()) {
                     // Set the move speed and move the dog in the direction of the controlling entity
                     this.setSpeed((float)this.getAttribute(Attributes.MOVEMENT_SPEED).getValue() * 0.5F);
