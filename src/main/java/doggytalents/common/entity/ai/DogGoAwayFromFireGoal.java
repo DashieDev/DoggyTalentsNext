@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.Util;
 import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import doggytalents.common.util.CachedSearchUtil.DogGreedyFireSafeSearchPath;
 import net.minecraft.core.BlockPos;
@@ -114,7 +115,7 @@ public class DogGoAwayFromFireGoal extends Goal {
             if (state.is(Blocks.LAVA)) {
                 return 1;
             }
-            var blockBb = new AABB(Vec3.atLowerCornerOf(x),Vec3.atLowerCornerWithOffset(x, 1, 1, 1));
+            var blockBb = new AABB(Vec3.atLowerCornerOf(x),Util.atLowerCornerWithOffset(x, 1, 1, 1));
 
             if (isBurning && dog.getBoundingBox().intersects(blockBb)) {
                 return 1;

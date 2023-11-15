@@ -173,10 +173,10 @@ public class TalentInfoViewElement extends AbstractElement {
         var lines_cnt = 0;
         for (var line : desc_lines) {
             if (lines_cnt >= 6) {
-                graphics.drawString(font, ".. (View more in Dog's Menu)", pX, pY, 0xffffffff);
+                font.draw(stack,  ".. (View more in Dog's Menu)", pX, pY, 0xffffffff);
                 break;
             }
-            graphics.drawString(font, line, pX, pY, 0xffffffff);
+            font.draw(stack, line, pX, pY, 0xffffffff);
             pY += font.lineHeight + LINE_SPACING;
             ++lines_cnt;
         }

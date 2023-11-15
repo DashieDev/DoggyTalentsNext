@@ -30,6 +30,7 @@ import doggytalents.common.talent.DoggyTorchTalent;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -432,14 +433,14 @@ public class TalentInfoViewElement extends AbstractElement {
         }
 
         @Override
-        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
             int pX = this.getRealX();
             int pY = this.getRealY() + LINE_SPACING;
-            graphics.drawString(font, title, pX, pY, 0xffffffff);
+            font.draw(stack, title, pX, pY, 0xffffffff);
             
             pY += font.lineHeight + LINE_SPACING;
             for (var line : descriptionLines) {
-                graphics.drawString(font, line, pX, pY, 0xffffffff);
+                font.draw(stack, line, pX, pY, 0xffffffff);
                 pY += font.lineHeight + LINE_SPACING;
             }
         }
@@ -448,13 +449,13 @@ public class TalentInfoViewElement extends AbstractElement {
 
     private static class ButtonOptionEntry extends AbstractElement {
 
-        private AbstractWidget button;
+        private AbstractButton button;
         private String label;
         private Font font;
 
         private boolean newline = false;
 
-        public ButtonOptionEntry(AbstractElement parent, Screen screen, AbstractWidget button, String label) {
+        public ButtonOptionEntry(AbstractElement parent, Screen screen, AbstractButton button, String label) {
             super(parent, screen);
             this.font = Minecraft.getInstance().font;
             this.button = button;
@@ -483,19 +484,19 @@ public class TalentInfoViewElement extends AbstractElement {
             if (newline)
             this.setSize(1f, 20 + LINE_SPACING + 14);
 
-            this.button.setX(this.getRealX() + buttonX_offset);
-            this.button.setY(this.getRealY() + buttonY_offset);
+            this.button.x = (this.getRealX() + buttonX_offset);
+            this.button.y = (this.getRealY() + buttonY_offset);
 
             this.addChildren(button);
             return this;
         }
 
         @Override
-        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
             if (newline) {
                 int startX = this.getRealX() + PADDING_LEFT;
                 int pY = this.getRealY() + 3;
-                graphics.drawString(font, this.label, startX, pY, 0xffffffff);
+                font.draw(stack, this.label, startX, pY, 0xffffffff);
                 
                 return;
             } 
@@ -503,7 +504,7 @@ public class TalentInfoViewElement extends AbstractElement {
             int startX = this.getRealX() + PADDING_LEFT;
             int pY = this.getRealY() + this.getSizeY()/2
                 - font.lineHeight/2;
-            graphics.drawString(font, this.label, startX, pY, 0xffffffff);
+            font.draw(stack,  this.label, startX, pY, 0xffffffff);
         }
     }
 

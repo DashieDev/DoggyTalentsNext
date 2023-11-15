@@ -24,13 +24,12 @@ public class SmallButton extends Button {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
         RenderSystem.setShaderTexture(0, Resources.SMALL_WIDGETS);
-       int i = this.getYImage(this.isHoveredOrFocused());
+       int i = this.getTextureY();
        RenderSystem.enableBlend();
        RenderSystem.defaultBlendFunc();
        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-       graphics.blit(Resources.SMALL_WIDGETS, this.getX(), this.getY(), 0, i, this.width, this.height);
-       //TODO 1.19.4 ??? 
-       //this.renderBg(stack, mc, mouseX, mouseY);
+       blit(stack, this.getX(), this.getY(), 0, i, this.width, this.height); 
+       this.renderBg(stack, mc, mouseX, mouseY);
        int j = getFGColor();
        this.drawCenteredString(stack, font, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }
@@ -45,5 +44,8 @@ public class SmallButton extends Button {
   
         return i * 12;
     }
+
+    private int getX() { return this.x; }
+    private int getY() { return this.y; }
 
 }
