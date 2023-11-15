@@ -815,7 +815,7 @@ upright piano, recorded using his phone and post-processed by MashXP.
 + Added new Option to access specific talents GUI in Talents Menu. (Pack Puppy, Doggy Tools, Doggy Armor)
 + More random names!
 + Added new Option to enable Auto-Mount (boats, minecarts,...) in Dog Option Menu.
-+ Added Option to force dog to always equip the tool in the first slots of its hotbar in Doggy Tools.
++ Added Option to force dog to always equip the tool in the first slot of its hotbar in Doggy Tools.
 ==================
 #Mob Retriever now drops entity upon taking damage.
 #Mob Retriever cannot take other players tamed animals.
@@ -829,4 +829,6 @@ upright piano, recorded using his phone and post-processed by MashXP.
 #Tune Happy Eater Talent: Lvl 2: Fishes, Lvl 5: Rotten Flesh
 #Dogs are now a bit more curious about fire. 🔥🔥🔥
 #Updated visuals of loading menu spinning doggos.
+
+#Improved Flying Furball Dynamics and Combat, dog will dash to target if close enough and not obstructed.
 ==================
