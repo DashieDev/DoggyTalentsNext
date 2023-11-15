@@ -3795,6 +3795,11 @@ public class Dog extends AbstractDog {
         return this.getControllingPassenger() != null;
     }
 
+    @Override
+    public boolean canBeControlledByRider() {
+        return true;
+    }
+
     public boolean canDogFly() {
         for (var alter : this.alterations) {
             var result = alter.canFly(this);
