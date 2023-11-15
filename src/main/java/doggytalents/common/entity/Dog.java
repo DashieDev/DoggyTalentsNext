@@ -3624,7 +3624,7 @@ public class Dog extends AbstractDog {
                 float forward = livingentity.zza;
                 double downward = positionIn.y; 
                 
-                if (this.isInWater() && forward > 0 && this.canSwimUnderwater() ) {
+                if (forward > 0 && !isDogRidingConstraintToGround()) {
                     float l = forward;
                     downward = -l*Mth.sin(this.getXRot() * ((float)Math.PI / 180F));
                     forward = l*Mth.cos(this.getXRot() * ((float)Math.PI / 180F));
@@ -3717,6 +3717,14 @@ public class Dog extends AbstractDog {
     @Override
     protected BodyRotationControl createBodyControl() {
         return new DogBodyRotationControl(this);
+    }
+
+    protected boolean isDogRidingConstraintToGround() {
+        if (this.isInWater() && this.canSwimUnderwater())
+            return false;
+        if (this.canDogFly())
+            return false;
+        return true;
     }
 
     private void doDogRideFloat() {
