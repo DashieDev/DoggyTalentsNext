@@ -78,16 +78,16 @@ public class DivineRetribution extends Accessory implements IAccessoryHasModel {
             float offsetY = 0.24f;
             var pose = dog.getDogPose();
             if (pose == DogPose.STAND || pose == DogPose.FLYING)
-                offsetY += dog.getBbHeight();
+                offsetY += dog.getDogVisualBbHeight();
             var a1 = dog.getClientAnimatedYBodyRotInRadians();
             var dx1 = -Mth.sin(a1);
             var dz1 = Mth.cos(a1);
-            float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
-            float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.5F;
+            float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getDogVisualBbWidth() * 0.5F;
+            float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getDogVisualBbWidth() * 0.5F;
             dog.level().addParticle(ParticleTypes.FLAME,
-            dog.getX() + f1 - dx1*(dog.getBbWidth() * 1.8),
+            dog.getX() + f1 - dx1*(dog.getDogVisualBbWidth() * 1.8),
             dog.getY() + offsetY,
-            dog.getZ() + f2 - dz1*(dog.getBbWidth() * 1.8),
+            dog.getZ() + f2 - dz1*(dog.getDogVisualBbWidth() * 1.8),
             -dx1*0.05, -0.01, -dz1*0.05);
         }
 
