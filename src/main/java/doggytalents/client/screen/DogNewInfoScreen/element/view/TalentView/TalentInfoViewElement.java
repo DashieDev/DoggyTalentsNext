@@ -138,7 +138,7 @@ public class TalentInfoViewElement extends AbstractElement {
                 .setSize(1f, 30)
                 .init();
             container.addChildren(torchButtonDiv);
-            var torchButtonStr = Component.translatable(
+            var torchButtonStr = ComponentUtil.translatable(
                 torchTalent.placingTorch() ?
                 "talent.doggytalents.doggy_tools.placing_torch.unset"
                 : "talent.doggytalents.doggy_tools.placing_torch.set"
@@ -148,7 +148,7 @@ public class TalentInfoViewElement extends AbstractElement {
                 torchButtonDiv.getRealY() + 5, 120, 20, torchButtonStr,
                 b -> {
                     boolean newVal = !torchTalent.placingTorch();
-                    b.setMessage(Component.translatable(
+                    b.setMessage(ComponentUtil.translatable(
                         newVal ?
                         "talent.doggytalents.doggy_tools.placing_torch.unset"
                         : "talent.doggytalents.doggy_tools.placing_torch.set"
@@ -172,10 +172,10 @@ public class TalentInfoViewElement extends AbstractElement {
                 new ButtonOptionEntry(container, getScreen(), 
                     new FlatButton(
                         0, 0,
-                        40, 20, Component.literal("" + toolsTalent.pickFirstTool()), 
+                        40, 20, ComponentUtil.literal("" + toolsTalent.pickFirstTool()), 
                         b -> {
                             Boolean newVal = !toolsTalent.pickFirstTool();
-                            b.setMessage(Component.literal("" + newVal));
+                            b.setMessage(ComponentUtil.literal("" + newVal));
                             toolsTalent.setPickFirstTool(newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), new DoggyToolsPickFirstData(
                                 dog.getId(), newVal
@@ -191,7 +191,7 @@ public class TalentInfoViewElement extends AbstractElement {
                 .setSize(1f, 30)
                 .init();
             container.addChildren(toolsButtonDiv);
-            var toolButtonStr = Component.translatable(
+            var toolButtonStr = ComponentUtil.translatable(
                 "talent.doggytalents.doggy_tools.open_tools"
             );
             var toolButton = new FlatButton(
@@ -213,7 +213,7 @@ public class TalentInfoViewElement extends AbstractElement {
                 .setSize(1f, 30)
                 .init();
             container.addChildren(armorButtonDiv);
-            var armorButtonStr = Component.translatable(
+            var armorButtonStr = ComponentUtil.translatable(
                 "talent.doggytalents.doggy_armor.open_armor"
             );
             var armorButton = new FlatButton(
@@ -347,7 +347,7 @@ public class TalentInfoViewElement extends AbstractElement {
         int pX = startX;
         int pY = startY;
 
-        // var title = Component.translatable(this.talent.getTranslationKey())
+        // var title = ComponentUtil.translatable(this.talent.getTranslationKey())
         //     .withStyle(
         //         Style.EMPTY
         //         .withBold(true)
@@ -355,7 +355,7 @@ public class TalentInfoViewElement extends AbstractElement {
         //     );
         // graphics.drawString(font, title, pX, pY, 0xffffffff);
         // pY += 2*LINE_SPACING + this.font.lineHeight;
-        // var desc = Component.translatable(this.talent.getInfoTranslationKey());
+        // var desc = ComponentUtil.translatable(this.talent.getInfoTranslationKey());
         // var desc_lines = this.font.split(desc, this.getSizeX() - (PADDING_LEFT + PADDING_RIGHT));
         // for (var line : desc_lines) {
         //     graphics.drawString(font, line, pX, pY, 0xffffffff);
@@ -419,13 +419,13 @@ public class TalentInfoViewElement extends AbstractElement {
         @Override
         public AbstractElement init() {
             this.setPosition(PosType.RELATIVE, 0, 0);
-            title = Component.translatable(this.talent.getTranslationKey())
+            title = ComponentUtil.translatable(this.talent.getTranslationKey())
             .withStyle(
                 Style.EMPTY
                 .withBold(true)
                 .withColor(0xffF4FF00)
             );
-            var content = Component.translatable(this.talent.getInfoTranslationKey());
+            var content = ComponentUtil.translatable(this.talent.getInfoTranslationKey());
             descriptionLines = this.font.split(content, this.getParent().getSizeX() - 20);
             int totalH = LINE_SPACING + font.lineHeight + LINE_SPACING + descriptionLines.size()*(LINE_SPACING + font.lineHeight)
                 + LINE_SPACING;

@@ -52,7 +52,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
     private static enum RegisterState { SUCCESS, DUPLICATE, FAIL }
 
-    private synchronized RegisterState registerDogSkin(DogTextureManager.Preparations prep, Resource resource, DogSkin dogSkin) {        
+    private synchronized RegisterState registerDogSkin(DogTextureManager.Preparations prep, ResourceManager resMan, ResourceLocation text_rl, DogSkin dogSkin) {        
         var state = RegisterState.FAIL;
 
         InputStream inputstream = null;
@@ -218,9 +218,9 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             readSkinExtraInfo(skin, skinObject);
 
             var state = RegisterState.FAIL;
-            var res = resMan.getResource(text_rl);
-            if (res.isPresent())
-            state = registerDogSkin(prep, res.get(), skin);
+            //var res = resMan.getResource(text_rl);
+            if (resMan.hasResource(text_rl))
+            state = registerDogSkin(prep, resMan, text_rl, skin);
             switch (state) {
             case SUCCESS:
                 ++success_cnt;

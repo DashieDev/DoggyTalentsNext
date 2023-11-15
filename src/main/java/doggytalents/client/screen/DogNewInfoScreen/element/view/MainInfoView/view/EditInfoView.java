@@ -217,10 +217,10 @@ public class EditInfoView extends AbstractElement {
             new ButtonOptionEntry(scroll, getScreen(), 
                 new FlatButton(
                     0, 0,
-                    40, 20, Component.literal("" + this.dog.dogAutoMount()), 
+                    40, 20, ComponentUtil.literal("" + this.dog.dogAutoMount()), 
                     b -> {
                         Boolean newVal = !this.dog.dogAutoMount();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setMessage(ComponentUtil.literal("" + newVal));
                         this.requestAutoMount(newVal);
                     }     
                 ),

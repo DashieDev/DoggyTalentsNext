@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
+import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -167,9 +168,9 @@ public class DogRandomSniffGoal extends Goal {
 
     private BlockPos findMoveToPos() {
         var r = this.dog.getRandom();
-        int offX = r.nextIntBetweenInclusive(-EXPLORE_RADIUS, EXPLORE_RADIUS);
-        int offY = r.nextIntBetweenInclusive(-1, 1);
-        int offZ = r.nextIntBetweenInclusive(-EXPLORE_RADIUS, EXPLORE_RADIUS);
+        int offX = EntityUtil.getRandomNumber(dog, -EXPLORE_RADIUS, EXPLORE_RADIUS);
+        int offY = EntityUtil.getRandomNumber(dog, -1, 1);
+        int offZ = EntityUtil.getRandomNumber(dog, -EXPLORE_RADIUS, EXPLORE_RADIUS);
         return this.dog.blockPosition().offset(offX, offY, offZ);
     }
 
