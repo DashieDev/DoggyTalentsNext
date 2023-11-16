@@ -135,6 +135,8 @@ public class Resources {
     public static final ResourceLocation BANDAID_OVERLAY_HALF = getEntity("dog", "doggy_hurt/bandaid/overlay_half");
     public static final ResourceLocation BANDAID_OVERLAY_FULL = getEntity("dog", "doggy_hurt/bandaid/overlay_full");
 
+    public static final ResourceLocation PIANO = Util.getResource("textures/misc/piano.png");
+
     public static ResourceLocation getEntity(String type, String textureFileName) {
         return Util.getResource("textures/entity/" + type + "/" + textureFileName + ".png");
     }

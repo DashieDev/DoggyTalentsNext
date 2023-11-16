@@ -2,6 +2,7 @@ package doggytalents;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DoggyBeamEntity;
+import doggytalents.common.entity.misc.Piano;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.world.entity.Entity;
@@ -34,6 +35,13 @@ public class DoggyEntityTypes {
             .setShouldReceiveVelocityUpdates(true)
             .setCustomClientFactory(DoggyBeamEntity::new)
             .noSummon());
+
+    public static final RegistryObject<EntityType<Piano>> PIANO = register("piano", Piano::new, MobCategory.MISC,
+        b -> b
+            .sized(3f, 3f)
+            .setUpdateInterval(4)
+            .setTrackingRange(10)
+            .setShouldReceiveVelocityUpdates(false));
 
     private static <E extends Entity, T extends EntityType<E>> RegistryObject<EntityType<E>> register(final String name, final EntityType.EntityFactory<E> sup, final MobCategory classification, final Function<EntityType.Builder<E>, EntityType.Builder<E>> builder) {
          return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(Util.getResourcePath(name)));
