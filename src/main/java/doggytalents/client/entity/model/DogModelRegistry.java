@@ -38,6 +38,7 @@ import doggytalents.client.entity.model.dog.CollieRoughModel;
 import doggytalents.client.entity.model.dog.CollieSmoothModel;
 import doggytalents.client.entity.model.dog.DachshundModel;
 import doggytalents.client.entity.model.dog.DeathModel;
+import doggytalents.client.entity.model.dog.DobermanModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.EnglishBulldogModel;
 import doggytalents.client.entity.model.dog.FrenchBulldogModel;
@@ -144,7 +145,7 @@ public class DogModelRegistry {
 
         register("pochita", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_POCHITA)));
         register("dachshund", ctx ->  new DachshundModel(ctx.bakeLayer(ClientSetup.DOG_DACHSHUND)));
-         register("doberman", ctx ->  new DachshundModel(ctx.bakeLayer(ClientSetup.DOG_DOBERMAN)));
+        register("doberman", ctx ->  new DobermanModel(ctx.bakeLayer(ClientSetup.DOG_DOBERMAN)));
         register("pug", ctx ->  new PugModel(ctx.bakeLayer(ClientSetup.DOG_PUG)));
         register("borzoi", ctx ->  new BorzoiModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI)));
         register("borzoi_long", ctx ->  new BorzoiLongModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI_LONG)));
