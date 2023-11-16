@@ -19,15 +19,18 @@ public class Piano extends Entity {
 
     private static final EntityDataAccessor<Integer> PIANO_FLAGS = SynchedEntityData.defineId(Piano.class, EntityDataSerializers.INT);
     private final PianoType pianoType;
+    private final PianoColor pianoColor;
 
     public Piano(EntityType<Piano> type, Level level) {
         super(type, level);
         this.pianoType = PianoType.GRAND;
+        this.pianoColor = PianoColor.BLACK;
     }
 
-    public Piano(EntityType<Piano> type, Level level, PianoType pianoType) {
+    public Piano(EntityType<Piano> type, Level level, PianoType pianoType, PianoColor pianoColor) {
         super(type, level);
         this.pianoType = pianoType;
+        this.pianoColor = pianoColor;
     }
 
     @Override
@@ -98,6 +101,7 @@ public class Piano extends Entity {
     }
 
     public PianoType getPianoType() { return this.pianoType; }
+    public PianoColor getPianoColor() { return this.pianoColor; }
 
     public static enum PianoType { GRAND, UPRIGHT }
 

@@ -71,6 +71,7 @@ import doggytalents.client.entity.model.dog.kusa.TakeModel;
 import doggytalents.client.entity.model.dog.kusa.TeiModel;
 import doggytalents.client.entity.model.dog.kusa.UmeModel;
 import doggytalents.client.entity.model.misc.GrandPianoModel;
+import doggytalents.client.entity.model.misc.UprightPianoModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.CollarRenderManager;
 import doggytalents.client.entity.render.DogScreenOverlays;
@@ -171,6 +172,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_MOUTH_ITEM = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_mouth_item"), "main");
 
     public static final ModelLayerLocation PIANO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "piano"), "main");
+    public static final ModelLayerLocation PIANO_UPRIGHT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "piano_upright"), "main");
 
     public static final List<ResourceLocation> OTHER_MOD_SKIN_JSONS = new ArrayList<ResourceLocation>();
 
@@ -251,6 +253,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_MOUTH_ITEM, SyncedItemModel::createLayer);
         
         event.registerLayerDefinition(PIANO, GrandPianoModel::creatPianoLayer);
+        event.registerLayerDefinition(PIANO_UPRIGHT, UprightPianoModel::createPianoLayer);
 
         AccessoryModelRenderEntries.registerEntries();
         AccessoryModelManager.registerLayerDef(event);
@@ -276,7 +279,10 @@ public class ClientSetup {
         event.registerEntityRenderer(DoggyEntityTypes.DOG_BEAM.get(), DoggyBeamRenderer::new);
         event.registerBlockEntityRenderer(DoggyTileEntityTypes.DOG_BED.get(), DogBedRenderer::new);
 
-        event.registerEntityRenderer(DoggyEntityTypes.GRAND_PIANO.get(), PianoRenderer::new);
+        event.registerEntityRenderer(DoggyEntityTypes.GRAND_PIANO_BLACK.get(), PianoRenderer::new);
+        event.registerEntityRenderer(DoggyEntityTypes.GRAND_PIANO_WHITE.get(), PianoRenderer::new);
+        event.registerEntityRenderer(DoggyEntityTypes.UPRIGHT_PIANO_BLACK.get(), PianoRenderer::new);
+        event.registerEntityRenderer(DoggyEntityTypes.UPRIGHT_PIANO_BROWN.get(), PianoRenderer::new);
     }
 
     public static void setupCollarRenderers(final FMLClientSetupEvent event) {
