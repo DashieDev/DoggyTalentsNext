@@ -1,31 +1,66 @@
 package doggytalents.common.entity.misc;
 
+import doggytalents.ChopinLogger;
+import doggytalents.common.entity.Dog;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class Piano extends Entity {
-    
+
+    private static final EntityDataAccessor<Integer> PIANO_FLAGS = SynchedEntityData.defineId(Piano.class, EntityDataSerializers.INT);
+    private final PianoType pianoType;
+
     public Piano(EntityType<Piano> type, Level level) {
         super(type, level);
+        this.pianoType = PianoType.GRAND;
+    }
+
+    public Piano(EntityType<Piano> type, Level level, PianoType pianoType) {
+        super(type, level);
+        this.pianoType = pianoType;
     }
 
     @Override
     protected void defineSynchedData() {
-        
+        this.entityData.define(PIANO_FLAGS, 0);
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag p_20052_) {
-        
+    protected void readAdditionalSaveData(CompoundTag compound) {
+        boolean bigLidClosed = compound.getBoolean("pianoFallboardClosed");
+        this.setFallboardClosed(bigLidClosed);
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag p_20139_) {
-        
+    protected void addAdditionalSaveData(CompoundTag compound) {
+        compound.putBoolean("pianoFallboardClosed", isFallboardClosed());
+    }
+
+    private boolean getPianoFlag(int bit) {
+        return (this.entityData.get(PIANO_FLAGS) & bit) != 0;
+    }
+
+    private void setPianoFlag(int bits, boolean flag) {
+        int c = this.entityData.get(PIANO_FLAGS);
+        this.entityData.set(PIANO_FLAGS, (flag ? c | bits : c & ~bits));
+    }
+
+    public boolean isFallboardClosed() {
+        return this.getPianoFlag(1);
+    }
+
+    public void setFallboardClosed(boolean val) {
+        this.setPianoFlag(1, val);
     }
 
     @Override
@@ -55,5 +90,17 @@ public class Piano extends Entity {
         this.discard();
         return true;
     }
+
+    @Override
+    public InteractionResult interact(Player player, InteractionHand hand) {
+        this.setFallboardClosed(!this.isFallboardClosed());
+        return InteractionResult.SUCCESS;
+    }
+
+    public PianoType getPianoType() { return this.pianoType; }
+
+    public static enum PianoType { GRAND, UPRIGHT }
+
+    public static enum PianoColor { BLACK, WHITE, BROWN }
 
 }

@@ -70,7 +70,7 @@ import doggytalents.client.entity.model.dog.kusa.ShinModel;
 import doggytalents.client.entity.model.dog.kusa.TakeModel;
 import doggytalents.client.entity.model.dog.kusa.TeiModel;
 import doggytalents.client.entity.model.dog.kusa.UmeModel;
-import doggytalents.client.entity.model.misc.PianoModel;
+import doggytalents.client.entity.model.misc.GrandPianoModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.CollarRenderManager;
 import doggytalents.client.entity.render.DogScreenOverlays;
@@ -250,7 +250,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_RESCUE_BOX, DogRescueModel::createRescueBoxLayer);
         event.registerLayerDefinition(DOG_MOUTH_ITEM, SyncedItemModel::createLayer);
         
-        event.registerLayerDefinition(PIANO, PianoModel::creatPianoLayer);
+        event.registerLayerDefinition(PIANO, GrandPianoModel::creatPianoLayer);
 
         AccessoryModelRenderEntries.registerEntries();
         AccessoryModelManager.registerLayerDef(event);
@@ -276,7 +276,7 @@ public class ClientSetup {
         event.registerEntityRenderer(DoggyEntityTypes.DOG_BEAM.get(), DoggyBeamRenderer::new);
         event.registerBlockEntityRenderer(DoggyTileEntityTypes.DOG_BED.get(), DogBedRenderer::new);
 
-        event.registerEntityRenderer(DoggyEntityTypes.PIANO.get(), PianoRenderer::new);
+        event.registerEntityRenderer(DoggyEntityTypes.GRAND_PIANO.get(), PianoRenderer::new);
     }
 
     public static void setupCollarRenderers(final FMLClientSetupEvent event) {

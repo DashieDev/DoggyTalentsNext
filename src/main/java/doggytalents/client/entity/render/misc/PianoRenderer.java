@@ -3,7 +3,7 @@ package doggytalents.client.entity.render.misc;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.ClientSetup;
-import doggytalents.client.entity.model.misc.PianoModel;
+import doggytalents.client.entity.model.misc.GrandPianoModel;
 import doggytalents.common.entity.misc.Piano;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -16,11 +16,11 @@ import net.minecraft.resources.ResourceLocation;
 
 public class PianoRenderer extends EntityRenderer<Piano> {
 
-    private PianoModel model;
+    private GrandPianoModel model;
 
     public PianoRenderer(EntityRendererProvider.Context  ctx) {
         super(ctx);
-        model = new PianoModel(ctx.bakeLayer(ClientSetup.PIANO));
+        model = new GrandPianoModel(ctx.bakeLayer(ClientSetup.PIANO));
     }
 
     @Override
@@ -37,6 +37,7 @@ public class PianoRenderer extends EntityRenderer<Piano> {
             MultiBufferSource bufferSource, int light) {
         stack.scale(-1.0F, -1.0F, 1.0F);
         stack.translate(0.0F, -1.501F, 0.0F);
+        model.preparePianoModel(piano);
         var consumer = bufferSource.getBuffer(getRenderType(piano));
         this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }

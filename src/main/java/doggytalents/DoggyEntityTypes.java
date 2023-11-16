@@ -36,7 +36,7 @@ public class DoggyEntityTypes {
             .setCustomClientFactory(DoggyBeamEntity::new)
             .noSummon());
 
-    public static final RegistryObject<EntityType<Piano>> PIANO = register("piano", Piano::new, MobCategory.MISC,
+    public static final RegistryObject<EntityType<Piano>> GRAND_PIANO = register("grand_piano", Piano::new, MobCategory.MISC,
         b -> b
             .sized(3f, 3f)
             .setUpdateInterval(4)

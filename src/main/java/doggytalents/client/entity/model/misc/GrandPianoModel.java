@@ -13,12 +13,16 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class PianoModel extends EntityModel<Piano> {
+public class GrandPianoModel extends EntityModel<Piano> {
 
-    private ModelPart piano;
+    public ModelPart piano;
+	public ModelPart fallBoard;
+	public ModelPart fallBoardStick;
 
-	public PianoModel(ModelPart root) {
+	public GrandPianoModel(ModelPart root) {
 		this.piano = root.getChild("piano");
+		this.fallBoard = piano.getChild("lid");
+		this.fallBoardStick = fallBoard.getChild("lid_prop");
 	}
 
 	public static LayerDefinition creatPianoLayer() {
@@ -77,9 +81,12 @@ public class PianoModel extends EntityModel<Piano> {
 
 		PartDefinition lid = piano.addOrReplaceChild("lid", CubeListBuilder.create(), PartPose.offset(-32.95F, -19.5F, 17.1F));
 
-		PartDefinition cube_r2 = lid.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(124, 132).addBox(41.45F, -0.5F, -6.1F, 2.0F, 23.0F, 2.0F, new CubeDeformation(-0.25F))
-		.texOffs(106, 52).addBox(1.2F, -1.0F, 2.4F, 25.0F, 2.0F, 12.4F, new CubeDeformation(0.1F))
+		PartDefinition cube_r2 = lid.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(106, 52).addBox(1.2F, -1.0F, 2.4F, 25.0F, 2.0F, 12.4F, new CubeDeformation(0.1F))
 		.texOffs(0, 28).addBox(1.3F, -1.0F, -13.1F, 46.0F, 2.0F, 17.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -4.0F, 0.0F, 0.0F, -0.3927F));
+
+		PartDefinition lid_prop = lid.addOrReplaceChild("lid_prop", CubeListBuilder.create(), PartPose.offset(39.4F, -16.0F, -9.0F));
+
+		PartDefinition cube_r3 = lid_prop.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(124, 132).addBox(41.45F, -0.5F, -6.1F, 2.0F, 23.0F, 2.0F, new CubeDeformation(-0.25F)), PartPose.offsetAndRotation(-39.4F, 16.0F, 5.0F, 0.0F, 0.0F, -0.3927F));
 
 		PartDefinition key = piano.addOrReplaceChild("key", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -175,9 +182,9 @@ public class PianoModel extends EntityModel<Piano> {
 
 		PartDefinition sheet_stand = piano.addOrReplaceChild("sheet_stand", CubeListBuilder.create(), PartPose.offset(13.0F, -12.5F, -6.0F));
 
-		PartDefinition cube_r3 = sheet_stand.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(0, 12).addBox(-1.0F, -0.75F, 0.25F, 2.0F, 6.0F, 2.0F, new CubeDeformation(-0.5F)), PartPose.offsetAndRotation(-21.0F, -9.5F, 3.0F, 0.3927F, 0.0F, 0.0F));
+		PartDefinition cube_r4 = sheet_stand.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(0, 12).addBox(-1.0F, -0.75F, 0.25F, 2.0F, 6.0F, 2.0F, new CubeDeformation(-0.5F)), PartPose.offsetAndRotation(-21.0F, -9.5F, 3.0F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition cube_r4 = sheet_stand.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(0, 37).addBox(-12.0F, -9.75F, -1.0F, 5.0F, 4.0F, 2.0F, new CubeDeformation(-0.45F))
+		PartDefinition cube_r5 = sheet_stand.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(0, 37).addBox(-12.0F, -9.75F, -1.0F, 5.0F, 4.0F, 2.0F, new CubeDeformation(-0.45F))
 		.texOffs(103, 48).addBox(7.0F, -9.75F, -1.0F, 5.0F, 4.0F, 2.0F, new CubeDeformation(-0.45F))
 		.texOffs(106, 87).addBox(-11.0F, -8.75F, -1.0F, 22.0F, 3.0F, 2.0F, new CubeDeformation(-0.35F))
 		.texOffs(118, 0).addBox(-10.0F, -6.75F, -1.0F, 20.0F, 6.0F, 2.0F, new CubeDeformation(-0.25F))
@@ -195,14 +202,18 @@ public class PianoModel extends EntityModel<Piano> {
 		.texOffs(63, 94).addBox(-6.0F, -9.0F, -2.5F, 1.0F, 8.0F, 1.0F, new CubeDeformation(0.0F))
 		.texOffs(22, 162).addBox(-9.0F, -1.25F, -6.75F, 2.0F, 1.0F, 3.0F, new CubeDeformation(-0.2F)), PartPose.offset(0.0F, 0.0F, -1.0F));
 
-		PartDefinition cube_r5 = pedal.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(2.0F, -5.5F, -0.25F, 2.0F, 11.0F, 2.0F, new CubeDeformation(-0.75F)).mirror(false)
+		PartDefinition cube_r6 = pedal.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(2.0F, -5.5F, -0.25F, 2.0F, 11.0F, 2.0F, new CubeDeformation(-0.75F)).mirror(false)
 		.texOffs(0, 0).addBox(-4.0F, -5.5F, -0.25F, 2.0F, 11.0F, 2.0F, new CubeDeformation(-0.75F)), PartPose.offsetAndRotation(-8.0F, -5.6157F, 1.1613F, -0.3927F, 0.0F, 0.0F));
 
-		PartDefinition cube_r6 = pedal.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(0, 128).addBox(-1.0F, -0.75F, -1.0F, 2.0F, 1.0F, 3.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(-11.0F, -0.5F, -5.75F, 0.0F, 0.3927F, 0.0F));
+		PartDefinition cube_r7 = pedal.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(0, 128).addBox(-1.0F, -0.75F, -1.0F, 2.0F, 1.0F, 3.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(-11.0F, -0.5F, -5.75F, 0.0F, 0.3927F, 0.0F));
 
-		PartDefinition cube_r7 = pedal.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(11, 162).addBox(-1.0F, -0.75F, -1.0F, 2.0F, 1.0F, 3.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(-5.0F, -0.5F, -5.75F, 0.0F, -0.3927F, 0.0F));
+		PartDefinition cube_r8 = pedal.addOrReplaceChild("cube_r8", CubeListBuilder.create().texOffs(11, 162).addBox(-1.0F, -0.75F, -1.0F, 2.0F, 1.0F, 3.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(-5.0F, -0.5F, -5.75F, 0.0F, -0.3927F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 256, 256);
+	}
+
+	public void preparePianoModel(Piano piano) {
+		this.setFallboard(!piano.isFallboardClosed());
 	}
 
 	@Override
@@ -213,5 +224,16 @@ public class PianoModel extends EntityModel<Piano> {
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		piano.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	}
+
+	public void setFallboard(boolean open) {
+		if (open) {
+			this.fallBoard.setRotation(0, 0, 0);
+			this.fallBoardStick.setRotation(0, 0, 0);
+		} else {
+			this.fallBoard.setRotation(0.0F, 0.0F, 0.3927F);
+			this.fallBoardStick.setRotation(0.0F, 0.0F, 1.3963F);
+		}
+		
 	}
 }
