@@ -29,10 +29,10 @@ public class DemonHornsModel extends SyncedAccessoryModel{
 
 		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 12.0F, 8.0F, 2.0944F, 0.0F, 0.0F));
 
-		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(56, 7).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.1F))
-		.texOffs(60, 23).addBox(0.5F, 8.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.3F))
-		.texOffs(60, 23).addBox(0.5F, 9.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.1F))
-		.texOffs(60, 23).addBox(0.5F, 10.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offset(-1.0F, 0.0F, 0.0F));
+		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(56, 7).addBox(-1F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.1F))
+		.texOffs(60, 23).addBox(-1.5F, 8.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.3F))
+		.texOffs(60, 23).addBox(-1.5F, 9.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.1F))
+		.texOffs(60, 23).addBox(-1.5F, 10.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offset(0F, 0.0F, 0.0F));
 
 		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 13.5F, -7.0F));
 

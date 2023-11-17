@@ -25,10 +25,10 @@ public class HotDogModel extends SyncedAccessoryModel{
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
 
 		PartDefinition hotdogmane = upper_body.addOrReplaceChild("hotdogmane", CubeListBuilder.create().texOffs(46, 40).addBox(3.0F, -4.1564F, -4.401F, 2.0F, 7.0F, 7.0F, new CubeDeformation(0.3F))
-		.texOffs(46, 40).addBox(-3.0F, -4.1564F, -4.401F, 2.0F, 7.0F, 7.0F, new CubeDeformation(0.3F)), PartPose.offset(0.0F, 2.0F, -1.5F));
+		.texOffs(46, 40).addBox(-3.0F, -4.1564F, -4.401F, 2.0F, 7.0F, 7.0F, new CubeDeformation(0.3F)), PartPose.offset(-1.0F, 2.0F, -1.5F));
 
 		PartDefinition body_rotation_r1 = hotdogmane.addOrReplaceChild("body_rotation_r1", CubeListBuilder.create().texOffs(46, 47).addBox(-8.1F, -7.5F, -3.5F, 2.0F, 7.0F, 7.0F, new CubeDeformation(0.2F)), PartPose.offsetAndRotation(1.0F, 3.3436F, 3.749F, 0.0F, -1.5708F, 0.0F));
 

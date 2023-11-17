@@ -30,12 +30,12 @@ public class BowTieModel extends SyncedAccessoryModel {
         MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-        var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
+        var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
         
         //1 2.5 -2.5
 		upper_body.addOrReplaceChild("bowtie", CubeListBuilder.create().texOffs(3, 1).addBox(-0.5F, -7.5F, -6.5F, 1.0F, 1.0F, 1.0F, CubeDeformation.NONE)
 		.texOffs(1, 1).addBox(-1.5F, -8.25F, -7.0F, 1.0F, 2.0F, 2.0F, CubeDeformation.NONE)
-		.texOffs(1, 1).addBox(0.5F, -8.25F, -7.0F, 1.0F, 2.0F, 2.0F, CubeDeformation.NONE), PartPose.offset(1.0F, 4F, 3F));
+		.texOffs(1, 1).addBox(0.5F, -8.25F, -7.0F, 1.0F, 2.0F, 2.0F, CubeDeformation.NONE), PartPose.offset(0F, 4F, 3F));
 
 		return LayerDefinition.create(meshdefinition, 16, 16);
     }
