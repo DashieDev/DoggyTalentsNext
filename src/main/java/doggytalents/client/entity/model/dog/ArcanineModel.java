@@ -77,7 +77,7 @@ public class ArcanineModel extends DogModel {
 		.texOffs(16, 14).addBox(-4.3F, -1.5F, -0.1F, 2.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offset(-2.0F, -2.0F, -1.5F));
 
 		var body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
-		var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-3.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
 
 		var mane_fur = upper_body.addOrReplaceChild("mane_fur", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, -4.75F, -4.5F, 8.0F, 5.0F, 7.0F, new CubeDeformation(-0.35F))
 		.texOffs(43, 30).addBox(-2.75F, -6.0F, -5.0F, 6.0F, 5.0F, 4.0F, new CubeDeformation(0.35F))
@@ -100,10 +100,10 @@ public class ArcanineModel extends DogModel {
 		.texOffs(0, 40).mirror().addBox(-2.75F, -7.05F, -7.9F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.25F)).mirror(false)
 		.texOffs(0, 31).addBox(-1.25F, -6.55F, -8.4F, 2.0F, 2.0F, 6.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 40).addBox(0.25F, -7.05F, -7.9F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.25F))
-		.texOffs(0, 40).addBox(1.0F, -6.35F, -7.15F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.15F)), PartPose.offset(1.0F, 2.5F, 2.5F));
+		.texOffs(0, 40).addBox(1.0F, -6.35F, -7.15F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.15F)), PartPose.offset(0F, 2.5F, 2.5F));
 
 
-		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.5F, 16.0F, 7.0F));
+		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.5F, 16.0F, 7.0F));
 
 		PartDefinition bone8 = right_hind_leg.addOrReplaceChild("bone8", CubeListBuilder.create().texOffs(1, 48).mirror().addBox(-2.6F, -3.5F, 5.6F, 3.0F, 2.0F, 3.0F, new CubeDeformation(0.2F)).mirror(false)
 		.texOffs(0, 49).mirror().addBox(-2.85F, -2.75F, 4.6F, 4.0F, 2.0F, 3.0F, new CubeDeformation(-0.25F)).mirror(false)
@@ -115,9 +115,9 @@ public class ArcanineModel extends DogModel {
 		.texOffs(1, 50).mirror().addBox(-3.35F, -5.75F, 10.7F, 3.0F, 1.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false)
 		.texOffs(1, 50).mirror().addBox(-3.35F, -6.25F, 9.95F, 3.0F, 1.0F, 3.0F, new CubeDeformation(-0.15F)).mirror(false)
 		.texOffs(0, 55).mirror().addBox(-3.1F, -5.25F, 7.9F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.1F)).mirror(false)
-		.texOffs(0, 55).mirror().addBox(-3.1F, -3.75F, 7.85F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.1F)).mirror(false), PartPose.offset(2.0F, 8.0F, -6.25F));
+		.texOffs(0, 55).mirror().addBox(-3.1F, -3.75F, 7.85F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.1F)).mirror(false), PartPose.offset(1.0F, 8.0F, -6.25F));
 
-		PartDefinition left_hind_leg = partdefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.5F, 16.0F, 7.0F));
+		PartDefinition left_hind_leg = partdefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(1.5F, 16.0F, 7.0F));
 
 		PartDefinition bone7 = left_hind_leg.addOrReplaceChild("bone7", CubeListBuilder.create().texOffs(1, 48).addBox(0.6F, -3.5F, 5.6F, 3.0F, 2.0F, 3.0F, new CubeDeformation(0.2F))
 		.texOffs(0, 49).addBox(-0.15F, -2.75F, 4.6F, 4.0F, 2.0F, 3.0F, new CubeDeformation(-0.25F))
@@ -129,9 +129,9 @@ public class ArcanineModel extends DogModel {
 		.texOffs(1, 50).addBox(1.35F, -5.75F, 10.7F, 3.0F, 1.0F, 3.0F, new CubeDeformation(-0.05F))
 		.texOffs(1, 50).addBox(1.35F, -6.25F, 9.95F, 3.0F, 1.0F, 3.0F, new CubeDeformation(-0.15F))
 		.texOffs(0, 55).addBox(2.1F, -5.25F, 7.9F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.1F))
-		.texOffs(0, 55).addBox(2.1F, -3.75F, 7.85F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.1F)), PartPose.offset(-1.0F, 8.0F, -6.25F));
+		.texOffs(0, 55).addBox(2.1F, -3.75F, 7.85F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.1F)), PartPose.offset(-2.0F, 8.0F, -6.25F));
 
-		PartDefinition right_front_leg = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.5F, 16.0F, -4.0F));
+		PartDefinition right_front_leg = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.5F, 16.0F, -4.0F));
 
 		PartDefinition bone4 = right_front_leg.addOrReplaceChild("bone4", CubeListBuilder.create().texOffs(1, 48).mirror().addBox(-3.1F, -4.0F, -3.9F, 3.0F, 2.0F, 3.0F, new CubeDeformation(-0.25F)).mirror(false)
 		.texOffs(1, 48).mirror().addBox(-3.1F, -4.75F, -3.4F, 3.0F, 2.0F, 3.0F, new CubeDeformation(-0.15F)).mirror(false)
@@ -139,9 +139,9 @@ public class ArcanineModel extends DogModel {
 		.texOffs(1, 48).mirror().addBox(-3.1F, -4.75F, -1.4F, 3.0F, 1.0F, 3.0F, new CubeDeformation(0.05F)).mirror(false)
 		.texOffs(1, 48).mirror().addBox(-3.6F, -5.25F, -1.9F, 3.0F, 1.0F, 3.0F, new CubeDeformation(-0.25F)).mirror(false)
 		.texOffs(0, 55).mirror().addBox(-3.1F, -5.75F, -2.65F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.25F)).mirror(false)
-		.texOffs(0, 55).mirror().addBox(-3.1F, -3.75F, -2.15F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.35F)).mirror(false), PartPose.offset(2.0F, 8.0F, 3.5F));
+		.texOffs(0, 55).mirror().addBox(-3.1F, -3.75F, -2.15F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.35F)).mirror(false), PartPose.offset(1.0F, 8.0F, 3.5F));
 
-		PartDefinition left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.5F, 16.0F, -4.0F));
+		PartDefinition left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(1.5F, 16.0F, -4.0F));
 
 		PartDefinition bone3 = left_front_leg.addOrReplaceChild("bone3", CubeListBuilder.create().texOffs(1, 48).addBox(1.1F, -4.0F, -3.9F, 3.0F, 2.0F, 3.0F, new CubeDeformation(-0.25F))
 		.texOffs(1, 48).addBox(1.1F, -4.75F, -3.4F, 3.0F, 2.0F, 3.0F, new CubeDeformation(-0.15F))
@@ -149,9 +149,9 @@ public class ArcanineModel extends DogModel {
 		.texOffs(1, 48).addBox(1.1F, -4.75F, -1.4F, 3.0F, 1.0F, 3.0F, new CubeDeformation(0.05F))
 		.texOffs(1, 48).addBox(1.6F, -5.25F, -1.9F, 3.0F, 1.0F, 3.0F, new CubeDeformation(-0.25F))
 		.texOffs(0, 55).addBox(2.1F, -5.75F, -2.65F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.25F))
-		.texOffs(0, 55).addBox(2.1F, -3.75F, -2.15F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.35F)), PartPose.offset(-1.0F, 8.0F, 3.5F));
+		.texOffs(0, 55).addBox(2.1F, -3.75F, -2.15F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.35F)), PartPose.offset(-2.0F, 8.0F, 3.5F));
 
-		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(-1.0F, 12.0F, 8.0F));
+		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(0F, 12.0F, 8.0F));
 		var real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create(), PartPose.ZERO);
 
 		PartDefinition tail_r1 = real_tail.addOrReplaceChild("tail_r1", CubeListBuilder.create().texOffs(54, 56).addBox(-0.625F, 3.525F, 14.125F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F))
@@ -174,7 +174,7 @@ public class ArcanineModel extends DogModel {
 		.texOffs(23, 30).addBox(-2.375F, 7.975F, 3.575F, 5.0F, 3.0F, 3.0F, new CubeDeformation(-0.2F))
 		.texOffs(23, 30).addBox(-2.375F, 7.975F, 1.575F, 5.0F, 3.0F, 3.0F, new CubeDeformation(-0.4F))
 		.texOffs(23, 30).addBox(-2.625F, 6.475F, 2.575F, 5.0F, 3.0F, 3.0F, new CubeDeformation(0.35F))
-		.texOffs(23, 30).addBox(-2.625F, 5.475F, 3.875F, 5.0F, 4.0F, 3.0F, new CubeDeformation(0.25F)), PartPose.offsetAndRotation(1.125F, -3.725F, 7.875F, -1.5708F, 0.0F, 0.0F));
+		.texOffs(23, 30).addBox(-2.625F, 5.475F, 3.875F, 5.0F, 4.0F, 3.0F, new CubeDeformation(0.25F)), PartPose.offsetAndRotation(0.125F, -3.725F, 7.875F, -1.5708F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
