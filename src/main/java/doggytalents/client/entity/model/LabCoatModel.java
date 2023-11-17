@@ -32,11 +32,11 @@ public class LabCoatModel extends SyncedAccessoryModel{
 
 		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(0.0F, 12.0F, 8.0F));
 
-		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(12, 8).addBox(0.0F, 0.0F, -1.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.2F)), PartPose.offset(-1.0F, 0.0F, 0.0F));
+		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(12, 8).addBox(-1F, 0.0F, -1.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.2F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition right_front_leg = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(11, 5).addBox(0.0F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(-2.5F, 16.0F, -4.0F));
+		PartDefinition right_front_leg = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(11, 5).addBox(-1F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(-1.5F, 16.0F, -4.0F));
 
-		PartDefinition left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(11, 5).mirror().addBox(0.0F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.35F)).mirror(false), PartPose.offset(0.5F, 16.0F, -4.0F));
+		PartDefinition left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(11, 5).mirror().addBox(-1F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.35F)).mirror(false), PartPose.offset(1.5F, 16.0F, -4.0F));
 
 		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
 
@@ -63,7 +63,7 @@ public class LabCoatModel extends SyncedAccessoryModel{
 
 		PartDefinition body_rotation_r6 = lab2.addOrReplaceChild("body_rotation_r6", CubeListBuilder.create().texOffs(38, 2).addBox(-3.5F, -4.0F, -11.0F, 7.0F, 9.0F, 4.0F, new CubeDeformation(0.24F)), PartPose.offsetAndRotation(0.0F, 0.6083F, 0.4319F, -0.0873F, 0.0F, 0.0F));
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
 
 		PartDefinition lab = upper_body.addOrReplaceChild("lab", CubeListBuilder.create().texOffs(0, 3).addBox(-4.5F, -3.5F, -0.5F, 9.0F, 7.0F, 5.0F, new CubeDeformation(-0.4F))
 		.texOffs(1, 4).addBox(-4.4F, -3.55F, -3.8F, 4.0F, 7.0F, 4.0F, new CubeDeformation(-0.3F))
@@ -79,7 +79,7 @@ public class LabCoatModel extends SyncedAccessoryModel{
 		.texOffs(3, 6).mirror().addBox(2.25F, -4.5F, -4.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.2F)).mirror(false)
 		.texOffs(3, 6).mirror().addBox(-0.15F, -2.0F, -4.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.5F)).mirror(false)
 		.texOffs(3, 6).mirror().addBox(0.35F, -2.75F, -4.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.4F)).mirror(false)
-		.texOffs(3, 6).mirror().addBox(1.25F, -4.0F, -4.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.3F)).mirror(false), PartPose.offset(1.0F, 0.0F, 0.0F));
+		.texOffs(3, 6).mirror().addBox(1.25F, -4.0F, -4.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.3F)).mirror(false), PartPose.offset(0F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 32);
 	}
