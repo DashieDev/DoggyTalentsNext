@@ -27,7 +27,7 @@ public class DogRescueModel extends SyncedAccessoryModel {
         MeshDefinition var0 = new MeshDefinition();
         PartDefinition var1 = var0.getRoot();
 
-        var1.addOrReplaceChild("rescue_box", CubeListBuilder.create().texOffs(0, 0).addBox(-1F, -4F, -4.5F, 4, 2, 2), PartPose.offsetAndRotation(-1F, 14F, -3F, (float) (Math.PI / 2), 0F, 0F));
+        var1.addOrReplaceChild("rescue_box", CubeListBuilder.create().texOffs(0, 0).addBox(-2F, -4F, -4.5F, 4, 2, 2), PartPose.offsetAndRotation(0F, 14F, -3F, (float) (Math.PI / 2), 0F, 0F));
 
         return LayerDefinition.create(var0, 64, 32);
     }

@@ -34,9 +34,9 @@ public class DogFrontLegsSeperate extends SyncedAccessoryModel {
     private static LayerDefinition createBodyLayerInternal(CubeDeformation scale) {
         MeshDefinition var0 = new MeshDefinition();
         PartDefinition var1 = var0.getRoot();
-        CubeListBuilder var4_1 = CubeListBuilder.create().texOffs(56, 0).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, scale);
-        var1.addOrReplaceChild("right_front_leg", var4_1, PartPose.offset(-2.5F, 16.0F, -4.0F));
-        var1.addOrReplaceChild("left_front_leg", var4_1, PartPose.offset(0.5F, 16.0F, -4.0F));
+        CubeListBuilder var4_1 = CubeListBuilder.create().texOffs(56, 0).addBox(-1F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, scale);
+        var1.addOrReplaceChild("right_front_leg", var4_1, PartPose.offset(-1.5F, 16.0F, -4.0F));
+        var1.addOrReplaceChild("left_front_leg", var4_1, PartPose.offset(1.5F, 16.0F, -4.0F));
         return LayerDefinition.create(var0, 64, 32);
     }
     
