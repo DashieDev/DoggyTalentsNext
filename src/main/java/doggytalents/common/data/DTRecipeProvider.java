@@ -685,6 +685,14 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('P', Items.PAPER)
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer, Util.getResource("birthday_hat_alt"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DoggyBlocks.DOG_BED.get(), 1)
+            .pattern("WDW")
+            .pattern("WDW")
+            .pattern("WWW")
+            .define('W', Blocks.SPRUCE_PLANKS)
+            .define('D', Blocks.WHITE_WOOL)
+            .unlockedBy("has_wool", has(ItemTags.WOOL))
+            .save(consumer, Util.getResource("dog_bed_def"));
     }
     
     // @Override
