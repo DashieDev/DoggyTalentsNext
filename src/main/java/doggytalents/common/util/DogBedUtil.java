@@ -43,7 +43,7 @@ public class DogBedUtil {
             return Pair.of(casingId, beddingId);
         }
 
-        return Pair.of(null, null);
+        return Pair.of(DogBedMaterialManager.NaniCasing.NULL, DogBedMaterialManager.NaniBedding.NULL);
     }
 
     public static ItemStack createItemStack(ICasingMaterial casingId, IBeddingMaterial beddingId) {
