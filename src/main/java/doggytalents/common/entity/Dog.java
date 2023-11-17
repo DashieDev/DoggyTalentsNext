@@ -1322,17 +1322,8 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean canTrample(BlockState state, BlockPos pos, float fallDistance) {
-        for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.canTrample(this, state, pos, fallDistance);
-
-            if (result.shouldSwing()) {
-                return true;
-            } else if (result == InteractionResult.FAIL) {
-                return false;
-            }
-        }
-
-        return super.canTrample(state, pos, fallDistance);
+        //Temporary to avoid wolf mount bug when trampling crops.
+        return false;
     }
 
     @Override
