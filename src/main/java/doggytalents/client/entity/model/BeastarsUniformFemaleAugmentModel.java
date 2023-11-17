@@ -49,7 +49,7 @@ public class BeastarsUniformFemaleAugmentModel extends SyncedAccessoryModel {
 		.texOffs(0, 28).addBox(-3.0F, -2.2F, -2.25F, 6.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 28).addBox(-3.1F, -7.0F, -2.25F, 6.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 10.0F, -2.0F));
 
-        var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
+        var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
 
 		upper_body.addOrReplaceChild("collarscarf", CubeListBuilder.create().texOffs(55, 11).addBox(-3.0F, -6.25F, -1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.1F))
 		.texOffs(55, 11).addBox(-4.0F, -5.75F, -1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.15F))
@@ -74,12 +74,12 @@ public class BeastarsUniformFemaleAugmentModel extends SyncedAccessoryModel {
 		.texOffs(55, 11).mirror().addBox(3.0F, -5.75F, -1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.15F)).mirror(false)
 		.texOffs(55, 11).mirror().addBox(3.5F, -5.25F, -0.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.05F)).mirror(false)
 		.texOffs(55, 11).addBox(2.0F, -6.0F, 0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.25F))
-		.texOffs(55, 11).addBox(-3.0F, -6.0F, 0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.25F)), PartPose.offset(1f, 2.5f, -2.5f));
+		.texOffs(55, 11).addBox(-3.0F, -6.0F, 0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.25F)), PartPose.offset(0, 2.5f, -2.5f));
 
-        PartDefinition leg3 = partdefinition.addOrReplaceChild("pLFLeg", CubeListBuilder.create().texOffs(0, 18), PartPose.offset(-2.5F, 16.0F, -4.0F));
-		PartDefinition leg4 = partdefinition.addOrReplaceChild("pRFLeg", CubeListBuilder.create().texOffs(0, 18), PartPose.offset(0.5F, 16.0F, -4.0F));
+        PartDefinition leg3 = partdefinition.addOrReplaceChild("pLFLeg", CubeListBuilder.create().texOffs(0, 18), PartPose.offset(-1.5F, 16.0F, -4.0F));
+		PartDefinition leg4 = partdefinition.addOrReplaceChild("pRFLeg", CubeListBuilder.create().texOffs(0, 18), PartPose.offset(1.5F, 16.0F, -4.0F));
         var blouse = CubeListBuilder.create()
-            .texOffs(56, 2).addBox(0.0F, 0.0F, -1.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.35F));
+            .texOffs(56, 2).addBox(-1F, 0.0F, -1.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.35F));
 
         leg3.addOrReplaceChild("blouse", blouse, PartPose.ZERO);
         leg4.addOrReplaceChild("blouse", blouse, PartPose.ZERO);

@@ -119,21 +119,21 @@ public class DogArmorModel extends SyncedAccessoryModel {
 		var body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
         var leggings = body.addOrReplaceChild("leggings", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, 1.5F, -3.5F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.3F)), PartPose.ZERO);
 		var chestplates = body.addOrReplaceChild("chestplates", CubeListBuilder.create().texOffs(18, 14).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, new CubeDeformation(0.15F)), PartPose.ZERO);
-        var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-3.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, new CubeDeformation(0.05F)), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
-		var right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create(), PartPose.offset(-2.5F, 16.0F, 7.0F));
-		var leg = right_hind_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(30, 21).mirror().addBox(0.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)).mirror(false), PartPose.ZERO);
-		var boot = right_hind_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).addBox(0.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.ZERO);
-		var left_hind_leg = partdefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create(), PartPose.offset(0.5F, 16.0F, 7.0F));
-		var leg2 = left_hind_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(30, 21).addBox(0.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.ZERO);
-		var boot2 = left_hind_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).mirror().addBox(3.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)).mirror(false), PartPose.offset(-3.0F, 0.0F, 0.0F));
-		var right_front_leg = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create(), PartPose.offset(-2.5F, 16.0F, -4.0F));
-		var boot3 = right_front_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).addBox(0.0F, 6.0F, -12.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(0.0F, 0.0F, 11.0F));
-		var leg3 = right_front_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(34, 20).mirror().addBox(-3.0F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)).mirror(false), PartPose.offset(3.0F, 0.0F, 11.0F));
-		var left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create(), PartPose.offset(0.5F, 16.0F, -4.0F));
-		var boot4 = left_front_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).mirror().addBox(3.0F, 6.0F, -12.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)).mirror(false), PartPose.offset(-3.0F, 0.0F, 11.0F));
-		var leg4 = left_front_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(34, 20).addBox(0.0F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 11.0F));
-		var tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(-1.0F, 12.0F, 8.0F));
-        tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(31, 7).addBox(0.0F, 0.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.45F)), PartPose.ZERO);
+        var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, new CubeDeformation(0.05F)), PartPose.offsetAndRotation(0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		var right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create(), PartPose.offset(-1.5F, 16.0F, 7.0F));
+		var leg = right_hind_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(30, 21).mirror().addBox(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)).mirror(false), PartPose.ZERO);
+		var boot = right_hind_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).addBox(-1.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.ZERO);
+		var left_hind_leg = partdefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create(), PartPose.offset(1.5F, 16.0F, 7.0F));
+		var leg2 = left_hind_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(30, 21).addBox(-1F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.ZERO);
+		var boot2 = left_hind_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).mirror().addBox(2.0F, 6.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)).mirror(false), PartPose.offset(-3.0F, 0.0F, 0.0F));
+		var right_front_leg = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create(), PartPose.offset(-1.5F, 16.0F, -4.0F));
+		var boot3 = right_front_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).addBox(-1F, 6.0F, -12.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)), PartPose.offset(0.0F, 0.0F, 11.0F));
+		var leg3 = right_front_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(34, 20).mirror().addBox(-4.0F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)).mirror(false), PartPose.offset(3.0F, 0.0F, 11.0F));
+		var left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create(), PartPose.offset(1.5F, 16.0F, -4.0F));
+		var boot4 = left_front_leg.addOrReplaceChild("boot", CubeListBuilder.create().texOffs(34, 20).mirror().addBox(2.0F, 6.0F, -12.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.35F)).mirror(false), PartPose.offset(-3.0F, 0.0F, 11.0F));
+		var leg4 = left_front_leg.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(34, 20).addBox(-1F, 0.0F, -12.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 11.0F));
+		var tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(0F, 12.0F, 8.0F));
+        tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(31, 7).addBox(-1F, 0.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.45F)), PartPose.ZERO);
 
 		return LayerDefinition.create(meshdefinition, 64, 32);
 	}

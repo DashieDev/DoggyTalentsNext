@@ -25,11 +25,11 @@ public class LocatorOrbModel extends SyncedAccessoryModel {
 		var meshdefinition = new MeshDefinition();
 		var partdefinition = meshdefinition.getRoot();
 
-        var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
+        var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
         upper_body.addOrReplaceChild("scarf", CubeListBuilder.create().texOffs(0, 43).addBox(-4.0F, -13.0F, -1.0F, 8.0F, 13.0F, 7.0F, new CubeDeformation(0.5F))
 		.texOffs(28, 27).addBox(-4.0F, -13.2F, -7.0F, 8.0F, 6.0F, 10.0F, new CubeDeformation(-0.2F))
 		.texOffs(0, 38).addBox(-1.0F, -14.0F, -3.7F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.1F)), 
-        PartPose.offset(1.0F, 10F, -2F));
+        PartPose.offset(0F, 10F, -2F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
