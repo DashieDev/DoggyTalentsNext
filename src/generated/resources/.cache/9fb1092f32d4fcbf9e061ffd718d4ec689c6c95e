@@ -1,4 +1,5 @@
-// 1.19.2	2023-11-02T13:29:47.4256377	Recipes
+// 1.19.2	2023-11-18T17:43:10.3766086	Recipes
+8270e2d1b39576e6e8cb2935e5ce69880a3a1cf1 data/doggytalents/advancements/recipes/doggytalents.dogbed/dog_bed_def.json
 27d79d5209be4c4faa190b319b12343e40d8d6b7 data/doggytalents/advancements/recipes/doggytalents/amnesia_bone.json
 238191851269dce82892f442824ee4ac35450727 data/doggytalents/advancements/recipes/doggytalents/bach_wig.json
 1a8643aee5813d769eb3d1a97a56b1283edf4048 data/doggytalents/advancements/recipes/doggytalents/baker_hat.json
@@ -100,6 +101,7 @@ bc7e754dd781539ea9a447e465e8ff0b0b55e840 data/doggytalents/recipes/dire_treat.js
 2494f00677e1fbda7b0e97125e3736c946c3b283 data/doggytalents/recipes/divine_retribution.json
 e86ecaead74087dbc7aecffb5e8c7bd7ce36dedd data/doggytalents/recipes/dog_bath.json
 370ea7b899a9652030231466548a73ddedffdcd3 data/doggytalents/recipes/dog_bed.json
+e73af4843dfc2ad26afca98f970d9faacb45c8fa data/doggytalents/recipes/dog_bed_def.json
 bc7f047f29ac108fd185126f1cf492c050b10984 data/doggytalents/recipes/egg_sandwich.json
 b0966c5c942c50775424d84620009e8e083b9aee data/doggytalents/recipes/empty_locator_orb.json
 ec0cc38bb51b4442e640c95097af071c9c2bc4e4 data/doggytalents/recipes/energizer_stick.json
