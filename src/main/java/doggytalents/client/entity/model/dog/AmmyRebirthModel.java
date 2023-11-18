@@ -90,15 +90,15 @@ public class AmmyRebirthModel extends DogModel {
 
 		PartDefinition body_rotation_r2 = bone.addOrReplaceChild("body_rotation_r2", CubeListBuilder.create().texOffs(0, 13).addBox(-3.0F, -13.8F, -1.5F, 6.0F, 10.0F, 6.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 2.0F, 9.0F, 1.4399F, 0.0F, 0.0F));
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition mane_rotation_r1 = upper_body.addOrReplaceChild("mane_rotation_r1", CubeListBuilder.create().texOffs(36, 42).mirror().addBox(-2.0F, -4.5F, -6.0F, 2.0F, 10.0F, 12.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-1.5F, 2.65F, 1.15F, 0.0F, 0.0F, 0.2618F));
+		PartDefinition mane_rotation_r1 = upper_body.addOrReplaceChild("mane_rotation_r1", CubeListBuilder.create().texOffs(36, 42).mirror().addBox(-2.0F, -4.5F, -6.0F, 2.0F, 10.0F, 12.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-2.5F, 2.65F, 1.15F, 0.0F, 0.0F, 0.2618F));
 
-		PartDefinition mane_rotation_r2 = upper_body.addOrReplaceChild("mane_rotation_r2", CubeListBuilder.create().texOffs(36, 42).addBox(0.0F, -4.5F, -6.0F, 2.0F, 10.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.5F, 2.65F, 1.15F, 0.0F, 0.0F, -0.2618F));
+		PartDefinition mane_rotation_r2 = upper_body.addOrReplaceChild("mane_rotation_r2", CubeListBuilder.create().texOffs(36, 42).addBox(0.0F, -4.5F, -6.0F, 2.0F, 10.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.5F, 2.65F, 1.15F, 0.0F, 0.0F, -0.2618F));
 
-		PartDefinition mane_rotation_r3 = upper_body.addOrReplaceChild("mane_rotation_r3", CubeListBuilder.create().texOffs(17, 23).addBox(-1.5F, -0.6F, -1.85F, 5.0F, 5.0F, 7.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.7854F, 0.0F, 0.0F));
+		PartDefinition mane_rotation_r3 = upper_body.addOrReplaceChild("mane_rotation_r3", CubeListBuilder.create().texOffs(17, 23).addBox(-1.5F, -0.6F, -1.85F, 5.0F, 5.0F, 7.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(-1.0F, 0.0F, 0.0F, 0.7854F, 0.0F, 0.0F));
 
-		PartDefinition mane_rotation_r4 = upper_body.addOrReplaceChild("mane_rotation_r4", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -2.6F, -2.85F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.1309F, 0.0F, 0.0F));
+		PartDefinition mane_rotation_r4 = upper_body.addOrReplaceChild("mane_rotation_r4", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -2.6F, -2.85F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(-1.0F, 0.0F, 0.0F, 0.1309F, 0.0F, 0.0F));
 
 		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 9.75F, -5.5F));
 
@@ -145,7 +145,7 @@ public class AmmyRebirthModel extends DogModel {
 		PartDefinition cube_r2 = left_ear.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(51, 0).mirror().addBox(-1.6F, -3.4F, -1.95F, 3.0F, 4.0F, 2.0F, new CubeDeformation(-0.5F)).mirror(false), PartPose.offsetAndRotation(0.25F, 0.0F, 0.0F, 0.0436F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
-	}	
+	}
 
 
 	public static void createAugment() {
