@@ -832,3 +832,9 @@ upright piano, recorded using his phone and post-processed by MashXP.
 
 #Improved Flying Furball Dynamics and Combat, dog will dash to target if close enough and not obstructed.
 ==================
+
+1.17.5 - 18th November 2023
+*HOTFIX: OwnerUUID is not saved in DogRespawnData allowing Duplications to happens after World Restart.
+*HOTFIX: Trampling Crops With WolfMount causes the crops to break and both the player and wolf to clip,
+glitch and take huge damage inside the block underneath.
+# Register a default recipe for the Dog Bed so it can show up in the crafting book.
