@@ -47,9 +47,9 @@ public class AmmyShinModel extends DogModel {
 
 		PartDefinition body_rotation = bone.addOrReplaceChild("body_rotation", CubeListBuilder.create().texOffs(0, 13).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition bone2 = upper_body.addOrReplaceChild("bone2", CubeListBuilder.create(), PartPose.offsetAndRotation(1.0F, 0.0F, 0.0F, -1.5708F, 0.0F, 0.0F));
+		PartDefinition bone2 = upper_body.addOrReplaceChild("bone2", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.5708F, 0.0F, 0.0F));
 
 		PartDefinition mane_rotation = bone2.addOrReplaceChild("mane_rotation", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -5.5F, -1.25F, 8.0F, 6.0F, 7.0F, new CubeDeformation(0.15F))
 		.texOffs(0, 32).addBox(3.35F, -5.5F, -4.5F, 1.0F, 11.0F, 13.0F, new CubeDeformation(0.0F))
