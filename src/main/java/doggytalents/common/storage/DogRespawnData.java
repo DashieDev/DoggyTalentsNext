@@ -111,10 +111,16 @@ public class DogRespawnData implements IDogData {
 
     public void read(CompoundTag compound) {
         this.data = compound.getCompound("data");
+        if (compound.hasUUID("owner_uuid")) {
+            this.ownerUUID = compound.getUUID("owner_uuid");
+        }
     }
 
     public CompoundTag write(CompoundTag compound) {
         compound.put("data", this.data);
+        if (this.ownerUUID != null) {
+            compound.putUUID("owner_uuid", this.ownerUUID);
+        }
         return compound;
     }
 }
