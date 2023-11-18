@@ -685,7 +685,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('P', Items.PAPER)
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer, Util.getResource("birthday_hat_alt"));
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DoggyBlocks.DOG_BED.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyBlocks.DOG_BED.get(), 1)
             .pattern("WDW")
             .pattern("WDW")
             .pattern("WWW")
