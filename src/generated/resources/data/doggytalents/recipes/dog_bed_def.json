@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WDW",
+    "WDW",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:spruce_planks"
+    },
+    "D": {
+      "item": "minecraft:white_wool"
+    }
+  },
+  "result": {
+    "item": "doggytalents:dog_bed"
+  }
+}
