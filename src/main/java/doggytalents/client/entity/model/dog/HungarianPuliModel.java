@@ -1,5 +1,8 @@
 package doggytalents.client.entity.model.dog;
 
+import doggytalents.DoggyAccessories;
+import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -161,9 +164,9 @@ public class HungarianPuliModel extends DogModel {
 
 		PartDefinition mane_rotation_r33 = manefluff12.addOrReplaceChild("mane_rotation_r33", CubeListBuilder.create().texOffs(0, 23).mirror().addBox(-4.6F, -4.0F, -10.25F, 1.0F, 6.0F, 9.0F, new CubeDeformation(-0.25F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.068F, 0.1656F, -0.2645F));
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-3.0F, -3.0F, -3.75F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.25F)), PartPose.offsetAndRotation(-1.0F, 15.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, -3.0F, -3.75F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.25F)), PartPose.offsetAndRotation(0F, 15.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition manefluff4 = upper_body.addOrReplaceChild("manefluff4", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 1.0F));
+		PartDefinition manefluff4 = upper_body.addOrReplaceChild("manefluff4", CubeListBuilder.create(), PartPose.offset(-1.0F, 0.0F, 1.0F));
 
 		PartDefinition manefluff = manefluff4.addOrReplaceChild("manefluff", CubeListBuilder.create().texOffs(21, 30).addBox(4.25F, -3.0F, -9.25F, 1.0F, 6.0F, 11.0F, new CubeDeformation(-0.25F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -253,4 +256,5 @@ public class HungarianPuliModel extends DogModel {
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
+
 }
