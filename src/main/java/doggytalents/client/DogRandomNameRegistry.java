@@ -38,7 +38,7 @@ public class DogRandomNameRegistry extends SimplePreparableReloadListener<DogRan
     public String getRandomName(Dog dog) {
         if (nameList.isEmpty())
             return "";
-        int r = new Random().nextInt(nameList.size());
+        int r = dog.getRandom().nextInt(nameList.size());
         return nameList.get(r);
     }
 
