@@ -18,6 +18,7 @@ public class DoggySpin extends AbstractWidget {
     private int size;
     private static enum Style { CHOPIN, BACKFLIP, SIT, AMMY }
     private Style style = Style.CHOPIN;
+    private Random random = new Random();
 
     public DoggySpin(int x, int y, int size) {
         super(x, y, size, size, Component.empty());
@@ -118,7 +119,7 @@ public class DoggySpin extends AbstractWidget {
     }
 
     public void chooseStyle() {
-        int r = new Random().nextInt(8);
+        int r = random.nextInt(8);
         switch (r) {
         default:
             this.style = Style.CHOPIN;
