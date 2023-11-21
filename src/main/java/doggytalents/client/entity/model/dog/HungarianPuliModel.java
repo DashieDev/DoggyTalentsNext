@@ -256,5 +256,9 @@ public class HungarianPuliModel extends DogModel {
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
+	@Override
+    public boolean useDefaultModelForAccessories() {
+        return true;
+    }
 
 }

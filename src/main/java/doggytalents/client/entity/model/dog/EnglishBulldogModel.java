@@ -17,13 +17,13 @@ public class EnglishBulldogModel extends DogModel {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 15.0F, 7.25F, 1.9635F, 0.0F, 0.0F));
+		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(0.0F, 15.0F, 7.25F));
 
-		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(9, 18).addBox(0.0F, 0.25F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.25F))
-		.texOffs(9, 18).addBox(0.75F, 0.75F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.15F))
-		.texOffs(9, 18).addBox(0.05F, 2.1F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.45F))
-		.texOffs(9, 18).addBox(0.85F, 1.7F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.55F))
-		.texOffs(9, 18).addBox(-0.65F, 1.6F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.55F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(9, 18).addBox(-1.0F, 0.25F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.25F))
+		.texOffs(9, 18).addBox(-0.25F, 0.75F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.15F))
+		.texOffs(9, 18).addBox(-0.95F, 2.1F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.45F))
+		.texOffs(9, 18).addBox(-0.15F, 1.7F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.55F))
+		.texOffs(9, 18).addBox(-1.65F, 1.6F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.55F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 19).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 7.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(-1.5F, 18.0F, 5.0F));
 
@@ -33,14 +33,12 @@ public class EnglishBulldogModel extends DogModel {
 
 		PartDefinition left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 7.0F, 2.0F, new CubeDeformation(0.25F)), PartPose.offset(2.5F, 18.0F, -4.0F));
 
-		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 16.0F, 1.75F, -0.2182F, 0.0F, 0.0F));
+		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(18, 14).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 9.0F, 6.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 16.0F, 1.75F, 1.3526F, 0.0F, 0.0F));
 
-		PartDefinition body_rotation_r1 = body.addOrReplaceChild("body_rotation_r1", CubeListBuilder.create().texOffs(18, 14).addBox(-3.0F, -12.0F, -1.0F, 6.0F, 9.0F, 6.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 2.0F, 9.0F, 1.5708F, 0.0F, 0.0F));
-
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-3.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, new CubeDeformation(0.0F))
-		.texOffs(21, 0).addBox(-3.0F, -3.0F, -3.75F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.4F))
-		.texOffs(21, 0).addBox(-3.0F, -3.0F, -2.25F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.4F))
-		.texOffs(21, 0).addBox(-3.0F, -3.0F, -5.0F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.9F)), PartPose.offsetAndRotation(-1.0F, 16.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, new CubeDeformation(0.0F))
+		.texOffs(21, 0).addBox(-4.0F, -3.0F, -3.75F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.4F))
+		.texOffs(21, 0).addBox(-4.0F, -3.0F, -2.25F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.4F))
+		.texOffs(21, 0).addBox(-4.0F, -3.0F, -5.0F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.9F)), PartPose.offsetAndRotation(0.0F, 16.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
 
 		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 15.0F, -7.0F));
 
@@ -73,5 +71,5 @@ public class EnglishBulldogModel extends DogModel {
 		.texOffs(45, 0).addBox(-1.125F, -0.925F, -1.625F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.05F)), PartPose.offsetAndRotation(0.0375F, -0.175F, -0.0625F, -0.7854F, 1.4835F, 2.0944F));
 
 		return LayerDefinition.create(meshdefinition, 64, 32);
-    }
+	}
 }

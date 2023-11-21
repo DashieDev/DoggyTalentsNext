@@ -207,12 +207,12 @@ public class ScrapsModel extends GlowingEyeDogModel {
 		.texOffs(27, 6).addBox(0.5F, -2.75F, 1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.2F))
 		.texOffs(27, 6).addBox(0.5F, -3.0F, 1.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 0.0F, 1.0F, 0.2182F, 0.0F, 0.0F));
 
-		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 13.5F, -7.0F));
+		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 12.25F, -7.0F));
 
-		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(17, 30).addBox(-3.0F, -3.75F, -2.0F, 6.0F, 5.0F, 4.0F, new CubeDeformation(0.1F))
-		.texOffs(19, 20).addBox(-2.5F, -1.0F, -2.0F, 5.0F, 4.0F, 4.0F, new CubeDeformation(-0.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(17, 30).addBox(-3.0F, -2.5F, -2.0F, 6.0F, 5.0F, 4.0F, new CubeDeformation(0.1F))
+		.texOffs(19, 20).addBox(-2.5F, 0.25F, -2.0F, 5.0F, 4.0F, 4.0F, new CubeDeformation(-0.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition head_r1 = real_head.addOrReplaceChild("head_r1", CubeListBuilder.create().texOffs(50, 28).addBox(-1.5F, -0.75F, -2.0F, 3.0F, 1.0F, 4.0F, new CubeDeformation(-0.35F)), PartPose.offsetAndRotation(0.0F, 3.5374F, -3.3646F, 0.2618F, 0.0F, 0.0F));
+		PartDefinition head_r1 = real_head.addOrReplaceChild("head_r1", CubeListBuilder.create().texOffs(50, 28).addBox(-1.5F, -0.75F, -2.0F, 3.0F, 1.0F, 4.0F, new CubeDeformation(-0.35F)), PartPose.offsetAndRotation(0.0F, 4.7874F, -3.3646F, 0.2618F, 0.0F, 0.0F));
 
 		PartDefinition head_r2 = real_head.addOrReplaceChild("head_r2", CubeListBuilder.create().texOffs(38, 0).addBox(-1.55F, -0.4F, -2.4F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
 		.texOffs(38, 0).addBox(-1.25F, -0.4F, -2.4F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
@@ -231,7 +231,7 @@ public class ScrapsModel extends GlowingEyeDogModel {
 		.texOffs(38, 0).mirror().addBox(-2.85F, -1.75F, 0.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)).mirror(false)
 		.texOffs(38, 0).addBox(0.05F, -1.75F, 0.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
 		.texOffs(38, 0).addBox(0.05F, -1.75F, -0.4F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
-		.texOffs(38, 0).addBox(-0.9F, -0.5F, -2.4F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.3F)), PartPose.offsetAndRotation(0.9F, 2.9037F, -2.9053F, 0.2182F, 0.0F, 0.0F));
+		.texOffs(38, 0).addBox(-0.9F, -0.5F, -2.4F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.3F)), PartPose.offsetAndRotation(0.9F, 4.1537F, -2.9053F, 0.2182F, 0.0F, 0.0F));
 
 		PartDefinition head_r3 = real_head.addOrReplaceChild("head_r3", CubeListBuilder.create().texOffs(38, 0).addBox(0.5F, -0.2132F, -3.2917F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.3F))
 		.texOffs(38, 0).addBox(0.5F, -0.2132F, -2.6917F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.3F))
@@ -239,7 +239,7 @@ public class ScrapsModel extends GlowingEyeDogModel {
 		.texOffs(38, 0).mirror().addBox(-1.5F, -0.2132F, -2.6917F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.3F)).mirror(false)
 		.texOffs(38, 0).mirror().addBox(-1.5F, -0.2132F, -3.2917F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.3F)).mirror(false)
 		.texOffs(38, 0).addBox(0.5F, -0.2132F, -2.0917F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.3F))
-		.texOffs(38, 8).addBox(-1.5F, 0.1368F, -3.2917F, 3.0F, 1.0F, 4.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(0.0F, 0.9909F, 0.1482F, 0.48F, 0.0F, 0.0F));
+		.texOffs(38, 8).addBox(-1.5F, 0.1368F, -3.2917F, 3.0F, 1.0F, 4.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(0.0F, 2.2409F, 0.1482F, 0.48F, 0.0F, 0.0F));
 
 		PartDefinition head_r4 = real_head.addOrReplaceChild("head_r4", CubeListBuilder.create().texOffs(38, 0).mirror().addBox(1.1F, -0.7F, -2.6F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)).mirror(false)
 		.texOffs(38, 0).mirror().addBox(0.7F, -0.7F, -2.6F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)).mirror(false)
@@ -253,23 +253,23 @@ public class ScrapsModel extends GlowingEyeDogModel {
 		.texOffs(38, 0).addBox(1.5F, -0.7F, -2.1F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
 		.texOffs(38, 0).addBox(1.5F, -0.7F, -1.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
 		.texOffs(38, 0).addBox(1.5F, -0.7F, -1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
-		.texOffs(38, 0).addBox(1.5F, -0.7F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(-1.15F, 2.1054F, -5.0796F, 0.1309F, 0.0F, 0.0F));
+		.texOffs(38, 0).addBox(1.5F, -0.7F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(-1.15F, 3.3554F, -5.0796F, 0.1309F, 0.0F, 0.0F));
 
 		PartDefinition head_r5 = real_head.addOrReplaceChild("head_r5", CubeListBuilder.create().texOffs(38, 0).mirror().addBox(-0.75F, -1.75F, -1.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)).mirror(false)
-		.texOffs(38, 0).addBox(1.55F, -1.75F, -1.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(-0.9F, 2.9037F, -2.9053F, 0.1745F, 0.0F, 0.0F));
+		.texOffs(38, 0).addBox(1.55F, -1.75F, -1.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(-0.9F, 4.1537F, -2.9053F, 0.1745F, 0.0F, 0.0F));
 
 		PartDefinition head_r6 = real_head.addOrReplaceChild("head_r6", CubeListBuilder.create().texOffs(38, 0).mirror().addBox(-0.85F, -1.65F, -1.35F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)).mirror(false)
 		.texOffs(38, 0).mirror().addBox(-0.85F, -1.65F, -0.95F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)).mirror(false)
 		.texOffs(38, 0).addBox(1.65F, -1.65F, -0.95F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
-		.texOffs(38, 0).addBox(1.65F, -1.65F, -1.35F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(-0.9F, 2.9037F, -2.9053F, 0.1309F, 0.0F, 0.0F));
+		.texOffs(38, 0).addBox(1.65F, -1.65F, -1.35F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(-0.9F, 4.1537F, -2.9053F, 0.1309F, 0.0F, 0.0F));
 
-		PartDefinition head_r7 = real_head.addOrReplaceChild("head_r7", CubeListBuilder.create().texOffs(0, 10).addBox(-1.5F, -1.0F, -3.5F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.25F)), PartPose.offsetAndRotation(0.0F, 0.98F, -4.5F, 0.1309F, 0.0F, 0.0F));
+		PartDefinition head_r7 = real_head.addOrReplaceChild("head_r7", CubeListBuilder.create().texOffs(0, 10).addBox(-1.5F, -1.0F, -3.5F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.25F)), PartPose.offsetAndRotation(0.0F, 2.23F, -4.5F, 0.1309F, 0.0F, 0.0F));
 
-		PartDefinition head_r8 = real_head.addOrReplaceChild("head_r8", CubeListBuilder.create().texOffs(0, 31).mirror().addBox(-1.6F, -1.0F, 0.2F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.2F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.98F, -4.5F, 0.1443F, -0.4323F, -0.0608F));
+		PartDefinition head_r8 = real_head.addOrReplaceChild("head_r8", CubeListBuilder.create().texOffs(0, 31).mirror().addBox(-1.6F, -1.0F, 0.2F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.2F)).mirror(false), PartPose.offsetAndRotation(0.0F, 2.23F, -4.5F, 0.1443F, -0.4323F, -0.0608F));
 
-		PartDefinition head_r9 = real_head.addOrReplaceChild("head_r9", CubeListBuilder.create().texOffs(0, 31).addBox(-1.4F, -1.0F, 0.2F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(0.0F, 0.98F, -4.5F, 0.1443F, 0.4323F, 0.0608F));
+		PartDefinition head_r9 = real_head.addOrReplaceChild("head_r9", CubeListBuilder.create().texOffs(0, 31).addBox(-1.4F, -1.0F, 0.2F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(0.0F, 2.23F, -4.5F, 0.1443F, 0.4323F, 0.0608F));
 
-		PartDefinition head_r10 = real_head.addOrReplaceChild("head_r10", CubeListBuilder.create().texOffs(33, 5).addBox(-1.5F, -1.05F, -0.5F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(0.0F, 0.98F, -4.5F, 0.2618F, 0.0F, 0.0F));
+		PartDefinition head_r10 = real_head.addOrReplaceChild("head_r10", CubeListBuilder.create().texOffs(33, 5).addBox(-1.5F, -1.05F, -0.5F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(0.0F, 2.23F, -4.5F, 0.2618F, 0.0F, 0.0F));
 
 		PartDefinition glowing_eyes = partdefinition.addOrReplaceChild("glowing_eyes", CubeListBuilder.create(), PartPose.offset(0.0F, 13.5F, -7.0F));
 
@@ -278,4 +278,9 @@ public class ScrapsModel extends GlowingEyeDogModel {
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
+	@Override
+    public boolean useDefaultModelForAccessories() {
+        return true;
+    }
+
 }
