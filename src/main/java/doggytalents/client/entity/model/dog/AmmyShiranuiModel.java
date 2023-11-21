@@ -42,16 +42,12 @@ public class AmmyShiranuiModel extends DogModel {
 		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 28).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(33, 43).mirror().addBox(-1.1F, 1.7F, -2.4F, 1.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-1.5F, 16.0F, 7.0F));
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -3.0187F, -3.9147F, 8.0F, 6.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition svve = upper_body.addOrReplaceChild("svve", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -2.552F, -3.4667F, 8.0F, 6.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -0.4667F, -0.448F));
+		PartDefinition Swirly_r1 = upper_body.addOrReplaceChild("Swirly_r1", CubeListBuilder.create().texOffs(0, 32).addBox(3.1F, -11.5F, 0.75F, 1.0F, 11.0F, 13.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 32).mirror().addBox(-4.1F, -11.5F, 0.75F, 1.0F, 11.0F, 13.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 9.9813F, -2.9147F, 0.2618F, 0.0F, 0.0F));
 
-		PartDefinition Swirly_r1 = svve.addOrReplaceChild("Swirly_r1", CubeListBuilder.create().texOffs(0, 32).mirror().addBox(-4.1F, -11.5F, 0.75F, 1.0F, 11.0F, 13.0F, new CubeDeformation(0.0F)).mirror(false)
-		.texOffs(0, 32).addBox(3.1F, -11.5F, 0.75F, 1.0F, 11.0F, 13.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.0F, 10.448F, -2.4667F, 0.2618F, 0.0F, 0.0F));
-
-		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
-
-		PartDefinition body_rotation = body.addOrReplaceChild("body_rotation", CubeListBuilder.create().texOffs(0, 13).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 13).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
 
 		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 13.5F, -7.0F));
 

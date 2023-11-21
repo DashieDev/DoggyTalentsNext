@@ -153,9 +153,9 @@ public class AmmyChiModel extends DogModel {
 		PartDefinition leg4 = left_front_leg.addOrReplaceChild("leg4", CubeListBuilder.create().texOffs(0, 28).addBox(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.25F))
 		.texOffs(33, 43).addBox(1.35F, 1.7F, -1.4F, 1.0F, 6.0F, 6.0F, new CubeDeformation(0.25F)), PartPose.offset(-1.0F, -2.0F, 0.0F));
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 16.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 15.0F, -4.0F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition bone8 = upper_body.addOrReplaceChild("bone8", CubeListBuilder.create(), PartPose.offsetAndRotation(0.25F, -0.6584F, 1.903F, -1.5708F, 0.0F, 0.0F));
+		PartDefinition bone8 = upper_body.addOrReplaceChild("bone8", CubeListBuilder.create(), PartPose.offsetAndRotation(0.25F, 0.3416F, 0.903F, -1.5708F, 0.0F, 0.0F));
 
 		PartDefinition bone = bone8.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(5, 10).addBox(-2.75F, -5.847F, 4.1584F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.6F))
 		.texOffs(5, 10).addBox(0.5F, -5.847F, 4.1584F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.6F))
@@ -213,7 +213,7 @@ public class AmmyChiModel extends DogModel {
 
 		PartDefinition mane_rotation = upper_body.addOrReplaceChild("mane_rotation", CubeListBuilder.create().texOffs(4, 4).addBox(-4.0F, -5.5F, -1.75F, 8.0F, 6.0F, 3.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 32).mirror().addBox(-5.6F, -7.5F, -2.5F, 1.0F, 11.0F, 13.0F, new CubeDeformation(0.0F)).mirror(false)
-		.texOffs(0, 32).addBox(4.6F, -7.5F, -2.5F, 1.0F, 11.0F, 13.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 3.0F, -1.5F));
+		.texOffs(0, 32).addBox(4.6F, -7.5F, -2.5F, 1.0F, 11.0F, 13.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 4.0F, -2.5F));
 
 		PartDefinition mane_rotation_r3 = mane_rotation.addOrReplaceChild("mane_rotation_r3", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -3.45F, -2.4F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(0.0F, -2.5F, 3.0F, -0.0873F, 0.0F, 0.0F));
 
