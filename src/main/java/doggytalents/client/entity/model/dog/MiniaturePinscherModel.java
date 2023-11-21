@@ -63,19 +63,19 @@ public class MiniaturePinscherModel extends DogModel{
 
 		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 17.5F, 2.0F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition body_rotation_r1 = body.addOrReplaceChild("body_rotation_r1", CubeListBuilder.create().texOffs(18, 14).addBox(-6.0F, -8.3372F, -0.9962F, 6.0F, 8.0F, 6.0F, new CubeDeformation(-1.0F)), PartPose.offsetAndRotation(3.0F, 5.0F, -2.25F, 0.0873F, 0.0F, 0.0F));
+		PartDefinition body_rotation_r1 = body.addOrReplaceChild("body_rotation_r1", CubeListBuilder.create().texOffs(18, 14).addBox(-3.0F, -4.0F, -3.0F, 6.0F, 8.0F, 6.0F, new CubeDeformation(-1.0F)), PartPose.offsetAndRotation(0.0F, 0.5047F, -0.6318F, 0.0873F, 0.0F, 0.0F));
 
-		PartDefinition left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 6.0F, 2.0F, new CubeDeformation(-0.3F)), PartPose.offset(1.5F, 19.0F, -4.0F));
+		PartDefinition left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, -1.5F, -1.0F, 2.0F, 6.0F, 2.0F, new CubeDeformation(-0.3F)), PartPose.offset(1.5F, 19.5F, -3.0F));
 
-		PartDefinition right_front_leg = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(0, 19).addBox(-1.0F, 0.0F, 0.0F, 2.0F, 5.0F, 2.0F, new CubeDeformation(-0.3F)), PartPose.offset(-1.5F, 19.0F, -4.0F));
+		PartDefinition right_front_leg = partdefinition.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(0, 19).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 5.0F, 2.0F, new CubeDeformation(-0.3F)), PartPose.offset(-1.5F, 19.5F, -3.0F));
 
-		PartDefinition left_hind_leg = partdefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, 0.0F, -2.0F, 2.0F, 6.0F, 2.0F, new CubeDeformation(-0.3F)), PartPose.offset(1.25F, 18.25F, 5.2F));
+		PartDefinition left_hind_leg = partdefinition.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, -0.75F, -2.2F, 2.0F, 6.0F, 2.0F, new CubeDeformation(-0.3F)), PartPose.offset(1.25F, 19.0F, 5.4F));
 
-		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, 0.0F, -2.0F, 2.0F, 6.0F, 2.0F, new CubeDeformation(-0.3F)), PartPose.offset(-1.25F, 18.25F, 5.2F));
+		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, -0.75F, -2.2F, 2.0F, 6.0F, 2.0F, new CubeDeformation(-0.3F)), PartPose.offset(-1.25F, 19.0F, 5.4F));
 
-		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 17.0F, 3.0F, 2.2253F, 0.0F, 0.0F));
+		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(0.0F, 16.5F, 4.75F));
 
-		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(9, 18).addBox(-2.0F, -2.0934F, -0.7873F, 2.0F, 4.0F, 2.0F, new CubeDeformation(-0.45F)), PartPose.offset(1.0F, 3.0715F, -0.3673F));
+		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(9, 18).addBox(-1.0F, -0.3243F, -1.0553F, 2.0F, 4.0F, 2.0F, new CubeDeformation(-0.45F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 32);
 	}

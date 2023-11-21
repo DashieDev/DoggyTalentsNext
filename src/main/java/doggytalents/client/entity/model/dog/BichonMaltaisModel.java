@@ -17,7 +17,7 @@ public class BichonMaltaisModel extends DogModel{
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 15.0F, 4.5F, 2.0508F, 0.0F, 0.0F));
+		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(0.0F, 15.0F, 4.5F));
 
 		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(24, 24).addBox(-1.0F, 2.4595F, 2.4619F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(24, 24).addBox(-1.0F, 0.0595F, 1.3619F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
@@ -36,14 +36,12 @@ public class BichonMaltaisModel extends DogModel{
 
 		PartDefinition left_front_leg = partdefinition.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 1.0F, -1.0F, 2.0F, 7.0F, 2.0F, new CubeDeformation(0.15F)), PartPose.offset(0.5F, 16.0F, -4.0F));
 
-		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 15.75F, 1.0F));
+		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(18, 14).addBox(-3.0F, 2.0F, -3.25F, 6.0F, 5.0F, 6.0F, new CubeDeformation(0.15F))
+		.texOffs(18, 14).addBox(-3.0F, -1.0F, -3.25F, 6.0F, 8.0F, 6.0F, new CubeDeformation(-0.25F)), PartPose.offsetAndRotation(0.0F, 16.25F, -0.25F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition body_rotation_r1 = body.addOrReplaceChild("body_rotation_r1", CubeListBuilder.create().texOffs(18, 14).addBox(-3.0F, -7.25F, -1.0F, 6.0F, 5.0F, 6.0F, new CubeDeformation(0.15F))
-		.texOffs(18, 14).addBox(-3.0F, -10.25F, -1.0F, 6.0F, 8.0F, 6.0F, new CubeDeformation(-0.25F)), PartPose.offsetAndRotation(0.0F, 2.75F, 8.0F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, -2.0F, -3.5F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.35F)), PartPose.offsetAndRotation(0.0F, 16.75F, -4.0F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(21, 0).addBox(-3.0F, -3.0F, -4.25F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.35F)), PartPose.offsetAndRotation(-1.0F, 16.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
-
-		PartDefinition bone8 = upper_body.addOrReplaceChild("bone8", CubeListBuilder.create(), PartPose.offsetAndRotation(1.0F, 3.0F, -8.0F, -1.5708F, 0.0F, 0.0F));
+		PartDefinition bone8 = upper_body.addOrReplaceChild("bone8", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 4.0F, -7.25F, -1.5708F, 0.0F, 0.0F));
 
 		PartDefinition bone = bone8.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(34, 10).addBox(-2.75F, -18.847F, 6.1584F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.1F))
 		.texOffs(34, 10).addBox(0.5F, -18.847F, 6.1584F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.1F))
