@@ -22,35 +22,33 @@ public class ZeroModel extends GlowingEyeDogModel {
 
 		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition ndeb = real_tail.addOrReplaceChild("ndeb", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, -8.0F, -6.0F, 1.2654F, 0.0F, 0.0F));
+		PartDefinition mane_rotation_r1 = real_tail.addOrReplaceChild("mane_rotation_r1", CubeListBuilder.create().texOffs(46, 32).mirror().addBox(-0.5F, -1.5F, 0.9F, 1.0F, 3.0F, 2.0F, new CubeDeformation(-0.45F)).mirror(false), PartPose.offsetAndRotation(-0.0339F, 8.3117F, 3.6054F, 0.0F, 0.3927F, -1.5708F));
 
-		PartDefinition mane_rotation_r1 = ndeb.addOrReplaceChild("mane_rotation_r1", CubeListBuilder.create().texOffs(44, 30).mirror().addBox(-1.0F, -1.75F, -2.5F, 1.0F, 3.0F, 4.0F, new CubeDeformation(0.35F)).mirror(false), PartPose.offsetAndRotation(1.2161F, 11.7918F, -12.8866F, 0.0F, 0.8727F, -1.5708F));
+		PartDefinition mane_rotation_r2 = real_tail.addOrReplaceChild("mane_rotation_r2", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-2.5F, -1.5F, -4.0F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.25F)).mirror(false), PartPose.offsetAndRotation(-0.0339F, 3.6264F, 2.024F, 0.0F, 1.5708F, -1.5708F));
 
-		PartDefinition mane_rotation_r2 = ndeb.addOrReplaceChild("mane_rotation_r2", CubeListBuilder.create().texOffs(45, 31).addBox(-1.974F, -0.75F, -6.1832F, 1.0F, 2.0F, 3.0F, new CubeDeformation(0.15F)), PartPose.offsetAndRotation(2.0339F, 9.0158F, -8.2034F, 0.2884F, -0.6875F, 0.717F));
+		PartDefinition mane_rotation_r3 = real_tail.addOrReplaceChild("mane_rotation_r3", CubeListBuilder.create().texOffs(46, 32).addBox(-0.5F, -1.5F, -1.25F, 1.0F, 3.0F, 2.0F, new CubeDeformation(-0.35F)), PartPose.offsetAndRotation(-0.0339F, 7.6159F, 4.6245F, 0.0F, -0.48F, -1.5708F));
 
-		PartDefinition mane_rotation_r3 = ndeb.addOrReplaceChild("mane_rotation_r3", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(0.974F, -0.75F, -6.1832F, 1.0F, 2.0F, 3.0F, new CubeDeformation(0.15F)).mirror(false), PartPose.offsetAndRotation(-0.0339F, 9.0158F, -8.2034F, 0.2884F, 0.6875F, -0.717F));
+		PartDefinition mane_rotation_r4 = real_tail.addOrReplaceChild("mane_rotation_r4", CubeListBuilder.create().texOffs(46, 32).addBox(1.4F, -1.5F, 1.1F, 1.0F, 3.0F, 2.0F, new CubeDeformation(-0.45F)), PartPose.offsetAndRotation(-0.0339F, 7.8717F, 8.198F, -3.1416F, 1.0908F, 1.5708F));
 
-		PartDefinition mane_rotation_r4 = ndeb.addOrReplaceChild("mane_rotation_r4", CubeListBuilder.create().texOffs(40, 26).mirror().addBox(-0.4626F, -2.0F, -3.2966F, 1.0F, 4.0F, 8.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offsetAndRotation(-0.2785F, 9.4551F, -8.7034F, 0.2298F, 0.2651F, -0.8419F));
+		PartDefinition mane_rotation_r5 = real_tail.addOrReplaceChild("mane_rotation_r5", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-0.5F, -1.5F, -4.0F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.15F)).mirror(false), PartPose.offsetAndRotation(-0.0339F, 3.7483F, 7.4397F, 0.0F, 0.3491F, -1.5708F));
 
-		PartDefinition mane_rotation_r5 = ndeb.addOrReplaceChild("mane_rotation_r5", CubeListBuilder.create().texOffs(40, 26).addBox(-0.5374F, -2.0F, -3.2966F, 1.0F, 4.0F, 8.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(2.2785F, 9.4551F, -8.7034F, 0.2298F, -0.2651F, 0.8419F));
+		PartDefinition mane_rotation_r6 = real_tail.addOrReplaceChild("mane_rotation_r6", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-0.5F, -1.5F, -1.25F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false), PartPose.offsetAndRotation(-0.0339F, 4.7721F, 6.9772F, 0.0F, -0.6545F, -1.5708F));
 
-		PartDefinition mane_rotation_r6 = ndeb.addOrReplaceChild("mane_rotation_r6", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-1.0F, -1.75F, -4.5F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.25F)).mirror(false), PartPose.offsetAndRotation(1.2161F, 12.4633F, -14.8167F, 3.1416F, 1.3963F, 1.5708F));
+		PartDefinition mane_rotation_r7 = real_tail.addOrReplaceChild("mane_rotation_r7", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-0.5F, -1.5F, -7.0F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.05F)).mirror(false), PartPose.offsetAndRotation(-0.0339F, 12.5182F, 8.3891F, 0.0F, -1.5272F, -1.5708F));
 
-		PartDefinition mane_rotation_r7 = ndeb.addOrReplaceChild("mane_rotation_r7", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-0.5F, -1.5F, -1.0F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.15F)).mirror(false), PartPose.offsetAndRotation(0.9661F, 17.9593F, -11.9964F, 3.1416F, 0.6545F, 1.5708F));
+		PartDefinition mane_rotation_r8 = real_tail.addOrReplaceChild("mane_rotation_r8", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-0.5F, -1.5F, -1.0F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.15F)).mirror(false), PartPose.offsetAndRotation(-0.0339F, 8.8417F, 7.5207F, -3.1416F, -0.6109F, 1.5708F));
 
-		PartDefinition mane_rotation_r8 = ndeb.addOrReplaceChild("mane_rotation_r8", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-0.5F, -1.5F, -7.0F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.05F)).mirror(false), PartPose.offsetAndRotation(0.9661F, 19.8931F, -15.2417F, 3.1416F, -0.3491F, 1.5708F));
+		PartDefinition mane_rotation_r9 = real_tail.addOrReplaceChild("mane_rotation_r9", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-1.0F, -1.75F, -4.5F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.25F)).mirror(false), PartPose.offsetAndRotation(0.2161F, 9.8787F, 1.4311F, -3.1416F, 0.1309F, 1.5708F));
 
-		PartDefinition mane_rotation_r9 = ndeb.addOrReplaceChild("mane_rotation_r9", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-0.5F, -1.5F, -1.25F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false), PartPose.offsetAndRotation(0.9661F, 16.2172F, -8.2786F, 3.1416F, -1.2217F, 1.5708F));
+		PartDefinition mane_rotation_r10 = real_tail.addOrReplaceChild("mane_rotation_r10", CubeListBuilder.create().texOffs(40, 26).addBox(-0.5374F, -2.0F, -3.2966F, 1.0F, 4.0F, 8.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(1.2785F, 3.1438F, 0.4004F, 1.6386F, -0.8715F, -0.0519F));
 
-		PartDefinition mane_rotation_r10 = ndeb.addOrReplaceChild("mane_rotation_r10", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-0.5F, -1.5F, -4.0F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.15F)).mirror(false), PartPose.offsetAndRotation(0.9661F, 16.3505F, -7.1631F, 0.0F, -0.9163F, -1.5708F));
+		PartDefinition mane_rotation_r11 = real_tail.addOrReplaceChild("mane_rotation_r11", CubeListBuilder.create().texOffs(40, 26).mirror().addBox(-0.4626F, -2.0F, -3.2966F, 1.0F, 4.0F, 8.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offsetAndRotation(-1.2785F, 3.1438F, 0.4004F, 1.6386F, 0.8715F, 0.0519F));
 
-		PartDefinition mane_rotation_r11 = ndeb.addOrReplaceChild("mane_rotation_r11", CubeListBuilder.create().texOffs(46, 32).addBox(1.4F, -1.5F, 1.1F, 1.0F, 3.0F, 2.0F, new CubeDeformation(-0.45F)), PartPose.offsetAndRotation(0.9661F, 18.3136F, -10.8677F, 0.0F, 0.7854F, -1.5708F));
+		PartDefinition mane_rotation_r12 = real_tail.addOrReplaceChild("mane_rotation_r12", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(0.974F, -0.75F, -6.1832F, 1.0F, 2.0F, 3.0F, new CubeDeformation(0.15F)).mirror(false), PartPose.offsetAndRotation(-1.0339F, 2.5348F, 0.1317F, 2.0852F, 0.7412F, 0.6604F));
 
-		PartDefinition mane_rotation_r12 = ndeb.addOrReplaceChild("mane_rotation_r12", CubeListBuilder.create().texOffs(46, 32).addBox(-0.5F, -1.5F, -1.25F, 1.0F, 3.0F, 2.0F, new CubeDeformation(-0.35F)), PartPose.offsetAndRotation(0.9661F, 14.8285F, -11.6983F, -3.1416F, -1.3963F, 1.5708F));
+		PartDefinition mane_rotation_r13 = real_tail.addOrReplaceChild("mane_rotation_r13", CubeListBuilder.create().texOffs(45, 31).addBox(-1.974F, -0.75F, -6.1832F, 1.0F, 2.0F, 3.0F, new CubeDeformation(0.15F)), PartPose.offsetAndRotation(1.0339F, 2.5348F, 0.1317F, 2.0852F, -0.7412F, -0.6604F));
 
-		PartDefinition mane_rotation_r13 = ndeb.addOrReplaceChild("mane_rotation_r13", CubeListBuilder.create().texOffs(45, 31).mirror().addBox(-2.5F, -1.5F, -4.0F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.25F)).mirror(false), PartPose.offsetAndRotation(0.9661F, 11.1488F, -8.6754F, 0.0F, 0.3054F, -1.5708F));
-
-		PartDefinition mane_rotation_r14 = ndeb.addOrReplaceChild("mane_rotation_r14", CubeListBuilder.create().texOffs(46, 32).mirror().addBox(-0.5F, -1.5F, 0.9F, 1.0F, 3.0F, 2.0F, new CubeDeformation(-0.45F)).mirror(false), PartPose.offsetAndRotation(0.9661F, 14.0658F, -12.6684F, 0.0F, -0.8727F, -1.5708F));
+		PartDefinition mane_rotation_r14 = real_tail.addOrReplaceChild("mane_rotation_r14", CubeListBuilder.create().texOffs(44, 30).mirror().addBox(-1.0F, -1.75F, -2.5F, 1.0F, 3.0F, 4.0F, new CubeDeformation(0.35F)).mirror(false), PartPose.offsetAndRotation(0.2161F, 7.8361F, 1.371F, 3.1416F, 1.0036F, 1.5708F));
 
 		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create(), PartPose.offset(-1.6F, 16.0F, 7.0F));
 
@@ -153,16 +151,16 @@ public class ZeroModel extends GlowingEyeDogModel {
 
 		PartDefinition mane_rotation_r57 = upper_body.addOrReplaceChild("mane_rotation_r57", CubeListBuilder.create().texOffs(41, 27).addBox(-0.5F, -2.0F, -2.5F, 1.0F, 4.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.5F, -1.0F, -3.5F, 0.0F, 0.0F, -0.4363F));
 
-		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 8.5F, -7.0F));
+		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 7.5F, -7.0F));
 
-		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -3.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.5F))
-		.texOffs(2, 1).addBox(-1.5F, 1.0F, -1.75F, 3.0F, 1.0F, 3.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.5F))
+		.texOffs(2, 1).addBox(-1.5F, 2.0F, -1.75F, 3.0F, 1.0F, 3.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition head_r1 = real_head.addOrReplaceChild("head_r1", CubeListBuilder.create().texOffs(29, 21).addBox(-1.5F, -1.25F, -2.0F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.65F)), PartPose.offsetAndRotation(0.0F, 3.7761F, -7.0433F, 0.1309F, 0.0F, 0.0F));
+		PartDefinition head_r1 = real_head.addOrReplaceChild("head_r1", CubeListBuilder.create().texOffs(29, 21).addBox(-1.5F, -1.25F, -2.0F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.65F)), PartPose.offsetAndRotation(0.0F, 4.7761F, -7.0433F, 0.1309F, 0.0F, 0.0F));
 
-		PartDefinition head_r2 = real_head.addOrReplaceChild("head_r2", CubeListBuilder.create().texOffs(44, 41).addBox(-1.5F, -1.0F, -5.5F, 3.0F, 2.0F, 7.0F, new CubeDeformation(-0.55F)), PartPose.offsetAndRotation(0.0F, 1.48F, -1.5F, 0.3927F, 0.0F, 0.0F));
+		PartDefinition head_r2 = real_head.addOrReplaceChild("head_r2", CubeListBuilder.create().texOffs(44, 41).addBox(-1.5F, -1.0F, -5.5F, 3.0F, 2.0F, 7.0F, new CubeDeformation(-0.55F)), PartPose.offsetAndRotation(0.0F, 2.48F, -1.5F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition right_ear = real_head.addOrReplaceChild("right_ear", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.5F, -3.25F, 1.0F, -0.5091F, -0.123F, -0.364F));
+		PartDefinition right_ear = real_head.addOrReplaceChild("right_ear", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.5F, -2.25F, 1.0F, -0.5091F, -0.123F, -0.364F));
 
 		PartDefinition head_r3 = right_ear.addOrReplaceChild("head_r3", CubeListBuilder.create().texOffs(16, 14).addBox(-0.9957F, -0.3134F, -0.7326F, 2.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(-1.4875F, -4.2418F, 1.0528F, -0.5612F, -0.3567F, -0.8125F));
 
@@ -178,7 +176,7 @@ public class ZeroModel extends GlowingEyeDogModel {
 
 		PartDefinition head_r9 = right_ear.addOrReplaceChild("head_r9", CubeListBuilder.create().texOffs(16, 14).addBox(-0.5F, -1.75F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(-0.7426F, -1.4365F, -0.6203F, 0.0F, 0.0F, -0.3491F));
 
-		PartDefinition left_ear = real_head.addOrReplaceChild("left_ear", CubeListBuilder.create(), PartPose.offsetAndRotation(1.5F, -3.25F, 1.0F, -0.5091F, 0.123F, 0.364F));
+		PartDefinition left_ear = real_head.addOrReplaceChild("left_ear", CubeListBuilder.create(), PartPose.offsetAndRotation(1.5F, -2.25F, 1.0F, -0.5091F, 0.123F, 0.364F));
 
 		PartDefinition head_r10 = left_ear.addOrReplaceChild("head_r10", CubeListBuilder.create().texOffs(16, 14).mirror().addBox(-1.0043F, -0.3134F, -0.7326F, 2.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offsetAndRotation(1.4875F, -4.2418F, 1.0528F, -0.5612F, 0.3567F, 0.8125F));
 
@@ -194,7 +192,8 @@ public class ZeroModel extends GlowingEyeDogModel {
 
 		PartDefinition head_r16 = left_ear.addOrReplaceChild("head_r16", CubeListBuilder.create().texOffs(16, 14).mirror().addBox(-1.5F, -1.75F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.1F)).mirror(false), PartPose.offsetAndRotation(0.7426F, -1.4365F, -0.6203F, 0.0F, 0.0F, 0.3491F));
 
-		PartDefinition bone3 = real_head.addOrReplaceChild("bone3", CubeListBuilder.create().texOffs(27, 6).addBox(-1.475F, 0.24F, -4.8146F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.35F)), PartPose.offsetAndRotation(-0.025F, -0.51F, -1.1854F, -0.1309F, 0.0F, 0.0F));
+		PartDefinition bone3 = real_head.addOrReplaceChild("bone3", CubeListBuilder.create().texOffs(27, 6).addBox(-1.475F, 0.24F, -4.8146F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.35F))
+		.texOffs(48, 0).addBox(-1.975F, -3.49F, -11.0646F, 4.0F, 4.0F, 4.0F, new CubeDeformation(-1.25F)), PartPose.offsetAndRotation(-0.025F, 0.49F, -1.1854F, -0.1309F, 0.0F, 0.0F));
 
 		PartDefinition head_r17 = bone3.addOrReplaceChild("head_r17", CubeListBuilder.create().texOffs(26, 21).addBox(-1.525F, 3.874F, -8.3662F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.65F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.6109F, 0.0F, 0.0F));
 
@@ -210,4 +209,9 @@ public class ZeroModel extends GlowingEyeDogModel {
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
+	@Override
+    public boolean useDefaultModelForAccessories() {
+        return true;
+    }
+
 }

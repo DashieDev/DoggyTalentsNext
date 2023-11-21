@@ -20,6 +20,7 @@ import doggytalents.client.entity.model.dog.AmmyJinModel;
 import doggytalents.client.entity.model.dog.AmmyRebirthModel;
 import doggytalents.client.entity.model.dog.AmmyReiModel;
 import doggytalents.client.entity.model.dog.AmmyShinModel;
+import doggytalents.client.entity.model.dog.AmmyShiranuiModel;
 import doggytalents.client.entity.model.dog.AmmyRebirthModel;
 import doggytalents.client.entity.model.dog.AmmyTeiModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
@@ -129,7 +130,7 @@ public class DogModelRegistry {
         register("ammy_divine_jin", ctx ->  new AmmyJinModel(ctx.bakeLayer(ClientSetup.AMMY_JIN)));
         register("ammy_divine_rei", ctx ->  new AmmyReiModel(ctx.bakeLayer(ClientSetup.AMMY_REI)));
         register("ammy_divine_shin", ctx ->  new AmmyShinModel(ctx.bakeLayer(ClientSetup.AMMY_SHIN)));
-        register("ammy_divine_shiranui", ctx ->  new AmmyRebirthModel(ctx.bakeLayer(ClientSetup.AMMY_SHIRANUI)));
+        register("ammy_divine_shiranui", ctx ->  new AmmyShiranuiModel(ctx.bakeLayer(ClientSetup.AMMY_SHIRANUI)));
         register("ammy_divine_rebirth", ctx ->  new AmmyRebirthModel(ctx.bakeLayer(ClientSetup.AMMY_REBIRTH)));        
         register("ammy_divine_tei", ctx ->  new AmmyTeiModel(ctx.bakeLayer(ClientSetup.AMMY_TEI)));
         
