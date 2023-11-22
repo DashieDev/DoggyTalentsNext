@@ -1,9 +1,14 @@
 package doggytalents.client.data;
 
 import doggytalents.DoggyBlocks;
+import doggytalents.common.block.crops.DogCropBlock;
 import doggytalents.common.lib.Constants;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
+
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -16,10 +21,15 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
+import java.util.stream.Collectors;
+
+
 public class DTBlockstateProvider extends BlockStateProvider {
 
-    public DTBlockstateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
-        super(gen, Constants.MOD_ID, exFileHelper);
+    private static final String RENDERTYPE_CUTOUT = "cutout";
+
+    public DTBlockstateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+        super(output, Constants.MOD_ID, exFileHelper);
     }
 
     public ExistingFileHelper getExistingHelper() {
@@ -36,6 +46,8 @@ public class DTBlockstateProvider extends BlockStateProvider {
         dogBath(DoggyBlocks.DOG_BATH);
         dogBed(DoggyBlocks.DOG_BED);
         createFromShape(DoggyBlocks.FOOD_BOWL, new AABB(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D));
+
+        doggyCrops(DoggyBlocks.RICE_CROP);
     }
 
     // Applies texture to all faces and for the input face culls that direction
@@ -150,10 +162,35 @@ public class DTBlockstateProvider extends BlockStateProvider {
         this.simpleBlock(blockIn.get(), model);
     }
 
+    private void doggyCrops(Supplier<? extends DogCropBlock> cropBlockSup) {
+      var cropBlock = cropBlockSup.get();
+      var variantBuilder = this.getVariantBuilder(cropBlock);
+      var ageProp = cropBlock.getAgeProperty();
+      var possibleAges = ageProp.getAllValues().collect(Collectors.toList());
 
+      for (var age : possibleAges) {
+        var partialState = variantBuilder.partialState()
+          .with(ageProp, age.value());
+        var modelName = cropState(cropBlock, age.value());
+        var modelTexture = cropTexture(cropBlock, age.value());
+        var model = this.models()
+          .crop(modelName, modelTexture)
+          .renderType(RENDERTYPE_CUTOUT);
+        
+        variantBuilder.addModels(partialState, new ConfiguredModel(model));
+      }
+    }
 
     private String name(Block block) {
         return ForgeRegistries.BLOCKS.getKey(block).getPath();
+    }
+
+    private String cropState(DogCropBlock block, int age) {
+      return name(block) + "/stage_" + age;
+    }
+
+    private ResourceLocation cropTexture(DogCropBlock block, int age) {
+      return extend(blockTexture(block), "/stage_" + age);
     }
 
     public ResourceLocation blockTexture(Block block) {
