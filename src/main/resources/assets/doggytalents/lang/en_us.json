@@ -138,6 +138,10 @@
    "item.doggytalents.divine_retribution.description": "\"Ow ow ow! Take it off my back! It burns!\" - Said Normal Wolfie.",
    "item.doggytalents.divine_retribution.description2": "\"You'll get used to it.\" - Replied Ammy.",
 
+   "item.doggytalents.rice_grains": "Rice Grains",
+   "item.doggytalents.rice_wheat": "Paddy Rice",
+   "block.doggytalents.rice_crop": "Rice Crop",
+
    "item.doggytalents.feathered_mantle": "Feathered Mantle",
 
    "item.doggytalents.cape_coloured.tooltip": "Color: %s",
