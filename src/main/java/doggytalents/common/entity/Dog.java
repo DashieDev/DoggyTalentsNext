@@ -1093,7 +1093,7 @@ public class Dog extends AbstractDog {
             this.displayToastIfNoPermission(player);
         }
 
-        return InteractionResult.FAIL;
+        return InteractionResult.PASS;
     }
 
     private InteractionResult handleDogSitStand(Player player) {
