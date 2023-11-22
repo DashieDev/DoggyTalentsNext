@@ -3445,7 +3445,6 @@ public class Dog extends AbstractDog {
             inst.set(this, previousLevel);
 
             if (level <= 0) {
-                inst.remove(this);
                 final int remove_id = selected_id;
                 modifyTalent(x -> {
                     if (remove_id >= 0) x.remove(remove_id);
