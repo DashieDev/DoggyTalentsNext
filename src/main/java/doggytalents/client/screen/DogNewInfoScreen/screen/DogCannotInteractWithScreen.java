@@ -135,11 +135,13 @@ public class DogCannotInteractWithScreen extends Screen {
                 );
         var help = I18n.get(
             "doggui.invalid_dog.incapacitated.subtitle", 
+                dog.getName().getString(),
+                dog.getGenderPronoun().getString(),
                 dog.getGenderSubject().getString()
             );
         var escToReturn = I18n.get("doggui.invalid_dog.esc_to_return");
         var lines1 = font.split(title, 120);
-        var lines2 = font.split(Component.literal(help), 120);
+        var lines2 = font.split(Component.literal(help), 150);
 
         int sizeYtotal = lines1.size()*14
             + 7 + font.lineHeight + 3
