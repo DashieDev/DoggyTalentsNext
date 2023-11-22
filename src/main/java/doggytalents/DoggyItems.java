@@ -18,6 +18,7 @@ import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeableLeatherItem;
@@ -127,6 +128,11 @@ public class DoggyItems {
     
     public static final RegistryObject<Item> FRISBEE = registerFrisbee("frisbee");
     public static final RegistryObject<Item> FRISBEE_WET = registerFrisbeeWet("frisbee_wet");
+
+    public static final RegistryObject<Item> RICE_GRAINS = register("rice_grains", 
+        () -> new BlockItem(DoggyBlocks.RICE_CROP.get(), createInitialProp()));
+    public static final RegistryObject<Item> RICE_WHEAT = register("rice_wheat",
+        () -> new RiceWheatItem(createInitialProp()));
 
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
