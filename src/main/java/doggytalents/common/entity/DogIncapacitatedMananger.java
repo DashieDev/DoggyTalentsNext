@@ -107,10 +107,6 @@ public class DogIncapacitatedMananger {
         } else if (item == Items.CAKE) {
             tryEatCake(stack, player);
             return InteractionResult.SUCCESS;
-        } else if (item == Items.STICK) {
-            if (this.dog.level().isClientSide)
-                DogCannotInteractWithScreen.open(this.dog);
-            return InteractionResult.SUCCESS;
         }
 
         if (handleOwnerRide(stack, player).shouldSwing())
@@ -118,8 +114,8 @@ public class DogIncapacitatedMananger {
         if (proccessSitStandOrder(player).shouldSwing())
             return InteractionResult.SUCCESS;
 
-        if (this.dog.level().isClientSide) 
-            this.displayToastIncapacitated(player);
+        if (this.dog.level().isClientSide && player == this.dog.getOwner()) 
+            DogCannotInteractWithScreen.open(this.dog);
         return InteractionResult.FAIL;
     }
 
