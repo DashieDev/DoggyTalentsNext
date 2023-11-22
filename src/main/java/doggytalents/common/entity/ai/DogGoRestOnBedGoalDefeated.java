@@ -92,7 +92,7 @@ public class DogGoRestOnBedGoalDefeated extends Goal {
             targetBed.getY(), targetBed.getZ() + 0.5, 1);
         }
         if (d_targetBed < 1) {
-            if (!this.dog.isInSittingPose()) {
+            if (!this.dog.isInSittingPose() && dog.onGround()) {
                 this.dog.setSitAnim(DogAnimation.LYING_DOWN);
                 this.dog.setInSittingPose(true);
             }
