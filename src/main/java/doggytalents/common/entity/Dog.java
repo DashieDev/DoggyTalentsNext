@@ -3436,7 +3436,6 @@ public class Dog extends AbstractDog {
             this.modifyTalent(x -> {
                 var newTalent = talent.getDefault(level);
                 x.add(newTalent);
-                newTalent.init(this);
             });            
         } else {
             int previousLevel = inst.level();
