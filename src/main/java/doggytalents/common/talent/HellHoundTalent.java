@@ -2,6 +2,7 @@ package doggytalents.common.talent;
 
 import java.util.UUID;
 
+import doggytalents.ChopinLogger;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -75,6 +76,15 @@ public class HellHoundTalent extends TalentInstance {
             dog.setPathfindingMalus(BlockPathTypes.LAVA, this.oldLavaCost);
             dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, this.oldFireCost);
             dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, this.oldDangerFireCost);
+        }
+        if (levelBefore < 5 && this.level() >= 5) {
+            this.oldLavaCost = dog.getPathfindingMalus(BlockPathTypes.LAVA);
+            this.oldFireCost = dog.getPathfindingMalus(BlockPathTypes.DAMAGE_FIRE);
+            this.oldDangerFireCost = dog.getPathfindingMalus(BlockPathTypes.DANGER_FIRE);
+
+            dog.setPathfindingMalus(BlockPathTypes.LAVA, 8.0f);
+            dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0f);
+            dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0f);
         }
     }
 
