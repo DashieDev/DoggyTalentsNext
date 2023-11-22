@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyEntityTypes;
+import doggytalents.DoggyItems;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -25,6 +27,8 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
@@ -94,6 +98,19 @@ public class DTLootTableProvider extends LootTableProvider {
             dropsSelf(DoggyBlocks.DOG_BATH);
             dropDogBed(DoggyBlocks.DOG_BED);
             dropsSelf(DoggyBlocks.FOOD_BOWL); // Drop with the name of the dog bowl
+        
+            final var RICE_LOOT_CONDITION = 
+                LootItemBlockStatePropertyCondition
+                    .hasBlockStateProperties(DoggyBlocks.RICE_CROP.get())
+                    .setProperties(
+                        StatePropertiesPredicate
+                        .Builder.properties()
+                        .hasProperty(DoggyBlocks.RICE_CROP.get().getAgeProperty(), 7));
+            this.add(DoggyBlocks.RICE_CROP.get(), 
+                this.createCropDrops(DoggyBlocks.RICE_CROP.get(), 
+                    DoggyItems.RICE_WHEAT.get(), 
+                    DoggyItems.RICE_GRAINS.get(), 
+                    RICE_LOOT_CONDITION));
         }
     }
 
