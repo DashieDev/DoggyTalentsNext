@@ -1069,99 +1069,82 @@ public class Dog extends AbstractDog {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
 
-        ItemStack stack = player.getItemInHand(hand);
+        var stack = player.getItemInHand(hand);
         
         if (this.isDefeated()) 
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
-
-        if (this.isTame()) {
-            if (stack.getItem() == Items.STICK) {
-
-                if (this.level().isClientSide) {
-                    if (this.canInteract(player)) {
-                        DogNewInfoScreen.open(this);
-                    } else {
-                        DogCannotInteractWithScreen.open(this);
-                    }
-                }
-
-                return InteractionResult.SUCCESS;
-            }
-        } else { // Not tamed
-            if (stack.getItem() == Items.BONE || stack.getItem() == DoggyItems.TRAINING_TREAT.get()) {
-
-                if (!this.level().isClientSide) {
-                    this.usePlayerItem(player, hand, stack);
-
-                    if (stack.getItem() == DoggyItems.TRAINING_TREAT.get() || this.random.nextInt(3) == 0) {
-                        this.tame(player);
-                        this.navigation.stop();
-                        this.setTarget((LivingEntity) null);
-                        this.setOrderedToSit(true);
-                        this.setHealth(20.0F);
-                        this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_HEARTS);
-                    } else {
-                        this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_SMOKE);
-                    }
-                }
-
-                return InteractionResult.SUCCESS;
-            } 
-        }
-
+        
+        if (handleOpenDogScreenDedicated(player, stack).shouldSwing())
+            return InteractionResult.SUCCESS;
+        if (handleTameDogIfNotTamed(player, stack, hand).shouldSwing())
+            return InteractionResult.SUCCESS;
         if (dogCheckAndRidePlayer(player, stack).shouldSwing())
             return InteractionResult.SUCCESS;
 
-        Optional<IDogFoodHandler> foodHandler = FoodHandler.getMatch(this, stack, player);
+        var otherHandlerResult = 
+            handleAlterationsAndOtherHandlers(player, stack, hand);
+        if (otherHandlerResult.isPresent())
+            return otherHandlerResult.get();
 
-        if (foodHandler.isPresent()) {
-            return foodHandler.get().consume(this, stack, player);
-        }
-
-        InteractionResult interactResult = InteractHandler.getMatch(this, stack, player, hand);
-
-        if (interactResult != InteractionResult.PASS) {
-            return interactResult;
-        }
-
-        for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.processInteract(this, this.level(), player, hand);
-            if (result != InteractionResult.PASS) {
-                return result;
-            }
-        }
-
-        if (handleBreeding(player, hand, stack).shouldSwing()) {
+        if (handleBreeding(player, hand, stack).shouldSwing())
             return InteractionResult.SUCCESS;
-        }
 
-        InteractionResult actionresulttype = super.mobInteract(player, hand);
-        int sit_interval = this.tickCount - this.lastOrderedToSitTick;
-        float r = this.getRandom().nextFloat();
-        if ((!actionresulttype.consumesAction() || this.isBaby()) && this.canInteract(player) && !this.isProtesting()) {
-            if (!this.level().isClientSide && this.isOrderedToSit() 
-                && checkRandomBackflip(r, sit_interval)
-                && this.level().getBlockState(this.blockPosition().above()).isAir()) {
-                this.setStandAnim(DogAnimation.NONE);
-                this.triggerAnimationAction(new DogBackFlipAction(this));
-            }
-            if (!this.level().isClientSide && !this.isOrderedToSit()) {
-                this.lastOrderedToSitTick = this.tickCount;
-            }
-            this.setOrderedToSit(!this.isOrderedToSit());
-            this.jumping = false;
-            this.navigation.stop();
-            this.setTarget(null);
+        if (handleDogSitStand(player).shouldSwing())
             return InteractionResult.SUCCESS;
-        } else if (this.level().isClientSide) {
+
+        if (this.level().isClientSide) {
             this.displayToastIfNoPermission(player);
         }
 
-        return actionresulttype;
+        return InteractionResult.FAIL;
     }
 
-    public InteractionResult dogCheckAndRidePlayer(Player player, ItemStack stack) {
+    private InteractionResult handleDogSitStand(Player player) {
+        if (!this.canInteract(player))
+            return InteractionResult.FAIL;
+        if (this.isProtesting())
+            return InteractionResult.FAIL;
+        
+
+        int sit_interval = this.tickCount - this.lastOrderedToSitTick;
+        float r = this.getRandom().nextFloat();
+
+        if (!this.level().isClientSide && this.isOrderedToSit() 
+            && checkRandomBackflip(r, sit_interval)
+            && this.level().getBlockState(this.blockPosition().above()).isAir()) {
+            this.setStandAnim(DogAnimation.NONE);
+            this.triggerAnimationAction(new DogBackFlipAction(this));
+        }
+        if (!this.level().isClientSide && !this.isOrderedToSit()) {
+            this.lastOrderedToSitTick = this.tickCount;
+        }
+
+        this.setOrderedToSit(!this.isOrderedToSit());
+        this.jumping = false;
+        this.navigation.stop();
+        this.setTarget(null);
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleOpenDogScreenDedicated(Player player, ItemStack stack) {
+        if (stack.getItem() != Items.STICK)
+            return InteractionResult.FAIL;
+        if (!this.isTame())
+            return InteractionResult.FAIL;
+
+        if (!this.level().isClientSide)
+            return InteractionResult.SUCCESS;
+        
+        if (this.canInteract(player))
+            DogNewInfoScreen.open(this);
+        else 
+            DogCannotInteractWithScreen.open(this);
+
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult dogCheckAndRidePlayer(Player player, ItemStack stack) {
         if (player.hasPassenger(this)) {
             if (!this.level().isClientSide)
                 this.unRide();
@@ -1185,6 +1168,30 @@ public class Dog extends AbstractDog {
         return InteractionResult.SUCCESS;
     }
 
+    private Optional<InteractionResult> handleAlterationsAndOtherHandlers(
+        Player player, ItemStack stack, InteractionHand hand) {
+        
+        Optional<IDogFoodHandler> foodHandler = FoodHandler.getMatch(this, stack, player);
+
+        if (foodHandler.isPresent()) {
+            return Optional.of(foodHandler.get().consume(this, stack, player));
+        }
+
+        InteractionResult interactResult = InteractHandler.getMatch(this, stack, player, hand);
+
+        if (interactResult != InteractionResult.PASS) {
+            return Optional.of(interactResult);
+        }
+
+        for (IDogAlteration alter : this.alterations) {
+            InteractionResult result = alter.processInteract(this, this.level(), player, hand);
+            if (result != InteractionResult.PASS) {
+                return Optional.of(result);
+            }
+        }
+        return Optional.empty();
+    }
+
     private InteractionResult handleBreeding(Player player, InteractionHand hand, ItemStack stack) {
         if (!stack.is(DoggyTags.BREEDING_ITEMS))
             return InteractionResult.PASS;
@@ -1204,6 +1211,34 @@ public class Dog extends AbstractDog {
             this.ageUp(getSpeedUpSecondsWhenFeeding(-age), true);
         }
         return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleTameDogIfNotTamed(Player player, ItemStack stack, InteractionHand hand) {
+        if (this.isTame())
+            return InteractionResult.FAIL;
+        if (!isDogTameItem(stack))
+            return InteractionResult.FAIL;
+        if (this.level().isClientSide)
+            return InteractionResult.SUCCESS;
+        
+        this.usePlayerItem(player, hand, stack);
+        boolean alwaysTame = stack.getItem() == DoggyItems.TRAINING_TREAT.get();
+        if (alwaysTame || this.random.nextInt(3) == 0) {
+            this.tame(player);
+            this.navigation.stop();
+            this.setTarget((LivingEntity) null);
+            this.setOrderedToSit(true);
+            this.setHealth(20.0F);
+            this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_HEARTS);
+        } else {
+            this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_SMOKE);
+        }
+
+        return InteractionResult.SUCCESS;
+    }
+
+    private boolean isDogTameItem(ItemStack stack) {
+        return stack.is(Items.BONE) || stack.is(DoggyItems.TRAINING_TREAT.get());
     }
 
     @Override
