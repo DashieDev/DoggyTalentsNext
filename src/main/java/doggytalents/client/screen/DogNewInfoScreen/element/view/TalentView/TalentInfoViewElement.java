@@ -7,12 +7,14 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.ChopinLogger;
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Talent;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.client.screen.framework.Store;
+import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.DivElement;
@@ -284,7 +286,7 @@ public class TalentInfoViewElement extends AbstractElement {
                         return;
                     }
                 }
-                graphics.renderComponentTooltip(font, List.of(c1), mouseX, mouseY);
+                ToolTipOverlayManager.get().setComponents(List.of(c1));
             }
         };
         trainButton.active = 
