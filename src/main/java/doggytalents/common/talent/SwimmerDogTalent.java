@@ -114,6 +114,7 @@ public class SwimmerDogTalent extends TalentInstance {
             dog.isInWater()
             && readyToBeginSwimming(dog)
             && !isNearLand(dog)
+            && !dog.isDogSwimming()
         ) {
             this.swimming = true;
             this.startSwimming(dog);
