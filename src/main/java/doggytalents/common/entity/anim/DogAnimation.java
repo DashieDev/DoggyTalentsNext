@@ -21,7 +21,7 @@ public enum DogAnimation {
     PROTEST(14, 120),
     STAND_IDLE_2(15, 80, 1f, true, false, true),
     DIG(16, 120),
-    SIT_IDLE(17, 90, 1f, true, false, true),
+    SIT_IDLE(17, 80, 1f, true, false, true),
     SCRATCHIE(18, 70),
     CHOPIN_TAIL(19, 200),
     BELLY_RUB(20, 11*20, 1f, false),
