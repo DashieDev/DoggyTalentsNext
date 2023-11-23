@@ -71,7 +71,7 @@ public class DogRandomSitIdleGoal extends Goal {
         if (r <= 0.10f) {
             return DogAnimation.SCRATCHIE;
         } else if (r <= 0.20f) {
-            return DogAnimation.SIT_IDLE_2;
+            return DogAnimation.SIT_LOOK_AROUND;
         } else if (r <= 0.30f) {
             return DogAnimation.BELLY_RUB;
         } else {
