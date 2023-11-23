@@ -81,6 +81,8 @@ public class DoggyTalentsNext {
         DoggyAccessoryTypes.ACCESSORY_TYPES.register(modEventBus);
         DoggyAttributes.ATTRIBUTES.register(modEventBus);
 
+        DTLootModifierProvider.CODEC.register(modEventBus);
+
         modEventBus.addListener(DoggyRegistries::newRegistry);
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
         modEventBus.addListener(Capabilities::registerCaps);
@@ -168,9 +170,10 @@ public class DoggyTalentsNext {
             //gen.addProvider(true, new DTAdvancementProvider(gen));
             DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(gen, event.getExistingFileHelper());
             gen.addProvider(true, blockTagProvider);
-            gen.addProvider(true, new DTItemTagsProvider(gen, blockTagProvider, event.getExistingFileHelper()));
-            gen.addProvider(true, new DTRecipeProvider(gen));
-            gen.addProvider(true, new DTLootTableProvider(gen));
+            gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider.contentsGetter(), event.getExistingFileHelper()));
+            gen.addProvider(true, new DTRecipeProvider(packOutput));
+            gen.addProvider(true, new DTLootTableProvider(packOutput));
+            gen.addProvider(true, new DTLootModifierProvider(packOutput));
         }
     }
 }
