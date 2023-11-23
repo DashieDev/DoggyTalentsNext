@@ -199,7 +199,7 @@ public class HellHoundTalent extends TalentInstance {
         if (this.level() < 5) return;
         if (!(d instanceof Dog dog))
             return;
-        if (dog.isInLava() && !this.swimming) {
+        if (dog.isInLava() && !this.swimming && !dog.isDogSwimming()) {
             this.startSwimming(dog);  
         } 
         if (!dog.isInLava() && this.swimming) {
