@@ -4782,7 +4782,7 @@ public class DogAnimationSequences {
     public static final AnimationDefinition BELLY_RUB = BellyRubAnimation.build();
 
 
-    public static final AnimationDefinition SIT_IDLE_2 = AnimationDefinition.Builder.withLength(5f).looping()
+    public static final AnimationDefinition SIT_LOOK_AROUND = AnimationDefinition.Builder.withLength(5f).looping()
         .addAnimation("head",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
                 new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
