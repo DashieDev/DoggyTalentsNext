@@ -42,7 +42,7 @@ public class DogAnimationRegistry {
         register(DogAnimation.SCRATCHIE, DogAnimationSequences.SCRATCHIE);
         register(DogAnimation.CHOPIN_TAIL, DogAnimationSequences.CHOPIN_TAIL);
         register(DogAnimation.BELLY_RUB, DogAnimationSequences.BELLY_RUB);
-        register(DogAnimation.SIT_IDLE_2, DogAnimationSequences.SIT_IDLE_2);
+        register(DogAnimation.SIT_LOOK_AROUND, DogAnimationSequences.SIT_LOOK_AROUND);
         register(DogAnimation.HOWL, DogAnimationSequences.HOWL);
         register(DogAnimation.LIE_DOWN_IDLE, DogAnimationSequences.LIE_DOWN_IDLE);
         register(DogAnimation.SIT_TO_REST, DogAnimationSequences2.SIT_TO_REST);

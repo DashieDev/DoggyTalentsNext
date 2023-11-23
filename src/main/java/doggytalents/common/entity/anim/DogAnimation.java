@@ -25,7 +25,7 @@ public enum DogAnimation {
     SCRATCHIE(18, 70),
     CHOPIN_TAIL(19, 200),
     BELLY_RUB(20, 11*20, 1f, false),
-    SIT_IDLE_2(21, 100),
+    SIT_LOOK_AROUND(21, 100),
     HOWL(22, 165),
     LIE_DOWN_IDLE(23, 20, 0.5f, true, true),
     SIT_TO_REST(24, 40, 0.5f),
