@@ -118,6 +118,7 @@ public class SwimmerDogTalent extends TalentInstance {
             dog.isInWater()
             && readyToBeginSwimming(dog)
             && !isNearLand(dog)
+            && !dog.isDogSwimming()
         ) {
             ChopinLogger.lwn(dog, "start swimming");
             this.swimming = true;
