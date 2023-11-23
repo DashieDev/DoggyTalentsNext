@@ -82,6 +82,8 @@ public class DoggyTalentsNext {
         DoggyAttributes.ATTRIBUTES.register(modEventBus);
         DoggyItemGroups.ITEM_GROUP.register(modEventBus);
 
+        DTLootModifierProvider.CODEC.register(modEventBus);
+
         modEventBus.addListener(DoggyRegistries::newRegistry);
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
         modEventBus.addListener(Capabilities::registerCaps);
@@ -178,6 +180,7 @@ public class DoggyTalentsNext {
             gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider.contentsGetter(), event.getExistingFileHelper()));
             gen.addProvider(true, new DTRecipeProvider(packOutput));
             gen.addProvider(true, new DTLootTableProvider(packOutput));
+            gen.addProvider(true, new DTLootModifierProvider(packOutput));
         }
     }
 }
