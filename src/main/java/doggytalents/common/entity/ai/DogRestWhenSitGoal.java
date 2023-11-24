@@ -59,7 +59,8 @@ public class DogRestWhenSitGoal extends Goal {
     public void start() {
         this.isBellyUpRest = this.dog.getRandom().nextInt(3) == 0;
         if (isBellyUpRest)
-            restPeriod = 140 + this.dog.getRandom().nextInt(11) * 20;
+            restPeriod = getStartAnim().getLengthTicks() + 
+                (1 + this.dog.getRandom().nextInt(4)) * (getLoopAnim().getLengthTicks());
         else
             restPeriod = 100 + this.dog.getRandom().nextInt(11) * 20;
         reSitTime = 0;
