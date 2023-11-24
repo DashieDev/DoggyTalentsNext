@@ -3,6 +3,7 @@ package doggytalents.common.entity.ai;
 import java.util.EnumSet;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.Dog.RestingState;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -12,6 +13,8 @@ public class DogRestWhenSitGoal extends Goal {
     private Dog dog;
     private int restPeriod;
     private int reSitTime;
+
+    private boolean isBellyUpRest;
 
     public DogRestWhenSitGoal(Dog dog) {
         this.dog = dog;
@@ -49,31 +52,35 @@ public class DogRestWhenSitGoal extends Goal {
             return false;
         if (!this.dog.onGround())
             return false;
-        return this.reSitTime <= DogAnimation.REST_TO_SIT.getLengthTicks();
+        return this.reSitTime <= getEndAnim().getLengthTicks();
     }
 
     @Override
     public void start() {
-        restPeriod = 100 + this.dog.getRandom().nextInt(11) * 20;
+        this.isBellyUpRest = this.dog.getRandom().nextInt(3) == 0;
+        if (isBellyUpRest)
+            restPeriod = 140 + this.dog.getRandom().nextInt(11) * 20;
+        else
+            restPeriod = 100 + this.dog.getRandom().nextInt(11) * 20;
         reSitTime = 0;
-        this.dog.setResting(true);
-        this.dog.setAnimForIdle(DogAnimation.SIT_TO_REST);
+        this.dog.setDogRestingState(isBellyUpRest ? RestingState.BELLY : RestingState.LYING);
+        this.dog.setAnimForIdle(getStartAnim());
     }
 
     @Override
     public void tick() {
         if (this.restPeriod > 0) {
-            if (this.dog.getAnim() == DogAnimation.NONE && this.dog.getDogPose() == DogPose.REST) {
-                this.dog.setAnim(DogAnimation.REST_IDLE);
+            if (this.dog.getAnim() == DogAnimation.NONE && this.dog.getDogPose() == getRestingPose()) {
+                this.dog.setAnim(getLoopAnim());
             }
             --this.restPeriod;
         }
         
         if (this.restPeriod <= 0) {
-            if (this.dog.getAnim() == DogAnimation.REST_IDLE) {
-                this.dog.setAnim(DogAnimation.REST_TO_SIT);
+            if (this.dog.getAnim() == getLoopAnim()) {
+                this.dog.setAnim(getEndAnim());
             }
-            this.dog.setResting(false);
+            this.dog.setDogRestingState(RestingState.NONE);
             ++this.reSitTime;
         }
     }
@@ -81,8 +88,8 @@ public class DogRestWhenSitGoal extends Goal {
     @Override
     public void stop() {
         this.dog.resetTickTillRest();
-        this.dog.setResting(false);
-        if (this.dog.getAnim() == DogAnimation.REST_IDLE) {
+        this.dog.setDogRestingState(RestingState.NONE);
+        if (this.dog.getAnim() == getLoopAnim()) {
             this.dog.setAnim(DogAnimation.NONE);
         }
     }
@@ -90,5 +97,29 @@ public class DogRestWhenSitGoal extends Goal {
     @Override
     public boolean requiresUpdateEveryTick() {
         return true;
+    }
+
+    private DogAnimation getStartAnim() {
+        return this.isBellyUpRest ?
+            DogAnimation.REST_BELLY_START
+            : DogAnimation.SIT_TO_REST;
+    }
+
+    private DogAnimation getLoopAnim() {
+        return this.isBellyUpRest ? 
+            DogAnimation.REST_BELLY_LOOP
+            : DogAnimation.REST_IDLE;
+    }
+
+    private DogAnimation getEndAnim() {
+        return this.isBellyUpRest ?
+            DogAnimation.REST_BELLY_END
+            : DogAnimation.REST_TO_SIT;
+    }
+
+    private DogPose getRestingPose() {
+        return this.isBellyUpRest ? 
+            DogPose.REST_BELLY
+            : DogPose.REST;
     }
 }
