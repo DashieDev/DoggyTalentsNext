@@ -9,7 +9,8 @@ public enum DogPose {
     FAINTED_2(4),
     LYING_2(5),
     DROWN(6),
-    FLYING(7, true, true, true, true);
+    FLYING(7, true, true, true, true),
+    REST_BELLY(8, false, false, true, false);
 
     private final int id;
     public final boolean canBeg;
