@@ -185,6 +185,9 @@ public class DogModel extends EntityModel<Dog> {
             case FLYING:
                 this.setupFlyPose(dog, limbSwing, limbSwingAmount, partialTickTime);
                 break;
+            case REST_BELLY:
+                this.setupRestBellyPose(dog, limbSwing, limbSwingAmount, partialTickTime);
+                break;
             default:
                 this.setUpStandPose(dog, limbSwing, limbSwingAmount, partialTickTime);
                 break;
@@ -439,6 +442,36 @@ public class DogModel extends EntityModel<Dog> {
         this.tail.xRot = ((Dog) dog).getTailRotation();
         this.tail.offsetRotation(KeyframeAnimations.degreeVec(10, 0, 0));
         this.tail.offsetPos(KeyframeAnimations.posVec(0, -0.5f, -2f));
+    }
+
+    public void setupRestBellyPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        this.head.offsetRotation(KeyframeAnimations.degreeVec(-38.87f, -25.09f, -23.41f));
+        this.head.offsetPos(KeyframeAnimations.posVec(-0.01f, -1.9f, 0.36f));
+        this.body.offsetRotation(KeyframeAnimations.degreeVec(-18.36f, 14.74f, 22.42f));
+        this.body.offsetPos(KeyframeAnimations.posVec(0.21f, -3.81f, -0.83f));
+        this.legBackRight.offsetRotation(KeyframeAnimations.degreeVec(-26.7f, 14.23f, 47.53f));
+        this.legBackRight.offsetPos(KeyframeAnimations.posVec(-0.09f, -3.49f, -0.65f));
+        this.legBackLeft.offsetRotation(KeyframeAnimations.degreeVec(-38.05f, -3.87f, 0f));
+        this.legBackLeft.offsetPos(KeyframeAnimations.posVec(0.09f, -6.17f, -2.3f));
+        this.legFrontRight.offsetRotation(KeyframeAnimations.degreeVec(-42.32f, 19.74f, 41.58f));
+        this.legFrontRight.offsetPos(KeyframeAnimations.posVec(-0.5f, -2f, 1.18f));
+        this.legFrontLeft.offsetRotation(KeyframeAnimations.degreeVec(-29.77f, 2.06f, -2.6f));
+        this.legFrontLeft.offsetPos(KeyframeAnimations.posVec(0f, -2f, 0.35f));
+        this.tail.offsetRotation(KeyframeAnimations.degreeVec(0f, 29.9f, 0f));
+        this.tail.offsetPos(KeyframeAnimations.posVec(1.24f, -6.7f, -1.49f));
+        this.mane.offsetRotation(KeyframeAnimations.degreeVec(-12.78f, 7.97f, 26.29f));
+        this.mane.offsetPos(KeyframeAnimations.posVec(0f, -2.79f, 0.35f));
+        this.root.offsetRotation(KeyframeAnimations.degreeVec(22.48072f, -0.95645f, 132.30991f));
+        this.root.offsetPos(KeyframeAnimations.posVec(2f, -8f, 0f));
+
+        if (this.earRight.isPresent()) {
+            this.earRight.get().offsetRotation(KeyframeAnimations.degreeVec(37.09314f, 13.50103f, -46.63682f));
+            this.earRight.get().offsetPos(KeyframeAnimations.posVec(0f, -0.12f, 0f));
+        }
+        if (this.earLeft.isPresent()) {
+            this.earLeft.get().offsetRotation(KeyframeAnimations.degreeVec(32.49638f, 13.81807f, -32.61916f));
+            this.earLeft.get().offsetPos(KeyframeAnimations.posVec(0f, -0.51f, 0f));
+        }
     }
 
     public void translateShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {

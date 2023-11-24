@@ -159,13 +159,15 @@ public class Dog extends AbstractDog {
      *     5               32                  LOW_HEALTH_STRATEGY_MSB
      *     6               64                  CROSS_ORIGIN_TP
      *     7               128                 REGARD_TEAM_PLAYERS
-     *     8               256                 RESTING
+     *     8               256                 <Reserved>
      *     9               512                 PATROL_TARGET_LOCK
      *     10              1024                FLYING
      *     11              2048                SHOW_ARMOR
      *     12              4096                COMBAT_RETURN_STRATEGY_LSB
      *     13              8192                COMBAT_RETURN_STRATEGY_MSB
      *     14              16384               AUTO_MOUNT
+     *     15              32768               RESTING
+     *     16              65536               REST_BELLY
      *     .
      *     31              2^31                <Reserved>
      */
@@ -932,7 +934,7 @@ public class Dog extends AbstractDog {
         //     }
         // }
 
-        if (!this.level().isClientSide && this.isInSittingPose() && !this.resting() && this.tickUntilRest > 0 ) {
+        if (!this.level().isClientSide && this.isInSittingPose() && !this.isDogResting() && this.tickUntilRest > 0 ) {
             --this.tickUntilRest;
         }
     }
@@ -3360,12 +3362,36 @@ public class Dog extends AbstractDog {
         this.setDogFlag(64, val);
     }
 
-    public boolean resting() {
-        return this.getDogFlag(256);
+    public static enum RestingState { NONE, LYING, BELLY }
+
+    public RestingState getDogRestingState() {
+        boolean isResting = this.getDogFlag(32768);
+        if (!isResting)
+            return RestingState.NONE;
+        boolean bellyUp = this.getDogFlag(65536);
+        return bellyUp ? RestingState.BELLY : RestingState.LYING;
     }
 
-    public void setResting(boolean val) {
-        this.setDogFlag(256, val);
+    public void setDogRestingState(RestingState val) {
+        if (val == null) val = RestingState.NONE;
+        switch (val) {
+        default:
+            this.setDogFlag(32768, false);
+            this.setDogFlag(65536, false);
+            break;
+        case LYING:
+            this.setDogFlag(32768, true);
+            this.setDogFlag(65536, false);
+            break;
+        case BELLY:
+            this.setDogFlag(32768, true);
+            this.setDogFlag(65536, true);
+            break;
+        }
+    }
+
+    public boolean isDogResting() {
+        return this.getDogRestingState() != RestingState.NONE;
     }
 
     public boolean patrolTargetLock() {
@@ -4363,8 +4389,13 @@ public class Dog extends AbstractDog {
             return;
         }
         if (this.isInSittingPose()) {
-            if (this.resting()) {
+            var restState = this.getDogRestingState();
+            if (restState == RestingState.LYING) {
                 this.setDogPose(DogPose.REST);
+                return;
+            }
+            if (restState == RestingState.BELLY) {
+                this.setDogPose(DogPose.REST_BELLY);
                 return;
             }
             this.setDogPose(this.isLying() ? DogPose.LYING_2 : DogPose.SIT);
