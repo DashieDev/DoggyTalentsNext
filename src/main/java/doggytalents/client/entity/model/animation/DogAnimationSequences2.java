@@ -5242,7 +5242,7 @@ public class DogAnimationSequences2 {
         public static final AnimationDefinition REST_BELLY_END = AnimationDefinition.Builder.withLength(3.5f)
             .addAnimation("head",
                 new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                    new Keyframe(0f, KeyframeAnimations.posVec(-1.82f, -1.51f, -0.41f),
+                    new Keyframe(0f, KeyframeAnimations.posVec(-0.01f, -1.9f, 0.36f),
                         AnimationChannel.Interpolations.CATMULLROM), 
                     new Keyframe(1.5f, KeyframeAnimations.posVec(-2.25f, 0.25f, 0.5f),
                         AnimationChannel.Interpolations.CATMULLROM), 
@@ -5254,7 +5254,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("head",
                 new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                    new Keyframe(0f, KeyframeAnimations.degreeVec(38.94f, -22.57f, -21.48f),
+                    new Keyframe(0f, KeyframeAnimations.degreeVec(-38.87f, -25.09f, -23.41f),
                         AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(1.5f, KeyframeAnimations.degreeVec(-9.41f, -46.4f, -72.2f),
                         AnimationChannel.Interpolations.CATMULLROM),
@@ -5270,7 +5270,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("body",
                 new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                    new Keyframe(0f, KeyframeAnimations.posVec(-0.74f, -2.75f, -0.91f),
+                    new Keyframe(0f, KeyframeAnimations.posVec(0.21f, -3.81f, -0.83f),
                         AnimationChannel.Interpolations.CATMULLROM), 
                     new Keyframe(1.5f, KeyframeAnimations.posVec(-1.03f, -2.6f, -0.88f),
                         AnimationChannel.Interpolations.CATMULLROM), 
@@ -5280,7 +5280,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("body",
                 new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                    new Keyframe(0f, KeyframeAnimations.degreeVec(-26.07f, 13.43f, 18.98f),
+                    new Keyframe(0f, KeyframeAnimations.degreeVec(-18.36f, 14.74f, 22.42f),
                         AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(1.5f, KeyframeAnimations.degreeVec(-27.13f, 12.12f, 16.58f),
                         AnimationChannel.Interpolations.CATMULLROM),
@@ -5290,7 +5290,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("right_hind_leg",
                 new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                    new Keyframe(0f, KeyframeAnimations.posVec(-0.77f, -3.33f, -1.77f),
+                    new Keyframe(0f, KeyframeAnimations.posVec(-0.09f, -3.49f, -0.65f),
                         AnimationChannel.Interpolations.CATMULLROM), 
                     new Keyframe(1.5f, KeyframeAnimations.posVec(-1f, -3.5f, -2f),
                         AnimationChannel.Interpolations.CATMULLROM), 
@@ -5300,7 +5300,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("right_hind_leg",
                 new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                    new Keyframe(0f, KeyframeAnimations.degreeVec(4.36f, 13.77f, 61.7f),
+                    new Keyframe(0f, KeyframeAnimations.degreeVec(-26.7f, 14.23f, 47.53f),
                         AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(1f, KeyframeAnimations.degreeVec(-2.63f, 12.95f, 59.13f),
                         AnimationChannel.Interpolations.CATMULLROM),
@@ -5312,7 +5312,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("left_hind_leg",
                 new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                    new Keyframe(0f, KeyframeAnimations.posVec(0f, -4.65f, -3.21f),
+                    new Keyframe(0f, KeyframeAnimations.posVec(0.09f, -6.17f, -2.3f),
                         AnimationChannel.Interpolations.CATMULLROM), 
                     new Keyframe(1.5f, KeyframeAnimations.posVec(0f, -4.25f, -3.27f),
                         AnimationChannel.Interpolations.CATMULLROM), 
@@ -5322,7 +5322,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("left_hind_leg",
                 new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                    new Keyframe(0f, KeyframeAnimations.degreeVec(-11.44f, -1.1f, -5.07f),
+                    new Keyframe(0f, KeyframeAnimations.degreeVec(-38.05f, -3.87f, 0f),
                         AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(1f, KeyframeAnimations.degreeVec(-11.77f, -4.25f, -19.56f),
                         AnimationChannel.Interpolations.CATMULLROM),
@@ -5334,7 +5334,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("right_front_leg",
                 new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                    new Keyframe(0f, KeyframeAnimations.posVec(-0.6f, -0.64f, 1f),
+                    new Keyframe(0f, KeyframeAnimations.posVec(-0.5f, -2f, 1.18f),
                         AnimationChannel.Interpolations.CATMULLROM), 
                     new Keyframe(1.5f, KeyframeAnimations.posVec(-0.6f, -1.1f, 1f),
                         AnimationChannel.Interpolations.CATMULLROM), 
@@ -5346,7 +5346,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("right_front_leg",
                 new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                    new Keyframe(0f, KeyframeAnimations.degreeVec(0.49f, 17.98f, 44.99f),
+                    new Keyframe(0f, KeyframeAnimations.degreeVec(-42.32f, 19.74f, 41.58f),
                         AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(1.5f, KeyframeAnimations.degreeVec(-29.56f, -24.22f, -15.5f),
                         AnimationChannel.Interpolations.CATMULLROM),
@@ -5356,7 +5356,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("left_front_leg",
                 new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                    new Keyframe(0f, KeyframeAnimations.posVec(0f, -1f, 0f),
+                    new Keyframe(0f, KeyframeAnimations.posVec(0f, -2f, 0.35f),
                         AnimationChannel.Interpolations.CATMULLROM), 
                     new Keyframe(1.5f, KeyframeAnimations.posVec(0f, -1f, 0f),
                         AnimationChannel.Interpolations.CATMULLROM), 
@@ -5368,7 +5368,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("left_front_leg",
                 new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                    new Keyframe(0f, KeyframeAnimations.degreeVec(-13.47f, -4.83f, -9.82f),
+                    new Keyframe(0f, KeyframeAnimations.degreeVec(-29.77f, 2.06f, -2.6f),
                         AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(0.5f, KeyframeAnimations.degreeVec(-1.64f, -4.52f, -8.93f),
                         AnimationChannel.Interpolations.CATMULLROM),
@@ -5382,7 +5382,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("tail",
                 new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                    new Keyframe(0f, KeyframeAnimations.posVec(1.19f, -7.2f, -2.08f),
+                    new Keyframe(0f, KeyframeAnimations.posVec(1.24f, -6.7f, -1.49f),
                         AnimationChannel.Interpolations.CATMULLROM), 
                     new Keyframe(1.5f, KeyframeAnimations.posVec(1.01f, -7.48f, -2.16f),
                         AnimationChannel.Interpolations.CATMULLROM), 
@@ -5390,7 +5390,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("tail",
                 new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                    new Keyframe(0f, KeyframeAnimations.degreeVec(0f, -27.5f, 0f),
+                    new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 29.9f, 0f),
                         AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(1.5f, KeyframeAnimations.degreeVec(0f, 40f, 0f),
                         AnimationChannel.Interpolations.CATMULLROM),
@@ -5408,7 +5408,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("upper_body",
                 new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                    new Keyframe(0f, KeyframeAnimations.posVec(-0.72f, -2f, 0f),
+                    new Keyframe(0f, KeyframeAnimations.posVec(0f, -2.79f, 0.35f),
                         AnimationChannel.Interpolations.CATMULLROM), 
                     new Keyframe(1.5f, KeyframeAnimations.posVec(-1f, -2f, 0f),
                         AnimationChannel.Interpolations.CATMULLROM), 
@@ -5418,7 +5418,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("upper_body",
                 new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                    new Keyframe(0f, KeyframeAnimations.degreeVec(-9.28f, 2.68f, 7.27f),
+                    new Keyframe(0f, KeyframeAnimations.degreeVec(-12.78f, 7.97f, 26.29f),
                         AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(1.5f, KeyframeAnimations.degreeVec(-18.34f, -4.86f, -19.13f),
                         AnimationChannel.Interpolations.CATMULLROM),
@@ -5428,7 +5428,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("right_ear",
                 new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                    new Keyframe(0f, KeyframeAnimations.posVec(0f, -0.02f, 0f),
+                    new Keyframe(0f, KeyframeAnimations.posVec(0f, -0.12f, 0f),
                         AnimationChannel.Interpolations.CATMULLROM), 
                     new Keyframe(1.7f, KeyframeAnimations.posVec(0f, -0.05f, 0f),
                         AnimationChannel.Interpolations.CATMULLROM), 
@@ -5438,7 +5438,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("right_ear",
                 new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                    new Keyframe(0f, KeyframeAnimations.degreeVec(27.28f, 12.73f, 0.87f),
+                    new Keyframe(0f, KeyframeAnimations.degreeVec(37.09f, 13.5f, -46.64f),
                         AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(0.4f, KeyframeAnimations.degreeVec(45.45f, 50.74f, 25.25f),
                         AnimationChannel.Interpolations.CATMULLROM),
@@ -5458,7 +5458,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("left_ear",
                 new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                    new Keyframe(0f, KeyframeAnimations.posVec(0f, -0.5f, 0f),
+                    new Keyframe(0f, KeyframeAnimations.posVec(0f, -0.51f, 0f),
                         AnimationChannel.Interpolations.CATMULLROM), 
                     new Keyframe(1.7f, KeyframeAnimations.posVec(0f, -0.5f, 0f),
                         AnimationChannel.Interpolations.CATMULLROM), 
@@ -5468,7 +5468,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("left_ear",
                 new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                    new Keyframe(0f, KeyframeAnimations.degreeVec(21.96f, 38.79f, 25.37f),
+                    new Keyframe(0f, KeyframeAnimations.degreeVec(32.5f, 13.82f, -32.62f),
                         AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(1.7f, KeyframeAnimations.degreeVec(-8.12f, 4.76f, -0.92f),
                         AnimationChannel.Interpolations.CATMULLROM),
@@ -5482,7 +5482,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.CATMULLROM)))
             .addAnimation("root",
                 new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                    new Keyframe(0f, KeyframeAnimations.posVec(1.51f, -6.8f, 0f),
+                    new Keyframe(0f, KeyframeAnimations.posVec(2f, -8f, 0f),
                         AnimationChannel.Interpolations.CATMULLROM), 
                     new Keyframe(1.5f, KeyframeAnimations.posVec(1.36f, -6.43f, 0f),
                         AnimationChannel.Interpolations.CATMULLROM), 
@@ -5492,9 +5492,7 @@ public class DogAnimationSequences2 {
                         AnimationChannel.Interpolations.LINEAR)))
             .addAnimation("root",
                 new AnimationChannel(AnimationChannel.Targets.ROTATION,
-                    new Keyframe(0f, KeyframeAnimations.degreeVec(19.73f, -11.03f, 158.08f),
-                        AnimationChannel.Interpolations.CATMULLROM),
-                    new Keyframe(0.5f, KeyframeAnimations.degreeVec(21.55f, -6.61f, 146.24f),
+                    new Keyframe(0f, KeyframeAnimations.degreeVec(22.48f, -0.96f, 132.31f),
                         AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(1.5f, KeyframeAnimations.degreeVec(15.27f, -0.65f, 89.86f),
                         AnimationChannel.Interpolations.CATMULLROM),
