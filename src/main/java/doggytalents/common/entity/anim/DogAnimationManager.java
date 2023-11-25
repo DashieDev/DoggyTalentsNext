@@ -43,10 +43,11 @@ public class DogAnimationManager {
             this.dog.resetBeggingRotation();
         }
         if (started && (!this.dog.level().isClientSide) && !looping) {
-            --this.animationTime;
             if (this.animationTime <= 0) {
                 this.animationTime = 0;
                 this.dog.setAnim(DogAnimation.NONE);
+            } else {
+                --this.animationTime;
             }
         }
     }
