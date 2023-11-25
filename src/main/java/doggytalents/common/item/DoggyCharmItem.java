@@ -2,9 +2,11 @@ package doggytalents.common.item;
 
 import doggytalents.DoggyEntityTypes;
 import doggytalents.common.entity.Dog;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -58,6 +60,8 @@ public class DoggyCharmItem extends Item {
                    dog.setOwnerUUID(player.getUUID());
                }
                itemstack.shrink(1);
+               if (player instanceof ServerPlayer sP)
+                   CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(sP, blockpos1, itemstack);
            }
 
            return InteractionResult.SUCCESS;
@@ -83,6 +87,8 @@ public class DoggyCharmItem extends Item {
                            dog.setOwnerUUID(playerIn.getUUID());
                            itemstack.shrink(1);
 
+                        if (playerIn instanceof ServerPlayer sP)
+                            CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(sP, blockpos, itemstack);
                         playerIn.awardStat(Stats.ITEM_USED.get(this));
                         return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
                     } else {

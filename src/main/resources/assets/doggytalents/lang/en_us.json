@@ -546,5 +546,11 @@
    "item.doggytalents.disc_okami_ryoshima_coast_arr.desc": "Okami - \"Ryoshima Coast\" (Arr. DashieDev for Organ)",
    "doggytalents.music.chopin_op64_no1": "F. Chopin - Valse Du Petit Chien (DashieDev)",
    "item.doggytalents.disc_chopin_op64_no1": "Music Disc",
-   "item.doggytalents.disc_chopin_op64_no1.desc": "F. Chopin - Valse Du Petit Chien (DashieDev)"
+   "item.doggytalents.disc_chopin_op64_no1.desc": "F. Chopin - Valse Du Petit Chien (DashieDev)",
+
+   "advancements.doggytalents.train_dog_hajimemashite.title": "Hajimemashite, Buddy!",
+   "advancements.doggytalents.train_dog_hajimemashite.description": "Train your first dog!",
+   "advancements.doggytalents.doggy_charm_summon.title": "Ah, you scared me!",
+   "advancements.doggytalents.doggy_charm_summon.description": "Summon your first dog via the Doggy Charm."
+
 }
