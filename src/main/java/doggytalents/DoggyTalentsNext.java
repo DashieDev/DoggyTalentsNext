@@ -166,9 +166,9 @@ public class DoggyTalentsNext {
 
         if (event.includeServer()) {
             // gen.addProvider(new DTBlockTagsProvider(gen));
-
-            //gen.addProvider(true, new DTAdvancementProvider(gen));
-            DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(gen, event.getExistingFileHelper());
+            gen.addProvider(true, new DTAdvancementProvider(packOutput, lookup, event.getExistingFileHelper()));
+            
+            DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(packOutput, lookup, event.getExistingFileHelper());
             gen.addProvider(true, blockTagProvider);
             gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider.contentsGetter(), event.getExistingFileHelper()));
             gen.addProvider(true, new DTRecipeProvider(packOutput));

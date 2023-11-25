@@ -10,6 +10,8 @@ import net.minecraft.world.level.ItemLike;
 
 import java.util.function.Supplier;
 
+import doggytalents.common.lib.Constants;
+
 /**
  * Defaults are to show toast, announce to chat and not to be hidden
  */
@@ -29,8 +31,10 @@ public class DisplayInfoBuilder {
     }
 
     public DisplayInfoBuilder translate(String key) {
-        this.title(Component.translatable("advancements."+key+".title"));
-        this.description(Component.translatable("advancements."+key+".description"));
+        this.title(Component.translatable(
+            "advancements." + Constants.MOD_ID + "." + key + ".title"));
+        this.description(Component.translatable(
+            "advancements." + Constants.MOD_ID + "." + key + ".description"));
         return this;
     }
 
