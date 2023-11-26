@@ -7,6 +7,7 @@ import doggytalents.common.lib.Constants;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -247,6 +248,16 @@ public class Util {
 
 
         return null;
+    }
+
+    public static long tickMayWithPartialToMillis(double tickMayWithPartial) {
+        double second = tickMayWithPartial/20D;
+        return Mth.lfloor(second*1000D);
+    }
+
+    public static double millisToTickMayWithPartial(long millis) {
+        double second = ((double)millis)/1000D;
+        return second*20D;
     }
 
 }
