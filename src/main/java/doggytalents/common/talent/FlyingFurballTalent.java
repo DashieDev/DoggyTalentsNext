@@ -96,7 +96,7 @@ public class FlyingFurballTalent extends TalentInstance {
         }
 
         if (!isDogFlying){
-            if (dog.getAnim() == DogAnimation.FLY_AIR_BOURNE || wasFlying)
+            if (dog.getAnim() == DogAnimation.FLY_AIR_BOURNE || (wasFlying && dog.getAnim() == DogAnimation.NONE))
                 dog.setAnim(DogAnimation.FLY_LANDING);
             this.wasFlying = false;
         }
