@@ -253,7 +253,7 @@ public class ClientEventHandler {
         var anim = dog.getAnim();
         var animSeq = DogAnimationRegistry.getSequence(anim);
         var animState = dog.animationManager.animationState;
-        return KeyframeAnimationsDelegate.getCurrentAnimatedYRot(dog, animSeq, animState.getAccumulatedTime(), 1);
+        return KeyframeAnimationsDelegate.getCurrentAnimatedYRot(dog, animSeq, animState.getAccumulatedTimeMillis(), 1);
     }
 
 }

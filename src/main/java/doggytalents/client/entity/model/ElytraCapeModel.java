@@ -75,7 +75,7 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
         if (sequence == null) return;
         
         if (animState.isStarted()) {
-            KeyframeAnimationsDelegate.animate(this, dog, sequence, animState.getAccumulatedTime(), 1.0F, vecObj);
+            KeyframeAnimationsDelegate.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
         }
     }
 
