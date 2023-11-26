@@ -261,6 +261,7 @@ public class DogMeleeAttackGoal extends Goal {
       flyNav.stop();
       dog.getMoveControl().setWantedPosition(target.position().x, 
           target.position().y, target.position().z, 2f);
+      ticksUntilPathRecalc = 10;
       return true;
   }
 
