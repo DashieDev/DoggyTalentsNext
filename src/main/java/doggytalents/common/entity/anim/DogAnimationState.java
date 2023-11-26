@@ -38,4 +38,13 @@ public class DogAnimationState {
     public boolean isStarted() {
         return started;
     }
+
+    public void resolveLatency(int resolveTick, int correctAnimPassedTick, float speedModifier) {
+        if (!started)
+            return;
+        
+        this.lastTimeMillis = Util.tickMayWithPartialToMillis(resolveTick);
+        double correctTickWithPartial = (double) Util.tickMayWithPartialToMillis(correctAnimPassedTick);
+        this.accumulatedTimeMillis = (long)(correctTickWithPartial*speedModifier);
+    }
 }
