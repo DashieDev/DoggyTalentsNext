@@ -2,13 +2,14 @@ package doggytalents.common.entity.anim;
 
 
 import doggytalents.ChopinLogger;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.util.Mth;
 
 public class DogAnimationManager {
 
     private static final int SYNC_INTERVAL_TICK = 7;
-    public static final int MAX_LATENCY_ALLOWED = 10;
+    private static final int MIN_VAL_MAX_LATENCY = 7;
 
     //Client
     public final DogAnimationState animationState
