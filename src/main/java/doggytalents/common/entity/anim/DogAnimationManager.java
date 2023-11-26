@@ -2,13 +2,12 @@ package doggytalents.common.entity.anim;
 
 
 import doggytalents.common.entity.Dog;
-import net.minecraft.world.entity.AnimationState;
 
 public class DogAnimationManager {
     
     //Client
-    public final AnimationState animationState
-        = new AnimationState();
+    public final DogAnimationState animationState
+        = new DogAnimationState();
     public boolean needRefresh = false;
 
     //Server
