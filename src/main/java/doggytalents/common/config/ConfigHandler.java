@@ -79,6 +79,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
         public ForgeConfigSpec.BooleanValue DISPLAY_SMOKE_WHEN_ON_FIRE;
         public ForgeConfigSpec.BooleanValue MOUTH_ITEM_FORCE_RENDER;
+        public ForgeConfigSpec.IntValue MAX_ANIMATION_LATENCY_ALLOWED;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -168,6 +169,12 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("less compatible model.")
                 .translation("doggytalents.config.client.mouth_item_force_render")
                 .define("mouth_item_force_render", true);
+            MAX_ANIMATION_LATENCY_ALLOWED = builder
+                .comment("Specify the max latency allowed before force adjusting the animation time")
+                .comment("clientside to sync with server's animation time. The unit is in ticks.")
+                .comment("Provide a non positive integer to disable this. Value from 0 to 7 both inclusive will be defaulted to 7.")
+                .translation("doggytalents.config.client.max_animation_latency_allowed")
+                .defineInRange("max_animation_latency_allowed", 10, Integer.MIN_VALUE, Integer.MAX_VALUE);
             builder.pop();
         }
 

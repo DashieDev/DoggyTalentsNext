@@ -79,10 +79,17 @@ public class DogAnimationManager {
         if (!started || looping)
             return;
         
+        int configMaxLatency = ConfigHandler.CLIENT.MAX_ANIMATION_LATENCY_ALLOWED.get();
+        if (configMaxLatency < 0)
+            return;
+        int maxLatencyAllowed = MIN_VAL_MAX_LATENCY;
+        if (configMaxLatency > MIN_VAL_MAX_LATENCY)
+            maxLatencyAllowed = configMaxLatency;
+
         int correctTime = dog.getAnimSyncTime();
         int currentTime = this.animationTime;
         int latencyAbs = Mth.abs(correctTime - currentTime);
-        if (latencyAbs <= MAX_LATENCY_ALLOWED)
+        if (latencyAbs <= maxLatencyAllowed)
             return;
 
         ChopinLogger.lwn(dog, "Resolving a latency of " + latencyAbs + " ticks");
