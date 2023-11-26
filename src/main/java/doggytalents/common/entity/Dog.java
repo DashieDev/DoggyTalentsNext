@@ -178,6 +178,7 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<ItemStack> BONE_VARIANT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.ITEM_STACK);
 
     private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ANIM_SYNC_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
     private static final Cache<EntityDataAccessor<List<AccessoryInstance>>> ACCESSORIES =  Cache.make(() -> (EntityDataAccessor<List<AccessoryInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get()));
@@ -310,6 +311,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
         this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
         this.entityData.define(ANIMATION, 0);
+        this.entityData.define(ANIM_SYNC_TIME, 0);
     }
 
     @Override
@@ -2876,6 +2878,9 @@ public class Dog extends AbstractDog {
         if (ANIMATION.equals(key)) {
             this.animationManager.onAnimationChange(getAnim());
         }
+        if (ANIM_SYNC_TIME.equals(key)) {
+            this.animationManager.onSyncTimeUpdated();
+        }
 
         if (!this.level().isClientSide && MODE.get().equals(key)) {
             var mode = getMode();
@@ -4334,6 +4339,14 @@ public class Dog extends AbstractDog {
 
     public DogAnimation getAnim() {
         return DogAnimation.byId(this.entityData.get(ANIMATION));
+    }
+
+    public void setAnimSyncTime(int val) {
+        this.entityData.set(ANIM_SYNC_TIME, val);
+    }
+
+    public int getAnimSyncTime() {
+        return this.entityData.get(ANIM_SYNC_TIME);
     }
 
     private AnimationAction animAction;
