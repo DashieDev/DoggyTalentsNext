@@ -115,9 +115,9 @@ public class DogIncapacitatedMananger {
         if (proccessSitStandOrder(player).shouldSwing())
             return InteractionResult.SUCCESS;
 
-        if (this.dog.level().isClientSide && player == this.dog.getOwner()) 
+        if (this.dog.level().isClientSide && player == this.dog.getOwner()) {}
             DogCannotInteractWithScreen.open(this.dog);
-        return InteractionResult.FAIL;
+        return InteractionResult.SUCCESS;
     }
 
     private InteractionResult proccessBandage(ItemStack stack, Player player) {
