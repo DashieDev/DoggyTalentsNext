@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.RegistryObject;
@@ -258,6 +259,16 @@ public class Util {
     
     public static Vec3 atLowerCornerWithOffset(Vec3i iVec, double offX, double offY, double offZ) {
         return Vec3.atLowerCornerOf(iVec).add(offX, offY, offZ);
+    }
+
+    public static long tickMayWithPartialToMillis(double tickMayWithPartial) {
+        double second = tickMayWithPartial/20D;
+        return Mth.lfloor(second*1000D);
+    }
+
+    public static double millisToTickMayWithPartial(long millis) {
+        double second = ((double)millis)/1000D;
+        return second*20D;
     }
 
 }

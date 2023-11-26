@@ -7,8 +7,8 @@ import doggytalents.common.entity.Dog;
 public class DogAnimationManager {
     
     //Client
-    public final AnimationState animationState
-        = new AnimationState();
+    public final DogAnimationState animationState
+        = new DogAnimationState();
     public boolean needRefresh = false;
 
     //Server
