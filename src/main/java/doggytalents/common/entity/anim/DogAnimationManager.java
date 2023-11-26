@@ -10,7 +10,7 @@ public class DogAnimationManager {
         = new DogAnimationState();
     public boolean needRefresh = false;
 
-    //Server
+    //Common
     private boolean started = false;
     private int animationTime;
     private final Dog dog;
