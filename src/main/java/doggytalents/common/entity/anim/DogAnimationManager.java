@@ -93,10 +93,10 @@ public class DogAnimationManager {
             return;
 
         ChopinLogger.lwn(dog, "Resolving a latency of " + latencyAbs + " ticks");
-        this.animationTime = correctTime;
         var anim = dog.getAnim();
+        this.animationTime = Mth.clamp(correctTime, 0, anim.getLengthTicks());
         int correctPassedTime = 
-            anim.getLengthTicks() - correctTime;
+            anim.getLengthTicks() - this.animationTime;
         
         animationState.resolveLatency(dog.tickCount, 
             correctPassedTime, 
