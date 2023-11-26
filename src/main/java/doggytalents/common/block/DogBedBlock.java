@@ -175,7 +175,7 @@ public class DogBedBlock extends BaseEntityBlock {
 
                     worldIn.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
                     return InteractionResult.SUCCESS;
-                } else if (player.isShiftKeyDown() && dogBedTileEntity.getOwnerUUID() == null) {
+                } else if ((player.isShiftKeyDown() || stack.getItem() == Items.BONE) && dogBedTileEntity.getOwnerUUID() == null) {
                     List<Dog> dogs = worldIn.getEntities(DoggyEntityTypes.DOG.get(), new AABB(pos).inflate(10D), (dog) -> dog.isDoingFine() && dog.isOwnedBy(player) && !dog.isOrderedToSit());
                     Collections.sort(dogs, new EntityUtil.Sorter(new Vec3(pos.getX(), pos.getY(), pos.getZ())));
 
