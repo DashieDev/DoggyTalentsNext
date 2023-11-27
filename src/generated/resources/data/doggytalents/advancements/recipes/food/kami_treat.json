@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:dire_treat"
+        "recipe": "doggytalents:kami_treat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:dire_treat"
+      "doggytalents:kami_treat"
     ]
   },
   "sends_telemetry_event": false

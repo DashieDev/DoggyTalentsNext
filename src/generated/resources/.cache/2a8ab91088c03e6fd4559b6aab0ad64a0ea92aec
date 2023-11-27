@@ -1,8 +1,8 @@
-// 1.20.1	2023-10-30T09:30:08.2349099	DoggyTalents Item Tags
+// 1.20.1	2023-11-28T00:57:55.5656694	DoggyTalents Item Tags
 1ade03ba9a879be231ed9a1b8cb5ce17689f92bd data/doggytalents/tags/items/beg_items_tamed.json
 8028613ac4c93680be80fa4e6e43a1e3b35be1f1 data/doggytalents/tags/items/beg_items_untamed.json
 79f9f87a319d8a1fb2cf5bc1cc287288a490eaea data/doggytalents/tags/items/breeding_items.json
 76cbea6b34ad3744e9fd8f22af461320d9d64d53 data/doggytalents/tags/items/dog_boosting_food.json
 e02fbe1fd70ae94b24bef7cbbe39885e2546aed4 data/doggytalents/tags/items/pack_puppy_blacklist.json
-f170fad28d9e6445f26508eeb2b300d0792712ea data/doggytalents/tags/items/treats.json
+153d488fcea4bee30689a6359a73ea55f3986284 data/doggytalents/tags/items/treats.json
 f0c70df2a0d22f1d54ed11508b67836c4c9c1024 data/minecraft/tags/items/music_discs.json
