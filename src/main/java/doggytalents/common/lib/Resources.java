@@ -117,7 +117,7 @@ public class Resources {
     public static final ResourceLocation KANJI_NORMAL = getGui("levelkanji/normal");
     public static final ResourceLocation KANJI_SUPER = getGui("levelkanji/super");
     public static final ResourceLocation KANJI_MASTER = getGui("levelkanji/master");
-    public static final ResourceLocation KANJI_DIRE = getGui("levelkanji/dire");
+    public static final ResourceLocation KANJI_KAMI = getGui("levelkanji/kami");
     
     public static final ResourceLocation KANJI_INCAP_BLOOD = getGui("fatalkanji/default");
     public static final ResourceLocation KANJI_INCAP_BURN = getGui("fatalkanji/burnt");
