@@ -19,6 +19,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.stats.StatFormatter;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 
@@ -125,7 +126,9 @@ public class DogStatusViewBoxElement extends AbstractElement {
             int pX = aX;
             int pY = aY;
             
-            String healthStr = " x " + dog.getHealth() + "/" + dogMaxHealth;
+            String healthStr = " x " 
+                + StatFormatter.DECIMAL_FORMAT.format(dog.getHealth()) + "/" 
+                + StatFormatter.DECIMAL_FORMAT.format(dogMaxHealth);
             pX += (80 - (8 + font.width(healthStr)))/2; 
             
             blit(stack, pX, pY, 16, 0 ,9, 9);
