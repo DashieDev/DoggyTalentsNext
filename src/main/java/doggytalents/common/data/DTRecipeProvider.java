@@ -59,7 +59,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_golden_apple", has(Items.GOLDEN_APPLE))
             .save(consumer);
             
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.DIRE_TREAT.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.KAMI_TREAT.get(), 1)
             .requires(DoggyItems.MASTER_TREAT.get(), 5)
             .requires(Blocks.END_STONE, 1)
             .unlockedBy("has_master_treat", has(DoggyItems.MASTER_TREAT.get()))
