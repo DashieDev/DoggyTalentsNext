@@ -888,7 +888,7 @@ public class Dog extends AbstractDog {
             this.dogMiningCautiousManager.tick();
         }
 
-        if (this.level.isClientSide && this.getDogLevel().isDireDog() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DIRE_PARTICLES)) {
+        if (this.level().isClientSide && this.getDogLevel().isFullKami() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DIRE_PARTICLES)) {
             for (int i = 0; i < 2; i++) {
                 this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2D);
             }
@@ -2327,7 +2327,7 @@ public class Dog extends AbstractDog {
         compound.putBoolean("hideDogArmor", this.hideArmor());
         compound.putInt("dogSize", this.getDogSize().getId());
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
-        compound.putInt("level_dire", this.getDogLevel().getLevel(Type.DIRE));
+        compound.putInt("level_dire", this.getDogLevel().getLevel(Type.KAMI));
         NBTUtil.writeItemStack(compound, "fetchItem", this.getBoneVariant());
 
         DimensionDependantArg<Optional<BlockPos>> bedsData = this.entityData.get(DOG_BED_LOCATION.get());
@@ -3644,7 +3644,7 @@ public class Dog extends AbstractDog {
 
     // When this method is changed the cache may need to be updated at certain points
     private final int getSpendablePointsInternal() {
-        int totalPoints = 15 + this.getDogLevel().getLevel(Type.NORMAL) + this.getDogLevel().getLevel(Type.DIRE);
+        int totalPoints = 15 + this.getDogLevel().getLevel(Type.NORMAL) + this.getDogLevel().getLevel(Type.KAMI);
         for (TalentInstance entry : this.getTalentMap()) {
             totalPoints -= entry.getTalent().getCummulativeCost(entry.level());
         }
