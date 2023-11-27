@@ -67,7 +67,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
     public static ResourceLocation getKanjiDogLevel(Dog dog) {
         var dogLevel = dog.getDogLevel();
         if (dogLevel.isFullKami())
-            return Resources.KANJI_DIRE;
+            return Resources.KANJI_KAMI;
         int level_normal = dogLevel.getLevel(Type.NORMAL);
         var ret = Resources.KANJI_NORMAL;
         if (level_normal >= 20) 
@@ -75,7 +75,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         if (level_normal >= 40)
             ret = Resources.KANJI_MASTER;
         if (level_normal >= 60)
-            ret = Resources.KANJI_DIRE;
+            ret = Resources.KANJI_KAMI;
         return ret;
     }
 

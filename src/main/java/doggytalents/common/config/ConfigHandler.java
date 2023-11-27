@@ -62,7 +62,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
 
     public static class ClientConfig {
 
-        public ForgeConfigSpec.BooleanValue DIRE_PARTICLES;
+        public ForgeConfigSpec.BooleanValue KAMI_PARTICLES;
         public ForgeConfigSpec.BooleanValue RENDER_CHEST;
         public ForgeConfigSpec.BooleanValue USE_DT_TEXTURES;
         public ForgeConfigSpec.BooleanValue RENDER_SADDLE;
@@ -87,10 +87,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
             builder.pop();
             builder.push("Dog Render");
 
-            DIRE_PARTICLES = builder
-                    .comment("Enables the particle effect on Dire Level 30 dogs.")
-                    .translation("doggytalents.config.client.enable_dire_particles")
-                    .define("enable_dire_particles", true);
+            KAMI_PARTICLES = builder
+                    .comment("Enables the particle effect on Full Kami dogs.")
+                    .translation("doggytalents.config.client.enable_kami_particles")
+                    .define("enable_kami_particles", false);
             RENDER_CHEST = builder
                     .comment("When enabled, dogs with points in pack puppy will have chests on their side.")
                     .translation("doggytalents.config.client.render_chest")

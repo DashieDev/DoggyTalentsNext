@@ -888,7 +888,7 @@ public class Dog extends AbstractDog {
             this.dogMiningCautiousManager.tick();
         }
 
-        if (this.level().isClientSide && this.getDogLevel().isFullKami() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DIRE_PARTICLES)) {
+        if (this.level().isClientSide && this.getDogLevel().isFullKami() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.KAMI_PARTICLES)) {
             for (int i = 0; i < 2; i++) {
                 this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2D);
             }
@@ -2327,7 +2327,7 @@ public class Dog extends AbstractDog {
         compound.putBoolean("hideDogArmor", this.hideArmor());
         compound.putInt("dogSize", this.getDogSize().getId());
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
-        compound.putInt("level_dire", this.getDogLevel().getLevel(Type.KAMI));
+        compound.putInt("level_kami", this.getDogLevel().getLevel(Type.KAMI));
         NBTUtil.writeItemStack(compound, "fetchItem", this.getBoneVariant());
 
         DimensionDependantArg<Optional<BlockPos>> bedsData = this.entityData.get(DOG_BED_LOCATION.get());
@@ -2582,17 +2582,22 @@ public class Dog extends AbstractDog {
         }
 
         try {
+            int level_normal = 0;
+            int level_kami = 0;
             if (compound.contains("level_normal", Tag.TAG_ANY_NUMERIC)) {
                 var lvl = this.getDogLevel().copy();
                 lvl.setLevel(Type.NORMAL, compound.getInt("level_normal"));
                 this.entityData.set(DOG_LEVEL.get(), lvl);
             }
-
-            if (compound.contains("level_dire", Tag.TAG_ANY_NUMERIC)) {
-                var lvl = this.getDogLevel().copy();
-                lvl.setLevel(Type.DIRE, compound.getInt("level_dire"));
-                this.entityData.set(DOG_LEVEL.get(), lvl);
+            
+            if (compound.contains("level_kami", Tag.TAG_ANY_NUMERIC)) {
+                level_kami = compound.getInt("level_kami");          
+            } 
+            //Old
+            else if (compound.contains("level_dire", Tag.TAG_ANY_NUMERIC)) {
+                level_kami = compound.getInt("level_dire");    
             }
+            this.entityData.set(DOG_LEVEL.get(), new DogLevel(level_normal, level_kami));
             float h = this.getDogLevel().getMaxHealth();
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
             this.maxHealth();
