@@ -47,7 +47,7 @@ public class DoggyItems {
     public static final RegistryObject<Item> TRAINING_TREAT = registerTreat("training_treat", DogLevel.Type.NORMAL, 20);
     public static final RegistryObject<Item> SUPER_TREAT = registerTreat("super_treat", DogLevel.Type.NORMAL, 40);
     public static final RegistryObject<Item> MASTER_TREAT = registerTreat("master_treat", DogLevel.Type.NORMAL, 60);
-    public static final RegistryObject<Item> DIRE_TREAT = registerTreat("dire_treat", DogLevel.Type.DIRE, 30);
+    public static final RegistryObject<Item> KAMI_TREAT = registerTreat("kami_treat", DogLevel.Type.KAMI, 30);
     public static final RegistryObject<Item> BREEDING_BONE = register("breeding_bone");
     public static final RegistryObject<Item> DOGGY_CHARM = registerWith("doggy_charm", DoggyCharmItem::new, 1);
     public static final RegistryObject<AccessoryItem> RADIO_COLLAR = registerAccessory("radio_collar", DoggyAccessories.RADIO_BAND);
