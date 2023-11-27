@@ -38,7 +38,7 @@ public class DTItemTagsProvider extends ItemTagsProvider {
         createTag(DoggyTags.BEG_ITEMS_UNTAMED, DoggyItems.TRAINING_TREAT, () -> Items.BONE);
         createTag(DoggyTags.BREEDING_ITEMS, DoggyItems.BREEDING_BONE);
         createTag(DoggyTags.PACK_PUPPY_BLACKLIST, DoggyItems.THROW_BONE, DoggyItems.THROW_BONE_WET, DoggyItems.THROW_STICK, DoggyItems.THROW_STICK_WET);
-        createTag(DoggyTags.TREATS, DoggyItems.TRAINING_TREAT, DoggyItems.SUPER_TREAT, DoggyItems.MASTER_TREAT, DoggyItems.DIRE_TREAT);
+        createTag(DoggyTags.TREATS, DoggyItems.TRAINING_TREAT, DoggyItems.SUPER_TREAT, DoggyItems.MASTER_TREAT, DoggyItems.KAMI_TREAT);
         createTag(DoggyTags.DOG_BOOSTING_FOOD, () -> Items.GOLDEN_APPLE, () -> Items.ENCHANTED_GOLDEN_APPLE, () -> Items.GOLDEN_CARROT, DoggyItems.EGG_SANDWICH, DoggyItems.GOLDEN_A_FIVE_WAGYU,
             DoggyItems.ONIGIRI, DoggyItems.SALMON_SUSHI, DoggyItems.SAUSAGE);
         tag(ItemTags.MUSIC_DISCS).add(

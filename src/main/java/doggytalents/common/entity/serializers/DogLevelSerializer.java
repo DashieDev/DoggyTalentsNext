@@ -10,7 +10,7 @@ public class DogLevelSerializer implements EntityDataSerializer<DogLevel> {
     @Override
     public void write(FriendlyByteBuf buf, DogLevel value) {
         buf.writeInt(value.getLevel(Type.NORMAL));
-        buf.writeInt(value.getLevel(Type.DIRE));
+        buf.writeInt(value.getLevel(Type.KAMI));
     }
 
     @Override
