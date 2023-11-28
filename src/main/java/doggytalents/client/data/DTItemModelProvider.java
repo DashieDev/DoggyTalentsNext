@@ -131,6 +131,8 @@ public class DTItemModelProvider extends ItemModelProvider {
 
         generated(DoggyItems.RICE_GRAINS);
         generated(DoggyItems.RICE_WHEAT);
+        generated(DoggyItems.SOY_BEANS);
+        generated(DoggyItems.SOY_PODS);
 
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);

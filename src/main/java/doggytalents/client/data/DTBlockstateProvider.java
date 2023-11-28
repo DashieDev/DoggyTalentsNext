@@ -47,6 +47,7 @@ public class DTBlockstateProvider extends BlockStateProvider {
         createFromShape(DoggyBlocks.FOOD_BOWL, new AABB(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D));
 
         doggyCrops(DoggyBlocks.RICE_CROP);
+        doggyCrops(DoggyBlocks.SOY_CROP);
     }
 
     // Applies texture to all faces and for the input face culls that direction
