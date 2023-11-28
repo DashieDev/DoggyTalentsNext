@@ -62,6 +62,7 @@ public final class PacketHandler {
         registerPacket(new DoggyTorchPlacingTorchPacket(), DoggyTorchPlacingTorchData.class);
         registerPacket(new DogAutoMountPacket(), DogAutoMountData.class);
         registerPacket(new DoggyToolsPickFirstPacket(), DoggyToolsPickFirstData.class);
+        registerPacket(new DogNoCuriousPacket(), DogNoCuriousData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
