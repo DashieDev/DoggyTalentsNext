@@ -107,6 +107,19 @@ public class DTLootTableProvider extends LootTableProvider {
                     DoggyItems.RICE_WHEAT.get(), 
                     DoggyItems.RICE_GRAINS.get(), 
                     RICE_LOOT_CONDITION));
+
+            final var SOY_LOOT_CONDITION = 
+                LootItemBlockStatePropertyCondition
+                    .hasBlockStateProperties(DoggyBlocks.SOY_CROP.get())
+                    .setProperties(
+                        StatePropertiesPredicate
+                        .Builder.properties()
+                        .hasProperty(DoggyBlocks.SOY_CROP.get().getAgeProperty(), 7));
+            this.add(DoggyBlocks.SOY_CROP.get(), 
+                this.createCropDrops(DoggyBlocks.SOY_CROP.get(), 
+                    DoggyItems.SOY_PODS.get(), 
+                    DoggyItems.SOY_BEANS.get(), 
+                    SOY_LOOT_CONDITION));
         }
     }
 
