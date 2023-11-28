@@ -34,7 +34,7 @@ public class FireDrillTalent extends TalentInstance {
         if (this.rollCooldown > 0)
             --this.rollCooldown;
 
-        if (dog.getRemainingFireTicks() >= 20) {
+        if (dog.getRemainingFireTicks() >= 20 || isRolling) {
             updateInFire(dog);
             if (canRoll(dog)) {
                 dog.triggerAction(new DogStopDropRollAction(dog, this));
