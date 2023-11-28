@@ -44,6 +44,7 @@ public class DogRandomSniffGoal extends Goal {
         if (dog.isOnFire()) return false;
         if (dog.isLowHunger()) return false;
         if (!this.dog.onGround()) return false;
+        if (this.dog.noDogCurious()) return false;
         if (this.dog.getRandom().nextFloat() >= 0.01f)
             return false;
         return true;
