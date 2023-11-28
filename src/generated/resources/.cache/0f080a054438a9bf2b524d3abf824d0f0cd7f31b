@@ -1,4 +1,4 @@
-// 1.20.1	2023-11-28T00:57:55.5676968	DoggyTalents Item Models
+// 1.20.1	2023-11-29T02:36:39.5522044	DoggyTalents Item Models
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
 b5e90b9e4c73e4e830dfa769f25fa806aa5dab8c assets/doggytalents/models/item/baker_hat.json
@@ -70,6 +70,8 @@ feaf5b15d7fa562f9522295316fd13bcde4b884d assets/doggytalents/models/item/rice_wh
 846f55137451d54b108cb05be5a3f66ff601401a assets/doggytalents/models/item/shrinking_mallet.json
 aa2f1cb07f093298438c6384ff408f9474117585 assets/doggytalents/models/item/smarty_glasses.json
 290198f286e62ba744a59e69a573202e99a86fb9 assets/doggytalents/models/item/snorkel.json
+a75e3c9772beb27a3f0e7e91825cfd70588cadcc assets/doggytalents/models/item/soy_beans.json
+38bcc0620d573f54fe0fe368e096db07a238a891 assets/doggytalents/models/item/soy_pods.json
 37e58be2f484f704505648796db525c00a615a1f assets/doggytalents/models/item/spotted_collar.json
 c940178a658a57efa71c4e2f657f4383832f15e7 assets/doggytalents/models/item/starter_bundle.json
 312d0f2de8dba6bad821639ad26b9c5c8a7347fb assets/doggytalents/models/item/sunglasses.json
