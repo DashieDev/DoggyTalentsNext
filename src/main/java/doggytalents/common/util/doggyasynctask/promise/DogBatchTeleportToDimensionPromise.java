@@ -3,8 +3,11 @@ package doggytalents.common.util.doggyasynctask.promise;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.Nullable;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
@@ -12,10 +15,14 @@ import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.common.world.ForgeChunkManager;
 
 public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
@@ -24,17 +31,19 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
     private final UUID playerUUID;
     private final ResourceKey<Level> dimeansion;
     private final ServerLevel origin;
+    private final Predicate<Dog> dogValidator;
 
     private int tickTillCheck;
     private int timeOut;
 
     private final ArrayList<ChunkPos> forcedDogChunk = new ArrayList<>();
 
-    public DogBatchTeleportToDimensionPromise(List<Dog> dogs, ServerLevel origin, UUID playerUUID, ResourceKey<Level> dimeansion) {
+    public DogBatchTeleportToDimensionPromise(List<Dog> dogs, ServerLevel origin, UUID playerUUID, ResourceKey<Level> dimeansion, Predicate<Dog> dogValidator) {
         this.dogs = dogs;
         this.playerUUID = playerUUID;
         this.dimeansion = dimeansion;
         this.origin = origin;
+        this.dogValidator = dogValidator;
     } 
 
     @Override
@@ -101,24 +110,10 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
     }
 
     private void teleportDog(Dog dog0, ServerLevel targetLevel, BlockPos pos) {
-        if (!dog0.isDoingFine()) return;
+        if (!dogValidator.test(dog0)) return;
 
-        //TODO Maybe broadcast Forge Event here.
-
-        var e = dog0.getType().create(targetLevel);
-        if (!(e instanceof Dog dog)) return;
-        dog.restoreFrom(dog0);
-
-        dog.fallDistance = 0;
-        dog.moveTo(pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5F, dog.getYRot(), dog.getXRot());
-        dog.getNavigation().stop();
-        dog.setPortalCooldown();
-        targetLevel.addDuringTeleport(dog);
-        
-        dog0.remove(RemovalReason.CHANGED_DIMENSION);
-        targetLevel.resetEmptyTime();
-        if (dog0.level instanceof ServerLevel sLevel) 
-            sLevel.resetEmptyTime();
+        dog0.authorizeChangeDimension();
+        dog0.changeDimension(targetLevel, new DogTeleporter(pos));
     }
 
     @Override
@@ -158,6 +153,26 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
                 chunkpos.x, chunkpos.z, 
                 false, true);
         }
+    }
+
+    private static class DogTeleporter implements ITeleporter {
+
+        private BlockPos safePos;
+
+        public DogTeleporter(BlockPos safePos) {
+            this.safePos = safePos;
+        }
+
+        @Override
+        public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld,
+                Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+            return new PortalInfo(
+                Vec3.atBottomCenterOf(safePos), 
+                Vec3.ZERO, 
+                entity.getYRot(), entity.getXRot()
+            );
+        }
+
     }
     
 }
