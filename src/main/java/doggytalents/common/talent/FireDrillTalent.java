@@ -48,17 +48,17 @@ public class FireDrillTalent extends TalentInstance {
         if (--tickTillUpdateInFire > 0)
             return;
         tickTillUpdateInFire = 10;
-        isInFire = false;
+        isInFire = true;
         var bb = dog.getBoundingBox();
         var startPos = BlockPos.containing(bb.minX, bb.minY, bb.minZ);
         var endPos = BlockPos.containing(bb.maxX, bb.maxY, bb.maxZ);
         for (var pos : BlockPos.betweenClosed(startPos, endPos)) {
             var state = dog.level().getBlockState(pos);
             if (state.getBlock() instanceof FireBlock) {
-                isInFire = true;
                 return;
             }
         }
+        isInFire = false;
     }
 
     private boolean canRoll(Dog dog) {
