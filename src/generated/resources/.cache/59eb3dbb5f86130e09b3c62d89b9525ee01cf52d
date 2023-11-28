@@ -1,6 +1,7 @@
-// 1.20.1	2023-11-21T18:12:27.3786353	Loot Tables
+// 1.20.1	2023-11-29T02:36:39.5542075	Loot Tables
 ed7adaacd20a615f8c13de392b94c4416d1c7427 data/doggytalents/loot_tables/blocks/dog_bath.json
 c20855a76d06742dfc16cbd0ae1015036ce1d01b data/doggytalents/loot_tables/blocks/dog_bed.json
 4832af6582ca6062426b3cbaa7619a0ecb113a9e data/doggytalents/loot_tables/blocks/food_bowl.json
 ea29aba87707a81e533adc6b13427c1a99fd2613 data/doggytalents/loot_tables/blocks/rice_crop.json
+8777be09297f1d8b8785af75ed2a8d294fe8f977 data/doggytalents/loot_tables/blocks/soy_crop.json
 92a218fe3eb8045713c2aab9553feeadbe23e152 data/doggytalents/loot_tables/entities/dog.json
