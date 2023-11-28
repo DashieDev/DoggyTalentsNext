@@ -2,6 +2,8 @@ package doggytalents.common.event;
 
 import java.util.UUID;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import doggytalents.ChopinLogger;
 import doggytalents.DoggyAccessories;
 import doggytalents.DoggyEntityTypes;
@@ -273,7 +275,7 @@ public class EventHandler {
         DogAsyncTaskManager.addPromiseWithOwnerAndStartImmediately(
             new DogBatchTeleportToDimensionPromise(
                 crossOriginTpList, 
-                fromLevel, owner.getUUID(), event.getDimension())
+                fromLevel, owner.getUUID(), event.getDimension(), d -> isDogReadyToTeleport(d, owner))
             , owner);
     }
 
@@ -305,7 +307,9 @@ public class EventHandler {
     private boolean isDogReadyToTeleport(Dog dog, LivingEntity owner) {
         if (!dog.isDoingFine()) 
         return false;
-        if (dog.getOwner() != owner)
+        if (owner == null || dog.getOwnerUUID() == null)
+            return false;
+        if (ObjectUtils.notEqual(dog.getOwnerUUID(), owner.getUUID()))
             return false;
         if (dog.isOrderedToSit())
             return false;
