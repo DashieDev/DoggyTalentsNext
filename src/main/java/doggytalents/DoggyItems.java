@@ -133,6 +133,10 @@ public class DoggyItems {
         () -> new BlockItem(DoggyBlocks.RICE_CROP.get(), createInitialProp()));
     public static final RegistryObject<Item> RICE_WHEAT = register("rice_wheat",
         () -> new RiceWheatItem(createInitialProp()));
+    public static final RegistryObject<Item> SOY_BEANS = register("soy_beans", 
+        () -> new BlockItem(DoggyBlocks.SOY_CROP.get(), createInitialProp()));
+    public static final RegistryObject<Item> SOY_PODS = register("soy_pods", 
+        () -> new Item(createInitialProp()));
 
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
