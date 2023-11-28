@@ -11,6 +11,7 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -19,6 +20,8 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
 
 public class DogTextureManager extends SimplePreparableReloadListener<DogTextureManager.Preparations> {
 
+    public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID + "/dogSkin");
     public static final DogTextureManager INSTANCE = new DogTextureManager();
     private static final Gson GSON = new Gson();
 
@@ -105,7 +109,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                 var jsonObject = jsonElement.getAsJsonObject();
                 var result = getSkinFromSkinJson(resMan, prep, jsonObject);
                 if (result.success > 0) {
-                    DoggyTalentsNext.LOGGER.info(
+                    DogTextureManager.LOGGER.info(
                         "Successfully registered "
                         + result.success + " entries from " + 
                         "pack ["
@@ -114,7 +118,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                     );
                 }
                 if (result.duplicates > 0) {
-                    DoggyTalentsNext.LOGGER.warn(
+                    DogTextureManager.LOGGER.warn(
                         "Pack ["
                         + jsonSkinPack.packId()
                         + "] contains "
@@ -149,7 +153,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                 var jsonObject = jsonElement.getAsJsonObject();
                 var result = getSkinFromSkinJson(resMan, prep, jsonObject);
                 if (result.success > 0) {
-                    DoggyTalentsNext.LOGGER.info(
+                    DogTextureManager.LOGGER.info(
                         "Successfully registered "
                         + result.success + " entries from path ["
                         + path
@@ -157,7 +161,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                     );
                 }
                 if (result.duplicates > 0) {
-                    DoggyTalentsNext.LOGGER.warn(
+                    DogTextureManager.LOGGER.warn(
                         "Path ["
                         + path
                         + "] contains "
