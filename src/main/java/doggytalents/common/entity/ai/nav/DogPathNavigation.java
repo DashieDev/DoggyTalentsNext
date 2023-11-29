@@ -1,12 +1,17 @@
 package doggytalents.common.entity.ai.nav;
 
+import org.jetbrains.annotations.ApiStatus.OverrideOnly;
+
 import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
@@ -102,4 +107,44 @@ public class DogPathNavigation extends GroundPathNavigation {
         return super.canUpdatePath() && !dog.isOnSwitchNavCooldown();
     }
     
+    @Override
+    protected boolean hasValidPathType(BlockPathTypes type) {
+        if (dog.fireImmune()) {
+            if (type == BlockPathTypes.LAVA)
+                return true;
+            if (type == BlockPathTypes.DAMAGE_FIRE)
+                return true;
+            if (type == BlockPathTypes.DANGER_FIRE)
+                return true;
+        }
+        return super.hasValidPathType(type);
+    }
+
+    @Override
+    public boolean isStableDestination(BlockPos pos) {
+        if (dog.fireImmune()) {
+            if (this.level.getFluidState(pos).is(FluidTags.LAVA))
+                return true;
+        }
+        return super.isStableDestination(pos);
+    }
+
+    @Override
+    protected PathFinder createPathFinder(int p_26453_) {
+        this.nodeEvaluator = new WalkNodeEvaluator() {
+            @Override
+            protected double getFloorLevel(BlockPos pos) {
+                if (dog.fireImmune()) {
+                    if (this.level.getFluidState(pos).is(FluidTags.LAVA)) {
+                        return pos.getY();
+                    }
+                }
+                return super.getFloorLevel(pos);
+            }
+        };
+        this.nodeEvaluator.setCanPassDoors(true);
+        return new PathFinder(this.nodeEvaluator, p_26453_);
+    }
+
+
 }
