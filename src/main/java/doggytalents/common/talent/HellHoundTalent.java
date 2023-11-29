@@ -43,7 +43,6 @@ public class HellHoundTalent extends TalentInstance {
     private int fireDamageAccumulate;
     private int lavaDamageAccumulate;
 
-    private DogLavaNavigation navigation;
     private boolean swimming;
 
     public HellHoundTalent(Talent talentIn, int levelIn) {
@@ -63,7 +62,6 @@ public class HellHoundTalent extends TalentInstance {
         dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0f);
         dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0f);
         if (dog instanceof Dog) {
-            this.navigation = new DogLavaNavigation((Dog)dog, dog.level());
             swimming = false;
         }
     }
@@ -274,64 +272,12 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     public void startSwimming(AbstractDog dog) {
-        dog.resetMoveControl();
-        dog.setNavigation(navigation);
         dog.setDogSwimming(true);
         swimming = true;
     }
 
     public void stopSwimming(AbstractDog dog) {
-        dog.resetMoveControl();
-        dog.resetNavigation();
         dog.setDogSwimming(false);
         swimming = false;
-    }
-
-    public static class DogLavaNavigation extends DogPathNavigation {
-
-        private Dog dog;
-
-        public DogLavaNavigation(Dog dog, Level level) {
-            super(dog, level);
-            this.dog = dog;
-        }
-
-        @Override
-        protected boolean hasValidPathType(BlockPathTypes type) {
-            if (type == BlockPathTypes.LAVA)
-                return true;
-            if (type == BlockPathTypes.DAMAGE_FIRE)
-                return true;
-            if (type == BlockPathTypes.DANGER_FIRE)
-                return true;
-            return super.hasValidPathType(type);
-         }
-   
-        @Override
-        public boolean isStableDestination(BlockPos pos) {
-            if (this.level.getBlockState(pos).is(Blocks.LAVA))
-                return true;
-            return super.isStableDestination(pos);
-        }
-
-        protected PathFinder createPathFinder(int p_26453_) {
-            this.nodeEvaluator = new WalkNodeEvaluator() {
-                @Override
-                protected double getFloorLevel(BlockPos pos) {
-                    if (this.level.getFluidState(pos).is(FluidTags.LAVA)) {
-                        return pos.getY();
-                    }
-                    return super.getFloorLevel(pos);
-                }
-            };
-            this.nodeEvaluator.setCanPassDoors(true);
-            return new PathFinder(this.nodeEvaluator, p_26453_);
-        }
-
-        @Override
-        protected boolean canUpdatePath() {
-            return super.canUpdatePath() && !dog.isOnSwitchNavCooldown();
-        }
-        
     }
 }
