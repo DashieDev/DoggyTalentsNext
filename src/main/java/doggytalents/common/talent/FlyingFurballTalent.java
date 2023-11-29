@@ -1,5 +1,6 @@
 package doggytalents.common.talent;
 
+import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -120,11 +121,6 @@ public class FlyingFurballTalent extends TalentInstance {
             && !dog.isInWater();
     }
 
-    @Override
-    public InteractionResult canFly(AbstractDog dog) {
-        return InteractionResult.SUCCESS;
-    }
-
     public AttributeModifier createSpeedModifier(AbstractDog dogIn, UUID uuidIn) {
         if (this.level() > 0) {
             double speed = (this.level() - 1)* 0.1;
@@ -133,6 +129,11 @@ public class FlyingFurballTalent extends TalentInstance {
         }
 
         return null;
+    }
+
+    @Override
+    public void props(AbstractDog dog, DogAlterationProps props) {
+        props.setCanFly();
     }
 
     public void startGliding(AbstractDog dog) {
