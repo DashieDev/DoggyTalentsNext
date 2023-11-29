@@ -1,6 +1,7 @@
 package doggytalents.api.inferface;
 
 import doggytalents.api.enu.WetSource;
+import doggytalents.api.impl.DogAlterationProps;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -65,6 +66,10 @@ public interface IDogAlteration {
      */
     default void tick(AbstractDog dogIn) {
 
+    }
+
+    default void props(AbstractDog dog, DogAlterationProps props) {
+        
     }
 
     /**
@@ -171,10 +176,6 @@ public interface IDogAlteration {
         return InteractionResultHolder.pass(second);
     }
 
-    default InteractionResult isImmuneToFire(AbstractDog dogIn) {
-        return InteractionResult.PASS;
-    }
-
     default InteractionResult isInvulnerableTo(AbstractDog dogIn, DamageSource source) {
         return InteractionResult.PASS;
     }
@@ -188,10 +189,6 @@ public interface IDogAlteration {
     }
 
     default InteractionResult isBlockSafe(BlockState blockIn) {
-        return InteractionResult.PASS;
-    }
-
-    default InteractionResult canSwimUnderwater(AbstractDog dogIn) {
         return InteractionResult.PASS;
     }
 
@@ -238,10 +235,6 @@ public interface IDogAlteration {
     }
 
     default InteractionResult negateExplosion(AbstractDog dog) {
-        return InteractionResult.PASS;
-    }
-
-    default InteractionResult canFly(AbstractDog dog) {
         return InteractionResult.PASS;
     }
 
