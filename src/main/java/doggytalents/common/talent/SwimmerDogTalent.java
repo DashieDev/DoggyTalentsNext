@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.DataKey;
+import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 
 import doggytalents.api.registry.Talent;
@@ -202,8 +203,8 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult canSwimUnderwater(AbstractDog dogIn) {
-        return InteractionResult.SUCCESS;
+    public void props(AbstractDog dog, DogAlterationProps props) {
+        props.setCanSwimUnderwater();
     }
 
     @Override

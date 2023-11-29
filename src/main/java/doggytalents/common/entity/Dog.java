@@ -6,6 +6,7 @@ import doggytalents.*;
 import doggytalents.api.enu.WetSource;
 import doggytalents.api.feature.*;
 import doggytalents.api.feature.DogLevel.Type;
+import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.api.inferface.IDogFoodHandler;
@@ -229,6 +230,8 @@ public class Dog extends AbstractDog {
         = new DogGroupsManager();
     public final DogIncapacitatedMananger incapacitatedMananger
         = new DogIncapacitatedMananger(this);
+    private DogAlterationProps alterationProps
+        = new DogAlterationProps();
 
     protected final PathNavigation defaultNavigation;
     protected final MoveControl defaultMoveControl;
@@ -1808,17 +1811,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean fireImmune() {
-        for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.isImmuneToFire(this);
-
-            if (result.shouldSwing()) {
-                return true;
-            } else if (result == InteractionResult.FAIL) {
-                return false;
-            }
-        }
-
-        return super.fireImmune();
+        return alterationProps.fireImmune();
     }
 
     @Override
@@ -2973,6 +2966,7 @@ public class Dog extends AbstractDog {
         }
         this.alterations.clear();
         this.foodHandlers.clear();
+        this.alterationProps = new DogAlterationProps();
 
         for (AccessoryInstance inst : this.getAccessories()) {
             if (inst instanceof IDogAlteration) {
@@ -2999,6 +2993,7 @@ public class Dog extends AbstractDog {
         }
 
         for (var inst : this.alterations) {
+            inst.props(this, alterationProps);
             inst.init(this);
         }
     }
@@ -3793,15 +3788,7 @@ public class Dog extends AbstractDog {
     }
 
     public boolean canDogFly() {
-        for (var alter : this.alterations) {
-            var result = alter.canFly(this);
-
-            if (result.shouldSwing()) {
-                return true;
-            }
-        }
-
-        return false;
+        return alterationProps.canFly();
     }
 
     // @Override
@@ -4212,14 +4199,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean canSwimUnderwater() {
-        for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.canSwimUnderwater(this);
-
-            if (result.shouldSwing()) {
-                return true;
-            }
-        }
-        return false;
+        return alterationProps.canSwimUnderwater();
     }
 
     @Override

@@ -3,6 +3,7 @@ package doggytalents.common.talent;
 import java.util.UUID;
 
 import doggytalents.ChopinLogger;
+import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -131,8 +132,10 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult isImmuneToFire(AbstractDog dogIn) {
-        return this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
+    public void props(AbstractDog dog, DogAlterationProps props) {
+        if (this.level() >= 5) {
+            props.setFireImmune();
+        }
     }
 
     @Override
