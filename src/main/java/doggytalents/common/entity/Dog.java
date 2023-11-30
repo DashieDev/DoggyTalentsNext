@@ -1092,6 +1092,10 @@ public class Dog extends AbstractDog {
         if (handleBreeding(player, hand, stack).shouldSwing())
             return InteractionResult.SUCCESS;
 
+        if (handleOpenDogScreen(player).shouldSwing()) {
+            return InteractionResult.SUCCESS;
+        }
+
         if (handleDogSitStand(player).shouldSwing())
             return InteractionResult.SUCCESS;
 
@@ -1126,6 +1130,17 @@ public class Dog extends AbstractDog {
         this.jumping = false;
         this.navigation.stop();
         this.setTarget(null);
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleOpenDogScreen(Player player) {
+        if (!player.isShiftKeyDown())
+            return InteractionResult.PASS;
+        if (!this.canInteract(player))
+            return InteractionResult.PASS;
+
+        if (this.level().isClientSide)
+            DogNewInfoScreen.open(this);
         return InteractionResult.SUCCESS;
     }
 
