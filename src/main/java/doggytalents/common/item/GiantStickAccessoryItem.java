@@ -5,9 +5,13 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Accessory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -24,5 +28,11 @@ public class GiantStickAccessoryItem extends AccessoryItem{
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
+    }
+
+    @Override
+    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
+            InteractionHand handIn) {
+        return InteractionResult.PASS;
     }
 }
