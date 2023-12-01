@@ -20,6 +20,7 @@ import doggytalents.common.entity.BoostingFoodHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.entity.DogDrinkMilkHandler;
+import doggytalents.common.entity.DogEddibleFoodHandler;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.PacketHandler;
@@ -122,6 +123,7 @@ public class DoggyTalentsNext {
         PacketHandler.init();
         //TODO CriteriaTriggers.register(criterion)
         FoodHandler.registerHandler(new MeatFoodHandler());
+        FoodHandler.registerHandler(new DogEddibleFoodHandler());
         FoodHandler.registerHandler(new BoostingFoodHandler());
         FoodHandler.registerHandler(new DogDrinkMilkHandler());
 
