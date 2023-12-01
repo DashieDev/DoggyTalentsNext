@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "doggytalents:soy_beans_dried"
+    },
+    {
+      "item": "doggytalents:rice_grains"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    }
+  ],
+  "result": {
+    "item": "doggytalents:miso_paste"
+  }
+}
