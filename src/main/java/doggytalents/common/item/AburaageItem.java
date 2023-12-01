@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 
 public class AburaageItem extends Item implements IDogEddible {
 
-    public static FoodProperties FOOD_PROPS =
+    public static final FoodProperties FOOD_PROPS =
         (new FoodProperties.Builder())
             .nutrition(6)
             .saturationMod(0.8F)

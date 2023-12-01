@@ -22,7 +22,7 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class GoldenAFiveWagyuItem extends Item implements IDogEddible {
 
-    public static FoodProperties FOOD_PROPS = 
+    public static final FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())
             .nutrition(8)
             .saturationMod(10F)

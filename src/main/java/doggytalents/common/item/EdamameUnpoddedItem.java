@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 
 public class EdamameUnpoddedItem extends Item implements IDogEddible {
 
-    public static FoodProperties FOOD_PROPS = 
+    public static final FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())
             .nutrition(1)
             .saturationMod(0.3F)
