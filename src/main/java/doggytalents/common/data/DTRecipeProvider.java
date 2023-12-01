@@ -685,7 +685,8 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('P', Items.PAPER)
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer, Util.getResource("birthday_hat_alt"));
-        ShapedRecipeBuilder.shaped(DoggyBlocks.DOG_BED.get(), 1)
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DoggyBlocks.DOG_BED.get(), 1)
             .pattern("WDW")
             .pattern("WDW")
             .pattern("WWW")
@@ -693,6 +694,52 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('D', Blocks.WHITE_WOOL)
             .unlockedBy("has_wool", has(ItemTags.WOOL))
             .save(consumer, Util.getResource("dog_bed_def"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SOY_MILK.get(), 1)
+            .pattern("SSS")
+            .pattern("SWS")
+            .pattern(" B ")
+            .define('S', DoggyItems.SOY_BEANS_DRIED.get())
+            .define('B', Items.BOWL)
+            .define('W', Items.WATER_BUCKET)
+            .unlockedBy("has_bowl", has(Items.BOWL))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.TOFU.get(), 8)
+            .pattern("SSS")
+            .pattern("SSS")
+            .define('S', DoggyItems.SOY_MILK.get())
+            .unlockedBy("has_bowl", has(Items.BOWL))
+            .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.SOY_BEANS_DRIED.get(), 3)
+            .requires(DoggyItems.SOY_PODS_DRIED.get())
+            .unlockedBy("has_furnace", has(Items.FURNACE))
+            .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.MISO_PASTE.get(), 1)
+            .requires(DoggyItems.SOY_BEANS_DRIED.get())
+            .requires(DoggyItems.RICE_GRAINS.get())
+            .requires(Items.RED_MUSHROOM)
+            .unlockedBy("has_red_mushroom", has(Items.RED_MUSHROOM))
+            .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.NATTO.get(), 1)
+            .requires(DoggyItems.SOY_BEANS_DRIED.get())
+            .requires(DoggyItems.RICE_GRAINS.get())
+            .requires(Items.BROWN_MUSHROOM)
+            .requires(Items.BOWL)
+            .unlockedBy("has_brown_mushroom", has(Items.BROWN_MUSHROOM))
+            .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.MISO_SOUP.get(), 1)
+            .requires(DoggyItems.MISO_PASTE.get())
+            .requires(DoggyItems.TOFU.get())
+            .requires(Items.WATER_BUCKET)
+            .requires(Items.BOWL)
+            .requires(Items.DRIED_KELP)
+            .unlockedBy("has_bowl", has(Items.BOWL))
+            .save(consumer);
     }
     
     // @Override
