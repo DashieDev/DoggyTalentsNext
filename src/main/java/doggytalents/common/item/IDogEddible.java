@@ -14,13 +14,13 @@ public interface IDogEddible {
         return ItemStack.EMPTY;
     };
 
-    public float getAddedHunger(ItemStack useStack, AbstractDog dog);
+    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog);
 
-    default List<Pair<MobEffectInstance, Float>> getAdditionalEffects(ItemStack useStack, AbstractDog dog) {
+    default List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack, AbstractDog dog) {
         return List.of();
     }
 
-    default boolean alwaysEat(AbstractDog dog) {
+    default boolean alwaysEatWhenDogConsume(AbstractDog dog) {
         return false;
     };
 
