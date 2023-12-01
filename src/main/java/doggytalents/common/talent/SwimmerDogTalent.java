@@ -30,6 +30,7 @@ import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
@@ -106,7 +107,6 @@ public class SwimmerDogTalent extends TalentInstance {
         if (
             (!dog.isInWater() && dog.onGround())
             || dog.isLowAirSupply()
-            || isNearLand(dog)
         ) {
             ChopinLogger.lwn(dog, "stop swimming");
             this.swimming = false;
@@ -118,25 +118,12 @@ public class SwimmerDogTalent extends TalentInstance {
         if (
             dog.isInWater()
             && readyToBeginSwimming(dog)
-            && !isNearLand(dog)
             && !dog.isDogSwimming()
         ) {
             ChopinLogger.lwn(dog, "start swimming");
             this.swimming = true;
             this.startSwimming(dog);
         }
-    }
-
-    private boolean isNearLand(Dog dog) {
-        var dog_b0 = dog.blockPosition();
-        for (var pos : BlockPos.betweenClosed(
-            dog_b0.offset(-1, -1, -1), 
-            dog_b0.offset(1, 1, 1)
-        )) {
-            var type = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
-            if (type == BlockPathTypes.WALKABLE || type == BlockPathTypes.WATER_BORDER) return true;
-        }
-        return false;
     }
 
     private boolean readyToBeginSwimming(Dog dog) {
