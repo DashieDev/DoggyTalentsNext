@@ -140,6 +140,18 @@ public class DoggyItems {
     public static final RegistryObject<Item> SOY_PODS = register("soy_pods", 
         () -> new Item(createInitialProp()));
 
+    public static final RegistryObject<Item> SOY_PODS_DRIED = register("soy_pods_dried");
+    public static final RegistryObject<Item> SOY_BEANS_DRIED = register("soy_beans_dried");
+    public static final RegistryObject<Item> EDAMAME = register("edamame", EdamameItem::new);
+    public static final RegistryObject<Item> EDAMAME_UNPODDED = register("edamame_unpodded", EdamameUnpoddedItem::new);
+    public static final RegistryObject<Item> MISO_PASTE = register("miso_paste", MisoPasteItem::new);
+    public static final RegistryObject<Item> MISO_SOUP = register("miso_soup", MisoSoupItem::new);
+    public static final RegistryObject<Item> SOY_MILK = register("soy_milk", SoyMilkItem::new);
+    public static final RegistryObject<Item> TOFU = register("tofu", TofuItem::new);
+    public static final RegistryObject<Item> ABURAAGE = register("aburaage", AburaageItem::new);
+    public static final RegistryObject<Item> NATTO = register("natto", NattoItem::new);
+
+
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
             () -> new FeatheredMantleArtifact(), props), 1);
