@@ -55,7 +55,7 @@ public class DogEddibleFoodHandler implements IDogFoodHandler {
                 (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
             );
 
-            var returnStack = dogEddible.getReturnStack(stack, dog);
+            var returnStack = dogEddible.getReturnStackAfterDogConsume(stack, dog);
             if (!returnStack.isEmpty()) {
                 dog.spawnAtLocation(returnStack);
             }
