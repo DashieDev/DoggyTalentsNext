@@ -27,7 +27,7 @@ public class RiceBowlItem extends Item implements IDogEddible {
     }
 
     @Override
-    public float getAddedHunger(ItemStack useStack, AbstractDog dog) {
+    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
         return FOOD_PROPS.getNutrition() * 5;
     }
 

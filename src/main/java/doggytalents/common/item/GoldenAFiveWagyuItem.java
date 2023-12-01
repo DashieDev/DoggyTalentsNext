@@ -49,12 +49,12 @@ public class GoldenAFiveWagyuItem extends Item implements IDogEddible {
         return Rarity.UNCOMMON;
     }
     @Override
-    public float getAddedHunger(ItemStack useStack, AbstractDog dog) {
+    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
         return FOOD_PROPS.getNutrition() * 5;
     }
 
     @Override
-    public List<Pair<MobEffectInstance, Float>> getAdditionalEffects(ItemStack useStack, AbstractDog dog) {
+    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack, AbstractDog dog) {
         return FOOD_PROPS.getEffects();
     }
 }
