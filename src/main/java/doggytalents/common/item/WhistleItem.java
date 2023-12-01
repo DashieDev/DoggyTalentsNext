@@ -24,6 +24,7 @@ import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -41,6 +42,7 @@ import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.I18NParser;
@@ -50,6 +52,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
 
 public class WhistleItem extends Item implements IDogItem {
 
@@ -469,5 +473,13 @@ public class WhistleItem extends Item implements IDogItem {
     @Override
     public Rarity getRarity(ItemStack stack) {
         return Rarity.UNCOMMON;
+    }
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+            TooltipFlag flags) {
+        var desc_id = this.getDescriptionId() + ".description";
+        components.add(Component.translatable(desc_id).withStyle(
+            Style.EMPTY.withItalic(true)
+        ));
     }
 }
