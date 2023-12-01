@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 
 public interface IDogEddible {
     
-    default ItemStack getReturnStack(ItemStack useStack, AbstractDog dog) {
+    default ItemStack getReturnStackAfterDogConsume(ItemStack useStack, AbstractDog dog) {
         return ItemStack.EMPTY;
     };
 
