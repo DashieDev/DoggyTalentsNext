@@ -132,6 +132,17 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.RICE_WHEAT);
         generated(DoggyItems.SOY_BEANS);
         generated(DoggyItems.SOY_PODS);
+        generated(DoggyItems.SOY_BEANS_DRIED);
+        generated(DoggyItems.SOY_PODS_DRIED);
+        generated(DoggyItems.EDAMAME);
+        generated(DoggyItems.EDAMAME_UNPODDED);
+        generated(DoggyItems.SOY_MILK);
+        generated(DoggyItems.TOFU);
+        generated(DoggyItems.ABURAAGE);
+        generated(DoggyItems.MISO_PASTE);
+        generated(DoggyItems.MISO_SOUP);
+        generated(DoggyItems.NATTO);
+
 
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);
