@@ -13,6 +13,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 
 import java.nio.file.Path;
@@ -740,6 +741,13 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(Items.BOWL)
             .requires(Items.DRIED_KELP)
             .unlockedBy("has_bowl", has(Items.BOWL))
+            .save(consumer);
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DoggyItems.SOY_PODS.get()), 
+            RecipeCategory.FOOD, 
+            DoggyItems.SOY_PODS_DRIED.get(), 
+            0.35F, 200)
+            .unlockedBy("has_dtn_soy_pods", has(DoggyItems.SOY_PODS.get()))
             .save(consumer);
     }
     
