@@ -544,6 +544,9 @@ public class Dog extends AbstractDog {
     public EntityDimensions getDimensions(Pose p_19975_) {
         var self_dim = super.getDimensions(p_19975_);
         visualDimension = null;
+        if (self_dim.width >= 1f) {
+            self_dim = new EntityDimensions(1f, self_dim.height, self_dim.fixed);
+        }
         if (this.isVehicle() && !this.getPassengers().isEmpty()) {
             visualDimension = self_dim;
             self_dim = computeRidingDimension(self_dim);
@@ -580,6 +583,9 @@ public class Dog extends AbstractDog {
         total_width = Math.max(total_width, passenger.getBbWidth());
         total_height += passenger.getBbHeight() + passenger.getMyRidingOffset();
         
+        if (total_width >= 1f)
+            total_width = 1f;
+
         return new EntityDimensions(total_width, total_height, self_dim.fixed);
     }
 
