@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 
 public class TofuItem extends Item implements IDogEddible {
 
-    public static FoodProperties FOOD_PROPS = 
+    public static final FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())
             .nutrition(5)
             .saturationMod(0.6F)
