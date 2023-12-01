@@ -4,8 +4,12 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import doggytalents.DoggyItems;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -24,4 +28,30 @@ public class EdamameItem extends Item{
             Style.EMPTY.withItalic(true)
         ));
     }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        var stack = player.getItemInHand(hand);
+        if (level.isClientSide)
+            return InteractionResultHolder.success(stack);
+        
+        float r = player.getRandom().nextFloat();
+        int amount = r < 0.4f ? 3 : 2;
+        var retStack = new ItemStack(DoggyItems.EDAMAME_UNPODDED.get(), amount);
+
+        var inv = player.getInventory();
+        int freeSlot = inv.getFreeSlot();
+        if (freeSlot >= 0) {
+            inv.add(retStack);
+        } else {
+            player.spawnAtLocation(retStack);
+        }
+
+        if (!player.getAbilities().instabuild) {
+            stack.shrink(1);
+        }
+
+        return InteractionResultHolder.success(stack);
+    }
+
 }
