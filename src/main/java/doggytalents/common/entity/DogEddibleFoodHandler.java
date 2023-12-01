@@ -34,12 +34,12 @@ public class DogEddibleFoodHandler implements IDogFoodHandler {
             if (!(item instanceof IDogEddible dogEddible))
                 return InteractionResult.SUCCESS;
 
-            float heal = dogEddible.getAddedHunger(stack, dog);
+            float heal = dogEddible.getAddedHungerWhenDogConsume(stack, dog);
 
             dog.addHunger(heal);
             dog.consumeItemFromStack(entityIn, stack);
 
-            for(var pair : dogEddible.getAdditionalEffects(stack, dog)) {
+            for(var pair : dogEddible.getAdditionalEffectsWhenDogConsume(stack, dog)) {
                 if (pair.getFirst() != null && dog.getRandom().nextFloat() < pair.getSecond()) {
                    dog.addEffect(new MobEffectInstance(pair.getFirst()));
                 }
