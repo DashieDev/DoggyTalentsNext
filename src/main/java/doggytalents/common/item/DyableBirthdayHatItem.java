@@ -3,15 +3,21 @@ package doggytalents.common.item;
 import java.util.List;
 import java.util.function.Supplier;
 
+import javax.annotation.Nullable;
+
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.entity.accessory.DyeableAccessory;
 import doggytalents.common.util.Util;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 public class DyableBirthdayHatItem extends AccessoryItem implements IDyeableArmorItem {
     
@@ -61,6 +67,14 @@ public class DyableBirthdayHatItem extends AccessoryItem implements IDyeableArmo
         int color = Util.colorDye(-1, dye);
         birthdayHat.setForegroundColor(newStack, color);
         return newStack;
+    }
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+            TooltipFlag flags) {
+        var desc_id = this.getDescriptionId(stack) + ".description";
+        components.add(Component.translatable(desc_id).withStyle(
+            Style.EMPTY.withItalic(true)
+        ));
     }
     
 }
