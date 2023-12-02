@@ -4387,8 +4387,11 @@ public class Dog extends AbstractDog {
             return;
         if (this.isVehicle() && !this.hasControllingPassenger())
             Entity_push(source);
-        else
+        else {
+            if (isDogCurious())
+                setDogCurious(false);
             super.push(source);
+        }
     }
 
     private void Entity_push(Entity source) {
