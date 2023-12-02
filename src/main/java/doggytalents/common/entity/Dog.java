@@ -3244,6 +3244,17 @@ public class Dog extends AbstractDog {
         }
      }
 
+    public void setTarget(@Nullable LivingEntity target) {
+        var oldTarget = this.getTarget();
+        super.setTarget(target);
+        var newTarget = this.getTarget();
+        if (oldTarget != newTarget) {
+            for (var alt : this.alterations) {
+                alt.onDogSetTarget(this, newTarget, oldTarget);
+            }
+        }
+    }
+
     public boolean hasCustomSkin() {
         return !Strings.isNullOrEmpty(this.getSkinData().getHash());
     }
