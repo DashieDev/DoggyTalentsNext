@@ -1,5 +1,7 @@
 package doggytalents.api.inferface;
 
+import javax.annotation.Nullable;
+
 import doggytalents.api.enu.WetSource;
 import doggytalents.api.impl.DogAlterationProps;
 import net.minecraft.world.level.block.state.BlockState;
@@ -237,6 +239,8 @@ public interface IDogAlteration {
     default InteractionResult negateExplosion(AbstractDog dog) {
         return InteractionResult.PASS;
     }
+
+    default void onDogSetTarget(AbstractDog dog, @Nullable LivingEntity newTarget, @Nullable LivingEntity oldTarget) {}
 
     /**
      * Only called serverside
