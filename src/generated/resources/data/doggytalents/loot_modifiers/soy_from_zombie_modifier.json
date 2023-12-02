@@ -1,0 +1,21 @@
+{
+  "type": "doggytalents:soy_from_zombie",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/zombie"
+    },
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "killer",
+      "predicate": {
+        "type": "doggytalents:dog"
+      }
+    },
+    {
+      "chance": 0.025,
+      "condition": "minecraft:random_chance_with_looting",
+      "looting_multiplier": 0.01
+    }
+  ]
+}
