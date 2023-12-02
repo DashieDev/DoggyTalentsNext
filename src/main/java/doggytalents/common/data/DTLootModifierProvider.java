@@ -5,19 +5,26 @@ import org.jetbrains.annotations.NotNull;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.lib.Constants;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootContext.EntityTarget;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
@@ -31,6 +38,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> CODEC = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Constants.MOD_ID);
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> RICE_FROM_GRASS_CODEC = CODEC.register("rice_from_grass", RiceFromGrass::getCodec);
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> SOY_FROM_ZOMBIE_CODEC = CODEC.register("soy_from_zombie", SoyFromZombies::getCodec);
 
     public DTLootModifierProvider(PackOutput output) {
         super(output, Constants.MOD_ID);
@@ -39,6 +47,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
     @Override
     protected void start() {
         this.add("rice_from_grass_modifier", createGrassRiceModifer());
+        this.add("soy_from_zombie_modifier", createSoyFromZombiesModifier());
     }
 
     private RiceFromGrass createGrassRiceModifer() {
@@ -58,6 +67,29 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
             random_condition
         };
         return new RiceFromGrass(conditions);
+    }
+
+    private SoyFromZombies createSoyFromZombiesModifier() {
+        var correct_id_codition = 
+            LootTableIdCondition.builder(EntityType.ZOMBIE.getDefaultLootTable())
+            .build();
+        var killed_by_dog_condition =
+            LootItemEntityPropertyCondition
+                .hasProperties(
+                    EntityTarget.KILLER, 
+                    EntityPredicate.Builder.entity().of(
+                        DoggyEntityTypes.DOG.get())
+                )
+                .build();
+        var random_condition = 
+            LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.025F, 0.01F)
+            .build();
+        var conditions = new LootItemCondition[] {
+            correct_id_codition,
+            killed_by_dog_condition,
+            random_condition
+        };
+        return new SoyFromZombies(conditions);
     }
 
     public static class RiceFromGrass extends LootModifier {
@@ -85,4 +117,30 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
     }
     
+    public static class SoyFromZombies extends LootModifier {
+
+        private static Codec<LootModifier> CODEC = 
+            RecordCodecBuilder.create(x -> codecStart(x).apply(x, SoyFromZombies::new));
+
+        public static Codec<LootModifier> getCodec() { return CODEC; }
+
+        protected SoyFromZombies(LootItemCondition[] conditionsIn) {
+            super(conditionsIn);
+        }
+
+        @Override
+        public Codec<? extends IGlobalLootModifier> codec() {
+            return SOY_FROM_ZOMBIE_CODEC.get();
+        }
+
+        @Override
+        protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot,
+                LootContext context) {
+            int r = 1 + context.getRandom().nextInt(3);
+            generatedLoot.add(new ItemStack(DoggyItems.SOY_BEANS.get(), r));
+            return generatedLoot;
+        }
+
+    }
+
 }
