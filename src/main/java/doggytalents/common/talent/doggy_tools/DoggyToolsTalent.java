@@ -2,6 +2,8 @@ package doggytalents.common.talent.doggy_tools;
 
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -106,12 +108,7 @@ public class DoggyToolsTalent extends TalentInstance  {
         var mainHandItem = dog.getMainHandItem();
         boolean mainHandNotEmpty = mainHandItem != null && !mainHandItem.isEmpty();
 
-        if (dog.getTarget() != null && !mainHandNotEmpty) {
-            pickTargetTool(dog);
-            return;
-        }
-
-        if (dog.isBusy())
+        if (dog.isBusy() || dog.getTarget() != null)
             return;
 
         if (mainHandItem != null && !mainHandItem.isEmpty())
@@ -180,6 +177,24 @@ public class DoggyToolsTalent extends TalentInstance  {
             Screens.openDoggyToolsScreen(sP, dog);
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public void onDogSetTarget(AbstractDog dogIn, @Nullable LivingEntity newTarget, @Nullable LivingEntity oldTarget) {
+        if (!(dogIn instanceof Dog dog))
+            return;
+        if (dog.level().isClientSide)
+            return;
+        if (this.alwaysPickSlot0)
+            return;
+        
+        if (newTarget == null) {
+            var mainHandItem = dog.getMainHandItem();
+            if (mainHandItem != null && !mainHandItem.isEmpty())
+                dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        } else {
+            pickTargetTool(dog);
+        }
     }
 
     @Override
