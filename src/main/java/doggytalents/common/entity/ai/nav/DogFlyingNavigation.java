@@ -6,9 +6,10 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.level.Level;
 
-public class DogFlyingNavigation extends FlyingPathNavigation {
+public class DogFlyingNavigation extends FlyingPathNavigation implements IDogNavLock {
 
     private Dog dog;
+    private boolean locked;
     
     public DogFlyingNavigation(Dog dog, Level level) {
         super(dog, level);
@@ -26,7 +27,18 @@ public class DogFlyingNavigation extends FlyingPathNavigation {
 
     @Override
     protected boolean canUpdatePath() {
-        return super.canUpdatePath() && !dog.isOnSwitchNavCooldown();
+        return super.canUpdatePath() && !dog.isOnSwitchNavCooldown() 
+            && !locked;
     }
     
+    @Override
+    public void lockDogNavigation() {
+        this.locked = true;
+    }
+
+    @Override
+    public void unlockDogNavigation() {
+        this.locked = false;
+    }
+
 }
