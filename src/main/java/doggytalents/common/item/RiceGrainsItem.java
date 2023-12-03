@@ -19,30 +19,37 @@ public class RiceGrainsItem extends BlockItem{
     }
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        Level world = context.getLevel();
+        var level = context.getLevel();
+        var pos = context.getClickedPos();
+        var state = level.getBlockState(pos);
+        var stack = context.getItemInHand();
+        var hand = context.getHand();
+        var player = context.getPlayer();
 
-        if (world.getBlockState(context.getClickedPos()).is(Blocks.GRINDSTONE)) {
-            // Check if right-clicked on a grindstone
-            ItemStack riceGrainsStack = context.getItemInHand();
-            ItemStack uncookedRiceStack = new ItemStack(DoggyItems.UNCOOKED_RICE.get(), riceGrainsStack.getCount());
+        if (!state.is(Blocks.GRINDSTONE))
+            return InteractionResult.FAIL;
 
-            if (!context.getPlayer().isCreative()) {
-                // Consume the entire stack of RiceGrainsItem when not in creative mode
-                context.getItemInHand().shrink(riceGrainsStack.getCount());
-            }
+        level.playSound(player, pos, SoundEvents.GRINDSTONE_USE, 
+            SoundSource.BLOCKS, 1.0F, 1.0F);
 
-            // Play the grindstone noise
-            world.playSound(context.getPlayer(), context.getClickedPos(), SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-            if (!world.isClientSide) {
-                // Spawn the UNCOOKED_RICE as an item entity at the grindstone's position
-                ItemEntity itemEntity = new ItemEntity(world, context.getClickedPos().getX() + 0.5, context.getClickedPos().getY() + 1.0, context.getClickedPos().getZ() + 0.5, uncookedRiceStack);
-                world.addFreshEntity(itemEntity);
-            }
-
+        if (level.isClientSide)
             return InteractionResult.SUCCESS;
-        }
+        
+        var resultStack = new ItemStack(
+            DoggyItems.UNCOOKED_RICE.get(), 
+            stack.getCount()
+        );
 
-        return super.useOn(context);
+        var resultEntity = new ItemEntity(
+            level, 
+            pos.getX() + 0.5, 
+            pos.getY() + 1.0, 
+            pos.getZ() + 0.5, resultStack);
+        level.addFreshEntity(resultEntity);
+
+        if (player != null)
+            player.setItemInHand(hand, ItemStack.EMPTY);
+
+        return InteractionResult.SUCCESS;
     }
 }
