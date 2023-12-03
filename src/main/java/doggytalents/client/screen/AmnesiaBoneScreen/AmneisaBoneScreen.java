@@ -78,10 +78,9 @@ public class AmneisaBoneScreen extends StoreConnectedScreen {
     }
     
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-
-        this.renderBackground(stack);
-        super.render(stack, mouseX, mouseY, pTicks);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+        
+        super.render(graphics, mouseX, mouseY, pTicks);
 
         //font.draw(stack, Component.literal("width : " + this.width ), 3 , 3, 0xffffffff);
         //font.draw(stack, Component.literal("height : " + this.height ), 3 , 11, 0xffffffff);
