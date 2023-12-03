@@ -27,13 +27,16 @@ public class DogEddibleFoodHandler implements IDogFoodHandler {
 
     @Override
     public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
+        var item = stack.getItem();
+
+        if (!(item instanceof IDogEddible dogEddible))
+            return InteractionResult.SUCCESS;
+        
+        if (!dogEddible.alwaysEatWhenDogConsume(dog) && !dog.canStillEat()) {
+            return InteractionResult.FAIL;
+        }
+
         if (!dog.level().isClientSide) {
-            
-            var item = stack.getItem();
-
-            if (!(item instanceof IDogEddible dogEddible))
-                return InteractionResult.SUCCESS;
-
             float heal = dogEddible.getAddedHungerWhenDogConsume(stack, dog);
 
             dog.addHunger(heal);
