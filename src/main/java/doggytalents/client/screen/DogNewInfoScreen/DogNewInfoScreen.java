@@ -265,9 +265,6 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
 
-        
-        
-        this.renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, pTicks);
 
         //font.draw(stack, Component.literal("width : " + this.width ), 3 , 3, 0xffffffff);
