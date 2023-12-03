@@ -137,9 +137,8 @@ public class DoggyItems {
     public static final RegistryObject<Item> SOY_BEANS = register("soy_beans", 
         () -> new BlockItem(DoggyBlocks.SOY_CROP.get(), createInitialProp()));
     public static final RegistryObject<Item> SOY_PODS = register("soy_pods", 
-        () -> new Item(createInitialProp()));
-
-    public static final RegistryObject<Item> SOY_PODS_DRIED = register("soy_pods_dried");
+        () -> new SoyPodsItem(createInitialProp()));
+    public static final RegistryObject<Item> SOY_PODS_DRIED = register("soy_pods_dried",  SoyPodsDriedItem::new);
     public static final RegistryObject<Item> SOY_BEANS_DRIED = register("soy_beans_dried");
     public static final RegistryObject<Item> EDAMAME = register("edamame", EdamameItem::new);
     public static final RegistryObject<Item> EDAMAME_UNPODDED = register("edamame_unpodded", EdamameUnpoddedItem::new);
