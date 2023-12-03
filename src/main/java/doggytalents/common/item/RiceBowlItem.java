@@ -37,6 +37,11 @@ public class RiceBowlItem extends Item implements IDogEddible {
     }
 
     @Override
+    public boolean alwaysEatWhenDogConsume(AbstractDog dog) {
+        return true;
+    }
+
+    @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity living) {
         ItemStack itemstack = super.finishUsingItem(stack, level, living);
         return living instanceof Player && ((Player)living).getAbilities().instabuild ? itemstack : new ItemStack(Items.BOWL);
