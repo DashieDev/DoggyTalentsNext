@@ -13,9 +13,10 @@ import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
-public class DogPathNavigation extends GroundPathNavigation {
+public class DogPathNavigation extends GroundPathNavigation implements IDogNavLock {
 
     private Dog dog;
+    private boolean locked;
 
     public DogPathNavigation(Dog dog, Level level) {
         super(dog, level);
@@ -102,7 +103,8 @@ public class DogPathNavigation extends GroundPathNavigation {
 
     @Override
     protected boolean canUpdatePath() {
-        return super.canUpdatePath() && !dog.isOnSwitchNavCooldown();
+        return super.canUpdatePath() && !dog.isOnSwitchNavCooldown()
+            && !locked;
     }
     
     @Override
@@ -144,5 +146,14 @@ public class DogPathNavigation extends GroundPathNavigation {
         return new PathFinder(this.nodeEvaluator, p_26453_);
     }
 
+    @Override
+    public void lockDogNavigation() {
+        this.locked = true;
+    }
+
+    @Override
+    public void unlockDogNavigation() {
+        this.locked = false;
+    }
 
 }
