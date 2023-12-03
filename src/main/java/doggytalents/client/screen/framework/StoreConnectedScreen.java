@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -26,9 +27,16 @@ public class StoreConnectedScreen extends Screen {
     @Override
     public void resize(Minecraft p_96575_, int width, int height) {
         Store.get(this).dispatchAll(
-            new UIAction(CommonUIActionTypes.RESIZE, new Object()),
-            width, height
+            new UIAction(CommonUIActionTypes.RESIZE, new Object())
         );
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+        Store.get(this).update();
+        if (doRenderBackground())
+            this.renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, pTicks);
     }
 
     
@@ -47,6 +55,8 @@ public class StoreConnectedScreen extends Screen {
         this.setFocused(null);
         return super.mouseClicked(p_94695_, p_94696_, p_94697_);
     }
+
+    public boolean doRenderBackground() { return true; }
 
     public List<Class<? extends AbstractSlice>> getSlices() { return List.of(); }
 

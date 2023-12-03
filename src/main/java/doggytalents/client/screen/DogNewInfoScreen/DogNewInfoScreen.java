@@ -264,11 +264,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
 
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-
-        
-        
-        this.renderBackground(stack);
-        super.render(stack, mouseX, mouseY, pTicks);
+        super.render(graphics, mouseX, mouseY, pTicks);
 
         //font.draw(stack, ComponentUtil.literal("width : " + this.width ), 3 , 3, 0xffffffff);
         //font.draw(stack, ComponentUtil.literal("height : " + this.height ), 3 , 11, 0xffffffff);
