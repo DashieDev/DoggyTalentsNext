@@ -3216,7 +3216,7 @@ public class Dog extends AbstractDog {
         var h1 = h0 + add;
         var h2 = (int) (h1 - this.getMaxHunger());
         if (h2 > 0) {
-            this.hungerSaturation = h2;
+            this.hungerSaturation = Math.max(this.hungerSaturation, h2);
         }
         this.setDogHunger(h0 + add);
     }
