@@ -6,9 +6,10 @@ import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.PathFinder;
 
-public class DogWaterBoundNavigation extends WaterBoundPathNavigation {
+public class DogWaterBoundNavigation extends WaterBoundPathNavigation implements IDogNavLock {
 
     private Dog dog;
+    private boolean locked;
 
     public DogWaterBoundNavigation(Dog dog, Level level) {
         super(dog, level);
@@ -23,7 +24,17 @@ public class DogWaterBoundNavigation extends WaterBoundPathNavigation {
 
     @Override
     protected boolean canUpdatePath() {
-        return this.isInLiquid() && !dog.isOnSwitchNavCooldown();
+        return this.isInLiquid() && !dog.isOnSwitchNavCooldown()
+            && !locked;
     }
-    
+
+    @Override
+    public void lockDogNavigation() {
+        this.locked = true;
+    }
+
+    @Override
+    public void unlockDogNavigation() {
+        this.locked = false;
+    }
 }
