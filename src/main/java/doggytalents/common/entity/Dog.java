@@ -24,6 +24,7 @@ import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.nav.DogBodyRotationControl;
 import doggytalents.common.entity.ai.nav.DogMoveControl;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
+import doggytalents.common.entity.ai.nav.IDogNavLock;
 import doggytalents.common.entity.ai.triggerable.AnimationAction;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogDrownAction;
@@ -234,6 +235,8 @@ public class Dog extends AbstractDog {
 
     protected final PathNavigation defaultNavigation;
     protected final MoveControl defaultMoveControl;
+    protected @Nullable IDogNavLock navigationLock;
+    protected PathNavigation currentNavigation;
     
     protected TriggerableAction stashedAction;
     protected TriggerableAction activeAction;
@@ -803,6 +806,12 @@ public class Dog extends AbstractDog {
 
     @Override
     public void aiStep() {
+        if (this.navigation != this.currentNavigation) {
+            this.navigation = this.currentNavigation;
+        }
+        if (this.navigationLock != null)
+            this.navigationLock.unlockDogNavigation();
+        
         super.aiStep();
 
         if (!this.level().isClientSide && this.delayedActionStart > 0)
@@ -948,6 +957,9 @@ public class Dog extends AbstractDog {
         if (!this.level().isClientSide && this.isInSittingPose() && !this.isDogResting() && this.tickUntilRest > 0 ) {
             --this.tickUntilRest;
         }
+
+        if (this.navigationLock != null)
+            this.navigationLock.lockDogNavigation();
     }
 
     public TriggerableAction getTriggerableAction() {
@@ -4100,6 +4112,10 @@ public class Dog extends AbstractDog {
     public void setNavigation(PathNavigation p) {
         super.setNavigation(p);
         this.switchNavCooldown = 5;
+        this.currentNavigation = p;
+        if (p instanceof IDogNavLock lock) {
+            this.navigationLock = lock;
+        }
     }
 
     @Override
@@ -4114,7 +4130,11 @@ public class Dog extends AbstractDog {
 
     @Override
     protected PathNavigation createNavigation(Level p_21480_) {
-        return new DogPathNavigation(this, p_21480_);
+        var dogPathNav = new DogPathNavigation(this, p_21480_);
+        this.currentNavigation = dogPathNav;
+        this.navigationLock = dogPathNav;
+        this.navigationLock.lockDogNavigation();
+        return dogPathNav;
     }
 
     public List<IDogAlteration> getAlterations() {
