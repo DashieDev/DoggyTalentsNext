@@ -43,4 +43,9 @@ public class TofuItem extends Item implements IDogEddible {
         return FOOD_PROPS.getNutrition() * 5;
     }
 
+    @Override
+    public boolean alwaysEatWhenDogConsume(AbstractDog dog) {
+        return true;
+    }
+
 }
