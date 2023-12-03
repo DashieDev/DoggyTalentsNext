@@ -748,6 +748,18 @@ public class DTRecipeProvider extends RecipeProvider {
             0.35F, 200)
             .unlockedBy("has_dtn_soy_pods", has(DoggyItems.SOY_PODS.get()))
             .save(consumer);
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DoggyItems.SOY_BEANS_DRIED.get()), 
+            RecipeCategory.FOOD, 
+            DoggyItems.SOY_BEANS.get(), 
+            0.1F, 100)
+            .unlockedBy("has_dtn_soy_beans", has(DoggyItems.SOY_BEANS.get()))
+            .save(consumer);
+        
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.RICE_GRAINS.get(), 3)
+            .requires(DoggyItems.RICE_WHEAT.get())
+            .unlockedBy("has_dtn_rice_wheat", has(DoggyItems.RICE_WHEAT.get()))
+            .save(consumer);
     }
     
     // @Override
