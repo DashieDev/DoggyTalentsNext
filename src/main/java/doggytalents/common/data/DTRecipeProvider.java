@@ -568,7 +568,7 @@ public class DTRecipeProvider extends RecipeProvider {
         
         ShapelessRecipeBuilder.shapeless(DoggyItems.RICE_BOWL.get(), 1)
             .requires(Items.BOWL)
-            .requires(Items.WHEAT)
+            .requires(DoggyItems.UNCOOKED_RICE.get())
             .requires(Items.WATER_BUCKET)
             .unlockedBy("has_bowl", has(Items.BOWL))
             .save(consumer);
