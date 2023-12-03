@@ -35,5 +35,10 @@ public class EggSandwichItem extends Item implements IDogEddible {
     public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack, AbstractDog dog) {
         return FOOD_PROPS.getEffects();
     }
+
+    @Override
+    public boolean alwaysEatWhenDogConsume(AbstractDog dog) {
+        return true;
+    }
     
 }
