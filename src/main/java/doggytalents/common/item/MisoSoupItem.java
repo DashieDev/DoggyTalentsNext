@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.mojang.datafixers.util.Pair;
+
+import doggytalents.api.inferface.AbstractDog;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -15,17 +18,22 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class MisoSoupItem extends BowlFoodItem{
+public class MisoSoupItem extends BowlFoodItem implements IDogEddible {
+
+    public static FoodProperties FOOD_PROPS = 
+        (new FoodProperties.Builder())
+            .nutrition(8)
+            .saturationMod(0.6F)
+            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 60, 1), 1)
+            .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 1200, 1), 1)
+            .effect(() -> new MobEffectInstance(MobEffects.HEAL, 1), 1)
+            .alwaysEat()
+            .build();
+
     public MisoSoupItem() {
         super(
             (new Properties()).food(
-                (new FoodProperties.Builder())
-                    .nutrition(8)
-                    .saturationMod(0.6F)
-                    .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 60, 1), 1)
-                    .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 1200, 1), 1)
-                    .effect(() -> new MobEffectInstance(MobEffects.HEAL, 1), 1)
-                    .build()
+                FOOD_PROPS
             ).stacksTo(1).craftRemainder(Items.BOWL)
         );
     }
@@ -37,4 +45,25 @@ public class MisoSoupItem extends BowlFoodItem{
             Style.EMPTY.withItalic(true)
         ));
     }
+    @Override
+    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
+        return FOOD_PROPS.getNutrition() * 5;
+    }
+
+    @Override
+    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+            AbstractDog dog) {
+        return FOOD_PROPS.getEffects();
+    }
+
+    @Override
+    public boolean alwaysEatWhenDogConsume(AbstractDog dog) {
+        return true;
+    }
+
+    @Override
+    public ItemStack getReturnStackAfterDogConsume(ItemStack useStack, AbstractDog dog) {
+        return new ItemStack(Items.BOWL);
+    }
+    
 }
