@@ -9,6 +9,8 @@ import com.mojang.datafixers.util.Pair;
 import doggytalents.api.inferface.AbstractDog;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -64,6 +66,11 @@ public class MisoSoupItem extends BowlFoodItem implements IDogEddible {
     @Override
     public ItemStack getReturnStackAfterDogConsume(ItemStack useStack, AbstractDog dog) {
         return new ItemStack(Items.BOWL);
+    }
+    
+    @Override
+    public SoundEvent getDogEatingSound(AbstractDog dog) {
+        return SoundEvents.GENERIC_DRINK;
     }
     
 }
