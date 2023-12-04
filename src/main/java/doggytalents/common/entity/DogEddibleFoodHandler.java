@@ -53,7 +53,7 @@ public class DogEddibleFoodHandler implements IDogFoodHandler {
                     dog, new ItemStack(item));
             }
             dog.playSound(
-                SoundEvents.GENERIC_EAT, 
+                dogEddible.getDogEatingSound(dog), 
                 dog.getSoundVolume(), 
                 (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
             );
