@@ -5,6 +5,8 @@ import java.util.List;
 import com.mojang.datafixers.util.Pair;
 
 import doggytalents.api.inferface.AbstractDog;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 
@@ -23,5 +25,9 @@ public interface IDogEddible {
     default boolean alwaysEatWhenDogConsume(AbstractDog dog) {
         return false;
     };
+
+    default SoundEvent getDogEatingSound(AbstractDog dog) {
+        return SoundEvents.GENERIC_EAT;
+    }
 
 }
