@@ -181,6 +181,8 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             .setSize(200, 10)
             .init();
         this.addRenderableWidget(navBar);
+        navBar.suscribeToStore(List.of(ActiveTabSlice.class));
+
         var upperView = new DivElement(null, this)
             .setPosition(PosType.FIXED, 0, 0)
             .setSize(this.width, this.height - 20);

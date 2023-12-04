@@ -16,6 +16,12 @@ public class StoreConnectedScreen extends Screen {
     
     protected StoreConnectedScreen(Component title) {
         super(title);
+        Store.get(this).init();
+    }
+
+    @Override
+    protected void init() {
+        Store.get(this).invalidateAllSubscribers();
     }
 
     @Override

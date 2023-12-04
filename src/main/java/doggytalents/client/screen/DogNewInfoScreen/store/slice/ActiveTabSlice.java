@@ -29,7 +29,7 @@ public class ActiveTabSlice implements AbstractSlice {
             if (action.payload instanceof ChangeTabPayload tabPayload) {
                 return tabPayload.getTab();
             }
-        } 
+        }
         return oldData;
     }
 

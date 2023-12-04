@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import doggytalents.client.screen.framework.AbstractSlice;
+import doggytalents.client.screen.framework.IStoreSubsriber;
+import doggytalents.client.screen.framework.Store;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.ContainerEventHandler;
@@ -15,7 +18,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 
 //TODO: maybe implements LayoutElement too
-public abstract class AbstractElement implements Renderable, ContainerEventHandler, NarratableEntry {
+public abstract class AbstractElement implements Renderable, ContainerEventHandler, NarratableEntry, IStoreSubsriber {
 
     @Nullable
     private GuiEventListener focused;
@@ -28,6 +31,8 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     private ElementPosition position;
     private ElementSize size;
     private int backgroundColor;
+
+    private List<Class<? extends AbstractSlice>> reRenderTriggers = List.of();
 
     public AbstractElement(AbstractElement parent, Screen screen) {
         if (this == parent) {
@@ -215,6 +220,37 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
 
     public Screen getScreen() {
         return this.screen;
+    }
+
+    public void reRender() {
+        Store.get(getScreen()).invalidateChildrenSubscribers(this);
+        this.children().clear();
+        this.init();
+    }
+
+    public void suscribeToStore(List<Class<? extends AbstractSlice>> changedSlices) {
+        this.reRenderTriggers = changedSlices;
+        Store.get(getScreen()).subscribe(this);
+    }
+
+    @Override
+    public boolean isChildrenOf(GuiEventListener listener) {
+        var parent = this.getParent();
+        while (parent != null) {
+            if (parent == listener) {
+                return true;
+            }
+            parent = parent.getParent();
+        }
+        return false;
+    }
+
+    @Override
+    public void onStoreUpdate(List<Class<? extends AbstractSlice>> changedSlices) {
+        for (var slice : this.reRenderTriggers) {
+            if (changedSlices.contains(slice))
+                reRender();
+        }
     }
 
     public boolean isMouseOver(double x, double y) {

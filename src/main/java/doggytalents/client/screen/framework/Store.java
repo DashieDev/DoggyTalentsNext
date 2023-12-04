@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 
 import doggytalents.ChopinLogger;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 
 public class Store {
@@ -22,11 +23,11 @@ public class Store {
         = Maps.newConcurrentMap();
 
     private final ArrayList<UIAction> dispatchedAction = new ArrayList<UIAction>();
+    private final ArrayList<IStoreSubsriber> subsribers = new ArrayList<IStoreSubsriber>();
 
     private Store(Screen screen) {
         this.screen = screen;
         this.registerSlices();
-        this.init();
     }
 
     private <T extends AbstractSlice> void registerSlice(Class<T> slice) {
@@ -47,7 +48,7 @@ public class Store {
         }
     }
 
-    private void init() {
+    public void init() {
         for (var x : this.applicationStates.entrySet()) {
             var initState = x.getValue().worker.getInitalState();
             x.getValue().state = initState;
@@ -67,30 +68,63 @@ public class Store {
     public void update() {
         if (this.dispatchedAction.isEmpty())
             return;
+        var changedSlices = new ArrayList<Class<? extends AbstractSlice>>();
         for (var action : this.dispatchedAction) {
-            processUIAction(action);
+            processUIAction(action, changedSlices);
         }
         this.dispatchedAction.clear();
-        this.screen.init(
-            this.screen.getMinecraft(), 
-            this.screen.width, 
-            this.screen.height
-        );
+        if (!changedSlices.isEmpty()) {
+            for (var subscriber : this.subsribers) {
+                subscriber.onStoreUpdate(changedSlices);
+            }
+        }
+        // this.screen.init(
+        //     this.screen.getMinecraft(), 
+        //     this.screen.width, 
+        //     this.screen.height
+        // );
     }
 
-    private void processUIAction(UIAction action) {
+    private void processUIAction(UIAction action, ArrayList<Class<? extends AbstractSlice>> changedSlices) {
         var targetSlice = action.targetSlice;
         if (targetSlice == null) {
             for (var entry : this.applicationStates.entrySet()) {
                 var storeValue = entry.getValue();
                 if (storeValue == null) return;
+                var oldState = storeValue.state;
                 storeValue.state = storeValue.worker.reducer(storeValue.state, action);
+                if (oldState != storeValue.state) {
+                    changedSlices.add(entry.getKey());
+                }
             }
             return;
         }
         var storeValue = this.applicationStates.get(targetSlice);
         if (storeValue == null) return;
+        var oldState = storeValue.state;
         storeValue.state = storeValue.worker.reducer(storeValue.state, action);
+        if (oldState != storeValue.state) {
+            changedSlices.add(targetSlice);
+        }
+    }
+
+    public void subscribe(IStoreSubsriber storeSubsriber) {
+        this.subsribers.add(storeSubsriber);
+    }
+
+    public void invalidateChildrenSubscribers(GuiEventListener parent) {
+        var toRemove = new ArrayList<IStoreSubsriber>();
+        for (var subsriber : this.subsribers) {
+            if (subsriber.isChildrenOf(parent))
+                toRemove.add(subsriber);
+        }
+        for (var remove : toRemove) {
+            subsribers.remove(remove);
+        }
+    }
+
+    public void invalidateAllSubscribers() {
+        subsribers.clear();
     }
 
     public <T extends Object, S extends AbstractSlice> T getStateOrDefault(
