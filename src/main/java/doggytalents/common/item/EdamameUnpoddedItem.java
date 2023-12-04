@@ -39,4 +39,9 @@ public class EdamameUnpoddedItem extends Item implements IDogEddible {
     public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
         return FOOD_PROPS.getNutrition() * 5;
     }
+
+    @Override
+    public boolean alwaysEatWhenDogConsume(AbstractDog dog) {
+        return true;
+    }
 }
