@@ -6,6 +6,7 @@ import doggytalents.*;
 import doggytalents.api.enu.WetSource;
 import doggytalents.api.feature.*;
 import doggytalents.api.feature.DogLevel.Type;
+import doggytalents.api.feature.training.DogPoints;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
@@ -198,7 +199,7 @@ public class Dog extends AbstractDog {
 
     public static final void initDataParameters() { 
         ACCESSORIES.get();
-        TALENTS.get();
+        TALENTS.get(); 
         DOG_LEVEL.get();
         GENDER.get();
         MODE.get();
@@ -233,6 +234,7 @@ public class Dog extends AbstractDog {
         = new DogIncapacitatedMananger(this);
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
+    private DogPoints dogPoints = new DogPoints();
 
     protected final PathNavigation defaultNavigation;
     protected final MoveControl defaultMoveControl;
@@ -3291,6 +3293,10 @@ public class Dog extends AbstractDog {
 
     public void setLevel(DogLevel level) {
         this.entityData.set(DOG_LEVEL.get(), level);
+    }
+
+    public DogPoints getDogPoints() {
+        return this.dogPoints;
     }
 
     public IncapacitatedSyncState getIncapSyncState() {
