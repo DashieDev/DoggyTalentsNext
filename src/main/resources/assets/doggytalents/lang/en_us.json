@@ -590,6 +590,7 @@
    "advancements.doggytalents.train_dog_hajimemashite.title": "Hajimemashite, Buddy!",
    "advancements.doggytalents.train_dog_hajimemashite.description": "Train your first dog!",
    "advancements.doggytalents.doggy_charm_summon.title": "Ah, you scared me!",
-   "advancements.doggytalents.doggy_charm_summon.description": "Summon your first dog via the Doggy Charm."
+   "advancements.doggytalents.doggy_charm_summon.description": "Summon your first dog via the Doggy Charm.",
 
+   "effect.doggytalents.natto_bite": "Natto Bite"
 }
