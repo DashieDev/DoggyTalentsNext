@@ -81,6 +81,8 @@ public class DoggyTalentsNext {
         DoggyAccessories.ACCESSORIES.register(modEventBus);
         DoggyAccessoryTypes.ACCESSORY_TYPES.register(modEventBus);
         DoggyAttributes.ATTRIBUTES.register(modEventBus);
+        DoggyItemGroups.ITEM_GROUP.register(modEventBus);
+        DoggyEffects.EFFECTS.register(modEventBus);
 
         DTLootModifierProvider.CODEC.register(modEventBus);
 
