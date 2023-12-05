@@ -1773,12 +1773,13 @@ public class Dog extends AbstractDog {
         for (IDogAlteration alter : this.alterations) {
             alter.doAdditionalAttackEffects(this, target);
         }
-        
-        if (target instanceof LivingEntity living
-            && living.isDeadOrDying()) {
-            this.statsTracker.incrementKillCount(living);
-        }
 
+        return true;
+    }
+
+    @Override
+    public boolean killedEntity(ServerLevel level, LivingEntity entity) {
+        this.statsTracker.incrementKillCount(entity);
         return true;
     }
 
