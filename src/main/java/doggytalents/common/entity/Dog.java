@@ -1778,6 +1778,11 @@ public class Dog extends AbstractDog {
             alter.doAdditionalAttackEffects(this, target);
         }
 
+        if (this.hasEffect(DoggyEffects.NATTO_BITE.get())
+            && target instanceof LivingEntity living) {
+            DoggyEffects.NATTO_BITE.get().doAdditionalAttackEffects(this, living);
+        }
+
         return true;
     }
 
