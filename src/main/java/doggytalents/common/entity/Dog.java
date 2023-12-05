@@ -2422,14 +2422,16 @@ public class Dog extends AbstractDog {
         compound.remove("ArmorItems");
 
         //Duplication Detection
-        var uuid = this.getUUID();
-        var ownerUUID = this.getOwnerUUID();
-        if (uuid != null && ownerUUID != null) {
-            var backupUUIDTag = new CompoundTag();
-            backupUUIDTag.putUUID("dtn_uuid_owner", ownerUUID);
-            backupUUIDTag.putUUID("dtn_uuid_self", uuid);
-            writeSessionUUIDToCompound(uuid, backupUUIDTag);
-            compound.put("DTN_DupeDetect_UUID", backupUUIDTag);
+        if (!this.level().isClientSide) {
+            var uuid = this.getUUID();
+            var ownerUUID = this.getOwnerUUID();
+            if (uuid != null && ownerUUID != null) {
+                var backupUUIDTag = new CompoundTag();
+                backupUUIDTag.putUUID("dtn_uuid_owner", ownerUUID);
+                backupUUIDTag.putUUID("dtn_uuid_self", uuid);
+                writeSessionUUIDToCompound(uuid, backupUUIDTag);
+                compound.put("DTN_DupeDetect_UUID", backupUUIDTag);
+            }
         }
     }
 
