@@ -63,7 +63,7 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.function.Predicate;
 
 public class DogBedBlock extends BaseEntityBlock {
 
@@ -156,72 +156,121 @@ public class DogBedBlock extends BaseEntityBlock {
 
     @Override
     @Deprecated
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (worldIn.isClientSide) {
-            return InteractionResult.SUCCESS;
-        } else {
-            DogBedTileEntity dogBedTileEntity = WorldUtil.getTileEntity(worldIn, pos, DogBedTileEntity.class);
-
-            if (dogBedTileEntity != null) {
-
-                ItemStack stack = player.getItemInHand(handIn);
-                if (stack.getItem() == Items.NAME_TAG && stack.hasCustomHoverName()) {
-                    dogBedTileEntity.setBedName(stack.getHoverName());
-
-                    if (!player.getAbilities().instabuild) {
-                        stack.shrink(1);
-                    }
-
-                    worldIn.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
-                    return InteractionResult.SUCCESS;
-                } else if ((player.isShiftKeyDown() || stack.getItem() == Items.BONE) && dogBedTileEntity.getOwnerUUID() == null) {
-                    List<Dog> dogs = worldIn.getEntities(DoggyEntityTypes.DOG.get(), new AABB(pos).inflate(10D), (dog) -> dog.isDoingFine() && dog.isOwnedBy(player) && !dog.isOrderedToSit());
-                    Collections.sort(dogs, new EntityUtil.Sorter(new Vec3(pos.getX(), pos.getY(), pos.getZ())));
-
-                    // Dog closestStanding = null;
-                    // Dog closestSitting = null;
-                    // for (Dog dog : dogs) {
-                    //     if (closestSitting != null && closestSitting != null) {
-                    //         break;
-                    //     }
-
-                    //     if (closestSitting == null && dog.isInSittingPose()) {
-                    //         closestSitting = dog;
-                    //     } else if (closestStanding == null && !dog.isInSittingPose()) {
-                    //         closestStanding = dog;
-                    //     }
-                    // }
-
-                    Dog closest = dogs.isEmpty() ? null : dogs.get(0);
-                    if (closest != null && closest.readyForNonTrivialAction()) {
-                        closest.triggerAction(new DogMoveToBedAction(closest, pos, true));
-                    }
-                } else if (dogBedTileEntity.getOwnerUUID() != null) {
-                    DogRespawnData storage = DogRespawnStorage.get(worldIn).remove(dogBedTileEntity.getOwnerUUID());
-
-                    if (storage != null) {
-                        Dog dog = storage.respawn((ServerLevel) worldIn, player, pos.above());
-
-                        dogBedTileEntity.setOwner(dog);
-                        dog.setBedPos(dog.level.dimension(), pos);
-                        return InteractionResult.SUCCESS;
-                    } else {
-                        if (player.isShiftKeyDown() 
-                            && reclaimBed(player, (ServerLevel) worldIn, dogBedTileEntity, pos)) {
-                            return InteractionResult.FAIL;
-                        }  
-
-                        Component name = dogBedTileEntity.getOwnerName();
-                        player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.owner", name != null ? name : "someone"));
-                        return InteractionResult.FAIL;
-                    }
-                } else {
-                    player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.set_owner_help"));
-                    return InteractionResult.SUCCESS;
-                }
-            }
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
+
+        var tile = WorldUtil.getTileEntity(level, pos, DogBedTileEntity.class);
+        if (tile == null) 
+            return InteractionResult.SUCCESS;
+
+        var stack = player.getItemInHand(handIn);
+
+        if (handleNameTagBed(player, level, state, pos, tile, stack)
+            .shouldSwing())
+            return InteractionResult.SUCCESS;
+        
+        if (handleDogClaimBed(player, level, state, pos, tile, stack)
+            .shouldSwing())
+            return InteractionResult.SUCCESS;
+
+        if (handleDogRespawn(player, level, state, pos, tile, stack)
+            .shouldSwing())
+            return InteractionResult.SUCCESS;
+
+        if (handleDogReclaim(player, level, state, pos, tile, stack)
+            .shouldSwing())
+            return InteractionResult.SUCCESS;
+        
+    
+        player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.set_owner_help"));
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleDogReclaim(Player player, Level level, 
+        BlockState state, BlockPos pos, DogBedTileEntity tile, ItemStack stack) {
+        var owner_id = tile.getOwnerUUID();
+        if (owner_id == null)
+            return InteractionResult.PASS;
+        
+        if (!player.isShiftKeyDown())
+            return InteractionResult.PASS;
+
+        if (!reclaimBed(player, (ServerLevel) level, tile, pos)) {
+            Component name = tile.getOwnerName();
+            player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.owner", name != null ? name : "someone"));
+        }  
+
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleDogRespawn(Player player, Level level, 
+        BlockState state, BlockPos pos, DogBedTileEntity tile, ItemStack stack) {
+        var owner_id = tile.getOwnerUUID();
+        if (owner_id == null)
+            return InteractionResult.PASS;
+        
+        var storage = DogRespawnStorage.get(level);
+        var data = storage.remove(owner_id);
+        if (data == null)
+            return InteractionResult.PASS;
+
+        var dog = data.respawn((ServerLevel) level, player, pos.above());
+        if (dog == null)
+            return InteractionResult.SUCCESS;
+
+        tile.setOwner(dog);
+        dog.setBedPos(dog.level().dimension(), pos);
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleDogClaimBed(Player player, Level level, 
+        BlockState state, BlockPos pos, DogBedTileEntity tile, ItemStack stack) {
+        if (tile.getOwnerUUID() != null)
+            return InteractionResult.PASS;
+
+        boolean isAssign = 
+            player.isShiftKeyDown() || stack.is(Items.BONE);
+        if (!isAssign)
+            return InteractionResult.PASS;
+        
+        Predicate<Dog> isValidDog = valid_dog -> 
+            valid_dog.isDoingFine()
+            && valid_dog.isOwnedBy(player)
+            && !valid_dog.isOrderedToSit();
+        List<Dog> dogs = level.getEntities(
+            DoggyEntityTypes.DOG.get(), 
+            new AABB(pos).inflate(10D), 
+            isValidDog
+        );
+        Collections.sort(dogs, new EntityUtil.Sorter(Vec3.atBottomCenterOf(pos)));
+
+        Dog closest = dogs.isEmpty() ? null : dogs.get(0);
+        if (pos != null && closest != null 
+            && closest.readyForNonTrivialAction()) {
+            closest.triggerAction(new DogMoveToBedAction(closest, pos, true));
+        }
+
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleNameTagBed(Player player, Level level, 
+        BlockState state, BlockPos pos, DogBedTileEntity tile, ItemStack stack) {
+        if (!stack.is(Items.NAME_TAG))
+            return InteractionResult.PASS;
+        if (!stack.hasCustomHoverName())
+            return InteractionResult.PASS;
+        
+        tile.setBedName(stack.getHoverName());
+
+        if (!player.getAbilities().instabuild) {
+            stack.shrink(1);
+        }
+
+        level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
+        
+        return InteractionResult.SUCCESS;
     }
 
     private boolean reclaimBed(Player player, ServerLevel level, DogBedTileEntity bedEntity, BlockPos pos) {
