@@ -57,6 +57,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import doggytalents.common.lib.Constants;
+
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
@@ -64,6 +66,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class DogBedBlock extends BaseEntityBlock {
 
@@ -171,6 +174,10 @@ public class DogBedBlock extends BaseEntityBlock {
             .shouldSwing())
             return InteractionResult.SUCCESS;
         
+        if (handleDogRandomRespawn(player, level, state, pos, tile, stack)
+            .shouldSwing())
+            return InteractionResult.SUCCESS;
+        
         if (handleDogClaimBed(player, level, state, pos, tile, stack)
             .shouldSwing())
             return InteractionResult.SUCCESS;
@@ -189,6 +196,49 @@ public class DogBedBlock extends BaseEntityBlock {
         } else { 
             player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.set_owner_help"));
         }   
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleDogRandomRespawn(Player player, Level level, 
+        BlockState state, BlockPos pos, DogBedTileEntity tile, ItemStack stack) {
+        if (tile.getOwnerUUID() != null)
+            return InteractionResult.PASS;
+        if (!stack.is(Items.TOTEM_OF_UNDYING))
+            return InteractionResult.PASS;
+        
+        var storage = DogRespawnStorage.get(level);
+        Predicate<DogRespawnData> isFromOwner =
+            filter_data -> {
+                var owner_id = filter_data.getOwnerId();
+                if (owner_id == null)
+                    return false;
+                return !ObjectUtils.notEqual(owner_id, player.getUUID());
+            };
+        var dataList = storage.getAll().stream()
+            .filter(isFromOwner)
+            .collect(Collectors.toList());
+        if (dataList.isEmpty())
+            return InteractionResult.PASS;
+        
+        
+        int dataListSize = dataList.size();
+        int rIndx = player.getRandom().nextInt(dataListSize);
+        var rUUID = dataList.get(rIndx).getDogId();
+        var dogData = storage.remove(rUUID);
+        if (dogData == null)
+            return InteractionResult.SUCCESS;
+        
+        var dog = dogData.respawn((ServerLevel) level, player, pos.above());
+        if (dog == null)
+            return InteractionResult.SUCCESS;
+        
+        tile.setOwner(dog);
+        dog.setBedPos(dog.level().dimension(), pos);
+        dog.level().broadcastEntityEvent(dog, (byte)35);
+
+        if (!player.getAbilities().instabuild)
+            stack.shrink(1);
+        
         return InteractionResult.SUCCESS;
     }
 
