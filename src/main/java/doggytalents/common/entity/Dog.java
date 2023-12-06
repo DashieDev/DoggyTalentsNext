@@ -291,6 +291,7 @@ public class Dog extends AbstractDog {
         this.setTame(false);
         this.setGender(EnumGender.random(this.getRandom()));
         this.setLowHealthStrategy(LowHealthStrategy.STICK_TO_OWNER);
+        this.setOwnerUUID(null); //Just to be sure
         this.resetTickTillRest();
 
         this.moveControl = new DogMoveControl(this);
@@ -1966,8 +1967,20 @@ public class Dog extends AbstractDog {
         this.setHealth(this.getMaxHealth());
     }
 
+    private boolean authorizedChangingOwner = false;
+
     @Override
     public void setOwnerUUID(@Nullable UUID uuid) {
+        var currentUUID = this.getOwnerUUID();
+        boolean isChangingOwner = 
+            currentUUID != null
+            && ObjectUtils.notEqual(currentUUID, uuid);
+        if (isChangingOwner && !authorizedChangingOwner) {
+            authorizedChangingOwner = false;
+            return;
+        }
+        authorizedChangingOwner = false;
+
         super.setOwnerUUID(uuid);
 
         if (uuid == null) {
@@ -2445,6 +2458,8 @@ public class Dog extends AbstractDog {
     @Override
     public void load(CompoundTag compound) {
 
+        this.authorizedChangingOwner = true;
+
         // DataFix uuid entries and attribute ids
         try {
             if (NBTUtil.hasOldUniqueId(compound, "UUID")) {
@@ -2525,6 +2540,8 @@ public class Dog extends AbstractDog {
         }
 
         super.load(compound);
+
+        this.authorizedChangingOwner = false;
     }
 
     @Override
@@ -3706,6 +3723,7 @@ public class Dog extends AbstractDog {
             .forEach(goal -> { goal.stop(); } );
         
         this.setMode(EnumMode.DOCILE);
+        this.authorizedChangingOwner = true;
         this.setOwnerUUID(newOwnerUUID);
     }
 
