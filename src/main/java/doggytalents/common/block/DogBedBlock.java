@@ -183,8 +183,12 @@ public class DogBedBlock extends BaseEntityBlock {
             .shouldSwing())
             return InteractionResult.SUCCESS;
         
-    
-        player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.set_owner_help"));
+        if (tile.getOwnerUUID() != null) {
+            var name = tile.getOwnerName();
+            player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.owner", name != null ? name : "someone"));
+        } else { 
+            player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.set_owner_help"));
+        }   
         return InteractionResult.SUCCESS;
     }
 
@@ -197,11 +201,7 @@ public class DogBedBlock extends BaseEntityBlock {
         if (!player.isShiftKeyDown())
             return InteractionResult.PASS;
 
-        if (!reclaimBed(player, (ServerLevel) level, tile, pos)) {
-            Component name = tile.getOwnerName();
-            player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.owner", name != null ? name : "someone"));
-        }  
-
+        reclaimBed(player, (ServerLevel) level, tile, pos);  
         return InteractionResult.SUCCESS;
     }
 
