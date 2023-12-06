@@ -206,6 +206,8 @@ public class DogBedBlock extends BaseEntityBlock {
             return InteractionResult.PASS;
         if (!stack.is(Items.TOTEM_OF_UNDYING))
             return InteractionResult.PASS;
+        if (player.getCooldowns().isOnCooldown(Items.TOTEM_OF_UNDYING))
+            return InteractionResult.PASS;
         
         var storage = DogRespawnStorage.get(level);
         Predicate<DogRespawnData> isFromOwner =
@@ -239,6 +241,8 @@ public class DogBedBlock extends BaseEntityBlock {
 
         if (!player.getAbilities().instabuild)
             stack.shrink(1);
+
+        player.getCooldowns().addCooldown(Items.TOTEM_OF_UNDYING, 60);
         
         return InteractionResult.SUCCESS;
     }
