@@ -30,13 +30,13 @@ public class DogEddibleFoodHandler implements IDogFoodHandler {
         var item = stack.getItem();
 
         if (!(item instanceof IDogEddible dogEddible))
-            return InteractionResult.SUCCESS;
+            return InteractionResult.FAIL;
         
         if (!dogEddible.alwaysEatWhenDogConsume(dog) && !dog.canStillEat()) {
             return InteractionResult.FAIL;
         }
 
-        if (!dog.level().isClientSide) {
+        if (!dog.level().isClientSide) {    
             float heal = dogEddible.getAddedHungerWhenDogConsume(stack, dog);
 
             dog.addHunger(heal);
