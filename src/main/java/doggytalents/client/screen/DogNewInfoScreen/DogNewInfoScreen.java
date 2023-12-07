@@ -161,6 +161,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     public static void open(Dog dog, ActiveTabSlice.Tab initTab) {
         var mc = Minecraft.getInstance();
         var screen = new DogNewInfoScreen(dog);
+        Store.get(screen);
         mc.setScreen(screen);
         Store.get(screen).dispatchAll(
             ActiveTabSlice.UIActionCreator(dog, initTab, CommonUIActionTypes.CHANGE_TAB)
