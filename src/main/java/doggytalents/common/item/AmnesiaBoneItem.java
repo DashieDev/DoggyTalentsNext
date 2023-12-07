@@ -37,13 +37,25 @@ public class AmnesiaBoneItem extends Item implements IDogItem  {
         if (ownerUUID == null) {
             return InteractionResult.FAIL;
         }
-        if (level.isClientSide && hand == InteractionHand.MAIN_HAND && dog instanceof Dog d) {
-            if (ownerUUID.equals(player.getUUID())) {
-                AmneisaBoneScreen.open(d);
-            }
+        if (level.isClientSide) {
+            handleOpenScreenOnClient(level, dog, player, hand, ownerUUID);
+            return InteractionResult.SUCCESS;
         }
         requestOwnership(level, ownerUUID, player, hand, dog);
         return InteractionResult.SUCCESS;
+    }
+
+    private void handleOpenScreenOnClient(Level level, AbstractDog dogIn, Player player,
+        InteractionHand hand, UUID dogOwnerUUID) {
+        if (!level.isClientSide)
+            return;
+        if (hand != InteractionHand.MAIN_HAND)
+            return;
+        if (!(dogIn instanceof Dog dog))
+            return;
+        if (dogOwnerUUID.equals(player.getUUID())) {
+            AmneisaBoneScreen.open(dog);
+        }
     }
 
     private void requestOwnership(Level level, UUID ownerUUID, Player player,
