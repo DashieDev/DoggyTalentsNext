@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:egg"
+    },
+    "O": {
+      "item": "minecraft:cooked_chicken"
+    },
+    "R": {
+      "item": "doggytalents:rice_bowl"
+    }
+  },
+  "pattern": [
+    "COC",
+    " R "
+  ],
+  "result": {
+    "item": "doggytalents:oyakodon"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "doggytalents:soy_beans_dried"
+  },
+  "result": "doggytalents:soy_beans"
+}
