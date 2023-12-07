@@ -150,6 +150,10 @@ public class DoggyItems {
     public static final RegistryObject<Item> TOFU = register("tofu", TofuItem::new);
     public static final RegistryObject<Item> ABURAAGE = register("aburaage", AburaageItem::new);
     public static final RegistryObject<Item> NATTO = register("natto", NattoItem::new);
+    public static final RegistryObject<Item> NATTO_RICE = register("natto_rice", NattoRiceItem::new);
+    public static final RegistryObject<Item> ONSEN_TAMAGO = register("onsen_tamago", OnsenTamagoItem::new);
+    public static final RegistryObject<Item> GYUDON = register("gyudon", GyudonItem::new);
+    public static final RegistryObject<Item> OYAKODON = register("oyakodon", OyakodonItem::new);
 
 
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
