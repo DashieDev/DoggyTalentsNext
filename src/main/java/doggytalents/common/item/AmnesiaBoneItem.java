@@ -9,6 +9,7 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.screen.AmnesiaBoneScreen.AmneisaBoneScreen;
+import doggytalents.client.screen.AmnesiaBoneScreen.screen.DogForceMigrateOwnerScreen;
 import doggytalents.common.entity.Dog;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.Tag;
@@ -55,6 +56,13 @@ public class AmnesiaBoneItem extends Item implements IDogItem  {
             return;
         if (dogOwnerUUID.equals(player.getUUID())) {
             AmneisaBoneScreen.open(dog);
+            return;
+        } 
+        boolean isOpAndCreative = 
+            player.hasPermissions(4)
+            && player.getAbilities().instabuild;
+        if (isOpAndCreative && player.isShiftKeyDown()) {
+            DogForceMigrateOwnerScreen.open(dog);
         }
     }
 
