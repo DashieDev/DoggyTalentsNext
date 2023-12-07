@@ -4562,12 +4562,22 @@ public class Dog extends AbstractDog {
             animAction.stop();
         this.animAction = action;
         if (this.animAction != null) {
-            this.animAction.start();
+            this.getNavigation().stop();
+            updateControlFlags();
             if (this.animAction.blockMove()) {
-                this.goalSelector.setControlFlag(Goal.Flag.MOVE, false);
-                this.getNavigation().stop();
+                forceStopAllGoalWithFlag(Goal.Flag.MOVE);
             }
+            if (this.animAction.blockLook()) {
+                forceStopAllGoalWithFlag(Goal.Flag.LOOK);
+            }
+            this.animAction.start();
         }
+    }
+
+    private void forceStopAllGoalWithFlag(Goal.Flag flag) {
+        this.goalSelector.getRunningGoals()
+            .filter(goal -> goal.getFlags().contains(flag))
+            .map(goal -> { goal.stop(); return goal; } );
     }
 
     protected void tickAnimAction() {
