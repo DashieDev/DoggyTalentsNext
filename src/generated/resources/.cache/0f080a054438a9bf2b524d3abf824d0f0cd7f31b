@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-03T19:28:07.307994	DoggyTalents Item Models
+// 1.20.1	2023-12-08T01:38:59.6405967	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
@@ -42,6 +42,7 @@ d9ec650c08c3440406bc3653fa92dd165d4045aa assets/doggytalents/models/item/frisbee
 ef520dd816cdadca205239f47708c42b2d3e818b assets/doggytalents/models/item/giant_stick.json
 daaaeb5312e241ac287f000bf92a2a39e95e5758 assets/doggytalents/models/item/golden_a_five_wagyu.json
 bbbddd194d8bce956f46ef7e0e9c24bef18cf451 assets/doggytalents/models/item/guard_suit.json
+e229e5037dd59fa9e79a9dd567c777082c9692bd assets/doggytalents/models/item/gyudon.json
 79e52c0e6f1a9fb7797c8c76bbff52744a3a861b assets/doggytalents/models/item/head_band_blank.json
 6434f8e2713a4f3f9c63793e2877a575434f8cb9 assets/doggytalents/models/item/head_band_highhh.json
 8cf873b2ed8380d259a3ef9e917a83d5fef907b8 assets/doggytalents/models/item/head_band_mystery.json
@@ -64,7 +65,10 @@ c78372cc5d3fb956867a2378707fdf0de6287dd0 assets/doggytalents/models/item/master_
 20876e8a278849e51c753ed80ddf10d661e303ac assets/doggytalents/models/item/miso_soup.json
 2898b9dfb81537fc36b6033c98081737b04b1f80 assets/doggytalents/models/item/multicoloured_collar.json
 abb54092dc011dc674d04af0994dc6ddb07c43ec assets/doggytalents/models/item/natto.json
+01c1b040c19c5a286c67541f0b03922144687992 assets/doggytalents/models/item/natto_rice.json
 1cf383b2f9a0e986a264fb2eadafe9b599a0c426 assets/doggytalents/models/item/onigiri.json
+311b153cdb0b8ba2761e8a11811c3a3c243e0351 assets/doggytalents/models/item/onsen_tamago.json
+efda45d5e77f973f93d63a8fc58e7d18c9e1fc18 assets/doggytalents/models/item/oyakodon.json
 bc4344cde9b92b3d303523e9d15fe95482b486c4 assets/doggytalents/models/item/pianist_suit.json
 9a6b2e26e6696561a2c685026102d3d2f0eed92e assets/doggytalents/models/item/plague_doctor_mask.json
 6154f41cf2303fc6636ee83009cc983c95970804 assets/doggytalents/models/item/radio_collar.json

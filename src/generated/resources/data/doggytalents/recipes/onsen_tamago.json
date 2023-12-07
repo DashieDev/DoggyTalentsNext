@@ -3,16 +3,20 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "minecraft:bowl"
+      "item": "minecraft:egg"
     },
     {
-      "item": "doggytalents:uncooked_rice"
+      "item": "minecraft:egg"
+    },
+    {
+      "item": "minecraft:egg"
     },
     {
       "item": "minecraft:water_bucket"
     }
   ],
   "result": {
-    "item": "doggytalents:rice_bowl"
+    "count": 3,
+    "item": "doggytalents:onsen_tamago"
   }
 }

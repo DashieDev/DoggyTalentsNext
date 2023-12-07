@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:cooked_beef"
+    },
+    "O": {
+      "item": "doggytalents:onsen_tamago"
+    },
+    "R": {
+      "item": "doggytalents:rice_bowl"
+    }
+  },
+  "pattern": [
+    "BOB",
+    " R "
+  ],
+  "result": {
+    "item": "doggytalents:gyudon"
+  },
+  "show_notification": true
+}
