@@ -761,6 +761,40 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(DoggyItems.RICE_WHEAT.get())
             .unlockedBy("has_dtn_rice_wheat", has(DoggyItems.RICE_WHEAT.get()))
             .save(consumer);
+        
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.ONSEN_TAMAGO.get(), 3)
+            .requires(Items.EGG)
+            .requires(Items.EGG)
+            .requires(Items.EGG)            
+            .requires(Items.WATER_BUCKET)
+            .unlockedBy("has_egg", has(Items.EGG))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.GYUDON.get(), 1)
+            .pattern("BOB")
+            .pattern(" R ")
+            .define('R', DoggyItems.RICE_BOWL.get())
+            .define('B', Items.COOKED_BEEF)
+            .define('O', DoggyItems.ONSEN_TAMAGO.get())
+            .unlockedBy("has_bowl", has(Items.BOWL))
+            .save(consumer);
+        
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.OYAKODON.get(), 1)
+            .pattern("COC")
+            .pattern(" R ")
+            .define('R', DoggyItems.RICE_BOWL.get())
+            .define('C', Items.EGG)
+            .define('O', Items.COOKED_CHICKEN)
+            .unlockedBy("has_bowl", has(Items.BOWL))
+            .save(consumer);
+        
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.NATTO_RICE.get(), 1)
+            .pattern("N")
+            .pattern("R")
+            .define('N', DoggyItems.NATTO.get())
+            .define('R', DoggyItems.RICE_BOWL.get())
+            .unlockedBy("has_bowl", has(Items.BOWL))
+            .save(consumer);
     }
     
     // @Override
