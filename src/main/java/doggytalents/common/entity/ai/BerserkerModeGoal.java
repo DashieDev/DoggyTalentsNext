@@ -1,5 +1,6 @@
 package doggytalents.common.entity.ai;
 
+import doggytalents.DoggyTags;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,7 +32,8 @@ public class BerserkerModeGoal extends NearestAttackableTargetGoal<Mob> {
                         }
                     }
                 }
-                if (e instanceof EnderMan) return false;
+                if (e.getType().is(DoggyTags.DOG_SHOULD_IGNORE))
+                    return false;
             }
             return true;
         });

@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 import doggytalents.ChopinLogger;
+import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
@@ -49,7 +50,8 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
                     }
                 }
                 if (e instanceof ZombifiedPiglin) return false;
-                if (e instanceof EnderMan) return false;
+                if (e.getType().is(DoggyTags.DOG_SHOULD_IGNORE))
+                    return false;
             }
             return true;
         });
