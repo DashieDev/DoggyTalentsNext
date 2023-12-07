@@ -147,7 +147,6 @@ public class DogIncapacitatedMananger {
         }
         if (this.bandagesCount >= MAX_BANDAID_COUNT) {
             this.dog.triggerAnimationAction(new DogFaintStandAction(dog, getFaintStandAnim()));
-            this.dog.updateControlFlags();
         }
     }
 
