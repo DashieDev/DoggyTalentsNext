@@ -7,6 +7,7 @@ public class DogDrownAction extends AnimationAction {
 
     private int tickTillShink = 70;
     private int tickSink = 0;
+    private boolean swimming = false;
 
     public DogDrownAction(Dog dog) {
         super(dog, DogAnimation.DROWN);
@@ -19,11 +20,12 @@ public class DogDrownAction extends AnimationAction {
             return;
         if (this.tickTillShink <= 0 && !this.dog.isDogSwimming()) {
             this.dog.setDogSwimming(true);
+            this.swimming = true;
         }
         if (this.tickTillShink <= 0) {
             this.tickSink += 1;
         }
-        if (tickSink >= 50) {
+        if (tickSink >= 50 && swimming) {
             this.dog.setDogSwimming(false);
         }
         --tickTillShink;
@@ -40,6 +42,7 @@ public class DogDrownAction extends AnimationAction {
     @Override
     public void onStop() {
         super.onStop();
+        if (swimming)
         this.dog.setDogSwimming(false);
     }
 
