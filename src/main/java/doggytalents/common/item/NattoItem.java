@@ -21,17 +21,11 @@ import net.minecraft.world.level.Level;
 
 public class NattoItem extends DogEddibleBowlFoodItem  {
 
-    public static FoodProperties FOOD_PROPS = 
-        (new FoodProperties.Builder())
-            .nutrition(3)
-            .saturationMod(0.5F)
-            .build();
-
     public NattoItem() {
         super(
-            (new Properties()).food(
-                FOOD_PROPS
-            ).stacksTo(1).craftRemainder(Items.BOWL)
+            b -> b
+                .nutrition(3)
+                .saturationMod(0.5F)
         );
     }
     @Override
@@ -41,11 +35,6 @@ public class NattoItem extends DogEddibleBowlFoodItem  {
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
-    }
-
-    @Override
-    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getNutrition() * 5;
     }
 
     @Override

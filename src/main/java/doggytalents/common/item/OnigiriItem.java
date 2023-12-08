@@ -7,24 +7,12 @@ import net.minecraft.world.item.ItemStack;
 
 public class OnigiriItem extends DogEddibleItem {
 
-    public static final FoodProperties FOOD_PROPS = 
-        (new FoodProperties.Builder())
-            .nutrition(4)
-            .saturationMod(0.5F)
-            .meat()
-            .build();
-
     public OnigiriItem() {
         super(
-            (new Properties()).food(FOOD_PROPS)
+            b -> b
+                .nutrition(4)
+                .saturationMod(0.5F)
         );
     }
-
-    @Override
-    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getNutrition();
-    }
-
-    
     
 }

@@ -22,18 +22,14 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class GoldenAFiveWagyuItem extends DogEddibleItem {
 
-    public static final FoodProperties FOOD_PROPS = 
-        (new FoodProperties.Builder())
-            .nutrition(8)
-            .saturationMod(10F)
-            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 1200, 1), 1)
-            .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 1), 1)
-            .effect(() -> new MobEffectInstance(MobEffects.SATURATION, 1200, 1), 1)
-            .build();
-
     public GoldenAFiveWagyuItem() {
         super(
-            (new Properties()).food(FOOD_PROPS)
+            b -> b
+                .nutrition(8)
+                .saturationMod(10F)
+                .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 1200, 1), 1)
+                .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 1), 1)
+                .effect(() -> new MobEffectInstance(MobEffects.SATURATION, 1200, 1), 1)
         );
     }
     @Override
@@ -48,16 +44,6 @@ public class GoldenAFiveWagyuItem extends DogEddibleItem {
     public Rarity getRarity(ItemStack stack) {
         return Rarity.UNCOMMON;
     }
-    @Override
-    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getNutrition() * 5;
-    }
-
-    @Override
-    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getEffects();
-    }
-
     @Override
     public boolean alwaysEatWhenDogConsume(AbstractDog dog) {
         return true;
