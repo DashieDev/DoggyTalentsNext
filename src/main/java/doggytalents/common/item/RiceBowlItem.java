@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
-public class RiceBowlItem extends DogEddibleItem {
+public class RiceBowlItem extends DogEddibleBowlFoodItem {
 
     public static final FoodProperties FOOD_PROPS =
         (new FoodProperties.Builder())
@@ -21,18 +21,13 @@ public class RiceBowlItem extends DogEddibleItem {
         super(
             (new Properties()).food(
                 FOOD_PROPS
-            ).stacksTo(1).craftRemainder(Items.BOWL)
+            )
         ); 
     }
 
     @Override
     public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
         return FOOD_PROPS.getNutrition() * 5;
-    }
-
-    @Override
-    public ItemStack getReturnStackAfterDogConsume(ItemStack useStack, AbstractDog dog) {
-        return new ItemStack(Items.BOWL);
     }
 
     @Override
