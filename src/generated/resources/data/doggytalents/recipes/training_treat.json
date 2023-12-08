@@ -1,31 +1,25 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "key": {
-    "C": {
-      "item": "doggytalents:rice_bowl"
-    },
-    "T": {
+  "ingredients": [
+    {
       "item": "minecraft:string"
     },
-    "U": {
+    {
       "item": "minecraft:bone"
     },
-    "V": {
+    {
       "item": "minecraft:gunpowder"
     },
-    "X": {
+    {
       "item": "minecraft:sugar"
+    },
+    {
+      "item": "doggytalents:rice_bowl"
     }
-  },
-  "pattern": [
-    "TUV",
-    "XXX",
-    " C "
   ],
   "result": {
     "count": 3,
     "item": "doggytalents:training_treat"
-  },
-  "show_notification": true
+  }
 }
