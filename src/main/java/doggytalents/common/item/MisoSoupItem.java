@@ -22,22 +22,16 @@ import net.minecraft.world.level.Level;
 
 public class MisoSoupItem extends DogEddibleBowlFoodItem {
 
-    public static FoodProperties FOOD_PROPS = 
-        (new FoodProperties.Builder())
-            .nutrition(8)
-            .saturationMod(0.6F)
-            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 1200, 2), 1)
-            .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, 1200, 1), 1)
-            .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 1200, 1), 1)
-            .effect(() -> new MobEffectInstance(MobEffects.HEAL, 1), 1)
-            .alwaysEat()
-            .build();
-
     public MisoSoupItem() {
         super(
-            (new Properties()).food(
-                FOOD_PROPS
-            )
+            b -> b
+                .nutrition(8)
+                .saturationMod(0.6F)
+                .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 1200, 2), 1)
+                .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, 1200, 1), 1)
+                .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 1200, 1), 1)
+                .effect(() -> new MobEffectInstance(MobEffects.HEAL, 1), 1)
+                .alwaysEat()
         );
     }
     @Override
@@ -47,16 +41,6 @@ public class MisoSoupItem extends DogEddibleBowlFoodItem {
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
-    }
-    @Override
-    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getNutrition() * 5;
-    }
-
-    @Override
-    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
-            AbstractDog dog) {
-        return FOOD_PROPS.getEffects();
     }
 
     @Override

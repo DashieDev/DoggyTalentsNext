@@ -20,21 +20,16 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 public class GyudonItem extends DogEddibleBowlFoodItem {
-    public static FoodProperties FOOD_PROPS = 
-        (new FoodProperties.Builder())
-            .nutrition(10)
-            .saturationMod(0.6F)
-            .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400, 1), 1)
-            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 1200, 1), 1)
-            .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 2400, 1), 1)
-            .effect(() -> new MobEffectInstance(MobEffects.HEAL, 1), 1)
-            .build();
 
     public GyudonItem() {
         super(
-            (new Properties()).food(
-                FOOD_PROPS
-            )
+            b -> b
+                .nutrition(10)
+                .saturationMod(0.6F)
+                .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400, 1), 1)
+                .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 1200, 1), 1)
+                .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 2400, 1), 1)
+                .effect(() -> new MobEffectInstance(MobEffects.HEAL, 1), 1)
         );
     }
     @Override
@@ -44,16 +39,6 @@ public class GyudonItem extends DogEddibleBowlFoodItem {
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
-    }
-    @Override
-    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getNutrition() * 5;
-    }
-
-    @Override
-    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
-            AbstractDog dog) {
-        return FOOD_PROPS.getEffects();
     }
 
     @Override

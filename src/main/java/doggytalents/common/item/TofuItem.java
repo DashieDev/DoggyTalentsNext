@@ -24,9 +24,11 @@ public class TofuItem extends DogEddibleItem {
 
     public TofuItem() {
         super(
-            (new Properties()).food(
-                FOOD_PROPS
-            ).stacksTo(8)
+            b -> b
+                .stacksTo(8),
+            b -> b
+                .nutrition(5)
+                .saturationMod(0.6F)
         );
     }
     @Override
