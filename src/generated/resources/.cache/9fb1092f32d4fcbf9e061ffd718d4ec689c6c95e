@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-09T00:45:37.9440108	Recipes
+// 1.20.1	2023-12-09T01:22:12.0931473	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 5bb21f3599e9ca5620bca26f572185ad321709a2 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -177,7 +177,7 @@ a8c635bc1eeff39b5e58b1502fd57752e00c0316 data/doggytalents/recipes/throw_bone_we
 d9f99518764735dfb233ade95161c52cd8c7adf0 data/doggytalents/recipes/throw_stick.json
 ee82bce7edd473e45aff8b389d706f60f8042a3f data/doggytalents/recipes/throw_stick_wet.json
 475e991fb38f76652be9578e20e9c0f759d3e397 data/doggytalents/recipes/tofu.json
-28b8a6953c7a610f1c5a214565ada64e4c2232ea data/doggytalents/recipes/training_treat.json
+641f5c45b1ace71f26e3b3c10fd6e4b849aa2a92 data/doggytalents/recipes/training_treat.json
 5b0896af5e5075a728c9fce7870d18de78b6d7fa data/doggytalents/recipes/treat_bag.json
 28e1d2c86ce1394ef49ce9d028c0d4cb0fca9f91 data/doggytalents/recipes/whistle.json
 15acbe6c0931a0a3fd1cfb3c033b1263a8c9748d data/doggytalents/recipes/wig.json
