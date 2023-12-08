@@ -86,8 +86,7 @@ public class DogFeelingNakeyGoal extends Goal {
         if (!naked)
             turnedNaked = false;
         if (naked && !prevNaked)
-            //turnedNaked = dog.getRandom().nextInt(3) == 0;
-            turnedNaked = true;
+            turnedNaked = dog.getRandom().nextInt(3) == 0;
         if (naked)
             updateInterval = (1 + dog.getRandom().nextInt(10)) * 20;
         else 
