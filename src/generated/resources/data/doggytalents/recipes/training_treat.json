@@ -2,6 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
+    "C": {
+      "item": "doggytalents:rice_bowl"
+    },
     "T": {
       "item": "minecraft:string"
     },
@@ -13,17 +16,15 @@
     },
     "X": {
       "item": "minecraft:sugar"
-    },
-    "Y": {
-      "item": "minecraft:wheat"
     }
   },
   "pattern": [
     "TUV",
     "XXX",
-    "YYY"
+    " C "
   ],
   "result": {
+    "count": 3,
     "item": "doggytalents:training_treat"
   },
   "show_notification": true
