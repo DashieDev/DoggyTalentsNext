@@ -55,11 +55,6 @@ public class NattoItem extends DogEddibleBowlFoodItem  {
     }
 
     @Override
-    public ItemStack getReturnStackAfterDogConsume(ItemStack useStack, AbstractDog dog) {
-        return new ItemStack(Items.BOWL);
-    }
-
-    @Override
     public boolean alwaysEatWhenDogConsume(AbstractDog dog) {
         return true;
     }
