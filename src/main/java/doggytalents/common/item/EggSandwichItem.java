@@ -12,7 +12,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class EggSandwichItem extends Item implements IDogEddible {
+public class EggSandwichItem extends DogEddibleItem {
 
     private static FoodProperties FOOD_PROPS = (new FoodProperties.Builder())
         .nutrition(6)

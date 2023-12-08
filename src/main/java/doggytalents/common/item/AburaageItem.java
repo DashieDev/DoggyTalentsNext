@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class AburaageItem extends Item implements IDogEddible {
+public class AburaageItem extends DogEddibleItem {
 
     public static final FoodProperties FOOD_PROPS =
         (new FoodProperties.Builder())
