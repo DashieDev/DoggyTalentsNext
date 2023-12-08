@@ -19,7 +19,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class GoldenAFiveWagyuItem extends Item implements IDogEddible {
+public class GoldenAFiveWagyuItem extends DogEddibleItem {
 
     public static final FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())

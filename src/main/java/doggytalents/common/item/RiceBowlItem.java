@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
-public class RiceBowlItem extends Item implements IDogEddible {
+public class RiceBowlItem extends DogEddibleItem {
 
     public static final FoodProperties FOOD_PROPS =
         (new FoodProperties.Builder())
