@@ -2785,6 +2785,7 @@ public class Dog extends AbstractDog {
                     this.remove(RemovalReason.DISCARDED);
                 }
             }
+            compound.putBoolean("DTN_DupeDetect_marked", true);
             if (strategy == 0)
                 throw new IllegalStateException(
                     "This dog has been restored from third-party storage which may leads to duplications."
@@ -2797,6 +2798,8 @@ public class Dog extends AbstractDog {
             return false;
         if (!tag.contains("DTN_DupeDetect_UUID", Tag.TAG_COMPOUND))
             return false;
+        if (tag.contains("DTN_DupeDetect_marked"))
+            return tag.getBoolean("DTN_DupeDetect_marked");
         var backupUUIDTag = tag.getCompound("DTN_DupeDetect_UUID");
         var uuid = backupUUIDTag.getUUID("dtn_uuid_self");
         var ownerUUID = backupUUIDTag.getUUID("dtn_uuid_owner");
