@@ -81,16 +81,16 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_master_treat", has(DoggyItems.SUPER_TREAT.get()))
             .save(consumer);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.TRAINING_TREAT.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.TRAINING_TREAT.get(), 3)
             .pattern("TUV")
             .pattern("XXX")
-            .pattern("YYY")
+            .pattern(" C ")
             .define('T', Items.STRING)
             .define('U', Items.BONE)
             .define('V', Items.GUNPOWDER)
             .define('X', Items.SUGAR)
-            .define('Y', Items.WHEAT)
-            .unlockedBy("has_wheat", has(Items.WHEAT))
+            .define('C', DoggyItems.RICE_BOWL.get())
+            .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
             .save(consumer);
             
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.WHISTLE.get(), 1)
