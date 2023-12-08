@@ -18,7 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class NattoRiceItem extends BowlFoodItem implements IDogEddible{
+public class NattoRiceItem extends DogEddibleBowlFoodItem {
     public static FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())
             .nutrition(5)
@@ -29,7 +29,7 @@ public class NattoRiceItem extends BowlFoodItem implements IDogEddible{
         super(
             (new Properties()).food(
                 FOOD_PROPS
-            ).stacksTo(1).craftRemainder(Items.BOWL)
+            )
         );
     }
     @Override
@@ -54,9 +54,5 @@ public class NattoRiceItem extends BowlFoodItem implements IDogEddible{
     @Override
     public boolean alwaysEatWhenDogConsume(AbstractDog dog) {
         return true;
-    }
-    @Override
-    public ItemStack getReturnStackAfterDogConsume(ItemStack useStack, AbstractDog dog) {
-        return new ItemStack(Items.BOWL);
     }
 }

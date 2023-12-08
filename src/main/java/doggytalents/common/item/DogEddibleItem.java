@@ -1,36 +1,35 @@
-package doggytalents.common.entity;
+package doggytalents.common.item;
 
 import javax.annotation.Nullable;
 
 import doggytalents.api.inferface.AbstractDog;
-import doggytalents.api.inferface.IDogFoodHandler;
-import doggytalents.common.item.IDogEddible;
 import doggytalents.common.network.packet.ParticlePackets;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class DogEddibleFoodHandler implements IDogFoodHandler {
-    
-    @Override
-    public boolean isFood(ItemStack stackIn) {
-        return stackIn.getItem() instanceof IDogEddible;
+public abstract class DogEddibleItem extends Item implements IDogEddible {
+
+    public DogEddibleItem(Properties itemProps) {
+        super(itemProps);
     }
 
     @Override
-    public boolean canConsume(AbstractDog dogIn, ItemStack stackIn, @Nullable Entity entityIn) {
-        return this.isFood(stackIn);
+    public boolean isFood(ItemStack stack) {
+        return stack.getItem() == this;
+    }
+
+    @Override
+    public boolean canConsume(AbstractDog dog, ItemStack stackIn, @Nullable Entity entityIn) {
+        return !dog.isDefeated() && isFood(stackIn);
     }
 
     @Override
     public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
-        var item = stack.getItem();
-
-        if (!(item instanceof IDogEddible dogEddible))
-            return InteractionResult.FAIL;
+        var dogEddible = this;
         
         if (!dogEddible.alwaysEatWhenDogConsume(dog) && !dog.canStillEat()) {
             return InteractionResult.FAIL;
@@ -50,7 +49,7 @@ public class DogEddibleFoodHandler implements IDogFoodHandler {
 
             if (dog.level() instanceof ServerLevel) {
                 ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(
-                    dog, new ItemStack(item));
+                    dog, new ItemStack(this));
             }
             dog.playSound(
                 dogEddible.getDogEatingSound(dog), 
@@ -66,5 +65,5 @@ public class DogEddibleFoodHandler implements IDogFoodHandler {
 
         return InteractionResult.SUCCESS;
     }
-
+    
 }

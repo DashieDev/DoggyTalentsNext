@@ -14,7 +14,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class TofuItem extends Item implements IDogEddible {
+public class TofuItem extends DogEddibleItem {
 
     public static final FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())

@@ -20,7 +20,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
-public class GoldenAFiveWagyuItem extends Item implements IDogEddible {
+public class GoldenAFiveWagyuItem extends DogEddibleItem {
 
     public static final FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())

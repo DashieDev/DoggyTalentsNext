@@ -17,7 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class OnsenTamagoItem extends Item implements IDogEddible{
+public class OnsenTamagoItem extends DogEddibleItem{
 
     public static FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())
