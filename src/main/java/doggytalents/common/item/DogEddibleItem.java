@@ -1,6 +1,12 @@
 package doggytalents.common.item;
 
+import java.util.List;
+import java.util.function.Function;
+
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.mojang.datafixers.util.Pair;
 
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.network.packet.ParticlePackets;
@@ -8,13 +14,69 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public abstract class DogEddibleItem extends Item implements IDogEddible {
 
-    public DogEddibleItem(Properties itemProps) {
-        super(itemProps);
+    private static FoodProperties NULL_PROPS = 
+        (new FoodProperties.Builder())
+            .nutrition(0)
+            .build();
+
+    private final FoodProperties nullProps;
+    private final FoodProperties actualFoodProps;
+    private FoodProperties currentFoodProps;
+
+    public DogEddibleItem(Properties itemProps, FoodProperties foodProps) {
+        super(itemProps.food(NULL_PROPS));
+        if (foodProps != null)
+            actualFoodProps = foodProps;
+        else 
+            actualFoodProps = NULL_PROPS;
+
+        var nullPropsBuilder = (new FoodProperties.Builder())
+            .nutrition(0);
+        boolean changed = false;
+        if (actualFoodProps.canAlwaysEat()) {
+            changed = true;
+            nullPropsBuilder.alwaysEat();
+        }
+        if (changed)
+            nullProps = nullPropsBuilder.build();
+        else
+            nullProps = NULL_PROPS;
+            
+        currentFoodProps = nullProps;
+    }
+
+    public DogEddibleItem(FoodProperties foodProperties) {
+        this(new Properties(), foodProperties);
+    }
+
+    public DogEddibleItem(Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
+        this(
+            new Properties(), 
+            propsCreator.apply(new FoodProperties.Builder())
+                .build()
+        );
+    }
+
+    public DogEddibleItem(Function<Item.Properties, Item.Properties> itemPropsCreator,
+        Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
+    
+        this(itemPropsCreator.apply(new Properties()),
+            propsCreator.apply(new FoodProperties.Builder()).build());
+    }
+
+    @Override
+    @Nullable
+    public FoodProperties getFoodProperties() {
+        return this.currentFoodProps;
     }
 
     @Override
@@ -64,6 +126,26 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
         }
 
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
+        return actualFoodProps.getNutrition() * 5;
+    }
+
+    @Override
+    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+            AbstractDog dog) {
+        return actualFoodProps.getEffects();
+    }
+
+    @Override
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+        if (entity instanceof Player)
+            currentFoodProps = actualFoodProps;
+        var ret = super.finishUsingItem(stack, level, entity);
+        currentFoodProps = nullProps;
+        return ret;
     }
     
 }

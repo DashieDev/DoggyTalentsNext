@@ -7,24 +7,12 @@ import net.minecraft.world.item.ItemStack;
 
 public class SausageItem extends DogEddibleItem {
 
-    public static final FoodProperties FOOD_PROPS = 
-        (new FoodProperties.Builder())
-            .nutrition(3)
-            .saturationMod(0.6F)
-            .meat()
-            .build();
-
     public SausageItem() {
         super(
-            (new Properties()).food(
-                FOOD_PROPS
-            )
+            b -> b
+                .nutrition(3)
+                .saturationMod(0.6F)
         );
-    }
-
-    @Override
-    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getNutrition() * 5;
     }
     
 }

@@ -15,17 +15,11 @@ import net.minecraft.world.level.Level;
 
 public class AburaageItem extends DogEddibleItem {
 
-    public static final FoodProperties FOOD_PROPS =
-        (new FoodProperties.Builder())
-            .nutrition(6)
-            .saturationMod(0.8F)
-            .build();
-
     public AburaageItem() {
         super(
-            (new Properties()).food(
-                FOOD_PROPS
-            )
+            b -> b
+            .nutrition(6)
+            .saturationMod(0.8F)
         );
     }
     @Override
@@ -35,10 +29,5 @@ public class AburaageItem extends DogEddibleItem {
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
-    }
-
-    @Override
-    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getNutrition() * 5;
     }
 }

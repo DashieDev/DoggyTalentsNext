@@ -21,16 +21,15 @@ public class OnsenTamagoItem extends DogEddibleItem{
 
     public static FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())
-            .nutrition(4)
-            .saturationMod(0.6F)
-            .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 600, 0), 1)
+            
             .build();
 
     public OnsenTamagoItem() {
         super(
-            (new Properties()).food(
-                FOOD_PROPS
-            ).stacksTo(1).craftRemainder(Items.BUCKET)
+            b -> b
+                .nutrition(4)
+                .saturationMod(0.6F)
+                .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 600, 0), 1)
         );
     }
     @Override

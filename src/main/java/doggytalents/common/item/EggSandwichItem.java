@@ -14,26 +14,13 @@ import net.minecraft.world.item.ItemStack;
 
 public class EggSandwichItem extends DogEddibleItem {
 
-    private static FoodProperties FOOD_PROPS = (new FoodProperties.Builder())
-        .nutrition(6)
-        .saturationMod(0.6F)
-        .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 60, 1), 1)
-        .build();
-
     public EggSandwichItem() {
         super(
-            (new Properties()).food(FOOD_PROPS)
+            b -> b
+                .nutrition(6)
+                .saturationMod(0.6F)
+                .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 60, 1), 1)
         );
-    }
-
-    @Override
-    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getNutrition() * 5;
-    }
-
-    @Override
-    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getEffects();
     }
 
     @Override
