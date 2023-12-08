@@ -26,7 +26,7 @@ public class EnergizerStick extends Item implements IDogFoodHandler {
 
     @Override
     public boolean canConsume(AbstractDog dog, ItemStack stackIn, Entity entityIn) {
-        return !dog.isDefeated();
+        return !dog.isDefeated() && isFood(stackIn);
     }
 
     @Override
