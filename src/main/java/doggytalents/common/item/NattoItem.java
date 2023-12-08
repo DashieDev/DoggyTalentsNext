@@ -19,7 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class NattoItem extends BowlFoodItem implements IDogEddible {
+public class NattoItem extends DogEddibleBowlFoodItem  {
 
     public static FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())

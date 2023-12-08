@@ -8,7 +8,7 @@ import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class SoyMilkItem extends BowlFoodItem implements IDogEddible {
+public class SoyMilkItem extends DogEddibleBowlFoodItem  {
 
     public static FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())
@@ -20,7 +20,7 @@ public class SoyMilkItem extends BowlFoodItem implements IDogEddible {
         super(
             (new Properties()).food(
                 FOOD_PROPS
-            ).stacksTo(1).craftRemainder(Items.BOWL)
+            )
         );
     }
 
@@ -32,11 +32,6 @@ public class SoyMilkItem extends BowlFoodItem implements IDogEddible {
     @Override
     public boolean alwaysEatWhenDogConsume(AbstractDog dog) {
         return true;
-    }
-
-    @Override
-    public ItemStack getReturnStackAfterDogConsume(ItemStack useStack, AbstractDog dog) {
-        return new ItemStack(Items.BOWL);
     }
 
     @Override

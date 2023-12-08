@@ -5,7 +5,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class OnigiriItem extends Item implements IDogEddible {
+public class OnigiriItem extends DogEddibleItem {
 
     public static final FoodProperties FOOD_PROPS = 
         (new FoodProperties.Builder())
