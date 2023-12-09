@@ -4164,13 +4164,8 @@ public class Dog extends AbstractDog {
         default:
             break;
         case WATER:
-            if (isDogFollowingSomeone())
-                return 0;
-            if (this.canSwimUnderwater() && this.isInWater())
-                return 0;
-            break;
         case WATER_BORDER:
-            if (this.canSwimUnderwater() && this.isInWater())
+            if (shouldDogOmitWaterPathWeight())
                 return 0;
             break;
         case LAVA:
@@ -4181,6 +4176,18 @@ public class Dog extends AbstractDog {
             break;
         }
         return super.getPathfindingMalus(type);
+    }
+
+    private boolean shouldDogOmitWaterPathWeight() {
+        if (isDogFollowingSomeone())
+            return true;
+        if (!this.isInWater())
+            return false;
+        if (this.canBreatheUnderwater())
+            return true;
+        if (this.canSwimUnderwater() && !this.isLowAirSupply())
+            return true;
+        return false;
     }
 
     public boolean shouldDogBlockFloat() {
