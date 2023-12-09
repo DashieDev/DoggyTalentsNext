@@ -34,69 +34,13 @@ import net.minecraftforge.fluids.FluidType;
 
 public class HellHoundTalent extends TalentInstance {
 
-    private static final UUID FIRE_SWIM_BOOST_ID = UUID.fromString("69192651-74c8-4366-8375-a488628f4556");
-
-    private float oldLavaCost;
-    private float oldFireCost;
-    private float oldDangerFireCost;
-
     private final int SEARCH_RANGE = 3;
     private int tickUntilSearch = 0;
     private int fireDamageAccumulate;
     private int lavaDamageAccumulate;
 
-    private boolean swimming;
-
     public HellHoundTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
-    }
-
-    @Override
-    public void init(AbstractDog dog) {
-        if (this.level() < 5) return; //HOTFIX!🔥🔥🔥
-        if (dog.level().isClientSide)
-            return;
-        this.oldLavaCost = dog.getPathfindingMalus(BlockPathTypes.LAVA);
-        this.oldFireCost = dog.getPathfindingMalus(BlockPathTypes.DAMAGE_FIRE);
-        this.oldDangerFireCost = dog.getPathfindingMalus(BlockPathTypes.DANGER_FIRE);
-
-        dog.setPathfindingMalus(BlockPathTypes.LAVA, 8.0f);
-        dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0f);
-        dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0f);
-        if (dog instanceof Dog) {
-            swimming = false;
-        }
-    }
-
-    @Override
-    public void set(AbstractDog dog, int levelBefore) {
-        if (dog.level().isClientSide)
-            return;
-        if (levelBefore >= 5 && this.level() < 5) {
-            dog.setPathfindingMalus(BlockPathTypes.LAVA, this.oldLavaCost);
-            dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, this.oldFireCost);
-            dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, this.oldDangerFireCost);
-        }
-        if (levelBefore < 5 && this.level() >= 5) {
-            this.oldLavaCost = dog.getPathfindingMalus(BlockPathTypes.LAVA);
-            this.oldFireCost = dog.getPathfindingMalus(BlockPathTypes.DAMAGE_FIRE);
-            this.oldDangerFireCost = dog.getPathfindingMalus(BlockPathTypes.DANGER_FIRE);
-
-            dog.setPathfindingMalus(BlockPathTypes.LAVA, 8.0f);
-            dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0f);
-            dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0f);
-        }
-    }
-
-    @Override
-    public void remove(AbstractDog dog) {
-        if (this.level() < 5) return;
-        if (dog.level().isClientSide)
-            return;
-        dog.setPathfindingMalus(BlockPathTypes.LAVA, this.oldLavaCost);
-        dog.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, this.oldFireCost);
-        dog.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, this.oldDangerFireCost);
-        this.stopSwimming(dog);
     }
 
     @Override
@@ -198,12 +142,6 @@ public class HellHoundTalent extends TalentInstance {
         if (this.level() < 5) return;
         if (!(d instanceof Dog dog))
             return;
-        if (dog.isInLava() && !this.swimming && !dog.isDogSwimming()) {
-            this.startSwimming(dog);  
-        } 
-        if (!dog.isInLava() && this.swimming) {
-            this.stopSwimming(dog);
-        }
         floatHellhound(dog);
         if (dog != null) {
             if (dog.isShakingLava()) {
@@ -250,16 +188,6 @@ public class HellHoundTalent extends TalentInstance {
         }
     }
 
-    private void applySwimAttributes(AbstractDog dog){
-        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.get(), FIRE_SWIM_BOOST_ID, (dd, u) -> 
-            new AttributeModifier(u, "Lava Swim Boost", 4, Operation.ADDITION)
-        );
-    }
-
-    private void removeSwimAttributes(AbstractDog dog) {
-        dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.get(), FIRE_SWIM_BOOST_ID);
-    }
-
     @Override
     public InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type) {
         if (level < 5) return super.inferType(dog, type);
@@ -276,15 +204,5 @@ public class HellHoundTalent extends TalentInstance {
             return InteractionResultHolder.success(BlockPathTypes.BLOCKED);
         }
         return super.inferType(dog, type);
-    }
-
-    public void startSwimming(AbstractDog dog) {
-        dog.setDogSwimming(true);
-        swimming = true;
-    }
-
-    public void stopSwimming(AbstractDog dog) {
-        dog.setDogSwimming(false);
-        swimming = false;
     }
 }

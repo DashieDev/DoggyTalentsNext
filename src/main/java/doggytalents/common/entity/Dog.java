@@ -4170,10 +4170,16 @@ public class Dog extends AbstractDog {
         case DAMAGE_FIRE:
         case DANGER_FIRE:
             if (fireImmune())
-                return type == BlockPathTypes.LAVA ? 8 : 0;
+                return 0;
             break;
         }
         return super.getPathfindingMalus(type);
+    }
+
+    public boolean shouldDogBlockFloat() {
+        if (fireImmune() && isInLava())
+            return true;
+        return false;
     }
 
     private boolean isDogFollowingSomeone;
