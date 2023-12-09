@@ -148,10 +148,6 @@ public class SwimmerDogTalent extends TalentInstance {
             dog.setInSittingPose(false);
         }
         applySwimAttributes(dog);
-        this.oldWaterCost = dog.getPathfindingMalus(BlockPathTypes.WATER);
-        this.oldWaterBorderCost = dog.getPathfindingMalus(BlockPathTypes.WATER_BORDER);
-        dog.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 0);
-        dog.setPathfindingMalus(BlockPathTypes.WATER, 0);
         dog.setDogSwimming(true);
     }
 
@@ -159,8 +155,6 @@ public class SwimmerDogTalent extends TalentInstance {
         dog.resetMoveControl();
         dog.resetNavigation();
         removeSwimAttributes(dog);
-        dog.setPathfindingMalus(BlockPathTypes.WATER_BORDER, this.oldWaterBorderCost);
-        dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
         dog.setDogSwimming(false);
     }
 
