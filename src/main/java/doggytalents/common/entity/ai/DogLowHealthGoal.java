@@ -78,7 +78,7 @@ public class DogLowHealthGoal {
         public void start() {
             this.timeToRecalcPath = 0;
             this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
-            this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+            this.dog.setDogFollowingSomeone(true);
             this.whine = true;
             if (this.tickTillInitTeleport <= 0) {
                 this.tickTillInitTeleport = 10;
@@ -103,7 +103,7 @@ public class DogLowHealthGoal {
 
             this.owner = null;
             this.dog.getNavigation().stop();
-            this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+            this.dog.setDogFollowingSomeone(false);
             this.dog.setBegging(false);
         }
 
@@ -233,7 +233,7 @@ public class DogLowHealthGoal {
         @Override
         public void start() {
             this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
-            this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+            this.dog.setDogFollowingSomeone(true);
             this.dog.getNavigation().stop();
             this.moveAwayPos = this.findMoveAwayPos();
             if (this.moveAwayPos != null) {
@@ -342,7 +342,7 @@ public class DogLowHealthGoal {
         @Override
         public void stop() {
             this.dog.getNavigation().stop();
-            this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+            this.dog.setDogFollowingSomeone(false);
             this.owner = null;
             this.enemies = List.of();
             this.moveAwayPos = null;

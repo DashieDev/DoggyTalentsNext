@@ -82,13 +82,13 @@ public class DogEatFromChestDogGoal extends Goal {
     public void start() {
         this.tickTillPathRecalc = 0;
         this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
-        this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.dog.setDogFollowingSomeone(true);
     }
 
     @Override
     public void stop() {
         this.dog.getNavigation().stop();
-        this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+        this.dog.setDogFollowingSomeone(false);
         this.dog.setBegging(false);
     }
 
