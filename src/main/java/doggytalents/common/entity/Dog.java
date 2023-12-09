@@ -4174,6 +4174,12 @@ public class Dog extends AbstractDog {
         case WATER:
             if (isDogFollowingSomeone())
                 return 0;
+            if (this.canSwimUnderwater() && this.isInWater())
+                return 0;
+            break;
+        case WATER_BORDER:
+            if (this.canSwimUnderwater() && this.isInWater())
+                return 0;
             break;
         case LAVA:
         case DAMAGE_FIRE:
