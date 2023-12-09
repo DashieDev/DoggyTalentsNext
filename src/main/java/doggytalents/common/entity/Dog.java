@@ -4167,6 +4167,34 @@ public class Dog extends AbstractDog {
         return dogPathNav;
     }
 
+    public float getPathfindingMalus(BlockPathTypes type) {
+        switch (type) {
+        default:
+            break;
+        case WATER:
+            if (isDogFollowingSomeone())
+                return 0;
+            break;
+        case LAVA:
+        case DAMAGE_FIRE:
+        case DANGER_FIRE:
+            if (fireImmune())
+                return type == BlockPathTypes.LAVA ? 8 : 0;
+            break;
+        }
+        return super.getPathfindingMalus(type);
+    }
+
+    private boolean isDogFollowingSomeone;
+
+    public boolean isDogFollowingSomeone() {
+        return isDogFollowingSomeone;    
+    }
+
+    public void setDogFollowingSomeone(boolean val) {
+        this.isDogFollowingSomeone = val;
+    }
+
     public List<IDogAlteration> getAlterations() {
         return this.alterations;
     }

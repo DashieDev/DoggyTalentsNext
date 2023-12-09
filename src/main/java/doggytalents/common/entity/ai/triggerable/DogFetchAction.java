@@ -78,7 +78,7 @@ public class DogFetchAction extends TriggerableAction {
     private void initFetch() {
         this.tickTillPathRecalc = 1;
         this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
-        this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.dog.setDogFollowingSomeone(true);
         var attrib = this.dog.getAttribute(Attributes.FOLLOW_RANGE);
         if (attrib == null) return;
         this.oldRangeSense = attrib.getValue();
@@ -89,7 +89,7 @@ public class DogFetchAction extends TriggerableAction {
     private void finishFetch() {
         if (!this.initFetch) return;
         this.dog.getNavigation().stop();
-        this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+        this.dog.setDogFollowingSomeone(false);
         var attrib = this.dog.getAttribute(Attributes.FOLLOW_RANGE);
         if (attrib == null) return;
         attrib.setBaseValue(this.oldRangeSense);
