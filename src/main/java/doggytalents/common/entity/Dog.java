@@ -1473,15 +1473,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean canBreatheUnderwater() {
-        for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.canBreatheUnderwater(this);
-
-            if (result.shouldSwing()) {
-                return true;
-            }
-        }
-
-        return super.canBreatheUnderwater();
+        return alterationProps.canBreatheUnderwater();
     }
 
     @Override
