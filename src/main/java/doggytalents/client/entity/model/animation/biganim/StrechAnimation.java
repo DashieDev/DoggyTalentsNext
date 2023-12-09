@@ -8,7 +8,7 @@ import net.minecraft.client.animation.KeyframeAnimations;
 public class StrechAnimation {
     
     public static AnimationDefinition build() {
-        var animDef = AnimationDefinition.Builder.withLength(3.5f).looping();
+        var animDef = AnimationDefinition.Builder.withLength(3.5f);
         build1(animDef);
         build2(animDef);
         build3(animDef);
