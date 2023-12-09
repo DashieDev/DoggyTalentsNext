@@ -20,6 +20,7 @@ import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToOwner
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
@@ -360,7 +361,11 @@ public class DogUtil {
                 break;
             }
         }
+        
         if (dog.canDogFly() && pathnodetype == BlockPathTypes.OPEN)
+            alterationWalkable = true;
+        if (dog.fireImmune() && pathnodetype == BlockPathTypes.OPEN
+            && dog.level().getFluidState(pos.below()).is(FluidTags.LAVA))
             alterationWalkable = true;
         if (pathnodetype != BlockPathTypes.WALKABLE && !alterationWalkable) {
             return false;
