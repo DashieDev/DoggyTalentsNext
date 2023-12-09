@@ -17,6 +17,8 @@ public class DogFloatGoal extends FloatGoal {
     
     @Override
     public boolean canUse() {
+        if (this.dog.shouldDogBlockFloat())
+            return false;
         if (this.dog.isInLava() && this.dog.isDefeated()) {
             return this.dog.getFluidHeight(FluidTags.LAVA) > this.dog.getFluidJumpThreshold() && !this.dog.isDogSwimming();
         }
