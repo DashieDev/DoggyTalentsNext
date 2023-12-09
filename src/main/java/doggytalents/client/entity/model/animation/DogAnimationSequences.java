@@ -2803,7 +2803,7 @@ public class DogAnimationSequences {
     
     public static final AnimationDefinition PROTEST = ProtestAnimation.build();
 
-    public static final AnimationDefinition STAND_IDLE_2 = AnimationDefinition.Builder.withLength(2f).looping()
+    public static final AnimationDefinition STAND_IDLE_2 = AnimationDefinition.Builder.withLength(2f)
         .addAnimation("right_ear",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
                 new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
@@ -3891,7 +3891,7 @@ public class DogAnimationSequences {
                 new Keyframe(6f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM))).build();
 
-    public static final AnimationDefinition SIT_IDLE = AnimationDefinition.Builder.withLength(2f).looping()
+    public static final AnimationDefinition SIT_IDLE = AnimationDefinition.Builder.withLength(2f)
         .addAnimation("head",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
                 new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
@@ -4797,7 +4797,7 @@ public class DogAnimationSequences {
     public static final AnimationDefinition BELLY_RUB = BellyRubAnimation.build();
 
 
-    public static final AnimationDefinition SIT_LOOK_AROUND = AnimationDefinition.Builder.withLength(5f).looping()
+    public static final AnimationDefinition SIT_LOOK_AROUND = AnimationDefinition.Builder.withLength(5f)
         .addAnimation("head",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
                 new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
