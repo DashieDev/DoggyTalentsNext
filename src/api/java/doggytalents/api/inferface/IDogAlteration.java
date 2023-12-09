@@ -105,10 +105,6 @@ public interface IDogAlteration {
         return InteractionResultHolder.pass(0F);
     }
 
-    default InteractionResult canBreatheUnderwater(AbstractDog dogIn) {
-        return InteractionResult.PASS;
-    }
-
     default InteractionResult canAttack(AbstractDog dogIn, LivingEntity target) {
         return InteractionResult.PASS;
     }
