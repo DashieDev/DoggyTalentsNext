@@ -161,11 +161,6 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult canBreatheUnderwater(AbstractDog dogIn) {
-        return this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
-    }
-
-    @Override
     public InteractionResultHolder<Integer> decreaseAirSupply(AbstractDog dogIn, int air) {
         if (this.level() > 0 && dogIn.getRandom().nextInt(this.level() + 1) > 0) {
             return InteractionResultHolder.success(air);
@@ -186,6 +181,8 @@ public class SwimmerDogTalent extends TalentInstance {
     @Override
     public void props(AbstractDog dog, DogAlterationProps props) {
         props.setCanSwimUnderwater();
+        if (this.level() >= 5)
+            props.setCanBreatheUnderwater();
     }
 
     @Override
