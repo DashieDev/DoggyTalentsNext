@@ -2729,8 +2729,6 @@ public class DogAnimationSequences {
                 new Keyframe(0.6766666f, KeyframeAnimations.posVec(0f, 3f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM), 
                 new Keyframe(0.7916766f, KeyframeAnimations.posVec(0f, 0f, 0f),
-                    AnimationChannel.Interpolations.CATMULLROM), 
-                new Keyframe(1f, KeyframeAnimations.posVec(0f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM)))
         .addAnimation("root",
             new AnimationChannel(AnimationChannel.Targets.ROTATION,
@@ -2738,9 +2736,7 @@ public class DogAnimationSequences {
                     AnimationChannel.Interpolations.CATMULLROM),
                 new Keyframe(0.20834334f, KeyframeAnimations.degreeVec(2.5f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM),
-                new Keyframe(0.7916766f, KeyframeAnimations.degreeVec(-362.5f, 0f, 0f),
-                    AnimationChannel.Interpolations.CATMULLROM),
-                new Keyframe(1f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                new Keyframe(0.7916766f, KeyframeAnimations.degreeVec(-360f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM)))
         .addAnimation("right_ear",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
