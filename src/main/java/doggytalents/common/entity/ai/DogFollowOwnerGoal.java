@@ -73,7 +73,7 @@ public class DogFollowOwnerGoal extends Goal {
     public void start() {
         this.timeToRecalcPath = 0;
         this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
-        this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.dog.setDogFollowingSomeone(true);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class DogFollowOwnerGoal extends Goal {
 
         this.owner = null;
         this.dog.getNavigation().stop();
-        this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+        this.dog.setDogFollowingSomeone(false);
     }
 
     @Override

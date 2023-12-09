@@ -78,7 +78,7 @@ public class DogHungryGoal extends Goal {
     public void start() {
         this.timeToRecalcPath = 0;
         this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
-        this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.dog.setDogFollowingSomeone(true);
         this.looktime = 0;
     }
 
@@ -97,7 +97,7 @@ public class DogHungryGoal extends Goal {
 
         this.owner = null;
         this.dog.getNavigation().stop();
-        this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+        this.dog.setDogFollowingSomeone(false);
         this.dog.setBegging(false);
         this.remindtime = 200 + dog.getRandom().nextInt(40) * 20;
     }
