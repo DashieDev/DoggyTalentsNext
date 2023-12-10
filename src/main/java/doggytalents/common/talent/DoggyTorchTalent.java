@@ -64,11 +64,13 @@ public class DoggyTorchTalent extends TalentInstance {
 
     @Override
     public void writeToBuf(FriendlyByteBuf buf) {
+        super.writeToBuf(buf);
         buf.writeBoolean(placingTorch);
     }
 
     @Override
     public void readFromBuf(FriendlyByteBuf buf) {
+        super.readFromBuf(buf);
         placingTorch = buf.readBoolean();
     }
 
