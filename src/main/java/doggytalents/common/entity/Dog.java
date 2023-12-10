@@ -2130,9 +2130,6 @@ public class Dog extends AbstractDog {
             if (data != null) data.update(this);
         }
         super.onRemovedFromWorld();
-        for (var x : this.alterations) {
-            x.remove(this);
-        }
     }
 
     @Override
@@ -2157,6 +2154,9 @@ public class Dog extends AbstractDog {
         }
         
         super.remove(removalReason);
+        for (var x : this.alterations) {
+            x.remove(this);
+        }
     }
     
     private void startShaking() {
