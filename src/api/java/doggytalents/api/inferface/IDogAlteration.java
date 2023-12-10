@@ -44,10 +44,10 @@ public interface IDogAlteration {
 
     /**
      * Called when this instance is about to be removed from the dog
-     * 's alterations list. Or the Dog Object owning this instance is 
-     * about to be removed. Notice that the later happens before the call 
-     * to save CompoundTag, hence info which need to be saved should always 
-     * be ready.
+     * 's alterations list. Or when the dog is removed from the world
+     * via remove(RemovalReason).
+     * Notice that this do not get called when setRemoved(RemovalReason) is called.
+     * to remove the dog.
      * 
      * @param dogIn The dog
      */
