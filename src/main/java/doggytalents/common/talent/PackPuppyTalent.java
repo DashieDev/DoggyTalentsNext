@@ -103,21 +103,20 @@ public class PackPuppyTalent extends TalentInstance {
         if (!(dogIn instanceof Dog dog))
             return;
         
-        var food = findFood(dog, dog);
-        if (food == null) 
+        if (!hasFood(dog))
             return;
 
         var hungry_dogs = getNearbyHungryDogs(dog);
         if (hungry_dogs.isEmpty()) return;
         for (var hungry_dog : hungry_dogs) {
-            checkAndFeedDog(dog, hungry_dog, food);
+            checkAndFeedDog(dog, hungry_dog);
         }
 
     }
 
-    private void checkAndFeedDog(Dog dog, Dog target, @NonNull ItemStack food) {
+    private void checkAndFeedDog(Dog dog, Dog target) {
         if (target == dog) {
-            FOOD_HANDLER.consume(dog, food, target);
+            tryFeed(dog, dog);
             return;
         }
         if (target.isBusy())
@@ -129,6 +128,17 @@ public class PackPuppyTalent extends TalentInstance {
         target.triggerAction(
             new DogEatFromChestDogAction(target, dog)
         );
+    }
+
+    private boolean tryFeed(Dog dog, Dog feeder) {
+        int foodSlot = findFoodInInv(dog, feeder);
+        if (foodSlot < 0)
+            return false;
+        var feedStack = this.inventory().getStackInSlot(foodSlot)
+            .copy();
+        FOOD_HANDLER.consume(dog, feedStack, feeder);
+        this.inventory().setStackInSlot(foodSlot, feedStack);
+        return true;
     }
 
     private List<Dog> getNearbyHungryDogs(Dog dog) {
@@ -201,23 +211,30 @@ public class PackPuppyTalent extends TalentInstance {
         return dogIn.isDoingFine() && dogIn.getTalent(DoggyTalents.PACK_PUPPY).isPresent();
     }
 
-    public static @Nullable ItemStack findFood(Dog finder, Dog target) {
-        var inventory = 
-            target.getTalent(DoggyTalents.PACK_PUPPY)
-            .map(
-                (inst) -> inst.cast(PackPuppyTalent.class)
-                .inventory()
-            ).orElse(null);
+    public boolean hasFood(Dog finder) {
+        return findFoodInInv(finder, finder) >= 0;
+    }
+
+    public int findFoodInInv(Dog finder, Dog target) {
+        var inventory = this.inventory();
         if (inventory == null)
-            return null;
+            return -1;
 
         for (int i = 0; i < inventory.getSlots(); i++) {
-            var stack = inventory.getStackInSlot(i);
-            if (FOOD_HANDLER.canConsume(finder, stack, target)) {
-                return stack;
+            var stack = inventory.getStackInSlot(i).copy();
+            if (FOOD_HANDLER.canConsume(target, stack, finder)) {
+                return i;
             }
         }
-        return null;
+        return -1;
+    }
+
+    public static PackPuppyTalent getInstanceFromDog(AbstractDog dog) {
+        return
+            dog.getTalent(DoggyTalents.PACK_PUPPY)
+            .map(
+                (inst) -> inst.cast(PackPuppyTalent.class)
+            ).orElse(null);
     }
 
     public static class DogEatFromChestDogAction extends TriggerableAction {
@@ -280,10 +297,10 @@ public class PackPuppyTalent extends TalentInstance {
         }
 
         private void checkAndEat() {
-            var food = findFood(dog, target);
-            if (food != null) {
-                FOOD_HANDLER.consume(dog, food, target);
-            }
+            var inst = getInstanceFromDog(target);
+            if (inst == null)
+                return;
+            inst.tryFeed(dog, target);
         }
 
         private boolean stillValidTarget() {  
@@ -291,7 +308,10 @@ public class PackPuppyTalent extends TalentInstance {
                 return false;
             if (dog.distanceToSqr(target) > 16*16) 
                 return false;
-            if (findFood(dog, target) == null)
+            var inst = getInstanceFromDog(target);
+            if (inst == null)
+                return false;
+            if (inst.findFoodInInv(target, dog) < 0)
                 return false;
             return true;
         }
