@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import doggytalents.DoggyAdvancementTriggers;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -104,7 +106,7 @@ public class SakeItem extends DogEddibleItem {
         return new ItemStack(Items.GLASS_BOTTLE);
     }
 
-    private void mayBoostOrDrunkEntity(LivingEntity entity) {
+    private void mayBoostOrDrunkEntity(LivingEntity entity, @Nullable Entity feeder) {
         float r = entity.getRandom().nextFloat();
         boolean drunk = r <= 0.4f;
         if (!drunk) {
@@ -119,6 +121,8 @@ public class SakeItem extends DogEddibleItem {
 
         int r_drunkTicks = 20 * (30 + entity.getRandom().nextInt(15));
         if (entity instanceof Dog dog) {
+            if (feeder instanceof ServerPlayer sP)
+                DoggyAdvancementTriggers.DOG_DRUNK_TRIGGER.trigger(dog, sP);
             dog.setDrunkTicks(r_drunkTicks);
         } else if (entity instanceof Player player) {
             r_drunkTicks = 60 * 20;
