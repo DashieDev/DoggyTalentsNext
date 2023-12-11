@@ -36,6 +36,12 @@ public class SakeItem extends DogEddibleItem {
 
     @Override
     public boolean canConsume(AbstractDog dog, ItemStack stackIn, @Nullable Entity entityIn) {
+        if (entityIn == null)
+            return false;
+        if (!(entityIn instanceof Player player))
+            return false;
+        if (dog.getOwner() != player)
+            return false;
         return !dog.isBaby() && super.canConsume(dog, stackIn, entityIn);
     }
 
