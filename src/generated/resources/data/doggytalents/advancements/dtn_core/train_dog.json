@@ -1,5 +1,5 @@
 {
-  "parent": "doggytalents:default/summon_dog",
+  "parent": "doggytalents:dtn_core/summon_dog",
   "criteria": {
     "train_dog": {
       "conditions": {

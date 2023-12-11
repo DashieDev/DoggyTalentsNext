@@ -1,3 +1,4 @@
-// 1.20.1	2023-11-25T16:21:39.0232875	Advancements
-2c0190f0a3469551de0ac930c7d79319dc46b939 data/doggytalents/advancements/default/summon_dog.json
-ef863732b6545079bb15a5dcb7be61144fe9b650 data/doggytalents/advancements/default/train_dog.json
+// 1.20.1	2023-12-12T01:00:28.670997	Advancements
+a0cef7f4698c32a98269ef9cb3669ef6aa3a43f8 data/doggytalents/advancements/default/get_dog_drunk.json
+2c0190f0a3469551de0ac930c7d79319dc46b939 data/doggytalents/advancements/dtn_core/summon_dog.json
+e7553f957c9eb32f942a034ec603d12fd1aa682c data/doggytalents/advancements/dtn_core/train_dog.json
