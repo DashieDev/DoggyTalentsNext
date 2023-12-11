@@ -40,6 +40,8 @@ public class SakeItem extends DogEddibleItem {
             return false;
         if (!(entityIn instanceof Player player))
             return false;
+        if (player.getCooldowns().isOnCooldown(this))
+            return false;
         if (dog.getOwner() != player)
             return false;
         return !dog.isBaby() && super.canConsume(dog, stackIn, entityIn);
@@ -48,7 +50,10 @@ public class SakeItem extends DogEddibleItem {
     @Override
     public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
         var ret = super.consume(dog, stack, entityIn);
-        mayBoostOrDrunkEntity(dog);
+        mayBoostOrDrunkEntity(dog, entityIn);
+        if (entityIn instanceof Player player) {
+            player.getCooldowns().addCooldown(this, 40);
+        }
         return ret;
     }
 
@@ -56,7 +61,8 @@ public class SakeItem extends DogEddibleItem {
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         var ret = super.finishUsingItem(stack, level, entity);
         if (entity instanceof Player player) {
-            mayBoostOrDrunkEntity(player);
+            mayBoostOrDrunkEntity(player, null);
+            player.getCooldowns().addCooldown(this, 40);
             if (!player.getAbilities().instabuild)
                 return new ItemStack(Items.GLASS_BOTTLE);
         }
