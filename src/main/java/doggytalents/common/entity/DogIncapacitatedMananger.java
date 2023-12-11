@@ -79,6 +79,7 @@ public class DogIncapacitatedMananger {
         this.dog.setAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT,
             (d, u) -> new AttributeModifier(u, "Defeated Slowness", -0.5f, Operation.MULTIPLY_TOTAL)
         );
+        this.dog.setDrunkTicks(0);
     }
 
     private void onExitingIncapMode() {

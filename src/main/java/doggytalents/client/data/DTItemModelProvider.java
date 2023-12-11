@@ -148,6 +148,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.ONSEN_TAMAGO);
         generated(DoggyItems.GYUDON);
         generated(DoggyItems.OYAKODON);
+        generated(DoggyItems.SAKE);
 
 
         blockItem(DoggyBlocks.DOG_BATH);
