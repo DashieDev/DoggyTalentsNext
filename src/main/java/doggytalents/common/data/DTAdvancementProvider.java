@@ -69,7 +69,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                                     .of(DoggyItems.DOGGY_CHARM.get())
                             )
                     )
-                    .save(consumer, Util.getResourcePath("default/summon_dog"));
+                    .save(consumer, Util.getResourcePath("dtn_core/summon_dog"));
             
             var train_dog_advancement = 
                 Advancement.Builder.advancement()
@@ -94,10 +94,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                                 )                              
                             )
                     )
-                    .save(consumer, Util.getResourcePath("default/train_dog"));
-            
-            
-            
+                    .save(consumer, Util.getResourcePath("dtn_core/train_dog"));
             // Old Advancement.
 
             // Advancement advancement = Advancement.Builder.advancement()
