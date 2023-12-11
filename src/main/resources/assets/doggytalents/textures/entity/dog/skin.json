@@ -562,6 +562,18 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "German Shorthaired Pointer",
+            "skin_id" : "german_pointer_shorthaired",
+            "use_model" : "german_pointer_shorthaired",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "German Wirehaired Pointer",
+            "skin_id" : "german_pointer_wirehaired",
+            "use_model" : "german_pointer_wirehaired",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Death",
             "skin_id" : "death",
             "use_model" : "death",
