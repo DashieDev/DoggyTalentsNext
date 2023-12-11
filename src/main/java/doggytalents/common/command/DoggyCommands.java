@@ -119,9 +119,6 @@ public class DoggyCommands {
 
     }
 
-    public static void registerSerilizers() {
-        ArgumentTypeInfos.registerByClass(UUIDArgument.class, SingletonArgumentInfo.contextFree(UUIDArgument::uuid));
-    }
 
     private static <S extends SharedSuggestionProvider> SuggestionProvider<S> getOwnerIdSuggestionsLocate() {
         return (context, builder) -> getOwnerIdSuggestions(DogLocationStorage.get(((CommandSourceStack)context.getSource()).getLevel()).getAll(), context, builder);
