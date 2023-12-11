@@ -62,6 +62,8 @@ public class DogAnimationRegistry {
         register(DogAnimation.REST_BELLY_LOOP, DogAnimationSequences2.REST_BELLY_LOOP);
         register(DogAnimation.REST_BELLY_END, DogAnimationSequences2.REST_BELLY_END);
         register(DogAnimation.NAKEY, DogAnimationSequences3.NAKEY);
+        register(DogAnimation.DRUNK_START, DogAnimationSequences3.DRUNK_START);
+        register(DogAnimation.DRUNK_LOOP, DogAnimationSequences2.REST_BELLY_LOOP);
     }
     
 }
