@@ -44,6 +44,8 @@ import doggytalents.client.entity.model.dog.DobermanModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.EnglishBulldogModel;
 import doggytalents.client.entity.model.dog.FrenchBulldogModel;
+import doggytalents.client.entity.model.dog.GermanPointerShorthaired;
+import doggytalents.client.entity.model.dog.GermanPointerWirehaired;
 import doggytalents.client.entity.model.dog.GermanShepherdModel;
 import doggytalents.client.entity.model.dog.HoundstoneModel;
 import doggytalents.client.entity.model.dog.HungarianPuliModel;
@@ -176,6 +178,8 @@ public class DogModelRegistry {
         register("zero", ctx ->  new ZeroModel(ctx.bakeLayer(ClientSetup.DOG_ZERO)));
         register("scraps", ctx ->  new ScrapsModel(ctx.bakeLayer(ClientSetup.DOG_SCRAPS)));
         register("sparky", ctx ->  new SparkyModel(ctx.bakeLayer(ClientSetup.DOG_SPARKY)));
+        register("german_pointer_shorthaired", ctx ->  new GermanPointerShorthaired(ctx.bakeLayer(ClientSetup.DOG_POINTER_SHORT)));
+        register("german_pointer_wirehaired", ctx ->  new GermanPointerWirehaired(ctx.bakeLayer(ClientSetup.DOG_POINTER_WIRE)));
 
         registerFromEvent();
     }
