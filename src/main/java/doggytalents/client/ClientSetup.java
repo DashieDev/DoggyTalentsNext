@@ -14,7 +14,8 @@ import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.DogRescueModel;
 import doggytalents.client.entity.model.SyncedItemModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
-import doggytalents.client.entity.model.dog.AkitaModel;
+import doggytalents.client.entity.model.dog.AkitaAmericanModel;
+import doggytalents.client.entity.model.dog.AkitaJapaneseModel;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.AmmyChiModel;
 import doggytalents.client.entity.model.dog.AmmyJinModel;
@@ -155,6 +156,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_OTTER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "otter"), "main");
     public static final ModelLayerLocation DOG_BULL_TERRIER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "bull_terrier"), "main");
     public static final ModelLayerLocation INU_AKITA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "akita_inu"), "main");
+    public static final ModelLayerLocation DOG_AKITA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "akita_dog"), "main");
     public static final ModelLayerLocation INU_SHIBA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "shiba_inu"), "main");
     public static final ModelLayerLocation INU_SHIKOKU = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "shikoku_inu"), "main");
     public static final ModelLayerLocation DOG_HOUNDSTONE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "houndstone"), "main");
@@ -232,7 +234,8 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_GERMAN_SHEPHERD, GermanShepherdModel::createBodyLayer);
         event.registerLayerDefinition(DOG_OTTER, OtterModel::createBodyLayer);
         event.registerLayerDefinition(DOG_BULL_TERRIER, BullTerrierModel::createBodyLayer);
-        event.registerLayerDefinition(INU_AKITA, AkitaModel::createBodyLayer);
+        event.registerLayerDefinition(INU_AKITA, AkitaJapaneseModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_AKITA, AkitaAmericanModel::createBodyLayer);
         event.registerLayerDefinition(INU_SHIBA, ShibaModel::createBodyLayer);
         event.registerLayerDefinition(INU_SHIKOKU, ShikokuModel::createBodyLayer);
         event.registerLayerDefinition(DOG_HOUNDSTONE, HoundstoneModel::createBodyLayer);
