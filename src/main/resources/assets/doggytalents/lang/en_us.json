@@ -595,6 +595,8 @@
    "advancements.doggytalents.train_dog_hajimemashite.description": "Train your first dog!",
    "advancements.doggytalents.doggy_charm_summon.title": "Ah, you scared me!",
    "advancements.doggytalents.doggy_charm_summon.description": "Summon your first dog via the Doggy Charm.",
+   "advancements.doggytalents.get_dog_drunk.title": "Suuussssannooo!!",
+   "advancements.doggytalents.get_dog_drunk.description": "Get your dog drunk using Sake.",
 
    "effect.doggytalents.natto_bite": "Natto Bite"
 }

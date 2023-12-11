@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.common.advancements.triggers.DogDrunkTrigger;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
@@ -106,6 +107,21 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                             )
                     )
                     .save(consumer, Util.getResourcePath("dtn_core/train_dog"));
+            
+            var sake_advancement = 
+                Advancement.Builder.advancement()
+                .display(
+                    DisplayInfoBuilder.create()
+                        .icon(DoggyItems.SAKE)
+                        .frame(FrameType.TASK)
+                        .translate("get_dog_drunk")
+                        .build()
+                )
+                .addCriterion(
+                    "get_dog_drunk", 
+                    DogDrunkTrigger.getInstance()
+                )
+                .save(consumer, Util.getResourcePath("default/get_dog_drunk"));
             // Old Advancement.
 
             // Advancement advancement = Advancement.Builder.advancement()

@@ -132,6 +132,7 @@ public class DoggyTalentsNext {
             
         event.enqueueWork(() -> {
             Dog.initDataParameters();
+            DoggyAdvancementTriggers.registerAll();
             GarbageChunkCollector.init();
         });
     }
