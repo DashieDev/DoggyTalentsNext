@@ -502,15 +502,39 @@
             "author" : "MashXP, DashieDev"
         },
         {
-            "skin_name" : "Akita Inu #1",
-            "skin_id" : "akita_inu",
+            "skin_name" : "Japanese Akita Inu (Sesame)",
+            "skin_id" : "akita_japanese_sesame",
             "use_model" : "akita_inu",
             "author" : "MashXP"
         },
         {
-            "skin_name" : "Akita Inu #2",
-            "skin_id" : "akita_inu_2",
+            "skin_name" : "Japanese Akita Inu (Chocolate Milk)",
+            "skin_id" : "akita_japanese_chocolate_milk",
             "use_model" : "akita_inu",
+            "author" : "MashXP (unofficial breed)"
+        },
+        {
+            "skin_name" : "Japanese Akita Inu (White)",
+            "skin_id" : "akita_japanese_whiteakita_inu",
+            "use_model" : "",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Japanese Akita Inu (Brindle)",
+            "skin_id" : "akita_japanese_brindle",
+            "use_model" : "akita_inu",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "American Akita (Red Bolder)",
+            "skin_id" : "akita_american_red_bolder",
+            "use_model" : "akita_dog",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "American Akita (Gray)",
+            "skin_id" : "akita_american_gray",
+            "use_model" : "akita_dog",
             "author" : "MashXP"
         },
         {
