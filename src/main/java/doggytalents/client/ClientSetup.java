@@ -43,6 +43,8 @@ import doggytalents.client.entity.model.dog.DobermanModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.EnglishBulldogModel;
 import doggytalents.client.entity.model.dog.FrenchBulldogModel;
+import doggytalents.client.entity.model.dog.GermanPointerShorthaired;
+import doggytalents.client.entity.model.dog.GermanPointerWirehaired;
 import doggytalents.client.entity.model.dog.GermanShepherdModel;
 import doggytalents.client.entity.model.dog.HoundstoneModel;
 import doggytalents.client.entity.model.dog.HungarianPuliModel;
@@ -163,6 +165,8 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_ZERO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "zero"), "main");
     public static final ModelLayerLocation DOG_SCRAPS = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "scraps"), "main");
     public static final ModelLayerLocation DOG_SPARKY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "sparky"), "main");
+    public static final ModelLayerLocation DOG_POINTER_SHORT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "german_pointer_shorthaired"), "main");
+    public static final ModelLayerLocation DOG_POINTER_WIRE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "german_pointer_wirehaired"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
@@ -242,6 +246,8 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_ZERO, ZeroModel::createBodyLayer);
         event.registerLayerDefinition(DOG_SCRAPS, ScrapsModel::createBodyLayer);
         event.registerLayerDefinition(DOG_SPARKY, SparkyModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_POINTER_SHORT, GermanPointerShorthaired::createBodyLayer);
+        event.registerLayerDefinition(DOG_POINTER_WIRE, GermanPointerWirehaired::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
