@@ -172,7 +172,6 @@ public class DoggyItems {
         () -> new ChopinRecordItem(13, () -> DoggySounds.CHOPIN_OP64_NO1.get() , 
         (new Item.Properties()).stacksTo(1).tab(DoggyItemGroups.GENERAL).rarity(Rarity.RARE), 132));
     
-    //public static final RegistryObject<Item> PATROL = registerWith("patrol_item", PatrolItem::new, 1);
 
     private static Item.Properties createInitialProp() {
         return new Item.Properties().tab(DoggyItemGroups.GENERAL);
