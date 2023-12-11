@@ -208,6 +208,7 @@ public class Dog extends AbstractDog {
         DOG_INCAP_SYNC_STATE.get();
         ARTIFACTS.get();
         DOG_SIZE.get();
+        CUSTOM_SKIN.get();
     }
 
     // Cached values
