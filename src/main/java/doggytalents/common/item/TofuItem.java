@@ -16,12 +16,6 @@ import net.minecraft.world.level.Level;
 
 public class TofuItem extends DogEddibleItem {
 
-    public static final FoodProperties FOOD_PROPS = 
-        (new FoodProperties.Builder())
-            .nutrition(5)
-            .saturationMod(0.6F)
-            .build();
-
     public TofuItem() {
         super(
             b -> b
@@ -38,11 +32,6 @@ public class TofuItem extends DogEddibleItem {
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
-    }
-
-    @Override
-    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getNutrition() * 5;
     }
 
     @Override
