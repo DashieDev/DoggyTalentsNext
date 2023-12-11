@@ -153,7 +153,7 @@ public class DoggyItems {
     public static final RegistryObject<Item> ONSEN_TAMAGO = register("onsen_tamago", OnsenTamagoItem::new);
     public static final RegistryObject<Item> GYUDON = register("gyudon", GyudonItem::new);
     public static final RegistryObject<Item> OYAKODON = register("oyakodon", OyakodonItem::new);
-
+    public static final RegistryObject<Item> SAKE = register("sake", SakeItem::new);
 
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
