@@ -105,9 +105,9 @@ public class SakeItem extends DogEddibleItem {
             if (!(entity instanceof Dog || entity instanceof Player))
                 return;
             entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60 * 20, 1));
-            entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60 * 10, 2));
-            entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60 * 10, 0));
-            entity.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 60 * 10, 0));
+            entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60 * 20, 2));
+            entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60 * 20, 0));
+            entity.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 60 * 20, 0));
             return;
         }
 
