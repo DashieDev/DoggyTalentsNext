@@ -44,7 +44,9 @@ public enum DogAnimation {
     REST_BELLY_START(37, 70, 1f, true),
     REST_BELLY_LOOP(38, 140, 1f, true, true),
     REST_BELLY_END(39, 70, 1f, true),
-    NAKEY(40, 140, 1f, true);
+    NAKEY(40, 140, 1f, true),
+    DRUNK_LOOP(41, 140, 0.5f, true, true), // Slower version of REST_BELLY_LOOP
+    DRUNK_START(42, 36, 1f, true);
 
     private final int id;
     private final int lengthTicks;

@@ -170,6 +170,7 @@ public class Dog extends AbstractDog {
      *     14              16384               AUTO_MOUNT
      *     15              32768               RESTING
      *     16              65536               REST_BELLY
+     *     17              131072              DRUNK_POSE
      *     .
      *     31              2^31                <Reserved>
      */
@@ -254,6 +255,7 @@ public class Dog extends AbstractDog {
     private int prevHealingTick;
     private int wanderRestTime = 0;
     private int wanderCooldown = 0;
+    private int drunkTickLeft = 0;
 
     private float headRotationCourse;
     private float headRotationCourseOld;
@@ -328,6 +330,7 @@ public class Dog extends AbstractDog {
         
         int p = 1;
         this.goalSelector.addGoal(p, new DogFloatGoal(this));
+        this.goalSelector.addGoal(p, new DogDrunkGoal(this));
         this.goalSelector.addGoal(p, new DogFindWaterGoal(this));
         this.goalSelector.addGoal(p, new DogAvoidPushWhenIdleGoal(this));
         //this.goalSelector.addGoal(1, new PatrolAreaGoal(this));
@@ -914,6 +917,16 @@ public class Dog extends AbstractDog {
             }
         }
 
+        if (this.level().isClientSide && this.isInDrunkPose()) {
+            if (this.tickCount % 16 == 0) {
+                int color = 0x9a24e3;
+                double d0 = (double)(color >> 16 & 255) / 255.0D;
+                double d1 = (double)(color >> 8 & 255) / 255.0D;
+                double d2 = (double)(color >> 0 & 255) / 255.0D;
+                this.level().addParticle(ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
+            }
+        }
+
         // Check if dog bowl still exists every 50t/2.5s, if not remove
         if (this.tickCount % 50 == 0) {
             ResourceKey<Level> dimKey = this.level.dimension();
@@ -945,6 +958,9 @@ public class Dog extends AbstractDog {
         if (this.idleAnimHurtCooldown > 0) {
             --this.idleAnimHurtCooldown;
         }
+
+        if (this.drunkTickLeft > 0)
+            --this.drunkTickLeft;
 
         // if (!this.level().isClientSide && this.getMode().canWander()) {
         //     if (!this.getMode().shouldAttack()) {
@@ -1096,6 +1112,11 @@ public class Dog extends AbstractDog {
         if (this.isDefeated()) 
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
+
+        if (stack.getItem() == Items.STONE_PICKAXE) {
+            this.setDrunkTicks(10*20);
+            return InteractionResult.SUCCESS;
+        }
         
         if (handleOpenDogScreenDedicated(player, stack).shouldSwing())
             return InteractionResult.SUCCESS;
@@ -1619,6 +1640,8 @@ public class Dog extends AbstractDog {
 //     }
 
     protected boolean stillIdleOrSitWhenHurt(DamageSource source, float amount) {
+        if (this.isDogDrunk())
+            return true;
         for (var alt : this.alterations) {
             if (alt.stillIdleOrSitWhenHurt(this, source, amount).shouldSwing())
                 return true;
@@ -3478,6 +3501,22 @@ public class Dog extends AbstractDog {
         return this.getDogFlag(512);
     }
 
+    public boolean isInDrunkPose() {
+        return this.getDogFlag(131072);
+    }
+
+    public void setInDrunkPose(boolean val) {
+        this.setDogFlag(131072, val);
+    }
+
+    public void setDrunkTicks(int ticks) {
+        this.drunkTickLeft = ticks;
+    }
+
+    public boolean isDogDrunk() {
+        return this.drunkTickLeft > 0;
+    }
+
     public void setPatrolTargetLock(boolean val) {
         this.setDogFlag(512, val);
     }
@@ -4527,6 +4566,10 @@ public class Dog extends AbstractDog {
     public void updateDogPose() {
         if (this.isDefeated() && !this.incapacitatedMananger.canMove()) {
             this.setDogPose(this.incapacitatedMananger.getPose());
+            return;
+        }
+        if (this.isInDrunkPose()) {
+            this.setDogPose(DogPose.REST_BELLY);
             return;
         }
         if (this.isInSittingPose()) {
