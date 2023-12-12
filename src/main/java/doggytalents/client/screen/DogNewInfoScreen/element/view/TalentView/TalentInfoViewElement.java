@@ -331,7 +331,10 @@ public class TalentInfoViewElement extends AbstractElement {
         } else if (!talent.isDogEligible(dog)) {
             int mX = this.getSizeX()/2;
             int mY = this.getSizeY()/2;
-            var txt = Component.translatable("doggui.talents.invalid.not_eligible");
+            var non_eligbleMsgOptional = talent.getNonEligibleTranslationKey(dog);
+            var txt = Component.translatable(
+                non_eligbleMsgOptional.orElse("doggui.talents.invalid.not_eligible")
+            );
             txt.setStyle(
                 Style.EMPTY
                 .withColor(0xffB20000)

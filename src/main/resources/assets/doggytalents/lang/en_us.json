@@ -299,6 +299,7 @@
    "talent.doggytalents.doggy_tools.pick_first_tool": "Always Pick First Slot",
    "talent.doggytalents.doggy_tools.open_tools": "Open Dog's ToolBar",
    "talent.doggytalents.doggy_armor.open_armor": "Open Dog's Armor",
+   "talent.doggytalents.flying_furball.dog_not_kami": "This dog is not on Kami level.",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",
 
