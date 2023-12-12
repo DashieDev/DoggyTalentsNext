@@ -1006,7 +1006,7 @@ public class Dog extends AbstractDog {
         this.entityData.set(FREEZE_ANIM, this.getAnim().getId());
         if (!this.level().isClientSide)
         this.animationManager.animationState.updateTime(this.tickCount, this.getAnim().getSpeedModifier());
-        this.entityData.set(FREEZE_ANIM_TIME, this.animationManager.animationState.getAccumulatedTime());
+        this.entityData.set(FREEZE_ANIM_TIME, this.animationManager.animationState.getAccumulatedTimeMillis());
     }
 
     public long freezeTime() {
@@ -1043,7 +1043,7 @@ public class Dog extends AbstractDog {
             this.setAnim(DogAnimation.STRETCH);
             return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.GREEN_DYE) {
-            this.setAnim(DogAnimation.SIT_IDLE_2);
+            this.setAnim(DogAnimation.SIT_LOOK_AROUND);
             return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.PURPLE_DYE) {
             this.setAnim(DogAnimation.SCRATCHIE);
