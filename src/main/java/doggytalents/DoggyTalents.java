@@ -1,5 +1,6 @@
 package doggytalents;
 
+import doggytalents.api.feature.DogLevel;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -11,6 +12,7 @@ import doggytalents.common.talent.talentclass.SingleLevelTalent;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -68,7 +70,15 @@ public class DoggyTalents {
 
             @Override
             public boolean isDogEligible(AbstractDog dog) {
-                return dog.getDogLevel(DoggyTalents.PILLOW_PAW) <= 0;
+                return dog.getDogLevel(DoggyTalents.PILLOW_PAW) <= 0
+                    && dog.getDogLevel().getLevel(DogLevel.Type.KAMI) > 0;
+            } 
+
+            @Override
+            public Optional<String> getNonEligibleTranslationKey(AbstractDog dog) {
+                if (dog.getDogLevel(DoggyTalents.PILLOW_PAW) > 0)
+                    return Optional.empty();
+                return Optional.of(this.getTranslationKey() + ".dog_not_kami");
             }
         });
     public static final RegistryObject<Talent> CHEMI_CANINE = register("chemi_canine", () -> 
