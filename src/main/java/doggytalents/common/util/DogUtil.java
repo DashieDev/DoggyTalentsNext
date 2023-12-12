@@ -10,6 +10,8 @@ import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NotNull;
 
+import doggytalents.api.registry.Talent;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
@@ -23,6 +25,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -611,6 +614,12 @@ public class DogUtil {
         dog.moveTo(target.getX() + 0.5F, target.getY(), target.getZ() + 0.5F, dog.getYRot(), dog.getXRot());
         dog.getNavigation().stop();
         dog.breakMoveControl();
+    }
+
+    public static boolean playerCanTrainTalent(Player player, Talent talent) {
+        if (player != null && player.hasPermissions(4))
+            return true;
+        return (ConfigHandler.TALENT.getFlag(talent));
     }
 
 

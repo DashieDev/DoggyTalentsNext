@@ -330,7 +330,8 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public Map<Talent, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
         public TalentConfig(ForgeConfigSpec.Builder builder) {
-            builder.comment("Here you can disable talents.").push("Talents");
+            builder.comment("Here you can disable talents.")
+                .comment("Notice that players with admin privileges can bypass this.").push("Talents");
 
             DISABLED_TALENTS = new HashMap<>();
 

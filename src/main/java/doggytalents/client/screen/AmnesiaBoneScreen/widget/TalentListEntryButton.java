@@ -11,6 +11,7 @@ import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.DogUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
@@ -69,7 +70,7 @@ public class TalentListEntryButton extends AbstractButton {
         //Ex : disable talent (or mutual talent)
         int talentMaxLvl = 0;
         float talentLvlPercent = 0;
-        if (!ConfigHandler.TALENT.getFlag(talent)) {
+        if (!DogUtil.playerCanTrainTalent(Minecraft.getInstance().player, talent)) {
             lvlcl = 0;
             cl = this.isHovered ? DEFAULT_INVALID_HLCOLOR : DEFAULT_INVALID_COLOR;
         } else {
