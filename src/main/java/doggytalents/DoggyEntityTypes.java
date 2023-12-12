@@ -2,6 +2,9 @@ package doggytalents;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DoggyBeamEntity;
+import doggytalents.common.entity.misc.Piano;
+import doggytalents.common.entity.misc.Piano.PianoColor;
+import doggytalents.common.entity.misc.Piano.PianoType;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.world.entity.Entity;
@@ -34,6 +37,34 @@ public class DoggyEntityTypes {
             .setShouldReceiveVelocityUpdates(true)
             .setCustomClientFactory(DoggyBeamEntity::new)
             .noSummon());
+
+    public static final RegistryObject<EntityType<Piano>> GRAND_PIANO_BLACK = register("grand_piano_black", Piano::new, MobCategory.MISC,
+        b -> b
+            .sized(3f, 3f)
+            .setUpdateInterval(4)
+            .setTrackingRange(10)
+            .setShouldReceiveVelocityUpdates(false));
+    
+    public static final RegistryObject<EntityType<Piano>> GRAND_PIANO_WHITE = register("grand_piano_white", (type, level) -> new Piano(type, level, PianoType.GRAND, PianoColor.WHITE), MobCategory.MISC,
+        b -> b
+            .sized(3f, 3f)
+            .setUpdateInterval(4)
+            .setTrackingRange(10)
+            .setShouldReceiveVelocityUpdates(false));
+
+    public static final RegistryObject<EntityType<Piano>> UPRIGHT_PIANO_BLACK = register("upright_piano_black", (type, level) -> new Piano(type, level, PianoType.UPRIGHT, PianoColor.BLACK), MobCategory.MISC,
+        b -> b
+            .sized(3f, 3f)
+            .setUpdateInterval(4)
+            .setTrackingRange(10)
+            .setShouldReceiveVelocityUpdates(false));
+
+    public static final RegistryObject<EntityType<Piano>> UPRIGHT_PIANO_BROWN = register("upright_piano_brown", (type, level) -> new Piano(type, level, PianoType.UPRIGHT, PianoColor.BROWN), MobCategory.MISC,
+        b -> b
+            .sized(3f, 3f)
+            .setUpdateInterval(4)
+            .setTrackingRange(10)
+            .setShouldReceiveVelocityUpdates(false));
 
     private static <E extends Entity, T extends EntityType<E>> RegistryObject<EntityType<E>> register(final String name, final EntityType.EntityFactory<E> sup, final MobCategory classification, final Function<EntityType.Builder<E>, EntityType.Builder<E>> builder) {
          return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(Util.getResourcePath(name)));
