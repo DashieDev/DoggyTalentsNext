@@ -338,8 +338,7 @@ public class TalentInfoViewElement extends AbstractElement {
             );
             txt.setStyle(
                 Style.EMPTY
-                .withColor(0xffB20000)
-                .withBold(true)
+                .withColor(0x828282)
             );
             int tX = this.getRealX() + mX - this.font.width(txt)/2;
             int tY = this.getRealY() + mY - this.font.lineHeight/2;
