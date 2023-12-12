@@ -112,6 +112,11 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     }
 
     @Override
+    protected boolean shouldShowName(Dog p_115506_) {
+        return super.shouldShowName(p_115506_);
+    }
+
+    @Override
     protected void renderNameTag(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight) {
         double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
 
