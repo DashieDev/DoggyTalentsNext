@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-11T18:43:25.3387778	DoggyTalents Item Models
+// 1.20.1	2023-12-12T04:27:39.0203327	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
@@ -41,6 +41,8 @@ d9ec650c08c3440406bc3653fa92dd165d4045aa assets/doggytalents/models/item/frisbee
 4589fc682d17c442a91272bf3c12ab74b2fe6a27 assets/doggytalents/models/item/gender_bone.json
 ef520dd816cdadca205239f47708c42b2d3e818b assets/doggytalents/models/item/giant_stick.json
 daaaeb5312e241ac287f000bf92a2a39e95e5758 assets/doggytalents/models/item/golden_a_five_wagyu.json
+4eeef293822b443b6f78e41c1c7fb88f46013992 assets/doggytalents/models/item/grand_piano_black_item.json
+0f45c10b5a2f65056fb82ea99f3fdf5a4beb280b assets/doggytalents/models/item/grand_piano_white_item.json
 bbbddd194d8bce956f46ef7e0e9c24bef18cf451 assets/doggytalents/models/item/guard_suit.json
 e229e5037dd59fa9e79a9dd567c777082c9692bd assets/doggytalents/models/item/gyudon.json
 79e52c0e6f1a9fb7797c8c76bbff52744a3a861b assets/doggytalents/models/item/head_band_blank.json
@@ -102,6 +104,8 @@ ed79374f62fcbaf72da014a75b6f8115f75fb640 assets/doggytalents/models/item/throw_s
 adc09642854ad0854ae5d3f97bcc2bcdbd7da8d0 assets/doggytalents/models/item/training_treat.json
 1149d5f23768a62627d782d1d6a66c1f0a1dd02f assets/doggytalents/models/item/treat_bag.json
 dbf6c9d6d5424690074e56d4aee155bcc19a4320 assets/doggytalents/models/item/uncooked_rice.json
+b14edc33827d1a6a1a7e096d17bff000ff4fd37f assets/doggytalents/models/item/upright_piano_black_item.json
+30cb8ec02f9f5c9def702a9ab527562cc63aa856 assets/doggytalents/models/item/upright_piano_brown_item.json
 7463378ef868b9e2a5743e3fc7837c28e1c8222e assets/doggytalents/models/item/whistle.json
 272f446b0708c9066160b62935c82364ebcffd02 assets/doggytalents/models/item/wig.json
 edfc173f2dcf439d7e9a9fb9cc54e18261ca75d6 assets/doggytalents/models/item/witch_hat.json
