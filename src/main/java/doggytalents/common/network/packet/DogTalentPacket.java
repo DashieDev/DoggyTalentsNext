@@ -6,6 +6,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.DogTalentData;
+import doggytalents.common.util.DogUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent.Context;
 
@@ -32,7 +33,7 @@ public class DogTalentPacket extends DogPacket<DogTalentData> {
             return;
         }
 
-        if (!ConfigHandler.TALENT.getFlag(data.talent)) {
+        if (!DogUtil.playerCanTrainTalent(ctx.get().getSender(), data.talent)) {
             // DoggyTalents2.LOGGER.info("{} tried to level a disabled talent ({})",
             //         ctx.get().getSender().getGameProfile().getName(),
             //         data.talent.getRegistryName());
