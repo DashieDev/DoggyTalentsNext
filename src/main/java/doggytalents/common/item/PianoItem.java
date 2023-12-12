@@ -1,0 +1,65 @@
+package doggytalents.common.item;
+
+import java.util.Objects;
+import java.util.function.Supplier;
+
+import doggytalents.common.entity.misc.Piano;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class PianoItem extends Item {
+
+    private Supplier<EntityType<Piano>> pianoSup;
+
+    public PianoItem(Supplier<EntityType<Piano>> pianoSup) {
+        super(new Properties().stacksTo(1));
+        this.pianoSup = pianoSup;
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        var level = context.getLevel();
+        if (level.isClientSide || !(level instanceof ServerLevel))
+            return InteractionResult.SUCCESS;
+        var player = context.getPlayer();
+        var stack = context.getItemInHand();
+        var pos = context.getClickedPos();
+        var face = context.getClickedFace();
+        var state = level.getBlockState(pos);
+
+        BlockPos spawnAt;
+        if (state.getCollisionShape(level, pos).isEmpty()) {
+            spawnAt = pos;
+        } else {
+            spawnAt = pos.relative(face);
+        }
+        var entity = pianoSup.get().create(
+            (ServerLevel) level, null, null, spawnAt, 
+            MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
+            , false);
+
+        if (entity instanceof Piano piano) {
+            piano.setYRot(face.getOpposite().toYRot());
+            level.addFreshEntity(piano);
+        }
+        
+        
+        if (player != null && !player.getAbilities().instabuild)
+            stack.shrink(1);
+
+        return InteractionResult.SUCCESS;
+    }
+    
+
+
+}
