@@ -72,6 +72,8 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
         public ForgeConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
         public ForgeConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
+        public ForgeConfigSpec.BooleanValue DONT_RENDER_DIFFOWNER_NAME;
+        public ForgeConfigSpec.BooleanValue ALWAYS_RENDER_DOG_NAME;
         public ForgeConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
         public ForgeConfigSpec.BooleanValue USE_VANILLA_RES_FOR_CLASSICAL;
         public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON;
@@ -131,6 +133,14 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Render dogs' name whose owner is not you with different color.")
                 .translation("doggytalents.config.client.render_diffowner_name_different")
                 .define("render_diffowner_name_different", true);
+            DONT_RENDER_DIFFOWNER_NAME = builder
+                .comment("Do not render dogs' name whose owner is not you.")
+                .translation("doggytalents.config.client.render_diffowner_name_dont")
+                .define("render_diffowner_name_dont", false);
+            ALWAYS_RENDER_DOG_NAME = builder
+                .comment("ALways render dog nametags regardless even if player blocks it by F1 mode.")
+                .translation("doggytalents.config.client.always_render_dog_name")
+                .define("always_render_dog_name", false);
             BLOCK_THIRD_PARTY_NAMETAG = builder
                 .comment("Attempt to block third parties from rendering overlays which may conflict")
                 .comment("with DT's built-in tag. It is recommended that this be achieved via the target third-party's")
