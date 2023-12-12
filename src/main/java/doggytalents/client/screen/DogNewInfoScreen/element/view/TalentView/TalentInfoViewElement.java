@@ -30,6 +30,7 @@ import doggytalents.common.network.packet.data.DoggyTorchPlacingTorchData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.talent.DoggyTorchTalent;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
+import doggytalents.common.util.DogUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractButton;
@@ -74,7 +75,7 @@ public class TalentInfoViewElement extends AbstractElement {
             return this;
         }
 
-        if (!ConfigHandler.TALENT.getFlag(talent) || !talent.isDogEligible(dog)) {
+        if (!DogUtil.playerCanTrainTalent(Minecraft.getInstance().player, talent) || !talent.isDogEligible(dog)) {
             return this;
         }
 
@@ -315,7 +316,7 @@ public class TalentInfoViewElement extends AbstractElement {
             int tY = this.getRealY() + mY - this.font.lineHeight/2;
             this.font.draw(stack, txt, tX, tY, 0xffffffff);
             return;
-        } else if (!ConfigHandler.TALENT.getFlag(talent)) {
+        } else if (!DogUtil.playerCanTrainTalent(Minecraft.getInstance().player, talent)) {
             int mX = this.getSizeX()/2;
             int mY = this.getSizeY()/2;
             var txt = Component.translatable("doggui.talents.invalid.disabled");
