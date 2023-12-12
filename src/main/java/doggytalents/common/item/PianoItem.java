@@ -43,16 +43,15 @@ public class PianoItem extends Item {
         } else {
             spawnAt = pos.relative(face);
         }
-        var entity = pianoSup.get().create(
+        var piano = pianoSup.get().create(
             (ServerLevel) level, null, null, spawnAt, 
             MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 
-        if (entity instanceof Piano piano) {
+        if (piano != null) {
             piano.setYRot(face.getOpposite().toYRot());
             level.addFreshEntity(piano);
         }
-        
         
         if (player != null && !player.getAbilities().instabuild)
             stack.shrink(1);
