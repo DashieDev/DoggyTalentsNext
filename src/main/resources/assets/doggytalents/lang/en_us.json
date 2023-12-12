@@ -180,9 +180,14 @@
    "item.doggytalents.natto_rice": "Natto Rice",
    "item.doggytalents.natto_rice.description": "Best way to enjoy Natto!", 
    "item.doggytalents.sake": "Bottle Of Sake",
-   "item.doggytalents.sake.description": "Drink responsibly! Not sutable for underage doggos!",   
+   "item.doggytalents.sake.description": "Drink responsibly! Not sutable for underage doggos!",
 
    "item.doggytalents.feathered_mantle": "Feathered Mantle",
+
+   "item.doggytalents.grand_piano_black_item": "Grand Piano Black (Experimental)",
+   "item.doggytalents.grand_piano_white_item": "Grand Piano White (Experimental)",
+   "item.doggytalents.upright_piano_black_item": "Upright Piano Black (Experimental)",
+   "item.doggytalents.upright_piano_brown_item": "Upright Piano Brown (Experimental)",
 
    "item.doggytalents.cape_coloured.tooltip": "Color: %s",
    "item.doggytalents.wool_collar.tooltip": "Color: %s",

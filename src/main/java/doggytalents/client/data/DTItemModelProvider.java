@@ -150,6 +150,10 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.OYAKODON);
         generated(DoggyItems.SAKE);
 
+        generated(DoggyItems.GRAND_PIANO_BLACK);
+        generated(DoggyItems.GRAND_PIANO_WHITE);
+        generated(DoggyItems.UPRIGHT_PIANO_BLACK);
+        generated(DoggyItems.UPRIGHT_PIANO_BROWN);
 
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);
