@@ -1,5 +1,6 @@
 package doggytalents.api.registry;
 
+import java.util.Optional;
 import java.util.function.BiFunction;
 
 import javax.annotation.Nullable;
@@ -70,6 +71,10 @@ public class Talent {
     public boolean isDogEligible(AbstractDog dog) {
         return true;
     }
+
+    public Optional<String> getNonEligibleTranslationKey(AbstractDog dog) {
+        return Optional.empty();
+    } 
 
     public boolean hasRenderer() {
         return false;

@@ -19,11 +19,6 @@ import net.minecraft.world.level.Level;
 
 public class OnsenTamagoItem extends DogEddibleItem{
 
-    public static FoodProperties FOOD_PROPS = 
-        (new FoodProperties.Builder())
-            
-            .build();
-
     public OnsenTamagoItem() {
         super(
             b -> b
@@ -40,17 +35,7 @@ public class OnsenTamagoItem extends DogEddibleItem{
             Style.EMPTY.withItalic(true)
         ));
     }
-    @Override
-    public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return FOOD_PROPS.getNutrition() * 5;
-    }
-
-    @Override
-    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
-            AbstractDog dog) {
-        return FOOD_PROPS.getEffects();
-    }
-
+    
     @Override
     public boolean alwaysEatWhenDogConsume(AbstractDog dog) {
         return true;

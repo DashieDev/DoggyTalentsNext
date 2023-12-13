@@ -149,6 +149,7 @@
    "item.doggytalents.uncooked_rice": "Uncooked Rice",
    "item.doggytalents.rice_wheat": "Paddy Rice",
    "block.doggytalents.rice_crop": "Rice Grains",
+   "item.doggytalents.koji": "Koji",
    "item.doggytalents.soy_beans": "Soy Beans",
    "item.doggytalents.soy_pods": "Soybean Pods",
    "item.doggytalents.soy_pods.description": "Right-click to unpod the beans.",
@@ -178,9 +179,16 @@
    "item.doggytalents.oyakodon": "Oyakodon",
    "item.doggytalents.oyakodon.description": "Chicken and Egg Bowl - Don't search up the name meaning!",
    "item.doggytalents.natto_rice": "Natto Rice",
-   "item.doggytalents.natto_rice.description": "Best way to enjoy Natto!",   
+   "item.doggytalents.natto_rice.description": "Best way to enjoy Natto!", 
+   "item.doggytalents.sake": "Bottle Of Sake",
+   "item.doggytalents.sake.description": "Drink responsibly! Not sutable for underage doggos!",
 
    "item.doggytalents.feathered_mantle": "Feathered Mantle",
+
+   "item.doggytalents.grand_piano_black_item": "Grand Piano Black (Experimental)",
+   "item.doggytalents.grand_piano_white_item": "Grand Piano White (Experimental)",
+   "item.doggytalents.upright_piano_black_item": "Upright Piano Black (Experimental)",
+   "item.doggytalents.upright_piano_brown_item": "Upright Piano Brown (Experimental)",
 
    "item.doggytalents.cape_coloured.tooltip": "Color: %s",
    "item.doggytalents.wool_collar.tooltip": "Color: %s",
@@ -292,6 +300,7 @@
    "talent.doggytalents.doggy_tools.pick_first_tool": "Always Pick First Slot",
    "talent.doggytalents.doggy_tools.open_tools": "Open Dog's ToolBar",
    "talent.doggytalents.doggy_armor.open_armor": "Open Dog's Armor",
+   "talent.doggytalents.flying_furball.dog_not_kami": "This dog is not on Kami level.",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",
 
@@ -594,6 +603,8 @@
    "advancements.doggytalents.train_dog_hajimemashite.description": "Train your first dog!",
    "advancements.doggytalents.doggy_charm_summon.title": "Ah, you scared me!",
    "advancements.doggytalents.doggy_charm_summon.description": "Summon your first dog via the Doggy Charm.",
+   "advancements.doggytalents.get_dog_drunk.title": "Suuussssannooo!!",
+   "advancements.doggytalents.get_dog_drunk.description": "Get your dog drunk using Sake.",
 
    "effect.doggytalents.natto_bite": "Natto Bite"
 }

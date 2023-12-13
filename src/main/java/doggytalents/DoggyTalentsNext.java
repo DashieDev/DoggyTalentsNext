@@ -131,10 +131,10 @@ public class DoggyTalentsNext {
 
         FoodHandler.registerDynPredicate(HappyEaterTalent.INNER_DYN_PRED);
         //InteractHandler.registerHandler(new HelmetInteractHandler());
-        ConfigHandler.initTalentConfig();
-        DoggyCommands.registerSerilizers();
-        Dog.initDataParameters();
         event.enqueueWork(() -> {
+            Dog.initDataParameters();
+            DoggyAdvancementTriggers.registerAll();
+            ConfigHandler.initTalentConfig();
             GarbageChunkCollector.init();
         });
     }

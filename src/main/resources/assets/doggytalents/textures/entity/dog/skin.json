@@ -515,8 +515,8 @@
         },
         {
             "skin_name" : "Japanese Akita Inu (White)",
-            "skin_id" : "akita_japanese_whiteakita_inu",
-            "use_model" : "",
+            "skin_id" : "akita_japanese_white",
+            "use_model" : "akita_inu",
             "author" : "MashXP"
         },
         {

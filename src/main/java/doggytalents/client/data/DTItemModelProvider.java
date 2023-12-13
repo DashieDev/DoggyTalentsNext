@@ -131,6 +131,7 @@ public class DTItemModelProvider extends ItemModelProvider {
 
         generated(DoggyItems.RICE_GRAINS);
         generated(DoggyItems.RICE_WHEAT);
+        generated(DoggyItems.KOJI);
         generated(DoggyItems.UNCOOKED_RICE);
         generated(DoggyItems.SOY_BEANS);
         generated(DoggyItems.SOY_PODS);
@@ -148,7 +149,12 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.ONSEN_TAMAGO);
         generated(DoggyItems.GYUDON);
         generated(DoggyItems.OYAKODON);
+        generated(DoggyItems.SAKE);
 
+        generated(DoggyItems.GRAND_PIANO_BLACK);
+        generated(DoggyItems.GRAND_PIANO_WHITE);
+        generated(DoggyItems.UPRIGHT_PIANO_BLACK);
+        generated(DoggyItems.UPRIGHT_PIANO_BROWN);
 
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);

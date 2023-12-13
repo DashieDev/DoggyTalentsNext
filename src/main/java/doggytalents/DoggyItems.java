@@ -135,6 +135,7 @@ public class DoggyItems {
         () -> new RiceGrainsItem(DoggyBlocks.RICE_CROP.get(), createInitialProp()));
     public static final RegistryObject<Item> RICE_WHEAT = register("rice_wheat",
         () -> new RiceWheatItem(createInitialProp()));
+    public static final RegistryObject<Item> KOJI = register("koji", KojiItem::new);
     public static final RegistryObject<Item> SOY_BEANS = register("soy_beans", 
         () -> new BlockItem(DoggyBlocks.SOY_CROP.get(), createInitialProp()));
     public static final RegistryObject<Item> SOY_PODS = register("soy_pods", 
@@ -154,7 +155,7 @@ public class DoggyItems {
     public static final RegistryObject<Item> ONSEN_TAMAGO = register("onsen_tamago", OnsenTamagoItem::new);
     public static final RegistryObject<Item> GYUDON = register("gyudon", GyudonItem::new);
     public static final RegistryObject<Item> OYAKODON = register("oyakodon", OyakodonItem::new);
-
+    public static final RegistryObject<Item> SAKE = register("sake", SakeItem::new);
 
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
@@ -172,8 +173,15 @@ public class DoggyItems {
     public static final RegistryObject<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
         () -> new ChopinRecordItem(13, () -> DoggySounds.CHOPIN_OP64_NO1.get() , 
         (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 132*20));
-    
-    //public static final RegistryObject<Item> PATROL = registerWith("patrol_item", PatrolItem::new, 1);
+
+    public static final RegistryObject<PianoItem> GRAND_PIANO_BLACK = register("grand_piano_black_item", 
+        () -> new PianoItem(DoggyEntityTypes.GRAND_PIANO_BLACK));
+    public static final RegistryObject<PianoItem> GRAND_PIANO_WHITE = register("grand_piano_white_item", 
+        () -> new PianoItem(DoggyEntityTypes.GRAND_PIANO_WHITE));
+    public static final RegistryObject<PianoItem> UPRIGHT_PIANO_BLACK = register("upright_piano_black_item", 
+        () -> new PianoItem(DoggyEntityTypes.UPRIGHT_PIANO_BLACK));
+    public static final RegistryObject<PianoItem> UPRIGHT_PIANO_BROWN = register("upright_piano_brown_item", 
+        () -> new PianoItem(DoggyEntityTypes.UPRIGHT_PIANO_BROWN));
 
     private static Item.Properties createInitialProp() {
         return new Item.Properties();

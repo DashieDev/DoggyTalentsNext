@@ -6,6 +6,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITagManager;
 
 public class DoggyTags {
 
@@ -23,6 +24,7 @@ public class DoggyTags {
     }
 
     private static TagKey<EntityType<?>> tagEntity(String name) {
-        return TagKey.create(ForgeRegistries.Keys.ENTITY_TYPES, Util.getResource(name));
-    } 
+        return ForgeRegistries.ENTITY_TYPES.tags()
+            .createTagKey(Util.getResource(name));
+    }
 }

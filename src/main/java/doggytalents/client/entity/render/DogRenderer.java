@@ -115,6 +115,12 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     }
 
     @Override
+    protected boolean shouldShowName(Dog p_115506_) {
+        return ConfigHandler.CLIENT.ALWAYS_RENDER_DOG_NAME.get()
+            || super.shouldShowName(p_115506_);
+    }
+
+    @Override
     protected void renderNameTag(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight) {
         double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
 
@@ -124,6 +130,9 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             && dog != this.entityRenderDispatcher.crosshairPickEntity;
         boolean isDiffOwner = 
             (player == null || !Objects.equals(player.getUUID(), dog.getOwnerUUID()));
+
+        if (isDiffOwner && ConfigHandler.CLIENT.DONT_RENDER_DIFFOWNER_NAME.get())
+            return;
 
         if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0))
             renderMainName(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner);
@@ -368,7 +377,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
                 }
        
                 p_115318_.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees(p_115317_)));
-            }
+            } else
             p_115318_.mulPose(Axis.YP.rotationDegrees(180.0F - p_115320_));
             return;
         }
