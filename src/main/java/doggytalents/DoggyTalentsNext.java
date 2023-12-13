@@ -130,6 +130,7 @@ public class DoggyTalentsNext {
         event.enqueueWork(() -> {
             Dog.initDataParameters();
             DoggyAdvancementTriggers.registerAll();
+            DoggyBrewingRecipes.registerAll();
             ConfigHandler.initTalentConfig();
             GarbageChunkCollector.init();
         });
