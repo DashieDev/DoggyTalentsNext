@@ -16,7 +16,6 @@ public abstract class DogEddibleBowlFoodItem extends DogEddibleItem {
     public DogEddibleBowlFoodItem(Properties itemProps, FoodProperties foodProps) {
         super(
             itemProps
-                .stacksTo(1)
                 .craftRemainder(Items.BOWL),
             foodProps
         );
