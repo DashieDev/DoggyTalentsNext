@@ -67,6 +67,7 @@ public class DoggyItems {
     public static final RegistryObject<Item> ENERGIZER_STICK = register("energizer_stick", EnergizerStick::new);
     public static final RegistryObject<Item> EGG_SANDWICH = register("egg_sandwich", EggSandwichItem::new);
     public static final RegistryObject<Item> RICE_BOWL = register("rice_bowl", RiceBowlItem::new);
+    public static final RegistryObject<Item> UNCOOKED_RICE_BOWL = register("uncooked_rice_bowl", UncookedRiceBowlItem::new);
     public static final RegistryObject<Item> SALMON_SUSHI = register("salmon_sushi", SalmonSushiItem::new);
     public static final RegistryObject<Item> ONIGIRI = register("onigiri", OnigiriItem::new);
     public static final RegistryObject<Item> SAUSAGE = register("sausage", SausageItem::new);

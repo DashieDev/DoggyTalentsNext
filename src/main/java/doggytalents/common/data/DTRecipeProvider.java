@@ -563,7 +563,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
             .save(consumer);
         
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.RICE_BOWL.get(), 8)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.UNCOOKED_RICE.get(), 8)
             .requires(Items.BOWL, 8)
             .requires(DoggyItems.UNCOOKED_RICE.get(), 8)
             .requires(Items.WATER_BUCKET)
@@ -751,6 +751,13 @@ public class DTRecipeProvider extends RecipeProvider {
             DoggyItems.SOY_BEANS.get(), 
             0.1F, 100)
             .unlockedBy("has_dtn_soy_beans", has(DoggyItems.SOY_BEANS.get()))
+            .save(consumer);
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DoggyItems.UNCOOKED_RICE_BOWL.get()), 
+            RecipeCategory.FOOD, 
+            DoggyItems.RICE_BOWL.get(), 
+            0.1F, 100)
+            .unlockedBy("has_dtn_uncooked_rice_bowl", has(DoggyItems.UNCOOKED_RICE_BOWL.get()))
             .save(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.RICE_GRAINS.get(), 3)
