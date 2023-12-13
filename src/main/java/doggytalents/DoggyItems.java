@@ -134,6 +134,7 @@ public class DoggyItems {
         () -> new RiceGrainsItem(DoggyBlocks.RICE_CROP.get(), createInitialProp()));
     public static final RegistryObject<Item> RICE_WHEAT = register("rice_wheat",
         () -> new RiceWheatItem(createInitialProp()));
+    public static final RegistryObject<Item> KOJI = register("koji", KojiItem::new);
     public static final RegistryObject<Item> SOY_BEANS = register("soy_beans", 
         () -> new BlockItem(DoggyBlocks.SOY_CROP.get(), createInitialProp()));
     public static final RegistryObject<Item> SOY_PODS = register("soy_pods", 
