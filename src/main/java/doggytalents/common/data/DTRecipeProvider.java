@@ -719,14 +719,14 @@ public class DTRecipeProvider extends RecipeProvider {
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.MISO_PASTE.get(), 1)
             .requires(DoggyItems.SOY_BEANS_DRIED.get())
-            .requires(DoggyItems.RICE_GRAINS.get())
+            .requires(DoggyItems.KOJI.get())
             .requires(Items.RED_MUSHROOM)
             .unlockedBy("has_red_mushroom", has(Items.RED_MUSHROOM))
             .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.NATTO.get(), 1)
             .requires(DoggyItems.SOY_BEANS_DRIED.get())
-            .requires(DoggyItems.RICE_GRAINS.get())
+            .requires(DoggyItems.KOJI.get())
             .requires(Items.BROWN_MUSHROOM)
             .unlockedBy("has_brown_mushroom", has(Items.BROWN_MUSHROOM))
             .save(consumer);
