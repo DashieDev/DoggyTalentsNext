@@ -17,7 +17,7 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
 
     public static final IDogFoodPredicate INNER_DYN_PRED = (stackIn) -> {
         Item item = stackIn.getItem();
-        return item == Items.ROTTEN_FLESH || (item.isEdible() && stackIn.is(ItemTags.FISHES));
+        return (item.isEdible() && stackIn.is(ItemTags.FISHES));
     };
 
     public HappyEaterTalent(Talent talentIn, int levelIn) {
@@ -45,24 +45,12 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
             return true;
         }
 
-        if (this.level() >= 5) {
-            if (item == Items.ROTTEN_FLESH) {
-                return true;
-            }
-        }
-
         return false;
     }
 
     @Override
     public InteractionResult consume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
         Item item = stackIn.getItem();
-
-        if (this.level() >= 5 && item == Items.ROTTEN_FLESH) {
-            dogIn.addHunger(30);
-            dogIn.consumeItemFromStack(entityIn, stackIn);
-            return InteractionResult.SUCCESS;
-        }
 
         if (this.level() >= 2 && item.isEdible() && stackIn.is(ItemTags.FISHES)) {
             dogIn.addHunger(item.getFoodProperties().getNutrition() * 5);
