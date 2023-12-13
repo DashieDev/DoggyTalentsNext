@@ -19,6 +19,12 @@ public class RiceGrainsItem extends BlockItem{
     }
     @Override
     public InteractionResult useOn(UseOnContext context) {
+        if (handleGrindStoneUsage(context).shouldSwing())
+            return InteractionResult.SUCCESS;
+        return super.useOn(context);
+    }
+
+    private InteractionResult handleGrindStoneUsage(UseOnContext context) {
         var level = context.getLevel();
         var pos = context.getClickedPos();
         var state = level.getBlockState(pos);
