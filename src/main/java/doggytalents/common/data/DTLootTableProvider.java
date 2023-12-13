@@ -17,6 +17,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -24,11 +25,13 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
@@ -106,11 +109,26 @@ public class DTLootTableProvider extends LootTableProvider {
                         StatePropertiesPredicate
                         .Builder.properties()
                         .hasProperty(DoggyBlocks.RICE_CROP.get().getAgeProperty(), 7));
-            this.add(DoggyBlocks.RICE_CROP.get(), 
+            final var KOJI_LOOT_CONDITION = 
+                LootItemRandomChanceCondition.randomChance(0.05f)
+                    .and(RICE_LOOT_CONDITION);
+
+            final var KOJI_LOOT_POOL = 
+                LootPool.lootPool().when(KOJI_LOOT_CONDITION)
+                    .add(LootItem.lootTableItem(DoggyItems.KOJI.get()))
+                    .apply(
+                        ApplyBonusCount
+                            .addBonusBinomialDistributionCount(
+                                Enchantments.BLOCK_FORTUNE, 0.5714286F, 3));
+
+            final var RICE_LOOTABLE = 
                 this.createCropDrops(DoggyBlocks.RICE_CROP.get(), 
                     DoggyItems.RICE_WHEAT.get(), 
                     DoggyItems.RICE_GRAINS.get(), 
-                    RICE_LOOT_CONDITION));
+                    RICE_LOOT_CONDITION)
+                .withPool(KOJI_LOOT_POOL);
+
+            this.add(DoggyBlocks.RICE_CROP.get(), RICE_LOOTABLE);
 
             final var SOY_LOOT_CONDITION = 
                 LootItemBlockStatePropertyCondition
