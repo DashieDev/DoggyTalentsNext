@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:soy_beans"
+        "recipe": "minecraft:soy_bean_dried_smelt"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:soy_beans"
+      "minecraft:soy_bean_dried_smelt"
     ]
   },
   "sends_telemetry_event": false
