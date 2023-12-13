@@ -131,10 +131,7 @@ public class ClientEventHandler {
             int x = guiLeft + (creative ? 36 : sizeX / 2 - 10);
             int y = guiTop + (creative ? 7 : 48);
 
-            this.activeInventoryButton = new DogInventoryButton(x, y, screen, (btn) -> {
-                PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
-                btn.active = false;
-            });
+            this.activeInventoryButton = new DogInventoryButton(x, y, screen);
 
             event.addListener(this.activeInventoryButton);
         }
