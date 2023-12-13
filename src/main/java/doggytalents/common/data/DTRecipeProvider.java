@@ -698,7 +698,6 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern(" B ")
             .define('S', DoggyItems.SOY_BEANS_DRIED.get())
             .define('B', Items.BOWL)
-            .define('W', Items.WATER_BUCKET)
             .unlockedBy("has_bowl", has(Items.BOWL))
             .save(consumer);
 
@@ -738,7 +737,6 @@ public class DTRecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.MISO_SOUP.get(), 1)
             .requires(DoggyItems.MISO_PASTE.get())
             .requires(DoggyItems.TOFU.get())
-            .requires(Items.WATER_BUCKET)
             .requires(Items.BOWL)
             .requires(Items.DRIED_KELP)
             .unlockedBy("has_bowl", has(Items.BOWL))
