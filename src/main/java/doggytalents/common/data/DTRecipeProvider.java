@@ -452,8 +452,6 @@ public class DTRecipeProvider extends RecipeProvider {
         SpecialRecipeBuilder.special(DoggyRecipeSerializers.DOG_BED.get()).save(consumer, Util.getResourcePath("dog_bed"));
         SpecialRecipeBuilder.special(DoggyRecipeSerializers.BIRTHDAY_HAT.get()).save(consumer, Util.getResourcePath("birthday_hat"));
 
-        SpecialRecipeBuilder.special(DoggyRecipeSerializers.UNCOOKED_RICE_BOWL.get()).save(consumer, Util.getResourcePath("uncooked_rice_bowl"));
-        
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.HOT_DOG.get(), 1)
             .pattern("RTY")
             .pattern("BCB")
@@ -565,12 +563,11 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
             .save(consumer);
         
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.UNCOOKED_RICE_BOWL.get(), 2)
-            .requires(Items.BOWL, 2)
-            .requires(DoggyItems.UNCOOKED_RICE.get(), 2)
-            .requires(Items.WATER_BUCKET)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.UNCOOKED_RICE_BOWL.get(), 1)
+            .requires(Items.BOWL)
+            .requires(DoggyItems.UNCOOKED_RICE.get())
             .unlockedBy("has_bowl", has(Items.BOWL))
-            .save(consumer, "uncooked_rice_bowl_alt");
+            .save(consumer);
             
         ShapedRecipeBuilder.shaped(DoggyItems.PLAGUE_DOC_MASK.get(), 1)
             .pattern("CWC")
