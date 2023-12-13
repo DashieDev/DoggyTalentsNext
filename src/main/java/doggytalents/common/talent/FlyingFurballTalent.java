@@ -24,6 +24,7 @@ public class FlyingFurballTalent extends TalentInstance {
     private DogFlyingNavigation navigation;
     
     private boolean wasFlying = false;
+    private int flyHoldTick = 0;
     
     public FlyingFurballTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -69,6 +70,9 @@ public class FlyingFurballTalent extends TalentInstance {
         if (!(dogIn instanceof Dog dog))
             return;
 
+        if (flyHoldTick > 0)
+            --flyHoldTick;
+
         boolean isDogFlying = dog.isDogFlying();
 
         if (dog.getNavigation() != navigation && shouldSwitchToFlying(dog)) {
@@ -83,6 +87,7 @@ public class FlyingFurballTalent extends TalentInstance {
 
         if (!isDogFlying && shouldBeFlying(dog)) {
             dog.setDogFlying(true);
+            this.flyHoldTick = 15;
         }
 
         isDogFlying = dog.isDogFlying();
@@ -107,6 +112,9 @@ public class FlyingFurballTalent extends TalentInstance {
     }
 
     private boolean shouldBeFlying(AbstractDog dog) {
+        if (flyHoldTick > 0)
+            return true;
+        
         if (!dog.isDoingFine()) {
             if (dog instanceof Dog ddog && !ddog.incapacitatedMananger.canMove())
             return false;
