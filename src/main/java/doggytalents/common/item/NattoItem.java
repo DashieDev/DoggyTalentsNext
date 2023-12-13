@@ -19,7 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class NattoItem extends DogEddibleItem  {
+public class NattoItem extends DogEddibleBowlFoodItem {
 
     public NattoItem() {
         super(
