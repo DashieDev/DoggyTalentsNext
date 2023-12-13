@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-13T16:39:44.1466095	Recipes
+// 1.20.1	2023-12-13T18:28:36.6561894	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 5bb21f3599e9ca5620bca26f572185ad321709a2 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -74,7 +74,6 @@ b560ae8828fc00700da4c41edcf2ad021e7e63a8 data/doggytalents/advancements/recipes/
 6ab6a9e392fdafa214e284576174db88f7681a0c data/doggytalents/advancements/recipes/food/super_treat.json
 473224a1c313121413a8e82ec4b650233f1a258b data/doggytalents/advancements/recipes/food/tofu.json
 e2605667befcd7bce53f0485caeed5964d7a95b5 data/doggytalents/advancements/recipes/food/training_treat.json
-9284826ab73bd70bfdd9bf38a3a636344a41ee82 data/doggytalents/advancements/recipes/food/uncooked_rice.json
 79a56f06b66d5f0e918993d86fa3251ac8dc0c00 data/doggytalents/advancements/recipes/misc/amnesia_bone.json
 6d870158a5f5b6095b117f3e4017a7cc3df3b94e data/doggytalents/advancements/recipes/misc/gender_bone.json
 95936ace95493c85b27a3a55f514d8786fdc0e60 data/doggytalents/advancements/recipes/tools/bandaid.json
@@ -180,8 +179,10 @@ ee82bce7edd473e45aff8b389d706f60f8042a3f data/doggytalents/recipes/throw_stick_w
 475e991fb38f76652be9578e20e9c0f759d3e397 data/doggytalents/recipes/tofu.json
 641f5c45b1ace71f26e3b3c10fd6e4b849aa2a92 data/doggytalents/recipes/training_treat.json
 5b0896af5e5075a728c9fce7870d18de78b6d7fa data/doggytalents/recipes/treat_bag.json
-24fd32f48aeec0610a66373bbb48b61cdfcfdcd5 data/doggytalents/recipes/uncooked_rice.json
+773c168f664b46ef88af017b98f19b7af18eda0b data/doggytalents/recipes/uncooked_rice_bowl.json
 28e1d2c86ce1394ef49ce9d028c0d4cb0fca9f91 data/doggytalents/recipes/whistle.json
 15acbe6c0931a0a3fd1cfb3c033b1263a8c9748d data/doggytalents/recipes/wig.json
 d57f1f956f0edc25d50d0c053a47172704549cd5 data/doggytalents/recipes/witch_hat.json
 0fee9bb7c144a6c87dd0110dc51cdc6bf87e0914 data/doggytalents/recipes/wool_collar.json
+c0c74ad8042aa891df0e672f556d5285699f1045 data/minecraft/advancements/recipes/food/uncooked_rice_bowl_alt.json
+1b9beece6c7964b8dfc6d8edae493a8b359f3286 data/minecraft/recipes/uncooked_rice_bowl_alt.json
