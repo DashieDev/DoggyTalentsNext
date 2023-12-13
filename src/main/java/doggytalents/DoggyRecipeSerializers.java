@@ -2,6 +2,7 @@ package doggytalents;
 
 import doggytalents.common.inventory.recipe.BirthdayHatRecipe;
 import doggytalents.common.inventory.recipe.DogBedRecipe;
+import doggytalents.common.inventory.recipe.UncookedRiceRecipe;
 import doggytalents.common.lib.Constants;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -21,6 +22,7 @@ public class DoggyRecipeSerializers {
 
     public static final RegistryObject<RecipeSerializer<DogBedRecipe>> DOG_BED = register("dog_bed", DogBedRecipe::new);
     public static final RegistryObject<RecipeSerializer<BirthdayHatRecipe>> BIRTHDAY_HAT = register("birthday_hat", BirthdayHatRecipe::new);
+    public static final RegistryObject<RecipeSerializer<UncookedRiceRecipe>> UNCOOKED_RICE_BOWL = register("uncooked_rice_bowl", UncookedRiceRecipe::new);
 //    public static final RegistryObject<SpecialRecipeSerializer<DogCollarRecipe>> COLLAR_COLOURING = register("collar_colouring", DogCollarRecipe::new);
 //    public static final RegistryObject<SpecialRecipeSerializer<DogCapeRecipe>> CAPE_COLOURING = register("cape_colouring", DogCapeRecipe::new);
 
