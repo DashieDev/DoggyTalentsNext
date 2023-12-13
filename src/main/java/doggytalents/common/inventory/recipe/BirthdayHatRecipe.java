@@ -32,29 +32,24 @@ public class BirthdayHatRecipe extends CustomRecipe {
             var stack = container.getItem(i);
             if (stack.isEmpty())
                 continue;
-            boolean isOtherStack = true;
             if (stack.is(Items.PAPER)) {
-                isOtherStack = false;
                 if (paperStack != null)
                     return false;
                 paperStack = stack;
                 continue;
             }
             if (stack.is(DoggyItems.BIRTHDAY_HAT.get())) {
-                isOtherStack = false;
                 if (bdStack != null)
                     return false;
                 bdStack = stack;
                 continue;
             }
             if (stack.getItem() instanceof DyeItem) {
-                isOtherStack = false;
                 if (dyeStack == null)
                     dyeStack = stack;
                 continue;
             }
-            if (isOtherStack)
-                return false;
+            return false;
         }
         return paperStack != null && dyeStack != null && bdStack != null;
     }
