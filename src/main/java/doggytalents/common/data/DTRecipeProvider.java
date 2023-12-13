@@ -725,6 +725,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(DoggyItems.SOY_BEANS_DRIED.get())
             .requires(DoggyItems.KOJI.get())
             .requires(Items.BROWN_MUSHROOM)
+            .requires(Items.BOWL)
             .unlockedBy("has_brown_mushroom", has(Items.BROWN_MUSHROOM))
             .save(consumer);
 
