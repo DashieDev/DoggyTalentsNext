@@ -695,8 +695,7 @@ public class DTRecipeProvider extends RecipeProvider {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SOY_MILK.get(), 1)
             .pattern("SSS")
-            .pattern("SWS")
-            .pattern(" B ")
+            .pattern("SBS")
             .define('S', DoggyItems.SOY_BEANS_DRIED.get())
             .define('B', Items.BOWL)
             .unlockedBy("has_bowl", has(Items.BOWL))
