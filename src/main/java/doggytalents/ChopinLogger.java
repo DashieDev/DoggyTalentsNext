@@ -63,7 +63,7 @@ public class ChopinLogger {
     public void onWolfOrDogDeath(LivingDeathEvent ev) {
         var e = ev.getEntity();
         if (
-            (e instanceof Dog && !IS_DEBUG_ALLOW_DEATH)
+            (e instanceof Dog && false)
             || e instanceof Wolf
         ) {
             if (ev.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
