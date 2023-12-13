@@ -731,6 +731,13 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_brown_mushroom", has(Items.BROWN_MUSHROOM))
             .save(consumer);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.KOJI.get(), 3)
+            .requires(DoggyItems.KOJI.get())
+            .requires(DoggyItems.UNCOOKED_RICE.get())
+            .requires(Items.SUGAR)
+            .unlockedBy("has_dtn_koji", has(DoggyItems.KOJI.get()))
+            .save(consumer);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.MISO_SOUP.get(), 1)
             .requires(DoggyItems.MISO_PASTE.get())
             .requires(DoggyItems.TOFU.get())
