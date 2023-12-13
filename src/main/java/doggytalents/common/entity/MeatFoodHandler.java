@@ -22,7 +22,8 @@ public class MeatFoodHandler implements IDogFoodHandler {
         var props = stack.getItem().getFoodProperties();
 
         if (props == null) return false;
-        return stack.isEdible() && props.isMeat() && stack.getItem() != Items.ROTTEN_FLESH;
+        return stack.isEdible() && props.isMeat() && stack.getItem() != Items.ROTTEN_FLESH
+            && props.getNutrition() >= 5;
     }
 
     @Override
