@@ -123,10 +123,7 @@ public class TalentInfoViewElement extends AbstractElement {
             container.addChildren(packPuppyButtonDiv);
             var dogInvButton = new DogInventoryButton(
                 packPuppyButtonDiv.getRealX() + PADDING_LEFT, 
-                packPuppyButtonDiv.getRealY() + 5, getScreen(), (btn) -> {
-                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
-                    btn.active = false;
-            });
+                packPuppyButtonDiv.getRealY() + 5, getScreen());
             packPuppyButtonDiv.addChildren(dogInvButton);
         } else if (talent == DoggyTalents.DOGGY_TORCH.get()) {
             var talentInstOptional = dog.getTalent(DoggyTalents.DOGGY_TORCH);

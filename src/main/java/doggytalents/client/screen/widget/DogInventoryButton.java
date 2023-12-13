@@ -5,10 +5,15 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.network.PacketHandler;
+import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.talent.PackPuppyTalent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.narration.NarratableEntry;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -16,16 +21,26 @@ import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.List;
 
-public class DogInventoryButton extends Button {
+public class DogInventoryButton extends AbstractButton {
 
     private Screen parent;
     private int baseX;
 
-    public DogInventoryButton(int x, int y, Screen parentIn, OnPress onPress) {
-        super(x, y, 13, 10, Component.literal(""), onPress);
+    private final Tooltip TOOLTIP_ACTIVE = 
+        Tooltip.create(Component.translatable("container.doggytalents.dog_inventories.link"));
+    
+    private final Tooltip TOOLTIP_NO_ACTIVE = 
+        Tooltip.create(Component.translatable("container.doggytalents.dog_inventories.link")
+            .withStyle(ChatFormatting.RED));
+
+    public DogInventoryButton(int x, int y, Screen parentIn) {
+        super(x, y, 13, 10, Component.literal(""));
         this.baseX = x;
         this.parent = parentIn;
     }
@@ -83,4 +98,15 @@ public class DogInventoryButton extends Button {
             this.parent.renderTooltip(stack, msg, mouseX, mouseY);
         }
     }
+
+    @Override
+    public void onPress() {
+        PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
+        this.active = false;
+    }
+
+    @Override
+    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
+    }
+
 }
