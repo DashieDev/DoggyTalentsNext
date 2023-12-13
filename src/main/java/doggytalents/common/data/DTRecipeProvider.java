@@ -763,6 +763,13 @@ public class DTRecipeProvider extends RecipeProvider {
             0.1F, 100)
             .unlockedBy("has_dtn_uncooked_rice_bowl", has(DoggyItems.UNCOOKED_RICE_BOWL.get()))
             .save(consumer);
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DoggyItems.ABURAAGE.get()), 
+            RecipeCategory.FOOD, 
+            DoggyItems.TOFU.get(), 
+            0.1F, 100)
+            .unlockedBy("has_dtn_tofu", has(DoggyItems.TOFU.get()))
+            .save(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.RICE_GRAINS.get(), 3)
             .requires(DoggyItems.RICE_WHEAT.get())
