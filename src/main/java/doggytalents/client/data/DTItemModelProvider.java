@@ -133,6 +133,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.RICE_WHEAT);
         generated(DoggyItems.KOJI);
         generated(DoggyItems.UNCOOKED_RICE);
+        generated(DoggyItems.UNCOOKED_RICE_BOWL);
         generated(DoggyItems.SOY_BEANS);
         generated(DoggyItems.SOY_PODS);
         generated(DoggyItems.SOY_BEANS_DRIED);
