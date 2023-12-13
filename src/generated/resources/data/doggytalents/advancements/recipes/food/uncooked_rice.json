@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_dtn_uncooked_rice_bowl": {
+    "has_bowl": {
       "conditions": {
         "items": [
           {
             "items": [
-              "doggytalents:uncooked_rice_bowl"
+              "minecraft:bowl"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:rice_bowl"
+        "recipe": "doggytalents:uncooked_rice"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_dtn_uncooked_rice_bowl",
+      "has_bowl",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:rice_bowl"
+      "doggytalents:uncooked_rice"
     ]
   },
   "sends_telemetry_event": false
