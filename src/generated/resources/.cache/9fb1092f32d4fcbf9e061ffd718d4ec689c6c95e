@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-14T02:32:52.1709087	Recipes
+// 1.20.1	2023-12-14T02:37:09.724829	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 5bb21f3599e9ca5620bca26f572185ad321709a2 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -56,6 +56,7 @@ c10bce103653d0dff30f37296d406505b55f6e54 data/doggytalents/advancements/recipes/
 f9d54f04f545ea4cdbd068559fb7fd5d11d2ec6d data/doggytalents/advancements/recipes/food/golden_a_five_wagyu.json
 77e293592dba7c3f920d8f8be11861dd5952c98a data/doggytalents/advancements/recipes/food/gyudon.json
 bdef3c647bb1452b195883eb391027c70a66e756 data/doggytalents/advancements/recipes/food/kami_treat.json
+0329fc4eb5e9e252ae4375673b55e3a9e54fdb54 data/doggytalents/advancements/recipes/food/koji.json
 672a16663f0fde095528ddc5abc7928aa54c9fd5 data/doggytalents/advancements/recipes/food/master_treat.json
 b3c4cbbdb94c423de59753432504e0aa7f6e8c1c data/doggytalents/advancements/recipes/food/miso_paste.json
 c8a240ad8eb5047fb08165b11b6aef0bf7dd5603 data/doggytalents/advancements/recipes/food/miso_soup.json
@@ -129,6 +130,7 @@ de15355e85b7a8d08cf90646c764f8fefe77fce6 data/doggytalents/recipes/head_band_bla
 d61477d5baad6dedaf1a01a51fe78a75fba7f21b data/doggytalents/recipes/hot_dog.json
 a6f2358e003e0dc59cbc507fa3699a87441ff547 data/doggytalents/recipes/kami_treat.json
 e39ac1ef0d10361b039c7e2dada3068f747e9553 data/doggytalents/recipes/kitsune_mask.json
+eda91a757ddd99c29a2e58290c8db85e0610e258 data/doggytalents/recipes/koji.json
 9d3480e8c01cb0556b3d364ab523f259c980f34a data/doggytalents/recipes/lab_coat.json
 9187e94ec445a098a93f744fa3b4ae29ea8cad8c data/doggytalents/recipes/leather_jacket.json
 ff7127678e5541e454472c54f044ab7d8039af8f data/doggytalents/recipes/locator_orb_chi.json
