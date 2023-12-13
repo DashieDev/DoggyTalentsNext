@@ -152,7 +152,6 @@ public class DogFarmerAction extends ToolAction {
 
     private void harvest() {
         this.dog.level().destroyBlock(this.nextFarmBlock.above(), true);
-        this.nextFarmBlock = this.findNextFarmBlock();
     }
 
     private FarmState getFarmState(BlockPos pos) { 
