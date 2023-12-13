@@ -1,6 +1,7 @@
 package doggytalents.common.talent.doggy_tools.tool_actions;
 
 import doggytalents.ChopinLogger;
+import doggytalents.DoggyBlocks;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
@@ -22,6 +23,9 @@ public class DogFarmerAction extends ToolAction {
     private int tickTillPathRecalc;
     private int tickTillResearch;
     private int cooldown;
+
+    private static enum SeedState { WHEAT, RICE }
+    private SeedState seedState = SeedState.WHEAT;
 
 
     public DogFarmerAction(Dog dog, DoggyToolsTalent talent) {
@@ -142,7 +146,10 @@ public class DogFarmerAction extends ToolAction {
     }
 
     private void placeSeed() {
-        var wheatState = Blocks.WHEAT.defaultBlockState();
+        var wheatState = 
+            seedState == SeedState.RICE ?
+            DoggyBlocks.RICE_CROP.get().defaultBlockState()
+            : Blocks.WHEAT.defaultBlockState();
         this.dog.level().setBlockAndUpdate(this.nextFarmBlock.above(), wheatState);
         var soundtype = wheatState.getSoundType(
             this.dog.level(), this.nextFarmBlock.above(), this.dog);
@@ -151,6 +158,11 @@ public class DogFarmerAction extends ToolAction {
     }
 
     private void harvest() {
+        var harvestState = this.dog.level().getBlockState(nextFarmBlock.above());
+        if (harvestState.is(DoggyBlocks.RICE_CROP.get()))
+            seedState = SeedState.RICE;
+        else 
+            seedState = SeedState.WHEAT;
         this.dog.level().destroyBlock(this.nextFarmBlock.above(), true);
     }
 
@@ -163,8 +175,14 @@ public class DogFarmerAction extends ToolAction {
             return FarmState.PLACE_SEED;
         }
         if(
-            state_above.getBlock() == Blocks.WHEAT 
+            state_above.getBlock() == Blocks.WHEAT
             && ((CropBlock) Blocks.WHEAT).isMaxAge(state_above)
+        ) {
+            return FarmState.HARVEST;
+        }
+        if(
+            state_above.getBlock() == DoggyBlocks.RICE_CROP.get()
+            && DoggyBlocks.RICE_CROP.get().isMaxAge(state_above)
         ) {
             return FarmState.HARVEST;
         }
