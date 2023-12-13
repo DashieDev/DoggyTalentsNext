@@ -797,10 +797,11 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
         
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.NATTO_RICE.get(), 1)
-            .pattern("N")
-            .pattern("R")
+            .pattern("NR")
+            .pattern("B ")
             .define('N', DoggyItems.NATTO.get())
             .define('R', DoggyItems.RICE_BOWL.get())
+            .define('B', Items.BOWL)
             .unlockedBy("has_bowl", has(Items.BOWL))
             .save(consumer);
     }
