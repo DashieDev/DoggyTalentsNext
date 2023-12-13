@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-13T18:28:36.6561894	Recipes
+// 1.20.1	2023-12-14T02:32:52.1709087	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 5bb21f3599e9ca5620bca26f572185ad321709a2 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -67,7 +67,6 @@ ca557184a58893296a02ffdbd891eb3834d3c9be data/doggytalents/advancements/recipes/
 e6e49daa95029d91f8e4f7319c8af4fcd3aded29 data/doggytalents/advancements/recipes/food/rice_grains.json
 7b9202e9b5775c7c99af8f0421544d3954b294bc data/doggytalents/advancements/recipes/food/salmon_sushi.json
 c67e08ff2145b794443293405c3587766c1d0557 data/doggytalents/advancements/recipes/food/sausage.json
-e72ac25680cc7b579f7120177c5137d4c023abdc data/doggytalents/advancements/recipes/food/soy_beans.json
 b560ae8828fc00700da4c41edcf2ad021e7e63a8 data/doggytalents/advancements/recipes/food/soy_beans_dried.json
 5a793914f7d8da9cbc16448c63d0ee9517b46350 data/doggytalents/advancements/recipes/food/soy_milk.json
 959bda1c4d4556d7ddf00fd9053160918fec995b data/doggytalents/advancements/recipes/food/soy_pods_dried.json
@@ -142,10 +141,10 @@ abd41f7e8df5e4dfdc49640c8f7909ceb4085315 data/doggytalents/recipes/locator_orb_r
 f748dab745d5dcacab5c899d158720bd3ce2e0c2 data/doggytalents/recipes/locator_orb_tei.json
 c1418c076cb635911c92c7031e8a130a9fe3a753 data/doggytalents/recipes/magnifying_bone.json
 cce602e93f1b0f9f7ea8a00966421f11f8d7bbb5 data/doggytalents/recipes/master_treat.json
-498967dd702d6b417bc60aa8f3f1037170893b29 data/doggytalents/recipes/miso_paste.json
+05751f0a3e6696069d730193d5e2499696d9ec17 data/doggytalents/recipes/miso_paste.json
 d1795c1d6c659174d8cac063608c73c8e45a77a5 data/doggytalents/recipes/miso_soup.json
 62aad174f5cc14006b076c69e010c28302333e8d data/doggytalents/recipes/multicoloured_collar.json
-431bb16710eb20366ac57b1dbd87da5e0c8fe4c3 data/doggytalents/recipes/natto.json
+2066dff212a469ca0f1bb6debb27ae7f6f4c5a09 data/doggytalents/recipes/natto.json
 627fc08a9fbd7d65396bd49acd4c836273d413ba data/doggytalents/recipes/natto_rice.json
 45991b7e034b8b3f4f2ee2359ffd88cb99a8a77c data/doggytalents/recipes/onigiri.json
 b8cf5e103db1dcbd05b4b0e53363eb49748a8b3d data/doggytalents/recipes/onsen_tamago.json
@@ -160,7 +159,6 @@ e57a6bb3e58fd657908642fc0175111d60ff9dff data/doggytalents/recipes/salmon_sushi.
 9d5c1e59e3e84491e33e2075c9bb0a4eb048584c data/doggytalents/recipes/shrinking_mallet.json
 c48095f87528ac9ba496417ef5a65af5161298c7 data/doggytalents/recipes/smarty_glasses.json
 088be877f1ee6a054b0062711ba057464926444b data/doggytalents/recipes/snorkel.json
-51f6e0f45082cf43c9ef2ac77cfd65a7d54d4dd6 data/doggytalents/recipes/soy_beans.json
 b05cc2849bf758e876b5f962331660aeb2accf20 data/doggytalents/recipes/soy_beans_dried.json
 064a85c734f0bfb59a5a21d2cc5b16aed65094f8 data/doggytalents/recipes/soy_milk.json
 b5a258fd0ae9351f4e98436eb39e737d0b95405c data/doggytalents/recipes/soy_pods_dried.json
@@ -184,5 +182,7 @@ ee82bce7edd473e45aff8b389d706f60f8042a3f data/doggytalents/recipes/throw_stick_w
 15acbe6c0931a0a3fd1cfb3c033b1263a8c9748d data/doggytalents/recipes/wig.json
 d57f1f956f0edc25d50d0c053a47172704549cd5 data/doggytalents/recipes/witch_hat.json
 0fee9bb7c144a6c87dd0110dc51cdc6bf87e0914 data/doggytalents/recipes/wool_collar.json
+00abcac32f0d0dfb7a55d7d82511a17532df178a data/minecraft/advancements/recipes/food/soy_bean_dried_smelt.json
 c0c74ad8042aa891df0e672f556d5285699f1045 data/minecraft/advancements/recipes/food/uncooked_rice_bowl_alt.json
+099235d8c758571ff8f2bd01e8cbb0d9a6fea01f data/minecraft/recipes/soy_bean_dried_smelt.json
 1b9beece6c7964b8dfc6d8edae493a8b359f3286 data/minecraft/recipes/uncooked_rice_bowl_alt.json

@@ -6,13 +6,10 @@
       "item": "doggytalents:soy_beans_dried"
     },
     {
-      "item": "doggytalents:rice_grains"
+      "item": "doggytalents:koji"
     },
     {
       "item": "minecraft:brown_mushroom"
-    },
-    {
-      "item": "minecraft:bowl"
     }
   ],
   "result": {
