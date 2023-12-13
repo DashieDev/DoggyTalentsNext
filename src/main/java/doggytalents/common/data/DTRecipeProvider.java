@@ -747,12 +747,12 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_dtn_soy_pods", has(DoggyItems.SOY_PODS.get()))
             .save(consumer);
 
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DoggyItems.SOY_BEANS_DRIED.get()), 
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DoggyItems.SOY_BEANS.get()), 
             RecipeCategory.FOOD, 
-            DoggyItems.SOY_BEANS.get(), 
+            DoggyItems.SOY_BEANS_DRIED.get(), 
             0.1F, 100)
             .unlockedBy("has_dtn_soy_beans", has(DoggyItems.SOY_BEANS.get()))
-            .save(consumer);
+            .save(consumer, "soy_bean_dried_smelt");
 
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(DoggyItems.UNCOOKED_RICE_BOWL.get()), 
             RecipeCategory.FOOD, 
