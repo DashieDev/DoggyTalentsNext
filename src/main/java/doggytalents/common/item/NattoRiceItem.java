@@ -5,6 +5,8 @@ import javax.annotation.Nullable;
 import com.mojang.datafixers.util.Pair;
 
 import java.util.List;
+
+import doggytalents.DoggyEffects;
 import doggytalents.api.inferface.AbstractDog;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -34,6 +36,12 @@ public class NattoRiceItem extends DogEddibleBowlFoodItem {
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
+    }
+
+    @Override
+    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+            AbstractDog dog) {
+        return List.of(Pair.of(new MobEffectInstance(DoggyEffects.NATTO_BITE.get(), 300 * 20, 1), 1f));
     }
 
     @Override
