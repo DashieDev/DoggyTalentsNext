@@ -18,7 +18,7 @@ public class AburaageItem extends DogEddibleItem {
     public AburaageItem() {
         super(
             b -> b
-            .nutrition(6)
+            .nutrition(10)
             .saturationMod(0.8F)
         );
     }

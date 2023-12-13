@@ -24,8 +24,8 @@ public class GyudonItem extends DogEddibleBowlFoodItem {
     public GyudonItem() {
         super(
             b -> b
-                .nutrition(10)
-                .saturationMod(0.6F)
+                .nutrition(20)
+                .saturationMod(1f)
                 .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400, 1), 1)
                 .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 1200, 1), 1)
                 .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 2400, 1), 1)

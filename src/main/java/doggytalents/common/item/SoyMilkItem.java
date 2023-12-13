@@ -13,7 +13,7 @@ public class SoyMilkItem extends DogEddibleBowlFoodItem  {
     public SoyMilkItem() {
         super(
             b -> b
-                .nutrition(4)
+                .nutrition(6)
                 .saturationMod(0.5F)
         );
     }
