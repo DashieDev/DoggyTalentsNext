@@ -7,15 +7,11 @@
     },
     "S": {
       "item": "doggytalents:soy_beans_dried"
-    },
-    "W": {
-      "item": "minecraft:water_bucket"
     }
   },
   "pattern": [
     "SSS",
-    "SWS",
-    " B "
+    "SBS"
   ],
   "result": {
     "item": "doggytalents:soy_milk"
