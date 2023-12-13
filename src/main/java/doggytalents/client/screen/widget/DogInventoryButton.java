@@ -15,6 +15,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -101,6 +102,12 @@ public class DogInventoryButton extends AbstractButton {
 
     @Override
     public void onPress() {
+        var mc = Minecraft.getInstance();
+        if (mc.screen instanceof AbstractContainerScreen container) {
+            var menu = container.getMenu();
+            if (menu != null)
+                menu.setCarried(ItemStack.EMPTY);
+        }
         PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
         this.active = false;
     }
