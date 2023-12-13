@@ -1,0 +1,61 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "doggytalents:uncooked_rice"
+    },
+    {
+      "item": "doggytalents:uncooked_rice"
+    },
+    {
+      "item": "doggytalents:uncooked_rice"
+    },
+    {
+      "item": "doggytalents:uncooked_rice"
+    },
+    {
+      "item": "doggytalents:uncooked_rice"
+    },
+    {
+      "item": "doggytalents:uncooked_rice"
+    },
+    {
+      "item": "doggytalents:uncooked_rice"
+    },
+    {
+      "item": "doggytalents:uncooked_rice"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "item": "doggytalents:uncooked_rice"
+  }
+}
