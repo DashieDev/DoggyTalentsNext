@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:uncooked_rice_bowl_alt"
+        "recipe": "doggytalents:uncooked_rice_bowl"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:uncooked_rice_bowl_alt"
+      "doggytalents:uncooked_rice_bowl"
     ]
   },
   "sends_telemetry_event": false
