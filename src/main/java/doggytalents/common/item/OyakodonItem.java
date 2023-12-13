@@ -24,8 +24,8 @@ public class OyakodonItem extends DogEddibleBowlFoodItem {
     public OyakodonItem() {
         super(
             b -> b
-                .nutrition(8)
-                .saturationMod(0.6F)
+                .nutrition(14)
+                .saturationMod(1f)
                 .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400, 0), 1)
                 .effect(() -> new MobEffectInstance(MobEffects.SLOW_FALLING, 1200, 0), 1)
                 .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 1200, 1), 1)
