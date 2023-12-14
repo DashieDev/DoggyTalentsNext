@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bowl": {
+    "has_rice_bowl": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:bowl"
+              "doggytalents:rice_bowl"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_bowl",
+      "has_rice_bowl",
       "has_the_recipe"
     ]
   ],
