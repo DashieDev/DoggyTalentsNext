@@ -804,7 +804,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("N")
             .pattern("B")
             .define('N', DoggyItems.NATTO.get())
-            .define('R', DoggyItems.RICE_BOWL.get())
+            .define('B', DoggyItems.RICE_BOWL.get())
             .unlockedBy("has_bowl", has(Items.BOWL))
             .save(consumer);
     }
