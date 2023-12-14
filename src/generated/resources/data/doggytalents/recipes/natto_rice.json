@@ -3,18 +3,15 @@
   "category": "misc",
   "key": {
     "B": {
-      "item": "minecraft:bowl"
+      "item": "doggytalents:rice_bowl"
     },
     "N": {
       "item": "doggytalents:natto"
-    },
-    "R": {
-      "item": "doggytalents:rice_bowl"
     }
   },
   "pattern": [
-    "NR",
-    "B "
+    "N",
+    "B"
   ],
   "result": {
     "item": "doggytalents:natto_rice"
