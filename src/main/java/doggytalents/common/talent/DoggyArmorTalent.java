@@ -2,12 +2,12 @@ package doggytalents.common.talent;
 
 import java.util.Map;
 
+import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.Screens;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.inventory.DogArmorItemHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
@@ -28,10 +28,6 @@ import net.minecraft.world.level.Level;
  */
 public class DoggyArmorTalent extends TalentInstance {
 
-    private static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
-
-    protected DogArmorItemHandler armors;
-
     protected int tickUntilXPSearch;
 
     protected final int SEARCH_RADIUS = 2; //TODO
@@ -40,7 +36,6 @@ public class DoggyArmorTalent extends TalentInstance {
 
     public DoggyArmorTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
-        armors = new DogArmorItemHandler();
     }
 
     @Override
@@ -50,12 +45,6 @@ public class DoggyArmorTalent extends TalentInstance {
 
     @Override
     public void init(AbstractDog dogIn) {
-        if (dogIn.level.isClientSide) return;
-        for (int i = 0; i < this.armors.getSlots(); ++i) {
-            var stack = this.armors.getStackInSlot(i);
-            var slot = Dog.getEquipmentSlotForItem(stack);
-            dogIn.setItemSlot(slot, stack);
-        }
     }
 
     @Override
@@ -69,41 +58,28 @@ public class DoggyArmorTalent extends TalentInstance {
     @Override
     public void onRead(AbstractDog dogIn, CompoundTag compound) {
         
-        this.armors.deserializeNBT(compound);
+        dogIn.dogArmors().deserializeNBT(compound);
         this.spareValue = compound.getInt("armors_spareXp");
-
-        for (int i = 0; i < this.armors.getSlots(); ++i) {
-            var stack = this.armors.getStackInSlot(i);
-            var slot = Dog.getEquipmentSlotForItem(stack);
-            dogIn.setItemSlot(slot, stack);
-        }
     }
 
     @Override
     public void onWrite(AbstractDog dogIn, CompoundTag compound) {
-        compound.merge(this.armors.serializeNBT());
+        compound.merge(dogIn.dogArmors().serializeNBT());
         compound.putInt("armors_spareXp", level);
     }
 
     @Override
     public void remove(AbstractDog dogIn) {
-        if (dogIn.level.isClientSide) return;
-        for (var slot : SLOT_IDS) {
-            dogIn.setItemSlot(slot, ItemStack.EMPTY);
-        }
+        if (dogIn.level().isClientSide) return;
     }
 
     private void dropArmor(AbstractDog dogIn) {
         
-        for (int i = 0; i < this.armors.getSlots(); ++i) {
-            Containers.dropItemStack(dogIn.level, dogIn.getX(), dogIn.getY(), dogIn.getZ(), 
-                this.armors.getStackInSlot(i));
-            this.armors.setStackInSlot(i, ItemStack.EMPTY);
+        for (int i = 0; i < dogIn.dogArmors().getSlots(); ++i) {
+            Containers.dropItemStack(dogIn.level(), dogIn.getX(), dogIn.getY(), dogIn.getZ(), 
+                dogIn.dogArmors().getStackInSlot(i));
+            dogIn.dogArmors().setStackInSlot(i, ItemStack.EMPTY);
         }
-    }   
-
-    public DogArmorItemHandler getArmors() {
-        return this.armors;
     }
 
     @Override
@@ -125,25 +101,14 @@ public class DoggyArmorTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog dog) {
-
-        if (!dog.level.isClientSide) {
-            validateAndSync(dog);
-        }
-            
-
         if (this.level() >= 3) {
             this.scanForXpAndRepair(dog);
         }
     }
-    
-    private void validateAndSync(AbstractDog dog) {
-        for (var slot : SLOT_IDS) {
-            var pStack = dog.getItemBySlot(slot);
-            var insStack = this.armors.getArmorWithSlot(slot);
-            if (pStack != insStack) {
-                dog.setItemSlot(slot, insStack);
-            }
-        }
+
+    @Override
+    public void props(AbstractDog dog, DogAlterationProps props) {
+        props.setCanWearArmor();
     }
 
     private void scanForXpAndRepair(AbstractDog dog) {
