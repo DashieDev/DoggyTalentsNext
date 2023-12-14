@@ -567,7 +567,7 @@ public class DTRecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.UNCOOKED_RICE_BOWL.get(), 1)
             .requires(Items.BOWL)
             .requires(DoggyItems.UNCOOKED_RICE.get())
-            .unlockedBy("has_bowl", has(Items.BOWL))
+            .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
             .save(consumer);
             
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.PLAGUE_DOC_MASK.get(), 1)
@@ -587,7 +587,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("R")
             .define('S', Items.SALMON)
             .define('R', DoggyItems.RICE_BOWL.get())
-            .unlockedBy("has_salmon", has(Items.SALMON))
+            .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
             .save(consumer);
         
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CROW_WINGS.get(), 1)
@@ -653,7 +653,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("K")
             .define('R', DoggyItems.RICE_BOWL.get())
             .define('K', Items.DRIED_KELP)
-            .unlockedBy("has_dried_kelp", has(Items.DRIED_KELP))
+            .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
             .save(consumer);
             
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DIVINE_RETRIBUTON.get(), 1)
@@ -789,7 +789,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('R', DoggyItems.RICE_BOWL.get())
             .define('B', Items.COOKED_BEEF)
             .define('O', DoggyItems.ONSEN_TAMAGO.get())
-            .unlockedBy("has_bowl", has(Items.BOWL))
+            .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
             .save(consumer);
         
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.OYAKODON.get(), 1)
@@ -798,7 +798,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('R', DoggyItems.RICE_BOWL.get())
             .define('C', Items.EGG)
             .define('O', Items.COOKED_CHICKEN)
-            .unlockedBy("has_bowl", has(Items.BOWL))
+            .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
             .save(consumer);
         
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.NATTO_RICE.get(), 1)
@@ -806,7 +806,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("B")
             .define('N', DoggyItems.NATTO.get())
             .define('B', DoggyItems.RICE_BOWL.get())
-            .unlockedBy("has_bowl", has(Items.BOWL))
+            .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
             .save(consumer);
     }
     
