@@ -1,6 +1,8 @@
 package doggytalents.common.item;
 
 import javax.annotation.Nullable;
+
+import java.util.ArrayList;
 import java.util.List;
 import com.mojang.datafixers.util.Pair;
 
@@ -38,6 +40,24 @@ public class OyakodonItem extends DogEddibleBowlFoodItem {
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
+    }
+
+    @Override
+    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+            AbstractDog dog) {
+        var ret = super.getAdditionalEffectsWhenDogConsume(useStack, dog);
+        var newRet = new ArrayList<Pair<MobEffectInstance, Float>>(ret.size());
+        for (var pair : ret) {
+            var effect = pair.getFirst();
+            var newEffect = new MobEffectInstance(
+                effect.getEffect(),
+                effect.getDuration() + 2 * 60 * 20,
+                effect.getAmplifier()
+            );
+            var newPair = new Pair<>(newEffect, 1f);
+            newRet.add(newPair);
+        }
+        return newRet;
     }
 
     @Override
