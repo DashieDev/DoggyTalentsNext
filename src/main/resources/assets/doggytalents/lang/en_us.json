@@ -102,6 +102,7 @@
    "item.doggytalents.starter_bundle.contains": "- %dx %s",
    "item.doggytalents.starter_bundle.fail": "Not enough space in inventory!",
    "item.doggytalents.rice_bowl": "Rice Bowl",
+   "item.doggytalents.rice_bowl_description": "White, Steamy and Fluffy!",
    "item.doggytalents.salmon_sushi": "Sake Nigiri Sushi",
    "item.doggytalents.onigiri": "Onigiri",
    "item.doggytalents.sausage": "Sausage",
@@ -146,7 +147,10 @@
    "item.doggytalents.divine_retribution.description2": "\"You'll get used to it.\" - Replied Ammy.",
 
    "item.doggytalents.rice_grains": "Rice Grains",
+   "item.doggytalents.rice_grains.description": "Sneak Right-Click on a Grindstone to dehusk the rice.",
    "item.doggytalents.uncooked_rice": "Uncooked Rice",
+   "item.doggytalents.uncooked_rice_bowl": "Uncooked Rice in a Bowl",
+   "item.doggytalents.uncooked_rice_bowl.description": "In the furnace it goes!",
    "item.doggytalents.rice_wheat": "Paddy Rice",
    "block.doggytalents.rice_crop": "Rice Grains",
    "item.doggytalents.koji": "Koji",
