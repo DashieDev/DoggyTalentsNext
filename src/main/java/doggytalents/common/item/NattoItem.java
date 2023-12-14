@@ -24,8 +24,8 @@ public class NattoItem extends DogEddibleItem {
     public NattoItem() {
         super(
             b -> b
-                .nutrition(8)
-                .saturationMod(0.8F)
+                .nutrition(6)
+                .saturationMod(0.6F)
         );
     }
     @Override
