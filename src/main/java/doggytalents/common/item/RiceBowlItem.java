@@ -14,7 +14,7 @@ public class RiceBowlItem extends DogEddibleBowlFoodItem {
     public RiceBowlItem() {
         super(
             b -> b
-                .nutrition(3)
+                .nutrition(5)
                 .saturationMod(0.5F)
         ); 
     }
