@@ -724,7 +724,6 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(DoggyItems.SOY_BEANS_DRIED.get())
             .requires(DoggyItems.KOJI.get())
             .requires(Items.BROWN_MUSHROOM)
-            .requires(Items.BOWL)
             .unlockedBy("has_brown_mushroom", has(Items.BROWN_MUSHROOM))
             .save(consumer);
 
@@ -803,11 +802,10 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
         
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.NATTO_RICE.get(), 1)
-            .pattern("NR")
-            .pattern("B ")
+            .pattern("N")
+            .pattern("B")
             .define('N', DoggyItems.NATTO.get())
             .define('R', DoggyItems.RICE_BOWL.get())
-            .define('B', Items.BOWL)
             .unlockedBy("has_bowl", has(Items.BOWL))
             .save(consumer);
     }
