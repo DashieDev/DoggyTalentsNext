@@ -25,8 +25,8 @@ public class NattoRiceItem extends DogEddibleBowlFoodItem {
     public NattoRiceItem() {
         super(
             b -> b
-                .nutrition(14)
-                .saturationMod(1f)
+                .nutrition(8)
+                .saturationMod(0.8f)
         );
     }
     @Override
