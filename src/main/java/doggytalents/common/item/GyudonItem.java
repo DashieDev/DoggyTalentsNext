@@ -49,9 +49,12 @@ public class GyudonItem extends DogEddibleBowlFoodItem {
         var newRet = new ArrayList<Pair<MobEffectInstance, Float>>(ret.size());
         for (var pair : ret) {
             var effect = pair.getFirst();
+            var newDuration = effect.getEffect().isInstantenous() ?
+                effect.getDuration()
+                : effect.getDuration() + 2 * 60 * 20;
             var newEffect = new MobEffectInstance(
                 effect.getEffect(),
-                effect.getDuration() + 2 * 60 * 20,
+                newDuration,
                 effect.getAmplifier()
             );
             var newPair = new Pair<>(newEffect, 1f);
