@@ -113,6 +113,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -4336,6 +4337,13 @@ public class Dog extends AbstractDog {
         if (slot.getType() != EquipmentSlot.Type.ARMOR)
             return;
         super.onEquipItem(slot, oldStack, newStack);
+    }
+    
+    @Override
+    public boolean canTakeItem(ItemStack stack) {
+        if (this.canDogWearArmor() && stack.getItem() instanceof ArmorItem)
+            return true;
+        return false;
     }
 
     public boolean isLowAirSupply() {
