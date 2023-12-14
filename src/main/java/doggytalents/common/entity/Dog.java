@@ -8,6 +8,7 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.*;
 import doggytalents.api.feature.DogLevel.Type;
 import doggytalents.api.impl.DogAlterationProps;
+import doggytalents.api.impl.DogArmorItemHandler;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.api.inferface.IDogFoodHandler;
@@ -234,6 +235,9 @@ public class Dog extends AbstractDog {
         = new DogIncapacitatedMananger(this);
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
+
+    private final DogArmorItemHandler dogArmors = new DogArmorItemHandler(this);
+    private ItemStack mouthStack = ItemStack.EMPTY;
 
     protected final PathNavigation defaultNavigation;
     protected final MoveControl defaultMoveControl;
@@ -2456,10 +2460,6 @@ public class Dog extends AbstractDog {
             }
         }
 
-        //Never save these entry, these will be loaded by the talents itself.
-        compound.remove("HandItems");
-        compound.remove("ArmorItems");
-
         //Duplication Detection
         if (!this.level().isClientSide) {
             var uuid = this.getUUID();
@@ -3076,6 +3076,14 @@ public class Dog extends AbstractDog {
             inst.props(this, alterationProps);
             inst.init(this);
         }
+
+        onPropsUpdated();
+    }
+
+    private void onPropsUpdated() {
+        this.dogArmors.onPropsUpdated(alterationProps);
+        if (!alterationProps.canUseTools())
+            this.mouthStack = ItemStack.EMPTY;
     }
 
     /**
@@ -4258,11 +4266,86 @@ public class Dog extends AbstractDog {
         return alterationProps.canSwimUnderwater();
     }
 
-    // @Override
-    // public void onEquipItem(EquipmentSlot p_238393_, ItemStack p_238394_, ItemStack p_238395_) {
-    //     //Don't play additional sound
-    //     //Cause that been done by the talents.
-    // }
+    @Override
+    public boolean canDogWearArmor() {
+        return this.alterationProps.canWearArmor();
+    }
+
+    @Override
+    public boolean canDogUseTools() {
+        return this.alterationProps.canUseTools();
+    }
+
+    public DogArmorItemHandler dogArmors() {
+        return this.dogArmors;
+    }
+
+    public Iterable<ItemStack> getHandSlots() {
+        if (!this.canDogUseTools() || this.mouthStack == null)
+            return List.of(); 
+        return List.of(this.mouthStack);
+    }
+
+    public Iterable<ItemStack> getArmorSlots() {
+        if (!this.canDogUseTools())
+            return List.of();
+        return this.dogArmors.armors();
+    }
+
+    public ItemStack getItemBySlot(EquipmentSlot slot) {
+        var type = slot.getType();
+        boolean getArmor = 
+            type == EquipmentSlot.Type.ARMOR 
+            && (alterationProps.canWearArmor() || this.level().isClientSide);
+        if (getArmor) {
+            return this.dogArmors.getArmorFromSlot(slot);
+        }
+        boolean getMouth = 
+            slot == EquipmentSlot.MAINHAND 
+            && (alterationProps.canUseTools() || this.level().isClientSide)
+            && mouthStack != null;
+        if (getMouth) {
+            return this.mouthStack;
+        }
+        return ItemStack.EMPTY;
+    }
+
+    public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
+        this.verifyEquippedItem(stack);
+        if (trySetDogArmorSlot(slot, stack))
+            return;
+        if (trySetDogToolSlot(slot, stack))
+            return;
+    }
+
+    private boolean trySetDogArmorSlot(EquipmentSlot slot, ItemStack stack) {
+        if (slot.getType() != EquipmentSlot.Type.ARMOR)
+            return false;
+        if (!this.level().isClientSide && !this.canDogWearArmor())
+            return false;
+        var oldStack =  this.dogArmors.getArmorFromSlot(slot);
+        this.dogArmors.setArmorInSlot(stack, slot);
+        onEquipItem(slot, oldStack, stack);
+        return true;
+    }
+
+    private boolean trySetDogToolSlot(EquipmentSlot slot, ItemStack stack) {
+        if (slot != EquipmentSlot.MAINHAND)
+            return false;
+        if (!this.level().isClientSide && !this.canDogUseTools())
+            return false;
+        var oldStack =  this.mouthStack == null ? ItemStack.EMPTY : this.mouthStack;
+        this.mouthStack = stack;
+        onEquipItem(slot, oldStack, stack);
+        return true;
+    }
+
+    @Override
+    public void onEquipItem(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack) {
+        if (slot.getType() != EquipmentSlot.Type.ARMOR)
+            return;
+        super.onEquipItem(slot, oldStack, newStack);
+    }
 
     public boolean isLowAirSupply() {
         return this.getAirSupply() < this.getMaxAirSupply() * 0.3;

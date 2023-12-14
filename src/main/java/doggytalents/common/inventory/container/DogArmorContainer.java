@@ -9,6 +9,7 @@ import com.mojang.datafixers.util.Pair;
 
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyTalents;
+import doggytalents.api.impl.DogArmorItemHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.inventory.PackPuppyItemHandler;
 import doggytalents.common.inventory.container.slot.DogInventorySlot;
@@ -50,31 +51,21 @@ public class DogArmorContainer extends AbstractContainerMenu {
         this.player = playerInventory.player;
         this.dog = dog;
 
-        var dogArmors = dog.getTalent(DoggyTalents.DOGGY_ARMOR)
-            .map((inst) -> inst.cast(DoggyArmorTalent.class).getArmors())
-            .orElse(null);
-        
-        if (dogArmors == null) return;
+        var dogArmors = dog.dogArmors();
         
         //TODO 3 -> 4
         for (int i = 0; i < 2; ++i) {  
             final EquipmentSlot equipmentslot = SLOT_IDS[i];
-            this.addSlot(new SlotItemHandler(dogArmors, i, 17, 27 + i * 18) {
+            var dogSlot = DogArmorItemHandler.DogArmorSlots.byEquipment(equipmentslot);
+            this.addSlot(new SlotItemHandler(dogArmors, dogSlot.slotId, 17, 27 + i * 18) {
                 public void set(ItemStack p_219985_) {
                     var itemstack = this.getItem();
-                        dog.setItemSlot(equipmentslot, p_219985_);
-                        super.set(p_219985_);
-                        //dog.onEquipItem(equipmentslot, itemstack, p_219985_);
+                    super.set(p_219985_);
+                    dog.onEquipItem(equipmentslot, itemstack, p_219985_);
                 }
     
                 public int getMaxStackSize() {
                    return 1;
-                }
-                
-                @Override
-                public boolean mayPlace(ItemStack stack) {
-                    if (!(stack.getItem() instanceof ArmorItem)) return false;
-                   return stack.canEquip(equipmentslot, dog);
                 }
 
                 @Override
@@ -87,25 +78,19 @@ public class DogArmorContainer extends AbstractContainerMenu {
 
         for (int i = 2; i < 4; ++i) {  
             final EquipmentSlot equipmentslot = SLOT_IDS[i];
-            this.addSlot(new SlotItemHandler(dogArmors, i, 138, 27 + (i-2) * 18) {
+            var dogSlot = DogArmorItemHandler.DogArmorSlots.byEquipment(equipmentslot);
+            this.addSlot(new SlotItemHandler(dogArmors, dogSlot.slotId, 138, 27 + (i-2) * 18) {
 
                 @Override
                 public void set(ItemStack p_219985_) {
                     var itemstack = this.getItem();
-                        dog.setItemSlot(equipmentslot, p_219985_);
-                        super.set(p_219985_);
-                        //dog.onEquipItem(equipmentslot, itemstack, p_219985_);
+                    super.set(p_219985_);
+                    dog.onEquipItem(equipmentslot, itemstack, p_219985_);
                 }
                 
                 @Override
                 public int getMaxStackSize() {
                    return 1;
-                }
-                
-                @Override
-                public boolean mayPlace(ItemStack stack) {
-                    if (!(stack.getItem() instanceof ArmorItem)) return false;
-                   return stack.canEquip(equipmentslot, dog);
                 }
 
                 @Override

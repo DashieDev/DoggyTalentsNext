@@ -11,6 +11,7 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.feature.IDog;
+import doggytalents.api.impl.DogArmorItemHandler;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -165,6 +166,9 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public abstract float getClientAnimatedYBodyRotInRadians();
     public abstract float getDogVisualBbHeight();
     public abstract float getDogVisualBbWidth();
+    public abstract DogArmorItemHandler dogArmors();
+    public abstract boolean canDogWearArmor();
+    public abstract boolean canDogUseTools();
 
     //Start : Re-adjust armor behaviour
     //All dog start hurting Amrmor in armorItems regradless of anything.
