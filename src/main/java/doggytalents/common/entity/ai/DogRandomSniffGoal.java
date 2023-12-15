@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.TorchBlock;
@@ -210,6 +211,10 @@ public class DogRandomSniffGoal extends Goal {
         if (sniffAtState.isAir() && sniffUnderState.isAir()) {
             return DogAnimation.DOWN_THE_HOLE;
         }
+        if (fireImmune && atBlock == (Blocks.LAVA)) {
+            return DogAnimation.SNIFF_SNEEZE;
+        }
+
         return DogAnimation.SNIFF_NEUTRAL;
     }
 
