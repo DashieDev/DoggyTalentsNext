@@ -86,7 +86,7 @@ public class DogFeelingNakeyGoal extends Goal {
         if (!naked)
             turnedNaked = false;
         if (naked && !prevNaked)
-            turnedNaked = dog.getRandom().nextBoolean();
+            turnedNaked = dog.getRandom().nextFloat() <= 0.75f;
         if (naked)
             updateInterval = (5 + dog.getRandom().nextInt(21)) * 20;
         else 
@@ -95,6 +95,17 @@ public class DogFeelingNakeyGoal extends Goal {
     }
 
     private boolean isNaked(Dog dog) {
+        var armors = dog.getArmorSlots();
+        boolean hasArmor = false;
+        for (var s : armors) {
+            if (!s.isEmpty()) {
+                hasArmor = true;
+                break;
+            }
+        }
+        if (hasArmor)
+            return false;
+
         var accessories = dog.getAccessories();
         if (accessories.isEmpty())
             return true;
