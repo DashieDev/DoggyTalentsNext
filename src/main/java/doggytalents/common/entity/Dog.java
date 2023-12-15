@@ -4400,7 +4400,7 @@ public class Dog extends AbstractDog {
     }
 
     public Iterable<ItemStack> getArmorSlots() {
-        if (!this.canDogUseTools())
+        if (!this.canDogWearArmor())
             return List.of();
         return this.dogArmors.armors();
     }
