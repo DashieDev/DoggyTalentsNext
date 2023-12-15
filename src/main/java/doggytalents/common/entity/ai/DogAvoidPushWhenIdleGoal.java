@@ -1,5 +1,6 @@
 package doggytalents.common.entity.ai;
 
+import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
@@ -32,6 +33,11 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
         if (this.dog.isVehicle()) return false;
 
         if (this.dog.isPathFinding()) return false;
+
+        var delta = this.dog.getDeltaMovement();
+        var delta_l = delta.x*delta.x + delta.z*delta.z;
+        if (delta_l < (double)2.5000003E-7F)
+            return false;
 
         if (!DogUtil.mayGetPushedIntoHazard(dog, dog.getDeltaMovement())) return false;
 
