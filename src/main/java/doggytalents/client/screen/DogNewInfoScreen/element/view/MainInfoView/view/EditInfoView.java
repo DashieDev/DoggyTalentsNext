@@ -22,7 +22,6 @@ import doggytalents.common.network.packet.data.CrossOriginTpData;
 import doggytalents.common.network.packet.data.DogAutoMountData;
 import doggytalents.common.network.packet.data.DogForceSitData;
 import doggytalents.common.network.packet.data.DogNameData;
-import doggytalents.common.network.packet.data.DogNoCuriousData;
 import doggytalents.common.network.packet.data.DogObeyData;
 import doggytalents.common.network.packet.data.DogRegardTeamPlayersData;
 import doggytalents.common.network.packet.data.FriendlyFireData;
@@ -232,30 +231,6 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
-                new FlatButton(
-                    0, 0,
-                    40, 20, Component.literal("" + this.dog.noDogCurious()), 
-                    b -> {
-                        Boolean newVal = !this.dog.noDogCurious();
-                        b.setMessage(Component.literal("" + newVal));
-                        this.requestNoDogCurious(newVal);
-                    }     
-                ) {
-                    @Override
-                    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                        super.render(graphics, mouseX, mouseY, pTicks);
-                        if (this.isHovered) {
-                            ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.no_dog_curious.help"), 150, font));
-                        }
-                    }
-                },
-                I18n.get("doggui.no_dog_curious")
-            )
-            .init()
-        );
-
-        scroll.addChildren(
-            new ButtonOptionEntry(scroll, getScreen(), 
                 new LowHealthStrategySwitch(
                     0, 0, 
                     100, 20, dog, font, getScreen()
@@ -340,12 +315,6 @@ public class EditInfoView extends AbstractElement {
         PacketHandler
             .send(PacketDistributor.SERVER.noArg(), 
             new DogAutoMountData(this.dog.getId(), val));
-    }
-
-    private void requestNoDogCurious(boolean val) {
-        PacketHandler
-            .send(PacketDistributor.SERVER.noArg(), 
-            new DogNoCuriousData(this.dog.getId(), val));
     }
 
     private static class NewnameEntry extends AbstractElement {
