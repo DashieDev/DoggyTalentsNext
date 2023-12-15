@@ -94,9 +94,10 @@ public class ChopinLogger {
         var pos = event.getEntity().blockPosition();
         if (level.isClientSide)
             return;
-        if (stack.getItem() != Items.STONE_PICKAXE) 
+        if (stack.getItem() != DoggyItems.RICE_WHEAT.get()) 
             return;
-
+        if (level.getBlockState(pos.below()).isAir())
+            return;
         level.setBlockAndUpdate(pos.below(2), Blocks.WATER.defaultBlockState());
         var area = BlockPos.betweenClosed(pos.offset(-5, -3, -5), pos.offset(5, 3, 5));
         for (var area_pos : area) {
