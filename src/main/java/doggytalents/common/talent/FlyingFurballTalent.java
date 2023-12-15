@@ -126,6 +126,7 @@ public class FlyingFurballTalent extends TalentInstance {
 
     private boolean shouldSwitchToFlying(AbstractDog dog) {
         return !dog.isInSittingPose() && !dog.isPassenger()
+            //To avoid conflict with SwimmerDog, may changes in future
             && !dog.isInWater();
     }
 
