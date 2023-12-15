@@ -164,7 +164,7 @@ public class Dog extends AbstractDog {
      *     5               32                  LOW_HEALTH_STRATEGY_MSB
      *     6               64                  CROSS_ORIGIN_TP
      *     7               128                 REGARD_TEAM_PLAYERS
-     *     8               256                 NO_CURIOUS
+     *     8               256                 <Reserved>
      *     9               512                 PATROL_TARGET_LOCK
      *     10              1024                FLYING
      *     11              2048                SHOW_ARMOR
@@ -2408,7 +2408,6 @@ public class Dog extends AbstractDog {
         compound.putBoolean("crossOriginTp", this.crossOriginTp());
         compound.putBoolean("patrolTargetLock", this.patrolTargetLock());
         compound.putBoolean("hideDogArmor", this.hideArmor());
-        compound.putBoolean("noDogCurious", this.noDogCurious());
         compound.putInt("dogSize", this.getDogSize().getId());
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
         compound.putInt("level_kami", this.getDogLevel().getLevel(Type.KAMI));
@@ -2657,7 +2656,6 @@ public class Dog extends AbstractDog {
             this.setCrossOriginTp(compound.getBoolean("crossOriginTp"));
             this.setPatrolTargetLock(compound.getBoolean("patrolTargetLock")); 
             this.setHideArmor(compound.getBoolean("hideDogArmor"));
-            this.setNoDogCurious(compound.getBoolean("noDogCurious"));
             var low_health_strategy_id = compound.getByte("lowHealthStrategy");
             this.setLowHealthStrategy(LowHealthStrategy.fromId(low_health_strategy_id));
             var combat_return_strategy_id = compound.getByte("combatReturnStrategy");
@@ -3553,14 +3551,6 @@ public class Dog extends AbstractDog {
 
     public void setDogAutoMount(boolean val) {
         this.setDogFlag(16384, val);
-    }
-
-    public boolean noDogCurious() {
-        return this.getDogFlag(256);
-    }
-
-    public void setNoDogCurious(boolean val) {
-        this.setDogFlag(256, val);
     }
 
     public boolean wantsToRest() {
