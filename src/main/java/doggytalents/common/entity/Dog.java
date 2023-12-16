@@ -1119,11 +1119,6 @@ public class Dog extends AbstractDog {
         if (this.isDefeated()) 
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
-
-        if (stack.getItem() == Items.STONE_PICKAXE) {
-            this.setDrunkTicks(10*20);
-            return InteractionResult.SUCCESS;
-        }
         
         if (handleOpenDogScreenDedicated(player, stack).shouldSwing())
             return InteractionResult.SUCCESS;
