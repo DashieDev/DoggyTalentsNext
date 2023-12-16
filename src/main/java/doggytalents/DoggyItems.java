@@ -130,6 +130,8 @@ public class DoggyItems {
     
     public static final RegistryObject<Item> FRISBEE = registerFrisbee("frisbee");
     public static final RegistryObject<Item> FRISBEE_WET = registerFrisbeeWet("frisbee_wet");
+    public static final RegistryObject<Item> CERA_GARB = registerFrisbee("ceramonial_garb");
+    public static final RegistryObject<Item> CERA_GARB_OVERLAY = registerFrisbeeWet("ceramonial_garb_overlay");
 
     public static final RegistryObject<Item> RICE_GRAINS = register("rice_grains", 
         () -> new RiceGrainsItem(DoggyBlocks.RICE_CROP.get(), createInitialProp()));
