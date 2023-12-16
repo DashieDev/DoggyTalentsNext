@@ -90,7 +90,7 @@
             "mystery" : true
         },
         {
-            "skin_name" : "Hayabusa",
+            "skin_name" : "Hayabusa (Kai Ken)",
             "skin_id" : "kusa_hayabusa",
             "use_model" : "kusa_hayabusa",
             "based_on" : "Hayabusa from the Canine Warriors from Okami(2006) by Clover Studio",
@@ -138,7 +138,7 @@
             "tags" : "okami, kusa, canine warriors"
         },
         {
-            "skin_name" : "Tei",
+            "skin_name" : "Tei (Tosa Inu)",
             "skin_id" : "kusa_tei",
             "use_model" : "kusa_tei",
             "based_on" : "Tei from the Kusa 5 from Okami(2006) by Clover Studio",
@@ -559,6 +559,24 @@
             "skin_name" : "Shikoku Inu ",
             "skin_id" : "shikoku_inu",
             "use_model" : "shikoku_inu",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Kai Ken #2",
+            "skin_id" : "kai_ken",
+            "use_model" : "kusa_hayabusa",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Kishu Inu",
+            "skin_id" : "kishu_inu",
+            "use_model" : "kusa_hayabusa",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Tosa Inu #2",
+            "skin_id" : "tosa_inu",
+            "use_model" : "kusa_tei",
             "author" : "MashXP"
         },
         {
