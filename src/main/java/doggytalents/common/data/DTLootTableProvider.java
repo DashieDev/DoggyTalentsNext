@@ -23,6 +23,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
 import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -122,11 +123,17 @@ public class DTLootTableProvider extends LootTableProvider {
                                 Enchantments.BLOCK_FORTUNE, 0.5714286F, 3));
 
             final var RICE_LOOTABLE = 
-                this.createCropDrops(DoggyBlocks.RICE_CROP.get(), 
-                    DoggyItems.RICE_WHEAT.get(), 
-                    DoggyItems.RICE_GRAINS.get(), 
-                    RICE_LOOT_CONDITION)
-                .withPool(KOJI_LOOT_POOL);
+                LootTable.lootTable().withPool(
+                    LootPool.lootPool().add(
+                        LootItem.lootTableItem(DoggyItems.RICE_WHEAT.get())
+                            .apply(
+                                ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3))
+                            .when(RICE_LOOT_CONDITION)
+                            .otherwise(LootItem.lootTableItem(DoggyItems.RICE_GRAINS.get()))
+                    )
+                )
+                .withPool(KOJI_LOOT_POOL)
+                .apply(ApplyExplosionDecay.explosionDecay());
 
             this.add(DoggyBlocks.RICE_CROP.get(), RICE_LOOTABLE);
 
