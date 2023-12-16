@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "minecraft:wool_carpets"
+    },
+    "L": {
+      "item": "minecraft:lead"
+    },
+    "W": {
+      "item": "doggytalents:wool_collar"
+    }
+  },
+  "pattern": [
+    " L ",
+    "CWC",
+    " C "
+  ],
+  "result": {
+    "item": "doggytalents:ceramonial_garb"
+  },
+  "show_notification": true
+}
