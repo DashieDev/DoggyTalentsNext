@@ -807,6 +807,16 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', DoggyItems.RICE_BOWL.get())
             .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
             .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CERA_GARB.get(), 1)
+            .pattern(" L ")
+            .pattern("CWC")
+            .pattern(" C ")
+            .define('L', Items.LEAD)
+            .define('W', DoggyItems.WOOL_COLLAR.get())
+            .define('C', ItemTags.WOOL_CARPETS)
+            .unlockedBy("has_lead", has(Items.LEAD))
+            .save(consumer);
     }
     
     // @Override
