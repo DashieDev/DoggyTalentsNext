@@ -361,7 +361,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
             .save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.BANDAID.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.BANDAID.get(), 4)
             .requires(DoggyItems.TRAINING_TREAT.get())
             .requires(Items.PAPER)
             .requires(Items.SLIME_BALL)
