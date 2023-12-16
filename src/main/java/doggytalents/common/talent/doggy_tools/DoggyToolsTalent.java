@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -195,6 +196,11 @@ public class DoggyToolsTalent extends TalentInstance  {
         } else {
             pickTargetTool(dog);
         }
+    }
+
+    @Override
+    public void props(AbstractDog dog, DogAlterationProps props) {
+        props.setCanUseTools();
     }
 
     @Override
