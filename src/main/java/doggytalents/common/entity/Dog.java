@@ -4345,6 +4345,12 @@ public class Dog extends AbstractDog {
         return false;
     }
 
+    //Dog dont drop from Lootables.
+    @Override
+    protected void dropAllDeathLoot(DamageSource source) {
+        this.dropEquipment();
+    }
+
     public boolean isLowAirSupply() {
         return this.getAirSupply() < this.getMaxAirSupply() * 0.3;
     }
