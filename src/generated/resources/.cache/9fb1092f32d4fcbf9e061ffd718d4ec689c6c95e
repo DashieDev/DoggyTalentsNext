@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-16T13:01:14.9339217	Recipes
+// 1.20.1	2023-12-16T23:35:57.3536599	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 5bb21f3599e9ca5620bca26f572185ad321709a2 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -11,6 +11,7 @@ c8e3a44a60770cbded622a26d9313ee14fc2f449 data/doggytalents/advancements/recipes/
 994ee5bb7d169fd395c53ec12e78c28e5e84b103 data/doggytalents/advancements/recipes/decorations/birthday_hat_alt.json
 89321d48d90fe2bf3afcdd8f5274c7360fbec7c8 data/doggytalents/advancements/recipes/decorations/bowtie.json
 c8449eeff76762f9eef09df4956b9b3aa9d7b7de data/doggytalents/advancements/recipes/decorations/cape_coloured.json
+52525e8b0303daff2b5aef29d08c535ee14be4e4 data/doggytalents/advancements/recipes/decorations/ceramonial_garb.json
 74a9389b94c816f8c2231cc13d35afc03a6cdb47 data/doggytalents/advancements/recipes/decorations/chef_hat.json
 dd7a9d14455e2b7333e3dff451789b3bb309695c data/doggytalents/advancements/recipes/decorations/conan_suit.json
 9988838928dc0bf42bf04f6b8c9881a62775414b data/doggytalents/advancements/recipes/decorations/crow_wings.json
@@ -106,6 +107,7 @@ ba4f15119714552102ccba4b4d9ff3ff56592dd2 data/doggytalents/recipes/bowtie.json
 2adc89fc801f9544f46e89b27e15778c5661fa5d data/doggytalents/recipes/breeding_bone.json
 17b2623a965932aca18c232dda2d5f043c7dc1e0 data/doggytalents/recipes/canine_tracker.json
 74892e854aac5d3bfed3c43a27a6f48823a36253 data/doggytalents/recipes/cape_coloured.json
+79e177417c804a448a889d6b5df89883f3b4f621 data/doggytalents/recipes/ceramonial_garb.json
 c69bb43a5c467808467cf59fc37b81874b5d53c1 data/doggytalents/recipes/chef_hat.json
 a19d29bce3a18d093277440a679156a9982c4172 data/doggytalents/recipes/conan_suit.json
 c671b121bd1a733af2ef2d606c5f141211e9d025 data/doggytalents/recipes/conducting_bone.json
