@@ -152,13 +152,14 @@ public class DTLootTableProvider extends LootTableProvider {
             this.registerNoLoot(DoggyEntityTypes.DOG);
         }
 
-        protected void registerNoLoot(Supplier<? extends EntityType<?>> type) {
-           this.add(type.get(), LootTable.lootTable());
+
+        @Override
+        protected java.util.stream.Stream<EntityType<?>> getKnownEntityTypes() {
+            return DoggyEntityTypes.ENTITIES.getEntries().stream().map(Supplier::get);
         }
 
         @Override
-        protected Iterable<EntityType<?>> getKnownEntities() {
-            return DoggyEntityTypes.ENTITIES.getEntries().stream().map(Supplier::get).collect(Collectors.toList());
+        public void generate() {
         }
     }
 }
