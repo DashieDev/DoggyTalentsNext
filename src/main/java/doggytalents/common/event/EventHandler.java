@@ -16,6 +16,7 @@ import doggytalents.common.entity.ai.WolfBegAtTreatGoal;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.anim.DogAnimation;
+import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.talent.HunterDogTalent;
 import doggytalents.common.util.DogLocationStorageMigration;
 import doggytalents.common.util.Util;
@@ -68,6 +69,7 @@ public class EventHandler {
     @SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
         DogAsyncTaskManager.forceStop();
+        unrideAllDogOnPlayer(event);
     }
 
     @SubscribeEvent
@@ -339,6 +341,31 @@ public class EventHandler {
         if (level != level_overworld)
             return;
         DogLocationStorageMigration.checkAndMigrate(level_overworld);
+    }
+
+    public void unrideAllDogOnPlayer(ServerStoppingEvent event) {
+        var server = event.getServer();
+        var defaultLevel = server.getLevel(Level.OVERWORLD);
+        if (defaultLevel == null) 
+            return;
+        var storage = DogLocationStorage.get(defaultLevel);
+        if (storage == null)
+            return;
+        var entries = storage.getAll();
+        for (var entry : entries) {
+            var dogOptional = entry.getDog(defaultLevel);
+            if (dogOptional == null)
+                continue;
+            if (!dogOptional.isPresent())
+                continue;
+            var dog = dogOptional.get();
+            if (!dog.isPassenger())
+                continue;
+            var vehicle = dog.getVehicle();
+            if (vehicle instanceof Player) {
+                dog.unRide();
+            }
+        }
     }
 
 
