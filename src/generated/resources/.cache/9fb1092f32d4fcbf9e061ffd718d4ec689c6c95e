@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-14T16:51:49.912193	Recipes
+// 1.20.1	2023-12-16T13:01:14.9339217	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 5bb21f3599e9ca5620bca26f572185ad321709a2 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -96,7 +96,7 @@ a3b77d0698c06818bed6cdcdb81d293a13ffe7ce data/doggytalents/recipes/aburaage.json
 5393d690b2130a0c11e640a158782ccc08a6fb67 data/doggytalents/recipes/amnesia_bone.json
 d3e661fcca095b9d821a5743b90eb6a6150cfd90 data/doggytalents/recipes/bach_wig.json
 74841cbe6da7f476d101d087311f83b66d0aac1e data/doggytalents/recipes/baker_hat.json
-a3bdb0459e8f333690f4947bfd6f602d1d2a9d8a data/doggytalents/recipes/bandaid.json
+0f97e0d3a4a9aa59f79a02cf04b1770f637f5c48 data/doggytalents/recipes/bandaid.json
 bec3b433400aa9ab4f534bb9f568aa2ee2807eab data/doggytalents/recipes/bat_wings.json
 c242f3780e9d1f5446b2c94eba771fe30d11ae72 data/doggytalents/recipes/beastars_uniform_female.json
 fa1d8328ab84b243d24ddf3dd6135829e95b48b4 data/doggytalents/recipes/beastars_uniform_male.json
