@@ -336,57 +336,57 @@ public class Dog extends AbstractDog {
         DogSitWhenOrderedGoal sitGoal = null;
         
         int p = 1;
-        this.goalSelector.addGoal(p, new DogFloatGoal(this));
-        this.goalSelector.addGoal(p, new DogDrunkGoal(this));
-        this.goalSelector.addGoal(p, new DogFindWaterGoal(this));
-        this.goalSelector.addGoal(p, new DogAvoidPushWhenIdleGoal(this));
-        //this.goalSelector.addGoal(1, new PatrolAreaGoal(this));
+        registerDogGoal(p, new DogFloatGoal(this));
+        registerDogGoal(p, new DogDrunkGoal(this));
+        registerDogGoal(p, new DogFindWaterGoal(this));
+        registerDogGoal(p, new DogAvoidPushWhenIdleGoal(this));
+        //registerDogGoal(1, new PatrolAreaGoal(this));
         ++p;
-        this.goalSelector.addGoal(p, new DogGoAwayFromFireGoal(this));
+        registerDogGoal(p, new DogGoAwayFromFireGoal(this));
         ++p;
         sitGoal = new DogSitWhenOrderedGoal(this);
-        this.goalSelector.addGoal(p, sitGoal);
-        this.goalSelector.addGoal(p, new DogProtestSitOrderGoal(this));
+        registerDogGoal(p, sitGoal);
+        registerDogGoal(p, new DogProtestSitOrderGoal(this));
         ++p;
-        this.goalSelector.addGoal(p, new DogHungryGoal(this, 1.0f, 2.0f));
+        registerDogGoal(p, new DogHungryGoal(this, 1.0f, 2.0f));
         ++p;
-        this.goalSelector.addGoal(p, new DogLowHealthGoal.StickToOwner(this));
-        this.goalSelector.addGoal(p, new DogLowHealthGoal.RunAway(this));
-        //this.goalSelector.addGoal(4, new DogLeapAtTargetGoal(this, 0.4F));
+        registerDogGoal(p, new DogLowHealthGoal.StickToOwner(this));
+        registerDogGoal(p, new DogLowHealthGoal.RunAway(this));
+        //registerDogGoal(4, new DogLeapAtTargetGoal(this, 0.4F));
         ++p;
         non_trivial_p = p;
-        this.goalSelector.addGoal(p, new DogTriggerableGoal(this, false));
+        registerDogGoal(p, new DogTriggerableGoal(this, false));
         ++p; //Prioritize Talent Action
         //All mutex by nature
-        this.goalSelector.addGoal(p, new GuardModeGoal.Minor(this));
-        this.goalSelector.addGoal(p, new GuardModeGoal.Major(this));
+        registerDogGoal(p, new GuardModeGoal.Minor(this));
+        registerDogGoal(p, new GuardModeGoal.Major(this));
         ++p;
-        this.goalSelector.addGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
-        this.goalSelector.addGoal(p, new DogGoRestOnBedGoalDefeated(this));
+        registerDogGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
+        registerDogGoal(p, new DogGoRestOnBedGoalDefeated(this));
         ++p;
         trivial_p = p;
         //Dog greet owner goal here
-        this.goalSelector.addGoal(p, new DogTriggerableGoal(this, true));
-        //this.goalSelector.addGoal(p, new FetchGoal(this, 1.0D, 32.0F));
-        this.goalSelector.addGoal(p, new DogFollowOwnerGoalDefeated(this));
-        this.goalSelector.addGoal(p, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
+        registerDogGoal(p, new DogTriggerableGoal(this, true));
+        //registerDogGoal(p, new FetchGoal(this, 1.0D, 32.0F));
+        registerDogGoal(p, new DogFollowOwnerGoalDefeated(this));
+        registerDogGoal(p, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
         ++p;
-        this.goalSelector.addGoal(p, new DogMoveBackToRestrictGoal(this));
-        this.goalSelector.addGoal(p, new DogBreedGoal(this, 1.0D));
+        registerDogGoal(p, new DogMoveBackToRestrictGoal(this));
+        registerDogGoal(p, new DogBreedGoal(this, 1.0D));
         ++p;
-        this.goalSelector.addGoal(p, new DogRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(p, new DogRandomStandIdleGoal(this));
-        this.goalSelector.addGoal(p, new DogRandomSniffGoal(this));
-        this.goalSelector.addGoal(p, new DogCommonStandIdleGoal(this));
+        registerDogGoal(p, new DogRandomStrollGoal(this, 1.0D));
+        registerDogGoal(p, new DogRandomStandIdleGoal(this));
+        registerDogGoal(p, new DogRandomSniffGoal(this));
+        registerDogGoal(p, new DogCommonStandIdleGoal(this));
         ++p;
-        this.goalSelector.addGoal(p, new DogBegGoal(this, 8.0F));
+        registerDogGoal(p, new DogBegGoal(this, 8.0F));
         ++p;
-        this.goalSelector.addGoal(p, new DogFeelingNakeyGoal(this));
-        this.goalSelector.addGoal(p, new DogLookAtPlayerGoal(this));
-        this.goalSelector.addGoal(p, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(p, new DogRandomSitIdleGoal(this));
-        this.goalSelector.addGoal(p, new DogCommonSitIdleGoal(this));
-        this.goalSelector.addGoal(p, new DogRestWhenSitGoal(this));
+        registerDogGoal(p, new DogFeelingNakeyGoal(this));
+        registerDogGoal(p, new DogLookAtPlayerGoal(this));
+        registerDogGoal(p, new RandomLookAroundGoal(this));
+        registerDogGoal(p, new DogRandomSitIdleGoal(this));
+        registerDogGoal(p, new DogCommonSitIdleGoal(this));
+        registerDogGoal(p, new DogRestWhenSitGoal(this));
         
         this.targetSelector.addGoal(1, new DogOwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new DogOwnerHurtTargetGoal(this));
@@ -395,9 +395,13 @@ public class Dog extends AbstractDog {
         this.targetSelector.addGoal(6, new BerserkerModeGoal(this));
         this.targetSelector.addGoal(6, new GuardModeGoal(this));
         this.targetSelector.addGoal(6, new PatrolAssistTargetGoal(this));
-        //this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5D)); //Stooopid...
+        //registerDogGoal(1, new Wolf.WolfPanicGoal(1.5D)); //Stooopid...
 
         populateActionBlockingGoals(trivial_p, non_trivial_p, sitGoal);
+    }
+
+    private void registerDogGoal(int priority, Goal goal) {
+        this.goalSelector.addGoal(priority, new DogWrappedGoal(goal));
     }
 
     private void populateActionBlockingGoals(int trivialP, int nonTrivialP, DogSitWhenOrderedGoal sitGoal) {
@@ -824,6 +828,8 @@ public class Dog extends AbstractDog {
         }
         if (this.navigationLock != null)
             this.navigationLock.unlockDogNavigation();
+            
+        validateGoals();
         
         super.aiStep();
 
@@ -986,6 +992,22 @@ public class Dog extends AbstractDog {
 
         if (this.navigationLock != null)
             this.navigationLock.lockDogNavigation();
+    }
+
+    private void validateGoals() {
+        //Valiate goals
+        if (this.level().isClientSide)
+            return;
+        boolean needRemoved = false;
+        var availableGoals = this.goalSelector.getAvailableGoals();
+        for (var goal : availableGoals) {
+            if (goal.getGoal() instanceof DogWrappedGoal)
+                continue;
+            needRemoved = true;
+            break;
+        }
+        if (needRemoved)
+            availableGoals.removeIf(x -> (!(x.getGoal() instanceof DogWrappedGoal)));
     }
 
     public TriggerableAction getTriggerableAction() {
