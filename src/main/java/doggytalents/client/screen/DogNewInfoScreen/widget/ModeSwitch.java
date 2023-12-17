@@ -104,6 +104,15 @@ public class ModeSwitch extends AbstractWidget {
         this.font.draw(stack, next_c1, next_tX, next_tY, hoveredRight ? 0xffffffff : 0xa5ffffff);
 
         var mode_c1 = this.getMessage();
+        int acceptedWidth = this.getWidth() - 30;
+        boolean needToShowModeName = false;
+        if (font.width(mode_c1) > acceptedWidth) {
+            var posfix = "..";
+            var newStr = font.plainSubstrByWidth(mode_c1.getString(), 
+                acceptedWidth - font.width(posfix)) + posfix;
+            mode_c1 = Component.literal(newStr).withStyle(mode_c1.getStyle());
+            needToShowModeName = true;
+        }
         int mode_tX = mX - this.font.width(mode_c1)/2;
         int mode_tY = mY - this.font.lineHeight/2;
         var mode = this.dog.getMode();
@@ -122,7 +131,7 @@ public class ModeSwitch extends AbstractWidget {
         }
 
         if (this.timeHoveredWithoutClick >= 25) {
-            this.setOverlayToolTip(stack, mouseX, mouseY);
+            this.setOverlayToolTip(graphics, mouseX, mouseY, needToShowModeName);
         }
 
     }
@@ -148,8 +157,13 @@ public class ModeSwitch extends AbstractWidget {
         this.timeHoveredWithoutClick = 0;
     }
 
-    public void setOverlayToolTip(PoseStack stack, int mouseX, int mouseY) {
+    public void setOverlayToolTip(GuiGraphics graphics, int mouseX, int mouseY, boolean showMsg) {
         List<Component> list = new ArrayList<>();
+        if (showMsg) {
+            var msg = this.getMessage();
+            if (msg != null)
+                list.add(msg);
+        }
         String str = I18n.get(dog.getMode().getUnlocalisedInfo());
         list.addAll(ScreenUtil.splitInto(str, 150, this.font));
         if (this.dog.getMode() == EnumMode.WANDERING) {
