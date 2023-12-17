@@ -1,6 +1,5 @@
 package doggytalents.common.entity.misc;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;

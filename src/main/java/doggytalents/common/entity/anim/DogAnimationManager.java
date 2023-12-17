@@ -1,8 +1,6 @@
 package doggytalents.common.entity.anim;
 
-
 import doggytalents.api.enu.forward_imitate.anim.AnimationState;
-import doggytalents.ChopinLogger;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.util.Mth;
@@ -92,8 +90,7 @@ public class DogAnimationManager {
         int latencyAbs = Mth.abs(correctTime - currentTime);
         if (latencyAbs <= maxLatencyAllowed)
             return;
-
-        ChopinLogger.lwn(dog, "Resolving a latency of " + latencyAbs + " ticks");
+            
         var anim = dog.getAnim();
         this.animationTime = Mth.clamp(correctTime, 0, anim.getLengthTicks());
         int correctPassedTime = 

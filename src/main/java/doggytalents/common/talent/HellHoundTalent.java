@@ -2,7 +2,6 @@ package doggytalents.common.talent;
 
 import java.util.UUID;
 
-import doggytalents.ChopinLogger;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
