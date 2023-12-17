@@ -399,7 +399,8 @@ public class CachedSearchUtil {
         }
         if (type == BlockPathTypes.OPEN) return OPEN;
         if (type.getDanger() != null) return DAMAGE;
-        if (dog.getPathfindingMalus(type) < 0) return BLOCKED;
+        if (type == BlockPathTypes.BLOCKED) return BLOCKED;
+        //if (dog.getPathfindingMalus(type) < 0) return DANGER;
         return DANGER;
     }
 
@@ -426,9 +427,10 @@ public class CachedSearchUtil {
         if (all_dog_OK) return OK;
         if (type == BlockPathTypes.OPEN) return OPEN;
         if (type.getDanger() != null) return DAMAGE;
-        for (var dog : dogs) {
-            if (dog.getPathfindingMalus(type) < 0) return BLOCKED;
-        }
+        if (type == BlockPathTypes.BLOCKED) return BLOCKED;
+        // for (var dog : dogs) {
+        //     if (dog.getPathfindingMalus(type) < 0) return DANGER;
+        // }
         return DANGER;
     }
 
