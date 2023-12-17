@@ -41,8 +41,26 @@ public abstract class DogEddibleBowlFoodItem extends DogEddibleItem {
     }
 
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
-        ItemStack itemstack = super.finishUsingItem(stack, level, user);
-        return user instanceof Player && ((Player)user).getAbilities().instabuild ? itemstack : new ItemStack(Items.BOWL);
+        ItemStack returnStack = super.finishUsingItem(stack, level, user);
+        boolean creativeUse = user instanceof Player && ((Player)user).getAbilities().instabuild;
+        if (creativeUse)
+            return returnStack;
+
+        if (returnStack.isEmpty())
+            return new ItemStack(Items.BOWL);
+        
+        if (!(user instanceof Player player))
+            return returnStack;
+
+        var bonusReturnStack = new ItemStack(Items.BOWL);
+        var inv = player.getInventory();
+        int freeSlot = inv.getFreeSlot();
+        if (freeSlot >= 0)
+            inv.add(bonusReturnStack);
+        else
+            player.spawnAtLocation(bonusReturnStack);
+        
+        return returnStack;
     }
 
     @Override
