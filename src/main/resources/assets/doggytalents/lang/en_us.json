@@ -102,7 +102,7 @@
    "item.doggytalents.starter_bundle.contains": "- %dx %s",
    "item.doggytalents.starter_bundle.fail": "Not enough space in inventory!",
    "item.doggytalents.rice_bowl": "Rice Bowl",
-   "item.doggytalents.rice_bowl_description": "White, Steamy and Fluffy!",
+   "item.doggytalents.rice_bowl.description": "White, Steamy and Fluffy!",
    "item.doggytalents.salmon_sushi": "Sake Nigiri Sushi",
    "item.doggytalents.onigiri": "Onigiri",
    "item.doggytalents.sausage": "Sausage",
