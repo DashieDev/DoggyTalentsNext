@@ -5,6 +5,7 @@ import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyRecipeSerializers;
 import doggytalents.common.util.Util;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.HashCache;
 import net.minecraft.data.recipes.*;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.nio.file.Path;
 import java.util.function.Consumer;
@@ -741,34 +743,26 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_bowl", has(Items.BOWL))
             .save(consumer);
 
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DoggyItems.SOY_PODS.get()), 
-            RecipeCategory.FOOD, 
-            DoggyItems.SOY_PODS_DRIED.get(), 
-            0.35F, 200)
-            .unlockedBy("has_dtn_soy_pods", has(DoggyItems.SOY_PODS.get()))
-            .save(consumer);
+        registerTripleCooking(consumer, 
+            Ingredient.of(DoggyItems.SOY_PODS.get()), 
+            DoggyItems.SOY_PODS_DRIED.get(), 0.35F, 200, "has_dtn_soy_pods", 
+            has(DoggyItems.SOY_PODS.get()));
 
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DoggyItems.SOY_BEANS.get()), 
-            RecipeCategory.FOOD, 
-            DoggyItems.SOY_BEANS_DRIED.get(), 
-            0.1F, 100)
-            .unlockedBy("has_dtn_soy_beans", has(DoggyItems.SOY_BEANS.get()))
-            .save(consumer, "soy_bean_dried_smelt");
+        registerTripleCooking(consumer, 
+            Ingredient.of(DoggyItems.SOY_BEANS.get()), 
+            DoggyItems.SOY_BEANS_DRIED.get(), 0.1F, 100, "has_dtn_soy_beans", 
+            has(DoggyItems.SOY_BEANS.get()));
 
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DoggyItems.UNCOOKED_RICE_BOWL.get()), 
-            RecipeCategory.FOOD, 
-            DoggyItems.RICE_BOWL.get(), 
-            0.1F, 100)
-            .unlockedBy("has_dtn_uncooked_rice_bowl", has(DoggyItems.UNCOOKED_RICE_BOWL.get()))
-            .save(consumer);
+        registerTripleCooking(consumer, 
+            Ingredient.of(DoggyItems.UNCOOKED_RICE_BOWL.get()), 
+            DoggyItems.RICE_BOWL.get(), 0.1F, 100, "has_dtn_uncooked_rice_bowl", 
+            has(DoggyItems.UNCOOKED_RICE_BOWL.get()));
 
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(DoggyItems.TOFU.get()), 
-            RecipeCategory.FOOD, 
-            DoggyItems.ABURAAGE.get(), 
-            0.1F, 100)
-            .unlockedBy("has_dtn_tofu", has(DoggyItems.TOFU.get()))
-            .save(consumer);
-        
+        registerTripleCooking(consumer, 
+            Ingredient.of(DoggyItems.TOFU.get()), 
+            DoggyItems.ABURAAGE.get(), 0.1F, 100, "has_dtn_tofu", 
+            has(DoggyItems.TOFU.get()));
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.RICE_GRAINS.get(), 3)
             .requires(DoggyItems.RICE_WHEAT.get())
             .unlockedBy("has_dtn_rice_wheat", has(DoggyItems.RICE_WHEAT.get()))
@@ -817,6 +811,32 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', ItemTags.WOOL_CARPETS)
             .unlockedBy("has_lead", has(Items.LEAD))
             .save(consumer);
+    }
+
+    private void registerTripleCooking(Consumer<FinishedRecipe> consumer, Ingredient input, Item output,
+        float xp, int lengthTicks,
+        String unlockedByStr, InventoryChangeTrigger.TriggerInstance trigger) {
+        var baseNameId = ForgeRegistries.ITEMS.getKey(output).getPath();
+        SimpleCookingRecipeBuilder.smelting(input, 
+            RecipeCategory.FOOD, 
+            output, 
+            xp, lengthTicks)
+            .unlockedBy(unlockedByStr, trigger)
+            .save(consumer, Util.getResource(baseNameId + "_smelting"));
+
+        SimpleCookingRecipeBuilder.campfireCooking(input, 
+        RecipeCategory.FOOD, 
+        output, 
+        xp, lengthTicks)
+        .unlockedBy(unlockedByStr, trigger)
+            .save(consumer, Util.getResource(baseNameId + "_camping"));
+            
+        SimpleCookingRecipeBuilder.smoking(input, 
+        RecipeCategory.FOOD, 
+        output, 
+        xp, lengthTicks/2)
+        .unlockedBy(unlockedByStr, trigger)
+            .save(consumer, Util.getResource(baseNameId) + "_smoking");
     }
     
     // @Override
