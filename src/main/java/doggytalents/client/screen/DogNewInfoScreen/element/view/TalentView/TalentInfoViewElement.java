@@ -21,6 +21,7 @@ import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.client.screen.framework.element.ScrollView;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.FlatButton;
+import doggytalents.client.screen.framework.widget.OneLineLimitedTextArea;
 import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -295,6 +296,12 @@ public class TalentInfoViewElement extends AbstractElement {
         trainButton.y = trainButtonY;
 
         this.addChildren(trainButton);
+
+        var pointsLeftStr = new OneLineLimitedTextArea(0, 0, 75, Component.translatable("doggui.talents.current_talent_level"));
+        pointsLeftStr.setX(this.getRealX() + PADDING_LEFT + 40);
+        pointsLeftStr.setY(this.getRealY() + this.getSizeY() - 45);
+        this.addChildren(pointsLeftStr);
+
     }
 
     private void requestTrain() {
@@ -373,9 +380,10 @@ public class TalentInfoViewElement extends AbstractElement {
         //Point left:
         startX = this.getRealX() + PADDING_LEFT + 40;
         pY = this.getRealY() + this.getSizeY() - 45;
-        var currentLevelStr = I18n.get("doggui.pointsleft");
+        //var currentLevelStr = I18n.get("doggui.pointsleft");
+        var currentLevelStr = "";
         var currentLevelStr1 = "" + this.dog.getSpendablePoints();
-        font.draw(stack, currentLevelStr, startX, pY, 0xffffffff);
+        //graphics.drawString(font, currentLevelStr, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
         font.draw(stack, currentLevelStr1, startX, pY, 0xffffffff);
 
