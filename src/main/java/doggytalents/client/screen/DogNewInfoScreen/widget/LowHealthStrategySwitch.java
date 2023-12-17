@@ -109,8 +109,19 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         graphics.drawString(font, next_c1, next_tX, next_tY, hoveredRight ? 0xffffffff : 0xa5ffffff);
 
         var mode_c1 = this.getMessage();
+        int acceptedWidth = this.getWidth() - 20;
+        boolean needToShowModeName = false;
+        if (font.width(mode_c1) > acceptedWidth) {
+            var posfix = "..";
+            var newStr = font.plainSubstrByWidth(mode_c1.getString(), 
+                acceptedWidth - font.width(posfix)) + posfix;
+            mode_c1 = Component.literal(newStr).withStyle(mode_c1.getStyle());
+            needToShowModeName = true;
+        }
         int mode_tX = mX - this.font.width(mode_c1)/2;
         int mode_tY = mY - this.font.lineHeight/2;
+
+        
         graphics.drawString(font, mode_c1, mode_tX, mode_tY, 0xffffffff);
 
         if (this.stillHovered) {
@@ -121,7 +132,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         }
 
         if (this.timeHoveredWithoutClick >= 25) {
-            this.setOverlayToolTip(graphics.pose(), mouseX, mouseY);
+            this.setOverlayToolTip(graphics.pose(), mouseX, mouseY, needToShowModeName);
         }
 
     }
@@ -147,8 +158,13 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         this.timeHoveredWithoutClick = 0;
     }
 
-    public void setOverlayToolTip(PoseStack stack, int mouseX, int mouseY) {
+    public void setOverlayToolTip(PoseStack stack, int mouseX, int mouseY, boolean showModeName) {
         List<Component> list = new ArrayList<>();
+        if (showModeName) {
+            var msg = this.getMessage();
+            if (msg != null)
+                list.add(msg);
+        }
         String str = I18n.get(dog.getLowHealthStrategy().getUnlocalisedInfo());
         list.addAll(ScreenUtil.splitInto(str, 150, this.font));
 

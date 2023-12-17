@@ -13,6 +13,7 @@ import doggytalents.client.screen.framework.element.ScrollView;
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.FlatButton;
+import doggytalents.client.screen.framework.widget.OneLineLimitedTextArea;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
@@ -451,23 +452,17 @@ public class EditInfoView extends AbstractElement {
             this.button.setY(this.getRealY() + buttonY_offset);
 
             this.addChildren(button);
-            return this;
-        }
 
-        @Override
-        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+            var labelStr = new OneLineLimitedTextArea(0, 0, 130, Component.literal(label));
+            labelStr.setX(this.getRealX() + PADDING_LEFT);
             if (newline) {
-                int startX = this.getRealX() + PADDING_LEFT;
-                int pY = this.getRealY() + 3;
-                graphics.drawString(font, this.label, startX, pY, 0xffffffff);
-                
-                return;
-            } 
-
-            int startX = this.getRealX() + PADDING_LEFT;
-            int pY = this.getRealY() + this.getSizeY()/2
-                - font.lineHeight/2;
-            graphics.drawString(font, this.label, startX, pY, 0xffffffff);
+                labelStr.setY(this.getRealY() + 3);
+            } else {
+                labelStr.setY(this.getRealY() + this.getSizeY()/2
+                    - font.lineHeight/2);
+            }
+            this.addChildren(labelStr);
+            return this;
         }
     }
 
