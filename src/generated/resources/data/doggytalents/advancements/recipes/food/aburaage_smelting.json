@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:aburaage"
+        "recipe": "doggytalents:aburaage_smelting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:aburaage"
+      "doggytalents:aburaage_smelting"
     ]
   },
   "sends_telemetry_event": false

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_dtn_soy_pods": {
+    "has_dtn_tofu": {
       "conditions": {
         "items": [
           {
             "items": [
-              "doggytalents:soy_pods"
+              "doggytalents:tofu"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:soy_pods_dried"
+        "recipe": "doggytalents:aburaage_camping"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_dtn_soy_pods",
+      "has_dtn_tofu",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:soy_pods_dried"
+      "doggytalents:aburaage_camping"
     ]
   },
   "sends_telemetry_event": false
