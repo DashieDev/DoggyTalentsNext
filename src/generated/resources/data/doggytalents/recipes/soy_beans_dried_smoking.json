@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "cookingtime": 50,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "doggytalents:soy_beans"
+  },
+  "result": "doggytalents:soy_beans_dried"
+}

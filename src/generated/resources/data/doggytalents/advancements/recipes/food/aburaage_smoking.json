@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_dtn_soy_beans": {
+    "has_dtn_tofu": {
       "conditions": {
         "items": [
           {
             "items": [
-              "doggytalents:soy_beans"
+              "doggytalents:tofu"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:soy_bean_dried_smelt"
+        "recipe": "doggytalents:aburaage_smoking"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_dtn_soy_beans",
+      "has_dtn_tofu",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:soy_bean_dried_smelt"
+      "doggytalents:aburaage_smoking"
     ]
   },
   "sends_telemetry_event": false
