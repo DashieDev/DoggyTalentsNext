@@ -18,6 +18,8 @@ public class DoggyTags {
     public static TagKey<Item> DOG_BOOSTING_FOOD = tag("dog_boosting_food");
 
     public static TagKey<EntityType<?>> DOG_SHOULD_IGNORE = tagEntity("dog_should_ignore");
+    public static TagKey<EntityType<?>> DROP_SOY_WHEN_DOG_KILL = tagEntity("drop_soy_when_dog_kill");
+    
 
     private static TagKey<Item> tag(String name) {
         return ItemTags.create(Util.getResource(name));

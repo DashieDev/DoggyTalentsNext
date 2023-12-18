@@ -32,6 +32,11 @@ public class DTEntityTagsProvider extends EntityTypeTagsProvider {
     @Override
     public void addTags(HolderLookup.Provider provider) {
         createTag(DoggyTags.DOG_SHOULD_IGNORE, () -> EntityType.ENDERMAN);
+        createTag(DoggyTags.DROP_SOY_WHEN_DOG_KILL, 
+            () -> EntityType.CREEPER, 
+            () -> EntityType.ZOMBIE,
+            () -> EntityType.SKELETON,
+            () -> EntityType.SPIDER);
     }
 
     @SafeVarargs
