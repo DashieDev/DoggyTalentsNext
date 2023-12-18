@@ -2,10 +2,6 @@
   "type": "doggytalents:soy_from_zombie",
   "conditions": [
     {
-      "condition": "forge:loot_table_id",
-      "loot_table_id": "minecraft:entities/zombie"
-    },
-    {
       "condition": "minecraft:entity_properties",
       "entity": "killer",
       "predicate": {
@@ -13,9 +9,16 @@
       }
     },
     {
-      "chance": 0.025,
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type": "#doggytalents:drop_soy_when_dog_kill"
+      }
+    },
+    {
+      "chance": 0.125,
       "condition": "minecraft:random_chance_with_looting",
-      "looting_multiplier": 0.01
+      "looting_multiplier": 0.05
     }
   ]
 }
