@@ -28,7 +28,11 @@ import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.network.packet.data.DoggyTorchPlacingTorchData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
+import doggytalents.common.network.packet.data.PackPuppyRenderData;
+import doggytalents.common.network.packet.data.RescueDogRenderData;
 import doggytalents.common.talent.DoggyTorchTalent;
+import doggytalents.common.talent.PackPuppyTalent;
+import doggytalents.common.talent.RescueDogTalent;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.client.Minecraft;
@@ -114,6 +118,8 @@ public class TalentInfoViewElement extends AbstractElement {
          */
 
         if (talent == DoggyTalents.PACK_PUPPY.get()) {
+            addRenderPackPuppyButton(dog, container);
+
             if (ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV.get())
                 return;
             var packPuppyButtonDiv = new DivElement(container, getScreen())
@@ -226,7 +232,60 @@ public class TalentInfoViewElement extends AbstractElement {
                 }
             );
             armorButtonDiv.addChildren(armorButton);
+        } else if (talent == DoggyTalents.RESCUE_DOG.get()) {
+            
+            var talentInstOptional = dog.getTalent(DoggyTalents.RESCUE_DOG);
+            if (!talentInstOptional.isPresent())
+                return;
+            var talentInst = talentInstOptional.get();
+            if (!(talentInst instanceof RescueDogTalent rescue))
+                return;
+            container.addChildren(
+                new ButtonOptionEntry(container, getScreen(), 
+                    new FlatButton(
+                        0, 0,
+                        40, 20, Component.literal("" + rescue.renderBox()), 
+                        b -> {
+                            Boolean newVal = !rescue.renderBox();
+                            b.setMessage(Component.literal("" + newVal));
+                            rescue.setRenderBox(newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new RescueDogRenderData(
+                                dog.getId(), newVal
+                            ));
+                        }     
+                    ),
+                    I18n.get("talent.doggytalents.rescue_dog.render_box")
+                )
+                .init()
+            );
         }
+    }
+
+    private void addRenderPackPuppyButton(Dog dog, AbstractElement container) {
+        var talentInstOptional = dog.getTalent(DoggyTalents.PACK_PUPPY);
+        if (!talentInstOptional.isPresent())
+            return;
+        var talentInst = talentInstOptional.get();
+        if (!(talentInst instanceof PackPuppyTalent packPup))
+            return;
+        container.addChildren(
+            new ButtonOptionEntry(container, getScreen(), 
+                new FlatButton(
+                    0, 0,
+                    40, 20, Component.literal("" + packPup.renderChest()), 
+                    b -> {
+                        Boolean newVal = !packPup.renderChest();
+                        b.setMessage(Component.literal("" + newVal));
+                        packPup.setRenderChest(newVal);
+                        PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyRenderData(
+                            dog.getId(), newVal
+                        ));
+                    }     
+                ),
+                I18n.get("talent.doggytalents.pack_puppy.render_chest")
+            )
+            .init()
+        );
     }
 
     private void addTrainButton(Dog dog) {
