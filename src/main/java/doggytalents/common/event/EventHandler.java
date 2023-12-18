@@ -53,6 +53,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -72,7 +73,7 @@ public class EventHandler {
         unrideAllDogOnPlayer(event);
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
     public void onWolfRightClickWithTreat(final PlayerInteractEvent.EntityInteract event) {
         var level = event.getLevel();
         var stack = event.getItemStack();
