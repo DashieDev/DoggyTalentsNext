@@ -106,11 +106,8 @@ public class DogIncapacitatedMananger {
         if (item == Items.TOTEM_OF_UNDYING) {
             useTotem(stack, player);
             return InteractionResult.SUCCESS;
-        } else if (item == Items.CAKE) {
-            tryEatCake(stack, player);
-            return InteractionResult.SUCCESS;
         }
-
+        
         if (handleOwnerRide(stack, player).shouldSwing())
             return InteractionResult.SUCCESS;
         if (proccessSitStandOrder(player).shouldSwing())
@@ -172,23 +169,6 @@ public class DogIncapacitatedMananger {
             //d.level.broadcastEntityEvent(d, (byte)35);
         }
         this.dog.level().broadcastEntityEvent(this.dog, (byte)35);
-    }
-
-    private void tryEatCake(ItemStack stack, Player player) {
-        if (recoveryMultiplier >= 2)
-            return;
-        if (this.dog.level() instanceof ServerLevel) {
-            ParticlePackets.DogEatingParticlePacket
-                .sendDogEatingParticlePacketToNearby(this.dog, new ItemStack(Items.CAKE));
-        }
-        this.dog.consumeItemFromStack(player, stack);
-        this.dog.playSound(
-            SoundEvents.GENERIC_EAT, 
-            this.dog.getSoundVolume(), 
-            (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.2F + 1.0F
-        );
-
-        this.recoveryMultiplier *= 2;
     }
 
     private InteractionResult handleOwnerRide(ItemStack stack, Player player) {
