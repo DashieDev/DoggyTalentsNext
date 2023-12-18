@@ -182,6 +182,10 @@ public interface IDogAlteration {
         return InteractionResult.PASS;
     }
 
+    default InteractionResult shouldNotAfraidOfFire(AbstractDog dog) {
+        return InteractionResult.PASS;
+    }
+
     default InteractionResult onLivingFall(AbstractDog dogIn, float distance, float damageMultiplier) {
         return InteractionResult.PASS;
     }
