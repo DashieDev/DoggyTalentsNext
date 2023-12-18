@@ -272,7 +272,6 @@ public class Dog extends AbstractDog {
     private int tickUntilRest;
     private int onFireSmokeTick;
 
-    private boolean wasInLava = false;
     private boolean shakeFire = false;
     
     private float radPerHealthDecrease;
@@ -469,8 +468,8 @@ public class Dog extends AbstractDog {
         return 0.4F;
     }
 
-    public boolean isDogWet() {
-        return !this.wetSource.isNone();
+    public boolean isDogSoaked() {
+        return this.wetSource.soaked();
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -687,7 +686,7 @@ public class Dog extends AbstractDog {
             
         updateClassicalBegAnim();
 
-        boolean val = checkDogInWaterSourceAndWetTheDog();
+        boolean val = checkDogInWetSourceAndWetTheDog();
         updateClassicalShakeAnim(val);
     }
 
@@ -706,7 +705,11 @@ public class Dog extends AbstractDog {
         }
     }
 
-    private boolean checkDogInWaterSourceAndWetTheDog() {
+    private boolean checkDogInWetSourceAndWetTheDog() {
+        if (this.isInLava()) {
+            this.wetSource = WetSource.LAVA;
+            return true;
+        }
         if (this.isInWater()) {
             this.wetSource = WetSource.WATER;
             return true;
@@ -771,7 +774,7 @@ public class Dog extends AbstractDog {
             }
         }
 
-        if (this.timeWolfIsShaking > 0.8) {
+        if (this.timeWolfIsShaking > 0.5) {
             if (this.shakeFire && random.nextInt(6) == 0) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
         }
     }
@@ -848,20 +851,7 @@ public class Dog extends AbstractDog {
             updateAndInvalidatePendingAction();
         }
 
-        if (!this.level().isClientSide && !this.wetSource.isNone() && !this.isShaking && !this.isPathFinding() && this.onGround() && this.canDogDoShakeAnim()) {
-            this.startShakingAndBroadcast(false);
-        }
-
-        if (!this.level.isClientSide && this.fireImmune()) {
-            if (this.isInLava()) {
-                this.wasInLava = true;
-            }
-
-            if (this.wasInLava == true && !this.isInLava() && !this.isShaking && !this.isPathFinding() && this.onGround() && this.canDogDoShakeAnim()) {
-                this.startShakingAndBroadcast(true);
-                this.wasInLava = false;
-            }
-        }
+        updateDogBeginShake();
         
         //Hunger And Healing tick.
         if (!this.level.isClientSide && !this.isDefeated()) {
@@ -1002,6 +992,27 @@ public class Dog extends AbstractDog {
         if (this.navigationLock != null)
             this.navigationLock.lockDogNavigation();
     }
+
+    private void updateDogBeginShake() {
+        if (this.level().isClientSide)
+            return;
+        if (this.isShaking)
+            return;
+        if (this.isPathFinding())
+            return;
+        if (!this.onGround())
+            return;
+        if (!this.canDogDoShakeAnim())
+            return;
+        if (this.wetSource.isNone())
+            return;
+        if (this.checkDogInWetSourceAndWetTheDog())
+            return;
+        if (this.wetSource.flame() && this.isOnFire())
+            return;
+        
+        this.startShakingAndBroadcast(this.wetSource.flame());
+    } 
 
     private void validateGoals() {
         //Valiate goals
