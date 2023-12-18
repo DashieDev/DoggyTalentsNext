@@ -265,7 +265,7 @@ public class Dog extends AbstractDog {
 
     private float headRotationCourse;
     private float headRotationCourseOld;
-    private WetSource wetSource;
+    private @Nonnull WetSource wetSource = WetSource.NONE;
     private boolean isShaking;
     private float timeWolfIsShaking;
     private float prevTimeWolfIsShaking;
@@ -470,7 +470,7 @@ public class Dog extends AbstractDog {
     }
 
     public boolean isDogWet() {
-        return this.wetSource != null;
+        return !this.wetSource.isNone();
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -698,71 +698,77 @@ public class Dog extends AbstractDog {
             this.headRotationCourseOld = 0;
         }
 
-        //"Wet" the dog
-        boolean inWater = this.isInWater();
-        // If inWater is false then isInRain is true in the or statement
-        boolean inRain = inWater ? false : this.isInWaterOrRain();
-        boolean inBubbleColumn = this.isInWaterOrBubble(); //!!!!!
-        boolean isWaterContact = inWater || inRain || inBubbleColumn;
-        if (isWaterContact) {
-            if (this.wetSource == null) {
-                this.wetSource = WetSource.of(inWater, inBubbleColumn, inRain);
+        boolean val = checkDogInWaterSourceAndWetTheDog();
+        updateClassicalShakeAnim(val);
+    }
+
+    private boolean checkDogInWaterSourceAndWetTheDog() {
+        if (this.isInWater()) {
+            this.wetSource = WetSource.WATER;
+            return true;
+        }
+        if (this.isInWaterOrRain()) {
+            this.wetSource = WetSource.RAIN;
+            return true;
+        }
+        if (this.isInWaterOrBubble()) {
+            this.wetSource = WetSource.BUBBLE_COLUMN;
+            return true;
+        }
+        return false;
+    }
+
+    private void updateClassicalShakeAnim(boolean currentlyInWater) {
+        if (!this.canDogDoShakeAnim() || currentlyInWater) {
+            if (this.isShaking && !this.level().isClientSide) {
+                this.finishShaking();
+                this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING);
+            }
+            return;
+        }
+        if (!this.isShaking)
+            return;
+
+        if (this.timeWolfIsShaking == 0.0F) {
+            if (!this.shakeFire) this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+        }
+
+        this.prevTimeWolfIsShaking = this.timeWolfIsShaking;
+        this.timeWolfIsShaking += 0.05F;
+        if (this.prevTimeWolfIsShaking >= 2.0F) {
+
+            //TODO check if only called server side
+            for (IDogAlteration alter : this.alterations) {
+                alter.onShakingDry(this, this.wetSource);
+            }
+
+            this.wetSource = WetSource.NONE;
+            this.finishShaking();
+        }
+
+        if (this.timeWolfIsShaking > 0.4F) {
+            float f = (float)this.getY();
+            int i = (int)(Mth.sin((this.timeWolfIsShaking - 0.4F) * (float)Math.PI) * 7.0F);
+            Vec3 vec3d = this.getDeltaMovement();
+
+            for (int j = 0; j < i; ++j) {
+                float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
+                float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
+                if (this.shakeFire) {
+                    byte r = (byte) this.getRandom().nextInt(3);
+                    if (r==0)
+                        this.level().addParticle(ParticleTypes.LAVA, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                    else if (r==1)
+                        this.level().addParticle(ParticleTypes.FLAME, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                    else if (r==2)
+                        this.level().addParticle(ParticleTypes.SMOKE, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                } else
+                this.level().addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
             }
         }
 
-        if (this.canDogDoShakeAnim()) {
-            if (isWaterContact) {
-                if (this.isShaking && !this.level().isClientSide) {
-                    this.finishShaking();
-                    this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING);
-                }
-            } else if ((this.wetSource != null || this.isShaking) && this.isShaking) {
-                if (this.timeWolfIsShaking == 0.0F) {
-                    if (!this.shakeFire) this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-                }
-
-                this.prevTimeWolfIsShaking = this.timeWolfIsShaking;
-                this.timeWolfIsShaking += 0.05F;
-                if (this.prevTimeWolfIsShaking >= 2.0F) {
-
-                    //TODO check if only called server side
-                    if (this.wetSource != null) {
-                        for (IDogAlteration alter : this.alterations) {
-                            alter.onShakingDry(this, this.wetSource);
-                        }
-                    }
-
-                    this.wetSource = null;
-                    this.finishShaking();
-                }
-
-                if (this.timeWolfIsShaking > 0.4F) {
-                    float f = (float)this.getY();
-                    int i = (int)(Mth.sin((this.timeWolfIsShaking - 0.4F) * (float)Math.PI) * 7.0F);
-                    Vec3 vec3d = this.getDeltaMovement();
-
-                    for (int j = 0; j < i; ++j) {
-                        float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
-                        float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
-                        if (this.shakeFire) {
-                            byte r = (byte) this.getRandom().nextInt(3);
-                            if (r==0)
-                                this.level().addParticle(ParticleTypes.LAVA, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
-                            else if (r==1)
-                                this.level().addParticle(ParticleTypes.FLAME, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
-                            else if (r==2)
-                                this.level().addParticle(ParticleTypes.SMOKE, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
-                        } else
-                        this.level().addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
-                    }
-                }
-
-                if (this.timeWolfIsShaking > 0.8) {
-                    if (this.shakeFire && random.nextInt(6) == 0) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-                }
-            }
-        } else {
-            if (this.isShaking) finishShaking();
+        if (this.timeWolfIsShaking > 0.8) {
+            if (this.shakeFire && random.nextInt(6) == 0) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
         }
     }
 
@@ -838,7 +844,7 @@ public class Dog extends AbstractDog {
             updateAndInvalidatePendingAction();
         }
 
-        if (!this.level().isClientSide && this.wetSource != null && !this.isShaking && !this.isPathFinding() && this.onGround() && this.canDogDoShakeAnim()) {
+        if (!this.level().isClientSide && !this.wetSource.isNone() && !this.isShaking && !this.isPathFinding() && this.onGround() && this.canDogDoShakeAnim()) {
             this.startShakingAndBroadcast(false);
         }
 
@@ -2262,7 +2268,7 @@ public class Dog extends AbstractDog {
         if (checkAndHandleIncapacitated(cause))
             return;
         
-        this.wetSource = null;
+        this.wetSource = WetSource.NONE;
         this.finishShaking();
 
         this.alterations.forEach((alter) -> alter.onDeath(this, cause));
