@@ -147,7 +147,7 @@ public class EventHandler {
     }
 
     private void migrateUUID(UUID uuid, Dog dog, ServerLevel level) {
-        if (!ConfigHandler.SERVER.PRESERVE_UUID.get())
+        if (ConfigHandler.SERVER.DISABLE_PRESERVE_UUID.get())
             return;
         if (level.getEntity(uuid) != null)
             return;
