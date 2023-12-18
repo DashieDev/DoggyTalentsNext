@@ -3,7 +3,7 @@
   "category": "equipment",
   "ingredients": [
     {
-      "item": "doggytalents:training_treat"
+      "item": "minecraft:paper"
     },
     {
       "item": "minecraft:paper"
@@ -13,9 +13,6 @@
     },
     {
       "item": "minecraft:bone_meal"
-    },
-    {
-      "item": "minecraft:string"
     }
   ],
   "result": {

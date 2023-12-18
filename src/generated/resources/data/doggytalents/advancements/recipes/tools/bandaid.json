@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_paper": {
+    "has_koji": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:paper"
+              "doggytalents:koji"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_paper",
+      "has_koji",
       "has_the_recipe"
     ]
   ],
