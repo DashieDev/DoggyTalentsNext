@@ -102,9 +102,11 @@ public class EventHandler {
 
     private boolean checkValidWolf(Wolf wolf, Player owner) {
         if (!wolf.isAlive()) return false;
-        if (!wolf.isTame()) return false;
-        if (!wolf.isOwnedBy(owner)) return false;
-        return true;
+        boolean trainUntamed = !ConfigHandler.SERVER.DISABLE_TRAIN_UNTAMED_WOLF.get();
+        boolean condition1 = trainUntamed && !wolf.isTame();
+        boolean condition2 = wolf.isTame() && wolf.isOwnedBy(owner);
+        
+        return condition1 || condition2;
     }
 
     private void trainWolf(Wolf wolf, Player owner, Level level) {
