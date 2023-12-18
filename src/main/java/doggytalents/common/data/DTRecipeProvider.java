@@ -213,13 +213,12 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("SW")
             .pattern("WS").define('W', Items.WHEAT).define('S', Items.SUGAR).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.EGG_SANDWICH.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.EGG_SANDWICH.get(), 3)
             .pattern(" B ")
-            .pattern("EME")
+            .pattern("EEE")
             .pattern(" B ")
             .define('B', Items.BREAD)
             .define('E', Items.EGG)
-            .define('M', Items.MILK_BUCKET)
             .unlockedBy("has_egg", has(Items.EGG))
             .save(consumer);
                     
@@ -364,12 +363,10 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.BANDAID.get(), 5)
-            .requires(DoggyItems.TRAINING_TREAT.get())
-            .requires(Items.PAPER)
+            .requires(Items.PAPER, 2)
             .requires(DoggyItems.KOJI.get())
             .requires(Items.BONE_MEAL)
-            .requires(Items.STRING)
-            .unlockedBy("has_paper", has(Items.PAPER))
+            .unlockedBy("has_koji", has(DoggyItems.KOJI.get()))
             .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.FEATHERED_MANTLE.get(), 1)
@@ -526,15 +523,13 @@ public class DTRecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.KITSUNE_MASK.get(), 1)
             .requires(DoggyItems.HEAD_BAND_BLANK.get())
             .requires(Items.RED_DYE)
-            .requires(Items.WHITE_DYE)
-            .requires(Items.WHITE_DYE)
+            .requires(Items.WHITE_DYE, 2)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.TENGU_MASK.get(), 1)
             .requires(DoggyItems.HEAD_BAND_BLANK.get())
-            .requires(Items.RED_DYE)
-            .requires(Items.RED_DYE)
+            .requires(Items.RED_DYE, 2)
             .requires(Items.BLACK_DYE)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
@@ -776,9 +771,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.ONSEN_TAMAGO.get(), 3)
-            .requires(Items.EGG)
-            .requires(Items.EGG)
-            .requires(Items.EGG)            
+            .requires(Items.EGG, 3)           
             .requires(Items.WATER_BUCKET)
             .unlockedBy("has_egg", has(Items.EGG))
             .save(consumer);

@@ -7,17 +7,15 @@
     },
     "E": {
       "item": "minecraft:egg"
-    },
-    "M": {
-      "item": "minecraft:milk_bucket"
     }
   },
   "pattern": [
     " B ",
-    "EME",
+    "EEE",
     " B "
   ],
   "result": {
+    "count": 3,
     "item": "doggytalents:egg_sandwich"
   },
   "show_notification": true

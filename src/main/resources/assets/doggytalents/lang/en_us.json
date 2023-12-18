@@ -44,6 +44,7 @@
    "item.doggytalents.treat_bag": "Treat Bag",
    "item.doggytalents.energizer_stick": "Energizer Stick",
    "item.doggytalents.egg_sandwich": "Egg Sandwich",
+   "item.doggytalents.egg_sandwich.description": "Delicious Tamago Sando! Legoshi and Legom approved.",
    "item.doggytalents.bandaid": "Band-Aid",
    "item.doggytalents.bandaid.description": "- Use 8 Band-Aids to help your incapacitated dog stand up!\n- A Bed (Vanilla or DTN) is needed to further increase recovery speed! ",
    "item.doggytalents.tantan_cape": "Tartan Cape",
@@ -307,6 +308,8 @@
    "talent.doggytalents.doggy_tools.open_tools": "Open Dog's ToolBar",
    "talent.doggytalents.doggy_armor.open_armor": "Open Dog's Armor",
    "talent.doggytalents.flying_furball.dog_not_kami": "This dog is not on Kami level.",
+   "talent.doggytalents.pack_puppy.render_chest": "Render Chest",
+   "talent.doggytalents.rescue_dog.render_box": "Render Box",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",
 
