@@ -1910,6 +1910,18 @@ public class Dog extends AbstractDog {
         return alterationProps.fireImmune();
     }
 
+    public boolean shouldDogNotAfraidOfFire() {
+        for (var alter : this.alterations) {
+            var result = alter.shouldNotAfraidOfFire(this);
+
+            if (result.shouldSwing()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
         for (IDogAlteration alter : this.alterations) {

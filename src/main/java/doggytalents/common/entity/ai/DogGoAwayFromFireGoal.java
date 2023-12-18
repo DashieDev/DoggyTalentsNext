@@ -35,6 +35,9 @@ public class DogGoAwayFromFireGoal extends Goal {
     public boolean canUse() {
         if (this.dog.fireImmune()) return false;
 
+        if (this.dog.shouldDogNotAfraidOfFire())
+            return false;
+
         byte dangerSpot = -1;
         if (--tickUntilSearch <= 0) {
             tickUntilSearch = 3;

@@ -130,6 +130,13 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
+    public InteractionResult shouldNotAfraidOfFire(AbstractDog dog) {
+        if (this.level() < 3)
+            return InteractionResult.PASS;
+        return InteractionResult.SUCCESS;
+    }
+
+    @Override
     public InteractionResult stillIdleOrSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
         if (source.is(DamageTypes.ON_FIRE))
             return InteractionResult.SUCCESS;
