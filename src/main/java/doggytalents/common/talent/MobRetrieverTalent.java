@@ -112,6 +112,18 @@ public class MobRetrieverTalent extends TalentInstance {
             return false;
         if (!dog.isDoingFine())
             return false;
+        if (!(target instanceof LivingEntity))
+            return false;
+        if (target instanceof Enemy)
+            return false;
+        if (target.getType().is(DoggyTags.MOB_RETRIEVER_MUST_IGNORE))
+            return false;
+        if (target instanceof TamableAnimal otherDog 
+            && dog.getOwnerUUID() != null
+            && ObjectUtils.notEqual(otherDog.getOwnerUUID(), dog.getOwnerUUID()))
+            return false;
+        if (!canLevelRideTarget(dog, target))
+            return false;
         return true;
     }
 
