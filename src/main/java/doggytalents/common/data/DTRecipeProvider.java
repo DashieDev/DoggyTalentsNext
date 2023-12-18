@@ -743,6 +743,12 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_bowl", has(Items.BOWL))
             .save(consumer);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.EDAMAME.get())
+            .requires(DoggyItems.SOY_PODS.get())
+            .requires(Items.SUGAR)
+            .unlockedBy("has_dtn_soy_pods", has(DoggyItems.SOY_PODS.get()))
+            .save(consumer);
+
         registerTripleCooking(consumer, 
             Ingredient.of(DoggyItems.SOY_PODS.get()), 
             DoggyItems.SOY_PODS_DRIED.get(), 0.35F, 200, "has_dtn_soy_pods", 
