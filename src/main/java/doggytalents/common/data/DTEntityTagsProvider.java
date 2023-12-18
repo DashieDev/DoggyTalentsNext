@@ -37,6 +37,8 @@ public class DTEntityTagsProvider extends EntityTypeTagsProvider {
             () -> EntityType.ZOMBIE,
             () -> EntityType.SKELETON,
             () -> EntityType.SPIDER);
+        createTag(DoggyTags.MOB_RETRIEVER_MUST_IGNORE, 
+            () -> EntityType.CREEPER);
     }
 
     @SafeVarargs

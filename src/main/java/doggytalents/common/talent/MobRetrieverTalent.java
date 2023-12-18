@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.ObjectUtils;
 
+import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -86,6 +87,8 @@ public class MobRetrieverTalent extends TalentInstance {
         if (target instanceof Player)
             return false;
         if (target instanceof Enemy)
+            return false;
+        if (target.getType().is(DoggyTags.MOB_RETRIEVER_MUST_IGNORE))
             return false;
         if (target instanceof TamableAnimal otherDog 
             && dog.getOwnerUUID() != null
