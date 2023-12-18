@@ -115,18 +115,26 @@ public class HellHoundTalent extends TalentInstance {
         }
         if (!source.is(DamageTypes.LAVA)) {
             ++this.fireDamageAccumulate;
-            if (this.fireDamageAccumulate >= this.level() + 1) {
+            if (this.fireDamageAccumulate >= getMaxAccumulate()) {
                 this.fireDamageAccumulate = 0;
                 return InteractionResultHolder.pass(1f);
             }
         } else {
             ++this.lavaDamageAccumulate;
-            if (this.lavaDamageAccumulate >= 10 * this.level()) {
+            if (this.lavaDamageAccumulate >= getMaxAccumulate() * 10) {
                 this.lavaDamageAccumulate = 0;
                 return InteractionResultHolder.pass(Math.max(0, 1- (this.level()*0.25f)) * damage);
             }
         }
         return InteractionResultHolder.fail(0f);
+    }
+
+    private int getMaxAccumulate() {
+        if (this.level() <= 2)
+            return this.level() + 1;
+        if (this.level() <= 3)
+            return this.level() + 3;
+        return this.level() + 10;
     }
 
     @Override
