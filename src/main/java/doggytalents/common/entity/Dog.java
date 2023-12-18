@@ -2320,6 +2320,9 @@ public class Dog extends AbstractDog {
         this.incapacitatedMananger.setIncapMsg(
             source.getLocalizedDeathMessage(this).getString()
         );
+
+        this.wetSource = WetSource.NONE;
+        this.finishShaking();
     }
 
     private void sendIncapacitatedMsg(LivingEntity owner, DamageSource source) {
