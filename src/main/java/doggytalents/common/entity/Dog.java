@@ -297,7 +297,9 @@ public class Dog extends AbstractDog {
         this.setTame(false);
         this.setGender(EnumGender.random(this.getRandom()));
         this.setLowHealthStrategy(LowHealthStrategy.STICK_TO_OWNER);
+        this.authorizedChangingOwner = true;
         this.setOwnerUUID(null); //Just to be sure
+        this.authorizedChangingOwner = false;
         this.resetTickTillRest();
 
         this.moveControl = new DogMoveControl(this);
