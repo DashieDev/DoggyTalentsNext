@@ -1,6 +1,7 @@
 package doggytalents.common.block;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.DoggyItems;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
@@ -286,7 +287,9 @@ public class DogBedBlock extends BaseEntityBlock {
             return InteractionResult.PASS;
 
         boolean isAssign = 
-            player.isShiftKeyDown() || stack.is(Items.BONE);
+            player.isShiftKeyDown() 
+            || stack.is(Items.BONE)
+            || stack.is(DoggyItems.TRAINING_TREAT.get());
         if (!isAssign)
             return InteractionResult.PASS;
         
