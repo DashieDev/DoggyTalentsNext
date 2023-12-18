@@ -856,7 +856,8 @@ public class Dog extends AbstractDog {
             if (this.isInLava()) {
                 this.wasInLava = true;
             }
-            if (this.wasInLava == true && !this.isInLava() && !this.isShaking && !this.isPathFinding() && this.isOnGround()) {
+
+            if (this.wasInLava == true && !this.isInLava() && !this.isShaking && !this.isPathFinding() && this.onGround() && this.canDogDoShakeAnim()) {
                 this.startShakingAndBroadcast(true);
                 this.wasInLava = false;
             }
