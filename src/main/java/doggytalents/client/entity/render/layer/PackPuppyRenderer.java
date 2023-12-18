@@ -9,6 +9,7 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.talent.PackPuppyTalent;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -41,8 +42,9 @@ public class PackPuppyRenderer extends RenderLayer<Dog, DogModel> {
                 return;
         }
 
-        Optional<TalentInstance> inst = dog.getTalent(DoggyTalents.PACK_PUPPY);
-        if (inst.isPresent() && inst.get().level() >= 0) {
+        Optional<PackPuppyTalent> inst = dog.getTalent(DoggyTalents.PACK_PUPPY)
+            .map(x -> x.cast(PackPuppyTalent.class));
+        if (inst.isPresent() && inst.get().renderChest()) {
             this.getParentModel().copyPropertiesTo(this.model);
             this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
             this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
