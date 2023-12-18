@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dtn_soy_pods": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "doggytalents:soy_pods"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "doggytalents:edamame"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_dtn_soy_pods",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "doggytalents:edamame"
+    ]
+  },
+  "sends_telemetry_event": false
+}
