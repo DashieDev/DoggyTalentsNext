@@ -50,12 +50,9 @@ public class PackPuppyTalent extends TalentInstance {
 
     public static final int MAX_DOG_INV_VIEW = 8;
 
-    public static Capability<PackPuppyItemHandler> PACK_PUPPY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});;
-
     private boolean renderChest = true;
 
     private PackPuppyItemHandler packPuppyHandler;
-    private LazyOptional<?> lazyPackPuppyHandler;
 
     public static Predicate<ItemEntity> SHOULD_PICKUP_ENTITY_ITEM = (entity) -> {
         return entity.isAlive() && !entity.hasPickUpDelay() && !entity.getItem().is(DoggyTags.PACK_PUPPY_BLACKLIST);// && !EntityAIFetch.BONE_PREDICATE.test(entity.getItem());
@@ -66,7 +63,6 @@ public class PackPuppyTalent extends TalentInstance {
         super(talentIn, levelIn);
         PackPuppyItemHandler handler = new PackPuppyItemHandler();
         this.packPuppyHandler = handler;
-        this.lazyPackPuppyHandler = LazyOptional.of(() -> handler);
     }
 
     public PackPuppyItemHandler inventory() {
@@ -198,19 +194,6 @@ public class PackPuppyTalent extends TalentInstance {
     public void onRead(AbstractDog dogIn, CompoundTag compound) {
         this.renderChest = compound.getBoolean("PackPuppyTalent_renderChest");
         this.packPuppyHandler.deserializeNBT(compound);
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(AbstractDog dogIn, Capability<T> cap, Direction side) {
-        if (cap == PackPuppyTalent.PACK_PUPPY_CAPABILITY) {
-            return (LazyOptional<T>) this.lazyPackPuppyHandler;
-        }
-        return null;
-    }
-
-    @Override
-    public void invalidateCapabilities(AbstractDog dogIn) {
-        this.lazyPackPuppyHandler.invalidate();
     }
 
     @Override
