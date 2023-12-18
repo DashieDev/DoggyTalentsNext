@@ -76,7 +76,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         }
 
         this.model.resetWetShade();
-        if (dog.isDogWet()) {
+        if (dog.isDogSoaked()) {
             float f = dog.getShadingWhileWet(partialTicks);
             this.model.setWetShade(f);
         }
