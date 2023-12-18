@@ -2,6 +2,7 @@ package doggytalents.api.enu;
 
 public enum WetSource {
 
+    NONE(false),
     WATER(true),
     BUBBLE_COLUMN(true),
     RAIN(false);
@@ -16,7 +17,7 @@ public enum WetSource {
         return this.isWater;
     }
 
-    public static WetSource of(boolean inWater, boolean inBubbleColumn, boolean inRain) {
-        return inWater ? WetSource.WATER : (inBubbleColumn ? WetSource.BUBBLE_COLUMN : WetSource.RAIN);
+    public boolean isNone() {
+        return this == NONE;
     }
 }
