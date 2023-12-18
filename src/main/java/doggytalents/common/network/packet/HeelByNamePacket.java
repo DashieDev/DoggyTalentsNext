@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import doggytalents.DoggyItems;
 import doggytalents.DoggySounds;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
+import doggytalents.api.feature.EnumMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.DogSoftHeelAction;
@@ -45,6 +46,12 @@ import net.minecraftforge.network.NetworkEvent.Context;
         if (owner.getCooldowns().isOnCooldown(DoggyItems.WHISTLE.get())) return;
         if (dog.isPassenger()) dog.stopRiding();
         dog.clearTriggerableAction();
+
+        var mode = dog.getMode();
+        if (mode.canWander()) {
+            dog.setMode(mode.shouldAttack() ? 
+                EnumMode.AGGRESIVE : EnumMode.DOCILE);
+        }
         
         if (data.softHeel) {
             if (dog.readyForNonTrivialAction())
