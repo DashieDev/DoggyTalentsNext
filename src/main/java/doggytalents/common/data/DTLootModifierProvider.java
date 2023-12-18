@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -70,9 +71,6 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
     }
 
     private SoyFromZombies createSoyFromZombiesModifier() {
-        var correct_id_codition = 
-            LootTableIdCondition.builder(EntityType.ZOMBIE.getDefaultLootTable())
-            .build();
         var killed_by_dog_condition =
             LootItemEntityPropertyCondition
                 .hasProperties(
@@ -81,12 +79,19 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
                         DoggyEntityTypes.DOG.get())
                 )
                 .build();
+        var drop_soy_condition =
+            LootItemEntityPropertyCondition
+                .hasProperties(
+                    EntityTarget.THIS, 
+                    EntityPredicate.Builder.entity().of(DoggyTags.DROP_SOY_WHEN_DOG_KILL)
+                )
+                .build();
         var random_condition = 
-            LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.025F, 0.01F)
+            LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.125F, 0.05F)
             .build();
         var conditions = new LootItemCondition[] {
-            correct_id_codition,
             killed_by_dog_condition,
+            drop_soy_condition,
             random_condition
         };
         return new SoyFromZombies(conditions);
