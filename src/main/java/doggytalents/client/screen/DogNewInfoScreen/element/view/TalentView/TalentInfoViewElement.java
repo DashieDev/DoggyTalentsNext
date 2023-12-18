@@ -121,8 +121,6 @@ public class TalentInfoViewElement extends AbstractElement {
         if (talent == DoggyTalents.PACK_PUPPY.get()) {
             addRenderPackPuppyButton(dog, container);
 
-            if (ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV.get())
-                return;
             var packPuppyButtonDiv = new DivElement(container, getScreen())
                 .setPosition(PosType.RELATIVE, 0, 0)
                 .setSize(1f, 20)
