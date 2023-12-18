@@ -126,6 +126,8 @@ public class Screens {
     }
 
     public static void openPackPuppyScreen(ServerPlayer player, Dog dogIn) {
+        if (!dogIn.canInteract(player))
+            return;
         if (dogIn.isDoingFine()) {
             NetworkHooks.openScreen(player, new PackPuppyContainerProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
@@ -158,6 +160,8 @@ public class Screens {
     }
 
     public static void openArmorScreen(ServerPlayer player, Dog dogIn) {
+        if (!dogIn.canInteract(player))
+            return;
         if (dogIn.isDoingFine() && dogIn.getDogLevel(DoggyTalents.DOGGY_ARMOR) > 0) {
             NetworkHooks.openScreen(player, new DogArmorContainerProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
@@ -166,6 +170,8 @@ public class Screens {
     }
 
     public static void openDoggyToolsScreen(ServerPlayer player, Dog dogIn) {
+        if (!dogIn.canInteract(player))
+            return;
         if (dogIn.isDoingFine() && dogIn.getDogLevel(DoggyTalents.DOGGY_TOOLS) > 0) {
             NetworkHooks.openScreen(player, new DoggyToolsMenuProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
