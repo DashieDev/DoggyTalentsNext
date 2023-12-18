@@ -685,21 +685,25 @@ public class Dog extends AbstractDog {
         if (!this.isAlive())
             return;
             
-        if (this.canDogDoBegAnim()) {
-            this.headRotationCourseOld = this.headRotationCourse;
-            if (this.isBegging()) {
-                this.headRotationCourse += (1.0F - this.headRotationCourse) * 0.4F;
-            } else {
-                this.headRotationCourse += (0.0F - this.headRotationCourse) * 0.4F;
-            }
-        } else {
-            //???
-            this.headRotationCourse = 0;
-            this.headRotationCourseOld = 0;
-        }
+        updateClassicalBegAnim();
 
         boolean val = checkDogInWaterSourceAndWetTheDog();
         updateClassicalShakeAnim(val);
+    }
+
+    private void updateClassicalBegAnim() {
+        if (!this.canDogDoBegAnim()) {
+            this.headRotationCourse = 0;
+            this.headRotationCourseOld = 0;
+            return;
+        }
+
+        this.headRotationCourseOld = this.headRotationCourse;
+        if (this.isBegging()) {
+            this.headRotationCourse += (1.0F - this.headRotationCourse) * 0.4F;
+        } else {
+            this.headRotationCourse += (0.0F - this.headRotationCourse) * 0.4F;
+        }
     }
 
     private boolean checkDogInWaterSourceAndWetTheDog() {
