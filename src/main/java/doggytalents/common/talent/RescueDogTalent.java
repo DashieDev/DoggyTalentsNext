@@ -14,8 +14,11 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
+import doggytalents.common.network.packet.data.RescueDogRenderData;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,6 +27,8 @@ import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
 
 public class RescueDogTalent extends TalentInstance {
+    private boolean renderBox = true;
+    
     private final int SEARCH_RADIUS = 12; //const ?? maybe can improve thru talents
     private int tickTillSearch = 0;
 
@@ -261,6 +266,45 @@ public class RescueDogTalent extends TalentInstance {
         
         return true;
     }
+
+    
+    @Override
+    public void onRead(AbstractDog dogIn, CompoundTag compound) {
+        this.renderBox = compound.getBoolean("RescueDogTalent_renderBox");
+    }
+
+    @Override
+    public void onWrite(AbstractDog dogIn, CompoundTag compound) {
+        compound.putBoolean("RescueDogTalent_renderBox", this.renderBox);
+    }
+
+    @Override
+    public void writeToBuf(FriendlyByteBuf buf) {
+        super.writeToBuf(buf);
+        buf.writeBoolean(renderBox);
+    }
+
+    @Override
+    public void readFromBuf(FriendlyByteBuf buf) {
+        super.readFromBuf(buf);
+        renderBox = buf.readBoolean();
+    }
+
+    public void updateFromPacket(RescueDogRenderData data) {
+        renderBox = data.val;
+    }
+
+    @Override
+    public TalentInstance copy() {
+        var ret = super.copy();
+        if (!(ret instanceof RescueDogTalent rescue))
+            return ret;
+        rescue.setRenderBox(this.renderBox);
+        return rescue;
+    }
+
+    public boolean renderBox() { return this.renderBox; }
+    public void setRenderBox(boolean render) { this.renderBox = render; }
 
     public static class RescueAction extends TriggerableAction {
 
