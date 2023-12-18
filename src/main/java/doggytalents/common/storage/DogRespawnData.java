@@ -95,7 +95,7 @@ public class DogRespawnData implements IDogData {
         compoundnbt.merge(this.data);
         dog.load(compoundnbt);
         boolean useOldUUID = 
-            ConfigHandler.SERVER.PRESERVE_UUID.get()
+            !ConfigHandler.SERVER.DISABLE_PRESERVE_UUID.get()
             && worldIn.getEntity(this.uuid) == null;
         dog.setUUID(useOldUUID ? this.uuid : uuid);
 
