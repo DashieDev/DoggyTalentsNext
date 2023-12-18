@@ -219,6 +219,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.IntValue TICK_PER_HUNGER_DEC;
         public ForgeConfigSpec.BooleanValue PRESERVE_UUID;
         public ForgeConfigSpec.IntValue DUPLICATION_RESOLVE_STRATEGY;
+        public ForgeConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -331,6 +332,11 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Other - Do nothing.")
                 .translation("doggytalents.duplication_resolve_strategy")
                 .defineInRange("duplication_resolve_strategy", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            DISABLE_TRAIN_UNTAMED_WOLF = builder
+                .comment("By default, you can directly train an untamed wolf to a Dog")
+                .comment("with a Training Treat. Set this to True to disable.")
+                .translation("doggytalents.train_untamed_wolf")
+                .define("train_untamed_wolf", false);
             builder.pop();
         }
 
