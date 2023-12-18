@@ -5,6 +5,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.InteractionHand;
@@ -67,14 +68,23 @@ public class DogFarmerAction extends ToolAction {
             return;
         }
 
-        moveToAndFarmBlock(farmState);
+        boolean hurtTools = moveToAndFarmBlock(farmState);
 
+        if (hurtTools) {
+            var hurtStack = dog.getMainHandItem();
+            if (hurtStack != null && hurtStack.getItem() instanceof HoeItem) {
+                hurtStack.hurtAndBreak(1, dog, (p_150845_) -> {
+                    p_150845_.broadcastBreakEvent(InteractionHand.MAIN_HAND);
+                });
+            }
+        }
         
     }
 
-    private void moveToAndFarmBlock(FarmState farmState) {
+    private boolean moveToAndFarmBlock(FarmState farmState) {
         var dog_b0 = dog.blockPosition();
         var dog_nav = dog.getNavigation();
+        boolean shouldHurtTool = false;
         
         dog.getLookControl()
             .setLookAt(Vec3.atBottomCenterOf(nextFarmBlock));
@@ -94,15 +104,17 @@ public class DogFarmerAction extends ToolAction {
             switch (farmState) {
                 case HARVEST:
                     harvest();
+                    shouldHurtTool = true;
                     break;
                 case PLACE_SEED:
                     placeSeed();
+                    shouldHurtTool = true;
                     break;
                 default:
                     break;
             }
             this.nextFarmBlock = null;
-            return;
+            return shouldHurtTool;
         }
 
         if (--tickTillPathRecalc <= 0) {
@@ -113,6 +125,7 @@ public class DogFarmerAction extends ToolAction {
                 this.nextFarmBlock.getZ()    
             , 1);
         }
+        return shouldHurtTool;
     }
     @Override
     public void onStop() {
@@ -154,6 +167,7 @@ public class DogFarmerAction extends ToolAction {
             this.dog.level, this.nextFarmBlock.above(), this.dog);
         this.dog.playSound(soundtype.getPlaceSound(), 
             (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+        
     }
 
     private void harvest() {
