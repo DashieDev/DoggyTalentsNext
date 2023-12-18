@@ -10,6 +10,7 @@ import doggytalents.client.entity.model.DogRescueModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.talent.RescueDogTalent;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -47,8 +48,9 @@ public class RescueDogRenderer extends RenderLayer<Dog, DogModel> {
             }
         }
 
-        Optional<TalentInstance> inst = dog.getTalent(DoggyTalents.RESCUE_DOG);
-        if (inst.isPresent() && inst.get().level() >= 5) {
+        Optional<RescueDogTalent> inst = dog.getTalent(DoggyTalents.RESCUE_DOG)
+            .map(x -> x.cast(RescueDogTalent.class));;
+        if (inst.isPresent() && inst.get().renderBox()) {
             var dogModel = this.getParentModel();
             dogModel.copyPropertiesTo(this.model);
             this.model.sync(dogModel);
