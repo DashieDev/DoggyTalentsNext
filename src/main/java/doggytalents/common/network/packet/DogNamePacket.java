@@ -30,10 +30,10 @@ public class DogNamePacket extends DogPacket<DogNameData> {
         }
 
         if (data.name.isEmpty()) {
-            dogIn.setCustomName(null);
+            dogIn.setDogCustomName(null);
         }
         else {
-            dogIn.setCustomName(Component.literal(data.name));
+            dogIn.setDogCustomName(Component.literal(data.name));
         }
     }
 }
