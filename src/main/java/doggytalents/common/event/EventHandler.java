@@ -131,7 +131,7 @@ public class EventHandler {
             dog.addAccessory(dog_collar);
             
         if (wolf.hasCustomName()) {
-            dog.setCustomName(wolf.getCustomName());
+            dog.setDogCustomName(wolf.getCustomName());
         }
         
         var wolf_uuid = wolf.getUUID();
