@@ -878,7 +878,7 @@ All of the newly added Food items are edible by both you and your dogs!
 #Improve Flying Animation.
 #Improve Backflip animation.
 #Improve Fire Drill animation.
-#Resolve latency in animations.
++Added a new Mechanic to resolves client latencies in displaying Dog Animations.
 
 # Change Egg Sandwich recipe.
 # Change Rice Bowl recipe.
@@ -904,7 +904,8 @@ All of the newly added Food items are edible by both you and your dogs!
 #Pack Puppy will reserve inventory if keepInventory is true.
 #Only Kami level Dogs can train Flying Furball.
 #Dispensing armor into Doggy Armor dogs is possible now.
-#Dogs are now picky eaters, they only eat food with nutrition over 6 and completely refuse to eat Rotten Flesh (even with Happy Eater level 5).
+#Dogs are now picky eaters, they only eat meat (Non DTN Food) with nutrition over 6 and 
+completely refuse to eat Rotten Flesh (even with Happy Eater level 5).
 
 #Dogs will stop being curious when pushed.
 #Dogs only beg at owners.
