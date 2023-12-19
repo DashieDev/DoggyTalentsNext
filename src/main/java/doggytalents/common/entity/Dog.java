@@ -2053,10 +2053,8 @@ public class Dog extends AbstractDog {
             currentUUID != null
             && ObjectUtils.notEqual(currentUUID, uuid);
         if (isChangingOwner && !authorizedChangingOwner) {
-            authorizedChangingOwner = false;
             return;
         }
-        authorizedChangingOwner = false;
 
         super.setOwnerUUID(uuid);
 
@@ -2071,7 +2069,6 @@ public class Dog extends AbstractDog {
     public void setCustomName(@Nullable Component name) {
         if (!authorizedChangingName)
             return;
-        authorizedChangingName = false;
         super.setCustomName(name);
     }    
 
@@ -3836,6 +3833,7 @@ public class Dog extends AbstractDog {
         this.setMode(EnumMode.DOCILE);
         this.authorizedChangingOwner = true;
         this.setOwnerUUID(newOwnerUUID);
+        this.authorizedChangingOwner = false;
     }
 
     public boolean canSpendPoints(int amount) {
