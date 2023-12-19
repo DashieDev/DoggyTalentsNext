@@ -90,6 +90,17 @@ public class Accessory {
     //     return accessoryDelegateIn.equals(this.delegate);
     // }
 
+    private boolean isDogStillNakedWhenWear = false;
+
+    public boolean isDogStillNakedWhenWear() {
+        return isDogStillNakedWhenWear;
+    }
+
+    public <T extends Accessory> T setDogStillNakedWhenWear(boolean val) {
+        this.isDogStillNakedWhenWear = val;
+        return (T) this;
+    } 
+
     private ResourceLocation modelTexture;
 
     public <T extends Accessory> T setModelTexture(ResourceLocation modelTextureIn) {
