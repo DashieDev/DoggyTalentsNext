@@ -111,12 +111,18 @@ public class DogFeelingNakeyGoal extends Goal {
         var accessories = dog.getAccessories();
         if (accessories.isEmpty())
             return true;
-        boolean onlyHasCollar =
-            accessories.size() <= 1
-            && accessories.get(0).getAccessory()
-                .getType() == DoggyAccessoryTypes.COLLAR.get();
-        if (onlyHasCollar)
+        
+        boolean hasNonNaked = false; 
+        for (var x : accessories) {
+            var accessory = x.getAccessory();
+            if (!accessory.isDogStillNakedWhenWear()) {
+                hasNonNaked = true;
+                break;
+            }
+        }
+        if (!hasNonNaked)
             return true;
+    
         return false;
     }
 
