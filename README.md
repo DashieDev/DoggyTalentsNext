@@ -18,6 +18,7 @@ A Big Thanks to everyone that has contributed. This includes but is not limited 
  * ❤️**NovaViper** for coding help and maintaining order in the DoggyTalents Project until 1.18.2
  * ❤️**SimonMeskens** for some of the textures
 
+ * 💚**zNexwr** for Translation in "FR"  
 Mod Authors:
 * 🦴 **DashieDev** - ダシデーブ
 * 🦴 **MashXP** - マッシーXP
