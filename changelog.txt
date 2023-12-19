@@ -835,3 +835,107 @@ upright piano, recorded using his phone and post-processed by MashXP.
 *HOTFIX: Trampling Crops With WolfMount causes the crops to break and both the player and wolf to clip,
 glitch and take huge damage inside the block underneath.
 # Register a default recipe for the Dog Bed so it can show up in the crafting book.
+
+**1.18.0 - 13th October 2023**
+# THE NIPPON 日本UPDATE!  ようこそ、旅行者！
+===========
+## Embark on an unparalleled journey into the heart of DTN, inspired by the Japanese culture. 
+An extraordinary journey awaits you!
+### 🍚 Rice: 🌾
++ Added a new Block: Rice Crops.  🌾
++ Added new Item: Rice Grains
++ Added new Item: Koji
++ Added new Item: Uncooked Rice 
++ Added new Item: Uncooked Rice in a Bowl
++ Added new Food Item: Gyudon 🐄
++ Added new Food Item: Oyakodon 🐔🥚
++ Added new Beverage: Sake 🍶 - You and your dogs now can get a little tipsy with some booze!
+### Soy:
++ Added a new Block: Soy Crops.
++ Added new Item: (Dried) Soy Pods 
++ Added new Item: (Dried) Soy Beans
++ Added new Food Item: (Unpodded) Edamame
++ Added new Food Item: Tofu
++ Added new Food Item: Aburaage
++ Added new Food Item: Natto and Natto Rice
+  Dogs when fed this will be affected with a new effect called Natto Bite!
+They will inflict Slowness on every targets they attack while being affected.
++ Added new Item: Miso Paste
++ Added new Food Item: Miso Soup
+All of the newly added Food items are edible by both you and your dogs!
++ Treats now requires DTN Rice instead of Wheat to be crafted.
+###
++ Dogs will occasionally do Belly Rub when resting.
++ Added new functional Advancements.
++ If you remove all of the accessories, your dog will be shy.
++ Added 2 new Akita variants. (Correctly addressed the breeds)
++ Added new Skins: German Pointers (2 variants).
++ Added new Skin: Tosa Inu (1 variant)
++ Added new Skin: Kishu Inu (1 variant)
++ Added new Skin: Kai Ken (1 variant)
++ Added new Accessory: Ceremonial Garb 
++ Added Pianos.
++ Added new Option to disable render Chest and Box visibility in Pack Puppy.
++ Added the Pack Puppy icon to the Talents Menu.
+**+ Any dogs that haven’t been linked to the bed can still be revived on an unclaimed bed by using a Totem of Undying.** 
++ French Translation! (Traduction in "FR" by zNexwr) 🥖
+===========
+-You can no longer use Cake to speed up the incapacitation recovery.
+===========
+#Agree on a general dog model.
+#Hayabusa and Tei model update.
+#Improve Flying Animation.
+#Improve Backflip animation.
+#Improve Fire Drill animation.
+#Resolve latency in animations.
+
+# Change Egg Sandwich recipe.
+# Change Rice Bowl recipe.
+# Change Bandaid recipe.
+
+#Rename the Giant Stick to “Broomstick”.
+#Rebrand “Dire Treat (Levels)” to “Kami Treat (Levels)”
+#Add descriptions to items to improve clarity.
+
+#Improve the clarity of incapacitated text.
+#Format big health.
+#Always show incapacitation GUI when trying to interact with an incap dog.
+
+#A Bone or Training Treat can also be used to make dogs claim their beds. 
+ **#You can now SNEAK + RIGHT CLICK with any item on hand (except for functional items) to access the menu.**
+#Admin can bypass disable talents. 
+**#The Operator can force claim other players' dogs by shift right-clicking with an Amnesia Bone.**
+#Untamed Wolf can now be trained using Training Treat.
+
+#Improve Swimmer Dog’s navigation.
+#Doggy Tools can harvest DTN rice crops.
+#Doggy Tools consumes hoe’s duration when harvested.
+#Pack Puppy will reserve inventory if keepInventory is true.
+#Only Kami level Dogs can train Flying Furball.
+#Dispensing armor into Doggy Armor dogs is possible now.
+#Dogs are now picky eaters, they only eat food with nutrition over 6 and completely refuse to eat Rotten Flesh (even with Happy Eater level 5).
+
+#Dogs will stop being curious when pushed.
+#Dogs only beg at owners.
+#You can now tag which entity whether a dog with Bm or Gm can attack via datapacks.
+
+#Allow the user to specify which mob must not be eligible for Mob Retriever via datapacks.
+#Make the dog skin manager registering progress less ambiguous.
+#Improve UIFramework
+#You can block or show Dogs’ names in F1 mode.
+#Dogs cannot be looted from loot tables
+
+#Improve Lava teleportation for level 5 Hellhound.
+#Level 5 Hellhound will sneeze when sniffing lava.
+#Buff level 3 and 4 Hellhound.
+# Non-hellhound dogs can shake lava too.
+#Hellhound level 3 and above is not afraid of lava.
+===========
++ Fixed: detrained level 5 Hellhound still thinks it can swim in lava.
++ Fixed: Birthday Hat crafting recipe accepting other items.
++ Fixed: client-side fake item duplication.
++ Fixed: Resolve texture collision in idle animations.
++ Fixed: A weird dying animation.
++ Fixed: Dissonance in Touchy touch animation.
++ Fixed: Dog teleport to fence.
++ Fixed: Only Owners can open Doggy Armor and Doggy Tools GUI!
