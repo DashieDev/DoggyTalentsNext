@@ -17,4 +17,9 @@ public class Band extends Accessory {
     public byte getRenderLayer() {
         return AccessoryInstance.RENDER_TOP;
     }
+
+    @Override
+    public boolean isDogStillNakedWhenWear() {
+        return true;
+    }
 }
