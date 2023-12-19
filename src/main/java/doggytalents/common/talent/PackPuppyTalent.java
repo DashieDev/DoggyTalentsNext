@@ -5,6 +5,7 @@ import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.config.ConfigHandler;
@@ -12,6 +13,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.inventory.PackPuppyItemHandler;
+import doggytalents.common.item.DogEddibleBowlFoodItem;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.data.PackPuppyRenderData;
 import doggytalents.common.util.InventoryUtil;
@@ -31,6 +33,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
@@ -345,7 +348,12 @@ public class PackPuppyTalent extends TalentInstance {
     public boolean renderChest() { return this.renderChest; }
     public void setRenderChest(boolean render) { this.renderChest = render; }
     
-    public static class ChestDogFoodHandler extends MeatFoodHandler {
+    public static class ChestDogFoodHandler implements IDogFoodHandler {
+
+        @Override
+        public boolean isFood(ItemStack stackIn) {
+            return false;
+        }
 
         @Override
         public boolean canConsume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
@@ -355,9 +363,8 @@ public class PackPuppyTalent extends TalentInstance {
                 return true;
             }
 
-            if (super.canConsume(dog, stack, entityIn)) {
-                var props = stack.getItem().getFoodProperties(stack, dog);
-                return props != null && props.getNutrition() >= 5;
+            if (checkMeat(stack)) {
+                return true;
             }
                 
             return false;
@@ -393,6 +400,14 @@ public class PackPuppyTalent extends TalentInstance {
             );
 
             return InteractionResult.SUCCESS;
+        }
+
+        private boolean checkMeat(ItemStack stack) {
+            var props = stack.getItem().getFoodProperties();
+
+            if (props == null) return false;
+            return stack.isEdible() && props.isMeat() && stack.getItem() != Items.ROTTEN_FLESH
+                && props.getNutrition() >= 6;
         }
 
     }
