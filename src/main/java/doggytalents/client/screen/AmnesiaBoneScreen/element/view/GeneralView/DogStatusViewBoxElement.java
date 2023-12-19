@@ -59,14 +59,14 @@ public class DogStatusViewBoxElement extends AbstractElement {
         }
         if (nameTooLong) {
             var tempName = currentDogNameStr.substring(0, 13) + " ..";
-            dog.setCustomName(Component.literal(tempName));
+            dog.setDogCustomName(Component.literal(tempName));
         }
 
         InventoryScreen.renderEntityInInventory(dog_mX, dog_mY, size, 
             lookX, lookY, dog);
 
         if (nameTooLong) {
-            dog.setCustomName(currentDogName);
+            dog.setDogCustomName(currentDogName);
         }
         if (dogTooBig) {
             dog.setDogSize(currentDogSize);
