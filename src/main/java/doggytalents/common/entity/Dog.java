@@ -2066,6 +2066,22 @@ public class Dog extends AbstractDog {
         }
     }
 
+    private boolean authorizedChangingName = false;
+
+    @Override
+    public void setCustomName(@Nullable Component name) {
+        if (!authorizedChangingName)
+            return;
+        authorizedChangingName = false;
+        super.setCustomName(name);
+    }    
+
+    public void setDogCustomName(@Nullable Component name) {
+        this.authorizedChangingName = true;
+        this.setCustomName(name);
+        this.authorizedChangingName = false;
+    }
+
     @Override // blockAttackFromPlayer
     public boolean skipAttackInteraction(Entity entityIn) {
 
@@ -2535,6 +2551,7 @@ public class Dog extends AbstractDog {
     public void load(CompoundTag compound) {
 
         this.authorizedChangingOwner = true;
+        this.authorizedChangingName = true;
 
         // DataFix uuid entries and attribute ids
         try {
@@ -2618,6 +2635,7 @@ public class Dog extends AbstractDog {
         super.load(compound);
 
         this.authorizedChangingOwner = false;
+        this.authorizedChangingName = false;
     }
 
     @Override
@@ -3799,7 +3817,7 @@ public class Dog extends AbstractDog {
             .map(goal -> { goal.stop(); return goal; } );
         this.setOrderedToSit(false);
         this.setHealth(8);
-        this.setCustomName(null);
+        this.setDogCustomName(null);
 
         this.modifyTalent(x -> x.clear());
 
