@@ -918,7 +918,7 @@ completely refuse to eat Rotten Flesh (even with Happy Eater level 5).
 
 #Dogs will stop being curious when pushed.
 #Dogs only beg at owners.
-#You can now tag which entity whether a dog with Bm or Gm can attack via datapacks.
+#You can now tag which entity whether a dog with Bm or Gb can attack via datapacks.
 
 #Allow the user to specify which mob must not be eligible for Mob Retriever via datapacks.
 #Make the dog skin manager registering progress less ambiguous.
