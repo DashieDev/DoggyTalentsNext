@@ -95,16 +95,18 @@ public class DogFeelingNakeyGoal extends Goal {
     }
 
     private boolean isNaked(Dog dog) {
-        var armors = dog.getArmorSlots();
-        boolean hasArmor = false;
-        for (var s : armors) {
-            if (!s.isEmpty()) {
-                hasArmor = true;
-                break;
+        if (!dog.hideArmor()) {
+            var armors = dog.getArmorSlots();
+            boolean hasArmor = false;
+            for (var s : armors) {
+                if (!s.isEmpty()) {
+                    hasArmor = true;
+                    break;
+                }
             }
+            if (hasArmor)
+                return false;
         }
-        if (hasArmor)
-            return false;
 
         var accessories = dog.getAccessories();
         if (accessories.isEmpty())
