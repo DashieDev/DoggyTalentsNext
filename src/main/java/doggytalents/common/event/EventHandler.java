@@ -157,6 +157,9 @@ public class EventHandler {
     @SubscribeEvent
     public void onEntitySpawn(final EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
+        var level = entity.level();
+        if (level.isClientSide)
+            return;
 
         if (entity instanceof AbstractSkeleton) {
             AbstractSkeleton skeleton = (AbstractSkeleton) entity;
@@ -168,6 +171,9 @@ public class EventHandler {
 
     @SubscribeEvent
     public void playerLoggedIn(final PlayerLoggedInEvent event) {
+        if (event.getEntity().level().isClientSide)
+            return;
+
         if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.STARTING_ITEMS)) {
 
             Player player = event.getPlayer();
