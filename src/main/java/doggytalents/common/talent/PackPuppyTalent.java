@@ -13,7 +13,8 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.inventory.PackPuppyItemHandler;
-import doggytalents.common.item.DogEddibleBowlFoodItem;
+import doggytalents.common.item.DogEddibleItem;
+import doggytalents.common.item.IDogEddible;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.data.PackPuppyRenderData;
 import doggytalents.common.util.InventoryUtil;
@@ -55,11 +56,11 @@ public class PackPuppyTalent extends TalentInstance {
     private boolean renderChest = true;
 
     private PackPuppyItemHandler packPuppyHandler;
+    private MeatFoodHandler meatFoodHandler = new MeatFoodHandler();
 
     public static Predicate<ItemEntity> SHOULD_PICKUP_ENTITY_ITEM = (entity) -> {
         return entity.isAlive() && !entity.hasPickUpDelay() && !entity.getItem().is(DoggyTags.PACK_PUPPY_BLACKLIST);// && !EntityAIFetch.BONE_PREDICATE.test(entity.getItem());
     };
-    public static ChestDogFoodHandler FOOD_HANDLER = new ChestDogFoodHandler();
 
     public PackPuppyTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -101,7 +102,7 @@ public class PackPuppyTalent extends TalentInstance {
 
         if (--this.tickTillUpdateFood > 0)
             return;
-        this.tickTillUpdateFood = 30;
+        this.tickTillUpdateFood = 60;
         
         if (!(dogIn instanceof Dog dog))
             return;
@@ -119,7 +120,7 @@ public class PackPuppyTalent extends TalentInstance {
 
     private void checkAndFeedDog(Dog dog, Dog target) {
         if (target == dog) {
-            tryFeed(dog, dog);
+            tryFeed(dog, dog, false);
             return;
         }
         if (target.isBusy())
@@ -128,18 +129,25 @@ public class PackPuppyTalent extends TalentInstance {
             return;
         if (target.isOrderedToSit())
             return;
+        if (!this.hasFood(target))
+            return;
         target.triggerAction(
             new DogEatFromChestDogAction(target, dog)
         );
     }
 
-    private boolean tryFeed(Dog dog, Dog feeder) {
-        int foodSlot = findFoodInInv(dog, feeder);
+    private boolean tryFeed(Dog dog, Dog feeder, boolean findHealingFood) {
+        int foodSlot = findFoodInInv(feeder, dog, findHealingFood);
         if (foodSlot < 0)
             return false;
         var feedStack = this.inventory().getStackInSlot(foodSlot)
             .copy();
-        FOOD_HANDLER.consume(dog, feedStack, feeder);
+        var feedItem = feedStack.getItem();
+        if (feedItem instanceof IDogEddible eddible) {
+            eddible.consume(dog, feedStack, feeder);
+        } else {
+            meatFoodHandler.consume(dog, feedStack, feeder);
+        }
         this.inventory().setStackInSlot(foodSlot, feedStack);
         return true;
     }
@@ -208,21 +216,90 @@ public class PackPuppyTalent extends TalentInstance {
     }
 
     public boolean hasFood(Dog finder) {
-        return findFoodInInv(finder, finder) >= 0;
+        var inventory = this.inventory();
+        if (inventory == null)
+            return false;
+
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            var stack = inventory.getStackInSlot(i);
+            var item = stack.getItem();
+            boolean isDogEddible = 
+                item instanceof DogEddibleItem eddible
+                && eddible.canConsume(finder, stack, finder);
+            if (isDogEddible)
+                return true;
+            boolean isMeat = this.meatFoodHandler.canConsume(finder, stack, finder);
+            if (isMeat)
+                return true;
+        }
+        return false;
     }
 
-    public int findFoodInInv(Dog finder, Dog target) {
+    public int findFoodInInv(Dog finder, Dog target, boolean findHealingFood) {
+        int eddibleFoodId = findBestDogEddibleFood(finder, target, findHealingFood);
+        if (eddibleFoodId > 0)
+            return eddibleFoodId;
+        int meatFoodId = findMeatFood(finder, target);
+        if (meatFoodId > 0)
+            return meatFoodId;
+
+        return -1;
+    }
+
+    private int findBestDogEddibleFood(Dog finder, Dog target, boolean findHealingFood) {
+        var inventory = this.inventory();
+        if (inventory == null)
+            return -1;
+
+        float minNutrition = -1; 
+        int selectedStack = -1;
+        
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            var stack = inventory.getStackInSlot(i);
+            var item = stack.getItem();
+            if (!(item instanceof DogEddibleItem eddible))
+                continue;
+            if (!eddible.canConsume(target, stack, finder))
+                continue;
+            if (findHealingFood && checkRegenEffects(target, stack, eddible)) {
+                return i;
+            }
+            float addedNutrition = eddible.getAddedHungerWhenDogConsume(stack, target);
+            if (minNutrition < 0) {
+                minNutrition = addedNutrition;
+                selectedStack = i;
+                continue;
+            }
+            if (minNutrition > addedNutrition) {
+                minNutrition = addedNutrition;
+                selectedStack = i;
+            }
+        }
+        return selectedStack;
+    }
+
+    private int findMeatFood(Dog finder, Dog target) {
         var inventory = this.inventory();
         if (inventory == null)
             return -1;
 
         for (int i = 0; i < inventory.getSlots(); i++) {
-            var stack = inventory.getStackInSlot(i).copy();
-            if (FOOD_HANDLER.canConsume(target, stack, finder)) {
+            var stack = inventory.getStackInSlot(i);
+            if (meatFoodHandler.canConsume(target, stack, finder)) {
                 return i;
             }
         }
         return -1;
+    }
+
+    private boolean checkRegenEffects(AbstractDog target, ItemStack stack, DogEddibleItem item) {
+        var effects = item.getAdditionalEffectsWhenDogConsume(stack, target);
+        for (var pair : effects) {
+            var effect = pair.getFirst();
+            if (effect.getEffect() == MobEffects.REGENERATION)
+                return true;
+        }
+        return false;
     }
 
     public static PackPuppyTalent getInstanceFromDog(AbstractDog dog) {
@@ -238,6 +315,8 @@ public class PackPuppyTalent extends TalentInstance {
         private Dog target;
         private int tickTillPathRecalc;
         private final int stopDist = 2;
+        private boolean enoughHealingFood = false;
+        private int feedCooldown = 0;
 
         public DogEatFromChestDogAction(Dog dog, Dog target) {
             super(dog, false, false);
@@ -258,6 +337,9 @@ public class PackPuppyTalent extends TalentInstance {
                 setState(ActionState.FINISHED);
                 return;
             }
+
+            if (feedCooldown > 0)
+                --feedCooldown;
             
             if (this.dog.distanceToSqr(this.target) > stopDist*stopDist) {
 
@@ -293,10 +375,17 @@ public class PackPuppyTalent extends TalentInstance {
         }
 
         private void checkAndEat() {
+            if (feedCooldown > 0)
+                return;
             var inst = getInstanceFromDog(target);
             if (inst == null)
                 return;
-            inst.tryFeed(dog, target);
+            if (!enoughHealingFood && this.dog.isDogLowHealth()) {
+                enoughHealingFood = true;
+                inst.tryFeed(dog, target, true);
+            } else
+                inst.tryFeed(dog, target, false);
+            feedCooldown = dog.getRandom().nextInt(11);
         }
 
         private boolean stillValidTarget() {  
@@ -307,7 +396,7 @@ public class PackPuppyTalent extends TalentInstance {
             var inst = getInstanceFromDog(target);
             if (inst == null)
                 return false;
-            if (inst.findFoodInInv(target, dog) < 0)
+            if (!inst.hasFood(dog))
                 return false;
             return true;
         }
@@ -347,69 +436,5 @@ public class PackPuppyTalent extends TalentInstance {
 
     public boolean renderChest() { return this.renderChest; }
     public void setRenderChest(boolean render) { this.renderChest = render; }
-    
-    public static class ChestDogFoodHandler implements IDogFoodHandler {
-
-        @Override
-        public boolean isFood(ItemStack stackIn) {
-            return false;
-        }
-
-        @Override
-        public boolean canConsume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
-            if (dog.isDogLowHealth()
-                && stack.getItem() == DoggyItems.EGG_SANDWICH.get()
-                && !dog.hasEffect(MobEffects.REGENERATION)) {
-                return true;
-            }
-
-            if (checkMeat(stack)) {
-                return true;
-            }
-                
-            return false;
-        }
-
-        @Override
-        public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
-            if (dog.level().isClientSide) return InteractionResult.SUCCESS;
-                
-            var item = stack.getItem();
-            var props = item.getFoodProperties();
-            if (props == null) return InteractionResult.FAIL;
-            int heal = props.getNutrition() * 5;
-
-            dog.addHunger(heal);
-            dog.consumeItemFromStack(entityIn, stack);
-
-            if (item == DoggyItems.EGG_SANDWICH.get())
-            for(var pair : props.getEffects()) {
-                if (pair.getFirst() != null && dog.getRandom().nextFloat() < pair.getSecond()) {
-                dog.addEffect(new MobEffectInstance(pair.getFirst()));
-                }
-            }
-
-            if (dog.level() instanceof ServerLevel) {
-                ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(
-                    dog, new ItemStack(item));
-            }
-            dog.playSound(
-                SoundEvents.GENERIC_EAT, 
-                dog.getSoundVolume(), 
-                (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
-            );
-
-            return InteractionResult.SUCCESS;
-        }
-
-        private boolean checkMeat(ItemStack stack) {
-            var props = stack.getItem().getFoodProperties();
-
-            if (props == null) return false;
-            return stack.isEdible() && props.isMeat() && stack.getItem() != Items.ROTTEN_FLESH
-                && props.getNutrition() >= 6;
-        }
-
-    }
 
 }
