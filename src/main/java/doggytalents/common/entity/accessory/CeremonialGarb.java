@@ -11,15 +11,15 @@ import doggytalents.common.item.DyeableAccessoryItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
-public class CeramonyGarb extends DyeableAccessory implements IAccessoryHasModel{
+public class CeremonialGarb extends DyeableAccessory implements IAccessoryHasModel{
 
-    public CeramonyGarb(Supplier<? extends ItemLike> itemIn) {
+    public CeremonialGarb(Supplier<? extends ItemLike> itemIn) {
         super(DoggyAccessoryTypes.CLOTHING, itemIn);
     }
 
     @Override
     public Entry getRenderEntry() {
-        return AccessoryModelRenderEntries.CERA_GARB;
+        return AccessoryModelRenderEntries.CERE_GARB;
     }
     
     public static class Item extends DyeableAccessoryItem {

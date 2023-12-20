@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.entity.model.CeramonyGarbModel;
+import doggytalents.client.entity.model.CeremonialGarbModel;
 import doggytalents.client.entity.model.LabCoatModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.model.dog.DogModel;
@@ -21,13 +21,13 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
-public class CeramonyGarbRenderEntry extends Entry{
-    public static final ModelLayerLocation CERA_GARB = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ceramonial_garb"), "main");
-    public CeramonyGarbModel model;
+public class CeremonialGarbRenderEntry extends Entry{
+    public static final ModelLayerLocation CERE_GARB = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ceremonial_garb"), "main");
+    public CeremonialGarbModel model;
 
     @Override
     public void initModel(Context ctx) {
-        this.model = new CeramonyGarbModel(ctx.bakeLayer(CERA_GARB));
+        this.model = new CeremonialGarbModel(ctx.bakeLayer(CERE_GARB));
     }
 
     @Override
@@ -37,12 +37,12 @@ public class CeramonyGarbRenderEntry extends Entry{
 
     @Override
     public void registerLayerDef(RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(CERA_GARB, CeramonyGarbModel::createBodyLayer);
+        event.registerLayerDefinition(CERE_GARB, CeremonialGarbModel::createBodyLayer);
     }
 
     @Override
     public ResourceLocation getResources(AccessoryInstance inst) {
-        return Resources.CERA_GARB;
+        return Resources.CERE_GARB;
     }
     @Override
     public boolean isDyable() {
@@ -65,9 +65,9 @@ public class CeramonyGarbRenderEntry extends Entry{
             if (inst instanceof IColoredObject coloredObject)
                 color = coloredObject.getColor();
             
-            DefaultAccessoryRenderer.renderTranslucentModel(model, Resources.CERA_GARB, 
+            DefaultAccessoryRenderer.renderTranslucentModel(model, Resources.CERE_GARB, 
                 poseStack, buffer, packedLight, dog, 1f, 1f, 1f, 1f);
-            DefaultAccessoryRenderer.renderTranslucentModel(model, Resources.CERA_GARB_OVERLAY, 
+            DefaultAccessoryRenderer.renderTranslucentModel(model, Resources.CERE_GARB_OVERLAY, 
                 poseStack, buffer, packedLight, dog, color[0], color[1], color[2], 1f);
     }
 
