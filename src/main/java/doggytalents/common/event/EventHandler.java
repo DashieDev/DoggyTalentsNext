@@ -27,6 +27,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -287,6 +288,9 @@ public class EventHandler {
             pos.getY() + 1.0, 
             pos.getZ() + 0.5, resultStack);
         level.addFreshEntity(resultEntity);
+
+        projectile.playSound(SoundEvents.TURTLE_EGG_CRACK, 0.5F, 0.9F + 
+            level.random.nextFloat() * 0.2F);
     }
 
     private static boolean checkIfArrowShouldNotHurtDog(Dog dog, Entity projectileOnwer, LivingEntity dogOwner) {
