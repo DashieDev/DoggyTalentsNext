@@ -370,12 +370,13 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.FEATHERED_MANTLE.get(), 1)
-            .pattern(" F ")
+            .pattern(" FP")
             .pattern("FTF")
-            .pattern(" F ")
+            .pattern("PF ")
             .define('F', Items.FEATHER)
+            .define('F', Items.PHANTOM_MEMBRANE)
             .define('T', DoggyItems.SUPER_TREAT.get())
-            .unlockedBy("has_paper", has(Items.PAPER))
+            .unlockedBy("has_feather", has(Items.FEATHER))
             .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.EMPTY_LOCATOR_ORB.get(), 1)
