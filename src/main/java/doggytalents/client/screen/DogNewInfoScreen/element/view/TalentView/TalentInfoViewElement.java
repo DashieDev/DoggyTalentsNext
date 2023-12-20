@@ -29,7 +29,7 @@ import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.network.packet.data.DoggyTorchPlacingTorchData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
-import doggytalents.common.network.packet.data.PackPuppyRenderData;
+import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.network.packet.data.RescueDogRenderData;
 import doggytalents.common.talent.DoggyTorchTalent;
 import doggytalents.common.talent.PackPuppyTalent;
@@ -276,8 +276,8 @@ public class TalentInfoViewElement extends AbstractElement {
                         Boolean newVal = !packPup.renderChest();
                         b.setMessage(Component.literal("" + newVal));
                         packPup.setRenderChest(newVal);
-                        PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyRenderData(
-                            dog.getId(), newVal
+                        PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
+                            dog.getId(), PackPuppyData.Type.RENDER_CHEST, newVal
                         ));
                     }     
                 ),
@@ -285,6 +285,46 @@ public class TalentInfoViewElement extends AbstractElement {
             )
             .init()
         );
+        if (packPup.canCollectItems()) {
+            container.addChildren(
+                new ButtonOptionEntry(container, getScreen(), 
+                    new FlatButton(
+                        0, 0,
+                        40, 20, Component.literal("" + packPup.pickupItems()), 
+                        b -> {
+                            Boolean newVal = !packPup.pickupItems();
+                            b.setMessage(Component.literal("" + newVal));
+                            packPup.setPickupItems(newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
+                                dog.getId(), PackPuppyData.Type.PICKUP_NEARBY, newVal
+                            ));
+                        }     
+                    ),
+                    I18n.get("talent.doggytalents.pack_puppy.pickup_item")
+                )
+                .init()
+            );
+        }
+        if (packPup.canOfferFood()) {
+            container.addChildren(
+                new ButtonOptionEntry(container, getScreen(), 
+                    new FlatButton(
+                        0, 0,
+                        40, 20, Component.literal("" + packPup.offerFood()), 
+                        b -> {
+                            Boolean newVal = !packPup.offerFood();
+                            b.setMessage(Component.literal("" + newVal));
+                            packPup.setOfferFood(newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
+                                dog.getId(), PackPuppyData.Type.OFFER_FOOD, newVal
+                            ));
+                        }     
+                    ),
+                    I18n.get("talent.doggytalents.pack_puppy.offer_food")
+                )
+                .init()
+            );
+        }
     }
 
     private void addTrainButton(Dog dog) {
