@@ -4,28 +4,30 @@ import java.util.function.Supplier;
 
 import doggytalents.DoggyTalents;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.network.packet.data.PackPuppyRenderData;
+import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.talent.PackPuppyTalent;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent.Context;
 
-public class PackPuppyRenderPacket extends DogPacket<PackPuppyRenderData> {
+public class PackPuppyPacket extends DogPacket<PackPuppyData> {
 
     @Override
-    public void encode(PackPuppyRenderData data, FriendlyByteBuf buf) {
+    public void encode(PackPuppyData data, FriendlyByteBuf buf) {
         super.encode(data, buf);
+        buf.writeInt(data.type.getId());
         buf.writeBoolean(data.val);
     }
 
     @Override
-    public PackPuppyRenderData decode(FriendlyByteBuf buf) {
+    public PackPuppyData decode(FriendlyByteBuf buf) {
         int entityId = buf.readInt();
+        var type = PackPuppyData.Type.fromId(buf.readInt());
         boolean val = buf.readBoolean();
-        return new PackPuppyRenderData(entityId, val);
+        return new PackPuppyData(entityId, type, val);
     }
 
     @Override
-    public void handleDog(Dog dogIn, PackPuppyRenderData data, Supplier<Context> ctx) {
+    public void handleDog(Dog dogIn, PackPuppyData data, Supplier<Context> ctx) {
         var talentInstOptional = dogIn.getTalent(DoggyTalents.PACK_PUPPY);
         if (!talentInstOptional.isPresent())
             return;
