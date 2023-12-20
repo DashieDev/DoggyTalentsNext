@@ -382,7 +382,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("FTF")
             .pattern("PF ")
             .define('F', Items.FEATHER)
-            .define('F', Items.PHANTOM_MEMBRANE)
+            .define('P', Items.PHANTOM_MEMBRANE)
             .define('T', DoggyItems.SUPER_TREAT.get())
             .unlockedBy("has_feather", has(Items.FEATHER))
             .save(consumer);
@@ -809,6 +809,12 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', ItemTags.WOOL_CARPETS)
             .unlockedBy("has_lead", has(Items.LEAD))
             .save(consumer);
+
+        //Just-in-case Recipe
+        registerTripleCooking(consumer, 
+            Ingredient.of(Items.EGG), 
+            DoggyItems.ONSEN_TAMAGO.get(), 0.1F, 100, "has_egg", 
+            has(Items.EGG));
     }
 
     private void registerTripleCooking(Consumer<FinishedRecipe> consumer, Ingredient input, Item output,
