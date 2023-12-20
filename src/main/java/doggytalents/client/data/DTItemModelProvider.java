@@ -129,7 +129,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         wetFrisbee(DoggyItems.FRISBEE_WET);
         birthdayHat(DoggyItems.BIRTHDAY_HAT);
 
-        ceraGarb(DoggyItems.CERA_GARB);
+        ceremonialGarb(DoggyItems.CERE_GARB);
 
         generated(DoggyItems.RICE_GRAINS);
         generated(DoggyItems.RICE_WHEAT);
@@ -205,7 +205,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/birthday_hat_bg"), modLoc(ModelProvider.ITEM_FOLDER + "/birthday_hat_fg"));
     }
 
-    private ItemModelBuilder ceraGarb(Supplier<? extends ItemLike> item) {
+    private ItemModelBuilder ceremonialGarb(Supplier<? extends ItemLike> item) {
         return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
     }
 
