@@ -338,7 +338,6 @@ public class Dog extends AbstractDog {
         int p = 1;
         registerDogGoal(p, new DogFloatGoal(this));
         registerDogGoal(p, new DogDrunkGoal(this));
-        registerDogGoal(p, new DogFindWaterGoal(this));
         registerDogGoal(p, new DogAvoidPushWhenIdleGoal(this));
         //registerDogGoal(1, new PatrolAreaGoal(this));
         ++p;
@@ -363,6 +362,8 @@ public class Dog extends AbstractDog {
         ++p;
         registerDogGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
         registerDogGoal(p, new DogGoRestOnBedGoalDefeated(this));
+        ++p;
+        registerDogGoal(p, new DogFindWaterGoal(this));
         ++p;
         trivial_p = p;
         //Dog greet owner goal here
