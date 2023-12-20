@@ -332,11 +332,11 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);  
         
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.SHRINKING_MALLET.get(), 1)
-            .pattern(" G ")
+            .pattern("GGG")
             .pattern("GFG")
             .pattern(" B ")
             .define('G', Items.GOLD_INGOT)
-            .define('F', Items.FIRE_CORAL)
+            .define('F', Items.REDSTONE_BLOCK)
             .define('B', Items.BONE)
             .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
             .save(consumer);
@@ -346,7 +346,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("GPG")
             .pattern("BG ")
             .define('G', Items.GOLD_INGOT)
-            .define('F', Items.FIRE_CORAL)
+            .define('F', Items.REDSTONE_BLOCK)
             .define('B', Items.BONE)
             .define('P', Items.GLASS_PANE)
             .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
