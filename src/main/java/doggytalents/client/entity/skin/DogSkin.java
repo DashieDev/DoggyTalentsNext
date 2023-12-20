@@ -29,7 +29,7 @@ public class DogSkin {
         }
         @Override
         public String getDesc() {
-            return "The Default Skin. Mhmmmm! Classy!";
+            return "The Minecraft Wolf. DTN's Default Skin. Mhmmmm! Classy!";
         }
         @Override
         public String getTags() {

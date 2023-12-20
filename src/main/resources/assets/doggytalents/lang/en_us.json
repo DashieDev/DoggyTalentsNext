@@ -196,6 +196,7 @@
    "item.doggytalents.grand_piano_white_item": "Grand Piano White (Experimental)",
    "item.doggytalents.upright_piano_black_item": "Upright Piano Black (Experimental)",
    "item.doggytalents.upright_piano_brown_item": "Upright Piano Brown (Experimental)",
+   "items.doggytalents.piano_item_common.description": "Sneak + Right Click with a Torch in hand to adjust its orientation.",
 
    "item.doggytalents.cape_coloured.tooltip": "Color: %s",
    "item.doggytalents.wool_collar.tooltip": "Color: %s",
@@ -309,6 +310,8 @@
    "talent.doggytalents.doggy_armor.open_armor": "Open Dog's Armor",
    "talent.doggytalents.flying_furball.dog_not_kami": "This dog is not on Kami level.",
    "talent.doggytalents.pack_puppy.render_chest": "Render Chest",
+   "talent.doggytalents.pack_puppy.pickup_item": "Pickup Neaby Items",
+   "talent.doggytalents.pack_puppy.offer_food": "Offer Food",
    "talent.doggytalents.rescue_dog.render_box": "Render Box",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",

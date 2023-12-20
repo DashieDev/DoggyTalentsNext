@@ -657,6 +657,7 @@
             "skin_name" : "Classical IV",
             "skin_id" : "wolf_old",
             "use_model" : "default",
+            "description" : "First Edition Of The Minecraft Wolf.",
             "tags" : "classical"
         },
         {
