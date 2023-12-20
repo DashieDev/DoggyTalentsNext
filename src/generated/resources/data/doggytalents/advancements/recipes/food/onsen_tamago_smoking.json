@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_dtn_soy_beans": {
+    "has_egg": {
       "conditions": {
         "items": [
           {
             "items": [
-              "doggytalents:soy_beans"
+              "minecraft:egg"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:tofu"
+        "recipe": "doggytalents:onsen_tamago_smoking"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_dtn_soy_beans",
+      "has_egg",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:tofu"
+      "doggytalents:onsen_tamago_smoking"
     ]
   },
   "sends_telemetry_event": false

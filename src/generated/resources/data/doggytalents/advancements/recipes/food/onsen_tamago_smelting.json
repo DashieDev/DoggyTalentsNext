@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:onsen_tamago"
+        "recipe": "doggytalents:onsen_tamago_smelting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:onsen_tamago"
+      "doggytalents:onsen_tamago_smelting"
     ]
   },
   "sends_telemetry_event": false

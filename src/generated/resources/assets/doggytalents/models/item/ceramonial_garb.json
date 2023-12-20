@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "doggytalents:item/ceramonial_garb",
-    "layer1": "doggytalents:item/ceramonial_garb_overlay"
-  }
-}
