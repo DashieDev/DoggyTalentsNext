@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_lead": {
+    "has_egg": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:lead"
+              "minecraft:egg"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:ceramonial_garb"
+        "recipe": "doggytalents:onsen_tamago_camping"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_lead",
+      "has_egg",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:ceramonial_garb"
+      "doggytalents:onsen_tamago_camping"
     ]
   },
   "sends_telemetry_event": false

@@ -5,14 +5,17 @@
     "F": {
       "item": "minecraft:feather"
     },
+    "P": {
+      "item": "minecraft:phantom_membrane"
+    },
     "T": {
       "item": "doggytalents:super_treat"
     }
   },
   "pattern": [
-    " F ",
+    " FP",
     "FTF",
-    " F "
+    "PF "
   ],
   "result": {
     "item": "doggytalents:feathered_mantle"
