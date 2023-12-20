@@ -196,6 +196,13 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onProjectileHit(final ProjectileImpactEvent event) {
+        var levelChecker = event.getProjectile();
+        if (levelChecker == null)
+            return;
+        var level = levelChecker.level();
+        if (level.isClientSide)
+            return;
+
         var hitResult = event.getRayTraceResult();
         if (!(hitResult instanceof EntityHitResult)) return;
 
