@@ -420,7 +420,9 @@ public class PackPuppyTalent extends TalentInstance {
             var inst = getInstanceFromDog(target);
             if (inst == null)
                 return;
-            if (!enoughHealingFood && this.dog.isDogLowHealth()) {
+            boolean dogNeedsHealing = 
+                this.dog.isDogLowHealth() && !dog.hasEffect(MobEffects.REGENERATION);
+            if (!enoughHealingFood && dogNeedsHealing) {
                 enoughHealingFood = true;
                 inst.tryFeed(dog, target, true);
             } else
