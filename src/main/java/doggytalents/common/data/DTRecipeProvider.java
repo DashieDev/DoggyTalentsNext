@@ -803,7 +803,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CERA_GARB.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CERE_GARB.get(), 1)
             .pattern(" L ")
             .pattern("CWC")
             .pattern(" C ")

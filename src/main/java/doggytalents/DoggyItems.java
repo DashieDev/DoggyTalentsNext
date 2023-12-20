@@ -4,7 +4,7 @@ import doggytalents.api.feature.DogLevel;
 import doggytalents.api.registry.Accessory;
 import doggytalents.common.artifacts.FeatheredMantleArtifact;
 import doggytalents.common.entity.accessory.BakerHat;
-import doggytalents.common.entity.accessory.CeramonyGarb;
+import doggytalents.common.entity.accessory.CeremonialGarb;
 import doggytalents.common.entity.accessory.ChefHat;
 import doggytalents.common.entity.accessory.DyeableAccessory;
 import doggytalents.common.entity.accessory.GiantStick;
@@ -129,7 +129,7 @@ public class DoggyItems {
 
     public static final RegistryObject<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
     public static final RegistryObject<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
-    public static final RegistryObject<DyeableAccessoryItem> CERA_GARB = register("ceramonial_garb", () -> new CeramonyGarb.Item(DoggyAccessories.CERA_GARB, createInitialProp()));
+    public static final RegistryObject<DyeableAccessoryItem> CERE_GARB = register("ceremonial_garb", () -> new CeremonialGarb.Item(DoggyAccessories.CERE_GARB, createInitialProp()));
     
     public static final RegistryObject<Item> FRISBEE = registerFrisbee("frisbee");
     public static final RegistryObject<Item> FRISBEE_WET = registerFrisbeeWet("frisbee_wet");
@@ -343,7 +343,7 @@ public class DoggyItems {
              }, item);
         }, DoggyBlocks::logError);
 
-        Util.acceptOrElse(DoggyItems.CERA_GARB, (item) -> {
+        Util.acceptOrElse(DoggyItems.CERE_GARB, (item) -> {
             event.register((stack, tintIndex) -> {
                 return tintIndex != 1 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
