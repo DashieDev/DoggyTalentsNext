@@ -62,8 +62,8 @@ public class Resources {
     public static final ResourceLocation BAKER_HAT = getEntity("dog", "baker_hat");
     public static final ResourceLocation CHEF_HAT = getEntity("dog", "chef_hat");
     public static final ResourceLocation LAB_COAT = getEntity("dog", "lab_coat");
-    public static final ResourceLocation CERA_GARB = getEntity("dog", "ceramonial_garb");
-    public static final ResourceLocation CERA_GARB_OVERLAY = getEntity("dog", "ceramonial_garb_overlay");
+    public static final ResourceLocation CERE_GARB = getEntity("dog", "ceremonial_garb");
+    public static final ResourceLocation CERE_GARB_OVERLAY = getEntity("dog", "ceremonial_garb_overlay");
 
     public static final ResourceLocation SUPERDOG_SUIT = getEntity("dog", "superdog_suit");
     public static final ResourceLocation FLYING_CAPE = getEntity("dog", "flying_cape");

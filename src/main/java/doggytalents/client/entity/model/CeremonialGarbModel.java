@@ -10,9 +10,9 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class CeramonyGarbModel extends SyncedAccessoryModel{
+public class CeremonialGarbModel extends SyncedAccessoryModel{
 
-    public CeramonyGarbModel(ModelPart root) {
+    public CeremonialGarbModel(ModelPart root) {
         super(root);
     }
 
