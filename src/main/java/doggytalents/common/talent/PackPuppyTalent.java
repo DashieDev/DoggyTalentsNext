@@ -17,7 +17,7 @@ import doggytalents.common.inventory.PackPuppyItemHandler;
 import doggytalents.common.item.DogEddibleItem;
 import doggytalents.common.item.IDogEddible;
 import doggytalents.common.network.packet.ParticlePackets;
-import doggytalents.common.network.packet.data.PackPuppyRenderData;
+import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -55,6 +55,8 @@ public class PackPuppyTalent extends TalentInstance {
     public static final int MAX_DOG_INV_VIEW = 8;
 
     private boolean renderChest = true;
+    private boolean pickupItems = true;
+    private boolean offerFood = true;
 
     private PackPuppyItemHandler packPuppyHandler;
     private MeatFoodHandler meatFoodHandler = new MeatFoodHandler();
@@ -75,30 +77,63 @@ public class PackPuppyTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog dogIn) {
-        if (dogIn.isDoingFine() && !dogIn.level().isClientSide && this.level() >= 5) {
-            List<ItemEntity> list = dogIn.level().getEntitiesOfClass(ItemEntity.class, dogIn.getBoundingBox().inflate(2.5D, 1D, 2.5D), SHOULD_PICKUP_ENTITY_ITEM);
-
-            if (!list.isEmpty()) {
-                for (ItemEntity entityItem : list) {
-                    ItemStack remaining = InventoryUtil.addItem(this.packPuppyHandler, entityItem.getItem());
-
-                    if (!remaining.isEmpty()) {
-                        entityItem.setItem(remaining);
-                    } else {
-                        entityItem.discard();
-                        dogIn.playSound(SoundEvents.ITEM_PICKUP, 0.25F, ((dogIn.level().random.nextFloat() - dogIn.level().random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-                    }
-                }
-            }
-        }
+        if (!dogIn.isDoingFine())
+            return;
+        if (dogIn.level().isClientSide)
+            return;
+        
+        tickDogCollectItems(dogIn);
         tickOfferFoodToTeammate(dogIn);
     }
 
+    public boolean canCollectItems() {
+        return this.level() >= 3;
+    }
+
+    public boolean canOfferFood() {
+        return this.level() >= 4;
+    }
+
+    private final double COLLECT_RADIUS = 2;
+    private int tickTillUpdateCollect = 10;
+    private void tickDogCollectItems(AbstractDog dog) {
+        if (dog.level().isClientSide)
+            return;
+        
+        if (!canCollectItems() || !this.pickupItems)
+            return;
+
+        if (--this.tickTillUpdateCollect > 0)
+            return;
+        this.tickTillUpdateCollect = 10;
+
+        var itemList = dog.level().getEntitiesOfClass(
+            ItemEntity.class, 
+            dog.getBoundingBox().inflate(COLLECT_RADIUS, 1D, COLLECT_RADIUS), 
+            SHOULD_PICKUP_ENTITY_ITEM);
+        if (itemList.isEmpty())
+            return;
+        for (var entity : itemList) {
+            var remaining = InventoryUtil.addItem(this.packPuppyHandler, entity.getItem());
+
+            if (!remaining.isEmpty()) {
+                entity.setItem(remaining);
+            } else {
+                entity.discard();
+                dog.playSound(
+                    SoundEvents.ITEM_PICKUP, 0.25F, 
+                    ((dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
+            }
+        }
+    }
 
     private final int TRIGGER_RADIUS = 12;
     private int tickTillUpdateFood = 30;
     private void tickOfferFoodToTeammate(AbstractDog dogIn) {
         if (dogIn.level().isClientSide)
+            return;
+
+        if (!canOfferFood() || !this.offerFood)
             return;
 
         if (--this.tickTillUpdateFood > 0)
@@ -204,6 +239,8 @@ public class PackPuppyTalent extends TalentInstance {
     @Override
     public void onRead(AbstractDog dogIn, CompoundTag compound) {
         this.renderChest = compound.getBoolean("PackPuppyTalent_renderChest");
+        this.pickupItems = compound.getBoolean("PackPuppyTalent_pickupNearby");
+        this.offerFood = compound.getBoolean("PackPuppyTalent_offerFood");
         this.packPuppyHandler.deserializeNBT(compound);
     }
 
@@ -410,22 +447,38 @@ public class PackPuppyTalent extends TalentInstance {
     @Override
     public void onWrite(AbstractDog dogIn, CompoundTag compound) {
         compound.putBoolean("PackPuppyTalent_renderChest", this.renderChest);
+        compound.putBoolean("PackPuppyTalent_pickupNearby", this.pickupItems);
+        compound.putBoolean("PackPuppyTalent_offerFood", this.offerFood);
     }
 
     @Override
     public void writeToBuf(FriendlyByteBuf buf) {
         super.writeToBuf(buf);
         buf.writeBoolean(this.renderChest);
+        buf.writeBoolean(this.pickupItems);
+        buf.writeBoolean(this.offerFood);
     }
 
     @Override
     public void readFromBuf(FriendlyByteBuf buf) {
         super.readFromBuf(buf);
         renderChest = buf.readBoolean();
+        pickupItems = buf.readBoolean();
+        offerFood = buf.readBoolean();
     }
 
-    public void updateFromPacket(PackPuppyRenderData data) {
-        renderChest = data.val;
+    public void updateFromPacket(PackPuppyData data) {
+        switch (data.type) {
+        default:
+            renderChest = data.val;
+            break;    
+        case PICKUP_NEARBY:
+            pickupItems = data.val;
+            break;
+        case OFFER_FOOD:
+            offerFood = data.val;
+            break;
+        }
     }
 
     @Override
@@ -434,10 +487,16 @@ public class PackPuppyTalent extends TalentInstance {
         if (!(ret instanceof PackPuppyTalent packPup))
             return ret;
         packPup.setRenderChest(this.renderChest);
+        packPup.setPickupItems(this.pickupItems);
+        packPup.setOfferFood(this.offerFood);
         return packPup;
     }
 
     public boolean renderChest() { return this.renderChest; }
     public void setRenderChest(boolean render) { this.renderChest = render; }
+    public boolean pickupItems() { return this.pickupItems; }
+    public void setPickupItems(boolean val) { this.pickupItems = val; }
+    public boolean offerFood() { return this.offerFood; }
+    public void setOfferFood(boolean val) { this.offerFood = val; }
 
 }
