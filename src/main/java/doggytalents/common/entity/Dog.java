@@ -347,8 +347,6 @@ public class Dog extends AbstractDog {
         registerDogGoal(p, sitGoal);
         registerDogGoal(p, new DogProtestSitOrderGoal(this));
         ++p;
-        registerDogGoal(p, new DogHungryGoal(this, 1.0f, 2.0f));
-        ++p;
         registerDogGoal(p, new DogLowHealthGoal.StickToOwner(this));
         registerDogGoal(p, new DogLowHealthGoal.RunAway(this));
         //registerDogGoal(4, new DogLeapAtTargetGoal(this, 0.4F));
@@ -356,6 +354,8 @@ public class Dog extends AbstractDog {
         non_trivial_p = p;
         registerDogGoal(p, new DogTriggerableGoal(this, false));
         ++p; //Prioritize Talent Action
+        registerDogGoal(p, new DogHungryGoal(this, 1.0f, 2.0f));
+        ++p;
         //All mutex by nature
         registerDogGoal(p, new GuardModeGoal.Minor(this));
         registerDogGoal(p, new GuardModeGoal.Major(this));
