@@ -31,12 +31,16 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TagsUpdatedEvent;
@@ -381,6 +385,34 @@ public class EventHandler {
                 dog.unRide();
             }
         }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
+    public void onOnsenTamagoCook(final PlayerInteractEvent.RightClickBlock event) {
+        var level = event.getLevel();
+        var pos = event.getPos();
+        var stack = event.getItemStack();
+        var player = event.getEntity();
+
+        if (level.isClientSide)
+            return;
+        if (!stack.is(Items.EGG))
+            return;
+        
+        var state = level.getBlockState(pos);
+        if (!state.is(Blocks.WATER_CAULDRON))
+            return;
+        var state_under = level.getBlockState(pos.below());
+        if (!WalkNodeEvaluator.isBurningBlock(state_under))
+            return;
+
+        var resultStack = new ItemStack(DoggyItems.ONSEN_TAMAGO.get());
+        var resultEntity = new ItemEntity(
+            level, 
+            pos.getX() + 0.5, 
+            pos.getY() + 1.0, 
+            pos.getZ() + 0.5, resultStack);
+        level.addFreshEntity(resultEntity);
     }
 
 
