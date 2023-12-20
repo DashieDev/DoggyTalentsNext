@@ -1,4 +1,4 @@
-﻿Doggy Talents Next - Changelog
+Doggy Talents Next - Changelog
 
 Update List Key
 (+) A new feature
@@ -833,7 +833,7 @@ upright piano, recorded using his phone and post-processed by MashXP.
 glitch and take huge damage inside the block underneath.
 # Register a default recipe for the Dog Bed so it can show up in the crafting book.
 
-**1.18.0 - 13th October 2023**
+**1.18.0 - 18th December 2023**
 # THE NIPPON 日本UPDATE!  ようこそ、旅行者！
 ===========
 ## Embark on an unparalleled journey into the heart of DTN, inspired by the Japanese culture. 
