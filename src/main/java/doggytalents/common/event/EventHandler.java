@@ -43,6 +43,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TagsUpdatedEvent;
@@ -214,10 +215,15 @@ public class EventHandler {
             return;
 
         var hitResult = event.getRayTraceResult();
-        if (!(hitResult instanceof EntityHitResult)) return;
+        if (hitResult instanceof EntityHitResult hitEntity)
+            proccessEntityProjectileHitEvent(event, hitEntity);
+        else if (hitResult instanceof BlockHitResult hitBlock)
+            proccessBlockProjectileHitEvent(event, hitBlock);
+            
+    }
 
-        var entityHitResult = (EntityHitResult) hitResult;
-        var entity = entityHitResult.getEntity();
+    private void proccessEntityProjectileHitEvent(final ProjectileImpactEvent event, EntityHitResult hit) {
+        var entity = hit.getEntity();
         if (!(entity instanceof Dog)) return;
         var dog = (Dog) entity;
 
@@ -251,7 +257,10 @@ public class EventHandler {
         }
 
         event.setCanceled(true);
-            
+    }
+
+    private void proccessBlockProjectileHitEvent(final ProjectileImpactEvent event, BlockHitResult hit) {
+        
     }
 
     private static boolean checkIfArrowShouldNotHurtDog(Dog dog, Entity projectileOnwer, LivingEntity dogOwner) {
