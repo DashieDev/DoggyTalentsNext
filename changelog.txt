@@ -1,4 +1,4 @@
-Doggy Talents Next - Changelog
+﻿Doggy Talents Next - Changelog
 
 Update List Key
 (+) A new feature
@@ -931,3 +931,26 @@ completely refuse to eat Rotten Flesh (even with Happy Eater level 5).
 + Fixed: Dissonance in Touchy touch animation.
 + Fixed: Dog teleport to fence.
 + Fixed: Only Owners can open Doggy Armor and Doggy Tools GUI!
+
+**1.18.1 - 21th December 2023**
++ Fixed: Prevented Player from force changing the name of a dog whom they do not
+own using Vanilla's Nametag.
+# Dog also still feels nakey when still being equipped with Radio Collar.
++ Change Mallet and Shrinking Bone recipe.
+*HOTFIX: potential NullPointerException when triggering Playing Tag clientside.
++ Refined Dog Go Eat From Chest Dog Action:
+Dogs will now strategically eat all DTN's food item which present in the inventory.
+(Ex: Rice Bowls, Tofu, Soy Milk, Natto, etc)
+They will prioritize DTN's food over other Meat Food.
+They will also prioritize DTN's food with lower nutrition.
+Except when they are low on health AND are not affected by Regeneration, 
+they would eat at most one DTN's food with Regeneration effect 
+and then continue to eat as normal till they are full instead of stopping at a certain
+threashold.
+# Resolved texture conflict in PackPuppy model.
++ Dog Menu Option to toggle PackPuppy Offering Food to other Dogs and picking up Nearby items
+if they are able to do that (they will be when trained enough)
++ Added description for Piano.
+# Improve DogSkin ScrollBar scrolling.
++ You can now throw an egg on the Top Face of the water caudron which is directly on top
+of a burning block (ex: Campfire) and make Onsen Tamago!
