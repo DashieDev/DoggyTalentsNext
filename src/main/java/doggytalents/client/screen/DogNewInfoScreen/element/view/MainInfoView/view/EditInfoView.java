@@ -456,7 +456,7 @@ public class EditInfoView extends AbstractElement {
 
             this.addChildren(button);
 
-            var labelStr = new OneLineLimitedTextArea(0, 0, 130, Component.literal(label));
+            var labelStr = new OneLineLimitedTextArea(0, 0, 130, ComponentUtil.literal(label));
             labelStr.x = (this.getRealX() + PADDING_LEFT);
             if (newline) {
                 labelStr.y = (this.getRealY() + 3);

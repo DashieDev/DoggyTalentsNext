@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyAdvancementTriggers;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import net.minecraft.network.chat.Component;
@@ -132,7 +133,7 @@ public class SakeItem extends DogEddibleItem {
             player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, r_drunkTicks, 2));
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, r_drunkTicks, 3));
             player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, r_drunkTicks, 1));
-            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, r_drunkTicks, 3));
+            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, r_drunkTicks, 3));
         }
     }
 
@@ -140,7 +141,7 @@ public class SakeItem extends DogEddibleItem {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        components.add(ComponentUtil.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }

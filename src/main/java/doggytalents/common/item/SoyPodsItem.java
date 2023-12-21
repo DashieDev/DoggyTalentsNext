@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
@@ -25,7 +26,7 @@ public class SoyPodsItem extends Item{
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        components.add(ComponentUtil.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }

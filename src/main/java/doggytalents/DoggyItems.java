@@ -343,7 +343,7 @@ public class DoggyItems {
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.CERE_GARB, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex != 1 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);

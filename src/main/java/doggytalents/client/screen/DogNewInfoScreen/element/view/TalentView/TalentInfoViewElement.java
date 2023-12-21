@@ -243,10 +243,10 @@ public class TalentInfoViewElement extends AbstractElement {
                 new ButtonOptionEntry(container, getScreen(), 
                     new FlatButton(
                         0, 0,
-                        40, 20, Component.literal("" + rescue.renderBox()), 
+                        40, 20, ComponentUtil.literal("" + rescue.renderBox()), 
                         b -> {
                             Boolean newVal = !rescue.renderBox();
-                            b.setMessage(Component.literal("" + newVal));
+                            b.setMessage(ComponentUtil.literal("" + newVal));
                             rescue.setRenderBox(newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), new RescueDogRenderData(
                                 dog.getId(), newVal
@@ -271,10 +271,10 @@ public class TalentInfoViewElement extends AbstractElement {
             new ButtonOptionEntry(container, getScreen(), 
                 new FlatButton(
                     0, 0,
-                    40, 20, Component.literal("" + packPup.renderChest()), 
+                    40, 20, ComponentUtil.literal("" + packPup.renderChest()), 
                     b -> {
                         Boolean newVal = !packPup.renderChest();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setMessage(ComponentUtil.literal("" + newVal));
                         packPup.setRenderChest(newVal);
                         PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
                             dog.getId(), PackPuppyData.Type.RENDER_CHEST, newVal
@@ -290,10 +290,10 @@ public class TalentInfoViewElement extends AbstractElement {
                 new ButtonOptionEntry(container, getScreen(), 
                     new FlatButton(
                         0, 0,
-                        40, 20, Component.literal("" + packPup.pickupItems()), 
+                        40, 20, ComponentUtil.literal("" + packPup.pickupItems()), 
                         b -> {
                             Boolean newVal = !packPup.pickupItems();
-                            b.setMessage(Component.literal("" + newVal));
+                            b.setMessage(ComponentUtil.literal("" + newVal));
                             packPup.setPickupItems(newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
                                 dog.getId(), PackPuppyData.Type.PICKUP_NEARBY, newVal
@@ -310,10 +310,10 @@ public class TalentInfoViewElement extends AbstractElement {
                 new ButtonOptionEntry(container, getScreen(), 
                     new FlatButton(
                         0, 0,
-                        40, 20, Component.literal("" + packPup.offerFood()), 
+                        40, 20, ComponentUtil.literal("" + packPup.offerFood()), 
                         b -> {
                             Boolean newVal = !packPup.offerFood();
-                            b.setMessage(Component.literal("" + newVal));
+                            b.setMessage(ComponentUtil.literal("" + newVal));
                             packPup.setOfferFood(newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
                                 dog.getId(), PackPuppyData.Type.OFFER_FOOD, newVal
@@ -393,7 +393,7 @@ public class TalentInfoViewElement extends AbstractElement {
 
         this.addChildren(trainButton);
 
-        var pointsLeftStr = new OneLineLimitedTextArea(0, 0, 75, Component.translatable("doggui.talents.current_talent_level"));
+        var pointsLeftStr = new OneLineLimitedTextArea(0, 0, 75, ComponentUtil.translatable("doggui.talents.current_talent_level"));
         pointsLeftStr.x = (this.getRealX() + PADDING_LEFT + 40);
         pointsLeftStr.y = (this.getRealY() + this.getSizeY() - 45);
         this.addChildren(pointsLeftStr);
@@ -434,7 +434,7 @@ public class TalentInfoViewElement extends AbstractElement {
             int mX = this.getSizeX()/2;
             int mY = this.getSizeY()/2;
             var non_eligbleMsgOptional = talent.getNonEligibleTranslationKey(dog);
-            var txt = Component.translatable(
+            var txt = ComponentUtil.translatable(
                 non_eligbleMsgOptional.orElse("doggui.talents.invalid.not_eligible")
             );
             txt.setStyle(

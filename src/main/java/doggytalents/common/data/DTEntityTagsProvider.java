@@ -8,7 +8,6 @@ import org.jetbrains.annotations.Nullable;
 
 import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.TagKey;

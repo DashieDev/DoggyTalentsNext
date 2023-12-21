@@ -26,7 +26,7 @@ public class DoggyTags {
     }
 
     private static TagKey<EntityType<?>> tagEntity(String name) {
-        return ForgeRegistries.ENTITY_TYPES.tags()
+        return ForgeRegistries.ENTITIES.tags()
             .createTagKey(Util.getResource(name));
     }
 }

@@ -12,11 +12,10 @@ import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemInteractWithBlockTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.ItemUsedOnBlockTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.PlayerInteractTrigger;
-import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
@@ -63,7 +62,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                 )
                 .addCriterion(
                     "summon_dog", 
-                    ItemInteractWithBlockTrigger.TriggerInstance
+                    ItemUsedOnBlockTrigger.TriggerInstance
                         .itemUsedOnBlock(
                             LocationPredicate.Builder.location(),
                             ItemPredicate.Builder.item()
@@ -87,6 +86,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                     "train_dog", 
                     PlayerInteractTrigger.TriggerInstance
                         .itemUsedOnEntity(
+                            EntityPredicate.Composite.ANY,
                             ItemPredicate.Builder.item()
                                 .of(DoggyItems.TRAINING_TREAT.get()),
                             EntityPredicate.Composite.wrap(

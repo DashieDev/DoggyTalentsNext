@@ -3,6 +3,7 @@ package doggytalents;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.feature.InteractHandler;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.DogBlockRenderTypeSetup;
 import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.data.DTBlockstateProvider;
 import doggytalents.client.data.DTItemModelProvider;
@@ -149,6 +150,7 @@ public class DoggyTalentsNext {
         ClientSetup.setupScreenManagers(event);
 
         ClientSetup.setupCollarRenderers(event);
+        DogBlockRenderTypeSetup.init();
     }
 
     protected void interModProcess(final InterModProcessEvent event) {
@@ -169,15 +171,15 @@ public class DoggyTalentsNext {
 
         if (event.includeServer()) {
             // gen.addProvider(new DTBlockTagsProvider(gen));
-            gen.addProvider(true, new DTAdvancementProvider(gen, event.getExistingFileHelper()));
+            gen.addProvider(new DTAdvancementProvider(gen, event.getExistingFileHelper()));
             
             DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(gen, event.getExistingFileHelper());
-            gen.addProvider(true, blockTagProvider);
-            gen.addProvider(true, new DTItemTagsProvider(gen ,blockTagProvider, event.getExistingFileHelper()));
-            gen.addProvider(true, new DTRecipeProvider(gen));
-            gen.addProvider(true, new DTLootTableProvider(gen));
-            gen.addProvider(true, new DTLootModifierProvider(gen));
-            gen.addProvider(true, new DTEntityTagsProvider(gen, event.getExistingFileHelper()));
+            gen.addProvider(blockTagProvider);
+            gen.addProvider(new DTItemTagsProvider(gen ,blockTagProvider, event.getExistingFileHelper()));
+            gen.addProvider(new DTRecipeProvider(gen));
+            gen.addProvider(new DTLootTableProvider(gen));
+            gen.addProvider(new DTLootModifierProvider(gen));
+            gen.addProvider(new DTEntityTagsProvider(gen, event.getExistingFileHelper()));
         }
     }
 }

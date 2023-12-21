@@ -115,7 +115,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
             var posfix = "..";
             var newStr = font.plainSubstrByWidth(mode_c1.getString(), 
                 acceptedWidth - font.width(posfix)) + posfix;
-            mode_c1 = Component.literal(newStr).withStyle(mode_c1.getStyle());
+            mode_c1 = ComponentUtil.literal(newStr).withStyle(mode_c1.getStyle());
             needToShowModeName = true;
         }
         int mode_tX = mX - this.font.width(mode_c1)/2;

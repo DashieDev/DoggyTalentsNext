@@ -174,8 +174,9 @@ public class DTBlockstateProvider extends BlockStateProvider {
         var modelName = cropState(cropBlock, age.value());
         var modelTexture = cropTexture(cropBlock, age.value());
         var model = this.models()
-          .crop(modelName, modelTexture)
-          .renderType(RENDERTYPE_CUTOUT);
+          .crop(modelName, modelTexture);
+          //.renderType(RENDERTYPE_CUTOUT);
+        
         
         variantBuilder.addModels(partialState, new ConfiguredModel(model));
       }

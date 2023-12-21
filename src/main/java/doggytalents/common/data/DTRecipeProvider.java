@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.nio.file.Path;
@@ -806,7 +807,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern(" C ")
             .define('L', Items.LEAD)
             .define('W', DoggyItems.WOOL_COLLAR.get())
-            .define('C', ItemTags.WOOL_CARPETS)
+            .define('C', Items.WHITE_CARPET)
             .unlockedBy("has_lead", has(Items.LEAD))
             .save(consumer);
 

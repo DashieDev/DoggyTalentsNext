@@ -194,9 +194,9 @@ public class DogBedBlock extends BaseEntityBlock {
         
         if (tile.getOwnerUUID() != null) {
             var name = tile.getOwnerName();
-            player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.owner", name != null ? name : "someone"));
+            player.sendMessage(ComponentUtil.translatable("block.doggytalents.dog_bed.owner", name != null ? name : "someone"), Util.NIL_UUID);
         } else { 
-            player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.set_owner_help"));
+            player.sendMessage(ComponentUtil.translatable("block.doggytalents.dog_bed.set_owner_help"), Util.NIL_UUID);
         }   
         return InteractionResult.SUCCESS;
     }

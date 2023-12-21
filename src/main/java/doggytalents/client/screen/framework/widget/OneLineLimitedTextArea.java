@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -37,7 +38,7 @@ public class OneLineLimitedTextArea extends AbstractWidget {
             var posfix = "..";
             var newStr = font.plainSubstrByWidth(msg.getString(), 
                 acceptedWidth - font.width(posfix)) + posfix;
-            msg = Component.literal(newStr).withStyle(msg.getStyle());
+            msg = ComponentUtil.literal(newStr).withStyle(msg.getStyle());
             //this.setTooltip(msgTooltip);
         }
         font.draw(stack, msg, tX, tY, 0xffffffff);

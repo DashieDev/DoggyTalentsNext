@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AmnesiaBoneItem;
 import doggytalents.common.network.PacketHandler;
@@ -24,7 +25,7 @@ public class DogForceMigrateOwnerScreen extends Screen {
     Dog dog;
 
     protected DogForceMigrateOwnerScreen(Dog dog) {
-        super(Component.literal(""));
+        super(ComponentUtil.literal(""));
         this.dog = dog;
     }
 
@@ -51,7 +52,7 @@ public class DogForceMigrateOwnerScreen extends Screen {
         int pY = mY - 72;
         Component title;
         String help;
-        title = Component.translatable("doggui.force_migrate_owner.confirm.title")
+        title = ComponentUtil.translatable("doggui.force_migrate_owner.confirm.title")
         .withStyle(
             Style.EMPTY
             .withBold(true)
@@ -67,7 +68,7 @@ public class DogForceMigrateOwnerScreen extends Screen {
         );
         var owner_title = I18n.get(
             "doggui.invalid_dog.info.owner",
-            this.dog.getOwnersName().orElse(Component.literal("")).getString()
+            this.dog.getOwnersName().orElse(ComponentUtil.literal("")).getString()
         );
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
         stack.pushPose();
@@ -92,7 +93,7 @@ public class DogForceMigrateOwnerScreen extends Screen {
 
     private void addForceChangeButton() {
         var untameButton = new Button(this.width/2 - 25, this.height/2 + 58, 
-            50, 20, Component.translatable("doggui.untame.confirm.confirmed"), 
+            50, 20, ComponentUtil.translatable("doggui.untame.confirm.confirmed"), 
             b -> {
                 requestForceChange();
                 Minecraft.getInstance().setScreen(null);

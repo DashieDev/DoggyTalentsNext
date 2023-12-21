@@ -1850,9 +1850,9 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean wasKilled(ServerLevel level, LivingEntity entity) {
+    public void killed(ServerLevel level, LivingEntity entity) {
         this.statsTracker.incrementKillCount(entity);
-        return true;
+        return;
     }
 
     @Override
@@ -4389,7 +4389,7 @@ public class Dog extends AbstractDog {
             return false;
         var oldStack =  this.dogArmors.getArmorFromSlot(slot);
         this.dogArmors.setArmorInSlot(stack, slot);
-        onEquipItem(slot, oldStack, stack);
+        //onEquipItem(slot, oldStack, stack);
         return true;
     }
 
@@ -4400,16 +4400,16 @@ public class Dog extends AbstractDog {
             return false;
         var oldStack =  this.mouthStack == null ? ItemStack.EMPTY : this.mouthStack;
         this.mouthStack = stack;
-        onEquipItem(slot, oldStack, stack);
+        //onEquipItem(slot, oldStack, stack);
         return true;
     }
 
-    @Override
-    public void onEquipItem(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack) {
-        if (slot.getType() != EquipmentSlot.Type.ARMOR)
-            return;
-        super.onEquipItem(slot, oldStack, newStack);
-    }
+    // @Override
+    // public void onEquipItem(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack) {
+    //     if (slot.getType() != EquipmentSlot.Type.ARMOR)
+    //         return;
+    //     super.onEquipItem(slot, oldStack, newStack);
+    // }
     
     @Override
     public boolean canTakeItem(ItemStack stack) {
