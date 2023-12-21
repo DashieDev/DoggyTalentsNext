@@ -1,7 +1,7 @@
 package doggytalents.client.entity.render.misc;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.misc.GrandPianoModel;
@@ -61,7 +61,7 @@ public class PianoRenderer extends EntityRenderer<Piano> {
         stack.pushPose();
         stack.scale(-1.0F, -1.0F, 1.0F);
         stack.translate(0.0F, -1.501F, 0.0F);
-        stack.mulPose(Axis.YP.rotationDegrees(Mth.wrapDegrees(piano.getYRot())));
+        stack.mulPose(Vector3f.YP.rotationDegrees(Mth.wrapDegrees(piano.getYRot())));
         if (piano.getPianoType() == PianoType.UPRIGHT) {
             var consumer = bufferSource.getBuffer(getRenderType(piano));
             this.modelUpright.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

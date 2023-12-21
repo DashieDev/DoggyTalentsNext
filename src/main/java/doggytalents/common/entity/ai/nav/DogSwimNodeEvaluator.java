@@ -32,7 +32,7 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
 
     @Override
     @Nullable
-    protected Node findAcceptedNode(int p_263032_, int p_263066_, int p_263105_) {
+    protected Node getNode(int p_263032_, int p_263066_, int p_263105_) {
         Node node = null;
         BlockPathTypes blockpathtypes = this.getCachedBlockType(p_263032_, p_263066_, p_263105_);
         if (blockpathtypes == BlockPathTypes.WATER) {
@@ -58,7 +58,7 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
     }
 
     @Override
-    public BlockPathTypes getBlockPathType(BlockGetter level, int x, int y, int z, Mob dog) {
+    public BlockPathTypes getBlockPathType(BlockGetter level, int x, int y, int z) {
         /*
          * TODO Absoluteness of dog bbW.
          * Currently this implementation relies on the fact that currently a dog's bbWidth never

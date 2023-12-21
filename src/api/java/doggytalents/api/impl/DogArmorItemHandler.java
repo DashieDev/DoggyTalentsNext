@@ -60,7 +60,7 @@ public class DogArmorItemHandler extends ItemStackHandler {
         var item = stack.getItem();
         if (!(item instanceof ArmorItem armor))
             return;
-        var slot = armor.getType().getSlot();
+        var slot = armor.getSlot();
         setArmorInSlot(stack, slot);
     }
 
@@ -95,7 +95,7 @@ public class DogArmorItemHandler extends ItemStackHandler {
         var item = stack.getItem();
         if (!(item instanceof ArmorItem armor))
             return false;
-        var wantSlot = armor.getType().getSlot();
+        var wantSlot = armor.getSlot();
 
         return wantSlot == equip;
     }

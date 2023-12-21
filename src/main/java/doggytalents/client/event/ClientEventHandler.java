@@ -97,6 +97,7 @@ public class ClientEventHandler {
         dog.setJumpPower(100);
     }
 
+    private DogInventoryButton activeInventoryButton;
     @SubscribeEvent
     public void onScreenInit(final ScreenEvent.InitScreenEvent.Post event) {
         if (!ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV)) 
