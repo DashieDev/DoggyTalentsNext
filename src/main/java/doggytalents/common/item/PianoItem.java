@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import doggytalents.DoggyItemGroups;
 import doggytalents.common.entity.misc.Piano;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,7 +29,7 @@ public class PianoItem extends Item {
     private Supplier<EntityType<Piano>> pianoSup;
 
     public PianoItem(Supplier<EntityType<Piano>> pianoSup) {
-        super(new Properties().stacksTo(1));
+        super(new Properties().stacksTo(1).tab(DoggyItemGroups.GENERAL));
         this.pianoSup = pianoSup;
     }
 

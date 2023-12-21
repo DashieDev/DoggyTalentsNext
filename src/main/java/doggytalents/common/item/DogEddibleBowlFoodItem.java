@@ -2,6 +2,7 @@ package doggytalents.common.item;
 
 import java.util.function.Function;
 
+import doggytalents.DoggyItemGroups;
 import doggytalents.api.inferface.AbstractDog;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -22,12 +23,12 @@ public abstract class DogEddibleBowlFoodItem extends DogEddibleItem {
     }
 
     public DogEddibleBowlFoodItem(FoodProperties foodProperties) {
-        this(new Properties(), foodProperties);
+        this(new Properties().tab(DoggyItemGroups.GENERAL), foodProperties);
     }
 
     public DogEddibleBowlFoodItem(Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
         this(
-            new Properties(), 
+            new Properties().tab(DoggyItemGroups.GENERAL), 
             propsCreator.apply(new FoodProperties.Builder())
                 .build()
         );
@@ -36,7 +37,7 @@ public abstract class DogEddibleBowlFoodItem extends DogEddibleItem {
     public DogEddibleBowlFoodItem(Function<Item.Properties, Item.Properties> itemPropsCreator,
         Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
     
-        this(itemPropsCreator.apply(new Properties()),
+        this(itemPropsCreator.apply(new Properties().tab(DoggyItemGroups.GENERAL)),
             propsCreator.apply(new FoodProperties.Builder()).build());
     }
 

@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 
 import com.mojang.datafixers.util.Pair;
 
+import doggytalents.DoggyItemGroups;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.network.packet.ParticlePackets;
 import net.minecraft.server.level.ServerLevel;
@@ -55,12 +56,12 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
     }
 
     public DogEddibleItem(FoodProperties foodProperties) {
-        this(new Properties(), foodProperties);
+        this(new Properties().tab(DoggyItemGroups.GENERAL), foodProperties);
     }
 
     public DogEddibleItem(Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
         this(
-            new Properties(), 
+            new Properties().tab(DoggyItemGroups.GENERAL), 
             propsCreator.apply(new FoodProperties.Builder())
                 .build()
         );
@@ -69,7 +70,7 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
     public DogEddibleItem(Function<Item.Properties, Item.Properties> itemPropsCreator,
         Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
     
-        this(itemPropsCreator.apply(new Properties()),
+        this(itemPropsCreator.apply(new Properties().tab(DoggyItemGroups.GENERAL)),
             propsCreator.apply(new FoodProperties.Builder()).build());
     }
 
