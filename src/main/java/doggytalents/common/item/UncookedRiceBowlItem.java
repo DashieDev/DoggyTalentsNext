@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import doggytalents.DoggyItemGroups;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.Level;
 public class UncookedRiceBowlItem extends Item {
 
     public UncookedRiceBowlItem() {
-        super(new Properties());
+        super(new Properties().tab(DoggyItemGroups.GENERAL));
     }
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,

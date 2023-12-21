@@ -12,11 +12,10 @@ import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemInteractWithBlockTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.PlayerInteractTrigger;
-import net.minecraft.advancements.critereon.TameAnimalTrigger;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -64,7 +63,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                 )
                 .addCriterion(
                     "summon_dog", 
-                    ItemUsedOnLocationTrigger.TriggerInstance
+                    ItemInteractWithBlockTrigger.TriggerInstance
                         .itemUsedOnBlock(
                             LocationPredicate.Builder.location(),
                             ItemPredicate.Builder.item()
@@ -72,6 +71,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                         )
                 )
                 .save(consumer, Util.getResourcePath("dtn_core/summon_dog"));
+                
         
         var train_dog_advancement = 
             Advancement.Builder.advancement()
@@ -89,7 +89,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                         .itemUsedOnEntity(
                             ItemPredicate.Builder.item()
                                 .of(DoggyItems.TRAINING_TREAT.get()),
-                            EntityPredicate.wrap(
+                            EntityPredicate.Composite.wrap(
                                 EntityPredicate.Builder.entity()
                                     .of(EntityType.WOLF)
                                     .build()
@@ -139,6 +139,5 @@ public class DTAdvancementProvider extends AdvancementProvider {
         //         .display(DisplayInfoBuilder.create().icon(DoggyItems.RADIO_COLLAR).frame(FrameType.TASK).translate("dog.radio_collar").build())
         //         .addCriterion("iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
         //         .save(consumer, Util.getResourcePath("default/radio_collar"));
-        
     }
 }

@@ -7,6 +7,7 @@ import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.advancements.AdventureAdvancements;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.data.loot.LootTableProvider;
@@ -103,12 +104,12 @@ public class DTLootTableProvider extends LootTableProvider {
                         StatePropertiesPredicate
                         .Builder.properties()
                         .hasProperty(DoggyBlocks.RICE_CROP.get().getAgeProperty(), 7));
-            final var KOJI_LOOT_CONDITION = 
-                LootItemRandomChanceCondition.randomChance(0.05f)
-                    .and(RICE_LOOT_CONDITION);
+            final var KOJI_LOOT_CONDITION_ADDITIONAL = 
+                LootItemRandomChanceCondition.randomChance(0.05f);
+                    //.and(RICE_LOOT_CONDITION);
 
             final var KOJI_LOOT_POOL = 
-                LootPool.lootPool().when(KOJI_LOOT_CONDITION)
+                LootPool.lootPool().when(RICE_LOOT_CONDITION).when(KOJI_LOOT_CONDITION_ADDITIONAL)
                     .add(LootItem.lootTableItem(DoggyItems.KOJI.get()))
                     .apply(
                         ApplyBonusCount
@@ -127,7 +128,7 @@ public class DTLootTableProvider extends LootTableProvider {
                 )
                 .withPool(KOJI_LOOT_POOL)
                 .apply(ApplyExplosionDecay.explosionDecay());
-
+            
             this.add(DoggyBlocks.RICE_CROP.get(), RICE_LOOTABLE);
 
             final var SOY_LOOT_CONDITION = 
