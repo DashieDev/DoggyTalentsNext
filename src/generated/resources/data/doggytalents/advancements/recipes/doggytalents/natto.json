@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bowl": {
+    "has_dtn_soy_beans": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:bowl"
+              "doggytalents:soy_beans"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:rice_bowl"
+        "recipe": "doggytalents:natto"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_bowl",
+      "has_dtn_soy_beans",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:rice_bowl"
+      "doggytalents:natto"
     ]
   }
 }

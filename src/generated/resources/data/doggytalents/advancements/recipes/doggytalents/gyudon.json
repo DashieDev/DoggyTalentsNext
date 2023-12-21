@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_master_treat": {
+    "has_rice_bowl": {
       "conditions": {
         "items": [
           {
             "items": [
-              "doggytalents:master_treat"
+              "doggytalents:rice_bowl"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:dire_treat"
+        "recipe": "doggytalents:gyudon"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_master_treat",
+      "has_rice_bowl",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:dire_treat"
+      "doggytalents:gyudon"
     ]
   }
 }

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dtn_rice_grains": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "doggytalents:rice_grains"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "doggytalents:uncooked_rice_bowl"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_dtn_rice_grains",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "doggytalents:uncooked_rice_bowl"
+    ]
+  }
+}

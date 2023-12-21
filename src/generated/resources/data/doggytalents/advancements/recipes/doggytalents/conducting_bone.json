@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_shulker_shell": {
+    "has_bone": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:shulker_shell"
+              "minecraft:bone"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_shulker_shell",
+      "has_bone",
       "has_the_recipe"
     ]
   ],

@@ -1,28 +1,28 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "doggytalents:training_treat"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "has_wheat": {
+    "has_dtn_rice_grains": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:wheat"
+              "doggytalents:rice_grains"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "doggytalents:training_treat"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_wheat",
+      "has_dtn_rice_grains",
       "has_the_recipe"
     ]
   ],
