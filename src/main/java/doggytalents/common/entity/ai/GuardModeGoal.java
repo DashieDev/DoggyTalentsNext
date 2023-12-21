@@ -126,8 +126,6 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
 
         @Override
         public void start() {
-            this.tickUntilGrowl = 0;
-            this.tickUntilSearch = 0;
         }
 
         @Override
