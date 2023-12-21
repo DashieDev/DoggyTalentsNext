@@ -61,13 +61,28 @@ public class SakeItem extends DogEddibleItem {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        var ret = super.finishUsingItem(stack, level, entity);
-        if (entity instanceof Player player) {
+        var ret = stack;
+        if (!(entity instanceof Player player))
+            return ret;
+
+        if (!player.level().isClientSide) {
             mayBoostOrDrunkEntity(player, null);
             player.getCooldowns().addCooldown(this, 40);
-            if (!player.getAbilities().instabuild)
-                return new ItemStack(Items.GLASS_BOTTLE);
         }
+
+        if (!player.getAbilities().instabuild)
+            ret.shrink(1);
+
+        if (ret.isEmpty())
+            return new ItemStack(Items.GLASS_BOTTLE);
+
+        var bonusReturnStack = new ItemStack(Items.GLASS_BOTTLE);
+        var inv = player.getInventory();
+        int freeSlot = inv.getFreeSlot();
+        if (freeSlot >= 0)
+            inv.add(bonusReturnStack);
+        else
+            player.spawnAtLocation(bonusReturnStack);
         return ret;
     }
 
