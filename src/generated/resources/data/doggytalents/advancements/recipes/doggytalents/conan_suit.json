@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_paper": {
+    "has_wool": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:paper"
+              "minecraft:white_wool"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_paper",
+      "has_wool",
       "has_the_recipe"
     ]
   ]

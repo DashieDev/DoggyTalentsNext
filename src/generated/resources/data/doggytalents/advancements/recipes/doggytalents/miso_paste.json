@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:miso_paste"
+    ]
+  },
+  "criteria": {
+    "has_dtn_soy_beans": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "doggytalents:soy_beans"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:miso_paste"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dtn_soy_beans",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "doggytalents:koji"
+    },
+    {
+      "item": "doggytalents:uncooked_rice"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "item": "doggytalents:koji",
+    "count": 3
+  }
+}

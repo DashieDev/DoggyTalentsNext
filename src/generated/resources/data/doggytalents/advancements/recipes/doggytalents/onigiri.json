@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_dried_kelp": {
+    "has_rice_bowl": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:dried_kelp"
+              "doggytalents:rice_bowl"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_dried_kelp",
+      "has_rice_bowl",
       "has_the_recipe"
     ]
   ]

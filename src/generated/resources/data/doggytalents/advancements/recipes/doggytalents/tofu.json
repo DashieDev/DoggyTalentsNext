@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "doggytalents:dire_treat"
+      "doggytalents:tofu"
     ]
   },
   "criteria": {
-    "has_master_treat": {
+    "has_dtn_soy_beans": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "doggytalents:master_treat"
+              "doggytalents:soy_beans"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "doggytalents:dire_treat"
+        "recipe": "doggytalents:tofu"
       }
     }
   },
   "requirements": [
     [
-      "has_master_treat",
+      "has_dtn_soy_beans",
       "has_the_recipe"
     ]
   ]

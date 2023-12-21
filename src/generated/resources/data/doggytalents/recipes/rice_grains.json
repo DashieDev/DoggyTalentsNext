@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "doggytalents:rice_wheat"
+    }
+  ],
+  "result": {
+    "item": "doggytalents:rice_grains",
+    "count": 3
+  }
+}

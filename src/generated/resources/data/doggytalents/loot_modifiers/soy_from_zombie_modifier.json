@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "predicate": {
+        "type": "doggytalents:dog"
+      },
+      "entity": "killer"
+    },
+    {
+      "condition": "minecraft:entity_properties",
+      "predicate": {
+        "type": "#doggytalents:drop_soy_when_dog_kill"
+      },
+      "entity": "this"
+    },
+    {
+      "condition": "minecraft:random_chance_with_looting",
+      "chance": 0.125,
+      "looting_multiplier": 0.05
+    }
+  ],
+  "type": "doggytalents:soy_from_zombie"
+}

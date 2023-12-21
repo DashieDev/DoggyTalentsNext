@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "doggytalents:block/rice_crop/stage_6"
+  }
+}

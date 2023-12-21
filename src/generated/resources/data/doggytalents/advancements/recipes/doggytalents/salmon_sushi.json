@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_salmon": {
+    "has_rice_bowl": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:salmon"
+              "doggytalents:rice_bowl"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_salmon",
+      "has_rice_bowl",
       "has_the_recipe"
     ]
   ]

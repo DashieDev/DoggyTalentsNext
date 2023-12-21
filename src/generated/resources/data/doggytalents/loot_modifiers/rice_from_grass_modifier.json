@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:blocks/grass"
+    },
+    {
+      "condition": "minecraft:inverted",
+      "term": {
+        "condition": "minecraft:match_tool",
+        "predicate": {
+          "items": [
+            "minecraft:shears"
+          ]
+        }
+      }
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.125
+    }
+  ],
+  "type": "doggytalents:rice_from_grass"
+}

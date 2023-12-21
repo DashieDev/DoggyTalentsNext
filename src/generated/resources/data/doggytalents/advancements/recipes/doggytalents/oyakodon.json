@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:oyakodon"
+    ]
+  },
+  "criteria": {
+    "has_rice_bowl": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "doggytalents:rice_bowl"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:oyakodon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_rice_bowl",
+      "has_the_recipe"
+    ]
+  ]
+}

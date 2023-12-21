@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_wheat": {
+    "has_dtn_rice_grains": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:wheat"
+              "doggytalents:rice_grains"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_wheat",
+      "has_dtn_rice_grains",
       "has_the_recipe"
     ]
   ]

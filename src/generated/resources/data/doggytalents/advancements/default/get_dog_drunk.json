@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "doggytalents:sake"
+    },
+    "title": {
+      "translate": "advancements.doggytalents.get_dog_drunk.title"
+    },
+    "description": {
+      "translate": "advancements.doggytalents.get_dog_drunk.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "get_dog_drunk": {
+      "trigger": "doggytalents:get_dog_drunk",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "get_dog_drunk"
+    ]
+  ]
+}

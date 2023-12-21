@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_paper": {
+    "has_feather": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:paper"
+              "minecraft:feather"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_paper",
+      "has_feather",
       "has_the_recipe"
     ]
   ]

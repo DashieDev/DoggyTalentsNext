@@ -2,25 +2,20 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "doggytalents:training_treat"
+      "item": "minecraft:paper"
     },
     {
       "item": "minecraft:paper"
     },
     {
-      "item": "minecraft:slime_ball"
+      "item": "doggytalents:koji"
     },
     {
       "item": "minecraft:bone_meal"
-    },
-    {
-      "item": "minecraft:bone_meal"
-    },
-    {
-      "item": "minecraft:string"
     }
   ],
   "result": {
-    "item": "doggytalents:bandaid"
+    "item": "doggytalents:bandaid",
+    "count": 5
   }
 }

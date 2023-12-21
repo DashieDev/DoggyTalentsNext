@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "doggytalents:doggy_charm"
+    },
+    "title": {
+      "translate": "advancements.doggytalents.doggy_charm_summon.title"
+    },
+    "description": {
+      "translate": "advancements.doggytalents.doggy_charm_summon.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+  },
+  "criteria": {
+    "summon_dog": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": {},
+        "item": {
+          "items": [
+            "doggytalents:doggy_charm"
+          ]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "summon_dog"
+    ]
+  ]
+}

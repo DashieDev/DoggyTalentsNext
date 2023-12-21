@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:aburaage_smelting"
+    ]
+  },
+  "criteria": {
+    "has_dtn_tofu": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "doggytalents:tofu"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:aburaage_smelting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dtn_tofu",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SBS"
+  ],
+  "key": {
+    "S": {
+      "item": "doggytalents:soy_beans_dried"
+    },
+    "B": {
+      "item": "minecraft:bowl"
+    }
+  },
+  "result": {
+    "item": "doggytalents:soy_milk"
+  }
+}

@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_shulker_shell": {
+    "has_bone": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:shulker_shell"
+              "minecraft:bone"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_shulker_shell",
+      "has_bone",
       "has_the_recipe"
     ]
   ]

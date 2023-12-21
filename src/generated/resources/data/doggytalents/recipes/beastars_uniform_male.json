@@ -1,22 +1,27 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "doggytalents:cape_coloured"
-    },
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "minecraft:red_dye"
-    },
-    {
-      "item": "minecraft:purple_dye"
-    },
-    {
-      "item": "minecraft:blue_dye"
-    }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BCB",
+    "WGW",
+    "R R"
   ],
+  "key": {
+    "B": {
+      "item": "minecraft:blue_wool"
+    },
+    "W": {
+      "item": "minecraft:white_wool"
+    },
+    "R": {
+      "item": "minecraft:brown_wool"
+    },
+    "G": {
+      "item": "minecraft:gray_wool"
+    },
+    "C": {
+      "item": "doggytalents:cape_coloured"
+    }
+  },
   "result": {
     "item": "doggytalents:beastars_uniform_male"
   }

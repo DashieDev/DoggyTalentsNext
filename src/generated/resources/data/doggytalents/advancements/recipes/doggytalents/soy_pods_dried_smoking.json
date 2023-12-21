@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:soy_pods_dried_smoking"
+    ]
+  },
+  "criteria": {
+    "has_dtn_soy_pods": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "doggytalents:soy_pods"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:soy_pods_dried_smoking"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dtn_soy_pods",
+      "has_the_recipe"
+    ]
+  ]
+}

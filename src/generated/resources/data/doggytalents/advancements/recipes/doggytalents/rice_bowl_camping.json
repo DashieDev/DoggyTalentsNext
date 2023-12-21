@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:rice_bowl_camping"
+    ]
+  },
+  "criteria": {
+    "has_dtn_uncooked_rice_bowl": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "doggytalents:uncooked_rice_bowl"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:rice_bowl_camping"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dtn_uncooked_rice_bowl",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "doggytalents:soy_milk"
+    }
+  },
+  "result": {
+    "item": "doggytalents:tofu",
+    "count": 8
+  }
+}

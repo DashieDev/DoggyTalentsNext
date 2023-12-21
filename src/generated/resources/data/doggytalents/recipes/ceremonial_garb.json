@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " L ",
+    "CWC",
+    " C "
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:lead"
+    },
+    "W": {
+      "item": "doggytalents:wool_collar"
+    },
+    "C": {
+      "item": "minecraft:white_carpet"
+    }
+  },
+  "result": {
+    "item": "doggytalents:ceremonial_garb"
+  }
+}

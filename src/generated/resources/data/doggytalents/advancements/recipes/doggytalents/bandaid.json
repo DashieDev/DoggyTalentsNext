@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_paper": {
+    "has_koji": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:paper"
+              "doggytalents:koji"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_paper",
+      "has_koji",
       "has_the_recipe"
     ]
   ]

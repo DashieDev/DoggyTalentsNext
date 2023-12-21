@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:kami_treat"
+    ]
+  },
+  "criteria": {
+    "has_master_treat": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "doggytalents:master_treat"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:kami_treat"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_master_treat",
+      "has_the_recipe"
+    ]
+  ]
+}

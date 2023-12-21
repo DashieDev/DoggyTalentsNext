@@ -1,19 +1,27 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "doggytalents:cape_coloured"
-    },
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "minecraft:red_dye"
-    },
-    {
-      "item": "minecraft:blue_dye"
-    }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BZB",
+    "LCL",
+    "R R"
   ],
+  "key": {
+    "L": {
+      "item": "minecraft:light_blue_wool"
+    },
+    "Z": {
+      "item": "doggytalents:bowtie"
+    },
+    "R": {
+      "item": "minecraft:red_wool"
+    },
+    "B": {
+      "item": "minecraft:blue_wool"
+    },
+    "C": {
+      "item": "doggytalents:cape_coloured"
+    }
+  },
   "result": {
     "item": "doggytalents:conan_suit"
   }

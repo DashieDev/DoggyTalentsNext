@@ -1,13 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " F ",
+    " FP",
     "FTF",
-    " F "
+    "PF "
   ],
   "key": {
     "F": {
       "item": "minecraft:feather"
+    },
+    "P": {
+      "item": "minecraft:phantom_membrane"
     },
     "T": {
       "item": "doggytalents:super_treat"

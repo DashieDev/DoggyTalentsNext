@@ -1,0 +1,44 @@
+{
+  "parent": "doggytalents:dtn_core/summon_dog",
+  "display": {
+    "icon": {
+      "item": "doggytalents:training_treat"
+    },
+    "title": {
+      "translate": "advancements.doggytalents.train_dog_hajimemashite.title"
+    },
+    "description": {
+      "translate": "advancements.doggytalents.train_dog_hajimemashite.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "train_dog": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "item": {
+          "items": [
+            "doggytalents:training_treat"
+          ]
+        },
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "minecraft:wolf"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "train_dog"
+    ]
+  ]
+}

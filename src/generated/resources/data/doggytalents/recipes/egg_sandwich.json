@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " B ",
-    "EME",
+    "EEE",
     " B "
   ],
   "key": {
@@ -11,12 +11,10 @@
     },
     "E": {
       "item": "minecraft:egg"
-    },
-    "M": {
-      "item": "minecraft:milk_bucket"
     }
   },
   "result": {
-    "item": "doggytalents:egg_sandwich"
+    "item": "doggytalents:egg_sandwich",
+    "count": 3
   }
 }

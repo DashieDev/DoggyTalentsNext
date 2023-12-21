@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "doggytalents:soy_pods"
+  },
+  "result": "doggytalents:soy_pods_dried",
+  "experience": 0.35,
+  "cookingtime": 100
+}

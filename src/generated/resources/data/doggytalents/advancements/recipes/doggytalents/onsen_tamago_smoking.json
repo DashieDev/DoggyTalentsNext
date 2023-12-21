@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "doggytalents:rice_bowl"
+      "doggytalents:onsen_tamago_smoking"
     ]
   },
   "criteria": {
-    "has_bowl": {
+    "has_egg": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:bowl"
+              "minecraft:egg"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "doggytalents:rice_bowl"
+        "recipe": "doggytalents:onsen_tamago_smoking"
       }
     }
   },
   "requirements": [
     [
-      "has_bowl",
+      "has_egg",
       "has_the_recipe"
     ]
   ]

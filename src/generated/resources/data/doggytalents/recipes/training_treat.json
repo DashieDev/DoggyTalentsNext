@@ -1,28 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "TUV",
-    "XXX",
-    "YYY"
-  ],
-  "key": {
-    "T": {
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
       "item": "minecraft:string"
     },
-    "U": {
+    {
       "item": "minecraft:bone"
     },
-    "V": {
+    {
       "item": "minecraft:gunpowder"
     },
-    "X": {
+    {
       "item": "minecraft:sugar"
     },
-    "Y": {
-      "item": "minecraft:wheat"
+    {
+      "item": "doggytalents:rice_bowl"
     }
-  },
+  ],
   "result": {
-    "item": "doggytalents:training_treat"
+    "item": "doggytalents:training_treat",
+    "count": 3
   }
 }

@@ -1,22 +1,24 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "doggytalents:cape_coloured"
-    },
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "minecraft:red_dye"
-    },
-    {
-      "item": "minecraft:purple_dye"
-    },
-    {
-      "item": "minecraft:pink_dye"
-    }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WBW",
+    "WLW",
+    "CCC"
   ],
+  "key": {
+    "W": {
+      "item": "minecraft:white_wool"
+    },
+    "B": {
+      "item": "doggytalents:bowtie"
+    },
+    "C": {
+      "item": "minecraft:white_carpet"
+    },
+    "L": {
+      "item": "doggytalents:cape_coloured"
+    }
+  },
   "result": {
     "item": "doggytalents:beastars_uniform_female"
   }
