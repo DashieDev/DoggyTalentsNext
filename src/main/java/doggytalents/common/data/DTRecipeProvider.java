@@ -815,12 +815,6 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', Items.WHITE_CARPET)
             .unlockedBy("has_lead", has(Items.LEAD))
             .save(consumer);
-
-        //Just-in-case Recipe
-        registerTripleCooking(consumer, 
-            Ingredient.of(Items.EGG), 
-            DoggyItems.ONSEN_TAMAGO.get(), 0.1F, 100, "has_egg", 
-            has(Items.EGG));
     }
 
     private void registerTripleCooking(Consumer<FinishedRecipe> consumer, Ingredient input, Item output,
