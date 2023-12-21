@@ -1850,7 +1850,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean killedEntity(ServerLevel level, LivingEntity entity) {
+    public boolean wasKilled(ServerLevel level, LivingEntity entity) {
         this.statsTracker.incrementKillCount(entity);
         return true;
     }

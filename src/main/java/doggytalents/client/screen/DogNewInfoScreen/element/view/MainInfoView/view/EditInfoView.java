@@ -456,11 +456,11 @@ public class EditInfoView extends AbstractElement {
             this.addChildren(button);
 
             var labelStr = new OneLineLimitedTextArea(0, 0, 130, Component.literal(label));
-            labelStr.setX(this.getRealX() + PADDING_LEFT);
+            labelStr.x = (this.getRealX() + PADDING_LEFT);
             if (newline) {
-                labelStr.setY(this.getRealY() + 3);
+                labelStr.y = (this.getRealY() + 3);
             } else {
-                labelStr.setY(this.getRealY() + this.getSizeY()/2
+                labelStr.y = (this.getRealY() + this.getSizeY()/2
                     - font.lineHeight/2);
             }
             this.addChildren(labelStr);

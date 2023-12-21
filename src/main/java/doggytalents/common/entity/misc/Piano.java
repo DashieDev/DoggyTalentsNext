@@ -4,6 +4,8 @@ import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -82,11 +84,6 @@ public class Piano extends Entity {
     }
 
     @Override
-    public boolean isEffectiveAi() {
-        return false;
-    }
-
-    @Override
     public boolean isPickable() {
         return true;
     }
@@ -112,7 +109,7 @@ public class Piano extends Entity {
         var stack = player.getItemInHand(hand);
         var item = stack.getItem();
         if (item == Items.TORCH) {
-            if (!this.level().isClientSide && player.isShiftKeyDown())
+            if (!this.level.isClientSide && player.isShiftKeyDown())
                 this.setYRot(this.getYRot() + 45);
             return InteractionResult.SUCCESS;
         }
@@ -142,5 +139,10 @@ public class Piano extends Entity {
     public static enum PianoType { GRAND, UPRIGHT }
 
     public static enum PianoColor { BLACK, WHITE, BROWN }
+
+    @Override
+    public Packet<?> getAddEntityPacket() {
+        return new ClientboundAddEntityPacket(this);
+    }
 
 }

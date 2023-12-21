@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import doggytalents.client.screen.framework.element.AbstractElement;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -33,11 +34,11 @@ public class StoreConnectedScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
         Store.get(this).update();
         if (doRenderBackground())
-            this.renderBackground(graphics);
-        super.render(graphics, mouseX, mouseY, pTicks);
+            this.renderBackground(stack);
+        super.render(stack, mouseX, mouseY, pTicks);
     }
 
     

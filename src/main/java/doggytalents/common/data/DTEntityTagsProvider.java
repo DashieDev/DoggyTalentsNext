@@ -9,8 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -18,9 +17,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class DTEntityTagsProvider extends EntityTypeTagsProvider {
 
-    public DTEntityTagsProvider(PackOutput p_256095_, CompletableFuture<Provider> p_256572_,
-            @Nullable ExistingFileHelper existingFileHelper) {
-        super(p_256095_, p_256572_, Constants.MOD_ID, existingFileHelper);
+    public DTEntityTagsProvider(DataGenerator gen, @org.jetbrains.annotations.Nullable net.minecraftforge.common.data.ExistingFileHelper existingFileHelper) {
+        super(gen, Constants.MOD_ID, existingFileHelper);
         //TODO Auto-generated constructor stub
     }
 
@@ -30,7 +28,7 @@ public class DTEntityTagsProvider extends EntityTypeTagsProvider {
     }
 
     @Override
-    public void addTags(HolderLookup.Provider provider) {
+    public void addTags() {
         createTag(DoggyTags.DOG_SHOULD_IGNORE, () -> EntityType.ENDERMAN);
         createTag(DoggyTags.DROP_SOY_WHEN_DOG_KILL, 
             () -> EntityType.CREEPER, 

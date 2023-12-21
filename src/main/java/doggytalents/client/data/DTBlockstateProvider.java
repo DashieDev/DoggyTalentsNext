@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -28,7 +27,7 @@ public class DTBlockstateProvider extends BlockStateProvider {
 
     private static final String RENDERTYPE_CUTOUT = "cutout";
 
-    public DTBlockstateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+    public DTBlockstateProvider(DataGenerator output, ExistingFileHelper exFileHelper) {
         super(output, Constants.MOD_ID, exFileHelper);
     }
 

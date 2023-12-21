@@ -164,7 +164,7 @@ public class EventHandler {
     @SubscribeEvent
     public void onEntitySpawn(final EntityJoinLevelEvent event) {
         Entity entity = event.getEntity();
-        var level = entity.level();
+        var level = entity.level;
         if (level.isClientSide)
             return;
 
@@ -178,7 +178,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void playerLoggedIn(final PlayerLoggedInEvent event) {
-        if (event.getEntity().level().isClientSide)
+        if (event.getEntity().level.isClientSide)
             return;
 
         if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.STARTING_ITEMS)) {
@@ -211,7 +211,7 @@ public class EventHandler {
         var levelChecker = event.getProjectile();
         if (levelChecker == null)
             return;
-        var level = levelChecker.level();
+        var level = levelChecker.level;
         if (level.isClientSide)
             return;
 
@@ -265,7 +265,7 @@ public class EventHandler {
         if (!(projectile instanceof ThrownEgg))
             return;
 
-        var level = projectile.level();
+        var level = projectile.level;
         var pos = hit.getBlockPos();
         var dir = hit.getDirection();
         if (dir != Direction.UP)

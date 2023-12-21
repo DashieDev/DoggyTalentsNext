@@ -80,7 +80,7 @@ public class DoggyTalentsNext {
         DoggyAccessories.ACCESSORIES.register(modEventBus);
         DoggyAccessoryTypes.ACCESSORY_TYPES.register(modEventBus);
         DoggyAttributes.ATTRIBUTES.register(modEventBus);
-        DoggyItemGroups.ITEM_GROUP.register(modEventBus);
+        //DoggyItemGroups.ITEM_GROUP.register(modEventBus);
         DoggyEffects.EFFECTS.register(modEventBus);
 
         DTLootModifierProvider.CODEC.register(modEventBus);
@@ -169,15 +169,15 @@ public class DoggyTalentsNext {
 
         if (event.includeServer()) {
             // gen.addProvider(new DTBlockTagsProvider(gen));
-            gen.addProvider(true, new DTAdvancementProvider(packOutput, lookup, event.getExistingFileHelper()));
+            gen.addProvider(true, new DTAdvancementProvider(gen, event.getExistingFileHelper()));
             
-            DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(packOutput, lookup, event.getExistingFileHelper());
+            DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(gen, event.getExistingFileHelper());
             gen.addProvider(true, blockTagProvider);
-            gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider.contentsGetter(), event.getExistingFileHelper()));
-            gen.addProvider(true, new DTRecipeProvider(packOutput));
-            gen.addProvider(true, new DTLootTableProvider(packOutput));
-            gen.addProvider(true, new DTLootModifierProvider(packOutput));
-            gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup, event.getExistingFileHelper()));
+            gen.addProvider(true, new DTItemTagsProvider(gen ,blockTagProvider, event.getExistingFileHelper()));
+            gen.addProvider(true, new DTRecipeProvider(gen));
+            gen.addProvider(true, new DTLootTableProvider(gen));
+            gen.addProvider(true, new DTLootModifierProvider(gen));
+            gen.addProvider(true, new DTEntityTagsProvider(gen, event.getExistingFileHelper()));
         }
     }
 }

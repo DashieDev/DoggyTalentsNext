@@ -12,8 +12,6 @@ import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.flag.FeatureFlagSet;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
@@ -66,13 +64,6 @@ public class DTLootTableProvider extends LootTableProvider {
 
     private static class Blocks extends BlockLoot {
 
-        @Override
-        protected void addTables() {
-            dropsSelf(DoggyBlocks.DOG_BATH);
-            dropDogBed(DoggyBlocks.DOG_BED);
-            dropsSelf(DoggyBlocks.FOOD_BOWL); // Drop with the name of the dog bowl
-        }
-
         private void dropDogBed(Supplier<? extends Block> block) {
             LootTable.Builder lootTableBuilder = LootTable.lootTable().withPool(applyExplosionCondition(block.get(),
                        LootPool.lootPool()
@@ -100,7 +91,7 @@ public class DTLootTableProvider extends LootTableProvider {
         }
 
         @Override
-        protected void generate() {
+        protected void addTables() {
             dropsSelf(DoggyBlocks.DOG_BATH);
             dropDogBed(DoggyBlocks.DOG_BED);
             dropsSelf(DoggyBlocks.FOOD_BOWL); // Drop with the name of the dog bowl
@@ -166,13 +157,8 @@ public class DTLootTableProvider extends LootTableProvider {
         }
 
         @Override
-        protected java.util.stream.Stream<EntityType<?>> getKnownEntityTypes() {
-            return DoggyEntityTypes.ENTITIES.getEntries().stream().map(Supplier::get);
-        }
-
-        @Override
-        public void generate() {
-            this.registerNoLoot(DoggyEntityTypes.DOG);
+        protected Iterable<EntityType<?>> getKnownEntities() {
+            return DoggyEntityTypes.ENTITIES.getEntries().stream().map(Supplier::get).collect(Collectors.toList());
         }
     }
 }

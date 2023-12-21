@@ -52,7 +52,7 @@ public abstract class DogEddibleBowlFoodItem extends DogEddibleItem {
         if (!(user instanceof Player player))
             return returnStack;
 
-        if (player.level().isClientSide)
+        if (player.level.isClientSide)
             return returnStack;
 
         var bonusReturnStack = new ItemStack(Items.BOWL);

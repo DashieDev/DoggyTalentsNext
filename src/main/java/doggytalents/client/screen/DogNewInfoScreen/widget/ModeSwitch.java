@@ -131,7 +131,7 @@ public class ModeSwitch extends AbstractWidget {
         }
 
         if (this.timeHoveredWithoutClick >= 25) {
-            this.setOverlayToolTip(graphics, mouseX, mouseY, needToShowModeName);
+            this.setOverlayToolTip(stack, mouseX, mouseY, needToShowModeName);
         }
 
     }
@@ -157,7 +157,7 @@ public class ModeSwitch extends AbstractWidget {
         this.timeHoveredWithoutClick = 0;
     }
 
-    public void setOverlayToolTip(GuiGraphics graphics, int mouseX, int mouseY, boolean showMsg) {
+    public void setOverlayToolTip(PoseStack stack, int mouseX, int mouseY, boolean showMsg) {
         List<Component> list = new ArrayList<>();
         if (showMsg) {
             var msg = this.getMessage();

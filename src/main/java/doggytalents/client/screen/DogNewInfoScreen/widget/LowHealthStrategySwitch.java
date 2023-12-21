@@ -121,7 +121,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         int mode_tY = mY - this.font.lineHeight/2;
 
         
-        graphics.drawString(font, mode_c1, mode_tX, mode_tY, 0xffffffff);
+        font.draw(stack, mode_c1, mode_tX, mode_tY, 0xffffffff);
 
         if (this.stillHovered) {
             if (this.dog.tickCount - this.tickCount0 >= 1) {
@@ -131,7 +131,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         }
 
         if (this.timeHoveredWithoutClick >= 25) {
-            this.setOverlayToolTip(graphics.pose(), mouseX, mouseY, needToShowModeName);
+            this.setOverlayToolTip(stack, mouseX, mouseY, needToShowModeName);
         }
 
     }

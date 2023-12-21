@@ -40,8 +40,8 @@ public class DTAdvancementProvider extends AdvancementProvider {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
     private final DataGenerator generator;
 
-    public DTAdvancementProvider(DataGenerator generatorIn) {
-        super(generatorIn);
+    public DTAdvancementProvider(DataGenerator generatorIn, net.minecraftforge.common.data.ExistingFileHelper fileHelper) {
+        super(generatorIn, fileHelper);
         this.generator = generatorIn;
     }
 
@@ -50,95 +50,95 @@ public class DTAdvancementProvider extends AdvancementProvider {
         return "DoggyTalents Advancements";
     }
 
-        @Override
-        public void generate(Provider registries, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
-            var charm_advancement =
-                Advancement.Builder.advancement()
-                    .display(
-                        DisplayInfoBuilder.create()
-                            .icon(DoggyItems.DOGGY_CHARM)
-                            .frame(FrameType.TASK)
-                            .translate("doggy_charm_summon")
-                            .background("adventure.png")
-                            .build()
-                    )
-                    .addCriterion(
-                        "summon_dog", 
-                        ItemUsedOnLocationTrigger.TriggerInstance
-                            .itemUsedOnBlock(
-                                LocationPredicate.Builder.location(),
-                                ItemPredicate.Builder.item()
-                                    .of(DoggyItems.DOGGY_CHARM.get())
-                            )
-                    )
-                    .save(consumer, Util.getResourcePath("dtn_core/summon_dog"));
-            
-            var train_dog_advancement = 
-                Advancement.Builder.advancement()
-                    .parent(charm_advancement)
-                    .display(
-                        DisplayInfoBuilder.create()
-                            .icon(DoggyItems.TRAINING_TREAT)
-                            .frame(FrameType.TASK)
-                            .translate("train_dog_hajimemashite")
-                            .build()
-                    )
-                    .addCriterion(
-                        "train_dog", 
-                        PlayerInteractTrigger.TriggerInstance
-                            .itemUsedOnEntity(
-                                ItemPredicate.Builder.item()
-                                    .of(DoggyItems.TRAINING_TREAT.get()),
-                                EntityPredicate.wrap(
-                                    EntityPredicate.Builder.entity()
-                                        .of(EntityType.WOLF)
-                                        .build()
-                                )                              
-                            )
-                    )
-                    .save(consumer, Util.getResourcePath("dtn_core/train_dog"));
-            
-            var sake_advancement = 
-                Advancement.Builder.advancement()
+    @Override
+    public void registerAdvancements(Consumer<Advancement> consumer, net.minecraftforge.common.data.ExistingFileHelper fileHelper) {
+        var charm_advancement =
+            Advancement.Builder.advancement()
                 .display(
                     DisplayInfoBuilder.create()
-                        .icon(DoggyItems.SAKE)
+                        .icon(DoggyItems.DOGGY_CHARM)
                         .frame(FrameType.TASK)
-                        .translate("get_dog_drunk")
+                        .translate("doggy_charm_summon")
+                        .background("adventure.png")
                         .build()
                 )
                 .addCriterion(
-                    "get_dog_drunk", 
-                    DogDrunkTrigger.getInstance()
+                    "summon_dog", 
+                    ItemUsedOnLocationTrigger.TriggerInstance
+                        .itemUsedOnBlock(
+                            LocationPredicate.Builder.location(),
+                            ItemPredicate.Builder.item()
+                                .of(DoggyItems.DOGGY_CHARM.get())
+                        )
                 )
-                .save(consumer, Util.getResourcePath("default/get_dog_drunk"));
-            // Old Advancement.
+                .save(consumer, Util.getResourcePath("dtn_core/summon_dog"));
+        
+        var train_dog_advancement = 
+            Advancement.Builder.advancement()
+                .parent(charm_advancement)
+                .display(
+                    DisplayInfoBuilder.create()
+                        .icon(DoggyItems.TRAINING_TREAT)
+                        .frame(FrameType.TASK)
+                        .translate("train_dog_hajimemashite")
+                        .build()
+                )
+                .addCriterion(
+                    "train_dog", 
+                    PlayerInteractTrigger.TriggerInstance
+                        .itemUsedOnEntity(
+                            ItemPredicate.Builder.item()
+                                .of(DoggyItems.TRAINING_TREAT.get()),
+                            EntityPredicate.wrap(
+                                EntityPredicate.Builder.entity()
+                                    .of(EntityType.WOLF)
+                                    .build()
+                            )                              
+                        )
+                )
+                .save(consumer, Util.getResourcePath("dtn_core/train_dog"));
+        
+        var sake_advancement = 
+            Advancement.Builder.advancement()
+            .display(
+                DisplayInfoBuilder.create()
+                    .icon(DoggyItems.SAKE)
+                    .frame(FrameType.TASK)
+                    .translate("get_dog_drunk")
+                    .build()
+            )
+            .addCriterion(
+                "get_dog_drunk", 
+                DogDrunkTrigger.getInstance()
+            )
+            .save(consumer, Util.getResourcePath("default/get_dog_drunk"));
+        // Old Advancement.
 
-            // Advancement advancement = Advancement.Builder.advancement()
-            //     .display(DisplayInfoBuilder.create().icon(DoggyItems.TRAINING_TREAT).frame(FrameType.TASK).translate("dog.root").background("stone.png").noToast().noAnnouncement().build())
-            //     .addCriterion("tame_dog", TameAnimalTrigger.TriggerInstance.tamedAnimal(EntityPredicate.Builder.entity().of(DoggyEntityTypes.DOG.get()).build()))
-            //     //.withCriterion("get_dog", ItemUseTrigger.TameAnimalTrigger.Instance.create(EntityPredicate.Builder.create().type(DoggyEntityTypes.DOG.get()).build()))
-            //     .requirements(RequirementsStrategy.OR)
-            //     .save(consumer, Util.getResourcePath("default/tame_dog"));
+        // Advancement advancement = Advancement.Builder.advancement()
+        //     .display(DisplayInfoBuilder.create().icon(DoggyItems.TRAINING_TREAT).frame(FrameType.TASK).translate("dog.root").background("stone.png").noToast().noAnnouncement().build())
+        //     .addCriterion("tame_dog", TameAnimalTrigger.TriggerInstance.tamedAnimal(EntityPredicate.Builder.entity().of(DoggyEntityTypes.DOG.get()).build()))
+        //     //.withCriterion("get_dog", ItemUseTrigger.TameAnimalTrigger.Instance.create(EntityPredicate.Builder.create().type(DoggyEntityTypes.DOG.get()).build()))
+        //     .requirements(RequirementsStrategy.OR)
+        //     .save(consumer, Util.getResourcePath("default/tame_dog"));
 
-            
+        
 
-            // Advancement advancement1 = Advancement.Builder.advancement()
-            //         .parent(advancement)
-            //         .display(DisplayInfoBuilder.create().icon(Items.WOODEN_PICKAXE).frame(FrameType.TASK).translate("dog.level_talent").build())
-            //         .addCriterion("level_talent", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.COBBLESTONE))
-            //         .save(consumer, Util.getResourcePath("default/level_talent"));
-            // Advancement advancement2 = Advancement.Builder.advancement()
-            //         .parent(advancement1)
-            //         .display(DisplayInfoBuilder.create().icon(DoggyItems.TANTAN_CAPE).frame(FrameType.TASK).translate("dog.accessorise").build())
-            //         .addCriterion("accessorise", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STONE_PICKAXE))
-            //         .save(consumer, Util.getResourcePath("default/accessorise"));
+        // Advancement advancement1 = Advancement.Builder.advancement()
+        //         .parent(advancement)
+        //         .display(DisplayInfoBuilder.create().icon(Items.WOODEN_PICKAXE).frame(FrameType.TASK).translate("dog.level_talent").build())
+        //         .addCriterion("level_talent", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.COBBLESTONE))
+        //         .save(consumer, Util.getResourcePath("default/level_talent"));
+        // Advancement advancement2 = Advancement.Builder.advancement()
+        //         .parent(advancement1)
+        //         .display(DisplayInfoBuilder.create().icon(DoggyItems.TANTAN_CAPE).frame(FrameType.TASK).translate("dog.accessorise").build())
+        //         .addCriterion("accessorise", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STONE_PICKAXE))
+        //         .save(consumer, Util.getResourcePath("default/accessorise"));
 
-            // Advancement advancement3 = Advancement.Builder.advancement()
-            //         .parent(advancement2)
-            //         .display(DisplayInfoBuilder.create().icon(DoggyItems.RADIO_COLLAR).frame(FrameType.TASK).translate("dog.radio_collar").build())
-            //         .addCriterion("iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
-            //         .save(consumer, Util.getResourcePath("default/radio_collar"));
-            
-        }
+        // Advancement advancement3 = Advancement.Builder.advancement()
+        //         .parent(advancement2)
+        //         .display(DisplayInfoBuilder.create().icon(DoggyItems.RADIO_COLLAR).frame(FrameType.TASK).translate("dog.radio_collar").build())
+        //         .addCriterion("iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
+        //         .save(consumer, Util.getResourcePath("default/radio_collar"));
+        
     }
+}

@@ -1,28 +1,29 @@
 package doggytalents.client.screen.framework.widget;
 
+import java.util.List;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+
+import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 
 public class OneLineLimitedTextArea extends AbstractWidget {
 
     private Font font;
-    private Tooltip msgTooltip;
 
     public OneLineLimitedTextArea(int x, int y, int w, Component msg) {
         super(x, y, w, 0, msg);
         font = Minecraft.getInstance().font;
-        msgTooltip = (Tooltip.create(msg));
         this.height = font.lineHeight + 2;
     }
 
 
     @Override
-    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
         int acceptedWidth = this.width - 5;
 
         int tX = this.getX();
@@ -37,17 +38,26 @@ public class OneLineLimitedTextArea extends AbstractWidget {
             var newStr = font.plainSubstrByWidth(msg.getString(), 
                 acceptedWidth - font.width(posfix)) + posfix;
             msg = Component.literal(newStr).withStyle(msg.getStyle());
-            this.setTooltip(msgTooltip);
+            //this.setTooltip(msgTooltip);
         }
-        graphics.drawString(font, msg, tX, tY, 0xffffffff);
-        
+        font.draw(stack, msg, tX, tY, 0xffffffff);
+        if (!this.isHovered)
+            return;
+        ToolTipOverlayManager.get().setComponents(List.of(msg));
     }
 
-    @Override
-    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
-        
+    private int getX() {
+        return this.x;
     }
-    
+
+    private int getY() {
+        return this.y;
+    }
+
+
+    @Override
+    public void updateNarration(NarrationElementOutput p_169152_) {
+    }
     
 
 }
