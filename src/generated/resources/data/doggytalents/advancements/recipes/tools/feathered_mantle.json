@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_paper": {
+    "has_feather": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:paper"
+              "minecraft:feather"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_paper",
+      "has_feather",
       "has_the_recipe"
     ]
   ],

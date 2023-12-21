@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_brown_mushroom": {
+    "has_dtn_soy_beans": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:brown_mushroom"
+              "doggytalents:soy_beans"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_brown_mushroom",
+      "has_dtn_soy_beans",
       "has_the_recipe"
     ]
   ],

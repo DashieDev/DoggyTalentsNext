@@ -21,9 +21,11 @@ import doggytalents.common.util.Util;
 import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
 import doggytalents.common.util.doggyasynctask.promise.DogHoldChunkToTeleportPromise;
 import doggytalents.common.util.doggyasynctask.promise.DogBatchTeleportToDimensionPromise;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -36,6 +38,7 @@ import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.entity.projectile.ThrownEgg;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -258,7 +261,34 @@ public class EventHandler {
     }
 
     private void proccessBlockProjectileHitEvent(final ProjectileImpactEvent event, BlockHitResult hit) {
+        var projectile = event.getProjectile();
+        if (!(projectile instanceof ThrownEgg))
+            return;
+
+        var level = projectile.level();
+        var pos = hit.getBlockPos();
+        var dir = hit.getDirection();
+        if (dir != Direction.UP)
+            return;
+
+        var state = level.getBlockState(pos);
+        if (!state.is(Blocks.WATER_CAULDRON))
+            return;
         
+        var state_under = level.getBlockState(pos.below());
+        if (!WalkNodeEvaluator.isBurningBlock(state_under))
+            return;
+        
+        var resultStack = new ItemStack(DoggyItems.ONSEN_TAMAGO.get());
+        var resultEntity = new ItemEntity(
+            level, 
+            pos.getX() + 0.5, 
+            pos.getY() + 1.0, 
+            pos.getZ() + 0.5, resultStack);
+        level.addFreshEntity(resultEntity);
+
+        projectile.playSound(SoundEvents.TURTLE_EGG_CRACK, 0.5F, 0.9F + 
+            level.random.nextFloat() * 0.2F);
     }
 
     private static boolean checkIfArrowShouldNotHurtDog(Dog dog, Entity projectileOnwer, LivingEntity dogOwner) {
@@ -394,34 +424,4 @@ public class EventHandler {
             }
         }
     }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
-    public void onOnsenTamagoCook(final PlayerInteractEvent.RightClickBlock event) {
-        var level = event.getLevel();
-        var pos = event.getPos();
-        var stack = event.getItemStack();
-        var player = event.getEntity();
-
-        if (level.isClientSide)
-            return;
-        if (!stack.is(Items.EGG))
-            return;
-        
-        var state = level.getBlockState(pos);
-        if (!state.is(Blocks.WATER_CAULDRON))
-            return;
-        var state_under = level.getBlockState(pos.below());
-        if (!WalkNodeEvaluator.isBurningBlock(state_under))
-            return;
-
-        var resultStack = new ItemStack(DoggyItems.ONSEN_TAMAGO.get());
-        var resultEntity = new ItemEntity(
-            level, 
-            pos.getX() + 0.5, 
-            pos.getY() + 1.0, 
-            pos.getZ() + 0.5, resultStack);
-        level.addFreshEntity(resultEntity);
-    }
-
-
 }
