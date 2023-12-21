@@ -93,7 +93,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
 
         private final Dog dog;
         private LivingEntity owner;
-        private Monster nearestDanger;
+        private LivingEntity nearestDanger;
         private int tickUntilSearch = 0;
         private int tickUntilGrowl = 0;
         private int tickUntilPathRecalc = 0;
@@ -177,13 +177,13 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
             }
             this.nearestDanger = this.dog.level()
                 .getNearestEntity(
-                    Monster.class,
+                    Mob.class,
                     TargetingConditions.forCombat().selector( target -> {
                         if (dog.getDogLevel(DoggyTalents.CREEPER_SWEEPER) > 0) {
                             //Creeper Sweeper dog only detect creeper in this mode
                             return (target instanceof Creeper);
                         } else {
-                            return true;
+                            return target instanceof Enemy;
                         }
                     }
                     ), 
