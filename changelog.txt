@@ -960,3 +960,15 @@ if they are able to do that (they will be when trained enough)
 # Improve DogSkin ScrollBar scrolling.
 + You can now throw an egg on the Top Face of the water caudron which is directly on top
 of a burning block (ex: Campfire) and make Onsen Tamago!
+
+**1.18.2 - 22th December 2023**
++ Documented the preferred way to make Onsen Tamago.
+* Prevent Guard Mode from spamming growl when player repeatedly switch mode.
++ Player can now sneak at the Main tab of Dog Menu to prevent immediate Mode Change when pressing
+ModeSwitch.
+========
+* HOTFIX: Fix Sake Logic:
+  + Sake no longer drunk player clientside
+  + Drinking Sake do not consume the whole stack.
+========
+* HOTFIX: WolfMount causing sitting dog to loose hunger in some versions.
