@@ -65,7 +65,7 @@ public class SakeItem extends DogEddibleItem {
         if (!(entity instanceof Player player))
             return ret;
 
-        if (!player.level().isClientSide) {
+        if (!player.level.isClientSide) {
             mayBoostOrDrunkEntity(player, null);
             player.getCooldowns().addCooldown(this, 40);
         }
