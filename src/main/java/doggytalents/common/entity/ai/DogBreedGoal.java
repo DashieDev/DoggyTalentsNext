@@ -3,8 +3,8 @@ package doggytalents.common.entity.ai;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;

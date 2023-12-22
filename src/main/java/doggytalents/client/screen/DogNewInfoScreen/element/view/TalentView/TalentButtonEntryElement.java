@@ -15,7 +15,7 @@ import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public class TalentButtonEntryElement extends AbstractElement {
 

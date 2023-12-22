@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.StatFormatter;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.effect.MobEffects;
 
 public class DogStatusViewBoxElement extends AbstractElement {

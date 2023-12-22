@@ -2,11 +2,11 @@ package doggytalents.common.entity.ai;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.EntityUtil;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.navigation.PathNavigation;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 

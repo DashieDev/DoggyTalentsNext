@@ -3,7 +3,7 @@ package doggytalents.common.entity.anim;
 import doggytalents.api.enu.forward_imitate.anim.AnimationState;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public class DogAnimationManager {
 

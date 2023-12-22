@@ -1,7 +1,7 @@
 package doggytalents.client.screen.framework.element;
 
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public class ElementSize {
     AbstractElement element;

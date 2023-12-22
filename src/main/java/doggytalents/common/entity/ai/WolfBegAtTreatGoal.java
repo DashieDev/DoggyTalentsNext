@@ -6,10 +6,10 @@ import javax.annotation.Nullable;
 
 import doggytalents.DoggyTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.targeting.TargetingConditions;
+import net.minecraft.entity.animal.Wolf;
+import net.minecraft.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;

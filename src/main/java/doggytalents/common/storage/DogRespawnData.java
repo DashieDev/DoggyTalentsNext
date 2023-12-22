@@ -18,8 +18,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.MobSpawnType;
+import net.minecraft.entity.player.Player;
 
 import javax.annotation.Nullable;
 import java.util.List;

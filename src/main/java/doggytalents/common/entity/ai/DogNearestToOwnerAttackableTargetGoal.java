@@ -2,9 +2,9 @@ package doggytalents.common.entity.ai;
 
 import doggytalents.common.entity.Dog;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.entity.player.Player;
 
 public class DogNearestToOwnerAttackableTargetGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
     

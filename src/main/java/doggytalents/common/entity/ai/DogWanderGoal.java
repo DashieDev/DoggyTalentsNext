@@ -3,8 +3,8 @@ package doggytalents.common.entity.ai;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;

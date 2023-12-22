@@ -4,8 +4,8 @@ import org.apache.commons.lang3.ObjectUtils;
 
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.entity.Mob;
+import net.minecraft.entity.ai.goal.target.NearestAttackableTargetGoal;
 
 public class PatrolAssistTargetGoal extends NearestAttackableTargetGoal<Mob> {
     

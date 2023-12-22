@@ -3,7 +3,7 @@ package doggytalents.common.entity.ai;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;

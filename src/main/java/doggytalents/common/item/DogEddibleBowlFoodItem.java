@@ -4,8 +4,8 @@ import java.util.function.Function;
 
 import doggytalents.DoggyItemGroups;
 import doggytalents.api.inferface.AbstractDog;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

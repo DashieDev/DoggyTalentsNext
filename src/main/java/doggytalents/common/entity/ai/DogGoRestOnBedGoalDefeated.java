@@ -9,8 +9,8 @@ import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.block.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 

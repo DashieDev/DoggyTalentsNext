@@ -3,10 +3,10 @@ package doggytalents.common.entity.ai.nav;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.talent.FlyingFurballTalent;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.FlyingMoveControl;
-import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.control.FlyingMoveControl;
+import net.minecraft.entity.ai.control.MoveControl;
 
 public class DogFlyingMoveControl extends FlyingMoveControl {
     

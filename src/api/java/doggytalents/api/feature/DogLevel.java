@@ -1,6 +1,6 @@
 package doggytalents.api.feature;
 
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public class DogLevel {
 

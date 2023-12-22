@@ -10,20 +10,20 @@ import doggytalents.DoggyItemGroups;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.misc.Piano;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.util.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobSpawnType;
+import net.minecraft.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.BlockState;
 
 public class PianoItem extends Item {
 

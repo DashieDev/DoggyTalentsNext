@@ -1,6 +1,6 @@
 package doggytalents.common.entity;
 
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.world.item.DiggerItem;
 
 public class DogMiningCautiousManager {

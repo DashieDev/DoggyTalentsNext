@@ -6,10 +6,10 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.RestingState;
 import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.targeting.TargetingConditions;
+import net.minecraft.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 

@@ -9,7 +9,7 @@ import doggytalents.common.lib.Resources;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.entity.player.Inventory;
 
 public class FoodBowlScreen extends AbstractContainerScreen<FoodBowlContainer> {
 

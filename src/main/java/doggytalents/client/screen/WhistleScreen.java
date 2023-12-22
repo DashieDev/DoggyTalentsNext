@@ -27,8 +27,8 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.player.Player;
 import net.minecraftforge.network.PacketDistributor;
 
 

@@ -2,7 +2,7 @@ package doggytalents.common.entity.ai;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
-import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
+import net.minecraft.entity.ai.goal.SitWhenOrderedToGoal;
 
 public class DogSitWhenOrderedGoal extends SitWhenOrderedToGoal {
 

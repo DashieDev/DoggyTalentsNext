@@ -4,7 +4,7 @@ import java.util.EnumSet;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
-import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.Goal;
 
 public class DogCommonStandIdleGoal extends Goal {
     

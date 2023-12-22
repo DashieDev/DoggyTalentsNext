@@ -1,6 +1,6 @@
 package doggytalents.common.entity.anim;
 
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public enum DogAnimation {
     

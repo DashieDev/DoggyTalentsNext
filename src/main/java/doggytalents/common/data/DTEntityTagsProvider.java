@@ -11,7 +11,7 @@ import doggytalents.common.lib.Constants;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class DTEntityTagsProvider extends EntityTypeTagsProvider {

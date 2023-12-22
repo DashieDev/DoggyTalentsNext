@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.inferface.IDogFoodPredicate;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 
 public class FoodHandler {

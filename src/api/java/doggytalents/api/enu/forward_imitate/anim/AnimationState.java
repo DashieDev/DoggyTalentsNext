@@ -1,7 +1,7 @@
 package doggytalents.api.enu.forward_imitate.anim;
 
 import java.util.function.Consumer;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public class AnimationState {
    private static final long STOPPED = Long.MAX_VALUE;

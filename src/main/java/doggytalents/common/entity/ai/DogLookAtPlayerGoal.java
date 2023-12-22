@@ -1,8 +1,8 @@
 package doggytalents.common.entity.ai;
 
 import doggytalents.common.entity.Dog;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.entity.player.Player;
 
 public class DogLookAtPlayerGoal extends LookAtPlayerGoal {
 

@@ -2,8 +2,8 @@ package doggytalents.common.entity.ai;
 
 import doggytalents.common.entity.Dog;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.entity.Mob;
+import net.minecraft.entity.ai.goal.FloatGoal;
 
 public class DogFloatGoal extends FloatGoal {
 

@@ -7,8 +7,8 @@ import doggytalents.api.registry.TalentInstance;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.block.BlockState;
 import net.minecraftforge.common.ForgeMod;
 
 import java.util.UUID;

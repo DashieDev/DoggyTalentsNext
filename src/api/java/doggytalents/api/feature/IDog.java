@@ -9,7 +9,7 @@ import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.entity.LivingEntity;
 
 // TODO: Add javadoc
 public interface IDog {

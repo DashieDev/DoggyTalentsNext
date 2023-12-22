@@ -5,7 +5,7 @@ import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.DogInventoryPageData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent.Context;

@@ -13,7 +13,7 @@ import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public class MobKillsView extends AbstractElement {
 

@@ -4,8 +4,8 @@ import java.util.EnumSet;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.WrappedGoal;
 
 public class DogWrappedGoal extends Goal {
 

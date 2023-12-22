@@ -6,7 +6,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.RestingState;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogPose;
-import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.Goal;
 
 public class DogRestWhenSitGoal extends Goal {
 

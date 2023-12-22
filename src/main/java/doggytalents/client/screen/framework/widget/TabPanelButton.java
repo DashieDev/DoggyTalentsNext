@@ -17,7 +17,7 @@ import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public class TabPanelButton extends AbstractButton {
     static final int DEFAULT_COLOR = 0x485e5d5d;

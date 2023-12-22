@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.client.gui.IIngameOverlay;
 

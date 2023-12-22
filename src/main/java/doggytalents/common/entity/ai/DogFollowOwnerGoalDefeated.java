@@ -3,8 +3,8 @@ package doggytalents.common.entity.ai;
 import java.util.EnumSet;
 
 import doggytalents.common.entity.Dog;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.Goal;
 
 public class DogFollowOwnerGoalDefeated extends Goal {
 

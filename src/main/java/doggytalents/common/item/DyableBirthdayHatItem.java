@@ -13,7 +13,7 @@ import doggytalents.common.entity.accessory.DyeableAccessory;
 import doggytalents.common.util.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;

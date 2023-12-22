@@ -12,13 +12,13 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.Enemy;
+import net.minecraft.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class RoaringGaleTalent extends TalentInstance {

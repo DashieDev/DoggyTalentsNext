@@ -9,8 +9,8 @@ import doggytalents.common.entity.ai.nav.DogFlyingMoveControl;
 import doggytalents.common.entity.ai.nav.DogFlyingNavigation;
 import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraftforge.common.ForgeMod;
 
 import java.util.UUID;

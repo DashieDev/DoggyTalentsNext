@@ -16,7 +16,7 @@ import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAcces
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AccessoryItem;
 import doggytalents.common.item.DyeableAccessoryItem;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;

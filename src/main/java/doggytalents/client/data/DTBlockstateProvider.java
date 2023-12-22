@@ -4,7 +4,7 @@ import doggytalents.DoggyBlocks;
 import doggytalents.common.block.crops.DogCropBlock;
 import doggytalents.common.lib.Constants;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.Direction;
+import net.minecraft.util.Direction;
 import net.minecraft.data.DataGenerator;
 
 import net.minecraft.data.models.model.TextureSlot;

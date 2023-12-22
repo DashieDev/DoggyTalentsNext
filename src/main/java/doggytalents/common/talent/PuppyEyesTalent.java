@@ -8,12 +8,12 @@ import doggytalents.common.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.gossip.GossipType;
-import net.minecraft.world.entity.ai.village.ReputationEventType;
-import net.minecraft.world.entity.npc.AbstractVillager;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.gossip.GossipType;
+import net.minecraft.entity.ai.village.ReputationEventType;
+import net.minecraft.entity.npc.AbstractVillager;
+import net.minecraft.entity.npc.Villager;
+import net.minecraft.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 

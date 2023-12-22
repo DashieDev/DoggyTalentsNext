@@ -14,11 +14,11 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.TamableAnimal;
+import net.minecraft.entity.monster.Enemy;
+import net.minecraft.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class MobRetrieverTalent extends TalentInstance {

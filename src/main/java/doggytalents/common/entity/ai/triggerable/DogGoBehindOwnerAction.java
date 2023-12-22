@@ -5,10 +5,10 @@ import javax.annotation.Nonnull;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.core.Vec3i;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 public class DogGoBehindOwnerAction extends TriggerableAction {

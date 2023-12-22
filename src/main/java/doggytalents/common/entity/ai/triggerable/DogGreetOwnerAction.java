@@ -13,8 +13,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.LivingEntity;
 
 public class DogGreetOwnerAction extends TriggerableAction {
 

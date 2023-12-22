@@ -11,8 +11,8 @@ import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity.RemovalReason;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.Entity.RemovalReason;
+import net.minecraft.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraftforge.common.world.ForgeChunkManager;
 

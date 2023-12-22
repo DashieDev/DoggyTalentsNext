@@ -3,7 +3,7 @@ package doggytalents.api.feature;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public enum DogSize {
     PPP(0, 0.5f),

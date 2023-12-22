@@ -11,7 +11,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.ai.triggerable.DogGreetOwnerAction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.entity.LivingEntity;
 
 public class DogOwnerDistanceManager {
     

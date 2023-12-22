@@ -9,7 +9,7 @@ import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
+import net.minecraft.util.math.MathHelper;
 
 public class ColorSelectElement extends AbstractElement {
 

@@ -2,7 +2,7 @@ package doggytalents.common.entity.ai.triggerable;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.entity.LivingEntity;
 
 public class DogSoftHeelAction extends TriggerableAction {
 

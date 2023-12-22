@@ -2,8 +2,8 @@ package doggytalents.common.entity.ai;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.phys.Vec3;
 
 public class DogMoveBackToRestrictGoal extends MoveTowardsRestrictionGoal {

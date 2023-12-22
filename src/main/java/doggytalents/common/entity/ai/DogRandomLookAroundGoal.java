@@ -2,8 +2,8 @@ package doggytalents.common.entity.ai;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimation;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.entity.Mob;
+import net.minecraft.entity.ai.goal.RandomLookAroundGoal;
 
 public class DogRandomLookAroundGoal extends RandomLookAroundGoal {
 

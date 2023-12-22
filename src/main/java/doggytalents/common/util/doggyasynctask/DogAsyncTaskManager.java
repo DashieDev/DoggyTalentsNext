@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import doggytalents.common.util.doggyasynctask.promise.AbstractPromise;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.entity.LivingEntity;
 
 import static doggytalents.common.util.doggyasynctask.promise.AbstractPromise.State.*;
 

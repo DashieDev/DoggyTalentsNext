@@ -10,8 +10,8 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.player.Inventory;
 
 public class PackPuppyScreen extends AbstractContainerScreen<PackPuppyContainer> {
 

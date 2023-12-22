@@ -4,8 +4,8 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.monster.Silverfish;
+import net.minecraft.entity.EntitySelector;
+import net.minecraft.entity.monster.Silverfish;
 
 import java.util.List;
 
