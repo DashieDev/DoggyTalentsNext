@@ -775,7 +775,7 @@ public class DTRecipeProvider extends RecipeProvider {
             DoggyItems.ONSEN_TAMAGO.get(), 0.1F, 200, "has_egg", 
             has(Items.EGG));
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.RICE_GRAINS.get(), 3)
+        ShapelessRecipeBuilder.shapeless(DoggyItems.RICE_GRAINS.get(), 3)
             .requires(DoggyItems.RICE_WHEAT.get())
             .unlockedBy("has_dtn_rice_wheat", has(DoggyItems.RICE_WHEAT.get()))
             .save(consumer);
