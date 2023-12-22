@@ -58,6 +58,26 @@ public class StoreConnectedScreen extends Screen {
         return super.mouseClicked(p_94695_, p_94696_, p_94697_);
     }
 
+    @Override
+    public boolean keyPressed(int p_96552_, int p_96553_, int p_96554_) {
+        for (var child : this.children()) {
+            if (child instanceof AbstractElement e) {
+                e.keyPressedRegardlessIfFocus(p_96552_, p_96553_, p_96554_);
+            }
+        }
+        return super.keyPressed(p_96552_, p_96553_, p_96554_);
+    }
+    
+    @Override
+    public boolean keyReleased(int p_94715_, int p_94716_, int p_94717_) {
+        for (var child : this.children()) {
+            if (child instanceof AbstractElement e) {
+                e.KeyReleasedRegardlessIfFocus(p_94715_, p_94716_, p_94717_);
+            }
+        }
+        return super.keyReleased(p_94715_, p_94716_, p_94717_);
+    }
+
     public boolean doRenderBackground() { return true; }
 
     public List<Class<? extends AbstractSlice>> getSlices() { return List.of(); }
