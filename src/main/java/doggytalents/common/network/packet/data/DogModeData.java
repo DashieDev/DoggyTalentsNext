@@ -8,6 +8,6 @@ public class DogModeData extends DogData {
 
     public DogModeData(int entityId, EnumMode modeIn) {
         super(entityId);
-        this.mode = modeIn;
+        this.mode = modeIn == null ? EnumMode.DOCILE : modeIn;
     }
 }
