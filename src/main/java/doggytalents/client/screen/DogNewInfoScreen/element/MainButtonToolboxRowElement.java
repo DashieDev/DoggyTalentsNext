@@ -26,6 +26,7 @@ public class MainButtonToolboxRowElement extends AbstractElement {
 
     Font font;
     Dog dog;
+    ModeSwitch modeSwitch;
 
     public MainButtonToolboxRowElement(AbstractElement parent, Screen screen, Dog dog) {
         super(parent, screen);
@@ -73,12 +74,25 @@ public class MainButtonToolboxRowElement extends AbstractElement {
 
         this.addChildren(modeButton);
         this.addChildren(editInfoButton);
+        this.modeSwitch = modeButton;
         return this;
     }
 
     @Override
     public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         
+    }
+
+    @Override
+    public void onGlobalKeyPress(int keyCode, int scanCode, int modifiers) {
+        if (this.modeSwitch != null)
+            modeSwitch.keyPressedGlobal(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public void onGlobalKeyRelease(int keyCode, int scanCode, int modifiers) {
+        if (this.modeSwitch != null)
+            modeSwitch.keyReleasedGlobal(keyCode, scanCode, modifiers);
     }
     
 }
