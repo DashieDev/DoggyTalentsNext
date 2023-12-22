@@ -74,9 +74,9 @@ public class ModeSwitch extends AbstractWidget {
             PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(this.dog.getId(), mode));
         }
         if (isHolding && holdMode != null) {
-            this.setMessage(Component.translatable(holdMode.getUnlocalisedName()));
+            this.setMessage(ComponentUtil.translatable(holdMode.getUnlocalisedName()));
         } else {
-            this.setMessage(Component.translatable(mode.getUnlocalisedName()));
+            this.setMessage(ComponentUtil.translatable(mode.getUnlocalisedName()));
         }
     }
 
@@ -224,7 +224,7 @@ public class ModeSwitch extends AbstractWidget {
 
     public boolean keyReleasedGlobal(int keyCode, int scanCode, int modifiers) {
         if (isHolding && holdMode != null && this.dog.getMode() != holdMode) {
-            this.setMessage(Component.translatable(holdMode.getUnlocalisedName()));
+            this.setMessage(ComponentUtil.translatable(holdMode.getUnlocalisedName()));
             PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(this.dog.getId(), holdMode));
         }
         isHolding = false;
