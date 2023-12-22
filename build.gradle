@@ -8,7 +8,7 @@ version = '1.18.3'
 group = 'com.github.dashiedev'
 archivesBaseName = "DoggyTalentsNext-${project.target_mc_version}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 
@@ -36,7 +36,7 @@ configurations {
 
 minecraft {
 
-    mappings channel: 'official', version: '1.18.2'
+    mappings channel: 'official', version: '1.16.5'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -86,10 +86,21 @@ repositories {
 
 dependencies {
 
-    minecraft 'net.minecraftforge:forge:1.18.2-40.2.0'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:0.4.2'
+    compileOnly 'com.github.bsideup.jabel:jabel-javac-plugin:0.4.2'
+}
+
+configure([tasks.compileJava]) {
+    sourceCompatibility = 16 // for the IDE support
+    options.release = 8
+
+    javaCompiler = javaToolchains.compilerFor {
+        languageVersion = JavaLanguageVersion.of(16)
+    }
 }
 
 
