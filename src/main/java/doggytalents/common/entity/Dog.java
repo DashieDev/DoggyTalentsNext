@@ -2876,6 +2876,14 @@ public class Dog extends AbstractDog {
                 throw new IllegalStateException(
                     "This dog has been restored from third-party storage which may leads to duplications."
                 );
+            return;
+        }
+
+        if (!this.level().isClientSide) {
+            try {
+                checkAndRecorrectOwner(compound);
+            } catch (Exception e) {
+            }
         }
     }
 
@@ -2996,6 +3004,19 @@ public class Dog extends AbstractDog {
         if (sessionUUID == null)
             return;
         this.cachedSessionUUID = sessionUUID;
+    }
+
+    private void checkAndRecorrectOwner(CompoundTag tag) {
+        if (!tag.contains("DTN_DupeDetect_UUID", Tag.TAG_COMPOUND))
+            return;
+        var backupUUIDTag = tag.getCompound("DTN_DupeDetect_UUID");
+        var ownerUUID = backupUUIDTag.getUUID("dtn_uuid_owner");
+        if (!ObjectUtils.notEqual(ownerUUID, this.getOwnerUUID()))
+            return;
+        boolean prevAuthorized = this.authorizedChangingOwner;
+        this.authorizedChangingOwner = true;
+        this.setOwnerUUID(ownerUUID);
+        this.authorizedChangingOwner = prevAuthorized;
     }
 
     @Override
