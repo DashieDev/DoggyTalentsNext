@@ -12,6 +12,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogModeData;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -34,6 +35,8 @@ public class ModeSwitch extends AbstractWidget {
 
     boolean hoveredLeft = false;
     boolean hoveredRight = false;
+    boolean isHolding = false;
+    EnumMode holdMode = null;
 
     int timeHoveredWithoutClick = 0;
     boolean stillHovered;
@@ -57,9 +60,24 @@ public class ModeSwitch extends AbstractWidget {
         } else {
             mode = this.dog.getMode().nextMode();
         }
-        this.setMessage(Component.translatable(mode.getUnlocalisedName()));
+        
 
-        PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(this.dog.getId(), mode));
+        if (isHolding) {
+            if (holdMode == null) {
+                holdMode = mode;
+            } else if (hoveredLeft) {
+                holdMode = holdMode.previousMode();
+            } else if (hoveredRight) {
+                holdMode = holdMode.nextMode();
+            }
+        } else {
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(this.dog.getId(), mode));
+        }
+        if (isHolding && holdMode != null) {
+            this.setMessage(Component.translatable(holdMode.getUnlocalisedName()));
+        } else {
+            this.setMessage(Component.translatable(mode.getUnlocalisedName()));
+        }
     }
 
     @Override
@@ -121,7 +139,12 @@ public class ModeSwitch extends AbstractWidget {
                 Style.EMPTY.withColor(0xffcda700)
             );
         }
-        font.draw(stack, mode_c1, mode_tX, mode_tY, 0xffffffff);
+        if (isHolding) {
+            mode_c1 = mode_c1.copy().withStyle(
+                Style.EMPTY.withColor(0xffff6f00)
+            );
+        }
+        graphics.drawString(font, mode_c1, mode_tX, mode_tY, 0xffffffff);
 
         if (this.stillHovered) {
             if (this.dog.tickCount - this.tickCount0 >= 1) {
@@ -187,6 +210,27 @@ public class ModeSwitch extends AbstractWidget {
     @Override
     public void updateNarration(NarrationElementOutput p_169152_) {
         
+    }
+
+    public boolean keyPressedGlobal(int keyCode, int scanCode, int modifiers) {
+        var mc = Minecraft.getInstance();
+        var sneakKey = mc.options.keyShift;
+        if (keyCode == sneakKey.getKey().getValue()) {
+            isHolding = true;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean keyReleasedGlobal(int keyCode, int scanCode, int modifiers) {
+        if (isHolding && holdMode != null && this.dog.getMode() != holdMode) {
+            this.setMessage(Component.translatable(holdMode.getUnlocalisedName()));
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogModeData(this.dog.getId(), holdMode));
+        }
+        isHolding = false;
+        holdMode = null;
+            
+        return false;
     }
     
 }
