@@ -2,7 +2,7 @@ package doggytalents.common.entity.ai.nav;
 
 import org.jetbrains.annotations.ApiStatus.OverrideOnly;
 import doggytalents.common.entity.Dog;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;

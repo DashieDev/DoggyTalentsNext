@@ -11,7 +11,7 @@ import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;

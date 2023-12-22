@@ -2,7 +2,7 @@ package doggytalents.common.block.tileentity;
 
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.WorldUtil;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;

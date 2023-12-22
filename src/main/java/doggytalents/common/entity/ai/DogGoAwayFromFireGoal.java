@@ -7,7 +7,7 @@ import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.Util;
 import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import doggytalents.common.util.CachedSearchUtil.DogGreedyFireSafeSearchPath;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;

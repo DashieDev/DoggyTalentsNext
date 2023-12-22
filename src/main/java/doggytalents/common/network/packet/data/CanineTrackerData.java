@@ -9,7 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 import doggytalents.common.storage.DogLocationData;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.level.ClipContext.Block;
 
 public class CanineTrackerData {

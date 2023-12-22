@@ -6,7 +6,7 @@ import doggytalents.common.block.tileentity.DogBedTileEntity;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.WorldUtil;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.phys.Vec3;
 
 public class DogMoveToBedAction extends TriggerableAction {

@@ -19,7 +19,7 @@ import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
 import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToBedPromise;
 import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToOwnerPromise;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;

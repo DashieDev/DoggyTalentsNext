@@ -2,7 +2,7 @@ package doggytalents.common.entity.ai;
 
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.phys.Vec3;

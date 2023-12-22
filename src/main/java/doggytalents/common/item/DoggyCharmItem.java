@@ -3,7 +3,7 @@ package doggytalents.common.item;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.common.entity.Dog;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

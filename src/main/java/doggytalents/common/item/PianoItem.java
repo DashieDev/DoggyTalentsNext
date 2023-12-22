@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import doggytalents.DoggyItemGroups;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.misc.Piano;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;

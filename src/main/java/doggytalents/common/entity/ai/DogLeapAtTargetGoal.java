@@ -3,7 +3,7 @@ package doggytalents.common.entity.ai;
 import java.util.EnumSet;
 
 import doggytalents.common.entity.Dog;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;

@@ -6,7 +6,7 @@ import doggytalents.common.Screens;
 import doggytalents.common.block.tileentity.FoodBowlTileEntity;
 import doggytalents.common.util.InventoryUtil;
 import doggytalents.common.util.WorldUtil;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;

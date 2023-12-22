@@ -6,7 +6,7 @@ import doggytalents.api.feature.FoodHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.inventory.container.FoodBowlContainer;
 import doggytalents.common.util.InventoryUtil;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

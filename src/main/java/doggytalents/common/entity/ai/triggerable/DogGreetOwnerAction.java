@@ -8,7 +8,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogOwnerDistanceManager;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;

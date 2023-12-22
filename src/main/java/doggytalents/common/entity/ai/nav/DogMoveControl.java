@@ -1,7 +1,7 @@
 package doggytalents.common.entity.ai.nav;
 
 import doggytalents.common.entity.Dog;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;

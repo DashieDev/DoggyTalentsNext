@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.RecordItem;

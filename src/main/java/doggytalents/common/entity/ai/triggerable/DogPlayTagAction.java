@@ -2,7 +2,7 @@ package doggytalents.common.entity.ai.triggerable;
 
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.Dog;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.network.chat.Component;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.sounds.SoundEvent;
