@@ -221,6 +221,32 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
         return x >= (double)this.getRealX() && y >= (double)this.getRealY() && x < (double)(this.getRealX() + this.getSizeX()) && y < (double)(this.getRealY() + this.getSizeY());
     }
 
+    public void keyPressedRegardlessIfFocus(int keyCode, int scanCode, int modifiers) {
+        onGlobalKeyPress(keyCode, scanCode, modifiers);
+        for (var c : this.child) {
+            if (c instanceof AbstractElement e) {
+                e.keyPressedRegardlessIfFocus(keyCode, scanCode, modifiers);
+            }
+        }
+    }
+
+    public void KeyReleasedRegardlessIfFocus(int keyCode, int scanCode, int modifiers) {
+        onGlobalKeyRelease(keyCode, scanCode, modifiers);
+        for (var c : this.child) {
+            if (c instanceof AbstractElement e) {
+                e.KeyReleasedRegardlessIfFocus(keyCode, scanCode, modifiers);
+            }
+        }
+    }
+
+    public void onGlobalKeyPress(int keyCode, int scanCode, int modifiers) {
+
+    }
+    
+    public void onGlobalKeyRelease(int keyCode, int scanCode, int modifiers) {
+
+    }
+
     @Override
     public final boolean isDragging() {
         return this.isDragging;
