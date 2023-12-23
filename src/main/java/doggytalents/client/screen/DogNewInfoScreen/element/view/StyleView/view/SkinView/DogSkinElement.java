@@ -7,9 +7,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.model.dog.DogModel.AccessoryState;
 import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveSkinSlice;
+import doggytalents.client.screen.DogNewInfoScreen.widget.AccessoryStatusHover;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.DivElement;
@@ -47,6 +50,9 @@ public class DogSkinElement extends AbstractElement {
 
     @Override
     public AbstractElement init() {
+        addAccStateHover();
+
+        
         this.showInfo = 
             Store.get(getScreen()).getStateOrDefault(
                 ActiveSkinSlice.class, ActiveSkinSlice.class, 
@@ -84,6 +90,28 @@ public class DogSkinElement extends AbstractElement {
             Component.literal(manifestSkin.getTags())).init());
         
         return this;
+    }
+
+    private void addAccStateHover() {
+        if (this.locList.isEmpty())
+            return;
+        if (this.activeSkinId < 0)
+            return;
+        if (this.activeSkinId >= this.locList.size())
+            return;
+        var skin = this.locList.get(this.activeSkinId);
+        var state = getStateFromSkin(skin);
+        var button = new AccessoryStatusHover(0, 0, state);
+        button.setX(this.getRealX() + 6);
+        button.setY(this.getRealY() + this.getSizeY() - 25);
+        this.addChildren(button);
+    }
+
+    private DogModel.AccessoryState getStateFromSkin(DogSkin skin) {
+        if (!skin.useCustomModel())
+            return AccessoryState.RECOMMENDED;
+        var model = skin.getCustomModel();
+        return model.getValue().getAccessoryState();
     }
 
     public static class SkinStrEntry extends AbstractElement {
@@ -270,5 +298,4 @@ public class DogSkinElement extends AbstractElement {
         stack.popPose();
         RenderSystem.disableBlend();
     }
-
 }

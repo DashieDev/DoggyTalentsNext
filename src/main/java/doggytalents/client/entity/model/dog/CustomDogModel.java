@@ -67,6 +67,13 @@ public class CustomDogModel extends DogModel {
     }
 
     @Override
+    public AccessoryState getAccessoryState() {
+        return this.props.shouldRenderAccessories ? 
+            AccessoryState.HAVE_NOT_TESTED
+            : AccessoryState.NON_COMPATIBLE;
+    }
+
+    @Override
     public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
             float headPitch) {
         super.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
