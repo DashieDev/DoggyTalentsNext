@@ -2344,7 +2344,7 @@ public class Dog extends AbstractDog {
         var entity = cause.getEntity();
         if (level instanceof ServerLevel) {
             ServerLevel serverlevel = (ServerLevel)level;
-            if (entity == null || entity.killedEntity(serverlevel, this)) {
+            if (entity == null || entity.wasKilled(serverlevel, this)) {
                 this.gameEvent(GameEvent.ENTITY_DIE);
                 this.dropAllDeathLoot(cause);
             }
