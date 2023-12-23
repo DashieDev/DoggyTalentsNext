@@ -2035,7 +2035,8 @@ public class Dog extends AbstractDog {
     public void setTame(boolean tamed) {
         super.setTame(tamed);
         if (tamed) {
-           this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D);
+            var maxHealth = this.getDogLevel().getMaxHealth();
+           this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
            this.maxHealth();
         } else {
            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(8.0D);
@@ -2794,9 +2795,6 @@ public class Dog extends AbstractDog {
                 level_kami = compound.getInt("level_dire");    
             }
             this.entityData.set(DOG_LEVEL.get(), new DogLevel(level_normal, level_kami));
-            float h = this.getDogLevel().getMaxHealth();
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
-            this.maxHealth();
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load levels: " + e.getMessage());
             e.printStackTrace();
@@ -3076,6 +3074,10 @@ public class Dog extends AbstractDog {
 
         if (DOG_LEVEL.get().equals(key)) {
             this.spendablePoints.markForRefresh();
+            float h = this.getDogLevel().getMaxHealth();
+            if (h != this.getMaxHealth())
+                this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
+            this.maxHealth();
         }
 
         if (ACCESSORIES.get().equals(key)) {
