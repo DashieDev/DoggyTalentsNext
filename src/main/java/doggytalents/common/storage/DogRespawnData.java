@@ -110,9 +110,6 @@ public class DogRespawnData implements IDogData {
             && worldIn.getEntity(this.uuid) == null;
         dog.setUUID(useOldUUID ? this.uuid : uuid);
 
-        worldIn.addFreshEntityWithPassengers(dog);
-        DogLocationStorage.setSessionUUIDFor(dog, uuid);
-
         dog.setOrderedToSit(true);
         if (killedBy != null && killedBy != IncapacitatedSyncState.NONE) {
             dog.setDogHunger(0);
@@ -127,6 +124,9 @@ public class DogRespawnData implements IDogData {
             dog.setMode(EnumMode.DOCILE);
             dog.setAnim(DogAnimation.STAND_QUICK);
         }
+
+        worldIn.addFreshEntityWithPassengers(dog);
+        DogLocationStorage.setSessionUUIDFor(dog, uuid);
         
 
         return dog;
