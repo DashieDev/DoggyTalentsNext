@@ -119,10 +119,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
@@ -2316,7 +2318,34 @@ public class Dog extends AbstractDog {
         this.finishShaking();
 
         this.alterations.forEach((alter) -> alter.onDeath(this, cause));
-        super.die(cause);
+        dogProccessAndBroadcastDieVanilla(cause);
+    }
+
+    private void dogProccessAndBroadcastDieVanilla(DamageSource cause) {
+        if (this.isRemoved())
+            return;
+        if (this.dead)
+            return;
+
+        this.dead = true;
+        this.getCombatTracker().recheckStatus();
+        var level = this.level();
+        var entity = cause.getEntity();
+        if (level instanceof ServerLevel) {
+            ServerLevel serverlevel = (ServerLevel)level;
+            if (entity == null || entity.killedEntity(serverlevel, this)) {
+                this.gameEvent(GameEvent.ENTITY_DIE);
+                this.dropAllDeathLoot(cause);
+            }
+
+            this.level().broadcastEntityEvent(this, (byte)3);
+        }
+        
+        var deathMessage = this.getCombatTracker().getDeathMessage();
+        var owner = this.getOwner();
+        if (!this.level().isClientSide && this.level().getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && owner instanceof ServerPlayer) {
+            owner.sendSystemMessage(deathMessage);
+        }
     }
 
     private boolean checkAndHandleIncapacitated(DamageSource cause) {
