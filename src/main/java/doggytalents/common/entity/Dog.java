@@ -2344,17 +2344,17 @@ public class Dog extends AbstractDog {
         var entity = cause.getEntity();
         if (level instanceof ServerLevel) {
             ServerLevel serverlevel = (ServerLevel)level;
-            if (entity == null || entity.wasKilled(serverlevel, this)) {
-                this.gameEvent(GameEvent.ENTITY_DIE);
-                this.dropAllDeathLoot(cause);
+            if (entity != null) {
+                //this.gameEvent(GameEvent.ENTITY_DIE);
+                entity.killed(serverlevel, this);
             }
-
+            this.dropAllDeathLoot(cause);
             this.level().broadcastEntityEvent(this, (byte)3);
         }
         
         var owner = this.getOwner();
         if (!this.level().isClientSide && this.level().getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && owner instanceof ServerPlayer) {
-            owner.sendSystemMessage(deathMessage);
+            owner.sendMessage(deathMessage, net.minecraft.Util.NIL_UUID);
         }
     }
 

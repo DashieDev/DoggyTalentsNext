@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.Minecraft;
@@ -19,11 +20,11 @@ public class AccessoryStatusHover extends AbstractWidget {
 
     private ItemStack logoIcon = ItemStack.EMPTY;
     private DogModel.AccessoryState state;
-    private Component statusTooltip = Component.empty();
+    private Component statusTooltip = ComponentUtil.empty();
     private ItemRenderer itemRenderer;
 
     public AccessoryStatusHover(int x, int y, DogModel.AccessoryState state) {
-        super(x, y, 20, 20, Component.empty());
+        super(x, y, 20, 20, ComponentUtil.empty());
         var collar = DoggyItems.WOOL_COLLAR.get();
         logoIcon = new ItemStack(collar);
         collar.setColor(logoIcon, 0xFFB02E26);
@@ -88,7 +89,7 @@ public class AccessoryStatusHover extends AbstractWidget {
             default:
                 break;
         }
-        this.statusTooltip = (Component.translatable("doggui.style.skins.accessory_state." + id));
+        this.statusTooltip = (ComponentUtil.translatable("doggui.style.skins.accessory_state." + id));
     }
 
     private int getX() { return this.x; }

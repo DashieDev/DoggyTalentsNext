@@ -186,7 +186,7 @@ public class DogSkinElement extends AbstractElement {
                 int cutLen = Math.max(0, maxLen - font.width(".."));
                 nameStr = font.plainSubstrByWidth(nameStr, cutLen) + "..";
             }
-            var c1 = Component.ComponentUtil(nameStr);
+            var c1 = ComponentUtil.literal(nameStr);
             c1.withStyle(Style.EMPTY.withBold(true));
             
             int nameX = this.getRealX() + mX - font.width(c1)/2;
