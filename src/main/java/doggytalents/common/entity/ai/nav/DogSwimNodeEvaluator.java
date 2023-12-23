@@ -38,7 +38,7 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
         if (blockpathtypes == BlockPathTypes.WATER) {
             float f = this.mob.getPathfindingMalus(blockpathtypes);
             if (f >= 0.0F) {
-                node = this.getNode(p_263032_, p_263066_, p_263105_);
+                node = this.actuallyGetNode(p_263032_, p_263066_, p_263105_);
                 node.type = blockpathtypes;
                 node.costMalus = Math.max(node.costMalus, f);
                 if (this.level.getFluidState(new BlockPos(p_263032_, p_263066_, p_263105_)).isEmpty()) {
@@ -48,13 +48,19 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
         } else if (checkLand && blockpathtypes == BlockPathTypes.WALKABLE) {
             float f = this.mob.getPathfindingMalus(blockpathtypes);
             if (f >= 0.0F) {
-                node = this.getNode(p_263032_, p_263066_ + 1, p_263105_);
+                node = this.actuallyGetNode(p_263032_, p_263066_ + 1, p_263105_);
                 node.type = blockpathtypes;
                 node.costMalus = Math.max(node.costMalus, f);
             }
         }
 
         return node;
+    }
+
+    protected Node actuallyGetNode(int p_77325_, int p_77326_, int p_77327_) {
+        return this.nodes.computeIfAbsent(Node.createHash(p_77325_, p_77326_, p_77327_), (p_77332_) -> {
+           return new Node(p_77325_, p_77326_, p_77327_);
+        });
     }
 
     @Override
