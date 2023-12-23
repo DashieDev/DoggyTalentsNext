@@ -151,8 +151,16 @@ public class DogSkinElement extends AbstractElement {
         int e_mY = this.getRealY() + mY - 10;
 
         {
-            var c1 = Component.literal(locList.get(activeSkinId).getName());
+            int maxLen = this.getSizeX() - 120;
+            var nameStr = locList.get(activeSkinId).getName();
+            var nameStrLen = font.width(nameStr);
+            if (nameStrLen > maxLen) {
+                int cutLen = Math.max(0, maxLen - font.width(".."));
+                nameStr = font.plainSubstrByWidth(nameStr, cutLen) + "..";
+            }
+            var c1 = Component.literal(nameStr);
             c1.withStyle(Style.EMPTY.withBold(true));
+            
             int nameX = this.getRealX() + mX - font.width(c1)/2;
             int nameY = this.getRealY() + this.getSizeY() - 13;
             graphics.drawString(font, c1, nameX, nameY, 0xffffffff);
