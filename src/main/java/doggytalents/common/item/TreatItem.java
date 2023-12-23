@@ -57,10 +57,6 @@ public class TreatItem extends Item implements IDogItem {
                 }
 
                 dogIn.increaseLevel(this.type);
-                float h = dogIn.getDogLevel().getMaxHealth();
-                if (h != dogIn.getMaxHealth())
-                dogIn.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
-                dogIn.setHealth(dogIn.getMaxHealth());
                 dogIn.setOrderedToSit(true);
                 worldIn.broadcastEntityEvent(dogIn, Constants.EntityState.WOLF_HEARTS);
                 playerIn.sendMessage(ComponentUtil.translatable("treat."+this.type.getName()+".level_up"), net.minecraft.Util.NIL_UUID);
