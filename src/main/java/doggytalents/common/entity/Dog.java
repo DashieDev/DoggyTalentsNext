@@ -2379,7 +2379,7 @@ public class Dog extends AbstractDog {
         this.setMode(EnumMode.INCAPACITATED);
         this.setDogHunger(0);
         this.unRide();
-        createIncapSyncState(source);
+        createAndSetIncapSyncState(source);
         if (this.isInWater() || this.isInLava()) {
             this.triggerAnimationAction(new DogDrownAction(this));
         } else
@@ -2418,7 +2418,7 @@ public class Dog extends AbstractDog {
         owner.sendSystemMessage(msg);
     }
 
-    private void createIncapSyncState(DamageSource source) {
+    private IncapacitatedSyncState createIncapSyncState(DamageSource source) {
         DefeatedType type;
         if (source.is(DamageTypeTags.IS_FIRE) || (this.isOnFire() && !this.fireImmune())) {
             type = DefeatedType.BURN;
@@ -2434,7 +2434,12 @@ public class Dog extends AbstractDog {
         
         int poseId = this.getRandom().nextInt(2);
         
-        this.setIncapSyncState(new IncapacitatedSyncState(type, BandaidState.NONE, poseId));
+        return (new IncapacitatedSyncState(type, BandaidState.NONE, poseId));
+    }
+
+    private void createAndSetIncapSyncState(DamageSource source) {
+        var state = createIncapSyncState(source);
+        this.setIncapSyncState(state);
     }
 
     @Override
