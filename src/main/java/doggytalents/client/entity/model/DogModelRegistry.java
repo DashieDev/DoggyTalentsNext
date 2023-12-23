@@ -66,6 +66,7 @@ import doggytalents.client.entity.model.dog.SparkyModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
 import doggytalents.client.entity.model.dog.VariantDogModel;
 import doggytalents.client.entity.model.dog.ZeroModel;
+import doggytalents.client.entity.model.dog.DogModel.AccessoryState;
 import doggytalents.client.entity.model.dog.kusa.ChiModel;
 import doggytalents.client.entity.model.dog.kusa.HayabusaModel;
 import doggytalents.client.entity.model.dog.kusa.KoModel;
@@ -118,34 +119,34 @@ public class DogModelRegistry {
 
     public static void init() {
         MODEL_MAP = Maps.newConcurrentMap();
-        register("default", ctx -> new DogModel(ctx.bakeLayer(ClientSetup.DOG)));
-        register("variant", ctx -> new VariantDogModel(ctx.bakeLayer(ClientSetup.DOG_LEGACY)));
-        register("iwanko", ctx -> new IwankoModel(ctx.bakeLayer(ClientSetup.DOG_IWANKO)));
-        register("lucario", ctx -> new LucarioModel(ctx.bakeLayer(ClientSetup.DOG_LUCARIO)));
-        register("death", ctx -> new DeathModel(ctx.bakeLayer(ClientSetup.DOG_DEATH)));
-        register("legoshi", ctx -> new LegoshiModel(ctx.bakeLayer(ClientSetup.DOG_LEGOSHI)));
-        register("jack", ctx -> new JackModel(ctx.bakeLayer(ClientSetup.DOG_JACK)));
-        register("juno", ctx -> new JunoModel(ctx.bakeLayer(ClientSetup.DOG_JUNO)));
-        register("st_bernard", ctx -> new StBernardModel(ctx.bakeLayer(ClientSetup.DOG_ST_BERNARD)));
+        register("default", ctx -> new DogModel(ctx.bakeLayer(ClientSetup.DOG)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("variant", ctx -> new VariantDogModel(ctx.bakeLayer(ClientSetup.DOG_LEGACY)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("iwanko", ctx -> new IwankoModel(ctx.bakeLayer(ClientSetup.DOG_IWANKO)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("lucario", ctx -> new LucarioModel(ctx.bakeLayer(ClientSetup.DOG_LUCARIO)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("death", ctx -> new DeathModel(ctx.bakeLayer(ClientSetup.DOG_DEATH)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("legoshi", ctx -> new LegoshiModel(ctx.bakeLayer(ClientSetup.DOG_LEGOSHI)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("jack", ctx -> new JackModel(ctx.bakeLayer(ClientSetup.DOG_JACK)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("juno", ctx -> new JunoModel(ctx.bakeLayer(ClientSetup.DOG_JUNO)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("st_bernard", ctx -> new StBernardModel(ctx.bakeLayer(ClientSetup.DOG_ST_BERNARD)).setAccessoryState(AccessoryState.RECOMMENDED));
 
-        register("okami_amaterasu", ctx ->  new AmaterasuModel(ctx.bakeLayer(ClientSetup.OKAMI_AMATERASU)));
-        register("ammy_divine_chi", ctx ->  new AmmyChiModel(ctx.bakeLayer(ClientSetup.AMMY_CHI)));
-        register("ammy_divine_jin", ctx ->  new AmmyJinModel(ctx.bakeLayer(ClientSetup.AMMY_JIN)));
-        register("ammy_divine_rei", ctx ->  new AmmyReiModel(ctx.bakeLayer(ClientSetup.AMMY_REI)));
-        register("ammy_divine_shin", ctx ->  new AmmyShinModel(ctx.bakeLayer(ClientSetup.AMMY_SHIN)));
-        register("ammy_divine_shiranui", ctx ->  new AmmyShiranuiModel(ctx.bakeLayer(ClientSetup.AMMY_SHIRANUI)));
+        register("okami_amaterasu", ctx ->  new AmaterasuModel(ctx.bakeLayer(ClientSetup.OKAMI_AMATERASU)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+        register("ammy_divine_chi", ctx ->  new AmmyChiModel(ctx.bakeLayer(ClientSetup.AMMY_CHI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+        register("ammy_divine_jin", ctx ->  new AmmyJinModel(ctx.bakeLayer(ClientSetup.AMMY_JIN)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+        register("ammy_divine_rei", ctx ->  new AmmyReiModel(ctx.bakeLayer(ClientSetup.AMMY_REI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+        register("ammy_divine_shin", ctx ->  new AmmyShinModel(ctx.bakeLayer(ClientSetup.AMMY_SHIN)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+        register("ammy_divine_shiranui", ctx ->  new AmmyShiranuiModel(ctx.bakeLayer(ClientSetup.AMMY_SHIRANUI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
         register("ammy_divine_rebirth", ctx ->  new AmmyRebirthModel(ctx.bakeLayer(ClientSetup.AMMY_REBIRTH)));        
-        register("ammy_divine_tei", ctx ->  new AmmyTeiModel(ctx.bakeLayer(ClientSetup.AMMY_TEI)));
-        
-        register("kusa_hayabusa", ctx ->  new HayabusaModel(ctx.bakeLayer(ClientSetup.KUSA_HAYABUSA)));
-        register("kusa_chi", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_CHI)));
-        register("kusa_ko", ctx ->  new KoModel(ctx.bakeLayer(ClientSetup.KUSA_KO)));
-        register("kusa_rei", ctx ->  new ReiModel(ctx.bakeLayer(ClientSetup.KUSA_REI)));
-        register("kusa_shin", ctx ->  new ShinModel(ctx.bakeLayer(ClientSetup.KUSA_SHIN)));
-        register("kusa_take", ctx ->  new TakeModel(ctx.bakeLayer(ClientSetup.KUSA_TAKE)));
-        register("kusa_tei", ctx ->  new TeiModel(ctx.bakeLayer(ClientSetup.KUSA_TEI)));
-        register("kusa_ume", ctx ->  new UmeModel(ctx.bakeLayer(ClientSetup.KUSA_UME)));
-        register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)));
+        register("ammy_divine_tei", ctx ->  new AmmyTeiModel(ctx.bakeLayer(ClientSetup.AMMY_TEI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+
+        register("kusa_hayabusa", ctx ->  new HayabusaModel(ctx.bakeLayer(ClientSetup.KUSA_HAYABUSA)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_chi", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_CHI)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_ko", ctx ->  new KoModel(ctx.bakeLayer(ClientSetup.KUSA_KO)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_rei", ctx ->  new ReiModel(ctx.bakeLayer(ClientSetup.KUSA_REI)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_shin", ctx ->  new ShinModel(ctx.bakeLayer(ClientSetup.KUSA_SHIN)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_take", ctx ->  new TakeModel(ctx.bakeLayer(ClientSetup.KUSA_TAKE)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_tei", ctx ->  new TeiModel(ctx.bakeLayer(ClientSetup.KUSA_TEI)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_ume", ctx ->  new UmeModel(ctx.bakeLayer(ClientSetup.KUSA_UME)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)).setAccessoryState(AccessoryState.RECOMMENDED));
 
         register("pochita", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_POCHITA)));
         register("dachshund", ctx ->  new DachshundModel(ctx.bakeLayer(ClientSetup.DOG_DACHSHUND)));
