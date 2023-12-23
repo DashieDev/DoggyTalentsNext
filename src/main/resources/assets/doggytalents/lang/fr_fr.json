@@ -318,7 +318,7 @@
    "dog.mode.docile": "Docile",
    "dog.mode.patrol": "Patrouille",
    "dog.mode.guard": "Garde",
-   "dog.mode.guard_flat": "G. rapproché",
+   "dog.mode.guard_flat": "G. Bémol",
    "dog.mode.guard_minor": "G. Mineur",
    "dog.mode.incapacitated": "Il est tombé",
 
@@ -330,7 +330,7 @@
    "dog.mode.docile.indicator": "(D)",
    "dog.mode.patrol.indicator": "(P)",
    "dog.mode.guard.indicator": "(G)",
-   "dog.mode.guard_flat.indicator": "(Gr)",
+   "dog.mode.guard_flat.indicator": "(G♭)",
    "dog.mode.guard_minor.indicator": "(Gm)",
    "dog.mode.incapacitated.indicator": "(Rip)",
 
@@ -342,7 +342,7 @@
    "dog.mode.docile.description": "Votre chien vous suit mais ne participera à aucun combat. Ils sont considérés comme agréable à jouer.",
    "dog.mode.patrol.description": "Identique au mode Errance, mais votre chien attaque automatiquement les ennemis proches.",
    "dog.mode.guard.description": "Votre chien vous suit de TRÈS PRÈS et attaque tous les ennemis qui s'approchent de vous jusqu'à ce qu'ils s'éloignent suffisamment de vous ou meurent.",
-   "dog.mode.guard_flat.description": "Garde rapproché - Identique au mode Garde, mais ils ignoreront les Piglins (si vous portez des pièces d'armure dorées) et les Enderman.",
+   "dog.mode.guard_flat.description": "Garde bémol - Identique au mode Garde, mais ils ignoreront les Piglins (si vous portez des pièces d'armure dorées) et les Enderman.",
    "dog.mode.guard_minor.description": "Garde mineure - Identique au mode Garde, mais ils s'abstiendront d'attaquer, mais grogneront pour vous avertir. Si le chien possède le talent Sniff les Creeper, il ne détectera que les Creeper. Idéal si vous ne voulez pas vous laisser surprendre",
 
    "dog.mode.incapacitated.msg.partition1": "%s est maintenant %s!",
