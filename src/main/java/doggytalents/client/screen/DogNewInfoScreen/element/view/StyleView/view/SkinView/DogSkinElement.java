@@ -134,7 +134,7 @@ public class DogSkinElement extends AbstractElement {
         if (this.locList.isEmpty()) return;
 
         
-
+        if (activeSkinId < 0) return;
         if (activeSkinId >= this.locList.size()) return;
 
         if (this.showInfo)
