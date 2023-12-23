@@ -96,6 +96,14 @@ public class DoggySpin extends AbstractWidget {
     }
 
     private void drawAmmy(GuiGraphics graphics, int x, int y, int size)  {
+        var stack = graphics.pose();
+        stack.pushPose();
+        stack.scale(1.5f, 1.5f, 1.5f);
+        
+        x /= 1.5f;
+        y /= 1.5f;
+        x -= 22;
+        y -= 22;
         //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
@@ -110,6 +118,7 @@ public class DoggySpin extends AbstractWidget {
         int uvY =  ((int)Mth.floor(indx/6));
         graphics.blit(Resources.SPIN4, x, y, 0, uvX * size, uvY* size, size , size, 6 * size, 7 * size);
         RenderSystem.disableBlend();
+        stack.popPose();
     }
 
     @Override
