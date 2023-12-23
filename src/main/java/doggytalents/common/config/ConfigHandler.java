@@ -217,6 +217,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DISABLE_PRESERVE_UUID;
         public ForgeConfigSpec.IntValue DUPLICATION_RESOLVE_STRATEGY;
         public ForgeConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
+        public ForgeConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -334,6 +335,12 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("with a Training Treat. Set this to True to disable.")
                 .translation("doggytalents.train_untamed_wolf")
                 .define("train_untamed_wolf", false);
+            DOG_RESPAWN_INCAPACITATED_WHEN_KILLED = builder
+                .comment("By default, Dogs respawning from bed after being killed will")
+                .comment("be incapacitated and are required to be nursed back to life.")
+                .comment("Set this to False to disable.")
+                .translation("doggytalents.dog_respawn_incapacitated_when_killed")
+                .define("dog_respawn_incapacitated_when_killed", true);
             builder.pop();
         }
 

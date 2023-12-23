@@ -7,10 +7,15 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
+import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
+import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
+import doggytalents.common.entity.ai.triggerable.DogDrownAction;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.MobSpawnType;
@@ -26,6 +31,7 @@ public class DogRespawnData implements IDogData {
     private final UUID uuid;
     private UUID ownerUUID;
     private CompoundTag data;
+    private IncapacitatedSyncState killedBy = IncapacitatedSyncState.NONE;
 
     //TODO Make it list you can only add too
     private static final List<String> TAGS_TO_REMOVE = Lists.newArrayList(
@@ -64,6 +70,10 @@ public class DogRespawnData implements IDogData {
         this.data = new CompoundTag();
         dogIn.saveWithoutId(this.data);
         this.ownerUUID = dogIn.getOwnerUUID();
+        var deathCauseOptional = dogIn.getDogDeathCause();
+        if (deathCauseOptional.isPresent()) {
+            this.killedBy = dogIn.createIncapSyncState(deathCauseOptional.get());
+        }
 
         // Remove tags that don't need to be saved
         for (String tag : TAGS_TO_REMOVE) {
@@ -103,9 +113,21 @@ public class DogRespawnData implements IDogData {
         worldIn.addFreshEntityWithPassengers(dog);
         DogLocationStorage.setSessionUUIDFor(dog, uuid);
 
-        dog.setMode(EnumMode.DOCILE);
         dog.setOrderedToSit(true);
-        dog.setAnim(DogAnimation.STAND_QUICK);
+        if (killedBy != null && killedBy != IncapacitatedSyncState.NONE) {
+            dog.setDogHunger(0);
+            dog.setMode(EnumMode.INCAPACITATED);
+            dog.setHealth(1);
+            dog.setIncapSyncState(killedBy);
+            if (dog.isInWater() || dog.isInLava()) {
+                dog.triggerAnimationAction(new DogDrownAction(dog));
+            } else
+            dog.setAnim(dog.incapacitatedMananger.getAnim());
+        } else {
+            dog.setMode(EnumMode.DOCILE);
+            dog.setAnim(DogAnimation.STAND_QUICK);
+        }
+        
 
         return dog;
     }
@@ -115,6 +137,7 @@ public class DogRespawnData implements IDogData {
         if (compound.hasUUID("owner_uuid")) {
             this.ownerUUID = compound.getUUID("owner_uuid");
         }
+        readKilledBy(compound);
     }
 
     public CompoundTag write(CompoundTag compound) {
@@ -122,6 +145,28 @@ public class DogRespawnData implements IDogData {
         if (this.ownerUUID != null) {
             compound.putUUID("owner_uuid", this.ownerUUID);
         }
+        writeKilledBy(compound);
         return compound;
+    }
+
+    public void writeKilledBy(CompoundTag compound) {
+        if (killedBy == IncapacitatedSyncState.NONE)
+            return;
+        if (killedBy == null)
+            return;
+        var killedByTag = new CompoundTag();
+        killedByTag.putInt("typeId", killedBy.type.getId());
+        killedByTag.putInt("poseId", killedBy.poseId);
+        compound.put("dog_killed_by", killedByTag);
+    }
+
+    public void readKilledBy(CompoundTag compound) {
+        if (!compound.contains("dog_killed_by", Tag.TAG_COMPOUND))
+            return;
+        var killedByTag = compound.getCompound("dog_killed_by");
+        var typeId = killedByTag.getInt("typeId");
+        var poseId = killedByTag.getInt("poseId");
+        this.killedBy = 
+            new IncapacitatedSyncState(DefeatedType.byId(typeId), BandaidState.NONE, poseId);
     }
 }
