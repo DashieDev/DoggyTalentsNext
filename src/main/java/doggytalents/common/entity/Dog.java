@@ -2309,6 +2309,7 @@ public class Dog extends AbstractDog {
         this.headRotationCourseOld = 0;
     }
 
+    private Optional<DamageSource> dogDeathCause = Optional.empty();
     @Override
     public void die(DamageSource cause) {
         if (checkAndHandleIncapacitated(cause))
@@ -2318,7 +2319,14 @@ public class Dog extends AbstractDog {
         this.finishShaking();
 
         this.alterations.forEach((alter) -> alter.onDeath(this, cause));
+        
+        if (ConfigHandler.SERVER.DOG_RESPAWN_INCAPACITATED_WHEN_KILLED.get())
+            dogDeathCause = Optional.ofNullable(cause);
         dogProccessAndBroadcastDieVanilla(cause);
+    }
+
+    public Optional<DamageSource> getDogDeathCause() {
+        return this.dogDeathCause;
     }
 
     private void dogProccessAndBroadcastDieVanilla(DamageSource cause) {
