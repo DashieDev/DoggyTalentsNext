@@ -2413,7 +2413,7 @@ public class Dog extends AbstractDog {
         owner.sendSystemMessage(msg);
     }
 
-    private IncapacitatedSyncState createIncapSyncState(DamageSource source) {
+    public IncapacitatedSyncState createIncapSyncState(DamageSource source) {
         DefeatedType type;
         if (source.isFire() || (this.isOnFire() && !this.fireImmune())) {
             type = DefeatedType.BURN;
