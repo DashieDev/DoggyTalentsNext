@@ -2332,6 +2332,8 @@ public class Dog extends AbstractDog {
         if (this.dead)
             return;
 
+        var deathMessage = this.getCombatTracker().getDeathMessage();
+
         this.dead = true;
         this.getCombatTracker().recheckStatus();
         var level = this.level();
@@ -2346,7 +2348,6 @@ public class Dog extends AbstractDog {
             this.level().broadcastEntityEvent(this, (byte)3);
         }
         
-        var deathMessage = this.getCombatTracker().getDeathMessage();
         var owner = this.getOwner();
         if (!this.level().isClientSide && this.level().getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && owner instanceof ServerPlayer) {
             owner.sendSystemMessage(deathMessage);
