@@ -620,6 +620,24 @@ public class DogModel extends EntityModel<Dog> {
         return 1f;
     }
 
+    public static enum AccessoryState {
+        NON_COMPATIBLE,
+        SOME_WILL_FIT,
+        HAVE_NOT_TESTED,
+        RECOMMENDED
+    }
+
+    private AccessoryState accessoryState = AccessoryState.HAVE_NOT_TESTED;
+    public AccessoryState getAccessoryState() {
+        return accessoryState;
+    }
+
+    public DogModel setAccessoryState(AccessoryState state) {
+        if (state == null) state = AccessoryState.HAVE_NOT_TESTED;
+        this.accessoryState = state;
+        return this;
+    }
+
     public void setVisible(boolean visible) {
         this.head.visible = visible;
         this.body.visible = visible;
