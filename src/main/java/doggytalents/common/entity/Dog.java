@@ -2414,7 +2414,7 @@ public class Dog extends AbstractDog {
         owner.sendSystemMessage(msg);
     }
 
-    private IncapacitatedSyncState createIncapSyncState(DamageSource source) {
+    public IncapacitatedSyncState createIncapSyncState(DamageSource source) {
         DefeatedType type;
         if (source.is(DamageTypeTags.IS_FIRE) || (this.isOnFire() && !this.fireImmune())) {
             type = DefeatedType.BURN;
