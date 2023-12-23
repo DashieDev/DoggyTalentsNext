@@ -287,7 +287,7 @@ public class DogSkinElement extends AbstractElement {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = 100;
-        RenderSystem.setShaderTexture(0, Resources.SMALL_WIDGETS);
+        RenderSystem.setShaderTexture(0, Resources.KANJI_MYSTERY_BKG);
         blit(stack, x - imgeSize/2, 
             y - imgeSize/2 - 27, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         stack.pushPose();
