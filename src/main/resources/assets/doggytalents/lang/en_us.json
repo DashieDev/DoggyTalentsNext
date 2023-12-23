@@ -486,6 +486,10 @@
    "doggui.style.skins.selected" : "Selected",
    "doggui.style.skins.search_by_tags" : "Search By Tags",
    "doggui.style.skins.search_by_name" : "Search By Name",
+   "doggui.style.skins.accessory_state.0" : "This model have not been tested with Accessories.",
+   "doggui.style.skins.accessory_state.1" : "This model is not compatible with Accessories.",
+   "doggui.style.skins.accessory_state.2" : "This model is recommended for Accessories!",
+   "doggui.style.skins.accessory_state.3" : "This model is compatible with some Accessories.",
 
    "doggui.stats.general" : "General",
    "doggui.stats.general.damageDealt" : "Damage dealt",
