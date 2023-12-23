@@ -966,3 +966,15 @@ ModeSwitch.
   + Drinking Sake do not consume the whole stack.
 ========
 * HOTFIX: WolfMount causing sitting dog to loose hunger in some versions.
+
+**1.18.3 - 24th December 2023**
+*HOTHOTFIX! (1.18.2/1.19.2 Only)
+  Dog entering water causing world to StackOverflow and keep on StackOverflow when joined since
+the dog still in the water.
+#Use Unicode Flat Symbol instead of b for Guard Flat Indicator.
++ (Configurable) Dogs who respawns in Dog Bed after being killed will now be incapacitated
+and is required to be nursed back to life.
+# Bigger Ammy at Loading Screen!
+# Skin name in the main Skin View now cuts off if too long.
++ Added Indicator to SkinView to indicate how compatible the current model
+is with Accessories.
