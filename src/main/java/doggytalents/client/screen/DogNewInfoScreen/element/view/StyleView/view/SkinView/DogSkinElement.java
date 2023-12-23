@@ -102,8 +102,8 @@ public class DogSkinElement extends AbstractElement {
         var skin = this.locList.get(this.activeSkinId);
         var state = getStateFromSkin(skin);
         var button = new AccessoryStatusHover(0, 0, state);
-        button.setX(this.getRealX() + 6);
-        button.setY(this.getRealY() + this.getSizeY() - 25);
+        button.x = (this.getRealX() + 6);
+        button.y = (this.getRealY() + this.getSizeY() - 25);
         this.addChildren(button);
     }
 
