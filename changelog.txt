@@ -990,3 +990,10 @@ and is required to be nursed back to life.
 # Skin name in the main Skin View now cuts off if too long.
 + Added Indicator to SkinView to indicate how compatible the current model
 is with Accessories.
+
+**1.18.4 - 25th December 2023**
+*HOTFIX: Dog Action is unable to overrideSit causing:
+*Dog cannot greet Owner
+*WaterHolder/RescueDog cannot urgently heal/extinguish owner support action.
+*Dog cannot Howl when sit.
+# Option to limit Mob Retriever to only Dog to Dog.
