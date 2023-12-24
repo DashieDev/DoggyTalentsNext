@@ -1,11 +1,14 @@
 package doggytalents.client.screen.DogNewInfoScreen.widget;
 
+import java.util.List;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyItems;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -37,6 +40,9 @@ public class AccessoryStatusHover extends AbstractWidget {
 
     @Override
     public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+        if (this.isHovered) {
+            ToolTipOverlayManager.get().setComponents(List.of(this.statusTooltip));
+        }
         if (this.logoIcon == ItemStack.EMPTY)
             return;
         itemRenderer.renderGuiItem(logoIcon, this.getX()+1, this.getY()+1);
