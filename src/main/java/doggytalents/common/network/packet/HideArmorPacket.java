@@ -10,13 +10,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class HideArmorPacket extends DogPacket<HideArmorData> {
 
     @Override
-    public void encode(HideArmorData data, FriendlyByteBuf buf) {
+    public void encode(HideArmorData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeBoolean(data.val);
     }
 
     @Override
-    public HideArmorData decode(FriendlyByteBuf buf) {
+    public HideArmorData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         boolean val = buf.readBoolean();
         return new HideArmorData(entityId, val);

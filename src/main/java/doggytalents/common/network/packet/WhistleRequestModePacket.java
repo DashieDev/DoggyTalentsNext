@@ -12,12 +12,12 @@ import java.util.function.Supplier;
 public class WhistleRequestModePacket implements IPacket<WhistleRequestModeData> {
 
     @Override
-    public void encode(WhistleRequestModeData data, FriendlyByteBuf buf) {
+    public void encode(WhistleRequestModeData data, PacketBuffer buf) {
         buf.writeInt(data.id);
     }
 
     @Override
-    public WhistleRequestModeData decode(FriendlyByteBuf buf) {
+    public WhistleRequestModeData decode(PacketBuffer buf) {
         return new WhistleRequestModeData(buf.readInt());
     }
 

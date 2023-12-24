@@ -239,13 +239,13 @@ public class DoggyToolsTalent extends TalentInstance  {
 
 
     @Override
-    public void writeToBuf(FriendlyByteBuf buf) {
+    public void writeToBuf(PacketBuffer buf) {
         super.writeToBuf(buf);
         buf.writeBoolean(this.alwaysPickSlot0);
     }
 
     @Override
-    public void readFromBuf(FriendlyByteBuf buf) {
+    public void readFromBuf(PacketBuffer buf) {
         super.readFromBuf(buf);
         alwaysPickSlot0 = buf.readBoolean();
     }

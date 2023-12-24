@@ -11,13 +11,13 @@ import java.util.function.Supplier;
 public class DogForceSitPacket extends DogPacket<DogForceSitData> {
 
     @Override
-    public void encode(DogForceSitData data, FriendlyByteBuf buf) {
+    public void encode(DogForceSitData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeBoolean(data.forceSit);
     }
 
     @Override
-    public DogForceSitData decode(FriendlyByteBuf buf) {
+    public DogForceSitData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         boolean forceSit = buf.readBoolean();
         return new DogForceSitData(entityId, forceSit);

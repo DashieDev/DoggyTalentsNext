@@ -11,13 +11,13 @@ import java.util.function.Supplier;
 public class DogRegardTeamPlayersPacket extends DogPacket<DogRegardTeamPlayersData> {
 
     @Override
-    public void encode(DogRegardTeamPlayersData data, FriendlyByteBuf buf) {
+    public void encode(DogRegardTeamPlayersData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeBoolean(data.regardTeamPlayers);
     }
 
     @Override
-    public DogRegardTeamPlayersData decode(FriendlyByteBuf buf) {
+    public DogRegardTeamPlayersData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         boolean regardTeamPlayers = buf.readBoolean();
         return new DogRegardTeamPlayersData(entityId, regardTeamPlayers);

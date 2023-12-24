@@ -48,7 +48,7 @@ public class Accessory extends ForgeRegistryEntry<Accessory> {
         return new AccessoryInstance(this);
     }
 
-    public AccessoryInstance createInstance(FriendlyByteBuf buf) {
+    public AccessoryInstance createInstance(PacketBuffer buf) {
         return this.getDefault();
     }
 
@@ -56,7 +56,7 @@ public class Accessory extends ForgeRegistryEntry<Accessory> {
         return this.getDefault();
     }
 
-    public void write(AccessoryInstance instance, FriendlyByteBuf buf) {
+    public void write(AccessoryInstance instance, PacketBuffer buf) {
 
     }
 

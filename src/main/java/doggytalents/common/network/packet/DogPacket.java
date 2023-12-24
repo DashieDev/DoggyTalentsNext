@@ -12,12 +12,12 @@ import java.util.function.Supplier;
 public abstract class DogPacket<T extends DogData> implements IPacket<T> {
 
     @Override
-    public void encode(T data, FriendlyByteBuf buf) {
+    public void encode(T data, PacketBuffer buf) {
         buf.writeInt(data.entityId);
     }
 
     @Override
-    public abstract T decode(FriendlyByteBuf buf);
+    public abstract T decode(PacketBuffer buf);
 
     @Override
     public final void handle(T data, Supplier<Context> ctx) {

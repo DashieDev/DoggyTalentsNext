@@ -12,14 +12,14 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
 
     @Override
-    public void encode(ChangeAccessoriesData data, FriendlyByteBuf buf) {
+    public void encode(ChangeAccessoriesData data, PacketBuffer buf) {
         buf.writeInt(data.entityId);
         buf.writeBoolean(data.add);
         buf.writeInt(data.slotId);
     }
 
     @Override
-    public ChangeAccessoriesData decode(FriendlyByteBuf buf) {
+    public ChangeAccessoriesData decode(PacketBuffer buf) {
         int dog_id = buf.readInt();
         boolean add =buf.readBoolean();
         int slot_id = buf.readInt();

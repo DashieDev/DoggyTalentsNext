@@ -32,11 +32,11 @@ public class HeelByGroupPackets {
 
         @Override
         public void encode(HeelByGroupData.REQUEST_GROUP_LIST data,
-                FriendlyByteBuf buf) {
+                PacketBuffer buf) {
         }
 
         @Override
-        public HeelByGroupData.REQUEST_GROUP_LIST decode(FriendlyByteBuf buf) {
+        public HeelByGroupData.REQUEST_GROUP_LIST decode(PacketBuffer buf) {
             return new HeelByGroupData.REQUEST_GROUP_LIST();
         }
 
@@ -80,7 +80,7 @@ public class HeelByGroupPackets {
 
         @Override
         public void encode(HeelByGroupData.RESPONSE_GROUP_LIST data,
-                FriendlyByteBuf buf) {
+                PacketBuffer buf) {
             int size = data.groups.size();
             buf.writeInt(size);
             for (int i = 0; i < size; ++i) {
@@ -91,7 +91,7 @@ public class HeelByGroupPackets {
         }
 
         @Override
-        public HeelByGroupData.RESPONSE_GROUP_LIST decode(FriendlyByteBuf buf) {
+        public HeelByGroupData.RESPONSE_GROUP_LIST decode(PacketBuffer buf) {
             int size = buf.readInt();
             var groups = new ArrayList<DogGroup>(size);
             for (int i = 0; i < size; ++i) {
@@ -126,7 +126,7 @@ public class HeelByGroupPackets {
 
         @Override
         public void encode(HeelByGroupData.REQUEST_HEEL data,
-            FriendlyByteBuf buf) {
+            PacketBuffer buf) {
             buf.writeBoolean(data.heelAndSit);
             var group = data.group;
             buf.writeInt(group.color);
@@ -134,7 +134,7 @@ public class HeelByGroupPackets {
         }
 
         @Override
-        public HeelByGroupData.REQUEST_HEEL decode(FriendlyByteBuf buf) {
+        public HeelByGroupData.REQUEST_HEEL decode(PacketBuffer buf) {
             boolean heelAndSit = buf.readBoolean();
             int color = buf.readInt();
             String name = buf.readUtf(DogGroupsManager.MAX_GROUP_STRLEN);

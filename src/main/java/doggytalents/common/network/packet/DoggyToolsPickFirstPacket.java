@@ -13,13 +13,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class DoggyToolsPickFirstPacket extends DogPacket<DoggyToolsPickFirstData> {
 
     @Override
-    public void encode(DoggyToolsPickFirstData data, FriendlyByteBuf buf) {
+    public void encode(DoggyToolsPickFirstData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeBoolean(data.val);
     }
 
     @Override
-    public DoggyToolsPickFirstData decode(FriendlyByteBuf buf) {
+    public DoggyToolsPickFirstData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         boolean val = buf.readBoolean();
         return new DoggyToolsPickFirstData(entityId, val);

@@ -30,12 +30,12 @@ public class DyeableAccessory extends Accessory {
     }
 
     @Override
-    public AccessoryInstance createInstance(FriendlyByteBuf buf) {
+    public AccessoryInstance createInstance(PacketBuffer buf) {
         return this.create(buf.readInt());
     }
 
     @Override
-    public void write(AccessoryInstance instance, FriendlyByteBuf buf) {
+    public void write(AccessoryInstance instance, PacketBuffer buf) {
         DyeableAccessoryInstance exact = instance.cast(DyeableAccessoryInstance.class);
         buf.writeInt(exact.getColorInteger());
     }

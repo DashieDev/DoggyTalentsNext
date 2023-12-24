@@ -25,13 +25,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class DogMountPacket implements IPacket<DogMountData> {
 
     @Override
-    public void encode(DogMountData data, FriendlyByteBuf buf) {
+    public void encode(DogMountData data, PacketBuffer buf) {
         buf.writeInt(data.dogId);
         buf.writeBoolean(data.mount);
     }
 
     @Override
-    public DogMountData decode(FriendlyByteBuf buf) {
+    public DogMountData decode(PacketBuffer buf) {
         int id = buf.readInt();
         boolean mount = buf.readBoolean();
         return new DogMountData(id, mount);

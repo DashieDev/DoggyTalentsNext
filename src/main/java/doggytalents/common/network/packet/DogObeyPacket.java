@@ -10,13 +10,13 @@ import java.util.function.Supplier;
 public class DogObeyPacket extends DogPacket<DogObeyData> {
 
     @Override
-    public void encode(DogObeyData data, FriendlyByteBuf buf) {
+    public void encode(DogObeyData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeBoolean(data.obeyOthers);
     }
 
     @Override
-    public DogObeyData decode(FriendlyByteBuf buf) {
+    public DogObeyData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         boolean obeyOthers = buf.readBoolean();
         return new DogObeyData(entityId, obeyOthers);

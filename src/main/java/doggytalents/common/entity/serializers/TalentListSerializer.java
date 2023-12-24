@@ -3,6 +3,7 @@ package doggytalents.common.entity.serializers;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.TalentInstance;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.IDataSerializer;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class TalentListSerializer implements IDataSerializer<List<TalentInstance
     }
 
     @Override
-    public IDataSerializer<List<TalentInstance>> createAccessor(int id) {
+    public DataParameter<List<TalentInstance>> createAccessor(int id) {
         return new DataParameter<>(id, this);
     }
 

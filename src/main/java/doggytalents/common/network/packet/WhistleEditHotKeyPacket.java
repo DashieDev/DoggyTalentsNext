@@ -13,13 +13,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class WhistleEditHotKeyPacket implements IPacket<WhisltleEditHotKeyData> {
 
     @Override
-    public void encode(WhisltleEditHotKeyData data, FriendlyByteBuf buf) {
+    public void encode(WhisltleEditHotKeyData data, PacketBuffer buf) {
         buf.writeInt(data.hotkey_id);
         buf.writeInt(data.new_mode_id);
     }
 
     @Override
-    public WhisltleEditHotKeyData decode(FriendlyByteBuf buf) {
+    public WhisltleEditHotKeyData decode(PacketBuffer buf) {
         int hotkey_id = buf.readInt();
         int new_mode_id = buf.readInt();
         return new WhisltleEditHotKeyData(hotkey_id, new_mode_id);

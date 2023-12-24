@@ -35,11 +35,11 @@ public class ConductingBonePackets {
 
         @Override
         public void encode(RequestDogsData data,
-                FriendlyByteBuf buf) {
+                PacketBuffer buf) {
         }
 
         @Override
-        public RequestDogsData decode(FriendlyByteBuf buf) {
+        public RequestDogsData decode(PacketBuffer buf) {
             return new RequestDogsData();
         }
 
@@ -75,7 +75,7 @@ public class ConductingBonePackets {
     public static class ResponseDogsPackets implements IPacket<ResponseDogsData> {
 
         @Override
-        public void encode(ResponseDogsData data, FriendlyByteBuf buf) {
+        public void encode(ResponseDogsData data, PacketBuffer buf) {
             int size = data.entries.size();
             buf.writeInt(size);
             for (int i = 0; i < size; ++i) {
@@ -91,7 +91,7 @@ public class ConductingBonePackets {
         }
 
         @Override
-        public ResponseDogsData decode(FriendlyByteBuf buf) {
+        public ResponseDogsData decode(PacketBuffer buf) {
             int size = buf.readInt();
             var newDogsLs = new ArrayList<Pair<UUID, String>>(size);
             for (int i = 0; i < size; ++i) {
@@ -124,13 +124,13 @@ public class ConductingBonePackets {
     public static class RequestDistantTeleportDogPacket implements IPacket<RequestDistantTeleportDogData> {
 
         @Override
-        public void encode(RequestDistantTeleportDogData data, FriendlyByteBuf buf) {
+        public void encode(RequestDistantTeleportDogData data, PacketBuffer buf) {
             buf.writeUUID(data.dogUUID);
             buf.writeBoolean(data.toBed);
         }
 
         @Override
-        public RequestDistantTeleportDogData decode(FriendlyByteBuf buf) {
+        public RequestDistantTeleportDogData decode(PacketBuffer buf) {
             var uuid = buf.readUUID();
             var toBed = buf.readBoolean();
             return new RequestDistantTeleportDogData(uuid, toBed);

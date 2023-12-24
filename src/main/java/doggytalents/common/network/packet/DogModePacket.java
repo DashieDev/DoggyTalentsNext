@@ -11,13 +11,13 @@ import java.util.function.Supplier;
 public class DogModePacket extends DogPacket<DogModeData> {
 
     @Override
-    public void encode(DogModeData data, FriendlyByteBuf buf) {
+    public void encode(DogModeData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeInt(data.mode.getIndex());
     }
 
     @Override
-    public DogModeData decode(FriendlyByteBuf buf) {
+    public DogModeData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         int modeIndex = buf.readInt();
         return new DogModeData(entityId, EnumMode.byIndex(modeIndex));

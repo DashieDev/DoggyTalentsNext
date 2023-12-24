@@ -35,14 +35,14 @@ public class BirthdayHatAccessory extends Accessory implements IAccessoryHasMode
     }
 
     @Override
-    public AccessoryInstance createInstance(FriendlyByteBuf buf) {
+    public AccessoryInstance createInstance(PacketBuffer buf) {
         var bg_color = buf.readInt();
         var fg_color = buf.readInt();
         return new Inst(this, bg_color, fg_color);
     }
 
     @Override
-    public void write(AccessoryInstance instance, FriendlyByteBuf buf) {
+    public void write(AccessoryInstance instance, PacketBuffer buf) {
         if (!(instance instanceof Inst inst)) {
             buf.writeInt(0);
             buf.writeInt(0);

@@ -10,13 +10,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class PatrolTargetLockPacket extends DogPacket<PatrolTargetLockData> {
 
     @Override
-    public void encode(PatrolTargetLockData data, FriendlyByteBuf buf) {
+    public void encode(PatrolTargetLockData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeBoolean(data.val);
     }
 
     @Override
-    public PatrolTargetLockData decode(FriendlyByteBuf buf) {
+    public PatrolTargetLockData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         boolean val = buf.readBoolean();
         return new PatrolTargetLockData(entityId, val);

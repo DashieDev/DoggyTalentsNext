@@ -37,11 +37,11 @@ public class CanineTrackerPackets {
 
         @Override
         public void encode(RequestDogsData data,
-                FriendlyByteBuf buf) {
+                PacketBuffer buf) {
         }
 
         @Override
-        public RequestDogsData decode(FriendlyByteBuf buf) {
+        public RequestDogsData decode(PacketBuffer buf) {
             return new RequestDogsData();
         }
 
@@ -83,7 +83,7 @@ public class CanineTrackerPackets {
     public static class ResponseDogsPackets implements IPacket<ResponseDogsData> {
 
         @Override
-        public void encode(ResponseDogsData data, FriendlyByteBuf buf) {
+        public void encode(ResponseDogsData data, PacketBuffer buf) {
             int size = data.entries.size();
             buf.writeInt(size);
             for (int i = 0; i < size; ++i) {
@@ -102,7 +102,7 @@ public class CanineTrackerPackets {
         }
 
         @Override
-        public ResponseDogsData decode(FriendlyByteBuf buf) {
+        public ResponseDogsData decode(PacketBuffer buf) {
             int size = buf.readInt();
             var newDogsLs = new ArrayList<Triple<UUID, String, BlockPos>>(size);
             for (int i = 0; i < size; ++i) {
@@ -135,12 +135,12 @@ public class CanineTrackerPackets {
 
     public static class StartLocatingPacket implements IPacket<StartLocatingData> {
         @Override
-        public void encode(StartLocatingData data, FriendlyByteBuf buf) {
+        public void encode(StartLocatingData data, PacketBuffer buf) {
             buf.writeUUID(data.uuid);
         }
 
         @Override
-        public StartLocatingData decode(FriendlyByteBuf buf) {
+        public StartLocatingData decode(PacketBuffer buf) {
             var uuid = buf.readUUID();
             return new StartLocatingData(uuid);
         }
@@ -182,13 +182,13 @@ public class CanineTrackerPackets {
 
         @Override
         public void encode(RequestPosUpdateData data,
-                FriendlyByteBuf buf) {
+                PacketBuffer buf) {
             buf.writeUUID(data.uuid);
             buf.writeBlockPos(data.pos);
         }
 
         @Override
-        public RequestPosUpdateData decode(FriendlyByteBuf buf) {
+        public RequestPosUpdateData decode(PacketBuffer buf) {
             return new RequestPosUpdateData(buf.readUUID(), buf.readBlockPos());
         }
 
@@ -237,13 +237,13 @@ public class CanineTrackerPackets {
     public static class ResponsePosUpdatePacket implements IPacket<ResponsePosUpdateData> {
 
         @Override
-        public void encode(ResponsePosUpdateData data, FriendlyByteBuf buf) {
+        public void encode(ResponsePosUpdateData data, PacketBuffer buf) {
             buf.writeUUID(data.uuid);
             buf.writeBlockPos(data.correctPos);
         }
 
         @Override
-        public ResponsePosUpdateData decode(FriendlyByteBuf buf) {
+        public ResponsePosUpdateData decode(PacketBuffer buf) {
             var uuid = buf.readUUID();
             var pos = buf.readBlockPos();
             return new ResponsePosUpdateData(uuid, pos);

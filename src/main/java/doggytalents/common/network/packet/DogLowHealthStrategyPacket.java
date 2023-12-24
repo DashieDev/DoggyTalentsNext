@@ -11,13 +11,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class DogLowHealthStrategyPacket extends DogPacket<DogLowHealthStrategyData> {
     
     @Override
-    public void encode(DogLowHealthStrategyData data, FriendlyByteBuf buf) {
+    public void encode(DogLowHealthStrategyData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeByte(data.strategy.getId());
     }
 
     @Override
-    public DogLowHealthStrategyData decode(FriendlyByteBuf buf) {
+    public DogLowHealthStrategyData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         var strategy = LowHealthStrategy.fromId(buf.readByte());
         return new DogLowHealthStrategyData(entityId, strategy);

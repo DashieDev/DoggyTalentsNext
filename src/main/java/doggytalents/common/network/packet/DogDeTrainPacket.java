@@ -14,13 +14,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class DogDeTrainPacket extends DogPacket<DogDeTrainData> {
 
     @Override
-    public void encode(DogDeTrainData data, FriendlyByteBuf buf) {
+    public void encode(DogDeTrainData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeRegistryIdUnsafe(DoggyTalentsAPI.TALENTS.get(), data.talent);
     }
 
     @Override
-    public DogDeTrainData decode(FriendlyByteBuf buf) {
+    public DogDeTrainData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         Talent talent = buf.readRegistryIdUnsafe(DoggyTalentsAPI.TALENTS.get());
         return new DogDeTrainData(entityId, talent);

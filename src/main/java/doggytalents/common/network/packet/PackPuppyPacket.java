@@ -12,14 +12,14 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class PackPuppyPacket extends DogPacket<PackPuppyData> {
 
     @Override
-    public void encode(PackPuppyData data, FriendlyByteBuf buf) {
+    public void encode(PackPuppyData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeInt(data.type.getId());
         buf.writeBoolean(data.val);
     }
 
     @Override
-    public PackPuppyData decode(FriendlyByteBuf buf) {
+    public PackPuppyData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         var type = PackPuppyData.Type.fromId(buf.readInt());
         boolean val = buf.readBoolean();

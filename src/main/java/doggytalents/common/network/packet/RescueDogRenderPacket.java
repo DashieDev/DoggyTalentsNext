@@ -12,13 +12,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class RescueDogRenderPacket extends DogPacket<RescueDogRenderData> {
 
     @Override
-    public void encode(RescueDogRenderData data, FriendlyByteBuf buf) {
+    public void encode(RescueDogRenderData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeBoolean(data.val);
     }
 
     @Override
-    public RescueDogRenderData decode(FriendlyByteBuf buf) {
+    public RescueDogRenderData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         boolean val = buf.readBoolean();
         return new RescueDogRenderData(entityId, val);

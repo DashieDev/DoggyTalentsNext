@@ -16,12 +16,12 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class WhistleUsePacket implements IPacket<WhistleUseData> {
 
     @Override
-    public void encode(WhistleUseData data, FriendlyByteBuf buf) {
+    public void encode(WhistleUseData data, PacketBuffer buf) {
         buf.writeInt(data.mode_id);
     }
 
     @Override
-    public WhistleUseData decode(FriendlyByteBuf buf) {
+    public WhistleUseData decode(PacketBuffer buf) {
         return new WhistleUseData(buf.readInt());
     }
 

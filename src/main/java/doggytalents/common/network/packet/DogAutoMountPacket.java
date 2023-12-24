@@ -10,13 +10,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class DogAutoMountPacket extends DogPacket<DogAutoMountData> {
     
     @Override
-    public void encode(DogAutoMountData data, FriendlyByteBuf buf) {
+    public void encode(DogAutoMountData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeBoolean(data.val);
     }
 
     @Override
-    public DogAutoMountData decode(FriendlyByteBuf buf) {
+    public DogAutoMountData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         boolean val = buf.readBoolean();
         return new DogAutoMountData(entityId, val);

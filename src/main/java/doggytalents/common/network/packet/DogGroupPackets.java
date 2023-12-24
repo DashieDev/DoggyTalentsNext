@@ -24,7 +24,7 @@ public class DogGroupPackets {
     public static class EDIT extends DogPacket<DogGroupsData.EDIT> {
 
         @Override
-        public void encode(DogGroupsData.EDIT data, FriendlyByteBuf buf) {
+        public void encode(DogGroupsData.EDIT data, PacketBuffer buf) {
             super.encode(data, buf);
             buf.writeBoolean(data.add);
             buf.writeUtf(data.group.name, DogGroupsManager.MAX_GROUP_STRLEN);
@@ -32,7 +32,7 @@ public class DogGroupPackets {
         }
 
         @Override
-        public DogGroupsData.EDIT decode(FriendlyByteBuf buf) {
+        public DogGroupsData.EDIT decode(PacketBuffer buf) {
             int id = buf.readInt();
             boolean add = buf.readBoolean();
             String group = buf.readUtf(DogGroupsManager.MAX_GROUP_STRLEN);
@@ -66,7 +66,7 @@ public class DogGroupPackets {
     public static class FETCH_REQUEST extends DogPacket<DogGroupsData.FETCH_REQUEST> {
 
         @Override
-        public DogGroupsData.FETCH_REQUEST decode(FriendlyByteBuf buf) {
+        public DogGroupsData.FETCH_REQUEST decode(PacketBuffer buf) {
             return new DogGroupsData.FETCH_REQUEST(buf.readInt());
         }
 
@@ -87,7 +87,7 @@ public class DogGroupPackets {
     public static class UPDATE implements IPacket<DogGroupsData.UPDATE> {
 
         @Override
-        public void encode(DogGroupsData.UPDATE data, FriendlyByteBuf buf) {
+        public void encode(DogGroupsData.UPDATE data, PacketBuffer buf) {
             buf.writeInt(data.dogId);
             buf.writeInt(data.groups.size());
             for (var group : data.groups) {
@@ -97,7 +97,7 @@ public class DogGroupPackets {
         }
 
         @Override
-        public DogGroupsData.UPDATE decode(FriendlyByteBuf buf) {
+        public DogGroupsData.UPDATE decode(PacketBuffer buf) {
             int id = buf.readInt();
             int size = buf.readInt();
             var groups = new ArrayList<DogGroup>(size);

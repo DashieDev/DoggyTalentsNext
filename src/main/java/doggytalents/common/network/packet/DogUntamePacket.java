@@ -17,7 +17,7 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class DogUntamePacket extends DogPacket<DogUntameData> {
 
     @Override
-    public DogUntameData decode(FriendlyByteBuf buf) {
+    public DogUntameData decode(PacketBuffer buf) {
         return new DogUntameData(buf.readInt());
     }
 

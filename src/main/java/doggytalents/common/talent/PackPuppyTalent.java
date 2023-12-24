@@ -452,7 +452,7 @@ public class PackPuppyTalent extends TalentInstance {
     }
 
     @Override
-    public void writeToBuf(FriendlyByteBuf buf) {
+    public void writeToBuf(PacketBuffer buf) {
         super.writeToBuf(buf);
         buf.writeBoolean(this.renderChest);
         buf.writeBoolean(this.pickupItems);
@@ -460,7 +460,7 @@ public class PackPuppyTalent extends TalentInstance {
     }
 
     @Override
-    public void readFromBuf(FriendlyByteBuf buf) {
+    public void readFromBuf(PacketBuffer buf) {
         super.readFromBuf(buf);
         renderChest = buf.readBoolean();
         pickupItems = buf.readBoolean();

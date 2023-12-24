@@ -5,19 +5,19 @@ import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.datasync.IDataSerializer;
 
-public class IncapacitatedSyncSerializer implements EntityDataSerializer<IncapacitatedSyncState> {
+public class IncapacitatedSyncSerializer implements IDataSerializer<IncapacitatedSyncState> {
 
     @Override
-    public void write(FriendlyByteBuf buf, IncapacitatedSyncState state) {
+    public void write(PacketBuffer buf, IncapacitatedSyncState state) {
         buf.writeInt(state.type.getId());
         buf.writeInt(state.bandaid.getId());
         buf.writeInt(state.poseId);
     }
 
     @Override
-    public IncapacitatedSyncState read(FriendlyByteBuf buf) {
+    public IncapacitatedSyncState read(PacketBuffer buf) {
         var type = DefeatedType.byId(buf.readInt());
         var bandaid = BandaidState.byId(buf.readInt());
         var poseId = buf.readInt();

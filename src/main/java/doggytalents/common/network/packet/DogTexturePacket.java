@@ -12,13 +12,13 @@ import java.util.function.Supplier;
 public class DogTexturePacket extends DogPacket<DogTextureData> {
 
     @Override
-    public void encode(DogTextureData data, FriendlyByteBuf buf) {
+    public void encode(DogTextureData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeUtf(data.hash);
     }
 
     @Override
-    public DogTextureData decode(FriendlyByteBuf buf) {
+    public DogTextureData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         String texture = buf.readUtf(128);
         return new DogTextureData(entityId, texture);

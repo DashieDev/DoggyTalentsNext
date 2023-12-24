@@ -16,7 +16,7 @@ public class StatsSyncPackets {
     public static class Request extends DogPacket<StatsSyncData.Request> {
 
         @Override
-        public StatsSyncData.Request decode(FriendlyByteBuf buf) {
+        public StatsSyncData.Request decode(PacketBuffer buf) {
             int id = buf.readInt();
             return new StatsSyncData.Request(id);
         }
@@ -39,13 +39,13 @@ public class StatsSyncPackets {
     public static class Response implements IPacket<StatsSyncData.Response> {
 
         @Override
-        public void encode(StatsSyncData.Response data, FriendlyByteBuf buf) {
+        public void encode(StatsSyncData.Response data, PacketBuffer buf) {
             buf.writeInt(data.entityId);
             data.tracker.serializeToBuf(buf);
         }
 
         @Override
-        public StatsSyncData.Response decode(FriendlyByteBuf buf) {
+        public StatsSyncData.Response decode(PacketBuffer buf) {
             int id = buf.readInt();
             var newTracker = new StatsTracker();
             newTracker.deserializeFromBuf(buf);

@@ -15,13 +15,13 @@ import java.util.function.Supplier;
 public class DogInventoryPagePacket implements IPacket<DogInventoryPageData>  {
 
     @Override
-    public DogInventoryPageData decode(FriendlyByteBuf buf) {
+    public DogInventoryPageData decode(PacketBuffer buf) {
         return new DogInventoryPageData(buf.readInt());
     }
 
 
     @Override
-    public void encode(DogInventoryPageData data, FriendlyByteBuf buf) {
+    public void encode(DogInventoryPageData data, PacketBuffer buf) {
         buf.writeInt(data.page);
     }
 

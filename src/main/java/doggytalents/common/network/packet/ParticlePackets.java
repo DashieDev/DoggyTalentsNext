@@ -24,12 +24,12 @@ public class ParticlePackets {
     public static class CritEmitterPacket implements IPacket<CritEmitterData> {
 
         @Override
-        public void encode(CritEmitterData data, FriendlyByteBuf buf) {
+        public void encode(CritEmitterData data, PacketBuffer buf) {
             buf.writeInt(data.targetId);
         }
 
         @Override
-        public CritEmitterData decode(FriendlyByteBuf buf) {
+        public CritEmitterData decode(PacketBuffer buf) {
             return new CritEmitterData(buf.readInt());
         }
 
@@ -61,13 +61,13 @@ public class ParticlePackets {
     public static class DogEatingParticlePacket implements IPacket<DogEatingParticleData> {
 
         @Override
-        public void encode(DogEatingParticleData data, FriendlyByteBuf buf) {
+        public void encode(DogEatingParticleData data, PacketBuffer buf) {
             buf.writeInt(data.dogId);
             buf.writeItem(data.food);            
         }
 
         @Override
-        public DogEatingParticleData decode(FriendlyByteBuf buf) {
+        public DogEatingParticleData decode(PacketBuffer buf) {
             int dogId = buf.readInt();
             var food = buf.readItem();       
             return new DogEatingParticleData(dogId, food);
@@ -126,12 +126,12 @@ public class ParticlePackets {
 
     public static class DogStartShakingLavaPacket implements IPacket<DogStartShakingLavaData>  {
         @Override
-        public void encode(DogStartShakingLavaData data, FriendlyByteBuf buf) {
+        public void encode(DogStartShakingLavaData data, PacketBuffer buf) {
             buf.writeInt(data.dogId);          
         }
 
         @Override
-        public DogStartShakingLavaData decode(FriendlyByteBuf buf) {
+        public DogStartShakingLavaData decode(PacketBuffer buf) {
             int dogId = buf.readInt();    
             return new DogStartShakingLavaData(dogId);
         }

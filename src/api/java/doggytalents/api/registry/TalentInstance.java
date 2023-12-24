@@ -69,11 +69,11 @@ public class TalentInstance implements IDogAlteration {
         this.setLevel(compound.getInt("level"));
     }
 
-    public void writeToBuf(FriendlyByteBuf buf) {
+    public void writeToBuf(PacketBuffer buf) {
         buf.writeInt(this.level());
     }
 
-    public void readFromBuf(FriendlyByteBuf buf) {
+    public void readFromBuf(PacketBuffer buf) {
         this.setLevel(buf.readInt());
     }
 

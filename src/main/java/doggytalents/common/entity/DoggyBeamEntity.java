@@ -72,7 +72,7 @@ public class DoggyBeamEntity extends ThrowableProjectile implements IEntityAddit
     }
 
     @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
+    public void writeSpawnData(PacketBuffer buffer) {
         UUID ownerId = this.uuid;
         buffer.writeBoolean(ownerId != null);
         if (ownerId != null) {
@@ -81,7 +81,7 @@ public class DoggyBeamEntity extends ThrowableProjectile implements IEntityAddit
     }
 
     @Override
-    public void readSpawnData(FriendlyByteBuf buffer) {
+    public void readSpawnData(PacketBuffer buffer) {
         boolean hasThrower = buffer.readBoolean();
         if (hasThrower) {
             this.uuid = buffer.readUUID();

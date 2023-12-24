@@ -162,7 +162,7 @@ public class StatsTracker {
         return distanceRidden;
     }
 
-    public void serializeToBuf(FriendlyByteBuf buf) {
+    public void serializeToBuf(PacketBuffer buf) {
 
         buf.writeFloat(damageDealt);
 
@@ -184,7 +184,7 @@ public class StatsTracker {
         }
     }
 
-    public void deserializeFromBuf(FriendlyByteBuf buf) {
+    public void deserializeFromBuf(PacketBuffer buf) {
 
         this.damageDealt = buf.readFloat();
         this.distanceOnWater = buf.readInt();

@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 public class OpenDogScreenPacket implements IPacket<OpenDogScreenData>  {
 
     @Override
-    public OpenDogScreenData decode(FriendlyByteBuf buf) {
+    public OpenDogScreenData decode(PacketBuffer buf) {
         var type = OpenDogScreenData.ScreenType
             .byId(buf.readInt());
         var dogId = buf.readInt();
@@ -29,7 +29,7 @@ public class OpenDogScreenPacket implements IPacket<OpenDogScreenData>  {
 
 
     @Override
-    public void encode(OpenDogScreenData data, FriendlyByteBuf buf) {
+    public void encode(OpenDogScreenData data, PacketBuffer buf) {
         buf.writeInt(data.type.getId());
         buf.writeInt(data.dogId);
     }

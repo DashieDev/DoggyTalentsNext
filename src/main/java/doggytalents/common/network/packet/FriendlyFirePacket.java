@@ -10,13 +10,13 @@ import java.util.function.Supplier;
 public class FriendlyFirePacket extends DogPacket<FriendlyFireData> {
 
     @Override
-    public void encode(FriendlyFireData data, FriendlyByteBuf buf) {
+    public void encode(FriendlyFireData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeBoolean(data.friendlyFire);
     }
 
     @Override
-    public FriendlyFireData decode(FriendlyByteBuf buf) {
+    public FriendlyFireData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         boolean obeyOthers = buf.readBoolean();
         return new FriendlyFireData(entityId, obeyOthers);

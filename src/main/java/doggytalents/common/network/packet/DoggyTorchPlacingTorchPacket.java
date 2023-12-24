@@ -12,13 +12,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class DoggyTorchPlacingTorchPacket extends DogPacket<DoggyTorchPlacingTorchData> {
 
     @Override
-    public void encode(DoggyTorchPlacingTorchData data, FriendlyByteBuf buf) {
+    public void encode(DoggyTorchPlacingTorchData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeBoolean(data.val);
     }
 
     @Override
-    public DoggyTorchPlacingTorchData decode(FriendlyByteBuf buf) {
+    public DoggyTorchPlacingTorchData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         boolean val = buf.readBoolean();
         return new DoggyTorchPlacingTorchData(entityId, val);

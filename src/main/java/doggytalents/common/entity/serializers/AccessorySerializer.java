@@ -4,15 +4,15 @@ import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.datasync.IDataSerializer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccessorySerializer implements EntityDataSerializer<List<AccessoryInstance>> {
+public class AccessorySerializer implements IDataSerializer<List<AccessoryInstance>> {
 
     @Override
-    public void write(FriendlyByteBuf buf, List<AccessoryInstance> value) {
+    public void write(PacketBuffer buf, List<AccessoryInstance> value) {
         buf.writeInt(value.size());
 
         for (AccessoryInstance inst : value) {
@@ -22,7 +22,7 @@ public class AccessorySerializer implements EntityDataSerializer<List<AccessoryI
     }
 
     @Override
-    public List<AccessoryInstance> read(FriendlyByteBuf buf) {
+    public List<AccessoryInstance> read(PacketBuffer buf) {
         int size = buf.readInt();
         List<AccessoryInstance> newInst = new ArrayList<>(size);
 

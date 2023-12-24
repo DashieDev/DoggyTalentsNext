@@ -17,7 +17,7 @@ public class DogIncapMsgPackets {
     public static class Request extends DogPacket<DogIncapMsgData.Request> {
 
         @Override
-        public DogIncapMsgData.Request decode(FriendlyByteBuf buf) {
+        public DogIncapMsgData.Request decode(PacketBuffer buf) {
             var id = buf.readInt();
             return new DogIncapMsgData.Request(id);
         }
@@ -42,13 +42,13 @@ public class DogIncapMsgPackets {
     public static class Response implements IPacket<DogIncapMsgData.Response> {
 
         @Override
-        public void encode(DogIncapMsgData.Response data, FriendlyByteBuf buf) {
+        public void encode(DogIncapMsgData.Response data, PacketBuffer buf) {
             buf.writeInt(data.entityId);
             buf.writeUtf(data.msg, DogIncapacitatedMananger.MAX_INCAP_MSG_LEN);
         }
 
         @Override
-        public DogIncapMsgData.Response decode(FriendlyByteBuf buf) {
+        public DogIncapMsgData.Response decode(PacketBuffer buf) {
             var id = buf.readInt();
             var msg = buf.readUtf(DogIncapacitatedMananger.MAX_INCAP_MSG_LEN);
             return new DogIncapMsgData.Response(msg, id);

@@ -12,13 +12,13 @@ import java.util.function.Supplier;
 public class DogNamePacket extends DogPacket<DogNameData> {
 
     @Override
-    public void encode(DogNameData data, FriendlyByteBuf buf) {
+    public void encode(DogNameData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeUtf(data.name, 64);
     }
 
     @Override
-    public DogNameData decode(FriendlyByteBuf buf) {
+    public DogNameData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         String name = buf.readUtf(64);
         return new DogNameData(entityId, name);

@@ -10,13 +10,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class CrossOriginTpPacket extends DogPacket<CrossOriginTpData> {
 
     @Override
-    public void encode(CrossOriginTpData data, FriendlyByteBuf buf) {
+    public void encode(CrossOriginTpData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeBoolean(data.crossOriginTp);
     }
 
     @Override
-    public CrossOriginTpData decode(FriendlyByteBuf buf) {
+    public CrossOriginTpData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         boolean crossOriginTp = buf.readBoolean();
         return new CrossOriginTpData(entityId, crossOriginTp);

@@ -166,8 +166,8 @@ public class Util {
         return getResource(modId, name).toString();
     }
 
-    public static FriendlyByteBuf createBuf() {
-        return new FriendlyByteBuf(Unpooled.buffer());
+    public static PacketBuffer createBuf() {
+        return new PacketBuffer(Unpooled.buffer());
     }
 
     // From net.minecraft.util.Util

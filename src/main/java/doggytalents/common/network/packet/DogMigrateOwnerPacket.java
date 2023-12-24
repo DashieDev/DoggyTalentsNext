@@ -17,13 +17,13 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
 
     @Override
-    public void encode(DogMigrateOwnerData data, FriendlyByteBuf buf) {
+    public void encode(DogMigrateOwnerData data, PacketBuffer buf) {
         buf.writeInt(data.entityId);
         buf.writeBoolean(data.confirmed);
     }
 
     @Override
-    public DogMigrateOwnerData decode(FriendlyByteBuf buf) {
+    public DogMigrateOwnerData decode(PacketBuffer buf) {
         var id = buf.readInt();
         var confirmed = buf.readBoolean();
         return new DogMigrateOwnerData(id, confirmed);

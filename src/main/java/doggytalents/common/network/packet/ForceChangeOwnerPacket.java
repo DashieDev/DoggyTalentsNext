@@ -13,12 +13,12 @@ import net.minecraftforge.network.NetworkEvent.Context;
 public class ForceChangeOwnerPacket extends DogPacket<ForceChangeOwnerData> {
     
     @Override
-    public void encode(ForceChangeOwnerData data, FriendlyByteBuf buf) {
+    public void encode(ForceChangeOwnerData data, PacketBuffer buf) {
         buf.writeInt(data.entityId);
     }
 
     @Override
-    public ForceChangeOwnerData decode(FriendlyByteBuf buf) {
+    public ForceChangeOwnerData decode(PacketBuffer buf) {
         var id = buf.readInt();
         return new ForceChangeOwnerData(id);
     }

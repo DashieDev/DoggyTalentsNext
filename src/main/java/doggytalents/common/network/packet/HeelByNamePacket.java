@@ -27,14 +27,14 @@ import net.minecraftforge.network.NetworkEvent.Context;
  public class HeelByNamePacket extends DogPacket<HeelByNameData> {
 
     @Override
-    public void encode(HeelByNameData data, FriendlyByteBuf buf) {
+    public void encode(HeelByNameData data, PacketBuffer buf) {
         buf.writeInt(data.entityId);
         buf.writeBoolean(data.heelAndSit);
         buf.writeBoolean(data.softHeel);
     }
 
     @Override
-    public HeelByNameData decode(FriendlyByteBuf buf) {
+    public HeelByNameData decode(PacketBuffer buf) {
         return new HeelByNameData(buf.readInt(), buf.readBoolean(), buf.readBoolean());
     }
 

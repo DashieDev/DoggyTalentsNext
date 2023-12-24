@@ -15,13 +15,13 @@ import java.util.function.Supplier;
 public class DogTalentPacket extends DogPacket<DogTalentData> {
 
     @Override
-    public void encode(DogTalentData data, FriendlyByteBuf buf) {
+    public void encode(DogTalentData data, PacketBuffer buf) {
         super.encode(data, buf);
         buf.writeRegistryIdUnsafe(DoggyTalentsAPI.TALENTS.get(), data.talent);
     }
 
     @Override
-    public DogTalentData decode(FriendlyByteBuf buf) {
+    public DogTalentData decode(PacketBuffer buf) {
         int entityId = buf.readInt();
         Talent talent = buf.readRegistryIdUnsafe(DoggyTalentsAPI.TALENTS.get());
         return new DogTalentData(entityId, talent);
