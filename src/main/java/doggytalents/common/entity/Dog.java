@@ -414,14 +414,14 @@ public class Dog extends AbstractDog {
 
         var trivial = this.goalSelector.getAvailableGoals()
             .stream().filter(x -> (
-                x.getGoal() != sitGoal 
+                !(x.getGoal() instanceof DogWrappedGoal dogGoal && dogGoal.getGoal() == sitGoal)
                 && x.getPriority() <= trivialP
                 && x.getFlags().contains(Goal.Flag.MOVE)    
             ))
             .collect(Collectors.toList());
         var nonTrivial = this.goalSelector.getAvailableGoals()
             .stream().filter(x -> (
-                x.getGoal() != sitGoal
+                !(x.getGoal() instanceof DogWrappedGoal dogGoal && dogGoal.getGoal() == sitGoal)
                 && x.getPriority() <= nonTrivialP
                 && (x.getFlags().contains(Goal.Flag.MOVE)
                     || x.getFlags().contains(Goal.Flag.LOOK)) 
