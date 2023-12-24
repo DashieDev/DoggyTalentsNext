@@ -9,6 +9,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import net.minecraft.world.InteractionResult;
@@ -82,6 +83,9 @@ public class MobRetrieverTalent extends TalentInstance {
             return false;
         if (target.isVehicle())
             return false;
+        boolean onlyDog = ConfigHandler.SERVER.MOB_RETRIEVER_ONLY_CARRY_DOG.get();
+        if (onlyDog && !(target instanceof Dog))
+            return false;
         if (!(target instanceof LivingEntity))
             return false;
         if (target instanceof Player)
@@ -107,6 +111,9 @@ public class MobRetrieverTalent extends TalentInstance {
         if (target.isSpectator())
             return false;
         if (target.isVehicle())
+            return false;
+        boolean onlyDog = ConfigHandler.SERVER.MOB_RETRIEVER_ONLY_CARRY_DOG.get();
+        if (onlyDog && !(target instanceof Dog))
             return false;
         if (dog.isInSittingPose())
             return false;
