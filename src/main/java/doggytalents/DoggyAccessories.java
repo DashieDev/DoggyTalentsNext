@@ -8,7 +8,7 @@ import doggytalents.common.lib.Resources;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;

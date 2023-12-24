@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import doggytalents.common.item.DoggyArtifactItem;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 

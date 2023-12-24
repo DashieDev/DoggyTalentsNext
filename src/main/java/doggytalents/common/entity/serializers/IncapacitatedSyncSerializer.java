@@ -4,7 +4,7 @@ import doggytalents.common.entity.DogIncapacitatedMananger;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
 public class IncapacitatedSyncSerializer implements EntityDataSerializer<IncapacitatedSyncState> {

@@ -2,9 +2,8 @@ package doggytalents;
 
 import doggytalents.common.entity.serializers.*;
 import doggytalents.common.lib.Constants;
-import net.minecraft.advancements.critereon.SerializationContext;
-import net.minecraft.network.syncher.EntityDataSerializer;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.network.datasync.IDataSerializer;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,7 +26,7 @@ public class DoggySerializers {
     public static final RegistryObject<DataSerializerEntry> DOG_SIZE_SERIALIZER = register2("dog_size", DogSizeSerializer::new);
     public static final RegistryObject<DataSerializerEntry> DOG_SKIN_DATA_SERIALIZER = register2("dog_skin_data", DogSkinDataSerializer::new);
 
-    private static <X extends EntityDataSerializer<?>> RegistryObject<DataSerializerEntry> register2(final String name, final Supplier<X> factory) {
+    private static <X extends IDataSerializer<?>> RegistryObject<DataSerializerEntry> register2(final String name, final Supplier<X> factory) {
         return register(name, () -> new DataSerializerEntry(factory.get()));
     }
 

@@ -20,7 +20,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.fml.RegistryObject;
 
 public class BachWig extends Accessory implements IAccessoryHasModel {
 

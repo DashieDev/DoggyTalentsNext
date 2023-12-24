@@ -7,7 +7,7 @@ import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.resources.ResourceLocation;
 
 public class TalentInstance implements IDogAlteration {

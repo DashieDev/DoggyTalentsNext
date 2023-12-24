@@ -2,17 +2,16 @@ package doggytalents.common.entity.serializers;
 
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.TalentInstance;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.datasync.IDataSerializer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TalentListSerializer implements EntityDataSerializer<List<TalentInstance>> {
+public class TalentListSerializer implements IDataSerializer<List<TalentInstance>> {
 
     @Override
-    public void write(FriendlyByteBuf buf, List<TalentInstance> value) {
+    public void write(PacketBuffer buf, List<TalentInstance> value) {
         buf.writeInt(value.size());
 
         for (TalentInstance inst : value) {
@@ -22,7 +21,7 @@ public class TalentListSerializer implements EntityDataSerializer<List<TalentIns
     }
 
     @Override
-    public List<TalentInstance> read(FriendlyByteBuf buf) {
+    public List<TalentInstance> read(PacketBuffer buf) {
         int size = buf.readInt();
         List<TalentInstance> newInst = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
@@ -34,8 +33,8 @@ public class TalentListSerializer implements EntityDataSerializer<List<TalentIns
     }
 
     @Override
-    public EntityDataAccessor<List<TalentInstance>> createAccessor(int id) {
-        return new EntityDataAccessor<>(id, this);
+    public IDataSerializer<List<TalentInstance>> createAccessor(int id) {
+        return new DataParameter<>(id, this);
     }
 
     @Override

@@ -13,7 +13,7 @@ import doggytalents.common.entity.DogGroupsManager;
 import doggytalents.common.entity.DogGroupsManager.DogGroup;
 import doggytalents.common.network.packet.data.DogGroupsData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import doggytalents.common.network.IPacket;

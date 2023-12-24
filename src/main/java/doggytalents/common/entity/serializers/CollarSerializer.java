@@ -4,7 +4,7 @@ import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.util.Util;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
 import java.util.Optional;

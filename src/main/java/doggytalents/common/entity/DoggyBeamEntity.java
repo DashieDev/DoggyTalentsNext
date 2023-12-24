@@ -6,7 +6,7 @@ import doggytalents.api.feature.EnumMode;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

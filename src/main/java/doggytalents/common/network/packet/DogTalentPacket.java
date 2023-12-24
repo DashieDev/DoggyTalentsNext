@@ -7,7 +7,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.util.DogUtil;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;

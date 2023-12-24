@@ -21,7 +21,7 @@ import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.util.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;

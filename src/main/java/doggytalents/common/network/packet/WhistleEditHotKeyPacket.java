@@ -6,7 +6,7 @@ import doggytalents.DoggyItems;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.WhisltleEditHotKeyData;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent.Context;
 

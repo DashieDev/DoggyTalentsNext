@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.CombatReturnStrategy;
 import doggytalents.common.network.packet.data.CombatReturnStrategyData;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.network.NetworkEvent.Context;
 
 public class CombatReturnStrategyPacket extends DogPacket<CombatReturnStrategyData> {

@@ -6,7 +6,7 @@ import doggytalents.api.registry.Accessory;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AccessoryItem;
 import doggytalents.common.network.packet.data.ChangeAccessoriesData;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.network.NetworkEvent.Context;
 
 public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {

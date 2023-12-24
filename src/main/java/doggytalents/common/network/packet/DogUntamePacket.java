@@ -9,7 +9,7 @@ import doggytalents.common.item.AmnesiaBoneItem;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.data.DogUntameData;
 import doggytalents.common.storage.DogLocationStorage;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraftforge.network.NetworkEvent.Context;

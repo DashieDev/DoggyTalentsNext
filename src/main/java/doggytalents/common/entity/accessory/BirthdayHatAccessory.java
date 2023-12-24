@@ -14,7 +14,7 @@ import doggytalents.common.item.BirthdayHatItem;
 import doggytalents.common.item.DyableBirthdayHatItem;
 import doggytalents.common.util.ColourCache;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 

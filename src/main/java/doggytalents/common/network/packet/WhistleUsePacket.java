@@ -9,7 +9,7 @@ import doggytalents.common.item.WhistleItem.WhistleMode;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.InteractionHand;
 import net.minecraftforge.network.NetworkEvent.Context;
 

@@ -9,7 +9,7 @@ import doggytalents.api.DoggyTalentsAPI;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.minecraft.Util;

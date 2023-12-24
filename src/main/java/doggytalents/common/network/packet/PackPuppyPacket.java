@@ -6,7 +6,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.talent.PackPuppyTalent;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.network.NetworkEvent.Context;
 
 public class PackPuppyPacket extends DogPacket<PackPuppyData> {

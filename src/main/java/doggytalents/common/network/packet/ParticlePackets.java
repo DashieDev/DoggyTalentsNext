@@ -11,7 +11,7 @@ import doggytalents.common.network.packet.data.ParticleData.CritEmitterData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.item.ItemStack;

@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.network.packet.data.ChangeArtifactData;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent.Context;
 

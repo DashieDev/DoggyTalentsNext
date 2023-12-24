@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.DogAutoMountData;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.network.NetworkEvent.Context;
 
 public class DogAutoMountPacket extends DogPacket<DogAutoMountData> {

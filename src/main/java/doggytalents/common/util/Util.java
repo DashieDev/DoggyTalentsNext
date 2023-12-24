@@ -7,12 +7,12 @@ import doggytalents.common.lib.Constants;
 import io.netty.buffer.Unpooled;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.text.DecimalFormat;

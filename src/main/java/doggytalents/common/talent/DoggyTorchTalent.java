@@ -9,7 +9,7 @@ import doggytalents.common.network.packet.data.DoggyTorchPlacingTorchData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;

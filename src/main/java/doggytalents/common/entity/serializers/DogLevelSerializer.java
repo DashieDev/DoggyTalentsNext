@@ -2,7 +2,7 @@ package doggytalents.common.entity.serializers;
 
 import doggytalents.api.feature.DogLevel;
 import doggytalents.api.feature.DogLevel.Type;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
 public class DogLevelSerializer implements EntityDataSerializer<DogLevel> {

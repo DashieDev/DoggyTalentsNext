@@ -10,7 +10,7 @@ import doggytalents.api.registry.AccessoryType;
 import doggytalents.common.util.ColourCache;
 import doggytalents.common.util.Util;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.entity.player.Player;

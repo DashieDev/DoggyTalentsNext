@@ -9,7 +9,7 @@ import doggytalents.common.talent.*;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import doggytalents.common.talent.talentclass.LowCostTalent;
 import doggytalents.common.talent.talentclass.SingleLevelTalent;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.Optional;

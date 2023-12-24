@@ -3,7 +3,7 @@ package doggytalents.common.network.packet;
 import doggytalents.common.inventory.container.DogInventoriesContainer;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.DogInventoryPageData;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.inventory.AbstractContainerMenu;

@@ -17,7 +17,7 @@ import doggytalents.common.network.packet.data.HeelByNameData;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.fml.loading.FMLEnvironment;

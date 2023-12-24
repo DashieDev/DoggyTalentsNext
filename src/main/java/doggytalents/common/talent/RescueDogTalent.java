@@ -17,7 +17,7 @@ import doggytalents.common.network.packet.data.RescueDogRenderData;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.entity.LivingEntity;

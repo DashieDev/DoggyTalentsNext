@@ -1,6 +1,6 @@
 package doggytalents.common.network;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;

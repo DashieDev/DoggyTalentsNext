@@ -3,7 +3,7 @@ package doggytalents.common.network.packet;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.DogModeData;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;

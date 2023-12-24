@@ -3,7 +3,7 @@ package doggytalents.common.network.packet;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.DogData;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.network.NetworkEvent.Context;
 

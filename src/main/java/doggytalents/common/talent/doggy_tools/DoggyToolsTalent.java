@@ -15,7 +15,7 @@ import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.talent.doggy_tools.tool_actions.ToolAction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Containers;

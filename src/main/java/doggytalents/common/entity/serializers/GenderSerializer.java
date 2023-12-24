@@ -1,7 +1,7 @@
 package doggytalents.common.entity.serializers;
 
 import doggytalents.api.feature.EnumGender;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
 public class GenderSerializer implements EntityDataSerializer<EnumGender> {

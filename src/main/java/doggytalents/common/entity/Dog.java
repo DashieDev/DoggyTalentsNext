@@ -64,7 +64,8 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -152,7 +153,7 @@ import java.util.stream.Collectors;
 
 public class Dog extends AbstractDog {
 
-    private static final EntityDataAccessor<Optional<Component>> LAST_KNOWN_NAME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.OPTIONAL_COMPONENT);
+    private static final DataParameter<Optional<Component>> LAST_KNOWN_NAME = EntityDataManager.defineId(Dog.class, EntityDataSerializers.OPTIONAL_COMPONENT);
     
     /**
      *     Bit number      Decimal Val         Flag
@@ -177,27 +178,27 @@ public class Dog extends AbstractDog {
      *     .
      *     31              2^31                <Reserved>
      */
-    private static final EntityDataAccessor<Integer> DOG_FLAGS = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
+    private static final DataParameter<Integer> DOG_FLAGS = EntityDataManager.defineId(Dog.class, EntityDataSerializers.INT);
 
-    private static final EntityDataAccessor<Float> HUNGER_INT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.FLOAT);
+    private static final DataParameter<Float> HUNGER_INT = EntityDataManager.defineId(Dog.class, EntityDataSerializers.FLOAT);
    
-    private static final EntityDataAccessor<ItemStack> BONE_VARIANT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.ITEM_STACK);
+    private static final DataParameter<ItemStack> BONE_VARIANT = EntityDataManager.defineId(Dog.class, EntityDataSerializers.ITEM_STACK);
 
-    private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> ANIM_SYNC_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
+    private static final DataParameter<Integer> ANIMATION = EntityDataManager.defineId(Dog.class, EntityDataSerializers.INT);
+    private static final DataParameter<Integer> ANIM_SYNC_TIME = EntityDataManager.defineId(Dog.class, EntityDataSerializers.INT);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
-    private static final Cache<EntityDataAccessor<List<AccessoryInstance>>> ACCESSORIES =  Cache.make(() -> (EntityDataAccessor<List<AccessoryInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<List<TalentInstance>>> TALENTS = Cache.make(() -> (EntityDataAccessor<List<TalentInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.TALENT_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<DogLevel>> DOG_LEVEL = Cache.make(() -> (EntityDataAccessor<DogLevel>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<EnumGender>> GENDER = Cache.make(() -> (EntityDataAccessor<EnumGender>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<EnumMode>> MODE = Cache.make(() -> (EntityDataAccessor<EnumMode>) SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BED_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BOWL_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<IncapacitatedSyncState>> DOG_INCAP_SYNC_STATE = Cache.make(() -> (EntityDataAccessor<IncapacitatedSyncState>) SynchedEntityData.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (EntityDataAccessor<List<DoggyArtifactItem>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<DogSize>> DOG_SIZE = Cache.make(() -> (EntityDataAccessor<DogSize>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<DogSkinData>> CUSTOM_SKIN = Cache.make(() -> (EntityDataAccessor<DogSkinData>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER.get().getSerializer()));
+    private static final Cache<DataParameter<List<AccessoryInstance>>> ACCESSORIES =  Cache.make(() -> (DataParameter<List<AccessoryInstance>>) EntityDataManager.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get().getSerializer()));
+    private static final Cache<DataParameter<List<TalentInstance>>> TALENTS = Cache.make(() -> (DataParameter<List<TalentInstance>>) EntityDataManager.defineId(Dog.class, DoggySerializers.TALENT_SERIALIZER.get().getSerializer()));
+    private static final Cache<DataParameter<DogLevel>> DOG_LEVEL = Cache.make(() -> (DataParameter<DogLevel>) EntityDataManager.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get().getSerializer()));
+    private static final Cache<DataParameter<EnumGender>> GENDER = Cache.make(() -> (DataParameter<EnumGender>) EntityDataManager.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER.get().getSerializer()));
+    private static final Cache<DataParameter<EnumMode>> MODE = Cache.make(() -> (DataParameter<EnumMode>) EntityDataManager.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER.get().getSerializer()));
+    private static final Cache<DataParameter<DimensionDependantArg<Optional<BlockPos>>>> DOG_BED_LOCATION = Cache.make(() -> (DataParameter<DimensionDependantArg<Optional<BlockPos>>>) EntityDataManager.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get().getSerializer()));
+    private static final Cache<DataParameter<DimensionDependantArg<Optional<BlockPos>>>> DOG_BOWL_LOCATION = Cache.make(() -> (DataParameter<DimensionDependantArg<Optional<BlockPos>>>) EntityDataManager.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get().getSerializer()));
+    private static final Cache<DataParameter<IncapacitatedSyncState>> DOG_INCAP_SYNC_STATE = Cache.make(() -> (DataParameter<IncapacitatedSyncState>) EntityDataManager.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER.get().getSerializer()));
+    private static final Cache<DataParameter<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (DataParameter<List<DoggyArtifactItem>>) EntityDataManager.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get().getSerializer()));
+    private static final Cache<DataParameter<DogSize>> DOG_SIZE = Cache.make(() -> (DataParameter<DogSize>) EntityDataManager.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER.get().getSerializer()));
+    private static final Cache<DataParameter<DogSkinData>> CUSTOM_SKIN = Cache.make(() -> (DataParameter<DogSkinData>) EntityDataManager.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER.get().getSerializer()));
 
     public static final void initDataParameters() { 
         ACCESSORIES.get();
@@ -3059,7 +3060,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+    public void onSyncedDataUpdated(DataParameter<?> key) {
         super.onSyncedDataUpdated(key);
         if (TALENTS.get().equals(key) || ACCESSORIES.get().equals(key) 
             || ARTIFACTS.get().equals(key)) {
@@ -3798,11 +3799,11 @@ public class Dog extends AbstractDog {
         this.modifyListSyncedData(ARTIFACTS.get(), modify);
     }
 
-    public <T> void modifyListSyncedData(EntityDataAccessor<List<T>> key, Consumer<List<T>> modify) {
+    public <T> void modifyListSyncedData(DataParameter<List<T>> key, Consumer<List<T>> modify) {
         modifySyncedData(key, modify, x -> new ArrayList<>(x));
     }
 
-    public <T> void modifySyncedData(EntityDataAccessor<T> key, Consumer<T> modify, Function<T, T> copyFunc) {
+    public <T> void modifySyncedData(DataParameter<T> key, Consumer<T> modify, Function<T, T> copyFunc) {
         var result = copyFunc.apply(this.entityData.get(key));
         modify.accept(result);
         this.entityData.set(key, result);

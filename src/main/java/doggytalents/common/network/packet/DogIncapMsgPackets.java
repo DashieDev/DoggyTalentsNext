@@ -8,7 +8,7 @@ import doggytalents.common.network.IPacket;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogIncapMsgData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 

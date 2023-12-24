@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.fml.RegistryObject;
 import org.junit.jupiter.api.Test;
 
 import static doggytalents.common.util.Util.*;

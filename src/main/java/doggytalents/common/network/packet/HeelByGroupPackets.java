@@ -19,7 +19,7 @@ import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundSource;

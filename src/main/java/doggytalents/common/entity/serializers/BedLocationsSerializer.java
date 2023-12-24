@@ -1,7 +1,7 @@
 package doggytalents.common.entity.serializers;
 
 import net.minecraft.core.Registry;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceKey;
