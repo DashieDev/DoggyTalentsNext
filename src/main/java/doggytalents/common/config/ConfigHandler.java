@@ -221,6 +221,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.IntValue DUPLICATION_RESOLVE_STRATEGY;
         public ForgeConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
         public ForgeConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
+        public ForgeConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -344,6 +345,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Set this to False to disable.")
                 .translation("doggytalents.dog_respawn_incapacitated_when_killed")
                 .define("dog_respawn_incapacitated_when_killed", true);
+            MOB_RETRIEVER_ONLY_CARRY_DOG = builder
+                .comment("Enable this if you prefer Mob Retriever to only work with DTN's dog.")
+                .translation("doggytalents.mob_retriever_only_carry_dog")
+                .define("mob_retriever_only_carry_dog", false);
             builder.pop();
         }
 
