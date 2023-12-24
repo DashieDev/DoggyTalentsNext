@@ -16,7 +16,7 @@ import net.minecraft.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 
 public class GenderBoneItem extends Item implements IDogItem{
 

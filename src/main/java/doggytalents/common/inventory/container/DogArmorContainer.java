@@ -1,7 +1,7 @@
 package doggytalents.common.inventory.container;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 import net.minecraftforge.items.SlotItemHandler;
 
 import com.google.errorprone.annotations.Var;
@@ -28,7 +28,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 
 public class DogArmorContainer extends AbstractContainerMenu {
     private Level world;

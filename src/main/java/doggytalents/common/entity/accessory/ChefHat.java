@@ -17,7 +17,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class ChefHat extends DyeableAccessory implements IAccessoryHasModel{

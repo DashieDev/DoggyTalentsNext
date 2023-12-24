@@ -4,7 +4,7 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Mob;
 import net.minecraft.entity.ai.navigation.FlyingPathNavigation;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 
 public class DogFlyingNavigation extends FlyingPathNavigation implements IDogNavLock {
 

@@ -65,6 +65,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.datasync.IDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -121,7 +122,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.block.BlockState;
@@ -130,6 +131,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
@@ -137,7 +139,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
@@ -153,7 +154,7 @@ import java.util.stream.Collectors;
 
 public class Dog extends AbstractDog {
 
-    private static final DataParameter<Optional<Component>> LAST_KNOWN_NAME = EntityDataManager.defineId(Dog.class, EntityDataSerializers.OPTIONAL_COMPONENT);
+    private static final DataParameter<Optional<Component>> LAST_KNOWN_NAME = EntityDataManager.defineId(Dog.class, DataSerializers.OPTIONAL_COMPONENT);
     
     /**
      *     Bit number      Decimal Val         Flag
@@ -178,14 +179,14 @@ public class Dog extends AbstractDog {
      *     .
      *     31              2^31                <Reserved>
      */
-    private static final DataParameter<Integer> DOG_FLAGS = EntityDataManager.defineId(Dog.class, EntityDataSerializers.INT);
+    private static final DataParameter<Integer> DOG_FLAGS = EntityDataManager.defineId(Dog.class, DataSerializers.INT);
 
-    private static final DataParameter<Float> HUNGER_INT = EntityDataManager.defineId(Dog.class, EntityDataSerializers.FLOAT);
+    private static final DataParameter<Float> HUNGER_INT = EntityDataManager.defineId(Dog.class, DataSerializers.FLOAT);
    
-    private static final DataParameter<ItemStack> BONE_VARIANT = EntityDataManager.defineId(Dog.class, EntityDataSerializers.ITEM_STACK);
+    private static final DataParameter<ItemStack> BONE_VARIANT = EntityDataManager.defineId(Dog.class, DataSerializers.ITEM_STACK);
 
-    private static final DataParameter<Integer> ANIMATION = EntityDataManager.defineId(Dog.class, EntityDataSerializers.INT);
-    private static final DataParameter<Integer> ANIM_SYNC_TIME = EntityDataManager.defineId(Dog.class, EntityDataSerializers.INT);
+    private static final DataParameter<Integer> ANIMATION = EntityDataManager.defineId(Dog.class, DataSerializers.INT);
+    private static final DataParameter<Integer> ANIM_SYNC_TIME = EntityDataManager.defineId(Dog.class, DataSerializers.INT);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
     private static final Cache<DataParameter<List<AccessoryInstance>>> ACCESSORIES =  Cache.make(() -> (DataParameter<List<AccessoryInstance>>) EntityDataManager.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get().getSerializer()));
@@ -200,7 +201,7 @@ public class Dog extends AbstractDog {
     private static final Cache<DataParameter<DogSize>> DOG_SIZE = Cache.make(() -> (DataParameter<DogSize>) EntityDataManager.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER.get().getSerializer()));
     private static final Cache<DataParameter<DogSkinData>> CUSTOM_SKIN = Cache.make(() -> (DataParameter<DogSkinData>) EntityDataManager.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER.get().getSerializer()));
 
-    public static final void initDataParameters() { 
+    public static final void initDataParameters() {
         ACCESSORIES.get();
         TALENTS.get();
         DOG_LEVEL.get();
@@ -326,8 +327,8 @@ public class Dog extends AbstractDog {
         this.entityData.define(DOG_SIZE.get(), DogSize.MODERATO);
         this.entityData.define(BONE_VARIANT, ItemStack.EMPTY);
         this.entityData.define(ARTIFACTS.get(), new ArrayList<DoggyArtifactItem>(3));
-        this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
-        this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+        this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> DataSerializers.OPTIONAL_BLOCK_POS));
+        this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> DataSerializers.OPTIONAL_BLOCK_POS));
         this.entityData.define(ANIMATION, 0);
         this.entityData.define(ANIM_SYNC_TIME, 0);
     }
@@ -2146,7 +2147,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel worldIn, AgeableMob partner) {
+    public AgeableMob getBreedOffspring(ServerWorld worldIn, AgeableEntity partner) {
         Dog child = DoggyEntityTypes.DOG.get().create(worldIn);
         UUID uuid = this.getOwnerUUID();
 

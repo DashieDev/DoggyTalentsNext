@@ -1,7 +1,7 @@
 package doggytalents.common.util.CachedSearchUtil;
 
 import doggytalents.common.entity.Dog;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 
 import static doggytalents.common.util.CachedSearchUtil.PoolValues.*;
 

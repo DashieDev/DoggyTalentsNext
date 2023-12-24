@@ -20,7 +20,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.Player;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;

@@ -12,7 +12,7 @@ import net.minecraft.entity.animal.Wolf;
 import net.minecraft.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 
 public class WolfBegAtTreatGoal extends Goal {
    private final Wolf wolf;

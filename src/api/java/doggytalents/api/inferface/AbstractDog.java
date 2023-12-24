@@ -23,22 +23,22 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.control.LookControl;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.navigation.PathNavigation;
-import net.minecraft.entity.ai.attributes.AttributeInstance;
-import net.minecraft.entity.TamableAnimal;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.animal.Wolf;
-import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
-public abstract class AbstractDog extends TamableAnimal implements IDog {
+public abstract class AbstractDog extends TameableEntity implements IDog {
 
-    protected AbstractDog(EntityType<? extends TamableAnimal> type, Level worldIn) {
+    protected AbstractDog(EntityType<? extends TameableEntity> type, World worldIn) {
         super(type, worldIn);
     }
 
     public void setAttributeModifier(Attribute attribute, UUID modifierUUID, BiFunction<AbstractDog, UUID, AttributeModifier> modifierGenerator) {
-        AttributeInstance attributeInst = this.getAttribute(attribute);
+        ModifiableAttributeInstance attributeInst = this.getAttribute(attribute);
 
         AttributeModifier currentModifier = attributeInst.getModifier(modifierUUID);
 
@@ -80,8 +80,8 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     }
 
     public void consumeItemFromStack(@Nullable Entity entity, ItemStack stack) {
-        if (entity instanceof Player) {
-            super.usePlayerItem((Player) entity, InteractionHand.MAIN_HAND, stack);
+        if (entity instanceof PlayerEntity) {
+            super.usePlayerItem((PlayerEntity) entity, stack);
         } else {
             stack.shrink(1);
         }
@@ -230,7 +230,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     }
 
     //Syntactic Sugar to imitate 1.20.
-    public Level level() { return this.level; }
+    public World level() { return this.level; }
     public boolean onGround() { return this.isOnGround(); }
 
     public boolean canStillEat() {

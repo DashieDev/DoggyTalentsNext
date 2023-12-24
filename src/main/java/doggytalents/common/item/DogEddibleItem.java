@@ -20,7 +20,7 @@ import net.minecraft.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 
 public abstract class DogEddibleItem extends Item implements IDogEddible {
 

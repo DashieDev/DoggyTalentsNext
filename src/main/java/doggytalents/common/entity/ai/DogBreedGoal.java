@@ -5,7 +5,7 @@ import doggytalents.common.util.EntityUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;

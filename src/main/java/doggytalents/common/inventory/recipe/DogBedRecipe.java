@@ -11,7 +11,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 
 public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<CraftingContainer> {

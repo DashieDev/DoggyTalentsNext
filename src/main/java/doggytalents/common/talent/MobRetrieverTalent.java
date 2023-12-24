@@ -19,7 +19,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.TamableAnimal;
 import net.minecraft.entity.monster.Enemy;
 import net.minecraft.entity.player.Player;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 
 public class MobRetrieverTalent extends TalentInstance {
 

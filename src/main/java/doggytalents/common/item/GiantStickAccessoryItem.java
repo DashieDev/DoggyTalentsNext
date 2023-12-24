@@ -14,7 +14,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class GiantStickAccessoryItem extends AccessoryItem{

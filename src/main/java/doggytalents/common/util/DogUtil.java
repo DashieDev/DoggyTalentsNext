@@ -28,7 +28,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;

@@ -4,7 +4,7 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.storage.DogLocationStorage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.DummySavedData;
 
 public class DogLocationStorageMigration {

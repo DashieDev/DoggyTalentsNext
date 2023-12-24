@@ -3,7 +3,7 @@ package doggytalents.common.entity.ai.nav;
 import doggytalents.common.entity.Dog;
 import net.minecraft.entity.Mob;
 import net.minecraft.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 import net.minecraft.world.level.pathfinder.PathFinder;
 
 public class DogWaterBoundNavigation extends WaterBoundPathNavigation implements IDogNavLock {

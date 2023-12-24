@@ -20,7 +20,7 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.navigation.PathNavigation;
 import net.minecraft.entity.ai.util.LandRandomPos;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
