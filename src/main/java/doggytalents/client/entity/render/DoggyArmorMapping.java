@@ -71,7 +71,6 @@ public class DoggyArmorMapping {
         var armorLoc = new ResourceLocation(armor.getMaterial().getName());
         var namespace = armorLoc.getNamespace();
         var path = armorLoc.getPath();
-        armor.onArmorTick(stack, null, null)
 
         String s = "textures/models/armor/" + path + "_layer_1.png";
         var computedRes = new ResourceLocation(namespace, s);
