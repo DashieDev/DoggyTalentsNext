@@ -1,17 +1,22 @@
 package doggytalents.client.entity.render;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+
 import doggytalents.DoggyAccessories;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.client.event.ClientEventHandler;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Resources;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -22,7 +27,7 @@ import java.util.Map;
 
 public class DoggyArmorMapping {
 
-    private static final Map<Item, ResourceLocation> MAPPING = new ImmutableMap.Builder<Item, ResourceLocation>()
+    private static final Map<Item, ResourceLocation> LEGACY_MAPPING = new ImmutableMap.Builder<Item, ResourceLocation>()
         .put(Items.IRON_HELMET,      Resources.IRON_HELMET)
         .put(Items.DIAMOND_HELMET,   Resources.DIAMOND_HELMET)
         .put(Items.GOLDEN_HELMET,    Resources.GOLDEN_HELMET)
@@ -50,8 +55,28 @@ public class DoggyArmorMapping {
         .put(Items.NETHERITE_LEGGINGS, Resources.NETHERITE_BODY_PIECE)
        .build();
 
+    private static Map<Item, ResourceLocation> MAPPING = Maps.newConcurrentMap();
+
+    private static ResourceLocation computeArmorTexture(Item item) {
+        if (!(item instanceof ArmorItem armor))
+            return Resources.DEFAULT_DOG_ARMOR;
+
+        String s = "textures/models/armor/" + armor.getMaterial().getName() + "_layer_1.png";
+        if (!(ClientEventHandler.vertifyArmorTexture(s)))
+            return Resources.DEFAULT_DOG_ARMOR;
+        
+        return new ResourceLocation(s);
+    }
+
     public static ResourceLocation getMappedResource(Item item) {
-        var x = MAPPING.get(item);
+        if (ConfigHandler.CLIENT.USE_LEGACY_DOG_ARMOR_RENDER.get())
+            return getLegacyMappedResource(item);
+
+        return MAPPING.computeIfAbsent(item, DoggyArmorMapping::computeArmorTexture);
+    }
+
+    public static ResourceLocation getLegacyMappedResource(Item item) {
+        var x = LEGACY_MAPPING.get(item);
         if (x != null) return x;
         var slot = LivingEntity.getEquipmentSlotForItem(new ItemStack(item));
         switch (slot) {

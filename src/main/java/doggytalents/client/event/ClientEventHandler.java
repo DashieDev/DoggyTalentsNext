@@ -241,6 +241,12 @@ public class ClientEventHandler {
         return new ResourceLocation(loc.getNamespace(), "textures/" + loc.getPath() + ".png");
     }
 
+    public static boolean vertifyArmorTexture(String loc) {
+        var res = Minecraft.getInstance().getResourceManager()
+            .getResource(new ResourceLocation(loc));
+        return res.isPresent();
+    }
+
     public static boolean shouldClientBlockPick(Dog dog) {
         var player = Minecraft.getInstance().player;
         if (player == null)

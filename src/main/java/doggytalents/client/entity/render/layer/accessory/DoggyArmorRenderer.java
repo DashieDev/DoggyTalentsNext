@@ -33,10 +33,14 @@ import net.minecraft.world.item.ItemStack;
 public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
 
     private DogArmorModel model;
+    private DogArmorModel newModel;
+    private DogArmorModel legacyModel;
 
     public DoggyArmorRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);
-        this.model = new DogArmorModel(ctx.bakeLayer(ClientSetup.DOG_ARMOR));
+        this.newModel = new DogArmorModel(ctx.bakeLayer(ClientSetup.DOG_ARMOR));
+        this.legacyModel = new DogArmorModel(ctx.bakeLayer(ClientSetup.DOG_ARMOR_LEGACY));
+        this.model = newModel;
     }
 
     @Override
@@ -58,6 +62,11 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
 
         Optional<TalentInstance> inst = dog.getTalent(DoggyTalents.DOGGY_ARMOR);
         if (!inst.isPresent()) return;
+
+        if (ConfigHandler.CLIENT.USE_LEGACY_DOG_ARMOR_RENDER.get())
+            this.model = this.legacyModel;
+        else
+            this.model = this.newModel;
 
         var parentModel = this.getParentModel();
         parentModel.copyPropertiesTo(this.model);

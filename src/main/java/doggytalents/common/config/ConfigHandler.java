@@ -82,6 +82,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DISPLAY_SMOKE_WHEN_ON_FIRE;
         public ForgeConfigSpec.BooleanValue MOUTH_ITEM_FORCE_RENDER;
         public ForgeConfigSpec.IntValue MAX_ANIMATION_LATENCY_ALLOWED;
+        public ForgeConfigSpec.BooleanValue USE_LEGACY_DOG_ARMOR_RENDER;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -185,6 +186,13 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Provide a non positive integer to disable this. Value from 0 to 7 both inclusive will be defaulted to 7.")
                 .translation("doggytalents.config.client.max_animation_latency_allowed")
                 .defineInRange("max_animation_latency_allowed", 10, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            USE_LEGACY_DOG_ARMOR_RENDER = builder
+                .comment("Currently DTN is utilizing a new system for rendering Doggy Armor's Armor")
+                .comment("which allow DTN to directly use any texture which the armor item provided")
+                .comment("for the player, thus better replicating third-party armor. Set this to true")
+                .comment("if you prefer to use the old system instead.")
+                .translation("doggytalents.config.client.use_legacy_dog_armor_render")
+                .define("use_legacy_dog_armor_render", false);
             builder.pop();
         }
 
