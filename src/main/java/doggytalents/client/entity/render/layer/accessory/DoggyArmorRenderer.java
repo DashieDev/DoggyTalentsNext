@@ -75,25 +75,25 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
         if (dog.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof ArmorItem) {
             var itemStack = dog.getItemBySlot(EquipmentSlot.HEAD);
             this.model.setHelmet();
-            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem()), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
+            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
         }
 
         if (dog.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof ArmorItem) {
             var itemStack = dog.getItemBySlot(EquipmentSlot.CHEST);
             this.model.setChestplate();
-            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem()), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
+            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
         }
 
         if (dog.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof ArmorItem) {
             var itemStack = dog.getItemBySlot(EquipmentSlot.LEGS);
             this.model.setLeggings();
-            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem()), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
+            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
         }
 
         if (dog.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof ArmorItem) {
             var itemStack = dog.getItemBySlot(EquipmentSlot.FEET);
             this.model.setBoot();
-            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem()), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
+            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
         }
     }
 
