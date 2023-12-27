@@ -53,7 +53,6 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        // Only show armour if dog is tamed or visible
         if (!dog.isTame() || dog.isInvisible()) {
             return;
         }
