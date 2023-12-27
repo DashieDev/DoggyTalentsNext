@@ -10,10 +10,12 @@ import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.config.ConfigHandler;
+import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
@@ -24,6 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class DoggyArmorMapping {
 
@@ -57,22 +60,43 @@ public class DoggyArmorMapping {
 
     private static Map<Item, ResourceLocation> MAPPING = Maps.newConcurrentMap();
 
-    private static ResourceLocation computeArmorTexture(Item item) {
+    private static ResourceLocation computeArmorTexture(Item item, Dog dog, ItemStack stack) {
         if (!(item instanceof ArmorItem armor))
             return Resources.DEFAULT_DOG_ARMOR;
 
-        String s = "textures/models/armor/" + armor.getMaterial().getName() + "_layer_1.png";
-        if (!(ClientEventHandler.vertifyArmorTexture(s)))
+        var preferedLocOptional = computePreferedArmorLoc(item, dog, stack);
+        if (preferedLocOptional.isPresent())
+            return preferedLocOptional.get();
+
+        var armorLoc = new ResourceLocation(armor.getMaterial().getName());
+        var namespace = armorLoc.getNamespace();
+        var path = armorLoc.getPath();
+        armor.onArmorTick(stack, null, null)
+
+        String s = "textures/models/armor/" + path + "_layer_1.png";
+        var computedRes = new ResourceLocation(namespace, s);
+        if (!(ClientEventHandler.vertifyArmorTexture(computedRes)))
             return Resources.DEFAULT_DOG_ARMOR;
         
-        return new ResourceLocation(s);
+        return computedRes;
     }
 
-    public static ResourceLocation getMappedResource(Item item) {
+    private static Optional<ResourceLocation> computePreferedArmorLoc(Item item, Dog dog, ItemStack stack) {
+        var preferedLocStr = net.minecraftforge.client.ForgeHooksClient.getArmorTexture(
+            dog, stack, Resources.DEFAULT_DOG_ARMOR.toString(), EquipmentSlot.CHEST, null);
+        var preferedLoc = new ResourceLocation(preferedLocStr);
+        if (preferedLoc.equals(Resources.DEFAULT_DOG_ARMOR))
+            return Optional.empty();
+        if (!(ClientEventHandler.vertifyArmorTexture(preferedLoc)))
+            return Optional.empty();
+        return Optional.ofNullable(preferedLoc);
+    }
+
+    public static ResourceLocation getMappedResource(Item item, Dog dog, ItemStack stack) {
         if (ConfigHandler.CLIENT.USE_LEGACY_DOG_ARMOR_RENDER.get())
             return getLegacyMappedResource(item);
 
-        return MAPPING.computeIfAbsent(item, DoggyArmorMapping::computeArmorTexture);
+        return MAPPING.computeIfAbsent(item, x -> computeArmorTexture(x, dog, stack));
     }
 
     public static ResourceLocation getLegacyMappedResource(Item item) {
