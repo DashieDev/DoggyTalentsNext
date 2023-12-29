@@ -157,6 +157,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.GRAND_PIANO_WHITE);
         generated(DoggyItems.UPRIGHT_PIANO_BLACK);
         generated(DoggyItems.UPRIGHT_PIANO_BROWN);
+        plushieToy(DoggyItems.DOG_PLUSHIE_TOY);
 
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);
@@ -205,6 +206,10 @@ public class DTItemModelProvider extends ItemModelProvider {
     }
 
     private ItemModelBuilder ceremonialGarb(Supplier<? extends ItemLike> item) {
+        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
+    }
+
+    private ItemModelBuilder plushieToy(Supplier<? extends ItemLike> item) {
         return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
     }
 
