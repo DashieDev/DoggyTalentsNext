@@ -185,6 +185,8 @@ public class DoggyItems {
         () -> new PianoItem(DoggyEntityTypes.UPRIGHT_PIANO_BLACK));
     public static final RegistryObject<PianoItem> UPRIGHT_PIANO_BROWN = register("upright_piano_brown_item", 
         () -> new PianoItem(DoggyEntityTypes.UPRIGHT_PIANO_BROWN));
+    public static final RegistryObject<DogPlushieItem> DOG_PLUSHIE_TOY = register("dog_plushie_toy_item", 
+        () -> new DogPlushieItem());
 
     private static Item.Properties createInitialProp() {
         return new Item.Properties().tab(DoggyItemGroups.GENERAL);
@@ -344,6 +346,12 @@ public class DoggyItems {
 
         Util.acceptOrElse(DoggyItems.CERE_GARB, (item) -> {
             itemColors.register((stack, tintIndex) -> {
+                return tintIndex != 1 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
+             }, item);
+        }, DoggyBlocks::logError);
+
+        Util.acceptOrElse(DoggyItems.DOG_PLUSHIE_TOY, (item) -> {
+            event.register((stack, tintIndex) -> {
                 return tintIndex != 1 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);

@@ -2,6 +2,7 @@ package doggytalents;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DoggyBeamEntity;
+import doggytalents.common.entity.misc.DogPlushie;
 import doggytalents.common.entity.misc.Piano;
 import doggytalents.common.entity.misc.Piano.PianoColor;
 import doggytalents.common.entity.misc.Piano.PianoType;
@@ -65,6 +66,13 @@ public class DoggyEntityTypes {
             .setUpdateInterval(4)
             .setTrackingRange(10)
             .setShouldReceiveVelocityUpdates(false));
+
+    public static final RegistryObject<EntityType<DogPlushie>> DOG_PLUSHIE_TOY = register("dog_plushie_toy", (type, level) -> new DogPlushie(type, level), MobCategory.MISC,
+        b -> b
+            .sized(0.5f, 0.5f)
+            .setUpdateInterval(3)
+            .setTrackingRange(10)
+            .setShouldReceiveVelocityUpdates(true));
 
     private static <E extends Entity, T extends EntityType<E>> RegistryObject<EntityType<E>> register(final String name, final EntityType.EntityFactory<E> sup, final MobCategory classification, final Function<EntityType.Builder<E>, EntityType.Builder<E>> builder) {
          return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(Util.getResourcePath(name)));
