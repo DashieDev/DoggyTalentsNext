@@ -11,9 +11,9 @@ public class Constants {
     public static final String VANILLA_ID = "minecraft";
     public static final String VANILLA_NAME = "Minecraft";
 
-    // Network
+    // Network (using int protocol for 1.20.2+)
     public static final ResourceLocation CHANNEL_NAME = Util.getResource("channel");
-    public static final String PROTOCOL_VERSION = Integer.toString(3);
+    public static final int PROTOCOL_VERSION = 3;
 
     // Storage
     public static final String STORAGE_DOG_RESPAWN = MOD_ID + "DeadDogs";

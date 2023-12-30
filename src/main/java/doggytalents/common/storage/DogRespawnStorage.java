@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
@@ -32,7 +33,7 @@ public class DogRespawnStorage extends SavedData {
         ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
 
         DimensionDataStorage storage = overworld.getDataStorage();
-        return storage.computeIfAbsent(DogRespawnStorage::load, DogRespawnStorage::new, Constants.STORAGE_DOG_RESPAWN);
+        return storage.computeIfAbsent(storageFactory(), Constants.STORAGE_DOG_RESPAWN);
     }
 
     public Stream<DogRespawnData> getDogs(@Nonnull UUID ownerId) {
@@ -130,6 +131,11 @@ public class DogRespawnStorage extends SavedData {
         compound.put("respawnData", list);
 
         return compound;
+    }
+
+    //1.20.2+
+    public static Factory<DogRespawnStorage> storageFactory() {
+        return new Factory<>(DogRespawnStorage::new, DogRespawnStorage::load, DataFixTypes.LEVEL);
     }
 
 }

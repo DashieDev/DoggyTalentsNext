@@ -19,8 +19,8 @@ import net.minecraft.world.level.Level;
 
 public class BirthdayHatRecipe extends CustomRecipe {
 
-    public BirthdayHatRecipe(ResourceLocation p_252125_, CraftingBookCategory p_249010_) {
-        super(p_252125_, p_249010_);
+    public BirthdayHatRecipe(CraftingBookCategory p_249010_) {
+        super(p_249010_);
     }
 
     @Override

@@ -9,7 +9,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.DogDeTrainData;
 import doggytalents.common.network.packet.data.DogTalentData;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 
 public class DogDeTrainPacket extends DogPacket<DogDeTrainData> {
 

@@ -18,7 +18,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkHooks;
 
 import java.util.List;
 
@@ -129,7 +128,7 @@ public class Screens {
         if (!dogIn.canInteract(player))
             return;
         if (dogIn.isDoingFine()) {
-            NetworkHooks.openScreen(player, new PackPuppyContainerProvider(dogIn), (buf) -> {
+            player.openMenu(new PackPuppyContainerProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
             });
         }
@@ -137,7 +136,7 @@ public class Screens {
 
     public static void openDogInventoriesScreen(ServerPlayer player, List<Dog> dogIn) {
         if (!dogIn.isEmpty()) {
-            NetworkHooks.openScreen(player, new DogInventoriesContainerProvider(dogIn), (buf) -> {
+            player.openMenu(new DogInventoriesContainerProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.size());
                 for (Dog dog : dogIn) {
                     buf.writeInt(dog.getId());
@@ -147,12 +146,12 @@ public class Screens {
     }
 
     public static void openFoodBowlScreen(ServerPlayer player, FoodBowlTileEntity foodBowl) {
-        NetworkHooks.openScreen(player, foodBowl, foodBowl.getBlockPos());
+        player.openMenu(foodBowl, foodBowl.getBlockPos());
     }
 
     public static void openTreatBagScreen(ServerPlayer player, ItemStack stackIn, int slotId) {
         if (stackIn.getItem() == DoggyItems.TREAT_BAG.get()) {
-            NetworkHooks.openScreen(player, new TreatBagContainerProvider(stackIn, slotId), buf -> {
+            player.openMenu(new TreatBagContainerProvider(stackIn, slotId), buf -> {
                 buf.writeVarInt(slotId);
                 buf.writeItem(stackIn);
             });
@@ -163,7 +162,7 @@ public class Screens {
         if (!dogIn.canInteract(player))
             return;
         if (dogIn.isDoingFine() && dogIn.getDogLevel(DoggyTalents.DOGGY_ARMOR) > 0) {
-            NetworkHooks.openScreen(player, new DogArmorContainerProvider(dogIn), (buf) -> {
+            player.openMenu(new DogArmorContainerProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
             });
         }
@@ -173,7 +172,7 @@ public class Screens {
         if (!dogIn.canInteract(player))
             return;
         if (dogIn.isDoingFine() && dogIn.getDogLevel(DoggyTalents.DOGGY_TOOLS) > 0) {
-            NetworkHooks.openScreen(player, new DoggyToolsMenuProvider(dogIn), (buf) -> {
+            player.openMenu(new DoggyToolsMenuProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.getId());
             });
         }

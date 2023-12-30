@@ -10,6 +10,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -34,7 +35,7 @@ public class DogLocationStorage extends SavedData {
         ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
 
         DimensionDataStorage storage = overworld.getDataStorage();
-        return storage.computeIfAbsent(DogLocationStorage::load, DogLocationStorage::new, Constants.STORAGE_DOG_LOCATION);
+        return storage.computeIfAbsent(storageFactory(), Constants.STORAGE_DOG_LOCATION);
     }
 
     public Stream<DogLocationData> getDogs(LivingEntity owner) {
@@ -177,6 +178,11 @@ public class DogLocationStorage extends SavedData {
         if (data == null)
             return;
         data.setSessionUUID(sessionUUID);
+    }
+
+    //1.20.2+
+    public static Factory<DogLocationStorage> storageFactory() {
+        return new Factory<>(DogLocationStorage::new, DogLocationStorage::load, DataFixTypes.LEVEL);
     }
 
 }

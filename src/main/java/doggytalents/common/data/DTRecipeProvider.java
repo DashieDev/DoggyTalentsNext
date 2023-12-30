@@ -5,6 +5,7 @@ import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyRecipeSerializers;
 import doggytalents.common.util.Util;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.HashCache;
@@ -28,7 +29,7 @@ public class DTRecipeProvider extends RecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.THROW_BONE.get())
             .pattern(" X ")
             .pattern("XYX")
@@ -817,9 +818,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
     }
 
-    private void registerTripleCooking(Consumer<FinishedRecipe> consumer, Ingredient input, Item output,
+    private void registerTripleCooking(RecipeOutput consumer, Ingredient input, Item output,
         float xp, int lengthTicks,
-        String unlockedByStr, InventoryChangeTrigger.TriggerInstance trigger) {
+        String unlockedByStr, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
         var baseNameId = ForgeRegistries.ITEMS.getKey(output).getPath();
         SimpleCookingRecipeBuilder.smelting(input, 
             RecipeCategory.FOOD, 

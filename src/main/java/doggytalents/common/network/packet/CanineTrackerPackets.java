@@ -30,7 +30,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 
 public class CanineTrackerPackets {
@@ -70,7 +70,7 @@ public class CanineTrackerPackets {
                     .collect(Collectors.toList());
 
                 PacketHandler.send(
-                    PacketDistributor.PLAYER.with(() -> sender), 
+                    PacketDistributor.PLAYER.with(sender), 
                     new ResponseDogsData(dogLs)
                 );
     
@@ -226,7 +226,7 @@ public class CanineTrackerPackets {
                 if (correct_blockpos.distSqr(data.pos) < 4) return;
 
                 PacketHandler.send(
-                    PacketDistributor.PLAYER.with(() -> sender), 
+                    PacketDistributor.PLAYER.with(sender), 
                     new ResponsePosUpdateData(data.uuid, correct_blockpos)
                 );
     

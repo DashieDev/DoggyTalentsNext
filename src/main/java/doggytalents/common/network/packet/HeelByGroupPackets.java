@@ -21,7 +21,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundSource;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 
 public class HeelByGroupPackets {
@@ -63,7 +63,7 @@ public class HeelByGroupPackets {
                 }
 
                 PacketHandler.send(
-                    PacketDistributor.PLAYER.with(() -> sender), 
+                    PacketDistributor.PLAYER.with(sender), 
                     new HeelByGroupData.RESPONSE_GROUP_LIST(groups_response)
                 );
     

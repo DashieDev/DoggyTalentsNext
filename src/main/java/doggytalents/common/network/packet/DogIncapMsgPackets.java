@@ -9,7 +9,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogIncapMsgData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 
 public class DogIncapMsgPackets {
@@ -32,7 +32,7 @@ public class DogIncapMsgPackets {
                 return;
             var msg = dog.incapacitatedMananger.getIncapMsg();
             PacketHandler.send(
-                PacketDistributor.PLAYER.with(() -> sender), 
+                PacketDistributor.PLAYER.with(sender), 
                 new DogIncapMsgData.Response(msg, dog.getId())
             );
         }

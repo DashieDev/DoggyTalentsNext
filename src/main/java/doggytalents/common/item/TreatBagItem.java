@@ -27,7 +27,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -53,7 +52,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
         }
         else {
-            if (playerIn instanceof ServerPlayer && !(playerIn instanceof FakePlayer)) {
+            if (playerIn instanceof ServerPlayer) {
                 ServerPlayer serverPlayer = (ServerPlayer) playerIn;
 
                 Screens.openTreatBagScreen(serverPlayer, stack, playerIn.getInventory().selected);

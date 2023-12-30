@@ -8,7 +8,7 @@ import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.ForceChangeOwnerData;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 
 public class ForceChangeOwnerPacket extends DogPacket<ForceChangeOwnerData> {
     

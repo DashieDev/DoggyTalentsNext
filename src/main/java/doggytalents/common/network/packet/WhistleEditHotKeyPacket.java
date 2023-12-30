@@ -8,7 +8,7 @@ import doggytalents.common.network.packet.data.WhisltleEditHotKeyData;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 
 public class WhistleEditHotKeyPacket implements IPacket<WhisltleEditHotKeyData> {
 

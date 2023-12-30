@@ -544,8 +544,8 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public double getMyRidingOffset() {
-        return this.getVehicle() instanceof Player ? 0.5D : 0.2D;
+    public float getMyRidingOffset(Entity e) {
+        return e instanceof Player ? 0.5f : 0.2f;
     }
 
     @Override
@@ -577,8 +577,9 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public double getPassengersRidingOffset() {
-        return (double)this.getRealDimensions().height * 0.75D;
+    public Vec3 getPassengerRidingPosition(Entity passenger) {
+        var ret = (double)this.getRealDimensions().height * 0.75D;
+        return new Vec3(0, ret, 0);
     }
 
     public EntityDimensions getRealDimensions() {
@@ -599,11 +600,11 @@ public class Dog extends AbstractDog {
 
     private EntityDimensions computeRidingDimension(EntityDimensions self_dim) {
         float total_width = self_dim.width;
-        float total_height = (float) this.getPassengersRidingOffset();
+        float total_height = (float) this.getPassengerRidingPosition(this.getPassengers().get(0)).y;
         
         var passenger = this.getPassengers().get(0);
         total_width = Math.max(total_width, passenger.getBbWidth());
-        total_height += passenger.getBbHeight() + passenger.getMyRidingOffset();
+        total_height += passenger.getBbHeight() + passenger.getMyRidingOffset(this);
         
         if (total_width >= 1f)
             total_width = 1f;
@@ -1410,7 +1411,7 @@ public class Dog extends AbstractDog {
             super.stopRiding();
             var e1 = this.getVehicle();
             if (e0 != e1 && e0 instanceof ServerPlayer player) {
-                PacketHandler.send(PacketDistributor.PLAYER.with(() -> player), 
+                PacketHandler.send(PacketDistributor.PLAYER.with(player), 
                     new DogMountData(this.getId(), false)
                 );
             }
@@ -1434,7 +1435,7 @@ public class Dog extends AbstractDog {
 
         if (!this.level().isClientSide && result) {
             if (entity instanceof ServerPlayer player) {
-                PacketHandler.send(PacketDistributor.PLAYER.with(() -> player), 
+                PacketHandler.send(PacketDistributor.PLAYER.with(player), 
                     new DogMountData(this.getId(), true)
                 );
             }
@@ -1484,10 +1485,10 @@ public class Dog extends AbstractDog {
         }
 
         // Start: Logic copied from the super call and altered to apply the reduced fall damage to passengers too. #358
-        float[] ret = net.minecraftforge.common.ForgeHooks.onLivingFall(this, distance, damageMultiplier);
-        if (ret == null) return false;
-        distance = ret[0];
-        damageMultiplier = ret[1];
+        var ret = net.minecraftforge.event.ForgeEventFactory.onLivingFall(this, distance, damageMultiplier);
+        if (ret.isCanceled()) return false;
+        distance = ret.getDistance();
+        damageMultiplier = ret.getDamageMultiplier();
 
         int i = this.calculateFallDamage(distance, damageMultiplier);
 
@@ -1829,7 +1830,7 @@ public class Dog extends AbstractDog {
 
 
         if (critModifiers != null && attackDamageInst != null) {
-            critModifiers.forEach(attackDamageInst::removeModifier);
+            critModifiers.forEach(x -> attackDamageInst.removeModifier(x.getId()));
         }
 
         boolean flag = target.hurt(this.damageSources().mobAttack(this), damage);

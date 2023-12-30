@@ -27,7 +27,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 
 /**
  * @Author DashieDev
@@ -61,7 +61,7 @@ public class ConductingBonePackets {
                         .collect(Collectors.toList());
 
                     PacketHandler.send(
-                        PacketDistributor.PLAYER.with(() -> sender), 
+                        PacketDistributor.PLAYER.with(sender), 
                         new ResponseDogsData(dogLs)
                     );
                 }

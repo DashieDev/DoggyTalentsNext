@@ -40,7 +40,7 @@ public class DogForceMigrateOwnerScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-        this.renderBackground(graphics);
+        this.renderBackground(graphics, mouseX, mouseY, pTicks);
         super.render(graphics, mouseX, mouseY, pTicks);
 
         var stack = graphics.pose();

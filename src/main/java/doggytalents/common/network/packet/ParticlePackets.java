@@ -15,7 +15,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.function.Supplier;
@@ -53,7 +53,7 @@ public class ParticlePackets {
         public static void sendCritEmitterPacketToNearClients(Entity e) {
             final int RADIUS = 64;
             PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(e.getX(), e.getY(), e.getZ(), RADIUS, e.level().dimension());
-            PacketHandler.send(PacketDistributor.NEAR.with(() -> tarp), new CritEmitterData(e.getId()));
+            PacketHandler.send(PacketDistributor.NEAR.with(tarp), new CritEmitterData(e.getId()));
         }
 
     }
@@ -119,7 +119,7 @@ public class ParticlePackets {
         public static void sendDogEatingParticlePacketToNearby(AbstractDog dog, ItemStack food) {
             final int RADIUS = 64;
             PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(dog.getX(), dog.getY(), dog.getZ(), RADIUS, dog.level().dimension());
-            PacketHandler.send(PacketDistributor.NEAR.with(() -> tarp), new DogEatingParticleData(dog.getId(), food));
+            PacketHandler.send(PacketDistributor.NEAR.with(tarp), new DogEatingParticleData(dog.getId(), food));
         }
         
     }
@@ -158,7 +158,7 @@ public class ParticlePackets {
         public static void sendDogStartShakingLavaPacketToNearByClients(AbstractDog dog) {
             final int RADIUS = 64;
             PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(dog.getX(), dog.getY(), dog.getZ(), RADIUS, dog.level().dimension());
-            PacketHandler.send(PacketDistributor.NEAR.with(() -> tarp), new DogStartShakingLavaData(dog.getId()));
+            PacketHandler.send(PacketDistributor.NEAR.with(tarp), new DogStartShakingLavaData(dog.getId()));
         }
 
     }

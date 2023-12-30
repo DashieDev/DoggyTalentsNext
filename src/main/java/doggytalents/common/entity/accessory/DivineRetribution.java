@@ -212,7 +212,7 @@ public class DivineRetribution extends Accessory implements IAccessoryHasModel {
             if (!recipeOptional.isPresent())
                 return null;
             var recipe = recipeOptional.get();
-            return recipe;
+            return recipe.value();
         }
     }
 }

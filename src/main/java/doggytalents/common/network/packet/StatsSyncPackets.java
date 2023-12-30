@@ -10,7 +10,7 @@ import doggytalents.common.network.packet.data.StatsSyncData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 
 public class StatsSyncPackets {
     public static class Request extends DogPacket<StatsSyncData.Request> {
@@ -28,7 +28,7 @@ public class StatsSyncPackets {
             var sender = ctx.get().getSender();
             if (!dogIn.canInteract(sender)) return;
             PacketHandler.send(
-                PacketDistributor.PLAYER.with(() -> sender), 
+                PacketDistributor.PLAYER.with(sender), 
                 new StatsSyncData.Response(dogIn.getId(), tracker)
             );
         }

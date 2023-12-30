@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.entity.render.DogScreenOverlays;
+import doggytalents.common.entity.Dog;
 import doggytalents.common.inventory.container.DogArmorContainer;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.gui.GuiGraphics;
@@ -26,7 +27,7 @@ public class DogArmorScreen extends AbstractContainerScreen<DogArmorContainer> {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(graphics);
+        this.renderBackground(graphics, mouseX, mouseY, partialTicks);
         super.render(graphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(graphics, mouseX, mouseY);
     }
@@ -39,8 +40,8 @@ public class DogArmorScreen extends AbstractContainerScreen<DogArmorContainer> {
         int y = (this.height - this.imageHeight) / 2;
         graphics.blit(Resources.DOGGY_ARMOR_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
         //TODO 1.19.4 ??
-        InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, x + 85, y + 62, 30, x + 85 - mouseX,
-            y + 65 - mouseY, this.container.getDog());
+        ScreenUtil.renderInInventory1_20_2(graphics, x + 86, y + 44, 30, x + 85 - mouseX,
+            y + 65 - mouseY, this.container.getDog(), mouseX, mouseY);
         renderArmorBar(graphics, x + 90, y + 5);
 
     
