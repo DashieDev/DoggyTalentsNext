@@ -49,7 +49,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         int e_mX = this.getRealX() + this.getSizeX()/2; 
         int e_mY = this.getRealY() + this.getSizeY()/2; 
 
-        renderDogInside(graphics, dog, e_mX, e_mY + 32, 50, e_mX - mouseX, e_mY - mouseY);
+        renderDogInside(graphics, dog, e_mX, e_mY + 32, 50, mouseX, mouseY);
 
         this.renderHealthBar(graphics, dog, e_mX - 41, this.getRealY() + this.getSizeY() - 10);
 
@@ -108,7 +108,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         }
 
         ScreenUtil.renderInInventory1_20_2(graphics, dog_mX, dog_mY - 32, size, 
-            lookX, lookY, dog, xMouse, yMouse);
+            lookX, lookY, dog);
 
         if (nameTooLong) {
             dog.setDogCustomName(currentDogName);

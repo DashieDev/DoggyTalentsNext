@@ -44,6 +44,6 @@ public class PackPuppyScreen extends AbstractContainerScreen<PackPuppyContainer>
             for (int k1 = 0; k1 < Mth.clamp(this.getMenu().getDogLevel(), 0, 5); k1++)
                 graphics.blit(Resources.GUI_PACK_PUPPY, l + 78 + 18 * k1, i1 + 9 + 18 * j1 + 15, 197, 2, 18, 18);
 
-        ScreenUtil.renderInInventory1_20_2(graphics, l + 42, i1 + 51, 30, xMouse, yMouse, this.getMenu().getDog(), xMouse, yMouse);
+        ScreenUtil.renderInInventory1_20_2(graphics, l + 42, i1 + 51, 30, xMouse, yMouse, this.getMenu().getDog());
     }
 }

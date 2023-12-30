@@ -40,11 +40,11 @@ public class ScreenUtil {
     }
 
     //1.20.2+
-    public static void renderInInventory1_20_2(GuiGraphics graphics, int dog_mX, int dog_mY, int size, float lookX, float lookY, AbstractDog dog, int mouseX, int mouseY) {
+    public static void renderInInventory1_20_2(GuiGraphics graphics, int dog_mX, int dog_mY, int size, float lookX, float lookY, AbstractDog dog) {
         var inflated_size = size + 60;
         InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, dog_mX - inflated_size/2, dog_mY - inflated_size/2,
             dog_mX + inflated_size/2, dog_mY + inflated_size/2, size, 
-            0.0625F, mouseX, mouseY, dog);
+            0.0625F, lookX, lookY, dog);
     }
 
 
