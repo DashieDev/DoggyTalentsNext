@@ -110,7 +110,7 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
 
         renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack), stack, buffer, light, dog, 1.0F, 1.0F, 1.0F);
         
-        var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack);
+        var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack, true);
         if (trim.isPresent()) {
             renderTrim(armor.getMaterial(), stack, buffer, light, trim.get(), this.model);
         }
@@ -126,7 +126,7 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
 
     private void renderTrim(ArmorMaterial material, PoseStack stack, MultiBufferSource buffer, int light, ArmorTrim trim, DogArmorModel model) {
         var textureatlassprite = this.dogArmorTrimAtlas.getSprite(trim.outerTexture(material));
-        var vertexconsumer = textureatlassprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet()));
+        var vertexconsumer = textureatlassprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet(trim.pattern().value().decal())));
         model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
