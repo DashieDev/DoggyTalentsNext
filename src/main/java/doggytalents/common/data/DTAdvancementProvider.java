@@ -8,8 +8,8 @@ import doggytalents.DoggyItems;
 import doggytalents.common.advancements.triggers.DogDrunkTrigger;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.FrameType;
-import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -38,6 +38,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -54,14 +55,14 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
     }   
 
 
-    private static Path getPath(Path pathIn, Advancement advancementIn) {
-        return pathIn.resolve("data/" + advancementIn.getId().getNamespace() + "/advancements/" + advancementIn.getId().getPath() + ".json");
-    }
+    // private static Path getPath(Path pathIn, Advancement advancementIn) {
+    //     return pathIn.resolve("data/" + advancementIn.getId().getNamespace() + "/advancements/" + advancementIn.getId().getPath() + ".json");
+    // }
 
     public static class DoggyAdvancementsSubProvider implements ForgeAdvancementProvider.AdvancementGenerator {
 
         @Override
-        public void generate(Provider registries, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
+        public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {
             var charm_advancement =
                 Advancement.Builder.advancement()
                     .display(
@@ -99,11 +100,11 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                             .itemUsedOnEntity(
                                 ItemPredicate.Builder.item()
                                     .of(DoggyItems.TRAINING_TREAT.get()),
-                                EntityPredicate.wrap(
+                                Optional.of(EntityPredicate.wrap(
                                     EntityPredicate.Builder.entity()
                                         .of(EntityType.WOLF)
                                         .build()
-                                )                              
+                                ))                   
                             )
                     )
                     .save(consumer, Util.getResourcePath("dtn_core/train_dog"));

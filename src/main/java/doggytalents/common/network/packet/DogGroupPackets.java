@@ -14,7 +14,7 @@ import doggytalents.common.entity.DogGroupsManager.DogGroup;
 import doggytalents.common.network.packet.data.DogGroupsData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.PacketHandler;
@@ -56,7 +56,7 @@ public class DogGroupPackets {
 
             if (update)
             PacketHandler.send(
-                PacketDistributor.PLAYER.with(() -> sender), 
+                PacketDistributor.PLAYER.with(sender), 
                 new DogGroupsData.UPDATE(dogIn.getId(), new ArrayList<>(groups.getGroupsReadOnly()))
             );
         }
@@ -77,7 +77,7 @@ public class DogGroupPackets {
             var groups = dogIn.getGroups();
             var sender = ctx.get().getSender();
             PacketHandler.send(
-                PacketDistributor.PLAYER.with(() -> sender), 
+                PacketDistributor.PLAYER.with(sender), 
                 new DogGroupsData.UPDATE(dogIn.getId(), new ArrayList<>(groups.getGroupsReadOnly()))
             );
         }

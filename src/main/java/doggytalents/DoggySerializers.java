@@ -2,7 +2,6 @@ package doggytalents;
 
 import doggytalents.common.entity.serializers.*;
 import doggytalents.common.lib.Constants;
-import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraftforge.registries.RegistryObject;
 

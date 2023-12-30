@@ -7,7 +7,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.DoggyTorchPlacingTorchData;
 import doggytalents.common.talent.DoggyTorchTalent;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 
 public class DoggyTorchPlacingTorchPacket extends DogPacket<DoggyTorchPlacingTorchData> {
 

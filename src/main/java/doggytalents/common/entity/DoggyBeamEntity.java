@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,8 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.network.packets.SpawnEntity;
 
 import java.util.UUID;
 
@@ -32,7 +32,7 @@ public class DoggyBeamEntity extends ThrowableProjectile implements IEntityAddit
         super(DoggyEntityTypes.DOG_BEAM.get(), livingEntityIn, worldIn);
     }
 
-    public DoggyBeamEntity(PlayMessages.SpawnEntity packet, Level worldIn) {
+    public DoggyBeamEntity(SpawnEntity packet, Level worldIn) {
         super(DoggyEntityTypes.DOG_BEAM.get(), worldIn);
     }
 
@@ -69,7 +69,8 @@ public class DoggyBeamEntity extends ThrowableProjectile implements IEntityAddit
 
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
+        //TODO 1.20.2 Hmm
+        return (Packet<ClientGamePacketListener>) new ClientboundAddEntityPacket(this);
     }
 
     @Override

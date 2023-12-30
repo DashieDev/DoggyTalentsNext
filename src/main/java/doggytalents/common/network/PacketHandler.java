@@ -68,10 +68,14 @@ public final class PacketHandler {
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
-        DoggyTalentsNext.HANDLER.send(target, message);
+        DoggyTalentsNext.HANDLER.send(message, target);
     }
 
     public static <D> void registerPacket(IPacket<D> packet, Class<D> dataClass) {
-        DoggyTalentsNext.HANDLER.registerMessage(PacketHandler.disc++, dataClass, packet::encode, packet::decode, packet::handle);
+        DoggyTalentsNext.HANDLER.messageBuilder(dataClass, PacketHandler.disc++)
+            .encoder(packet::encode)
+            .decoder(packet::decode)
+            .consumerNetworkThread(packet::doHandle)
+            .add();
     }
 }

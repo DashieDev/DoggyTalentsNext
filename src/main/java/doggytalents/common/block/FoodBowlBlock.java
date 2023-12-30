@@ -39,7 +39,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.EmptyHandler;
@@ -161,7 +160,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
                     IItemHandler bowlInventory = foodBowl.getInventory();
 
                     InventoryUtil.transferStacks((IItemHandlerModifiable) bagInventory, bowlInventory);
-                } else if (playerIn instanceof ServerPlayer && !(playerIn instanceof FakePlayer)) {
+                } else if (playerIn instanceof ServerPlayer) {
                     ServerPlayer serverPlayer = (ServerPlayer)playerIn;
 
                     Screens.openFoodBowlScreen(serverPlayer, foodBowl);

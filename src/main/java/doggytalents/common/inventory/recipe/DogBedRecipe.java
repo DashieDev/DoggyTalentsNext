@@ -18,8 +18,8 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
 
 public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<CraftingContainer> {
 
-    public DogBedRecipe(ResourceLocation resource, CraftingBookCategory p_249010_) {
-        super(resource, p_249010_);
+    public DogBedRecipe(CraftingBookCategory p_249010_) {
+        super(p_249010_);
     }
 
     @Override

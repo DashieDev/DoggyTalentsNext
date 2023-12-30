@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.feature.DogSize;
 import doggytalents.client.entity.render.DogScreenOverlays;
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.gui.Font;
@@ -31,6 +32,11 @@ public class DogStatusViewBoxElement extends AbstractElement {
 
     @Override
     public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+
+        //1.20.2
+        this.tMouseX = mouseX;
+        this.tMouseY = mouseY;
+        //
 
         int e_mX = this.getRealX() + this.getSizeX()/2; 
         int e_mY = this.getRealY() + this.getSizeY()/2; 
@@ -63,8 +69,8 @@ public class DogStatusViewBoxElement extends AbstractElement {
             dog.setDogCustomName(Component.literal(tempName));
         }
 
-        InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, dog_mX, dog_mY, size, 
-            lookX, lookY, dog);
+        ScreenUtil.renderInInventory1_20_2(graphics, dog_mX, dog_mY - 32, size, 
+            lookX, lookY, dog, tMouseX, tMouseY);
 
         if (nameTooLong) {
             dog.setDogCustomName(currentDogName);
@@ -159,6 +165,6 @@ public class DogStatusViewBoxElement extends AbstractElement {
         // this.minecraft.getProfiler().pop();
     }
 
-
+    private static int tMouseX, tMouseY;
     
 }

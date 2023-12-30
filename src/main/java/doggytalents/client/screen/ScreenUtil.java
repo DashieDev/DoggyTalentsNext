@@ -1,10 +1,15 @@
 package doggytalents.client.screen;
 
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import doggytalents.api.inferface.AbstractDog;
+import doggytalents.common.entity.Dog;
 
 public class ScreenUtil {
 
@@ -32,6 +37,14 @@ public class ScreenUtil {
         }
 
         return list;
+    }
+
+    //1.20.2+
+    public static void renderInInventory1_20_2(GuiGraphics graphics, int dog_mX, int dog_mY, int size, float lookX, float lookY, AbstractDog dog, int mouseX, int mouseY) {
+        var inflated_size = size + 60;
+        InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, dog_mX - inflated_size/2, dog_mY - inflated_size/2,
+            dog_mX + inflated_size/2, dog_mY + inflated_size/2, size, 
+            0.0625F, mouseX, mouseY, dog);
     }
 
 

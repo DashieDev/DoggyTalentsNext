@@ -36,7 +36,7 @@ public class StoreConnectedScreen extends Screen {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         Store.get(this).update();
         if (doRenderBackground())
-            this.renderBackground(graphics);
+            this.renderBackground(graphics, mouseX, mouseY, pTicks);
         super.render(graphics, mouseX, mouseY, pTicks);
     }
 
