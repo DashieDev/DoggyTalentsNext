@@ -53,7 +53,6 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        // Only show armour if dog is tamed or visible
         if (!dog.isTame() || dog.isInvisible()) {
             return;
         }
@@ -80,59 +79,59 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
         parentModel.copyPropertiesTo(this.model);
         this.model.sync(parentModel);
 
-        if (dog.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof ArmorItem armor) {
-            var itemStack = dog.getItemBySlot(EquipmentSlot.HEAD);
-            this.model.setHelmet();
-            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
-        
-            var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack);
-            if (trim.isPresent()) {
-                renderTrim(armor.getMaterial(), poseStack, buffer, packedLight, trim.get(), this.model);
-            }
-        }
-
-        if (dog.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof ArmorItem armor) {
-            var itemStack = dog.getItemBySlot(EquipmentSlot.CHEST);
-            this.model.setChestplate();
-            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
-            
-            var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack);
-            if (trim.isPresent()) {
-                renderTrim(armor.getMaterial(), poseStack, buffer, packedLight, trim.get(), this.model);
-            }
-        }
-
-        if (dog.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof ArmorItem armor) {
-            var itemStack = dog.getItemBySlot(EquipmentSlot.LEGS);
-            this.model.setLeggings();
-            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
-        
-            var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack);
-            if (trim.isPresent()) {
-                renderTrim(armor.getMaterial(), poseStack, buffer, packedLight, trim.get(), this.model);
-            }
-        }
-
-        if (dog.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof ArmorItem armor) {
-            var itemStack = dog.getItemBySlot(EquipmentSlot.FEET);
-            this.model.setBoot();
-            this.renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack), poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, itemStack.isEnchanted());
-        
-            var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack);
-            if (trim.isPresent()) {
-                renderTrim(armor.getMaterial(), poseStack, buffer, packedLight, trim.get(), this.model);
-            }
-        }
+        checkAndRenderSlot(dog, EquipmentSlot.HEAD, poseStack, buffer, packedLight);
+        checkAndRenderSlot(dog, EquipmentSlot.CHEST, poseStack, buffer, packedLight);
+        checkAndRenderSlot(dog, EquipmentSlot.LEGS, poseStack, buffer, packedLight);
+        checkAndRenderSlot(dog, EquipmentSlot.FEET, poseStack, buffer, packedLight);
     }
 
-    public static <T extends LivingEntity> void renderArmorCutout(EntityModel<T> modelIn, ResourceLocation textureLocationIn, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, T entityIn, float red, float green, float blue, boolean enchanted) {
-        VertexConsumer ivertexbuilder = ItemRenderer.getArmorFoilBuffer(bufferIn, RenderType.armorCutoutNoCull(textureLocationIn), false, enchanted);
-        modelIn.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
+    private void checkAndRenderSlot(Dog dog, EquipmentSlot slot, PoseStack stack, MultiBufferSource buffer, int light) {
+        var itemStack = dog.getItemBySlot(slot);
+        var item = itemStack.getItem();
+        if (!(item instanceof ArmorItem armor))
+            return;
+        
+        switch (slot) {
+        case HEAD:
+            this.model.setHelmet();
+            break;
+        case CHEST:
+            this.model.setChestplate();
+            break;
+        case LEGS:
+            this.model.setLeggings();
+            break;
+        case FEET:
+            this.model.setBoot();
+            break;
+        default:
+            return;
+        }
+
+        renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack), stack, buffer, light, dog, 1.0F, 1.0F, 1.0F);
+        
+        var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack);
+        if (trim.isPresent()) {
+            renderTrim(armor.getMaterial(), stack, buffer, light, trim.get(), this.model);
+        }
+
+        if (itemStack.hasFoil())
+            renderGlint(stack, buffer, light, this.model);
+    }
+
+    private void renderArmorCutout(DogArmorModel model, ResourceLocation textureLocationIn, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, Dog entityIn, float red, float green, float blue) {
+        VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderType.armorCutoutNoCull(textureLocationIn));
+        model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
     }
 
     private void renderTrim(ArmorMaterial material, PoseStack stack, MultiBufferSource buffer, int light, ArmorTrim trim, DogArmorModel model) {
         var textureatlassprite = this.dogArmorTrimAtlas.getSprite(trim.outerTexture(material));
         var vertexconsumer = textureatlassprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet()));
         model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-     }
+    }
+
+    private void renderGlint(PoseStack stack, MultiBufferSource buffer, int light, DogArmorModel model) {
+        model.renderToBuffer(stack, buffer.getBuffer(RenderType.armorEntityGlint()), light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+    }
+  
 }

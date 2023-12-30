@@ -74,6 +74,7 @@ import doggytalents.client.entity.model.dog.kusa.ShinModel;
 import doggytalents.client.entity.model.dog.kusa.TakeModel;
 import doggytalents.client.entity.model.dog.kusa.TeiModel;
 import doggytalents.client.entity.model.dog.kusa.UmeModel;
+import doggytalents.client.entity.model.misc.DogPlushieModel;
 import doggytalents.client.entity.model.misc.GrandPianoModel;
 import doggytalents.client.entity.model.misc.UprightPianoModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
@@ -89,6 +90,7 @@ import doggytalents.client.entity.render.layer.accessory.DoggyArmorRenderer;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
 import doggytalents.client.entity.render.layer.accessory.IncapacitatedRenderer;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.AccessoryModelRenderEntries;
+import doggytalents.client.entity.render.misc.DogPlushieRenderer;
 import doggytalents.client.entity.render.misc.PianoRenderer;
 import doggytalents.client.screen.DogArmorScreen;
 import doggytalents.client.screen.DogInventoriesScreen;
@@ -182,6 +184,7 @@ public class ClientSetup {
 
     public static final ModelLayerLocation PIANO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "piano"), "main");
     public static final ModelLayerLocation PIANO_UPRIGHT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "piano_upright"), "main");
+    public static final ModelLayerLocation DOG_PLUSHIE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_plushie_toy"), "main");
 
     public static final List<ResourceLocation> OTHER_MOD_SKIN_JSONS = new ArrayList<ResourceLocation>();
 
@@ -268,6 +271,7 @@ public class ClientSetup {
         
         event.registerLayerDefinition(PIANO, GrandPianoModel::creatPianoLayer);
         event.registerLayerDefinition(PIANO_UPRIGHT, UprightPianoModel::createPianoLayer);
+        event.registerLayerDefinition(DOG_PLUSHIE, DogPlushieModel::createBodyLayer);
 
         AccessoryModelRenderEntries.registerEntries();
         AccessoryModelManager.registerLayerDef(event);
@@ -297,6 +301,7 @@ public class ClientSetup {
         event.registerEntityRenderer(DoggyEntityTypes.GRAND_PIANO_WHITE.get(), PianoRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.UPRIGHT_PIANO_BLACK.get(), PianoRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.UPRIGHT_PIANO_BROWN.get(), PianoRenderer::new);
+        event.registerEntityRenderer(DoggyEntityTypes.DOG_PLUSHIE_TOY.get(), DogPlushieRenderer::new);
     }
 
     public static void setupCollarRenderers(final FMLClientSetupEvent event) {
