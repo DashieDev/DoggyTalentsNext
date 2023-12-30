@@ -592,6 +592,26 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Samoyed",
+            "skin_id" : "samoyed",
+            "use_model" : "samoyed",
+            "author" : "MashXP"
+        },
+        {
+            "skin_name" : "Samoyed (Hapi)",
+            "skin_id" : "samoyed_hapi",
+            "use_model" : "samoyed",
+            "author" : "MashXP",
+            "mystery": true
+        },
+        {
+            "skin_name" : "Samoyed (Angy)",
+            "skin_id" : "samoyed_angy",
+            "use_model" : "samoyed",
+            "author" : "MashXP",
+            "mystery": true
+        },
+        {
             "skin_name" : "Death",
             "skin_id" : "death",
             "use_model" : "death",
