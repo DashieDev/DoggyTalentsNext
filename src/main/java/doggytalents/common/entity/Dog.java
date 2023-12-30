@@ -263,7 +263,7 @@ public class Dog extends AbstractDog {
     private int hungerSaturationHealingTick;   
     private int healingTick;  
     private int prevHealingTick;
-    private int wanderRestTime = 0;
+    //private int wanderRestTime = 0;
     private int wanderCooldown = 0;
     private int drunkTickLeft = 0;
 
@@ -3125,7 +3125,6 @@ public class Dog extends AbstractDog {
             this.clearRestriction();
             return;
         }
-        this.resetWanderRestTime();
         var restrictPos = this.blockPosition();
         int restrictRadius = 12;
         var bowlPosOptional = this.getBowlPos();
@@ -3150,32 +3149,6 @@ public class Dog extends AbstractDog {
             return true;
         }
         return false;
-    }
-
-    private void updateWanderRestState() {
-        if (this.wanderRestTime > 0) {
-            --this.wanderRestTime;
-            if (this.wanderRestTime <= 0) {
-                resetWanderRestTime();
-            }
-            return;
-        }
-        if (this.wanderCooldown > 0) {
-            --this.wanderCooldown;
-            return;
-        }
-        if (this.tickCount % 2 == 0 && this.getRandom().nextFloat() < 0.02f) {
-            this.wanderRestTime = 15*20 + this.getRandom().nextInt(16) * 20;
-        }
-    }
-
-    public boolean isWanderResting() {
-        return this.wanderRestTime > 0;
-    }
-
-    private void resetWanderRestTime() {
-        this.wanderCooldown = 15*20 + this.getRandom().nextInt(46) * 20;
-        this.wanderRestTime = 0;
     }
 
     public void recalculateAlterations() {
