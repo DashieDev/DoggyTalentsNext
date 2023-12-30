@@ -252,16 +252,16 @@ public class DogSkinElement extends AbstractElement {
             ActiveSkinSlice.DUMMY_DOG_OBJ.setClientSkin(manifestSkin);
             DogStatusViewBoxElement.renderDogInside(graphics, 
                 ActiveSkinSlice.DUMMY_DOG_OBJ, e_mX, e_mY, size, 
-                followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
+                followMouse ? mouseX : e_mX -64, followMouse ? mouseY : e_mY-64);
         } else if (useDummy && ActiveSkinSlice.DUMMY_DOG_OBJ != null) {
             ActiveSkinSlice.DUMMY_DOG_OBJ.setClientSkin(manifestSkin);
             DogStatusViewBoxElement.renderDogInside(graphics, 
                 ActiveSkinSlice.DUMMY_DOG_OBJ, e_mX, e_mY, size, 
-                followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
+                followMouse ? mouseX :  e_mX -64, followMouse ? mouseY : e_mY -64);
         } else {   
             dog.setClientSkin(manifestSkin);
             DogStatusViewBoxElement.renderDogInside(graphics, dog, e_mX, e_mY, size, 
-                followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
+                followMouse ? mouseX : e_mX -64, followMouse ? mouseY : e_mY  -64);
             dog.setClientSkin(oldSkin);
         }
         if (oldSkin == manifestSkin) {
