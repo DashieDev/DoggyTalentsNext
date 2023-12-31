@@ -144,13 +144,17 @@ public class DogPlayTagAction extends TriggerableAction {
     private BlockPos getRandomPosAwayFromOwner(Dog dog, LivingEntity owner) {
         var owner_b0 = owner.blockPosition();
         var r = dog.getRandom();
-        int off = RUN_AWAY_RADIUS - RUN_AWAY_RADIUS_MIN + 1;
-        int dx = r.nextIntBetweenInclusive(-off, off);
-        dx += Mth.sign(dx)*RUN_AWAY_RADIUS_MIN;
+        int offSmall = RUN_AWAY_RADIUS - RUN_AWAY_RADIUS_MIN;
+        int offLarge = RUN_AWAY_RADIUS;
+        int r1 = r.nextIntBetweenInclusive(-offLarge, offLarge);
+        int r2 = r.nextIntBetweenInclusive(-offSmall, offSmall);
+        r2 += Mth.sign(r2)*RUN_AWAY_RADIUS_MIN;
         int dy = r.nextIntBetweenInclusive(-2, 2);
-        int dz = r.nextIntBetweenInclusive(-off, off);
-        dz += Mth.sign(dz)*RUN_AWAY_RADIUS_MIN;
-        
+        int dx = r1; 
+        int dz = r2;
+        if (dog.getRandom().nextBoolean()) {
+            dx = r2; dz = r1;
+        }
         return owner_b0.offset(dx, dy, dz);
     }
 
