@@ -15,6 +15,7 @@ public class DoggyAccessoryTypes {
     public static final RegistryObject<AccessoryType> BOWTIE = register("bowtie");
     public static final RegistryObject<AccessoryType> CLOTHING = register("clothing");
     public static final RegistryObject<AccessoryType> GLASSES = register("glasses");
+    public static final RegistryObject<AccessoryType> CONTACTS = register("contacts");
     public static final RegistryObject<AccessoryType> BAND = register("band");
     public static final RegistryObject<AccessoryType> HEAD = register("head");
     public static final RegistryObject<AccessoryType> FEET = register("feet");
