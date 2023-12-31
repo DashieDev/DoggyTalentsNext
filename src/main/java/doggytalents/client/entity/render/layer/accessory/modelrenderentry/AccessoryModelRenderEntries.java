@@ -31,9 +31,12 @@ public class AccessoryModelRenderEntries {
     public static Entry DIVINE_RETRIB = new DivineRetributionRenderEntry();
     public static Entry LAB_COAT = new LabCoatRenderEntry();
     public static Entry CERE_GARB = new CeremonialGarbRenderEntry();
+    public static Entry CONTACTS = new ContactsRenderEntry();
+
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
+        AccessoryModelManager.register(CONTACTS);
         AccessoryModelManager.register(SMARTY_GLASSES);
         AccessoryModelManager.register(WIG);
         AccessoryModelManager.register(BACH_WIG);
