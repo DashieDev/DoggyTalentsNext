@@ -814,6 +814,12 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', ItemTags.WOOL_CARPETS)
             .unlockedBy("has_lead", has(Items.LEAD))
             .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOGGY_CONTACTS.get(), 1)
+            .pattern("GKG")
+            .define('G', Items.GLASS_PANE)
+            .define('K', DoggyItems.SAKE.get())
+            .unlockedBy("has_dtn_koji", has(DoggyItems.KOJI.get()))
+            .save(consumer);    
     }
 
     private void registerTripleCooking(Consumer<FinishedRecipe> consumer, Ingredient input, Item output,
