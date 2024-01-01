@@ -23,7 +23,7 @@ public class DogMiningCautiousManager {
         if (owner == null) return;
         if (ownerMayBeMining(owner)) {
             miningCautiousTime = MINING_CAUTIOUS_DURATION;
-            ChopinLogger.lwn (this.dog, "mining Cautious : " + miningCautiousTime);
+            //ChopinLogger.lwn (this.dog, "mining Cautious : " + miningCautiousTime);
         }
     }
 

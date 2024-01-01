@@ -91,11 +91,11 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
                 DogUtil.posWillCollideWithOwnerMovingForward(dog, owner, p.getNodePos(i));
 
             if (flag) {
-                ChopinLogger.sendToOwner(this.dog, 
-                    this.dog.getName().getString()
-                     + " : i was going to go to this pos,"
-                     + p.getNodePos(i)
-                     + " but it is not good!"); //debug chopin
+                // ChopinLogger.sendToOwner(this.dog, 
+                //     this.dog.getName().getString()
+                //      + " : i was going to go to this pos,"
+                //      + p.getNodePos(i)
+                //      + " but it is not good!"); //debug chopin
                 return true;
             }
 
