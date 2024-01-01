@@ -48,6 +48,11 @@ public class DogFetchAction extends TriggerableAction {
 
     @Override
     public void tick() {
+        if (!this.owner.isAlive() || this.owner.isSpectator()) {
+            this.setState(ActionState.FINISHED);
+            return;
+        }
+
         if (!this.isBringingBack) {
             if (!this.canFetchStack(fetchTarget)) {
                 this.setState(ActionState.FINISHED); return;

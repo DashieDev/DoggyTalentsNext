@@ -45,7 +45,12 @@ public class DogFarmerAction extends ToolAction {
         if (owner == null || dog.distanceToSqr(owner) > this.talent.getMaxOwnerDistSqr()) {
             this.setState(ActionState.FINISHED);
             return;
-        } 
+        }
+
+        if (owner.isAlive() || owner.isSpectator()) {
+            this.setState(ActionState.FINISHED);
+            return;
+        }
 
         var stack = this.dog.getItemInHand(InteractionHand.MAIN_HAND);
         if (stack == null || stack.getItem() != Items.STONE_HOE) {
