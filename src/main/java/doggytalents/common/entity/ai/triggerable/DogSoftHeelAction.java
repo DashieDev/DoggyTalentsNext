@@ -22,6 +22,10 @@ public class DogSoftHeelAction extends TriggerableAction {
 
     @Override
     public void tick() {
+        if (!this.owner.isAlive() || this.owner.isSpectator()) {
+            this.setState(ActionState.FINISHED);
+            return;
+        }
         double d0 = this.dog.distanceToSqr(owner);
         if (d0 < 4 || --timeOut <= 0) {
             this.setState(ActionState.FINISHED);
