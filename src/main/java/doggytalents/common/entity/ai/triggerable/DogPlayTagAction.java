@@ -45,6 +45,10 @@ public class DogPlayTagAction extends TriggerableAction {
 
     @Override
     public void tick() {
+        if (!this.owner.isAlive() || this.owner.isSpectator()) {
+            this.setState(ActionState.FINISHED);
+            return;
+        }
         --timeLeft;
         if (dog.distanceToSqr(owner) > RUN_AWAY_RADIUS*RUN_AWAY_RADIUS || timeLeft <= 0) {
             this.setState(ActionState.FINISHED);
