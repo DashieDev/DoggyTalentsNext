@@ -161,6 +161,9 @@ public class DoggyItems {
     public static final RegistryObject<Item> OYAKODON = register("oyakodon", OyakodonItem::new);
     public static final RegistryObject<Item> SAKE = register("sake", SakeItem::new);
 
+    public static final RegistryObject<Item> SCENT_TREAT = register("scent_treat", ScentTreatItem::new);
+    public static final RegistryObject<Item> DROOL_SCENT_TREAT = register("drool_scent_treat", DroolScentTreatItem::new);
+
     public static final RegistryObject<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
             () -> new FeatheredMantleArtifact(), props), 1);
