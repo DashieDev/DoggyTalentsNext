@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyItems;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -113,7 +112,6 @@ public class SnifferDogTalent extends TalentInstance {
                 if (state.getBlock() == this.detectingBlock) {
                     suspiciousPos = Optional.of(rand_b0);
                     //this.tickTillDetect = 100;
-                    ChopinLogger.lwn(dog, "Oi detected Blocku!");
                     return;
                 }
             }
