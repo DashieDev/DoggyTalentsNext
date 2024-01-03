@@ -1,5 +1,6 @@
 package doggytalents.common.item;
 
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -31,6 +32,7 @@ public class DroolBoneItem extends Item {
             }
 
             playerIn.swing(handIn);
+            playerIn.playSound(SoundEvents.INK_SAC_USE, 1f , 1f);
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, returnStack);
         }
 
