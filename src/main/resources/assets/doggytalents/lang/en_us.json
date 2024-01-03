@@ -191,6 +191,11 @@
    "item.doggytalents.sake": "Bottle Of Sake",
    "item.doggytalents.sake.description": "Drink responsibly! Not sutable for underage doggos!",
 
+   "item.doggytalents.scent_treat": "Scent Treat",
+   "item.doggytalents.scent_treat.description": "Right-Click a Block to collect a sample of its scent. Right-Click on a Water Caudron to clear its collected scent.",
+   "item.doggytalents.scent_treat.scented_block": "Collected Block Sample: ",
+   "item.doggytalents.drool_scent_treat": "Drool Scent Treat",
+
    "item.doggytalents.feathered_mantle": "Feathered Mantle",
 
    "item.doggytalents.grand_piano_black_item": "Grand Piano Black (Experimental)",
@@ -269,6 +274,7 @@
    "talent.doggytalents.flying_furball": "Flying Furball",
    "talent.doggytalents.chemi_canine": "Chemi Canine",
    "talent.doggytalents.fire_drill": "Fire Drill",
+   "talent.doggytalents.sniffer_dog": "Sniffer Dog",
 
    "talent.doggytalents.bed_finder.description": "While a Dog with this ability is on your head, your bed will have a yellow outline around it. To place the Dog on your head, Right-click on the Dog with a Bone in your hand. The range is 200 blocks per level, but becomes infinite at level 5.",
    "talent.doggytalents.black_pelt.description": "Increases critical hit rate by half a heart per level, plus an additional heart upon mastery.",
@@ -299,6 +305,7 @@
    "talent.doggytalents.flying_furball.description": "Allow your Dog to conquer the limit of the sky! The higher the level the faster your Dog flies.",
    "talent.doggytalents.chemi_canine.description": "When you or your other dogs receive negative effects, the dog with this talent will run to the target and try to absorb the negative effects, one at a time. The effects will accumulate to the dogs (without causing harm to it). When it accumulates enough, the dog cannot absorb more effects and have to wait for the accumulated effects to decay, which will take a while. However, when the dog attacks, the target will be affected by one of the effects absorbed by it, which also consumes the effect allowing the dog to absorb again.",
    "talent.doggytalents.fire_drill.description": "This skill teaches your dog how to put itself out when it catches on fire. Stop, Drop and Roll!",
+   "talent.doggytalents.sniffer_dog.description": "This talent allows your dog to sniff out valuable ores. Each level increases your dog's sniffing distance, thus increasing the chance of finding the desired ore. To make your dog start detecting a certain block, a Scent Treat is required to mark the scent of the block. The treat then be given to the dog who will lick the treat, memorize the scent and give you back. To make your dog stop detecting, give it a Empty Scent Treat.",
 
    "talent.doggytalents.roaring_gale.cooldown": "Roaring Gale is on cooldown.",
    "talent.doggytalents.roaring_gale.level": "Put some points in Roaring Gale to use!",
@@ -316,6 +323,15 @@
    "talent.doggytalents.pack_puppy.pickup_item": "Pickup Nearby Items",
    "talent.doggytalents.pack_puppy.offer_food": "Offer Food",
    "talent.doggytalents.rescue_dog.render_box": "Render Box",
+   "talent.doggytalents.sniffer_dog.notify_owner.0.near": "%s: Hey, come check this out! I think i found something! It is very close by!",
+   "talent.doggytalents.sniffer_dog.notify_owner.0.mid": "%s: Hey, come check this out! I think i found something! It is a bit further away.",
+   "talent.doggytalents.sniffer_dog.notify_owner.0.far": "%s: Uhm hey, come check this out! I think i found something! Although it is quite far awy!",
+   "talent.doggytalents.sniffer_dog.notify_owner.1.near": "%s: OOOOH! My nose caught something familiar! It is quite STRONG! Come here, quick!",
+   "talent.doggytalents.sniffer_dog.notify_owner.1.mid": "%s: Ah! My nose caught something familiar! Come here!",
+   "talent.doggytalents.sniffer_dog.notify_owner.1.far": "%s: Hmmm, My nose caught a brief smell of a familiar sense. You might want to take a look.",
+   "talent.doggytalents.sniffer_dog.notify_owner.2.near": "%s: WOAH! I can smell the thing that you needed! It is very strong!",
+   "talent.doggytalents.sniffer_dog.notify_owner.2.mid": "%s: Interesting, i think i am smelling something that you needed!",
+   "talent.doggytalents.sniffer_dog.notify_owner.2.far": "%s: Hmmm, i think i am smelling a bit of something that you needed!",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",
 
