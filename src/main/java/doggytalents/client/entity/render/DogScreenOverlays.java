@@ -1,6 +1,8 @@
 package doggytalents.client.entity.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -83,5 +85,23 @@ public class DogScreenOverlays {
             RenderSystem.disableBlend();
             mc.getProfiler().pop();
         }
+    };
+
+    //Internal Branch
+    public static final IGuiOverlay COORDINATE = (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+        if (!ClientEventHandler.showCoordinateOverlay)
+            return;
+        
+        var mc = Minecraft.getInstance();
+        var font = mc.font;
+        var player = mc.player;
+        if (player == null)
+            return;
+        int x = 5;
+        int y = 5;
+        var pos = player.blockPosition();
+        var str = pos.getX() + " " + pos.getY() + " " + pos.getZ();
+        mStack.fill(0, 3, font.width(str) + 10, font.lineHeight + 5, 0x56000000);
+        mStack.drawString(font, str, x, y, 0xffffffff);
     };
 }

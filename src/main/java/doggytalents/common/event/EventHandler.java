@@ -24,6 +24,7 @@ import doggytalents.common.util.doggyasynctask.promise.DogHoldChunkToTeleportPro
 import doggytalents.common.util.doggyasynctask.promise.DogBatchTeleportToDimensionPromise;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -454,5 +455,17 @@ public class EventHandler {
         
         event.setAmount(0);
         event.setCanceled(true);
+    }
+    //Internal Branch
+    @SubscribeEvent
+    public void onPlayerDeath(LivingDeathEvent event) {
+        var e = event.getEntity();
+        if (e.level().isClientSide)
+            return;
+        if (!(e instanceof Player player))
+            return;
+        var pos = e.blockPosition();
+        var str = pos.getX() + " " + pos.getY() + " " + pos.getZ();
+        player.sendSystemMessage(Component.literal("Your last Death Coord : " + str));
     }
 }

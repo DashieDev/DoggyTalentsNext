@@ -109,6 +109,7 @@ public class DoggyTalentsNext {
             modEventBus.addListener(ClientSetup::addClientReloadListeners);
             modEventBus.addListener(ClientSetup::registerOverlay);
             forgeEventBus.register(new ClientEventHandler());
+            forgeEventBus.addListener(ClientEventHandler::showingOverlayListen);
             forgeEventBus.addListener(BedFinderRenderer::onWorldRenderLast);
             forgeEventBus.addListener(CanineTrackerLocateRenderer::onWorldRenderLast);
             forgeEventBus.addListener(CanineTrackerLocateRenderer::tickUpdate);

@@ -11,6 +11,7 @@ import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
+import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.client.screen.widget.DoggySpin;
 import doggytalents.common.config.ConfigHandler;
@@ -24,6 +25,7 @@ import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
+import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -33,6 +35,7 @@ import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -280,5 +283,27 @@ public class ClientEventHandler {
         var animState = dog.animationManager.animationState;
         return KeyframeAnimationsDelegate.getCurrentAnimatedYRot(dog, animSeq, animState.getAccumulatedTimeMillis(), 1);
     }
+
+    //Internal Branch
+    public static boolean showCoordinateOverlay = false;
+
+    private static CustomButton showCoordinNate = new CustomButton(10, 0, 120, 20, Component.literal("Show Coordinates"), 
+        b -> {
+            showCoordinateOverlay = !showCoordinateOverlay;
+            if (showCoordinateOverlay) {
+                b.setMessage(Component.literal("Hide Coordinates"));
+            } else {
+                b.setMessage(Component.literal("Show Coordinates"));
+            }
+        }
+    );
+
+    public static void showingOverlayListen(final ScreenEvent.Init.Post event) {
+        var screen = event.getScreen();
+        if (!(screen instanceof PauseScreen))
+            return;
+        showCoordinNate.setY(screen.height - 30);
+        event.addListener(showCoordinNate);
+    }   
 
 }
