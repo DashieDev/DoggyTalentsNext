@@ -87,6 +87,7 @@ public class DogRandomSniffGoal extends Goal {
             dog.setAnim(DogAnimation.NONE);
         dog.setDogCurious(false);
         resetSniffPos();
+        dog.getNavigation().stop();
     }
 
     private void startDoingAnim() {
