@@ -154,6 +154,9 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.OYAKODON);
         generated(DoggyItems.SAKE);
 
+        generated(DoggyItems.SCENT_TREAT);
+        scentTreatDrooled(DoggyItems.DROOL_SCENT_TREAT, DoggyItems.SCENT_TREAT);
+
         generated(DoggyItems.GRAND_PIANO_BLACK);
         generated(DoggyItems.GRAND_PIANO_WHITE);
         generated(DoggyItems.UPRIGHT_PIANO_BLACK);
@@ -213,6 +216,10 @@ public class DTItemModelProvider extends ItemModelProvider {
     private ItemModelBuilder plushieToy(Supplier<? extends ItemLike> item) {
         return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
     }
+
+    private ItemModelBuilder scentTreatDrooled(Supplier<? extends ItemLike> item, Supplier<? extends ItemLike> base) {
+        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(base)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(base) + "_overlay"));
+    }    
 
     private ItemModelBuilder generated2(Supplier<? extends ItemLike> item, ResourceLocation tex0, ResourceLocation tex1) {
         return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/generated"))
