@@ -47,7 +47,7 @@ public class DogFarmerAction extends ToolAction {
             return;
         }
 
-        if (owner.isAlive() || owner.isSpectator()) {
+        if (!owner.isAlive() || owner.isSpectator()) {
             this.setState(ActionState.FINISHED);
             return;
         }
