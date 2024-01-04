@@ -820,7 +820,15 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('G', Items.GLASS_PANE)
             .define('K', DoggyItems.SAKE.get())
             .unlockedBy("has_dtn_koji", has(DoggyItems.KOJI.get()))
-            .save(consumer);    
+            .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.SCENT_TREAT.get(), 1)
+            .pattern(" W ")
+            .pattern("WTW")
+            .pattern(" W ")
+            .define('W', ItemTags.WOOL)
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .unlockedBy("has_dtn_training_treat", has(DoggyItems.TRAINING_TREAT.get()))
+            .save(consumer);
     }
 
     private void registerTripleCooking(Consumer<FinishedRecipe> consumer, Ingredient input, Item output,
