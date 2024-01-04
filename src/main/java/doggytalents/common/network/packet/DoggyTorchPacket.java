@@ -4,28 +4,30 @@ import java.util.function.Supplier;
 
 import doggytalents.DoggyTalents;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.network.packet.data.DoggyTorchPlacingTorchData;
+import doggytalents.common.network.packet.data.DoggyTorchData;
 import doggytalents.common.talent.DoggyTorchTalent;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent.Context;
 
-public class DoggyTorchPlacingTorchPacket extends DogPacket<DoggyTorchPlacingTorchData> {
+public class DoggyTorchPacket extends DogPacket<DoggyTorchData> {
 
     @Override
-    public void encode(DoggyTorchPlacingTorchData data, FriendlyByteBuf buf) {
+    public void encode(DoggyTorchData data, FriendlyByteBuf buf) {
         super.encode(data, buf);
+        buf.writeInt(data.type.getId());
         buf.writeBoolean(data.val);
     }
 
     @Override
-    public DoggyTorchPlacingTorchData decode(FriendlyByteBuf buf) {
+    public DoggyTorchData decode(FriendlyByteBuf buf) {
         int entityId = buf.readInt();
+        var type = DoggyTorchData.Type.fromId(buf.readInt());
         boolean val = buf.readBoolean();
-        return new DoggyTorchPlacingTorchData(entityId, val);
+        return new DoggyTorchData(entityId, val, type);
     }
 
     @Override
-    public void handleDog(Dog dogIn, DoggyTorchPlacingTorchData data, Supplier<Context> ctx) {
+    public void handleDog(Dog dogIn, DoggyTorchData data, Supplier<Context> ctx) {
         var talentInstOptional = dogIn.getTalent(DoggyTalents.DOGGY_TORCH);
         if (!talentInstOptional.isPresent())
             return;
