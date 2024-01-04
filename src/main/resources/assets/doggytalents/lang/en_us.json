@@ -334,6 +334,7 @@
    "talent.doggytalents.sniffer_dog.notify_owner.2.far": "%s: Hmmm, i think i am smelling a bit of something that you needed!",
    "talent.doggytalents.sniffer_dog.detecting_block_status.none": "%s is not looking for any blocks.",
    "talent.doggytalents.sniffer_dog.detecting_block_status": "%s is looking for : %s",
+   "talent.doggytalents.doggy_torch.render_torch": "Render Torch",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",
 
