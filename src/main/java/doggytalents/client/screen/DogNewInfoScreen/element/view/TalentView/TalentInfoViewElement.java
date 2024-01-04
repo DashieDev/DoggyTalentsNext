@@ -27,7 +27,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
-import doggytalents.common.network.packet.data.DoggyTorchPlacingTorchData;
+import doggytalents.common.network.packet.data.DoggyTorchData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.network.packet.data.RescueDogRenderData;
@@ -158,12 +158,33 @@ public class TalentInfoViewElement extends AbstractElement {
                         : "talent.doggytalents.doggy_tools.placing_torch.set"
                     ));
                     torchTalent.setPlacingTorch(newVal);
-                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new DoggyTorchPlacingTorchData(
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new DoggyTorchData(
                         dog.getId(), newVal
                     ));
                 }
             );
             torchButtonDiv.addChildren(torchButton);
+
+            if (torchTalent.canRenderTorch()) {
+                container.addChildren(
+                    new ButtonOptionEntry(container, getScreen(), 
+                        new FlatButton(
+                            0, 0,
+                            40, 20, Component.literal("" + torchTalent.renderTorch()), 
+                            b -> {
+                                Boolean newVal = !torchTalent.renderTorch();
+                                b.setMessage(Component.literal("" + newVal));
+                                torchTalent.setRenderTorch(newVal);
+                                PacketHandler.send(PacketDistributor.SERVER.noArg(), new DoggyTorchData(
+                                    dog.getId(), newVal, DoggyTorchData.Type.RENDER_TORCH
+                                ));
+                            }     
+                        ),
+                        I18n.get("talent.doggytalents.doggy_torch.render_torch")
+                    )
+                    .init()
+            );
+            }
         } else if (talent == DoggyTalents.DOGGY_TOOLS.get()) {
             var talentOptional = dog.getTalent(DoggyTalents.DOGGY_TOOLS);
             if (!talentOptional.isPresent())

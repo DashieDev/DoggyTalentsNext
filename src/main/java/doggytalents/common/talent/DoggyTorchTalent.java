@@ -5,7 +5,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.inventory.PackPuppyItemHandler;
-import doggytalents.common.network.packet.data.DoggyTorchPlacingTorchData;
+import doggytalents.common.network.packet.data.DoggyTorchData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +19,7 @@ import org.apache.commons.lang3.tuple.Pair;
 public class DoggyTorchTalent extends TalentInstance {
 
     private boolean placingTorch = true;
+    private boolean renderTorch = true;
 
     public DoggyTorchTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -52,30 +53,47 @@ public class DoggyTorchTalent extends TalentInstance {
         }
     }
 
+    public boolean canRenderTorch() {
+        return this.level() >= 5;
+    }
+
     @Override
     public void onRead(AbstractDog dogIn, CompoundTag compound) {
         this.placingTorch = compound.getBoolean("DoggyTorchTalent_placingTorch");
+        this.renderTorch = compound.getBoolean("DoggyTorchTalent_renderTorch");
     }
 
     @Override
     public void onWrite(AbstractDog dogIn, CompoundTag compound) {
         compound.putBoolean("DoggyTorchTalent_placingTorch", placingTorch);
+        compound.putBoolean("DoggyTorchTalent_renderTorch", renderTorch);
     }
 
     @Override
     public void writeToBuf(FriendlyByteBuf buf) {
         super.writeToBuf(buf);
         buf.writeBoolean(placingTorch);
+        buf.writeBoolean(renderTorch);
     }
 
     @Override
     public void readFromBuf(FriendlyByteBuf buf) {
         super.readFromBuf(buf);
         placingTorch = buf.readBoolean();
+        renderTorch = buf.readBoolean();
     }
 
-    public void updateFromPacket(DoggyTorchPlacingTorchData data) {
-        placingTorch = data.val;
+    public void updateFromPacket(DoggyTorchData data) {
+        switch (data.type) {
+        case ALLOW_PLACING:
+            this.placingTorch = data.val;
+            break;
+        case RENDER_TORCH:
+            this.renderTorch = data.val;
+            break;
+        default:
+            break;   
+        }
     }
 
     @Override
@@ -84,10 +102,14 @@ public class DoggyTorchTalent extends TalentInstance {
         if (!(ret instanceof DoggyTorchTalent torch))
             return ret;
         torch.setPlacingTorch(this.placingTorch);
+        torch.setRenderTorch(this.renderTorch);
         return torch;
     }
 
     public boolean placingTorch() { return this.placingTorch; }
     public void setPlacingTorch(boolean torch) { this.placingTorch = torch; }
+
+    public boolean renderTorch() { return this.renderTorch; }
+    public void setRenderTorch(boolean torch) { this.renderTorch = torch; }    
     
 }
