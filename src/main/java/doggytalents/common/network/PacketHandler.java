@@ -59,7 +59,7 @@ public final class PacketHandler {
         registerPacket(new PatrolTargetLockPacket(), PatrolTargetLockData.class);
         registerPacket(new HideArmorPacket(), HideArmorData.class);
         registerPacket(new CombatReturnStrategyPacket(), CombatReturnStrategyData.class);
-        registerPacket(new DoggyTorchPlacingTorchPacket(), DoggyTorchPlacingTorchData.class);
+        registerPacket(new DoggyTorchPacket(), DoggyTorchData.class);
         registerPacket(new DogAutoMountPacket(), DogAutoMountData.class);
         registerPacket(new DoggyToolsPickFirstPacket(), DoggyToolsPickFirstData.class);
         registerPacket(new ForceChangeOwnerPacket(), ForceChangeOwnerData.class);
