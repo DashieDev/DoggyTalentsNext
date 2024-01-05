@@ -60,8 +60,13 @@ public class TorchDogModel extends AnimatedSyncedAccessoryModel {
     @Override
     public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
             float headPitch) {
-        var timeLine = ageInTicks % Util.millisToTickMayWithPartial((long) TORCH_SPINNA.lengthInSeconds() * 1000);
+        var animLenMillis = (long)TORCH_SPINNA.lengthInSeconds() * 1000;
+        var offset = (entityIn.getId() % 6) * (20 * 0.5);
+        var timeLine = (offset + ageInTicks) % Util.millisToTickMayWithPartial(animLenMillis);
         var timeLineMillis = Util.tickMayWithPartialToMillis(timeLine);
+        if (entityIn.getId() % 2 == 0) {
+            timeLineMillis = animLenMillis - timeLineMillis;
+        }
         KeyframeAnimationsDelegate.animate(this, entityIn, TORCH_SPINNA, timeLineMillis, 1, this.vecObj);
     }
 
