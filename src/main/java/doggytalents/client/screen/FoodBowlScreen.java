@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Inventory;
 
 public class FoodBowlScreen extends AbstractContainerScreen<FoodBowlContainer> {
@@ -22,6 +23,7 @@ public class FoodBowlScreen extends AbstractContainerScreen<FoodBowlContainer> {
         this.renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(graphics, mouseX, mouseY);
+        renderDogProTip(graphics);
     }
 
     @Override
@@ -36,5 +38,23 @@ public class FoodBowlScreen extends AbstractContainerScreen<FoodBowlContainer> {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
         graphics.blit(Resources.GUI_FOOD_BOWL, x, y, 0, 0, this.imageWidth, this.imageHeight);
+    }
+
+    private void renderDogProTip(GuiGraphics graphics) {
+        int mX = this.width / 2;
+        var title = Component.translatable("block.doggytalents.food_bowl.pro_tip.title")
+            .withStyle(Style.EMPTY.withBold(true));
+        var desc = Component.translatable("block.doggytalents.food_bowl.pro_tip.desc");
+        var max_width = Math.min(360, this.width - 10);
+        var desc_lines = font.split(desc, max_width);
+        int tX = mX - font.width(title)/2;
+        int tY = this.height/2 + 70;
+        graphics.drawString(font, title, tX, tY, 0xffffffff);
+        tY += font.lineHeight + 2;
+        for (var line : desc_lines) {
+            tX = mX - font.width(line)/2;
+            graphics.drawString(font, line, tX, tY, 0xffffffff);
+            tY += font.lineHeight + 2;
+        }
     }
 }
