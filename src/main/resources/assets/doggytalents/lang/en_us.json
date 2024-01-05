@@ -3,7 +3,7 @@
    "block.doggytalents.dog_bed.set_owner_help": "Sneak + Right click the Dog Bed with BOTH hands empty (Alternatively, Right Click with a Bone in hand) and the nearest Standing dog will come and make the bed their own! If the unthinkable happens and they die, Right-click on the bed to revive them!",
    "block.doggytalents.dog_bed.owner": "This bed is owned by %s.",
    "block.doggytalents.dog_bed.reclaim": "%s has reclaimed %s bed.",
-   "block.doggytalents.food_bowl": "Food Bowl", 
+   "block.doggytalents.food_bowl": "Food Bowl",
    "block.doggytalents.dog_bath": "Dog Bath",
 
    "item.doggytalents.throw_bone": "Throw Bone",
@@ -583,6 +583,8 @@
    "doggui.migrate_owner.show_uuid": "Show New Owner UUID",
    "doggui.force_migrate_owner.confirm.title": "Force Migrate Owner?",
    "doggui.force_migrate_owner.confirm.subtitle": "You will now be the Owner of %s, proceed?",
+   "block.doggytalents.food_bowl.pro_tip.title": "Pro Tip",
+   "block.doggytalents.food_bowl.pro_tip.desc": "The prefered and recommended way to automatically feed your dog is by utilizing a PackPuppy Dog as a Shared Food Source for all of your other dogs!",
 
    "key.categories.doggy_talents": "Doggy Talents Next",
    "key.whistle.1": "Whistle #1",
