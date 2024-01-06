@@ -1806,6 +1806,9 @@ public class Dog extends AbstractDog {
     @Override
     public boolean doHurtTarget(Entity target) {
         
+        for (IDogAlteration alter : this.alterations) {
+            alter.doInitialAttackEffects(this, target);
+        }
 
         var attackDamageInst = this.getAttribute(Attributes.ATTACK_DAMAGE);
         var critDamageInst = this.getAttribute(DoggyAttributes.CRIT_CHANCE.get());
