@@ -60,7 +60,7 @@ public class PoisonFangTalent extends TalentInstance {
     }
 
     @Override
-    public void doAdditionalAttackEffects(AbstractDog dog, Entity entity) {
+    public void doInitialAttackEffects(AbstractDog dog, Entity entity) {
         if (entity instanceof LivingEntity) {
             if (this.level() > 0) {
                 ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.POISON, this.level() * 20, 0));
