@@ -88,7 +88,7 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public void doAdditionalAttackEffects(AbstractDog dogIn, Entity entity) {
+    public void doInitialAttackEffects(AbstractDog dogIn, Entity entity) {
         if (this.level() >= 4) {
             entity.setSecondsOnFire(this.level());
         }
