@@ -291,6 +291,8 @@ public class ChemiCanineTalent extends TalentInstance {
 
     @Override
     public void doAdditionalAttackEffects(AbstractDog dogIn, Entity target) {
+        if (!target.isAlive())
+            return;
         if (this.storedEffects.isEmpty())
             return;
         var effectAdding = this.storedEffects.get(0);
