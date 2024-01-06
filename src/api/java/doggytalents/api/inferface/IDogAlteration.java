@@ -125,6 +125,10 @@ public interface IDogAlteration {
         return InteractionResult.PASS;
     }
 
+    default void doInitialAttackEffects(AbstractDog dogIn, Entity target) {
+
+    }
+
     default void doAdditionalAttackEffects(AbstractDog dogIn, Entity target) {
     }
 
