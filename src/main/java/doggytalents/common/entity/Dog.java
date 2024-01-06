@@ -671,7 +671,13 @@ public class Dog extends AbstractDog {
                 this.getZ() + f2,
                 0, 0.05 , 0 );
             }
-            onFireSmokeTick = Mth.clamp(++this.onFireSmokeTick, 20, 20 * 15);
+            if (onFireSmokeTick <= 20 * 15) {
+                ++onFireSmokeTick;
+            } else if (onFireSmokeTick <= 20 * 30
+                && this.tickCount % 4 == 0) {
+                ++onFireSmokeTick;
+            }
+            onFireSmokeTick = Mth.clamp(onFireSmokeTick, 20, 20 * 15);
         } else if (onFireSmokeTick > 0) {
             --onFireSmokeTick;
             if (this.getRandom().nextInt(3) == 0) {
