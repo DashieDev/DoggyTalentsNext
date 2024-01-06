@@ -1838,6 +1838,8 @@ public class Dog extends AbstractDog {
             critModifiers.forEach(attackDamageInst::removeModifier);
         }
 
+        this.doInitialEnchantDamageEffects(this, target);
+
         boolean flag = target.hurt(this.damageSources().mobAttack(this), damage);
         if (!flag) return false;
 
@@ -1868,16 +1870,12 @@ public class Dog extends AbstractDog {
         return true;
     }
 
-    @Override
-    public void doEnchantDamageEffects(LivingEntity dog, Entity target) {
-        
-        //instead of doing this before the damage is done, this can be done after
+    protected void doInitialEnchantDamageEffects(LivingEntity dog, Entity target) {
         int i = EnchantmentHelper.getFireAspect(this);
         if (i > 0) {
             target.setSecondsOnFire(i * 4);
         }
 
-        //Also this
         float knockback = (float)this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
         knockback += (float)EnchantmentHelper.getKnockbackBonus(this);
         if (knockback > 0 && target instanceof LivingEntity living) {
@@ -1891,8 +1889,6 @@ public class Dog extends AbstractDog {
                     .multiply(0.6D, 1.0D, 0.6D)
             );
         }
-
-        super.doEnchantDamageEffects(dog, target);
     }
 
     @Override
