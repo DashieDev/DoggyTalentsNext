@@ -37,8 +37,8 @@ public class HellHoundTalent extends TalentInstance {
 
     private final int SEARCH_RANGE = 3;
     private int tickUntilSearch = 0;
-    private int fireDamageAccumulate;
-    private int lavaDamageAccumulate;
+    private int fireResistTickLeft = 60;
+    private int fireResistHealCooldown = 0;
 
     public HellHoundTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -113,20 +113,25 @@ public class HellHoundTalent extends TalentInstance {
         if (!source.is(DamageTypeTags.IS_FIRE)) {
             return InteractionResultHolder.pass(damage);
         }
-        if (!source.is(DamageTypes.LAVA)) {
-            ++this.fireDamageAccumulate;
-            if (this.fireDamageAccumulate >= getMaxAccumulate()) {
-                this.fireDamageAccumulate = 0;
-                return InteractionResultHolder.pass(1f);
-            }
-        } else {
-            ++this.lavaDamageAccumulate;
-            if (this.lavaDamageAccumulate >= getMaxAccumulate() * 10) {
-                this.lavaDamageAccumulate = 0;
-                return InteractionResultHolder.pass(Math.max(0, 1- (this.level()*0.25f)) * damage);
-            }
+        var resistValue = getResistValue(source);
+        this.fireResistHealCooldown = 80;
+        this.fireResistTickLeft = Math.min(fireResistTickLeft, resistValue);
+        if (this.fireResistTickLeft > 0) {
+            return InteractionResultHolder.fail(0f);
         }
-        return InteractionResultHolder.fail(0f);
+        this.fireResistTickLeft = resistValue;
+        return InteractionResultHolder.pass(getFireDamageReduced(source, damage));
+    }
+
+    private float getFireDamageReduced(DamageSource source, float amount) {
+        if (source.is(DamageTypes.LAVA)) {
+            if (this.level() >= 4)
+                return 1;
+            if (this.level() >= 3)
+                return 2;
+            return Math.max(0, 1- (this.level()*0.25f)) * amount;
+        }
+        return 1f;
     }
 
     private int getMaxAccumulate() {
@@ -135,6 +140,16 @@ public class HellHoundTalent extends TalentInstance {
         if (this.level() <= 3)
             return this.level() + 3;
         return this.level() + 10;
+    }
+
+    private int getResistValue(DamageSource source) {
+        if (source.is(DamageTypes.LAVA)) {
+            return getMaxAccumulate()*10;
+        }
+        if (source.is(DamageTypes.IN_FIRE)) {
+            return getMaxAccumulate() * 15;
+        }
+        return getMaxAccumulate() * 20;
     }
 
     @Override
@@ -146,6 +161,9 @@ public class HellHoundTalent extends TalentInstance {
 
     @Override
     public InteractionResult stillIdleOrSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
+        if (this.level() >= 4 && source.is(DamageTypeTags.IS_FIRE)) {
+            return InteractionResult.SUCCESS;
+        }
         if (source.is(DamageTypes.ON_FIRE))
             return InteractionResult.SUCCESS;
         return InteractionResult.PASS;    
@@ -155,7 +173,10 @@ public class HellHoundTalent extends TalentInstance {
     public void tick(AbstractDog d) {
         if (d.level().isClientSide)
             return;
-        if (this.level() < 5) return;
+        if (this.level() < 5) {
+            updateResistValues();
+            return;
+        };
         if (!(d instanceof Dog dog))
             return;
         floatHellhound(dog);
@@ -169,6 +190,17 @@ public class HellHoundTalent extends TalentInstance {
                 }
             }
         }
+    }
+
+    private void updateResistValues() {
+        if (this.fireResistHealCooldown > 0)
+            --this.fireResistHealCooldown;
+        if (this.fireResistHealCooldown <= 0) {
+            this.fireResistTickLeft = 60;
+            return;
+        }
+        if (this.fireResistTickLeft > 0)
+            --this.fireResistTickLeft;
     }
 
     private void floatHellhound(AbstractDog dog) {
