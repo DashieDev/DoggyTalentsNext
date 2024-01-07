@@ -69,6 +69,7 @@ public class DoggyAccessories {
     public static final RegistryObject<PlagueDoctorMaskAccessory> PLAGUE_DOC_MASK = register("plague_doctor_mask", () -> new PlagueDoctorMaskAccessory(DoggyItems.PLAGUE_DOC_MASK).setModelTexture(Resources.PLAGUE_DOC_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<BirthdayHatAccessory> BIRTHDAY_HAT = register("birthday_hat", () -> new BirthdayHatAccessory(DoggyItems.BIRTHDAY_HAT).setModelTexture(Resources.BIRTHDAY_HAT_BG).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<CeremonialGarb> CERE_GARB = register("ceramonial_garb", () -> new CeremonialGarb(DoggyItems.CERE_GARB).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<Accessory> PROPELLAR = register("propeller_hat", () -> new Propellar(DoggyItems.PROPELLER_HAT).setModelTexture(Resources.DOG_PROPELLAR).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
     public static final RegistryObject<Contacts> DOGGY_CONTACTS = register("doggy_contacts", () -> new Contacts(DoggyItems.DOGGY_CONTACTS).setModelTexture(Resources.DOGGY_CONTACTS).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
