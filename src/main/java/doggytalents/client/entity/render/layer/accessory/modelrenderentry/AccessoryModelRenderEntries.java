@@ -32,7 +32,7 @@ public class AccessoryModelRenderEntries {
     public static Entry LAB_COAT = new LabCoatRenderEntry();
     public static Entry CERE_GARB = new CeremonialGarbRenderEntry();
     public static Entry CONTACTS = new ContactsRenderEntry();
-
+    public static Entry PROPELLAR = new PropellarRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -61,6 +61,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(DIVINE_RETRIB);
         AccessoryModelManager.register(LAB_COAT);
         AccessoryModelManager.register(CERE_GARB);
+        AccessoryModelManager.register(PROPELLAR);
     }
 
 }
