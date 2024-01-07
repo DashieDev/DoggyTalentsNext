@@ -139,6 +139,9 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     private int getResistValue(DamageSource source) {
+        if (this.level() >= 4) {
+            return getMaxAccumulate() * 20;
+        }
         if (source.is(DamageTypes.LAVA)) {
             return getMaxAccumulate()*10;
         }
