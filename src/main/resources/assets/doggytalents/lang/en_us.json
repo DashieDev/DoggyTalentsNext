@@ -586,7 +586,7 @@
    "doggui.force_migrate_owner.confirm.title": "Force Migrate Owner?",
    "doggui.force_migrate_owner.confirm.subtitle": "You will now be the Owner of %s, proceed?",
    "block.doggytalents.food_bowl.pro_tip.title": "Pro Tip",
-   "block.doggytalents.food_bowl.pro_tip.desc": "The prefered and recommended way to automatically feed your dog is by utilizing a PackPuppy Dog as a Shared Food Source for all of your other dogs!",
+   "block.doggytalents.food_bowl.pro_tip.desc": "The recommended way to automatically feed your dog is by utilizing a PackPuppy Dog as a Shared Food Source for all of your other dogs!",
 
    "key.categories.doggy_talents": "Doggy Talents Next",
    "key.whistle.1": "Whistle #1",
