@@ -197,7 +197,7 @@ public class ClientEventHandler {
             dog -> dog.isDoingFine() && dog.isOwnedBy(player)
         );
         whistle.useMode(useMode, dogsList, 
-            player.level(), player, InteractionHand.MAIN_HAND);
+            player.level(), player, InteractionHand.MAIN_HAND, true);
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
             new WhistleUseData(mode_id));
     }
