@@ -383,7 +383,7 @@ public class SnifferDogTalent extends TalentInstance {
             // return v_dog_pos.y < 0 ? 
             //     DogAnimation.SNIFFER_DOG_POINT_DOWNARD
             //     : DogAnimation.SNIFFER_DOG_POINT_UPWARD;
-            if (v_dog_pos.y < 0)
+            if (v_dog_pos.y < -1)
                 return DogAnimation.SNIFFER_DOG_POINT_DOWNARD;
             if (v_dog_pos.y > 1)
                 return DogAnimation.SNIFFER_DOG_POINT_UPWARD;
