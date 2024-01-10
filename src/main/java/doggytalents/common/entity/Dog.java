@@ -570,6 +570,11 @@ public class Dog extends AbstractDog {
         if (self_dim.width >= 1f) {
             self_dim = new EntityDimensions(1f, self_dim.height, self_dim.fixed);
         }
+        
+        boolean collide_passeneger = 
+            ConfigHandler.SERVER.WOLF_MOUNT_PASSENGER_COLLISION.get();
+        if (!collide_passeneger)
+            return self_dim;
         if (this.isVehicle() && !this.getPassengers().isEmpty()) {
             visualDimension = self_dim;
             self_dim = computeRidingDimension(self_dim);
