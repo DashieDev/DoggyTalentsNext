@@ -154,12 +154,12 @@ public class WhistleItem extends Item implements IDogItem {
             if (id_mode >= WhistleMode.VALUES.length) id_mode = 0;
             var mode = WhistleMode.VALUES[id_mode];
 
-            useMode(mode, dogsList, world, player, hand);
+            useMode(mode, dogsList, world, player, hand, false);
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
         }
     }
 
-    public void useMode(WhistleMode mode, List<Dog> dogsList, Level world, Player player, InteractionHand hand) {
+    public void useMode(WhistleMode mode, List<Dog> dogsList, Level world, Player player, InteractionHand hand, boolean isKeyBind) {
         if (mode == null) return;
 
         if (ConfigHandler.WHISTLE_SOUNDS)
@@ -278,8 +278,9 @@ public class WhistleItem extends Item implements IDogItem {
             RoaringGaleTalent.roar(dogsList, world, player);
             return;
         case HEEL_BY_NAME:
-            if (world.isClientSide) 
-                HeelByNameScreen.open();
+            if (world.isClientSide) {
+                HeelByNameScreen.open(isKeyBind ? 200 : 0);
+            }
             return;
         case TO_BED: 
         {
