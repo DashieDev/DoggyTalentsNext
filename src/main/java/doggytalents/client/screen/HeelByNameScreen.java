@@ -59,6 +59,9 @@ public class HeelByNameScreen extends Screen {
     private int mouseX0 = -1;
     private int mouseY0 = -1;
 
+    private long blockCharInputMillis = 0;
+    private long prevMillis = 0;
+
    
     private final int MAX_BUFFER_SIZE = 64;
 
@@ -84,7 +87,11 @@ public class HeelByNameScreen extends Screen {
         updatePages();
     }
 
-    public static void open() { 
+    public static void open() {
+        open(0);
+    }
+
+    public static void open(long blockCharInputMillis) { 
         Minecraft mc = Minecraft.getInstance();
         var stack = mc.player.getItemInHand(InteractionHand.MAIN_HAND);
         if (stack == null) return;
@@ -93,7 +100,10 @@ public class HeelByNameScreen extends Screen {
         if (stack.hasTag()) {
             softHeel = stack.getTag().getBoolean("soft_heel");
         }
-        mc.setScreen(new HeelByNameScreen(mc.player, softHeel) );
+        var screen = new HeelByNameScreen(mc.player, softHeel);
+        screen.blockCharInputMillis = blockCharInputMillis;
+        screen.prevMillis = System.currentTimeMillis();
+        mc.setScreen(screen);
     }
 
     @Override
@@ -169,6 +179,14 @@ public class HeelByNameScreen extends Screen {
 
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+
+        if (this.blockCharInputMillis > 0) {
+            long passed = System.currentTimeMillis() - prevMillis;
+            if (passed > 0) {
+                this.blockCharInputMillis -= passed;
+                prevMillis = System.currentTimeMillis();
+            }
+        }
 
         var soft_heel = I18n.get("doggytalents.screen.whistler.heel_by_name.soft_heel");
         this.font.draw(stack, soft_heel, 3, 52, 0xffffffff);
@@ -338,6 +356,8 @@ public class HeelByNameScreen extends Screen {
 
     @Override
     public boolean charTyped(char code, int p_231042_2_) {
+        if (this.blockCharInputMillis > 0)
+            return false;
         if (SharedConstants.isAllowedChatCharacter(code)) {
             this.insertText(Character.toString(code));
             return true;
