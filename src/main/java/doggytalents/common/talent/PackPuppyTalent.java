@@ -47,6 +47,7 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class PackPuppyTalent extends TalentInstance {
@@ -191,8 +192,19 @@ public class PackPuppyTalent extends TalentInstance {
         var dogs = dog.level().getEntitiesOfClass(
             Dog.class, 
             dog.getBoundingBox().inflate(TRIGGER_RADIUS, 4, TRIGGER_RADIUS), 
-            this::isHungryDog);
+            filter_dog -> isEligibleDog(dog, filter_dog));
         return dogs;
+    }
+
+    private boolean isEligibleDog(Dog offerer, Dog target) {
+        if (!isHungryDog(target))
+            return false;
+        var ownerUUID = offerer.getOwnerUUID();
+        if (ownerUUID == null)
+            return false;
+        if (!offerer.willObeyOthers() && ObjectUtils.notEqual(ownerUUID, target.getOwnerUUID()))
+            return false;
+        return true;
     }
 
     private boolean isHungryDog(Dog dog) {
