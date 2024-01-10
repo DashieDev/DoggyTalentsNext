@@ -71,12 +71,19 @@ public class DogGoBehindOwnerAction extends TriggerableAction {
         double pX = owner_pos0.x, pY = owner_pos0.y , pZ = owner_pos0.z;
         BlockPos bpos = null;
         BlockState state = null;
+        BlockState state_below = null;
         for (int i = 0; i < 3; ++i) {
             pX += vec_back.x; pZ += vec_back.z;
             bpos = BlockPos.containing(pX, pY, pZ);
             state = dog.level().getBlockState(bpos);
             if (!state.isAir()) {
                 ++pY;
+                continue;
+            }
+            state_below = dog.level().getBlockState(bpos.below());
+            if (state_below.isAir()) {
+                --pY;
+                continue;
             }
         }
         
