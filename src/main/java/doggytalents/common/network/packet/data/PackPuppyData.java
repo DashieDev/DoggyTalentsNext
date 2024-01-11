@@ -14,7 +14,8 @@ public class PackPuppyData extends DogData {
     public static enum Type {
         RENDER_CHEST(0),
         PICKUP_NEARBY(1),
-        OFFER_FOOD(2);
+        OFFER_FOOD(2),
+        COLLECT_KILL_LOOT(3);
 
         private int id;
 
