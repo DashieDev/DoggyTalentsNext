@@ -18,7 +18,9 @@ import doggytalents.common.item.DogEddibleItem;
 import doggytalents.common.item.IDogEddible;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.data.PackPuppyData;
+import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.InventoryUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -38,12 +40,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
@@ -58,6 +65,7 @@ public class PackPuppyTalent extends TalentInstance {
     private boolean renderChest = true;
     private boolean pickupItems = true;
     private boolean offerFood = true;
+    private boolean collectKillLoot = true;
 
     private PackPuppyItemHandler packPuppyHandler;
     private MeatFoodHandler meatFoodHandler = new MeatFoodHandler();
@@ -253,6 +261,7 @@ public class PackPuppyTalent extends TalentInstance {
         this.renderChest = compound.getBoolean("PackPuppyTalent_renderChest");
         this.pickupItems = compound.getBoolean("PackPuppyTalent_pickupNearby");
         this.offerFood = compound.getBoolean("PackPuppyTalent_offerFood");
+        this.collectKillLoot = compound.getBoolean("PackPuppyTalent_collectKillLoot");
         this.packPuppyHandler.deserializeNBT(compound);
     }
 
@@ -461,6 +470,7 @@ public class PackPuppyTalent extends TalentInstance {
         compound.putBoolean("PackPuppyTalent_renderChest", this.renderChest);
         compound.putBoolean("PackPuppyTalent_pickupNearby", this.pickupItems);
         compound.putBoolean("PackPuppyTalent_offerFood", this.offerFood);
+        compound.putBoolean("PackPuppyTalent_collectKillLoot", this.collectKillLoot);
     }
 
     @Override
@@ -469,6 +479,7 @@ public class PackPuppyTalent extends TalentInstance {
         buf.writeBoolean(this.renderChest);
         buf.writeBoolean(this.pickupItems);
         buf.writeBoolean(this.offerFood);
+        buf.writeBoolean(this.collectKillLoot);
     }
 
     @Override
@@ -477,6 +488,7 @@ public class PackPuppyTalent extends TalentInstance {
         renderChest = buf.readBoolean();
         pickupItems = buf.readBoolean();
         offerFood = buf.readBoolean();
+        collectKillLoot = buf.readBoolean();
     }
 
     public void updateFromPacket(PackPuppyData data) {
@@ -490,6 +502,9 @@ public class PackPuppyTalent extends TalentInstance {
         case OFFER_FOOD:
             offerFood = data.val;
             break;
+        case COLLECT_KILL_LOOT:
+            collectKillLoot = data.val;
+            break;
         }
     }
 
@@ -501,6 +516,7 @@ public class PackPuppyTalent extends TalentInstance {
         packPup.setRenderChest(this.renderChest);
         packPup.setPickupItems(this.pickupItems);
         packPup.setOfferFood(this.offerFood);
+        packPup.setCollectKillLoot(this.collectKillLoot);
         return packPup;
     }
 
@@ -510,5 +526,149 @@ public class PackPuppyTalent extends TalentInstance {
     public void setPickupItems(boolean val) { this.pickupItems = val; }
     public boolean offerFood() { return this.offerFood; }
     public void setOfferFood(boolean val) { this.offerFood = val; }
+    public boolean collectKillLoot() { return this.collectKillLoot; }
+    public void setCollectKillLoot(boolean val) { this.collectKillLoot = val; }
+
+    private static int NOTIFY_RADIUS = 20;
+    public static void mayNotifyNearbyPackPuppy(LivingDropsEvent event) {
+        var source = event.getSource();
+        var killed = event.getEntity();
+        var killer = source.getEntity();
+        if (killer == null)
+            return;
+        if (killer.level().isClientSide)
+            return;
+
+        var drops = event.getDrops();
+        if (drops.isEmpty())
+            return;
+
+        if (!(killer instanceof LivingEntity killerLiving))
+            return;
+        
+        boolean eligibleKiller = 
+            killerLiving instanceof Player
+            || killerLiving instanceof Dog;
+        if (!eligibleKiller)
+            return;
+        
+        var dogOptional = findNearestChestDogToNotify(killerLiving);
+        if (!dogOptional.isPresent())
+            return;
+        var dog = dogOptional.get();
+        dog.triggerAction(new DogCollectLootAction(dog, killed.blockPosition()));
+    }
+
+    private static Optional<Dog> findNearestChestDogToNotify(LivingEntity killer) {
+        var dogs = killer.level().getEntitiesOfClass(
+            Dog.class, 
+            killer.getBoundingBox().inflate(NOTIFY_RADIUS, 3, NOTIFY_RADIUS),
+            filter_dog -> isValidItemCollector(filter_dog, killer)
+        );
+        if (dogs.isEmpty())
+            return Optional.empty();
+        
+        Dog selected_dog = dogs.get(0);
+        double min_dist = selected_dog.distanceToSqr(killer);
+        for (var dog : dogs) {
+            double dist = dog.distanceToSqr(killer);
+            if (dist < min_dist) {
+                min_dist = dist;
+                selected_dog = dog;
+            }
+        }
+        return Optional.ofNullable(selected_dog);
+    }
+
+    private static boolean isValidItemCollector(Dog dog, LivingEntity killer) {
+        if (!dog.isDoingFine())
+            return false;
+        if (!dog.readyForNonTrivialAction())
+            return false;
+
+        if (killer == dog)
+            return false;
+            
+        var ownerUUID = dog.getOwnerUUID();
+        if (ownerUUID == null)
+            return false;
+        UUID killerOwnerUUID = null; 
+        if (killer instanceof Player player) {
+            killerOwnerUUID = player.getUUID();
+        } else if (killer instanceof Dog killerDog) {
+            killerOwnerUUID = dog.getOwnerUUID();
+        }
+        if (killerOwnerUUID == null)
+            return false;
+        if (ObjectUtils.notEqual(ownerUUID, killerOwnerUUID))
+            return false;
+        
+        var instOptional = dog.getTalent(DoggyTalents.PACK_PUPPY);
+        if (!instOptional.isPresent())
+            return false;
+        var inst = instOptional.get();
+        if (!(inst instanceof PackPuppyTalent packPup))
+            return false;
+        if (!packPup.canCollectItems())
+            return false;
+        if (!packPup.pickupItems())
+            return false;
+        if (!packPup.collectKillLoot())
+            return false;
+        
+        var inv = packPup.inventory();
+        if (inv == null)
+            return false;
+        boolean hasFreeSlot = false;
+        for (int i = 0; i < inv.getSlots(); ++i) {
+            var stack = inv.getStackInSlot(i);
+            if (stack.isEmpty()) {
+                hasFreeSlot = true;
+                break;
+            }
+        }
+        if (!hasFreeSlot)
+            return false;
+    
+        return true;
+    }
+
+    public static class DogCollectLootAction extends TriggerableAction {
+
+        private BlockPos target;
+
+        public DogCollectLootAction(Dog dog, @NonNull BlockPos target) {
+            super(dog, false, false);
+            this.target = target;
+        }
+
+        @Override
+        public void onStart() {
+            if (this.dog.distanceToSqr(Vec3.atBottomCenterOf(target)) > 16 * 16) {
+                this.setState(ActionState.FINISHED);
+                return;
+            }
+            this.dog.getNavigation().stop();
+            DogUtil.moveToIfReachOrElse(dog, target, 
+                dog.getUrgentSpeedModifier(), 1, 1, d -> { this.target = null; });
+        }
+
+        @Override
+        public void tick() {
+            if (this.target == null) {
+                this.setState(ActionState.FINISHED);
+                return;
+            }
+            if (this.dog.getNavigation().isDone()) {
+                this.setState(ActionState.FINISHED);
+                return;
+            }
+        }
+
+        @Override
+        public void onStop() {
+        }
+
+    }
 
 }
