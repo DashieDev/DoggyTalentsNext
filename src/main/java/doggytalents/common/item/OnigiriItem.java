@@ -10,7 +10,7 @@ public class OnigiriItem extends DogEddibleItem {
     public OnigiriItem() {
         super(
             b -> b
-                .nutrition(4)
+                .nutrition(7)
                 .saturationMod(0.5F)
         );
     }
