@@ -385,7 +385,7 @@ public class TalentInfoViewElement extends AbstractElement {
 
             @Override
             public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, dogLevel);
+                super.render(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 MutableComponent c1;
                 if (this.active) {
