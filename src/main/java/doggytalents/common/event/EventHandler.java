@@ -18,6 +18,7 @@ import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.talent.HunterDogTalent;
+import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.util.DogLocationStorageMigration;
 import doggytalents.common.util.Util;
 import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
@@ -57,6 +58,8 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
@@ -383,6 +386,11 @@ public class EventHandler {
 
     private boolean distanceTooShortToTeleport(Vec3 from, Vec3 to) {
         return from.distanceToSqr(to) < MIN_DISTANCE_TO_TRIGGER_TELEPORT_SQR;
+    }
+
+    @SubscribeEvent
+    public void onLivingDeath(LivingDropsEvent event) {
+        PackPuppyTalent.mayNotifyNearbyPackPuppy(event);
     }
 
     @SubscribeEvent

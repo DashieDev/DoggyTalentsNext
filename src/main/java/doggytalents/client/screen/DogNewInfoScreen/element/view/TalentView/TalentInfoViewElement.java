@@ -326,6 +326,32 @@ public class TalentInfoViewElement extends AbstractElement {
                 )
                 .init()
             );
+            container.addChildren(
+                new ButtonOptionEntry(container, getScreen(), 
+                    new FlatButton(
+                        0, 0,
+                        40, 20, Component.literal("" + packPup.collectKillLoot()), 
+                        b -> {
+                            Boolean newVal = !packPup.collectKillLoot();
+                            b.setMessage(Component.literal("" + newVal));
+                            packPup.setCollectKillLoot(newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
+                                dog.getId(), PackPuppyData.Type.COLLECT_KILL_LOOT, newVal
+                            ));
+                        }     
+                    ) {
+                        @Override
+                        public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                            super.render(graphics, mouseX, mouseY, pTicks);
+                            if (!this.isHovered) return;
+                            var c1 = Component.translatable("talent.doggytalents.pack_puppy.collect_kill_loot.desc");
+                            ToolTipOverlayManager.get().setComponents(List.of(c1));
+                        }
+                    },
+                    I18n.get("talent.doggytalents.pack_puppy.collect_kill_loot")
+                )
+                .init()
+            );
         }
         if (packPup.canOfferFood()) {
             container.addChildren(
