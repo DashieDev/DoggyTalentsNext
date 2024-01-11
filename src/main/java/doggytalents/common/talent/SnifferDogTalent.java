@@ -18,7 +18,9 @@ import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -162,6 +164,21 @@ public class SnifferDogTalent extends TalentInstance {
         if (dog.level().isClientSide)
             return InteractionResult.SUCCESS;
 
+        if (playerIn.isShiftKeyDown()) {
+            if (this.detectingBlock == null)
+                this.detectingBlock = Blocks.AIR;
+            var c1 = this.detectingBlock == Blocks.AIR ? 
+            Component.translatable("talent.doggytalents.sniffer_dog.detecting_block_status.none")
+            : Component.translatable("talent.doggytalents.sniffer_dog.detecting_block_status",
+                dog.getName().getString(),
+                Component.translatable(this.detectingBlock.asItem().getDescriptionId()).withStyle(
+                    Style.EMPTY.withItalic(true)
+                )
+            );
+            playerIn.sendSystemMessage(c1);
+            return InteractionResult.SUCCESS;
+        }
+
         var tag = stack.getOrCreateTag();
         if (!tag.contains(ScentTreatItem.SCENT_BLOCK_ID)) {
             this.clearDetectBlock();
@@ -206,6 +223,24 @@ public class SnifferDogTalent extends TalentInstance {
         if (!dog.canDoIdileAnim())
             return;
         dog.triggerAction(new DogGetOwnerAttentionAndInformAction(dog, owner, this));
+    }
+
+    @Override
+    public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.writeToNBT(dogIn, compound);
+        if (this.detectingBlock == null)
+            this.detectingBlock = Blocks.AIR;
+        var id = ForgeRegistries.BLOCKS.getKey(this.detectingBlock);
+        NBTUtil.putResourceLocation(compound, "snifferDog_detectingBlock", id);
+    }
+
+    @Override
+    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.readFromNBT(dogIn, compound);
+        var block = NBTUtil.getRegistryValue(compound, "snifferDog_detectingBlock", ForgeRegistries.BLOCKS);
+        if (block == null)
+            block = Blocks.AIR;
+        this.detectingBlock = block;
     }
 
     public static class DogGetOwnerAttentionAndInformAction extends TriggerableAction {
