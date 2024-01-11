@@ -56,6 +56,27 @@ public class InventoryUtil {
     }
 
     public static ItemStack addItem(IItemHandler target, ItemStack remaining) {
+        if (remaining.isEmpty()) {
+            return remaining;
+        }
+        // Try to merge the stack into existing stack with same item first
+        for (int i = 0; i < target.getSlots(); i++) {
+            var stack = target.getStackInSlot(i);
+            if (!stack.is(remaining.getItem()))
+                continue;
+            if (target.isItemValid(i, remaining)) {
+                remaining = target.insertItem(i, remaining, false);
+            }
+
+            if (remaining.isEmpty()) {
+                break;
+            }
+        }
+
+        if (remaining.isEmpty()) {
+            return remaining;
+        }
+
         // Try to insert item into all slots
         for (int i = 0; i < target.getSlots(); i++) {
             if (target.isItemValid(i, remaining)) {
