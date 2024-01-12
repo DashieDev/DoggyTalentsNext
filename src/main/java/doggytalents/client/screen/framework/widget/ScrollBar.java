@@ -59,7 +59,7 @@ public class ScrollBar extends AbstractWidget {
 
     @Override
     protected void onDrag(double mouseX, double mouseY, double dY, double dX) {
-        if (!checkMouseBound(mouseX, mouseY))
+        if (!checkAndHandleMouseOutBound(mouseX, mouseY))
             return;
         double offset = this.dir == Direction.VERTICAL ?
             dX : dY;
@@ -70,11 +70,23 @@ public class ScrollBar extends AbstractWidget {
         onValueUpdated();
     }
 
-    private boolean checkMouseBound(double mouseX, double mouseY) {
-        if (mouseX < this.getX())
+    private boolean checkAndHandleMouseOutBound(double mouseX, double mouseY) {
+        if (mouseX < this.getX()) {
+            if (this.barOffset > 0) {
+                setBarOffset(0);
+                holdInflate = true;
+                onValueUpdated();
+            }
             return false;
-        if (mouseX > this.getX() + this.width)
+        }   
+        if (mouseX > this.getX() + this.width) {
+            if (this.barOffset < this.getMaxOffsetValue()) {
+                setBarOffset(getMaxOffsetValue());
+                holdInflate = true;
+                onValueUpdated();
+            }
             return false;
+        }
         return true;
     }
 
