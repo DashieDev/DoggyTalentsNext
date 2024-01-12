@@ -16,6 +16,10 @@ public class ScrollBar extends AbstractWidget {
     private Direction dir;
     private Screen screen;
     private boolean holdInflate;
+    private long inflateAnim = 0;
+    private final long MAX_INFLATE_ANIM = 50;
+    private long prevAnimUpdateMillis = 0;
+    private boolean startedAnimate = false;
 
     public ScrollBar(int x, int y, int w, int h, Direction dir, int barsize, Screen screen) {
         super(x, y, w, h, Component.empty());
@@ -23,37 +27,55 @@ public class ScrollBar extends AbstractWidget {
             : Math.min(w, barsize);
         this.dir = dir;
         this.screen = screen;
+        prevAnimUpdateMillis = System.currentTimeMillis();
     }
 
     public static enum Direction { VERTICAL, HORIZONTAL }
 
     @Override
     public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+        if (!startedAnimate) {
+            startedAnimate = true;
+            prevAnimUpdateMillis = System.currentTimeMillis();
+        }
+        long currentTimeMillis = System.currentTimeMillis();
+        long passedAnimMillis = currentTimeMillis - prevAnimUpdateMillis;
+        if (passedAnimMillis > 0) {
+            prevAnimUpdateMillis = currentTimeMillis;
+        }
         int barOffset = Mth.floor(this.barOffset);
         if (this.holdInflate) {
             this.holdInflate = screen.isDragging();
         }
-        if (!this.isHovered && !holdInflate) {
-            final int thick = 3;
-            if (this.dir == Direction.VERTICAL) 
-                fill(stack,this.getX() + this.width - thick, this.getY(), this.getX()+this.width, this.getY()+this.height, 0x87363636);
-            else
-                fill(stack, this.getX(), this.getY() + this.height - thick, this.getX()+this.width, this.getY()+this.height, 0x87363636);
-            if (this.dir == Direction.VERTICAL) {
-                fill(stack,this.getX() + this.getWidth() - thick, this.getY() + barOffset, 
-                    this.getX()+this.getWidth(), this.getY() + barOffset+this.barSize, 0xffffffff);
+        final int BASE_THICK = 3;
+        if (passedAnimMillis > 0) {
+            if (!this.isHovered && !holdInflate) {
+                this.inflateAnim -= passedAnimMillis;
             } else {
-                fill(stack,this.getX() + barOffset, this.getY() + this.getHeight() - thick, 
-                    this.getX() + barOffset + this.barSize, this.getY() + this.getHeight(), 0xffffffff);
+                this.inflateAnim += passedAnimMillis;
             }
-            return;
         }
-        fill(stack, this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, 0x87363636);
+
+        if (this.inflateAnim < 0) {
+            this.inflateAnim = 0;
+        }
+        if (this.inflateAnim > MAX_INFLATE_ANIM) {
+            this.inflateAnim = MAX_INFLATE_ANIM;
+        }
+
+        float inflateAnimProgress = ((float) this.inflateAnim) / MAX_INFLATE_ANIM;
+        int maxBarThick = this.dir == Direction.VERTICAL ?
+            this.getWidth() : this.getHeight();
+        int barThickAfterAnim = BASE_THICK + Mth.ceil(inflateAnimProgress*(maxBarThick));
+        if (this.dir == Direction.VERTICAL) 
+            graphics.fill(this.getX() + this.width - barThickAfterAnim, this.getY(), this.getX()+this.width, this.getY()+this.height, 0x87363636);
+        else
+            graphics.fill( this.getX(), this.getY() + this.height - barThickAfterAnim, this.getX()+this.width, this.getY()+this.height, 0x87363636);
         if (this.dir == Direction.VERTICAL) {
-            fill(stack,this.getX(), this.getY() + barOffset, 
+            graphics.fill(this.getX() + this.getWidth() - barThickAfterAnim, this.getY() + barOffset, 
                 this.getX()+this.getWidth(), this.getY() + barOffset+this.barSize, 0xffffffff);
         } else {
-            fill(stack,this.getX() + barOffset, this.getY(), 
+            graphics.fill(this.getX() + barOffset, this.getY() + this.getHeight() - barThickAfterAnim, 
                 this.getX() + barOffset + this.barSize, this.getY() + this.getHeight(), 0xffffffff);
         }
     }
