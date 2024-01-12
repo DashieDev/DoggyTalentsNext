@@ -108,11 +108,10 @@ public class DogGoAwayFromFireGoal extends Goal {
         int minZ = Mth.floor(pos.z - half_bbw)-1;
 
         int maxX = Mth.floor(pos.x + half_bbw)+1;
-        int maxY = Mth.floor(pos.y+1);
+        int maxY = Mth.floor(pos.y);
         int maxZ = Mth.floor(pos.z + half_bbw)+1;
 
         byte ret = -1; //Assume all is safe
-        int ix = 0;
         for (BlockPos x : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
             boolean isCorner = 
                 (x.getX() == minX || x.getX() == maxX)
@@ -134,9 +133,7 @@ public class DogGoAwayFromFireGoal extends Goal {
             if (isBurning && dog.getBoundingBox().intersects(blockBb)) {
                 return 1;
             }
-            ++ix;
         }
-        ChopinLogger.lwn(dog, "Lava check total : " + ix + " blocks");
 
         // {
         //     var x = new BlockPos(pos.x, pos.y-1, pos.z);
