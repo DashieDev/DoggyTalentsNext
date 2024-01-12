@@ -107,7 +107,7 @@ public class DogGoAwayFromFireGoal extends Goal {
         int minZ = Mth.floor(pos.z - half_bbw)-1;
 
         int maxX = Mth.floor(pos.x + half_bbw)+1;
-        int maxY = Mth.floor(pos.y);
+        int maxY = Mth.floor(pos.y+1);
         int maxZ = Mth.floor(pos.z + half_bbw)+1;
 
         byte ret = -1; //Assume all is safe
