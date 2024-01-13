@@ -29,6 +29,14 @@ public class DogWaterBoundNavigation extends WaterBoundPathNavigation implements
     }
 
     @Override
+    public void recomputePath() {
+        boolean prevLock = locked;
+        locked = false;
+        super.recomputePath();
+        locked = prevLock;
+    }
+
+    @Override
     public void lockDogNavigation() {
         this.locked = true;
     }

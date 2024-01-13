@@ -106,6 +106,14 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         return super.canUpdatePath() && !dog.isOnSwitchNavCooldown()
             && !locked;
     }
+
+    @Override
+    public void recomputePath() {
+        boolean prevLock = locked;
+        locked = false;
+        super.recomputePath();
+        locked = prevLock;
+    }
     
     @Override
     protected boolean hasValidPathType(BlockPathTypes type) {
