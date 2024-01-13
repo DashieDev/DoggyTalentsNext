@@ -30,6 +30,14 @@ public class DogFlyingNavigation extends FlyingPathNavigation implements IDogNav
         return super.canUpdatePath() && !dog.isOnSwitchNavCooldown() 
             && !locked;
     }
+
+    @Override
+    public void recomputePath() {
+        boolean prevLock = locked;
+        locked = false;
+        super.recomputePath();
+        locked = prevLock;
+    }
     
     @Override
     public void lockDogNavigation() {
