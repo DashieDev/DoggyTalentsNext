@@ -439,9 +439,9 @@ public class TalentInfoViewElement extends AbstractElement {
 
         this.addChildren(trainButton);
 
-        var pointsLeftStr = new OneLineLimitedTextArea(0, 0, 75, Component.translatable("doggui.talents.current_talent_level"));
-        pointsLeftStr.x = (this.getRealX() + PADDING_LEFT + 40);
-        pointsLeftStr.y = (this.getRealY() + this.getSizeY() - 45);
+        var pointsLeftStr = new OneLineLimitedTextArea(0, 0, 75, Component.translatable("doggui.pointsleft"));
+        pointsLeftStr.setX(this.getRealX() + PADDING_LEFT + 40);
+        pointsLeftStr.setY(this.getRealY() + this.getSizeY() - 45);
         this.addChildren(pointsLeftStr);
 
     }
