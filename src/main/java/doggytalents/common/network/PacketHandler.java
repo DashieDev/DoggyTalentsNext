@@ -65,6 +65,7 @@ public final class PacketHandler {
         registerPacket(new ForceChangeOwnerPacket(), ForceChangeOwnerData.class);
         registerPacket(new PackPuppyPacket(), PackPuppyData.class);
         registerPacket(new RescueDogRenderPacket(), RescueDogRenderData.class);
+        registerPacket(new GatePasserPacket(), GatePasserData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {

@@ -1,14 +1,21 @@
 package doggytalents.common.entity.ai.nav;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jetbrains.annotations.ApiStatus.OverrideOnly;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
@@ -103,7 +110,7 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
 
     @Override
     protected boolean canUpdatePath() {
-        return super.canUpdatePath() && !dog.isOnSwitchNavCooldown()
+        return (super.canUpdatePath()) && !dog.isOnSwitchNavCooldown()
             && !locked;
     }
 
@@ -148,6 +155,29 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
                     }
                 }
                 return super.getFloorLevel(pos);
+            }
+
+            @Override
+            @Nullable
+            protected Node findAcceptedNode(int x, int y, int z, int floorLevel,
+                    double maxUpStep, Direction dir, BlockPathTypes centerType) {
+                if (centerType == BlockPathTypes.DOOR_WOOD_CLOSED && dog.canDogPassGate()) {
+                    centerType = BlockPathTypes.WALKABLE;
+                }
+                return super.findAcceptedNode(x, y, z, floorLevel, maxUpStep, dir, centerType);
+            }
+
+            @Override
+            public BlockPathTypes getBlockPathType(BlockGetter getter, int x, int y, int z) {
+                var retType =  super.getBlockPathType(getter, x, y, z);
+                
+                if (retType == BlockPathTypes.FENCE && dog.canDogPassGate()) {
+                    var state = getter.getBlockState(new BlockPos(x, y, z));
+                    if (state.getBlock() instanceof FenceGateBlock) {
+                        retType = BlockPathTypes.WALKABLE;
+                    }  
+                } 
+                return retType;
             }
         };
         this.nodeEvaluator.setCanPassDoors(true);
