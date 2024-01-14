@@ -23,41 +23,38 @@ public class DogMoveControl extends MoveControl {
 
     @Override
     public void tick() {
-        double dy = 0;
-        if (this.hasWanted()) {
-            dy = Math.abs(this.getWantedY() - this.dog.getY());
-        }
-        if (
-            this.operation == MoveControl.Operation.MOVE_TO
-            && (dy > 0.75 || dog.isDogCurious())
-        ) {
-            final float SNEAK_SPEED_1 = 0.35f;
-            final float SNEAK_SPEED_2 = 0.25f;
-
+        final float SNEAK_SPEED_1 = 0.35f;
+        final float SNEAK_SPEED_2 = 0.25f;
+        if (this.operation == MoveControl.Operation.MOVE_TO) {
             this.operation = MoveControl.Operation.WAIT;
-            double d0 = this.wantedX - this.mob.getX();
-            double d1 = this.wantedZ - this.mob.getZ();
-            double d2 = this.wantedY - this.mob.getY();
-            double d3 = d0 * d0 + d2 * d2 + d1 * d1;
-            if (d3 < (double)2.5000003E-7F) {
-                this.mob.setZza(0.0F);
+            double dx = this.wantedX - this.dog.getX();
+            double dz = this.wantedZ - this.dog.getZ();
+            double dy = this.wantedY - this.dog.getY();
+            double l_sqr = dx * dx + dy * dy + dz * dz;
+            if (l_sqr < (double)2.5000003E-7F) {
+                this.dog.setZza(0.0F);
                 return;
             }
 
-            float f9 = (float)(Mth.atan2(d1, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
-            this.mob.setYRot(this.rotlerp(this.mob.getYRot(), f9, 90.0F));
-            float speed_cap = dy > 1.75 ? SNEAK_SPEED_2 : SNEAK_SPEED_1;
-            float speed = Math.min(speed_cap, 
-                (float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
-            if (this.dog.isDogCurious()) {
-                speed = (float) speedModifier * SNEAK_SPEED_2;
+            float f9 = (float)(Mth.atan2(dz, dx) * (double)(180F / (float)Math.PI)) - 90.0F;
+            this.dog.setYRot(this.rotlerp(this.dog.getYRot(), f9, 90.0F));
+            float speed0 = (float) this.dog.getAttributeValue(Attributes.MOVEMENT_SPEED);
+            float speed = speed0;
+            double dy_abs = Math.abs(dy);
+            if (dy_abs > 0.75 || dog.isDogCurious()) {
+                float speed_cap = dy_abs > 1.75 ? SNEAK_SPEED_2 : SNEAK_SPEED_1;
+                speed = Math.min(speed_cap, 
+                    (float) (this.speedModifier * speed0));
+                if (this.dog.isDogCurious()) {
+                    speed = (float) speedModifier * SNEAK_SPEED_2;
+                }
             }
-            this.mob.setSpeed(speed);
-            BlockPos blockpos = this.mob.blockPosition();
-            BlockState blockstate = this.mob.level().getBlockState(blockpos);
-            VoxelShape voxelshape = blockstate.getCollisionShape(this.mob.level(), blockpos);
-            if (d2 > (double)this.mob.getStepHeight() && d0 * d0 + d1 * d1 < (double)Math.max(1.0F, this.mob.getBbWidth()) || !voxelshape.isEmpty() && this.mob.getY() < voxelshape.max(Direction.Axis.Y) + (double)blockpos.getY() && !blockstate.is(BlockTags.DOORS) && !blockstate.is(BlockTags.FENCES)) {
-                this.mob.getJumpControl().jump();
+            this.dog.setSpeed(speed);
+            var b0 = this.dog.blockPosition();
+            var b0_state = this.dog.level().getBlockState(b0);
+            var b0_collision = b0_state.getCollisionShape(this.dog.level(), b0);
+            if (dy > (double)this.dog.getStepHeight() && dx * dx + dz * dz < (double)Math.max(1.0F, this.dog.getBbWidth()) || !b0_collision.isEmpty() && this.mob.getY() < b0_collision.max(Direction.Axis.Y) + (double)b0.getY() && !b0_state.is(BlockTags.DOORS) && !b0_state.is(BlockTags.FENCES)) {
+                this.dog.getJumpControl().jump();
                 this.operation = MoveControl.Operation.JUMPING;
             }
             return;
