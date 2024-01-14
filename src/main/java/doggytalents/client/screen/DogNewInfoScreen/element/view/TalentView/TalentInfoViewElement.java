@@ -27,10 +27,12 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.network.packet.data.DoggyTorchData;
+import doggytalents.common.network.packet.data.GatePasserData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.network.packet.data.RescueDogRenderData;
 import doggytalents.common.talent.DoggyTorchTalent;
+import doggytalents.common.talent.GatePasserTalent;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.talent.RescueDogTalent;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
@@ -277,6 +279,40 @@ public class TalentInfoViewElement extends AbstractElement {
                 )
                 .init()
             );
+        } else if (talent == DoggyTalents.GATE_PASSER.get()) {
+            var talentInstOptional = dog.getTalent(DoggyTalents.GATE_PASSER);
+            if (!talentInstOptional.isPresent())
+                return;
+            var talentInst = talentInstOptional.get();
+            if (!(talentInst instanceof GatePasserTalent gateTalent))
+                return;
+            var gateButtonDiv = new DivElement(container, getScreen())
+                .setPosition(PosType.RELATIVE, 0, 0)
+                .setSize(1f, 30)
+                .init();
+            container.addChildren(gateButtonDiv);
+            var gateButtonStr = Component.translatable(
+                gateTalent.allowPassingGate() ?
+                "talent.doggytalents.gate_passer.pass_gate.unset"
+                : "talent.doggytalents.gate_passer.pass_gate.set"
+            );
+            var gateButton = new FlatButton(
+                gateButtonDiv.getRealX() + PADDING_LEFT,
+                gateButtonDiv.getRealY() + 5, 120, 20, gateButtonStr,
+                b -> {
+                    boolean newVal = !gateTalent.allowPassingGate();
+                    b.setMessage(Component.translatable(
+                        newVal ?
+                        "talent.doggytalents.gate_passer.pass_gate.unset"
+                        : "talent.doggytalents.gate_passer.pass_gate.set"
+                    ));
+                    gateTalent.setAllowPassingGate(newVal);
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new GatePasserData(
+                        dog.getId(), newVal
+                    ));
+                }
+            );
+            gateButtonDiv.addChildren(gateButton);
         }
     }
 
