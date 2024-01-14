@@ -4451,6 +4451,10 @@ public class Dog extends AbstractDog {
             if (fireImmune())
                 return 0;
             break;
+        case DOOR_WOOD_CLOSED:
+            if (this.canDogPassGate())
+                return 8;
+            break;
         }
         return super.getPathfindingMalus(type);
     }
@@ -4805,6 +4809,14 @@ public class Dog extends AbstractDog {
             }
         }
         return blockType;
+    }
+
+    public boolean canDogPassGate() {
+        for (var alt : this.alterations) {
+            if (alt.canDogPassGate(this).shouldSwing())
+                return true;
+        }
+        return false;
     }
 
     public float getTimeDogIsShaking() {

@@ -255,4 +255,8 @@ public interface IDogAlteration {
     default void onShakingDry(AbstractDog dogIn, WetSource source) {
 
     }
+
+    default InteractionResult canDogPassGate(AbstractDog dogIn) {
+        return InteractionResult.PASS;
+    }
 }
