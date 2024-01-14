@@ -100,7 +100,7 @@ public class DoggyTalents {
     public static final RegistryObject<Talent> FIRE_DRILL = register("fire_drill", () ->
         new SingleLevelTalent(FireDrillTalent::new));
     public static final RegistryObject<Talent> SNIFFER_DOG = register("sniffer_dog", () -> new Talent(SnifferDogTalent::new));
-    
+    public static final RegistryObject<Talent> GATE_PASSER = register("gate_passer", () -> new SingleLevelTalent(GatePasserTalent::new));
     
 
     private static <T extends Talent> RegistryObject<Talent> registerInst(final String name, final BiFunction<Talent, Integer, TalentInstance> sup) {
