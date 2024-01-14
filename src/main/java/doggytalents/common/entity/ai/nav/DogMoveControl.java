@@ -9,6 +9,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -60,7 +61,8 @@ public class DogMoveControl extends MoveControl {
                 !b0_collision.isEmpty() 
                 && this.dog.getY() < b0_collision.max(Direction.Axis.Y) + (double)b0.getY() 
                 && !b0_state.is(BlockTags.DOORS) 
-                && !b0_state.is(BlockTags.FENCES);
+                && !b0_state.is(BlockTags.FENCES)
+                && !(b0_state.getBlock() instanceof FenceGateBlock);
             boolean shouldJump =
                 dyRequiresJump
                 || collisionRequireJump;
