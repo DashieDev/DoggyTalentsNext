@@ -83,6 +83,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue MOUTH_ITEM_FORCE_RENDER;
         public ForgeConfigSpec.IntValue MAX_ANIMATION_LATENCY_ALLOWED;
         public ForgeConfigSpec.BooleanValue USE_LEGACY_DOG_ARMOR_RENDER;
+        public ForgeConfigSpec.BooleanValue USE_PLAYER_HELMET_MODEL_BY_DEFAULT;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -193,6 +194,12 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("if you prefer to use the old system instead.")
                 .translation("doggytalents.config.client.use_legacy_dog_armor_render")
                 .define("use_legacy_dog_armor_render", false);
+            USE_PLAYER_HELMET_MODEL_BY_DEFAULT = builder
+                .comment("By default, if there is no custom Helmet Armor model for the Helmet Item,")
+                .comment("DTN will use its own helmet armor model designed for DTN Dog to")
+                .comment("render it on the Dog's head. Enable this to make DTN reuse the player's Helmet Model instead.")
+                .translation("doggytalents.config.client.use_player_helmet_model_by_default")
+                .define("use_player_helmet_model_by_default", false);
             builder.pop();
         }
 
