@@ -8,6 +8,7 @@ public class DogAlterationProps {
     private boolean canFly = false;
     private boolean canWearArmor = false;
     private boolean canUseTools = false;
+    private boolean fallImmune = false;
 
     public DogAlterationProps() {}
 
@@ -17,6 +18,7 @@ public class DogAlterationProps {
     public boolean canBreatheUnderwater() { return canBreatheUnderwater; }
     public boolean canWearArmor() { return canWearArmor; }
     public boolean canUseTools() { return canUseTools; }
+    public boolean fallImmune() { return fallImmune; }
 
     public DogAlterationProps setFireImmune() {
         this.fireImmune = true;
@@ -45,6 +47,11 @@ public class DogAlterationProps {
 
     public DogAlterationProps setCanUseTools() {
         this.canUseTools = true;
+        return this;
+    }
+
+    public DogAlterationProps setFallImmune() {
+        this.fallImmune = true;
         return this;
     }
 }

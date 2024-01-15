@@ -1480,6 +1480,9 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
+        if (this.alterationProps.fallImmune()) {
+            return false;
+        }
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.onLivingFall(this, distance, damageMultiplier); // TODO pass source
 
