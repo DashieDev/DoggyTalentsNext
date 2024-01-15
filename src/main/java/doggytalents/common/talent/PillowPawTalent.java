@@ -1,6 +1,7 @@
 package doggytalents.common.talent;
 
 import doggytalents.DoggyTalents;
+import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -36,6 +37,11 @@ public class PillowPawTalent extends TalentInstance {
         }
 
         return InteractionResultHolder.pass(0F);
+    }
+
+    @Override
+    public void props(AbstractDog dog, DogAlterationProps props) {
+        props.setFallImmune();
     }
 
     public static boolean isDogEligible(AbstractDog dog) {
