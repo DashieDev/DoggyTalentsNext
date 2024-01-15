@@ -9,9 +9,11 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 public class DogArmorHelmetAltModel {
  
     private HumanoidArmorModel<Dog> helmetModel;
+    private HumanoidArmorModel<Dog> dummyModel;
 
     public DogArmorHelmetAltModel(EntityRendererProvider.Context ctx) {
         this.helmetModel = new HumanoidArmorModel<>(ctx.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR));
+        this.dummyModel = new HumanoidArmorModel<>(ctx.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR));
         this.helmetModel.setAllVisible(false);
         this.helmetModel.head.visible = true;
         this.helmetModel.young = false;
@@ -19,6 +21,10 @@ public class DogArmorHelmetAltModel {
 
     public Model getModel() {
         return helmetModel;
-    }    
+    }
+
+    public HumanoidArmorModel<?> getDummy() {
+        return dummyModel;
+    }
 
 }
