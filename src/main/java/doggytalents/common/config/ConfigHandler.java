@@ -238,6 +238,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
         public ForgeConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
         public ForgeConfigSpec.BooleanValue WOLF_MOUNT_PASSENGER_COLLISION;
+        public ForgeConfigSpec.BooleanValue CONDUCTING_BONE_CROSS_ORIGIN;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -372,6 +373,12 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("try to calculate the appropriate path while carrying another mob, there might be accidental suffocations.")
                 .translation("doggytalents.wolf_mount_passenger_collision")
                 .define("wolf_mount_passenger_collision", true);
+            CONDUCTING_BONE_CROSS_ORIGIN = builder
+                .comment("By default, Conducting Bone users and summon their Dogs even when they are in")
+                .comment("other dimensions. Set this to false to limit Conducting Bone Users to only summon")
+                .comment("Dogs of the same dimension.")
+                .translation("doggytalents.conducting_bone_cross_origin")
+                .define("conducting_bone_cross_origin", true);  
 
             builder.pop();
         }
