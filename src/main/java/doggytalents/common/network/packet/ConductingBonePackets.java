@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import doggytalents.DoggyItems;
 import doggytalents.client.screen.ConductingBoneScreen;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.PacketHandler;
@@ -55,8 +56,11 @@ public class ConductingBonePackets {
                     var sender = ctx.get().getSender();
                     var storage = 
                         DogLocationStorage.get(sender.level());
+                    var dogLsStream = ConfigHandler.SERVER.CONDUCTING_BONE_CROSS_ORIGIN.get() ?
+                        storage.getDogs(sender)
+                        : storage.getDogs(sender, sender.level().dimension());
                     var dogLs = 
-                        storage.getDogs(sender, sender.level().dimension())
+                        dogLsStream
                         .map(dogLoc -> Pair.of(dogLoc.getDogId(), dogLoc.getDogName()))
                         .collect(Collectors.toList());
 
