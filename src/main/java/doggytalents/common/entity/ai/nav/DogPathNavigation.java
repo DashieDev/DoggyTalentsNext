@@ -1,5 +1,7 @@
 package doggytalents.common.entity.ai.nav;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -16,6 +18,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
@@ -194,4 +197,19 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         this.locked = false;
     }
 
+    @Override
+    @Nullable
+    protected Path createPath(@Nonnull Set<BlockPos> pos, int p_148224_, boolean p_148225_, int p_148226_,
+            float p_148227_) {
+        dogThrowIfLockAndDebug();  
+        return super.createPath(pos, p_148224_, p_148225_, p_148226_, p_148227_);
+    }
+
+    //Debug only
+    private void dogThrowIfLockAndDebug() {
+        if (locked) {
+            ChopinLogger.lwn(dog, "Someone trying to create path from outside!");
+            throw new IllegalStateException(dog.getName().getString() + ": Someone trying to create path from outside!");
+        }
+    }
 }
