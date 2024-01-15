@@ -2781,11 +2781,8 @@ public class Dog extends AbstractDog {
             int level_normal = 0;
             int level_kami = 0;
             if (compound.contains("level_normal", Tag.TAG_ANY_NUMERIC)) {
-                var lvl = this.getDogLevel().copy();
-                lvl.setLevel(Type.NORMAL, compound.getInt("level_normal"));
-                this.entityData.set(DOG_LEVEL.get(), lvl);
+                level_normal = compound.getInt("level_normal");
             }
-            
             if (compound.contains("level_kami", Tag.TAG_ANY_NUMERIC)) {
                 level_kami = compound.getInt("level_kami");          
             } 
