@@ -1,4 +1,4 @@
-// 1.20.1	2024-01-07T13:39:49.4172834	DoggyTalents Item Models
+// 1.20.1	2024-01-16T15:24:09.9826759	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
@@ -38,6 +38,8 @@ c308c809213ff3393bfd94da560555797d4097cc assets/doggytalents/models/item/edamame
 0807828e53bd3d57eb4fc8e23fbdf4e3f6f35a52 assets/doggytalents/models/item/empty_locator_orb.json
 2b241a97c7a75299f0df2a8b38a741693e92e5b2 assets/doggytalents/models/item/energizer_stick.json
 fcce3621bda79bfb2c94031ae8ab9eabef319edc assets/doggytalents/models/item/feathered_mantle.json
+567e3bd3453bd6c927f463931d62c0da0c254443 assets/doggytalents/models/item/fedora.json
+a4bc3a31db081fb8923a0112d32bd4650d41c4f9 assets/doggytalents/models/item/flatcap.json
 fd14db626434a2c48c8ee30395f56f64c64879c8 assets/doggytalents/models/item/flying_cape.json
 7cdb64b50b71c47cea28a9126f474fa5795001a3 assets/doggytalents/models/item/food_bowl.json
 d9ec650c08c3440406bc3653fa92dd165d4045aa assets/doggytalents/models/item/frisbee.json
