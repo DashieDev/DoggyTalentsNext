@@ -271,10 +271,10 @@ public class ScrapsModel extends GlowingEyeDogModel {
 
 		PartDefinition head_r10 = real_head.addOrReplaceChild("head_r10", CubeListBuilder.create().texOffs(33, 5).addBox(-1.5F, -1.05F, -0.5F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(0.0F, 2.23F, -4.5F, 0.2618F, 0.0F, 0.0F));
 
-		PartDefinition glowing_eyes = partdefinition.addOrReplaceChild("glowing_eyes", CubeListBuilder.create(), PartPose.offset(0.0F, 13.5F, -7.0F));
+		PartDefinition glowing_eyes = partdefinition.addOrReplaceChild("glowing_eyes", CubeListBuilder.create(), PartPose.offset(0.0F, 12.25F, -7.0F));
 
-		PartDefinition real_glowing_eyes = glowing_eyes.addOrReplaceChild("real_glowing_eyes", CubeListBuilder.create().texOffs(0, 39).addBox(-3.0F, -3.5F, -2.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 39).mirror().addBox(1.0F, -3.5F, -2.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition real_glowing_eyes = glowing_eyes.addOrReplaceChild("real_glowing_eyes", CubeListBuilder.create().texOffs(0, 39).addBox(-3.0F, -2.25F, -2.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 39).mirror().addBox(1.0F, -2.25F, -2.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
