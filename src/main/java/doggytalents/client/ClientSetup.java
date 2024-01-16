@@ -12,7 +12,7 @@ import doggytalents.client.entity.model.DogBackpackModel;
 import doggytalents.client.entity.model.DogFrontLegsSeperate;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.DogRescueModel;
-import doggytalents.client.entity.model.SyncedItemModel;
+import doggytalents.client.entity.model.SyncedRenderFunctionWithHeadModel;
 import doggytalents.client.entity.model.TorchDogModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.dog.AkitaAmericanModel;
@@ -29,6 +29,7 @@ import doggytalents.client.entity.model.dog.ArcanineModel;
 import doggytalents.client.entity.model.dog.BassetHoundModel;
 import doggytalents.client.entity.model.dog.BelgianMalinoisModel;
 import doggytalents.client.entity.model.dog.BichonMaltaisModel;
+import doggytalents.client.entity.model.dog.BoltModel;
 import doggytalents.client.entity.model.dog.BorzoiLongModel;
 import doggytalents.client.entity.model.dog.BorzoiModel;
 import doggytalents.client.entity.model.dog.BoxerFloppyModel;
@@ -176,13 +177,14 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_POINTER_SHORT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "german_pointer_shorthaired"), "main");
     public static final ModelLayerLocation DOG_POINTER_WIRE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "german_pointer_wirehaired"), "main");
     public static final ModelLayerLocation DOG_SAMOYED = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "samoyed"), "main");
+    public static final ModelLayerLocation DOG_BOLT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "bolt"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_ARMOR_LEGACY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor_legacy");
     public static final ModelLayerLocation DOG_FRONT_LEGS_SEPERATE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_hind_leg_diff_tex"), "main");
     public static final ModelLayerLocation DOG_BACKPACK = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_backpack"), "main");
     public static final ModelLayerLocation DOG_RESCUE_BOX = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_rescue_box"), "main");
-    public static final ModelLayerLocation DOG_MOUTH_ITEM = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_mouth_item"), "main");
+    public static final ModelLayerLocation DOG_SYNCED_FUNCTION_WITH_HEAD = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_mouth_item"), "main");
     public static final ModelLayerLocation DOG_TORCHIE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_torchie"), "main");
 
     public static final ModelLayerLocation PIANO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "piano"), "main");
@@ -264,13 +266,14 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_POINTER_SHORT, GermanPointerShorthaired::createBodyLayer);
         event.registerLayerDefinition(DOG_POINTER_WIRE, GermanPointerWirehaired::createBodyLayer);
         event.registerLayerDefinition(DOG_SAMOYED, SamoyedModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_BOLT, BoltModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ARMOR_LEGACY, DogArmorModel::createLegacyLayer);
         event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
         event.registerLayerDefinition(DOG_BACKPACK, DogBackpackModel::createChestLayer);
         event.registerLayerDefinition(DOG_RESCUE_BOX, DogRescueModel::createRescueBoxLayer);
-        event.registerLayerDefinition(DOG_MOUTH_ITEM, SyncedItemModel::createLayer);
+        event.registerLayerDefinition(DOG_SYNCED_FUNCTION_WITH_HEAD, SyncedRenderFunctionWithHeadModel::createLayer);
         event.registerLayerDefinition(DOG_TORCHIE, TorchDogModel::createLayer);
         
         event.registerLayerDefinition(PIANO, GrandPianoModel::creatPianoLayer);

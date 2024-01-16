@@ -100,7 +100,8 @@ public class DogGoAwayFromFireGoal extends Goal {
      * @return the preceeding (not param)
      */
     private byte isDogInDangerSpot(Vec3 pos) {
-        var half_bbw = 0.5*dog.getBbWidth();
+        final double FLUID_BB_DEFLATE = 0.001D;
+        var half_bbw = 0.5*dog.getBbWidth() - FLUID_BB_DEFLATE;
         int minX = Mth.floor(pos.x - half_bbw)-1;
         int minY = Mth.floor(pos.y);
         int minZ = Mth.floor(pos.z - half_bbw)-1;
@@ -111,6 +112,15 @@ public class DogGoAwayFromFireGoal extends Goal {
 
         byte ret = -1; //Assume all is safe
         for (BlockPos x : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
+            boolean isCorner = 
+                (x.getX() == minX || x.getX() == maxX)
+                && (x.getZ() == minZ || x.getZ() == maxZ);
+            if (isCorner)
+                continue;
+            boolean isWithinDogBb =
+                dog.getBoundingBox().intersects(new AABB(x));
+            if (isWithinDogBb)
+                continue;
             var state = dog.level().getBlockState(x);
             var isBurning = WalkNodeEvaluator.isBurningBlock(state);
 

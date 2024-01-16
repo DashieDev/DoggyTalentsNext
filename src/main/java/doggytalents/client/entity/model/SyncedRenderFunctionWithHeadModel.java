@@ -10,29 +10,21 @@ import com.mojang.math.Axis;
 
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
 
-public class SyncedItemModel extends SyncedAccessoryModel {
-
+public class SyncedRenderFunctionWithHeadModel extends SyncedAccessoryModel {
+    
     private Vector3f pivot = DogModel.DEFAULT_ROOT_PIVOT;
-    private ItemInHandRenderer itemRenderer;
 
-    public SyncedItemModel(ModelPart root, ItemInHandRenderer renderer) {
+    public SyncedRenderFunctionWithHeadModel(ModelPart root) {
         super(root);
-        this.itemRenderer = renderer;
     }
 
     @Override
@@ -74,7 +66,7 @@ public class SyncedItemModel extends SyncedAccessoryModel {
             float p_103018_, float p_103019_, float p_103020_) {
     }
 
-    public void startRenderFromRoot(PoseStack stack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack itemStack) {
+    public void startRenderFromRoot(PoseStack stack, Renderer actualRendering) {
         stack.pushPose();
         stack.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
         stack.translate((double)(pivot.x / 16.0F), (double)(pivot.y / 16.0F), (double)(pivot.z / 16.0F));
@@ -101,10 +93,10 @@ public class SyncedItemModel extends SyncedAccessoryModel {
             stack.pushPose();
             stack.scale(2, 2, 2);
             stack.translate(0, -0.5, 0.15);
-            startRenderItemFromHead(stack, bufferSource, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, itemStack);
+            startRenderItemFromHead(stack, actualRendering);
             stack.popPose();  
         } else
-        startRenderItemFromHead(stack, bufferSource, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, itemStack);
+        startRenderItemFromHead(stack, actualRendering);
 
         stack.popPose();
         stack.popPose();
@@ -112,29 +104,23 @@ public class SyncedItemModel extends SyncedAccessoryModel {
         root.x = x0; root.y = y0; root.z = z0;
     }
 
-    public void startRenderItemFromHead(PoseStack matrixStack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
+    public void startRenderItemFromHead(PoseStack matrixStack, Renderer renderer) {
         matrixStack.pushPose();
         this.head.get().translateAndRotate(matrixStack);
         matrixStack.pushPose();
         this.realHead.get().translateAndRotate(matrixStack);
 
-        renderItem(matrixStack, bufferSource, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
+        renderer.doRender(matrixStack);
 
         matrixStack.popPose();
         matrixStack.popPose();
     }
 
-    public void renderItem(PoseStack matrixStack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        matrixStack.translate(-0.025F, 0.125F, -0.32F);
-        var item = stack.getItem();
-
-        if (item instanceof SwordItem || item instanceof DiggerItem) {
-            matrixStack.translate(0.25, 0, 0);
-        }
-        matrixStack.mulPose(Axis.YP.rotationDegrees(45.0F));
-        matrixStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-
-        this.itemRenderer.renderItem(dog, stack, ItemDisplayContext.GROUND, false, matrixStack, bufferSource, packedLight);
+    public static interface Renderer {
+        
+        void doRender(PoseStack matrixStack);
+        
     }
+
 
 }

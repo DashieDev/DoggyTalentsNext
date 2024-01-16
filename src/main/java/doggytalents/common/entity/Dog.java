@@ -570,6 +570,11 @@ public class Dog extends AbstractDog {
         if (self_dim.width >= 1f) {
             self_dim = new EntityDimensions(1f, self_dim.height, self_dim.fixed);
         }
+        
+        boolean collide_passeneger = 
+            ConfigHandler.SERVER.WOLF_MOUNT_PASSENGER_COLLISION.get();
+        if (!collide_passeneger)
+            return self_dim;
         if (this.isVehicle() && !this.getPassengers().isEmpty()) {
             visualDimension = self_dim;
             self_dim = computeRidingDimension(self_dim);
@@ -1480,6 +1485,9 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
+        if (this.alterationProps.fallImmune()) {
+            return false;
+        }
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.onLivingFall(this, distance, damageMultiplier); // TODO pass source
 
@@ -4446,6 +4454,10 @@ public class Dog extends AbstractDog {
             if (fireImmune())
                 return 0;
             break;
+        case DOOR_WOOD_CLOSED:
+            if (this.canDogPassGate())
+                return 8;
+            break;
         }
         return super.getPathfindingMalus(type);
     }
@@ -4800,6 +4812,14 @@ public class Dog extends AbstractDog {
             }
         }
         return blockType;
+    }
+
+    public boolean canDogPassGate() {
+        for (var alt : this.alterations) {
+            if (alt.canDogPassGate(this).shouldSwing())
+                return true;
+        }
+        return false;
     }
 
     public float getTimeDogIsShaking() {

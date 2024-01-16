@@ -69,6 +69,8 @@
    "item.doggytalents.birthday_hat.description": "Craft with Paper to add a Secondary color to the hat",
    "item.doggytalents.propeller_hat": "Propeller Hat",
    "item.doggytalents.propeller_hat.description": "Spinna!",
+   "item.doggytalents.fedora": "Fedora",
+   "item.doggytalents.flatcap": "Flat Cap",
 
    "item.doggytalents.witch_hat": "Witch Hat",
    "item.doggytalents.witch_hat.description": "It smells funky...",
@@ -108,6 +110,7 @@
    "item.doggytalents.rice_bowl.description": "White, Steamy and Fluffy!",
    "item.doggytalents.salmon_sushi": "Sake Nigiri Sushi",
    "item.doggytalents.onigiri": "Onigiri",
+   "item.doggytalents.onigiri.description": "Also known as Rice Balls",
    "item.doggytalents.sausage": "Sausage",
    "item.doggytalents.baker_hat": "Baker's Hat",
    "item.doggytalents.baker_hat.description": "Hot Dachshbuns comin' up!.",
@@ -277,6 +280,7 @@
    "talent.doggytalents.chemi_canine": "Chemi Canine",
    "talent.doggytalents.fire_drill": "Fire Drill",
    "talent.doggytalents.sniffer_dog": "Sniffer Dog",
+   "talent.doggytalents.gate_passer": "Gate Woof",
 
    "talent.doggytalents.bed_finder.description": "While a Dog with this ability is on your head, your bed will have a yellow outline around it. To place the Dog on your head, Right-click on the Dog with a Bone in your hand. The range is 200 blocks per level, but becomes infinite at level 5.",
    "talent.doggytalents.black_pelt.description": "Increases critical hit rate by half a heart per level, plus an additional heart upon mastery.",
@@ -307,7 +311,8 @@
    "talent.doggytalents.flying_furball.description": "Allow your Dog to conquer the limit of the sky! The higher the level the faster your Dog flies.",
    "talent.doggytalents.chemi_canine.description": "When you or your other dogs receive negative effects, the dog with this talent will run to the target and try to absorb the negative effects, one at a time. The effects will accumulate to the dogs (without causing harm to it). When it accumulates enough, the dog cannot absorb more effects and have to wait for the accumulated effects to decay, which will take a while. However, when the dog attacks, the target will be affected by one of the effects absorbed by it, which also consumes the effect allowing the dog to absorb again.",
    "talent.doggytalents.fire_drill.description": "This skill teaches your dog how to put itself out when it catches on fire. Stop, Drop and Roll!",
-   "talent.doggytalents.sniffer_dog.description": "This talent allows your dog to sniff out valuable ores. Each level increases your dog's sniffing distance, thus increasing the chance of finding the desired ore. To make your dog start detecting a certain block, a Scent Treat is required to mark the scent of the block. The treat then be given to the dog who will lick the treat, memorize the scent and give you back. To make your dog stop detecting, give it a Empty Scent Treat. To check which block your Dog are looking for, Sneak and Right-Click it with any Scent Treat in hand.",
+   "talent.doggytalents.sniffer_dog.description": "This talent allows your dog to sniff out valuable ores. Each level increases your dog's sniffing distance, thus increasing the chance of finding the desired ore. To make your dog start detecting a certain block, a Scent Treat is required to mark the scent of the block. The treat then be given to the dog who will lick the treat, memorize the scent and give you back. To make your dog stop detecting, give it a Empty Scent Treat. To check which block your Dog are looking for, Sneak and Right-Click it with any Scent Treat in hand. One thing to note is that Dogs are not quite good at detecting blocks vertically, so despite the radius increase that each level provides along the horizontal plane, they are only capable of locating blocks which is not around 3 blocks higher or lower than where they are standing. Be sure to pay close attention to what the Dog is trying to tell you to have a better idea of where the block is.",
+   "talent.doggytalents.gate_passer.description": "This talent allows your dog to open fence gates and wooden doors and pass through them. They will also remember to close it afterwards, although sometimes they do forget :)",
 
    "talent.doggytalents.roaring_gale.cooldown": "Roaring Gale is on cooldown.",
    "talent.doggytalents.roaring_gale.level": "Put some points in Roaring Gale to use!",
@@ -324,6 +329,8 @@
    "talent.doggytalents.pack_puppy.render_chest": "Render Chest",
    "talent.doggytalents.pack_puppy.pickup_item": "Pickup Nearby Items",
    "talent.doggytalents.pack_puppy.offer_food": "Offer Food",
+   "talent.doggytalents.pack_puppy.collect_kill_loot": "Collect Kill Loot",
+   "talent.doggytalents.pack_puppy.collect_kill_loot.desc": "This option only take effect if Pickup Nearby Items is true. When You or your other Dogs kill an entity and cause it to drop something, it will run towards that entity and collect the loot.",
    "talent.doggytalents.rescue_dog.render_box": "Render Box",
    "talent.doggytalents.sniffer_dog.notify_owner.0.near": "%s: Hey, come check this out! I think i found something! It is very close by!",
    "talent.doggytalents.sniffer_dog.notify_owner.0.mid": "%s: Hey, come check this out! I think i found something! It is a bit further away.",
@@ -337,6 +344,8 @@
    "talent.doggytalents.sniffer_dog.detecting_block_status.none": "%s is not looking for any blocks.",
    "talent.doggytalents.sniffer_dog.detecting_block_status": "%s is looking for : %s",
    "talent.doggytalents.doggy_torch.render_torch": "Render Torch",
+   "talent.doggytalents.gate_passer.pass_gate.set": "Allow Passing Gates",
+   "talent.doggytalents.gate_passer.pass_gate.unset": "Stop Passing Gates",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",
 
@@ -586,7 +595,7 @@
    "doggui.force_migrate_owner.confirm.title": "Force Migrate Owner?",
    "doggui.force_migrate_owner.confirm.subtitle": "You will now be the Owner of %s, proceed?",
    "block.doggytalents.food_bowl.pro_tip.title": "Pro Tip",
-   "block.doggytalents.food_bowl.pro_tip.desc": "The prefered and recommended way to automatically feed your dog is by utilizing a PackPuppy Dog as a Shared Food Source for all of your other dogs!",
+   "block.doggytalents.food_bowl.pro_tip.desc": "The recommended way to automatically feed your dog is by utilizing a PackPuppy Dog as a Shared Food Source for all of your other dogs!",
 
    "key.categories.doggy_talents": "Doggy Talents Next",
    "key.whistle.1": "Whistle #1",

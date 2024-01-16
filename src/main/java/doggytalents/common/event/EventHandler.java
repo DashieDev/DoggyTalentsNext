@@ -18,6 +18,7 @@ import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.talent.HunterDogTalent;
+import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.util.DogLocationStorageMigration;
 import doggytalents.common.util.Util;
 import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
@@ -30,6 +31,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,6 +58,9 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.level.LevelEvent;
@@ -384,6 +389,11 @@ public class EventHandler {
     }
 
     @SubscribeEvent
+    public void onLivingDeath(LivingDropsEvent event) {
+        PackPuppyTalent.mayNotifyNearbyPackPuppy(event);
+    }
+
+    @SubscribeEvent
     public void onTagsUpdated(TagsUpdatedEvent event) {
         DogBedMaterialManager.onTagsUpdated(event);
     }
@@ -425,5 +435,26 @@ public class EventHandler {
                 dog.unRide();
             }
         }
+    }
+
+    //Prevent passenger suffocate when riding dog.
+    @SubscribeEvent
+    public void onDogPassenegerHurtInWall(LivingHurtEvent event) {
+        var entity = event.getEntity();
+        if (entity == null)
+            return;
+        if (!entity.isPassenger())
+            return;
+        
+        var source = event.getSource();
+        if (!source.is(DamageTypes.IN_WALL))
+            return;
+        
+        var vehicle = entity.getVehicle();
+        if (!(vehicle instanceof Dog dog))
+            return;
+        
+        event.setAmount(0);
+        event.setCanceled(true);
     }
 }

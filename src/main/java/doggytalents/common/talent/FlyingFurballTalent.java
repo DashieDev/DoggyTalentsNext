@@ -107,8 +107,6 @@ public class FlyingFurballTalent extends TalentInstance {
                 dog.setAnim(DogAnimation.FLY_LANDING);
             this.wasFlying = false;
         }
-
-        dogIn.fallDistance = 0;
     }
 
     private boolean shouldBeFlying(AbstractDog dog) {
@@ -142,7 +140,7 @@ public class FlyingFurballTalent extends TalentInstance {
 
     @Override
     public void props(AbstractDog dog, DogAlterationProps props) {
-        props.setCanFly();
+        props.setCanFly().setFallImmune();
     }
 
     public void startGliding(AbstractDog dog) {

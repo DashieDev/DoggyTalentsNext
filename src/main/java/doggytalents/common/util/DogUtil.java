@@ -19,6 +19,7 @@ import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
 import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToBedPromise;
+import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToOwnerCrossDimensionPromise;
 import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToOwnerPromise;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -585,11 +586,29 @@ public class DogUtil {
                 var dataPos = data.getPos();
                 if (dataPos == null) return;
                 var pos = new BlockPos(Mth.floor(dataPos.x), Mth.floor(dataPos.y), Mth.floor(dataPos.z));
+                var dataDim = data.getDimension();
+                if (dataDim == null) {
+                    dataDim = Level.OVERWORLD;
+                }
+                var server = owner.getServer();
+                if (server == null)
+                    return;
+                var dogLevel = server.getLevel(dataDim);
+                if (dogLevel == null)
+                    return;
+                if (dogLevel != sLevel && ConfigHandler.SERVER.CONDUCTING_BONE_CROSS_ORIGIN.get()) {
+                    DogAsyncTaskManager.addPromiseWithOwner(
+                        new DogDistantTeleportToOwnerCrossDimensionPromise(dogUUID, owner, pos, dogLevel, sLevel),
+                        owner
+                    );
+                } else {
+                    DogAsyncTaskManager.addPromiseWithOwner(
+                        new DogDistantTeleportToOwnerPromise(dogUUID, owner, pos),
+                        owner
+                    );
+                }
+
                 
-                DogAsyncTaskManager.addPromiseWithOwner(
-                    new DogDistantTeleportToOwnerPromise(dogUUID, owner, pos),
-                    owner
-                );
             }
         }
     }

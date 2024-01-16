@@ -83,6 +83,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue MOUTH_ITEM_FORCE_RENDER;
         public ForgeConfigSpec.IntValue MAX_ANIMATION_LATENCY_ALLOWED;
         public ForgeConfigSpec.BooleanValue USE_LEGACY_DOG_ARMOR_RENDER;
+        public ForgeConfigSpec.BooleanValue USE_PLAYER_HELMET_MODEL_BY_DEFAULT;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -193,6 +194,12 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("if you prefer to use the old system instead.")
                 .translation("doggytalents.config.client.use_legacy_dog_armor_render")
                 .define("use_legacy_dog_armor_render", false);
+            USE_PLAYER_HELMET_MODEL_BY_DEFAULT = builder
+                .comment("By default, if there is no custom Helmet Armor model for the Helmet Item,")
+                .comment("DTN will use its own helmet armor model designed for DTN Dog to")
+                .comment("render it on the Dog's head. Enable this to make DTN reuse the player's Helmet Model instead.")
+                .translation("doggytalents.config.client.use_player_helmet_model_by_default")
+                .define("use_player_helmet_model_by_default", false);
             builder.pop();
         }
 
@@ -230,6 +237,8 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
         public ForgeConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
         public ForgeConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
+        public ForgeConfigSpec.BooleanValue WOLF_MOUNT_PASSENGER_COLLISION;
+        public ForgeConfigSpec.BooleanValue CONDUCTING_BONE_CROSS_ORIGIN;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -357,6 +366,20 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Enable this if you prefer Mob Retriever to only work with DTN's dog.")
                 .translation("doggytalents.mob_retriever_only_carry_dog")
                 .define("mob_retriever_only_carry_dog", false);
+            WOLF_MOUNT_PASSENGER_COLLISION = builder
+                .comment("By default, Dogs extend their bounding box covering the passengers")
+                .comment("to avoid suffocating them while calculating the appropriate path.")
+                .comment("Set this to false to disable it, but be warned, although Mob Retriever Dogs will still")
+                .comment("try to calculate the appropriate path while carrying another mob, there might be accidental suffocations.")
+                .translation("doggytalents.wolf_mount_passenger_collision")
+                .define("wolf_mount_passenger_collision", true);
+            CONDUCTING_BONE_CROSS_ORIGIN = builder
+                .comment("By default, Conducting Bone users and summon their Dogs even when they are in")
+                .comment("other dimensions. Set this to false to limit Conducting Bone Users to only summon")
+                .comment("Dogs of the same dimension.")
+                .translation("doggytalents.conducting_bone_cross_origin")
+                .define("conducting_bone_cross_origin", true);  
+
             builder.pop();
         }
 

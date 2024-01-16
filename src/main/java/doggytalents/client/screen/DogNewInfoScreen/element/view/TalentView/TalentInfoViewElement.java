@@ -28,10 +28,12 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.network.packet.data.DoggyTorchData;
+import doggytalents.common.network.packet.data.GatePasserData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.network.packet.data.RescueDogRenderData;
 import doggytalents.common.talent.DoggyTorchTalent;
+import doggytalents.common.talent.GatePasserTalent;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.talent.RescueDogTalent;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
@@ -279,6 +281,40 @@ public class TalentInfoViewElement extends AbstractElement {
                 )
                 .init()
             );
+        } else if (talent == DoggyTalents.GATE_PASSER.get()) {
+            var talentInstOptional = dog.getTalent(DoggyTalents.GATE_PASSER);
+            if (!talentInstOptional.isPresent())
+                return;
+            var talentInst = talentInstOptional.get();
+            if (!(talentInst instanceof GatePasserTalent gateTalent))
+                return;
+            var gateButtonDiv = new DivElement(container, getScreen())
+                .setPosition(PosType.RELATIVE, 0, 0)
+                .setSize(1f, 30)
+                .init();
+            container.addChildren(gateButtonDiv);
+            var gateButtonStr = Component.translatable(
+                gateTalent.allowPassingGate() ?
+                "talent.doggytalents.gate_passer.pass_gate.unset"
+                : "talent.doggytalents.gate_passer.pass_gate.set"
+            );
+            var gateButton = new FlatButton(
+                gateButtonDiv.getRealX() + PADDING_LEFT,
+                gateButtonDiv.getRealY() + 5, 120, 20, gateButtonStr,
+                b -> {
+                    boolean newVal = !gateTalent.allowPassingGate();
+                    b.setMessage(Component.translatable(
+                        newVal ?
+                        "talent.doggytalents.gate_passer.pass_gate.unset"
+                        : "talent.doggytalents.gate_passer.pass_gate.set"
+                    ));
+                    gateTalent.setAllowPassingGate(newVal);
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new GatePasserData(
+                        dog.getId(), newVal
+                    ));
+                }
+            );
+            gateButtonDiv.addChildren(gateButton);
         }
     }
 
@@ -323,6 +359,32 @@ public class TalentInfoViewElement extends AbstractElement {
                         }     
                     ),
                     I18n.get("talent.doggytalents.pack_puppy.pickup_item")
+                )
+                .init()
+            );
+            container.addChildren(
+                new ButtonOptionEntry(container, getScreen(), 
+                    new FlatButton(
+                        0, 0,
+                        40, 20, Component.literal("" + packPup.collectKillLoot()), 
+                        b -> {
+                            Boolean newVal = !packPup.collectKillLoot();
+                            b.setMessage(Component.literal("" + newVal));
+                            packPup.setCollectKillLoot(newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
+                                dog.getId(), PackPuppyData.Type.COLLECT_KILL_LOOT, newVal
+                            ));
+                        }     
+                    ) {
+                        @Override
+                        public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                            super.render(graphics, mouseX, mouseY, pTicks);
+                            if (!this.isHovered) return;
+                            var c1 = Component.translatable("talent.doggytalents.pack_puppy.collect_kill_loot.desc");
+                            ToolTipOverlayManager.get().setComponents(List.of(c1));
+                        }
+                    },
+                    I18n.get("talent.doggytalents.pack_puppy.collect_kill_loot")
                 )
                 .init()
             );
@@ -385,7 +447,7 @@ public class TalentInfoViewElement extends AbstractElement {
 
             @Override
             public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, dogLevel);
+                super.render(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 MutableComponent c1;
                 if (this.active) {
@@ -416,7 +478,7 @@ public class TalentInfoViewElement extends AbstractElement {
 
         this.addChildren(trainButton);
 
-        var pointsLeftStr = new OneLineLimitedTextArea(0, 0, 75, Component.translatable("doggui.talents.current_talent_level"));
+        var pointsLeftStr = new OneLineLimitedTextArea(0, 0, 75, Component.translatable("doggui.pointsleft"));
         pointsLeftStr.setX(this.getRealX() + PADDING_LEFT + 40);
         pointsLeftStr.setY(this.getRealY() + this.getSizeY() - 45);
         this.addChildren(pointsLeftStr);
