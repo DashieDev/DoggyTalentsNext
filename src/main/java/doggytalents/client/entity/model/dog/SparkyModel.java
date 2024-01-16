@@ -101,10 +101,10 @@ public class SparkyModel extends GlowingEyeDogModel {
 
 		PartDefinition head_r15 = right_ear.addOrReplaceChild("head_r15", CubeListBuilder.create().texOffs(51, 0).mirror().addBox(-1.1374F, -1.319F, -1.8596F, 2.0F, 3.0F, 1.0F, new CubeDeformation(0.1F)).mirror(false), PartPose.offsetAndRotation(0.5979F, -1.7986F, 1.0F, 0.0425F, 0.9276F, 0.0004F));
 
-		PartDefinition glowing_eyes = partdefinition.addOrReplaceChild("glowing_eyes", CubeListBuilder.create(), PartPose.offset(0.0F, 11.5F, -6.0F));
+		PartDefinition glowing_eyes = partdefinition.addOrReplaceChild("glowing_eyes", CubeListBuilder.create(), PartPose.offset(0.0F, 10.65F, -7.5F));
 
-		PartDefinition real_glowing_eyes = glowing_eyes.addOrReplaceChild("real_glowing_eyes", CubeListBuilder.create().texOffs(43, 24).addBox(0.95F, -2.35F, -3.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.3F))
-		.texOffs(43, 24).mirror().addBox(-2.95F, -2.35F, -3.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.3F)).mirror(false), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition real_glowing_eyes = glowing_eyes.addOrReplaceChild("real_glowing_eyes", CubeListBuilder.create().texOffs(43, 24).addBox(0.95F, -1.5F, -1.5F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.3F))
+		.texOffs(43, 24).mirror().addBox(-2.95F, -1.5F, -1.5F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.3F)).mirror(false), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
