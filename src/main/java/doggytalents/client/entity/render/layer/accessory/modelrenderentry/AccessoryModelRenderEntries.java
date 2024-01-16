@@ -33,6 +33,8 @@ public class AccessoryModelRenderEntries {
     public static Entry CERE_GARB = new CeremonialGarbRenderEntry();
     public static Entry CONTACTS = new ContactsRenderEntry();
     public static Entry PROPELLAR = new PropellarRenderEntry();
+    public static Entry FEDORA = new FedoraRenderEntry();
+    public static Entry FLATCAP = new FlatCapRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -63,6 +65,8 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(LAB_COAT);
         AccessoryModelManager.register(CERE_GARB);
         AccessoryModelManager.register(PROPELLAR);
+        AccessoryModelManager.register(FEDORA);
+        AccessoryModelManager.register(FLATCAP);
     }
 
 }
