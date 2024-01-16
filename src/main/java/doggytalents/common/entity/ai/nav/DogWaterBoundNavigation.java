@@ -63,9 +63,9 @@ public class DogWaterBoundNavigation extends WaterBoundPathNavigation implements
 
     //Debug only
     private void dogThrowIfLockAndDebug() {
-        // if (locked) {
-        //     ChopinLogger.lwn(dog, "Someone trying to create path from outside!");
-        //     throw new IllegalStateException(dog.getName().getString() + ": Someone trying to create path from outside!");
-        // }
+        if (locked) {
+            //ChopinLogger.lwn(dog, "Someone trying to create path from outside!");
+            throw new IllegalStateException(dog.getName().getString() + ": Someone trying to create path from outside!");
+        }
     }
 }
