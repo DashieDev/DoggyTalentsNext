@@ -5,7 +5,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Mob;
@@ -64,9 +63,9 @@ public class DogWaterBoundNavigation extends WaterBoundPathNavigation implements
 
     //Debug only
     private void dogThrowIfLockAndDebug() {
-        if (locked) {
-            ChopinLogger.lwn(dog, "Someone trying to create path from outside!");
-            throw new IllegalStateException(dog.getName().getString() + ": Someone trying to create path from outside!");
-        }
+        // if (locked) {
+        //     ChopinLogger.lwn(dog, "Someone trying to create path from outside!");
+        //     throw new IllegalStateException(dog.getName().getString() + ": Someone trying to create path from outside!");
+        // }
     }
 }
