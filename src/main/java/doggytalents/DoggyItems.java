@@ -7,6 +7,8 @@ import doggytalents.common.entity.accessory.BakerHat;
 import doggytalents.common.entity.accessory.CeremonialGarb;
 import doggytalents.common.entity.accessory.ChefHat;
 import doggytalents.common.entity.accessory.DyeableAccessory;
+import doggytalents.common.entity.accessory.Fedora;
+import doggytalents.common.entity.accessory.FlatCap;
 import doggytalents.common.entity.accessory.GiantStick;
 import doggytalents.common.entity.accessory.HeadBandAccessory;
 import doggytalents.common.entity.accessory.LabCoat;
@@ -125,6 +127,8 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> PLAGUE_DOC_MASK = register("plague_doctor_mask", () -> new PlagueDoctorMaskItem(DoggyAccessories.PLAGUE_DOC_MASK, createInitialProp()));
     public static final RegistryObject<AccessoryItem> BIRTHDAY_HAT = register("birthday_hat", () -> new DyableBirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT, createInitialProp()));
     public static final RegistryObject<AccessoryItem> PROPELLER_HAT = register("propeller_hat", () -> new Propellar.PropellerHatItem(DoggyAccessories.PROPELLAR, createInitialProp()));
+    public static final RegistryObject<AccessoryItem> FEDORA = register("fedora", () -> new Fedora.FedoraItem(DoggyAccessories.FEDORA, createInitialProp()));
+    public static final RegistryObject<DyeableAccessoryItem> FLATCAP = register("flatcap", () -> new FlatCap.FlatCapItem(DoggyAccessories.FLATCAP, createInitialProp()));
 
     public static final RegistryObject<AccessoryItem> KITSUNE_MASK = register("kitsune_mask", () -> new KitsuneMaskItem(DoggyAccessories.KITSUNE_MASK, createInitialProp()));
 

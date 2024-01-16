@@ -129,7 +129,9 @@ public class DTItemModelProvider extends ItemModelProvider {
         wetFrisbee(DoggyItems.FRISBEE_WET);
         birthdayHat(DoggyItems.BIRTHDAY_HAT);
         generated(DoggyItems.PROPELLER_HAT);
-
+        generated(DoggyItems.FEDORA);
+        generated(DoggyItems.FLATCAP);
+        
         ceremonialGarb(DoggyItems.CERE_GARB);
 
         generated(DoggyItems.RICE_GRAINS);
