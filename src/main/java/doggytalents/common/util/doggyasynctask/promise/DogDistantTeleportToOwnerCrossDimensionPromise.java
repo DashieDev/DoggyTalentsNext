@@ -7,7 +7,6 @@ import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
@@ -136,9 +135,9 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
     //this method also check if can start, if not, then set it to rejected.
     @Override
     public void start() {
-        ChopinLogger.l("this level should have no forced chunk, and this is the result : " 
-            +   ForgeChunkManager.hasForcedChunks(dogLevel)
-        );
+        // ChopinLogger.l("this level should have no forced chunk, and this is the result : " 
+        //     +   ForgeChunkManager.hasForcedChunks(dogLevel)
+        // );
         
         if (this.ownerLevel == null || this.dogLevel == null) {
             this.rejectedMsg = "CLIENTLEVEL";
@@ -159,15 +158,15 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
             return;
         }
 
-        ChopinLogger.l("hasChunk before ? : " 
-            + this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)
-        );
+        // ChopinLogger.l("hasChunk before ? : " 
+        //     + this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)
+        // );
 
         this.setDogChunk(true);
 
-        ChopinLogger.l("Does hasChunk return true immediately after forced? : " 
-            + this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)
-        );
+        // ChopinLogger.l("Does hasChunk return true immediately after forced? : " 
+        //     + this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)
+        // );
     }
 
     //No Ressurect
