@@ -192,8 +192,7 @@ public class ZeroModel extends GlowingEyeDogModel {
 
 		PartDefinition head_r16 = left_ear.addOrReplaceChild("head_r16", CubeListBuilder.create().texOffs(16, 14).mirror().addBox(-1.5F, -1.75F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.1F)).mirror(false), PartPose.offsetAndRotation(0.7426F, -1.4365F, -0.6203F, 0.0F, 0.0F, 0.3491F));
 
-		PartDefinition bone3 = real_head.addOrReplaceChild("bone3", CubeListBuilder.create().texOffs(27, 6).addBox(-1.475F, 0.24F, -4.8146F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.35F))
-		.texOffs(48, 0).addBox(-1.975F, -3.49F, -11.0646F, 4.0F, 4.0F, 4.0F, new CubeDeformation(-1.25F)), PartPose.offsetAndRotation(-0.025F, 0.49F, -1.1854F, -0.1309F, 0.0F, 0.0F));
+		PartDefinition bone3 = real_head.addOrReplaceChild("bone3", CubeListBuilder.create().texOffs(27, 6).addBox(-1.475F, 0.24F, -4.8146F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.35F)), PartPose.offsetAndRotation(-0.025F, 0.49F, -1.1854F, -0.1309F, 0.0F, 0.0F));
 
 		PartDefinition head_r17 = bone3.addOrReplaceChild("head_r17", CubeListBuilder.create().texOffs(26, 21).addBox(-1.525F, 3.874F, -8.3662F, 3.0F, 2.0F, 4.0F, new CubeDeformation(-0.65F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.6109F, 0.0F, 0.0F));
 
@@ -201,11 +200,11 @@ public class ZeroModel extends GlowingEyeDogModel {
 
 		PartDefinition head_r19 = bone3.addOrReplaceChild("head_r19", CubeListBuilder.create().texOffs(28, 7).addBox(-1.475F, -1.7202F, -2.1022F, 3.0F, 2.0F, 3.0F, new CubeDeformation(-0.45F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.9599F, 0.0F, 0.0F));
 
-		PartDefinition glowing_eyes = partdefinition.addOrReplaceChild("glowing_eyes", CubeListBuilder.create(), PartPose.offset(0.0F, 8.5F, -7.0F));
+		PartDefinition glowing_eyes = partdefinition.addOrReplaceChild("glowing_eyes", CubeListBuilder.create(), PartPose.offset(0.0F, 7.5F, -7.0F));
 
 		PartDefinition real_glowing_eyes = glowing_eyes.addOrReplaceChild("real_glowing_eyes", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition cube_r1 = real_glowing_eyes.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(48, 0).addBox(-2.0F, -2.0F, -1.75F, 4.0F, 4.0F, 4.0F, new CubeDeformation(-1.25F)), PartPose.offsetAndRotation(0.0F, -3.2F, -10.25F, -0.1309F, 0.0F, 0.0F));
+		PartDefinition cube_r1 = real_glowing_eyes.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(48, 0).addBox(-2.0F, -2.0F, -1.75F, 4.0F, 4.0F, 4.0F, new CubeDeformation(-1.25F)), PartPose.offsetAndRotation(0.0F, -2.2F, -10.25F, -0.1309F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
