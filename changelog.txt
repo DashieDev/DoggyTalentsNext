@@ -997,3 +997,52 @@ is with Accessories.
 *WaterHolder/RescueDog cannot urgently heal/extinguish owner support action.
 *Dog cannot Howl when sit.
 # Option to limit Mob Retriever to only Dog to Dog.
+
+1.18.5 - 16th January 2024
+
+FIRST UPDATE OF 2024!!! 🎊🎊🎊
+===
++ Added new Decoration Item: Dog Plushie. 🧸
+
++ Added new Accessory: Doggy Contact Lenses 👁👁 (You can now change your dog's eye color! *Only works for simple models*).
++ Added new Accessory: Propeller Hat. *spinnnnnaaaaa*
++ Added new Accessory: Fedora. *dobe dobe badoo-* 🕵️‍♀️
++ Added new Accessory: Flat Cap.
+
++ Added new Skin: Samoyed (1 variant + 2 special variants).
++ Added new Skin: Bolt. ⚡
++ Added new Option: Disable passenger collision (Wolf Mount).
++ Added new Option: Enable Alternative Head Model (Wolf Armor).
+
++ Added new Talent: Gate Woof *open the nooor*
++ Added new Talent: Sniffer Dog! (Very useful for mining!)
++ Added new Item: Scent Treat.
+
++ Added Pro-tip to Food Bowl.
++ JAPANESE TRANSLATION!!! by MashXP 「日本語翻訳！！！ ： マッシーXP」
+===
+#Allow Doggy Armor to render 3rd-party armors from other mods.
+#Allow Doggy Armor dogs to wear trimmed armor !!!
+#Update description for Pack Puppy.
+#Shock Absorber will now resists Sonic Boom from Warden!
+#Maxed out Doggy Torch now have very cool visuals! (toggleable)
+#Doggy Tools when farming need at least 1 type of seed in the Dog's Toolbar.
+#Tune Hellhound's fire resistant + Buff Hellhound lvl 4.
+#Pack Puppy now only offer food to other dogs if Obey Others is set to true.
+#Pack Puppy will pathfind to nearby dropped items when you or the other dogs killed an entity and made it drop!!!
+#Block passenger suffocate damage when riding Wolf Mount.
+
+#Buff Onigiri + add description. 
+#Heel By Name Whistle now works well with hotkey.
+#Conducting Bone now works Cross Origin (configurable).
+
+#Added a few adjustments to the scrollbar in Dog Menu.
+
+#Dogs are smarter now. They won't run if lava is flowing diagonally.
+#Dogs will now go behind owners when going down stairs.
+===
+- Fixed minor typos.
+- Chemi Canine don't transfer effect if enemy is dead.
+- Hellhound will properly cook food if it can light mobs on fire.
+- Fixed item not stacking properly (Pack Puppy auto-pick).
+- Fix Tim Burtons trio eye/nose visual bug.
