@@ -67,7 +67,11 @@
  
     "item.doggytalents.birthday_hat": "誕生日の帽子",
     "item.doggytalents.birthday_hat.description": "紙で帽子の2色目クラフトをします。",
- 
+    "item.doggytalents.propeller_hat": "プロペラハット",
+    "item.doggytalents.propeller_hat.description": "スピンナァァァァ～！",
+    "item.doggytalents.fedora": "中折帽子",
+    "item.doggytalents.flatcap": "ハンナハット",
+
     "item.doggytalents.witch_hat": "ウィッチの帽子",
     "item.doggytalents.witch_hat.description": "変なにおいだ...",
     "item.doggytalents.demon_horns": "鬼の角",
@@ -106,6 +110,7 @@
     "item.doggytalents.rice_bowl.description": "白くて、蒸し暑くて、ふわふわ！",
     "item.doggytalents.salmon_sushi": "サーモン握り寿司",
     "item.doggytalents.onigiri": "おにぎり",
+    "item.doggytalents.onigiri.description": "美味しい～！",
     "item.doggytalents.sausage": "ソーセージ",
     "item.doggytalents.baker_hat": "パン屋の帽子",
     "item.doggytalents.baker_hat.description": "熱いバウッツェルがやってくるよ～！",
@@ -113,6 +118,7 @@
     "item.doggytalents.chef_hat.description": "やっと、おいしい寿司を...",
     "item.doggytalents.lab_coat": "白衣",
     "item.doggytalents.ceremonial_garb": "儀式用衣装",
+    "item.doggytalents.doggy_contacts": "犬のコンタクトレンズ",
  
     "item.doggytalents.locator_orb_chi": "智玉",
     "item.doggytalents.locator_orb_chi.description": "知恵と知識のオーブ。",
@@ -190,6 +196,11 @@
     "item.doggytalents.sake": "お酒入りの瓶",
     "item.doggytalents.sake.description": "お酒は飲んでも飲まれるな！ 未成年のワンコは不可！",
  
+    "item.doggytalents.scent_treat": "香りおやつ",
+    "item.doggytalents.scent_treat.description": "ブロックを右クリックすると香りのサンプルが採取できます。水入った大釜を右クリックすると、採取した香りを消すことができます。",
+    "item.doggytalents.scent_treat.scented_block": "採取したブロックサンプル：",
+    "item.doggytalents.drool_scent_treat": "よだれた香りおやつ",
+
     "item.doggytalents.feathered_mantle": "羽衣",
  
     "item.doggytalents.grand_piano_black_item": "グランドピアノ - 黒 (実験的)",
@@ -268,6 +279,8 @@
     "talent.doggytalents.flying_furball": "天飛犬",
     "talent.doggytalents.chemi_canine": "ケミケン",
     "talent.doggytalents.fire_drill": "防火訓練",
+    "talent.doggytalents.sniffer_dog": "探知犬",
+    "talent.doggytalents.gate_passer": "ワンドア",
  
     "talent.doggytalents.bed_finder.description": "このアビリティを持った犬があなたの頭の上にいる間、あなたのベッドは黄色い輪郭で囲まれます。犬を頭の上に置くには、手に骨を持った犬を右クリックします。範囲はレベルごとに200ブロックだが、レベル5で無限になります。",
     "talent.doggytalents.black_pelt.description": "クリティカルヒット率が1レベルにつきハート半分増加し、マスターするとさらにハート1個増加する。",
@@ -292,13 +305,15 @@
     "talent.doggytalents.doggy_torch.description": "犬のインベントリ（箱犬）にある松明を1本消費すると、光量が少ないときに松明を使えるようになります。松明を与えるには、松明を近くに落とすと拾われます。レベル5になると、犬インベントリに松明を入れる必要がなくなります。",
     "talent.doggytalents.doggy_armor.description": "犬が防具を着用できるようになります。この才能を持つ犬を右クリックするとGUIが表示され、犬に鎧を着せることができます。レベル3になると、犬は修繕 (エンチャント)で防具を修繕するための経験値を自動的に得ることができます。",
     "talent.doggytalents.water_holder.description": "犬の毛皮に注目してほしい。そして犬はそれを振って乾かすのが大好物だ。この才能により、犬は水を蓄えることができます。あなたや他の狼や犬が燃えている場合、それぞれのところに走って行って毛を振り、燃焼時間を短くしたり、完全に消したりします。レベルが高ければ高いほど、犬はより多くの水を貯めることができ、燃焼時間を短縮することができます！水入りバケツを補給するか、雨や水源に触れると自動的に水を吸収します。水の残量は、犬にどんなバケツを使っても、スニークを押しながら確認することができます。この才能をマスターすると、犬の毛皮に無限の水量を与えることができます。",
-    "talent.doggytalents.doggy_tools.description": "犬が特定の道具を使えるようになり、特定の作業を手助けしてくれるようになります。道具は道具犬のツールバーに加えることができ、どんなのツルハシを右クリックすることでアクセスできます。レベルが高いほど、ツールバーの容量が大きくなります。例えば ツールバーの中にクワを持っている犬は、飼い主が小麦や米を収穫するのを手伝います。また、攻撃するとき、ツールバーに武器を装備している犬は、左から最も近い武器を見つけて装備します。",
+    "talent.doggytalents.doggy_tools.description": "犬が特定の道具を使えるようになり、特定の作業を手助けしてくれるようになります。道具は道具犬のツールバーに加えることができ、どんなのツルハシを右クリックすることでアクセスできます。レベルが高いほど、ツールバーの容量が大きくなります。例えば クワを持った犬がツールバーの中にいて、小麦の種か米粒を持っていれば、それぞれ小麦と籾を収穫することができます。また、攻撃するとき、ツールバーに武器を装備している犬は、左から最も近い武器を見つけて装備します。",
     "talent.doggytalents.shock_absorber.description": "ノックバック耐性を増加さ せます。マスターするとノックバックへの完全な耐性が得られる。",
     "talent.doggytalents.mob_retriever.description": "MOBを背中に乗せて回収することができます。まず、この能力を持つ犬を近くに連れておく。そしてMOBレトリーバー口笛を使い、犬に拾わせたい目標を指さして「使い」を押す。犬は目標を取りに行きます。対象は犬が座るまで犬に乗り続けます。レベルはドッグが回収できるMOBのヒットボックスの最大量を決定します。マスターするとヒットボックスの制約が解除さ れます。",
     "talent.doggytalents.flying_furball.description": "愛犬に空の限界を征服させよう！レベルが高いほど、犬はより速く飛ぶことができます。",
     "talent.doggytalents.chemi_canine.description": "あなたや他の犬がマイナス効果を受けると、この才能を持つ犬は対象に向かって走り、マイナス効果を一つずつ吸収しようとします。効果は（犬に害を与えることなく）犬に蓄積さ れます。十分に蓄積されると、犬はそれ以上効果を吸収できなくなり、蓄積された効果が減衰するのを待たなければならなくなるが、それにはしばらく時間が掛かります。しかし、犬が攻撃すると、対象は吸収した効果の1つを受け、その効果も消費され、再び吸収できるようになります。",
     "talent.doggytalents.fire_drill.description": "ワンちゃんが火に包まれた時、自分で火を消す方法を教えます。ストップ、ドロップ、ロール！",
- 
+    "talent.doggytalents.sniffer_dog.description": "この才能を持つ犬は貴重な鉱石を嗅ぎつけることができる。レベルが上がるごとに犬の嗅覚の距離が伸び、目的の鉱石を見つけるチャンスが増える。犬に特定の鉱石を発見させるには、鉱石の匂いをマーキングするための「香りおやつ」が必要です。おやつを犬に与えると、犬はおやつを舐めて匂いを覚え、おやつを返します。犬に探知をやめさせるには、空の「香りおやつ」を与えます。犬がどのブロックを探しているかを確認するには、「香りおやつ」をこっそり右クリックします。注意点として、犬はブロックを垂直に探知するのがあまり得意ではないので、水平面に沿って各レベルの半径が大きくなっているにもかかわらず、犬が立っている位置より3ブロック前後高いか低いブロックしか探知することができません。犬が何を伝えようとしているのかに細心の注意を払い、ブロックがどこにあるのかをより正確に知るようにしてください。",
+   "talent.doggytalents.gate_passer.description": "この才能を持つ犬は、フェンスゲートや木製のドアを開けて通り抜けることができる。閉めた後も忘れずに閉めてくれますが、時々忘れてしまうこともあります :)",
+
     "talent.doggytalents.roaring_gale.cooldown": "烈風咆哮はクールダウン中。",
     "talent.doggytalents.roaring_gale.level": "烈風咆哮のアップグレードをお願いします！",
     "talent.doggytalents.roaring_gale.miss": "ミス！(￣□￣」)",
@@ -314,8 +329,24 @@
     "talent.doggytalents.pack_puppy.render_chest": "表示・チェスト",
     "talent.doggytalents.pack_puppy.pickup_item": "近くアイテムを拾う",
     "talent.doggytalents.pack_puppy.offer_food": "食品を提供する",
+    "talent.doggytalents.pack_puppy.collect_kill_loot": "戦利品を集める",
+    "talent.doggytalents.pack_puppy.collect_kill_loot.desc": "このオプションは「近くアイテムを拾う」がtrueの場合のみ有効です。あなたや他の犬がエンティティーを殺して何かを落とすと、そのエンティティーに向かって走り、戦利品を集めます。",
     "talent.doggytalents.rescue_dog.render_box": "表示・箱",
- 
+    "talent.doggytalents.sniffer_dog.notify_owner.0.near": "%s: ねえ、これ見てよ！何か見つけたよ！すごく近い！",
+    "talent.doggytalents.sniffer_dog.notify_owner.0.mid": "%s: ねえ、これ見てよ！何か見つけたよ！ちょっと遠いけど。",
+    "talent.doggytalents.sniffer_dog.notify_owner.0.far": "%s: えぇっと、これ見て！何か見つけた…かなり遠いけど！",
+    "talent.doggytalents.sniffer_dog.notify_owner.1.near": "%s: おおっ！私の鼻は何か見覚えのあるものをとらえた！かなり強い！こっちだ、急げ～！",
+    "talent.doggytalents.sniffer_dog.notify_owner.1.mid": "%s: 私の鼻は、何か見覚えのあるものをとらえた！こっちだ!",
+    "talent.doggytalents.sniffer_dog.notify_owner.1.far": "%s: うーん、私の鼻は一瞬、嗅ぎ慣れた感覚を捉えた。見てみたら？",
+    "talent.doggytalents.sniffer_dog.notify_owner.2.near": "%s: うわぁ！あなたが必要としていたものの匂いがする！とても強い！",
+    "talent.doggytalents.sniffer_dog.notify_owner.2.mid": "%s: 興味深いね、私は君が必要としていた何かを嗅ぎ取っているようだ！",
+    "talent.doggytalents.sniffer_dog.notify_owner.2.far": "%s: うーん、あなたが必要としていた何かの匂いが少しするような気がする！",
+    "talent.doggytalents.sniffer_dog.detecting_block_status.none": "%s はブロックを探していない。",
+    "talent.doggytalents.sniffer_dog.detecting_block_status": "%s を探しているブロック: %s",
+    "talent.doggytalents.doggy_torch.render_torch": "表示・松明",
+    "talent.doggytalents.gate_passer.pass_gate.set": "パッシングゲートを許可する",
+    "talent.doggytalents.gate_passer.pass_gate.unset": "パッシングゲートを止める",
+
     "talent.doggytalents.bed_finder.dog_mount": "%sを右クリックしてマウントを解除します。",
  
     "dog.mode.wandering": "放浪",
@@ -459,6 +490,7 @@
  
     "doggui.common.apply" : "適用",
     "doggui.common.go_back" : "戻る",
+    "doggui.common.debug" : "Debug",
     
     "doggui.navbar.home" : "ホーム",
     "doggui.navbar.talents" : "才能",
@@ -487,7 +519,11 @@
     "doggui.style.skins.selected" : "厳選された",
     "doggui.style.skins.search_by_tags" : "タグで探す",
     "doggui.style.skins.search_by_name" : "名前で探す",
- 
+    "doggui.style.skins.accessory_state.0" : "This model have not been tested with Accessories.",
+    "doggui.style.skins.accessory_state.1" : "This model is not compatible with Accessories.",
+    "doggui.style.skins.accessory_state.2" : "This model is recommended for Accessories!",
+    "doggui.style.skins.accessory_state.3" : "This model is compatible with some Accessories.",
+
     "doggui.stats.general" : "一般的",
     "doggui.stats.general.damageDealt" : "与えたダメージ",
     "doggui.stats.general.distanceInWater" : "水中距離",
@@ -558,6 +594,8 @@
     "doggui.migrate_owner.show_uuid": "表示・新飼い主のUUID",
     "doggui.force_migrate_owner.confirm.title": "強制的飼い主権の移転？",
     "doggui.force_migrate_owner.confirm.subtitle": "これで %s の飼い主になります。続行しますか？",
+    "block.doggytalents.food_bowl.pro_tip.title": "プロのヒント",
+    "block.doggytalents.food_bowl.pro_tip.desc": "愛犬に自動的に餌を与えるには、「箱犬」を他の犬たちの共有フードソースとして利用するのがおすすめです！",
  
     "key.categories.doggy_talents": "狼才能次",
     "key.whistle.1": "口笛 ＃１",
