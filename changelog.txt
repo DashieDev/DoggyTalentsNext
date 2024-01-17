@@ -1040,3 +1040,5 @@ FIRST UPDATE OF 2024!!! 🎊🎊🎊
 - Hellhound will properly cook food if it can light mobs on fire.
 - Fixed item not stacking properly (Pack Puppy auto-pick).
 - Fix Tim Burtons trio eye/nose visual bug.
+- HOTFIX: Dog pathfinding interupted when a block change happens in the world.
+- HOTFIX (1.18.2/1.19.2 only): Normal Points reset after reload the world.
