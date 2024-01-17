@@ -2932,6 +2932,8 @@ public class Dog extends AbstractDog {
                     "This dog has been restored from third-party storage which may leads to duplications."
                 );
             return;
+        } else {
+            detectedDuplicateVertified = true;
         }
 
         if (!this.level().isClientSide) {
@@ -2942,7 +2944,10 @@ public class Dog extends AbstractDog {
         }
     }
 
+    private boolean detectedDuplicateVertified = false;
     private boolean detectDuplicate(CompoundTag tag) {
+        if (detectedDuplicateVertified)
+            return false; 
         if (ConfigHandler.SERVER.DISABLE_PRESERVE_UUID.get())
             return false;
         if (!tag.contains("DTN_DupeDetect_UUID", Tag.TAG_COMPOUND))
