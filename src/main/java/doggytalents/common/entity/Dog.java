@@ -2233,7 +2233,9 @@ public class Dog extends AbstractDog {
             && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.ALL_DOG_BLOCK_PORTAL);
         if (flag) return null;
         changeDimensionAuthorized = false;
+        this.DTN_dogChangingDim = true;
         Entity transportedEntity = super.changeDimension(worldIn, teleporter);
+        this.DTN_dogChangingDim = false;
         if (transportedEntity instanceof Dog) {
             DogLocationStorage.get(this.level()).getOrCreateData(this).update((Dog) transportedEntity);
         }
@@ -2594,7 +2596,7 @@ public class Dog extends AbstractDog {
         }
 
         //Duplication Detection
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide && !DTN_dogChangingDim) {
             var uuid = this.getUUID();
             var ownerUUID = this.getOwnerUUID();
             if (uuid != null && ownerUUID != null) {
@@ -2949,6 +2951,7 @@ public class Dog extends AbstractDog {
     }
 
     private boolean detectedDuplicateVertified = false;
+    private boolean DTN_dogChangingDim = false;
     private boolean detectDuplicate(CompoundTag tag) {
         if (detectedDuplicateVertified)
             return false; 
