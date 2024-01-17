@@ -44,6 +44,7 @@
    "item.doggytalents.treat_bag": "Sachet de friandises",
    "item.doggytalents.energizer_stick": "Bâton énergisant",
    "item.doggytalents.egg_sandwich": "Sandwich aux oeufs",
+   "item.doggytalents.egg_sandwich.description": "Delicious Tamago Sando! Legoshi and Legom approved.",
    "item.doggytalents.bandaid": "Bandage",
    "item.doggytalents.bandaid.description": "- Utiliser 8 bandages pour aider votre chien en incapassité\n- Un lit (Vanilla or DTN) est requis pour soigner plus vite! ",
    "item.doggytalents.tantan_cape": "Tartan Cape",
@@ -66,6 +67,10 @@
 
    "item.doggytalents.birthday_hat": "Chapeau d'anniversaire",
    "item.doggytalents.birthday_hat.description": "Fabriquez avec du papier pour ajouter une couleur secondaire au chapeau",
+   "item.doggytalents.propeller_hat": "Chapeau à hélice",
+   "item.doggytalents.propeller_hat.description": "Spinna!",
+   "item.doggytalents.fedora": "Fedora",
+   "item.doggytalents.flatcap": "Casquette plate",
 
    "item.doggytalents.witch_hat": "Chapeau de sorcier",
    "item.doggytalents.witch_hat.description": "Ça sent pas foufou...",
@@ -105,6 +110,7 @@
    "item.doggytalents.rice_bowl.description": "Blanc, chaud et moelleux",
    "item.doggytalents.salmon_sushi": "Saké Nigiri Sushi",
    "item.doggytalents.onigiri": "Onigiri",
+   "item.doggytalents.onigiri.description": "Aussi connu sous le nom de boulettes de riz",
    "item.doggytalents.sausage": "Saucisse",
    "item.doggytalents.baker_hat": "Chapeau de cuisinier",
    "item.doggytalents.baker_hat.description": "Briochien arrive!",
@@ -112,6 +118,7 @@
    "item.doggytalents.chef_hat.description": "Enfin des bons sushis...",
    "item.doggytalents.lab_coat": "Blouse de laboratoire",
    "item.doggytalents.ceremonial_garb":"Costume de cérémonie   ",
+   "item.doggytalents.doggy_contacts": "Lentilles de contact pour chien",
 
    "item.doggytalents.locator_orb_chi": "Orbe de Chi",
    "item.doggytalents.locator_orb_chi.description": "L'Orbe de la Sagesse et de la Connaissance.",
@@ -189,12 +196,20 @@
    "item.doggytalents.sake": "Bouteille de Saké",
    "item.doggytalents.sake.description": "Buvez avec modérations! N'alcoolisez pas votre chien!",
 
+   "item.doggytalents.scent_treat": "Gâterie parfumée",
+   "item.doggytalents.scent_treat.description": "Cliquez avec le Clic droit sur un bloc pour collecter un échantillon de son odeur. Faites un clic droit sur un chaudron d'eau pour effacer l'odeur collectée.",
+   "item.doggytalents.scent_treat.scented_block": "Échantillon de bloc collecté: ",
+   "item.doggytalents.drool_scent_treat": "Gâterie parfumée à la bave",
+
    "item.doggytalents.feathered_mantle": "Manteau à plumes",
 
    "item.doggytalents.grand_piano_black_item": "Piano à queue Noir (Experimental)",
    "item.doggytalents.grand_piano_white_item": "Piano à queue Blanche (Experimental)",
    "item.doggytalents.upright_piano_black_item": "Piano droit Noir (Experimental)",
    "item.doggytalents.upright_piano_brown_item": "Piano droit Marron (Experimental)",
+   "items.doggytalents.piano_item_common.description": "Sneak + clic droit avec une torche en main pour ajuster son orientation..",
+   "item.doggytalents.dog_plushie_toy_item": "Peluche en forme de chien",
+   "item.doggytalents.dog_plushie_toy_item.description": "Sneak + clic droit avec une torche en main pour ajuster son orientation.", 
 
    "item.doggytalents.cape_coloured.tooltip": "Couleur: %s",
    "item.doggytalents.wool_collar.tooltip": "Couleur: %s",
@@ -264,6 +279,8 @@
    "talent.doggytalents.flying_furball": "Boule de poils volante",
    "talent.doggytalents.chemi_canine": "Canine Chimique",
    "talent.doggytalents.fire_drill": "Combat le Feu",
+   "talent.doggytalents.sniffer_dog": "Chien renifleur ",
+   "talent.doggytalents.gate_passer": "Porte a woofer",
 
    "talent.doggytalents.bed_finder.description": "Lorsqu'un chien doté de cette capacité est sur votre tête, votre lit sera entouré d'un contour jaune. Pour placer le chien sur votre tête, faites un clic droit sur le chien avec un os dans la main. La portée est de 200 blocs par niveau, mais devient infinie au niveau 5.",
    "talent.doggytalents.black_pelt.description": "Augmente le taux de coup critique d'un demi-cœur par niveau, plus un coeur supplémentaire lors du niveau max",
@@ -271,7 +288,7 @@
    "talent.doggytalents.hunter_dog.description": "Chaque niveau a 10%% Il y a une chance que tout ce que votre chien tue laisse tomber son butin deux fois, le niveau 5 accorde un supplément de 10%%, ramenant la chance à 60%%.",
    "talent.doggytalents.hell_hound.description": "Cette compétence entraîne votre chien à résister à une chaleur extrême. Plus le niveau est élevé, plus le chien peut supporter la chaleur et moins il brulera. Les chiens qui maîtrisent cette compétence seront totalement ininflammables et traiteront la lave comme de l'eau. Ils préféreront peut-être même s'y baigner, car sa consistance épaisse leur procure un massage. De plus, maîtriser cette compétence permettra également aux chiens de marcher sur la lave, ce qui sera utile lorsqu'il sera combiné avec 'Récupérateur de mob' pour transporter vos autres chiens à travers le Nether. Votre chien peut également avoir la capacité de mettre le feu à des objets lorsqu'il attaque s'il est suffisamment entraîné.",
    "talent.doggytalents.wolf_mount.description": "Vous permet de monter sur votre chien n'importe où à grande vitesse. Chaque niveau permet à votre chien de sauter plus haut. Pour monter votre chien, ayez la main vide puis cliquez rapidement avec le bouton droit sur le chien au moins deux fois pour continuer.",
-   "talent.doggytalents.pack_puppy.description": "Chaque niveau donne à votre chien 3 emplacements d'inventaire dans son inventaire PackPuppy. Pour ouvrir l'inventaire, appuyez sur E pour accéder à votre inventaire, puis accédez à l'inventaire du chiens ! Au niveau 5, votre chien ramassera également automatiquement tous les objets à proximité s'il a de la place dans son inventaire. De plus, s'il y a de la viande dans son inventaire, il la proposera aux autres chiens affamés qui se trouvent à proximité. Un sandwich aux œufs sera également proposé si l'autre chien est en mauvaise santé.",
+   "talent.doggytalents.pack_puppy.description": "Chaque niveau donne à votre chien 3 emplacements d'inventaire. Pour ouvrir inventaire, appuyez la touche d'inventaire pour y accéder, puis accédez à Inventaires de chiens! Au niveau 3, votre chien ramassera également automatiquement tous les objets à proximité s'il a de la place dans son inventaire. De plus, au niveau 4, s'il y a de la viande dans son inventaire, il la proposera aux autres chiens affamés qui se trouvent à proximité. Un sandwich aux œufs sera également proposé si l'autre chien est au bord de la mort.",
    "talent.doggytalents.pillow_paw.description": "Chaque niveau permet à votre chien de tomber de 3 blocs supplémentaires avant de subir des dégâts. La maîtrise de cette compétence permettra à votre chien d'annuler complètement les dégâts de chute.",
    "talent.doggytalents.quick_healer.description": "Améliore la vitesse à laquelle votre chien guérit sans se reposer. La maîtrise de cette compétence permettra à votre chien de guérir 50%% plus rapidement lorsqu'il est assis.",
    "talent.doggytalents.creeper_sweeper.description": "Un chien doté de cette capacité peut flairer les Creepers dans la zone et grognera pour vous avertir. La portée à laquelle votre chien peut détecter les Creepers augmente de 6 blocs par niveau, et la maîtrise de cette compétence permet à votre chien d'attaquer les Creepers et les tuer en un seul coup, et réduit la détonation du Creeper à chaque attaque.",
@@ -288,12 +305,14 @@
    "talent.doggytalents.doggy_torch.description": "Permet à votre chien d'utiliser des Torches lorsque la luminosité se fait faible, au prix d'une Torche de son inventaire (Inventaire du chien). Pour lui donner des Torches, vous pouvez en déposer à proximité et il les récupérera. Au niveau 5, il n'a plus besoin de Torches dans son inventaire.",
    "talent.doggytalents.doggy_armor.description": "Permet à votre chien de porter une armure. Pour commencer, faites un clic droit sur un chien doté de ce talent avec n'importe quelle pièce d'armure en main et l'inventaire apparaîtra vous permettant de la mettre sur votre chien. Au niveau 3, votre chien gagnera automatiquement de l'XP pour réparer n'importe quelle armure avec l'enchantement 'raccomodage'.",
    "talent.doggytalents.water_holder.description": "Remarquez le pelage du Chien, il adore absorber l'eau. Et le chien adore le secouer pour le sécher. Ce talent permet à votre Chien de stocker de l'eau. Si vous, vos autres loups ou chiens êtes en feu, il courra vers chacun et secouera sa fourrure, réduira le temps de combustion ou éteindra complètement la cible. Plus le niveau est élevé, plus le chien peut stocker d'eau, ce qui réduit le temps de combustion ! Vous pouvez soit utiliser un seau d'eau sur le chien pour reconstituer l'eau, soit le chien absorbera automatiquement l'eau lorsqu'il entrera en contact avec la pluie ou une source d'eau. Vous pouvez vérifier la quantité d'eau restante en utilisant n'importe quel seau sur le chien tout en maintenant Sneak. La maîtrise de la compétence confère à la fourrure de votre chien une capacité d'eau infinie.",
-   "talent.doggytalents.doggy_tools.description": "Permet à votre chien d'utiliser certains outils pour vous aider dans des tâches spécifiques. Des outils peuvent être ajoutés à la barre d'outils du chien, accessible en cliquant avec le bouton droit sur votre chien avec n'importe quelle variante de la pioche. Plus le niveau est élevé, plus la capacité de la barre d'outils est grande. Par exemple: Les chiens avec une houe à l'intérieur de la barre d'outils aideront leur propriétaire à cultiver/récolter les récoltes. Lors d'une attaque, les chiens avec n'importe quelle arme dans leur barre d'outils trouveront et équiperont l'arme la plus proche en partant de la gauche.",
+   "talent.doggytalents.doggy_tools.description": "Permet à votre chien d'utiliser certains outils pour vous aider dans des tâches spécifiques. Des outils peuvent être ajoutés à la barre d'outils du chien, accessible en cliquant avec le Clic droit sur votre chien avec n'importe quelle variante de la pioche. Plus le niveau est élevé, plus la capacité de la barre d'outils est grande. Par exemple: Les chiens avec une houe à l'intérieur de la barre d'outils avec soit des graines de blé, soit des grains de riz vous aideront à récolter respectivement du blé et du riz (si les deux sont présents dans la barre de raccourcis du chien, il choisira celui le plus proche à gauche). Lorsqu'ils attaquent, les chiens avec n'importe quelle arme dans leur barre d'outils trouveront et équiperont l'arme la plus proche en partant de la gauche.",
    "talent.doggytalents.shock_absorber.description": "Augmente la résistance du knockback. Maîtriser cela confère au chien une immunité complète contre le knockback.",
    "talent.doggytalents.mob_retriever.description": "Permettez à votre chien de récupérer les mobs en les forçant sur son dos. Pour commencer, ayez un chien doté de cette capacité à proximité. Vous pouvez ensuite utiliser un sifflet 'Récupérateur de mob' en pointant la cible que vous souhaitez que le chien ramasse et en appuyant sur Utiliser. Le Chien ira récupérer la cible. La cible continuera à monter le chien jusqu'à ce que le chien s'assoie. Le niveau détermine le volume maximum de la hitbox du mob que le chien peut récupérer. Le maîtriser supprime la contrainte hitbox.",
    "talent.doggytalents.flying_furball.description": "Permettez à votre Chien de conquérir la limite du ciel ! Plus le niveau est élevé, plus votre chien vole vite. (c'est drole a voir)",
    "talent.doggytalents.chemi_canine.description": "Lorsque vous ou vos autres chiens subissez des effets négatifs, le chien doté de ce talent courra vers la cible et tentera d'absorber les effets négatifs, un à la fois. Les effets s'accumuleront sur les chiens (sans leur nuire). Lorsqu'il accumule suffisamment, le chien ne peut pas absorber davantage d'effets et doit attendre que les effets accumulés se dissipent, ce qui prendra un certain temps. Cependant, lorsque le chien attaquera, la cible sera affectée par l'un des effets absorbés par elle, qui consommera également l'effet permettant au chien d'absorber à nouveau.",
-   "talent.doggytalents.fire_drill.description": "Cette compétence apprend à votre chien à éteindre lui-même la flamme lorsqu'elle prend feu. En gros il se roulera sur le sol! ou taper un sprint dans l'eau...",
+   "talent.doggytalents.fire_drill.description": "Cette compétence apprend à votre chien à s'éteindre lorsqu'il prend feu. Arrêter, tomber et rouler!",
+   "talent.doggytalents.sniffer_dog.description": "Ce talent permet à votre chien de détecter des minerais précieux. Chaque niveau augmente la distance de reniflement de votre chien, augmentant ainsi les chances de trouver le minerai souhaité. Pour que votre chien commence à détecter un certain bloc, une Gâterie parfumée est nécessaire pour marquer l'odeur du bloc. La gâterie sera ensuite donnée au chien qui la léchera, mémorisera l'odeur et vous la rendra. Pour empêcher votre chien de détecter, donnez-lui une friandise parfumée vide. Pour vérifier quel bloc votre chien recherche, sneak et clic droit dessus avec n'importe quelle Gâterie parfumée en main. Une chose à noter est que les chiens ne sont pas très doués pour détecter les blocs verticalement, donc malgré l'augmentation du rayon que chaque niveau fournit le long du plan horizontal, ils ne sont capables de localiser que des blocs qui ne sont pas environ 3 blocs plus hauts ou plus bas que là où ils se trouvent. debout. Assurez-vous de prêter une attention particulière à ce que le chien essaie de vous dire pour avoir une meilleure idée de l'endroit où se trouve le bloc.",
+   "talent.doggytalents.gate_passer.description": "Ce talent permet à votre chien d’ouvrir les clôtures et les portes en bois et de les franchir. Ils penseront également à le fermer par la suite, même s'ils oublient parfois :)",
 
    "talent.doggytalents.roaring_gale.cooldown": "Rugissement est en temps de recharge.",
    "talent.doggytalents.roaring_gale.level": "Mettez quelques points dans la compétence rugissementpour l'utiliser!",
@@ -307,7 +326,27 @@
    "talent.doggytalents.doggy_tools.open_tools": "Ouvrir la barre d'outils du chien",
    "talent.doggytalents.doggy_armor.open_armor": "Ouvrir l'armure du chien",
    "talent.doggytalents.flying_furball.dog_not_kami": "Ce chien n'est pas au niveau max.",
-
+   "talent.doggytalents.pack_puppy.render_chest": "Render Chest",
+   "talent.doggytalents.pack_puppy.pickup_item": "Ramasser les objets proches",
+   "talent.doggytalents.pack_puppy.offer_food": "Offer Food",
+   "talent.doggytalents.pack_puppy.collect_kill_loot": "Récupérez le butin des entités",
+   "talent.doggytalents.pack_puppy.collect_kill_loot.desc": "Cette option ne prend effet que si Ramasser les objets proche à proximité est activé. Lorsque vous ou vos autres chiens tuez une entité et lui faites lâcher quelque chose, il courra vers cette entité et récupérera le loot.",
+   "talent.doggytalents.rescue_dog.render_box": "Render Box",
+   "talent.doggytalents.sniffer_dog.notify_owner.0.near": "%s: Hé, viens voir ça ! Je pense avoir trouvé quelque chose ! C'est pas très loin !",
+   "talent.doggytalents.sniffer_dog.notify_owner.0.mid": "%s: Hé, viens voir ça ! Je pense avoir trouvé quelque chose! C'est un peu plus loin.",
+   "talent.doggytalents.sniffer_dog.notify_owner.0.far": "%s: Euh, hé, viens voir ça ! Je pense avoir trouvé quelque chose! Même si c'est assez loin!",
+   "talent.doggytalents.sniffer_dog.notify_owner.1.near": "%s: OOOOH ! Ma truffe a capté quelque chose de familier ! C'est assez FORT ! Viens ici, vite!",
+   "talent.doggytalents.sniffer_dog.notify_owner.1.mid": "%s: Ah ! Ma truffe a capté quelque chose de familier ! Viens ici !",
+   "talent.doggytalents.sniffer_dog.notify_owner.1.far": "%s: Hmmm, Ma truffe a perçu une brève odeur que je connais. Vous voudrez peut-être jeter un oeil.",
+   "talent.doggytalents.sniffer_dog.notify_owner.2.near": "%s: WOAH ! Je peux sentir la chose que tu avais besoin ! C'est très fort!",
+   "talent.doggytalents.sniffer_dog.notify_owner.2.mid": "%s: Intéressant, je pense que je sens quelque chose que tu avais besoin !",
+   "talent.doggytalents.sniffer_dog.notify_owner.2.far": "%s: Hmmm, je pense que je sens un peu quelque chose dont tu avais besoin !",
+   "talent.doggytalents.sniffer_dog.detecting_block_status.none": "%s ne recherche aucun bloc.",
+   "talent.doggytalents.sniffer_dog.detecting_block_status": "%s cherche : %s",
+   "talent.doggytalents.doggy_torch.render_torch": "Torche de rendu?",
+   "talent.doggytalents.gate_passer.pass_gate.set": "Autoriser le passage aux portes",
+   "talent.doggytalents.gate_passer.pass_gate.unset": "Arrêtez de passer aux porte",
+   
    "talent.doggytalents.bed_finder.dog_mount": "Cliquez pour faire descendre %s",
 
    "dog.mode.wandering": "Errant",
@@ -480,6 +519,10 @@
    "doggui.style.skins.selected" : "Séléctionner",
    "doggui.style.skins.search_by_tags" : "Recherche par tags",
    "doggui.style.skins.search_by_name" : "Recherche par Nom",
+   "doggui.style.skins.accessory_state.0" : "This model have not been tested with Accessories.",
+   "doggui.style.skins.accessory_state.1" : "This model is not compatible with Accessories.",
+   "doggui.style.skins.accessory_state.2" : "This model is recommended for Accessories!",
+   "doggui.style.skins.accessory_state.3" : "This model is compatible with some Accessories.",
 
    "doggui.stats.general" : "General",
    "doggui.stats.general.damageDealt" : "Dégâts infligés",
@@ -550,8 +593,10 @@
    "doggui.migrate_owner.confirm": "Confirmer",
    "doggui.migrate_owner.show_uuid": "Montrer le nouvel UUID du maître",
    "doggui.force_migrate_owner.confirm.title": "Forcer la migration du propriétaire?",
-   "doggui.force_migrate_owner.confirm.subtitle": "Vous serez désormais propriétaire de %s, continuer?",
-
+   "doggui.force_migrate_owner.confirm.subtitle": "Vous serez le maître de %s, Continuer ?",
+   "block.doggytalents.food_bowl.pro_tip.title": "Conseil de pro",
+   "block.doggytalents.food_bowl.pro_tip.desc": "La méthode recommandée pour nourrir automatiquement votre chien consiste à utiliser un chien avec la compétence Inventaire du chien comme source de nourriture partagée pour tous vos autres chiens !",
+   
    "key.categories.doggy_talents": "Doggy Talents Next",
    "key.whistle.1": "Sifflet #1",
    "key.whistle.2": "Sifflet #2",
@@ -611,6 +656,6 @@
    "advancements.doggytalents.doggy_charm_summon.description": "Invoquez votre premier chien via le Talisman du chien.",
    "advancements.doggytalents.get_dog_drunk.title": "Suuussssannooo!!",
    "advancements.doggytalents.get_dog_drunk.description": "Ivrez votre chien avec du saké.",
+   
    "effect.doggytalents.natto_bite": "Morssure de Natto"
 }
-
