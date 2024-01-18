@@ -97,15 +97,15 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                     .translation("doggytalents.config.client.enable_kami_particles")
                     .define("enable_kami_particles", false);
             RENDER_CHEST = builder
-                    .comment("When enabled, dogs with points in pack puppy will have chests on their side.")
+                    .comment("When enabled, dogs with points in Pack Puppy will have chests on their side.")
                     .translation("doggytalents.config.client.render_chest")
                     .define("render_chest", true);
             USE_DT_TEXTURES = builder
-                    .comment("If disabled will use the default minecraft wolf skin for all dog textures.")
+                    .comment("If disabled will use the default Minecraft wolf skin for all dog textures.")
                     .translation("doggytalents.config.client.enable_dt_textures")
                     .define("enable_dt_textures", true);
             RENDER_SADDLE = builder
-                    .comment("When enabled, dogs with points in wolf mount will have a saddle on.")
+                    .comment("When enabled, dogs with points in Wolf Mount will have a saddle on.")
                     .translation("doggytalents.config.client.render_saddle")
                     .define("render_saddle", true);
             RENDER_WINGS = builder
@@ -118,7 +118,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                     .define("render_incapacitated_overlay", true);
             RENDER_HEALTH_IN_NAME = builder
                 .comment("When sneaking, a part of the dog's name will be rendered with a certain color")
-                .comment("and the length of the part is based on the health percentage the dog has left")
+                .comment(", the length of the part is based on the health percentage the dog has left")
                 .translation("doggytalents.config.client.render_health_in_name")
                 .define("render_health_in_name", true);
             DOG_INV_BUTTON_IN_INV = builder
@@ -128,32 +128,32 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .translation("doggytalents.config.client.dog_inv_button_in_inv")
                 .define("dog_inv_button_in_inv", true);
             RENDER_INCAP_TXT_LESS_GRAPHIC = builder
-                .comment("If the defeault incapacitated texture proof too much graphic.")
+                .comment("If the default incapacitated texture proof too many graphics.")
                 .comment("You can substitute this friendlier texture instead.")
                 .translation("doggytalents.config.client.render_incap_txt_less_graphic")
                 .define("render_incap_txt_less_graphic", false);
             RENDER_DIFFOWNER_NAME_DIFFERENT = builder
-                .comment("Render dogs' name whose owner is not you with different color.")
+                .comment("Render the dogs' name whose owner is not you with a different color.")
                 .translation("doggytalents.config.client.render_diffowner_name_different")
                 .define("render_diffowner_name_different", true);
             DONT_RENDER_DIFFOWNER_NAME = builder
-                .comment("Do not render dogs' name whose owner is not you.")
+                .comment("Do not render dogs' names whose owner is not you.")
                 .translation("doggytalents.config.client.render_diffowner_name_dont")
                 .define("render_diffowner_name_dont", false);
             ALWAYS_RENDER_DOG_NAME = builder
-                .comment("ALways render dog nametags regardless even if player blocks it by F1 mode.")
+                .comment("Always render dog nametags regardless even if the player blocks it by F1 mode.")
                 .translation("doggytalents.config.client.always_render_dog_name")
                 .define("always_render_dog_name", false);
             BLOCK_THIRD_PARTY_NAMETAG = builder
-                .comment("Attempt to block third parties from rendering overlays which may conflict")
+                .comment("Attempt to block third parties from rendering overlays that may conflict")
                 .comment("with DT's built-in tag. It is recommended that this be achieved via the target third-party's")
                 .comment("configurations if they have the option to disable nametag overlay for certain mobs")
                 .comment("(Which they should). This option should only be used as the last resort.")
                 .translation("doggytalents.config.client.block_third_party_nametag")
                 .define("block_third_party_nametag", false);
             USE_VANILLA_RES_FOR_CLASSICAL = builder
-                .comment("By defeault, a copy of the Classical (Vanilla Wolf Texture) provided by the mod")
-                .comment("is used to render The Classical Skin, this is to avoid conflicts with resources packs")
+                .comment("By default, a copy of the Classical (Vanilla Wolf Texture) provided by the mod")
+                .comment("is used to render The Classical Skin, this is to avoid conflicts with resource packs")
                 .comment("like Fresh Animations which are directly using the in-game wolf texture. Turning this on")
                 .comment("will make DTN directly reference the in-game texture.")
                 .translation("doggytalents.config.client.use_vanilla_res_for_classical")
@@ -168,29 +168,29 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .define("render_armor", true);
             BLOCK_RED_OVERLAY_WHEN_HURT = builder
                 .comment("Determine if dogs still render with a red overlay upon hurt like they usually do.")
-                .comment("This can be toggled on if user prefer to not having the red overlay and rely on the animation")
+                .comment("This can be toggled on if the user prefers to not have the red overlay and relies on the animation ")
                 .comment("to indicate hurting.")
                 .translation("doggytalents.config.client.block_red_overlay_when_hurt")
                 .define("block_red_overlay_when_hurt", false);
             DISPLAY_SMOKE_WHEN_ON_FIRE = builder
-                .comment("Display extra smoke when dog is on fire.")
+                .comment("Display extra smoke when the dog is on fire.")
                 .translation("doggytalents.config.client.display_smoke_when_on_fire")
                 .define("display_smoke_when_on_fire", true);
             MOUTH_ITEM_FORCE_RENDER = builder
-                .comment("By default, dogs will render item in their mouth, regardless of models.")
+                .comment("By default, dogs will render items in their mouth, regardless of models.")
                 .comment("This can be disabled if you prefer not to render it on some")
                 .comment("less compatible model.")
                 .translation("doggytalents.config.client.mouth_item_force_render")
                 .define("mouth_item_force_render", true);
             MAX_ANIMATION_LATENCY_ALLOWED = builder
                 .comment("Specify the max latency allowed before force adjusting the animation time")
-                .comment("clientside to sync with server's animation time. The unit is in ticks.")
+                .comment("client side to sync with server's animation time. The unit is in ticks.")
                 .comment("Provide a non positive integer to disable this. Value from 0 to 7 both inclusive will be defaulted to 7.")
                 .translation("doggytalents.config.client.max_animation_latency_allowed")
                 .defineInRange("max_animation_latency_allowed", 10, Integer.MIN_VALUE, Integer.MAX_VALUE);
             USE_LEGACY_DOG_ARMOR_RENDER = builder
-                .comment("Currently DTN is utilizing a new system for rendering Doggy Armor's Armor")
-                .comment("which allow DTN to directly use any texture which the armor item provided")
+                .comment("Currently, DTN is utilizing a new system for rendering Doggy Armor's Armor")
+                .comment("which allows DTN to directly use any texture which the armor item provided")
                 .comment("for the player, thus better replicating third-party armor. Set this to true")
                 .comment("if you prefer to use the old system instead.")
                 .translation("doggytalents.config.client.use_legacy_dog_armor_render")
@@ -265,7 +265,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                     .translation("doggytalents.config.dog.disable_hunger")
                     .define("disable_hunger", false);
             STARTING_ITEMS = builder
-                    .comment("When enabled you will spawn with a guide, Doggy Charm and Command Emblem.")
+                    .comment("When enabled you will spawn with a Starter Bundle.")
                     .translation("doggytalents.config.enable_starting_items")
                     .define("enable_starting_items", false);
             DOG_GENDER = builder
@@ -273,7 +273,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                     .translation("doggytalents.config.enable_gender")
                     .define("enable_gender", true);
             PUPS_GET_PARENT_LEVELS = builder
-                    .comment("When enabled, puppies get some levels from parents. When disabled, puppies start at 0 points.")
+                    .comment("When enabled, puppies get some levels from their parents. When disabled, puppies start at 0 points.")
                     .translation("doggytalents.config.enable_pup_get_parent_levels")
                     .define("enable_pup_get_parent_levels", false);
             TIME_TO_MATURE = builder
@@ -281,15 +281,15 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                     .translation("doggytalents.config.dog.time_to_mature")
                     .defineInRange("time_to_mature", 48000, 0, Integer.MAX_VALUE);
             DOG_WHINE_WHEN_HUNGER_LOW = builder
-                    .comment("Determines if dogs should whine when hunger reaches below 20 DP.")
+                    .comment("Determines if dogs should whine when hunger reaches below 20 NP.")
                     .translation("doggytalents.config.whine_when_hungry")
                     .define("whine_when_hungry", true);
             EAT_FOOD_ON_FLOOR = builder
-                    .comment("When enabled, dogs will path and eat editable items in the world.")
+                    .comment("When enabled, dogs will path and eat edible items in the world.")
                     .translation("doggytalents.config.eat_food_on_floor")
                     .define("eat_food_on_floor", true);
             IMMORTAL_DOGS = builder
-                .comment("When enabled, dogs cannot be killed by any mean (except creative-mode-bypass damage, in that case you can still respawn your dog using his linked bed or commands).")
+                .comment("When enabled, dogs cannot be killed by any means (except creative-mode-bypass damage, in that case, you can still respawn your dog using his linked bed or commands).")
                 .comment("Instead, when his health reaches Zero, he will go into Incapacitated Mode.")
                 .translation("doggytalents.config.immortal_dogs")
                 .define("immortal_dogs", true);
@@ -299,23 +299,23 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .define("play_tag_with_dog", true);
             DOG_GREET_OWNER = builder
                 .comment("When enabled, dogs will start to miss you when you leave them for too long.")
-                .comment("and when you come back, they will rush to you and greet you with love!")
+                .comment("And when you come back, they will rush to you and greet you with love!")
                 .translation("doggytalents.dog_greet_owner")
                 .define("dog_greet_owner", true);
             DOG_GREET_OWNER_LIMIT = builder
                 .comment("Specify how many dogs can greet you when you approach more than one missing dog.")
-                .comment("The remaning dog will remain in their position.")
+                .comment("The remaning dogs will remain in their position.")
                 .comment("To disable the limit, set this to any non-positive integer.")
                 .comment("Although this will cause all of your dogs to stand up and greet.")
                 .comment("YOU HAVE BEEN WARNED! :)")
                 .translation("doggytalents.dog_greet_owner_limit")
                 .defineInRange("dog_greet_owner_limit", 5, Integer.MIN_VALUE, Integer.MAX_VALUE);
             MAX_CREEPER_SWEEPER_DONT_GROWL = builder
-                .comment("Option to disable dogs who mastered creeper sweeper and ")
-                .comment("and are able to tackle creepers. This is helpful if players intend")
-                .comment("their creeper sweeper master dogs to focus on fighting creeper instead of")
-                .comment("warning, which may causes a bunch of false positive due to the range")
-                .comment("is so wide that it includes creepers which are not in danger zone or not reachable.")
+                .comment("Option to disable dogs who mastered Creeper Sweeper and ")
+                .comment("and are able to tackle Creepers. This is helpful if players intend")
+                .comment("their Creeper Sweeper master dogs to focus on fighting Creeper instead of")
+                .comment("warning you, which may causes a bunch of false positives due to the range")
+                .comment("being so wide that it includes Creepers which are not in danger zone or not reachable.")
                 .translation("doggytalents.max_creeper_sweeper_dont_growl")
                 .define("max_creeper_sweeper_dont_growl", true);
             ALL_PLAYER_CANNOT_ATTACK_DOG = builder
@@ -324,9 +324,9 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .translation("doggytalents.all_player_cannot_attack_dog")
                 .define("all_player_cannot_attack_dog", false);
             ALL_DOG_BLOCK_PORTAL = builder
-                .comment("Option to prevent dogs from accidentally go into a portal and get")
-                .comment("unecessary transfered to another dimension, causing the owner having")
-                .comment("to take them back. The prefered way to make a dog go to another dimension is")
+                .comment("Option to prevent dogs from accidentally going into a portal and get")
+                .comment("unnecessary transferred to another dimension, causing the owner to have")
+                .comment("to take them back. The preferred way to make a dog go to another dimension is")
                 .comment("to have Cross Origin Teleport set to true on that dog.")
                 .translation("doggytalents.all_dog_block_portal")
                 .define("all_dog_block_portal", true);
@@ -337,7 +337,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .defineInRange("max_heel_limit", 20, Integer.MIN_VALUE, Integer.MAX_VALUE);
             PREVENT_DOGS_PUSHING_EACH_OTHER = builder
                 .comment("Prevent dogs from pushing each other when navigating, this prevents dogs from pushing")
-                .comment("another dog into a dangeruous area and improve navigation.")
+                .comment("another dog into a dangerous area and improves navigation.")
                 .translation("doggytalents.prevent_dogs_pushing_each_other")
                 .define("prevent_dogs_pushing_each_other", true);
             TICK_PER_HUNGER_DEC = builder
@@ -353,7 +353,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Duplication Detection")
                 .comment("Specify what to do when a Duplication is detected when third parties are trying")
                 .comment("to load the dog from their own copy.")
-                .comment("Option are specified via the follwing Integer values")
+                .comment("Option are specified via the following Integer values")
                 .comment("0 - Throw an exception out, this may produce a crash. However, this is the recommended way.")
                 .comment("1 - Silently remove the dog.")
                 .comment("Other - Do nothing.")
@@ -382,7 +382,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .translation("doggytalents.wolf_mount_passenger_collision")
                 .define("wolf_mount_passenger_collision", true);
             CONDUCTING_BONE_CROSS_ORIGIN = builder
-                .comment("By default, Conducting Bone users and summon their Dogs even when they are in")
+                .comment("By default, Conducting Bone users can summon their Dogs even when they are in")
                 .comment("other dimensions. Set this to false to limit Conducting Bone Users to only summon")
                 .comment("Dogs of the same dimension.")
                 .translation("doggytalents.conducting_bone_cross_origin")
