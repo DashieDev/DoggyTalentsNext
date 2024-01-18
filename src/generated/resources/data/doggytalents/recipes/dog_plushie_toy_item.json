@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "doggytalents:wool_collar"
+    },
+    "G": {
+      "item": "minecraft:light_gray_wool"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
+    },
+    "W": {
+      "item": "minecraft:white_wool"
+    }
+  },
+  "pattern": [
+    "WW ",
+    "SCG",
+    "WTW"
+  ],
+  "result": {
+    "item": "doggytalents:dog_plushie_toy_item"
+  },
+  "show_notification": true
+}
