@@ -263,9 +263,9 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
             DOG_GENDER = builder
                     .comment("By default, each Dog will be one of the Biological Genders. This, like how Biological Genders")
                     .comment("work, add restrictions how Dogs can breed. Therefore, only Dogs whose gender is Biologically Opposed")
-                    .comment("can mate with each other. Set this to false to disable this behaviour.")
-                    .translation("doggytalents.config.dog_has_gender")
-                    .define("dog_has_gender", true);
+                    .comment("can mate with each other. Set this to true to disable this behaviour.")
+                    .translation("doggytalents.config.disable_dog_gender")
+                    .define("disable_dog_gender", false);
             PUPS_GET_PARENT_LEVELS = builder
                     .comment("When enabled, puppies get some levels from their parents. When disabled, puppies start at 0 points.")
                     .translation("doggytalents.config.enable_pup_get_parent_levels")
