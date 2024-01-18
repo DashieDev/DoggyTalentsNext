@@ -3873,7 +3873,6 @@ public class Dog extends AbstractDog {
         return this.objects.containsKey(key.getIndex());
     }
 
-    @Override
     public void untame() {
         this.navigation.stop();
         this.clearTriggerableAction();
