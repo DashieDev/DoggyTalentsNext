@@ -1042,3 +1042,16 @@ FIRST UPDATE OF 2024!!! 🎊🎊🎊
 - Fix Tim Burtons trio eye/nose visual bug.
 - HOTFIX: Dog pathfinding interupted when a block change happens in the world.
 - HOTFIX (1.18.2/1.19.2 only): Normal Points reset after reload the world.
+
+**1.18.6 - 18th January 2024**
+
+FIRST HOTFIX OF THE YEAR 🔥
+===
++ Added Recipes for the newly added Hats and Dog Plushie.
+===
+#Buff Sausage + Miso Soup
+#Torch Dogs' Torches unlit and slower when incapacitated.
+#Update Configs, remove redundant options and paraphrase existing one.
+===
+- Fixed minor typos, gramatical errors.
+*HOTFIX: Silly mistake causing third-party helmet to not render prop
