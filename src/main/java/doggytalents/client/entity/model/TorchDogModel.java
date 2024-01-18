@@ -62,7 +62,8 @@ public class TorchDogModel extends AnimatedSyncedAccessoryModel {
             float headPitch) {
         var animLenMillis = (long)TORCH_SPINNA.lengthInSeconds() * 1000;
         var offset = (entityIn.getId() % 6) * (20 * 0.5);
-        var timeLine = (offset + ageInTicks) % Util.millisToTickMayWithPartial(animLenMillis);
+        var timeLine = (offset + (entityIn.isDefeated() ? 0.25f : 1f)*ageInTicks) 
+            % Util.millisToTickMayWithPartial(animLenMillis);
         var timeLineMillis = Util.tickMayWithPartialToMillis(timeLine);
         if (entityIn.getId() % 2 == 0) {
             timeLineMillis = animLenMillis - timeLineMillis;
