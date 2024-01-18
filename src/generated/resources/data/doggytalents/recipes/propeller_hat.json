@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bamboo"
+    },
+    "G": {
+      "item": "minecraft:green_wool"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "item": "minecraft:blue_wool"
+    },
+    "R": {
+      "item": "minecraft:red_wool"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
+    },
+    "Y": {
+      "item": "minecraft:yellow_wool"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "RIL",
+    "GTY"
+  ],
+  "result": {
+    "item": "doggytalents:propeller_hat"
+  },
+  "show_notification": true
+}
