@@ -843,7 +843,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.FLATCAP.get(), 1)
-            .pattern(" C")
+            .pattern("  C")
             .pattern("CTC")
             .define('C', Items.WHITE_CARPET)
             .define('T', DoggyItems.TRAINING_TREAT.get())
@@ -865,7 +865,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_PLUSHIE_TOY.get(), 1)
-            .pattern("WW")
+            .pattern("WW ")
             .pattern("SCG")
             .pattern("WTW")
             .define('G', Items.LIGHT_GRAY_WOOL)
