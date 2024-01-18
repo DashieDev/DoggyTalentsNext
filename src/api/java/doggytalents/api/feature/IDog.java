@@ -16,8 +16,6 @@ public interface IDog {
 
     public AbstractDog getDog();
 
-    public void untame();
-
     public boolean canInteract(LivingEntity playerIn);
 
     public EnumMode getMode();
