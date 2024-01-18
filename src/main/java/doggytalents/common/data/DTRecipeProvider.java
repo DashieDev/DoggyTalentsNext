@@ -816,12 +816,14 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', ItemTags.WOOL_CARPETS)
             .unlockedBy("has_lead", has(Items.LEAD))
             .save(consumer);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOGGY_CONTACTS.get(), 1)
             .pattern("GKG")
             .define('G', Items.GLASS_PANE)
             .define('K', DoggyItems.SAKE.get())
             .unlockedBy("has_dtn_koji", has(DoggyItems.KOJI.get()))
             .save(consumer);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.SCENT_TREAT.get(), 1)
             .pattern(" W ")
             .pattern("WTW")
@@ -829,6 +831,51 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('W', ItemTags.WOOL)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_dtn_training_treat", has(DoggyItems.TRAINING_TREAT.get()))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.FEDORA.get(), 1)
+            .pattern(" BW")
+            .pattern("WCW")
+            .pattern(" T ")
+            .define('B', Items.BLACK_WOOL)
+            .define('W', Items.BROWN_WOOL)
+            .define('C', Items.LEATHER_HELMET)
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.FLATCAP.get(), 1)
+            .pattern(" C")
+            .pattern("CTC")
+            .define('C', Items.WHITE_CARPET)
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .unlockedBy("has_white_carpet", has(Items.WHITE_CARPET))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.PROPELLER_HAT.get(), 1)
+            .pattern("BBB")
+            .pattern("RIL")
+            .pattern("GTY")
+            .define('B', Items.BAMBOO)
+            .define('G', Items.GREEN_WOOL)
+            .define('L', Items.BLUE_WOOL)
+            .define('R', Items.RED_WOOL)
+            .define('Y', Items.YELLOW_WOOL)
+            .define('I', Items.IRON_INGOT)
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_PLUSHIE_TOY.get(), 1)
+            .pattern("WW")
+            .pattern("SCG")
+            .pattern("WTW")
+            .define('G', Items.LIGHT_GRAY_WOOL)
+            .define('W', Items.WHITE_WOOL)
+            .define('S', Items.STRING)
+            .define('C', DoggyItems.WOOL_COLLAR.get())
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .unlockedBy("has_white_wool", has(Items.WHITE_WOOL))
             .save(consumer);
     }
 
