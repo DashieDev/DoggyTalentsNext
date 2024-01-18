@@ -84,6 +84,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.IntValue MAX_ANIMATION_LATENCY_ALLOWED;
         public ForgeConfigSpec.BooleanValue USE_LEGACY_DOG_ARMOR_RENDER;
         public ForgeConfigSpec.BooleanValue USE_PLAYER_HELMET_MODEL_BY_DEFAULT;
+        public ForgeConfigSpec.BooleanValue USE_THIRD_PARTY_PLAYER_HELMET_MODEL;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -200,6 +201,12 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("render it on the Dog's head. Enable this to make DTN reuse the player's Helmet Model instead.")
                 .translation("doggytalents.config.client.use_player_helmet_model_by_default")
                 .define("use_player_helmet_model_by_default", false);
+            USE_THIRD_PARTY_PLAYER_HELMET_MODEL = builder
+                .comment("By default, DTN will try querying models from third parties designed for the player when")
+                .comment("rendering helmet on the Dog. Disable this to force DTN to use either vanilla's player model or")
+                .comment("DTN provided model designed for Dogs (specified by the below option).")
+                .translation("doggytalents.config.client.use_third_party_player_helmet_model")
+                .define("use_third_party_player_helmet_model", false);
             builder.pop();
         }
 
