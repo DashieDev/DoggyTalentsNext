@@ -17,6 +17,10 @@ public class DogArmorHelmetAltModel {
         this.helmetModel.setAllVisible(false);
         this.helmetModel.head.visible = true;
         this.helmetModel.young = false;
+        
+        this.dummyModel.setAllVisible(false);
+        this.dummyModel.head.visible = true;
+        this.dummyModel.young = false;
     }
 
     public Model getModel() {
