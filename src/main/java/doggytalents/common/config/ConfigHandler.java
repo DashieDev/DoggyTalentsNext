@@ -65,8 +65,6 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue KAMI_PARTICLES;
         public ForgeConfigSpec.BooleanValue RENDER_CHEST;
         public ForgeConfigSpec.BooleanValue USE_DT_TEXTURES;
-        public ForgeConfigSpec.BooleanValue RENDER_SADDLE;
-        public ForgeConfigSpec.BooleanValue RENDER_WINGS;
         public ForgeConfigSpec.BooleanValue RENDER_INCAPACITATED_TEXTURE;
         public ForgeConfigSpec.BooleanValue RENDER_HEALTH_IN_NAME;
         public ForgeConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
@@ -97,21 +95,13 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                     .translation("doggytalents.config.client.enable_kami_particles")
                     .define("enable_kami_particles", false);
             RENDER_CHEST = builder
-                    .comment("When enabled, dogs with points in Pack Puppy will have chests on their side.")
+                    .comment("Disable this if you want to force all PackPuppy Dog to not render their Chest.")
                     .translation("doggytalents.config.client.render_chest")
                     .define("render_chest", true);
             USE_DT_TEXTURES = builder
-                    .comment("If disabled will use the default Minecraft wolf skin for all dog textures.")
-                    .translation("doggytalents.config.client.enable_dt_textures")
-                    .define("enable_dt_textures", true);
-            RENDER_SADDLE = builder
-                    .comment("When enabled, dogs with points in Wolf Mount will have a saddle on.")
-                    .translation("doggytalents.config.client.render_saddle")
-                    .define("render_saddle", true);
-            RENDER_WINGS = builder
-                    .comment("When enabled, Dogs will have wings when at level 5 pillow paw.")
-                    .translation("doggytalents.config.client.render_wings")
-                    .define("render_wings", false);
+                    .comment("Disable this if you prefer to have The Classical Skin rendered on all dog regardless.")
+                    .translation("doggytalents.config.client.always_render_classical_skin")
+                    .define("always_render_classical_skin", true);
             RENDER_INCAPACITATED_TEXTURE = builder
                     .comment("When enabled, Dogs will show injured texture while incapacitated.")
                     .translation("doggytalents.config.client.render_incapacitated_overlay")
@@ -227,9 +217,6 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue STARTING_ITEMS;
         public ForgeConfigSpec.BooleanValue DOG_GENDER;
         public ForgeConfigSpec.BooleanValue PUPS_GET_PARENT_LEVELS;
-        public ForgeConfigSpec.IntValue TIME_TO_MATURE;
-        public ForgeConfigSpec.BooleanValue DOG_WHINE_WHEN_HUNGER_LOW;
-        public ForgeConfigSpec.BooleanValue EAT_FOOD_ON_FLOOR;
         public ForgeConfigSpec.BooleanValue IMMORTAL_DOGS;
         public ForgeConfigSpec.BooleanValue PLAY_TAG_WITH_DOG;
         public ForgeConfigSpec.BooleanValue DOG_GREET_OWNER;
@@ -261,33 +248,28 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
             builder.push("Dog Constants");
 
             DISABLE_HUNGER = builder
-                    .comment("Disable hunger mode for the dog")
+                    .comment("By default, Dogs can starve to Incapacitated if are not fed properly.")
+                    .comment("Disable this to prevent this behaviour. Do note that you can still feed")
+                    .comment("your Dog to recover health.")
                     .translation("doggytalents.config.dog.disable_hunger")
                     .define("disable_hunger", false);
             STARTING_ITEMS = builder
-                    .comment("When enabled you will spawn with a Starter Bundle.")
-                    .translation("doggytalents.config.enable_starting_items")
-                    .define("enable_starting_items", false);
+                    .comment("When enabled, DTN will provide new players of this world")
+                    .comment("(relative to the point that this option is first enabled on this world)")
+                    .comment("a Starter Bundle which contains certain key items which assist you in starting")
+                    .comment("with DTN.")
+                    .translation("doggytalents.config.enable_starter_bundle")
+                    .define("enable_starter_bundle", false);
             DOG_GENDER = builder
-                    .comment("When enabled, dogs will be randomly assigned genders and will only mate and produce children with the opposite gender.")
-                    .translation("doggytalents.config.enable_gender")
-                    .define("enable_gender", true);
+                    .comment("By default, each Dog will be one of the Biological Genders. This, like how Biological Genders")
+                    .comment("work, add restrictions how Dogs can breed. Therefore, only Dogs whose gender is Biologically Opposed")
+                    .comment("can mate with each other. Set this to false to disable this behaviour.")
+                    .translation("doggytalents.config.dog_has_gender")
+                    .define("dog_has_gender", true);
             PUPS_GET_PARENT_LEVELS = builder
                     .comment("When enabled, puppies get some levels from their parents. When disabled, puppies start at 0 points.")
                     .translation("doggytalents.config.enable_pup_get_parent_levels")
                     .define("enable_pup_get_parent_levels", false);
-            TIME_TO_MATURE = builder
-                    .comment("The time in ticks it takes for a baby dog to become an adult, default 48000 (2 Minecraft days) and minimum 0")
-                    .translation("doggytalents.config.dog.time_to_mature")
-                    .defineInRange("time_to_mature", 48000, 0, Integer.MAX_VALUE);
-            DOG_WHINE_WHEN_HUNGER_LOW = builder
-                    .comment("Determines if dogs should whine when hunger reaches below 20 NP.")
-                    .translation("doggytalents.config.whine_when_hungry")
-                    .define("whine_when_hungry", true);
-            EAT_FOOD_ON_FLOOR = builder
-                    .comment("When enabled, dogs will path and eat edible items in the world.")
-                    .translation("doggytalents.config.eat_food_on_floor")
-                    .define("eat_food_on_floor", true);
             IMMORTAL_DOGS = builder
                 .comment("When enabled, dogs cannot be killed by any means (except creative-mode-bypass damage, in that case, you can still respawn your dog using his linked bed or commands).")
                 .comment("Instead, when his health reaches Zero, he will go into Incapacitated Mode.")
