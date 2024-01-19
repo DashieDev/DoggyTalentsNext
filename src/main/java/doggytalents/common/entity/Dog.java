@@ -47,6 +47,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.ParticlePackets.CritEmitterPacket;
 import doggytalents.common.network.packet.data.DogMountData;
+import doggytalents.common.network.packet.data.DogShakingData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.util.*;
@@ -505,12 +506,30 @@ public class Dog extends AbstractDog {
 
     @Override
     public void handleEntityEvent(byte id) {
-        if (id == doggytalents.common.lib.Constants.EntityState.WOLF_START_SHAKING) {
+        // if (id == doggytalents.common.lib.Constants.EntityState.WOLF_START_SHAKING) {
+        //     this.startShaking();
+        // } else if (id == doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING) {
+        //     this.finishShaking();
+        // } else {
+        //     super.handleEntityEvent(id);
+        // }
+        super.handleEntityEvent(id);
+    }
+
+    public void handleDogShakingUpdate(DogShakingData.State state) {
+        switch (state) {
+        case SHAKE_WATER:
             this.startShaking();
-        } else if (id == doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING) {
+            break;
+        case SHAKE_LAVA:
+            this.startShakingLava();
+            break;
+        case STOP:
             this.finishShaking();
-        } else {
-            super.handleEntityEvent(id);
+            break;
+        default:
+            this.finishShaking();
+            break;
         }
     }
 
@@ -749,7 +768,7 @@ public class Dog extends AbstractDog {
             if (this.isShaking)
             if (!this.canDogDoShakeAnim() || currentlyInWater) {
                 this.finishShaking();
-                this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING);
+                ParticlePackets.DogShakingPacket.sendDogShakingPacket(getDog(), DogShakingData.State.STOP);
                 return;
             }
         }
@@ -2297,11 +2316,11 @@ public class Dog extends AbstractDog {
         if (this.level().isClientSide) return;
         if (shakeFire) {
             this.startShakingLava();
-            ParticlePackets.DogStartShakingLavaPacket.sendDogStartShakingLavaPacketToNearByClients(this);
+            ParticlePackets.DogShakingPacket.sendDogShakingPacket(this, DogShakingData.State.SHAKE_LAVA);
             return;
         }
         this.startShaking();
-        this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_START_SHAKING);
+        ParticlePackets.DogShakingPacket.sendDogShakingPacket(this, DogShakingData.State.SHAKE_WATER);
     }
 
     private void finishShaking() {
