@@ -376,6 +376,7 @@ public class PackPuppyTalent extends TalentInstance {
         private final int stopDist = 2;
         private boolean enoughHealingFood = false;
         private int feedCooldown = 0;
+        private boolean failedEating = false;
 
         public DogEatFromChestDogAction(Dog dog, Dog target) {
             super(dog, false, false);
@@ -395,6 +396,11 @@ public class PackPuppyTalent extends TalentInstance {
                 return;
             }
             if (enoughEating()) {
+                setState(ActionState.FINISHED);
+                return;
+            }
+
+            if (failedEating) {
                 setState(ActionState.FINISHED);
                 return;
             }
@@ -445,9 +451,9 @@ public class PackPuppyTalent extends TalentInstance {
                 this.dog.isDogLowHealth() && !dog.hasEffect(MobEffects.REGENERATION);
             if (!enoughHealingFood && dogNeedsHealing) {
                 enoughHealingFood = true;
-                inst.tryFeed(dog, target, true);
+                failedEating = !inst.tryFeed(dog, target, true);
             } else
-                inst.tryFeed(dog, target, false);
+                failedEating = !inst.tryFeed(dog, target, false);
             feedCooldown = dog.getRandom().nextInt(11);
         }
 
@@ -459,7 +465,7 @@ public class PackPuppyTalent extends TalentInstance {
             var inst = getInstanceFromDog(target);
             if (inst == null)
                 return false;
-            if (!inst.hasFood(dog))
+            if (!inst.hasFood(target, dog))
                 return false;
             return true;
         }
