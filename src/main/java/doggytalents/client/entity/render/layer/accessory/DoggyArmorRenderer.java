@@ -18,7 +18,6 @@ import doggytalents.client.entity.render.layer.DogArmorHelmetAltModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.HumanoidArmorModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -37,8 +36,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.armortrim.ArmorTrim;
-
 public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
 
     private DogArmorModel model;
@@ -48,7 +45,7 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
     private boolean initAltModel = false;    
 
     private DogArmorHelmetAltModel helmetAltModel;
-    private final TextureAtlas dogArmorTrimAtlas;
+    //private final TextureAtlas dogArmorTrimAtlas;
 
     public DoggyArmorRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);
@@ -59,7 +56,7 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
         this.model = newModel;
 
         this.helmetAltModel = new DogArmorHelmetAltModel(ctx);
-        this.dogArmorTrimAtlas = ctx.getModelManager().getAtlas(Sheets.ARMOR_TRIMS_SHEET);
+        //this.dogArmorTrimAtlas = ctx.getModelManager().getAtlas(Sheets.ARMOR_TRIMS_SHEET);
     }
 
     @Override
@@ -135,10 +132,10 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
 
         renderArmorCutout(this.model, DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack), stack, buffer, light, dog, 1.0F, 1.0F, 1.0F);
         
-        var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack);
-        if (trim.isPresent()) {
-            renderTrim(armor.getMaterial(), stack, buffer, light, trim.get(), this.model);
-        }
+        // var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack);
+        // if (trim.isPresent()) {
+        //     renderTrim(armor.getMaterial(), stack, buffer, light, trim.get(), this.model);
+        // }
 
         if (itemStack.hasFoil())
             renderGlint(stack, buffer, light, this.model);
@@ -165,10 +162,10 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
             stack1.translate(0, 0.15f, 0.07);
             renderAlternativeModel(model, dog, stack1, buffer, light, itemStack);
 
-            var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack);
-            if (trim.isPresent()) {
-                renderTrim(armor.getMaterial(), stack, buffer, light, trim.get(), model);
-            }
+            // var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack);
+            // if (trim.isPresent()) {
+            //     renderTrim(armor.getMaterial(), stack, buffer, light, trim.get(), model);
+            // }
 
             if (itemStack.hasFoil())
                 renderGlint(stack, buffer, light, model);
@@ -188,11 +185,11 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
         model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
     }
 
-    private void renderTrim(ArmorMaterial material, PoseStack stack, MultiBufferSource buffer, int light, ArmorTrim trim, Model model) {
-        var textureatlassprite = this.dogArmorTrimAtlas.getSprite(trim.outerTexture(material));
-        var vertexconsumer = textureatlassprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet()));
-        model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-    }
+    // private void renderTrim(ArmorMaterial material, PoseStack stack, MultiBufferSource buffer, int light, ArmorTrim trim, Model model) {
+    //     var textureatlassprite = this.dogArmorTrimAtlas.getSprite(trim.outerTexture(material));
+    //     var vertexconsumer = textureatlassprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet()));
+    //     model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+    // }
 
     private void renderGlint(PoseStack stack, MultiBufferSource buffer, int light, Model model) {
         model.renderToBuffer(stack, buffer.getBuffer(RenderType.armorEntityGlint()), light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

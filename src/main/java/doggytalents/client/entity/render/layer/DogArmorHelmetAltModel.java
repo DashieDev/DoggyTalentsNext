@@ -1,19 +1,19 @@
 package doggytalents.client.entity.render.layer;
 
 import doggytalents.common.entity.Dog;
-import net.minecraft.client.model.HumanoidArmorModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 public class DogArmorHelmetAltModel {
  
-    private HumanoidArmorModel<Dog> helmetModel;
-    private HumanoidArmorModel<Dog> dummyModel;
+    private HumanoidModel<Dog> helmetModel;
+    private HumanoidModel<Dog> dummyModel;
 
     public DogArmorHelmetAltModel(EntityRendererProvider.Context ctx) {
-        this.helmetModel = new HumanoidArmorModel<>(ctx.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR));
-        this.dummyModel = new HumanoidArmorModel<>(ctx.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR));
+        this.helmetModel = new HumanoidModel<>(ctx.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR));
+        this.dummyModel = new HumanoidModel<>(ctx.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR));
         this.helmetModel.setAllVisible(false);
         this.helmetModel.head.visible = true;
         this.helmetModel.young = false;
@@ -27,7 +27,7 @@ public class DogArmorHelmetAltModel {
         return helmetModel;
     }
 
-    public HumanoidArmorModel<?> getDummy() {
+    public HumanoidModel<?> getDummy() {
         return dummyModel;
     }
 

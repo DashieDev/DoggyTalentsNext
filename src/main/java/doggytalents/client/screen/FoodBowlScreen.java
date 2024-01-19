@@ -24,7 +24,7 @@ public class FoodBowlScreen extends AbstractContainerScreen<FoodBowlContainer> {
         this.renderBackground(stack);
         super.render(stack, mouseX, mouseY, partialTicks);
         this.renderTooltip(stack, mouseX, mouseY);
-        renderDogProTip(graphics);
+        renderDogProTip(stack);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class FoodBowlScreen extends AbstractContainerScreen<FoodBowlContainer> {
         this.blit(stack, x, y, 0, 0, this.imageWidth, this.imageHeight);
     }
 
-    private void renderDogProTip(GuiGraphics graphics) {
+    private void renderDogProTip(PoseStack stack) {
         int mX = this.width / 2;
         var title = Component.translatable("block.doggytalents.food_bowl.pro_tip.title")
             .withStyle(Style.EMPTY.withBold(true));
@@ -51,11 +51,11 @@ public class FoodBowlScreen extends AbstractContainerScreen<FoodBowlContainer> {
         var desc_lines = font.split(desc, max_width);
         int tX = mX - font.width(title)/2;
         int tY = this.height/2 + 70;
-        graphics.drawString(font, title, tX, tY, 0xffffffff);
+        font.draw(stack, title, tX, tY, 0xffffffff);
         tY += font.lineHeight + 2;
         for (var line : desc_lines) {
             tX = mX - font.width(line)/2;
-            graphics.drawString(font, line, tX, tY, 0xffffffff);
+            font.draw(stack, line, tX, tY, 0xffffffff);
             tY += font.lineHeight + 2;
         }
     }

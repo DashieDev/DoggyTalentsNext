@@ -1,7 +1,7 @@
 package doggytalents.client.entity.render.misc;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.misc.DogPlushieModel;
@@ -43,7 +43,7 @@ public class DogPlushieRenderer extends EntityRenderer<DogPlushie> {
         stack.pushPose();
         stack.scale(-0.6F, -0.6F, 0.6F);
         stack.translate(0.0F, -1.05F, 0.0F);
-        stack.mulPose(Axis.YP.rotationDegrees(Mth.wrapDegrees(piano.getYRot())));
+        stack.mulPose(Vector3f.YP.rotationDegrees(Mth.wrapDegrees(piano.getYRot())));
         var consumer = bufferSource.getBuffer(getRenderType(piano, false));
         this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         int color = piano.getCollarColor();

@@ -69,14 +69,14 @@ public class ScrollBar extends AbstractWidget {
             this.getWidth() : this.getHeight();
         int barThickAfterAnim = BASE_THICK + Mth.ceil(inflateAnimProgress*(maxBarThick));
         if (this.dir == Direction.VERTICAL) 
-            graphics.fill(this.getX() + this.width - barThickAfterAnim, this.getY(), this.getX()+this.width, this.getY()+this.height, 0x87363636);
+            fill(stack, this.getX() + this.width - barThickAfterAnim, this.getY(), this.getX()+this.width, this.getY()+this.height, 0x87363636);
         else
-            graphics.fill( this.getX(), this.getY() + this.height - barThickAfterAnim, this.getX()+this.width, this.getY()+this.height, 0x87363636);
+            fill(stack,  this.getX(), this.getY() + this.height - barThickAfterAnim, this.getX()+this.width, this.getY()+this.height, 0x87363636);
         if (this.dir == Direction.VERTICAL) {
-            graphics.fill(this.getX() + this.getWidth() - barThickAfterAnim, this.getY() + barOffset, 
+            fill(stack, this.getX() + this.getWidth() - barThickAfterAnim, this.getY() + barOffset, 
                 this.getX()+this.getWidth(), this.getY() + barOffset+this.barSize, 0xffffffff);
         } else {
-            graphics.fill(this.getX() + barOffset, this.getY() + this.getHeight() - barThickAfterAnim, 
+            fill(stack, this.getX() + barOffset, this.getY() + this.getHeight() - barThickAfterAnim, 
                 this.getX() + barOffset + this.barSize, this.getY() + this.getHeight(), 0xffffffff);
         }
     }

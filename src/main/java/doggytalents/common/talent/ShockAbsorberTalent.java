@@ -4,11 +4,9 @@ package doggytalents.common.talent;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class ShockAbsorberTalent extends TalentInstance {
@@ -57,9 +55,9 @@ public class ShockAbsorberTalent extends TalentInstance {
     }
 
     private boolean isExplosionSource(DamageSource source) {
-        if (source.is(DamageTypeTags.IS_EXPLOSION))
+        if (source.isExplosion())
             return true;
-        if (source.is(DamageTypes.SONIC_BOOM))
+        if ("sonic_boom".equals(source.msgId))
             return true;
         return false;
     }

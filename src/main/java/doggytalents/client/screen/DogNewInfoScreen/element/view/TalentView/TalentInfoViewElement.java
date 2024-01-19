@@ -376,7 +376,7 @@ public class TalentInfoViewElement extends AbstractElement {
                         }     
                     ) {
                         @Override
-                        public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                        public void render(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
                             super.render(graphics, mouseX, mouseY, pTicks);
                             if (!this.isHovered) return;
                             var c1 = Component.translatable("talent.doggytalents.pack_puppy.collect_kill_loot.desc");
@@ -476,9 +476,9 @@ public class TalentInfoViewElement extends AbstractElement {
 
         this.addChildren(trainButton);
 
-        var pointsLeftStr = new OneLineLimitedTextArea(0, 0, 75, ComponentUtil.translatable("doggui.pointsleft"));
-        pointsLeftStr.setX(this.getRealX() + PADDING_LEFT + 40);
-        pointsLeftStr.setY(this.getRealY() + this.getSizeY() - 45);
+        var pointsLeftStr = new OneLineLimitedTextArea(0, 0, 75, Component.translatable("doggui.pointsleft"));
+        pointsLeftStr.x = (this.getRealX() + PADDING_LEFT + 40);
+        pointsLeftStr.y = (this.getRealY() + this.getSizeY() - 45);
         this.addChildren(pointsLeftStr);
 
     }

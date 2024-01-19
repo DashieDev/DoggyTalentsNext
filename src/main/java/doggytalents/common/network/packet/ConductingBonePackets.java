@@ -56,7 +56,7 @@ public class ConductingBonePackets {
                         DogLocationStorage.get(sender.level);
                     var dogLsStream = ConfigHandler.SERVER.CONDUCTING_BONE_CROSS_ORIGIN.get() ?
                         storage.getDogs(sender)
-                        : storage.getDogs(sender, sender.level().dimension());
+                        : storage.getDogs(sender, sender.level.dimension());
                     var dogLs = 
                         dogLsStream
                         .map(dogLoc -> Pair.of(dogLoc.getDogId(), dogLoc.getDogName()))

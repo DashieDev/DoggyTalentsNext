@@ -527,7 +527,7 @@ public class PackPuppyTalent extends TalentInstance {
         var killer = source.getEntity();
         if (killer == null)
             return;
-        if (killer.level().isClientSide)
+        if (killer.level.isClientSide)
             return;
 
         var drops = event.getDrops();
@@ -551,7 +551,7 @@ public class PackPuppyTalent extends TalentInstance {
     }
 
     private static Optional<Dog> findNearestChestDogToNotify(LivingEntity killer) {
-        var dogs = killer.level().getEntitiesOfClass(
+        var dogs = killer.level.getEntitiesOfClass(
             Dog.class, 
             killer.getBoundingBox().inflate(NOTIFY_RADIUS, 3, NOTIFY_RADIUS),
             filter_dog -> isValidItemCollector(filter_dog, killer)

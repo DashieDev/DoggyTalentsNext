@@ -120,7 +120,7 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     private float getFireDamageReduced(DamageSource source, float amount) {
-        if (source.is(DamageTypes.LAVA)) {
+        if (source == DamageSource.LAVA) {
             if (this.level() >= 4)
                 return 1;
             if (this.level() >= 3)
@@ -142,10 +142,10 @@ public class HellHoundTalent extends TalentInstance {
         if (this.level() >= 4) {
             return getMaxAccumulate() * 20;
         }
-        if (source.is(DamageTypes.LAVA)) {
+        if (source == DamageSource.LAVA) {
             return getMaxAccumulate()*10;
         }
-        if (source.is(DamageTypes.IN_FIRE)) {
+        if (source == DamageSource.IN_FIRE) {
             return getMaxAccumulate() * 15;
         }
         return getMaxAccumulate() * 20;
@@ -160,10 +160,10 @@ public class HellHoundTalent extends TalentInstance {
 
     @Override
     public InteractionResult stillIdleOrSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
-        if (this.level() >= 4 && source.is(DamageTypeTags.IS_FIRE)) {
+        if (this.level() >= 4 && source.isFire()) {
             return InteractionResult.SUCCESS;
         }
-        if (source.is(DamageTypes.ON_FIRE))
+        if (source == DamageSource.ON_FIRE)
             return InteractionResult.SUCCESS;
         return InteractionResult.PASS;    
     }

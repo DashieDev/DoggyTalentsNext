@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import doggytalents.DoggyItemGroups;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -23,7 +24,7 @@ public class ScentTreatItem extends Item {
     public static String SCENT_BLOCK_ID = "DTN_scented_block_id";
     
     public ScentTreatItem() {
-        super((new Properties().stacksTo(1)));
+        super((new Properties().stacksTo(1)).tab(DoggyItemGroups.GENERAL));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package doggytalents.common.item;
 
+import doggytalents.DoggyItemGroups;
 import doggytalents.DoggyItems;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.Level;
 public class DroolScentTreatItem extends Item {
 
     public DroolScentTreatItem() {
-        super(new Properties().stacksTo(1));
+        super(new Properties().stacksTo(1).tab(DoggyItemGroups.GENERAL));
     }
 
     @Override
