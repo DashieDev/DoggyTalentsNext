@@ -29,7 +29,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -445,7 +445,7 @@ public class EventHandler {
             return;
         
         var source = event.getSource();
-        if (!source.is(DamageTypes.IN_WALL))
+        if (source != DamageSource.IN_WALL)
             return;
         
         var vehicle = entity.getVehicle();

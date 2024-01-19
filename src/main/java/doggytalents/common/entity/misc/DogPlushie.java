@@ -3,6 +3,8 @@ package doggytalents.common.entity.misc;
 import doggytalents.DoggyItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -84,11 +86,6 @@ public class DogPlushie extends Entity {
     }
 
     @Override
-    public boolean isEffectiveAi() {
-        return false;
-    }
-
-    @Override
     public boolean isPickable() {
         return true;
     }
@@ -134,6 +131,15 @@ public class DogPlushie extends Entity {
         var list = this.level().getEntities(EntityTypeTest.forClass(DogPlushie.class), this.getBoundingBox(), e -> true);
         for (var e : list)
             e.push(this);
+    }
+
+    @Override
+    public Packet<?> getAddEntityPacket() {
+        return new ClientboundAddEntityPacket(this);
+    }
+
+    public Level level() {
+        return this.level;
     }
 
 }

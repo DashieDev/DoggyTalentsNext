@@ -14,12 +14,12 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
@@ -68,10 +68,10 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
         if (item instanceof SwordItem || item instanceof DiggerItem) {
             stack.translate(0.25, 0, 0);
         }
-        stack.mulPose(Axis.YP.rotationDegrees(45.0F));
-        stack.mulPose(Axis.XP.rotationDegrees(90.0F));
+        stack.mulPose(Vector3f.YP.rotationDegrees(45.0F));
+        stack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
 
-        this.itemInHandRenderer.renderItem(dog, itemStack, ItemDisplayContext.GROUND, false, stack, bufferSource, packedLight);
+        this.itemInHandRenderer.renderItem(dog, itemStack, TransformType.GROUND, false, stack, bufferSource, packedLight);
         stack.popPose();
     }
 }

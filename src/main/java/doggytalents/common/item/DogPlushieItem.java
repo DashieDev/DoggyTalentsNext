@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.DoggyItemGroups;
 import doggytalents.DoggyItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +25,7 @@ import net.minecraft.world.level.Level;
 public class DogPlushieItem extends Item implements IDyeableArmorItem {
 
     public DogPlushieItem() {
-        super(new Properties().stacksTo(1));
+        super(new Properties().stacksTo(1).tab(DoggyItemGroups.GENERAL));
     }
 
     @Override
@@ -45,7 +46,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem {
             spawnAt = pos.relative(face);
         }
         var plush = DoggyEntityTypes.DOG_PLUSHIE_TOY.get().create(
-            (ServerLevel) level, null, null, spawnAt, 
+            (ServerLevel) level, null, null, null, spawnAt, 
             MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 

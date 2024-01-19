@@ -20,6 +20,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -227,7 +228,7 @@ public class GatePasserTalent extends TalentInstance {
 
     private boolean isValidDoorBlock(Block block) {
         return (block instanceof DoorBlock door
-                && door.type().canOpenByHand()
+                && block.builtInRegistryHolder().is(BlockTags.WOODEN_DOORS)
             )
             || block instanceof FenceGateBlock;
     }
@@ -265,7 +266,7 @@ public class GatePasserTalent extends TalentInstance {
 
         if (hasUpdate) {
             boolean still_open = state.getValue(FenceGateBlock.OPEN);
-            level.playSound(dog, pos, still_open ? SoundEvents.FENCE_GATE_OPEN : SoundEvents.FENCE_GATE_CLOSE, 
+            level.playSound(null, pos, still_open ? SoundEvents.FENCE_GATE_OPEN : SoundEvents.FENCE_GATE_CLOSE, 
                 SoundSource.BLOCKS, 1.0F, dog.getRandom().nextFloat() * 0.1F + 0.9F);
             level.gameEvent(dog, still_open ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
         }

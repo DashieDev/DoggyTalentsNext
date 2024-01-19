@@ -58,6 +58,4 @@ public class OneLineLimitedTextArea extends AbstractWidget {
     @Override
     public void updateNarration(NarrationElementOutput p_169152_) {
     }
-    
-
 }

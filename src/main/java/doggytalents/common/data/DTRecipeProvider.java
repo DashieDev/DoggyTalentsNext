@@ -815,14 +815,14 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_lead", has(Items.LEAD))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOGGY_CONTACTS.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.DOGGY_CONTACTS.get(), 1)
             .pattern("GKG")
             .define('G', Items.GLASS_PANE)
             .define('K', DoggyItems.SAKE.get())
             .unlockedBy("has_dtn_koji", has(DoggyItems.KOJI.get()))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.SCENT_TREAT.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.SCENT_TREAT.get(), 1)
             .pattern(" W ")
             .pattern("WTW")
             .pattern(" W ")
@@ -831,7 +831,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_dtn_training_treat", has(DoggyItems.TRAINING_TREAT.get()))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.FEDORA.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.FEDORA.get(), 1)
             .pattern(" BW")
             .pattern("WCW")
             .pattern(" T ")
@@ -842,7 +842,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.FLATCAP.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.FLATCAP.get(), 1)
             .pattern("  C")
             .pattern("CTC")
             .define('C', Items.WHITE_CARPET)
@@ -850,7 +850,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_white_carpet", has(Items.WHITE_CARPET))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.PROPELLER_HAT.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.PROPELLER_HAT.get(), 1)
             .pattern("BBB")
             .pattern("RIL")
             .pattern("GTY")
@@ -864,7 +864,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_PLUSHIE_TOY.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.DOG_PLUSHIE_TOY.get(), 1)
             .pattern("WW ")
             .pattern("SCG")
             .pattern("WTW")
