@@ -86,7 +86,7 @@ public class EventHandler {
         unrideAllDogOnPlayer(event);
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
+    @SubscribeEvent
     public void onWolfRightClickWithTreat(final PlayerInteractEvent.EntityInteract event) {
         var level = event.getLevel();
         var stack = event.getItemStack();
