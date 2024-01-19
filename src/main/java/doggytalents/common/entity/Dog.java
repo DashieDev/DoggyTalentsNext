@@ -746,12 +746,13 @@ public class Dog extends AbstractDog {
     }
 
     private void updateClassicalShakeAnim(boolean currentlyInWater) {
-        if (!this.canDogDoShakeAnim() || currentlyInWater) {
-            if (this.isShaking && !this.level().isClientSide) {
+        if (!this.level().isClientSide) {
+            if (this.isShaking)
+            if (!this.canDogDoShakeAnim() || currentlyInWater) {
                 this.finishShaking();
                 this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING);
+                return;
             }
-            return;
         }
         if (!this.isShaking)
             return;
