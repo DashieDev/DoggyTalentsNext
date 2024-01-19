@@ -1058,3 +1058,13 @@ FIRST HOTFIX OF THE YEAR 🔥
 ===
 - Fixed minor typos, gramatical errors.
 *HOTFIX: Silly mistake causing third-party helmet to not render prop
+
+**1.18.7 - 20th January 2024**
+*HOTFIX: Disable Gender Option being Inverted without updating in the code.
+Causing Unwanted Gender Disabling.
+*HOTFIX: Stoopid PackPuppy Bug that caused PackPuppy to not eat from chest 
+or offer when there is an eligible food item in the slot located in the
+left top corner of the PackPuppy inventory screen, in other words, slot 0.
+And also causing other hungry dogs to keep following it without eating.
+*HOTFIX: Potential shake animation glitch.
+#Tune Lava Shaking.
