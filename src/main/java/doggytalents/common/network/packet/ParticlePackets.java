@@ -51,9 +51,7 @@ public class ParticlePackets {
         }
 
         public static void sendCritEmitterPacketToNearClients(Entity e) {
-            final int RADIUS = 64;
-            PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(e.getX(), e.getY(), e.getZ(), RADIUS, e.level().dimension());
-            PacketHandler.send(PacketDistributor.NEAR.with(tarp), new CritEmitterData(e.getId()));
+            PacketHandler.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> e), new CritEmitterData(e.getId()));
         }
 
     }
@@ -117,9 +115,7 @@ public class ParticlePackets {
         }
 
         public static void sendDogEatingParticlePacketToNearby(AbstractDog dog, ItemStack food) {
-            final int RADIUS = 64;
-            PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(dog.getX(), dog.getY(), dog.getZ(), RADIUS, dog.level().dimension());
-            PacketHandler.send(PacketDistributor.NEAR.with(tarp), new DogEatingParticleData(dog.getId(), food));
+            PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> dog), new DogEatingParticleData(dog.getId(), food));
         }
         
     }
@@ -156,9 +152,7 @@ public class ParticlePackets {
         }
 
         public static void sendDogStartShakingLavaPacketToNearByClients(AbstractDog dog) {
-            final int RADIUS = 64;
-            PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(dog.getX(), dog.getY(), dog.getZ(), RADIUS, dog.level().dimension());
-            PacketHandler.send(PacketDistributor.NEAR.with(tarp), new DogStartShakingLavaData(dog.getId()));
+            PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> dog), new DogStartShakingLavaData(dog.getId()));
         }
 
     }
