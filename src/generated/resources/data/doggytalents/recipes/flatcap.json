@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "minecraft:white_carpet"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
+    }
+  },
+  "pattern": [
+    "  C",
+    "CTC"
+  ],
+  "result": {
+    "item": "doggytalents:flatcap"
+  }
+}

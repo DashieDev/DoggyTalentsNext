@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:black_wool"
+    },
+    "C": {
+      "item": "minecraft:leather_helmet"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
+    },
+    "W": {
+      "item": "minecraft:brown_wool"
+    }
+  },
+  "pattern": [
+    " BW",
+    "WCW",
+    " T "
+  ],
+  "result": {
+    "item": "doggytalents:fedora"
+  }
+}
