@@ -151,9 +151,10 @@ public class PackPuppyTalent extends TalentInstance {
         if (!(dogIn instanceof Dog dog))
             return;
         
-        if (!hasFood(dog))
+        if (!hasFood(dog, dog)) {
             return;
-
+        }
+            
         var hungry_dogs = getNearbyHungryDogs(dog);
         if (hungry_dogs.isEmpty()) return;
         for (var hungry_dog : hungry_dogs) {
@@ -173,7 +174,7 @@ public class PackPuppyTalent extends TalentInstance {
             return;
         if (target.isOrderedToSit())
             return;
-        if (!this.hasFood(target))
+        if (!this.hasFood(dog, target))
             return;
         target.triggerAction(
             new DogEatFromChestDogAction(target, dog)
@@ -273,24 +274,8 @@ public class PackPuppyTalent extends TalentInstance {
         return dogIn.isDoingFine() && dogIn.getTalent(DoggyTalents.PACK_PUPPY).isPresent();
     }
 
-    public boolean hasFood(Dog finder) {
-        var inventory = this.inventory();
-        if (inventory == null)
-            return false;
-
-        for (int i = 0; i < inventory.getSlots(); i++) {
-            var stack = inventory.getStackInSlot(i);
-            var item = stack.getItem();
-            boolean isDogEddible = 
-                item instanceof DogEddibleItem eddible
-                && eddible.canConsume(finder, stack, finder);
-            if (isDogEddible)
-                return true;
-            boolean isMeat = this.meatFoodHandler.canConsume(finder, stack, finder);
-            if (isMeat)
-                return true;
-        }
-        return false;
+    public boolean hasFood(Dog finder, Dog forWho) {
+        return findFoodInInv(finder, forWho, false) > 0;
     }
 
     public int findFoodInInv(Dog finder, Dog target, boolean findHealingFood) {
