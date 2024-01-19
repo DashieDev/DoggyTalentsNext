@@ -275,15 +275,15 @@ public class PackPuppyTalent extends TalentInstance {
     }
 
     public boolean hasFood(Dog finder, Dog forWho) {
-        return findFoodInInv(finder, forWho, false) > 0;
+        return findFoodInInv(finder, forWho, false) >= 0;
     }
 
     public int findFoodInInv(Dog finder, Dog target, boolean findHealingFood) {
         int eddibleFoodId = findBestDogEddibleFood(finder, target, findHealingFood);
-        if (eddibleFoodId > 0)
+        if (eddibleFoodId >= 0)
             return eddibleFoodId;
         int meatFoodId = findMeatFood(finder, target);
-        if (meatFoodId > 0)
+        if (meatFoodId >= 0)
             return meatFoodId;
 
         return -1;
