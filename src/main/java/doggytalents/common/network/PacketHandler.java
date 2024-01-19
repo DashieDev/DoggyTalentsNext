@@ -25,7 +25,7 @@ public final class PacketHandler {
         registerPacket(new WhistleRequestModePacket(), WhistleRequestModeData.class);
         registerPacket(new CritEmitterPacket(), CritEmitterData.class); 
         registerPacket(new DogEatingParticlePacket(), DogEatingParticleData.class);
-        registerPacket(new DogStartShakingLavaPacket(), DogStartShakingLavaData.class);
+        registerPacket(new DogShakingPacket(), DogShakingData.class);
         registerPacket(new ConductingBonePackets.RequestDogsPacket(), ConductingBoneData.RequestDogsData.class);
         registerPacket(new ConductingBonePackets.ResponseDogsPackets(), ConductingBoneData.ResponseDogsData.class);
         registerPacket(new ConductingBonePackets.RequestDistantTeleportDogPacket(), ConductingBoneData.RequestDistantTeleportDogData.class);
