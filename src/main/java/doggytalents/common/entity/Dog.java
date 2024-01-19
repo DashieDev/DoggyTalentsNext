@@ -802,13 +802,14 @@ public class Dog extends AbstractDog {
                 float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
                 float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
                 if (this.shakeFire) {
-                    byte r = (byte) this.getRandom().nextInt(3);
-                    if (r==0)
-                        this.level().addParticle(ParticleTypes.LAVA, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
-                    else if (r==1)
-                        this.level().addParticle(ParticleTypes.FLAME, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
-                    else if (r==2)
-                        this.level().addParticle(ParticleTypes.SMOKE, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                    float r = this.getRandom().nextFloat();
+                    var type = ParticleTypes.SMOKE;
+                    if (r <= 0.15f) {
+                        type = ParticleTypes.LANDING_LAVA;
+                    } else if (r <= 0.6f) {
+                        type = ParticleTypes.LAVA;
+                    }
+                    this.level().addParticle(type, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                 } else
                 this.level().addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
             }
