@@ -2157,7 +2157,7 @@ public class Dog extends AbstractDog {
                 return false;
             } else if (entitydog.isInSittingPose()) {
                 return false;
-            } else if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) && !this.getGender().canMateWith(entitydog.getGender())) {
+            } else if (!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER) && !this.getGender().canMateWith(entitydog.getGender())) {
                 return false;
             } else {
                 return !entitydog.isDefeated() && this.isInLove() && entitydog.isInLove();
@@ -4318,7 +4318,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public MutableComponent getTranslationKey(Function<EnumGender, String> function) {
-        return Component.translatable(function.apply(ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) ? this.getGender() : EnumGender.UNISEX));
+        return Component.translatable(function.apply(!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER) ? this.getGender() : EnumGender.UNISEX));
     }
 
     @Override
