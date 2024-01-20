@@ -166,6 +166,9 @@ public class DoggyTalentsNext {
     }
 
     private void gatherData(final GatherDataEvent event) {
+        //1.20.2+ require advancements to be registered when gatherData.
+        DoggyAdvancementTriggers.registerAll();
+
         DataGenerator gen = event.getGenerator();
         var packOutput = gen.getPackOutput();
         var lookup = event.getLookupProvider();
