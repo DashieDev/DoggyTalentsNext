@@ -50,6 +50,9 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
 
     @Override
     public InteractionResult consume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
+        if (dogIn.level().isClientSide)
+            return InteractionResult.SUCCESS;
+
         Item item = stackIn.getItem();
 
         if (this.level() >= 2 && item.isEdible() && stackIn.is(ItemTags.FISHES)) {
