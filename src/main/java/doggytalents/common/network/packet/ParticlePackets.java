@@ -52,7 +52,7 @@ public class ParticlePackets {
         }
 
         public static void sendCritEmitterPacketToNearClients(Entity e) {
-            PacketHandler.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> e), new CritEmitterData(e.getId()));
+            PacketHandler.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(e), new CritEmitterData(e.getId()));
         }
 
     }
@@ -116,7 +116,7 @@ public class ParticlePackets {
         }
 
         public static void sendDogEatingParticlePacketToNearby(AbstractDog dog, ItemStack food) {
-            PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> dog), new DogEatingParticleData(dog.getId(), food));
+            PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(dog), new DogEatingParticleData(dog.getId(), food));
         }
         
     }
@@ -155,7 +155,7 @@ public class ParticlePackets {
         }
 
         public static void sendDogShakingPacket(AbstractDog dog, State state) {
-            PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> dog), new DogShakingData(dog.getId(), state));
+            PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(dog), new DogShakingData(dog.getId(), state));
         }
 
     }
