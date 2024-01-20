@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " W ",
+    "WTW",
+    " W "
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
+    }
+  },
+  "result": {
+    "item": "doggytalents:scent_treat"
+  }
+}

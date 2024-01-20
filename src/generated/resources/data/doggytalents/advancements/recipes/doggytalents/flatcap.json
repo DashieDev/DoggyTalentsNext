@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:flatcap"
+    ]
+  },
+  "criteria": {
+    "has_white_carpet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:white_carpet"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:flatcap"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_white_carpet",
+      "has_the_recipe"
+    ]
+  ]
+}
