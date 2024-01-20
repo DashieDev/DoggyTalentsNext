@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_dtn_soy_pods",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dtn_soy_pods"
     ]
   ],
   "rewards": {

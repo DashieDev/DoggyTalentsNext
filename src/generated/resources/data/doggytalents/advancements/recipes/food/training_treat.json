@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_dtn_rice_grains",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dtn_rice_grains"
     ]
   ],
   "rewards": {

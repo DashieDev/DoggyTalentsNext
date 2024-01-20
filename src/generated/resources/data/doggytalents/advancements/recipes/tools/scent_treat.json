@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dtn_training_treat": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "doggytalents:training_treat"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "doggytalents:scent_treat"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dtn_training_treat"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "doggytalents:scent_treat"
+    ]
+  },
+  "sends_telemetry_event": false
+}
