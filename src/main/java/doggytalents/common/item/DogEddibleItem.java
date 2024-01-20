@@ -91,6 +91,9 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
 
     @Override
     public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
+        if (dog.level().isClientSide)
+            return InteractionResult.SUCCESS;
+        
         var dogEddible = this;
         
         if (!dogEddible.alwaysEatWhenDogConsume(dog) && !dog.canStillEat()) {
