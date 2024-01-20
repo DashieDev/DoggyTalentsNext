@@ -165,7 +165,7 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
             stack1.translate(0, 0.15f, 0.07);
             renderAlternativeModel(model, dog, stack1, buffer, light, itemStack);
 
-            var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack);
+            var trim = ArmorTrim.getTrim(dog.level().registryAccess(), itemStack, true);
             if (trim.isPresent()) {
                 renderTrim(armor.getMaterial(), stack, buffer, light, trim.get(), model);
             }
