@@ -20,9 +20,10 @@ public class HotDogAccessoryItem extends AccessoryItem {
     public HotDogAccessoryItem(Supplier<? extends Accessory> type, Properties properties) {
         super(type, properties.food(
             (new FoodProperties.Builder())
-                        .nutrition(8)
+                        .nutrition(12)
                         .saturationMod(1F)
-                        .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 60, 1), 1)
+                        .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 60*60, 1), 1)
+                        .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 60*60, 1), 1)
                         .build()
         ));
     }
