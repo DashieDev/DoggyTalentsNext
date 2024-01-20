@@ -1,6 +1,5 @@
 package doggytalents.common.talent;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
@@ -152,9 +151,10 @@ public class PackPuppyTalent extends TalentInstance {
         if (!(dogIn instanceof Dog dog))
             return;
         
-        if (!hasFood(dog))
+        if (!hasFood(dog, dog)) {
             return;
-
+        }
+            
         var hungry_dogs = getNearbyHungryDogs(dog);
         if (hungry_dogs.isEmpty()) return;
         for (var hungry_dog : hungry_dogs) {
@@ -174,7 +174,7 @@ public class PackPuppyTalent extends TalentInstance {
             return;
         if (target.isOrderedToSit())
             return;
-        if (!this.hasFood(target))
+        if (!this.hasFood(dog, target))
             return;
         target.triggerAction(
             new DogEatFromChestDogAction(target, dog)
@@ -274,32 +274,16 @@ public class PackPuppyTalent extends TalentInstance {
         return dogIn.isDoingFine() && dogIn.getTalent(DoggyTalents.PACK_PUPPY).isPresent();
     }
 
-    public boolean hasFood(Dog finder) {
-        var inventory = this.inventory();
-        if (inventory == null)
-            return false;
-
-        for (int i = 0; i < inventory.getSlots(); i++) {
-            var stack = inventory.getStackInSlot(i);
-            var item = stack.getItem();
-            boolean isDogEddible = 
-                item instanceof DogEddibleItem eddible
-                && eddible.canConsume(finder, stack, finder);
-            if (isDogEddible)
-                return true;
-            boolean isMeat = this.meatFoodHandler.canConsume(finder, stack, finder);
-            if (isMeat)
-                return true;
-        }
-        return false;
+    public boolean hasFood(Dog finder, Dog forWho) {
+        return findFoodInInv(finder, forWho, false) >= 0;
     }
 
     public int findFoodInInv(Dog finder, Dog target, boolean findHealingFood) {
         int eddibleFoodId = findBestDogEddibleFood(finder, target, findHealingFood);
-        if (eddibleFoodId > 0)
+        if (eddibleFoodId >= 0)
             return eddibleFoodId;
         int meatFoodId = findMeatFood(finder, target);
-        if (meatFoodId > 0)
+        if (meatFoodId >= 0)
             return meatFoodId;
 
         return -1;
@@ -376,6 +360,7 @@ public class PackPuppyTalent extends TalentInstance {
         private final int stopDist = 2;
         private boolean enoughHealingFood = false;
         private int feedCooldown = 0;
+        private boolean failedEating = false;
 
         public DogEatFromChestDogAction(Dog dog, Dog target) {
             super(dog, false, false);
@@ -384,7 +369,6 @@ public class PackPuppyTalent extends TalentInstance {
 
         @Override
         public void onStart() {
-            ChopinLogger.sendToOwner(dog, "Started Eating from chestDog");
             //this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
         }
 
@@ -395,6 +379,11 @@ public class PackPuppyTalent extends TalentInstance {
                 return;
             }
             if (enoughEating()) {
+                setState(ActionState.FINISHED);
+                return;
+            }
+
+            if (failedEating) {
                 setState(ActionState.FINISHED);
                 return;
             }
@@ -445,9 +434,9 @@ public class PackPuppyTalent extends TalentInstance {
                 this.dog.isDogLowHealth() && !dog.hasEffect(MobEffects.REGENERATION);
             if (!enoughHealingFood && dogNeedsHealing) {
                 enoughHealingFood = true;
-                inst.tryFeed(dog, target, true);
+                failedEating = !inst.tryFeed(dog, target, true);
             } else
-                inst.tryFeed(dog, target, false);
+                failedEating = !inst.tryFeed(dog, target, false);
             feedCooldown = dog.getRandom().nextInt(11);
         }
 
@@ -459,7 +448,7 @@ public class PackPuppyTalent extends TalentInstance {
             var inst = getInstanceFromDog(target);
             if (inst == null)
                 return false;
-            if (!inst.hasFood(dog))
+            if (!inst.hasFood(target, dog))
                 return false;
             return true;
         }

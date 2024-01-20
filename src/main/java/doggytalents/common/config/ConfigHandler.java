@@ -215,7 +215,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
 
         public ForgeConfigSpec.BooleanValue DISABLE_HUNGER;
         public ForgeConfigSpec.BooleanValue STARTING_ITEMS;
-        public ForgeConfigSpec.BooleanValue DOG_GENDER;
+        public ForgeConfigSpec.BooleanValue DISABLE_GENDER;
         public ForgeConfigSpec.BooleanValue PUPS_GET_PARENT_LEVELS;
         public ForgeConfigSpec.BooleanValue IMMORTAL_DOGS;
         public ForgeConfigSpec.BooleanValue PLAY_TAG_WITH_DOG;
@@ -260,7 +260,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                     .comment("with DTN.")
                     .translation("doggytalents.config.enable_starter_bundle")
                     .define("enable_starter_bundle", false);
-            DOG_GENDER = builder
+            DISABLE_GENDER = builder
                     .comment("By default, each Dog will be one of the Biological Genders. This, like how Biological Genders")
                     .comment("work, add restrictions how Dogs can breed. Therefore, only Dogs whose gender is Biologically Opposed")
                     .comment("can mate with each other. Set this to true to disable this behaviour.")

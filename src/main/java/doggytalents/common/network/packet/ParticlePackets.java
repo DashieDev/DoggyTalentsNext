@@ -6,7 +6,8 @@ import doggytalents.common.network.IPacket;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogData;
 import doggytalents.common.network.packet.data.DogEatingParticleData;
-import doggytalents.common.network.packet.data.DogStartShakingLavaData;
+import doggytalents.common.network.packet.data.DogShakingData;
+import doggytalents.common.network.packet.data.DogShakingData.State;
 import doggytalents.common.network.packet.data.ParticleData.CritEmitterData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -51,9 +52,7 @@ public class ParticlePackets {
         }
 
         public static void sendCritEmitterPacketToNearClients(Entity e) {
-            final int RADIUS = 64;
-            PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(e.getX(), e.getY(), e.getZ(), RADIUS, e.level().dimension());
-            PacketHandler.send(PacketDistributor.NEAR.with(() -> tarp), new CritEmitterData(e.getId()));
+            PacketHandler.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> e), new CritEmitterData(e.getId()));
         }
 
     }
@@ -117,27 +116,27 @@ public class ParticlePackets {
         }
 
         public static void sendDogEatingParticlePacketToNearby(AbstractDog dog, ItemStack food) {
-            final int RADIUS = 64;
-            PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(dog.getX(), dog.getY(), dog.getZ(), RADIUS, dog.level().dimension());
-            PacketHandler.send(PacketDistributor.NEAR.with(() -> tarp), new DogEatingParticleData(dog.getId(), food));
+            PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> dog), new DogEatingParticleData(dog.getId(), food));
         }
         
     }
 
-    public static class DogStartShakingLavaPacket implements IPacket<DogStartShakingLavaData>  {
+    public static class DogShakingPacket implements IPacket<DogShakingData>  {
         @Override
-        public void encode(DogStartShakingLavaData data, FriendlyByteBuf buf) {
-            buf.writeInt(data.dogId);          
+        public void encode(DogShakingData data, FriendlyByteBuf buf) {
+            buf.writeInt(data.dogId);
+            buf.writeInt(data.state.getId());
         }
 
         @Override
-        public DogStartShakingLavaData decode(FriendlyByteBuf buf) {
-            int dogId = buf.readInt();    
-            return new DogStartShakingLavaData(dogId);
+        public DogShakingData decode(FriendlyByteBuf buf) {
+            int dogId = buf.readInt();
+            State state = State.fromId(buf.readInt());
+            return new DogShakingData(dogId, state);
         }
 
         @Override
-        public void handle(DogStartShakingLavaData data, Supplier<Context> ctx) {
+        public void handle(DogShakingData data, Supplier<Context> ctx) {
             
             ctx.get().enqueueWork(() -> {
 
@@ -146,7 +145,7 @@ public class ParticlePackets {
                     Entity e = mc.level.getEntity(data.dogId);
                     if (e instanceof Dog) {
                         Dog d = (Dog) e;
-                        d.startShakingLava();
+                        d.handleDogShakingUpdate(data.state);
                     }
                 }
 
@@ -155,10 +154,8 @@ public class ParticlePackets {
             ctx.get().setPacketHandled(true);
         }
 
-        public static void sendDogStartShakingLavaPacketToNearByClients(AbstractDog dog) {
-            final int RADIUS = 64;
-            PacketDistributor.TargetPoint tarp = new PacketDistributor.TargetPoint(dog.getX(), dog.getY(), dog.getZ(), RADIUS, dog.level().dimension());
-            PacketHandler.send(PacketDistributor.NEAR.with(() -> tarp), new DogStartShakingLavaData(dog.getId()));
+        public static void sendDogShakingPacket(AbstractDog dog, State state) {
+            PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> dog), new DogShakingData(dog.getId(), state));
         }
 
     }

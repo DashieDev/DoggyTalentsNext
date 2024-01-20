@@ -47,6 +47,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.ParticlePackets.CritEmitterPacket;
 import doggytalents.common.network.packet.data.DogMountData;
+import doggytalents.common.network.packet.data.DogShakingData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.util.*;
@@ -505,12 +506,30 @@ public class Dog extends AbstractDog {
 
     @Override
     public void handleEntityEvent(byte id) {
-        if (id == doggytalents.common.lib.Constants.EntityState.WOLF_START_SHAKING) {
+        // if (id == doggytalents.common.lib.Constants.EntityState.WOLF_START_SHAKING) {
+        //     this.startShaking();
+        // } else if (id == doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING) {
+        //     this.finishShaking();
+        // } else {
+        //     super.handleEntityEvent(id);
+        // }
+        super.handleEntityEvent(id);
+    }
+
+    public void handleDogShakingUpdate(DogShakingData.State state) {
+        switch (state) {
+        case SHAKE_WATER:
             this.startShaking();
-        } else if (id == doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING) {
+            break;
+        case SHAKE_LAVA:
+            this.startShakingLava();
+            break;
+        case STOP:
             this.finishShaking();
-        } else {
-            super.handleEntityEvent(id);
+            break;
+        default:
+            this.finishShaking();
+            break;
         }
     }
 
@@ -745,12 +764,13 @@ public class Dog extends AbstractDog {
     }
 
     private void updateClassicalShakeAnim(boolean currentlyInWater) {
-        if (!this.canDogDoShakeAnim() || currentlyInWater) {
-            if (this.isShaking && !this.level().isClientSide) {
+        if (!this.level().isClientSide) {
+            if (this.isShaking)
+            if (!this.canDogDoShakeAnim() || currentlyInWater) {
                 this.finishShaking();
-                this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_INTERUPT_SHAKING);
+                ParticlePackets.DogShakingPacket.sendDogShakingPacket(getDog(), DogShakingData.State.STOP);
+                return;
             }
-            return;
         }
         if (!this.isShaking)
             return;
@@ -781,13 +801,14 @@ public class Dog extends AbstractDog {
                 float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
                 float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getDogVisualBbWidth() * 0.5F;
                 if (this.shakeFire) {
-                    byte r = (byte) this.getRandom().nextInt(3);
-                    if (r==0)
-                        this.level().addParticle(ParticleTypes.LAVA, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
-                    else if (r==1)
-                        this.level().addParticle(ParticleTypes.FLAME, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
-                    else if (r==2)
-                        this.level().addParticle(ParticleTypes.SMOKE, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
+                    float r = this.getRandom().nextFloat();
+                    var type = ParticleTypes.SMOKE;
+                    if (r <= 0.15f) {
+                        type = ParticleTypes.LANDING_LAVA;
+                    } else if (r <= 0.6f) {
+                        type = ParticleTypes.LAVA;
+                    }
+                    this.level().addParticle(type, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
                 } else
                 this.level().addParticle(ParticleTypes.SPLASH, this.getX() + f1, f + 0.8F, this.getZ() + f2, vec3d.x, vec3d.y, vec3d.z);
             }
@@ -2156,7 +2177,7 @@ public class Dog extends AbstractDog {
                 return false;
             } else if (entitydog.isInSittingPose()) {
                 return false;
-            } else if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) && !this.getGender().canMateWith(entitydog.getGender())) {
+            } else if (!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER) && !this.getGender().canMateWith(entitydog.getGender())) {
                 return false;
             } else {
                 return !entitydog.isDefeated() && this.isInLove() && entitydog.isInLove();
@@ -2300,11 +2321,11 @@ public class Dog extends AbstractDog {
         if (this.level().isClientSide) return;
         if (shakeFire) {
             this.startShakingLava();
-            ParticlePackets.DogStartShakingLavaPacket.sendDogStartShakingLavaPacketToNearByClients(this);
+            ParticlePackets.DogShakingPacket.sendDogShakingPacket(this, DogShakingData.State.SHAKE_LAVA);
             return;
         }
         this.startShaking();
-        this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_START_SHAKING);
+        ParticlePackets.DogShakingPacket.sendDogShakingPacket(this, DogShakingData.State.SHAKE_WATER);
     }
 
     private void finishShaking() {
@@ -4317,7 +4338,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public MutableComponent getTranslationKey(Function<EnumGender, String> function) {
-        return Component.translatable(function.apply(ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GENDER) ? this.getGender() : EnumGender.UNISEX));
+        return Component.translatable(function.apply(!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER) ? this.getGender() : EnumGender.UNISEX));
     }
 
     @Override
