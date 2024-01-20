@@ -99,7 +99,7 @@ public class DogAccessoriesElement extends AbstractElement {
             int e_mY = dogDiv.getRealY() + mY;
 
             DogStatusViewBoxElement.renderDogInside(graphics, this.dog, e_mX, e_mY + 32, 50, 
-            mouseX,  mouseY);
+            e_mX - mouseX, e_mY - mouseY);
         }
 
         //accessory div

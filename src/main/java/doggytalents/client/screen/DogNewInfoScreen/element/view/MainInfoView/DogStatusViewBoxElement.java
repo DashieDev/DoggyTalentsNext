@@ -39,17 +39,12 @@ public class DogStatusViewBoxElement extends AbstractElement {
     @Override
     public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
-        //1.20.2
-        xMouse = mouseX;
-        yMouse = mouseY;
-        //
-
         drawDogLevelKanji(graphics, mouseX, mouseY, partialTicks);
 
         int e_mX = this.getRealX() + this.getSizeX()/2; 
         int e_mY = this.getRealY() + this.getSizeY()/2; 
 
-        renderDogInside(graphics, dog, e_mX, e_mY + 32, 50, mouseX, mouseY);
+        renderDogInside(graphics, dog, e_mX, e_mY + 32, 50, e_mX - mouseX, e_mY - mouseY);
 
         this.renderHealthBar(graphics, dog, e_mX - 41, this.getRealY() + this.getSizeY() - 10);
 
@@ -107,7 +102,8 @@ public class DogStatusViewBoxElement extends AbstractElement {
             dog.setDogCustomName(Component.literal(tempName));
         }
 
-        ScreenUtil.renderInInventory1_20_2(graphics, dog_mX, dog_mY - 32, size, 
+        //Fixed  my - 32 -> my
+        ScreenUtil.renderInInventory1_20_2(graphics, dog_mX, dog_mY, size, 
             lookX, lookY, dog);
 
         if (nameTooLong) {
@@ -206,7 +202,4 @@ public class DogStatusViewBoxElement extends AbstractElement {
 
         // this.minecraft.getProfiler().pop();
     }
-
-    private static int xMouse, yMouse;
-    
 }
