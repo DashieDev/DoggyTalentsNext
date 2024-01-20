@@ -4223,7 +4223,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public MutableComponent getTranslationKey(Function<EnumGender, String> function) {
-        return Component.translatable(function.apply(!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER) ? this.getGender() : EnumGender.UNISEX));
+        return ComponentUtil.translatable(function.apply(!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER) ? this.getGender() : EnumGender.UNISEX));
     }
 
     @Override

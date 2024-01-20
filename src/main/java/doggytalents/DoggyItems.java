@@ -361,12 +361,12 @@ public class DoggyItems {
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.DOG_PLUSHIE_TOY, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex != 1 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);
         Util.acceptOrElse(DoggyItems.DOGGY_CONTACTS, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);

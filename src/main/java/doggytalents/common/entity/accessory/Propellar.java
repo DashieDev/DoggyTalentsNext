@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyAccessoryTypes;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
@@ -45,7 +46,7 @@ public class Propellar extends Accessory implements IAccessoryHasModel {
         public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
                 TooltipFlag flags) {
             var desc_id = this.getDescriptionId(stack) + ".description";
-            components.add(Component.translatable(desc_id).withStyle(
+            components.add(ComponentUtil.translatable(desc_id).withStyle(
                 Style.EMPTY.withItalic(true)
             ));
         }

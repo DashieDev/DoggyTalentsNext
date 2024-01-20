@@ -172,10 +172,10 @@ public class TalentInfoViewElement extends AbstractElement {
                     new ButtonOptionEntry(container, getScreen(), 
                         new FlatButton(
                             0, 0,
-                            40, 20, Component.literal("" + torchTalent.renderTorch()), 
+                            40, 20, ComponentUtil.literal("" + torchTalent.renderTorch()), 
                             b -> {
                                 Boolean newVal = !torchTalent.renderTorch();
-                                b.setMessage(Component.literal("" + newVal));
+                                b.setMessage(ComponentUtil.literal("" + newVal));
                                 torchTalent.setRenderTorch(newVal);
                                 PacketHandler.send(PacketDistributor.SERVER.noArg(), new DoggyTorchData(
                                     dog.getId(), newVal, DoggyTorchData.Type.RENDER_TORCH
@@ -292,7 +292,7 @@ public class TalentInfoViewElement extends AbstractElement {
                 .setSize(1f, 30)
                 .init();
             container.addChildren(gateButtonDiv);
-            var gateButtonStr = Component.translatable(
+            var gateButtonStr = ComponentUtil.translatable(
                 gateTalent.allowPassingGate() ?
                 "talent.doggytalents.gate_passer.pass_gate.unset"
                 : "talent.doggytalents.gate_passer.pass_gate.set"
@@ -302,7 +302,7 @@ public class TalentInfoViewElement extends AbstractElement {
                 gateButtonDiv.getRealY() + 5, 120, 20, gateButtonStr,
                 b -> {
                     boolean newVal = !gateTalent.allowPassingGate();
-                    b.setMessage(Component.translatable(
+                    b.setMessage(ComponentUtil.translatable(
                         newVal ?
                         "talent.doggytalents.gate_passer.pass_gate.unset"
                         : "talent.doggytalents.gate_passer.pass_gate.set"
@@ -365,10 +365,10 @@ public class TalentInfoViewElement extends AbstractElement {
                 new ButtonOptionEntry(container, getScreen(), 
                     new FlatButton(
                         0, 0,
-                        40, 20, Component.literal("" + packPup.collectKillLoot()), 
+                        40, 20, ComponentUtil.literal("" + packPup.collectKillLoot()), 
                         b -> {
                             Boolean newVal = !packPup.collectKillLoot();
-                            b.setMessage(Component.literal("" + newVal));
+                            b.setMessage(ComponentUtil.literal("" + newVal));
                             packPup.setCollectKillLoot(newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
                                 dog.getId(), PackPuppyData.Type.COLLECT_KILL_LOOT, newVal
@@ -379,7 +379,7 @@ public class TalentInfoViewElement extends AbstractElement {
                         public void render(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
                             super.render(graphics, mouseX, mouseY, pTicks);
                             if (!this.isHovered) return;
-                            var c1 = Component.translatable("talent.doggytalents.pack_puppy.collect_kill_loot.desc");
+                            var c1 = ComponentUtil.translatable("talent.doggytalents.pack_puppy.collect_kill_loot.desc");
                             ToolTipOverlayManager.get().setComponents(List.of(c1));
                         }
                     },
@@ -476,7 +476,7 @@ public class TalentInfoViewElement extends AbstractElement {
 
         this.addChildren(trainButton);
 
-        var pointsLeftStr = new OneLineLimitedTextArea(0, 0, 75, Component.translatable("doggui.pointsleft"));
+        var pointsLeftStr = new OneLineLimitedTextArea(0, 0, 75, ComponentUtil.translatable("doggui.pointsleft"));
         pointsLeftStr.x = (this.getRealX() + PADDING_LEFT + 40);
         pointsLeftStr.y = (this.getRealY() + this.getSizeY() - 45);
         this.addChildren(pointsLeftStr);

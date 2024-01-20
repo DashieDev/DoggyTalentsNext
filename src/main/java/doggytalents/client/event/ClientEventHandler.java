@@ -243,8 +243,8 @@ public class ClientEventHandler {
 
     public static boolean vertifyArmorTexture(ResourceLocation loc) {
         var res = Minecraft.getInstance().getResourceManager()
-            .getResource(loc);
-        return res.isPresent();
+            .hasResource(loc);
+        return res;
     }
 
     public static boolean shouldClientBlockPick(Dog dog) {

@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Random;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -16,6 +17,7 @@ import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.item.ScentTreatItem;
 import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.NBTUtil;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
@@ -99,8 +101,8 @@ public class SnifferDogTalent extends TalentInstance {
                 var r = dog.getRandom();
                 int offSmall = 2;
                 int offLarge = start + 2;
-                int r1 = r.nextIntBetweenInclusive(-offLarge, offLarge);
-                int r2 = r.nextIntBetweenInclusive(-offSmall, offSmall);
+                int r1 = EntityUtil.getRandomNumber(dog, -offLarge, offLarge);
+                int r2 = EntityUtil.getRandomNumber(dog, -offSmall, offSmall);
                 r2 += Mth.sign(r2)*start;
                 int randXOff = r1;
                 int randZOff = r2;
@@ -108,7 +110,7 @@ public class SnifferDogTalent extends TalentInstance {
                     randXOff = r2;
                     randZOff = r1;
                 }
-                int randYOff = r.nextIntBetweenInclusive(-3, 3);
+                int randYOff = EntityUtil.getRandomNumber(dog, -3, 3);
                 var rand_b0 = dog_b0.offset(new Vec3i(randXOff, randYOff, randZOff));
                 var state = dog.level().getBlockState(rand_b0);
                 if (state.getBlock() == this.detectingBlock) {
@@ -168,14 +170,14 @@ public class SnifferDogTalent extends TalentInstance {
             if (this.detectingBlock == null)
                 this.detectingBlock = Blocks.AIR;
             var c1 = this.detectingBlock == Blocks.AIR ? 
-            Component.translatable("talent.doggytalents.sniffer_dog.detecting_block_status.none")
-            : Component.translatable("talent.doggytalents.sniffer_dog.detecting_block_status",
+            ComponentUtil.translatable("talent.doggytalents.sniffer_dog.detecting_block_status.none")
+            : ComponentUtil.translatable("talent.doggytalents.sniffer_dog.detecting_block_status",
                 dog.getName().getString(),
-                Component.translatable(this.detectingBlock.asItem().getDescriptionId()).withStyle(
+                ComponentUtil.translatable(this.detectingBlock.asItem().getDescriptionId()).withStyle(
                     Style.EMPTY.withItalic(true)
                 )
             );
-            playerIn.sendSystemMessage(c1);
+            playerIn.sendMessage(c1, Util.NIL_UUID);
             return InteractionResult.SUCCESS;
         }
 
@@ -391,9 +393,9 @@ public class SnifferDogTalent extends TalentInstance {
         }
 
         private void notifyOwner(Dog dog, LivingEntity owner, double distanceAwaySqr) {
-            var c1 = Component.translatable(getStringStatus(dog, distanceAwaySqr),
+            var c1 = ComponentUtil.translatable(getStringStatus(dog, distanceAwaySqr),
                 dog.getName().getString());
-            owner.sendSystemMessage(c1);
+            owner.sendMessage(c1, Util.NIL_UUID);
             dog.playSound(SoundEvents.WOLF_AMBIENT, 1f, 1.5f);
         }
 

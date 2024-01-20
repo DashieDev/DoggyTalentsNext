@@ -8,6 +8,7 @@ import java.util.Objects;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItemGroups;
 import doggytalents.DoggyItems;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -67,7 +68,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
             TooltipFlag flags) {
         var desc_id = "item.doggytalents.dog_plushie_toy_item.description";
-        components.add(Component.translatable(desc_id).withStyle(
+        components.add(ComponentUtil.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }

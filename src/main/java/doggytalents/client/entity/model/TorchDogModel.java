@@ -8,10 +8,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
-import net.minecraft.client.animation.AnimationChannel;
-import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.client.animation.Keyframe;
-import net.minecraft.client.animation.KeyframeAnimations;
+import doggytalents.api.enu.forward_imitate.anim.AnimationChannel;
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
+import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
+import doggytalents.api.enu.forward_imitate.anim.Keyframe;
+import doggytalents.api.enu.forward_imitate.anim.KeyframeAnimations;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -23,15 +24,15 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class TorchDogModel extends AnimatedSyncedAccessoryModel {
     
-    public ModelPart torchBig;
-    public ModelPart torchSmall2;
-    public ModelPart torchSmall;
+    public DogModelPart torchBig;
+    public DogModelPart torchSmall2;
+    public DogModelPart torchSmall;
 
     public TorchDogModel(ModelPart box) {
-        super(box);
-        this.torchBig = root.getChild("torch_big");
-        this.torchSmall = root.getChild("torch_small");
-        this.torchSmall2 = root.getChild("torch_small2");
+        super(DogModelPart.recreateFromModelPart(box));
+        this.torchBig = (DogModelPart) root.getChild("torch_big");
+        this.torchSmall = (DogModelPart) root.getChild("torch_small");
+        this.torchSmall2 = (DogModelPart) root.getChild("torch_small2");
     }
 
     public static LayerDefinition createLayer() {
@@ -78,7 +79,7 @@ public class TorchDogModel extends AnimatedSyncedAccessoryModel {
 
     @Override
     void resetAllPose() {
-        this.root.resetPose();
+        ((DogModelPart)this.root).resetPose();
         this.torchBig.resetPose();
         this.torchSmall.resetPose();
         this.torchSmall2.resetPose();

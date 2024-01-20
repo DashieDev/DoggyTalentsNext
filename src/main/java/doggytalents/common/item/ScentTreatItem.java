@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyItemGroups;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -81,7 +82,7 @@ public class ScentTreatItem extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        components.add(ComponentUtil.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
         var tag = stack.getOrCreateTag();
@@ -90,9 +91,9 @@ public class ScentTreatItem extends Item {
         var block = NBTUtil.getRegistryValue(tag, SCENT_BLOCK_ID, ForgeRegistries.BLOCKS);
         if (block == null)
             return;
-        components.add(Component.translatable(this.getDescriptionId() + ".scented_block"));
+        components.add(ComponentUtil.translatable(this.getDescriptionId() + ".scented_block"));
         components.add(
-            Component.translatable(block.asItem().getDescriptionId()).withStyle(
+            ComponentUtil.translatable(block.asItem().getDescriptionId()).withStyle(
                 Style.EMPTY.withItalic(true)
             )
         );

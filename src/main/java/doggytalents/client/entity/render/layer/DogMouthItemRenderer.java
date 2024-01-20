@@ -33,7 +33,7 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
     public DogMouthItemRenderer(RenderLayerParent dogRendererIn, EntityRendererProvider.Context ctx) {
         super(dogRendererIn);
 
-        this.itemInHandRenderer = ctx.getItemInHandRenderer();
+        this.itemInHandRenderer = Minecraft.getInstance().getItemInHandRenderer();
         itemSyncer = new SyncedRenderFunctionWithHeadModel(ctx.bakeLayer(ClientSetup.DOG_SYNCED_FUNCTION_WITH_HEAD));
     }
 

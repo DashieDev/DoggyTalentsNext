@@ -152,10 +152,10 @@ public class DogPlayTagAction extends TriggerableAction {
         var r = dog.getRandom();
         int offSmall = RUN_AWAY_RADIUS - RUN_AWAY_RADIUS_MIN;
         int offLarge = RUN_AWAY_RADIUS;
-        int r1 = r.nextIntBetweenInclusive(-offLarge, offLarge);
-        int r2 = r.nextIntBetweenInclusive(-offSmall, offSmall);
+        int r1 = EntityUtil.getRandomNumber(dog, -offLarge, offLarge);
+        int r2 = EntityUtil.getRandomNumber(dog, -offSmall, offSmall);
         r2 += Mth.sign(r2)*RUN_AWAY_RADIUS_MIN;
-        int dy = r.nextIntBetweenInclusive(-2, 2);
+        int dy = EntityUtil.getRandomNumber(dog, -2, 2);
         int dx = r1; 
         int dz = r2;
         if (dog.getRandom().nextBoolean()) {

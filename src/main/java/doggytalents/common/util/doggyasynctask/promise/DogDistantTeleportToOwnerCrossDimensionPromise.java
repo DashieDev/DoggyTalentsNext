@@ -7,11 +7,13 @@ import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -101,11 +103,11 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
     @Override
     public void onFulfilled() {
         if (this.owner != null && this.teleportedDog != null)
-            this.owner.sendSystemMessage(
-                Component.translatable(
+            this.owner.sendMessage(
+                ComponentUtil.translatable(
                     "item.doggytalents.conducting_bone.fulfilled.tp_self", 
                     this.teleportedDog.getName().getString()  
-                )
+                ), Util.NIL_UUID
             );
         if (this.teleportedDog != null)
         this.ownerLevel.sendParticles(
@@ -121,14 +123,14 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
     @Override
     public void onRejected() {
         if (this.owner != null)
-            this.owner.sendSystemMessage(
-                Component.translatable(
+            this.owner.sendMessage(
+                ComponentUtil.translatable(
                     "item.doggytalents.conducting_bone.rejected",
-                    Component.literal(this.rejectedMsg).withStyle(
+                    ComponentUtil.literal(this.rejectedMsg).withStyle(
                         Style.EMPTY.withBold(true)
                         .withColor(ChatFormatting.RED)
                     )
-                )
+                ), Util.NIL_UUID
             );     
     }
 

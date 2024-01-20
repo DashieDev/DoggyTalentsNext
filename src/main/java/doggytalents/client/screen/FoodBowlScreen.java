@@ -44,9 +44,9 @@ public class FoodBowlScreen extends AbstractContainerScreen<FoodBowlContainer> {
 
     private void renderDogProTip(PoseStack stack) {
         int mX = this.width / 2;
-        var title = Component.translatable("block.doggytalents.food_bowl.pro_tip.title")
+        var title = ComponentUtil.translatable("block.doggytalents.food_bowl.pro_tip.title")
             .withStyle(Style.EMPTY.withBold(true));
-        var desc = Component.translatable("block.doggytalents.food_bowl.pro_tip.desc");
+        var desc = ComponentUtil.translatable("block.doggytalents.food_bowl.pro_tip.desc");
         var max_width = Math.min(360, this.width - 10);
         var desc_lines = font.split(desc, max_width);
         int tX = mX - font.width(title)/2;
