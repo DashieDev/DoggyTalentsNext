@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_throw_bone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_throw_bone"
     ]
   ],
   "rewards": {

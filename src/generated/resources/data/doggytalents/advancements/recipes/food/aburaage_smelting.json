@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_dtn_tofu",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dtn_tofu"
     ]
   ],
   "rewards": {

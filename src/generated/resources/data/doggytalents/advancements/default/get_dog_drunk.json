@@ -1,7 +1,6 @@
 {
   "criteria": {
     "get_dog_drunk": {
-      "conditions": {},
       "trigger": "doggytalents:get_dog_drunk"
     }
   },

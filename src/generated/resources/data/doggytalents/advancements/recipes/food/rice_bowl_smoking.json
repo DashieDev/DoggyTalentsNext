@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_dtn_uncooked_rice_bowl",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dtn_uncooked_rice_bowl"
     ]
   ],
   "rewards": {

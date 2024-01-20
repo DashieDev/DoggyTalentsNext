@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_potion",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_potion"
     ]
   ],
   "rewards": {
