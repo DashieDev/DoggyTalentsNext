@@ -66,6 +66,16 @@ For more informations, please consult the [wiki](https://github.com/DashieDev/Do
    **A:** Use a **Training Treat** to turn him into a **DoggyTalents Dog**. Visit the [Getting Started wiki](https://github.com/DashieDev/DoggyTalentsNext/wiki/Getting-Started) for more info.
 
 -----------------
-### Additional Licenses
-DoggyTalentsNext API - Anything under **src/api**.
- - [![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+### License
+Part of the project that is still present on DoggyTalents's sources.
+ - [![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0) 
+All right reserved: (which includes but not limited to)
+  + DTN's Gui Framework and any DTN Gui that implements or make use of it.
+  + All DTN exclusive Talents.
+  + All DTN exclusive Accessories.
+  + All DTN exclusive Models (Copyright for each model belongs to their respective owners).
+  + All DTN Dog Animation Definitions.
+  + All DTN Exclusive behaviour source code
+    such as: Dog Greet Owner, Dog Play Tag With Owner, etc
+  + All DTN Exclusive Items Textures.
+  + All DTN Exclusive Textures.
