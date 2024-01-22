@@ -85,3 +85,5 @@ These features include, but not limited to:
     such as: Dog Greet Owner, Dog Play Tag With Owner, etc
   + All DTN Exclusive Items Textures.
   + All DTN Exclusive Textures.
+  + Internationalization(i18n) files other than en_us.json (each file copyrights belongs
+  to their respective Owners.) 
