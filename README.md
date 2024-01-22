@@ -63,7 +63,12 @@ For more informations, please consult the [wiki](https://github.com/DashieDev/Do
 ### License
 Part of the project that is still present on DoggyTalents's sources.
  - [![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0) 
-All right reserved: (which includes but not limited to)
+
+All right reserved: 
+A large portion of the project containing features that is DTN 
+exclusive remains Copyrighted and unless stated otherwise,
+the Copyright belongs to its author, MashXP and DashieDev. 
+These features include, but not limited to:
   + DTN's Gui Framework and any DTN Gui that implements or make use of it.
   + All DTN exclusive Talents.
   + All DTN exclusive Accessories.
