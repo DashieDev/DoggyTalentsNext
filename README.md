@@ -74,6 +74,7 @@ These features include, but not limited to:
   + All DTN exclusive Accessories.
   + All DTN exclusive Models (Copyright for each model belongs to their respective owners).
   + All DTN Dog Animation Definitions.
+  + DTN's Animation System.
   + All DTN Exclusive behaviour source code
     such as: Dog Greet Owner, Dog Play Tag With Owner, etc
   + All DTN Exclusive Items Textures.
