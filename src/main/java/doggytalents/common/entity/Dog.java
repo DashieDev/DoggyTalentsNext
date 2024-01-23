@@ -604,7 +604,7 @@ public class Dog extends AbstractDog {
     @Override
     public Vec3 getPassengerRidingPosition(Entity passenger) {
         var ret = (double)this.getRealDimensions().height * 0.75D;
-        return new Vec3(0, ret, 0);
+        return new Vec3(0, ret, 0).add(this.position());
     }
 
     public EntityDimensions getRealDimensions() {
@@ -625,7 +625,7 @@ public class Dog extends AbstractDog {
 
     private EntityDimensions computeRidingDimension(EntityDimensions self_dim) {
         float total_width = self_dim.width;
-        float total_height = (float) this.getPassengerRidingPosition(this.getPassengers().get(0)).y;
+        float total_height = (float) this.getRealDimensions().height;
         
         var passenger = this.getPassengers().get(0);
         total_width = Math.max(total_width, passenger.getBbWidth());
