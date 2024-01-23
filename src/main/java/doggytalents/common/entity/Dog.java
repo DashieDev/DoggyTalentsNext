@@ -607,6 +607,10 @@ public class Dog extends AbstractDog {
         return new Vec3(0, ret, 0).add(this.position());
     }
 
+    public double getPassengersRidingOffset() {
+        return (double)this.getRealDimensions().height * 0.75D;
+    }
+
     public EntityDimensions getRealDimensions() {
         return super.getDimensions(getPose());
     }
@@ -625,7 +629,7 @@ public class Dog extends AbstractDog {
 
     private EntityDimensions computeRidingDimension(EntityDimensions self_dim) {
         float total_width = self_dim.width;
-        float total_height = (float) this.getRealDimensions().height;
+        float total_height = (float) getPassengersRidingOffset();
         
         var passenger = this.getPassengers().get(0);
         total_width = Math.max(total_width, passenger.getBbWidth());
