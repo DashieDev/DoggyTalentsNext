@@ -19,6 +19,7 @@ import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.item.WhistleItem.WhistleMode;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogMountData;
+import doggytalents.common.network.packet.data.DogSyncData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
@@ -279,6 +280,17 @@ public class ClientEventHandler {
         var animSeq = DogAnimationRegistry.getSequence(anim);
         var animState = dog.animationManager.animationState;
         return KeyframeAnimationsDelegate.getCurrentAnimatedYRot(dog, animSeq, animState.getAccumulatedTimeMillis(), 1);
+    }
+
+    public static void onDogSyncedDataUpdated(DogSyncData data) {
+        var mc = Minecraft.getInstance();
+        var level = mc.level;
+        if (level == null)
+            return;
+        var e = level.getEntity(data.dogId);
+        if (!(e instanceof Dog dog))
+            return;
+        dog.dogSyncedDataManager.updateFromDataPacketFromServer(data);
     }
 
 }
