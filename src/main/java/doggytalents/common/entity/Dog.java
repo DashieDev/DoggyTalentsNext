@@ -35,6 +35,7 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogAnimationManager;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.entity.datasync.DogDataSyncManager;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
@@ -191,8 +192,6 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Integer> ANIM_SYNC_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
-    private static final Cache<EntityDataAccessor<List<AccessoryInstance>>> ACCESSORIES =  Cache.make(() -> (EntityDataAccessor<List<AccessoryInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ACCESSORY_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<List<TalentInstance>>> TALENTS = Cache.make(() -> (EntityDataAccessor<List<TalentInstance>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.TALENT_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<DogLevel>> DOG_LEVEL = Cache.make(() -> (EntityDataAccessor<DogLevel>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<EnumGender>> GENDER = Cache.make(() -> (EntityDataAccessor<EnumGender>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<EnumMode>> MODE = Cache.make(() -> (EntityDataAccessor<EnumMode>) SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER.get()));
@@ -204,8 +203,6 @@ public class Dog extends AbstractDog {
     private static final Cache<EntityDataAccessor<DogSkinData>> CUSTOM_SKIN = Cache.make(() -> (EntityDataAccessor<DogSkinData>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER.get()));
 
     public static final void initDataParameters() { 
-        ACCESSORIES.get();
-        TALENTS.get();
         DOG_LEVEL.get();
         GENDER.get();
         MODE.get();
@@ -231,6 +228,8 @@ public class Dog extends AbstractDog {
     
         
     public final StatsTracker statsTracker = new StatsTracker();
+    public final DogDataSyncManager dogSyncedDataManager
+        = new DogDataSyncManager(this);
     public final DogOwnerDistanceManager dogOwnerDistanceManager 
         = new DogOwnerDistanceManager(this);
     public final DogMiningCautiousManager dogMiningCautiousManager
@@ -316,8 +315,6 @@ public class Dog extends AbstractDog {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(ACCESSORIES.get(), new ArrayList<>());
-        this.entityData.define(TALENTS.get(), new ArrayList<>());
         this.entityData.define(LAST_KNOWN_NAME, Optional.empty());
         this.entityData.define(DOG_FLAGS, 0);
         this.entityData.define(GENDER.get(), EnumGender.UNISEX);
@@ -644,6 +641,10 @@ public class Dog extends AbstractDog {
     @Override
     public void tick() {
         super.tick();
+
+        if (!this.level().isClientSide) {
+            this.dogSyncedDataManager.tick();
+        }
 
         updateClassicalAnim();
 
@@ -2741,7 +2742,9 @@ public class Dog extends AbstractDog {
         }
 
         //this.markDataParameterDirty(TALENTS.get(), false); // Mark dirty so data is synced to client
-        this.entityData.set(TALENTS.get(), newTlInstLs);
+        this.dogSyncedDataManager.talents().clear();
+        this.dogSyncedDataManager.talents().addAll(newTlInstLs);
+        this.dogSyncedDataManager.setTalentsDirty();
 
         var newAccInstLs = new ArrayList<AccessoryInstance>();
 
@@ -2758,7 +2761,9 @@ public class Dog extends AbstractDog {
         }
 
         //this.markDataParameterDirty(ACCESSORIES.get(), false); // Mark dirty so data is synced to client
-        this.entityData.set(ACCESSORIES.get(), newAccInstLs);
+        this.dogSyncedDataManager.accessories().clear();
+        this.dogSyncedDataManager.accessories().addAll(newAccInstLs);
+        this.dogSyncedDataManager.setAccessoriesDirty();
 
         var artifactsList = new ArrayList<DoggyArtifactItem>(3);
         if (compound.contains("doggy_artifacts", Tag.TAG_LIST)) {
@@ -3111,13 +3116,8 @@ public class Dog extends AbstractDog {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (TALENTS.get().equals(key) || ACCESSORIES.get().equals(key) 
-            || ARTIFACTS.get().equals(key)) {
+        if (ARTIFACTS.get().equals(key)) {
             this.recalculateAlterations();
-        }
-
-        if (TALENTS.get().equals(key)) {
-            this.spendablePoints.markForRefresh();
         }
 
         if (DOG_LEVEL.get().equals(key)) {
@@ -3126,17 +3126,6 @@ public class Dog extends AbstractDog {
             if (h != this.getMaxHealth())
                 this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
             this.maxHealth();
-        }
-
-        if (ACCESSORIES.get().equals(key)) {
-            // If client sort accessories
-            if (this.level().isClientSide) {
-                // Does not recall this notifyDataManagerChange as list object is
-                // still the same, maybe in future MC versions this will change so need to watch out
-                this.clientAccessories = new ArrayList<>(this.getAccessories());
-                this.clientAccessories.sort(AccessoryInstance.RENDER_SORTER);
-                //this.getAccessories().sort(AccessoryInstance.RENDER_SORTER);
-            }
         }
 
         if (DOG_SIZE.get().equals(key)) {
@@ -3165,6 +3154,26 @@ public class Dog extends AbstractDog {
             }
             updateWanderState(mode);
         }
+    }
+
+    public void onTalentsUpdated() {
+        this.recalculateAlterations();
+        this.spendablePoints.markForRefresh();
+    }
+
+    public void onAccessoriesUpdated() {
+        this.recalculateAlterations();
+        this.spendablePoints.markForRefresh();
+        if (this.level().isClientSide) {
+            this.clientAccessories = new ArrayList<>(this.getAccessories());
+            this.clientAccessories.sort(AccessoryInstance.RENDER_SORTER);
+        }
+    }
+
+    @Override
+    public void startSeenByPlayer(ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        this.dogSyncedDataManager.onStartBeingSeenBy(player);
     }
 
     private void updateWanderState(EnumMode mode) {
@@ -3257,7 +3266,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public List<AccessoryInstance> getAccessories() {
-        return this.entityData.get(ACCESSORIES.get());
+        return this.dogSyncedDataManager.accessories();
     }
 
     @Override
@@ -3279,9 +3288,8 @@ public class Dog extends AbstractDog {
             return false;
         }
 
-        this.modifyAccessory(x -> {
-            x.add(accessoryInst);
-        });
+        this.dogSyncedDataManager.accessories().add(accessoryInst);
+        this.dogSyncedDataManager.setAccessoriesDirty();
 
         return true;
     }
@@ -3290,9 +3298,8 @@ public class Dog extends AbstractDog {
     public List<AccessoryInstance> removeAccessories() {
         List<AccessoryInstance> removed = new ArrayList<>(this.getAccessories());
 
-        this.modifyAccessory(x -> {
-            x.clear();
-        });
+        this.dogSyncedDataManager.accessories().clear();
+        this.dogSyncedDataManager.setAccessoriesDirty();
         return removed;
     }
 
@@ -3717,11 +3724,7 @@ public class Dog extends AbstractDog {
     }
 
     public List<TalentInstance> getTalentMap() {
-        return this.entityData.get(TALENTS.get());
-    }
-
-    public void setTalentMap(List<TalentInstance> map) {
-        this.entityData.set(TALENTS.get(), map);
+        return this.dogSyncedDataManager.talents();
     }
 
     public InteractionResult setTalentLevel(Talent talent, int level) {
@@ -3747,10 +3750,8 @@ public class Dog extends AbstractDog {
                 return InteractionResult.PASS;
             }
 
-            this.modifyTalent(x -> {
-                var newTalent = talent.getDefault(level);
-                x.add(newTalent);
-            });            
+            var newTalent = talent.getDefault(level);
+            this.dogSyncedDataManager.talents().add(newTalent);
         } else {
             int previousLevel = inst.level();
             if (previousLevel == level) {
@@ -3762,13 +3763,11 @@ public class Dog extends AbstractDog {
 
             if (level <= 0) {
                 final int remove_id = selected_id;
-                modifyTalent(x -> {
-                    if (remove_id >= 0) x.remove(remove_id);
-                });
-            } else {
-                forceSyncTalents();
+                if (remove_id >= 0) 
+                    this.dogSyncedDataManager.talents().remove(remove_id);
             }
         }
+        this.dogSyncedDataManager.setTalentsDirty();
         return InteractionResult.SUCCESS;
     }
 
@@ -3803,19 +3802,6 @@ public class Dog extends AbstractDog {
         return new ItemStack(removedArtifact);
     }
 
-    public void forceSyncTalents() {
-        var copy_list = new ArrayList<>(this.getTalentMap());
-        this.getTalentMap().clear();
-        this.modifyTalent(x -> x.addAll(copy_list));
-    }
-
-    public void modifyTalent(Consumer<List<TalentInstance>> modify) {
-        this.modifyListSyncedData(TALENTS.get(), modify);
-    }
-
-    public void modifyAccessory(Consumer<List<AccessoryInstance>> modify) {
-        this.modifyListSyncedData(ACCESSORIES.get(), modify);
-    }
 
     public void modifyArtifact(Consumer<List<DoggyArtifactItem>> modify) {
         this.modifyListSyncedData(ARTIFACTS.get(), modify);
@@ -3903,7 +3889,8 @@ public class Dog extends AbstractDog {
         this.setHealth(8);
         this.setDogCustomName(null);
 
-        this.modifyTalent(x -> x.clear());
+        this.dogSyncedDataManager.talents().clear();
+        this.dogSyncedDataManager.setTalentsDirty();
 
         this.setTame(false);
         this.setOwnerUUID(null);
