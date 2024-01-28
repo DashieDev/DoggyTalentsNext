@@ -481,6 +481,16 @@ public class PackPuppyTalent extends TalentInstance {
         collectKillLoot = buf.readBoolean();
     }
 
+    @Override
+    public void updateOptionsFromServer(TalentInstance fromServer) {
+        if (!(fromServer instanceof PackPuppyTalent chest))
+            return;
+        this.setRenderChest(chest.renderChest);
+        this.setPickupItems(chest.pickupItems);
+        this.setOfferFood(chest.offerFood);
+        this.setCollectKillLoot(chest.collectKillLoot);
+    }
+
     public void updateFromPacket(PackPuppyData data) {
         switch (data.type) {
         default:
