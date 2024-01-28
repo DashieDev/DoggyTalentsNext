@@ -34,6 +34,8 @@ public class DoggyToolsPickFirstPacket extends DogPacket<DoggyToolsPickFirstData
         if (!(talentInst instanceof DoggyToolsTalent toolsTalent))
             return;
         toolsTalent.updateFromPacket(data);
+        
+        dogIn.dogSyncedDataManager.markTalentNeedRefresh(toolsTalent);
     }
 
 }

@@ -27,6 +27,11 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
             buf.writeInt(ReadState.ACCESSORIES.getId());
             writeAccessories(accessoriesOptional.get(), buf);
         }
+        var refreshOptionOptional = data.refreshOptions();
+        if (refreshOptionOptional.isPresent()) {
+            buf.writeInt(ReadState.TALENTS_REFRESH_OPTIONS.getId());
+            writeTalents(refreshOptionOptional.get(), buf);
+        }
         buf.writeInt(ReadState.FINISH.getId());
     }
 
@@ -54,16 +59,19 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
         var readState = ReadState.fromId(buf.readInt());
         ArrayList<TalentInstance> talents = null;
         ArrayList<AccessoryInstance> accessories = null;
+        ArrayList<TalentInstance> refreshOptions = null;
         while (readState != ReadState.FINISH) {
             if (readState == ReadState.TALENTS) {
                 talents = readTalents(buf);
             } else if (readState == ReadState.ACCESSORIES) {
                 accessories = readAccessories(buf);
+            } else if (readState == ReadState.TALENTS_REFRESH_OPTIONS) {
+                refreshOptions = readTalents(buf);
             }
             readState = ReadState.fromId(buf.readInt());
         }
 
-        return new DogSyncData(dogId, talents, accessories);
+        return new DogSyncData(dogId, talents, accessories, refreshOptions);
     }
 
     private ArrayList<TalentInstance> readTalents(FriendlyByteBuf buf) {
@@ -102,7 +110,8 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
     public static enum ReadState {
         FINISH(0),
         TALENTS(1),
-        ACCESSORIES(2);
+        ACCESSORIES(2),
+        TALENTS_REFRESH_OPTIONS(3);
 
         private int id;
 

@@ -314,6 +314,13 @@ public class GatePasserTalent extends TalentInstance {
         allowPassingGate = buf.readBoolean();
     }
 
+    @Override
+    public void updateOptionsFromServer(TalentInstance fromServer) {
+        if (!(fromServer instanceof GatePasserTalent gate))
+            return;
+        this.allowPassingGate = gate.allowPassingGate; 
+    }
+
     public void updateFromPacket(GatePasserData data) {
         this.allowPassingGate = data.allowPassingGate;
     }
