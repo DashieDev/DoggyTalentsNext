@@ -251,6 +251,13 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
 
     @Override
+    public void updateOptionsFromServer(TalentInstance fromServer) {
+        if (!(fromServer instanceof DoggyToolsTalent tools))
+            return;
+        this.alwaysPickSlot0 = tools.alwaysPickSlot0;
+    }
+
+    @Override
     public TalentInstance copy() {
         var ret = super.copy();
         if (!(ret instanceof DoggyToolsTalent tools))

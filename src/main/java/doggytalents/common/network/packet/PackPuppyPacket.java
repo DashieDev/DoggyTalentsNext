@@ -35,5 +35,6 @@ public class PackPuppyPacket extends DogPacket<PackPuppyData> {
         if (!(talentInst instanceof PackPuppyTalent packPup))
             return;
         packPup.updateFromPacket(data);
+        dogIn.dogSyncedDataManager.markTalentNeedRefresh(packPup);
     }
 }

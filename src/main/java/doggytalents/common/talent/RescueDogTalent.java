@@ -289,6 +289,13 @@ public class RescueDogTalent extends TalentInstance {
         renderBox = buf.readBoolean();
     }
 
+    @Override
+    public void updateOptionsFromServer(TalentInstance fromServer) {
+        if (!(fromServer instanceof RescueDogTalent rescue))
+            return;
+        this.renderBox = rescue.renderBox;
+    }
+
     public void updateFromPacket(RescueDogRenderData data) {
         renderBox = data.val;
     }

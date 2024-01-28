@@ -17,6 +17,8 @@ public class DogDataSyncManager {
             new ArrayList<>();
     private final ArrayList<AccessoryInstance> accessories = 
         new ArrayList<>();
+    private final ArrayList<TalentInstance> talentsNeedsRefresh =
+        new ArrayList<>();
 
     public DogDataSyncManager(Dog dog) {
         this.dog = dog;
@@ -43,8 +45,12 @@ public class DogDataSyncManager {
         this.dog.onAccessoriesUpdated();
     }
 
+    public void markTalentNeedRefresh(TalentInstance inst) {
+        this.talentsNeedsRefresh.add(inst);
+    }
+
     public void tick() {
-        if (this.accessoriesDirty || this.talentsDirty) 
+        if (this.accessoriesDirty || this.talentsDirty || !this.talentsNeedsRefresh.isEmpty()) 
             broadcastChangesToClients();
     }
 
@@ -54,13 +60,14 @@ public class DogDataSyncManager {
 
     private void sendAllDataTo(ServerPlayer seenBy) {
         PacketHandler.send(PacketDistributor.PLAYER.with(() -> seenBy), 
-            new DogSyncData(this.dog.getId(), talents(), accessories())
+            new DogSyncData(this.dog.getId(), talents(), accessories(), null)
         );
     }
 
     private void broadcastChangesToClients() {
         ArrayList<AccessoryInstance> accessories = null;
         ArrayList<TalentInstance> talents = null;
+        ArrayList<TalentInstance> needRefresh = null;
         if (accessoriesDirty) {
             accessoriesDirty = false;
             accessories = new ArrayList<>(this.accessories());
@@ -68,9 +75,14 @@ public class DogDataSyncManager {
         if (talentsDirty) {
             talentsDirty = false;
             talents = new ArrayList<>(this.talents());
+            this.talentsNeedsRefresh.clear();
+        }
+        if (!this.talentsNeedsRefresh.isEmpty()) {
+            needRefresh = new ArrayList<>(this.talentsNeedsRefresh);
+            this.talentsNeedsRefresh.clear();
         }
         PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> this.dog), 
-            new DogSyncData(this.dog.getId(), talents, accessories)
+            new DogSyncData(this.dog.getId(), talents, accessories, needRefresh)
         );
     }
 
@@ -86,6 +98,16 @@ public class DogDataSyncManager {
             this.talents.clear();
             this.talents.addAll(talents.get());
             dog.onTalentsUpdated();
+        }
+        var refreshOptions = data.refreshOptions();
+        if (refreshOptions.isPresent()) {
+            for (var inst : refreshOptions.get()) {
+                var talent = inst.getTalent();
+                var dogInst = dog.getTalent(talent);
+                if (!dogInst.isPresent())
+                    continue;
+                dogInst.get().updateOptionsFromServer(inst);
+            }
         }
     }
 
