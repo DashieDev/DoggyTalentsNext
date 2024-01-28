@@ -74,6 +74,9 @@ public class FireDrillTalent extends TalentInstance {
             return false;
         if (!dog.readyForNonTrivialAction())
             return false;
+        if (dog.getTarget() != null) {
+            return false;
+        }
         return true;
     }
 
