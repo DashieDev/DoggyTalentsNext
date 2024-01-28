@@ -33,5 +33,6 @@ public class RescueDogRenderPacket extends DogPacket<RescueDogRenderData> {
         if (!(talentInst instanceof RescueDogTalent rescue))
             return;
         rescue.updateFromPacket(data);
+        dogIn.dogSyncedDataManager.markTalentNeedRefresh(rescue);
     }
 }

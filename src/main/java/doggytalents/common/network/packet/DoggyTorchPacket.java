@@ -35,6 +35,7 @@ public class DoggyTorchPacket extends DogPacket<DoggyTorchData> {
         if (!(talentInst instanceof DoggyTorchTalent torchTalent))
             return;
         torchTalent.updateFromPacket(data);
+        dogIn.dogSyncedDataManager.markTalentNeedRefresh(torchTalent);
     }
 
 }

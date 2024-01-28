@@ -83,6 +83,14 @@ public class DoggyTorchTalent extends TalentInstance {
         renderTorch = buf.readBoolean();
     }
 
+    @Override
+    public void updateOptionsFromServer(TalentInstance fromServer) {
+        if (!(fromServer instanceof DoggyTorchTalent torch))
+            return;
+        this.setPlacingTorch(torch.placingTorch);
+        this.setRenderTorch(torch.renderTorch);
+    }
+
     public void updateFromPacket(DoggyTorchData data) {
         switch (data.type) {
         case ALLOW_PLACING:

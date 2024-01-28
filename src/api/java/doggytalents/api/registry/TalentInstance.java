@@ -77,6 +77,10 @@ public class TalentInstance implements IDogAlteration {
         this.setLevel(buf.readInt());
     }
 
+    public void updateOptionsFromServer(TalentInstance fromServer) {
+
+    }
+
     public final void writeInstance(AbstractDog dogIn, CompoundTag compound) {
         ResourceLocation rl = DoggyTalentsAPI.TALENTS.get().getKey(this.talent);
         if (rl != null) {

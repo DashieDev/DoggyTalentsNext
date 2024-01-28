@@ -33,6 +33,8 @@ public class GatePasserPacket extends DogPacket<GatePasserData> {
         if (!(talentInst instanceof GatePasserTalent gate))
             return;
         gate.updateFromPacket(data);
+        
+        dogIn.dogSyncedDataManager.markTalentNeedRefresh(gate);
     }
 
 }
