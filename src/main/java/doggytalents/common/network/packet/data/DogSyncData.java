@@ -13,12 +13,14 @@ public class DogSyncData {
     public final int dogId;
     private ArrayList<TalentInstance> talents = null;
     private ArrayList<AccessoryInstance> accessories = null;
+    private ArrayList<TalentInstance> refreshOptions = null;
 
     public DogSyncData(int dogId, @Nullable ArrayList<TalentInstance> talents,
-        @Nullable ArrayList<AccessoryInstance> accessories) {
+        @Nullable ArrayList<AccessoryInstance> accessories, @Nullable ArrayList<TalentInstance> refreshOptions) {
         this.dogId = dogId;
         this.talents = talents;
         this.accessories = accessories;
+        this.refreshOptions = refreshOptions;
     }
 
     public Optional<ArrayList<AccessoryInstance>> accessories() {
@@ -29,6 +31,8 @@ public class DogSyncData {
         return Optional.ofNullable(talents);
     }
 
-
+    public Optional<ArrayList<TalentInstance>> refreshOptions() {
+        return Optional.ofNullable(refreshOptions);
+    }
 
 }
