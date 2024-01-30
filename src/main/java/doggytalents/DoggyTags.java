@@ -15,6 +15,7 @@ public class DoggyTags {
     public static TagKey<Item> BREEDING_ITEMS = tag("breeding_items");
     public static TagKey<Item> PACK_PUPPY_BLACKLIST = tag("pack_puppy_blacklist");
     public static TagKey<Item> TREATS = tag("treats");
+    public static TagKey<Item> WHITELIST_FOOD = tag("whitelist_food");
 
     public static TagKey<EntityType<?>> DOG_SHOULD_IGNORE = tagEntity("dog_should_ignore");
     public static TagKey<EntityType<?>> DROP_SOY_WHEN_DOG_KILL = tagEntity("drop_soy_when_dog_kill");

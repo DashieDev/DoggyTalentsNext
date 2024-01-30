@@ -19,6 +19,7 @@ import doggytalents.common.data.*;
 import doggytalents.common.entity.BoostingFoodHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.MeatFoodHandler;
+import doggytalents.common.entity.WhitelistFoodHandler;
 import doggytalents.common.entity.DogDrinkMilkHandler;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.lib.Constants;
@@ -124,6 +125,7 @@ public class DoggyTalentsNext {
         FoodHandler.registerHandler(new MeatFoodHandler());
         FoodHandler.registerHandler(new BoostingFoodHandler());
         FoodHandler.registerHandler(new DogDrinkMilkHandler());
+        FoodHandler.registerHandler(new WhitelistFoodHandler());
 
         FoodHandler.registerDynPredicate(HappyEaterTalent.INNER_DYN_PRED);
         //InteractHandler.registerHandler(new HelmetInteractHandler());
