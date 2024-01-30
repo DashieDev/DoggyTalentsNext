@@ -28,13 +28,6 @@ public class PuppyEyesTalent extends TalentInstance {
     }
 
     @Override
-    public TalentInstance copy() {
-        PuppyEyesTalent inst = new PuppyEyesTalent(this.getTalent(), this.level);
-        inst.cooldown = this.cooldown;
-        return inst;
-    }
-
-    @Override
     public void init(AbstractDog dogIn) {
         this.cooldown = dogIn.tickCount;
     }
@@ -52,53 +45,50 @@ public class PuppyEyesTalent extends TalentInstance {
         this.cooldown = dogIn.tickCount + compound.getInt("cooldown");
     }
 
-    // Left in for backwards compatibility for versions <= 2.0.0.5
-    @Override
-    public void onRead(AbstractDog dogIn, CompoundTag compound) {
-        if (compound.contains("charmercharge")) {
-            this.cooldown = dogIn.tickCount + compound.getInt("charmercharge");
-        }
-    }
-
     @Override
     public void livingTick(AbstractDog dogIn) {
-        if (dogIn.tickCount % 40 != 0) {
+        tickGainReputation(dogIn);
+    }
+
+    public void tickGainReputation(AbstractDog dog) {
+        if (dog.tickCount % 40 != 0) {
             return;
         }
 
-        if (dogIn.level.isClientSide || !dogIn.isTame()) {
+        if (dog.level().isClientSide) {
             return;
         }
 
         if (this.level() <= 0) {
             return;
         }
-        int timeLeft = this.cooldown - dogIn.tickCount;
+        int timeLeft = this.cooldown - dog.tickCount;
 
-        if (timeLeft <= 0) {
-            LivingEntity owner = dogIn.getOwner();
+        if (timeLeft > 0) 
+            return; 
+        
+        LivingEntity owner = dog.getOwner();
 
-            // Dog doesn't have owner or is offline
-            if (owner == null) {
-                return;
-            }
-
-            Villager villager = this.getClosestVisibleVillager(dogIn, 5D);
-
-            if (villager != null) {
-                //Gone is the unecessary (and a bit Cringy?) villager dialog and gift mechanic,
-                //players already abuse villages too much 🥴
-
-                //Instead of dropping items, add good gossips based on the level.
-                int add_val = this.level() * 20;
-                villager.getGossips()
-                    .add(owner.getUUID(), GossipType.MINOR_POSITIVE, add_val);
-
-                this.cooldown = dogIn.tickCount + (this.level() >= 5 ? 24000 : 48000);
-            }
+        // Dog doesn't have owner or is offline
+        if (owner == null) {
+            return;
         }
+
+        Villager villager = this.getClosestVisibleVillager(dog, 5D);
+
+        if (villager == null)
+            return;
+
+        //Gone is the unecessary (and a bit Cringy?) villager dialog and gift mechanic,
+        //players already abuse villages too much 🥴
+
+        //Instead of dropping items, add good gossips based on the level.
+        int add_val = this.level() * 20;
+        villager.getGossips()
+            .add(owner.getUUID(), GossipType.MINOR_POSITIVE, add_val);
+
+        this.cooldown = dog.tickCount + (this.level() >= 5 ? 24000 : 48000);
     }
-    
 
     public Villager getClosestVisibleVillager(AbstractDog dogIn, double radiusIn) {
         List<Villager> list = dogIn.level.getEntitiesOfClass(
