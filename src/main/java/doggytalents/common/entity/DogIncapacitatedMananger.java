@@ -49,6 +49,7 @@ public class DogIncapacitatedMananger {
     private boolean appliedIncapChanges = false;
     
     private static final int MAX_BANDAID_COUNT = 8;
+    private float partialRecoverVal = 0;
     private int bandagesCount = 0;
     private int bandageCooldown = 0;
     private int drownPoseTick = 0;
@@ -158,7 +159,7 @@ public class DogIncapacitatedMananger {
         var defeatedDogs = DogUtil.getOtherIncapacitatedDogNearby(this.dog);
         
         for (var d : defeatedDogs) {
-            d.setDogHunger(this.dog.getMaxIncapacitatedHunger());
+            d.setDogIncapValue(0);
             incapacitatedExit();
 
             d.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
@@ -249,7 +250,7 @@ public class DogIncapacitatedMananger {
         var type = sync_state.type;
         switch (type) {
         case BURN:
-            if (dog.getDogHunger() <= 10) {
+            if (dog.getDogIncapValue() <= dog.getMinDogIncapValue() + 10) {
                 for (int i = 0; i < 2; ++i) {
                     float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
                     float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
@@ -272,7 +273,7 @@ public class DogIncapacitatedMananger {
             }
             break;
         case BLOOD:
-            if (dog.getDogHunger() <= 10 && dog.tickCount % 8 == 0) {
+            if (dog.getDogIncapValue() <= dog.getMinDogIncapValue() + 10 && dog.tickCount % 8 == 0) {
                 for (int i = 0; i < 2; ++i) {
                     float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
                     float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
@@ -287,7 +288,7 @@ public class DogIncapacitatedMananger {
             }
             break;
         case DROWN:
-            if (dog.getDogHunger() <= 10 && dog.tickCount % 8 == 0) {
+            if (dog.getDogIncapValue() <= dog.getMinDogIncapValue() + 10 && dog.tickCount % 8 == 0) {
                 for (int i = 0; i < 2; ++i) {
                     float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
                     float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
@@ -328,16 +329,21 @@ public class DogIncapacitatedMananger {
         var dog_b0_state = this.dog.level().getBlockState(this.dog.blockPosition());
         var dog_b0_block = dog_b0_state.getBlock();
 
-        if (this.dog.getDogHunger() >= this.dog.getMaxIncapacitatedHunger()) {
+        if (this.dog.getDogIncapValue() >= 0) {
             incapacitatedExit();
             return;
         }
 
         if (dog_b0_block == Blocks.AIR) {
-            this.dog.addHunger(0.001f*this.recoveryMultiplier);
+            this.partialRecoverVal += (0.001f*this.recoveryMultiplier);
         } else if (dog_b0_block == DoggyBlocks.DOG_BED.get()
             || dog_b0_state.is(BlockTags.BEDS)) {
             incapacitatedHealWithBed(owner);
+        }
+
+        if (this.partialRecoverVal >= 1f) {
+            this.dog.setDogIncapValue(this.dog.getDogIncapValue() + 1);
+            this.partialRecoverVal = 0;
         }
     }
         
@@ -346,6 +352,7 @@ public class DogIncapacitatedMananger {
         this.dog.maxHealth();
         this.dog.setMode(EnumMode.DOCILE);
         this.dog.setDogHunger(this.dog.getMaxHunger());
+        this.dog.setDogIncapValue(0);
         this.dog.setOrderedToSit(true);
         this.dog.setIncapSyncState(IncapacitatedSyncState.NONE);
         this.dog.triggerAnimationAction(new DogBounceAction(dog));
@@ -363,11 +370,11 @@ public class DogIncapacitatedMananger {
     }
 
     private void incapacitatedHealWithBed(LivingEntity owner) {
-        this.dog.addHunger(0.002f*this.recoveryMultiplier);
+        this.partialRecoverVal += (0.002f*this.recoveryMultiplier);
 
         if (owner == null) return;
         if (this.dog.distanceToSqr(owner) > 100) return;
-        this.dog.addHunger(0.02f*this.recoveryMultiplier);
+        this.partialRecoverVal += (0.02f*this.recoveryMultiplier);
 
         if (!(this.dog.level() instanceof ServerLevel)) return;
         if (this.dog.tickCount % 10 != 0) return;
@@ -383,10 +390,10 @@ public class DogIncapacitatedMananger {
     private void healWithBandaid(BandaidState state) {
         switch (state) {
         case FULL:
-            this.dog.addHunger(0.02f*this.recoveryMultiplier);
+            this.partialRecoverVal += (0.02f*this.recoveryMultiplier);
             break;
         case HALF:
-            this.dog.addHunger(0.01f*this.recoveryMultiplier);
+            this.partialRecoverVal += (0.01f*this.recoveryMultiplier);
             break;
         default:
             break;
