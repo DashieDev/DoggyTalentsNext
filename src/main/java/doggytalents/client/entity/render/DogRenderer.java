@@ -171,7 +171,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         String tip = dog.getMode().getTip();
         var hunger = Mth.ceil(
             (dog.isDefeated()?
-            (dog.getDogHunger() - dog.getMaxIncapacitatedHunger()) :
+            dog.getDogIncapValue() :
             dog.getDogHunger())
         );
 
@@ -179,9 +179,12 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
             && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
 
-        MutableComponent label = ComponentUtil.translatable(tip);
-        var hunger_c1 = ComponentUtil.literal("(" + hunger + ")");
-        if (dog.getDogHunger() <= 10 && flag1) {
+        var label = Component.translatable(tip);
+        var hunger_c1 = Component.literal("(" + hunger + ")");
+        boolean hightlight_red = 
+            (dog.getDogHunger() <= 10 && flag1)
+            || dog.isDefeated();
+        if (hightlight_red) {
             hunger_c1.withStyle(Style.EMPTY.withColor(0xff3636));
         }
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get() && !dog.isDefeated())

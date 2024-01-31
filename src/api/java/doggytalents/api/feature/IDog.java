@@ -48,6 +48,10 @@ public interface IDog {
     public DogSize getDogSize();
     public void setDogSize(DogSize size);
 
+    public int getMinDogIncapValue();
+    public int getDogIncapValue();
+    public void setDogIncapValue(int val);
+
     public float getMaxHunger();
     public float getDogHunger();
     public void addHunger(float add);

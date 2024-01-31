@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 
 public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
@@ -88,7 +89,7 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
             texture_rl = Resources.INCAPACITATED_LESS_GRAPHIC;
         }
         if (texture_rl == null) return;
-        var alpha = (float) (dog.getMaxIncapacitatedHunger()-dog.getDogHunger())/dog.getMaxIncapacitatedHunger();
+        var alpha = 1f - getHealingProgress(dog);
         renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
         
         //Bandaid layer
@@ -107,6 +108,14 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
 
         if (bandaid_texture_rl != null)
         renderTranslucentModel(dogModel, bandaid_texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, 1);
+    }
+
+    private float getHealingProgress(Dog dog) {
+        var min_incap_val = dog.getMinDogIncapValue();
+        var required_amount_to_healed = 0 - min_incap_val;
+        var current_to_healed = dog.getDogIncapValue() - min_incap_val;
+        var ret = ((float)current_to_healed)/((float)required_amount_to_healed);
+        return Mth.clamp(ret, 0, 1);
     }
 
     public static <T extends LivingEntity> void renderTranslucentModel(EntityModel<T> p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, T p_117382_, float p_117383_, float p_117384_, float p_117385_, float opascity) {

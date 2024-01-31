@@ -187,6 +187,7 @@ public class Dog extends AbstractDog {
    
     private static final EntityDataAccessor<ItemStack> BONE_VARIANT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.ITEM_STACK);
 
+    private static final EntityDataAccessor<Integer> INCAP_VAL = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ANIM_SYNC_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
 
@@ -327,6 +328,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(ARTIFACTS.get(), new ArrayList<DoggyArtifactItem>(3));
         this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
         this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+        this.entityData.define(INCAP_VAL, 0);
         this.entityData.define(ANIMATION, 0);
         this.entityData.define(ANIM_SYNC_TIME, 0);
     }
@@ -2420,6 +2422,8 @@ public class Dog extends AbstractDog {
         this.setHealth(1);
         this.setMode(EnumMode.INCAPACITATED);
         this.setDogHunger(0);
+        this.setDogIncapValue(this.getMinDogIncapValue());
+        
         this.unRide();
         createAndSetIncapSyncState(source);
         if (this.isInWater() || this.isInLava()) {
@@ -3397,6 +3401,21 @@ public class Dog extends AbstractDog {
 
     public void setBowlPos(ResourceKey<Level> registryKey, Optional<BlockPos> pos) {
         this.entityData.set(DOG_BOWL_LOCATION.get(), this.entityData.get(DOG_BOWL_LOCATION.get()).copy().set(registryKey, pos));
+    }
+
+    @Override
+    public int getMinDogIncapValue() {
+        return -64;
+    }
+
+    @Override
+    public int getDogIncapValue() {
+        return this.entityData.get(INCAP_VAL);
+    }
+
+    @Override
+    public void setDogIncapValue(int val) {
+        this.entityData.set(INCAP_VAL, val);
     }
 
     @Override
@@ -4732,10 +4751,6 @@ public class Dog extends AbstractDog {
         } else {
             return 1.0f;
         }
-    }
-
-    public int getMaxIncapacitatedHunger() {
-        return 64;
     }
 
     public StatsTracker getStatTracker() {
