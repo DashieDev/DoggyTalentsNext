@@ -2404,6 +2404,8 @@ public class Dog extends AbstractDog {
         }
     }
 
+    
+
     private boolean checkAndHandleIncapacitated(DamageSource cause) {
         if (this.level().isClientSide)
             return false;
@@ -3413,7 +3415,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public int getDefaultInitIncapVal() {
-        return -64;
+        return 64;
     }
 
     @Override
