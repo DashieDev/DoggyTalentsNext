@@ -111,7 +111,7 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
     }
 
     private float getHealingProgress(Dog dog) {
-        var min_incap_val = dog.getMinDogIncapValue();
+        var min_incap_val = dog.getDefaultInitIncapVal();
         var required_amount_to_healed = 0 - min_incap_val;
         var current_to_healed = dog.getDogIncapValue() - min_incap_val;
         var ret = ((float)current_to_healed)/((float)required_amount_to_healed);

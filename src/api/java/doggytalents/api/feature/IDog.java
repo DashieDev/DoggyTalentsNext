@@ -48,7 +48,7 @@ public interface IDog {
     public DogSize getDogSize();
     public void setDogSize(DogSize size);
 
-    public int getMinDogIncapValue();
+    public int getDefaultInitIncapVal();
     public int getDogIncapValue();
     public void setDogIncapValue(int val);
 
