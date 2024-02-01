@@ -89,7 +89,7 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
             texture_rl = Resources.INCAPACITATED_LESS_GRAPHIC;
         }
         if (texture_rl == null) return;
-        var alpha = 1f - getHealingProgress(dog);
+        var alpha = getInjureOpascity(dog);
         renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
         
         //Bandaid layer
@@ -110,11 +110,14 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
         renderTranslucentModel(dogModel, bandaid_texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, 1);
     }
 
-    private float getHealingProgress(Dog dog) {
-        var min_incap_val = dog.getDefaultInitIncapVal();
-        var required_amount_to_healed = 0 - min_incap_val;
-        var current_to_healed = dog.getDogIncapValue() - min_incap_val;
-        var ret = ((float)current_to_healed)/((float)required_amount_to_healed);
+    private float getInjureOpascity(Dog dog) {
+        var default_val = dog.getDefaultInitIncapVal();
+        var dog_val = dog.getDogIncapValue();
+        if (default_val <= 0f)
+            return 1f;
+        if (dog_val >= default_val)
+            return 0f;
+        var ret = ((float)dog_val)/((float)default_val);
         return Mth.clamp(ret, 0, 1);
     }
 
