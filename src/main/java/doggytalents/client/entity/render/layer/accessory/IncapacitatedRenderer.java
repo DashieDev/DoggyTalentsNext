@@ -114,9 +114,9 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
         var default_val = dog.getDefaultInitIncapVal();
         var dog_val = dog.getDogIncapValue();
         if (default_val <= 0f)
-            return 1f;
-        if (dog_val >= default_val)
             return 0f;
+        if (dog_val >= default_val)
+            return 1f;
         var ret = ((float)dog_val)/((float)default_val);
         return Mth.clamp(ret, 0, 1);
     }
