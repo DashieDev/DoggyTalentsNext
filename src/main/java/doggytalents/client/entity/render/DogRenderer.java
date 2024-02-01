@@ -171,7 +171,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         String tip = dog.getMode().getTip();
         var hunger = Mth.ceil(
             (dog.isDefeated()?
-            dog.getDogIncapValue() :
+            -dog.getDogIncapValue() :
             dog.getDogHunger())
         );
 
