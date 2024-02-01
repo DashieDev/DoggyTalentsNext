@@ -2443,6 +2443,7 @@ public class Dog extends AbstractDog {
         this.setDogHunger(0);
         this.setDogIncapValue(this.getDefaultInitIncapVal());
         
+        this.getNavigation().stop();
         this.unRide();
         createAndSetIncapSyncState(source);
         if (this.isInWater() || this.isInLava()) {
