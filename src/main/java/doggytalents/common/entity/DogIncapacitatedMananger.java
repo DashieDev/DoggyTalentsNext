@@ -251,7 +251,7 @@ public class DogIncapacitatedMananger {
         var type = sync_state.type;
         switch (type) {
         case BURN:
-            if (dog.getDogIncapValue() <= dog.getMinDogIncapValue() + 10) {
+            if (dog.getDogIncapValue() <= dog.getDefaultInitIncapVal() + 10) {
                 for (int i = 0; i < 2; ++i) {
                     float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
                     float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
@@ -274,7 +274,7 @@ public class DogIncapacitatedMananger {
             }
             break;
         case BLOOD:
-            if (dog.getDogIncapValue() <= dog.getMinDogIncapValue() + 10 && dog.tickCount % 8 == 0) {
+            if (dog.getDogIncapValue() <= dog.getDefaultInitIncapVal() + 10 && dog.tickCount % 8 == 0) {
                 for (int i = 0; i < 2; ++i) {
                     float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
                     float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
@@ -289,7 +289,7 @@ public class DogIncapacitatedMananger {
             }
             break;
         case DROWN:
-            if (dog.getDogIncapValue() <= dog.getMinDogIncapValue() + 10 && dog.tickCount % 8 == 0) {
+            if (dog.getDogIncapValue() <= dog.getDefaultInitIncapVal() + 10 && dog.tickCount % 8 == 0) {
                 for (int i = 0; i < 2; ++i) {
                     float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
                     float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
@@ -315,6 +315,11 @@ public class DogIncapacitatedMananger {
      * 
      */
     public void incapacitatedTick() {
+        if (this.dog.getDogIncapValue() >= 0) {
+            incapacitatedExit();
+            return;
+        }
+
         // 3 days max 60 min = 72 000 ticks
 
         var incap_state = dog.getIncapSyncState();
@@ -329,11 +334,6 @@ public class DogIncapacitatedMananger {
         var owner = this.dog.getOwner();
         var dog_b0_state = this.dog.level.getBlockState(this.dog.blockPosition());
         var dog_b0_block = dog_b0_state.getBlock();
-
-        if (this.dog.getDogIncapValue() >= 0) {
-            incapacitatedExit();
-            return;
-        }
 
         if (dog_b0_block == Blocks.AIR) {
             this.partialRecoverVal += (0.001f*this.recoveryMultiplier);

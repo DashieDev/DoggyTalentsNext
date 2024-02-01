@@ -2422,7 +2422,7 @@ public class Dog extends AbstractDog {
         this.setHealth(1);
         this.setMode(EnumMode.INCAPACITATED);
         this.setDogHunger(0);
-        this.setDogIncapValue(this.getMinDogIncapValue());
+        this.setDogIncapValue(this.getDefaultInitIncapVal());
         
         this.unRide();
         createAndSetIncapSyncState(source);
@@ -3404,7 +3404,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public int getMinDogIncapValue() {
+    public int getDefaultInitIncapVal() {
         return -64;
     }
 
