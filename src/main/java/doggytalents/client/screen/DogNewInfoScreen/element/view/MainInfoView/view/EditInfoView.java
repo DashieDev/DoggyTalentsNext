@@ -390,9 +390,8 @@ public class EditInfoView extends AbstractElement {
         }
 
         private void addEditNameBox(int x, int y, int w, int h) {
-            this.nameEdit = new EditBox(this.font, x, y, w, h, ComponentUtil.translatable("dogInfo.enterName"));
-            nameEdit.setFocus(false);
-            nameEdit.setMaxLength(32);
+            this.nameEdit = new EditBox(this.font, x, y, w, h, Component.translatable("dogInfo.enterName"));
+            nameEdit.setMaxLength(Dog.MAX_NAME_LEN);
             nameEdit.setResponder(s -> {
                 if (this.applyButton == null) return;
                 if (this.applyButton.active) return;
