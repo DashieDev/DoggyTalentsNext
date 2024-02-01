@@ -2548,6 +2548,7 @@ public class Dog extends AbstractDog {
         compound.putString("mode", this.getMode().getSaveName());
         compound.putString("dogGender", this.getGender().getSaveName());
         compound.putFloat("dogHunger", this.getDogHunger());
+        compound.putInt("dogIncapacitatedValue", this.getDogIncapValue());
         this.getOwnersName().ifPresent((comp) -> {
             NBTUtil.putTextComponent(compound, "lastKnownOwnerName", comp);
         });
@@ -2808,6 +2809,7 @@ public class Dog extends AbstractDog {
             }
 
             this.setHungerDirectly(compound.getFloat("dogHunger"));
+            this.setDogIncapValue(compound.getInt("dogIncapacitatedValue"));
             this.setOwnersName(NBTUtil.getTextComponent(compound, "lastKnownOwnerName"));
             this.setWillObeyOthers(compound.getBoolean("willObey"));
             this.setCanPlayersAttack(compound.getBoolean("friendlyFire"));
