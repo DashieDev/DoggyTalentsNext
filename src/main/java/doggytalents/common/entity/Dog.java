@@ -2028,6 +2028,22 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public void setLeashedTo(Entity p_21464_, boolean p_21465_) {
+        return;
+    }
+
+    @Override
+    public boolean isLeashed() {
+        return false;
+    }
+
+    @Override
+    @Nullable
+    public Entity getLeashHolder() {
+        return null;
+    }
+
+    @Override
     public void setUUID(UUID uniqueIdIn) {
 
         // If the UUID is changed remove old one and add new one
