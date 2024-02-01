@@ -82,6 +82,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -2445,7 +2446,7 @@ public class Dog extends AbstractDog {
         this.setHealth(1);
         this.setMode(EnumMode.INCAPACITATED);
         this.setDogHunger(0);
-        this.setDogIncapValue(this.getDefaultInitIncapVal());
+        this.setDogIncapValue(this.getInitalDogIncapVal(source));
         
         this.getNavigation().stop();
         this.unRide();
@@ -2463,6 +2464,24 @@ public class Dog extends AbstractDog {
 
         this.wetSource = WetSource.NONE;
         this.finishShaking();
+    }
+
+    private int getInitalDogIncapVal(DamageSource source) {
+        var difficulty = this.level().getDifficulty();
+        if (difficulty == Difficulty.PEACEFUL)
+            return this.getDefaultInitIncapVal()/2;
+        if (difficulty == Difficulty.EASY)
+            return this.getDefaultInitIncapVal();
+        var fatal_damage = this.lastHurt;
+        if (fatal_damage <= 0)
+            return this.getDefaultInitIncapVal();
+        fatal_damage = getDamageAfterArmorAbsorb(source, fatal_damage);
+        fatal_damage = getDamageAfterMagicAbsorb(source, fatal_damage);
+        if (fatal_damage <= 0)
+            return this.getDefaultInitIncapVal();
+        int multipler = difficulty == Difficulty.HARD ? 2 : 1;
+        int additional_incap = Mth.floor(multipler * fatal_damage);
+        return this.getDefaultInitIncapVal() + additional_incap;
     }
 
     private void sendIncapacitatedMsg(LivingEntity owner, DamageSource source) {
@@ -3437,12 +3456,18 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public int getMaxDogIncapVal() {
+        return 256;
+    }
+
+    @Override
     public int getDogIncapValue() {
         return this.entityData.get(INCAP_VAL);
     }
 
     @Override
     public void setDogIncapValue(int val) {
+        val = Mth.clamp(val, 0, getMaxDogIncapVal());
         this.entityData.set(INCAP_VAL, val);
     }
 
