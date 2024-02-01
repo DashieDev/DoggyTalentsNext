@@ -2134,8 +2134,23 @@ public class Dog extends AbstractDog {
     public void setCustomName(@Nullable Component name) {
         if (!authorizedChangingName)
             return;
+
+        name = checkDogNameLength(name);
         super.setCustomName(name);
     }    
+
+    public static int MAX_NAME_LEN = 32;
+    private Component checkDogNameLength(Component name) {
+        if (name == null)
+            return null;
+        var str = name.getString();
+        if (str.length() <= MAX_NAME_LEN)
+            return name;
+        var new_str = str.substring(0, MAX_NAME_LEN);
+        var new_name = Component.literal(new_str)
+            .withStyle(name.getStyle());
+        return new_name;
+    }
 
     public void setDogCustomName(@Nullable Component name) {
         this.authorizedChangingName = true;

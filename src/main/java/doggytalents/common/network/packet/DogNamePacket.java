@@ -13,13 +13,13 @@ public class DogNamePacket extends DogPacket<DogNameData> {
     @Override
     public void encode(DogNameData data, FriendlyByteBuf buf) {
         super.encode(data, buf);
-        buf.writeUtf(data.name, 64);
+        buf.writeUtf(data.name, Dog.MAX_NAME_LEN);
     }
 
     @Override
     public DogNameData decode(FriendlyByteBuf buf) {
         int entityId = buf.readInt();
-        String name = buf.readUtf(64);
+        String name = buf.readUtf(Dog.MAX_NAME_LEN);
         return new DogNameData(entityId, name);
     }
 
