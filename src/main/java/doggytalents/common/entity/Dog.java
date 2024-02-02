@@ -2831,7 +2831,7 @@ public class Dog extends AbstractDog {
 
         try {
             // Does what notifyDataManagerChange would have done but this way only does it once
-            this.recalculateAlterations();
+            this.refreshAlterations();
             this.spendablePoints.markForRefresh();
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to init alteration: " + e.getMessage());
@@ -3168,7 +3168,7 @@ public class Dog extends AbstractDog {
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
         if (ARTIFACTS.get().equals(key)) {
-            this.recalculateAlterations();
+            this.refreshAlterations();
         }
 
         if (DOG_LEVEL.get().equals(key)) {
@@ -3208,12 +3208,12 @@ public class Dog extends AbstractDog {
     }
 
     public void onTalentsUpdated() {
-        this.recalculateAlterations();
+        this.refreshAlterations();
         this.spendablePoints.markForRefresh();
     }
 
     public void onAccessoriesUpdated() {
-        this.recalculateAlterations();
+        this.refreshAlterations();
         this.spendablePoints.markForRefresh();
         if (this.level().isClientSide) {
             this.clientAccessories = new ArrayList<>(this.getAccessories());
@@ -3258,7 +3258,7 @@ public class Dog extends AbstractDog {
         return false;
     }
 
-    public void recalculateAlterations() {
+    public void refreshAlterations() {
         //safely remove all alterations
         for (var inst : this.alterations) {
             inst.remove(this);
