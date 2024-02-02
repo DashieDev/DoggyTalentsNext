@@ -2836,8 +2836,6 @@ public class Dog extends AbstractDog {
         this.entityData.set(ARTIFACTS.get(), artifactsList);
 
         try {
-            // Does what notifyDataManagerChange would have done but this way only does it once
-            this.refreshAlterations();
             this.spendablePoints.markForRefresh();
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to init alteration: " + e.getMessage());
