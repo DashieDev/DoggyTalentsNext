@@ -41,8 +41,7 @@ public class DogInfoNavBarElement extends AbstractElement {
             var title = ComponentUtil.translatable(tab.unlocalizedTitle);
             int buttonWidth = font.width(title);
             var activeTab = 
-                Store.get(getScreen())
-                .getStateOrDefault(
+                getStateAndSubscribesTo(
                     ActiveTabSlice.class,
                     ActiveTabSlice.Tab.class, ActiveTabSlice.Tab.HOME);
             if (tab == activeTab) {

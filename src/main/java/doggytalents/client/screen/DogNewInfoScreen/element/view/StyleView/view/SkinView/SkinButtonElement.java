@@ -55,7 +55,7 @@ public class SkinButtonElement extends AbstractElement {
     @Override
     public AbstractElement init() {
         showInfo = 
-            Store.get(getScreen()).getStateOrDefault(
+            getStateAndSubscribesTo(
                 ActiveSkinSlice.class, ActiveSkinSlice.class, 
                 new ActiveSkinSlice()).showInfo;
         

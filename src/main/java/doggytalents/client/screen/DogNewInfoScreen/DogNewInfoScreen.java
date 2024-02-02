@@ -186,7 +186,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             .setPosition(PosType.FIXED, 0, 0)
             .setSize(this.width, this.height - 20);
         this.addRenderableWidget(upperView);
-        var selectedTab = Store.get(this).getStateOrDefault(
+        var selectedTab = getStateAndSubscribesTo(
             ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
             null
         );

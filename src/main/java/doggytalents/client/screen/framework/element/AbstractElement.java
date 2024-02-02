@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.components.Widget;
+import doggytalents.client.screen.framework.AbstractSlice;
+import doggytalents.client.screen.framework.Store;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.ContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
@@ -23,6 +23,7 @@ public abstract class AbstractElement extends GuiComponent implements Widget, Co
 
     private final @Nullable AbstractElement parent;
     private final ArrayList<GuiEventListener> child = new ArrayList<>();
+    private final ArrayList<Class<? extends AbstractSlice>> subscribedTo = new ArrayList<>();
     private final Screen screen;
 
     private ElementPosition position;
@@ -245,6 +246,39 @@ public abstract class AbstractElement extends GuiComponent implements Widget, Co
     
     public void onGlobalKeyRelease(int keyCode, int scanCode, int modifiers) {
 
+    }
+
+    public void onStoreUpdated(List<Class<? extends AbstractSlice>> changedSlices) {
+        boolean needsReRender = false;
+        for (var slice : changedSlices) {
+            if (subscribedTo.contains(slice)) {
+                needsReRender = true;
+                break;
+            }
+        }
+        if (needsReRender) {
+            reRender();
+            return;
+        }
+        for (var c : this.child) {
+            if (c instanceof AbstractElement e) {
+                e.onStoreUpdated(changedSlices);
+            }
+        }
+    }
+
+    public void reRender() {
+        if (this.child.contains(getFocused()))
+            setFocused(null);
+        this.child.clear();
+        this.init();
+    }
+
+    public <T extends Object, S extends AbstractSlice> T getStateAndSubscribesTo(
+        Class<S> slice, Class<T> cast, T defaultState) {
+        if (!this.subscribedTo.contains(slice))
+            this.subscribedTo.add(slice);
+        return Store.get(getScreen()).getStateOrDefault(slice, cast, defaultState); 
     }
 
     @Override
