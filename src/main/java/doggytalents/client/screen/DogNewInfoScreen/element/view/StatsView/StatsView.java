@@ -35,8 +35,7 @@ public class StatsView extends AbstractElement {
     @Override
     public AbstractElement init() {
 
-        var tab = Store.get(getScreen())
-            .getStateOrDefault(StatsViewPanelSlice.class, 
+        var tab = getStateAndSubscribesTo(StatsViewPanelSlice.class, 
                 StatsViewPanelTab.class, StatsViewPanelTab.GENERAL);
 
         int sizeX = this.getSizeX();

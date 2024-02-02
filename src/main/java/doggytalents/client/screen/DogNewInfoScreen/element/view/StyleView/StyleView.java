@@ -30,8 +30,7 @@ public class StyleView extends AbstractElement {
     @Override
     public AbstractElement init() {
 
-        var tab = Store.get(getScreen())
-            .getStateOrDefault(StyleViewPanelSlice.class, 
+        var tab = getStateAndSubscribesTo(StyleViewPanelSlice.class, 
                 StyleViewPanelTab.class, StyleViewPanelTab.ACCESSORIES);
 
         int sizeX = this.getSizeX();
