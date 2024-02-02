@@ -31,8 +31,7 @@ public class MainInfoView extends AbstractElement {
     @Override
     public AbstractElement init() {
         
-        var tab = Store.get(getScreen())
-            .getStateOrDefault(MainPanelSlice.class, 
+        var tab = getStateAndSubscribesTo(MainPanelSlice.class, 
             MainTab.class, MainTab.MAIN);
         
         switch (tab) {
