@@ -33,17 +33,15 @@ public class TalentListPanel extends AbstractElement {
     @Override
     public AbstractElement init() {
         this.getPosition().setChildDirection(ChildDirection.COL);
-        var pageIndex = Store.get(getScreen()).getStateOrDefault(
+        var pageIndex = getStateAndSubscribesTo(
             TalentListPageCounterSlice.class, 
             Integer.class, 0);
-        var talentList = Store.get(getScreen())
-            .getStateOrDefault(
+        var talentList = getStateAndSubscribesTo(
                 TalentListSlice.class, 
                 TalentListData.class, 
                 new TalentListData(List.of())
             );
-        var selectedTalent = Store.get(getScreen())
-            .getStateOrDefault(ActiveTalentDescSlice.class, 
+        var selectedTalent = getStateAndSubscribesTo(ActiveTalentDescSlice.class, 
             ActiveTalentDescSlice.class, 
             new ActiveTalentDescSlice(null)).activeTalent;
         var talentListEntries =

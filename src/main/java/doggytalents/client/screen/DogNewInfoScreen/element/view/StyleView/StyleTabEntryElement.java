@@ -25,7 +25,7 @@ public class StyleTabEntryElement extends AbstractElement {
     @Override
     public AbstractElement init() {
         var activeTab =
-            Store.get(getScreen()).getStateOrDefault(
+            getStateAndSubscribesTo(
                 StyleViewPanelSlice.class, 
                 StyleViewPanelTab.class,
                 StyleViewPanelTab.ACCESSORIES

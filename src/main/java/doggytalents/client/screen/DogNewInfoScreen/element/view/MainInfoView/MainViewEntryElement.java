@@ -24,9 +24,8 @@ public class MainViewEntryElement extends AbstractElement {
 
     @Override
     public AbstractElement init() {
-        var activeTab = Store.get(getScreen())
-        .getStateOrDefault(MainPanelSlice.class, 
-        MainTab.class, MainTab.MAIN);
+        var activeTab = getStateAndSubscribesTo(MainPanelSlice.class, 
+            MainTab.class, MainTab.MAIN);
         var tabs = MainTab.values();
         var tabButtons = new ArrayList<TabPanelButton>();
         for (var tab : tabs) {

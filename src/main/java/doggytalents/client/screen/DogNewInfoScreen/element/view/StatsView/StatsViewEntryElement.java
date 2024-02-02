@@ -27,7 +27,7 @@ public class StatsViewEntryElement extends AbstractElement {
     @Override
     public AbstractElement init() {
         var activeTab =
-            Store.get(getScreen()).getStateOrDefault(
+            getStateAndSubscribesTo(
                 StatsViewPanelSlice.class, 
                 StatsViewPanelTab.class,
                 StatsViewPanelTab.GENERAL

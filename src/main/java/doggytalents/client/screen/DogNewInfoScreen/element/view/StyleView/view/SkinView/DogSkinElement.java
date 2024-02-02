@@ -54,7 +54,7 @@ public class DogSkinElement extends AbstractElement {
 
         
         this.showInfo = 
-            Store.get(getScreen()).getStateOrDefault(
+            getStateAndSubscribesTo(
                 ActiveSkinSlice.class, ActiveSkinSlice.class, 
                 new ActiveSkinSlice()).showInfo;
         if (!this.showInfo) 
