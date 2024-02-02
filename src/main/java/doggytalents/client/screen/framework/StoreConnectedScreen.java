@@ -1,5 +1,6 @@
 package doggytalents.client.screen.framework;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -12,7 +13,10 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-public class StoreConnectedScreen extends Screen {
+public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
+
+    private final ArrayList<Class<? extends AbstractSlice>> subscribedTo = new ArrayList<>();
+    private boolean isResizing = false;
     
     protected StoreConnectedScreen(Component title) {
         super(title);
@@ -31,11 +35,16 @@ public class StoreConnectedScreen extends Screen {
         Store.get(this).dispatchAll(
             new UIAction(CommonUIActionTypes.RESIZE, new Object())
         );
+        this.isResizing = true;
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         Store.get(this).update();
+        if (this.isResizing) {
+            reRender();
+            this.isResizing = false;
+        }
         if (doRenderBackground())
             this.renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, pTicks);
@@ -82,5 +91,41 @@ public class StoreConnectedScreen extends Screen {
     public boolean doRenderBackground() { return true; }
 
     public List<Class<? extends AbstractSlice>> getSlices() { return List.of(); }
+
+    @Override
+    public void onStoreUpdated(List<Class<? extends AbstractSlice>> changedSlices) {
+        if (this.isResizing)
+            return;
+        boolean needsReRender = false;
+        for (var slice : changedSlices) {
+            if (subscribedTo.contains(slice)) {
+                needsReRender = true;
+                break;
+            }
+        }
+        if (needsReRender) {
+            reRender();
+            return;
+        }
+        var childrens = this.children();
+        for (var c : childrens) {
+            if (c instanceof AbstractElement e) {
+                e.onStoreUpdated(changedSlices);
+            }
+        }
+    }
+
+    public void reRender() {
+        this.setFocused(null);
+        this.clearWidgets();
+        this.init();
+    }
+
+    public <T extends Object, S extends AbstractSlice> T getStateAndSubscribesTo(
+        Class<S> slice, Class<T> cast, T defaultState) {
+        if (!this.subscribedTo.contains(slice))
+            this.subscribedTo.add(slice);
+        return Store.get(this).getStateOrDefault(slice, cast, defaultState); 
+    }
 
 }

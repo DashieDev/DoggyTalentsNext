@@ -17,6 +17,7 @@ public class Store {
 
     //Re-render listener.
     private final Screen screen;
+    private IStoreSubscriber subscriber;
 
     private final Map<Class<? extends AbstractSlice>, StoreValue> applicationStates
         = Maps.newConcurrentMap();
@@ -67,30 +68,37 @@ public class Store {
     public void update() {
         if (this.dispatchedAction.isEmpty())
             return;
+        var changedSlices = new ArrayList<Class<? extends AbstractSlice>>();
         for (var action : this.dispatchedAction) {
-            processUIAction(action);
+            processUIAction(action, changedSlices);
         }
         this.dispatchedAction.clear();
-        this.screen.init(
-            this.screen.getMinecraft(), 
-            this.screen.width, 
-            this.screen.height
-        );
+        if (!changedSlices.isEmpty()) {
+            this.subscriber.onStoreUpdated(changedSlices);
+        }
     }
 
-    private void processUIAction(UIAction action) {
+    private void processUIAction(UIAction action, ArrayList<Class<? extends AbstractSlice>> changedSlices) {
         var targetSlice = action.targetSlice;
         if (targetSlice == null) {
             for (var entry : this.applicationStates.entrySet()) {
                 var storeValue = entry.getValue();
                 if (storeValue == null) return;
+                var oldState = storeValue.state;
                 storeValue.state = storeValue.worker.reducer(storeValue.state, action);
+                if (oldState != storeValue.state) {
+                    changedSlices.add(entry.getKey());
+                }
             }
             return;
         }
         var storeValue = this.applicationStates.get(targetSlice);
         if (storeValue == null) return;
+        var oldState = storeValue.state;
         storeValue.state = storeValue.worker.reducer(storeValue.state, action);
+        if (oldState != storeValue.state) {
+            changedSlices.add(targetSlice);
+        }
     }
 
     public <T extends Object, S extends AbstractSlice> T getStateOrDefault(
@@ -106,8 +114,12 @@ public class Store {
     public static Store get(Screen screen) {
         if (INSTANCE == null) {
             INSTANCE = new Store(screen);
+            if (screen instanceof IStoreSubscriber sub)
+                INSTANCE.subscriber = sub;
         } else if (screen != INSTANCE.screen) {
             INSTANCE = new Store(screen);
+            if (screen instanceof IStoreSubscriber sub)
+                INSTANCE.subscriber = sub;
         }
         return INSTANCE;
     }

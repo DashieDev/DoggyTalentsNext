@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import doggytalents.client.screen.framework.AbstractSlice;
+import doggytalents.client.screen.framework.Store;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.ContainerEventHandler;
@@ -23,6 +25,7 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
 
     private final @Nullable AbstractElement parent;
     private final ArrayList<GuiEventListener> child = new ArrayList<>();
+    private final ArrayList<Class<? extends AbstractSlice>> subscribedTo = new ArrayList<>();
     private final Screen screen;
 
     private ElementPosition position;
@@ -245,6 +248,39 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     
     public void onGlobalKeyRelease(int keyCode, int scanCode, int modifiers) {
 
+    }
+
+    public void onStoreUpdated(List<Class<? extends AbstractSlice>> changedSlices) {
+        boolean needsReRender = false;
+        for (var slice : changedSlices) {
+            if (subscribedTo.contains(slice)) {
+                needsReRender = true;
+                break;
+            }
+        }
+        if (needsReRender) {
+            reRender();
+            return;
+        }
+        for (var c : this.child) {
+            if (c instanceof AbstractElement e) {
+                e.onStoreUpdated(changedSlices);
+            }
+        }
+    }
+
+    public void reRender() {
+        if (this.child.contains(getFocused()))
+            setFocused(null);
+        this.child.clear();
+        this.init();
+    }
+
+    public <T extends Object, S extends AbstractSlice> T getStateAndSubscribesTo(
+        Class<S> slice, Class<T> cast, T defaultState) {
+        if (!this.subscribedTo.contains(slice))
+            this.subscribedTo.add(slice);
+        return Store.get(getScreen()).getStateOrDefault(slice, cast, defaultState); 
     }
 
     @Override
