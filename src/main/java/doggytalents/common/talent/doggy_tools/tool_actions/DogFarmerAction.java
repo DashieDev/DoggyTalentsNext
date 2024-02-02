@@ -89,6 +89,7 @@ public class DogFarmerAction extends ToolAction {
     }
 
     private void refreshTargetSeed() {
+        this.seedTarget = ItemStack.EMPTY;
         var inv = this.talent.getTools();
         for (int i = 0; i < inv.getSlots(); ++i) {
             var stack = inv.getStackInSlot(i);
