@@ -3211,6 +3211,8 @@ public class Dog extends AbstractDog {
     public void onTalentsUpdated() {
         this.refreshAlterations();
         this.spendablePoints.markForRefresh();
+        if (this.level().isClientSide)
+            ClientEventHandler.onDogTalentUpdated(this);
     }
 
     public void onAccessoriesUpdated() {
