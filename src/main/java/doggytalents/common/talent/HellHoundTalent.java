@@ -220,14 +220,6 @@ public class HellHoundTalent extends TalentInstance {
         }
     }
 
-    @Override
-    public InteractionResult canStandOnFluid(AbstractDog dogIn, FluidState state) {
-        if (this.level() >= 5 && state.is(FluidTags.LAVA)) {
-            return InteractionResult.SUCCESS;
-        }
-        return InteractionResult.PASS;
-    }
-
     private void fireSpreadToEnermies(AbstractDog dog) {
         var targets = 
             dog.level().getEntitiesOfClass(
