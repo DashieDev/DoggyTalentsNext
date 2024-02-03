@@ -372,45 +372,27 @@ public class DoggyCommands {
     }
 
     private static int locate(DogLocationStorage respawnStorage, DogLocationData locationData, final CommandSourceStack source) throws CommandSyntaxException {
-        Player player = source.getPlayerOrException();
 
-        if (locationData.getDimension().equals(player.level.dimension())) {
-            String translateStr = getDirectionTranslationKey(locationData, player);
-            int distance = Mth.ceil(locationData.getPos() != null ? locationData.getPos().distanceTo(player.position()) : -1);
+        source.sendSuccess(() -> getLocationInfo(locationData), false);
 
-            source.sendSuccess(ComponentUtil.translatable(translateStr, locationData.getName(player.level), distance), false);
-        } else {
-            source.sendSuccess(ComponentUtil.translatable("dogradar.notindim", locationData.getDimension()), false); // TODO change message
-        }
         return 1;
 
     }
 
-    public static String getDirectionTranslationKey(DogLocationData loc, Entity entity) {
-        if (loc.getPos() == null) {
-            return "dogradar.unknown";
+    public static Component getLocationInfo(DogLocationData loc) {
+        var pos = loc.getPos();
+        BlockPos bpos = null;
+        if (pos != null) {
+            bpos = BlockPos.containing(pos);
         }
-        Vec3 diff = loc.getPos().add(entity.position().reverse());
-        double angle = Mth.atan2(diff.x(), diff.z());
-
-        if (angle < -Math.PI + Math.PI / 8) {
-            return "dogradar.north";
-        } else if (angle < -Math.PI + 3 * Math.PI / 8) {
-            return "dogradar.north.west";
-        } else if (angle < -Math.PI + 5 * Math.PI / 8) {
-            return "dogradar.west";
-        } else if (angle < -Math.PI + 7 * Math.PI / 8) {
-            return "dogradar.south.west";
-        } else if (angle < -Math.PI + 9 * Math.PI / 8) {
-            return "dogradar.south";
-        } else if (angle < -Math.PI + 11 * Math.PI / 8) {
-            return "dogradar.south.east";
-        } else if (angle < -Math.PI + 13 * Math.PI / 8) {
-            return "dogradar.east";
-        } else if (angle < -Math.PI + 15 * Math.PI / 8) {
-            return "dogradar.north.east";
-        } else {
-            return "dogradar.north";
-        }
+        var posStr = bpos == null ? "[???]" : 
+            "[ " + bpos.getX() + ", " + bpos.getY() + ", " + bpos.getZ() + " ]";
+        var dim = loc.getDimension();
+        var dim_loc = dim == null ? null : dim.location(); 
+        var dimStr = dim == null ? "[???]" :
+            "[ " + (dim_loc == null ? "" : dim_loc) + " ]";
+        var dogName = loc.getDogName();
+        if (dogName == null) dogName = "noname";
+        return Component.translatable("command.doglocate.info", dogName, posStr, dimStr);
     }
 }
