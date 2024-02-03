@@ -11,6 +11,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Talent;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentChangeHandlerSlice;
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
@@ -73,6 +74,7 @@ public class TalentInfoViewElement extends AbstractElement {
 
     @Override
     public AbstractElement init() {
+        getStateAndSubscribesTo(TalentChangeHandlerSlice.class, TalentChangeHandlerSlice.class, null);
         var talent = getStateAndSubscribesTo(ActiveTalentDescSlice.class, 
             ActiveTalentDescSlice.class, 
             new ActiveTalentDescSlice(null)).activeTalent;
