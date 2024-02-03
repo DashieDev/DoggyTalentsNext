@@ -2550,8 +2550,6 @@ public class Dog extends AbstractDog {
 
     @Override
     public void dropEquipment() {
-        super.dropEquipment();
-
         this.alterations.forEach((alter) -> alter.dropInventory(this));
     }
 
