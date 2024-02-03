@@ -125,13 +125,13 @@ public class ParticlePackets {
         @Override
         public void encode(DogShakingData data, FriendlyByteBuf buf) {
             buf.writeInt(data.dogId);
-            buf.writeInt(data.state.getId());
+            buf.writeByte((byte) data.state.getId());
         }
 
         @Override
         public DogShakingData decode(FriendlyByteBuf buf) {
             int dogId = buf.readInt();
-            State state = State.fromId(buf.readInt());
+            State state = State.fromId((int) buf.readByte());
             return new DogShakingData(dogId, state);
         }
 
