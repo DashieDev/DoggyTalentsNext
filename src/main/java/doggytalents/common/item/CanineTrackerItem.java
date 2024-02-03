@@ -37,7 +37,7 @@ public class CanineTrackerItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        ItemStack stack = playerIn.getItemInHand(handIn);
+        var stack = playerIn.getItemInHand(handIn);
 
         if (!worldIn.isClientSide) {
             if (stack.getItem() instanceof CanineTrackerItem && stack.hasTag()) {
