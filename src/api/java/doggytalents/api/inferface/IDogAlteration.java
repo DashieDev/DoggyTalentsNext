@@ -169,11 +169,6 @@ public interface IDogAlteration {
         return InteractionResultHolder.pass(currentAir);
     }
 
-    default InteractionResult canStandOnFluid(AbstractDog dogIn, FluidState state) {
-        return InteractionResult.PASS;
-    }
-
-
     default InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int second) {
         return InteractionResultHolder.pass(second);
     }
