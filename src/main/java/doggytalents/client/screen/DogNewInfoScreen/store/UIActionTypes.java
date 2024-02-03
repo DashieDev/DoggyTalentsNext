@@ -9,6 +9,7 @@ public class UIActionTypes {
         
         public static String LIST_INC = "talents.list.increment";
         public static String LIST_DEC = "talents.list.decrement";
+        public static String TALENT_UPDATE = "talents.update";
     }
 
     public static class Skins {
