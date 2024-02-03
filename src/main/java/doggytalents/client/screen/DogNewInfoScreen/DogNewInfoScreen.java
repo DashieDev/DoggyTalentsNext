@@ -40,7 +40,7 @@ import net.minecraft.network.chat.Component;
 
 public class DogNewInfoScreen extends StoreConnectedScreen {
 
-    private Dog dog;
+    public final Dog dog;
 
     private TextOnlyButton rightTabButton;
     private TextOnlyButton lefTabButton;
@@ -366,7 +366,8 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             StyleViewPanelSlice.class,
             ActiveSkinSlice.class,
             StatsViewPanelSlice.class,
-            MainPanelSlice.class
+            MainPanelSlice.class,
+            TalentChangeHandlerSlice.class
         );
     }
 
