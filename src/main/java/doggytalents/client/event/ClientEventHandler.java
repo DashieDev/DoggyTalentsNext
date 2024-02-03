@@ -11,6 +11,11 @@ import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
+import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
+import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentChangeHandlerSlice;
+import doggytalents.client.screen.framework.Store;
+import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.client.screen.widget.DoggySpin;
 import doggytalents.common.config.ConfigHandler;
@@ -276,6 +281,18 @@ public class ClientEventHandler {
         if (!(e instanceof Dog dog))
             return;
         dog.dogSyncedDataManager.updateFromDataPacketFromServer(data);
+    }
+
+    public static void onDogTalentUpdated(Dog dog) {
+        var mc = Minecraft.getInstance();
+        var screen = mc.screen;
+        if (screen == null)
+            return;
+        if (!(screen instanceof DogNewInfoScreen infoScr))
+            return;
+        if (infoScr.dog != dog)
+            return;
+        Store.get(infoScr).dispatch(TalentChangeHandlerSlice.class, new UIAction(UIActionTypes.Talents.TALENT_UPDATE, null));
     }
 
 }
