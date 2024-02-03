@@ -1603,13 +1603,8 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean canStandOnFluid(FluidState state) {
-        for (var alter : this.alterations) {
-            var result = alter.canStandOnFluid(this, state);
-
-            if (result.shouldSwing()) {
-                return true;
-            }
-        }
+        if (this.fireImmune() && state.is(FluidTags.LAVA))
+            return true;
 
         return super.canStandOnFluid(state);
     }
