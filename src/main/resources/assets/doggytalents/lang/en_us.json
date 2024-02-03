@@ -629,6 +629,7 @@
    "command.dogrespawn.imprecise": "\"%s\" is ambiguous. Consider providing the Dog's UUID as an extra argument.",
    "command.dogrespawn.bad_uuid_str": "Bad UUID string provided.",
    "command.dogrespawn.notfound": "No Dogs under the identifier \"%s\" were found.",
+   "command.doglocate.info": "%s is at %s in %s",
    "dogbed.bedding.null": "Bedding material not set",
    "dogbed.casing.null": "Casing material not set",
    "dogbed.bedding.missing": "Missing: %s",
