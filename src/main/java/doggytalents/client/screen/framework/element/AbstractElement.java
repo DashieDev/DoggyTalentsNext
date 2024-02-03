@@ -250,15 +250,17 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
 
     }
 
-    public void onStoreUpdated(List<Class<? extends AbstractSlice>> changedSlices) {
-        boolean needsReRender = false;
+    public boolean needsReRender(List<Class<? extends AbstractSlice>> changedSlices) {
         for (var slice : changedSlices) {
             if (subscribedTo.contains(slice)) {
-                needsReRender = true;
-                break;
+                return true;
             }
         }
-        if (needsReRender) {
+        return false;
+    }
+
+    public void onStoreUpdated(List<Class<? extends AbstractSlice>> changedSlices) {
+        if (needsReRender(changedSlices)) {
             reRender();
             return;
         }
