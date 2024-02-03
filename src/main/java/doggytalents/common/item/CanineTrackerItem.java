@@ -41,23 +41,10 @@ public class CanineTrackerItem extends Item {
         ItemStack stack = playerIn.getItemInHand(handIn);
 
         if (!worldIn.isClientSide) {
-            if (playerIn.isShiftKeyDown()) {
-                if (playerIn.getAbilities().instabuild) {
-                    DogLocationStorage locationManager = DogLocationStorage.get(worldIn);
-                    for (UUID uuid : locationManager.getAllUUID()) {
-                        playerIn.sendMessage(ComponentUtil.literal(locationManager.getData(uuid).toString()), net.minecraft.Util.NIL_UUID);
-                    }
-                }
-                return new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
-            }
-
             if (stack.getItem() instanceof CanineTrackerItem && stack.hasTag()) {
                 stack.setTag(null);
             }
         } else {
-            if (playerIn.isShiftKeyDown()) 
-                return
-                    new InteractionResultHolder<>(InteractionResult.FAIL, playerIn.getItemInHand(handIn));
             if (!stack.hasTag())
                 CanineTrackerScreen.open();
         }
