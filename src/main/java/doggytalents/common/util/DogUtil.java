@@ -20,6 +20,7 @@ import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
 import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToBedPromise;
 import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToOwnerCrossDimensionPromise;
 import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToOwnerPromise;
+import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -649,6 +650,65 @@ public class DogUtil {
         if (player != null && player.hasPermissions(4))
             return true;
         return (ConfigHandler.TALENT.getFlag(talent));
+    }
+
+    private static List<Character> INVALID_NAME_CHARS = List.of('\"');
+    public static String checkAndCorrectInvalidName(String name) {
+        if (name == null)
+            return name;
+        String str = name;
+        if (str.isEmpty())
+            return name;
+        
+        str = checkInvalidChar(str);
+        str = stripIfNeccessary(str);
+
+        return str;
+    }
+
+    private static String stripIfNeccessary(String x) {
+        var str = x;
+        if (str == null) str = "";
+        if (str.isEmpty())
+            return x;
+        if (str.charAt(0) == ' ' || str.charAt(str.length() - 1) == ' ') {
+            str = str.strip();
+            return str;
+        }
+        return x;
+    }
+
+    private static String checkInvalidChar(String x) {
+        var str = x;
+        if (str == null) str = "";
+        if (str.isEmpty())
+            return x;
+        boolean isInvalidStr = false;
+        for (int i = 0; i < str.length(); ++i) {
+            var c = str.charAt(i);
+            if (!isValidChar(c)) {
+                isInvalidStr = true;
+                break;
+            }
+        }
+
+        if (!isInvalidStr)
+            return x;
+        
+        var builder = new StringBuilder("");
+        for (int i = 0; i < str.length(); ++i) {
+            var c = str.charAt(i);
+            if (isValidChar(c)) {
+                builder.append(c);
+            }
+        }
+        str = builder.toString();
+
+        return str;
+    } 
+
+    private static boolean isValidChar(Character x) {
+        return !INVALID_NAME_CHARS.contains(x) && SharedConstants.isAllowedChatCharacter(x);
     }
 
 

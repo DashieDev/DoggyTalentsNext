@@ -25,6 +25,7 @@ import doggytalents.common.network.packet.data.DogObeyData;
 import doggytalents.common.network.packet.data.DogRegardTeamPlayersData;
 import doggytalents.common.network.packet.data.FriendlyFireData;
 import doggytalents.common.network.packet.data.PatrolTargetLockData;
+import doggytalents.common.util.DogUtil;
 import doggytalents.common.network.packet.data.HideArmorData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -324,6 +325,7 @@ public class EditInfoView extends AbstractElement {
         private EditBox nameEdit;
         private FlatButton applyButton;
         private FlatButton randomButton;
+        private String replacingStr = null;
 
         public NewnameEntry(AbstractElement parent, Screen screen, Dog dog) {
             super(parent, screen);
@@ -348,6 +350,10 @@ public class EditInfoView extends AbstractElement {
                 pY, 40, 20, 
                 Component.translatable("doggui.common.apply"), b -> {
                     var newName = this.nameEdit.getValue();
+                    if (this.replacingStr != null) {
+                        newName = this.replacingStr;
+                        this.nameEdit.setValue(newName);
+                    }
                     requestNameChange(this.dog, newName);
                     b.active = false;
                 });
@@ -385,12 +391,29 @@ public class EditInfoView extends AbstractElement {
 
             graphics.drawString(font, I18n.get("doggui.newname"), startX, pY, 0xffffffff);
             
+            if (this.replacingStr != null) {
+                renderReplacingStr(graphics, replacingStr);
+            }
+        }
+
+        private void renderReplacingStr(GuiGraphics graphics, String str) {
+            var renderStr = I18n.get("doggui.home.edit_info.substitude_name", str);
+            int maxLen = this.getSizeX() - 20 - PADDING_LEFT;
+            var renderStrLen = font.width(renderStr);
+            if (renderStrLen > maxLen) {
+                int cutLen = Math.max(0, maxLen - font.width(".."));
+                renderStr = font.plainSubstrByWidth(renderStr, cutLen) + "..";
+            }
+            int tX = this.getRealX() + PADDING_LEFT;
+            int tY = this.getRealY() + PADDING_TOP + 37;
+            graphics.drawString(font, renderStr, tX, tY, 0xffcda700);
         }
 
         private void addEditNameBox(int x, int y, int w, int h) {
             this.nameEdit = new EditBox(this.font, x, y, w, h, Component.translatable("dogInfo.enterName"));
             nameEdit.setMaxLength(Dog.MAX_NAME_LEN);
             nameEdit.setResponder(s -> {
+                this.updateReplacingStr(s);
                 if (this.applyButton == null) return;
                 if (this.applyButton.active) return;
                 var dogName = this.dog.hasCustomName() ?
@@ -407,6 +430,16 @@ public class EditInfoView extends AbstractElement {
             }
     
             this.addChildren(nameEdit);
+        }
+
+        private void updateReplacingStr(String newVal) {
+            this.replacingStr = null;
+            if (newVal == null)
+                return;
+            var correctStr = DogUtil.checkAndCorrectInvalidName(newVal);
+            if (correctStr != newVal) {
+                this.replacingStr = correctStr;
+            }
         }
         
     }
