@@ -112,6 +112,8 @@ public class DogRespawnData implements IDogData {
 
         dog.setOrderedToSit(true);
         if (killedBy != null && killedBy != IncapacitatedSyncState.NONE) {
+            if (dog.getDogIncapValue() <= 0)
+                dog.setDogIncapValue(dog.getDefaultInitIncapVal());
             dog.setDogHunger(0);
             dog.setMode(EnumMode.INCAPACITATED);
             dog.setHealth(1);
