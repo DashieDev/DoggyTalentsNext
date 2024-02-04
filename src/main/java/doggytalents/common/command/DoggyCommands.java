@@ -245,6 +245,7 @@ public class DoggyCommands {
                     .filter(data -> ownerName.equals(data.getOwnerName()))
                     .map(IDogData::getDogName)
                     .filter((str) -> !Strings.isNullOrEmpty(str))
+                    .map(str -> wrapStringInQuoteIfContainsSpace(str))
                      .collect(Collectors.toList()),
                      builder);
 
@@ -253,6 +254,16 @@ public class DoggyCommands {
         } else {
              return Suggestions.empty();
         }
+    }
+
+    private static String wrapStringInQuoteIfContainsSpace(String str) {
+        if (str == null || str.isEmpty())
+            return str;
+        var spaceIndx = str.indexOf(" ");
+        if (spaceIndx < 0)
+            return str;
+        
+        return "\"" + str + "\"";
     }
 
     private static int respawn(final CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
