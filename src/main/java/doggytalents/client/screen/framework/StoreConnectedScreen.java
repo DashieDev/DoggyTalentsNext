@@ -2,12 +2,15 @@ package doggytalents.client.screen.framework;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.client.screen.framework.element.AbstractElement;
+import doggytalents.client.screen.framework.element.DivElement;
+import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
@@ -17,9 +20,26 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
 
     private final ArrayList<Class<? extends AbstractSlice>> subscribedTo = new ArrayList<>();
     private boolean isResizing = false;
+    protected AbstractElement rootView;
     
     protected StoreConnectedScreen(Component title) {
         super(title);
+    }
+
+    @Override
+    protected void init() {
+        this.reRenderRoot();
+    }
+
+    private AbstractElement createRootView() {
+        return new RootView(null, this, this::renderRootView)
+            .setPosition(PosType.ABSOLUTE, 0, 0)
+            .setSize(this.width, this.height)
+            .init();
+    }
+
+    public void renderRootView(AbstractElement rootView) {
+
     }
 
     @Override
@@ -42,7 +62,7 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     public void render(PoseStack stack, int mouseX, int mouseY, float pTicks) {
         Store.get(this).update();
         if (this.isResizing) {
-            reRender();
+            reRenderRoot();
             this.isResizing = false;
         }
         if (doRenderBackground())
@@ -95,36 +115,30 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     public void onStoreUpdated(List<Class<? extends AbstractSlice>> changedSlices) {
         if (this.isResizing)
             return;
-        boolean needsReRender = false;
-        for (var slice : changedSlices) {
-            if (subscribedTo.contains(slice)) {
-                needsReRender = true;
-                break;
-            }
-        }
-        if (needsReRender) {
-            reRender();
-            return;
-        }
-        var childrens = this.children();
-        for (var c : childrens) {
-            if (c instanceof AbstractElement e) {
-                e.onStoreUpdated(changedSlices);
-            }
-        }
+        this.rootView.onStoreUpdated(changedSlices);
     }
 
-    public void reRender() {
+    public void reRenderRoot() {
         this.setFocused(null);
         this.clearWidgets();
-        this.init();
+        this.rootView = createRootView();
+        this.addRenderableWidget(this.rootView);
     }
 
-    public <T extends Object, S extends AbstractSlice> T getStateAndSubscribesTo(
-        Class<S> slice, Class<T> cast, T defaultState) {
-        if (!this.subscribedTo.contains(slice))
-            this.subscribedTo.add(slice);
-        return Store.get(this).getStateOrDefault(slice, cast, defaultState); 
-    }
+    private static class RootView extends AbstractElement {
 
+        private Consumer<AbstractElement> reRenderer;
+
+        public RootView(AbstractElement parent, Screen screen, Consumer<AbstractElement> reRenderer) {
+            super(parent, screen);
+            this.reRenderer = reRenderer;
+        }
+
+        @Override
+        public AbstractElement init() {
+            this.reRenderer.accept(this);
+            return this;
+        }
+        
+    }
 }

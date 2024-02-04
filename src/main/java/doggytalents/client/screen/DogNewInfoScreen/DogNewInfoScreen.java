@@ -171,22 +171,24 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
 
     @Override
     public void init() {
-        super.init();
-
         this.setupDropdown();
-        
+        super.init();
+    }
+
+    @Override
+    public void renderRootView(AbstractElement rootView) {        
         int mX = this.width/2;
         int mY = this.height/2;
         var navBar = new DogInfoNavBarElement(null, this, this.dog)
             .setPosition(PosType.FIXED, mX, this.height - 12)
             .setSize(200, 10)
             .init();
-        this.addRenderableWidget(navBar);
+        rootView.addChildren(navBar);
         var upperView = new DivElement(null, this)
             .setPosition(PosType.FIXED, 0, 0)
             .setSize(this.width, this.height - 20);
-        this.addRenderableWidget(upperView);
-        var selectedTab = getStateAndSubscribesTo(
+        rootView.addChildren(upperView);
+        var selectedTab = rootView.getStateAndSubscribesTo(
             ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
             null
         );
@@ -215,10 +217,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             .init()
         );
         
-        this.addSwitchTabButtons(selectedTab);
-
-        //var button = new Button(0, 0, 40, 20, ComponentUtil.literal(A ctiveTabSlice.activeTab.title), b -> {});
-        //this.addRenderableWidget(button);
+        this.addSwitchTabButtons(rootView, selectedTab);
     }
 
     public void setupDropdown() {
@@ -226,7 +225,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         dropdownManager.attach(this, dropdown -> this.addWidget(dropdown));
     }
 
-    private void addSwitchTabButtons(Tab activeTab) {
+    private void addSwitchTabButtons(AbstractElement root, Tab activeTab) {
         int mY = this.height/2;
 
         int requiredX;
@@ -258,8 +257,8 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         this.rightTabButton.setHeight(100);
         this.rightTabButton.y = mY - 50;
 
-        this.addRenderableWidget(this.lefTabButton);
-        this.addRenderableWidget(this.rightTabButton);
+        root.addChildren(this.lefTabButton);
+        root.addChildren(this.rightTabButton);
 
     }
 
