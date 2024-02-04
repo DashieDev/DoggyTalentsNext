@@ -2485,11 +2485,13 @@ public class Dog extends AbstractDog {
         this.finishShaking();
     }
 
-    private int getInitalDogIncapVal(DamageSource source) {
+    public int getInitalDogIncapVal(DamageSource source) {
         var difficulty = this.level().getDifficulty();
         if (difficulty == Difficulty.PEACEFUL)
             return this.getDefaultInitIncapVal()/2;
         if (difficulty == Difficulty.EASY)
+            return this.getDefaultInitIncapVal();
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
             return this.getDefaultInitIncapVal();
         var fatal_damage = this.lastHurt;
         if (fatal_damage <= 0)
