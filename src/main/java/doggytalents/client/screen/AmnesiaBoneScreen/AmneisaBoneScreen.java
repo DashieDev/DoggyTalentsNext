@@ -38,21 +38,19 @@ public class AmneisaBoneScreen extends StoreConnectedScreen {
     }
 
     @Override
-    protected void init() {
-        super.init();
-        
+    public void renderRootView(AbstractElement rootView) {
         int mX = this.width/2;
         int mY = this.height/2;
         var navBar = new AmnesiaNavBarElement(null, this, this.dog)
             .setPosition(PosType.FIXED, mX, this.height - 12)
             .setSize(200, 10)
             .init();
-        this.addRenderableWidget(navBar);
+        rootView.addChildren(navBar);
         var upperView = new DivElement(null, this)
             .setPosition(PosType.FIXED, 0, 0)
             .setSize(this.width, this.height - 20);
-        this.addRenderableWidget(upperView);
-        var selectedTab = getStateAndSubscribesTo(
+        rootView.addChildren(upperView);
+        var selectedTab = rootView.getStateAndSubscribesTo(
             ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
             ActiveTabSlice.Tab.GENERAL
         );
