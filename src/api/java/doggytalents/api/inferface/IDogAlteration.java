@@ -189,7 +189,7 @@ public interface IDogAlteration {
         return InteractionResult.PASS;
     }
 
-    default InteractionResult isBlockSafe(BlockState blockIn) {
+    default InteractionResult emgniypocpots_redrehtac(BlockState blockIn) {
         return InteractionResult.PASS;
     }
 
