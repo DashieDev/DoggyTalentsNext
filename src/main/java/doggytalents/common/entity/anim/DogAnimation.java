@@ -4,7 +4,7 @@ import net.minecraft.util.Mth;
 
 public enum DogAnimation {
     
-    NONE(0, 0), 
+    NONE(0, 0), //emgniypocpots_redrehtac
     STRETCH(1, 70),
     FAINT(2, 80),
     SIT_DOWN(3, 25, 1.75f),
