@@ -6,9 +6,11 @@ import javax.annotation.Nullable;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.common.block.RiceMillBlock;
+import doggytalents.common.inventory.container.RiceMillMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
@@ -40,12 +42,23 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
     private InvWrapper containerWrapper = new InvWrapper(container);
 
     public static final int TOTOAL_DATA_SLOT = 2;
+    public static final int GRINDING_TIME_ID = 0;
+    public static final int GRINDING_TINE_FINISH_ID = 1;
     private int grindingTime;
     private int grindingTimeWhenFinish = 100;
     private RiceMillSyncedData syncedData = new RiceMillSyncedData(this);
 
+    private RiceMillMenuProvider menuProvider = new RiceMillMenuProvider(this);
+
     public RiceMillBlockEntity(BlockPos pos, BlockState blockState) {
         super(DoggyTileEntityTypes.RICE_MILL.get(), pos, blockState);
+    }
+
+    public static void openContainer(ServerPlayer player, Level level, BlockPos pos) {
+        var blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof RiceMillBlockEntity mill))
+            return;
+        player.openMenu(mill.menuProvider);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
@@ -156,9 +169,9 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
         @Override
         public int get(int syncedSlotId) {
             switch (syncedSlotId) {
-            case 0:
+            case GRINDING_TIME_ID:
                 return mill.grindingTime;
-            case 1:
+            case GRINDING_TINE_FINISH_ID:
                 return mill.grindingTimeWhenFinish;
             default:
                 return 0;
@@ -168,10 +181,10 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
         @Override
         public void set(int syncedSlotId, int val) {
             switch (syncedSlotId) {
-            case 0:
+            case GRINDING_TIME_ID:
                 mill.grindingTime = val;
                 return;
-            case 1:
+            case GRINDING_TINE_FINISH_ID:
                 mill.grindingTimeWhenFinish = val;
                 return;
             default:
@@ -261,15 +274,13 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
 
         @Override
         @Nullable
-        public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'createMenu'");
+        public AbstractContainerMenu createMenu(int containerId, Inventory inv, Player player) {
+            return new RiceMillMenu(containerId, inv, mill.container, mill.syncedData);
         }
 
         @Override
         public Component getDisplayName() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getDisplayName'");
+            return Component.empty();
         }
         
     }

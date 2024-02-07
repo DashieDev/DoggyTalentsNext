@@ -1,22 +1,32 @@
 package doggytalents.common.inventory.container;
 
 import doggytalents.DoggyContainerTypes;
+import doggytalents.DoggyItems;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class RiceMillMenu extends AbstractContainerMenu {
 
+    private int grainSlotEnd;
+    private int bowlSlotId;
+    private int outputSlotId;
+    private int playerInventoryBegin;
+
     private Container millContainer;
+    private ContainerData syncedData;
 
     //Client constructor
     public RiceMillMenu(int containerId, Inventory inv) {
@@ -29,14 +39,39 @@ public class RiceMillMenu extends AbstractContainerMenu {
         checkContainerSize(millContainer, RiceMillBlockEntity.TOTOAL_SLOTS);
         checkContainerDataCount(syncedData, RiceMillBlockEntity.TOTOAL_DATA_SLOT);
         this.millContainer = millContainer;
+        this.syncedData = syncedData;
 
         for (int i = 0; i < RiceMillBlockEntity.GRAIN_SLOTS.length; ++i) {
             int grainSlot = RiceMillBlockEntity.GRAIN_SLOTS[i]; 
-            this.addSlot(new Slot(millContainer, grainSlot, 20, 17 + i * 18));            
+            this.addSlot(new Slot(millContainer, grainSlot, 20, 17 + i * 18) {
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return stack.is(DoggyItems.RICE_GRAINS.get());
+                }
+            });
         }
+        grainSlotEnd = RiceMillBlockEntity.GRAIN_SLOTS.length - 1;
 
-        this.addSlot(new Slot(millContainer, RiceMillBlockEntity.BOWL_SLOT, 58, 35));
-        this.addSlot(new Slot(millContainer, RiceMillBlockEntity.OUTPUT_SLOT[0], 116, 35));
+        var bowlSlot = 
+            this.addSlot(new Slot(millContainer, RiceMillBlockEntity.BOWL_SLOT, 58, 35) {
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    // TODO Auto-generated method stub
+                    return stack.is(Items.BOWL);
+                }
+            });
+
+        bowlSlotId = bowlSlot.index;
+        
+        var outputSlot =
+            this.addSlot(new Slot(millContainer, RiceMillBlockEntity.OUTPUT_SLOT[0], 116, 35) {
+                @Override
+                public boolean mayPlace(ItemStack p_40231_) {
+                    return false;
+                }
+            });
+        outputSlotId = outputSlot.index;
+        playerInventoryBegin = outputSlotId + 1;
 
         //Player inv
         for(int i = 0; i < 3; ++i) {
@@ -52,13 +87,54 @@ public class RiceMillMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player p_38941_, int p_38942_) {
-        return ItemStack.EMPTY;
+    public ItemStack quickMoveStack(Player player, int clickedSlotId) {
+        var clickedSlot = this.slots.get(clickedSlotId);
+        if (clickedSlot == null || !clickedSlot.hasItem())
+            return ItemStack.EMPTY;
+
+        var clickedItem = clickedSlot.getItem();
+        var clickedItem0 = clickedItem.copy();
+
+        boolean moveResult = false;
+        if (clickedSlotId >= this.playerInventoryBegin) {
+            moveResult = moveItemStackTo(
+                clickedItem, 
+                0, this.playerInventoryBegin - 1, 
+                false
+            );
+        } else {
+            moveResult = moveItemStackTo(
+                clickedItem, 
+                this.playerInventoryBegin, this.slots.size() - 1, 
+                false
+            );
+        }
+        if (!moveResult)
+            return ItemStack.EMPTY;
+
+        if (clickedItem.isEmpty()) {
+            clickedSlot.set(ItemStack.EMPTY);
+        } else {
+            clickedSlot.setChanged();
+        }
+
+        if (clickedItem.getCount() == clickedItem0.getCount()) {
+            return ItemStack.EMPTY;
+        }
+        
+        return clickedItem0;
     }
 
     @Override
     public boolean stillValid(Player player) {
         return this.millContainer.stillValid(player);
+    }
+
+    public float getGrindProgress() {
+        float grindTime = (float) this.syncedData.get(RiceMillBlockEntity.GRINDING_TIME_ID);
+        float finishTime = (float) this.syncedData.get(RiceMillBlockEntity.GRINDING_TINE_FINISH_ID);
+        var ret = grindTime/finishTime;
+        return Mth.clamp(ret, 0, 1);
     }
     
 }
