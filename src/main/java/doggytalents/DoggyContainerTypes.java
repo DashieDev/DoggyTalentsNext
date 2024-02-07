@@ -6,6 +6,7 @@ import doggytalents.common.inventory.container.DogInventoriesContainer;
 import doggytalents.common.inventory.container.DoggyToolsMenu;
 import doggytalents.common.inventory.container.FoodBowlContainer;
 import doggytalents.common.inventory.container.PackPuppyContainer;
+import doggytalents.common.inventory.container.RiceMillMenu;
 import doggytalents.common.inventory.container.TreatBagContainer;
 import doggytalents.common.lib.Constants;
 import net.minecraft.core.BlockPos;
@@ -64,7 +65,11 @@ public class DoggyContainerTypes {
         int dogId = data.readInt();
         var e = inv.player.level().getEntity(dogId);
         if (!(e instanceof Dog)) return null;
-        return new DoggyToolsMenu(windowId, inv, (Dog) e);
+    return new DoggyToolsMenu(windowId, inv, (Dog) e);
+    });
+
+    public static final RegistryObject<MenuType<RiceMillMenu>> RICE_MILL = register("rice_mill", (windowId, inv, data) -> {
+        return new RiceMillMenu(windowId, inv);
     });
 
     private static <X extends AbstractContainerMenu, T extends MenuType<X>> RegistryObject<MenuType<X>> register(final String name, final IContainerFactory<X> factory) {

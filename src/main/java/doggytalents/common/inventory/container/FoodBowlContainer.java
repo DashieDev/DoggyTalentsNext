@@ -78,7 +78,7 @@ public class FoodBowlContainer extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
         }
-
+        
         return itemstack;
     }
 }
