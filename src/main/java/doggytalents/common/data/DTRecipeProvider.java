@@ -123,7 +123,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("S S")
             .pattern("SSS")
             .define('S', Items.STRING)
-            .unlockedBy("has_stick", has(Items.STRING))
+            .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
             
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.TREAT_BAG.get(), 1)
