@@ -1,4 +1,4 @@
-// 1.20.1	2024-01-18T23:11:27.079889	Recipes
+// 1.20.1	2024-02-07T14:59:30.6645842	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 5bb21f3599e9ca5620bca26f572185ad321709a2 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -55,7 +55,7 @@ f08385c797fbde3e93fe9fb98fb29b1a70df5223 data/doggytalents/advancements/recipes/
 e1e0326740a071c3b8636d928184cc7d52631b82 data/doggytalents/advancements/recipes/decorations/tengu_mask.json
 cb4d668540ee7d88e96b4a2adf5269aff39d0c7d data/doggytalents/advancements/recipes/decorations/wig.json
 66e7331a7e1dd1f6c4be09e346cbe42be2f05c97 data/doggytalents/advancements/recipes/decorations/witch_hat.json
-5059508ee80e6bef15096506c574613915fa5799 data/doggytalents/advancements/recipes/decorations/wool_collar.json
+3c27346f143f463f9d28911b505314c12baed794 data/doggytalents/advancements/recipes/decorations/wool_collar.json
 05552e5523914cc3d2c9051f30f1348f8b506cd6 data/doggytalents/advancements/recipes/food/aburaage_camping.json
 6b4699d7bf9e2caebdbf6d41f417d05f00354310 data/doggytalents/advancements/recipes/food/aburaage_smelting.json
 b8baafa125cffc4511db9e1a51c026542ddaa9a7 data/doggytalents/advancements/recipes/food/aburaage_smoking.json
