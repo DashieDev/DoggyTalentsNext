@@ -242,7 +242,9 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         if (flag1) {
             int noCharsInName = text.getString().length();
             float healthPercentage = dog.getHealth()/dog.getMaxHealth();
+            healthPercentage = Mth.clamp(healthPercentage, 0, 1);
             int noCharHighlighted = Mth.ceil( noCharsInName * healthPercentage );
+            noCharHighlighted = Mth.clamp(noCharHighlighted, 0, noCharsInName);
             var hlPart = text.getString().substring(0, noCharHighlighted);
             String nonHlPart = "";
             if (noCharHighlighted <= noCharsInName) {
