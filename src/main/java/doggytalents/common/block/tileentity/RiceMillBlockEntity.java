@@ -1,5 +1,7 @@
 package doggytalents.common.block.tileentity;
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -9,6 +11,10 @@ import doggytalents.common.block.RiceMillBlock;
 import doggytalents.common.inventory.container.RiceMillMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -23,21 +29,29 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainerHolder { 
+public class RiceMillBlockEntity extends BlockEntity { 
 
     public static final int GRAINS_REQUIRED = 5;
     
-    public static final int TOTOAL_SLOTS = 5;
-    public static final int[] GRAIN_SLOTS = {0, 1, 2};
-    public static final int BOWL_SLOT = 3;
-    public static final int[] INPUT_SLOT = {0, 1, 2, 3};
-    public static final int[] OUTPUT_SLOT = {4};
+    public static final int TOTOAL_SLOTS = 3;
+    public static final int[] GRAIN_SLOTS = {0};
+    public static final int BOWL_SLOT = 1;
+    public static final int[] INPUT_SLOT = {0, 1};
+    public static final int[] OUTPUT_SLOT = {2};
     private RiceMillContainer container = new RiceMillContainer(this);
     private InvWrapper containerWrapper = new InvWrapper(container);
 
@@ -49,6 +63,8 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
     private RiceMillSyncedData syncedData = new RiceMillSyncedData(this);
 
     private RiceMillMenuProvider menuProvider = new RiceMillMenuProvider(this);
+
+    public int timeLine = 0;
 
     public RiceMillBlockEntity(BlockPos pos, BlockState blockState) {
         super(DoggyTileEntityTypes.RICE_MILL.get(), pos, blockState);
@@ -62,9 +78,13 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
+        if (level == null)
+            return;
         if (!(blockEntity instanceof RiceMillBlockEntity mill))
             return;
         grindTick(level, pos, blockState, mill);
+        ejectTick(level, mill);
+        ++mill.timeLine;
     }
 
     private static void grindTick(Level level, BlockPos pos, BlockState blockState, RiceMillBlockEntity mill) {
@@ -146,16 +166,110 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
     }
 
     private boolean isInputMaterialForSlotId(ItemStack stack, int slotId) {
-        if (slotId <= 2)
-            return stack.is(DoggyItems.RICE_GRAINS.get());
-        if (slotId <= 3)
+        if (slotId == BOWL_SLOT)
             return stack.is(Items.BOWL);
-        return false;
+        return stack.is(DoggyItems.RICE_GRAINS.get());
+    }
+
+    private static int tickTillUpdateEject = 8;
+    private static void ejectTick(Level level, RiceMillBlockEntity mill) {
+        if (level.isClientSide)
+            return;
+        if (--tickTillUpdateEject > 0)
+            return;
+        tickTillUpdateEject = 8;
+
+        var output = mill.container.getItem(OUTPUT_SLOT[0]);
+        if (output.isEmpty())
+            return;
+        
+        var recipentOptional = getAttachedRecipent(mill);
+        if (!recipentOptional.isPresent())
+            return;
+        var recipent = recipentOptional.get();
+        var remaining = tryEjectToRecipent(recipent, output);
+        if (remaining != output) {
+            mill.container.setItem(OUTPUT_SLOT[0], remaining);
+        }
+    }
+
+    private static Optional<BlockEntity> getAttachedRecipent(RiceMillBlockEntity mill) {
+        var pos = mill.getBlockPos();
+        var state = mill.getBlockState();
+        var level = mill.getLevel();
+        if (level == null)
+            return Optional.empty();
+        var facing = RiceMillBlock.getFacing(state);
+        var attached_dir = facing.getClockWise();
+        var attach_pos =  pos.offset(attached_dir.getStepX(), 0, attached_dir.getStepZ());
+        var attach_blockEntity = level.getBlockEntity(attach_pos);
+        if (attach_blockEntity instanceof FurnaceBlockEntity)
+            return Optional.of(attach_blockEntity);
+        if (attach_blockEntity instanceof ChestBlockEntity)
+            return Optional.of(attach_blockEntity);
+        return Optional.empty();
+    }
+
+    private static ItemStack tryEjectToRecipent(BlockEntity recipent, ItemStack currentStack) {
+        if (currentStack.isEmpty())
+            return currentStack;
+        if (recipent instanceof FurnaceBlockEntity furnace) {
+            var furnaceIn = FurnaceBlockEntityDelegate.FURNACE_IN;
+            ItemStack current_in = furnace.getItem(furnaceIn);
+            if (!current_in.isEmpty() && !ItemStack.isSameItem(currentStack, current_in))
+                return currentStack;
+            if (!current_in.isEmpty() && current_in.getCount() >= current_in.getMaxStackSize())
+                return currentStack;
+            if (current_in.isEmpty()) {
+                current_in = new ItemStack(currentStack.getItem());
+            } else {
+                current_in = current_in.copy();
+                current_in.grow(1);
+            }
+            furnace.setItem(furnaceIn, current_in);
+            currentStack = currentStack.copy();
+            currentStack.shrink(1);
+            return currentStack;
+        }
+        return currentStack;
+    }
+    
+
+    public WorldlyContainer getWorldlyContainer() {
+        return this.container;
     }
 
     @Override
-    public WorldlyContainer getContainer(BlockState p_19242_, LevelAccessor p_19243_, BlockPos p_19244_) {
-        return this.container;
+    public AABB getRenderBoundingBox() {
+        var pos = this.getBlockPos();
+        var state = this.getBlockState();
+        var aabb = new AABB(pos, pos.offset(1, 1, 1));
+        var facing = RiceMillBlock.getFacing(state);
+        var facing_norm = facing.getNormal();
+        var expand_vec = new Vec3(facing_norm.getX(), facing_norm.getY(), facing_norm.getZ());
+        aabb = aabb.expandTowards(expand_vec);
+        var side_axis = facing.getClockWise().getAxis();
+        if (side_axis == Axis.X) {
+            aabb = aabb.inflate(1, 0, 0);
+        } else {
+            aabb = aabb.inflate(0, 0, 1);
+        }
+
+        return aabb;
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        container.deserializeNBT(tag);
+        this.grindingTime = tag.getInt("grindingTime");
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        container.serializeNBT(tag);
+        tag.putInt("grindingTime", this.grindingTime);
     }
 
     public static class RiceMillSyncedData implements ContainerData {
@@ -212,11 +326,7 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
             if (dir.getAxis() == Direction.Axis.Y)
                 return new int[0];
             var state = this.mill.getBlockState();
-            var facing = state.getValue(RiceMillBlock.FACING);
-            if (facing.getAxis() == Direction.Axis.Y)
-                return new int[0];
-            if (facing.getClockWise() == dir) 
-                return OUTPUT_SLOT;
+            var facing = RiceMillBlock.getFacing(state);
             if (facing.getCounterClockWise() == dir)
                 return INPUT_SLOT;
             return new int[0];
@@ -229,9 +339,7 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
             if (dir.getAxis() == Direction.Axis.Y)
                 return false;
             var state = mill.getBlockState();
-            var facing = state.getValue(RiceMillBlock.FACING);
-            if (facing.getAxis() == Direction.Axis.Y)
-                return false;
+            var facing = RiceMillBlock.getFacing(state);
             if (facing.getCounterClockWise() == dir)
                 return mill.isInputMaterialForSlotId(stack, slotId);
             return false;
@@ -239,20 +347,11 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
 
         @Override
         public boolean canTakeItemThroughFace(int slotId, ItemStack stack, Direction dir) {
-            if (dir.getAxis() == Direction.Axis.Y)
-                return false;
-            var state = mill.getBlockState();
-            var facing = state.getValue(RiceMillBlock.FACING);
-            if (facing.getAxis() == Direction.Axis.Y)
-                return false;
-            if (facing.getClockWise() == dir)
-                return true;
             return false;
         }
 
         @Override
         public void setChanged() {
-            super.setChanged();
             this.mill.setChanged();
         }
 
@@ -260,6 +359,36 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
         public boolean stillValid(Player player) {
             // TODO Auto-generated method stub
             return Container.stillValidBlockEntity(this.mill, player);
+        }
+        
+        public void serializeNBT(CompoundTag compound) {
+            var itemsList = new ListTag();
+
+            for(int i = 0; i < this.getContainerSize(); i++) {
+                ItemStack stack = this.getItem(i);
+                if (!stack.isEmpty()) {
+                    CompoundTag itemTag = new CompoundTag();
+                    itemTag.putByte("Slot", (byte) i);
+                    stack.save(itemTag);
+                    itemsList.add(itemTag);
+                }
+            }
+
+            compound.put("MillItems", itemsList);
+        }
+
+        public void deserializeNBT(CompoundTag compound) {
+            if (compound.contains("MillItems", Tag.TAG_LIST)) {
+                ListTag tagList = compound.getList("MillItems", Tag.TAG_COMPOUND);
+                for (int i = 0; i < tagList.size(); i++) {
+                    CompoundTag itemTag = tagList.getCompound(i);
+                    int slot = itemTag.getInt("Slot");
+
+                    if (slot >= 0 && slot < this.getContainerSize()) {
+                        this.setItem(slot, ItemStack.of(itemTag));
+                    }
+                }
+            }
         }
         
     }
@@ -283,6 +412,25 @@ public class RiceMillBlockEntity extends BlockEntity implements WorldlyContainer
             return Component.empty();
         }
         
+    }
+
+    public static class FurnaceBlockEntityDelegate extends AbstractFurnaceBlockEntity {
+
+        public static int FURNACE_IN = AbstractFurnaceBlockEntity.SLOT_INPUT;
+
+        protected FurnaceBlockEntityDelegate(BlockEntityType<?> p_154991_, BlockPos p_154992_, BlockState p_154993_,
+                RecipeType<? extends AbstractCookingRecipe> p_154994_) {
+            super(p_154991_, p_154992_, p_154993_, p_154994_);
+        }
+        @Override
+        protected Component getDefaultName() {
+            return Component.empty();
+        }
+        @Override
+        protected AbstractContainerMenu createMenu(int p_58627_, Inventory p_58628_) {
+            return null;
+        }
+
     }
     
 }

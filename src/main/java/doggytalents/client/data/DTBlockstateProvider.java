@@ -70,6 +70,13 @@ public class DTBlockstateProvider extends BlockStateProvider {
         this.simpleBlock(blockIn.get(), model);
     }
 
+    private void createEmptyModel(Supplier<? extends Block> blockIn) {
+      var model = this.models()
+        .getBuilder(name(blockIn.get()))
+        .parent(this.models().getExistingFile(mcLoc(ModelProvider.BLOCK_FOLDER + "/block")));
+      this.simpleBlock(blockIn.get(), model);
+    }
+
 
     protected void dogBed(Supplier<? extends Block> blockIn) {
         BlockModelBuilder model = this.models()

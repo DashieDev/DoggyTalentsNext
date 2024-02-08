@@ -2,17 +2,23 @@ package doggytalents.common.block;
 
 import javax.annotation.Nullable;
 
+import doggytalents.DoggyBlocks;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.common.block.tileentity.FoodBowlTileEntity;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.WorldlyContainerHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -27,15 +33,23 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class RiceMillBlock extends BaseEntityBlock {
+public class RiceMillBlock extends BaseEntityBlock implements WorldlyContainerHolder {
 
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    private static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    protected static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
 
     public RiceMillBlock() {
         super(Block.Properties.of().mapColor(MapColor.WOOD).strength(1.0F, 5.0F).sound(SoundType.WOOD));
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext selectionContext) {
+        return SHAPE;
     }
 
     @Override
@@ -49,7 +63,6 @@ public class RiceMillBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
         builder.add(FACING);
     }
 
@@ -80,5 +93,20 @@ public class RiceMillBlock extends BaseEntityBlock {
         return createTickerHelper(blockEntityType, DoggyTileEntityTypes.RICE_MILL.get(), RiceMillBlockEntity::tick);
     }
 
+    @Override
+    public WorldlyContainer getContainer(BlockState state, LevelAccessor level, BlockPos pos) {
+        var blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof RiceMillBlockEntity mill))
+            return null;
+        return mill.getWorldlyContainer();
+    }
 
+    public static Direction getFacing(BlockState state) {
+        if (state.getBlock() != DoggyBlocks.RICE_MILL.get())
+            return Direction.NORTH;
+        var facing = state.getValue(FACING);
+        if (facing.getAxis() == Axis.Y)
+            return Direction.NORTH;
+        return facing;
+    }
 }

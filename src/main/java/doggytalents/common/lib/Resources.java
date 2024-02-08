@@ -152,6 +152,7 @@ public class Resources {
     public static final ResourceLocation PIANO_UPRIGHT_BROWN = Util.getResource("textures/misc/piano/upright_brown.png");
     public static final ResourceLocation DOG_PLUSHIE_TOY = Util.getResource("textures/misc/dog_plushie/dog_plushie_toy.png");
     public static final ResourceLocation DOG_PLUSHIE_TOY_OVERLAY = Util.getResource("textures/misc/dog_plushie/plushie_overlay.png");
+    public static final ResourceLocation RICE_MILL_MODEL = Util.getResource("textures/block/rice_mill/rice_mill.png");
 
     public static ResourceLocation getEntity(String type, String textureFileName) {
         return Util.getResource("textures/entity/" + type + "/" + textureFileName + ".png");
