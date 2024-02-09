@@ -78,7 +78,7 @@ public class TorchDogModel extends AnimatedSyncedAccessoryModel {
     }
 
     @Override
-    void resetAllPose() {
+    public void resetAllPose() {
         ((DogModelPart)this.root).resetPose();
         this.torchBig.resetPose();
         this.torchSmall.resetPose();
