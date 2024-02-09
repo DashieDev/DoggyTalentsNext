@@ -25,7 +25,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class KeyframeAnimationsDelegate {
    public static void animate(DogModel model, Dog dog,
         AnimationDefinition animation, long elapsed_in_millis, float interpolation_scale, 
-        Vector3f current_pos) {
+        Vector3f temp_buffer) {
         float elapsed_in_seconds = getElapsedSeconds(animation, elapsed_in_millis);
 
         for(var entry : animation.boneAnimations().entrySet()) {
@@ -36,8 +36,8 @@ public class KeyframeAnimationsDelegate {
             var channelList = entry.getValue();
             for (var channel : channelList) {
                 var keyframes = channel.keyframes();
-                int currentKeyframeIndx = Math.max(0, Mth.binarySearch(0, keyframes.length, (p_232315_) -> {
-                    return elapsed_in_seconds <= keyframes[p_232315_].timestamp();
+                int currentKeyframeIndx = Math.max(0, Mth.binarySearch(0, keyframes.length, (compare_indx) -> {
+                    return elapsed_in_seconds <= keyframes[compare_indx].timestamp();
                 }) - 1);
                 int nextKeyframeIndx = Math.min(keyframes.length - 1, currentKeyframeIndx + 1);
                 Keyframe currentKeyframe = keyframes[currentKeyframeIndx];
@@ -51,8 +51,8 @@ public class KeyframeAnimationsDelegate {
                         0.0F, 1.0F);
                 }
                 nextKeyframe.interpolation()
-                    .apply(current_pos, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
-                channel.target().apply(part, current_pos);
+                    .apply(temp_buffer, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
+                channel.target().apply(part, temp_buffer);
                 model.adjustAnimatedPart(part, dog);
                 //ChopinLogger.l("Anim : " + current_pos);
             }
@@ -62,7 +62,7 @@ public class KeyframeAnimationsDelegate {
 
    public static void animate(AnimatedSyncedAccessoryModel model, Dog dog,
         AnimationDefinition animation, long elapsed_in_millis, float interpolation_scale, 
-        Vector3f current_pos) {
+        Vector3f temp_buffer) {
         float elapsed_in_seconds = getElapsedSeconds(animation, elapsed_in_millis);
 
         for(var entry : animation.boneAnimations().entrySet()) {
@@ -73,8 +73,8 @@ public class KeyframeAnimationsDelegate {
             var channelList = entry.getValue();
             for (var channel : channelList) {
                 var keyframes = channel.keyframes();
-                int currentKeyframeIndx = Math.max(0, Mth.binarySearch(0, keyframes.length, (p_232315_) -> {
-                    return elapsed_in_seconds <= keyframes[p_232315_].timestamp();
+                int currentKeyframeIndx = Math.max(0, Mth.binarySearch(0, keyframes.length, (compare_indx) -> {
+                    return elapsed_in_seconds <= keyframes[compare_indx].timestamp();
                 }) - 1);
                 int nextKeyframeIndx = Math.min(keyframes.length - 1, currentKeyframeIndx + 1);
                 Keyframe currentKeyframe = keyframes[currentKeyframeIndx];
@@ -88,8 +88,8 @@ public class KeyframeAnimationsDelegate {
                         0.0F, 1.0F);
                 }
                 nextKeyframe.interpolation()
-                    .apply(current_pos, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
-                channel.target().apply(part, current_pos);
+                    .apply(temp_buffer, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
+                channel.target().apply(part, temp_buffer);
                 //ChopinLogger.l("Anim : " + current_pos);
             }
         }
@@ -98,7 +98,7 @@ public class KeyframeAnimationsDelegate {
 
    public static void animateSimple(SimpleAnimatedModel model,
         AnimationDefinition animation, long elapsed_in_millis, float interpolation_scale, 
-        Vector3f current_pos) {
+        Vector3f temp_buffer) {
         float elapsed_in_seconds = getElapsedSeconds(animation, elapsed_in_millis);
 
         for(var entry : animation.boneAnimations().entrySet()) {
@@ -109,8 +109,8 @@ public class KeyframeAnimationsDelegate {
             var channelList = entry.getValue();
             for (var channel : channelList) {
                 var keyframes = channel.keyframes();
-                int currentKeyframeIndx = Math.max(0, Mth.binarySearch(0, keyframes.length, (p_232315_) -> {
-                    return elapsed_in_seconds <= keyframes[p_232315_].timestamp();
+                int currentKeyframeIndx = Math.max(0, Mth.binarySearch(0, keyframes.length, (compare_indx) -> {
+                    return elapsed_in_seconds <= keyframes[compare_indx].timestamp();
                 }) - 1);
                 int nextKeyframeIndx = Math.min(keyframes.length - 1, currentKeyframeIndx + 1);
                 Keyframe currentKeyframe = keyframes[currentKeyframeIndx];
@@ -124,8 +124,8 @@ public class KeyframeAnimationsDelegate {
                         0.0F, 1.0F);
                 }
                 nextKeyframe.interpolation()
-                    .apply(current_pos, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
-                channel.target().apply(part, current_pos);
+                    .apply(temp_buffer, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
+                channel.target().apply(part, temp_buffer);
                 //ChopinLogger.l("Anim : " + current_pos);
             }
         }
@@ -149,8 +149,8 @@ public class KeyframeAnimationsDelegate {
             return 0f;
 
         var keyframes = rotationChannel.keyframes();
-        int currentKeyframeIndx = Math.max(0, Mth.binarySearch(0, keyframes.length, (p_232315_) -> {
-            return elapsed_in_seconds <= keyframes[p_232315_].timestamp();
+        int currentKeyframeIndx = Math.max(0, Mth.binarySearch(0, keyframes.length, (compare_indx) -> {
+            return elapsed_in_seconds <= keyframes[compare_indx].timestamp();
         }) - 1);
         int nextKeyframeIndx = Math.min(keyframes.length - 1, currentKeyframeIndx + 1);
         Keyframe currentKeyframe = keyframes[currentKeyframeIndx];
