@@ -33,6 +33,8 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -64,7 +66,9 @@ public class RiceMillBlockEntity extends BlockEntity {
 
     private RiceMillMenuProvider menuProvider = new RiceMillMenuProvider(this);
 
-    public int timeLine = 0;
+    private static final int ANIMATION_LENGTH = 200;
+    private int animationTick = 0;
+    private boolean isSpinning = false;
 
     public RiceMillBlockEntity(BlockPos pos, BlockState blockState) {
         super(DoggyTileEntityTypes.RICE_MILL.get(), pos, blockState);
@@ -82,9 +86,61 @@ public class RiceMillBlockEntity extends BlockEntity {
             return;
         if (!(blockEntity instanceof RiceMillBlockEntity mill))
             return;
+        updateSpinning(level, mill);
+        updateAnimation(mill);
         grindTick(level, pos, blockState, mill);
         ejectTick(level, mill);
-        ++mill.timeLine;
+    }
+
+
+    private int tickTillUpdateWaterSource = 15;
+    private static void updateSpinning(Level level, RiceMillBlockEntity mill) {
+        if (--mill.tickTillUpdateWaterSource > 0)
+            return;
+        mill.tickTillUpdateWaterSource = 15;
+        mill.isSpinning = scanForWaterSource(level, mill);
+    }
+
+    private static void updateAnimation(RiceMillBlockEntity mill) {
+        if (mill.isSpinning)
+            ++mill.animationTick;
+        else
+            mill.animationTick = 0;
+    }
+
+    private static boolean scanForWaterSource(Level level, RiceMillBlockEntity mill) {
+        var pos = mill.getBlockPos();
+        var state = mill.getBlockState();
+        var facing = RiceMillBlock.getFacing(state);
+        var side_axis = facing.getClockWise().getAxis();
+        for (int i = 0; i < 3; ++i) {
+            boolean waterPart = i <= 0;
+            var middle_pos = pos.offset(facing.getStepX(), i - 1, facing.getStepZ());
+            var middle_state = level.getBlockState(middle_pos);
+            if (!isValidBlockForSpiningInPart(waterPart, middle_state))
+                return false;
+            BlockPos side_pos_1 = null, side_pos_2 = null;
+            if (side_axis == Axis.X) {
+                side_pos_1 = middle_pos.offset(1, 0, 0);
+                side_pos_2 = middle_pos.offset(-1, 0, 0);
+            } else {
+                side_pos_1 = middle_pos.offset(0, 0, 1);
+                side_pos_2 = middle_pos.offset(0, 0, -1);
+            }
+            var side_state_1 = level.getBlockState(side_pos_1);
+            if (!isValidBlockForSpiningInPart(waterPart, side_state_1))
+                return false;
+            var side_state_2 = level.getBlockState(side_pos_2);
+            if (!isValidBlockForSpiningInPart(waterPart, side_state_2))
+                return false;
+        }
+        return true;
+    }
+
+    private static boolean isValidBlockForSpiningInPart(boolean waterPart, BlockState state) {
+        if (waterPart)
+            return state.is(Blocks.WATER);
+        return state.isAir();
     }
 
     private static void grindTick(Level level, BlockPos pos, BlockState blockState, RiceMillBlockEntity mill) {
@@ -103,7 +159,7 @@ public class RiceMillBlockEntity extends BlockEntity {
     }
 
     private static boolean isGrinding(RiceMillBlockEntity mill) {
-        return hasEnoughIngredient(mill) && productSlotEmpty(mill);
+        return mill.isSpinning && hasEnoughIngredient(mill) && productSlotEmpty(mill);
     }
 
     private static boolean productSlotEmpty(RiceMillBlockEntity mill) {
@@ -171,13 +227,13 @@ public class RiceMillBlockEntity extends BlockEntity {
         return stack.is(DoggyItems.RICE_GRAINS.get());
     }
 
-    private static int tickTillUpdateEject = 8;
+    private int tickTillUpdateEject = 8;
     private static void ejectTick(Level level, RiceMillBlockEntity mill) {
         if (level.isClientSide)
             return;
-        if (--tickTillUpdateEject > 0)
+        if (--mill.tickTillUpdateEject > 0)
             return;
-        tickTillUpdateEject = 8;
+        mill.tickTillUpdateEject = 8;
 
         var output = mill.container.getItem(OUTPUT_SLOT[0]);
         if (output.isEmpty())
@@ -246,7 +302,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         var aabb = new AABB(pos, pos.offset(1, 1, 1));
         var facing = RiceMillBlock.getFacing(state);
         var facing_norm = facing.getNormal();
-        var expand_vec = new Vec3(facing_norm.getX(), facing_norm.getY(), facing_norm.getZ());
+        var expand_vec = new Vec3(facing_norm.getX(), 1, facing_norm.getZ());
         aabb = aabb.expandTowards(expand_vec);
         var side_axis = facing.getClockWise().getAxis();
         if (side_axis == Axis.X) {
@@ -294,16 +350,7 @@ public class RiceMillBlockEntity extends BlockEntity {
 
         @Override
         public void set(int syncedSlotId, int val) {
-            switch (syncedSlotId) {
-            case GRINDING_TIME_ID:
-                mill.grindingTime = val;
-                return;
-            case GRINDING_TINE_FINISH_ID:
-                mill.grindingTimeWhenFinish = val;
-                return;
-            default:
-                return;
-            }
+            return;
         }
 
         @Override
@@ -357,7 +404,6 @@ public class RiceMillBlockEntity extends BlockEntity {
 
         @Override
         public boolean stillValid(Player player) {
-            // TODO Auto-generated method stub
             return Container.stillValidBlockEntity(this.mill, player);
         }
         

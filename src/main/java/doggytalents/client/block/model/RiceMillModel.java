@@ -3,7 +3,12 @@ package doggytalents.client.block.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import doggytalents.client.entity.model.AnimatedSyncedAccessoryModel;
 import doggytalents.common.entity.Dog;
+import net.minecraft.client.animation.AnimationChannel;
+import net.minecraft.client.animation.AnimationDefinition;
+import net.minecraft.client.animation.Keyframe;
+import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
@@ -14,13 +19,19 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class RiceMillModel extends EntityModel<Dog> {
+public class RiceMillModel extends AnimatedSyncedAccessoryModel {
 
     private ModelPart root;
 
     public RiceMillModel(ModelPart box) {
-        this.root = box;
+        super(box);
+		this.root = box;
     }
+
+	@Override
+	protected void populatePart(ModelPart box) {
+		
+	}
 
     public static LayerDefinition createLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
@@ -134,5 +145,101 @@ public class RiceMillModel extends EntityModel<Dog> {
             float p_103115_, float p_103116_, float p_103117_, float p_103118_) {
         this.root.render(p_103111_, p_103112_, p_103113_, p_103114_);
     }
+
+	public static final AnimationDefinition GRIND_ANIM = AnimationDefinition.Builder.withLength(10f).looping()
+		.addAnimation("spin",
+			new AnimationChannel(AnimationChannel.Targets.ROTATION,
+				new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.LINEAR),
+				new Keyframe(10f, KeyframeAnimations.degreeVec(0f, 0f, 360f),
+					AnimationChannel.Interpolations.LINEAR)))
+		.addAnimation("hammer_lever2",
+			new AnimationChannel(AnimationChannel.Targets.POSITION, 
+				new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(2.5f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(5f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(7.5f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM)))
+		.addAnimation("hammer_lever2",
+			new AnimationChannel(AnimationChannel.Targets.ROTATION,
+				new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(0.9f, KeyframeAnimations.degreeVec(0f, 0f, -27.5f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(1.2f, KeyframeAnimations.degreeVec(0f, 0f, 2.5f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(2.5f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(3.4f, KeyframeAnimations.degreeVec(0f, 0f, -27.5f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(3.7f, KeyframeAnimations.degreeVec(0f, 0f, 2.5f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(5f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(5.9f, KeyframeAnimations.degreeVec(0f, 0f, -27.5f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(6.2f, KeyframeAnimations.degreeVec(0f, 0f, 2.5f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(7.5f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(8.4f, KeyframeAnimations.degreeVec(0f, 0f, -27.5f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(8.7f, KeyframeAnimations.degreeVec(0f, 0f, 2.5f),
+					AnimationChannel.Interpolations.CATMULLROM)))
+		.addAnimation("hammer_head2",
+			new AnimationChannel(AnimationChannel.Targets.POSITION, 
+				new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(0.9f, KeyframeAnimations.posVec(0f, 1f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(1.2f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(2.5f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(3.4f, KeyframeAnimations.posVec(0f, 1f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(3.7f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(5f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(5.9f, KeyframeAnimations.posVec(0f, 1f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(6.2f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(7.5f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(8.4f, KeyframeAnimations.posVec(0f, 1f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM), 
+				new Keyframe(8.7f, KeyframeAnimations.posVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM)))
+		.addAnimation("hammer_head2",
+			new AnimationChannel(AnimationChannel.Targets.ROTATION,
+				new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(0.9f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(1.2f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(2.5f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(3.4f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(3.7f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(5f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(5.9f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(6.2f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(7.5f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(8.4f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM),
+				new Keyframe(8.7f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+					AnimationChannel.Interpolations.CATMULLROM))).build();
 
 }

@@ -34,7 +34,6 @@ public class RiceMillRenderer implements BlockEntityRenderer<RiceMillBlockEntity
         stack.translate(0.5F, 0F, -0.5F);
         var state = mill.getBlockState();
         var facing = RiceMillBlock.getFacing(state);
-        var degTimeLine = 20 * (mill.timeLine + pTicks) % 360f;
         stack.mulPose(Axis.YP.rotationDegrees(facing.getOpposite().toYRot()));
         //stack.mulPose(Axis.YP.rotationDegrees(degTimeLine));
         stack.scale(2f, 2f, 2f);
