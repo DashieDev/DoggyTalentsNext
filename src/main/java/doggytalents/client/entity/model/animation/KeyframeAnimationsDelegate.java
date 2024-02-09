@@ -98,6 +98,42 @@ public class KeyframeAnimationsDelegate {
 
    }
 
+   public static void animateSimple(SimpleAnimatedModel model,
+        AnimationDefinition animation, long elapsed_in_millis, float interpolation_scale, 
+        Vector3f current_pos) {
+        float elapsed_in_seconds = getElapsedSeconds(animation, elapsed_in_millis);
+
+        for(var entry : animation.boneAnimations().entrySet()) {
+            var partOptional = model.getPartFromName(entry.getKey());
+            if (partOptional.isEmpty()) continue;
+            var part = partOptional.get();
+            model.resetPart(part);
+            var channelList = entry.getValue();
+            for (var channel : channelList) {
+                var keyframes = channel.keyframes();
+                int currentKeyframeIndx = Math.max(0, Mth.binarySearch(0, keyframes.length, (p_232315_) -> {
+                    return elapsed_in_seconds <= keyframes[p_232315_].timestamp();
+                }) - 1);
+                int nextKeyframeIndx = Math.min(keyframes.length - 1, currentKeyframeIndx + 1);
+                Keyframe currentKeyframe = keyframes[currentKeyframeIndx];
+                Keyframe nextKeyframe = keyframes[nextKeyframeIndx];
+                float passed_time_since_current = elapsed_in_seconds - currentKeyframe.timestamp();
+                float duration_between = nextKeyframe.timestamp() - currentKeyframe.timestamp();
+                float passed_progress = 0;
+                if (duration_between > 0) {
+                    passed_progress = Mth.clamp(
+                        passed_time_since_current / duration_between, 
+                        0.0F, 1.0F);
+                }
+                nextKeyframe.interpolation()
+                    .apply(current_pos, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
+                channel.target().apply(part, current_pos);
+                //ChopinLogger.l("Anim : " + current_pos);
+            }
+        }
+
+   }
+
    public static float getCurrentAnimatedYRot(Dog dog,
         AnimationDefinition animation, long elapsed_in_millis, float interpolation_scale) {
         float elapsed_in_seconds = getElapsedSeconds(animation, elapsed_in_millis);
