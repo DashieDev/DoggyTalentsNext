@@ -80,7 +80,7 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
     }
 
     @Override
-    void resetAllPose() {
+    public void resetAllPose() {
         elytra.resetPose();
         lWing.resetPose();
         rWing.resetPose();
