@@ -31,6 +31,6 @@ public abstract class AnimatedSyncedAccessoryModel extends SyncedAccessoryModel 
         resetAllPose();
     }
 
-    abstract void resetAllPose();
+    public abstract void resetAllPose();
 
 }
