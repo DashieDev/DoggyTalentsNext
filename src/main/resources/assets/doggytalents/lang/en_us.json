@@ -162,6 +162,7 @@
    "item.doggytalents.rice_wheat": "Paddy Rice",
    "item.doggytalents.rice_wheat.description": "Use this to craft rice grains.",
    "block.doggytalents.rice_crop": "Rice Grains",
+   "block.doggytalents.rice_mill": "Rice Mill",
    "item.doggytalents.koji": "Koji",
    "item.doggytalents.soy_beans": "Soy Beans",
    "item.doggytalents.soy_pods": "Soybean Pods",
