@@ -877,6 +877,14 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_white_wool", has(Items.WHITE_WOOL))
             .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyBlocks.RICE_MILL.get())
+            .requires(DoggyItems.TRAINING_TREAT.get())
+            .requires(DoggyItems.KOJI.get())
+            .requires(ItemTags.PLANKS)
+            .requires(ItemTags.LOGS)
+            .requires(Items.STONE)
+            .unlockedBy("has_koji", has(DoggyItems.KOJI.get()))
+            .save(consumer);
     }
 
     private void registerTripleCooking(RecipeOutput consumer, Ingredient input, Item output,
