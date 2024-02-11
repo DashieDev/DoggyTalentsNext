@@ -34,6 +34,7 @@ public class RiceMillScreen extends AbstractContainerScreen<RiceMillMenu> {
         int y = (this.height - this.imageHeight) / 2;
         graphics.blit(Resources.RICE_MILL_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
         blitProgressArrow(graphics);
+        blitWaterBucket(graphics);
     }
 
     private void blitProgressArrow(GuiGraphics graphics) {
@@ -48,6 +49,21 @@ public class RiceMillScreen extends AbstractContainerScreen<RiceMillMenu> {
     private int getFilledArrow(float progress) {
         var ret = Mth.ceil(24 * progress);
         return Mth.clamp(ret, 0, 24);
+    }
+
+    private void blitWaterBucket(GuiGraphics graphics) {
+        int x = (this.width - this.imageWidth) / 2;
+        int y = (this.height - this.imageHeight) / 2;
+        var clientMill = this.menu.getClientMill();
+        if (clientMill == null)
+            return;
+        if (clientMill.isRemoved())
+            return;
+        var isSpinning = clientMill.isSpinning();
+        if (!isSpinning)
+            return;
+        graphics.blit(Resources.RICE_MILL_GUI, x + 82, y + 29, 
+            176, 31, 11, 10);
     }
     
 }

@@ -1,10 +1,18 @@
 package doggytalents.client.block.model;
 
+import java.util.Optional;
+
+import org.joml.Vector3f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import doggytalents.client.entity.model.AnimatedSyncedAccessoryModel;
+import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
+import doggytalents.client.entity.model.animation.SimpleAnimatedModel;
+import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
@@ -18,19 +26,50 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.RenderType;
 
-public class RiceMillModel extends AnimatedSyncedAccessoryModel {
+public class RiceMillModel extends SimpleAnimatedModel {
 
     private ModelPart root;
+	private ModelPart spin;
+	private ModelPart hammer;
 
     public RiceMillModel(ModelPart box) {
-        super(box);
+		super(RenderType::entityCutoutNoCull);
 		this.root = box;
+		this.spin = box.getChild("spin");
+		this.hammer = box.getChild("hammer2");
     }
 
 	@Override
-	protected void populatePart(ModelPart box) {
-		
+	public Optional<ModelPart> getPartFromName(String name) {
+		if ("spin".equals(name))
+			return Optional.of(this.spin);
+		if (this.hammer.hasChild(name))
+			return Optional.of(this.hammer.getChild(name));
+		return Optional.empty();
+	}
+
+	@Override
+	public void resetPart(ModelPart part) {
+		part.resetPose();
+	}
+
+	@Override
+	public void resetAllPose() {
+		this.spin.resetPose();
+		this.hammer.getAllParts().forEach(x -> x.resetPose());
+	}
+
+	private Vector3f tempVec = new Vector3f();
+
+	public void setUpMillAnim(RiceMillBlockEntity mill, float pTicks) {
+		if (!mill.isSpinning())
+			pTicks = 0;
+		var timeLine = (mill.getAnimationTick() + pTicks)
+			% (double) RiceMillBlockEntity.GRIND_ANIM_TICK_LEN;
+		var timeLineMillis = Util.tickMayWithPartialToMillis(timeLine);
+		KeyframeAnimationsDelegate.animateSimple(this, GRIND_ANIM, timeLineMillis, 1, tempVec);
 	}
 
     public static LayerDefinition createLayer() {
@@ -135,18 +174,12 @@ public class RiceMillModel extends AnimatedSyncedAccessoryModel {
 	}
 
     @Override
-    public void setupAnim(Dog p_102618_, float p_102619_, float p_102620_, float p_102621_, float p_102622_,
-            float p_102623_) {
-        
-    }
-
-    @Override
     public void renderToBuffer(PoseStack p_103111_, VertexConsumer p_103112_, int p_103113_, int p_103114_,
             float p_103115_, float p_103116_, float p_103117_, float p_103118_) {
         this.root.render(p_103111_, p_103112_, p_103113_, p_103114_);
     }
 
-	public static final AnimationDefinition GRIND_ANIM = AnimationDefinition.Builder.withLength(10f).looping()
+	private static final AnimationDefinition GRIND_ANIM = AnimationDefinition.Builder.withLength(10f).looping()
 		.addAnimation("spin",
 			new AnimationChannel(AnimationChannel.Targets.ROTATION,
 				new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
@@ -241,5 +274,4 @@ public class RiceMillModel extends AnimatedSyncedAccessoryModel {
 					AnimationChannel.Interpolations.CATMULLROM),
 				new Keyframe(8.7f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
 					AnimationChannel.Interpolations.CATMULLROM))).build();
-
 }

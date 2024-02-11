@@ -39,6 +39,7 @@ public class RiceMillRenderer implements BlockEntityRenderer<RiceMillBlockEntity
         stack.scale(2f, 2f, 2f);
         stack.translate(-0.25f, -1.501F, -0.25f);
         //stack.translate(0.47F, 0, -0f);
+        this.model.setUpMillAnim(mill, pTicks);
         var consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(Resources.RICE_MILL_MODEL));
         this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         stack.popPose();

@@ -48,6 +48,7 @@ public class DTBlockstateProvider extends BlockStateProvider {
 
         doggyCrops(DoggyBlocks.RICE_CROP);
         doggyCrops(DoggyBlocks.SOY_CROP);
+        particleOnly(DoggyBlocks.RICE_MILL.get(), Blocks.OAK_PLANKS);
     }
 
     // Applies texture to all faces and for the input face culls that direction
@@ -69,14 +70,6 @@ public class DTBlockstateProvider extends BlockStateProvider {
 
         this.simpleBlock(blockIn.get(), model);
     }
-
-    private void createEmptyModel(Supplier<? extends Block> blockIn) {
-      var model = this.models()
-        .getBuilder(name(blockIn.get()))
-        .parent(this.models().getExistingFile(mcLoc(ModelProvider.BLOCK_FOLDER + "/block")));
-      this.simpleBlock(blockIn.get(), model);
-    }
-
 
     protected void dogBed(Supplier<? extends Block> blockIn) {
         BlockModelBuilder model = this.models()
@@ -209,6 +202,11 @@ public class DTBlockstateProvider extends BlockStateProvider {
         return this.models().cross(name(block.get()), blockTexture(block.get()));
     }
 
+    private void particleOnly(Block block, Block textureBlock) {
+       var model = this.models().withExistingParent(name(block), mcLoc(ModelProvider.BLOCK_FOLDER + "/block"))
+          .texture("particle", blockTexture(textureBlock));
+        this.simpleBlock(block, model);
+    }
 
     protected void makeSimple(Supplier<? extends Block> blockIn) {
         this.simpleBlock(blockIn.get());

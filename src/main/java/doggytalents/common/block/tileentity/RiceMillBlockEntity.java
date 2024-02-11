@@ -1,9 +1,12 @@
 package doggytalents.common.block.tileentity;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.google.common.collect.Maps;
 
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTileEntityTypes;
@@ -27,6 +30,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
@@ -40,14 +44,16 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.network.NetworkHooks;
 
 public class RiceMillBlockEntity extends BlockEntity { 
 
-    public static final int GRAINS_REQUIRED = 5;
+    public static final int GRAINS_REQUIRED = 3;
     
     public static final int TOTOAL_SLOTS = 3;
     public static final int[] GRAIN_SLOTS = {0};
@@ -66,9 +72,16 @@ public class RiceMillBlockEntity extends BlockEntity {
 
     private RiceMillMenuProvider menuProvider = new RiceMillMenuProvider(this);
 
-    private static final int ANIMATION_LENGTH = 200;
+    public static final int GRIND_ANIM_TICK_LEN = 200;
     private int animationTick = 0;
     private boolean isSpinning = false;
+
+    private static Map<Item, Item> GRIND_MAP = null;
+    public static void initGrindMap() {
+        GRIND_MAP = Maps.newHashMap();
+        GRIND_MAP.put(DoggyItems.RICE_GRAINS.get(), DoggyItems.UNCOOKED_RICE_BOWL.get());
+        GRIND_MAP.put(DoggyItems.SOY_BEANS_DRIED.get(), DoggyItems.SOY_MILK.get());
+    }
 
     public RiceMillBlockEntity(BlockPos pos, BlockState blockState) {
         super(DoggyTileEntityTypes.RICE_MILL.get(), pos, blockState);
@@ -78,7 +91,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         var blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof RiceMillBlockEntity mill))
             return;
-        player.openMenu(mill.menuProvider);
+        NetworkHooks.openScreen(player, mill.menuProvider, mill.getBlockPos());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
@@ -101,11 +114,20 @@ public class RiceMillBlockEntity extends BlockEntity {
         mill.isSpinning = scanForWaterSource(level, mill);
     }
 
+    public boolean isSpinning() {
+        return this.isSpinning;
+    }
+
+    public int getAnimationTick() {
+        return this.animationTick;
+    }
+
     private static void updateAnimation(RiceMillBlockEntity mill) {
         if (mill.isSpinning)
             ++mill.animationTick;
-        else
+        if (mill.animationTick >= GRIND_ANIM_TICK_LEN) {
             mill.animationTick = 0;
+        }
     }
 
     private static boolean scanForWaterSource(Level level, RiceMillBlockEntity mill) {
@@ -159,16 +181,20 @@ public class RiceMillBlockEntity extends BlockEntity {
     }
 
     private static boolean isGrinding(RiceMillBlockEntity mill) {
-        return mill.isSpinning && hasEnoughIngredient(mill) && productSlotEmpty(mill);
+        return mill.isSpinning && hasEnoughIngredient(mill) && productSlotIsAvailable(mill);
     }
 
-    private static boolean productSlotEmpty(RiceMillBlockEntity mill) {
+    private static boolean productSlotIsAvailable(RiceMillBlockEntity mill) {
         var stack = mill.container.getItem(OUTPUT_SLOT[0]);
         if (stack.isEmpty())
             return true;
-        if (!stack.is(DoggyItems.UNCOOKED_RICE_BOWL.get()))
+        var inputStack = mill.container.getItem(INPUT_SLOT[0]);
+        var outputItem = getMIllProductItem(inputStack.getItem());
+        if (outputItem == null)
             return false;
-        return stack.getCount() < DoggyItems.UNCOOKED_RICE_BOWL.get().getMaxStackSize(stack);
+        if (!inputStack.is(outputItem))
+            return false;
+        return stack.getCount() < stack.getMaxStackSize();
     }
 
     private static boolean hasEnoughIngredient(RiceMillBlockEntity mill) {
@@ -182,11 +208,22 @@ public class RiceMillBlockEntity extends BlockEntity {
             if (requireGrainLeft < 0)
                 break;
             var grainSlotStack = mill.container.getItem(grainSlot);
-            if (!grainSlotStack.is(DoggyItems.RICE_GRAINS.get()))
+            if (!isInputGrainsForMIll(grainSlotStack))
                 continue;
             requireGrainLeft -= grainSlotStack.getCount();
         }
         return requireGrainLeft <= 0;
+    }
+
+    public static boolean isInputGrainsForMIll(ItemStack stack) {
+        if (stack.isEmpty())
+            return false;
+        var item = stack.getItem();
+        return GRIND_MAP.get(item) != null;
+    }
+
+    public static @Nullable Item getMIllProductItem(Item item) {
+        return GRIND_MAP.get(item);
     }
 
     private static void createFinishProduct(RiceMillBlockEntity mill) {
@@ -201,12 +238,15 @@ public class RiceMillBlockEntity extends BlockEntity {
         }
 
         int grainsNeeded = GRAINS_REQUIRED;
+        Item inputItem = null;
         for (var grainSlot : GRAIN_SLOTS) {
             if (grainsNeeded <= 0)
                 break;
             var grainSlotStack = mill.container.getItem(grainSlot);
-            if (!grainSlotStack.is(DoggyItems.RICE_GRAINS.get()))
+            if (!isInputGrainsForMIll(grainSlotStack))
                 continue;
+            if (inputItem == null)
+                inputItem = grainSlotStack.getItem();
             grainSlotStack = grainSlotStack.copy();
             var stackCount = grainSlotStack.getCount();
             if (stackCount <= grainsNeeded) {
@@ -218,13 +258,18 @@ public class RiceMillBlockEntity extends BlockEntity {
             }
             mill.container.setItem(grainSlot, grainSlotStack);
         }
-        mill.containerWrapper.insertItem(OUTPUT_SLOT[0], new ItemStack(DoggyItems.UNCOOKED_RICE_BOWL.get()), false);
+        if (inputItem == null)
+            return;
+        var resultItem = getMIllProductItem(inputItem);
+        if (resultItem == null)
+            return;
+        mill.containerWrapper.insertItem(OUTPUT_SLOT[0], new ItemStack(resultItem), false);
     }
 
     private boolean isInputMaterialForSlotId(ItemStack stack, int slotId) {
         if (slotId == BOWL_SLOT)
             return stack.is(Items.BOWL);
-        return stack.is(DoggyItems.RICE_GRAINS.get());
+        return isInputGrainsForMIll(stack);
     }
 
     private int tickTillUpdateEject = 8;
@@ -263,6 +308,8 @@ public class RiceMillBlockEntity extends BlockEntity {
             return Optional.of(attach_blockEntity);
         if (attach_blockEntity instanceof ChestBlockEntity)
             return Optional.of(attach_blockEntity);
+        if (attach_blockEntity instanceof HopperBlockEntity)
+            return Optional.of(attach_blockEntity);
         return Optional.empty();
     }
 
@@ -286,7 +333,47 @@ public class RiceMillBlockEntity extends BlockEntity {
             currentStack = currentStack.copy();
             currentStack.shrink(1);
             return currentStack;
+        } else if (recipent instanceof ChestBlockEntity chest) {
+            currentStack = tryInputStackInContainer(currentStack, chest);
+        } else if (recipent instanceof HopperBlockEntity hopper) {
+            currentStack = tryInputStackInContainer(currentStack, hopper);
+        }  
+        return currentStack;
+    }
+
+    private static ItemStack tryInputStackInContainer(ItemStack currentStack, Container target) {
+        int freeSlot = -1;
+        for (int i = 0; i < target.getContainerSize(); ++i) {
+            ItemStack item = target.getItem(i);
+            if (item.isEmpty()) {
+                freeSlot = i;
+                break;
+            }
+            if (!ItemStack.isSameItem(currentStack, item))
+                continue;
+            if (item.getCount() < item.getMaxStackSize()) {
+                freeSlot = i;
+                break;
+            }
         }
+        if (freeSlot < 0)
+            return currentStack;
+        
+        ItemStack targetItem = target.getItem(freeSlot);
+        if (!targetItem.isEmpty() && !ItemStack.isSameItem(currentStack, targetItem))
+            return currentStack;
+        if (!targetItem.isEmpty() && targetItem.getCount() >= targetItem.getMaxStackSize())
+            return currentStack;
+        
+        if (targetItem.isEmpty()) {
+            targetItem = new ItemStack(currentStack.getItem());
+        } else {
+            targetItem = targetItem.copy();
+            targetItem.grow(1);
+        }
+        target.setItem(freeSlot, targetItem);
+        currentStack = currentStack.copy();
+        currentStack.shrink(1);
         return currentStack;
     }
     
@@ -455,7 +542,7 @@ public class RiceMillBlockEntity extends BlockEntity {
 
         @Override
         public Component getDisplayName() {
-            return Component.empty();
+            return Component.translatable("container.doggytalents.rice_mill");
         }
         
     }

@@ -3,6 +3,7 @@ package doggytalents.common.inventory.container;
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -16,6 +17,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class RiceMillMenu extends AbstractContainerMenu {
@@ -28,9 +30,25 @@ public class RiceMillMenu extends AbstractContainerMenu {
     private Container millContainer;
     private ContainerData syncedData;
 
-    //Client constructor
-    public RiceMillMenu(int containerId, Inventory inv) {
+    private RiceMillBlockEntity clientMill = null;
+
+    //Client constructor and functions
+    public RiceMillMenu(int containerId, Inventory inv, BlockPos millPos) {
         this(containerId, inv, new SimpleContainer(RiceMillBlockEntity.TOTOAL_SLOTS), new SimpleContainerData(RiceMillBlockEntity.TOTOAL_DATA_SLOT));
+        var player = inv.player;
+        var level = player.level();
+        if (level.isClientSide) {
+            findClientMill(level, millPos);
+        }
+    }
+    private void findClientMill(Level level, BlockPos pos) {
+        var blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof RiceMillBlockEntity mill))
+            return;
+        this.clientMill = mill;
+    }
+    public RiceMillBlockEntity getClientMill() {
+        return this.clientMill;
     }
 
     //Server constructor
@@ -43,10 +61,10 @@ public class RiceMillMenu extends AbstractContainerMenu {
 
         for (int i = 0; i < RiceMillBlockEntity.GRAIN_SLOTS.length; ++i) {
             int grainSlot = RiceMillBlockEntity.GRAIN_SLOTS[i]; 
-            this.addSlot(new Slot(millContainer, grainSlot, 20, 17 + i * 18) {
+            this.addSlot(new Slot(millContainer, grainSlot, 20, 17 + (i+1) * 18) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return stack.is(DoggyItems.RICE_GRAINS.get());
+                    return RiceMillBlockEntity.isInputGrainsForMIll(stack);
                 }
             });
         }

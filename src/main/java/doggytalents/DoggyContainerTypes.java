@@ -69,7 +69,8 @@ public class DoggyContainerTypes {
     });
 
     public static final RegistryObject<MenuType<RiceMillMenu>> RICE_MILL = register("rice_mill", (windowId, inv, data) -> {
-        return new RiceMillMenu(windowId, inv);
+        var pos = data.readBlockPos();
+        return new RiceMillMenu(windowId, inv, pos);
     });
 
     private static <X extends AbstractContainerMenu, T extends MenuType<X>> RegistryObject<MenuType<X>> register(final String name, final IContainerFactory<X> factory) {
