@@ -170,6 +170,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);
         blockItem(DoggyBlocks.FOOD_BOWL);
+        generated(DoggyBlocks.RICE_MILL);
     }
 
     private ResourceLocation itemTexture(Supplier<? extends ItemLike> item) {
