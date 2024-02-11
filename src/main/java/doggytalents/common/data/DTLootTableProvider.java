@@ -96,7 +96,8 @@ public class DTLootTableProvider extends LootTableProvider {
             dropsSelf(DoggyBlocks.DOG_BATH);
             dropDogBed(DoggyBlocks.DOG_BED);
             dropsSelf(DoggyBlocks.FOOD_BOWL); // Drop with the name of the dog bowl
-        
+            dropsSelf(DoggyBlocks.RICE_MILL);
+
             final var RICE_LOOT_CONDITION = 
                 LootItemBlockStatePropertyCondition
                     .hasBlockStateProperties(DoggyBlocks.RICE_CROP.get())

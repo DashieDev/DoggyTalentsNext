@@ -7,6 +7,8 @@ import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.api.events.RegisterDogSkinJsonPathEvent;
+import doggytalents.client.block.model.RiceMillModel;
+import doggytalents.client.block.render.RiceMillRenderer;
 import doggytalents.client.entity.model.DogArmorModel;
 import doggytalents.client.entity.model.DogBackpackModel;
 import doggytalents.client.entity.model.DogFrontLegsSeperate;
@@ -100,6 +102,7 @@ import doggytalents.client.screen.DogInventoriesScreen;
 import doggytalents.client.screen.DoggyToolsScreen;
 import doggytalents.client.screen.FoodBowlScreen;
 import doggytalents.client.screen.PackPuppyScreen;
+import doggytalents.client.screen.RiceMillScreen;
 import doggytalents.client.screen.TreatBagScreen;
 import doggytalents.client.tileentity.renderer.DogBedRenderer;
 import doggytalents.common.lib.Constants;
@@ -190,6 +193,7 @@ public class ClientSetup {
     public static final ModelLayerLocation PIANO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "piano"), "main");
     public static final ModelLayerLocation PIANO_UPRIGHT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "piano_upright"), "main");
     public static final ModelLayerLocation DOG_PLUSHIE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_plushie_toy"), "main");
+    public static final ModelLayerLocation RICE_MILL = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "rice_mill"), "main");
 
     public static final List<ResourceLocation> OTHER_MOD_SKIN_JSONS = new ArrayList<ResourceLocation>();
 
@@ -200,6 +204,7 @@ public class ClientSetup {
         MenuScreens.register(DoggyContainerTypes.DOG_INVENTORIES.get(), DogInventoriesScreen::new);
         MenuScreens.register(DoggyContainerTypes.DOG_ARMOR.get(), DogArmorScreen::new);
         MenuScreens.register(DoggyContainerTypes.DOG_TOOLS.get(), DoggyToolsScreen::new);
+        MenuScreens.register(DoggyContainerTypes.RICE_MILL.get(), RiceMillScreen::new);
     }
 
     public static void setupEntityRenderers(final EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -279,6 +284,7 @@ public class ClientSetup {
         event.registerLayerDefinition(PIANO, GrandPianoModel::creatPianoLayer);
         event.registerLayerDefinition(PIANO_UPRIGHT, UprightPianoModel::createPianoLayer);
         event.registerLayerDefinition(DOG_PLUSHIE, DogPlushieModel::createBodyLayer);
+        event.registerLayerDefinition(RICE_MILL, RiceMillModel::createLayer);
 
         AccessoryModelRenderEntries.registerEntries();
         AccessoryModelManager.registerLayerDef(event);
@@ -303,6 +309,7 @@ public class ClientSetup {
         event.registerEntityRenderer(DoggyEntityTypes.DOG.get(), DogRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.DOG_BEAM.get(), DoggyBeamRenderer::new);
         event.registerBlockEntityRenderer(DoggyTileEntityTypes.DOG_BED.get(), DogBedRenderer::new);
+        event.registerBlockEntityRenderer(DoggyTileEntityTypes.RICE_MILL.get(), RiceMillRenderer::new);
 
         event.registerEntityRenderer(DoggyEntityTypes.GRAND_PIANO_BLACK.get(), PianoRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.GRAND_PIANO_WHITE.get(), PianoRenderer::new);
