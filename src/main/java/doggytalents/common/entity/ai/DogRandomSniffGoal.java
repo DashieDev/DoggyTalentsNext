@@ -291,7 +291,7 @@ public class DogRandomSniffGoal extends Goal implements HasTickNonRunningPrev {
     }
 
     private void rememberBeingBurned() {
-        this.stillRememberBeingBurnedTick = this.dog.getRandom().nextInt(25) * 20;
+        this.stillRememberBeingBurnedTick = this.dog.getRandom().nextInt(5) * 10 * 20;
     }
 
     private boolean stillRememberBeingBurned() {
