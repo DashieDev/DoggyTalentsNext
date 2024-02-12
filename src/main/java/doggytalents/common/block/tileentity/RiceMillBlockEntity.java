@@ -52,8 +52,6 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.network.NetworkHooks;
 
 public class RiceMillBlockEntity extends BlockEntity { 
-
-    public static final int GRAINS_REQUIRED = 3;
     
     public static final int TOTOAL_SLOTS = 3;
     public static final int[] GRAIN_SLOTS = {0};
@@ -76,11 +74,15 @@ public class RiceMillBlockEntity extends BlockEntity {
     private int animationTick = 0;
     private boolean isSpinning = false;
 
-    private static Map<Item, Item> GRIND_MAP = null;
+    private static Map<Item, MillOutput> GRIND_MAP = null;
     public static void initGrindMap() {
         GRIND_MAP = Maps.newHashMap();
-        GRIND_MAP.put(DoggyItems.RICE_WHEAT.get(), DoggyItems.UNCOOKED_RICE_BOWL.get());
-        GRIND_MAP.put(DoggyItems.SOY_BEANS_DRIED.get(), DoggyItems.SOY_MILK.get());
+        GRIND_MAP.put(DoggyItems.RICE_GRAINS.get(), 
+            MillOutput.of(true, 3, DoggyItems.UNCOOKED_RICE_BOWL.get()));
+        GRIND_MAP.put(DoggyItems.SOY_BEANS_DRIED.get(),
+            MillOutput.of(true, 3, DoggyItems.SOY_MILK.get()));
+        GRIND_MAP.put(DoggyItems.SOY_PODS.get(),
+            MillOutput.of(false, 1, 3, DoggyItems.SOY_BEANS.get()));
     }
 
     public RiceMillBlockEntity(BlockPos pos, BlockState blockState) {
@@ -169,10 +171,12 @@ public class RiceMillBlockEntity extends BlockEntity {
         if (level.isClientSide)
             return;
         
-        if (isGrinding(mill)) {
+        var inputStack = mill.container.getItem(INPUT_SLOT[0]);
+        var currentRecipe = getMIllRecipe(inputStack.getItem());
+        if (isGrinding(mill, inputStack, currentRecipe)) {
             ++mill.grindingTime;
             if (mill.grindingTime >= mill.grindingTimeWhenFinish) {
-                createFinishProduct(mill);
+                createFinishProduct(mill, inputStack, currentRecipe);
                 mill.grindingTime = 0;
             }
         } else {
@@ -180,73 +184,74 @@ public class RiceMillBlockEntity extends BlockEntity {
         }
     }
 
-    private static boolean isGrinding(RiceMillBlockEntity mill) {
-        return mill.isSpinning && hasEnoughIngredient(mill) && productSlotIsAvailable(mill);
+    private static boolean isGrinding(RiceMillBlockEntity mill, ItemStack inputStack, MillOutput currentRecipe) {
+        if (currentRecipe.empty())
+            return false;
+        return mill.isSpinning && hasEnoughIngredient(mill, inputStack, currentRecipe) && productSlotIsAvailable(mill, currentRecipe);
     }
 
-    private static boolean productSlotIsAvailable(RiceMillBlockEntity mill) {
+    private static boolean productSlotIsAvailable(RiceMillBlockEntity mill, MillOutput recipe) {
+        if (recipe.empty())
+            return false;
         var currentOutputStack = mill.container.getItem(OUTPUT_SLOT[0]);
         if (currentOutputStack.isEmpty())
             return true;
-        var inputStack = mill.container.getItem(INPUT_SLOT[0]);
-        var outputItemFromInput = getMIllProductItem(inputStack.getItem());
+        var outputItemFromInput = recipe.resultItem();
         if (outputItemFromInput == null)
             return false;
         if (!currentOutputStack.is(outputItemFromInput))
             return false;
-        return currentOutputStack.getCount() < currentOutputStack.getMaxStackSize();
+        return currentOutputStack.getCount() + recipe.outputAmount() < currentOutputStack.getMaxStackSize();
     }
 
-    private static boolean hasEnoughIngredient(RiceMillBlockEntity mill) {
+    private static boolean hasEnoughIngredient(RiceMillBlockEntity mill, ItemStack inputStack, MillOutput recipe) {
+        if (recipe.empty())
+            return false;
         var bowSlotStack = (mill.container.getItem(BOWL_SLOT));
-        if (!bowSlotStack.is(Items.BOWL)) {
+        if (recipe.needBowl() && !bowSlotStack.is(Items.BOWL)) {
             return false;
         }
 
-        int requireGrainLeft = GRAINS_REQUIRED;
+        int requireGrainLeft = recipe.inputAmount();
+        var inputItem = inputStack.getItem();
         for (var grainSlot : GRAIN_SLOTS) {
             if (requireGrainLeft < 0)
                 break;
             var grainSlotStack = mill.container.getItem(grainSlot);
-            if (!isInputGrainsForMIll(grainSlotStack))
+            if (!grainSlotStack.is(inputItem))
                 continue;
             requireGrainLeft -= grainSlotStack.getCount();
         }
         return requireGrainLeft <= 0;
     }
 
-    public static boolean isInputGrainsForMIll(ItemStack stack) {
-        if (stack.isEmpty())
-            return false;
-        var item = stack.getItem();
-        return GRIND_MAP.get(item) != null;
+
+    public static MillOutput getMIllRecipe(Item inputItem) {
+        return GRIND_MAP.getOrDefault(inputItem, MillOutput.EMPTY);
     }
 
-    public static @Nullable Item getMIllProductItem(Item item) {
-        return GRIND_MAP.get(item);
-    }
-
-    private static void createFinishProduct(RiceMillBlockEntity mill) {
-        if (!isGrinding(mill))
+    private static void createFinishProduct(RiceMillBlockEntity mill, ItemStack currentInput, MillOutput currentRecipe) {
+        if (!isGrinding(mill, currentInput, currentRecipe))
+            return;
+        
+        var inputItem = currentInput.getItem();
+        if (currentRecipe.empty())
             return;
 
         var bowSlotStack = (mill.container.getItem(BOWL_SLOT));
-        if (bowSlotStack.is(Items.BOWL)) {
+        if (currentRecipe.needBowl() && bowSlotStack.is(Items.BOWL)) {
             bowSlotStack = bowSlotStack.copy();
             bowSlotStack.shrink(1);
             mill.container.setItem(BOWL_SLOT, bowSlotStack);
         }
 
-        int grainsNeeded = GRAINS_REQUIRED;
-        Item inputItem = null;
+        int grainsNeeded = currentRecipe.inputAmount();
         for (var grainSlot : GRAIN_SLOTS) {
             if (grainsNeeded <= 0)
                 break;
             var grainSlotStack = mill.container.getItem(grainSlot);
-            if (!isInputGrainsForMIll(grainSlotStack))
+            if (!grainSlotStack.is(inputItem))
                 continue;
-            if (inputItem == null)
-                inputItem = grainSlotStack.getItem();
             grainSlotStack = grainSlotStack.copy();
             var stackCount = grainSlotStack.getCount();
             if (stackCount <= grainsNeeded) {
@@ -258,18 +263,20 @@ public class RiceMillBlockEntity extends BlockEntity {
             }
             mill.container.setItem(grainSlot, grainSlotStack);
         }
-        if (inputItem == null)
+        var resultStack = currentRecipe.produce();
+        if (resultStack == ItemStack.EMPTY)
             return;
-        var resultItem = getMIllProductItem(inputItem);
-        if (resultItem == null)
-            return;
-        mill.containerWrapper.insertItem(OUTPUT_SLOT[0], new ItemStack(resultItem), false);
+        mill.containerWrapper.insertItem(OUTPUT_SLOT[0], resultStack, false);
     }
 
     private boolean isInputMaterialForSlotId(ItemStack stack, int slotId) {
         if (slotId == BOWL_SLOT)
             return stack.is(Items.BOWL);
-        return isInputGrainsForMIll(stack);
+        return isInputGrain(stack);
+    }
+    
+    public static boolean isInputGrain(ItemStack stack) {
+        return !getMIllRecipe(stack.getItem()).empty();
     }
 
     private int tickTillUpdateEject = 8;
@@ -545,6 +552,46 @@ public class RiceMillBlockEntity extends BlockEntity {
             return Component.translatable("container.doggytalents.rice_mill");
         }
         
+    }
+
+    public static class MillOutput {
+
+        public static MillOutput EMPTY = MillOutput.of(false, 0, null);
+
+        private boolean needBowl = true;
+        private Item resultItem = null;
+        private int inputAmount = 0;
+        private int outputAmount = 1;
+
+        private MillOutput() {}
+
+        public boolean needBowl() { return this.needBowl; }
+        public @Nullable Item resultItem() { return this.resultItem; }
+        public int inputAmount() {return this.inputAmount; }
+        public int outputAmount() {return this.outputAmount; }
+        public boolean empty() {
+            return resultItem == null;
+        }
+        public ItemStack produce() {
+            if (this.resultItem == null)
+                return ItemStack.EMPTY;
+            return new ItemStack(this.resultItem, this.outputAmount);
+        }
+
+        public static MillOutput of(boolean needBowl, int inputAmount, @Nullable Item result) {
+            return of(needBowl, inputAmount, 1, result);
+        }
+
+        public static MillOutput of(boolean needBowl, int inputAmount, int outputAmount, @Nullable Item result) {
+            var ret = new MillOutput();
+            ret.inputAmount = inputAmount;
+            ret.resultItem = result;
+            ret.needBowl = needBowl;
+            ret.outputAmount = outputAmount;
+            if (ret.outputAmount < 1 || ret.outputAmount >= 10)
+                ret.outputAmount = 1;
+            return ret;
+        }
     }
 
     public static class FurnaceBlockEntityDelegate extends AbstractFurnaceBlockEntity {
