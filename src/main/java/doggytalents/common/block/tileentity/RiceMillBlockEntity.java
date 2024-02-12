@@ -67,7 +67,7 @@ public class RiceMillBlockEntity extends BlockEntity {
     public static final int GRINDING_TIME_ID = 0;
     public static final int GRINDING_TINE_FINISH_ID = 1;
     private int grindingTime;
-    private int grindingTimeWhenFinish = 100;
+    private int grindingTimeWhenFinish = 50;
     private RiceMillSyncedData syncedData = new RiceMillSyncedData(this);
 
     private RiceMillMenuProvider menuProvider = new RiceMillMenuProvider(this);
@@ -79,7 +79,7 @@ public class RiceMillBlockEntity extends BlockEntity {
     private static Map<Item, Item> GRIND_MAP = null;
     public static void initGrindMap() {
         GRIND_MAP = Maps.newHashMap();
-        GRIND_MAP.put(DoggyItems.RICE_GRAINS.get(), DoggyItems.UNCOOKED_RICE_BOWL.get());
+        GRIND_MAP.put(DoggyItems.RICE_WHEAT.get(), DoggyItems.UNCOOKED_RICE_BOWL.get());
         GRIND_MAP.put(DoggyItems.SOY_BEANS_DRIED.get(), DoggyItems.SOY_MILK.get());
     }
 
