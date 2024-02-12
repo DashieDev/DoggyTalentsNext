@@ -185,7 +185,11 @@ public class DogRandomSniffGoal extends Goal {
         var sniffState = this.dog.level().getBlockState(sniffPos);
         if (!isBlockSniffable(sniffPos, sniffState))
             return false;
-        populateSniffPos(currentPos, sniffPos, sniffState);
+        var sniffPosUnder = sniffPos.below();
+        var sniffStateUnder = this.dog.level().getBlockState(sniffPosUnder);
+        if (!isBlockBelowSniffable(sniffPosUnder, sniffStateUnder))
+            return false;
+        populateSniffPos(currentPos, sniffPos, sniffState, sniffPosUnder, sniffStateUnder);
         return true;
     }
 
@@ -193,6 +197,10 @@ public class DogRandomSniffGoal extends Goal {
         if (state.isAir())
             return true;
         return !state.isCollisionShapeFullBlock(dog.level(), pos);
+    }
+
+    private boolean isBlockBelowSniffable(BlockPos posBelow, BlockState state) {
+        return true;
     }
 
     private DogAnimation getSniffAnim() {
@@ -243,12 +251,13 @@ public class DogRandomSniffGoal extends Goal {
         return;
     }
 
-    private void populateSniffPos(BlockPos current, BlockPos sniffPos, BlockState sniffState) {
-        if (sniffPos == null || sniffState == null) 
-            return;
-        sniffAtState = sniffState;
-        var sniffUnderPos = sniffPos.below();
-        sniffUnderState = this.dog.level().getBlockState(sniffUnderPos);
+    private void populateSniffPos(BlockPos current, BlockPos sniffPos, BlockState sniffState,
+        BlockPos sniffUnderPos, BlockState sniffUnderState) {
+        if (sniffUnderPos == null || sniffUnderState == null ||
+            sniffState == null || current == null) 
+            sniffPos = null;
+        this.sniffAtState = sniffState;
+        this.sniffUnderState = sniffUnderState;
         this.sniffAtPos = sniffPos;
         this.sniffUnderPos = sniffUnderPos;
         this.currentPos = current;
