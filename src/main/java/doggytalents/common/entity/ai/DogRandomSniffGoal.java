@@ -3,6 +3,7 @@ package doggytalents.common.entity.ai;
 import java.util.EnumSet;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.DogWrappedGoal.HasTickNonRunningPrev;
 import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
-public class DogRandomSniffGoal extends Goal {
+public class DogRandomSniffGoal extends Goal implements HasTickNonRunningPrev {
 
     private Dog dog;
     private int stopTick;
@@ -32,6 +33,7 @@ public class DogRandomSniffGoal extends Goal {
     private boolean isDoingAnim = false;
     private boolean shouldMoveSignificantly = false;
     private final int EXPLORE_RADIUS = 6;
+    private int stillRememberBeingBurnedTick = 0;
 
     public DogRandomSniffGoal(Dog dog) {
         this.dog = dog;
@@ -47,6 +49,12 @@ public class DogRandomSniffGoal extends Goal {
         if (this.dog.getRandom().nextFloat() >= 0.01f)
             return false;
         return true;
+    }
+
+    @Override
+    public void tickDogWhenGoalNotRunning() {
+        if (stillRememberBeingBurnedTick > 0)
+            --stillRememberBeingBurnedTick;
     }
 
     @Override
@@ -121,6 +129,7 @@ public class DogRandomSniffGoal extends Goal {
                 this.dog.push(pushBackVec.x() * 0.3, 0, pushBackVec.z() * 0.3);
                 this.dog.playSound(SoundEvents.WOLF_HURT, 0.6f, this.dog.getVoicePitch());
                 this.dog.playSound(SoundEvents.GENERIC_BURN, 0.3F, 2.0F + this.dog.getRandom().nextFloat() * 0.4F);
+                rememberBeingBurned();
             }
             ++tickAnim;
             break;
@@ -138,6 +147,7 @@ public class DogRandomSniffGoal extends Goal {
             if (this.tickAnim == 35) {
                 this.dog.playSound(SoundEvents.WOLF_HURT, 0.6f, this.dog.getVoicePitch());
                 this.dog.playSound(SoundEvents.GENERIC_BURN, 0.3F, 2.0F + this.dog.getRandom().nextFloat() * 0.4F);
+                rememberBeingBurned();
             }
             ++tickAnim;
         }
@@ -196,10 +206,18 @@ public class DogRandomSniffGoal extends Goal {
     private boolean isBlockSniffable(BlockPos pos, BlockState state) {
         if (state.isAir())
             return true;
+        if (this.stillRememberBeingBurned()) {
+            if (WalkNodeEvaluator.isBurningBlock(state))
+                return false;
+        }
         return !state.isCollisionShapeFullBlock(dog.level(), pos);
     }
 
     private boolean isBlockBelowSniffable(BlockPos posBelow, BlockState state) {
+        if (this.stillRememberBeingBurned()) {
+            if (WalkNodeEvaluator.isBurningBlock(state))
+                return false;
+        }
         return true;
     }
 
@@ -269,6 +287,14 @@ public class DogRandomSniffGoal extends Goal {
         this.sniffUnderPos = null;
         this.sniffUnderState = null;
         this.currentPos = null;
+    }
+
+    private void rememberBeingBurned() {
+        this.stillRememberBeingBurnedTick = this.dog.getRandom().nextInt(25) * 20;
+    }
+
+    private boolean stillRememberBeingBurned() {
+        return this.stillRememberBeingBurnedTick > 0;
     }
 
     @Override
