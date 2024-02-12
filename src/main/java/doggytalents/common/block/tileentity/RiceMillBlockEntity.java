@@ -79,6 +79,8 @@ public class RiceMillBlockEntity extends BlockEntity {
         GRIND_MAP = Maps.newHashMap();
         GRIND_MAP.put(DoggyItems.RICE_GRAINS.get(), 
             MillOutput.of(true, 3, DoggyItems.UNCOOKED_RICE_BOWL.get()));
+        GRIND_MAP.put(DoggyItems.RICE_WHEAT.get(), 
+            MillOutput.of(true, 1, DoggyItems.UNCOOKED_RICE_BOWL.get()));
         GRIND_MAP.put(DoggyItems.SOY_BEANS_DRIED.get(),
             MillOutput.of(true, 3, DoggyItems.SOY_MILK.get()));
         GRIND_MAP.put(DoggyItems.SOY_PODS.get(),
