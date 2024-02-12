@@ -875,13 +875,16 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_white_wool", has(Items.WHITE_WOOL))
             .save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyBlocks.RICE_MILL.get())
-            .requires(DoggyItems.TRAINING_TREAT.get())
-            .requires(DoggyItems.KOJI.get())
-            .requires(ItemTags.PLANKS)
-            .requires(ItemTags.LOGS)
-            .requires(Items.STONE)
-            .unlockedBy("has_koji", has(DoggyItems.KOJI.get()))
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyBlocks.RICE_MILL.get(), 1)
+            .pattern("FLF")
+            .pattern("LCL")
+            .pattern("FDF")
+            .define('F', ItemTags.FENCES)
+            .define('L', ItemTags.LOGS)
+            .define('C', Items.COBBLESTONE_SLAB)
+            .define('D', DoggyItems.RICE_WHEAT.get())
+            .unlockedBy("has_paddy_rice_dtn", has(DoggyItems.RICE_WHEAT.get()))
             .save(consumer);
     }
 
