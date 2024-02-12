@@ -185,16 +185,16 @@ public class RiceMillBlockEntity extends BlockEntity {
     }
 
     private static boolean productSlotIsAvailable(RiceMillBlockEntity mill) {
-        var stack = mill.container.getItem(OUTPUT_SLOT[0]);
-        if (stack.isEmpty())
+        var currentOutputStack = mill.container.getItem(OUTPUT_SLOT[0]);
+        if (currentOutputStack.isEmpty())
             return true;
         var inputStack = mill.container.getItem(INPUT_SLOT[0]);
-        var outputItem = getMIllProductItem(inputStack.getItem());
-        if (outputItem == null)
+        var outputItemFromInput = getMIllProductItem(inputStack.getItem());
+        if (outputItemFromInput == null)
             return false;
-        if (!inputStack.is(outputItem))
+        if (!currentOutputStack.is(outputItemFromInput))
             return false;
-        return stack.getCount() < stack.getMaxStackSize();
+        return currentOutputStack.getCount() < currentOutputStack.getMaxStackSize();
     }
 
     private static boolean hasEnoughIngredient(RiceMillBlockEntity mill) {
