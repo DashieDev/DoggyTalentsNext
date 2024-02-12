@@ -64,7 +64,7 @@ public class RiceMillMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(millContainer, grainSlot, 20, 17 + (i+1) * 18) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return RiceMillBlockEntity.isInputGrainsForMIll(stack);
+                    return RiceMillBlockEntity.isInputGrain(stack);
                 }
             });
         }
