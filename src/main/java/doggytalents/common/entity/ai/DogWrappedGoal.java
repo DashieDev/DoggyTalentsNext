@@ -10,9 +10,13 @@ import net.minecraft.world.entity.ai.goal.WrappedGoal;
 public class DogWrappedGoal extends Goal {
 
     private final Goal goal;
+    private HasTickNonRunningPrev nonRunningTicker = null; 
 
     public DogWrappedGoal(Goal goal) {
         this.goal = goal;
+        if (goal instanceof HasTickNonRunningPrev ticker) {
+            nonRunningTicker = ticker;
+        }
     }
 
     public boolean canUse() {
@@ -57,6 +61,20 @@ public class DogWrappedGoal extends Goal {
 
     public Goal getGoal() {
         return this.goal;
+    }
+
+    public void tickDogWhenGoalNotRunning() {
+        if (this.nonRunningTicker != null)
+            this.nonRunningTicker.tickDogWhenGoalNotRunning();
+    }
+
+    public static interface HasTickNonRunningPrev {
+        
+        /**
+         * Called before canUse() if the goal is not running prior
+         */
+        void tickDogWhenGoalNotRunning();
+
     }
     
 }
