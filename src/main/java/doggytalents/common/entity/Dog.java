@@ -881,9 +881,9 @@ public class Dog extends AbstractDog {
         }
         if (this.navigationLock != null)
             this.navigationLock.unlockDogNavigation();
-            
-        validateGoals();
         
+        validateGoalsAndTickNonRunningIfNeeded();
+
         super.aiStep();
 
         if (!this.level().isClientSide && this.delayedActionStart > 0)
@@ -1056,15 +1056,19 @@ public class Dog extends AbstractDog {
         this.startShakingAndBroadcast(this.wetSource.flame());
     } 
 
-    private void validateGoals() {
+    private void validateGoalsAndTickNonRunningIfNeeded() {
         //Valiate goals
         if (this.level().isClientSide)
             return;
         boolean needRemoved = false;
         var availableGoals = this.goalSelector.getAvailableGoals();
         for (var goal : availableGoals) {
-            if (goal.getGoal() instanceof DogWrappedGoal)
+            if (goal.getGoal() instanceof DogWrappedGoal dogGoal) {
+                if (goal.isRunning())
+                    continue;    
+                dogGoal.tickDogWhenGoalNotRunning();
                 continue;
+            }    
             needRemoved = true;
             break;
         }
