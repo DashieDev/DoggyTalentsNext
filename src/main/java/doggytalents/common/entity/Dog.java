@@ -337,6 +337,7 @@ public class Dog extends AbstractDog {
     @Override
     protected void registerGoals() {
         int trivial_p = 0, non_trivial_p = 0;
+        ItemStack stack = new ItemStack(Items.DIAMOND);
         DogSitWhenOrderedGoal sitGoal = null;
         
         int p = 1;

@@ -1,5 +1,6 @@
 package doggytalents.common.block.tileentity;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -73,33 +74,61 @@ public class RiceMillBlockEntity extends BlockEntity {
     public static final int GRIND_ANIM_TICK_LEN = 200;
     private int animationTick = 0;
     private boolean isSpinning = false;
+    private MillRecipe currentRecipe = MillRecipe.EMPTY;
+    private ItemStack prevInputStack = ItemStack.EMPTY;
+    private boolean prevHasBowl = false;
 
-    private static Map<Item, MillOutput> GRIND_MAP = null;
+    private static final ArrayList<MillRecipe> MILL_RECIPES = new ArrayList<>();
     public static void initGrindMap() {
-        GRIND_MAP = Maps.newHashMap();
-        GRIND_MAP.put(DoggyItems.RICE_GRAINS.get(), 
-            MillOutput.of(true, 3, DoggyItems.UNCOOKED_RICE_BOWL.get()));
-        GRIND_MAP.put(DoggyItems.RICE_GRAINS.get(), 
-            MillOutput.of(false, 1, DoggyItems.UNCOOKED_RICE.get()));
+        MILL_RECIPES.clear();
+        MILL_RECIPES.add(
+            MillRecipe.Builder.withInput(DoggyItems.RICE_GRAINS.get(), 3)
+                .needsBowl()
+                .withOutput(DoggyItems.UNCOOKED_RICE_BOWL.get(), 1)
+                .build());
+        MILL_RECIPES.add(
+            MillRecipe.Builder.withInput(DoggyItems.RICE_GRAINS.get(), 1)
+                .withOutput(DoggyItems.UNCOOKED_RICE.get(), 1)
+                .build());
 
-        GRIND_MAP.put(DoggyItems.RICE_WHEAT.get(), 
-            MillOutput.of(true, 1, DoggyItems.UNCOOKED_RICE_BOWL.get()));
-        GRIND_MAP.put(DoggyItems.RICE_WHEAT.get(), 
-            MillOutput.of(false, 1, 3, DoggyItems.UNCOOKED_RICE.get()));
+        MILL_RECIPES.add(
+            MillRecipe.Builder.withInput(DoggyItems.RICE_WHEAT.get(), 1)
+                .needsBowl()
+                .withOutput(DoggyItems.UNCOOKED_RICE_BOWL.get(), 1)
+                .build());
+        MILL_RECIPES.add(
+            MillRecipe.Builder.withInput(DoggyItems.RICE_WHEAT.get(), 1)
+                .withOutput(DoggyItems.UNCOOKED_RICE.get(), 3)
+                .build());
 
-        GRIND_MAP.put(DoggyItems.SOY_BEANS_DRIED.get(),
-            MillOutput.of(true, 3, DoggyItems.SOY_MILK.get()));
-        GRIND_MAP.put(DoggyItems.SOY_PODS.get(),
-            MillOutput.of(false, 1, 3, DoggyItems.SOY_BEANS.get()));
-        GRIND_MAP.put(DoggyItems.SOY_PODS_DRIED.get(),
-            MillOutput.of(false, 1, 3, DoggyItems.SOY_BEANS_DRIED.get()));
-        GRIND_MAP.put(DoggyItems.SOY_PODS_DRIED.get(),
-            MillOutput.of(true, 1, DoggyItems.SOY_MILK.get()));
-        GRIND_MAP.put(DoggyItems.EDAMAME.get(),
-            MillOutput.of(false, 1, 3, DoggyItems.EDAMAME_UNPODDED.get()));
+        MILL_RECIPES.add(
+            MillRecipe.Builder.withInput(DoggyItems.SOY_BEANS_DRIED.get(), 3)
+                .needsBowl()
+                .withOutput(DoggyItems.SOY_MILK.get(), 1)
+                .build());
+        MILL_RECIPES.add(
+            MillRecipe.Builder.withInput(DoggyItems.SOY_PODS_DRIED.get(), 1)
+                .needsBowl()
+                .withOutput(DoggyItems.SOY_MILK.get(), 1)
+                .build());
 
-        GRIND_MAP.put(Items.WHEAT,
-            MillOutput.of(false, 1, Items.BREAD));
+        MILL_RECIPES.add(
+            MillRecipe.Builder.withInput(DoggyItems.SOY_PODS.get(), 1)
+                .withOutput(DoggyItems.SOY_BEANS.get(), 3)
+                .build());
+        MILL_RECIPES.add(
+            MillRecipe.Builder.withInput(DoggyItems.SOY_PODS_DRIED.get(), 1)
+                .withOutput(DoggyItems.SOY_BEANS_DRIED.get(), 3)
+                .build());
+        MILL_RECIPES.add(
+            MillRecipe.Builder.withInput(DoggyItems.EDAMAME.get(), 1)
+                .withOutput(DoggyItems.EDAMAME_UNPODDED.get(), 3)
+                .build());
+
+        MILL_RECIPES.add(
+            MillRecipe.Builder.withInput(Items.WHEAT, 1)
+                .withOutput(Items.BREAD, 1)
+                .build());
 
         // GRIND_MAP.put(DoggyItems.UNCOOKED_RICE.get(), 
         //     MillOutput.of(false, 1, DoggyItems.RICE_FLOUR.get()));
@@ -127,7 +156,6 @@ public class RiceMillBlockEntity extends BlockEntity {
         grindTick(level, pos, blockState, mill);
         ejectTick(level, mill);
     }
-
 
     private int tickTillUpdateWaterSource = 15;
     private static void updateSpinning(Level level, RiceMillBlockEntity mill) {
@@ -193,7 +221,9 @@ public class RiceMillBlockEntity extends BlockEntity {
             return;
         
         var inputStack = mill.container.getItem(INPUT_SLOT[0]);
-        var currentRecipe = getMIllRecipe(inputStack.getItem());
+        recipeUpdateTick(mill, inputStack);
+        var currentRecipe = mill.currentRecipe;
+
         if (isGrinding(mill, inputStack, currentRecipe)) {
             ++mill.grindingTime;
             if (mill.grindingTime >= mill.grindingTimeWhenFinish) {
@@ -205,19 +235,84 @@ public class RiceMillBlockEntity extends BlockEntity {
         }
     }
 
-    private static boolean isGrinding(RiceMillBlockEntity mill, ItemStack inputStack, MillOutput currentRecipe) {
+    private static void recipeUpdateTick(RiceMillBlockEntity mill, ItemStack currentInputStack) {
+        var bowlStack = mill.container.getItem(BOWL_SLOT);
+        var hasBowl = bowlStack.is(Items.BOWL);
+        var changed = checkAndDetectChangeInMillInput(mill, currentInputStack, hasBowl);
+        if (changed)
+            changeRecipeIfNeeded(mill, currentInputStack, hasBowl);
+    }
+
+    private static void changeRecipeIfNeeded(RiceMillBlockEntity mill, 
+        ItemStack currentInputStack, boolean hasBowl) {
+
+        if (currentInputStack.isEmpty())
+            return;
+        if (currentRecipeStillvalid(mill, currentInputStack, hasBowl))
+            return;
+        mill.currentRecipe = findMillRecipe(currentInputStack, hasBowl);
+    }
+
+    private static boolean currentRecipeStillvalid(RiceMillBlockEntity mill, 
+        ItemStack currentInputStack, boolean hasBowl) {
+        var currentRecipe = mill.currentRecipe;
+        if (currentRecipe.empty()) 
+            return false;
+        boolean isMatch = currentRecipe.matches(currentInputStack, hasBowl);
+        return isMatch;
+    }
+
+    private static boolean checkAndDetectChangeInMillInput(RiceMillBlockEntity mill, ItemStack currentInputStack,
+        boolean hasBowl) {
+        if (!isChanged(mill, currentInputStack, hasBowl))
+            return false;
+        mill.prevHasBowl = hasBowl;
+        if (currentInputStack.isEmpty()) {
+            mill.prevInputStack = ItemStack.EMPTY;
+        } else {
+            mill.prevInputStack = currentInputStack.copy();
+        }
+        return true;
+    }
+
+    private static boolean isChanged(RiceMillBlockEntity mill, ItemStack currentInputStack, boolean hasBowl) {
+        if (currentInputStack.isEmpty() && mill.prevInputStack.isEmpty())
+            return false;
+        if (currentInputStack.isEmpty() != mill.prevInputStack.isEmpty())
+            return true;
+
+        if (currentInputStack.getItem() != mill.prevInputStack.getItem())
+            return true;
+        if (currentInputStack.getCount() != mill.prevInputStack.getCount())
+            return true;
+        if (mill.prevHasBowl != hasBowl)
+            return true;
+        return false;
+    }
+
+    private static MillRecipe findMillRecipe(ItemStack stack, boolean hasBowl) {
+        if (stack.isEmpty())
+            return MillRecipe.EMPTY;
+        for (var recipe : MILL_RECIPES) {
+            if (recipe.matches(stack, hasBowl))
+                return recipe;
+        }
+        return MillRecipe.EMPTY;
+    }
+
+    private static boolean isGrinding(RiceMillBlockEntity mill, ItemStack inputStack, MillRecipe currentRecipe) {
         if (currentRecipe.empty())
             return false;
         return mill.isSpinning && hasEnoughIngredient(mill, inputStack, currentRecipe) && productSlotIsAvailable(mill, currentRecipe);
     }
 
-    private static boolean productSlotIsAvailable(RiceMillBlockEntity mill, MillOutput recipe) {
+    private static boolean productSlotIsAvailable(RiceMillBlockEntity mill, MillRecipe recipe) {
         if (recipe.empty())
             return false;
         var currentOutputStack = mill.container.getItem(OUTPUT_SLOT[0]);
         if (currentOutputStack.isEmpty())
             return true;
-        var outputItemFromInput = recipe.resultItem();
+        var outputItemFromInput = recipe.outputItem();
         if (outputItemFromInput == null)
             return false;
         if (!currentOutputStack.is(outputItemFromInput))
@@ -225,7 +320,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         return currentOutputStack.getCount() + recipe.outputAmount() < currentOutputStack.getMaxStackSize();
     }
 
-    private static boolean hasEnoughIngredient(RiceMillBlockEntity mill, ItemStack inputStack, MillOutput recipe) {
+    private static boolean hasEnoughIngredient(RiceMillBlockEntity mill, ItemStack inputStack, MillRecipe recipe) {
         if (recipe.empty())
             return false;
         var bowSlotStack = (mill.container.getItem(BOWL_SLOT));
@@ -246,12 +341,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         return requireGrainLeft <= 0;
     }
 
-
-    public static MillOutput getMIllRecipe(Item inputItem) {
-        return GRIND_MAP.getOrDefault(inputItem, MillOutput.EMPTY);
-    }
-
-    private static void createFinishProduct(RiceMillBlockEntity mill, ItemStack currentInput, MillOutput currentRecipe) {
+    private static void createFinishProduct(RiceMillBlockEntity mill, ItemStack currentInput, MillRecipe currentRecipe) {
         if (!isGrinding(mill, currentInput, currentRecipe))
             return;
         
@@ -293,11 +383,11 @@ public class RiceMillBlockEntity extends BlockEntity {
     private boolean isInputMaterialForSlotId(ItemStack stack, int slotId) {
         if (slotId == BOWL_SLOT)
             return stack.is(Items.BOWL);
-        return isInputGrain(stack);
+        return isInputSlotValid(stack);
     }
     
-    public static boolean isInputGrain(ItemStack stack) {
-        return !getMIllRecipe(stack.getItem()).empty();
+    public static boolean isInputSlotValid(ItemStack stack) {
+        return true;
     }
 
     private int tickTillUpdateEject = 8;
@@ -575,43 +665,89 @@ public class RiceMillBlockEntity extends BlockEntity {
         
     }
 
-    public static class MillOutput {
+    public static class MillRecipe {
 
-        public static MillOutput EMPTY = MillOutput.of(false, 0, null);
+        public static MillRecipe EMPTY = MillRecipe.Builder.empty().build();
 
-        private boolean needBowl = true;
-        private Item resultItem = null;
+        private Item inputItem = null;
         private int inputAmount = 0;
+        private boolean needBowl = true;
+        private Item outputItem = null;
         private int outputAmount = 1;
 
-        private MillOutput() {}
+        private MillRecipe() {}
 
-        public boolean needBowl() { return this.needBowl; }
-        public @Nullable Item resultItem() { return this.resultItem; }
+        public Item inputItem() {return this.inputItem;}
         public int inputAmount() {return this.inputAmount; }
+        public boolean needBowl() { return this.needBowl; }
+        public @Nullable Item outputItem() { return this.outputItem; }
         public int outputAmount() {return this.outputAmount; }
         public boolean empty() {
-            return resultItem == null;
+            return outputItem == null || inputItem == null;
+        }
+        public boolean matches(ItemStack inputStack, boolean hasBowl) {
+            if (this.empty())
+                return false;
+            if (hasBowl != needBowl)
+                return false;
+            if (inputStack == null)
+                return false;
+            if (!inputStack.is(this.inputItem))
+                return false;
+            if (inputStack.getCount() < this.inputAmount)
+                return false;
+            return true;
         }
         public ItemStack produce() {
-            if (this.resultItem == null)
+            if (this.empty())
                 return ItemStack.EMPTY;
-            return new ItemStack(this.resultItem, this.outputAmount);
+            if (this.outputItem == null)
+                return ItemStack.EMPTY;
+            return new ItemStack(this.outputItem, this.outputAmount);
         }
+        
+        public static class Builder {
 
-        public static MillOutput of(boolean needBowl, int inputAmount, @Nullable Item result) {
-            return of(needBowl, inputAmount, 1, result);
-        }
+            private Item inputItem = null;
+            private int inputAmount = 0;
+            private boolean needBowl = false;
+            private Item outputItem = null;
+            private int outputAmount = 1;
 
-        public static MillOutput of(boolean needBowl, int inputAmount, int outputAmount, @Nullable Item result) {
-            var ret = new MillOutput();
-            ret.inputAmount = inputAmount;
-            ret.resultItem = result;
-            ret.needBowl = needBowl;
-            ret.outputAmount = outputAmount;
-            if (ret.outputAmount < 1 || ret.outputAmount >= 10)
-                ret.outputAmount = 1;
-            return ret;
+            private Builder() {}
+
+            public static Builder empty() {
+                return new Builder();
+            }
+
+            public static Builder withInput(Item item, int amount) {
+                var ret = new Builder();
+                ret.inputItem = item;
+                ret.inputAmount = amount;
+                return ret;
+            }
+
+            public Builder needsBowl() {
+                this.needBowl = true;
+                return this;
+            }
+
+            public Builder withOutput(Item item, int amount) {
+                this.outputAmount = amount;
+                this.outputItem = item;
+                return this;
+            }
+
+            public MillRecipe build() {
+                var ret = new MillRecipe();
+                ret.inputItem = this.inputItem;
+                ret.inputAmount = this.inputAmount;
+                ret.needBowl = this.needBowl;
+                ret.outputItem = this.outputItem;
+                ret.outputAmount = this.outputAmount;
+                return ret;
+            }
+
         }
     }
 
