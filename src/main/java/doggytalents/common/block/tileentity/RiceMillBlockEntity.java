@@ -79,12 +79,27 @@ public class RiceMillBlockEntity extends BlockEntity {
         GRIND_MAP = Maps.newHashMap();
         GRIND_MAP.put(DoggyItems.RICE_GRAINS.get(), 
             MillOutput.of(true, 3, DoggyItems.UNCOOKED_RICE_BOWL.get()));
+        GRIND_MAP.put(DoggyItems.RICE_GRAINS.get(), 
+            MillOutput.of(false, 1, DoggyItems.UNCOOKED_RICE.get()));
+
         GRIND_MAP.put(DoggyItems.RICE_WHEAT.get(), 
             MillOutput.of(true, 1, DoggyItems.UNCOOKED_RICE_BOWL.get()));
+        GRIND_MAP.put(DoggyItems.RICE_WHEAT.get(), 
+            MillOutput.of(false, 1, 3, DoggyItems.UNCOOKED_RICE.get()));
+
         GRIND_MAP.put(DoggyItems.SOY_BEANS_DRIED.get(),
             MillOutput.of(true, 3, DoggyItems.SOY_MILK.get()));
         GRIND_MAP.put(DoggyItems.SOY_PODS.get(),
             MillOutput.of(false, 1, 3, DoggyItems.SOY_BEANS.get()));
+        GRIND_MAP.put(DoggyItems.SOY_PODS_DRIED.get(),
+            MillOutput.of(false, 1, 3, DoggyItems.SOY_BEANS_DRIED.get()));
+
+        GRIND_MAP.put(Items.WHEAT,
+            MillOutput.of(false, 1, Items.BREAD));
+
+        // GRIND_MAP.put(DoggyItems.UNCOOKED_RICE.get(), 
+        //     MillOutput.of(false, 1, DoggyItems.RICE_FLOUR.get()));
+
     }
 
     public RiceMillBlockEntity(BlockPos pos, BlockState blockState) {
