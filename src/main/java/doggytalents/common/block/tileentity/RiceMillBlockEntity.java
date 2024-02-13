@@ -162,7 +162,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         if (--mill.tickTillUpdateWaterSource > 0)
             return;
         mill.tickTillUpdateWaterSource = 15;
-        mill.isSpinning = scanForWaterSource(level, mill);
+        mill.isSpinning = scanIfMillCanSpin(level, mill);
     }
 
     public boolean isSpinning() {
@@ -181,7 +181,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         }
     }
 
-    private static boolean scanForWaterSource(Level level, RiceMillBlockEntity mill) {
+    private static boolean scanIfMillCanSpin(Level level, RiceMillBlockEntity mill) {
         var pos = mill.getBlockPos();
         var state = mill.getBlockState();
         var facing = RiceMillBlock.getFacing(state);
