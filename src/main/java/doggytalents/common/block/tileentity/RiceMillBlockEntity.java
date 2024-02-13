@@ -248,12 +248,12 @@ public class RiceMillBlockEntity extends BlockEntity {
 
         if (currentInputStack.isEmpty())
             return;
-        if (currentRecipeStillvalid(mill, currentInputStack, hasBowl))
+        if (currentRecipeStillMatch(mill, currentInputStack, hasBowl))
             return;
         mill.currentRecipe = findMillRecipe(currentInputStack, hasBowl);
     }
 
-    private static boolean currentRecipeStillvalid(RiceMillBlockEntity mill, 
+    private static boolean currentRecipeStillMatch(RiceMillBlockEntity mill, 
         ItemStack currentInputStack, boolean hasBowl) {
         var currentRecipe = mill.currentRecipe;
         if (currentRecipe.empty()) 
