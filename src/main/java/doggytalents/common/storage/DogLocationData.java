@@ -45,9 +45,7 @@ public class DogLocationData implements IDogData {
     private boolean hasRadarCollar;
     private int locateColor;
 
-    // Cached objects
     private Dog dog;
-    private LivingEntity owner;
 
     protected DogLocationData(DogLocationStorage storageIn, UUID uuid) {
         this.storage = storageIn;
@@ -151,29 +149,6 @@ public class DogLocationData implements IDogData {
         DogLocationData locationData = new DogLocationData(storageIn, dogIn.getUUID());
         locationData.populate(dogIn);
         return locationData;
-    }
-
-    @Nullable
-    public Optional<LivingEntity> getOwner(@Nullable Level worldIn) {
-        if (worldIn == null) {
-            return Optional.ofNullable(this.owner);
-        }
-
-        MinecraftServer server = worldIn.getServer();
-        if (server == null) {
-            throw new IllegalArgumentException("worldIn must be of ServerWorld");
-        }
-
-        for (ServerLevel world : server.getAllLevels()) {
-            LivingEntity possibleOwner = WorldUtil.getCachedEntity(world, LivingEntity.class, this.owner, this.uuid);
-            if (possibleOwner != null) {
-                this.owner = possibleOwner;
-                return Optional.of(this.owner);
-            }
-        }
-
-        this.owner = null;
-        return Optional.empty();
     }
 
     @Nullable
