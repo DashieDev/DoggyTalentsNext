@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -32,6 +33,13 @@ public class DogLocationStorage extends SavedData {
         }
 
         ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
+
+        DimensionDataStorage storage = overworld.getDataStorage();
+        return storage.computeIfAbsent(DogLocationStorage::load, DogLocationStorage::new, Constants.STORAGE_DOG_LOCATION);
+    }
+
+    public static DogLocationStorage get(MinecraftServer server) {
+        ServerLevel overworld = server.getLevel(Level.OVERWORLD);
 
         DimensionDataStorage storage = overworld.getDataStorage();
         return storage.computeIfAbsent(DogLocationStorage::load, DogLocationStorage::new, Constants.STORAGE_DOG_LOCATION);
