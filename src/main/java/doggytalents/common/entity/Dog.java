@@ -2008,7 +2008,23 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public boolean addEffect(MobEffectInstance effectInst, @Nullable Entity adder) {
+        if (this.isDefeated())
+            return false;
+        return super.addEffect(effectInst, adder);
+    }
+
+    @Override
+    public void forceAddEffect(MobEffectInstance p_147216_, @Nullable Entity adder) {
+        if (this.isDefeated())
+            return;
+        super.forceAddEffect(p_147216_, adder);
+    }
+
+    @Override
     public boolean canBeAffected(MobEffectInstance effectIn) {
+        if (this.isDefeated())
+            return false;
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.isPotionApplicable(this, effectIn);
 
@@ -2481,6 +2497,7 @@ public class Dog extends AbstractDog {
         this.setMode(EnumMode.INCAPACITATED);
         this.setDogHunger(0);
         this.removeAllEffects();
+        this.addEffect(null)
         this.setDogIncapValue(this.getInitalDogIncapVal(source));
         
         this.getNavigation().stop();
