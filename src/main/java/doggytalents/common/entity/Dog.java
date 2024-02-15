@@ -51,6 +51,7 @@ import doggytalents.common.network.packet.data.DogMountData;
 import doggytalents.common.network.packet.data.DogShakingData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
+import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.util.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -669,9 +670,6 @@ public class Dog extends AbstractDog {
 
             // Every 2 seconds
             if (this.tickCount % 40 == 0) {
-                DogLocationStorage.get(this.level()).getOrCreateData(this).update(this);
-
-
                 var owner = this.getOwner();
                 if (owner != null) {
                     this.setOwnersName(owner.getName());
@@ -2330,6 +2328,7 @@ public class Dog extends AbstractDog {
             var data = DogLocationStorage.get(serverLevel).getOrCreateData(this);
             
             if (data != null) data.update(this);
+            OnlineDogLocationManager.get().onDogGoOnline(this);
         }
         super.onAddedToWorld();
     }
