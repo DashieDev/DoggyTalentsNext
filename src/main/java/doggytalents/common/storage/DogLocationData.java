@@ -44,8 +44,6 @@ public class DogLocationData implements IDogData {
     private boolean hasRadarCollar;
     private int locateColor;
 
-    private Optional<Dog> onlineDog = Optional.empty();
-
     protected DogLocationData(DogLocationStorage storageIn, UUID uuid) {
         this.storage = storageIn;
         this.uuid = uuid;
@@ -97,7 +95,6 @@ public class DogLocationData implements IDogData {
 
         updateLocator(dogIn);
 
-        this.onlineDog = Optional.of(dogIn);
         this.storage.setDirty();
     }
 
@@ -155,15 +152,7 @@ public class DogLocationData implements IDogData {
     }
 
     public Optional<Dog> getOnlineDog() {
-        if (this.onlineDog == null) {
-            this.onlineDog = Optional.empty();
-        }
-        if (this.onlineDog.isPresent()) {
-            var dog = this.onlineDog.get();
-            if (dog.isRemoved())
-                this.onlineDog = Optional.empty();
-        }   
-        return this.onlineDog;
+        return OnlineDogLocationManager.get().getOnlineDog(this.uuid);
     }
 
     @Nullable

@@ -15,6 +15,7 @@ import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
 import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.storage.DogLocationStorage;
+import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.talent.HunterDogTalent;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.util.DogLocationStorageMigration;
@@ -76,6 +77,7 @@ public class EventHandler {
         if (event.phase != Phase.END) return;
 
         DogAsyncTaskManager.tick();
+        OnlineDogLocationManager.get().tick(event.getServer());
     }
 
     @SubscribeEvent
