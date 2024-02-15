@@ -83,7 +83,7 @@ public class EventHandler {
     @SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
         DogAsyncTaskManager.forceStop();
-        unrideAllDogOnPlayer(event);
+        OnlineDogLocationManager.get().unrideAllDogOnPlayer();
     }
 
     @SubscribeEvent
@@ -410,28 +410,6 @@ public class EventHandler {
         if (level != level_overworld)
             return;
         DogLocationStorageMigration.checkAndMigrate(level_overworld);
-    }
-
-    public void unrideAllDogOnPlayer(ServerStoppingEvent event) {
-        var server = event.getServer();
-        if (server == null)
-            return;
-        var storage = DogLocationStorage.get(server);
-        if (storage == null)
-            return;
-        var entries = storage.getAll();
-        for (var entry : entries) {
-            var dogOptional = entry.getOnlineDog();
-            if (!dogOptional.isPresent())
-                continue;
-            var dog = dogOptional.get();
-            if (!dog.isPassenger())
-                continue;
-            var vehicle = dog.getVehicle();
-            if (vehicle instanceof Player) {
-                dog.unRide();
-            }
-        }
     }
 
     //Prevent passenger suffocate when riding dog.
