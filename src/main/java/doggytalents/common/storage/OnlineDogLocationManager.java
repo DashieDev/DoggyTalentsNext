@@ -7,8 +7,10 @@ import java.util.UUID;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class OnlineDogLocationManager {
@@ -81,6 +83,20 @@ public class OnlineDogLocationManager {
         if (data == null)
             return;
         data.update(dog);
+    }
+
+    public void unrideAllDogOnPlayer() {
+        for (var entry : this.onlineDogs.entrySet()) {
+            var dog = entry.getValue();
+            if (dog.isRemoved())
+                continue;
+            if (!dog.isPassenger())
+                continue;
+            var vehicle = dog.getVehicle();
+            if (vehicle instanceof Player) {
+                dog.unRide();
+            }
+        }
     }
     
 }
