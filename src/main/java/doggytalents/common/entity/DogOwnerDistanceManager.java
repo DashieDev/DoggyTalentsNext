@@ -20,7 +20,7 @@ public class DogOwnerDistanceManager {
     private static final long START_MISSING_OWNER_TIME = 24000*4; // 4 days.
     private static final int UPDATE_INTERVAL = 5;
 
-    private static Map<UUID, Integer> GREETING_DOG_LIMIT_MAP = Maps.newConcurrentMap();
+    private static Map<UUID, Integer> GREETING_DOG_LIMIT_MAP = Maps.newHashMap();
 
     private final Dog dog;
 
