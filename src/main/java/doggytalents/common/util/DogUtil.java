@@ -622,6 +622,7 @@ public class DogUtil {
         if (dog.level().hasChunk(chunkpos.x, chunkpos.z)) {
             if (isTeleportSafeBlockMidAir(dog, bedPos.get().above())) {
                 teleportInternal(dog, bedPos.get().above());
+                dog.setOrderedToSit(true);
             }
         } else if (owner != null && owner instanceof ServerPlayer sP) {
             DogAsyncTaskManager.addPromiseWithOwner(
