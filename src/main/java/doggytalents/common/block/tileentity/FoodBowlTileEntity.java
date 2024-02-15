@@ -76,7 +76,7 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
         //Only run update code every 5 ticks (0.25s)
         if (++bowl.timeoutCounter < 5) { return; }
 
-        List<Dog> dogList = bowl.level.getEntitiesOfClass(Dog.class, new AABB(pos).inflate(5, 5, 5));
+        List<Dog> dogList = level.getEntitiesOfClass(Dog.class, new AABB(pos).inflate(5, 5, 5));
 
         for (Dog dog : dogList) {
             if (!dog.isDoingFine()) continue;
