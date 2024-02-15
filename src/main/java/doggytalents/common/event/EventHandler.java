@@ -420,9 +420,7 @@ public class EventHandler {
             return;
         var entries = storage.getAll();
         for (var entry : entries) {
-            var dogOptional = entry.getDog(defaultLevel);
-            if (dogOptional == null)
-                continue;
+            var dogOptional = entry.getOnlineDog();
             if (!dogOptional.isPresent())
                 continue;
             var dog = dogOptional.get();
