@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 public class DogLocationStorage extends SavedData {
 
-    private Map<UUID, DogLocationData> locationDataMap = Maps.newConcurrentMap();
+    private Map<UUID, DogLocationData> locationDataMap = Maps.newHashMap();
 
     public DogLocationStorage() {}
 
