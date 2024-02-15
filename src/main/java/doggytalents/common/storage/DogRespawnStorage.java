@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 
 public class DogRespawnStorage extends SavedData {
 
-    private Map<UUID, DogRespawnData> respawnDataMap = Maps.newConcurrentMap();
+    private Map<UUID, DogRespawnData> respawnDataMap = Maps.newHashMap();
 
     public DogRespawnStorage() {}
 
