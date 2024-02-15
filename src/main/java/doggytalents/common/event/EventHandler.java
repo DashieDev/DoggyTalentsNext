@@ -413,10 +413,9 @@ public class EventHandler {
 
     public void unrideAllDogOnPlayer(ServerStoppingEvent event) {
         var server = event.getServer();
-        var defaultLevel = server.getLevel(Level.OVERWORLD);
-        if (defaultLevel == null) 
+        if (server == null)
             return;
-        var storage = DogLocationStorage.get(defaultLevel);
+        var storage = DogLocationStorage.get(server);
         if (storage == null)
             return;
         var entries = storage.getAll();
