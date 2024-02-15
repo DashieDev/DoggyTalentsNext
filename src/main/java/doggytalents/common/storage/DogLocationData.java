@@ -44,7 +44,7 @@ public class DogLocationData implements IDogData {
     private boolean hasRadarCollar;
     private int locateColor;
 
-    private Dog dog;
+    private Optional<Dog> onlineDog = Optional.empty();
 
     protected DogLocationData(DogLocationStorage storageIn, UUID uuid) {
         this.storage = storageIn;
@@ -97,7 +97,7 @@ public class DogLocationData implements IDogData {
 
         updateLocator(dogIn);
 
-        this.dog = dogIn;
+        this.onlineDog = Optional.of(dogIn);
         this.storage.setDirty();
     }
 
@@ -150,41 +150,30 @@ public class DogLocationData implements IDogData {
         return locationData;
     }
 
-    @Nullable
-    public Optional<Dog> getDog(@Nullable Level worldIn) {
-        if (worldIn == null) {
-            return Optional.ofNullable(this.dog);
-        }
-
-        MinecraftServer server = worldIn.getServer();
-        if (server == null) {
-            throw new IllegalArgumentException("worldIn must be of ServerWorld");
-        }
-
-        for (ServerLevel world : server.getAllLevels()) {
-            Dog possibleDog = WorldUtil.getCachedEntity(world, Dog.class, this.dog, this.uuid);
-            if (possibleDog != null) {
-                this.dog = possibleDog;
-                return Optional.of(this.dog);
-            }
-        }
-
-        this.dog = null;
-        return Optional.empty();
-    }
-
     public boolean shouldDisplay(Level worldIn, Player playerIn, InteractionHand handIn) {
         return this.hasRadarCollar || playerIn.isCreative() || playerIn.getItemInHand(handIn).getItem() == DoggyItems.CREATIVE_CANINE_TRACKER.get();
     }
 
+    public Optional<Dog> getOnlineDog() {
+        if (this.onlineDog == null) {
+            this.onlineDog = Optional.empty();
+        }
+        if (this.onlineDog.isPresent()) {
+            var dog = this.onlineDog.get();
+            if (dog.isRemoved())
+                this.onlineDog = Optional.empty();
+        }   
+        return this.onlineDog;
+    }
+
     @Nullable
     public Component getName(@Nullable Level worldIn) {
-        return this.getDog(worldIn).map(Dog::getDisplayName).orElse(this.name);
+        return this.getOnlineDog().map(Dog::getDisplayName).orElse(this.name);
     }
 
     @Nullable
     public Vec3 getPos(@Nullable ServerLevel worldIn) {
-        return this.getDog(worldIn).map(Dog::position).orElse(this.position);
+        return this.getOnlineDog().map(Dog::position).orElse(this.position);
     }
 
     @Nullable
