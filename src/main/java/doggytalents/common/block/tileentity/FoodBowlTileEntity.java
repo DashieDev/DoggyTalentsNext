@@ -65,6 +65,10 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
+        if (level == null)
+            return;
+        if (level.isClientSide)
+            return; 
         if (!(blockEntity instanceof FoodBowlTileEntity bowl)) {
             return;
         }
