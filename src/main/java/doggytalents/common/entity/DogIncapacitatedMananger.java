@@ -325,15 +325,20 @@ public class DogIncapacitatedMananger {
 
         // 3 days max 60 min = 72 000 ticks
 
+        if (this.partialRecoverVal >= 1f) {
+            this.dog.setDogIncapValue(this.dog.getDogIncapValue() - 1);
+            this.partialRecoverVal = 0;
+        }
+        
+        if (this.bandageCooldown > 0) --bandageCooldown;
+
         var incap_state = dog.getIncapSyncState();
         var new_incap_state = incap_state.updateBandaid(bandagesCount);
         if (new_incap_state != incap_state) {
             dog.setIncapSyncState(new_incap_state);
         }
+
         healWithBandaid(new_incap_state.bandaid);
-
-        if (this.bandageCooldown > 0) --bandageCooldown;
-
         var owner = this.dog.getOwner();
         var dog_b0_state = this.dog.level.getBlockState(this.dog.blockPosition());
         var dog_b0_block = dog_b0_state.getBlock();
