@@ -2491,7 +2491,6 @@ public class Dog extends AbstractDog {
         this.setMode(EnumMode.INCAPACITATED);
         this.setDogHunger(0);
         this.removeAllEffects();
-        this.addEffect(null)
         this.setDogIncapValue(this.getInitalDogIncapVal(source));
         
         this.getNavigation().stop();
