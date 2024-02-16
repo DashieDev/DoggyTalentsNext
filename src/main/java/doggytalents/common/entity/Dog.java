@@ -1749,10 +1749,12 @@ public class Dog extends AbstractDog {
         var attacker = source.getEntity();
 
         if (this.isDefeated() && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
-            //Reset the dog incapacitated healing time
-            //The dog is already weak, hurting the dog makes,
-            //the dog being weak for longer...
-            this.setDogHunger(0);
+            if (ConfigHandler.SERVER.INCAP_VAL_RESET_WHEN_HURT.get()) {
+                var currentIncapVal = this.getDogIncapValue();
+                if (currentIncapVal < this.getDefaultInitIncapVal()) {
+                    this.setDogIncapValue(this.getDefaultInitIncapVal());
+                }
+            }
             this.incapacitatedMananger.onHurt();
 
             //Invalidate dog as a target for whatever killed him.
