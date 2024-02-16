@@ -209,17 +209,7 @@ public class DogIncapacitatedMananger {
 
     public void onHurt() {
         if (!ConfigHandler.SERVER.INCAP_VAL_RESET_WHEN_HURT.get()) {
-            return;
-        }
-
-        this.dropBandages();
-        this.bandagesCount = 0;
-
-        //Update.
-        var incap_state = dog.getIncapSyncState();
-        var new_incap_state = incap_state.updateBandaid(bandagesCount);
-        if (new_incap_state != incap_state) {
-            dog.setIncapSyncState(new_incap_state);
+            this.dropBandages();
         }
     }
 
@@ -234,6 +224,15 @@ public class DogIncapacitatedMananger {
                 new ItemStack(DoggyItems.BANDAID.get(), 1));
         }
         bandageCooldown = 200;
+
+        this.bandagesCount = 0;
+
+        //Update.
+        var incap_state = dog.getIncapSyncState();
+        var new_incap_state = incap_state.updateBandaid(bandagesCount);
+        if (new_incap_state != incap_state) {
+            dog.setIncapSyncState(new_incap_state);
+        }
     }
 
     private void displayToastIncapacitated(Player player) {
