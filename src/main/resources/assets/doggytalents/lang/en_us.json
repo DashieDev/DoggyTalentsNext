@@ -551,6 +551,7 @@
    "doggui.prevpage": "Previous Page",
    "doggui.nextpage": "Next Page",
    "doggui.newname": "New name:",
+   "doggui.newname.random.tooltip": "Randomize this Dog name.",
    "doggui.level": "Level:",
    "doggui.leveldire": "Kami Level:",
    "doggui.pointsleft": "Points Left:",
