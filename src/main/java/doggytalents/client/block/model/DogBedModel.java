@@ -96,30 +96,6 @@ private BlockModel model;
         return this.getModelVariant(data).getParticleIcon(data);
     }
 
-    @Override
-    public ModelData getModelData(@Nonnull BlockAndTintGetter world, @Nonnull BlockPos pos, @Nonnull BlockState state, ModelData tileData) {
-        ICasingMaterial casing = null;
-        IBeddingMaterial bedding = null;
-        Direction facing = Direction.NORTH;
-
-        BlockEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof DogBedTileEntity) {
-            casing = ((DogBedTileEntity) tile).getCasing();
-            bedding = ((DogBedTileEntity) tile).getBedding();
-        }
-
-        if (state.hasProperty(DogBedBlock.FACING)) {
-            facing = state.getValue(DogBedBlock.FACING);
-        }
-
-        var tb = tileData.derive();
-        tb.with(DogBedTileEntity.CASING, casing);
-        tb.with(DogBedTileEntity.BEDDING, bedding);
-        tb.with(DogBedTileEntity.FACING, facing);
-
-        return tb.build();
-    }
-
     public BakedModel bakeModelVariant(@Nullable ICasingMaterial casingResource, @Nullable IBeddingMaterial beddingResource, @Nonnull Direction facing) {
         List<BlockElement> parts = this.model.getElements();
         List<BlockElement> elements = new ArrayList<>(parts.size()); //We have to duplicate this so we can edit it below.
