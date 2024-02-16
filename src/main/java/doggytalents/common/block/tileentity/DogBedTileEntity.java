@@ -6,6 +6,7 @@ import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
+import doggytalents.common.block.DogBedBlock;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.storage.DogLocationData;
@@ -91,11 +92,16 @@ public class DogBedTileEntity extends PlacedTileEntity {
     }
 
     @Override
-    public IModelData getModelData() {
-        return new ModelDataMap.Builder()
-                .withInitial(CASING, this.casingType)
-                .withInitial(BEDDING, this.beddingType)
-                .withInitial(FACING, Direction.NORTH)
+    public ModelData getModelData() {
+        var state = this.getBlockState();
+        var facing = Direction.NORTH;
+        if (state != null && state.hasProperty(DogBedBlock.FACING)) {
+            facing = state.getValue(DogBedBlock.FACING);
+        }
+        return ModelData.builder()
+                .with(CASING, this.casingType)
+                .with(BEDDING, this.beddingType)
+                .with(FACING, facing)
                 .build();
     }
 
