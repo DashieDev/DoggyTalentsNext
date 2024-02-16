@@ -5,7 +5,8 @@ public class OpenDogScreenData {
     public enum ScreenType {
         INVENTORY(0),
         TOOL(1),
-        ARMOR(2);
+        ARMOR(2),
+        INVENTORY_SINGLE(3);
 
         private int id;
 

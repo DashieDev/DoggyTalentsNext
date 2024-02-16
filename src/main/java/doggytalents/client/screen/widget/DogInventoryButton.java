@@ -7,9 +7,11 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
+import doggytalents.common.network.packet.data.OpenDogScreenData.ScreenType;
 import doggytalents.common.talent.PackPuppyTalent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
@@ -29,11 +31,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DogInventoryButton extends AbstractButton {
 
     private Screen parent;
     private int baseX;
+    private boolean openSingle = false;
+    private Optional<Dog> openSingleDog = Optional.empty();
+    private Font font;
 
     private final Tooltip TOOLTIP_ACTIVE = 
         Tooltip.create(Component.translatable("container.doggytalents.dog_inventories.link"));
@@ -46,6 +52,15 @@ public class DogInventoryButton extends AbstractButton {
         super(x, y, 13, 10, Component.literal(""));
         this.baseX = x;
         this.parent = parentIn;
+        this.font = Minecraft.getInstance().font;
+    }
+
+    public DogInventoryButton(int x, int y, Screen parentIn, Dog dog) {
+        super(x, y, 13, 10, Component.literal(""));
+        this.baseX = x;
+        this.parent = parentIn;
+        this.openSingleDog = Optional.of(dog);
+        this.font = Minecraft.getInstance().font;
     }
 
     @Override
@@ -94,6 +109,11 @@ public class DogInventoryButton extends AbstractButton {
        graphics.blit(Resources.SMALL_WIDGETS, this.getX(), this.getY(), 0, 36 + i * 10, this.width, this.height);
        //TODO : 1.19.4 ???
        //this.renderBg(stack, mc, mouseX, mouseY);
+       if (this.openSingle) {
+            int tX = this.getX() + 11;
+            int tY = this.getY() + 5;
+            graphics.drawString(font, "x1", tX, tY, 0xffffffff);
+       }
 
     }
     
@@ -116,12 +136,31 @@ public class DogInventoryButton extends AbstractButton {
             if (menu != null)
                 menu.setCarried(ItemStack.EMPTY);
         }
-        PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
+        if (openSingle && openSingleDog.isPresent()) {
+            var dog = openSingleDog.get();
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), 
+                new OpenDogScreenData(ScreenType.INVENTORY_SINGLE, dog.getId()));
+        } else {
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
+        }
+        
         this.active = false;
     }
 
     @Override
     protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
+    }
+
+    public void keyGlobalPressed(int keyCode, int scanCode, int modifier) {
+        var mc = Minecraft.getInstance();
+        var shiftKey = mc.options.keyShift;
+        if (shiftKey.getKey().getValue() == keyCode && this.openSingleDog.isPresent()) {
+            this.openSingle = true;
+        }
+    }
+
+    public void keyGlobalReleased(int keyCode, int scanCode, int modifier) {
+        this.openSingle = false;
     }
 
 }
