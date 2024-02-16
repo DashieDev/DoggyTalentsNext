@@ -296,7 +296,7 @@ public class DoggyCommands {
 
         String dogName = ctx.getArgument("dogName", String.class);
         DogRespawnStorage respawnStorage = DogRespawnStorage.get(world);
-        List<DogRespawnData> respawnData = respawnStorage.getDogs(ownerName).filter((data) -> data.getDogName().equalsIgnoreCase(dogName)).collect(Collectors.toList());
+        List<DogRespawnData> respawnData = respawnStorage.getDogs(ownerName).filter((data) -> data.getDogName().equals(dogName)).collect(Collectors.toList());
 
         if (respawnData.isEmpty()) {
             throw NOTFOUND_EXCEPTION.create(dogName);
