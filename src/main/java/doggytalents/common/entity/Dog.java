@@ -1513,7 +1513,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
-        if (this.alterationProps.fallImmune()) {
+        if (dogFallImmune()) {
             return false;
         }
         for (IDogAlteration alter : this.alterations) {
@@ -1550,6 +1550,10 @@ public class Dog extends AbstractDog {
            return false;
         }
         // End: Logic copied from the super call and altered to apply the reduced fall damage to passengers too. #358
+    }
+
+    public boolean dogFallImmune() {
+        return this.alterationProps.fallImmune();
     }
 
     // TODO
