@@ -33,6 +33,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
@@ -377,6 +378,7 @@ public class EditInfoView extends AbstractElement {
                     blit(stack, this.x, this.y, 20, 0, 20, 20);
                 }
             };
+            this.randomButton.setTooltip(Tooltip.create(Component.translatable("doggui.newname.random.tooltip")));
             this.applyButton.active = false;
             this.randomButton.active = true;
             this.addChildren(randomButton);
