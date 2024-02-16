@@ -208,6 +208,10 @@ public class DogIncapacitatedMananger {
     }
 
     public void onHurt() {
+        if (!ConfigHandler.SERVER.INCAP_VAL_RESET_WHEN_HURT.get()) {
+            return;
+        }
+
         this.dropBandages();
         this.bandagesCount = 0;
 
