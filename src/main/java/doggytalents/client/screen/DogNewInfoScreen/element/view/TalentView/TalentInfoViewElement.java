@@ -125,15 +125,11 @@ public class TalentInfoViewElement extends AbstractElement {
         if (talent == DoggyTalents.PACK_PUPPY.get()) {
             addRenderPackPuppyButton(dog, container);
 
-            var packPuppyButtonDiv = new DivElement(container, getScreen())
+            var packPuppyButtonDiv = new PackPuppyButtonDiv(container, getScreen(), dog)
                 .setPosition(PosType.RELATIVE, 0, 0)
                 .setSize(1f, 20)
                 .init();
             container.addChildren(packPuppyButtonDiv);
-            var dogInvButton = new DogInventoryButton(
-                packPuppyButtonDiv.getRealX() + PADDING_LEFT, 
-                packPuppyButtonDiv.getRealY() + 5, getScreen());
-            packPuppyButtonDiv.addChildren(dogInvButton);
         } else if (talent == DoggyTalents.DOGGY_TORCH.get()) {
             var talentInstOptional = dog.getTalent(DoggyTalents.DOGGY_TORCH);
             if (!talentInstOptional.isPresent())
@@ -700,6 +696,39 @@ public class TalentInfoViewElement extends AbstractElement {
                 - font.lineHeight/2;
             font.draw(stack,  this.label, startX, pY, 0xffffffff);
         }
+    }
+
+    private static class PackPuppyButtonDiv extends AbstractElement {
+
+        private DogInventoryButton button;
+        private Dog dog;
+
+        public PackPuppyButtonDiv(AbstractElement parent, Screen screen, Dog dog) {
+            super(parent, screen);
+            this.dog = dog;
+        }
+
+        @Override
+        public AbstractElement init() {
+    
+            this.button = new DogInventoryButton(
+                this.getRealX() + PADDING_LEFT, 
+                this.getRealY() + 5, getScreen(), dog);
+            this.addChildren(button);
+
+            return this;
+        }
+
+        @Override
+        public void onGlobalKeyPress(int keyCode, int scanCode, int modifiers) {
+            this.button.keyGlobalPressed(keyCode, scanCode, modifiers);
+        }
+
+        @Override
+        public void onGlobalKeyRelease(int keyCode, int scanCode, int modifiers) {
+            this.button.keyGlobalReleased(keyCode, scanCode, modifiers);
+        }
+
     }
 
     
