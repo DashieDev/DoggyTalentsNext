@@ -234,6 +234,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
         public ForgeConfigSpec.BooleanValue WOLF_MOUNT_PASSENGER_COLLISION;
         public ForgeConfigSpec.BooleanValue CONDUCTING_BONE_CROSS_ORIGIN;
+        public ForgeConfigSpec.BooleanValue INCAP_VAL_RESET_WHEN_HURT;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -368,7 +369,12 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("other dimensions. Set this to false to limit Conducting Bone Users to only summon")
                 .comment("Dogs of the same dimension.")
                 .translation("doggytalents.conducting_bone_cross_origin")
-                .define("conducting_bone_cross_origin", true);  
+                .define("conducting_bone_cross_origin", true);
+            INCAP_VAL_RESET_WHEN_HURT = builder
+                .comment("Determine if Dog's incapacitated value should be reset when taking any damage")
+                .comment("while being Incapacitated.")
+                .translation("doggytalents.incap_val_reset_when_hurt")
+                .define("incap_val_reset_when_hurt", false);
 
             builder.pop();
         }
