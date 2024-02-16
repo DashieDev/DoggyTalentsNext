@@ -28,8 +28,8 @@ public class PackPuppyScreen extends AbstractContainerScreen<PackPuppyContainer>
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int par1, int par2) {
-        graphics.drawString(font, this.title.getString(), this.imageWidth / 2 - 10, 10, 4210752);
-        graphics.drawString(font, this.playerInventoryTitle, 8, this.imageHeight - 96 - 2, 4210752);
+        graphics.drawString(font, this.title.getString(), this.imageWidth / 2 - 10, 10, 4210752, false);
+        graphics.drawString(font, this.playerInventoryTitle, 8, this.imageHeight - 96 - 2, 4210752, false);
     }
 
     @Override
