@@ -39,6 +39,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class DogIncapacitatedMananger {
 
@@ -53,6 +54,7 @@ public class DogIncapacitatedMananger {
     private int bandagesCount = 0;
     private int bandageCooldown = 0;
     private int drownPoseTick = 0;
+    private BlockState atBlockState = null;
     
     public static final int MAX_INCAP_MSG_LEN = 256;
     private String incapMsg = "";
@@ -337,6 +339,12 @@ public class DogIncapacitatedMananger {
             dog.setIncapSyncState(new_incap_state);
         }
 
+        if (!ConfigHandler.SERVER.INCAP_VAL_RESET_WHEN_HURT.get() && 
+            this.bandagesCount > 0 && isConditionDestroyBandages(dog)) {
+            this.dropBandages();
+            return;
+        }
+
         healWithBandaid(new_incap_state.bandaid);
         var owner = this.dog.getOwner();
         var dog_b0_state = this.dog.level.getBlockState(this.dog.blockPosition());
@@ -348,13 +356,21 @@ public class DogIncapacitatedMananger {
             || dog_b0_state.is(BlockTags.BEDS)) {
             incapacitatedHealWithBed(owner);
         }
-
-        if (this.partialRecoverVal >= 1f) {
-            this.dog.setDogIncapValue(this.dog.getDogIncapValue() - 1);
-            this.partialRecoverVal = 0;
-        }
     }
-        
+
+    private boolean isConditionDestroyBandages(Dog dog) {
+        if (dog.isOnFire())
+            return true;
+        if (dog.isInWall())
+            return true;
+        if (dog.isInLava())
+            return true;
+        if (dog.isInWater())
+            return true;
+        if (dog.fallDistance > 3)
+            return true;
+        return false;
+    }
 
     private void incapacitatedExit() {
         this.dog.maxHealth();
