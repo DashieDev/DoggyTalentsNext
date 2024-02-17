@@ -374,7 +374,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Determine if Dog's incapacitated value should be reset when taking any damage")
                 .comment("while being Incapacitated.")
                 .translation("doggytalents.incap_val_reset_when_hurt")
-                .define("incap_val_reset_when_hurt", false);
+                .define("incap_val_reset_when_hurt", true);
 
             builder.pop();
         }
