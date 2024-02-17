@@ -359,15 +359,11 @@ public class DogIncapacitatedMananger {
     }
 
     private boolean isConditionDestroyBandages(Dog dog) {
-        if (dog.isOnFire())
+        if (!dog.fireImmune() && dog.isOnFire())
             return true;
-        if (dog.isInWall())
+        if (!dog.canSwimUnderwater() && dog.isInWater())
             return true;
-        if (dog.isInLava())
-            return true;
-        if (dog.isInWater())
-            return true;
-        if (dog.fallDistance > 3)
+        if (!dog.dogFallImmune() && dog.fallDistance > 3)
             return true;
         return false;
     }
