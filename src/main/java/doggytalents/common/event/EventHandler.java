@@ -3,6 +3,8 @@ package doggytalents.common.event;
 import java.util.UUID;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.mutable.MutableBoolean;
+
 import doggytalents.DoggyAccessories;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
@@ -50,6 +52,7 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
@@ -67,6 +70,7 @@ import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class EventHandler {
@@ -188,7 +192,7 @@ public class EventHandler {
         if (event.getEntity().level().isClientSide)
             return;
 
-        if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.STARTING_ITEMS)) {
+        if (isEnableStarterBundle()) {
 
             Player player = event.getEntity();
 
@@ -206,6 +210,18 @@ public class EventHandler {
                 player.getInventory().add(new ItemStack(DoggyItems.STARTER_BUNDLE.get()));
             }
         }
+    }
+
+    private boolean isEnableStarterBundle() {
+        final var retMut = new MutableBoolean(false);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+            if (ConfigHandler.ClientConfig
+                .getConfig(ConfigHandler.CLIENT.ENABLE_STARTER_BUNDLE_BY_DEFAULT))
+                retMut.setTrue();
+        });
+        if (retMut.getValue())
+            return true;
+        return ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.STARTING_ITEMS);
     }
 
     @SubscribeEvent

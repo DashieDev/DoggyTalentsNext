@@ -83,6 +83,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue USE_LEGACY_DOG_ARMOR_RENDER;
         public ForgeConfigSpec.BooleanValue USE_PLAYER_HELMET_MODEL_BY_DEFAULT;
         public ForgeConfigSpec.BooleanValue USE_THIRD_PARTY_PLAYER_HELMET_MODEL;
+        public ForgeConfigSpec.BooleanValue ENABLE_STARTER_BUNDLE_BY_DEFAULT;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -197,6 +198,12 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("render it on the Dog's head. Enable this to make DTN reuse the player's Helmet Model instead.")
                 .translation("doggytalents.config.client.use_player_helmet_model_by_default")
                 .define("use_player_helmet_model_by_default", false);
+            ENABLE_STARTER_BUNDLE_BY_DEFAULT = builder
+                .comment("Enable this to allow every World which is running on this Minecraft")
+                .comment("instance's Integrated Server to provide new players with a Starter Bundle")
+                .comment("regardless of the world's serverconfig.")
+                .translation("doggytalents.config.client.enable_starter_bundle_by_default")
+                .define("enable_starter_bundle_by_default", false);
             
             builder.pop();
         }
