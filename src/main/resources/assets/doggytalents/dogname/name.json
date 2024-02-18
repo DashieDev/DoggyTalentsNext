@@ -20,6 +20,9 @@
     "Chromatic",
     "Clef",
     "Coda",
+    "Dominant",
+    "Sub Dominant",
+    "Tonic",
     "Coloratura",
     "Concerto",
     "Countertenor",
@@ -410,5 +413,7 @@
     "Pochita",
     "Bond",
     "Happy",
-    "Happie"
+    "Happie",
+    "Neapolitan",
+    "Appoggiatura"
 ]
