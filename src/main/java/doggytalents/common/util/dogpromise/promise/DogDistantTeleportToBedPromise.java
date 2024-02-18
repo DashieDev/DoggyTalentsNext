@@ -1,4 +1,4 @@
-package doggytalents.common.util.doggyasynctask.promise;
+package doggytalents.common.util.dogpromise.promise;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
