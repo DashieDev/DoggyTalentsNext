@@ -51,7 +51,10 @@ public class DogTriggerableGoal extends Goal {
             case PAUSED :
                 action.setState(ActionState.RUNNING);
                 //action.onResume()
-                action.tick();
+                if (action.isStarted()) 
+                    action.tick();
+                else
+                    action.start();
                 break;
             case RUNNING :
                 action.tick();
