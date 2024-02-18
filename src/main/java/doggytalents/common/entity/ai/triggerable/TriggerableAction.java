@@ -24,6 +24,7 @@ public abstract class TriggerableAction {
     public final void stop() {
         onStop();
         started = false;
+        this.dog.getNavigation().stop();
     }
 
     public boolean isStarted() {
