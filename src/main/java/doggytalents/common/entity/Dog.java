@@ -771,7 +771,7 @@ public class Dog extends AbstractDog {
             if (this.isShaking)
             if (!this.canDogDoShakeAnim() || currentlyInWater) {
                 this.finishShaking();
-                ParticlePackets.DogShakingPacket.sendDogShakingPacket(getDog(), DogShakingData.State.STOP);
+                ParticlePackets.DogShakingPacket.sendDogShakingPacket(this, DogShakingData.State.STOP);
                 return;
             }
         }
