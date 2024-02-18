@@ -37,6 +37,7 @@ public class DogDrunkGoal extends Goal {
         dog.setAnim(DogAnimation.DRUNK_START);
         dog.setInDrunkPose(true);
         extendedGoalTick = DogAnimation.STAND_QUICK.getLengthTicks();
+        dog.getNavigation().stop();
     }
 
     @Override
