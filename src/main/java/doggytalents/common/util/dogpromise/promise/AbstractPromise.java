@@ -1,4 +1,4 @@
-package doggytalents.common.util.doggyasynctask.promise;
+package doggytalents.common.util.dogpromise.promise;
 
 import javax.annotation.Nullable;
 

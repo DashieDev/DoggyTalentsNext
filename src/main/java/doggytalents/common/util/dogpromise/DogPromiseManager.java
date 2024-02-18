@@ -1,18 +1,18 @@
-package doggytalents.common.util.doggyasynctask;
+package doggytalents.common.util.dogpromise;
+
+import static doggytalents.common.util.dogpromise.promise.AbstractPromise.State.*;
 
 import java.util.ArrayList;
 
 import doggytalents.ChopinLogger;
-import doggytalents.common.util.doggyasynctask.promise.AbstractPromise;
+import doggytalents.common.util.dogpromise.promise.AbstractPromise;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-
-import static doggytalents.common.util.doggyasynctask.promise.AbstractPromise.State.*;
 
 /**
  * @author DashieDev
  */
-public class DogAsyncTaskManager {
+public class DogPromiseManager {
     
     private static final ArrayList<AbstractPromise> PROMISES = new ArrayList<AbstractPromise>();
 

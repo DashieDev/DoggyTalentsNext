@@ -17,10 +17,10 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
-import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
-import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToBedPromise;
-import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToOwnerCrossDimensionPromise;
-import doggytalents.common.util.doggyasynctask.promise.DogDistantTeleportToOwnerPromise;
+import doggytalents.common.util.dogpromise.DogPromiseManager;
+import doggytalents.common.util.dogpromise.promise.DogDistantTeleportToBedPromise;
+import doggytalents.common.util.dogpromise.promise.DogDistantTeleportToOwnerCrossDimensionPromise;
+import doggytalents.common.util.dogpromise.promise.DogDistantTeleportToOwnerPromise;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -598,12 +598,12 @@ public class DogUtil {
                 if (dogLevel == null)
                     return;
                 if (dogLevel != sLevel && ConfigHandler.SERVER.CONDUCTING_BONE_CROSS_ORIGIN.get()) {
-                    DogAsyncTaskManager.addPromiseWithOwner(
+                    DogPromiseManager.addPromiseWithOwner(
                         new DogDistantTeleportToOwnerCrossDimensionPromise(dogUUID, owner, pos, dogLevel, sLevel),
                         owner
                     );
                 } else {
-                    DogAsyncTaskManager.addPromiseWithOwner(
+                    DogPromiseManager.addPromiseWithOwner(
                         new DogDistantTeleportToOwnerPromise(dogUUID, owner, pos),
                         owner
                     );
@@ -625,7 +625,7 @@ public class DogUtil {
                 dog.setOrderedToSit(true);
             }
         } else if (owner != null && owner instanceof ServerPlayer sP) {
-            DogAsyncTaskManager.addPromiseWithOwner(
+            DogPromiseManager.addPromiseWithOwner(
                 new DogDistantTeleportToBedPromise(dog),
                 sP
             );

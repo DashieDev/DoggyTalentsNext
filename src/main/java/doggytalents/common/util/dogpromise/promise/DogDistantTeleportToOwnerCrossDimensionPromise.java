@@ -1,14 +1,17 @@
-package doggytalents.common.util.doggyasynctask.promise;
+package doggytalents.common.util.dogpromise.promise;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
-import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -18,21 +21,21 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.common.world.ForgeChunkManager;
 
-/**
- * @author DashieDev
- */
-public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
-
+public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractPromise {
+    
     private static final int TIMEOUT = 200;
     private static final int SEARCH_INTERVAL = 10;
 
     private final BlockPos targetPos;
     private final BlockPos dogPos;
     private final UUID dogUUID;
-    private final ServerLevel level;
+    private final ServerLevel ownerLevel;
+    private final ServerLevel dogLevel;
 
     private int timeOutTick;
     private int tickTillSearch;
@@ -42,47 +45,58 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
 
     private boolean dogChunkForced;
 
-    public DogDistantTeleportToOwnerPromise(@Nonnull UUID dogUUID, @Nonnull LivingEntity owner,
-         @Nonnull BlockPos dogPos) {
+    public DogDistantTeleportToOwnerCrossDimensionPromise(@Nonnull UUID dogUUID, @Nonnull LivingEntity owner,
+         @Nonnull BlockPos dogPos, ServerLevel dogLevel, ServerLevel ownerLevel) {
         this.dogUUID = dogUUID;
-        if (owner.level() instanceof ServerLevel sL) {
-            this.level = sL;
-        } else {
-            this.level = null;
-        }
+        this.ownerLevel = ownerLevel;
         this.targetPos = owner.blockPosition();
         this.dogPos = dogPos;
         this.owner = owner;
+        this.dogLevel = dogLevel;
     }
 
     @Override
     public void tick() {
-        Entity dog = null;
+        if (this.dogLevel == this.ownerLevel) {
+            this.rejectedMsg = "WHAT?";
+            this.setState(State.REJECTED);
+            return;
+        }
+        Entity e = null;
         if (--tickTillSearch <= 0) {
             tickTillSearch = SEARCH_INTERVAL;
-            dog = this.level.getEntity(dogUUID);
+            e = this.dogLevel.getEntity(dogUUID);
         } 
-        if (dog != null) {
-            if (! (dog instanceof Dog)) {
-                this.rejectedMsg = "WHAT?";
-                this.setState(State.REJECTED);
-                return;
-            }
-            boolean flag = 
-                DogUtil.dynamicSearchAndTeleportToBlockPos((Dog)dog, targetPos, 4);
-            if (!flag) {
-                this.rejectedMsg = "NOSAFEPOS";
-                this.setState(State.REJECTED);
-                return;
-            }
-            this.teleportedDog = (Dog) dog;
-            this.setState(State.FULFILLED);
-        } else {
+        if (e == null) {
             if (--this.timeOutTick <= 0) {
                 this.rejectedMsg = "TIMEOUT";
                 this.setState(State.REJECTED);
             }
+            return;
         }
+        if (!(e instanceof Dog dog)) {
+            this.rejectedMsg = "WHAT?";
+            this.setState(State.REJECTED);
+            return;
+        }
+        var safePosList = 
+            CachedSearchUtil.getAllSafePosUsingPool(ownerLevel, List.of((Dog)e), targetPos, 4, 1);
+        if (safePosList.isEmpty()) {
+            this.rejectedMsg = "NOSAFEPOS";
+            this.setState(State.REJECTED);
+            return;
+        }
+        
+        int r = dog.getRandom().nextInt(safePosList.size());
+        var safePos = safePosList.get(r);
+        dog.authorizeChangeDimension();
+        var dogafterTp = dog.changeDimension(ownerLevel, new DogTeleporter(safePos));
+
+        if (dogafterTp instanceof Dog) {
+            this.teleportedDog = (Dog) dogafterTp;
+        }
+        
+        this.setState(State.FULFILLED);
     }
 
     @Override
@@ -95,7 +109,7 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
                 )
             );
         if (this.teleportedDog != null)
-        this.level.sendParticles(
+        this.ownerLevel.sendParticles(
             ParticleTypes.PORTAL, 
             this.teleportedDog.getX(), this.teleportedDog.getY(), this.teleportedDog.getZ(), 
             30, 
@@ -123,52 +137,36 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
     @Override
     public void start() {
         ChopinLogger.l("this level should have no forced chunk, and this is the result : " 
-            +   ForgeChunkManager.hasForcedChunks(level)
+            +   ForgeChunkManager.hasForcedChunks(dogLevel)
         );
         
-        if (this.level == null) {
+        if (this.ownerLevel == null || this.dogLevel == null) {
             this.rejectedMsg = "CLIENTLEVEL";
             this.setState(State.REJECTED);
             return;
         }
 
-        //This promise don't handle cross dimension tp.
-        var storage = DogLocationStorage.get(level);
-        var data = storage.getData(this.dogUUID);
-        if (data == null) {
-            this.rejectedMsg = "WHAT?";
-            this.setState(State.REJECTED);
-            return;
-        }
-        var dogDimKey = data.getDimension();
-        var ownerDimKey = owner.level().dimension();
-        if (ownerDimKey == null || dogDimKey == null) {
-            this.rejectedMsg = "WHAT?";
-            this.setState(State.REJECTED);
-            return;
-        }
-        if (!dogDimKey.equals(ownerDimKey)) {
-            this.rejectedMsg = "DIFFERENTDIM";
+        //This promise don't handle same dimension tp.
+        if (this.ownerLevel == this.dogLevel) {
+            this.rejectedMsg = "SAMEDIM";
             this.setState(State.REJECTED);
             return;
         }
 
         this.timeOutTick = TIMEOUT;
         ChunkPos chunkpos = new ChunkPos(dogPos);
-        if (this.level.hasChunk(chunkpos.x, chunkpos.z)) {
-            this.rejectedMsg = "ALREADYREQUESTORLOADED";
-            this.setState(State.REJECTED);
+        if (this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)) {
             return;
         }
 
         ChopinLogger.l("hasChunk before ? : " 
-            + this.level.hasChunk(chunkpos.x, chunkpos.z)
+            + this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)
         );
 
         this.setDogChunk(true);
 
         ChopinLogger.l("Does hasChunk return true immediately after forced? : " 
-            + this.level.hasChunk(chunkpos.x, chunkpos.z)
+            + this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)
         );
     }
 
@@ -183,11 +181,31 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
         ChunkPos chunkpos = new ChunkPos(dogPos);
         //if (this.level.hasChunk(chunkpos.x, chunkpos.z)) return;
         ForgeChunkManager.forceChunk(
-            this.level, Constants.MOD_ID, 
+            this.dogLevel, Constants.MOD_ID, 
             dogUUID,
             chunkpos.x, chunkpos.z, 
             loaded, true);
         this.dogChunkForced = loaded;
+    }
+
+    private static class DogTeleporter implements ITeleporter {
+
+        private BlockPos safePos;
+
+        public DogTeleporter(BlockPos safePos) {
+            this.safePos = safePos;
+        }
+
+        @Override
+        public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld,
+                Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+            return new PortalInfo(
+                Vec3.atBottomCenterOf(safePos), 
+                Vec3.ZERO, 
+                entity.getYRot(), entity.getXRot()
+            );
+        }
+
     }
 
 }

@@ -23,9 +23,9 @@ import doggytalents.common.talent.HunterDogTalent;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.util.DogLocationStorageMigration;
 import doggytalents.common.util.Util;
-import doggytalents.common.util.doggyasynctask.DogAsyncTaskManager;
-import doggytalents.common.util.doggyasynctask.promise.DogHoldChunkToTeleportPromise;
-import doggytalents.common.util.doggyasynctask.promise.DogBatchTeleportToDimensionPromise;
+import doggytalents.common.util.dogpromise.DogPromiseManager;
+import doggytalents.common.util.dogpromise.promise.DogBatchTeleportToDimensionPromise;
+import doggytalents.common.util.dogpromise.promise.DogHoldChunkToTeleportPromise;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -81,13 +81,13 @@ public class EventHandler {
 
         if (event.phase != Phase.END) return;
 
-        DogAsyncTaskManager.tick();
+        DogPromiseManager.tick();
         OnlineDogLocationManager.get().tick(event.getServer());
     }
 
     @SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
-        DogAsyncTaskManager.forceStop();
+        DogPromiseManager.forceStop();
         OnlineDogLocationManager.get().unrideAllDogOnPlayer();
     }
 
@@ -355,7 +355,7 @@ public class EventHandler {
             );
         if (crossOriginTpList.isEmpty()) return;
 
-        DogAsyncTaskManager.addPromiseWithOwnerAndStartImmediately(
+        DogPromiseManager.addPromiseWithOwnerAndStartImmediately(
             new DogBatchTeleportToDimensionPromise(
                 crossOriginTpList, 
                 fromLevel, owner.getUUID(), event.getDimension(), d -> isDogReadyToTeleport(d, owner))
@@ -380,7 +380,7 @@ public class EventHandler {
             );
         if (crossOriginTpList.isEmpty()) return;
 
-        DogAsyncTaskManager.addPromiseWithOwnerAndStartImmediately(
+        DogPromiseManager.addPromiseWithOwnerAndStartImmediately(
             new DogHoldChunkToTeleportPromise(
                 crossOriginTpList, sLevel
             )
