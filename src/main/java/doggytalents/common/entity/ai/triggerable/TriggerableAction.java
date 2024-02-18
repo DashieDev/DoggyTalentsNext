@@ -29,9 +29,21 @@ public abstract class TriggerableAction {
     public boolean isStarted() {
         return started;
     }
-    
+
+    /**
+     * Called when this Action is started by DogTriggerableGoal when it
+     * updates.
+     */
     public abstract void onStart();
 
+    /**
+     * Called to Update This Action when this 
+     * is already at RUNNING state by DogTriggerableGoal when
+     * it updates. Notice: this won't get called if this Action is not
+     * already at RUNNING state when being updated by DogTriggerableGoal
+     * so this won't be called during the tick when DogTriggerableGoal
+     * set this Action state from PENDING to RUNNING and onStart() get called.
+     */
     public abstract void tick();
 
     public abstract void onStop();
