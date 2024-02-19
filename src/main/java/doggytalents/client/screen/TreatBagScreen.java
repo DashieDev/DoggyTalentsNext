@@ -26,7 +26,7 @@ public class TreatBagScreen extends AbstractContainerScreen<TreatBagContainer> {
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int var1, int var2) {
-        graphics.drawString(font, this.title.getString(), 10, 8, 4210752);
+        graphics.drawString(font, this.title.getString(), 10, 8, 4210752, false);
     }
 
     @Override
