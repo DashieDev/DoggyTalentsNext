@@ -1,6 +1,7 @@
 package doggytalents;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogFoodProjectile;
 import doggytalents.common.entity.DoggyBeamEntity;
 import doggytalents.common.entity.misc.DogPlushie;
 import doggytalents.common.entity.misc.Piano;
@@ -73,6 +74,14 @@ public class DoggyEntityTypes {
             .setUpdateInterval(3)
             .setTrackingRange(10)
             .setShouldReceiveVelocityUpdates(true));
+
+    public static final RegistryObject<EntityType<DogFoodProjectile>> DOG_FOOD_PROJ = register("dog_food_projectile", DogFoodProjectile::new, MobCategory.MISC, (b) -> b
+        .sized(0.25F, 0.25F)
+        .setUpdateInterval(4)
+        .setTrackingRange(10)
+        .setShouldReceiveVelocityUpdates(true)
+        .setCustomClientFactory(DogFoodProjectile::new)
+        .noSummon());
 
     private static <E extends Entity, T extends EntityType<E>> RegistryObject<EntityType<E>> register(final String name, final EntityType.EntityFactory<E> sup, final MobCategory classification, final Function<EntityType.Builder<E>, EntityType.Builder<E>> builder) {
          return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(Util.getResourcePath(name)));
