@@ -1,8 +1,10 @@
 package doggytalents.common.item;
 
+import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.Screens;
+import doggytalents.common.entity.DogFoodProjectile;
 import doggytalents.common.inventory.TreatBagItemHandler;
 import doggytalents.common.util.Cache;
 import doggytalents.common.util.InventoryUtil;
@@ -10,7 +12,7 @@ import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-
+import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -52,6 +54,13 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
         }
         else {
+            if (!playerIn.isShiftKeyDown()) {
+                if (playerIn instanceof ServerPlayer sP) {
+                    findFoodAndShootOut(sP, stack);
+                }
+
+                return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+            }
             if (playerIn instanceof ServerPlayer) {
                 ServerPlayer serverPlayer = (ServerPlayer) playerIn;
 
@@ -62,10 +71,45 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         }
     }
 
+    private void findFoodAndShootOut(ServerPlayer player, ItemStack stack) {
+        var itemHandler = (IItemHandlerModifiable) stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
+        int foodStackId = findFoodInItemHandler(itemHandler);
+        if (foodStackId < 0)
+            return;
+        var foodStack = itemHandler.getStackInSlot(foodStackId);
+        if (foodStack.isEmpty())
+            return;
+        var dogFoodProj = new DogFoodProjectile(player.level(), player);
+        dogFoodProj.setDogFoodStack(new ItemStack(foodStack.getItem()));
+        dogFoodProj.setOwner(player);
+        dogFoodProj.shootFromRotation(player, 
+            player.getXRot(), player.getYRot(), 0.0F, 1.0F, 1.0F);
+        player.level().addFreshEntity(dogFoodProj);
+        foodStack = foodStack.copy();
+        foodStack.shrink(1);
+        itemHandler.setStackInSlot(foodStackId, foodStack);
+    }
+
+    private int findFoodInItemHandler(IItemHandler itemHandler) {
+        for (int i = 0; i < itemHandler.getSlots(); ++i) {
+            var stack = itemHandler.getStackInSlot(i);
+            if (stack.isEmpty())
+                continue;
+            if (FoodHandler.isFood(stack).isPresent()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     @Override
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
+
+        tooltip.add(Component.translatable("item.doggytalents.treat_bag.help").withStyle(
+            Style.EMPTY.withItalic(true)
+        ));
 
         IItemHandler bagInventory = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
         List<ItemStack> condensedContents = ItemUtil.getContentOverview(bagInventory);
@@ -73,6 +117,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         condensedContents.forEach((food) -> {
             tooltip.add(Component.translatable(this.contentsTranslationKey.get(), food.getCount(), Component.translatable(food.getDescriptionId())));
         });
+        
     }
 
     @Override
