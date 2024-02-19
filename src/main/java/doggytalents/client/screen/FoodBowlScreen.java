@@ -28,7 +28,7 @@ public class FoodBowlScreen extends AbstractContainerScreen<FoodBowlContainer> {
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawString(font, this.title.getString(), 10, 8, 4210752);
+        graphics.drawString(font, this.title.getString(), 10, 8, 4210752, false);
     }
 
     @Override
