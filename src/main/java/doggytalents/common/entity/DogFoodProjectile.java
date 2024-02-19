@@ -98,6 +98,8 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdd
     private boolean isValidDog(Dog dog, Vec3 lookVecXZ) {
         if (!dog.isDoingFine())
             return false;
+        if (dog.isOrderedToSit())
+            return false;
         if (dog.getOwner() != this.getOwner())
             return false;
         if (!checkIfDogCanCatch(dog, lookVecXZ) && dog.distanceToSqr(this) >= 4)
