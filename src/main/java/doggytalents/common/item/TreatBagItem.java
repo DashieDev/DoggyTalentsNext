@@ -112,12 +112,32 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
             Style.EMPTY.withItalic(true)
         ));
 
-        IItemHandler bagInventory = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
-        List<ItemStack> condensedContents = ItemUtil.getContentOverview(bagInventory);
+        displayContents(stack, worldIn, tooltip, flagIn);
+        
+        
+    }
 
-        condensedContents.forEach((food) -> {
-            tooltip.add(Component.translatable(this.contentsTranslationKey.get(), food.getCount(), Component.translatable(food.getDescriptionId())));
-        });
+    private void displayContents(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        var inv = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
+        var contentsOverview = ItemUtil.getContentOverview(inv);
+        var contentsMap = contentsOverview.contents();
+        if (contentsMap.isEmpty())
+            return;
+        tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents"));
+        for (var entry : contentsMap.entrySet()) {
+            var c1 = Component.translatable("item.doggytalents.starter_bundle.contains",
+                entry.getValue(), entry.getKey().getDescription()).withStyle(
+                    Style.EMPTY.withColor(0xffa3a3a3)
+                );
+            tooltip.add(c1);
+        }
+        if (contentsOverview.isMore() > 0) {
+            tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents.more",
+                contentsOverview.isMore()).withStyle(
+                Style.EMPTY.withColor(0xffa3a3a3)
+            ));
+        }
+        
         
     }
 
