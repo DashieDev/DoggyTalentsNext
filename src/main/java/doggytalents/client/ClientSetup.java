@@ -83,6 +83,7 @@ import doggytalents.client.entity.model.misc.GrandPianoModel;
 import doggytalents.client.entity.model.misc.UprightPianoModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.CollarRenderManager;
+import doggytalents.client.entity.render.DogFoodProjectileRenderer;
 import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.client.entity.render.DoggyBeamRenderer;
@@ -307,6 +308,7 @@ public class ClientSetup {
 
     public static void setupTileEntityRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(DoggyEntityTypes.DOG.get(), DogRenderer::new);
+        event.registerEntityRenderer(DoggyEntityTypes.DOG_FOOD_PROJ.get(), DogFoodProjectileRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.DOG_BEAM.get(), DoggyBeamRenderer::new);
         event.registerBlockEntityRenderer(DoggyTileEntityTypes.DOG_BED.get(), DogBedRenderer::new);
         event.registerBlockEntityRenderer(DoggyTileEntityTypes.RICE_MILL.get(), RiceMillRenderer::new);
