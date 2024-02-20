@@ -25,6 +25,8 @@ public class DogLocationStorage extends SavedData {
 
     private Map<UUID, DogLocationData> locationDataMap = Maps.newHashMap();
 
+    private final OnlineDogLocationManager onlineDogManager = new OnlineDogLocationManager(this);
+
     public DogLocationStorage() {}
 
     public static DogLocationStorage get(Level world) {
@@ -185,6 +187,10 @@ public class DogLocationStorage extends SavedData {
         if (data == null)
             return;
         data.setSessionUUID(sessionUUID);
+    }
+
+    public OnlineDogLocationManager getOnlineDogsManager() {
+        return this.onlineDogManager;
     }
 
 }
