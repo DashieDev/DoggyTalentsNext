@@ -1,12 +1,14 @@
-// 1.19.2	2023-12-21T16:53:35.8059027	DoggyTalents Blockstates/Block Models
+// 1.19.2	2024-02-20T17:49:14.0627345	DoggyTalents Blockstates/Block Models
 931d77cecd337848a1324fd8839be49fcde904e6 assets/doggytalents/blockstates/dog_bath.json
 2e7db34ce99c53c88c06f263c0ec63c924afb551 assets/doggytalents/blockstates/dog_bed.json
 4907f1b495dda9a8be2bc728ae2f5b8f7c1113da assets/doggytalents/blockstates/food_bowl.json
 d0faa4adab5d6172a0f98f88d5c16b27c09ee4e2 assets/doggytalents/blockstates/rice_crop.json
+a468d82d3442921c63f377130c1d43df38ed184f assets/doggytalents/blockstates/rice_mill.json
 e04d7b71f3ac81a434797aeff0852feed0e1dc26 assets/doggytalents/blockstates/soy_crop.json
 8f4b9e0c68e4feb8bcc63e73e3518bdbfd6576b0 assets/doggytalents/models/block/dog_bath.json
 2f6336dd08f8e3b987abf4f7b5f5f86ff58880bb assets/doggytalents/models/block/dog_bed.json
 658d9750126e963880fef0a9eed43b033c503973 assets/doggytalents/models/block/food_bowl.json
+ceaefaa3aceac61abc24a4c3dd9f8bc0cafef6e1 assets/doggytalents/models/block/rice_mill.json
 ffd6baeaa82614ec7327a919073279245d6cbac7 assets/doggytalents/models/rice_crop/stage_0.json
 bff0dc0cf534998fc0118b58b7d99565de8ec178 assets/doggytalents/models/rice_crop/stage_1.json
 f5ef16436cf66a902b3fa3aab2e64482fa474d1c assets/doggytalents/models/rice_crop/stage_2.json
