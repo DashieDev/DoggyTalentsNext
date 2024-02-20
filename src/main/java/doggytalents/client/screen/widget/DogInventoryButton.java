@@ -48,7 +48,7 @@ public class DogInventoryButton extends AbstractButton {
     }
 
     public DogInventoryButton(int x, int y, Screen parentIn, Dog dog) {
-        super(x, y, 13, 10, Component.literal(""));
+        super(x, y, 13, 10, ComponentUtil.literal(""));
         this.baseX = x;
         this.parent = parentIn;
         this.openSingleDog = Optional.of(dog);

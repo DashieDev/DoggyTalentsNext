@@ -74,7 +74,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     }
 
     private void findFoodAndShootOut(ServerPlayer player, ItemStack stack) {
-        var itemHandler = (IItemHandlerModifiable) stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
+        var itemHandler = (IItemHandlerModifiable) stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(EmptyHandler.INSTANCE);
         int foodStackId = findFoodInItemHandler(itemHandler);
         if (foodStackId < 0)
             return;
@@ -109,7 +109,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
-        tooltip.add(Component.translatable("item.doggytalents.treat_bag.help").withStyle(
+        tooltip.add(ComponentUtil.translatable("item.doggytalents.treat_bag.help").withStyle(
             Style.EMPTY.withItalic(true)
         ));
 
@@ -119,21 +119,21 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     }
 
     private void displayContents(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        var inv = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
+        var inv = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(EmptyHandler.INSTANCE);
         var contentsOverview = ItemUtil.getContentOverview(inv);
         var contentsMap = contentsOverview.contents();
         if (contentsMap.isEmpty())
             return;
-        tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents"));
+        tooltip.add(ComponentUtil.translatable("item.doggytalents.treat_bag.contents"));
         for (var entry : contentsMap.entrySet()) {
-            var c1 = Component.translatable("item.doggytalents.starter_bundle.contains",
+            var c1 = ComponentUtil.translatable("item.doggytalents.starter_bundle.contains",
                 entry.getValue(), entry.getKey().getDescription()).withStyle(
                     Style.EMPTY.withColor(0xffa3a3a3)
                 );
             tooltip.add(c1);
         }
         if (contentsOverview.isMore() > 0) {
-            tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents.more",
+            tooltip.add(ComponentUtil.translatable("item.doggytalents.treat_bag.contents.more",
                 contentsOverview.isMore()).withStyle(
                 Style.EMPTY.withColor(0xffa3a3a3)
             ));
@@ -184,7 +184,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         if (dogIn.level().isClientSide)
             return InteractionResult.SUCCESS;
 
-            IItemHandlerModifiable treatBag = (IItemHandlerModifiable) stackIn.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(EmptyHandler.INSTANCE);
+        IItemHandlerModifiable treatBag = (IItemHandlerModifiable) stackIn.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(EmptyHandler.INSTANCE);
         return InventoryUtil.feedDogFrom(dogIn, entityIn, treatBag);
     }
 }

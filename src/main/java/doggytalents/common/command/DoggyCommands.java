@@ -21,6 +21,7 @@ import doggytalents.common.util.Util;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.commands.EffectCommands;
@@ -404,6 +405,6 @@ public class DoggyCommands {
             "[ " + (dim_loc == null ? "" : dim_loc) + " ]";
         var dogName = loc.getDogName();
         if (dogName == null) dogName = "noname";
-        return Component.translatable("command.doglocate.info", dogName, posStr, dimStr);
+        return ComponentUtil.translatable("command.doglocate.info", dogName, posStr, dimStr);
     }
 }

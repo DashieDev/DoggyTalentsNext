@@ -2163,7 +2163,7 @@ public class Dog extends AbstractDog {
         if (str.length() <= MAX_NAME_LEN)
             return name;
         var new_str = str.substring(0, MAX_NAME_LEN);
-        var new_name = Component.literal(new_str)
+        var new_name = ComponentUtil.literal(new_str)
             .withStyle(name.getStyle());
         return new_name;
     }
@@ -2176,7 +2176,7 @@ public class Dog extends AbstractDog {
         if (newStr == str) {
             return name;
         }
-        return Component.literal(newStr).withStyle(name.getStyle());
+        return ComponentUtil.literal(newStr).withStyle(name.getStyle());
     } 
 
     public void setDogCustomName(@Nullable Component name) {

@@ -179,8 +179,8 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
             && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
 
-        var label = Component.translatable(tip);
-        var hunger_c1 = Component.literal("(" + hunger + ")");
+        MutableComponent label = ComponentUtil.translatable(tip);
+        var hunger_c1 = ComponentUtil.literal("(" + hunger + ")");
         boolean hightlight_red = 
             (dog.getDogHunger() <= 10 && flag1)
             || dog.isDefeated();

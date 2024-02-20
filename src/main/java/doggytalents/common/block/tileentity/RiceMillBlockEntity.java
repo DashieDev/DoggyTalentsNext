@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTileEntityTypes;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.block.RiceMillBlock;
 import doggytalents.common.inventory.container.RiceMillMenu;
 import doggytalents.common.util.WorldUtil;
@@ -144,7 +145,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         var blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof RiceMillBlockEntity mill))
             return;
-        NetworkHooks.openScreen(player, mill.menuProvider, mill.getBlockPos());
+        NetworkHooks.openGui(player, mill.menuProvider, mill.getBlockPos());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
@@ -661,7 +662,7 @@ public class RiceMillBlockEntity extends BlockEntity {
 
         @Override
         public Component getDisplayName() {
-            return Component.translatable("container.doggytalents.rice_mill");
+            return ComponentUtil.translatable("container.doggytalents.rice_mill");
         }
         
     }
@@ -762,7 +763,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         }
         @Override
         protected Component getDefaultName() {
-            return Component.empty();
+            return ComponentUtil.empty();
         }
         @Override
         protected AbstractContainerMenu createMenu(int p_58627_, Inventory p_58628_) {

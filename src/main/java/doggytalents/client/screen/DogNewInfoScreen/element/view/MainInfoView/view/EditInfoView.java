@@ -383,7 +383,7 @@ public class EditInfoView extends AbstractElement {
                 public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
                     NewnameEntry.this.getScreen()
                         .renderComponentTooltip(stack, 
-                            List.of(Component.translatable("doggui.newname.random.tooltip")), mouseX, mouseY);
+                            List.of(ComponentUtil.translatable("doggui.newname.random.tooltip")), mouseX, mouseY);
                 }
             };
             this.applyButton.active = false;
@@ -421,7 +421,7 @@ public class EditInfoView extends AbstractElement {
         }
 
         private void addEditNameBox(int x, int y, int w, int h) {
-            this.nameEdit = new EditBox(this.font, x, y, w, h, Component.translatable("dogInfo.enterName"));
+            this.nameEdit = new EditBox(this.font, x, y, w, h, ComponentUtil.translatable("dogInfo.enterName"));
             nameEdit.setMaxLength(Dog.MAX_NAME_LEN);
             nameEdit.setResponder(s -> {
                 this.updateReplacingStr(s);

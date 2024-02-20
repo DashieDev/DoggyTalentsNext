@@ -13,10 +13,11 @@ import doggytalents.client.entity.model.animation.SimpleAnimatedModel;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
-import net.minecraft.client.animation.AnimationChannel;
-import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.client.animation.Keyframe;
-import net.minecraft.client.animation.KeyframeAnimations;
+import doggytalents.api.enu.forward_imitate.anim.AnimationChannel;
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
+import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
+import doggytalents.api.enu.forward_imitate.anim.Keyframe;
+import doggytalents.api.enu.forward_imitate.anim.KeyframeAnimations;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
@@ -30,15 +31,16 @@ import net.minecraft.client.renderer.RenderType;
 
 public class RiceMillModel extends SimpleAnimatedModel {
 
-    private ModelPart root;
-	private ModelPart spin;
-	private ModelPart hammer;
+    private DogModelPart root;
+	private DogModelPart spin;
+	private DogModelPart hammer;
 
     public RiceMillModel(ModelPart box) {
 		super(RenderType::entityCutoutNoCull);
-		this.root = box;
-		this.spin = box.getChild("spin");
-		this.hammer = box.getChild("hammer2");
+		box = DogModelPart.recreateFromModelPart(box);
+		this.root = (DogModelPart) box;
+		this.spin = (DogModelPart) box.getChild("spin");
+		this.hammer = (DogModelPart) box.getChild("hammer2");
     }
 
 	@Override
@@ -52,13 +54,13 @@ public class RiceMillModel extends SimpleAnimatedModel {
 
 	@Override
 	public void resetPart(ModelPart part) {
-		part.resetPose();
+		((DogModelPart)part).resetPose();
 	}
 
 	@Override
 	public void resetAllPose() {
 		this.spin.resetPose();
-		this.hammer.getAllParts().forEach(x -> x.resetPose());
+		this.hammer.getAllParts().forEach(x -> ((DogModelPart)x).resetPose());
 	}
 
 	private Vector3f tempVec = new Vector3f();

@@ -128,7 +128,7 @@ public class KeyframeAnimationsDelegate {
                 }
                 nextKeyframe.interpolation()
                     .apply(temp_buffer, passed_progress, keyframes, currentKeyframeIndx, nextKeyframeIndx, interpolation_scale);
-                channel.target().apply(part, temp_buffer);
+                channel.target().apply((DogModelPart)part, temp_buffer);
                 //ChopinLogger.l("Anim : " + current_pos);
             }
         }

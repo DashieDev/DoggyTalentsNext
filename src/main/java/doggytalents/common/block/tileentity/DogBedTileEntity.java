@@ -92,16 +92,16 @@ public class DogBedTileEntity extends PlacedTileEntity {
     }
 
     @Override
-    public ModelData getModelData() {
+    public IModelData getModelData() {
         var state = this.getBlockState();
         var facing = Direction.NORTH;
         if (state != null && state.hasProperty(DogBedBlock.FACING)) {
             facing = state.getValue(DogBedBlock.FACING);
         }
-        return ModelData.builder()
-                .with(CASING, this.casingType)
-                .with(BEDDING, this.beddingType)
-                .with(FACING, facing)
+        return (new ModelDataMap.Builder())
+                .withInitial(CASING, this.casingType)
+                .withInitial(BEDDING, this.beddingType)
+                .withInitial(FACING, facing)
                 .build();
     }
 
