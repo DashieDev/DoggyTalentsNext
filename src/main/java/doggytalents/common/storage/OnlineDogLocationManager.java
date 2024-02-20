@@ -12,25 +12,24 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 
 public class OnlineDogLocationManager {
-    
-    private static OnlineDogLocationManager INSTANCE = new OnlineDogLocationManager();
-
-    public static OnlineDogLocationManager get() {
-        return INSTANCE;
-    }
-
-    private OnlineDogLocationManager() {}
 
     private final Map<UUID, Dog> onlineDogs = Maps.newHashMap();
     private final ArrayList<UUID> toRemove = new ArrayList<>();
 
-    public void tick(MinecraftServer server) {
+    private final DogLocationStorage storage;
+
+    public OnlineDogLocationManager(DogLocationStorage storage) {
+        this.storage = storage;
+    }
+
+    public void tick() {
         if (onlineDogs.isEmpty())
             return;
         invalidateOnlineDogs();
-        updateAllOnlineDogs(server);
+        updateAllOnlineDogs();
     }
 
     private void invalidateOnlineDogs() {
@@ -61,15 +60,10 @@ public class OnlineDogLocationManager {
     }
 
     private int tickTillUpdateAllOnlineDog = 40;
-    private void updateAllOnlineDogs(MinecraftServer server) {
+    private void updateAllOnlineDogs() {
         if (--tickTillUpdateAllOnlineDog > 0)
             return;
         tickTillUpdateAllOnlineDog = 40;
-        if (server == null)
-            return;
-        var storage = DogLocationStorage.get(server);
-        if (storage == null)
-            return;
         for (var entry : onlineDogs.entrySet()) {
             var dog = entry.getValue();
             if (dog.isRemoved())
