@@ -153,7 +153,7 @@ public class DogLocationData implements IDogData {
     }
 
     public Optional<Dog> getOnlineDog() {
-        return OnlineDogLocationManager.get().getOnlineDog(this.uuid);
+        return this.storage.getOnlineDogsManager().getOnlineDog(this.uuid);
     }
 
     @Nullable
