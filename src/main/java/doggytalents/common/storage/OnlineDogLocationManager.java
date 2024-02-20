@@ -78,7 +78,15 @@ public class OnlineDogLocationManager {
         data.update(dog);
     }
 
-    public void unrideAllDogOnPlayer() {
+    public void onServerStop() {
+        unrideAllDogOnPlayer();
+        
+        this.onlineDogs.clear();
+        this.toRemove.clear();
+    }
+
+
+    private void unrideAllDogOnPlayer() {
         for (var entry : this.onlineDogs.entrySet()) {
             var dog = entry.getValue();
             if (dog.isRemoved())
