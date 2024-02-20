@@ -29,6 +29,8 @@ public class DogLocationStorage extends SavedData {
 
     private final OnlineDogLocationManager onlineDogManager = new OnlineDogLocationManager(this);
 
+    public final Map<UUID, Integer> GREETING_DOG_LIMIT_MAP = Maps.newHashMap();
+
     public DogLocationStorage() {}
 
     public static DogLocationStorage get(Level world) {
@@ -197,6 +199,7 @@ public class DogLocationStorage extends SavedData {
 
     public void onServerStop(ServerStoppingEvent event) {
         this.onlineDogManager.onServerStop();
+        GREETING_DOG_LIMIT_MAP.clear();
     }
 
     public static Factory<DogLocationStorage> storageFactory() {
