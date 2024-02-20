@@ -3,7 +3,9 @@ package doggytalents.common.util;
 import com.google.common.collect.AbstractIterator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -61,4 +63,13 @@ public class WorldUtil {
     public static Optional<BlockPos> toImmutable(Optional<BlockPos> pos) {
         return pos.map(BlockPos::immutable);
     }
+
+    public static boolean containerStillValidTileEntity1_19_2below(BlockEntity blockEntity, Player player) {
+        var posSelf = blockEntity.getBlockPos();
+        if (player.level.getBlockEntity(posSelf) != blockEntity) {
+           return false;
+        } else {
+           return player.distanceToSqr((double)posSelf.getX() + 0.5D, (double)posSelf.getY() + 0.5D, (double)posSelf.getZ() + 0.5D) <= 64.0D;
+        }
+     }
 }

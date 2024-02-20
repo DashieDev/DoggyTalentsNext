@@ -1,5 +1,6 @@
 package doggytalents.client.entity.render;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
@@ -7,6 +8,7 @@ import com.mojang.math.Matrix4f;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -14,6 +16,7 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
 public class RenderUtil {
@@ -94,5 +97,17 @@ public class RenderUtil {
         int g = (color >> 8) & 255;
         int b = (color >> 0) & 255;
         return new int[]{r, g, b};
+    }
+
+    public static void blit_for_1_19_2below(GuiComponent comp, PoseStack stack, ResourceLocation blitLoc, int x, int y,
+        int imgX, int imgY, int imgW, int imgH, boolean blend) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1);
+        RenderSystem.setShaderTexture(0, blitLoc);
+        if (blend) {
+            RenderSystem.enableBlend();
+            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        }
+        comp.blit(stack, x, y, imgX, imgY, imgW, imgH);
     }
 }
