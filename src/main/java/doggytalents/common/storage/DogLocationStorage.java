@@ -16,6 +16,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -192,6 +193,10 @@ public class DogLocationStorage extends SavedData {
 
     public OnlineDogLocationManager getOnlineDogsManager() {
         return this.onlineDogManager;
+    }
+
+    public void onServerStop(ServerStoppingEvent event) {
+        this.onlineDogManager.onServerStop();
     }
 
     public static Factory<DogLocationStorage> storageFactory() {
