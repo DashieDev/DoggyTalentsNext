@@ -26,6 +26,8 @@ public class DogLocationStorage extends SavedData {
 
     private Map<UUID, DogLocationData> locationDataMap = Maps.newHashMap();
 
+    private final OnlineDogLocationManager onlineDogManager = new OnlineDogLocationManager(this);
+
     public DogLocationStorage() {}
 
     public static DogLocationStorage get(Level world) {
@@ -188,7 +190,10 @@ public class DogLocationStorage extends SavedData {
         data.setSessionUUID(sessionUUID);
     }
 
-    //1.20.2+
+    public OnlineDogLocationManager getOnlineDogsManager() {
+        return this.onlineDogManager;
+    }
+
     public static Factory<DogLocationStorage> storageFactory() {
         return new Factory<>(DogLocationStorage::new, DogLocationStorage::load, DataFixTypes.LEVEL);
     }
