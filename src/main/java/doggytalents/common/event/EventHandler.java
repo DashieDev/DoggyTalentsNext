@@ -88,7 +88,7 @@ public class EventHandler {
     @SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
         DogPromiseManager.forceStop();
-        DogLocationStorage.get(event.getServer()).getOnlineDogsManager().onServerStop();
+        DogLocationStorage.get(event.getServer()).onServerStop(event);
     }
 
     @SubscribeEvent
