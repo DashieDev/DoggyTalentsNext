@@ -9,6 +9,7 @@ import com.google.common.collect.Maps;
 
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.ai.triggerable.DogGreetOwnerAction;
+import doggytalents.common.storage.DogLocationStorage;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,8 +20,6 @@ public class DogOwnerDistanceManager {
     private static final int OWNER_START_GREET_DISTANCE_SQR = 144;
     private static final long START_MISSING_OWNER_TIME = 24000*4; // 4 days.
     private static final int UPDATE_INTERVAL = 5;
-
-    private static Map<UUID, Integer> GREETING_DOG_LIMIT_MAP = Maps.newHashMap();
 
     private final Dog dog;
 
@@ -104,11 +103,13 @@ public class DogOwnerDistanceManager {
     }
 
     public static int getGreetCountForOwner(LivingEntity owner) {
-        return GREETING_DOG_LIMIT_MAP.getOrDefault(owner.getUUID(), 0);
+        var storage = DogLocationStorage.get(owner.getServer());
+        return storage.GREETING_DOG_LIMIT_MAP.getOrDefault(owner.getUUID(), 0);
     }
 
     public static void incGreetCountForOwner(LivingEntity owner) {
-        GREETING_DOG_LIMIT_MAP.compute(owner.getUUID(), (uuid, old_val)  -> {
+        var storage = DogLocationStorage.get(owner.getServer());
+        storage.GREETING_DOG_LIMIT_MAP.compute(owner.getUUID(), (uuid, old_val)  -> {
             if (old_val == null) {
                 return 1;
             }
@@ -117,7 +118,8 @@ public class DogOwnerDistanceManager {
     }
 
     public static void decGreetCountForOwner(LivingEntity owner) {
-        GREETING_DOG_LIMIT_MAP.computeIfPresent(owner.getUUID(), (uuid, old_val)  -> {
+        var storage = DogLocationStorage.get(owner.getServer());
+        storage.GREETING_DOG_LIMIT_MAP.computeIfPresent(owner.getUUID(), (uuid, old_val)  -> {
             if (old_val == null) {
                 return null;
             }
