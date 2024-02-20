@@ -2523,7 +2523,7 @@ public class Dog extends AbstractDog {
             return this.getDefaultInitIncapVal()/2;
         if (difficulty == Difficulty.EASY)
             return this.getDefaultInitIncapVal();
-        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
+        if (source.isBypassInvul())
             return this.getDefaultInitIncapVal();
         var fatal_damage = this.lastHurt;
         if (fatal_damage <= 0)

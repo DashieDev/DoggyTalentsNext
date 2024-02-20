@@ -252,5 +252,7 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdd
         }
 
     }
+    
+    public Level level() { return this.level; }
 
 }

@@ -64,7 +64,7 @@ public class OpenDogScreenPacket implements IPacket<OpenDogScreenData>  {
         }
         case INVENTORY_SINGLE:
         {
-            var e = player.level().getEntity(data.dogId);
+            var e = player.level.getEntity(data.dogId);
             if (e instanceof Dog dog)
                 Screens.openPackPuppyScreen(player, dog);
             break;

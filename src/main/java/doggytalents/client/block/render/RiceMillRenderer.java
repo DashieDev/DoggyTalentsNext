@@ -1,7 +1,7 @@
 package doggytalents.client.block.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 
 import doggytalents.client.ClientSetup;
 import doggytalents.client.block.model.RiceMillModel;
@@ -34,7 +34,7 @@ public class RiceMillRenderer implements BlockEntityRenderer<RiceMillBlockEntity
         stack.translate(0.5F, 0F, -0.5F);
         var state = mill.getBlockState();
         var facing = RiceMillBlock.getFacing(state);
-        stack.mulPose(Axis.YP.rotationDegrees(facing.getOpposite().toYRot()));
+        stack.mulPose(Vector3f.YP.rotationDegrees(facing.getOpposite().toYRot()));
         //stack.mulPose(Axis.YP.rotationDegrees(degTimeLine));
         stack.scale(2f, 2f, 2f);
         stack.translate(-0.25f, -1.501F, -0.25f);

@@ -38,7 +38,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
     @Override
     protected void onHit(HitResult result) {
         if (result.getType() == HitResult.Type.ENTITY) {
-            if (!this.level().isClientSide) {
+            if (!this.level.isClientSide) {
                 Entity entityHit = ((EntityHitResult) result).getEntity();
 
                 Entity thrower = this.getOwner();
@@ -57,7 +57,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
                 }
             } else {
                 for (int j = 0; j < 8; ++j) {
-                    this.level().addParticle(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                    this.level.addParticle(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
                 }
             }
         }

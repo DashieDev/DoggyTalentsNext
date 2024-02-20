@@ -13,6 +13,7 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.common.block.RiceMillBlock;
 import doggytalents.common.inventory.container.RiceMillMenu;
+import doggytalents.common.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -437,7 +438,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         if (recipent instanceof FurnaceBlockEntity furnace) {
             var furnaceIn = FurnaceBlockEntityDelegate.FURNACE_IN;
             ItemStack current_in = furnace.getItem(furnaceIn);
-            if (!current_in.isEmpty() && !ItemStack.isSameItem(currentStack, current_in))
+            if (!current_in.isEmpty() && !currentStack.sameItem(current_in))
                 return currentStack;
             if (!current_in.isEmpty() && current_in.getCount() >= current_in.getMaxStackSize())
                 return currentStack;
@@ -467,7 +468,7 @@ public class RiceMillBlockEntity extends BlockEntity {
                 freeSlot = i;
                 break;
             }
-            if (!ItemStack.isSameItem(currentStack, item))
+            if (!currentStack.sameItem(item))
                 continue;
             if (item.getCount() < item.getMaxStackSize()) {
                 freeSlot = i;
@@ -478,7 +479,7 @@ public class RiceMillBlockEntity extends BlockEntity {
             return currentStack;
         
         ItemStack targetItem = target.getItem(freeSlot);
-        if (!targetItem.isEmpty() && !ItemStack.isSameItem(currentStack, targetItem))
+        if (!targetItem.isEmpty() && !currentStack.sameItem(targetItem))
             return currentStack;
         if (!targetItem.isEmpty() && targetItem.getCount() >= targetItem.getMaxStackSize())
             return currentStack;
@@ -609,7 +610,7 @@ public class RiceMillBlockEntity extends BlockEntity {
 
         @Override
         public boolean stillValid(Player player) {
-            return Container.stillValidBlockEntity(this.mill, player);
+            return WorldUtil.containerStillValidTileEntity1_19_2below(this.mill, player);
         }
         
         public void serializeNBT(CompoundTag compound) {
