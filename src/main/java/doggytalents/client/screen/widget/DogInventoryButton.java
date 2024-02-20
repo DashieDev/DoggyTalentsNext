@@ -146,4 +146,7 @@ public class DogInventoryButton extends AbstractButton {
         this.openSingle = false;
     }
 
+    private int getX() {return this.x;}
+    private int getY() {return this.y;}
+
 }

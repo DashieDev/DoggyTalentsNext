@@ -392,7 +392,7 @@ public class DoggyCommands {
 
     private static int locate(DogLocationStorage respawnStorage, DogLocationData locationData, final CommandSourceStack source) throws CommandSyntaxException {
 
-        source.sendSuccess(() -> getLocationInfo(locationData), false);
+        source.sendSuccess(getLocationInfo(locationData), false);
 
         return 1;
 
@@ -402,7 +402,7 @@ public class DoggyCommands {
         var pos = loc.getPos();
         BlockPos bpos = null;
         if (pos != null) {
-            bpos = BlockPos.containing(pos);
+            bpos = new BlockPos(pos);
         }
         var posStr = bpos == null ? "[???]" : 
             "[ " + bpos.getX() + ", " + bpos.getY() + ", " + bpos.getZ() + " ]";

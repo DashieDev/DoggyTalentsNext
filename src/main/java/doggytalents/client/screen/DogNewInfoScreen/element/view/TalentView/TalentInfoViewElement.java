@@ -12,7 +12,6 @@ import doggytalents.api.registry.Talent;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentChangeHandlerSlice;
-import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.client.screen.framework.UIAction;

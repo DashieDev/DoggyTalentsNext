@@ -1,5 +1,7 @@
 package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.view;
 
+import java.util.List;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -32,7 +34,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
@@ -376,8 +377,14 @@ public class EditInfoView extends AbstractElement {
                     RenderSystem.setShaderTexture(0, Resources.HAMBURGER);
                     blit(stack, this.x, this.y, 20, 0, 20, 20);
                 }
+
+                @Override
+                public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+                    NewnameEntry.this.getScreen()
+                        .renderComponentTooltip(stack, 
+                            List.of(Component.translatable("doggui.newname.random.tooltip")), mouseX, mouseY);
+                }
             };
-            this.randomButton.setTooltip(Tooltip.create(Component.translatable("doggui.newname.random.tooltip")));
             this.applyButton.active = false;
             this.randomButton.active = true;
             this.addChildren(randomButton);
@@ -395,11 +402,11 @@ public class EditInfoView extends AbstractElement {
             font.draw(stack, I18n.get("doggui.newname"), startX, pY, 0xffffffff);
             
             if (this.replacingStr != null) {
-                renderReplacingStr(graphics, replacingStr);
+                renderReplacingStr(stack, replacingStr);
             }
         }
 
-        private void renderReplacingStr(GuiGraphics graphics, String str) {
+        private void renderReplacingStr(PoseStack stack, String str) {
             var renderStr = I18n.get("doggui.home.edit_info.substitude_name", str);
             int maxLen = this.getSizeX() - 20 - PADDING_LEFT;
             var renderStrLen = font.width(renderStr);
@@ -409,7 +416,7 @@ public class EditInfoView extends AbstractElement {
             }
             int tX = this.getRealX() + PADDING_LEFT;
             int tY = this.getRealY() + PADDING_TOP + 37;
-            graphics.drawString(font, renderStr, tX, tY, 0xffcda700);
+            font.draw(stack, renderStr, tX, tY, 0xffcda700);
         }
 
         private void addEditNameBox(int x, int y, int w, int h) {

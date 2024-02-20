@@ -80,12 +80,12 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         var foodStack = itemHandler.getStackInSlot(foodStackId);
         if (foodStack.isEmpty())
             return;
-        var dogFoodProj = new DogFoodProjectile(player.level(), player);
+        var dogFoodProj = new DogFoodProjectile(player.level, player);
         dogFoodProj.setDogFoodStack(new ItemStack(foodStack.getItem()));
         dogFoodProj.setOwner(player);
         dogFoodProj.shootFromRotation(player, 
             player.getXRot(), player.getYRot(), 0.0F, 0.8F, 1.0F);
-        player.level().addFreshEntity(dogFoodProj);
+        player.level.addFreshEntity(dogFoodProj);
         foodStack = foodStack.copy();
         foodStack.shrink(1);
         itemHandler.setStackInSlot(foodStackId, foodStack);

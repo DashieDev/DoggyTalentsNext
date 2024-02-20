@@ -2,7 +2,7 @@ package doggytalents.client.block.model;
 
 import java.util.Optional;
 
-import org.joml.Vector3f;
+import com.mojang.math.Vector3f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
