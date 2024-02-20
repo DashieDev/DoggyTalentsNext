@@ -2340,11 +2340,12 @@ public class Dog extends AbstractDog {
 
     @Override
     public void onAddedToWorld() {
-        if (this.level instanceof ServerLevel serverLevel && this.isAlive()) {
-            var data = DogLocationStorage.get(serverLevel).getOrCreateData(this);
+        if (this.level() instanceof ServerLevel serverLevel && this.isAlive()) {
+            var storage = DogLocationStorage.get(serverLevel);
+            var data = storage.getOrCreateData(this);
             
             if (data != null) data.update(this);
-            OnlineDogLocationManager.get().onDogGoOnline(this);
+            storage.getOnlineDogsManager().onDogGoOnline(this);
         }
         super.onAddedToWorld();
     }
