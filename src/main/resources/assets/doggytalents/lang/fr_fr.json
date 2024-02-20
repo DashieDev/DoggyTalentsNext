@@ -635,7 +635,7 @@
    "command.dogrespawn.imprecise": "\"%s\" c'est ambigu. Pensez à fournir l'UUID du chien comme argument supplémentaire.",
    "command.dogrespawn.bad_uuid_str": "Mauvaise chaîne UUID fournie.",
    "command.dogrespawn.notfound": "Pas de chiens sous l'identifiant \"%s\" à été trouvé.",
-   "command.doglocate.info": "[!] Jack est à %s en %s",
+   "command.doglocate.info": "[!] %s est à %s en %s",
    "dogbed.bedding.null": "Matériel de literie non réglé",
    "dogbed.casing.null": "Matériau du boîtier non réglé",
    "dogbed.bedding.missing": "Manquant: %s",
