@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FLF",
+    "LCL",
+    "FDF"
+  ],
+  "key": {
+    "F": {
+      "tag": "minecraft:fences"
+    },
+    "L": {
+      "tag": "minecraft:logs"
+    },
+    "C": {
+      "item": "minecraft:cobblestone_slab"
+    },
+    "D": {
+      "item": "doggytalents:rice_wheat"
+    }
+  },
+  "result": {
+    "item": "doggytalents:rice_mill"
+  }
+}

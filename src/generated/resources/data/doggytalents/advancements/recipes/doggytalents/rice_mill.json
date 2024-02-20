@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "doggytalents:wool_collar"
+      "doggytalents:rice_mill"
     ]
   },
   "criteria": {
-    "has_string": {
+    "has_paddy_rice_dtn": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:string"
+              "doggytalents:rice_wheat"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "doggytalents:wool_collar"
+        "recipe": "doggytalents:rice_mill"
       }
     }
   },
   "requirements": [
     [
-      "has_string",
+      "has_paddy_rice_dtn",
       "has_the_recipe"
     ]
   ]
