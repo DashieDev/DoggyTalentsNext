@@ -83,7 +83,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         dogFoodProj.setDogFoodStack(new ItemStack(foodStack.getItem()));
         dogFoodProj.setOwner(player);
         dogFoodProj.shootFromRotation(player, 
-            player.getXRot(), player.getYRot(), 0.0F, 1.0F, 1.0F);
+            player.getXRot(), player.getYRot(), 0.0F, 0.8F, 1.0F);
         player.level().addFreshEntity(dogFoodProj);
         foodStack = foodStack.copy();
         foodStack.shrink(1);
