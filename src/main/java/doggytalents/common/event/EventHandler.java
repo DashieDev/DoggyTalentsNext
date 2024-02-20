@@ -81,7 +81,7 @@ public class EventHandler {
         if (event.phase != Phase.END) return;
 
         DogPromiseManager.tick();
-        DogLocationStorage.get(event.getServer()).getOnlineDogsManager().tick();
+        //DogLocationStorage.get(event.getServer()).getOnlineDogsManager().tick();
     }
 
     @SubscribeEvent

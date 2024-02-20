@@ -26,6 +26,7 @@ import doggytalents.common.entity.DogDrinkMilkHandler;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.PacketHandler;
+import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.talent.HappyEaterTalent;
 import doggytalents.common.util.BackwardsComp;
 import net.minecraft.data.DataGenerator;
@@ -119,6 +120,9 @@ public class DoggyTalentsNext {
         ConfigHandler.init(modEventBus);
 
         //AddonManager.init();
+
+        //1.18.2
+        forgeEventBus.addListener(OnlineDogLocationManager::onLevelTick1_18_2);
     }
 
     public void commonSetup(final FMLCommonSetupEvent event) {

@@ -11,6 +11,8 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 
 public class OnlineDogLocationManager {
@@ -98,6 +100,18 @@ public class OnlineDogLocationManager {
                 dog.unRide();
             }
         }
+    }
+
+    //1.18.2
+    public static void onLevelTick1_18_2(TickEvent.WorldTickEvent event) {
+        var level = event.world;
+        if (level.isClientSide)
+            return;
+        if (event.phase != Phase.END)
+            return;
+        if (!level.dimension().equals(Level.OVERWORLD))
+            return;
+        DogLocationStorage.get(level).getOnlineDogsManager().tick();
     }
     
 }
