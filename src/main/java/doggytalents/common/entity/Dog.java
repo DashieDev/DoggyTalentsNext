@@ -567,7 +567,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public float getMyRidingOffset(Entity e) {
-        return e instanceof Player ? 0.5f : 0.2f;
+        return e instanceof Player ? 0.05f : 0.2f;
     }
 
     @Override
