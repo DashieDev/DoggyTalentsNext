@@ -1,4 +1,4 @@
-// 1.20.2	2024-01-21T03:21:12.5716236	Recipes
+// 1.20.2	2024-02-22T00:02:20.7696935	Recipes
 57abecd5160179088769f733bd576650b7cce7c2 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 c982bdf1b8b463a349cdc7002e02beffc0e286b2 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 99e9bcc4635396898d943c198911b83c6cbc146e data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -45,6 +45,7 @@ d96297ca647fa3d4a77ddb68847c467289cf144c data/doggytalents/advancements/recipes/
 837af8b4d9b5434cce9252feea17529d7defd626 data/doggytalents/advancements/recipes/decorations/pianist_suit.json
 831a5b07c1a0cd2848d535e26038098b7f30d684 data/doggytalents/advancements/recipes/decorations/plague_doctor_mask.json
 c5d668fcc4ff6f092cc35e5aef5cc324948a60fe data/doggytalents/advancements/recipes/decorations/propeller_hat.json
+78a3abaac214f75dc93043fd21eb0104f97076b2 data/doggytalents/advancements/recipes/decorations/rice_mill.json
 587dc456815e3670e74b5359df1a4866d0e421f1 data/doggytalents/advancements/recipes/decorations/smarty_glasses.json
 379018bb440d9129d7a9f3b62e95236c03a57976 data/doggytalents/advancements/recipes/decorations/snorkel.json
 5a469d903cf091f652dce4c31c6a1d6f63e97066 data/doggytalents/advancements/recipes/decorations/spotted_collar.json
@@ -55,7 +56,7 @@ c7c90998d6fb04a6dbb68d868ebe6fd0f7370ad8 data/doggytalents/advancements/recipes/
 b17e7562153dbe49b33e1b73e20ff6954e23a478 data/doggytalents/advancements/recipes/decorations/tengu_mask.json
 570fa5bc7d73f268e86fbaea96b48284b95a7330 data/doggytalents/advancements/recipes/decorations/wig.json
 c85b03a19ab689ebe71e1c47b4f00ae5a54aaa1d data/doggytalents/advancements/recipes/decorations/witch_hat.json
-48c45d8de0e6746ab366185005ef9b040060be66 data/doggytalents/advancements/recipes/decorations/wool_collar.json
+448e32b517da20ef7ee4680cb39da6804d4847a2 data/doggytalents/advancements/recipes/decorations/wool_collar.json
 8da47aec998621e13743b63a1ffc97d6dfe197ac data/doggytalents/advancements/recipes/food/aburaage_camping.json
 5de304307e0fea58f18f8a48c53e69743cad6006 data/doggytalents/advancements/recipes/food/aburaage_smelting.json
 8a3be84f46b6137f323f98ac95f7f0293f41012d data/doggytalents/advancements/recipes/food/aburaage_smoking.json
@@ -190,6 +191,7 @@ e03cd048267ff55bd5cd24285063df1de908794d data/doggytalents/recipes/rice_bowl_cam
 8242f179a52ff762e0a147440dd3a44e7caa35ab data/doggytalents/recipes/rice_bowl_smelting.json
 85bdb12afd0a78430fd2533852dac24d692137e2 data/doggytalents/recipes/rice_bowl_smoking.json
 1f197c067a6bd86c196a63651458044e51648419 data/doggytalents/recipes/rice_grains.json
+d8e85f5f7a0feca150b82df1c0f3943d8e347be7 data/doggytalents/recipes/rice_mill.json
 e57a6bb3e58fd657908642fc0175111d60ff9dff data/doggytalents/recipes/salmon_sushi.json
 13679fd396df877ce47294565028eda46315ce55 data/doggytalents/recipes/sausage.json
 8d2590a8059f9cdaeb5c9b2dfef51d2622e27cc5 data/doggytalents/recipes/scent_treat.json
