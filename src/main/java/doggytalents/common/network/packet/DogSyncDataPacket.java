@@ -10,7 +10,7 @@ import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.DogSyncData;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 
 public class DogSyncDataPacket implements IPacket<DogSyncData> {
 

@@ -59,7 +59,7 @@ public class DogDataSyncManager {
     }
 
     private void sendAllDataTo(ServerPlayer seenBy) {
-        PacketHandler.send(PacketDistributor.PLAYER.with(() -> seenBy), 
+        PacketHandler.send(PacketDistributor.PLAYER.with(seenBy), 
             new DogSyncData(this.dog.getId(), talents(), accessories(), null)
         );
     }
@@ -81,7 +81,7 @@ public class DogDataSyncManager {
             needRefresh = new ArrayList<>(this.talentsNeedsRefresh);
             this.talentsNeedsRefresh.clear();
         }
-        PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> this.dog), 
+        PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(this.dog), 
             new DogSyncData(this.dog.getId(), talents, accessories, needRefresh)
         );
     }

@@ -41,7 +41,7 @@ public class DogRespawnStorage extends SavedData {
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
 
         DimensionDataStorage storage = overworld.getDataStorage();
-        return storage.computeIfAbsent(DogRespawnStorage::load, DogRespawnStorage::new, Constants.STORAGE_DOG_RESPAWN);
+        return storage.computeIfAbsent(storageFactory(), Constants.STORAGE_DOG_RESPAWN);
     }
 
     public Stream<DogRespawnData> getDogs(@Nonnull UUID ownerId) {

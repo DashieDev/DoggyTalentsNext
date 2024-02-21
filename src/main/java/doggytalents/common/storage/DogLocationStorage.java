@@ -48,7 +48,7 @@ public class DogLocationStorage extends SavedData {
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
 
         DimensionDataStorage storage = overworld.getDataStorage();
-        return storage.computeIfAbsent(DogLocationStorage::load, DogLocationStorage::new, Constants.STORAGE_DOG_LOCATION);
+        return storage.computeIfAbsent(storageFactory(), Constants.STORAGE_DOG_LOCATION);
     }
 
     public Stream<DogLocationData> getDogs(LivingEntity owner) {

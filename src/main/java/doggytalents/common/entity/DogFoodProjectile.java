@@ -18,9 +18,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.network.packets.SpawnEntity;
 
 public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdditionalSpawnData {
 
@@ -34,7 +34,7 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdd
         super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), livingEntityIn, worldIn);
     }
 
-    public DogFoodProjectile(PlayMessages.SpawnEntity packet, Level worldIn) {
+    public DogFoodProjectile(SpawnEntity packet, Level worldIn) {
         super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), worldIn);
     }
 
@@ -180,7 +180,7 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdd
 
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
+        return (Packet<ClientGamePacketListener>) ForgeHooks.getEntitySpawnPacket(this);
     }
 
     @Override

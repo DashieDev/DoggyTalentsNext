@@ -50,7 +50,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.network.NetworkHooks;
 
 public class RiceMillBlockEntity extends BlockEntity { 
     
@@ -143,7 +142,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         var blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof RiceMillBlockEntity mill))
             return;
-        NetworkHooks.openScreen(player, mill.menuProvider, mill.getBlockPos());
+        player.openMenu(mill.menuProvider, mill.getBlockPos());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
