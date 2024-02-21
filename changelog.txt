@@ -1068,3 +1068,61 @@ left top corner of the PackPuppy inventory screen, in other words, slot 0.
 And also causing other hungry dogs to keep following it without eating.
 *HOTFIX: Potential shake animation glitch.
 #Tune Lava Shaking.
+
+**1.18.8 - 20th February 2024**
+# Buff Hot Dog
+* (Hopefully) Fix the occasional Double Interact bug causing Sit/Stand to be issued right after
+feeding the dog.
++ Added Dedicated Talent/Accessories Syncing System for DTN.
+* Update all players when Dog Talents Option (ex: Render Chest for Pack Puppy)
+changes.
+# Fire Drill Dog don't extinguish themselves when fighting.
++ Added a Whitelist Food System in case anyone needs to add additional food.
+# Seperated Incapaciated Value out of Hunger Value
+# The initial Incapaciated Value is now determined by the damage the fatal blow did
+to the Dog.
+* Fixes some rare cases where Dog continue to navigate a bit after being Incapacitated.
++ Added And Reinforced Dog Name Validating:
+  Dog Names is now being checked in the Dog Class itself serverside and Corrected
+before being actually set to the Dog. 
+  Name length now have a hard limit of 32 characters, if a Name longer than 32 characters
+somehow being forcely set to the Dog (ex: via /data), it will be substring-ed to take only
+the first 32 characters.
+  Name must not contains any Leading or Trailing Whitespaces, it will be Stripped before setting
+to the Dog.
+  Certain characters are not allowed (ex: the Double Quote (") character), they will be removed
+from the name before setting to the Dog.
+* Fix Doggy Tools Dog sometimes "remembering" the seeds and keep planting despite having no seed
+in Toolbar.
+# Imrpoved And Optimized UI Framework ReRender mechanic.
+# The Talent Info View now ReRender when the Dog got that Talent Trained up, allowing
+Options to immediately appears when you click Train.
+# Upon being Incapacitated, all Effects will be removed from Dog.
+# All effects cannot be applied on Incapacitated Dogs.
+# Canine Tracker no longer dumps all DogLocationStorage.
+# /dog locate command now directly output the Position and Dimension the Dog is at.
+# /dog ... byname command auto-complete now automatically wraps the Dog name in double-quotes if
+it have any spaces in between (hence why the (") character is not allowed)
+*Avoid wierd cases which causes StringOutOfBound exception when rendering Health In Name.
++ More Random Names !!!
++ Added Rice Mill !!! 🌾🌾🌾🍙🍙🍙
+  A water-powered Utility Block to Auto Grind certain Item.
+  For this block to be powered, the mill part must have its bottom (one block below the main block)
+covered in water while the rest of the mill must not be obstructed by any block. The mill will spin
+while this block is powered.
++ Dog after being burned when Random Sniff will remember it and don't sniff hot stuff for awhile.
++ Drop cached Dog in DogLocationStorage when dog Unloads to prevent unecessary storing the dog in mem.
+*Fix certain case when Conducting Bone forgot to Sit the Dog down when To Bed.
++ Allow you to access Only a Single Dog Pack Puppy Inventory by Sneak + Right Clicking the Dog
+inventory button located at the Dog's GUI > Train > Pack Puppy.
++ Config Option to determine if dog Incap Value should be reset when the Dog recieves any
+damage while being Incap. If this is disabled then the dog bandages would still drop under certain
+circumstances.
++ Client Config Option to allow any world runned on this Client's Integrated Server to give 
+new players Starter Bundle regardless of that world's serverconfig.
++ New Treat Bag Feature !!
+  Right Click the Treat Bag to throw a Dog food from far away!
+The Dog might even do a Backflip to catch it!
+  Sneak + Right Click the Dog to access its inventory.
+* Treat Bag now properly displays Content Overview of its inventory when hovered.
+* Fix the rest of the Black Text on certain Inventories.
