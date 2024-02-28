@@ -641,10 +641,6 @@ public class Dog extends AbstractDog {
     public void tick() {
         super.tick();
 
-        if (!this.level().isClientSide) {
-            this.dogSyncedDataManager.tick();
-        }
-
         updateClassicalAnim();
 
         this.setMaxUpStep(this.isVehicle() ? 1f : 0.6f);
@@ -685,6 +681,10 @@ public class Dog extends AbstractDog {
         if (this.level().isClientSide 
             && ConfigHandler.CLIENT.DISPLAY_SMOKE_WHEN_ON_FIRE.get()) {
             addAdditionalOnFireEffect();
+        }
+
+        if (!this.level().isClientSide) {
+            this.dogSyncedDataManager.tick();
         }
     }
 
