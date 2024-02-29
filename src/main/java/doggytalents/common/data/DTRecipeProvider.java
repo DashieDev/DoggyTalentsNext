@@ -877,7 +877,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_white_wool", has(Items.WHITE_WOOL))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyBlocks.RICE_MILL.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DoggyBlocks.RICE_MILL.get(), 1)
             .pattern("FLF")
             .pattern("LCL")
             .pattern("FDF")
