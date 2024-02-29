@@ -15,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -24,6 +25,10 @@ import java.util.stream.Stream;
 public class DogLocationStorage extends SavedData {
 
     private Map<UUID, DogLocationData> locationDataMap = Maps.newHashMap();
+
+    private final OnlineDogLocationManager onlineDogManager = new OnlineDogLocationManager(this);
+
+    public final Map<UUID, Integer> GREETING_DOG_LIMIT_MAP = Maps.newHashMap();
 
     public DogLocationStorage() {}
 
@@ -187,4 +192,12 @@ public class DogLocationStorage extends SavedData {
         data.setSessionUUID(sessionUUID);
     }
 
+    public OnlineDogLocationManager getOnlineDogsManager() {
+        return this.onlineDogManager;
+    }
+
+    public void onServerStop(ServerStoppingEvent event) {
+        this.onlineDogManager.onServerStop();
+        GREETING_DOG_LIMIT_MAP.clear();
+    }
 }
