@@ -3249,19 +3249,20 @@ public class Dog extends AbstractDog {
         }
     }
 
-    public void onTalentsUpdated() {
-        this.refreshAlterations();
-        this.spendablePoints.markForRefresh();
-        if (this.level().isClientSide)
-            ClientEventHandler.onDogTalentUpdated(this);
-    }
-
-    public void onAccessoriesUpdated() {
-        this.refreshAlterations();
-        this.spendablePoints.markForRefresh();
-        if (this.level().isClientSide) {
-            this.clientAccessories = new ArrayList<>(this.getAccessories());
-            this.clientAccessories.sort(AccessoryInstance.RENDER_SORTER);
+    public void onDogSyncedDataUpdated(boolean talents, boolean accessories) {
+        if (talents || accessories) {
+            this.refreshAlterations();
+            this.spendablePoints.markForRefresh();
+        }
+        if (talents) {
+            if (this.level().isClientSide)
+                ClientEventHandler.onDogTalentUpdated(this);
+        }
+        if (accessories) {
+            if (this.level().isClientSide) {
+                this.clientAccessories = new ArrayList<>(this.getAccessories());
+                this.clientAccessories.sort(AccessoryInstance.RENDER_SORTER);
+            }
         }
     }
 
