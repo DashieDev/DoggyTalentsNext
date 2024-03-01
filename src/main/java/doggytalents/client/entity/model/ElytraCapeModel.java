@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.joml.Vector3f;
 
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.geom.ModelPart;
