@@ -8,9 +8,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.events.RegisterCustomDogModelsEvent.DogModelProps;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.entity.Dog;
+import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelPart;
 
 public class CustomDogModel extends DogModel {
@@ -84,6 +86,17 @@ public class CustomDogModel extends DogModel {
             this.glowingEyes.visible = this.head.visible;
             this.realGlowingEyes.visible = this.realHead.visible;
         }
+    }
+
+    @Override
+    protected AnimationDefinition getAnimationSequence(DogAnimation anim) {
+        var animOverride = this.props.getAnimOverride();
+        if (animOverride.isEmpty())
+            return super.getAnimationSequence(anim);
+        var animDef = animOverride.get(anim);
+        if (animDef == null)
+            return super.getAnimationSequence(anim);
+        return animDef;
     }
 
     @Override
