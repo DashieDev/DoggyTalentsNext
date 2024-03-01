@@ -105,7 +105,9 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
             }
 
             public DogModelProps build() {
-                return new DogModelProps(id, layer, accessory, incap, customRootPivot, defaultScale, glowingEyes);
+                var ret =  new DogModelProps(id, layer, accessory, incap, customRootPivot, defaultScale, glowingEyes);
+                ret.aninationOverride = this.animationOverride;
+                return ret;
             }
 
         }
