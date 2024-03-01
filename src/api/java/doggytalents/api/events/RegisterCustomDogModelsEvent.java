@@ -6,6 +6,10 @@ import java.util.function.Function;
 
 import com.mojang.math.Vector3f;
 
+import com.google.common.collect.Maps;
+
+import doggytalents.api.anim.DogAnimation;
+import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -38,6 +42,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
         public final Vector3f customRootPivot;
         public final float defaultScale;
         public final boolean glowingEyes;
+        private Map<DogAnimation, AnimationDefinition> aninationOverride = Maps.newConcurrentMap();
 
         private DogModelProps(ResourceLocation id, ModelLayerLocation layer, boolean accessory, boolean incap,
             Vector3f customPivot, float defaulScale, boolean glowingEyes) {
@@ -51,6 +56,10 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
             this.glowingEyes = glowingEyes;
         }
 
+        public Map<DogAnimation, AnimationDefinition> getAnimOverride() {
+            return this.aninationOverride;
+        }
+
         public static class Builder {
             public final ResourceLocation id;
             public final ModelLayerLocation layer;
@@ -58,6 +67,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
             private Vector3f customRootPivot = null;
             private float defaultScale = 1f;
             private boolean glowingEyes = false;
+            private Map<DogAnimation, AnimationDefinition> animationOverride = Maps.newConcurrentMap();
 
             public Builder(ResourceLocation id, ModelLayerLocation layer) {
                 this.id = id;
@@ -86,6 +96,11 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
 
             public Builder withGlowingEyes() {
                 this.glowingEyes = true;
+                return this;
+            }
+
+            public Builder withCustomAnim(DogAnimation anim, AnimationDefinition seq) {
+                this.animationOverride.put(anim, seq);
                 return this;
             }
 

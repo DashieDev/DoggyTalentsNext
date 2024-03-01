@@ -22,6 +22,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
 import doggytalents.common.entity.Dog;
+import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.ColorableAgeableListModel;
@@ -504,7 +505,7 @@ public class DogModel extends EntityModel<Dog> {
         var animState = animationManager.animationState;
         var anim = dog.getAnim();
         if (anim == DogAnimation.NONE) return;
-        var sequence = DogAnimationRegistry.getSequence(anim);
+        var sequence = this.getAnimationSequence(anim);
         if (sequence == null) return;
         if (pose.freeHead && anim.freeHead()) {
             headXRot0 = this.head.xRot;
@@ -516,6 +517,10 @@ public class DogModel extends EntityModel<Dog> {
             animState.updateTime(ageInTicks, anim.getSpeedModifier());
             KeyframeAnimationsDelegate.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
         }
+    }
+
+    protected AnimationDefinition getAnimationSequence(DogAnimation anim) {
+        return DogAnimationRegistry.getSequence(anim);
     }
 
     public void resetAllPose() {
