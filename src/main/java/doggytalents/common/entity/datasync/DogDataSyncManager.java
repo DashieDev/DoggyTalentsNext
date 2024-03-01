@@ -36,13 +36,17 @@ public class DogDataSyncManager {
     }
 
     public void setTalentsDirty() {
+        if (this.dog.level().isClientSide)
+            return;
         this.talentsDirty = true;
-        this.dog.onTalentsUpdated();
+        this.dog.onDogSyncedDataUpdated(true, false);
     }
 
     public void setAccessoriesDirty() {
+        if (this.dog.level().isClientSide)
+            return;
         this.accessoriesDirty = true;
-        this.dog.onAccessoriesUpdated();
+        this.dog.onDogSyncedDataUpdated(false, true);
     }
 
     public void markTalentNeedRefresh(TalentInstance inst) {
@@ -91,13 +95,11 @@ public class DogDataSyncManager {
         if (accessories.isPresent()) {
             this.accessories.clear();
             this.accessories.addAll(accessories.get());
-            dog.onAccessoriesUpdated();
         }
         var talents = data.talents();
         if (talents.isPresent()) {
             this.talents.clear();
             this.talents.addAll(talents.get());
-            dog.onTalentsUpdated();
         }
         var refreshOptions = data.refreshOptions();
         if (refreshOptions.isPresent()) {
@@ -109,6 +111,7 @@ public class DogDataSyncManager {
                 dogInst.get().updateOptionsFromServer(inst);
             }
         }
+        dog.onDogSyncedDataUpdated(talents.isPresent(), accessories.isPresent());
     }
 
 }
