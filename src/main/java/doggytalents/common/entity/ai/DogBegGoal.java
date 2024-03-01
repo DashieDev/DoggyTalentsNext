@@ -1,10 +1,10 @@
 package doggytalents.common.entity.ai;
 
 import doggytalents.DoggyTags;
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.RestingState;
-import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;

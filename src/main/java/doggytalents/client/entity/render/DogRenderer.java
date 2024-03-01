@@ -10,7 +10,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 
-import doggytalents.api.enu.forward_imitate.ComponentUtil;
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.model.DogModelRegistry;
@@ -19,7 +19,6 @@ import doggytalents.client.entity.model.dog.IwankoModel;
 import doggytalents.client.entity.render.layer.LayerFactory;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.ChatFormatting;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;

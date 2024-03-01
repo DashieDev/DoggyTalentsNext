@@ -1,7 +1,7 @@
 package doggytalents.common.entity.ai.triggerable;
 
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.anim.DogAnimation;
 
 public class DogFaintStandAction extends AnimationAction {
 

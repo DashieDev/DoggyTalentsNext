@@ -2,8 +2,8 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 public class DogRandomStandIdleGoal extends Goal {
