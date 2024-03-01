@@ -46,6 +46,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
+import net.minecraft.world.level.block.entity.SmokerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -424,6 +425,8 @@ public class RiceMillBlockEntity extends BlockEntity {
         var attach_blockEntity = level.getBlockEntity(attach_pos);
         if (attach_blockEntity instanceof FurnaceBlockEntity)
             return Optional.of(attach_blockEntity);
+        if (attach_blockEntity instanceof SmokerBlockEntity)
+            return Optional.of(attach_blockEntity);
         if (attach_blockEntity instanceof ChestBlockEntity)
             return Optional.of(attach_blockEntity);
         if (attach_blockEntity instanceof HopperBlockEntity)
@@ -434,7 +437,7 @@ public class RiceMillBlockEntity extends BlockEntity {
     private static ItemStack tryEjectToRecipent(BlockEntity recipent, ItemStack currentStack) {
         if (currentStack.isEmpty())
             return currentStack;
-        if (recipent instanceof FurnaceBlockEntity furnace) {
+        if (recipent instanceof AbstractFurnaceBlockEntity furnace) {
             var furnaceIn = FurnaceBlockEntityDelegate.FURNACE_IN;
             ItemStack current_in = furnace.getItem(furnaceIn);
             if (!current_in.isEmpty() && !ItemStack.isSameItem(currentStack, current_in))
