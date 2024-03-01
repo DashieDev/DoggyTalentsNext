@@ -12,13 +12,13 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 
 import doggytalents.DoggyAccessoryTypes;
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.ColorableAgeableListModel;

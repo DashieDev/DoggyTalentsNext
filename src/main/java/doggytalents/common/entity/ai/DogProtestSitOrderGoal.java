@@ -1,7 +1,7 @@
 package doggytalents.common.entity.ai;
 
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 public class DogProtestSitOrderGoal extends Goal {

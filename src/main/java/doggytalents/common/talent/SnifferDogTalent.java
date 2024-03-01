@@ -7,12 +7,12 @@ import java.util.Optional;
 import java.util.Random;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
-import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.item.ScentTreatItem;
 import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.NBTUtil;

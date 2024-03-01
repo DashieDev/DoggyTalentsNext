@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
@@ -12,7 +13,6 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.triggerable.DogBounceAction;
 import doggytalents.common.entity.ai.triggerable.DogFaintStandAction;
-import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.util.DogUtil;

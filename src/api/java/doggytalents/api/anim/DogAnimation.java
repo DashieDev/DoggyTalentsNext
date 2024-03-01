@@ -1,4 +1,4 @@
-package doggytalents.common.entity.anim;
+package doggytalents.api.anim;
 
 import net.minecraft.util.Mth;
 

@@ -1,5 +1,6 @@
 package doggytalents.common.entity.anim;
 
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.util.Mth;

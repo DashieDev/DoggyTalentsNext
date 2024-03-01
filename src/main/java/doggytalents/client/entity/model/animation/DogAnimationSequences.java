@@ -5,13 +5,13 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 import com.mojang.math.Vector3f;
 
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.entity.model.animation.biganim.BellyRubAnimation;
 import doggytalents.client.entity.model.animation.biganim.DrownAnimation;
 import doggytalents.client.entity.model.animation.biganim.FaintStand1Animation;
 import doggytalents.client.entity.model.animation.biganim.ProtestAnimation;
 import doggytalents.client.entity.model.animation.biganim.ScratchAnimation;
 import doggytalents.client.entity.model.animation.biganim.StrechAnimation;
-import doggytalents.common.entity.anim.DogAnimation;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
