@@ -5,8 +5,8 @@ import java.util.List;
 
 import doggytalents.ChopinLogger;
 import doggytalents.DoggyBlocks;
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;

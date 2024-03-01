@@ -1,9 +1,9 @@
 package doggytalents.common.entity;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
-import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.item.IDogEddible;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.network.FriendlyByteBuf;
