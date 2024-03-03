@@ -21,6 +21,8 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nullable;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,6 +39,11 @@ public class DogRespawnData implements IDogData {
             "Pos", "Health", "Motion", "Rotation", "FallDistance", "Fire", "Air", "OnGround",
             "Dimension", "PortalCooldown", "Passengers", "Leash", "InLove", "Leash", "HurtTime",
             "HurtByTimestamp", "DeathTime", "AbsorptionAmount", "FallFlying", "Brain", "Sitting", "ActiveEffects"); // Remove dog mode
+
+    private static final List<String> IMPORTANT_TAGS = List.of(
+        "Owner", "friendlyFire", "UUID", "talents", "level_normal", "level_kami", "dogGender",
+        "dogSize", "entityKills", "accessories", "doggytalents_dog_skin"
+    );
 
     protected DogRespawnData(DogRespawnStorage storageIn, UUID uuid) {
         this.storage = storageIn;
@@ -81,6 +88,8 @@ public class DogRespawnData implements IDogData {
 
         var extraTagsToRemove = ConfigHandler.RESPAWN_TAGS.TAGS_TO_REMOVE.get();
         for (String tag : extraTagsToRemove) {
+            if (IMPORTANT_TAGS.contains(tag))
+                continue;
             this.data.remove(tag);
         }
 
