@@ -72,7 +72,7 @@ public class DoggyAccessories {
     public static final RegistryObject<Accessory> FEDORA = register("fedora", () -> new Fedora(DoggyItems.FEDORA).setModelTexture(Resources.DOG_FEDORA).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<DyeableAccessory> FLATCAP = register("flatcap", () -> new FlatCap(DoggyItems.FLATCAP).setModelTexture(Resources.DOG_FLATCAP).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
-    public static final RegistryObject<Contacts> DOGGY_CONTACTS = register("doggy_contacts", () -> new Contacts(DoggyItems.DOGGY_CONTACTS).setModelTexture(Resources.DOGGY_CONTACTS).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<Contacts> DOGGY_CONTACTS = register("doggy_contacts", () -> new Contacts(DoggyItems.DOGGY_CONTACTS).setModelTexture(Resources.DOGGY_CONTACTS_BG).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
     private static <T extends Accessory> RegistryObject<T> register(final String name, final Supplier<T> sup) {
         return ACCESSORIES.register(name, sup);
