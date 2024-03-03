@@ -1,4 +1,4 @@
-// 1.20.1	2024-02-20T01:08:00.9306259	Recipes
+// 1.20.1	2024-03-03T16:15:30.5026109	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 5bb21f3599e9ca5620bca26f572185ad321709a2 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -45,7 +45,6 @@ b9f2fad680d40c03ed5ed14f24a2d3ce5692d7c4 data/doggytalents/advancements/recipes/
 228934ccdbfdd775b0f9661e2d4a6b95d3e5a39e data/doggytalents/advancements/recipes/decorations/pianist_suit.json
 f3d0d5542c1550508d1fe4aba7876a5ad383b93d data/doggytalents/advancements/recipes/decorations/plague_doctor_mask.json
 e437ed71c923a85a998122e5d8d3462dd4a2f3bc data/doggytalents/advancements/recipes/decorations/propeller_hat.json
-ab95540841dbd3fbcc05a20124959e8abd1d5b0f data/doggytalents/advancements/recipes/decorations/rice_mill.json
 45b71e5a9d9e508d27e2b1b1bb61513d7d633c7d data/doggytalents/advancements/recipes/decorations/smarty_glasses.json
 61f0f235f769a1fcea4d15952a2eb28b93620d81 data/doggytalents/advancements/recipes/decorations/snorkel.json
 6dbd5efa5eac77935b77a2cf22db7642b65699f3 data/doggytalents/advancements/recipes/decorations/spotted_collar.json
@@ -96,6 +95,7 @@ a9df1b98b06eb06f834617f6e2c97a99e61a0108 data/doggytalents/advancements/recipes/
 6615aae28cdf0758e122d84112669748dbe751ca data/doggytalents/advancements/recipes/food/uncooked_rice_bowl.json
 79a56f06b66d5f0e918993d86fa3251ac8dc0c00 data/doggytalents/advancements/recipes/misc/amnesia_bone.json
 6d870158a5f5b6095b117f3e4017a7cc3df3b94e data/doggytalents/advancements/recipes/misc/gender_bone.json
+ab95540841dbd3fbcc05a20124959e8abd1d5b0f data/doggytalents/advancements/recipes/misc/rice_mill.json
 a4df882f0fda9516336e75e284760540603645c4 data/doggytalents/advancements/recipes/tools/bandaid.json
 a4b2f6fe8c6e1e2a3508ae13e1ebe993a8707312 data/doggytalents/advancements/recipes/tools/canine_tracker.json
 05b7f54338e4ae622e08ab1f5b30ba887eaf6b99 data/doggytalents/advancements/recipes/tools/conducting_bone.json
@@ -121,7 +121,7 @@ d3e661fcca095b9d821a5743b90eb6a6150cfd90 data/doggytalents/recipes/bach_wig.json
 bec3b433400aa9ab4f534bb9f568aa2ee2807eab data/doggytalents/recipes/bat_wings.json
 d7e762538d6354b54b49b498678af3b21a9a5bc7 data/doggytalents/recipes/beastars_uniform_female.json
 8d0a236085cac47107bc3544cd23f6beffeb7f7d data/doggytalents/recipes/beastars_uniform_male.json
-b14c9a473986a44380b31b45a11372f4326317a1 data/doggytalents/recipes/birthday_hat.json
+26b26742d740d81cbccfbb0865635bd4a9dc545e data/doggytalents/recipes/birthday_hat.json
 f6aa85f570f68662cf9682465aaf8c0c99d66ad9 data/doggytalents/recipes/birthday_hat_alt.json
 858a3b05f7c466fdce47fe482d968c83c004d26c data/doggytalents/recipes/bowtie.json
 2adc89fc801f9544f46e89b27e15778c5661fa5d data/doggytalents/recipes/breeding_bone.json
