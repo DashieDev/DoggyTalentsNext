@@ -62,11 +62,21 @@ public class TalentInstance implements IDogAlteration {
     }
 
     public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
-        compound.putInt("level", this.level());
+        
     }
 
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+        
+    }
+
+    public final void doReadFromNBT(AbstractDog dogIn, CompoundTag compound) {
         this.setLevel(compound.getInt("level"));
+        readFromNBT(dogIn, compound);
+    }
+
+    public final void doWriteToNBT(AbstractDog dogIn, CompoundTag compound) {
+        compound.putInt("level", this.level());
+        writeToNBT(dogIn, compound);
     }
 
     public void writeToBuf(FriendlyByteBuf buf) {
@@ -87,14 +97,14 @@ public class TalentInstance implements IDogAlteration {
             compound.putString("type", rl.toString());
         }
 
-        this.writeToNBT(dogIn, compound);
+        this.doWriteToNBT(dogIn, compound);
     }
 
     public static Optional<TalentInstance> readInstance(AbstractDog dogIn, CompoundTag compound) {
         ResourceLocation rl = ResourceLocation.tryParse(compound.getString("type"));
         if (DoggyTalentsAPI.TALENTS.get().containsKey(rl)) {
             TalentInstance inst = DoggyTalentsAPI.TALENTS.get().getValue(rl).getDefault();
-            inst.readFromNBT(dogIn, compound);
+            inst.doReadFromNBT(dogIn, compound);
             return Optional.of(inst);
         } else {
             DoggyTalentsAPI.LOGGER.warn("Failed to load talent {}", rl);
