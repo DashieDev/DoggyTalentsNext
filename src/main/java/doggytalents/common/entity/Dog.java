@@ -3068,6 +3068,13 @@ public class Dog extends AbstractDog {
             } catch (Exception e) {
             }
         }
+
+        if (!this.level().isClientSide) {
+            try {
+                this.setAnim(DogAnimation.NONE);
+            } catch (Exception e) {
+            }
+        }
     }
 
     private boolean detectedDuplicateVertified = false;
