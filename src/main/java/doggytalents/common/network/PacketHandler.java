@@ -62,6 +62,7 @@ public final class PacketHandler {
         registerPacket(new DoggyTorchPacket(), DoggyTorchData.class);
         registerPacket(new DogAutoMountPacket(), DogAutoMountData.class);
         registerPacket(new DoggyToolsPickFirstPacket(), DoggyToolsPickFirstData.class);
+        registerPacket(new CreeperSweeperPacket(), CreeperSweeperData.class);
         registerPacket(new ForceChangeOwnerPacket(), ForceChangeOwnerData.class);
         registerPacket(new PackPuppyPacket(), PackPuppyData.class);
         registerPacket(new RescueDogRenderPacket(), RescueDogRenderData.class);

@@ -6,6 +6,9 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.network.packet.data.CreeperSweeperData;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,6 +22,7 @@ import java.util.List;
 public class CreeperSweeperTalent extends TalentInstance {
 
     private int cooldown;
+    private boolean onlyAttackCreeper = false;
 
     public CreeperSweeperTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -70,16 +74,25 @@ public class CreeperSweeperTalent extends TalentInstance {
 
     @Override
     public InteractionResult canAttack(AbstractDog dog, EntityType<?> entityType) {
+        if (this.level() >= 5 && onlyAttackCreeper) {
+            return entityType == EntityType.CREEPER ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+        }
         return entityType == EntityType.CREEPER && this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 
     @Override
     public InteractionResult canAttack(AbstractDog dog, LivingEntity entity) {
+        if (this.level() >= 5 && onlyAttackCreeper) {
+            return entity instanceof Creeper ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+        }
         return entity instanceof Creeper && this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 
     @Override
     public InteractionResult shouldAttackEntity(AbstractDog dog, LivingEntity target, LivingEntity owner) {
+        if (this.level() >= 5 && onlyAttackCreeper) {
+            return target instanceof Creeper ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+        }
         return target instanceof Creeper && this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
      }
 
@@ -92,4 +105,51 @@ public class CreeperSweeperTalent extends TalentInstance {
         creeper.setHealth(0);
         creeper.die(DamageSource.mobAttack(dogIn));
     }
+
+    @Override
+    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.readFromNBT(dogIn, compound);
+        this.onlyAttackCreeper = compound.getBoolean("targetOnlyCreeper");
+    }
+
+    @Override
+    public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.writeToNBT(dogIn, compound);
+        compound.putBoolean("targetOnlyCreeper", this.onlyAttackCreeper);
+    }
+
+    @Override
+    public void writeToBuf(FriendlyByteBuf buf) {
+        super.writeToBuf(buf);
+        buf.writeBoolean(this.onlyAttackCreeper);
+    }
+
+    @Override
+    public void readFromBuf(FriendlyByteBuf buf) {
+        super.readFromBuf(buf);
+        this.onlyAttackCreeper = buf.readBoolean();
+    }
+
+    @Override
+    public void updateOptionsFromServer(TalentInstance fromServer) {
+        if (!(fromServer instanceof CreeperSweeperTalent sweep))
+            return;
+        this.onlyAttackCreeper = sweep.onlyAttackCreeper;
+    }
+
+    public void updateFromPacket(CreeperSweeperData data) {
+        onlyAttackCreeper = data.val;
+    }
+
+    @Override
+    public TalentInstance copy() {
+        var ret = super.copy();
+        if (!(ret instanceof CreeperSweeperTalent sweep))
+            return ret;
+        sweep.setOnlyAttackCreeper(this.onlyAttackCreeper);
+        return sweep;
+    }
+
+    public boolean onlyAttackCreeper() { return this.onlyAttackCreeper; }
+    public void setOnlyAttackCreeper(boolean val) { this.onlyAttackCreeper = val; }
 }
