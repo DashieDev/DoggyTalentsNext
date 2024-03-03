@@ -92,7 +92,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.CHEF_HAT);
         generated(DoggyItems.SAUSAGE);
         generated(DoggyItems.LAB_COAT);
-        generated(DoggyItems.DOGGY_CONTACTS);
+        contactLens(DoggyItems.DOGGY_CONTACTS);
 
         
         generated(DoggyItems.RICE_BOWL);
@@ -225,6 +225,10 @@ public class DTItemModelProvider extends ItemModelProvider {
     private ItemModelBuilder scentTreatDrooled(Supplier<? extends ItemLike> item, Supplier<? extends ItemLike> base) {
         return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(base)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(base) + "_overlay"));
     }    
+
+    private ItemModelBuilder contactLens(Supplier<? extends ItemLike> item) {
+        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
+    }
 
     private ItemModelBuilder generated2(Supplier<? extends ItemLike> item, ResourceLocation tex0, ResourceLocation tex1) {
         return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/generated"))

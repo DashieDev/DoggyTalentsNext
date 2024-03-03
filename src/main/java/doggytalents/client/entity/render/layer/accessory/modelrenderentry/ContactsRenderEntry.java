@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
-public class ContactsRenderEntry extends Entry{
+public class ContactsRenderEntry extends DoubleDyableRenderEntry {
     public static final ModelLayerLocation DOG_CONTACTS = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_contacts"), "main");
 
     private ContactsModel model;
@@ -32,11 +32,12 @@ public class ContactsRenderEntry extends Entry{
     }
 
     @Override
-    public ResourceLocation getResources(AccessoryInstance inst) {
-        return Resources.DOGGY_CONTACTS;
+    protected ResourceLocation getFgResource(AccessoryInstance inst) {
+        return Resources.DOGGY_CONTACTS_FG;
     }
+
     @Override
-    public boolean isDyable() {
-        return true;
+    protected ResourceLocation getBgResource(AccessoryInstance inst) {
+        return Resources.DOGGY_CONTACTS_BG;
     }
 }
