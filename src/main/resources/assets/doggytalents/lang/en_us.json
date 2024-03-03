@@ -351,6 +351,7 @@
    "talent.doggytalents.doggy_torch.render_torch": "Render Torch",
    "talent.doggytalents.gate_passer.pass_gate.set": "Allow Passing Gates",
    "talent.doggytalents.gate_passer.pass_gate.unset": "Stop Passing Gates",
+   "talent.doggytalents.creeper_sweeper.only_attack_creeper": "Only Target Creeper",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",
 
