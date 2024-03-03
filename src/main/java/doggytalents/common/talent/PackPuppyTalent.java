@@ -15,6 +15,7 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.inventory.PackPuppyItemHandler;
 import doggytalents.common.item.DogEddibleItem;
 import doggytalents.common.item.IDogEddible;
+import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.util.DogUtil;
@@ -247,21 +248,25 @@ public class PackPuppyTalent extends TalentInstance {
     public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
         super.writeToNBT(dogIn, compound);
         compound.merge(this.packPuppyHandler.serializeNBT());
+        compound.putBoolean("renderChest", this.renderChest);
+        compound.putBoolean("pickupNearby", this.pickupItems);
+        compound.putBoolean("offerFood", this.offerFood);
+        compound.putBoolean("collectKillLoot", this.collectKillLoot);
     }
 
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
         this.packPuppyHandler.deserializeNBT(compound);
+        this.renderChest = compound.getBoolean("renderChest");
+        this.pickupItems = compound.getBoolean("pickupNearby");
+        this.offerFood = compound.getBoolean("offerFood");
+        this.collectKillLoot = compound.getBoolean("collectKillLoot");
     }
 
     // Left in for backwards compatibility for versions <= 2.0.0.5
     @Override
     public void onRead(AbstractDog dogIn, CompoundTag compound) {
-        this.renderChest = compound.getBoolean("PackPuppyTalent_renderChest");
-        this.pickupItems = compound.getBoolean("PackPuppyTalent_pickupNearby");
-        this.offerFood = compound.getBoolean("PackPuppyTalent_offerFood");
-        this.collectKillLoot = compound.getBoolean("PackPuppyTalent_collectKillLoot");
         this.packPuppyHandler.deserializeNBT(compound);
     }
 
@@ -452,15 +457,6 @@ public class PackPuppyTalent extends TalentInstance {
             return true;
         }
 
-    }
-
-
-    @Override
-    public void onWrite(AbstractDog dogIn, CompoundTag compound) {
-        compound.putBoolean("PackPuppyTalent_renderChest", this.renderChest);
-        compound.putBoolean("PackPuppyTalent_pickupNearby", this.pickupItems);
-        compound.putBoolean("PackPuppyTalent_offerFood", this.offerFood);
-        compound.putBoolean("PackPuppyTalent_collectKillLoot", this.collectKillLoot);
     }
 
     @Override
