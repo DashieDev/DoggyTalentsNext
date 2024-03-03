@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
-public class BirthdayHatRenderEntry extends AccessoryModelManager.Entry{
+public class BirthdayHatRenderEntry extends DoubleDyableRenderEntry {
     public static final ModelLayerLocation DOG_BIRTHDAY_HAT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_birthday_hat"), "main");
     
     public BirthdayHatModel model;
@@ -35,31 +35,18 @@ public class BirthdayHatRenderEntry extends AccessoryModelManager.Entry{
     }
 
     @Override
-    public void renderAccessory(RenderLayer<Dog, DogModel> layer, PoseStack poseStack, MultiBufferSource buffer,
-            int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks,
-            float netHeadYaw, float headPitch, AccessoryInstance inst) {
-        super.renderAccessory(layer, poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks,
-                netHeadYaw, headPitch, inst);
-        if (!(inst instanceof BirthdayHatAccessory.Inst birthday))
-            return;
-        var fg_color = birthday.getFgColor();
-        DefaultAccessoryRenderer.renderTranslucentModel(model, Resources.BIRTHDAY_HAT_FG, 
-            poseStack, buffer, packedLight, dog, fg_color[0], fg_color[1], fg_color[2], 1f);
-    }
-
-    @Override
     public void registerLayerDef(RegisterLayerDefinitions event) {
         event.registerLayerDefinition(DOG_BIRTHDAY_HAT, BirthdayHatModel::createBodyLayer);
     }
 
     @Override
-    public boolean isDyable() {
-        return true;
+    protected ResourceLocation getFgResource(AccessoryInstance inst) {
+        return Resources.BIRTHDAY_HAT_FG;
     }
 
     @Override
-    public ResourceLocation getResources(AccessoryInstance inst) {
-        return inst.getAccessory().getModelTexture();
+    protected ResourceLocation getBgResource(AccessoryInstance inst) {
+        return Resources.BIRTHDAY_HAT_BG;
     }
     
 }
