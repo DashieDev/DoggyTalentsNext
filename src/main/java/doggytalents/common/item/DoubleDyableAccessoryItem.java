@@ -76,7 +76,7 @@ public class DoubleDyableAccessoryItem extends AccessoryItem {
         return stack;
     }
 
-    public int getDefaultBgColor() { return 0; }
+    public int getDefaultBgColor() { return 0xffffffff; }
     public int getDefaultFgColor() { return getDefaultBgColor(); }
 
 }
