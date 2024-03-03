@@ -9,7 +9,9 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.Screens;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.lib.Constants;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -57,16 +59,40 @@ public class DoggyArmorTalent extends TalentInstance {
     }
 
     @Override
-    public void onRead(AbstractDog dogIn, CompoundTag compound) {
-        
-        dogIn.dogArmors().deserializeNBT(compound);
-        this.spareValue = compound.getInt("armors_spareXp");
-    }
+    public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.writeToNBT(dogIn, compound);
 
-    @Override
-    public void onWrite(AbstractDog dogIn, CompoundTag compound) {
         compound.merge(dogIn.dogArmors().serializeNBT());
         compound.putInt("armors_spareXp", level);
+    }
+
+    private boolean mayNeedsDataUpgrade = false;
+    @Override
+    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.readFromNBT(dogIn, compound);
+        try {
+            dogIn.dogArmors().deserializeNBT(compound);
+            if (compound.contains("armors_spareXp")) {
+                this.spareValue = compound.getInt("armors_spareXp");
+                mayNeedsDataUpgrade = false;
+            } else {
+                this.spareValue = 0;
+                mayNeedsDataUpgrade = true;
+            }
+        } catch (Exception e) {}
+    }
+
+
+    @Override
+    public void onRead(AbstractDog dogIn, CompoundTag compound) {
+        if (!mayNeedsDataUpgrade)
+            return;
+        
+        try {
+            if (compound.contains("dogArmors", Tag.TAG_LIST))
+                dogIn.dogArmors().deserializeNBT(compound);
+            this.spareValue = compound.getInt("armors_spareXp");
+        } catch (Exception e) {}
     }
 
     @Override

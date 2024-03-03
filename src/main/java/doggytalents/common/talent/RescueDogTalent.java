@@ -269,13 +269,15 @@ public class RescueDogTalent extends TalentInstance {
 
     
     @Override
-    public void onRead(AbstractDog dogIn, CompoundTag compound) {
-        this.renderBox = compound.getBoolean("RescueDogTalent_renderBox");
+    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.readFromNBT(dogIn, compound);
+        this.renderBox = compound.getBoolean("renderBox");
     }
 
     @Override
-    public void onWrite(AbstractDog dogIn, CompoundTag compound) {
-        compound.putBoolean("RescueDogTalent_renderBox", this.renderBox);
+    public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.writeToNBT(dogIn, compound);
+        compound.putBoolean("renderBox", this.renderBox);
     }
 
     @Override
