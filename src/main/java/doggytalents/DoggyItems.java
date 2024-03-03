@@ -342,9 +342,9 @@ public class DoggyItems {
         Util.acceptOrElse(DoggyItems.BIRTHDAY_HAT, (item) -> {
             event.register((stack, tintIndex) -> {
                 if (tintIndex == 1) {
-                    return ((DyableBirthdayHatItem) stack.getItem()).getForegroundColor(stack);
+                    return ((DyableBirthdayHatItem) stack.getItem()).getFgColor(stack);
                 }
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
+                return tintIndex > 0 ? -1 : ((DyableBirthdayHatItem) stack.getItem()).getBgColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 

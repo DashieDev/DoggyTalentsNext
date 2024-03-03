@@ -2,9 +2,8 @@ package doggytalents.common.inventory.recipe;
 
 import java.util.ArrayList;
 
-import doggytalents.DoggyItems;
 import doggytalents.DoggyRecipeSerializers;
-import doggytalents.common.item.DyableBirthdayHatItem;
+import doggytalents.common.item.DoubleDyableAccessoryItem;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -16,17 +15,17 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
-public class BirthdayHatRecipe extends CustomRecipe {
+public class DoubleDyableRecipe extends CustomRecipe {
 
-    public BirthdayHatRecipe(ResourceLocation p_252125_) {
-        super(p_252125_);
+    public DoubleDyableRecipe(ResourceLocation p_252125_, CraftingBookCategory p_249010_) {
+        super(p_252125_, p_249010_);
     }
 
     @Override
     public boolean matches(CraftingContainer container, Level level) {
         ItemStack paperStack = null;
         ItemStack dyeStack = null;
-        ItemStack bdStack = null;
+        ItemStack targetStack = null;
         for (int i = 0; i < container.getContainerSize(); ++i) {
             var stack = container.getItem(i);
             if (stack.isEmpty())
@@ -37,10 +36,10 @@ public class BirthdayHatRecipe extends CustomRecipe {
                 paperStack = stack;
                 continue;
             }
-            if (stack.is(DoggyItems.BIRTHDAY_HAT.get())) {
-                if (bdStack != null)
+            if (stack.getItem() instanceof DoubleDyableAccessoryItem) {
+                if (targetStack != null)
                     return false;
-                bdStack = stack;
+                targetStack = stack;
                 continue;
             }
             if (stack.getItem() instanceof DyeItem) {
@@ -50,14 +49,15 @@ public class BirthdayHatRecipe extends CustomRecipe {
             }
             return false;
         }
-        return paperStack != null && dyeStack != null && bdStack != null;
+        return dyeStack != null && targetStack != null;
     }
 
     @Override
     public ItemStack assemble(CraftingContainer container) {
         ItemStack paperStack = null;
         var dyeList = new ArrayList<DyeColor>();
-        ItemStack bdStack = null;
+        ItemStack targetStack = null;
+        boolean fg_color = false;
         for (int i = 0; i < container.getContainerSize(); ++i) {
             var stack = container.getItem(i);
             if (stack.isEmpty())
@@ -66,12 +66,13 @@ public class BirthdayHatRecipe extends CustomRecipe {
                 if (paperStack != null)
                     return ItemStack.EMPTY;
                 paperStack = stack;
+                fg_color = true;
                 continue;
             }
-            if (stack.is(DoggyItems.BIRTHDAY_HAT.get())) {
-                if (bdStack != null)
+            if (stack.getItem() instanceof DoubleDyableAccessoryItem) {
+                if (targetStack != null)
                     return ItemStack.EMPTY;
-                bdStack = stack;
+                targetStack = stack;
                 continue;
             }
             if (stack.getItem() instanceof DyeItem dye) {
@@ -79,9 +80,9 @@ public class BirthdayHatRecipe extends CustomRecipe {
                 continue;
             }
         }
-        if (paperStack == null || bdStack == null || dyeList.isEmpty())
+        if (targetStack == null || dyeList.isEmpty())
             return ItemStack.EMPTY;
-        return DyableBirthdayHatItem.dyeForegroundColorStack(bdStack, dyeList);
+        return DoubleDyableAccessoryItem.copyAndSetColorForStack(targetStack, dyeList, fg_color);
     }
 
     @Override
@@ -91,7 +92,6 @@ public class BirthdayHatRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return DoggyRecipeSerializers.BIRTHDAY_HAT.get();
+        return DoggyRecipeSerializers.DOUBLE_DYABLE.get();
     }
-    
 }
