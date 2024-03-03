@@ -5,10 +5,12 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.inventory.PackPuppyItemHandler;
+import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.data.DoggyTorchData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -58,15 +60,18 @@ public class DoggyTorchTalent extends TalentInstance {
     }
 
     @Override
-    public void onRead(AbstractDog dogIn, CompoundTag compound) {
-        this.placingTorch = compound.getBoolean("DoggyTorchTalent_placingTorch");
-        this.renderTorch = compound.getBoolean("DoggyTorchTalent_renderTorch");
+    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.readFromNBT(dogIn, compound);
+
+        this.placingTorch = compound.getBoolean("placingTorch");
+        this.renderTorch = compound.getBoolean("renderTorch");
     }
 
     @Override
-    public void onWrite(AbstractDog dogIn, CompoundTag compound) {
-        compound.putBoolean("DoggyTorchTalent_placingTorch", placingTorch);
-        compound.putBoolean("DoggyTorchTalent_renderTorch", renderTorch);
+    public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.writeToNBT(dogIn, compound);
+        compound.putBoolean("placingTorch", placingTorch);
+        compound.putBoolean("renderTorch", renderTorch);
     }
 
     @Override
