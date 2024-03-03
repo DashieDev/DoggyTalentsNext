@@ -26,6 +26,7 @@ import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
+import doggytalents.common.network.packet.data.CreeperSweeperData;
 import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.network.packet.data.DoggyTorchData;
@@ -33,6 +34,7 @@ import doggytalents.common.network.packet.data.GatePasserData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.network.packet.data.RescueDogRenderData;
+import doggytalents.common.talent.CreeperSweeperTalent;
 import doggytalents.common.talent.DoggyTorchTalent;
 import doggytalents.common.talent.GatePasserTalent;
 import doggytalents.common.talent.PackPuppyTalent;
@@ -312,6 +314,31 @@ public class TalentInfoViewElement extends AbstractElement {
                 }
             );
             gateButtonDiv.addChildren(gateButton);
+        } else if (talent == DoggyTalents.CREEPER_SWEEPER.get()) {
+            var talentInstOptional = dog.getTalent(DoggyTalents.CREEPER_SWEEPER);
+            if (!talentInstOptional.isPresent())
+                return;
+            var talentInst = talentInstOptional.get();
+            if (!(talentInst instanceof CreeperSweeperTalent sweep))
+                return;
+            container.addChildren(
+                new ButtonOptionEntry(container, getScreen(), 
+                    new FlatButton(
+                        0, 0,
+                        40, 20, Component.literal("" + sweep.onlyAttackCreeper()), 
+                        b -> {
+                            Boolean newVal = !sweep.onlyAttackCreeper();
+                            b.setMessage(Component.literal("" + newVal));
+                            sweep.setOnlyAttackCreeper(newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new CreeperSweeperData(
+                                dog.getId(), newVal
+                            ));
+                        }     
+                    ),
+                    I18n.get("talent.doggytalents.creeper_sweeper.only_attack_creeper")
+                )
+                .init()
+            );
         }
     }
 
