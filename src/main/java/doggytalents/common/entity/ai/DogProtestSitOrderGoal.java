@@ -77,7 +77,6 @@ public class DogProtestSitOrderGoal extends Goal {
             } else {
                 this.spamTime = 0;
             }
-            ChopinLogger.lwn(dog, "Owner made me sit after : " + interval + " ticks");
             this.lastOrderedToSitTick0 = dog.lastOrderedToSitTick;
         }
     }

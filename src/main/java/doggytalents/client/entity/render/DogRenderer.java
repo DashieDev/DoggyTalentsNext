@@ -56,7 +56,6 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             this.addLayer(layer.createLayer(this, ctx));
         }
         this.originalDogLayers = new ArrayList<>(this.layers);
-        ChopinLogger.l("creation of dog renderer.");
     }
 
     @Override
