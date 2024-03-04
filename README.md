@@ -19,6 +19,7 @@ A Big Thanks to everyone that has contributed. This includes but is not limited 
  * ❤️**SimonMeskens** for some of the textures
 
  * 💚**zNexwr** for Translation in "FR"
+ * 💚**Arkathus** for Translation in "ES"
     
 **Mod Authors:**
 * 🦴 **DashieDev** - ダシデーブ
