@@ -43,15 +43,13 @@ public class DoggyContainerTypes {
     public static final RegistryObject<MenuType<DogInventoriesContainer>> DOG_INVENTORIES = register("dog_inventories", (windowId, inv, data) -> {
         int noDogs = data.readInt();
         List<Dog> dogs = new ArrayList<>(noDogs);
-        SimpleContainerData array = new SimpleContainerData(noDogs);
-        for (int i = 0; i < noDogs; i++) {
+        for (int i = 0; i < noDogs; ++i) {
             Entity entity = inv.player.level().getEntity(data.readInt());
             if (entity instanceof Dog) {
                 dogs.add((Dog) entity);
-                array.set(i, entity.getId());
             }
         }
-        return !dogs.isEmpty() ? new DogInventoriesContainer(windowId, inv, array) : null;
+        return !dogs.isEmpty() ? new DogInventoriesContainer(windowId, inv, dogs) : null;
     });
 
     public static final RegistryObject<MenuType<DogArmorContainer>> DOG_ARMOR = register("dog_armor", (windowId, inv, data) -> {
