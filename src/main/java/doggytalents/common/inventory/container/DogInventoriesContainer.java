@@ -25,22 +25,28 @@ import java.util.List;
  */
 public class DogInventoriesContainer extends AbstractContainerMenu {
 
-    private Level world;
+    private Level level;
     private Player player;
-    private DataSlot position;
-    private SimpleContainerData trackableArray;
+    private DataSlot slotViewOffset;
+    private SimpleContainerData syncedDogIds;
     private final List<DogInventorySlot> dogSlots = new ArrayList<>();
-    private int possibleSlots = 0;
+    private int totalDogColsCount = 0;
+    private static final int VIEW_OFFSET_DATA_ID = 0;
 
-    //Server method
-    public DogInventoriesContainer(int windowId, Inventory playerInventory, SimpleContainerData trackableArray) {
+    private int dogSlotsStartsAt = 0;
+
+    public DogInventoriesContainer(int windowId, Inventory playerInventory, SimpleContainerData syncedDogIds) {
         super(DoggyContainerTypes.DOG_INVENTORIES.get(), windowId);
-        this.world = playerInventory.player.level;
+        
+        this.level = playerInventory.player.level();
         this.player = playerInventory.player;
-        this.position = DataSlot.standalone();
-        checkContainerDataCount(trackableArray, 1);
-        this.addDataSlot(this.position);
-        this.trackableArray = trackableArray;
+        
+        checkContainerDataCount(syncedDogIds, 1);
+
+        this.slotViewOffset = DataSlot.standalone();
+        this.addDataSlot(this.slotViewOffset);
+
+        this.syncedDogIds = syncedDogIds;
 
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
@@ -51,46 +57,54 @@ public class DogInventoriesContainer extends AbstractContainerMenu {
         for (int col = 0; col < 9; ++col) {
             this.addSlot(new Slot(playerInventory, col, 8 + col * 18, 142));
         }
+        
+        this.dogSlotsStartsAt = this.slots.size();
 
         this.addDogSlots();
     }
 
     public void addDogSlots() {
-        final int TOTAL_COLUMNS = 9;
+        final int VIEWPORT_COLS = 9;
 
-        int page = this.position.get();
-        int drawingColumn = 0;
+        int view_offset = this.slotViewOffset.get();
+        int current_col = 0;
 
-        for (int i = 0; i < this.trackableArray.getCount(); i++) {
-            int entityId = this.trackableArray.get(i);
-            Entity entity = this.world.getEntity(entityId);
+        for (int i = 0; i < this.syncedDogIds.getCount(); i++) {
+            var id = this.syncedDogIds.get(i);
+            var entity = this.level.getEntity(id);
 
-            if (entity instanceof Dog) {
-                Dog dog = (Dog) entity;
+            if (!(entity instanceof Dog dog))
+                continue;
 
-                PackPuppyItemHandler packInventory = dog.getTalent(DoggyTalents.PACK_PUPPY)
-                        .map((inst) -> inst.cast(PackPuppyTalent.class).inventory()).orElse(null);
-                if (packInventory == null) {
-                    continue;
-                }
-
-                int level = Mth.clamp(dog.getDogLevel(DoggyTalents.PACK_PUPPY), 0, 5); // Number of rows for this dog
-                int numCols = Mth.clamp(level, 0, Math.max(0, TOTAL_COLUMNS)); // Number of rows to draw
-
-                for (int row = 0; row < 3; row++) {
-                    for (int col = 0; col < numCols; col++) {
-                        DogInventorySlot slot = new DogInventorySlot(dog, this.player, packInventory, drawingColumn + col, row, col, col * 3 + row, 8 + 18 * (drawingColumn + col - page), 18 * row + 18);
-                        this.addDogSlot(slot);
-                        int adjustedColumn = slot.getOverallColumn() - page;
-                        if (adjustedColumn - page < 0 || adjustedColumn - page >= 9) {
-                            slot.setEnabled(false);
-                        }
-                    }
-                }
-
-                this.possibleSlots += level;
-                drawingColumn += numCols;
+            var packInventory = dog.getTalent(DoggyTalents.PACK_PUPPY)
+                    .map((inst) -> inst.cast(PackPuppyTalent.class).inventory())
+                    .orElse(null);
+            if (packInventory == null) {
+                continue;
             }
+
+            int dog_total_cols = Mth.clamp(dog.getDogLevel(DoggyTalents.PACK_PUPPY), 0, 5);
+    
+            for (int col = 0; col < dog_total_cols; col++) {
+                for (int row = 0; row < 3; row++) {
+                    var slot_indx = col * 3 + row;
+                    var abs_col = current_col + col;
+                    var viewX = 8 + 18 * (current_col + col - view_offset);
+                    var viewY = 18 * row + 18;
+                    var slot = new DogInventorySlot(
+                        dog, this.player, packInventory, 
+                        abs_col, row, col, slot_indx, viewX, viewY);
+                    this.addDogSlot(slot);
+                    int viewport_col = slot.getAbsoluteCol() - view_offset;
+                    boolean inside_of_viewport = 
+                        viewport_col >= 0 && viewport_col < VIEWPORT_COLS;
+                    if (!inside_of_viewport)
+                        slot.setEnabled(false);
+                }
+            }
+
+            this.totalDogColsCount += dog_total_cols;
+            current_col += dog_total_cols;
         }
 
     }
@@ -99,18 +113,22 @@ public class DogInventoriesContainer extends AbstractContainerMenu {
     public void setData(int id, int data) {
         super.setData(id, data);
 
-        if (id == 0) {
-            for (int i = 0; i < this.dogSlots.size(); i++) {
-                DogInventorySlot slot = this.dogSlots.get(i);
-                DogInventorySlot newSlot = new DogInventorySlot(slot, 8 + 18 * (slot.getOverallColumn() - data));
-                this.replaceDogSlot(i, newSlot);
-                int adjustedColumn = slot.getOverallColumn() - data;
-                if (adjustedColumn < 0 || adjustedColumn >= 9) {
-                    newSlot.setEnabled(false);
-                }
-            }
+        if (id == VIEW_OFFSET_DATA_ID) {
+            reDrawDogSlots(data);
         }
 
+    }
+
+    private void reDrawDogSlots(int newViewOffset) {
+        for (int i = 0; i < this.dogSlots.size(); i++) {
+            var slot0 = this.dogSlots.get(i);
+            var new_slot = new DogInventorySlot(slot0, 8 + 18 * (slot0.getAbsoluteCol() - newViewOffset));
+            this.replaceDogSlot(i, new_slot);
+            int viewport_col = slot0.getAbsoluteCol() - newViewOffset;
+            if (viewport_col < 0 || viewport_col >= 9) {
+                new_slot.setEnabled(false);
+            }
+        }
     }
 
     private void addDogSlot(DogInventorySlot slotIn) {
@@ -127,15 +145,15 @@ public class DogInventoriesContainer extends AbstractContainerMenu {
     }
 
     public int getTotalNumColumns() {
-        return this.possibleSlots;
+        return this.totalDogColsCount;
     }
 
-    public int getPage() {
-        return this.position.get();
+    public int getViewOffset() {
+        return this.slotViewOffset.get();
     }
 
-    public void setPage(int page) {
-        this.position.set(page);
+    public void setViewOffset(int offset) {
+        this.slotViewOffset.set(offset);
     }
 
     public List<DogInventorySlot> getSlots() {
@@ -149,36 +167,33 @@ public class DogInventoriesContainer extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int i) {
-        ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(i);
 
-        if (slot != null && slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
+        if (slot == null || !slot.hasItem())
+            return ItemStack.EMPTY;
 
-            int startIndex = this.slots.size() - this.dogSlots.size() + this.position.get() * 3;
-            int endIndex = Math.min(startIndex + 9 * 3, this.slots.size());
+        var moveStack0 = ItemStack.EMPTY;
+        var moveStack = slot.getItem();
+        moveStack0 = moveStack.copy();
 
-            if (i >= this.slots.size() - this.dogSlots.size() && i < this.slots.size()) {
-                if (!moveItemStackTo(itemstack1, 0, this.slots.size() - this.dogSlots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-            else if (!moveItemStackTo(itemstack1, this.slots.size() - this.dogSlots.size(), this.slots.size(), false)) {
-                return ItemStack.EMPTY;
-            }
+        boolean moveResult = false;
+        boolean clickedDogSlot = i >= dogSlotsStartsAt && i < this.slots.size();
+        if (clickedDogSlot)
+            moveResult = moveItemStackTo(moveStack, 0, this.dogSlotsStartsAt, true);
+        else
+            moveResult = moveItemStackTo(moveStack, this.dogSlotsStartsAt, this.slots.size(), false);
+        if (!moveResult)
+            return ItemStack.EMPTY;
 
-            if (itemstack1.isEmpty()) {
-                slot.set(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-
-            if (itemstack1.getCount() == itemstack.getCount()) {
-                return ItemStack.EMPTY;
-            }
+        if (moveStack.isEmpty()) {
+            slot.set(ItemStack.EMPTY);
+        } else {
+            slot.setChanged();
         }
 
-        return itemstack;
+        if (moveStack.getCount() == moveStack0.getCount()) {
+            return ItemStack.EMPTY;
+        }
+        return moveStack0;
     }
 }
