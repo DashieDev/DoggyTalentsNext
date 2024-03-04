@@ -110,10 +110,6 @@ public interface IDogAlteration {
         return InteractionResult.PASS;
     }
 
-    default InteractionResult canAttack(AbstractDog dogIn, EntityType<?> entityType) {
-        return InteractionResult.PASS;
-    }
-
     default InteractionResult shouldAttackEntity(AbstractDog dog, LivingEntity target, LivingEntity owner) {
         return InteractionResult.PASS;
     }
