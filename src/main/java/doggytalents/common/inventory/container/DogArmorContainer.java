@@ -123,8 +123,8 @@ public class DogArmorContainer extends AbstractContainerMenu {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
 
-            if (index < 5) { // TODO will change when dog have 4 armor
-                if (!moveItemStackTo(itemstack1, 5, this.slots.size(), true)) {
+            if (index < 4) { // TODO will change when dog have 4 armor
+                if (!moveItemStackTo(itemstack1, 4, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
             }
