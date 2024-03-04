@@ -73,14 +73,6 @@ public class CreeperSweeperTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult canAttack(AbstractDog dog, EntityType<?> entityType) {
-        if (this.level() >= 5 && onlyAttackCreeper) {
-            return entityType == EntityType.CREEPER ? InteractionResult.SUCCESS : InteractionResult.FAIL;
-        }
-        return entityType == EntityType.CREEPER && this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
-    }
-
-    @Override
     public InteractionResult canAttack(AbstractDog dog, LivingEntity entity) {
         if (this.level() >= 5 && onlyAttackCreeper) {
             return entity instanceof Creeper ? InteractionResult.SUCCESS : InteractionResult.FAIL;
