@@ -31,12 +31,12 @@ public class DogInventoryPagePacket implements IPacket<DogInventoryPageData>  {
             if (ctx.get().getDirection().getReceptionSide() == LogicalSide.SERVER) {
                 ServerPlayer player = ctx.get().getSender();
                 AbstractContainerMenu container = player.containerMenu;
-                if (container instanceof DogInventoriesContainer) {
-                    DogInventoriesContainer inventories = (DogInventoriesContainer) container;
-                    int page = Mth.clamp(data.page, 0, Math.max(0, inventories.getTotalNumColumns() - 9));
+                if (container instanceof DogInventoriesContainer inventories) {
+                    int maxViewOffset = Math.max(0, inventories.getTotalNumColumns() - 9);
+                    int newViewOffset = Mth.clamp(data.page, 0, maxViewOffset);
 
-                    inventories.setPage(page);
-                    inventories.setData(0, page);
+                    inventories.setViewOffset(newViewOffset);
+                    inventories.setData(0, newViewOffset);
                 }
             }
         });

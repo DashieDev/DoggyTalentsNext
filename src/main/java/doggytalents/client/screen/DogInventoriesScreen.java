@@ -39,7 +39,7 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
     public void init() {
         super.init();
         this.left = new SmallButton(this.leftPos + this.imageWidth - 29, this.topPos + 4, Component.literal("<"), (btn) -> {
-            int page = this.getMenu().getPage();
+            int page = this.getMenu().getViewOffset();
 
             if (page > 0) {
                 PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogInventoryPageData(--page));
@@ -49,7 +49,7 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
             this.right.active = page < this.getMenu().getTotalNumColumns() - 9;
         });
         this.right = new SmallButton(this.leftPos + this.imageWidth - 26 + 9, this.topPos + 4, Component.literal(">"), (btn) -> {
-            int page = this.getMenu().getPage();
+            int page = this.getMenu().getViewOffset();
 
             if (page < this.getMenu().getTotalNumColumns() - 9) {
                 PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogInventoryPageData(++page));
