@@ -117,13 +117,13 @@ public class RiceMillMenu extends AbstractContainerMenu {
         if (clickedSlotId >= this.playerInventoryBegin) {
             moveResult = moveItemStackTo(
                 clickedItem, 
-                0, this.playerInventoryBegin - 1, 
+                0, this.playerInventoryBegin, 
                 false
             );
         } else {
             moveResult = moveItemStackTo(
                 clickedItem, 
-                this.playerInventoryBegin, this.slots.size() - 1, 
+                this.playerInventoryBegin, this.slots.size(), 
                 false
             );
         }
