@@ -28,25 +28,23 @@ public class DogInventoriesContainer extends AbstractContainerMenu {
     private Level level;
     private Player player;
     private DataSlot slotViewOffset;
-    private SimpleContainerData syncedDogIds;
+    private final List<Dog> chestDogs;
     private final List<DogInventorySlot> dogSlots = new ArrayList<>();
     private int totalDogColsCount = 0;
-    private static final int VIEW_OFFSET_DATA_ID = 0;
+    public static final int VIEW_OFFSET_DATA_ID = 0;
 
     private int dogSlotsStartsAt = 0;
 
-    public DogInventoriesContainer(int windowId, Inventory playerInventory, SimpleContainerData syncedDogIds) {
+    public DogInventoriesContainer(int windowId, Inventory playerInventory, List<Dog> chestDogs) {
         super(DoggyContainerTypes.DOG_INVENTORIES.get(), windowId);
         
         this.level = playerInventory.player.level();
         this.player = playerInventory.player;
-        
-        checkContainerDataCount(syncedDogIds, 1);
 
         this.slotViewOffset = DataSlot.standalone();
         this.addDataSlot(this.slotViewOffset);
 
-        this.syncedDogIds = syncedDogIds;
+        this.chestDogs = chestDogs;
 
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
@@ -69,13 +67,7 @@ public class DogInventoriesContainer extends AbstractContainerMenu {
         int view_offset = this.slotViewOffset.get();
         int current_col = 0;
 
-        for (int i = 0; i < this.syncedDogIds.getCount(); i++) {
-            var id = this.syncedDogIds.get(i);
-            var entity = this.level.getEntity(id);
-
-            if (!(entity instanceof Dog dog))
-                continue;
-
+        for (var dog : chestDogs) {
             var packInventory = dog.getTalent(DoggyTalents.PACK_PUPPY)
                     .map((inst) -> inst.cast(PackPuppyTalent.class).inventory())
                     .orElse(null);

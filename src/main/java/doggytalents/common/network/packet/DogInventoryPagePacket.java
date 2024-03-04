@@ -36,7 +36,7 @@ public class DogInventoryPagePacket implements IPacket<DogInventoryPageData>  {
                     int newViewOffset = Mth.clamp(data.page, 0, maxViewOffset);
 
                     inventories.setViewOffset(newViewOffset);
-                    inventories.setData(0, newViewOffset);
+                    inventories.setData(DogInventoriesContainer.VIEW_OFFSET_DATA_ID, newViewOffset);
                 }
             }
         });

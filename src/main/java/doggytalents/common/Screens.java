@@ -53,11 +53,7 @@ public class Screens {
 
         @Override
         public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
-            SimpleContainerData array = new SimpleContainerData(this.dogs.size());
-            for (int i = 0; i < array.getCount(); i++) {
-                array.set(i, this.dogs.get(i).getId());
-            }
-            return new DogInventoriesContainer(windowId, inventory, array);
+            return new DogInventoriesContainer(windowId, inventory, this.dogs);
         }
 
         @Override
