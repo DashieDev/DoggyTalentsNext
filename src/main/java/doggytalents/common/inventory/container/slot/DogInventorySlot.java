@@ -12,23 +12,23 @@ public class DogInventorySlot extends SlotItemHandler {
     private boolean enabled = true;
     private Player player;
     private Dog dog;
-    private int overallColumn, row, col;
+    private int absolute_col, relative_row, relative_col;
 
-    public DogInventorySlot(Dog dogIn, Player playerIn, IItemHandler itemHandler, int overallColumn, int row, int col, int index, int xPosition, int yPosition) {
+    public DogInventorySlot(Dog dogIn, Player playerIn, IItemHandler itemHandler, int absolute_col, int relative_row, int relative_col, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
         this.player = playerIn;
-        this.overallColumn = overallColumn;
-        this.row = row;
-        this.col = col;
+        this.absolute_col = absolute_col;
+        this.relative_row = relative_row;
+        this.relative_col = relative_col;
         this.dog = dogIn;
     }
 
     public DogInventorySlot(DogInventorySlot prev, int newX) {
         super(prev.getItemHandler(), prev.getSlotIndex(), newX, prev.y);
         this.player = prev.player;
-        this.overallColumn = prev.overallColumn;
-        this.row = prev.row;
-        this.col = prev.col;
+        this.absolute_col = prev.absolute_col;
+        this.relative_row = prev.relative_row;
+        this.relative_col = prev.relative_col;
         this.dog = prev.dog;
         // Work around to set Slot#slotNumber (MCP name) which is Slot#index in official
         // mappings. Needed because SlotItemHandler#index shadows the latter.
@@ -67,15 +67,15 @@ public class DogInventorySlot extends SlotItemHandler {
         return this.player;
     }
 
-    public int getOverallColumn() {
-        return this.overallColumn;
+    public int getAbsoluteCol() {
+        return this.absolute_col;
     }
 
-    public int getRow() {
-        return this.row;
+    public int getRelativeRow() {
+        return this.relative_row;
     }
 
-    public int getColumn() {
-        return this.col;
+    public int getRelativeCol() {
+        return this.relative_col;
     }
 }
