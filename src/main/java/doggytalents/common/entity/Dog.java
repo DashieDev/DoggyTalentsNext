@@ -1666,24 +1666,10 @@ public class Dog extends AbstractDog {
         if (!this.getMode().shouldAttack()) {
             return false;
         }
-
-        for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.canAttack(this, entityType);
-
-            if (result.shouldSwing()) {
-                return true;
-            } else if (result == InteractionResult.FAIL) {
-                return false;
-            }
-        }
-
-        // Stop dogs being able to attack creepers. If the dog has lvl 5 creeper
-        // sweeper then we will return true in the for loop above.
-        if (entityType == EntityType.CREEPER) {
+        if (entityType == EntityType.GHAST && !this.canDogFly())
             return false;
-        }
 
-        return super.canAttackType(entityType);
+        return true;
     }
 
     @Override
