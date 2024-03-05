@@ -27,6 +27,7 @@ public class DogInventoriesContainer extends AbstractContainerMenu {
 
     private Level level;
     private Player player;
+    //Read only view, for write, use setData instead.
     private DataSlot slotViewOffset;
     private final List<Dog> chestDogs;
     private final List<DogInventorySlot> dogSlots = new ArrayList<>();
@@ -145,7 +146,7 @@ public class DogInventoriesContainer extends AbstractContainerMenu {
     }
 
     public void setViewOffset(int offset) {
-        this.slotViewOffset.set(offset);
+        this.setData(VIEW_OFFSET_DATA_ID, offset);
     }
 
     public List<DogInventorySlot> getSlots() {
