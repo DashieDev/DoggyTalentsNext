@@ -770,11 +770,6 @@ public class DTRecipeProvider extends RecipeProvider {
             DoggyItems.ABURAAGE.get(), 0.1F, 100, "has_dtn_tofu", 
             has(DoggyItems.TOFU.get()));
 
-        registerTripleCooking(consumer, 
-            Ingredient.of(Items.EGG), 
-            DoggyItems.ONSEN_TAMAGO.get(), 0.1F, 200, "has_egg", 
-            has(Items.EGG));
-
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.RICE_GRAINS.get(), 3)
             .requires(DoggyItems.RICE_WHEAT.get())
             .unlockedBy("has_dtn_rice_wheat", has(DoggyItems.RICE_WHEAT.get()))
