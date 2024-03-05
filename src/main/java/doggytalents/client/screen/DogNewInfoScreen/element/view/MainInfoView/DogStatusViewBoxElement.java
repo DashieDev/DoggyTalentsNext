@@ -49,7 +49,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
 
         var points = this.dog.getSpendablePoints();
 
-        graphics.drawString(font, "Pts: " + points, this.getRealX(), this.getRealY(), 0xffffffff);
+        renderHungerStatusStr(graphics, this.dog, this.getRealX(), this.getRealY());
 
         
     }
@@ -135,7 +135,6 @@ public class DogStatusViewBoxElement extends AbstractElement {
             pX += 9;
             pY += 1;
             graphics.drawString(font, healthStr, pX, pY, 0xffffffff);
-            
             return;
         }
         if (totalHealth > 20f) {
@@ -201,6 +200,10 @@ public class DogStatusViewBoxElement extends AbstractElement {
         // this.minecraft.getProfiler().pop();
     }
 
-
+    private void renderHungerStatusStr(GuiGraphics graphics, Dog dog, int x, int y) {
+        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, x, y, 16 + 36, 27, 9, 9);
+        int hunger = (int) dog.getDogHunger();
+        graphics.drawString(font, "" + hunger, x + 10, y + 1, 0xffffffff);
+    }
     
 }
