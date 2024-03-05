@@ -1,4 +1,4 @@
-// 1.20.1	2024-03-03T16:15:30.5026109	Recipes
+// 1.20.1	2024-03-05T17:27:44.6030483	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 5bb21f3599e9ca5620bca26f572185ad321709a2 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -72,9 +72,6 @@ bdef3c647bb1452b195883eb391027c70a66e756 data/doggytalents/advancements/recipes/
 32ee01b8b10b5c14dd63a9138dd3196cd0c58ea1 data/doggytalents/advancements/recipes/food/miso_soup.json
 b32928eec0a99ccc8cfeea1187c5aad63469b303 data/doggytalents/advancements/recipes/food/natto.json
 4d51754edf5dcd6cb6e6563b394fc4c34a3243e5 data/doggytalents/advancements/recipes/food/natto_rice.json
-bdde8b8b01729ba57cd9e21db16a41b940b36c1c data/doggytalents/advancements/recipes/food/onsen_tamago_camping.json
-bc2650a4dc8ca54b8ebdc2ad6776250559804e3a data/doggytalents/advancements/recipes/food/onsen_tamago_smelting.json
-2854bdc3466567b19846991fb8fb21593bb86f14 data/doggytalents/advancements/recipes/food/onsen_tamago_smoking.json
 c6a317dde0e0df7eb4d06182592e8970d1c408eb data/doggytalents/advancements/recipes/food/oyakodon.json
 e94d022570c63d02ebda6c89b83845fd1b96524c data/doggytalents/advancements/recipes/food/rice_bowl_camping.json
 6d2a5ef23101c0340b3096ce24ac2c85710254a3 data/doggytalents/advancements/recipes/food/rice_bowl_smelting.json
@@ -179,9 +176,6 @@ d9dc1119a0289c60385d991f30ce83326af8912d data/doggytalents/recipes/miso_paste.js
 56dacd97aad26898c7bc8b2eba1394138fb221f8 data/doggytalents/recipes/natto.json
 db72ca9cdf7db561d5f353d54b4507912ca01bf8 data/doggytalents/recipes/natto_rice.json
 45991b7e034b8b3f4f2ee2359ffd88cb99a8a77c data/doggytalents/recipes/onigiri.json
-17dc706af52dc2d541e25a5d1c27363fcbe0f179 data/doggytalents/recipes/onsen_tamago_camping.json
-0e45de1d0476cf1eb9e0f9c0a402d88080633dfd data/doggytalents/recipes/onsen_tamago_smelting.json
-e548ddf616d0236420d59102d63952ea394aa747 data/doggytalents/recipes/onsen_tamago_smoking.json
 2884cccc665c16f345ef05364b80c7e903ce5904 data/doggytalents/recipes/oyakodon.json
 68c800604e9c2e7b10e21263301d5c3836d35f78 data/doggytalents/recipes/pianist_suit.json
 39c9044fde241a67ec46cf3b9e4f737b4405c8e0 data/doggytalents/recipes/plague_doctor_mask.json
