@@ -2414,7 +2414,9 @@ public class Dog extends AbstractDog {
 
         this.alterations.forEach((alter) -> alter.onDeath(this, cause));
         
-        if (ConfigHandler.SERVER.DOG_RESPAWN_INCAPACITATED_WHEN_KILLED.get()) {
+        dogDeathCause = Optional.empty();
+        if (ConfigHandler.SERVER.DOG_RESPAWN_INCAPACITATED_WHEN_KILLED.get()
+            && !cause.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             dogDeathCause = Optional.ofNullable(cause);
             
             //This value will be saved to respawn storage and
