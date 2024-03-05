@@ -1,24 +1,27 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "ingredients": [
-    {
-      "item": "doggytalents:training_treat"
+  "key": {
+    "C": {
+      "item": "minecraft:cobblestone_slab"
     },
-    {
-      "item": "doggytalents:koji"
+    "D": {
+      "item": "doggytalents:rice_wheat"
     },
-    {
-      "tag": "minecraft:planks"
+    "F": {
+      "tag": "minecraft:fences"
     },
-    {
+    "L": {
       "tag": "minecraft:logs"
-    },
-    {
-      "item": "minecraft:stone"
     }
+  },
+  "pattern": [
+    "FLF",
+    "LCL",
+    "FDF"
   ],
   "result": {
     "item": "doggytalents:rice_mill"
-  }
+  },
+  "show_notification": true
 }
