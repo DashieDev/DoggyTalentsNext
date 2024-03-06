@@ -16,6 +16,7 @@ import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
+import doggytalents.client.entity.model.dog.NullDogModel;
 import doggytalents.client.entity.render.layer.LayerFactory;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -43,18 +44,21 @@ import net.minecraft.world.phys.Vec3;
 public class DogRenderer extends MobRenderer<Dog, DogModel> {
 
     private DogModel defaultModel;
+    private NullDogModel nullDogModel;
 
     public DogRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, null, 0.5F);
 //        this.addLayer(new DogTalentLayer(this, ctx));
 //        this.addLayer(new DogAccessoryLayer(this, ctx));
         DogModelRegistry.resolve(ctx);
-        this.model = DogModelRegistry.getDogModelHolder("default").getValue();
-        this.defaultModel = this.model;
+        this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
         for (LayerFactory<Dog, DogModel> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
         }
         this.originalDogLayers = new ArrayList<>(this.layers);
+        
+        this.nullDogModel = new NullDogModel(ctx.bakeLayer(ClientSetup.DOG_NULL));
+        this.model = this.nullDogModel;
     }
 
     @Override
@@ -86,6 +90,8 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
 
         if (this.model.hasAdditonalRendering())
             this.model.doAdditonalRendering(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+    
+        this.model = this.nullDogModel;
     }
 
     private Component getNameUnknown(Dog dogIn) {
