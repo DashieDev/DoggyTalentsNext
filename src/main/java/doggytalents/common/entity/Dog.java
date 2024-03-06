@@ -2737,54 +2737,69 @@ public class Dog extends AbstractDog {
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
 
-        var talentMap = new ArrayList<TalentInstance>();
+        var newTlInstLs = new ArrayList<TalentInstance>();
 
-        if (compound.contains("talents", Tag.TAG_LIST)) {
-            ListTag talentList = compound.getList("talents", Tag.TAG_COMPOUND);
-
-            for (int i = 0; i < talentList.size(); i++) {
-                // Add directly so that nothing is lost, if number allowed on changes
-                TalentInstance.readInstance(this, talentList.getCompound(i)).ifPresent(talentMap::add);
+        try {
+            if (compound.contains("talents", Tag.TAG_LIST)) {
+                ListTag talentList = compound.getList("talents", Tag.TAG_COMPOUND);
+    
+                for (int i = 0; i < talentList.size(); i++) {
+                    // Add directly so that nothing is lost, if number allowed on changes
+                    TalentInstance.readInstance(this, talentList.getCompound(i)).ifPresent(newTlInstLs::add);
+                }
+            } else {
+                // Try to read old talent format if new one doesn't exist
+                BackwardsComp.readTalentMapping(compound, newTlInstLs);
             }
-        } else {
-            // Try to read old talent format if new one doesn't exist
-            BackwardsComp.readTalentMapping(compound, talentMap);
+        } catch (Exception e) {
+            DoggyTalentsNext.LOGGER.error("Failed to load talents : " + e);
         }
-
+        
+        //this.markDataParameterDirty(TALENTS.get(), false); // Mark dirty so data is synced to client
         this.dogSyncedDataManager.talents().clear();
         this.dogSyncedDataManager.talents().addAll(talentMap);
         this.dogSyncedDataManager.setTalentsDirty();
 
-        var accessories = new ArrayList<AccessoryInstance>();
-
-        if (compound.contains("accessories", Tag.TAG_LIST)) {
-            ListTag accessoryList = compound.getList("accessories", Tag.TAG_COMPOUND);
-
-            for (int i = 0; i < accessoryList.size(); i++) {
-                // Add directly so that nothing is lost, if number allowed on changes
-                AccessoryInstance.readInstance(accessoryList.getCompound(i)).ifPresent(accessories::add);
+        var newAccInstLs = new ArrayList<AccessoryInstance>();
+        try {
+            if (compound.contains("accessories", Tag.TAG_LIST)) {
+                ListTag accessoryList = compound.getList("accessories", Tag.TAG_COMPOUND);
+    
+                for (int i = 0; i < accessoryList.size(); i++) {
+                    // Add directly so that nothing is lost, if number allowed on changes
+                    AccessoryInstance.readInstance(accessoryList.getCompound(i)).ifPresent(newAccInstLs::add);
+                }
+            } else {
+                // Try to read old accessories from their individual format
+                BackwardsComp.readAccessories(compound, newAccInstLs);
             }
-        } else {
-            // Try to read old accessories from their individual format
-            BackwardsComp.readAccessories(compound, accessories);
+        } catch (Exception e) {
+            DoggyTalentsNext.LOGGER.error("Failed to load accessories : " + e);
         }
+        
 
 
         this.dogSyncedDataManager.accessories().clear();
         this.dogSyncedDataManager.accessories().addAll(accessories);
         this.dogSyncedDataManager.setAccessoriesDirty();
 
-        var artifactsList = new ArrayList<DoggyArtifactItem>();
-        if (compound.contains("doggy_artifacts", Tag.TAG_LIST)) {
-            var artifactsListTag = compound.getList("doggy_artifacts", Tag.TAG_COMPOUND);
-            for (int i = 0; i < artifactsListTag.size(); ++i) {
-                var artifactItem = DoggyArtifactItem.readCompound(
-                    artifactsListTag.getCompound(i));
-                if (artifactItem != null) {
-                    artifactsList.add(artifactItem);
+        var artifactsList = new ArrayList<DoggyArtifactItem>(3);
+        
+        try {
+            if (compound.contains("doggy_artifacts", Tag.TAG_LIST)) {
+                var artifactsListTag = compound.getList("doggy_artifacts", Tag.TAG_COMPOUND);
+                for (int i = 0; i < artifactsListTag.size(); ++i) {
+                    var artifactItem = DoggyArtifactItem.readCompound(
+                        artifactsListTag.getCompound(i));
+                    if (artifactItem != null) {
+                        artifactsList.add(artifactItem);
+                    }
                 }
             }
+        } catch (Exception e) {
+            DoggyTalentsNext.LOGGER.error("Failed to load artifacts : " + e);
         }
+        
         this.entityData.set(ARTIFACTS.get(), artifactsList);
 
         try {
