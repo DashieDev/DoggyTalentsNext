@@ -2747,9 +2747,6 @@ public class Dog extends AbstractDog {
                     // Add directly so that nothing is lost, if number allowed on changes
                     TalentInstance.readInstance(this, talentList.getCompound(i)).ifPresent(newTlInstLs::add);
                 }
-            } else {
-                // Try to read old talent format if new one doesn't exist
-                BackwardsComp.readTalentMapping(compound, newTlInstLs);
             }
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load talents : " + e);
@@ -2769,9 +2766,6 @@ public class Dog extends AbstractDog {
                     // Add directly so that nothing is lost, if number allowed on changes
                     AccessoryInstance.readInstance(accessoryList.getCompound(i)).ifPresent(newAccInstLs::add);
                 }
-            } else {
-                // Try to read old accessories from their individual format
-                BackwardsComp.readAccessories(compound, newAccInstLs);
             }
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load accessories : " + e);
@@ -2814,9 +2808,6 @@ public class Dog extends AbstractDog {
 
             if (compound.contains("mode", Tag.TAG_STRING)) {
             this.setMode(EnumMode.bySaveName(compound.getString("mode")));
-            } else {
-                // Read old mode id
-                BackwardsComp.readMode(compound, this::setMode);
             }
 
             var dogSkinData = DogSkinData.readFromTag(compound);
@@ -2824,8 +2815,6 @@ public class Dog extends AbstractDog {
 
             if (compound.contains("fetchItem", Tag.TAG_COMPOUND)) {
                 this.setBoneVariant(NBTUtil.readItemStack(compound, "fetchItem"));
-            } else {
-                BackwardsComp.readHasBone(compound, this::setBoneVariant);
             }
 
             this.setHungerDirectly(compound.getFloat("dogHunger"));
@@ -2882,8 +2871,6 @@ public class Dog extends AbstractDog {
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bedNBT, "pos");
                     bedsData.put(type, pos);
                 }
-            } else {
-                BackwardsComp.readBedLocations(compound, bedsData);
             }
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load beds: " + e.getMessage());
@@ -2905,8 +2892,6 @@ public class Dog extends AbstractDog {
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bowlsNBT, "pos");
                     bowlsData.put(type, pos);
                 }
-            } else {
-                BackwardsComp.readBowlLocations(compound, bowlsData);
             }
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load bowls: " + e.getMessage());

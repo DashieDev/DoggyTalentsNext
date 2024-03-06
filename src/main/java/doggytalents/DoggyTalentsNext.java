@@ -26,7 +26,6 @@ import doggytalents.common.event.EventHandler;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;
-import doggytalents.common.util.BackwardsComp;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.api.distmarker.Dist;
@@ -96,7 +95,6 @@ public class DoggyTalentsNext {
         forgeEventBus.addListener(this::registerCommands);
 
         forgeEventBus.register(new EventHandler());
-        forgeEventBus.register(new BackwardsComp());
 
         // Client Events
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
@@ -156,7 +154,6 @@ public class DoggyTalentsNext {
     }
 
     protected void interModProcess(final InterModProcessEvent event) {
-        BackwardsComp.init();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         //AddonManager.init();
