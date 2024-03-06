@@ -58,6 +58,7 @@ import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.client.entity.model.dog.MiniaturePinscherModel;
+import doggytalents.client.entity.model.dog.NullDogModel;
 import doggytalents.client.entity.model.dog.OtterModel;
 import doggytalents.client.entity.model.dog.PochitaModel;
 import doggytalents.client.entity.model.dog.PoodleModel;
@@ -190,6 +191,8 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_RESCUE_BOX = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_rescue_box"), "main");
     public static final ModelLayerLocation DOG_SYNCED_FUNCTION_WITH_HEAD = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_mouth_item"), "main");
     public static final ModelLayerLocation DOG_TORCHIE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_torchie"), "main");
+    
+    public static final ModelLayerLocation DOG_NULL = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_null"), "main");
 
     public static final ModelLayerLocation PIANO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "piano"), "main");
     public static final ModelLayerLocation PIANO_UPRIGHT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "piano_upright"), "main");
@@ -282,6 +285,8 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_SYNCED_FUNCTION_WITH_HEAD, SyncedRenderFunctionWithHeadModel::createLayer);
         event.registerLayerDefinition(DOG_TORCHIE, TorchDogModel::createLayer);
         
+        event.registerLayerDefinition(DOG_NULL, NullDogModel::createBodyLayer);
+
         event.registerLayerDefinition(PIANO, GrandPianoModel::creatPianoLayer);
         event.registerLayerDefinition(PIANO_UPRIGHT, UprightPianoModel::createPianoLayer);
         event.registerLayerDefinition(DOG_PLUSHIE, DogPlushieModel::createBodyLayer);
