@@ -64,7 +64,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
 
         public ForgeConfigSpec.BooleanValue KAMI_PARTICLES;
         public ForgeConfigSpec.BooleanValue RENDER_CHEST;
-        public ForgeConfigSpec.BooleanValue USE_DT_TEXTURES;
+        public ForgeConfigSpec.BooleanValue ALWAYS_RENDER_CLASSICAL;
         public ForgeConfigSpec.BooleanValue RENDER_INCAPACITATED_TEXTURE;
         public ForgeConfigSpec.BooleanValue RENDER_HEALTH_IN_NAME;
         public ForgeConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
@@ -99,10 +99,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                     .comment("Disable this if you want to force all PackPuppy Dog to not render their Chest.")
                     .translation("doggytalents.config.client.render_chest")
                     .define("render_chest", true);
-            USE_DT_TEXTURES = builder
-                    .comment("Disable this if you prefer to have The Classical Skin rendered on all dog regardless.")
-                    .translation("doggytalents.config.client.always_render_classical_skin")
-                    .define("always_render_classical_skin", true);
+            ALWAYS_RENDER_CLASSICAL = builder
+                    .comment("Enable this if you prefer to have The Classical Skin rendered on all dog regardless.")
+                    .translation("doggytalents.config.client.always_render_classical")
+                    .define("always_render_classical", false);
             RENDER_INCAPACITATED_TEXTURE = builder
                     .comment("When enabled, Dogs will show injured texture while incapacitated.")
                     .translation("doggytalents.config.client.render_incapacitated_overlay")
@@ -335,7 +335,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Determine if the UUIDs of the dogs are being kept when training from vanilla")
                 .comment("and when they respawn on bed. This also allows Duplication Detection.")
                 .translation("doggytalents.preserve_uuid")
-                .define("preserve_uuid", false);
+                .define("disable_preserve_uuid", false);
             DUPLICATION_RESOLVE_STRATEGY = builder
                 .comment("Duplication Detection")
                 .comment("Specify what to do when a Duplication is detected when third parties are trying")
@@ -350,7 +350,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("By default, you can directly train an untamed wolf to a Dog")
                 .comment("with a Training Treat. Set this to True to disable.")
                 .translation("doggytalents.train_untamed_wolf")
-                .define("train_untamed_wolf", false);
+                .define("disable_train_untamed_wolf", false);
             DOG_RESPAWN_INCAPACITATED_WHEN_KILLED = builder
                 .comment("By default, Dogs respawning from bed after being killed will")
                 .comment("be incapacitated and are required to be nursed back to life.")
