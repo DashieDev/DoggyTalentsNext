@@ -2594,6 +2594,10 @@ public class Dog extends AbstractDog {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
 
+        addDTNAdditionalSavedData(compound);
+    }
+
+    public void addDTNAdditionalSavedData(CompoundTag compound) {
         ListTag talentList = new ListTag();
         List<TalentInstance> talents = this.getTalentMap();
 
@@ -2712,6 +2716,10 @@ public class Dog extends AbstractDog {
                 compound.put("DTN_DupeDetect_UUID", backupUUIDTag);
             }
         }
+    }
+
+    public void addNonDTNAdditionalData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
     }
 
     @Override
