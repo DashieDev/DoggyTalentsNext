@@ -1,6 +1,8 @@
 package doggytalents.common.storage;
 
 import com.google.common.collect.Lists;
+
+import doggytalents.ChopinLogger;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.anim.DogAnimation;
@@ -45,6 +47,10 @@ public class DogRespawnData implements IDogData {
         "dogSize", "entityKills", "accessories", "doggytalents_dog_skin"
     );
 
+    private static final String STORAGE_AGE_TAG = "DogRespawn_Age";
+    private static final String STORAGE_OWNER_TAG = "DogRespawn_ownerUUID";
+    private static final String STORAGE_NAME_TAG = "DogRespawn_dogName";
+
     protected DogRespawnData(DogRespawnStorage storageIn, UUID uuid) {
         this.storage = storageIn;
         this.uuid = uuid;
@@ -74,30 +80,110 @@ public class DogRespawnData implements IDogData {
 
     public void populate(Dog dogIn) {
         this.data = new CompoundTag();
-        dogIn.saveWithoutId(this.data);
+        
         this.ownerUUID = dogIn.getOwnerUUID();
+
         var deathCauseOptional = dogIn.getDogDeathCause();
         if (deathCauseOptional.isPresent()) {
             this.killedBy = dogIn.createIncapSyncState(deathCauseOptional.get());
         }
 
-        // Remove tags that don't need to be saved
-        for (String tag : TAGS_TO_REMOVE) {
-            this.data.remove(tag);
+        var strategy = fetchDataStrategy();
+        if (strategy == DataStrategy.KEEP_ALL_EXCEPT) {
+            writeAlldataAndRemoveSpecific(dogIn, this.data);
+        } else {
+            writeImportantDataToKeep(dogIn, this.data);
         }
-
-        var extraTagsToRemove = ConfigHandler.RESPAWN_TAGS.TAGS_TO_REMOVE.get();
-        for (String tag : extraTagsToRemove) {
-            if (IMPORTANT_TAGS.contains(tag))
-                continue;
-            this.data.remove(tag);
-        }
-
+        
         this.data.remove("UUID");
         this.data.remove("LoveCause");
 
         //Duplication Detection
         this.data.remove("DTN_DupeDetect_UUID");
+    }
+
+    private void writeAlldataAndRemoveSpecific(Dog dog, CompoundTag target) {
+        dog.saveWithoutId(target);
+        // Remove tags that don't need to be saved
+        for (String tag : TAGS_TO_REMOVE) {
+            target.remove(tag);
+        }
+        target.remove(STORAGE_AGE_TAG);
+        target.remove(STORAGE_OWNER_TAG);
+        target.remove(STORAGE_NAME_TAG);
+        try {
+            var extraTagsToRemove = ConfigHandler.RESPAWN_TAGS.TAGS_TO_REMOVE.get();
+            for (String tag : extraTagsToRemove) {
+                if (IMPORTANT_TAGS.contains(tag))
+                    continue;
+                target.remove(tag);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void writeImportantDataToKeep(Dog dog, CompoundTag target) {
+        dog.addDTNAdditionalSavedData(target);
+        target.putInt(STORAGE_AGE_TAG, dog.getAge());
+        var owner_uuid = dog.getOwnerUUID();
+        if (owner_uuid != null) {
+            target.putUUID(STORAGE_OWNER_TAG, owner_uuid);
+        }
+        var custom_name = dog.getCustomName();
+        if (custom_name != null) {
+            target.putString(STORAGE_NAME_TAG, Component.Serializer.toJson(custom_name));
+        }
+        keepAdditionalTag(target, dog);
+        ChopinLogger.lwn(dog, target.toString());
+    }
+
+    private void keepAdditionalTag(CompoundTag target, Dog dog) {
+
+        try {
+            var extraTagsToKeep = ConfigHandler.RESPAWN_TAGS.TAGS_TO_KEEP.get();
+            if (extraTagsToKeep == null || extraTagsToKeep.isEmpty())
+                return;
+            var nonDTNTags = new CompoundTag();
+            dog.addNonDTNAdditionalData(nonDTNTags);
+            for (var toKeepStr : extraTagsToKeep) {
+                if (!nonDTNTags.contains(toKeepStr))
+                    continue;
+                if (target.contains(toKeepStr))
+                    continue;
+                var toKeep = nonDTNTags.get(toKeepStr).copy();
+                target.put(toKeepStr, toKeep);
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    private void restoreAndConsumeImportantDataIfNeeded(Dog dog, CompoundTag tag) {
+        if (tag.contains(STORAGE_AGE_TAG, Tag.TAG_INT)) {
+            dog.setAge(tag.getInt(STORAGE_AGE_TAG));
+            tag.remove(STORAGE_AGE_TAG);
+        }
+        if (tag.hasUUID(STORAGE_OWNER_TAG)) {
+            var correct_owner_uuid = this.ownerUUID;
+            try {
+                correct_owner_uuid = tag.getUUID(STORAGE_OWNER_TAG);
+            } catch (Exception e) {
+
+            }
+            dog.setOwnerUUID(correct_owner_uuid);
+            dog.setTame(correct_owner_uuid != null);
+            tag.remove(STORAGE_OWNER_TAG);
+        }
+        if (tag.contains(STORAGE_NAME_TAG)) {
+            try {
+                var name_c1_str = tag.getString(STORAGE_NAME_TAG);
+                dog.setDogCustomName(Component.Serializer.fromJson(name_c1_str));
+            } catch (Exception e) {
+    
+            }
+            tag.remove(STORAGE_NAME_TAG);
+        }
+        
     }
 
     @Nullable
@@ -108,7 +194,8 @@ public class DogRespawnData implements IDogData {
         if (dog == null) {
             return null;
         }
-
+        
+        restoreAndConsumeImportantDataIfNeeded(dog, this.data);
         CompoundTag compoundnbt = dog.saveWithoutId(new CompoundTag());
         UUID uuid = dog.getUUID();
         compoundnbt.merge(this.data);
@@ -178,5 +265,16 @@ public class DogRespawnData implements IDogData {
         var poseId = killedByTag.getInt("poseId");
         this.killedBy = 
             new IncapacitatedSyncState(DefeatedType.byId(typeId), BandaidState.NONE, poseId);
+    }
+
+    private DataStrategy fetchDataStrategy() {
+        var stategy_int = ConfigHandler.RespawnTagConfig.getConfig(ConfigHandler.RESPAWN_TAGS.STRATEGY);
+        if (stategy_int != 1)
+            return DataStrategy.REMOVE_ALL_EXCEPT;
+        return DataStrategy.KEEP_ALL_EXCEPT;
+
+    }
+    private enum DataStrategy {
+        REMOVE_ALL_EXCEPT, KEEP_ALL_EXCEPT
     }
 }

@@ -419,11 +419,21 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
 
     public static class RespawnTagConfig {
 
+        public ForgeConfigSpec.IntValue STRATEGY;
         public ConfigValue<List<? extends String>> TAGS_TO_REMOVE;
+        public ConfigValue<List<? extends String>> TAGS_TO_KEEP;
 
         public RespawnTagConfig(ForgeConfigSpec.Builder builder) {
-            builder.comment("Extra tags to be removed when a dog is respawned.");
+            builder.comment("Specify the Strategy to be used when picking which data to keep and remove");
+            builder.comment("when a Dog got unloaded into DTN Respawn Storage");
+            builder.comment("0: Removes all tags, keeping only the Dog's Owner, the Dog's Age, DTN's saved data");
+            builder.comment("and additional tags provided by tags_to_keep below.");
+            builder.comment("1: Keep all tags, and remove certain tags specified in respawn_removal_tags except");
+            builder.comment("important DTN tags.");
+            builder.comment("Other: Defaulted to 0");
 
+            STRATEGY = builder.defineInRange("restore_strategy", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            
             TAGS_TO_REMOVE = builder
                 .translation("doggytalents.respawn_removal_tags")    
                 .<String>defineList("respawn_removal_tags", List.of(), 
@@ -431,6 +441,21 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                         return obj instanceof String;
                     }
                 );
+            TAGS_TO_KEEP = builder
+                .translation("doggytalents.tags_to_keep")    
+                .<String>defineList("tags_to_keep", List.of(), 
+                    obj -> {
+                        return obj instanceof String;
+                    }
+                );
         }
+
+        public static<T> T getConfig(ConfigValue<T> config) {
+            if (CONFIG_RESPAWN_TAG_SPEC.isLoaded()) {
+                    return config.get();
+            }
+            return config.getDefault();
+        }
+
     }
 }
