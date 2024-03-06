@@ -4996,6 +4996,8 @@ public class Dog extends AbstractDog {
 
     //Client
     public DogSkin getClientSkin() {
+        if (ConfigHandler.CLIENT.ALWAYS_RENDER_CLASSICAL.get())
+            return DogSkin.CLASSICAL;
         return this.clientSkin;
     }
 
