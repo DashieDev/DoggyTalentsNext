@@ -1833,7 +1833,7 @@ public class Dog extends AbstractDog {
             return;
         }
 
-        if (source.getEntity() != null) {
+        if (source.getEntity() != null && real_hurt_amount >= 2) {
             this.setAnim(DogAnimation.HURT_2);
             return;
         }
