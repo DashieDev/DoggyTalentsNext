@@ -1782,26 +1782,20 @@ public class Dog extends AbstractDog {
             if (flag) return false;
         }
 
-        if (!this.level().isClientSide)
-        if (!this.stillIdleOrSitWhenHurt(source, amount)) {
-            if (this.isInSittingPose() || amount > 6.0f) {
-                this.setAnim(DogAnimation.HURT_1);
-            } else if (source.getEntity() != null) {
-                this.setAnim(DogAnimation.HURT_2);
-            }
-            if (this.isInSittingPose()) {
-                this.setStandAnim(DogAnimation.NONE);
-                this.setInSittingPose(false);
-            }
-            this.setOrderedToSit(false);
-            this.dogAnimHurtImpules = true;
-        }
-
         if (attacker != null && !(attacker instanceof Player) && !(attacker instanceof AbstractArrow)) {
             amount = (amount + 1.0F) / 2.0F;
         }
 
+        float health0 = this.getHealth();
+
         boolean ret = super.hurt(source, amount);
+
+        float actual_hurt_amount = this.getHealth() - health0;
+
+        if (!this.level().isClientSide) {
+            mayStandUpAndPlayHurtAnim(source, actual_hurt_amount, health0);   
+            this.dogAnimHurtImpules = true;
+        }
 
         if (this.isDeadOrDying() && !this.level().isClientSide)
             this.setAnim(DogAnimation.HURT_1);
@@ -1811,6 +1805,33 @@ public class Dog extends AbstractDog {
             this.hurtDuration = 0;
         }
         return ret;
+    }
+
+    private void mayStandUpAndPlayHurtAnim(DamageSource source, float real_hurt_amount, float health0) {
+        if (this.isDeadOrDying()) {
+            this.setAnim(DogAnimation.HURT_1);
+            return;
+        }
+
+        if (this.stillIdleOrSitWhenHurt(source, real_hurt_amount))
+            return;
+
+        boolean wasSitting = this.isInSittingPose();
+
+        if (wasSitting) {
+            this.setStandAnim(DogAnimation.NONE);
+            this.setInSittingPose(false);
+        }
+
+        if (wasSitting || real_hurt_amount >= 6) {
+            this.setAnim(DogAnimation.HURT_1);
+            return;
+        }
+
+        if (source.getEntity() != null) {
+            this.setAnim(DogAnimation.HURT_2);
+            return;
+        }
     }
 
     public boolean checkIfAttackedFromOwnerOrTeam(LivingEntity owner, Entity attacker) {
