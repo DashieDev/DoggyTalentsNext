@@ -43,19 +43,10 @@ public class DogHungerManager {
             this.hungerTick = 0;
         }
 
+        mayHealWithSaturation();
+
         if (this.zeroHunger)
             this.handleZeroHunger();
-
-        if (saturation > 0) {
-            if (dog.getHealth() < dog.getMaxHealth()) {
-                if (--this.saturationHealingTick <= 0) {
-                    this.saturationHealingTick = 10;
-                    dog.heal(1.0f);
-                    saturation -= 3; // -3 saturation per health healed
-                }
-            }
-        }
-        
     }
 
     private float getIncreaseHungerTick() {
