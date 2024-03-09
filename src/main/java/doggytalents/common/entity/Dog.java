@@ -240,6 +240,8 @@ public class Dog extends AbstractDog {
         = new DogGroupsManager();
     public final DogIncapacitatedMananger incapacitatedMananger
         = new DogIncapacitatedMananger(this);
+    private final DogHungerManager hungerManager
+        = new DogHungerManager(this);
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
 
@@ -259,10 +261,6 @@ public class Dog extends AbstractDog {
     protected List<WrappedGoal> nonTrivialBlocking;
     protected int switchNavCooldown = 0;
 
-    private int hungerTick;
-    private int prevHungerTick;  
-    private int hungerSaturation; // Extra Hunger to prevent real hunger from decreasing when saturated
-    private int hungerSaturationHealingTick;   
     private int healingTick;  
     private int prevHealingTick;
     //private int wanderRestTime = 0;
@@ -287,16 +285,11 @@ public class Dog extends AbstractDog {
     protected float jumpPower;
 
     protected boolean isDogSwimming;
-    protected boolean isLowHunger;
-    protected boolean isZeroHunger;
-    protected int hungerDamageTick;
 
     public int lastOrderedToSitTick;
     private int tickChopinTail;
     private boolean dogAnimHurtImpules = false;
     private int idleAnimHurtCooldown = 0;
-
-    private static final UUID HUNGER_MOVEMENT = UUID.fromString("50671f49-1dfd-4397-242b-78bb6b178115");
 
     public Dog(EntityType<? extends Dog> type, Level worldIn) {
         super(type, worldIn);
@@ -896,46 +889,7 @@ public class Dog extends AbstractDog {
         //Hunger And Healing tick.
         if (!this.level.isClientSide && !this.isDefeated()) {
             
-            if (! ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_HUNGER)) {
-                this.prevHungerTick = this.hungerTick;
-
-                if (!this.isVehicle() && !this.isInSittingPose()) {
-                    this.hungerTick += 1;
-                }
-
-                for (IDogAlteration alter : this.alterations) {
-                    InteractionResultHolder<Integer> result = alter.hungerTick(this, this.hungerTick - this.prevHungerTick);
-
-                    if (result.getResult().shouldSwing()) {
-                        this.hungerTick = result.getObject() + this.prevHungerTick;
-                    }
-                }
-
-                int tickPerDec = 
-                    ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.TICK_PER_HUNGER_DEC);
-
-                if (this.hungerTick > tickPerDec) {
-                    if (this.hungerSaturation > 0) {
-                        --this.hungerSaturation;
-                    } else {
-                        this.setDogHunger(this.getDogHunger() - 1);
-                    }
-                    
-                    this.hungerTick -= tickPerDec;
-                }
-                if (this.isZeroHunger)
-                    this.handleZeroHunger();
-            }
-
-            if (hungerSaturation > 0) {
-                if (this.getHealth() < this.getMaxHealth()) {
-                    if (--this.hungerSaturationHealingTick <= 0) {
-                        this.hungerSaturationHealingTick = 10;
-                        this.heal(1.0f);
-                        hungerSaturation -= 3; // -3 saturation per health healed
-                    }
-                }
-            }
+            this.hungerManager.tick();
             
             this.prevHealingTick = this.healingTick;
             this.healingTick += 8;
@@ -1394,7 +1348,7 @@ public class Dog extends AbstractDog {
             return false;
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get()) {
             if(this.getHealth() < this.getMaxHealth()
-                && this.hungerSaturation <= 0)
+                && this.hungerManager.saturation() <= 0)
                 return true;
         }
         
@@ -3181,11 +3135,15 @@ public class Dog extends AbstractDog {
             this.animationManager.onSyncTimeUpdated();
         }
 
+        if (HUNGER_INT.equals(key)) {
+            this.hungerManager.onHungerUpdated(this.getDogHunger());
+        }
+
         if (!this.level().isClientSide && MODE.get().equals(key)) {
             var mode = getMode();
             this.incapacitatedMananger.onModeUpdate(mode);
             if (mode == EnumMode.INCAPACITATED) {
-                this.removeAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT);
+                this.hungerManager.onBeingIncapacitated();
             }
             updateWanderState(mode);
         }
@@ -3485,16 +3443,10 @@ public class Dog extends AbstractDog {
     public float getDogHunger() {
         return this.entityData.get(HUNGER_INT);
     }
-
+    
     @Override
     public void addHunger(float add) {
-        var h0 = this.getDogHunger();
-        var h1 = h0 + add;
-        var h2 = (int) (h1 - this.getMaxHunger());
-        if (h2 > 0) {
-            this.hungerSaturation = Math.max(this.hungerSaturation, h2);
-        }
-        this.setDogHunger(h0 + add);
+        this.hungerManager.addHunger(add);
     }
 
     @Override
@@ -3515,7 +3467,6 @@ public class Dog extends AbstractDog {
 
     private void setHungerDirectly(float hunger) {
         this.entityData.set(HUNGER_INT, hunger);
-        this.updateLowHunger();
     }
 
     @Override
@@ -4586,73 +4537,8 @@ public class Dog extends AbstractDog {
     public boolean isDogFlying() {
         return this.getDogFlag(1024);
     }
-
-    private void hungerHighToLow() {
-        if (!this.isDefeated())
-        this.setAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT,
-                (d, u) -> new AttributeModifier(u, "Hunger Slowness", -0.35f, Operation.MULTIPLY_TOTAL) // this
-                                                                                                        // operation is
-                                                                                                        // mutiply by 1
-                                                                                                        // + x
-        );
-
-    }
-
-    private void hungerLowToHigh() {
-        this.removeAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT);
-    }
-
     public boolean isLowHunger() {
-        return this.isLowHunger;
-
-    }
-
-    public void updateLowHunger () {
-        if (this.isLowHunger) {
-            if (this.getDogHunger() > 10) {
-                this.isLowHunger = false;
-                this.hungerLowToHigh();
-            }
-        } else {
-            if (this.getDogHunger() <= 10) {
-                this.isLowHunger = true;
-                this.hungerHighToLow();
-            }
-        }
-        this.isZeroHunger = this.getDogHunger() == 0;
-    }
-
-    protected void handleZeroHunger() {
-        ++this.hungerDamageTick;
-        int hurt_interval = -1;
-        boolean hurt_last_health = false;
-        switch (this.level.getDifficulty()) {
-            case EASY: {
-                hurt_interval = 125;
-                break;
-            }
-            case NORMAL: {
-                hurt_interval = 100;
-                break;
-            }
-            case HARD: {
-                hurt_interval = 75;
-                hurt_last_health = true;
-                break;
-            }
-            default: {
-                hurt_interval = -1;
-                break;
-            }
-        }
-
-        // Sorry, i think i need some food...
-        // var food beg
-        if (hurt_interval >= 0 && ++this.hungerDamageTick >= hurt_interval
-                && (hurt_last_health || this.getHealth() > 1f)) {
-            this.hurt(DamageSource.STARVE, 0.5f);
-            this.hungerDamageTick = 0;
-        }
+        return this.hungerManager.isLowHunger();
     }
 
     @Override
