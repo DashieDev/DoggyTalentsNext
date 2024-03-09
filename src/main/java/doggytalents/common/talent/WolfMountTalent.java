@@ -98,7 +98,7 @@ public class WolfMountTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<Integer> hungerTick(AbstractDog dogIn, int hungerTick) {
+    public InteractionResultHolder<Float> hungerTick(AbstractDog dogIn, float hungerTick) {
         if (dogIn.getControllingPassenger() != null) {
             hungerTick += this.level() < 5 ? 3 : 1;
             return InteractionResultHolder.success(hungerTick);

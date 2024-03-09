@@ -3,6 +3,7 @@ package doggytalents.common.entity;
 import java.util.UUID;
 
 import doggytalents.common.config.ConfigHandler;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -10,11 +11,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 public class DogHungerManager {
     
     public static final UUID HUNGER_MOVEMENT = UUID.fromString("50671f49-1dfd-4397-242b-78bb6b178115");
+    public static final float MAX_HUNGER_TICK = 800;
 
     private final Dog dog;
 
-    private int hungerTick0 = 0;
-    private int hungerTick = 0;
+    private float hungerTick = 0;
     private int saturation = 0;
     private int saturationHealingTick = 0;
     private int hungerDamageTick = 0;
@@ -30,30 +31,16 @@ public class DogHungerManager {
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get())
             return;
 
-        hungerTick0 = hungerTick;
+        this.hungerTick += this.getIncreaseHungerTick();
 
-        if (!dog.isVehicle() && !dog.isInSittingPose()) {
-            this.hungerTick += 1;
-        }
-
-        for (var alter : dog.getAlterations()) {
-            var result = alter.hungerTick(dog, this.hungerTick - this.hungerTick0);
-
-            if (result.getResult().shouldSwing()) {
-                this.hungerTick = result.getObject() + this.hungerTick0;
-            }
-        }
-
-        int tickPerDec = ConfigHandler.SERVER.TICK_PER_HUNGER_DEC.get();
-
-        if (this.hungerTick > tickPerDec) {
+        if (this.hungerTick >= MAX_HUNGER_TICK) {
             if (this.saturation > 0) {
                 --this.saturation;
             } else {
                 dog.setDogHunger(dog.getDogHunger() - 1);
             }
             
-            this.hungerTick -= tickPerDec;
+            this.hungerTick = 0;
         }
 
         if (this.zeroHunger)
@@ -69,6 +56,23 @@ public class DogHungerManager {
             }
         }
         
+    }
+
+    private float getIncreaseHungerTick() {
+        float inc_tick = 0;
+        if (!this.dog.isVehicle() && !this.dog.isInSittingPose())
+            inc_tick = 1;
+        if (!this.dog.getNavigation().isDone())
+            inc_tick = 2;
+        for (var alter : dog.getAlterations()) {
+            var result = alter.hungerTick(dog, inc_tick);
+
+            if (result.getResult().shouldSwing()) {
+                inc_tick = result.getObject();
+            }
+        }
+        float modifier = ConfigHandler.SERVER.HUNGER_MODIFIER.get().floatValue();
+        return inc_tick * modifier;
     }
 
     private void handleZeroHunger() {

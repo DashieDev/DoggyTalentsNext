@@ -81,7 +81,7 @@ public interface IDogAlteration {
 
     }
 
-    default InteractionResultHolder<Integer> hungerTick(AbstractDog dogIn, int hungerTick) {
+    default InteractionResultHolder<Float> hungerTick(AbstractDog dogIn, float hungerTick) {
         return InteractionResultHolder.pass(hungerTick);
     }
 
