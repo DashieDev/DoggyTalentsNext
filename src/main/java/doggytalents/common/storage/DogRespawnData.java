@@ -2,7 +2,6 @@ package doggytalents.common.storage;
 
 import com.google.common.collect.Lists;
 
-import doggytalents.ChopinLogger;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.anim.DogAnimation;
@@ -134,7 +133,6 @@ public class DogRespawnData implements IDogData {
             target.putString(STORAGE_NAME_TAG, Component.Serializer.toJson(custom_name));
         }
         keepAdditionalTag(target, dog);
-        ChopinLogger.lwn(dog, target.toString());
     }
 
     private void keepAdditionalTag(CompoundTag target, Dog dog) {
