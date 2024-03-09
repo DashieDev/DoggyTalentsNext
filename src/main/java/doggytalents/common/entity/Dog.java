@@ -886,34 +886,9 @@ public class Dog extends AbstractDog {
 
         updateDogBeginShake();
         
-        //Hunger And Healing tick.
-        if (!this.level.isClientSide && !this.isDefeated()) {
-            
+        if (!this.level().isClientSide && !this.isDefeated()) {
             this.hungerManager.tick();
-            
-            this.prevHealingTick = this.healingTick;
-            this.healingTick += 8;
-
-            if (this.isInSittingPose()) {
-                this.healingTick += 4;
-            }
-
-            for (IDogAlteration alter : this.alterations) {
-                InteractionResultHolder<Integer> result = alter.healingTick(this, this.healingTick - this.prevHealingTick);
-
-                if (result.getResult().shouldSwing()) {
-                    this.healingTick = result.getObject() + this.prevHealingTick;
-                }
-            }
-
-            if (this.healingTick >= 6000) {
-                if (this.getHealth() < this.getMaxHealth()) {
-                    this.heal(1);
-                }
-
-                this.healingTick = 0;
-            }
-
+            this.tickDogHealing();
             this.dogOwnerDistanceManager.tick();
             this.dogMiningCautiousManager.tick();
         }
@@ -985,6 +960,31 @@ public class Dog extends AbstractDog {
 
         if (this.navigationLock != null)
             this.navigationLock.lockDogNavigation();
+    }
+
+    private void tickDogHealing() {
+        this.prevHealingTick = this.healingTick;
+        this.healingTick += 8;
+
+        if (this.isInSittingPose()) {
+            this.healingTick += 4;
+        }
+
+        for (var alter : this.alterations) {
+            var result = alter.healingTick(this, this.healingTick - this.prevHealingTick);
+
+            if (result.getResult().shouldSwing()) {
+                this.healingTick = result.getObject() + this.prevHealingTick;
+            }
+        }
+
+        if (this.healingTick >= 6000) {
+            if (this.getHealth() < this.getMaxHealth()) {
+                this.heal(1);
+            }
+
+            this.healingTick = 0;
+        }
     }
 
     private void updateDogBeginShake() {
