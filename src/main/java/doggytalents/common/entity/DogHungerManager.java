@@ -98,6 +98,18 @@ public class DogHungerManager {
         }
     }
 
+    private void mayHealWithSaturation() {
+        if (saturation <= 0)
+            return;
+        if (dog.getHealth() >= dog.getMaxHealth())
+            return;
+        if (--this.saturationHealingTick <= 0) {
+            this.saturationHealingTick = 10;
+            dog.heal(1.0f);
+            saturation -= 3; // -3 saturation per health healed
+        }
+    }
+
     public int saturation() {
         return this.saturation;
     }
@@ -109,13 +121,14 @@ public class DogHungerManager {
     public void onHungerUpdated(float new_hunger) {
         if (this.dog.level().isClientSide)
             return;
-        boolean updated_is_low = new_hunger <= 10;
-        if (this.lowHunger && !updated_is_low) {
+        boolean lowHunger_updated = new_hunger <= 10;
+        if (this.lowHunger && !lowHunger_updated) {
             this.hungerLowToHigh();
         }
-        if (!this.lowHunger && updated_is_low) {
+        if (!this.lowHunger && lowHunger_updated) {
             this.hungerHighToLow();
         }
+        this.lowHunger = lowHunger_updated;
         this.zeroHunger = new_hunger <= 0;
     }
     
