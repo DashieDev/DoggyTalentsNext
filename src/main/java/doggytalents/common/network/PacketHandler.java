@@ -12,6 +12,7 @@ public final class PacketHandler {
     private static int disc = 0;
 
     public static void init() {
+        registerPacket(new TrainWolfToDogPacket(), TrainWolfToDogData.class);
         registerPacket(new DogModePacket(), DogModeData.class);
         registerPacket(new DogNamePacket(), DogNameData.class);
         registerPacket(new DogObeyPacket(), DogObeyData.class);
