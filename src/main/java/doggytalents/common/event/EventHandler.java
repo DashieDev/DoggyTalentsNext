@@ -16,6 +16,8 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.WolfBegAtTreatGoal;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
+import doggytalents.common.network.PacketHandler;
+import doggytalents.common.network.packet.data.TrainWolfToDogData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.talent.HunterDogTalent;
@@ -31,6 +33,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
@@ -71,6 +74,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class EventHandler {
@@ -99,7 +103,6 @@ public class EventHandler {
 
         if (stack.getItem() != DoggyItems.TRAINING_TREAT.get()) 
             return;
-        if (target.getType() != EntityType.WOLF) return;
         if (!(target instanceof Wolf wolf)) return;
         event.setCanceled(true);
         
@@ -108,18 +111,45 @@ public class EventHandler {
             return;
         }
 
-        if (!level.isClientSide) {
-            if (!owner.getAbilities().instabuild) {
-                stack.shrink(1);
-            }
-
-            trainWolf(wolf, owner, level);
+        if (level.isClientSide) {
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), 
+                new TrainWolfToDogData(wolf.getId(), wolf.yBodyRot, wolf.yHeadRot)
+            );
         }
 
         event.setCancellationResult(InteractionResult.SUCCESS);
     }
 
-    private boolean checkValidWolf(Wolf wolf, Player owner) {
+    public static void checkAndTrainWolf(Player trainer, Wolf wolf, float yBodyRot, float yHeadRot) {
+        var level = trainer.level();
+        if (level.isClientSide)
+            return;
+        
+        var stack = trainer.getMainHandItem();
+        if (stack.getItem() != DoggyItems.TRAINING_TREAT.get()) 
+            return;
+
+        if (!checkValidWolf(wolf, trainer))
+            return;
+        
+        if (!trainer.getAbilities().instabuild) {
+            stack.shrink(1);
+        }
+
+        rotateWolfIfNecceassary(wolf, yHeadRot, yBodyRot);
+        trainWolf(wolf, trainer, level);
+    }
+
+    private static void rotateWolfIfNecceassary(Wolf wolf, float yHeadRot, float yBodyRot) {
+        float wanted_yBodyRot = yHeadRot;
+        float wanted_dYBodyRot =  Mth.degreesDifference(yBodyRot, wanted_yBodyRot);
+        float approaching_dYBodyRot = Mth.clamp(wanted_dYBodyRot, -25, 25);
+        float approaching_yBodyRot = yBodyRot + approaching_dYBodyRot;
+        approaching_yBodyRot = Mth.wrapDegrees(approaching_yBodyRot);
+        wolf.yBodyRot = approaching_yBodyRot;
+    }
+
+    private static boolean checkValidWolf(Wolf wolf, Player owner) {
         if (!wolf.isAlive()) return false;
         boolean trainUntamed = !ConfigHandler.SERVER.DISABLE_TRAIN_UNTAMED_WOLF.get();
         boolean condition1 = trainUntamed && !wolf.isTame();
@@ -128,7 +158,7 @@ public class EventHandler {
         return condition1 || condition2;
     }
 
-    private void trainWolf(Wolf wolf, Player owner, Level level) {
+    public static void trainWolf(Wolf wolf, Player owner, Level level) {
         Dog dog = DoggyEntityTypes.DOG.get().create(level);
         if (dog == null) {
             throw new IllegalStateException("Creator function for the dog returned \"null\"");
@@ -138,8 +168,9 @@ public class EventHandler {
         dog.setOrderedToSit(false);
         dog.setAge(wolf.getAge());
         dog.absMoveTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
-        dog.setYHeadRot(wolf.getYHeadRot());
-        dog.setYBodyRot(wolf.getVisualRotationYInDegrees());
+        dog.setYHeadRot(wolf.yBodyRot);
+        dog.setYBodyRot(wolf.yBodyRot);
+        dog.setYRot(wolf.yBodyRot);
 
         var wolf_collar_color = wolf.getCollarColor();
         var color = Util.srgbArrayToInt(wolf_collar_color.getTextureDiffuseColors());
@@ -164,7 +195,7 @@ public class EventHandler {
         dog.getJumpControl().jump();
     }
 
-    private void migrateUUID(UUID uuid, Dog dog, ServerLevel level) {
+    private static void migrateUUID(UUID uuid, Dog dog, ServerLevel level) {
         if (ConfigHandler.SERVER.DISABLE_PRESERVE_UUID.get())
             return;
         if (level.getEntity(uuid) != null)
