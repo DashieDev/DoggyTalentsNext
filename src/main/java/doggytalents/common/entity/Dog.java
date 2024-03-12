@@ -2714,39 +2714,14 @@ public class Dog extends AbstractDog {
 
         var newTlInstLs = new ArrayList<TalentInstance>();
 
-        try {
-            if (compound.contains("talents", Tag.TAG_LIST)) {
-                ListTag talentList = compound.getList("talents", Tag.TAG_COMPOUND);
-    
-                for (int i = 0; i < talentList.size(); i++) {
-                    // Add directly so that nothing is lost, if number allowed on changes
-                    TalentInstance.readInstance(this, talentList.getCompound(i)).ifPresent(newTlInstLs::add);
-                }
-            }
-        } catch (Exception e) {
-            DoggyTalentsNext.LOGGER.error("Failed to load talents : " + e);
-        }
+        tryReadAllTalents(compound, newTlInstLs);
         
-        //this.markDataParameterDirty(TALENTS.get(), false); // Mark dirty so data is synced to client
         this.dogSyncedDataManager.talents().clear();
         this.dogSyncedDataManager.talents().addAll(talentMap);
         this.dogSyncedDataManager.setTalentsDirty();
 
         var newAccInstLs = new ArrayList<AccessoryInstance>();
-        try {
-            if (compound.contains("accessories", Tag.TAG_LIST)) {
-                ListTag accessoryList = compound.getList("accessories", Tag.TAG_COMPOUND);
-    
-                for (int i = 0; i < accessoryList.size(); i++) {
-                    // Add directly so that nothing is lost, if number allowed on changes
-                    AccessoryInstance.readInstance(accessoryList.getCompound(i)).ifPresent(newAccInstLs::add);
-                }
-            }
-        } catch (Exception e) {
-            DoggyTalentsNext.LOGGER.error("Failed to load accessories : " + e);
-        }
-        
-
+        tryReadAllAccessories(compound, newAccInstLs);
 
         this.dogSyncedDataManager.accessories().clear();
         this.dogSyncedDataManager.accessories().addAll(accessories);
@@ -2963,6 +2938,42 @@ public class Dog extends AbstractDog {
                 this.setAnim(DogAnimation.NONE);
             } catch (Exception e) {
             }
+        }
+    }
+
+    private void tryReadAllTalents(CompoundTag compound, ArrayList<TalentInstance> target) {
+        try {
+            if (compound.contains("talents", Tag.TAG_LIST)) {
+                ListTag talentList = compound.getList("talents", Tag.TAG_COMPOUND);
+    
+                for (int i = 0; i < talentList.size(); ++i) {
+                    try {
+                        TalentInstance.readInstance(this, talentList.getCompound(i)).ifPresent(target::add);
+                    } catch (Exception e)  {
+                        DoggyTalentsNext.LOGGER.error(e.getMessage());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            DoggyTalentsNext.LOGGER.error("Failed to load talents : " + e);
+        }
+    }
+
+    private void tryReadAllAccessories(CompoundTag compound, ArrayList<AccessoryInstance> target) {
+        try {
+            if (compound.contains("accessories", Tag.TAG_LIST)) {
+                ListTag accessoryList = compound.getList("accessories", Tag.TAG_COMPOUND);
+    
+                for (int i = 0; i < accessoryList.size(); ++i) {
+                    try {
+                        AccessoryInstance.readInstance(accessoryList.getCompound(i)).ifPresent(target::add);
+                    } catch (Exception e)  {
+                        DoggyTalentsNext.LOGGER.error(e.getMessage());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            DoggyTalentsNext.LOGGER.error("Failed to load accessories : " + e);
         }
     }
 
