@@ -86,6 +86,8 @@ public class DogGunpowderProjectile extends ThrowableProjectile {
             .orElse(null);
         if (talentInst == null)
             return;
+        if (!talentInst.canExplode())
+            return;
         var dy = this.position().y - nearestDog.position().y;
         var minDistXZ = new Vec3(
             this.position().x - nearestDog.position().x,

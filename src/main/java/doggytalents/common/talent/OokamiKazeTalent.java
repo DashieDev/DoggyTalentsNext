@@ -6,7 +6,9 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.DoggyTalents;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.config.ConfigHandler;
@@ -34,8 +36,22 @@ import net.minecraftforge.network.PacketDistributor;
 
 public class OokamiKazeTalent extends TalentInstance {
 
+    private int cooldown = 0;
+
     public OokamiKazeTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
+    }
+
+    @Override
+    public void tick(AbstractDog dogIn) {
+        if (dogIn.level().isClientSide)
+            return;
+        if (this.cooldown > 0)
+            --this.cooldown;
+    }
+
+    public boolean canExplode() {
+        return this.cooldown <= 0;
     }
 
     public DogCatchGunpowderAndExplodeAction actionCreator(Dog dog, @Nullable DogGunpowderProjectile proj) {
@@ -185,6 +201,7 @@ public class OokamiKazeTalent extends TalentInstance {
             if (tickTillBoom == 0) {
                 var explode = new DogExplosion(dog, this.radius, this.knockbackModifier);
                 explode.explode();
+                this.setTalentCooldown();
             }
         }
 
@@ -215,6 +232,15 @@ public class OokamiKazeTalent extends TalentInstance {
             this.stopTick = dog.tickCount + DogAnimation.HOWL.getLengthTicks();
             this.dog.setAnim(DogAnimation.HOWL);
             tickTillBoom = 63;
+        }
+
+        private void setTalentCooldown() {
+            var talent = this.dog.getTalent(DoggyTalents.OOKAMIKAZE)
+                .map(inst -> inst.cast(OokamiKazeTalent.class))
+                .orElse(null);
+            if (talent == null)
+                return;
+            talent.cooldown = 200;
         }
 
         @Override
