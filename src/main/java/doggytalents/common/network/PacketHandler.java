@@ -69,6 +69,7 @@ public final class PacketHandler {
         registerPacket(new RescueDogRenderPacket(), RescueDogRenderData.class);
         registerPacket(new GatePasserPacket(), GatePasserData.class);
         registerPacket(new DogSyncDataPacket(), DogSyncData.class);
+        registerPacket(new DogExplosionPacket(), DogExplosionData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
