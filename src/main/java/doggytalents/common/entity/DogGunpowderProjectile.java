@@ -33,6 +33,11 @@ public class DogGunpowderProjectile extends ThrowableProjectile {
 
     @Override
     protected void onHit(HitResult hitResult) {
+        if (this.level().isClientSide)
+            return;
+        if (hitResult.getType() != HitResult.Type.BLOCK) {
+            return;
+        } 
         if (!this.level().isClientSide) {
             this.spawnAtLocation(new ItemStack(Items.GUNPOWDER));
         }
