@@ -162,7 +162,7 @@ public class OokamiKazeTalent extends TalentInstance {
 
             --tickTillBoom;
             if (tickTillBoom == 0) {
-                var explode = new DogExplosion(dog, 8);
+                var explode = new DogExplosion(dog, this.radius);
                 explode.explode();
             }
         }
@@ -211,7 +211,6 @@ public class OokamiKazeTalent extends TalentInstance {
         public DogExplosion(Dog dog, int radius) {
             this.dog = dog;
             this.radius = radius;
-            //Explode when howl 🥴
         }
 
         public void explode() {
