@@ -38,7 +38,7 @@ public class OokamiKazeTalent extends TalentInstance {
 
     public int getRadius() {
         var level = this.level();
-        if (level <= 5)
+        if (level >= 5)
             return 10;
         if (level <= 1)
             return 3;
