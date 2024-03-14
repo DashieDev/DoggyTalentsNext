@@ -5,6 +5,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.Screens;
 import doggytalents.common.entity.DogFoodProjectile;
+import doggytalents.common.entity.DogGunpowderProjectile;
 import doggytalents.common.inventory.TreatBagItemHandler;
 import doggytalents.common.util.Cache;
 import doggytalents.common.util.InventoryUtil;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -74,24 +76,40 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
 
     private void findFoodAndShootOut(ServerPlayer player, ItemStack stack) {
         var itemHandler = (IItemHandlerModifiable) stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
-        int foodStackId = findFoodInItemHandler(itemHandler);
+        int foodStackId = findThrowableInItemHandler(itemHandler);
         if (foodStackId < 0)
             return;
         var foodStack = itemHandler.getStackInSlot(foodStackId);
         if (foodStack.isEmpty())
             return;
-        var dogFoodProj = new DogFoodProjectile(player.level(), player);
-        dogFoodProj.setDogFoodStack(new ItemStack(foodStack.getItem()));
-        dogFoodProj.setOwner(player);
-        dogFoodProj.shootFromRotation(player, 
-            player.getXRot(), player.getYRot(), 0.0F, 0.8F, 1.0F);
-        player.level().addFreshEntity(dogFoodProj);
+        if (foodStack.is(Items.GUNPOWDER)) {
+            throwGunpowder(player);
+        } else {
+            throwFood(player, foodStack.getItem());
+        }
         foodStack = foodStack.copy();
         foodStack.shrink(1);
         itemHandler.setStackInSlot(foodStackId, foodStack);
     }
 
-    private int findFoodInItemHandler(IItemHandler itemHandler) {
+    private void throwFood(Player player, Item item) {
+        var dogFoodProj = new DogFoodProjectile(player.level(), player);
+        dogFoodProj.setDogFoodStack(new ItemStack(item));
+        dogFoodProj.setOwner(player);
+        dogFoodProj.shootFromRotation(player, 
+            player.getXRot(), player.getYRot(), 0.0F, 0.8F, 1.0F);
+        player.level().addFreshEntity(dogFoodProj);
+    }
+
+    private void throwGunpowder(Player player) {
+        var dogGunpowderProj = new DogGunpowderProjectile(player.level(), player);
+        dogGunpowderProj.setOwner(player);
+        dogGunpowderProj.shootFromRotation(player, 
+            player.getXRot(), player.getYRot(), 0.0F, 0.8F, 1.0F);
+        player.level().addFreshEntity(dogGunpowderProj);
+    }
+
+    private int findThrowableInItemHandler(IItemHandler itemHandler) {
         for (int i = 0; i < itemHandler.getSlots(); ++i) {
             var stack = itemHandler.getStackInSlot(i);
             if (stack.isEmpty())
@@ -99,6 +117,8 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
             if (FoodHandler.isFood(stack).isPresent()) {
                 return i;
             }
+            if (stack.is(Items.GUNPOWDER))
+                return i;
         }
         return -1;
     }
