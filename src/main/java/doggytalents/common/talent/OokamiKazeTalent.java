@@ -257,14 +257,22 @@ public class OokamiKazeTalent extends TalentInstance {
             }
         }
 
-        private void hurtAndKnockback(LivingEntity owner, Entity e, float hurt_radius) {
-            var dog_pos = dog.position();
+        private double calculateImpactValue(Vec3 dog_pos, Entity e, int hurt_radius) {
             var far_percent = Math.sqrt(e.distanceToSqr(dog_pos)) / hurt_radius;
             if (far_percent > 1)
-                return;
+                return -1;
             var close_percent = 1 - far_percent;
             var seen_percent = Explosion.getSeenPercent(dog_pos, e);
             var impact_value = seen_percent * close_percent;
+            return impact_value;
+        }
+
+        private void hurtAndKnockback(LivingEntity owner, Entity e, float hurt_radius) {
+            var dog_pos = dog.position();            
+            var impact_value = calculateImpactValue(dog_pos, e, radius);
+            if (impact_value <= 0)
+                return;
+
             var t = impact_value * impact_value + impact_value;
             final int base_damage = 7;
             var hurt_amount = 1 + t * base_damage * this.radius;
