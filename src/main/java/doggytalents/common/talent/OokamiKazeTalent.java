@@ -217,6 +217,11 @@ public class OokamiKazeTalent extends TalentInstance {
             tickTillBoom = 63;
         }
 
+        @Override
+        public boolean canOverrideSit() {
+            return true;
+        }
+
         private enum ActionPhase {
             CATCH, WAIT_TILL_LAND, EXPLODE
         }
