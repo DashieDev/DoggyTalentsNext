@@ -1744,7 +1744,7 @@ public class Dog extends AbstractDog {
 
         boolean ret = super.hurt(source, amount);
 
-        float actual_hurt_amount = this.getHealth() - health0;
+        float actual_hurt_amount = health0 - this.getHealth();
 
         if (!this.level().isClientSide) {
             mayStandUpAndPlayHurtAnim(source, actual_hurt_amount, health0);   
@@ -1770,6 +1770,7 @@ public class Dog extends AbstractDog {
         if (this.stillIdleOrSitWhenHurt(source, real_hurt_amount))
             return;
 
+        this.setOrderedToSit(false);
         boolean wasSitting = this.isInSittingPose();
 
         if (wasSitting) {
@@ -1782,7 +1783,7 @@ public class Dog extends AbstractDog {
             return;
         }
 
-        if (source.getEntity() != null && real_hurt_amount >= 2) {
+        if (source.getEntity() != null && real_hurt_amount >= 1) {
             this.setAnim(DogAnimation.HURT_2);
             return;
         }
