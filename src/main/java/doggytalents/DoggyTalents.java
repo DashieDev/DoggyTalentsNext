@@ -109,7 +109,7 @@ public class DoggyTalents {
 
         @Override
         public Optional<String> getNonEligibleTranslationKey(AbstractDog dog) {
-            return Optional.of(this.getTranslationKey() + ".dog_not_kami");
+            return Optional.of(DoggyTalents.FLYING_FURBALL.get().getTranslationKey() + ".dog_not_kami");
         }
     });
 
