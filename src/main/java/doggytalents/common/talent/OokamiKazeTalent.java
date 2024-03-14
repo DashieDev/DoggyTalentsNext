@@ -1,6 +1,10 @@
 package doggytalents.common.talent;
 
+import java.util.Map;
+
 import javax.annotation.Nullable;
+
+import com.google.common.collect.Maps;
 
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.registry.Talent;
@@ -12,8 +16,10 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogExplosionData;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
@@ -33,7 +39,7 @@ public class OokamiKazeTalent extends TalentInstance {
     }
 
     public DogCatchGunpowderAndExplodeAction actionCreator(Dog dog, @Nullable DogGunpowderProjectile proj) {
-        return new DogCatchGunpowderAndExplodeAction(dog, proj, getRadius());
+        return new DogCatchGunpowderAndExplodeAction(dog, proj, getRadius(), getKnockbackModifier());
     }
 
     public int getRadius() {
@@ -51,11 +57,25 @@ public class OokamiKazeTalent extends TalentInstance {
         return 0;
     }
 
+    public float getKnockbackModifier() {
+        var level = this.level();
+        if (level >= 5)
+            return 2.5f;
+        if (level <= 2)
+            return 1;
+        if (level <= 3)
+            return 1.4f;
+        if (level <= 4)
+            return 1.8f;
+        return 1;
+    }
+
     public static class DogCatchGunpowderAndExplodeAction extends TriggerableAction {
 
         private ActionPhase phase;
         private int stopTick;
         private final int radius;
+        private final float knockbackModifier;
 
         private final DogGunpowderProjectile toCatch;
         private int tickTillJump;
@@ -64,11 +84,12 @@ public class OokamiKazeTalent extends TalentInstance {
         private int tickTillHowl = 50;
         private int tickTillBoom = 55;
 
-        public DogCatchGunpowderAndExplodeAction(Dog dog, @Nullable DogGunpowderProjectile toCatch, int radius) {
+        public DogCatchGunpowderAndExplodeAction(Dog dog, @Nullable DogGunpowderProjectile toCatch, int radius, float knockbackModifier) {
             super(dog, false, false);
             this.phase = toCatch != null ? ActionPhase.CATCH : ActionPhase.EXPLODE;
             this.toCatch = toCatch;
             this.radius = radius;
+            this.knockbackModifier = knockbackModifier;
         }
 
         @Override
@@ -162,7 +183,7 @@ public class OokamiKazeTalent extends TalentInstance {
 
             --tickTillBoom;
             if (tickTillBoom == 0) {
-                var explode = new DogExplosion(dog, this.radius);
+                var explode = new DogExplosion(dog, this.radius, this.knockbackModifier);
                 explode.explode();
             }
         }
@@ -207,24 +228,45 @@ public class OokamiKazeTalent extends TalentInstance {
 
         private final Dog dog;
         private final int radius;
+        private float knockbackModifier = 1;
+        private final Map<ServerPlayer, Vec3> toSendKnockback = Maps.newHashMap();
 
-        public DogExplosion(Dog dog, int radius) {
+        public DogExplosion(Dog dog, int radius, float knockbackModifier) {
             this.dog = dog;
             this.radius = radius;
+            this.knockbackModifier = knockbackModifier;
         }
 
         public void explode() {
             if (dog.level().isClientSide)
                 return;
             dog.level().gameEvent(dog, GameEvent.EXPLODE, dog.position());
-            broadcastExploisionToClient();
             hurtEntities();
+            broadcastExploisionToClient();
+            
+            this.toSendKnockback.clear();
         }
 
         private void broadcastExploisionToClient() {
-            PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> dog), 
-                new DogExplosionData(dog.getId())
-            );
+            var level = this.dog.level();
+            var server = level.getServer();
+            if (server == null)
+                return;
+            var playerList = server.getPlayerList();
+            if (playerList == null)
+                return;
+            
+            final int notify_radius = 64;
+            for (var player : playerList.getPlayers()) {
+                if (player.level() != level)
+                    continue;
+                var dist_sqr = player.distanceToSqr(dog);
+                if (dist_sqr > notify_radius * notify_radius)
+                    continue;
+                PacketHandler.send(PacketDistributor.PLAYER.with(() -> player),
+                    new DogExplosionData(dog.getId(), this.toSendKnockback.get(player))
+                );
+            }
         }
 
         private void hurtEntities() {
@@ -251,8 +293,10 @@ public class OokamiKazeTalent extends TalentInstance {
                     continue;
                 if (e.ignoreExplosion())
                     continue;
-                if (e instanceof LivingEntity living && isAlliedToDog(living, owner))
+                if (e instanceof LivingEntity living && isAlliedToDog(living, owner)) {
+                    lightlyKnockback(owner, e, ext_radius);
                     continue;
+                }
                 hurtAndKnockback(owner, e, ext_radius);
             }
         }
@@ -267,6 +311,47 @@ public class OokamiKazeTalent extends TalentInstance {
             return impact_value;
         }
 
+        private void lightlyKnockback(LivingEntity owner, Entity e, float hurt_radius) {
+            var dog_pos = dog.position();            
+            var impact_value = calculateImpactValue(dog_pos, e, radius);
+            if (impact_value <= 0)
+                return;
+            
+            impact_value = Mth.clamp(impact_value, 0, 1);
+            final double max_pushback = 0.8;
+            knockbackEntity(dog_pos, e, max_pushback * impact_value);
+        }
+
+        private void knockbackEntity(Vec3 dog_pos, Entity e, double knockback_value) {
+            if (e instanceof LivingEntity living) {
+                knockback_value = ProtectionEnchantment.getExplosionKnockbackAfterDampener(living, knockback_value);
+            }
+            Vec3 e_pos;
+            if (e instanceof PrimedTnt)
+                e_pos = e.position();
+            else
+                e_pos = e.getEyePosition();
+            var knock_vec = e_pos
+                .subtract(dog_pos)
+                .normalize()
+                .scale(knockback_value);
+            var knock_movement = e.getDeltaMovement().add(knock_vec);
+            e.setDeltaMovement(knock_movement);
+
+            if (e instanceof ServerPlayer player && canKnockbackPlayer(player)) {
+                this.toSendKnockback.put(player, knock_vec);
+            }
+        }
+
+        private boolean canKnockbackPlayer(ServerPlayer player) {
+            if (player.isSpectator())
+                return false;
+            if (!player.isCreative()) {
+                return true;
+            }
+            return !player.getAbilities().flying;
+        }
+
         private void hurtAndKnockback(LivingEntity owner, Entity e, float hurt_radius) {
             var dog_pos = dog.position();            
             var impact_value = calculateImpactValue(dog_pos, e, radius);
@@ -278,21 +363,7 @@ public class OokamiKazeTalent extends TalentInstance {
             var hurt_amount = 1 + t * base_damage * this.radius;
             e.hurt(e.damageSources().explosion(dog, owner), (float) hurt_amount);
 
-            double knockback = impact_value;
-            if (e instanceof LivingEntity living) {
-                knockback = ProtectionEnchantment.getExplosionKnockbackAfterDampener(living, knockback);
-            }
-            Vec3 e_pos;
-            if (e instanceof PrimedTnt)
-                e_pos = e.position();
-            else
-                e_pos = e.getEyePosition();
-            var knock_vec = e_pos
-                .subtract(dog_pos)
-                .normalize()
-                .scale(knockback);
-            var knock_movement = e.getDeltaMovement().add(knock_vec);
-            e.setDeltaMovement(knock_movement);
+            knockbackEntity(dog_pos, e, this.knockbackModifier * impact_value);
         }
 
         private boolean isAlliedToDog(LivingEntity entity, LivingEntity owner) {
