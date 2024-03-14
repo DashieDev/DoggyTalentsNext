@@ -1756,8 +1756,6 @@ public class Dog extends AbstractDog {
             this.dogAnimHurtImpules = true;
         }
 
-        if (this.isDeadOrDying() && !this.level().isClientSide)
-            this.setAnim(DogAnimation.HURT_1);
         if (this.level().isClientSide
             && ConfigHandler.CLIENT.BLOCK_RED_OVERLAY_WHEN_HURT.get()) {
             this.hurtTime = 0;
