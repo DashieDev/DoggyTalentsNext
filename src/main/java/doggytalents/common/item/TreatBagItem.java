@@ -90,6 +90,8 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         foodStack = foodStack.copy();
         foodStack.shrink(1);
         itemHandler.setStackInSlot(foodStackId, foodStack);
+
+        player.getCooldowns().addCooldown(this, 20);
     }
 
     private void throwFood(Player player, Item item) {
