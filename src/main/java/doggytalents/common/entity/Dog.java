@@ -1761,6 +1761,8 @@ public class Dog extends AbstractDog {
     }
 
     private void mayStandUpAndPlayHurtAnim(DamageSource source, float real_hurt_amount, float health0) {
+        if (this.isDefeated())
+            return;
         if (this.isDeadOrDying()) {
             this.setAnim(DogAnimation.HURT_1);
             return;
@@ -2461,6 +2463,8 @@ public class Dog extends AbstractDog {
         this.setDogHunger(0);
         this.removeAllEffects();
         this.setDogIncapValue(this.getInitalDogIncapVal(source));
+        this.updateControlFlags();
+        this.goalSelector.getRunningGoals().forEach(x -> { x.stop(); });
         
         this.getNavigation().stop();
         this.unRide();
