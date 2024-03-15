@@ -353,7 +353,7 @@
    "talent.doggytalents.doggy_torch.render_torch": "Montrer les Torches?",
    "talent.doggytalents.gate_passer.pass_gate.set": "Autoriser le passage aux portes",
    "talent.doggytalents.gate_passer.pass_gate.unset": "Arrêtez de passer aux porte",
-   "talent.doggytalents.creeper_sweeper.only_attack_creeper": "Uniquement le Creeper de Target",
+   "talent.doggytalents.creeper_sweeper.only_attack_creeper": "[!] Uniquement le Creeper de Target",
    
    "talent.doggytalents.bed_finder.dog_mount": "Cliquez pour faire descendre %s",
 
