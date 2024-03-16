@@ -6,7 +6,7 @@ import com.mojang.math.Vector3f;
 
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
-import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
+import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.api.enu.forward_imitate.anim.KeyframeAnimations;
@@ -75,7 +75,7 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
         if (sequence == null) return;
         
         if (animState.isStarted()) {
-            KeyframeAnimationsDelegate.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
+            DogKeyframeAnimations.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
         }
     }
 
