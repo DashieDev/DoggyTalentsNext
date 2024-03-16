@@ -50,7 +50,7 @@ public class DogLevel {
     }
 
     public float getMaxHealth() {
-        int hearts = 10 + (int) Math.ceil((1f/6f) * this.level + (1f/3f) * this.kamiLevel);
+        int hearts = 20 + (int) Math.ceil((1f/6f) * this.level + (1f/3f) * this.kamiLevel);
         return 2*hearts;
     }
 
