@@ -1737,7 +1737,7 @@ public class Dog extends AbstractDog {
         }
 
         if (attacker != null && !(attacker instanceof Player) && !(attacker instanceof AbstractArrow)) {
-            amount = (amount + 1.0F) / 2.0F;
+            amount = (amount) / 2.0F;
         }
 
         float health0 = this.getHealth();
