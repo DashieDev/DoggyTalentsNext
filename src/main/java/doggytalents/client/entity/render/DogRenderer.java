@@ -139,36 +139,56 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             return;
 
         if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0))
-            renderMainName(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner);
+            renderMainName(dog, text, stack, buffer, packedLight, renderDiffOwnerName && isDiffOwner);
         if (d0 <= 64 * 64)
             renderExtraInfo(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner);
         
     }
 
     private void renderMainName(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int packedLight, double d0, boolean diffOwnerRender) {
-        boolean flag = !dog.isDiscrete();
-        float f = dog.getBbHeight() + 0.5F;
-        int i = 0;
+        int light, boolean diffOwnerRender) {
+        
         stack.pushPose();
-        stack.translate(0.0D, (double)f, 0.0D);
+        
+        boolean dog_not_sneaking = !dog.isDiscrete();        
+        float render_y_offset = dog.getBbHeight() + 0.5F;
+
+        text = modifyText(dog, text, diffOwnerRender);
+
+        stack.translate(0.0D, (double)render_y_offset, 0.0D);
         stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         stack.scale(-0.025F, -0.025F, 0.025F);
-        var matrix4f = stack.last().pose();
-        float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
-        if (diffOwnerRender) f1 = 0;
-        int j = (int)(f1 * 255.0F) << 24;
+        
+        var pose = stack.last().pose();
         var font = this.getFont();
-        float f2 = (float)(-font.width(text) / 2);
+        float tX = (float)(-font.width(text) / 2);
+        float tY = 0;
         
-        text = modifyText(dog, text, diffOwnerRender);
+        boolean bkg_see_through = dog_not_sneaking;
+        var bkg_display_mode = bkg_see_through ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL;
+        int bkg_color = getBkgTextColorWithOpacity(diffOwnerRender);
+        int bkg_txtcolor = 0x20FFFFFF;
+        font.drawInBatch(text, tX, tY, bkg_txtcolor, false, pose, buffer, bkg_display_mode, bkg_color, light);
         
-        font.drawInBatch(text, f2, (float)i, 553648127, false, matrix4f, buffer, flag ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL, j, packedLight);
-           if (flag) {
-              font.drawInBatch(text, f2, (float)i, -1, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight);
-           }
+        boolean draw_fg_text = dog_not_sneaking;
+        if (draw_fg_text) {
+            var fg_display_mode = Font.DisplayMode.NORMAL;
+            int fg_color = 0x0;
+            int fg_txt_color = 0xFFFFFFFF;
+            font.drawInBatch(text, tX, tY, fg_txt_color, false, pose, buffer, fg_display_mode, fg_color, light);
+        }
 
         stack.popPose();
+    }
+
+    private int getBkgTextColorWithOpacity(boolean diffOwnerRender) {
+        final int color = 0x0;
+        float bkg_opacity = 0;
+        if (!diffOwnerRender) 
+            bkg_opacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
+        
+        int alpha = (int)(bkg_opacity * 255.0F) << 24;
+        return alpha | color;
     }
 
     private void renderExtraInfo(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
