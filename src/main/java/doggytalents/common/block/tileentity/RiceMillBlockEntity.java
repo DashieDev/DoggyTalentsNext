@@ -389,6 +389,8 @@ public class RiceMillBlockEntity extends BlockEntity {
     }
     
     public static boolean isInputSlotValid(ItemStack stack) {
+        if (stack.is(Items.BOWL))
+            return false;
         return true;
     }
 
