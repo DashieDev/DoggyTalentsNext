@@ -119,6 +119,7 @@
    "item.doggytalents.lab_coat": "Blouse de laboratoire",
    "item.doggytalents.ceremonial_garb":"Tenue de cérémonie",
    "item.doggytalents.doggy_contacts": "Lentilles de contact pour chien",
+   "item.doggytalents.doggy_contacts.description": "[!] Pour teindre l'autre len, utilisez une feuille de papier.",
 
    "item.doggytalents.locator_orb_chi": "Orbe de Chi",
    "item.doggytalents.locator_orb_chi.description": "L'Orbe de la Sagesse et de la Connaissance.",
@@ -285,6 +286,7 @@
    "talent.doggytalents.fire_drill": "Combat le Feu",
    "talent.doggytalents.sniffer_dog": "Chien renifleur ",
    "talent.doggytalents.gate_passer": "Porte a woofer",
+   "talent.doggytalents.ookamikaze": "Ookamikaze",
 
    "talent.doggytalents.bed_finder.description": "Lorsqu'un chien doté de cette capacité est sur votre tête, votre lit sera entouré d'un contour jaune. Pour placer le chien sur votre tête, faites un clic droit sur le chien avec un os dans la main. La portée est de 200 blocs par niveau, mais devient infinie au niveau 5.",
    "talent.doggytalents.black_pelt.description": "Augmente le taux de coup critique d'un demi-cœur par niveau, plus un coeur supplémentaire lors du niveau max",
@@ -317,6 +319,7 @@
    "talent.doggytalents.fire_drill.description": "Cette compétence apprend à votre chien à s'éteindre lorsqu'il prend feu. Arrêter, tomber et rouler!",
    "talent.doggytalents.sniffer_dog.description": "Ce talent permet à votre chien de détecter des minerais précieux. Chaque niveau augmente la distance de reniflement de votre chien, augmentant ainsi les chances de trouver le minerai souhaité. Pour que votre chien commence à détecter un certain bloc, une Gâterie parfumée est nécessaire pour marquer l'odeur du bloc. La gâterie sera ensuite donnée au chien qui la léchera, mémorisera l'odeur et vous la rendra. Pour empêcher votre chien de détecter, donnez-lui une friandise parfumée vide. Pour vérifier quel bloc votre chien recherche, sneak et clic droit dessus avec n'importe quelle Gâterie parfumée en main. Une chose à noter est que les chiens ne sont pas très doués pour détecter les blocs verticalement, donc malgré l'augmentation du rayon que chaque niveau fournit le long du plan horizontal, ils ne sont capables de localiser que des blocs qui ne sont pas environ 3 blocs plus hauts ou plus bas que là où ils se trouvent. debout. Assurez-vous de prêter une attention particulière à ce que le chien essaie de vous dire pour avoir une meilleure idée de l'endroit où se trouve le bloc.",
    "talent.doggytalents.gate_passer.description": "Ce talent permet à votre chien d’ouvrir les clôtures et les portes en bois et de les franchir. Ils penseront également à le fermer par la suite, même s'ils oublient parfois :)",
+   "talent.doggytalents.ookamikaze.description": "[!] \"Le plus adorable annonciateur de chaos et de destruction que le monde ait jamais connu ! Nourrissez-le de poudre à canon et il créera une explosion qui ne le blessera pas !\" - RaustBlackDragon, Créateur original de DoggyTalents, 2011.\n\nLancez de la poudre au chien à l'aide du sac à friandises pour qu'il invoque l'Explosion, qui ne se blesse pas, ne vous blesse pas et ne blesse pas votre équipe ! Notez que l'Eplosion du chien inflige toujours des dégâts complets à toute entité proche autre que celle mentionnée ci-dessus, vous êtes prévenus !",
 
    "talent.doggytalents.roaring_gale.cooldown": "Rugissement est en temps de recharge.",
    "talent.doggytalents.roaring_gale.level": "Mettez quelques points dans la compétence rugissementpour l'utiliser!",
@@ -350,6 +353,7 @@
    "talent.doggytalents.doggy_torch.render_torch": "Montrer les Torches?",
    "talent.doggytalents.gate_passer.pass_gate.set": "Autoriser le passage aux portes",
    "talent.doggytalents.gate_passer.pass_gate.unset": "Arrêtez de passer aux porte",
+   "talent.doggytalents.creeper_sweeper.only_attack_creeper": "[!] Uniquement le Creeper de Target",
    
    "talent.doggytalents.bed_finder.dog_mount": "Cliquez pour faire descendre %s",
 
