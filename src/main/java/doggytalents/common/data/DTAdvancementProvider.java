@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.advancements.triggers.DogDrunkTrigger;
+import doggytalents.common.advancements.triggers.OokamikazeTrigger;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
@@ -122,6 +123,21 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                     DogDrunkTrigger.getInstance()
                 )
                 .save(consumer, Util.getResourcePath("default/get_dog_drunk"));
+
+            var ookamikaze_advancement = 
+                Advancement.Builder.advancement()
+                .display(
+                    DisplayInfoBuilder.create()
+                        .icon(() -> Items.GUNPOWDER)
+                        .frame(FrameType.TASK)
+                        .translate("ookamikaze_trigger")
+                        .build()
+                )
+                .addCriterion(
+                    "ookamikaze_trigger", 
+                    OokamikazeTrigger.getInstance()
+                )
+                .save(consumer, Util.getResourcePath("default/ookamikaze_trigger"));
             // Old Advancement.
 
             // Advancement advancement = Advancement.Builder.advancement()
