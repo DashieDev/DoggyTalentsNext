@@ -139,14 +139,14 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             return;
 
         if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0))
-            renderMainName(dog, text, stack, buffer, packedLight, renderDiffOwnerName && isDiffOwner);
+            renderMainName(dog, text, stack, buffer, packedLight, renderDiffOwnerName && isDiffOwner, isDiffOwner);
         if (d0 <= 64 * 64)
             renderExtraInfo(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner);
         
     }
 
     private void renderMainName(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int light, boolean diffOwnerRender) {
+        int light, boolean diffOwnerRender, boolean isDiffOwner) {
         
         stack.pushPose();
         
@@ -164,7 +164,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         float tX = (float)(-font.width(text) / 2);
         float tY = 0;
         
-        boolean bkg_see_through = dog_not_sneaking;
+        boolean bkg_see_through = dog_not_sneaking && !isDiffOwner;
         var bkg_display_mode = bkg_see_through ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL;
         int bkg_color = getBkgTextColorWithOpacity(diffOwnerRender);
         int bkg_txtcolor = 0x20FFFFFF;
