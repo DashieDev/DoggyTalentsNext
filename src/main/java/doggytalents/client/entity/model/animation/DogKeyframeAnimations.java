@@ -24,7 +24,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class KeyframeAnimationsDelegate {
+public class DogKeyframeAnimations {
    public static void animate(DogModel model, Dog dog,
         AnimationDefinition animation, long elapsed_in_millis, float interpolation_scale, 
         Vector3f temp_buffer) {

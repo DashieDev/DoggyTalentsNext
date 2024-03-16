@@ -12,7 +12,7 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
-import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
+import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentChangeHandlerSlice;
@@ -285,7 +285,7 @@ public class ClientEventHandler {
         var anim = dog.getAnim();
         var animSeq = DogAnimationRegistry.getSequence(anim);
         var animState = dog.animationManager.animationState;
-        return KeyframeAnimationsDelegate.getCurrentAnimatedYRot(dog, animSeq, animState.getAccumulatedTimeMillis(), 1);
+        return DogKeyframeAnimations.getCurrentAnimatedYRot(dog, animSeq, animState.getAccumulatedTimeMillis(), 1);
     }
 
     public static void onDogSyncedDataUpdated(DogSyncData data) {
