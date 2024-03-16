@@ -278,7 +278,7 @@ public class Dog extends AbstractDog {
 
     private boolean shakeFire = false;
     
-    private float radPerHealthDecrease;
+    private float percentDecreasePerHealthLost;
     private float maxHealth0;
 
     protected boolean dogJumping;
@@ -527,10 +527,16 @@ public class Dog extends AbstractDog {
     }
 
     public float getTailRotation() {
-        return 
-            this.isTame() ? 
-            (1.73f) - this.radPerHealthDecrease*(this.getMaxHealth() - this.getHealth()) 
-            : ((float)Math.PI / 5F);
+        if (!this.isTame())
+            return ((float) Math.PI / 5f);
+        final float full_health_angle = 1.73f;
+        float lost_health = this.getMaxHealth() - this.getHealth();
+        float lost_health_percent = lost_health * this.percentDecreasePerHealthLost;
+        float lost_rad_percent = lost_health_percent * lost_health_percent;
+        float lost_rad = Mth.HALF_PI * lost_rad_percent;
+        lost_rad = Mth.clamp(lost_rad, 0, Mth.HALF_PI);
+        
+        return full_health_angle - lost_rad;
     }
 
     @Override
@@ -643,7 +649,7 @@ public class Dog extends AbstractDog {
 
         if (this.isAlive() && this.getMaxHealth() != this.maxHealth0) {
             this.maxHealth0 = this.getMaxHealth();
-            this.radPerHealthDecrease = Mth.HALF_PI / this.maxHealth0;
+            this.percentDecreasePerHealthLost = 1 / this.maxHealth0;
         }
 
         // On server side
