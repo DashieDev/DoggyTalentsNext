@@ -17,7 +17,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
-import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
+import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.KeyframeAnimations;
@@ -510,7 +510,7 @@ public class DogModel extends EntityModel<Dog> {
         
         if (animState.isStarted()) {
             animState.updateTime(ageInTicks, anim.getSpeedModifier());
-            KeyframeAnimationsDelegate.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
+            DogKeyframeAnimations.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
         }
     }
 

@@ -5,7 +5,7 @@ import com.mojang.math.Vector3f;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
+import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationChannel;
@@ -68,7 +68,7 @@ public class TorchDogModel extends AnimatedSyncedAccessoryModel {
         if (entityIn.getId() % 2 == 0) {
             timeLineMillis = animLenMillis - timeLineMillis;
         }
-        KeyframeAnimationsDelegate.animate(this, entityIn, TORCH_SPINNA, timeLineMillis, 1, this.vecObj);
+        DogKeyframeAnimations.animate(this, entityIn, TORCH_SPINNA, timeLineMillis, 1, this.vecObj);
     }
 
     @Override
