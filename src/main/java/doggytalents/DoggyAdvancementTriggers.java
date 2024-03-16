@@ -5,6 +5,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import doggytalents.common.advancements.triggers.DogDrunkTrigger;
+import doggytalents.common.advancements.triggers.OokamikazeTrigger;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
@@ -13,6 +14,7 @@ public class DoggyAdvancementTriggers {
     
     private static final Map<ResourceLocation, CriterionTrigger<?>> TRIGGERS = Maps.newHashMap();
     public static final DogDrunkTrigger DOG_DRUNK_TRIGGER = register(new DogDrunkTrigger());
+    public static final OokamikazeTrigger OOKAMIKAZE_TRIGGER  = register(new OokamikazeTrigger());
 
     public static <T extends CriterionTrigger<?>> T register(T p_10596_) {
         if (!TRIGGERS.containsKey(p_10596_.getId())) {

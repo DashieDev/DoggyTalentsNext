@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.DoggyAdvancementTriggers;
 import doggytalents.DoggyTalents;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.inferface.AbstractDog;
@@ -202,6 +203,7 @@ public class OokamiKazeTalent extends TalentInstance {
                 var explode = new DogExplosion(dog, this.radius, this.knockbackModifier);
                 explode.explode();
                 this.setTalentCooldown();
+                this.triggerAdvancement();
             }
         }
 
@@ -241,6 +243,13 @@ public class OokamiKazeTalent extends TalentInstance {
             if (talent == null)
                 return;
             talent.cooldown = 200;
+        }
+
+        private void triggerAdvancement() {
+            var owner = this.dog.getOwner();
+            if (!(owner instanceof ServerPlayer player))
+                return;
+            DoggyAdvancementTriggers.OOKAMIKAZE_TRIGGER.trigger(dog, player);
         }
 
         @Override

@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.advancements.triggers.DogDrunkTrigger;
+import doggytalents.common.advancements.triggers.OokamikazeTrigger;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
@@ -69,8 +70,51 @@ public class DTAdvancementProvider extends AdvancementProvider {
                                 .of(DoggyItems.DOGGY_CHARM.get())
                         )
                 )
-                .save(consumer, Util.getResourcePath("dtn_core/summon_dog"));
-                
+                .save(consumer, Util.getResourcePath("default/get_dog_drunk"));
+
+            var ookamikaze_advancement = 
+                Advancement.Builder.advancement()
+                .display(
+                    DisplayInfoBuilder.create()
+                        .icon(() -> Items.GUNPOWDER)
+                        .frame(FrameType.TASK)
+                        .translate("ookamikaze_trigger")
+                        .build()
+                )
+                .addCriterion(
+                    "ookamikaze_trigger", 
+                    OokamikazeTrigger.getInstance()
+                )
+                .save(consumer, Util.getResourcePath("default/ookamikaze_trigger"));
+            // Old Advancement.
+
+            // Advancement advancement = Advancement.Builder.advancement()
+            //     .display(DisplayInfoBuilder.create().icon(DoggyItems.TRAINING_TREAT).frame(FrameType.TASK).translate("dog.root").background("stone.png").noToast().noAnnouncement().build())
+            //     .addCriterion("tame_dog", TameAnimalTrigger.TriggerInstance.tamedAnimal(EntityPredicate.Builder.entity().of(DoggyEntityTypes.DOG.get()).build()))
+            //     //.withCriterion("get_dog", ItemUseTrigger.TameAnimalTrigger.Instance.create(EntityPredicate.Builder.create().type(DoggyEntityTypes.DOG.get()).build()))
+            //     .requirements(RequirementsStrategy.OR)
+            //     .save(consumer, Util.getResourcePath("default/tame_dog"));
+
+            
+
+            // Advancement advancement1 = Advancement.Builder.advancement()
+            //         .parent(advancement)
+            //         .display(DisplayInfoBuilder.create().icon(Items.WOODEN_PICKAXE).frame(FrameType.TASK).translate("dog.level_talent").build())
+            //         .addCriterion("level_talent", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.COBBLESTONE))
+            //         .save(consumer, Util.getResourcePath("default/level_talent"));
+            // Advancement advancement2 = Advancement.Builder.advancement()
+            //         .parent(advancement1)
+            //         .display(DisplayInfoBuilder.create().icon(DoggyItems.TANTAN_CAPE).frame(FrameType.TASK).translate("dog.accessorise").build())
+            //         .addCriterion("accessorise", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STONE_PICKAXE))
+            //         .save(consumer, Util.getResourcePath("default/accessorise"));
+
+            // Advancement advancement3 = Advancement.Builder.advancement()
+            //         .parent(advancement2)
+            //         .display(DisplayInfoBuilder.create().icon(DoggyItems.RADIO_COLLAR).frame(FrameType.TASK).translate("dog.radio_collar").build())
+            //         .addCriterion("iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
+            //         .save(consumer, Util.getResourcePath("default/radio_collar"));
+            
+        }
         
         var train_dog_advancement = 
             Advancement.Builder.advancement()
