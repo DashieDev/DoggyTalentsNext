@@ -66,7 +66,7 @@
     "item.doggytalents.tengu_mask.description": "糸で右クリックしてマスクの位置を切り替えします。",
  
     "item.doggytalents.birthday_hat": "誕生日の帽子",
-    "item.doggytalents.birthday_hat.description": "紙で帽子の2色目クラフトをします。",
+    "item.doggytalents.birthday_hat.description": "紙を使って2色のクラフトをします。",
     "item.doggytalents.propeller_hat": "プロペラハット",
     "item.doggytalents.propeller_hat.description": "スピンナァァァァ～！",
     "item.doggytalents.fedora": "中折帽子",
@@ -119,6 +119,7 @@
     "item.doggytalents.lab_coat": "白衣",
     "item.doggytalents.ceremonial_garb": "儀式用衣装",
     "item.doggytalents.doggy_contacts": "犬のコンタクトレンズ",
+    "item.doggytalents.doggy_contacts.description": "紙を使って2色のクラフトをします。",
  
     "item.doggytalents.locator_orb_chi": "智玉",
     "item.doggytalents.locator_orb_chi.description": "知恵と知識のオーブ。",
@@ -285,7 +286,8 @@
     "talent.doggytalents.fire_drill": "防火訓練",
     "talent.doggytalents.sniffer_dog": "探知犬",
     "talent.doggytalents.gate_passer": "ワンドア",
- 
+    "talent.doggytalents.ookamikaze": "オオカミ風",
+
     "talent.doggytalents.bed_finder.description": "このアビリティを持った犬があなたの頭の上にいる間、あなたのベッドは黄色い輪郭で囲まれます。犬を頭の上に置くには、手に骨を持った犬を右クリックします。範囲はレベルごとに200ブロックだが、レベル5で無限になります。",
     "talent.doggytalents.black_pelt.description": "クリティカルヒット率が1レベルにつきハート半分増加し、マスターするとさらにハート1個増加する。",
     "talent.doggytalents.guard_dog.description": "愛犬が物理的な攻撃を完全に防ぐ確率が高まります。",
@@ -317,7 +319,8 @@
     "talent.doggytalents.fire_drill.description": "ワンちゃんが火に包まれた時、自分で火を消す方法を教えます。ストップ、ドロップ、ロール！",
     "talent.doggytalents.sniffer_dog.description": "この才能を持つ犬は貴重な鉱石を嗅ぎつけることができる。レベルが上がるごとに犬の嗅覚の距離が伸び、目的の鉱石を見つけるチャンスが増える。犬に特定の鉱石を発見させるには、鉱石の匂いをマーキングするための「香りおやつ」が必要です。おやつを犬に与えると、犬はおやつを舐めて匂いを覚え、おやつを返します。犬に探知をやめさせるには、空の「香りおやつ」を与えます。犬がどのブロックを探しているかを確認するには、「香りおやつ」をこっそり右クリックします。注意点として、犬はブロックを垂直に探知するのがあまり得意ではないので、水平面に沿って各レベルの半径が大きくなっているにもかかわらず、犬が立っている位置より3ブロック前後高いか低いブロックしか探知することができません。犬が何を伝えようとしているのかに細心の注意を払い、ブロックがどこにあるのかをより正確に知るようにしてください。",
    "talent.doggytalents.gate_passer.description": "この才能を持つ犬は、フェンスゲートや木製のドアを開けて通り抜けることができる。閉めた後も忘れずに閉めてくれますが、時々忘れてしまうこともあります :)",
-
+   "talent.doggytalents.ookamikaze.description": "\"「世界が知る限り、最も愛らしい混乱と破壊の前触れ！火薬を与えれば、自分を傷つけずに爆発を起こす！」\"- RaustBlackDragon、DoggyTalentsのオリジナル作者、2011年。\n\nおやつ袋を使って犬に火薬を投げ、爆発を召喚させます！犬爆発は、前述したもの以外にも、近くにいるすべての存在にフルダメージを与えることに注意してください！",
+   
     "talent.doggytalents.roaring_gale.cooldown": "烈風咆哮はクールダウン中。",
     "talent.doggytalents.roaring_gale.level": "烈風咆哮のアップグレードをお願いします！",
     "talent.doggytalents.roaring_gale.miss": "ミス！(￣□￣」)",
@@ -350,6 +353,7 @@
     "talent.doggytalents.doggy_torch.render_torch": "表示・松明",
     "talent.doggytalents.gate_passer.pass_gate.set": "パッシングゲートを許可する",
     "talent.doggytalents.gate_passer.pass_gate.unset": "パッシングゲートを止める",
+    "talent.doggytalents.creeper_sweeper.only_attack_creeper": "匠のみを攻撃",
 
     "talent.doggytalents.bed_finder.dog_mount": "%sを右クリックしてマウントを解除します。",
  
