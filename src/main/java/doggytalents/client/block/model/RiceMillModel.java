@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import doggytalents.client.entity.model.AnimatedSyncedAccessoryModel;
-import doggytalents.client.entity.model.animation.KeyframeAnimationsDelegate;
+import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.client.entity.model.animation.SimpleAnimatedModel;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import doggytalents.common.entity.Dog;
@@ -69,7 +69,7 @@ public class RiceMillModel extends SimpleAnimatedModel {
 		var timeLine = (mill.getAnimationTick() + pTicks)
 			% (double) RiceMillBlockEntity.GRIND_ANIM_TICK_LEN;
 		var timeLineMillis = Util.tickMayWithPartialToMillis(timeLine);
-		KeyframeAnimationsDelegate.animateSimple(this, GRIND_ANIM, timeLineMillis, 1, tempVec);
+		DogKeyframeAnimations.animateSimple(this, GRIND_ANIM, timeLineMillis, 1, tempVec);
 	}
 
     public static LayerDefinition createLayer() {
