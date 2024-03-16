@@ -141,44 +141,16 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0))
             renderMainName(dog, text, stack, buffer, packedLight, renderDiffOwnerName && isDiffOwner, isDiffOwner);
         if (d0 <= 64 * 64)
-            renderExtraInfo(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner);
+            renderExtraInfo(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner, isDiffOwner);
         
     }
 
     private void renderMainName(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
         int light, boolean diffOwnerRender, boolean isDiffOwner) {
-        
-        stack.pushPose();
-        
-        boolean dog_not_sneaking = !dog.isDiscrete();        
-        float render_y_offset = dog.getBbHeight() + 0.5F;
 
         text = modifyText(dog, text, diffOwnerRender);
 
-        stack.translate(0.0D, (double)render_y_offset, 0.0D);
-        stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-        stack.scale(-0.025F, -0.025F, 0.025F);
-        
-        var pose = stack.last().pose();
-        var font = this.getFont();
-        float tX = (float)(-font.width(text) / 2);
-        float tY = 0;
-        
-        boolean bkg_see_through = dog_not_sneaking && !isDiffOwner;
-        var bkg_display_mode = bkg_see_through ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL;
-        int bkg_color = getBkgTextColorWithOpacity(diffOwnerRender);
-        int bkg_txtcolor = 0x20FFFFFF;
-        font.drawInBatch(text, tX, tY, bkg_txtcolor, false, pose, buffer, bkg_display_mode, bkg_color, light);
-        
-        boolean draw_fg_text = dog_not_sneaking;
-        if (draw_fg_text) {
-            var fg_display_mode = Font.DisplayMode.NORMAL;
-            int fg_color = 0x0;
-            int fg_txt_color = 0xFFFFFFFF;
-            font.drawInBatch(text, tX, tY, fg_txt_color, false, pose, buffer, fg_display_mode, fg_color, light);
-        }
-
-        stack.popPose();
+        renderDogText(dog, text, 0, 0.025f, stack, buffer, light, diffOwnerRender, isDiffOwner);
     }
 
     private int getBkgTextColorWithOpacity(boolean diffOwnerRender) {
@@ -191,8 +163,43 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         return alpha | color;
     }
 
+    private void renderDogText(Dog dog, Component text, double y_offset_from_default, float scale,
+        PoseStack stack, MultiBufferSource buffer, int light,
+        boolean render_diffowner, boolean is_diffowner) {
+
+        boolean dog_not_sneaking = !dog.isDiscrete();
+        double render_y_offset = dog.getBbHeight() + 0.5F + y_offset_from_default;
+
+        stack.pushPose();
+
+        stack.translate(0.0D, (double)render_y_offset, 0.0D);
+        stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
+        stack.scale(-scale, -scale, scale);
+        
+        var pose = stack.last().pose();
+        var font = this.getFont();
+        float tX = (float)(-font.width(text) / 2);
+        float tY = 0;
+        
+        boolean bkg_see_through = dog_not_sneaking && !is_diffowner;
+        var bkg_display_mode = bkg_see_through ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL;
+        int bkg_color = getBkgTextColorWithOpacity(render_diffowner);
+        int bkg_txtcolor = 0x20FFFFFF;
+        font.drawInBatch(text, tX, tY, bkg_txtcolor, false, pose, buffer, bkg_display_mode, bkg_color, light);
+        
+        boolean draw_fg_text = dog_not_sneaking;
+        if (draw_fg_text) {
+            var fg_display_mode = Font.DisplayMode.NORMAL;
+            int fg_color = 0x0;
+            int fg_txtcolor = 0xFFFFFFFF;
+            font.drawInBatch(text, tX, tY, fg_txtcolor, false, pose, buffer, fg_display_mode, fg_color, light);
+        }
+
+        stack.popPose();
+    }
+
     private void renderExtraInfo(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int packedLight, double d0, boolean diffOwnerRender) {
+        int packedLight, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
         String tip = dog.getMode().getTip();
         var hunger = Mth.ceil(
             (dog.isDefeated()?
@@ -229,7 +236,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             );
         }
 
-        RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, label, stack, buffer, packedLight, 0.01F, 0.12F, !diffOwnerRender);
+        renderDogText(dog, label, 0.12f, 0.01f, stack, buffer, packedLight, diffOwnerRender, isDiffOwner);
 
         if (d0 <= 5 * 5 && this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()) {
             var ownerC0 = dog.getOwnersName().orElseGet(() -> this.getNameUnknown(dog));
@@ -241,7 +248,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
                 );
             }
 
-            RenderUtil.renderLabelWithScale(dog, this, this.entityRenderDispatcher, ownerC0, stack, buffer, packedLight, 0.01F, -0.25F, !diffOwnerRender);
+            renderDogText(dog, ownerC0, -0.25f, 0.01f, stack, buffer, packedLight, diffOwnerRender, isDiffOwner);
         }
     }
 
