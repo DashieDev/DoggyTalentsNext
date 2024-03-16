@@ -105,7 +105,7 @@ public class DogHungerManager {
             return;
         if (--this.saturationHealingTick <= 0) {
             this.saturationHealingTick = 10;
-            dog.heal(1.0f);
+            dog.heal(2.0f);
             saturation -= 3; // -3 saturation per health healed
         }
     }

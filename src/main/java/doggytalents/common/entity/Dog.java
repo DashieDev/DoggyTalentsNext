@@ -982,7 +982,7 @@ public class Dog extends AbstractDog {
 
         if (this.healingTick >= 6000) {
             if (this.getHealth() < this.getMaxHealth()) {
-                this.heal(1);
+                this.heal(2);
             }
 
             this.healingTick = 0;
@@ -1334,7 +1334,7 @@ public class Dog extends AbstractDog {
             this.navigation.stop();
             this.setTarget((LivingEntity) null);
             this.setOrderedToSit(true);
-            this.setHealth(20.0F);
+            this.maxHealth();
             this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_HEARTS);
         } else {
             this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_SMOKE);
@@ -1741,10 +1741,6 @@ public class Dog extends AbstractDog {
             if (flag) return false;
         }
 
-        if (attacker != null && !(attacker instanceof Player) && !(attacker instanceof AbstractArrow)) {
-            amount = (amount) / 2.0F;
-        }
-
         float health0 = this.getHealth();
 
         boolean ret = super.hurt(source, amount);
@@ -2057,27 +2053,12 @@ public class Dog extends AbstractDog {
         this.setOwnersName(player.getName());
     }
 
-    /**
-     * This function actually contains a so called "bug" but i think it is more of 
-     * a hidden feature in vanilla wolves/dogs. This function would always be called
-     * when the dog is loaded from disk to memory to populate the java object. As you can
-     * see setHealth(20.0f) is always called if the dog is tamed, so the result is that 
-     * the dog health will always reset to 20.0f whether the owner :
-     * <p>+ Quit the game and come back in singleplayer</p> 
-     * <p>+ Unload the chunk and then come back</p> 
-     * <p>+ Anything that involves reloading a dog in memory</p> 
-     * <p>This is default behaviour and it is actually a hidden feature to help you
-     * heals a large amount of dogs easier, as you can just leave that chunk and come back later
-     * or in singleplayer... the classic restart the program :)) Which allows you to save your 
-     * dog even if he is in LAVA :)</p>
-     */
     @Override
     public void setTame(boolean tamed) {
         super.setTame(tamed);
         if (tamed) {
             var maxHealth = this.getDogLevel().getMaxHealth();
            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
-           this.maxHealth();
         } else {
            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(8.0D);
         }
@@ -3134,7 +3115,6 @@ public class Dog extends AbstractDog {
             float h = this.getDogLevel().getMaxHealth();
             if (h != this.getMaxHealth())
                 this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
-            this.maxHealth();
         }
 
         if (DOG_SIZE.get().equals(key)) {
