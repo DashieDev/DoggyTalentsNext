@@ -147,7 +147,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     private void renderMainName(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
         int light, boolean diffOwnerRender, boolean isDiffOwner) {
 
-        text = modifyText(dog, text, diffOwnerRender);
+        text = modifyMainText(dog, text, diffOwnerRender);
 
         renderDogText(dog, text, 0, 0.025f, stack, buffer, light, diffOwnerRender, isDiffOwner);
     }
@@ -251,7 +251,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         }
     }
 
-     private Component modifyText(Dog dog, Component text, boolean diffOwnerRender) {
+     private Component modifyMainText(Dog dog, Component text, boolean diffOwnerRender) {
         final int TXTCLR_HEALTH_70_100 = 0x0aff43;
         final int TXTCLR_HEALTH_30_70 = 0xeffa55;
         final int TXTCLR_HEALTH_0_30 = 0xff3636;
