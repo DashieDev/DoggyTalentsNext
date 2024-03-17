@@ -1166,3 +1166,9 @@ Inspired from the first ever creator of DoggyTalents.
 kick user out when load Dog's talents or accessories.
 * (Fabric Only) Fix Rice Texture.
 * (Fabric Only) Fix player unable to dismount Dog on Head.
+
+**1.18.10 - 18th March 2024**
+* Fix some model's Howl Animation.
+* HOTFIX: Dog health not getting maxed when it is supposed to.
+* HOTFIX: DogRespawnStorage don't show Dog's name.
+* (Fabric Only) Fix Swimmer Dog unable to be ridden at full speed underwater.
