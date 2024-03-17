@@ -1127,7 +1127,7 @@ The Dog might even do a Backflip to catch it!
 * Treat Bag now properly displays Content Overview of its inventory when hovered.
 * Fix the rest of the Black Text on certain Inventories.
 
-**1.18.9 - 20th February 2024**
+**1.18.9 - 17th March 2024**
 ========
 # Changes with respect to Vanilla Wolves:
 + Dogs no longer +1 and halves the damges dealt when being hit by an entity other than the Player or Arrow.
