@@ -1123,3 +1123,43 @@ The Dog might even do a Backflip to catch it!
   Sneak + Right Click the Dog to access its inventory.
 * Treat Bag now properly displays Content Overview of its inventory when hovered.
 * Fix the rest of the Black Text on certain Inventories.
+
+**1.18.9 - 20th February 2024**
+========
+# Changes with respect to Vanilla Wolves:
++ Dogs no longer +1 and halves the damges dealt when being hit by an entity other than the Player or Arrow.
++ Instead the dog's base max health itself is doubled.
++ Health-related logic are also doubled to accompaint, including:
+  + Dogs now heal 2 hearts per saturation value instead of one.
+  + Extra Health amount calculated based on Dog Level will now be doubled.
+"Speaking of wolf hearts – wolf-health-parity came with the most recent Bedrock Preview and Beta, meaning every wolf across both editions of Minecraft will now have 40 hearts when fully grown (Bedrock wolves only had 20 previously!" - Offical Minecraft statement.
++ (Non vanilla accompaint) Dog tail will now fold down slower at first but 
+quicker the more health the dog lost.
+========
++ Rice Mill now support Smoker directly too!
++ Allow Models to override animation Sequences, meaning that model can provide their own implementation of the Animation that causes too much dissonance with it.
++ Double Dyable Contact Lens!!!
++ Option to restrict CreeperSweeper 5 Dogs to only target Creepers.
++ Added es_es! @Arkathus
++ More names.
++ Ookamikaze Talent!! 💣💣
+Inspired from the first ever creator of DoggyTalents.
+"The most adorable harbinger of chaos and destruction the world has ever known! Feed it gunpowder, and it will create an explosion that doesn't hurt it!" - RaustBlackDragon, 2011.
+===
+- Remove Onsen Tamago Recipe to prevent conflict with other mod's Egg Recipe.
+===
+#Show dog Hunger in Status View Area instead of Pts.
+#Synchronized Config Value.
+#Changed how DTN pick data to be saved when dog got unloaded to Respawn Storage.
+#Halves the hunger decrease speed when dog is not moving.
+#Smoother transition from Vanilla to Classical.
+#Cooldown for Treat Bag
+===
+* Howl Animation fix
+* Fixed faint animation sometimes break.
+* Reinforce Quick Move on all DTN Inventory Menu.
+* (Fabric Only) Fix desynchronized Dog Inventories Menu
+* (Fabric Only) HOTFIX: Fix unsyncable DTN registries causing dedicated server to
+kick user out when load Dog's talents or accessories.
+* (Fabric Only) Fix Rice Texture.
+* (Fabric Only) Fix player unable to dismount Dog on Head.
