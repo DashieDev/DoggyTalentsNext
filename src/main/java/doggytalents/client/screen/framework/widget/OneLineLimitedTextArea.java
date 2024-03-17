@@ -48,6 +48,19 @@ public class OneLineLimitedTextArea extends AbstractWidget {
         
     }
     
-    
+    @Override
+    public boolean keyPressed(int p_94745_, int p_94746_, int p_94747_) {
+        return false;
+    }
+
+    @Override
+    public boolean keyReleased(int p_94750_, int p_94751_, int p_94752_) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseClicked(double p_93641_, double p_93642_, int p_93643_) {
+        return false;
+    }
 
 }
