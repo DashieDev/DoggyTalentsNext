@@ -14,6 +14,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.stats.StatFormatter;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 
@@ -75,86 +76,99 @@ public class DogStatusViewBoxElement extends AbstractElement {
     }
 
     public void renderHealthBar(GuiGraphics graphics, Dog dog, int x, int y) {
-        Random random = new Random();
-        random.setSeed((long) (dog.tickCount * 312871));
-        int dogHealth = Mth.ceil(dog.getHealth());
-        int aX = x;
-        int aY = y;
-        float dogMaxHealth = (float) dog.getMaxHealth();
-        int dogAbsorbAmount = Mth.ceil(dog.getAbsorptionAmount());
-        float totalHealth = (dogMaxHealth + (float) dogAbsorbAmount);
-        if (totalHealth > 40f) {
-            int pX = aX;
-            int pY = aY;
+        int pX = x;
+        int pY = y;
+        
+        String healthStr = " x " 
+            + StatFormatter.DECIMAL_FORMAT.format(dog.getHealth()) + "/" 
+            + ((int)dog.getMaxHealth());
+        pX += (80 - (8 + font.width(healthStr)))/2; 
+        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
+        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
+        pX += 9;
+        pY += 1;
+        graphics.drawString(font, healthStr, pX, pY, 0xffffffff);
+        return;
+        // Random random = new Random();
+        // random.setSeed((long) (dog.tickCount * 312871));
+        // int dogHealth = Mth.ceil(dog.getHealth());
+        // int aX = x;
+        // int aY = y;
+        // float dogMaxHealth = (float) dog.getMaxHealth();
+        // int dogAbsorbAmount = Mth.ceil(dog.getAbsorptionAmount());
+        // float totalHealth = (dogMaxHealth + (float) dogAbsorbAmount);
+        // if (totalHealth > 40f) {
+        //     int pX = aX;
+        //     int pY = aY;
             
-            String healthStr = " x " + dog.getHealth() + "/" + dogMaxHealth;
-            pX += (80 - (8 + font.width(healthStr)))/2; 
-            graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
-            pX += 9;
-            pY += 1;
-            graphics.drawString(font, healthStr, pX, pY, 0xffffffff);
+        //     String healthStr = " x " + dog.getHealth() + "/" + dogMaxHealth;
+        //     pX += (80 - (8 + font.width(healthStr)))/2; 
+        //     graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
+        //     pX += 9;
+        //     pY += 1;
+        //     graphics.drawString(font, healthStr, pX, pY, 0xffffffff);
             
-            return;
-        }
-        if (totalHealth > 20f) {
-            aY += 9;
-        }
-        int fullHealthLines = Mth.ceil(totalHealth / 20f);
-        int j2 = Math.max(10 - (fullHealthLines - 2), 3);
-        int pDogAbsorbAmount = dogAbsorbAmount;
-        int k3 = -1;
-        if (dog.hasEffect(MobEffects.REGENERATION)) {
-            k3 = dog.tickCount % Mth.ceil(dogMaxHealth + 5.0F);
-        }
-        // this.minecraft.getProfiler().push("health");
-        // not gonna display effect now becuz there is an client entity effect sync
-        // problem
+        //     return;
+        // }
+        // if (totalHealth > 20f) {
+        //     aY += 9;
+        // }
+        // int fullHealthLines = Mth.ceil(totalHealth / 20f);
+        // int j2 = Math.max(10 - (fullHealthLines - 2), 3);
+        // int pDogAbsorbAmount = dogAbsorbAmount;
+        // int k3 = -1;
+        // if (dog.hasEffect(MobEffects.REGENERATION)) {
+        //     k3 = dog.tickCount % Mth.ceil(dogMaxHealth + 5.0F);
+        // }
+        // // this.minecraft.getProfiler().push("health");
+        // // not gonna display effect now becuz there is an client entity effect sync
+        // // problem
 
-        for (int pHeart = Mth.ceil(totalHealth / 2.0F) - 1; pHeart >= 0; --pHeart) {
-            int guiIconIndexX = 16;
-            int guiIconIndexY = 0;
-            if (dog.hasEffect(MobEffects.POISON)) {
-                guiIconIndexX += 36;
-            } else if (dog.hasEffect(MobEffects.WITHER)) {
-                guiIconIndexX += 72;
-            }
+        // for (int pHeart = Mth.ceil(totalHealth / 2.0F) - 1; pHeart >= 0; --pHeart) {
+        //     int guiIconIndexX = 16;
+        //     int guiIconIndexY = 0;
+        //     if (dog.hasEffect(MobEffects.POISON)) {
+        //         guiIconIndexX += 36;
+        //     } else if (dog.hasEffect(MobEffects.WITHER)) {
+        //         guiIconIndexX += 72;
+        //     }
 
-            int k4 = Mth.ceil((float) (pHeart + 1) / 10.0F) - 1;
-            int heartX = aX + pHeart % 10 * 8;
-            int heartY = aY - k4 * j2;
-            if (dogHealth <= 4) {
-                heartY += random.nextInt(2);
-            }
+        //     int k4 = Mth.ceil((float) (pHeart + 1) / 10.0F) - 1;
+        //     int heartX = aX + pHeart % 10 * 8;
+        //     int heartY = aY - k4 * j2;
+        //     if (dogHealth <= 4) {
+        //         heartY += random.nextInt(2);
+        //     }
 
-            if (pDogAbsorbAmount <= 0 && pHeart == k3) {
-                heartY -= 2;
-            }
+        //     if (pDogAbsorbAmount <= 0 && pHeart == k3) {
+        //         heartY -= 2;
+        //     }
 
             
 
-            graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, 16, 0, 9, 9);
+        //     graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, 16, 0, 9, 9);
 
-            if (pDogAbsorbAmount > 0) {
-                //Render Yellow Heart.
-                if (pDogAbsorbAmount == dogAbsorbAmount && dogAbsorbAmount % 2 == 1) {
-                    graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 153, 9 * guiIconIndexY, 9, 9);
-                    --pDogAbsorbAmount;
-                } else {
-                    graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 144, 9 * guiIconIndexY, 9, 9);
-                    pDogAbsorbAmount -= 2;
-                }
-            } else {
-                //Render last red heart
-                if (pHeart * 2 + 1 < dogHealth) {
-                    graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 36, 9 * guiIconIndexY, 9, 9);
-                }
+        //     if (pDogAbsorbAmount > 0) {
+        //         //Render Yellow Heart.
+        //         if (pDogAbsorbAmount == dogAbsorbAmount && dogAbsorbAmount % 2 == 1) {
+        //             graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 153, 9 * guiIconIndexY, 9, 9);
+        //             --pDogAbsorbAmount;
+        //         } else {
+        //             graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 144, 9 * guiIconIndexY, 9, 9);
+        //             pDogAbsorbAmount -= 2;
+        //         }
+        //     } else {
+        //         //Render last red heart
+        //         if (pHeart * 2 + 1 < dogHealth) {
+        //             graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 36, 9 * guiIconIndexY, 9, 9);
+        //         }
 
-                if (pHeart * 2 + 1 == dogHealth) {
-                    graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 45, 9 * guiIconIndexY, 9, 9);
-                }
-            }
+        //         if (pHeart * 2 + 1 == dogHealth) {
+        //             graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, heartX, heartY, guiIconIndexX + 45, 9 * guiIconIndexY, 9, 9);
+        //         }
+        //     }
 
-        }
+        // }
 
         // this.minecraft.getProfiler().pop();
     }
