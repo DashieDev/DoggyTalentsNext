@@ -2208,6 +2208,7 @@ public class Dog extends AbstractDog {
         if (uuid != null) {
             child.setOwnerUUID(uuid);
             child.setTame(true);
+            child.maxHealth();
         }
 
         if (partner instanceof Dog && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PUPS_GET_PARENT_LEVELS)) {

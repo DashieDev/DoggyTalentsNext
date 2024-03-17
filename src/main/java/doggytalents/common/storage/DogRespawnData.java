@@ -218,6 +218,7 @@ public class DogRespawnData implements IDogData {
         } else {
             dog.setMode(EnumMode.DOCILE);
             dog.setAnim(DogAnimation.STAND_QUICK);
+            dog.maxHealth();
         }
 
         worldIn.addFreshEntityWithPassengers(dog);

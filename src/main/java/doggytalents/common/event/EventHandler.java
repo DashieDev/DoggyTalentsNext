@@ -165,7 +165,7 @@ public class EventHandler {
             throw new IllegalStateException("Creator function for the dog returned \"null\"");
         }
         dog.tame(owner);
-        dog.setHealth(dog.getMaxHealth());
+        dog.maxHealth();
         dog.setOrderedToSit(false);
         dog.setAge(wolf.getAge());
         dog.absMoveTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
