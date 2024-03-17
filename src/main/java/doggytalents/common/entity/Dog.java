@@ -138,7 +138,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidType;
@@ -2230,31 +2229,6 @@ public class Dog extends AbstractDog {
         } else {
             return this.getDogSize().getScale();
         }
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        // Any mod that tries to access capabilities from entity size/entity
-        // creation event will crash here because of the order java inits the
-        // classes fields and so will not have been initialised and are
-        // accessed during the classes super() call.
-        // Since this.alterations will be empty anyway as we have not read
-        // NBT data at this point just avoid silent error
-        // DoggyTalents#295, DoggyTalents#296
-        if (this.alterations == null) {
-            return super.getCapability(cap, side);
-        }
-
-        for (IDogAlteration alter : this.alterations) {
-            LazyOptional<T> result = alter.getCapability(this, cap, side);
-
-            if (result != null) {
-                return result;
-            }
-        }
-
-        return super.getCapability(cap, side);
     }
 
     private boolean changeDimensionAuthorized = false;
