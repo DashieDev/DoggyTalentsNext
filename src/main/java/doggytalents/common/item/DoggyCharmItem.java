@@ -58,6 +58,7 @@ public class DoggyCharmItem extends Item {
                if (player != null) {
                    dog.setTame(true);
                    dog.setOwnerUUID(player.getUUID());
+                   dog.maxHealth();
                }
                itemstack.shrink(1);
                if (player instanceof ServerPlayer sP)
@@ -85,6 +86,7 @@ public class DoggyCharmItem extends Item {
                         Dog dog = (Dog)entity;
                            dog.setTame(true);
                            dog.setOwnerUUID(playerIn.getUUID());
+                           dog.maxHealth();
                            itemstack.shrink(1);
 
                         if (playerIn instanceof ServerPlayer sP)
