@@ -10,7 +10,6 @@ import doggytalents.client.entity.render.DoggyArmorMapping;
 import doggytalents.client.entity.render.world.BedFinderRenderer;
 import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
 import doggytalents.client.event.ClientEventHandler;
-import doggytalents.common.Capabilities;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import doggytalents.common.chunk.GarbageChunkCollector;
 //import doggytalents.common.addon.AddonManager;
@@ -88,7 +87,6 @@ public class DoggyTalentsNext {
 
         modEventBus.addListener(DoggyRegistries::newRegistry);
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
-        modEventBus.addListener(Capabilities::registerCaps);
 
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
