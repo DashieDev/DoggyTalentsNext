@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class DogRespawnData implements IDogData {
@@ -32,6 +33,7 @@ public class DogRespawnData implements IDogData {
     private final DogRespawnStorage storage;
     private final UUID uuid;
     private UUID ownerUUID;
+    private Optional<String> dogName = Optional.empty();
     private CompoundTag data;
     private IncapacitatedSyncState killedBy = IncapacitatedSyncState.NONE;
 
@@ -62,8 +64,8 @@ public class DogRespawnData implements IDogData {
 
     @Override
     public String getDogName() {
-        Component name = NBTUtil.getTextComponent(this.data, "CustomName");
-        return name == null ? "noname" : name.getString();
+        var name = this.dogName.orElse(null);
+        return name == null ? "noname" : name;
     }
 
     @Override
@@ -81,6 +83,10 @@ public class DogRespawnData implements IDogData {
         this.data = new CompoundTag();
         
         this.ownerUUID = dogIn.getOwnerUUID();
+        var customName = dogIn.getCustomName();
+        if (customName != null) {
+            this.dogName = Optional.ofNullable(customName.getString());
+        } 
 
         var deathCauseOptional = dogIn.getDogDeathCause();
         if (deathCauseOptional.isPresent()) {
@@ -230,6 +236,12 @@ public class DogRespawnData implements IDogData {
 
     public void read(CompoundTag compound) {
         this.data = compound.getCompound("data");
+        if (compound.contains("dog_name", Tag.TAG_STRING)) {
+            try {
+                var name_str = compound.getString("dog_name");
+                this.dogName = Optional.ofNullable(name_str);
+            } catch (Exception e) {}
+        }
         if (compound.hasUUID("owner_uuid")) {
             this.ownerUUID = compound.getUUID("owner_uuid");
         }
@@ -238,6 +250,9 @@ public class DogRespawnData implements IDogData {
 
     public CompoundTag write(CompoundTag compound) {
         compound.put("data", this.data);
+        if (this.dogName.isPresent()) { 
+            compound.putString("dog_name", this.dogName.get());
+        }
         if (this.ownerUUID != null) {
             compound.putUUID("owner_uuid", this.ownerUUID);
         }
