@@ -1,5 +1,8 @@
 package doggytalents.client.entity.model.dog;
 
+import doggytalents.api.anim.AltDogAnimationSequences;
+import doggytalents.api.anim.DogAnimation;
+import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -250,4 +253,13 @@ public class SamoyedModel extends DogModel{
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
+
+	@Override
+	protected AnimationDefinition getAnimationSequence(DogAnimation anim) {
+		if (anim == DogAnimation.HOWL) {
+			return AltDogAnimationSequences.VICTORY_HOWL_ALT;
+		}
+		return super.getAnimationSequence(anim);
+	}
+
 }

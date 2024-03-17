@@ -1,5 +1,8 @@
 package doggytalents.client.entity.model.dog;
 
+import doggytalents.api.anim.AltDogAnimationSequences;
+import doggytalents.api.anim.DogAnimation;
+import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -57,5 +60,13 @@ public class BoxerFloppyModel extends DogModel {
 		.texOffs(16, 12).mirror().addBox(1.4335F, -1.0F, -1.0789F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F)).mirror(false), PartPose.offsetAndRotation(2.0F, -1.5F, -1.0F, 0.0F, 0.3054F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 32);
+	}
+
+	@Override
+	protected AnimationDefinition getAnimationSequence(DogAnimation anim) {
+		if (anim == DogAnimation.HOWL) {
+			return AltDogAnimationSequences.VICTORY_HOWL_ALT;
+		}
+		return super.getAnimationSequence(anim);
 	}
 }
