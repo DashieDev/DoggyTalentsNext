@@ -4,13 +4,12 @@ import com.google.common.collect.Lists;
 
 import doggytalents.common.block.DogBathBlock;
 import doggytalents.common.lib.Constants;
+import doggytalents.forge_imitate.registry.RegistryObject;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

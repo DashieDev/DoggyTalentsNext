@@ -1,16 +1,18 @@
 package doggytalents.common.util;
 
 import doggytalents.api.feature.FoodHandler;
+import doggytalents.api.forge_imitate.inventory.ContainerWrapper;
+import doggytalents.api.forge_imitate.inventory.IItemHandler;
+import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
@@ -19,7 +21,7 @@ import java.util.function.Predicate;
 
 public class InventoryUtil {
 
-    public static InteractionResult feedDogFrom(AbstractDog dogIn, @Nullable Entity entity, IItemHandlerModifiable source) {
+    public static InteractionResult feedDogFrom(AbstractDog dogIn, @Nullable Entity entity, ItemStackHandler source) {
 
         for (int i = 0; i < source.getSlots(); i++) {
 
@@ -48,7 +50,7 @@ public class InventoryUtil {
         return null;
     }
 
-    public static void transferStacks(IItemHandlerModifiable source, IItemHandler target) {
+    public static void transferStacks(IItemHandler source, IItemHandler target) {
         for (int i = 0; i < source.getSlots(); i++) {
             ItemStack stack = source.getStackInSlot(i);
             source.setStackInSlot(i, addItem(target, stack));
@@ -92,23 +94,23 @@ public class InventoryUtil {
 
     // Same as net.minecraft.inventory.container.Container.calcRedstoneFromInventory but for IItemHandler
     public static int calcRedstoneFromInventory(@Nullable IItemHandler inv) {
-        if (inv == null) {
+        //if (inv == null) {
            return 0;
-        } else {
-           int i = 0;
-           float f = 0.0F;
+        // } else {
+        //    int i = 0;
+        //    float f = 0.0F;
 
-           for (int j = 0; j < inv.getSlots(); ++j) {
-              ItemStack itemstack = inv.getStackInSlot(j);
-              if (!itemstack.isEmpty()) {
-                 f += itemstack.getCount() / (float)Math.min(inv.getSlotLimit(j), itemstack.getMaxStackSize());
-                 ++i;
-              }
-           }
+        //    for (int j = 0; j < inv.getSlots(); ++j) {
+        //       ItemStack itemstack = inv.getStackInSlot(j);
+        //       if (!itemstack.isEmpty()) {
+        //          f += itemstack.getCount() / (float)Math.min(inv.getSlotLimit(j), itemstack.getMaxStackSize());
+        //          ++i;
+        //       }
+        //    }
 
-           f = f / inv.getSlots();
-           return Mth.floor(f * 14.0F) + (i > 0 ? 1 : 0);
-        }
+        //    f = f / inv.getSlots();
+        //    return Mth.floor(f * 14.0F) + (i > 0 ? 1 : 0);
+        // }
      }
 
     public static @Nullable ItemStack findStackWithItemFromHands(Player player, Item item) {
@@ -121,5 +123,15 @@ public class InventoryUtil {
         if (stack1 != null && stack1.getItem() == item)
             return stack1;
         return null; 
+    }
+
+    
+    //Fabric
+    public static ItemStack addItem(Container target, ItemStack remaining) {
+        return addItem(new ContainerWrapper(target), remaining);
+    }
+
+    public static Pair<ItemStack, Integer> findStack(Container source, Predicate<ItemStack> searchCriteria) {
+        return findStack(new ContainerWrapper(source), searchCriteria);
     }
 }

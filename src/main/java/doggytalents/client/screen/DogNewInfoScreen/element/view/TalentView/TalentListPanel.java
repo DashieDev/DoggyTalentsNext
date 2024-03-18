@@ -13,6 +13,7 @@ import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.common.entity.Dog;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -26,7 +27,7 @@ public class TalentListPanel extends AbstractElement {
     public TalentListPanel(AbstractElement parent, Screen screen, Dog dog) {
         super(parent, screen);
         this.dog = dog;
-        var mc = this.getScreen().getMinecraft();
+        var mc = Minecraft.getInstance();
         this.font = mc.font;
         //TODO Auto-generated constructor stub
     }

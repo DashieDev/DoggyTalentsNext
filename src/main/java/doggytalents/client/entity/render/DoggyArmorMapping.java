@@ -23,7 +23,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Map;
 import java.util.Optional;
@@ -64,9 +63,9 @@ public class DoggyArmorMapping {
         if (!(item instanceof ArmorItem armor))
             return Resources.DEFAULT_DOG_ARMOR;
 
-        var preferedLocOptional = computePreferedArmorLoc(item, dog, stack);
-        if (preferedLocOptional.isPresent())
-            return preferedLocOptional.get();
+        // var preferedLocOptional = computePreferedArmorLoc(item, dog, stack);
+        // if (preferedLocOptional.isPresent())
+        //     return preferedLocOptional.get();
 
         var armorLoc = new ResourceLocation(armor.getMaterial().getName());
         var namespace = armorLoc.getNamespace();
@@ -80,16 +79,16 @@ public class DoggyArmorMapping {
         return computedRes;
     }
 
-    private static Optional<ResourceLocation> computePreferedArmorLoc(Item item, Dog dog, ItemStack stack) {
-        var preferedLocStr = net.minecraftforge.client.ForgeHooksClient.getArmorTexture(
-            dog, stack, Resources.DEFAULT_DOG_ARMOR.toString(), EquipmentSlot.CHEST, null);
-        var preferedLoc = new ResourceLocation(preferedLocStr);
-        if (preferedLoc.equals(Resources.DEFAULT_DOG_ARMOR))
-            return Optional.empty();
-        if (!(ClientEventHandler.vertifyArmorTexture(preferedLoc)))
-            return Optional.empty();
-        return Optional.ofNullable(preferedLoc);
-    }
+    // private static Optional<ResourceLocation> computePreferedArmorLoc(Item item, Dog dog, ItemStack stack) {
+    //     var preferedLocStr = net.minecraftforge.client.ForgeHooksClient.getArmorTexture(
+    //         dog, stack, Resources.DEFAULT_DOG_ARMOR.toString(), EquipmentSlot.CHEST, null);
+    //     var preferedLoc = new ResourceLocation(preferedLocStr);
+    //     if (preferedLoc.equals(Resources.DEFAULT_DOG_ARMOR))
+    //         return Optional.empty();
+    //     if (!(ClientEventHandler.vertifyArmorTexture(preferedLoc)))
+    //         return Optional.empty();
+    //     return Optional.ofNullable(preferedLoc);
+    // }
 
     public static ResourceLocation getMappedResource(Item item, Dog dog, ItemStack stack) {
         if (ConfigHandler.CLIENT.USE_LEGACY_DOG_ARMOR_RENDER.get())

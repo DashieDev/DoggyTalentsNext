@@ -1,19 +1,21 @@
 plugins {
     id 'eclipse'
-    id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
+	id 'fabric-loom' version '1.5-SNAPSHOT'
+	id 'maven-publish'
 }
 
 version = '1.18.10'
 group = 'com.github.dashiedev'
-archivesBaseName = "DoggyTalentsNext-${project.target_mc_version}"
+archivesBaseName = "DoggyTalentsNext[Fabric]-${project.minecraft_version}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 
 sourceSets {
-    api
+    api {
+        compileClasspath = configurations.compileClasspath
+    }
     main {
         compileClasspath += sourceSets.api.output
         runtimeClasspath += sourceSets.api.output
@@ -41,54 +43,58 @@ configurations {
     apiRuntimeOnly.extendsFrom(runtimeOnly)
 }
 
-minecraft {
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-    mappings channel: 'official', version: '1.20.1'
+repositories {
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    // Add repositories to retrieve artifacts from in here.
+	// You should only use this when depending on other mods because
+	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
+	// for more information about repositories.
+    maven {
+        name = "Fuzs Mod Resources"
+        url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+    }
 
+}
+
+loom {
+	accessWidenerPath = file("src/main/resources/doggytalents.accesswidener")
     runs {
-        client {
-            taskName 'doggytalents_client'
-            workingDirectory file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                doggytalents.sources((SourceSet[]) [sourceSets.main, sourceSets.api])
-            }
-        }
-
-        server {
-            taskName 'doggytalents_server'
-            workingDirectory file('run-server')
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                doggytalents.sources((SourceSet[]) [sourceSets.main, sourceSets.api])
-            }
-        }
-
-        data {
-            taskName 'doggytalents_data'
-            workingDirectory file('run')
-            property 'forge.logging.console.level', 'debug'
-            args '--mod', 'doggytalents', '--all', '--output', '"' + file('src/generated/resources/') + '"', '--existing', '"' + sourceSets.main.resources.srcDirs[0] + '"'
-            mods {
-                doggytalents.sources((SourceSet[]) [sourceSets.main, sourceSets.api])
-            }
+        // This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
+        datagen {
+            inherit server
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated/resources")}"
+            vmArg "-Dfabric-api.datagen.modid=doggytalents"
+ 
+            runDir "build/datagen"
         }
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
-repositories {
-}
-
 dependencies {
+	// To change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.officialMojangMappings()
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    
+    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
 
-    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
+	// Fabric API. This is technically optional, but you probably want it anyway.
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+	// Uncomment the following line to enable the deprecated Fabric API modules. 
+	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
+
+	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
+
+	implementation 'javax.inject:javax.inject:1'
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
 }
 
 jar {
@@ -114,4 +120,12 @@ tasks.withType(JavaCompile).configureEach {
 
 test {
     useJUnitPlatform()
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
 }

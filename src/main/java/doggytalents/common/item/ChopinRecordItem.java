@@ -20,7 +20,7 @@ public class ChopinRecordItem extends RecordItem {
 
     public ChopinRecordItem(int comparatorValue, Supplier<SoundEvent> soundSupplier, Properties builder,
             int lengthInTicks) {
-        super(comparatorValue, soundSupplier, builder, lengthInTicks);
+        super(comparatorValue, soundSupplier.get(), builder, lengthInTicks);
     }
 
     @Override

@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 
-import org.checkerframework.checker.units.qual.cd;
-
 import com.google.common.collect.Maps;
 
 import doggytalents.api.events.RegisterCustomDogModelsEvent;
 import doggytalents.api.events.RegisterCustomDogModelsEvent.DogModelProps;
+import doggytalents.api.events.fabric_helper.DTNDogModelEventCallbacks;
+import doggytalents.api.fabric_helper.entry.DogModelConfiguationRegistry;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.dog.AkitaAmericanModel;
@@ -80,7 +80,6 @@ import doggytalents.client.entity.model.dog.kusa.UmeModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.ModLoader;
 
 public class DogModelRegistry {
     
@@ -186,12 +185,12 @@ public class DogModelRegistry {
         register("samoyed", ctx ->  new SamoyedModel(ctx.bakeLayer(ClientSetup.DOG_SAMOYED)));
         register("bolt", ctx ->  new BoltModel(ctx.bakeLayer(ClientSetup.DOG_BOLT)));
 
-        registerFromEvent();
+        //registerFromEvent();
     }
 
     private static void registerFromEvent() {
         var entries = new ArrayList<DogModelProps>(); 
-        ModLoader.get().postEvent(new RegisterCustomDogModelsEvent(entries));
+        DTNDogModelEventCallbacks.REGISTER_CUSTOM_DOG_MODEL.invoker().onRegister(new RegisterCustomDogModelsEvent(entries));
         if (entries.isEmpty())
             return;
         for (var entry : entries) {
@@ -221,6 +220,23 @@ public class DogModelRegistry {
             this.value = getter.apply(ctx);
         }
 
+    }
+
+
+    //Fabric
+    public static void registerFromRegistry() {
+        var entries = DogModelConfiguationRegistry.getAllProps();
+        if (entries.isEmpty())
+            return;
+        for (var entry : entries) {
+            if (entry.id == null)
+                continue;
+            if (entry.layer == null)
+                continue;
+            if (MODEL_MAP.containsKey(entry.id)) 
+                continue;
+            register(entry.id, ctx -> new CustomDogModel(ctx.bakeLayer(entry.layer), entry));
+        }
     }
 
 }

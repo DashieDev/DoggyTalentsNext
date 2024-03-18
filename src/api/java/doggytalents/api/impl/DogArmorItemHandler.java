@@ -2,6 +2,7 @@ package doggytalents.api.impl;
 
 import org.jetbrains.annotations.NotNull;
 
+import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.api.inferface.AbstractDog;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -9,7 +10,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class DogArmorItemHandler extends ItemStackHandler {
     

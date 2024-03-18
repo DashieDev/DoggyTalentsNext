@@ -22,8 +22,8 @@ public class HotDogAccessoryItem extends AccessoryItem {
             (new FoodProperties.Builder())
                         .nutrition(12)
                         .saturationMod(1F)
-                        .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 60*60, 1), 1)
-                        .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 60*60, 1), 1)
+                        .effect(new MobEffectInstance(MobEffects.REGENERATION, 60*60, 1), 1)
+                        .effect(new MobEffectInstance(MobEffects.ABSORPTION, 60*60, 1), 1)
                         .build()
         ));
     }

@@ -8,10 +8,10 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogFlyingMoveControl;
 import doggytalents.common.entity.ai.nav.DogFlyingNavigation;
+import doggytalents.forge_imitate.atrrib.ForgeMod;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.common.ForgeMod;
 
 import java.util.UUID;
 

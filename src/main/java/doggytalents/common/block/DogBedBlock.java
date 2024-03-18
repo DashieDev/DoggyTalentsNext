@@ -55,8 +55,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import doggytalents.common.lib.Constants;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -350,7 +348,7 @@ public class DogBedBlock extends BaseEntityBlock {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    //@OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
@@ -391,7 +389,7 @@ public class DogBedBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(/*BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player*/BlockGetter world, BlockPos pos, BlockState state) {
         DogBedTileEntity dogBedTileEntity = WorldUtil.getTileEntity(world, pos, DogBedTileEntity.class);
 
         if (dogBedTileEntity != null) {

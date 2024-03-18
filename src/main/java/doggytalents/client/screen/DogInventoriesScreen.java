@@ -21,7 +21,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.forge_imitate.network.PacketDistributor;
 
 import java.util.Optional;
 
@@ -105,15 +105,15 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-       InputConstants.Key mouseKey = InputConstants.getKey(keyCode, scanCode);
-       if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
-           if (this.player.getAbilities().instabuild) {
-                this.minecraft.setScreen(new CreativeModeInventoryScreen(this.minecraft.player, this.minecraft.player.connection.enabledFeatures(), this.minecraft.options.operatorItemsTab().get()));
-           } else {
-                this.minecraft.setScreen(new InventoryScreen(this.player));
-           }
-           return true;
-       }
+    //    InputConstants.Key mouseKey = InputConstants.getKey(keyCode, scanCode);
+    //    if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
+    //        if (this.player.getAbilities().instabuild) {
+    //             this.minecraft.setScreen(new CreativeModeInventoryScreen(this.minecraft.player, this.minecraft.player.connection.enabledFeatures(), this.minecraft.options.operatorItemsTab().get()));
+    //        } else {
+    //             this.minecraft.setScreen(new InventoryScreen(this.player));
+    //        }
+    //        return true;
+    //    }
 
        return super.keyPressed(keyCode, scanCode, modifiers);
     }

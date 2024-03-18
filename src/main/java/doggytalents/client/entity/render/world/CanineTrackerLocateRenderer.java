@@ -30,11 +30,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
-import net.minecraftforge.event.TickEvent.ClientTickEvent;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.forge_imitate.event.client.ClientTickEvent;
+import doggytalents.forge_imitate.event.client.RenderLevelStageEvent;
+import doggytalents.forge_imitate.event.client.ClientTickEvent.Phase;
+import doggytalents.forge_imitate.event.client.RenderLevelStageEvent.Stage;
+import doggytalents.forge_imitate.network.PacketDistributor;
 
 public class CanineTrackerLocateRenderer {
 

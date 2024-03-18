@@ -56,5 +56,14 @@ public class TextOnlyButton extends AbstractButton {
         // TODO Auto-generated method stub
         
     }
+
+
+    //Fabric
+    public void setHeight(int h) {
+        this.height = h;
+    }
+    public int getHeight() {
+        return this.height;
+    }
     
 }

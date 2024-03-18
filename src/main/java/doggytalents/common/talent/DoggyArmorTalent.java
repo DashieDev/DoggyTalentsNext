@@ -8,6 +8,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.Screens;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.lib.Constants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -153,10 +154,10 @@ public class DoggyArmorTalent extends TalentInstance {
 
             if (spareValue > 0) {
                 
-                int i = Math.min((int) (spareValue * itemstack.getXpRepairRatio()), itemstack.getDamageValue());
+                int i = Math.min((int) (spareValue * FabricUtil.getRepairRatio(itemstack)), itemstack.getDamageValue());
                 itemstack.setDamageValue(itemstack.getDamageValue() - i);
 
-                spareValue -= i / itemstack.getXpRepairRatio();
+                spareValue -= i / FabricUtil.getRepairRatio(itemstack);
             }
 
             if (!itemstack.isDamaged()) return;
@@ -171,10 +172,10 @@ public class DoggyArmorTalent extends TalentInstance {
             for (var x : orbs) {
                 if (itemstack.getDamageValue() <= 0) break;
                 
-                int j = Math.min((int) (x.getValue() * itemstack.getXpRepairRatio()), itemstack.getDamageValue());
+                int j = Math.min((int) (x.getValue() * FabricUtil.getRepairRatio(itemstack)), itemstack.getDamageValue());
                 itemstack.setDamageValue(itemstack.getDamageValue() - j);
                 dog.take(x, 1);
-                this.spareValue += j / itemstack.getXpRepairRatio();
+                this.spareValue += j / FabricUtil.getRepairRatio(itemstack);
                 x.discard();
             }
                 

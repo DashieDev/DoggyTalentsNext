@@ -2,6 +2,7 @@ package doggytalents.common.inventory.container;
 
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyTalents;
+import doggytalents.api.forge_imitate.inventory.SlotItemHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.inventory.DoggyToolsItemHandler;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
@@ -11,7 +12,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class DoggyToolsMenu extends AbstractContainerMenu {
 

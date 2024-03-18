@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "doggytalents",
+  "version": "${version}",
+
+  "name": "Doggy Talents Next",
+  "description": "Minecraft Wolf, reimagined",
+  "authors": [
+    "DashieDev",
+    "MashXP"
+  ],
+  "contact": {
+    "homepage": "https://legacy.curseforge.com/minecraft/mc-mods/doggy-talents-next"
+  },
+
+  "accessWidener" : "doggytalents.accesswidener",
+
+  "license": "GNU LGPLv3",
+  "icon": "assets/doggytalents/dtn_icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "doggytalents.DoggyTalentsNextEntry"
+    ],
+    "client": [
+      "doggytalents.DoggyTalentsNextEntryClient"
+    ],
+    "fabric-datagen": [
+      "doggytalents.DoggyTalentsNextEntryData"
+    ]
+  },
+
+  "depends": {
+    "fabricloader": ">=0.15.7",
+    "fabric-api": "*",
+    "forgeconfigapiport": "*",
+    "minecraft": "~1.20",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  },
+
+  "mixins": [
+    "doggytalents.mixins.json"
+  ]
+}

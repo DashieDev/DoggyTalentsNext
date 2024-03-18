@@ -150,8 +150,8 @@ public class RescueDogTalent extends TalentInstance {
         //🥴
         if (add <= 0)
             return;
-        var add1 = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(e, add);
-        add = Math.max(add1, add);
+        // var add1 = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(e, add);
+        // add = Math.max(add1, add);
         
         float h = e.getHealth();
         if (h > 0.0F) {

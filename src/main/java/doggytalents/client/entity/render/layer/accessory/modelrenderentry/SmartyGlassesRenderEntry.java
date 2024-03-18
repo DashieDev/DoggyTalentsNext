@@ -22,7 +22,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLayerDefinitions;
+
 
 public class SmartyGlassesRenderEntry extends AccessoryModelManager.Entry {
 

@@ -1,10 +1,12 @@
 package doggytalents.common.network;
 
 import doggytalents.DoggyTalentsNext;
+import doggytalents.common.fabric_helper.entity.network.FabricSyncAllData;
+import doggytalents.common.fabric_helper.entity.network.FabricSyncAllPacket;
 import doggytalents.common.network.packet.*;
 import doggytalents.common.network.packet.data.*;
-import net.minecraftforge.network.PacketDistributor;
 import doggytalents.common.network.packet.data.ParticleData.*;
+import doggytalents.forge_imitate.network.PacketDistributor;
 import doggytalents.common.network.packet.ParticlePackets.*;
 
 public final class PacketHandler {
@@ -70,9 +72,12 @@ public final class PacketHandler {
         registerPacket(new GatePasserPacket(), GatePasserData.class);
         registerPacket(new DogSyncDataPacket(), DogSyncData.class);
         registerPacket(new DogExplosionPacket(), DogExplosionData.class);
+
+        //Fabric
+        registerPacket(new FabricSyncAllPacket(), FabricSyncAllData.class);
     }
 
-    public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
+    public static <MSG> void send(PacketDistributor.PacketTarget<?> target, MSG message) {
         DoggyTalentsNext.HANDLER.send(target, message);
     }
 

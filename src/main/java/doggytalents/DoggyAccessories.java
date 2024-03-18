@@ -1,21 +1,22 @@
 package doggytalents;
 
+import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.Accessory.AccessoryRenderType;
 import doggytalents.common.entity.accessory.*;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.forge_imitate.registry.DeferredRegister;
+import doggytalents.forge_imitate.registry.RegistryObject;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
 public class DoggyAccessories {
 
-    public static final DeferredRegister<Accessory> ACCESSORIES = DeferredRegister.create(DoggyRegistries.Keys.ACCESSORIES_REGISTRY, Constants.MOD_ID);
+    public static final DeferredRegister<Accessory> ACCESSORIES = DeferredRegister.create(DoggyTalentsAPI.ACCESSORIES, Constants.MOD_ID);
 
     public static final RegistryObject<DyeableAccessory> DYEABLE_COLLAR = register("dyeable_collar", () -> new DyeableAccessory(DoggyAccessoryTypes.COLLAR, DoggyItems.WOOL_COLLAR).setDogStillNakedWhenWear(true).setModelTexture(Resources.COLLAR_DEFAULT).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
     public static final RegistryObject<Collar> GOLDEN_COLLAR = register("golden_collar", () -> new Collar(DoggyItems.CREATIVE_COLLAR).setModelTexture(Resources.COLLAR_GOLDEN).setAccessoryRenderType(AccessoryRenderType.OVERLAY));

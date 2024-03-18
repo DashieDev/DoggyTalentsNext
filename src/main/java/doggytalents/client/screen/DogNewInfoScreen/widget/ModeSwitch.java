@@ -21,7 +21,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.forge_imitate.network.PacketDistributor;
 
 public class ModeSwitch extends AbstractWidget {
 
@@ -221,7 +221,7 @@ public class ModeSwitch extends AbstractWidget {
     public boolean keyPressedGlobal(int keyCode, int scanCode, int modifiers) {
         var mc = Minecraft.getInstance();
         var sneakKey = mc.options.keyShift;
-        if (keyCode == sneakKey.getKey().getValue()) {
+        if (sneakKey.matches(keyCode, scanCode)) {
             isHolding = true;
             return true;
         }

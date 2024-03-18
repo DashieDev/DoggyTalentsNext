@@ -29,7 +29,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.forge_imitate.network.PacketDistributor;
 
 
 
@@ -449,7 +449,7 @@ public class HeelByNameScreen extends Screen {
         }
 
         public void pushDogToFrequentStack(int id) {
-            var dog = screen.getMinecraft().level.getEntity(id);
+            var dog = Minecraft.getInstance().level.getEntity(id);
             if (dog == null) return;
             var uuid_str = dog.getStringUUID();
             if (uuid_str == null) return;

@@ -28,7 +28,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.forge_imitate.network.PacketDistributor;
 
 import java.util.List;
 import java.util.Optional;
@@ -154,7 +154,7 @@ public class DogInventoryButton extends AbstractButton {
     public void keyGlobalPressed(int keyCode, int scanCode, int modifier) {
         var mc = Minecraft.getInstance();
         var shiftKey = mc.options.keyShift;
-        if (shiftKey.getKey().getValue() == keyCode && this.openSingleDog.isPresent()) {
+        if (shiftKey.matches(keyCode, scanCode) && this.openSingleDog.isPresent()) {
             this.openSingle = true;
         }
     }

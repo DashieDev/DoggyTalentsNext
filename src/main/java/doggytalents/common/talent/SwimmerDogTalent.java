@@ -12,6 +12,7 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
+import doggytalents.forge_imitate.atrrib.ForgeMod;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
@@ -31,8 +32,6 @@ import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fluids.FluidType;
 
 public class SwimmerDogTalent extends TalentInstance {
     
@@ -186,9 +185,9 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult canResistPushFromFluidType(FluidType type) {
-        if (type != ForgeMod.WATER_TYPE.get())
-            return InteractionResult.PASS;
+    public InteractionResult canResistPushFromFluidType() {
+        // if (type != ForgeMod.WATER_TYPE.get())
+        //     return InteractionResult.PASS;
 
         if (this.level() >= 2) 
             return InteractionResult.SUCCESS;

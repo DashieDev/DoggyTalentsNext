@@ -16,16 +16,16 @@ import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.event.TagsUpdatedEvent;
+import doggytalents.forge_imitate.event.TagsUpdatedEvent.UpdateCause;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.event.TagsUpdatedEvent;
-import net.minecraftforge.event.TagsUpdatedEvent.UpdateCause;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class DogBedMaterialManager {
 
@@ -133,7 +133,7 @@ public class DogBedMaterialManager {
     private static void populateBedding(UpdateCause cause) {
         var blocks = fetchBeddingBlocks();
         for (var block : blocks) {
-            var id = ForgeRegistries.BLOCKS.getKey(block);
+            var id = BuiltInRegistries.BLOCK.getKey(block);
             var value = (IBeddingMaterial) new BeddingMaterial(() -> block);
             if (cause == UpdateCause.CLIENT_PACKET_RECEIVED) {
                 if (!ClientEventHandler.vertifyBlockTexture(value.getTexture()))
@@ -147,7 +147,7 @@ public class DogBedMaterialManager {
     private static void populateCasing(UpdateCause cause) {
         var blocks = fetchCasingBlocks();
         for (var block : blocks) {
-            var id = ForgeRegistries.BLOCKS.getKey(block);
+            var id = BuiltInRegistries.BLOCK.getKey(block);
             var value = (ICasingMaterial) new CasingMaterial(() -> block);
             if (cause == UpdateCause.CLIENT_PACKET_RECEIVED) {
                 if (!ClientEventHandler.vertifyBlockTexture(value.getTexture()))
@@ -159,11 +159,11 @@ public class DogBedMaterialManager {
     }
 
     private static List<Block> fetchCasingBlocks() {
-        var tags = ForgeRegistries.BLOCKS.tags();
-        var planks = tags.getTag(BlockTags.PLANKS)
-            .stream().collect(Collectors.toList());
-        var logs = tags.getTag(BlockTags.LOGS)
-            .stream().collect(Collectors.toList());
+        var tags = BuiltInRegistries.BLOCK;
+        var planks = tags.getTag(BlockTags.PLANKS).map(x -> x
+            .stream().map(y -> y.value()).collect(Collectors.toList())).orElse(List.of());
+        var logs = tags.getTag(BlockTags.LOGS).map(x -> x
+            .stream().map(y -> y.value()).collect(Collectors.toList())).orElse(List.of());
         var ret = new ArrayList<Block>(planks.size() + logs.size());
         ret.addAll(planks);
         ret.addAll(logs);
@@ -171,9 +171,9 @@ public class DogBedMaterialManager {
     }
 
     private static List<Block> fetchBeddingBlocks() {
-        var tags = ForgeRegistries.BLOCKS.tags();
-        var wools = tags.getTag(BlockTags.WOOL)
-            .stream().collect(Collectors.toList());
+        var tags = BuiltInRegistries.BLOCK;
+        var wools = tags.getTag(BlockTags.WOOL).map(x -> x
+            .stream().map(y -> y.value()).collect(Collectors.toList())).orElse(List.of());
         var ret = new ArrayList<Block>(wools.size());
         ret.addAll(wools);
         return ret;

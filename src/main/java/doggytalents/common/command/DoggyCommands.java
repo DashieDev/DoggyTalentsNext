@@ -16,6 +16,8 @@ import doggytalents.common.item.CanineTrackerItem;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.storage.*;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.registry.DeferredRegister;
+import doggytalents.forge_imitate.registry.RegistryObject;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -24,6 +26,7 @@ import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.commands.EffectCommands;
 import net.minecraft.server.level.ServerLevel;
@@ -31,9 +34,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -45,7 +45,7 @@ import static net.minecraft.commands.Commands.literal;
 public class DoggyCommands {
 
     
-    public static final DeferredRegister<ArgumentTypeInfo<?,?>> ARG_TYPE = DeferredRegister.create(ForgeRegistries.Keys.COMMAND_ARGUMENT_TYPES, Constants.MOD_ID);
+    public static final DeferredRegister<ArgumentTypeInfo<?,?>> ARG_TYPE = DeferredRegister.create(() -> BuiltInRegistries.COMMAND_ARGUMENT_TYPE, Constants.MOD_ID);
     public static final RegistryObject<SingletonArgumentInfo<UUIDArgument>> SUUID = ARG_TYPE.register("doggy_uuid", () -> SingletonArgumentInfo.contextFree(UUIDArgument::uuid));
 
 

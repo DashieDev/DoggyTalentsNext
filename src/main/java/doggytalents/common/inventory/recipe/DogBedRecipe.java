@@ -14,9 +14,8 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.crafting.IShapedRecipe;
 
-public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<CraftingContainer> {
+public class DogBedRecipe extends CustomRecipe /*implements IShapedRecipe<CraftingContainer>*/ {
 
     public DogBedRecipe(ResourceLocation resource, CraftingBookCategory p_249010_) {
         super(resource, p_249010_);
@@ -61,17 +60,17 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
         return true;
     }
 
-    @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
-        NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack>withSize(inv.getContainerSize(), ItemStack.EMPTY);
+    // @Override
+    // public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
+    //     NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack>withSize(inv.getContainerSize(), ItemStack.EMPTY);
 
-        for (int i = 0; i < nonnulllist.size(); ++i) {
-            ItemStack itemstack = inv.getItem(i);
-            nonnulllist.set(i, net.minecraftforge.common.ForgeHooks.getCraftingRemainingItem(itemstack)); //TODO?
-        }
+    //     for (int i = 0; i < nonnulllist.size(); ++i) {
+    //         ItemStack itemstack = inv.getItem(i);
+    //         nonnulllist.set(i, net.minecraftforge.common.ForgeHooks.getCraftingRemainingItem(itemstack)); //TODO?
+    //     }
 
-        return nonnulllist;
-    }
+    //     return nonnulllist;
+    // }
 
     //Is on a 3x3 grid or bigger
     @Override
@@ -84,15 +83,15 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
         return DoggyRecipeSerializers.DOG_BED.get();
     }
 
-    @Override
-    public int getRecipeWidth() {
-        return 3;
-    }
+    // @Override
+    // public int getRecipeWidth() {
+    //     return 3;
+    // }
 
-    @Override
-    public int getRecipeHeight() {
-        return 3;
-    }
+    // @Override
+    // public int getRecipeHeight() {
+    //     return 3;
+    // }
 
     @Override
     public ItemStack assemble(CraftingContainer inv, RegistryAccess p_267165_) {

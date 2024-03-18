@@ -31,7 +31,7 @@ public class SmallButton extends Button {
        graphics.blit(Resources.SMALL_WIDGETS, this.getX(), this.getY(), 0, i, this.width, this.height);
        //TODO 1.19.4 ??? 
        //this.renderBg(stack, mc, mouseX, mouseY);
-       int j = getFGColor();
+       int j = this.active ? 0xFFFFFF : 0xA0A0A0;
        graphics.drawCenteredString(font, this.getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }
     private int getTextureY() {

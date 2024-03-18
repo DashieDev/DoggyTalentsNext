@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import doggytalents.common.util.NBTUtil;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -16,7 +17,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class ScentTreatItem extends Item {
 
@@ -70,7 +70,7 @@ public class ScentTreatItem extends Item {
             return InteractionResult.SUCCESS;
 
         var block = state.getBlock();
-        var id = ForgeRegistries.BLOCKS.getKey(block);
+        var id = BuiltInRegistries.BLOCK.getKey(block);
         NBTUtil.putResourceLocation(tag, SCENT_BLOCK_ID, id);
 
         return InteractionResult.SUCCESS;
@@ -86,7 +86,7 @@ public class ScentTreatItem extends Item {
         var tag = stack.getOrCreateTag();
         if (!tag.contains(SCENT_BLOCK_ID))
             return;
-        var block = NBTUtil.getRegistryValue(tag, SCENT_BLOCK_ID, ForgeRegistries.BLOCKS);
+        var block = NBTUtil.getRegistryValue(tag, SCENT_BLOCK_ID, BuiltInRegistries.BLOCK);
         if (block == null)
             return;
         components.add(Component.translatable(this.getDescriptionId() + ".scented_block"));

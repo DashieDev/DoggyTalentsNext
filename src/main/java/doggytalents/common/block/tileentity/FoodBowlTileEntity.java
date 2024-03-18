@@ -2,6 +2,7 @@ package doggytalents.common.block.tileentity;
 
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.api.feature.FoodHandler;
+import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.inventory.container.FoodBowlContainer;
 import doggytalents.common.util.InventoryUtil;
@@ -19,10 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,17 +30,17 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
 
     private final ItemStackHandler inventory = new ItemStackHandler(5) {
         @Override
-        protected void onContentsChanged(int slot) {
+        protected void onContentsChanged() {
             // When contents change mark needs save to disc
             FoodBowlTileEntity.this.setChanged();
         }
 
         @Override
-        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        public boolean canPlaceItem(int slotId, @Nonnull ItemStack stack) {
             return FoodHandler.isFood(stack).isPresent();
         }
     };
-    private final LazyOptional<ItemStackHandler> itemStackHandler = LazyOptional.of(() -> this.inventory);
+    //private final LazyOptional<ItemStackHandler> itemStackHandler = LazyOptional.of(() -> this.inventory);
 
 
     public int timeoutCounter;
@@ -99,14 +96,14 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
         return this.inventory;
     }
 
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return (LazyOptional<T>) this.itemStackHandler;
-        }
-        return super.getCapability(cap, side);
-    }
+    // @Nonnull
+    // @Override
+    // public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+    //     if (cap == ForgeCapabilities.ITEM_HANDLER) {
+    //         return (LazyOptional<T>) this.itemStackHandler;
+    //     }
+    //     return super.getCapability(cap, side);
+    // }
 
     @Override
     public Component getDisplayName() {

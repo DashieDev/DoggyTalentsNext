@@ -16,6 +16,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.WolfBegAtTreatGoal;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
+import doggytalents.common.fabric_helper.storage.FabricRecievedStarterBundleStorage;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.TrainWolfToDogData;
 import doggytalents.common.storage.DogLocationStorage;
@@ -27,6 +28,18 @@ import doggytalents.common.util.Util;
 import doggytalents.common.util.dogpromise.DogPromiseManager;
 import doggytalents.common.util.dogpromise.promise.DogBatchTeleportToDimensionPromise;
 import doggytalents.common.util.dogpromise.promise.DogHoldChunkToTeleportPromise;
+import doggytalents.forge_imitate.event.EntityJoinLevelEvent;
+import doggytalents.forge_imitate.event.EntityTravelToDimensionEvent;
+import doggytalents.forge_imitate.event.LivingHurtEvent;
+import doggytalents.forge_imitate.event.LootingLevelEvent;
+import doggytalents.forge_imitate.event.PlayerInteractEvent;
+import doggytalents.forge_imitate.event.PlayerLoggedInEvent;
+import doggytalents.forge_imitate.event.ProjectileImpactEvent;
+import doggytalents.forge_imitate.event.ServerStoppingEvent;
+import doggytalents.forge_imitate.event.ServerTickEvent;
+import doggytalents.forge_imitate.event.TagsUpdatedEvent;
+import doggytalents.forge_imitate.event.ServerTickEvent.Phase;
+import doggytalents.forge_imitate.network.PacketDistributor;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -55,31 +68,10 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.TagsUpdatedEvent;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.TickEvent.ServerTickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.EntityTeleportEvent;
-import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LootingLevelEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.event.server.ServerStoppingEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class EventHandler {
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onServerTickEnd(final ServerTickEvent event) {
 
         if (event.phase != Phase.END) return;
@@ -88,13 +80,13 @@ public class EventHandler {
         DogLocationStorage.get(event.getServer()).getOnlineDogsManager().tick();
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
         DogPromiseManager.forceStop();
         DogLocationStorage.get(event.getServer()).onServerStop(event);
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onWolfRightClickWithTreat(final PlayerInteractEvent.EntityInteract event) {
         var level = event.getLevel();
         var stack = event.getItemStack();
@@ -203,7 +195,7 @@ public class EventHandler {
         dog.setUUID(uuid);
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onEntitySpawn(final EntityJoinLevelEvent event) {
         Entity entity = event.getEntity();
         var level = entity.level();
@@ -218,25 +210,21 @@ public class EventHandler {
         }
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void playerLoggedIn(final PlayerLoggedInEvent event) {
         if (event.getEntity().level().isClientSide)
             return;
 
         if (isEnableStarterBundle()) {
 
-            Player player = event.getEntity();
+            var player = event.getEntity();
+ 
+            var storage = FabricRecievedStarterBundleStorage.get(player.level().getServer());
+            if (storage == null)
+                return;
 
-            CompoundTag tag = player.getPersistentData();
-
-            if (!tag.contains(Player.PERSISTED_NBT_TAG)) {
-                tag.put(Player.PERSISTED_NBT_TAG, new CompoundTag());
-            }
-
-            CompoundTag persistTag = tag.getCompound(Player.PERSISTED_NBT_TAG);
-
-            if (!persistTag.getBoolean("gotDTStartingItems")) {
-                persistTag.putBoolean("gotDTStartingItems", true);
+            if (!storage.hasBundleAlready(player)) {
+                storage.onRecievedBundle(player);
 
                 player.getInventory().add(new ItemStack(DoggyItems.STARTER_BUNDLE.get()));
             }
@@ -244,23 +232,23 @@ public class EventHandler {
     }
 
     private boolean isEnableStarterBundle() {
-        final var retMut = new MutableBoolean(false);
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-            if (ConfigHandler.ClientConfig
-                .getConfig(ConfigHandler.CLIENT.ENABLE_STARTER_BUNDLE_BY_DEFAULT))
-                retMut.setTrue();
-        });
-        if (retMut.getValue())
-            return true;
+        // final var retMut = new MutableBoolean(false);
+        // DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+        //     if (ConfigHandler.ClientConfig
+        //         .getConfig(ConfigHandler.CLIENT.ENABLE_STARTER_BUNDLE_BY_DEFAULT))
+        //         retMut.setTrue();
+        // });
+        // if (retMut.getValue())
+        //     return true;
         return ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.STARTING_ITEMS);
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onLootDrop(final LootingLevelEvent event) {
         HunterDogTalent.onLootDrop(event);
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onProjectileHit(final ProjectileImpactEvent event) {
         var levelChecker = event.getProjectile();
         if (levelChecker == null)
@@ -361,7 +349,7 @@ public class EventHandler {
     }
 
     public final int COLLECT_RADIUS = 26;
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onEntityChangeDimension(EntityTravelToDimensionEvent event) {
         var entity = event.getEntity();
         if (entity.level().isClientSide) return;
@@ -393,29 +381,29 @@ public class EventHandler {
     }
 
     public final int MIN_DISTANCE_TO_TRIGGER_TELEPORT_SQR = 400;
-    @SubscribeEvent
-    public void onOwnerTeleport(EntityTeleportEvent event) {
-        var entity = event.getEntity();
-        if (!(entity instanceof ServerPlayer owner)) return;
-        if (!(owner.level() instanceof ServerLevel sLevel)) return;
+    // @SubscribeEvent
+    // public void onOwnerTeleport(EntityTeleportEvent event) {
+    //     var entity = event.getEntity();
+    //     if (!(entity instanceof ServerPlayer owner)) return;
+    //     if (!(owner.level() instanceof ServerLevel sLevel)) return;
         
-        if (this.distanceTooShortToTeleport(event.getPrev(), event.getTarget()))
-            return;
+    //     if (this.distanceTooShortToTeleport(event.getPrev(), event.getTarget()))
+    //         return;
 
-        var crossOriginTpList = sLevel
-            .getEntitiesOfClass(
-                Dog.class, 
-                owner.getBoundingBox().inflate(COLLECT_RADIUS, 4, COLLECT_RADIUS),
-                d -> isDogReadyToTeleport(d, owner)
-            );
-        if (crossOriginTpList.isEmpty()) return;
+    //     var crossOriginTpList = sLevel
+    //         .getEntitiesOfClass(
+    //             Dog.class, 
+    //             owner.getBoundingBox().inflate(COLLECT_RADIUS, 4, COLLECT_RADIUS),
+    //             d -> isDogReadyToTeleport(d, owner)
+    //         );
+    //     if (crossOriginTpList.isEmpty()) return;
 
-        DogPromiseManager.addPromiseWithOwnerAndStartImmediately(
-            new DogHoldChunkToTeleportPromise(
-                crossOriginTpList, sLevel
-            )
-            , owner);
-    }
+    //     DogPromiseManager.addPromiseWithOwnerAndStartImmediately(
+    //         new DogHoldChunkToTeleportPromise(
+    //             crossOriginTpList, sLevel
+    //         )
+    //         , owner);
+    // }
 
     private boolean isDogReadyToTeleport(Dog dog, LivingEntity owner) {
         if (!dog.isDoingFine()) 
@@ -435,32 +423,32 @@ public class EventHandler {
         return from.distanceToSqr(to) < MIN_DISTANCE_TO_TRIGGER_TELEPORT_SQR;
     }
 
-    @SubscribeEvent
-    public void onLivingDeath(LivingDropsEvent event) {
-        PackPuppyTalent.mayNotifyNearbyPackPuppy(event);
-    }
+    // @SubscribeEvent
+    // public void onLivingDeath(LivingDropsEvent event) {
+    //     PackPuppyTalent.mayNotifyNearbyPackPuppy(event);
+    // }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onTagsUpdated(TagsUpdatedEvent event) {
         DogBedMaterialManager.onTagsUpdated(event);
     }
 
-    @SubscribeEvent
-    public void onLevelLoad(LevelEvent.Load event) {
-        var level = event.getLevel();
-        if (level == null)
-            return;
-        var server = level.getServer();
-        if (server == null)
-            return;
-        var level_overworld = server.getLevel(Level.OVERWORLD);
-        if (level != level_overworld)
-            return;
-        DogLocationStorageMigration.checkAndMigrate(level_overworld);
-    }
+    // @SubscribeEvent
+    // public void onLevelLoad(LevelEvent.Load event) {
+    //     var level = event.getLevel();
+    //     if (level == null)
+    //         return;
+    //     var server = level.getServer();
+    //     if (server == null)
+    //         return;
+    //     var level_overworld = server.getLevel(Level.OVERWORLD);
+    //     if (level != level_overworld)
+    //         return;
+    //     DogLocationStorageMigration.checkAndMigrate(level_overworld);
+    // }
 
     //Prevent passenger suffocate when riding dog.
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onDogPassenegerHurtInWall(LivingHurtEvent event) {
         var entity = event.getEntity();
         if (entity == null)

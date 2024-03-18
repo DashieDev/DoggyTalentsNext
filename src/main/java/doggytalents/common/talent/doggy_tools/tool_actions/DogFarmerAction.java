@@ -184,8 +184,8 @@ public class DogFarmerAction extends ToolAction {
             Blocks.WHEAT.defaultBlockState()
             : DoggyBlocks.RICE_CROP.get().defaultBlockState();
         this.dog.level().setBlockAndUpdate(this.nextFarmBlock.above(), wheatState);
-        var soundtype = wheatState.getSoundType(
-            this.dog.level(), this.nextFarmBlock.above(), this.dog);
+        var soundtype = wheatState.getBlock().getSoundType(
+            wheatState);
         this.dog.playSound(soundtype.getPlaceSound(), 
             (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
     }

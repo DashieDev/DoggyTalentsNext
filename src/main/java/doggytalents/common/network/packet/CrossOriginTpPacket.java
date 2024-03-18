@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.CrossOriginTpData;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
 
 public class CrossOriginTpPacket extends DogPacket<CrossOriginTpData> {
 

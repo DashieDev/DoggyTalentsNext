@@ -10,7 +10,8 @@ import doggytalents.common.lib.Resources;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLayerDefinitions;
+
 
 public class HotDogRenderEntry extends AccessoryModelManager.Entry{
     

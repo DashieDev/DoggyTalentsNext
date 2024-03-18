@@ -22,8 +22,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.ITeleporter;
-import net.minecraftforge.common.world.ForgeChunkManager;
+import doggytalents.forge_imitate.chunk.ForgeChunkManager;
 
 public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
 
@@ -113,7 +112,7 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
         if (!dogValidator.test(dog0)) return;
 
         dog0.authorizeChangeDimension();
-        dog0.changeDimension(targetLevel, new DogTeleporter(pos));
+        var dog = dog0.changeDimension(targetLevel); dog.moveTo(pos, dog.getYRot(), dog.getXRot());
     }
 
     @Override
@@ -155,24 +154,24 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
         }
     }
 
-    private static class DogTeleporter implements ITeleporter {
+    // private static class DogTeleporter implements ITeleporter {
 
-        private BlockPos safePos;
+    //     private BlockPos safePos;
 
-        public DogTeleporter(BlockPos safePos) {
-            this.safePos = safePos;
-        }
+    //     public DogTeleporter(BlockPos safePos) {
+    //         this.safePos = safePos;
+    //     }
 
-        @Override
-        public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld,
-                Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-            return new PortalInfo(
-                Vec3.atBottomCenterOf(safePos), 
-                Vec3.ZERO, 
-                entity.getYRot(), entity.getXRot()
-            );
-        }
+    //     @Override
+    //     public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld,
+    //             Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+    //         return new PortalInfo(
+    //             Vec3.atBottomCenterOf(safePos), 
+    //             Vec3.ZERO, 
+    //             entity.getYRot(), entity.getXRot()
+    //         );
+    //     }
 
-    }
+    // }
     
 }

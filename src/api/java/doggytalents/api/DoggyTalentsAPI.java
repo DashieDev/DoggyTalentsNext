@@ -8,7 +8,7 @@ import doggytalents.api.registry.AccessoryType;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.api.registry.Talent;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraft.core.Registry;
 
 import java.util.function.Supplier;
 
@@ -17,9 +17,9 @@ import java.util.function.Supplier;
  */
 public class DoggyTalentsAPI {
 
-    public static Supplier<IForgeRegistry<Talent>> TALENTS;
-    public static Supplier<IForgeRegistry<Accessory>> ACCESSORIES;
-    public static Supplier<IForgeRegistry<AccessoryType>> ACCESSORY_TYPE;
+    public static Supplier<Registry<Talent>> TALENTS;
+    public static Supplier<Registry<Accessory>> ACCESSORIES;
+    public static Supplier<Registry<AccessoryType>> ACCESSORY_TYPE;
     
     public static final Logger LOGGER = LogManager.getLogger("doggytalents");
 }

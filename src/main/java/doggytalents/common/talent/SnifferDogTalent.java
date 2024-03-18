@@ -18,6 +18,7 @@ import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -34,7 +35,6 @@ import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class SnifferDogTalent extends TalentInstance {
 
@@ -183,7 +183,7 @@ public class SnifferDogTalent extends TalentInstance {
         if (!tag.contains(ScentTreatItem.SCENT_BLOCK_ID)) {
             this.clearDetectBlock();
         } else {
-            var block = NBTUtil.getRegistryValue(tag, ScentTreatItem.SCENT_BLOCK_ID, ForgeRegistries.BLOCKS);
+            var block = NBTUtil.getRegistryValue(tag, ScentTreatItem.SCENT_BLOCK_ID, BuiltInRegistries.BLOCK);
             if (block == null)
                 return InteractionResult.SUCCESS;
             
@@ -230,14 +230,14 @@ public class SnifferDogTalent extends TalentInstance {
         super.writeToNBT(dogIn, compound);
         if (this.detectingBlock == null)
             this.detectingBlock = Blocks.AIR;
-        var id = ForgeRegistries.BLOCKS.getKey(this.detectingBlock);
+        var id = BuiltInRegistries.BLOCK.getKey(this.detectingBlock);
         NBTUtil.putResourceLocation(compound, "snifferDog_detectingBlock", id);
     }
 
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
-        var block = NBTUtil.getRegistryValue(compound, "snifferDog_detectingBlock", ForgeRegistries.BLOCKS);
+        var block = NBTUtil.getRegistryValue(compound, "snifferDog_detectingBlock", BuiltInRegistries.BLOCK);
         if (block == null)
             block = Blocks.AIR;
         this.detectingBlock = block;

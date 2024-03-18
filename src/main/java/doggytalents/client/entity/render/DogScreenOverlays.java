@@ -2,12 +2,12 @@ package doggytalents.client.entity.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import doggytalents.common.entity.Dog;
+import doggytalents.forge_imitate.client.ForgeGuiOverlayManager.IGuiOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 public class DogScreenOverlays {
 

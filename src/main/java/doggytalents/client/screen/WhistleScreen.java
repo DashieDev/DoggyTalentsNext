@@ -3,8 +3,6 @@ package doggytalents.client.screen;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.antlr.v4.parse.ANTLRParser.parserRule_return;
-
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -31,7 +29,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.forge_imitate.network.PacketDistributor;
 
 
 public class WhistleScreen extends Screen{

@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 
 import doggytalents.common.util.Cache;
 import doggytalents.common.util.NBTUtil;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -11,7 +12,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collections;
 import java.util.Map;
@@ -36,7 +36,7 @@ public class StatsTracker {
         ListTag killList = new ListTag();
         for (Entry<EntityType<?>, Integer> entry : this.ENTITY_KILLS.entrySet()) {
             CompoundTag stats = new CompoundTag();
-            NBTUtil.putRegistryValue(stats, "type", ForgeRegistries.ENTITY_TYPES.getKey(entry.getKey()));
+            NBTUtil.putRegistryValue(stats, "type", BuiltInRegistries.ENTITY_TYPE.getKey(entry.getKey()));
             stats.putInt("count", entry.getValue());
             killList.add(stats);
         }
@@ -54,7 +54,7 @@ public class StatsTracker {
         ListTag killList = compound.getList("entityKills", Tag.TAG_COMPOUND);
         for (int i = 0; i < killList.size(); i++) {
             CompoundTag stats = killList.getCompound(i);
-            EntityType<?> type = NBTUtil.getRegistryValue(stats, "type", ForgeRegistries.ENTITY_TYPES);
+            EntityType<?> type = NBTUtil.getRegistryValue(stats, "type", BuiltInRegistries.ENTITY_TYPE);
             this.ENTITY_KILLS.put(type, stats.getInt("count"));
         }
         this.damageDealt = compound.getFloat("damageDealt");
@@ -177,7 +177,7 @@ public class StatsTracker {
         int mapSize = this.ENTITY_KILLS.size();
         buf.writeInt(mapSize);
         for (var entry : this.ENTITY_KILLS.entrySet()) {
-            var typeId = ForgeRegistries.ENTITY_TYPES.getKey(entry.getKey());
+            var typeId = BuiltInRegistries.ENTITY_TYPE.getKey(entry.getKey());
             var killCount = entry.getValue();
             buf.writeResourceLocation(typeId);
             buf.writeInt(killCount);
@@ -199,7 +199,7 @@ public class StatsTracker {
         for (int i = 0; i < mapSize; ++i) {
             var typeId = buf.readResourceLocation();
             var killCount = buf.readInt();
-            var type = ForgeRegistries.ENTITY_TYPES.getValue(typeId);
+            var type = BuiltInRegistries.ENTITY_TYPE.get(typeId);
             this.ENTITY_KILLS.put(type, killCount);
         }
     }

@@ -1,6 +1,8 @@
 package doggytalents.common.item;
 
 import doggytalents.api.feature.FoodHandler;
+import doggytalents.api.forge_imitate.inventory.ContainerWrapper;
+import doggytalents.api.forge_imitate.inventory.IItemHandler;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.Screens;
@@ -26,16 +28,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.EmptyHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -64,10 +56,10 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
 
                 return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
             }
-            if (playerIn instanceof ServerPlayer && !(playerIn instanceof FakePlayer)) {
-                ServerPlayer serverPlayer = (ServerPlayer) playerIn;
+            if (playerIn instanceof ServerPlayer) {
+                // ServerPlayer serverPlayer = (ServerPlayer) playerIn;
 
-                Screens.openTreatBagScreen(serverPlayer, stack, playerIn.getInventory().selected);
+                // Screens.openTreatBagScreen(serverPlayer, stack, playerIn.getInventory().selected);
             }
 
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
@@ -75,7 +67,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     }
 
     private void findFoodAndShootOut(ServerPlayer player, ItemStack stack) {
-        var itemHandler = (IItemHandlerModifiable) stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
+        var itemHandler = new ContainerWrapper(player.getInventory());
         int foodStackId = findThrowableInItemHandler(itemHandler);
         if (foodStackId < 0)
             return;
@@ -126,7 +118,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    //@OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
@@ -134,61 +126,61 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
             Style.EMPTY.withItalic(true)
         ));
 
-        displayContents(stack, worldIn, tooltip, flagIn);
+        //displayContents(stack, worldIn, tooltip, flagIn);
         
         
     }
 
-    private void displayContents(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        var inv = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
-        var contentsOverview = ItemUtil.getContentOverview(inv);
-        var contentsMap = contentsOverview.contents();
-        if (contentsMap.isEmpty())
-            return;
-        tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents"));
-        for (var entry : contentsMap.entrySet()) {
-            var c1 = Component.translatable("item.doggytalents.starter_bundle.contains",
-                entry.getValue(), entry.getKey().getDescription()).withStyle(
-                    Style.EMPTY.withColor(0xffa3a3a3)
-                );
-            tooltip.add(c1);
-        }
-        if (contentsOverview.isMore() > 0) {
-            tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents.more",
-                contentsOverview.isMore()).withStyle(
-                Style.EMPTY.withColor(0xffa3a3a3)
-            ));
-        }
+    // private void displayContents(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    //     var inv = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
+    //     var contentsOverview = ItemUtil.getContentOverview(inv);
+    //     var contentsMap = contentsOverview.contents();
+    //     if (contentsMap.isEmpty())
+    //         return;
+    //     tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents"));
+    //     for (var entry : contentsMap.entrySet()) {
+    //         var c1 = Component.translatable("item.doggytalents.starter_bundle.contains",
+    //             entry.getValue(), entry.getKey().getDescription()).withStyle(
+    //                 Style.EMPTY.withColor(0xffa3a3a3)
+    //             );
+    //         tooltip.add(c1);
+    //     }
+    //     if (contentsOverview.isMore() > 0) {
+    //         tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents.more",
+    //             contentsOverview.isMore()).withStyle(
+    //             Style.EMPTY.withColor(0xffa3a3a3)
+    //         ));
+    //     }
         
         
-    }
+    // }
 
-    @Override
-    public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundTag nbt) {
-        // https://github.com/MinecraftForge/MinecraftForge/issues/5989
-        if (ForgeCapabilities.ITEM_HANDLER == null) {
-            return null;
-        }
+    // @Override
+    // public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundTag nbt) {
+    //     // https://github.com/MinecraftForge/MinecraftForge/issues/5989
+    //     if (ForgeCapabilities.ITEM_HANDLER == null) {
+    //         return null;
+    //     }
 
-        return new ICapabilityProvider() {
-            final LazyOptional<IItemHandler> itemHandlerInstance = LazyOptional.of(() -> new TreatBagItemHandler(stack));
+    //     return new ICapabilityProvider() {
+    //         final LazyOptional<IItemHandler> itemHandlerInstance = LazyOptional.of(() -> new TreatBagItemHandler(stack));
 
-            @Override
-            @Nonnull
-            public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, final @Nullable Direction side) {
-                if (cap == ForgeCapabilities.ITEM_HANDLER) {
-                    return (LazyOptional<T>) this.itemHandlerInstance;
-                }
-                return LazyOptional.empty();
-            }
-        };
-    }
+    //         @Override
+    //         @Nonnull
+    //         public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, final @Nullable Direction side) {
+    //             if (cap == ForgeCapabilities.ITEM_HANDLER) {
+    //                 return (LazyOptional<T>) this.itemHandlerInstance;
+    //             }
+    //             return LazyOptional.empty();
+    //         }
+    //     };
+    // }
 
-    @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        //TODO : do we want to matches the tag as well ? As this one is currently do...
-        return !ItemStack.matches(oldStack, newStack);
-    }
+    // @Override
+    // public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+    //     //TODO : do we want to matches the tag as well ? As this one is currently do...
+    //     return !ItemStack.matches(oldStack, newStack);
+    // }
 
     @Override
     public boolean isFood(ItemStack stackIn) {
@@ -206,7 +198,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         if (dogIn.level().isClientSide)
             return InteractionResult.SUCCESS;
 
-        IItemHandlerModifiable treatBag = (IItemHandlerModifiable) stackIn.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
-        return InventoryUtil.feedDogFrom(dogIn, entityIn, treatBag);
+        //IItemHandlerModifiable treatBag = (IItemHandlerModifiable) stackIn.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
+        /*return InventoryUtil.feedDogFrom(dogIn, entityIn, treatBag);*/return InteractionResult.SUCCESS;
     }
 }

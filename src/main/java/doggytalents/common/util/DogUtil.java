@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import doggytalents.api.registry.Talent;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
@@ -473,7 +474,7 @@ public class DogUtil {
 
         var blockType = dog.getBlockPathTypeViaAlterations(dog_b1);
 
-        if (blockType.getDanger() != null)
+        if (FabricUtil.getDanger(blockType) != null)
             return true;
 
         if (blockType != BlockPathTypes.OPEN)

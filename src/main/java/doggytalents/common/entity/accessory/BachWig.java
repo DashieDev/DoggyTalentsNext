@@ -16,11 +16,11 @@ import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAcces
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AccessoryItem;
 import doggytalents.common.item.DyeableAccessoryItem;
+import doggytalents.forge_imitate.registry.RegistryObject;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.RegistryObject;
 
 public class BachWig extends Accessory implements IAccessoryHasModel {
 

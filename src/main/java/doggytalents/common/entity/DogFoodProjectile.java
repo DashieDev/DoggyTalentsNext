@@ -9,6 +9,9 @@ import doggytalents.common.util.DogUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,11 +21,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
 
-public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdditionalSpawnData {
+public class DogFoodProjectile extends ThrowableProjectile {
 
     private ItemStack foodStack = ItemStack.EMPTY;
 
@@ -34,9 +34,9 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdd
         super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), livingEntityIn, worldIn);
     }
 
-    public DogFoodProjectile(PlayMessages.SpawnEntity packet, Level worldIn) {
-        super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), worldIn);
-    }
+    // public DogFoodProjectile(PlayMessages.SpawnEntity packet, Level worldIn) {
+    //     super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), worldIn);
+    // }
 
     @Override
     protected void onHit(HitResult hitResult) {
@@ -137,29 +137,29 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdd
         return dog.getDogHunger() < dog.getMaxHunger();
     }   
 
-    @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
-        boolean hasStack = !this.foodStack.isEmpty();
-        buffer.writeBoolean(hasStack);
-        if (hasStack) {
-            buffer.writeItemStack(foodStack, true);
-        }
-    }
+    // @Override
+    // public void writeSpawnData(FriendlyByteBuf buffer) {
+    //     boolean hasStack = !this.foodStack.isEmpty();
+    //     buffer.writeBoolean(hasStack);
+    //     if (hasStack) {
+    //         buffer.writeItemStack(foodStack, true);
+    //     }
+    // }
 
-    @Override
-    public void readSpawnData(FriendlyByteBuf buffer) {
-        boolean hasStack = buffer.readBoolean();
-        if (hasStack) {
-            this.foodStack = buffer.readItem();
-        }
-    }
+    // @Override
+    // public void readSpawnData(FriendlyByteBuf buffer) {
+    //     boolean hasStack = buffer.readBoolean();
+    //     if (hasStack) {
+    //         this.foodStack = buffer.readItem();
+    //     }
+    // }
 
     public ItemStack getDogFoodStack() {
-        return this.foodStack;
+        return this.entityData.get(FOOD_STACK);
     }
 
     public void setDogFoodStack(ItemStack stack) {
-        this.foodStack = stack;
+        this.entityData.set(FOOD_STACK, stack); this.foodStack = stack;
     }
 
     public boolean feedDog(Dog dog) {
@@ -178,15 +178,10 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdd
         return true;
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
-    protected void defineSynchedData() {
+    // @Override
+    // protected void defineSynchedData() {
         
-    }
+    // }
 
     public static class DogJumpAndEatAction extends TriggerableAction {
 
@@ -251,6 +246,15 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdd
             }
         }
 
+    }
+
+    
+    //Fabric
+    private static final EntityDataAccessor<ItemStack> FOOD_STACK = SynchedEntityData.defineId(DogFoodProjectile.class, EntityDataSerializers.ITEM_STACK);
+
+    @Override
+    protected void defineSynchedData() {
+        this.entityData.define(FOOD_STACK, ItemStack.EMPTY);
     }
 
 }

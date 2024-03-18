@@ -11,7 +11,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
-import net.minecraftforge.common.world.ForgeChunkManager;
+import doggytalents.forge_imitate.chunk.ForgeChunkManager;
 
 /**
  * @author DashieDev

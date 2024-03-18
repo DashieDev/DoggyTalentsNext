@@ -14,6 +14,7 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -23,7 +24,6 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 
 public class AccessoryModelManager {
 

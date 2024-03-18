@@ -3,9 +3,8 @@ package doggytalents.common.network.packet;
 import doggytalents.common.item.WhistleItem;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.WhistleRequestModeData;
+import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;
 
@@ -24,9 +23,9 @@ public class WhistleRequestModePacket implements IPacket<WhistleRequestModeData>
     @Override
     public void handle(WhistleRequestModeData data, Supplier<Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            LogicalSide side = ctx.get().getDirection().getReceptionSide();
+            //LogicalSide side = ctx.get().getDirection().getReceptionSide();
 
-            if (!side.isServer()) return;
+            if (ctx.get().isClientRecipent()) return;
             var player = ctx.get().getSender();
             var stack = player.getMainHandItem();
             if (!(stack.getItem() instanceof WhistleItem)) return;

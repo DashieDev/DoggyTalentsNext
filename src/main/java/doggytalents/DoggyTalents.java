@@ -1,5 +1,6 @@
 package doggytalents;
 
+import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.feature.DogLevel;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -9,8 +10,8 @@ import doggytalents.common.talent.*;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import doggytalents.common.talent.talentclass.LowCostTalent;
 import doggytalents.common.talent.talentclass.SingleLevelTalent;
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
+import doggytalents.forge_imitate.registry.DeferredRegister;
+import doggytalents.forge_imitate.registry.RegistryObject;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -18,7 +19,7 @@ import java.util.function.Supplier;
 
 public class DoggyTalents {
 
-    public static final DeferredRegister<Talent> TALENTS = DeferredRegister.create(DoggyRegistries.Keys.TALENTS_REGISTRY, Constants.MOD_ID);
+    public static final DeferredRegister<Talent> TALENTS = DeferredRegister.create(DoggyTalentsAPI.TALENTS, Constants.MOD_ID);
 
     public static final RegistryObject<Talent> BED_FINDER = registerInst("bed_finder", BedFinderTalent::new);
     public static final RegistryObject<Talent> BLACK_PELT = registerInst("black_pelt", BlackPeltTalent::new);

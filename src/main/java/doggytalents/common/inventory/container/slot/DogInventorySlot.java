@@ -1,11 +1,11 @@
 package doggytalents.common.inventory.container.slot;
 
+import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
+import doggytalents.api.forge_imitate.inventory.SlotItemHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class DogInventorySlot extends SlotItemHandler {
 
@@ -14,7 +14,7 @@ public class DogInventorySlot extends SlotItemHandler {
     private Dog dog;
     private int absolute_col, relative_row, relative_col;
 
-    public DogInventorySlot(Dog dogIn, Player playerIn, IItemHandler itemHandler, int absolute_col, int relative_row, int relative_col, int index, int xPosition, int yPosition) {
+    public DogInventorySlot(Dog dogIn, Player playerIn, ItemStackHandler itemHandler, int absolute_col, int relative_row, int relative_col, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
         this.player = playerIn;
         this.absolute_col = absolute_col;
@@ -24,7 +24,7 @@ public class DogInventorySlot extends SlotItemHandler {
     }
 
     public DogInventorySlot(DogInventorySlot prev, int newX) {
-        super(prev.getItemHandler(), prev.getSlotIndex(), newX, prev.y);
+        super(prev.handler, prev.getContainerSlot(), newX, prev.y);
         this.player = prev.player;
         this.absolute_col = prev.absolute_col;
         this.relative_row = prev.relative_row;

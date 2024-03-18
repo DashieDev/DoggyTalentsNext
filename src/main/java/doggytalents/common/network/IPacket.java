@@ -1,9 +1,10 @@
 package doggytalents.common.network;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
+
+import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent;
 
 public interface IPacket<D> {
 

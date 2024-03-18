@@ -5,6 +5,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import doggytalents.DoggyTalents;
 import doggytalents.common.entity.Dog;
+import doggytalents.forge_imitate.event.client.RenderLevelStageEvent;
+import doggytalents.forge_imitate.event.client.RenderLevelStageEvent.Stage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -13,15 +15,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
 
 import java.util.Optional;
 
 public class BedFinderRenderer {
 
     public static void onWorldRenderLast(RenderLevelStageEvent event) {
-        if (event.getStage() != Stage.AFTER_PARTICLES) 
+
+        if (event.getStage() != Stage.AFTER_TRANSLUCENT_BLOCKS) 
             return;
         Player player = Minecraft.getInstance().player;
         for (Entity passenger : player.getPassengers()) {

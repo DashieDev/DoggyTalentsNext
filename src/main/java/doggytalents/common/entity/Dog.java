@@ -43,6 +43,9 @@ import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.stats.StatsTracker;
 import doggytalents.common.entity.texture.DogSkinData;
+import doggytalents.common.fabric_helper.entity.DogFabricHelper;
+import doggytalents.common.fabric_helper.entity.network.SyncTypes;
+import doggytalents.common.fabric_helper.entity.network.SyncTypes.SyncType;
 import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.ParticlePackets;
@@ -53,12 +56,18 @@ import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.util.*;
+import doggytalents.forge_imitate.atrrib.ForgeMod;
+import doggytalents.forge_imitate.network.PacketDistributor;
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -82,6 +91,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -129,21 +139,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.util.ITeleporter;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -194,26 +198,26 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Integer> ANIM_SYNC_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
-    private static final Cache<EntityDataAccessor<DogLevel>> DOG_LEVEL = Cache.make(() -> (EntityDataAccessor<DogLevel>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<EnumGender>> GENDER = Cache.make(() -> (EntityDataAccessor<EnumGender>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<EnumMode>> MODE = Cache.make(() -> (EntityDataAccessor<EnumMode>) SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BED_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BOWL_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<IncapacitatedSyncState>> DOG_INCAP_SYNC_STATE = Cache.make(() -> (EntityDataAccessor<IncapacitatedSyncState>) SynchedEntityData.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (EntityDataAccessor<List<DoggyArtifactItem>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<DogSize>> DOG_SIZE = Cache.make(() -> (EntityDataAccessor<DogSize>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<DogSkinData>> CUSTOM_SKIN = Cache.make(() -> (EntityDataAccessor<DogSkinData>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER.get()));
+    // private static final Cache<EntityDataAccessor<DogLevel>> DOG_LEVEL = Cache.make(() -> (EntityDataAccessor<DogLevel>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get()));
+    // private static final Cache<EntityDataAccessor<EnumGender>> GENDER = Cache.make(() -> (EntityDataAccessor<EnumGender>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER.get()));
+    // private static final Cache<EntityDataAccessor<EnumMode>> MODE = Cache.make(() -> (EntityDataAccessor<EnumMode>) SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER.get()));
+    // private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BED_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get()));
+    // private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BOWL_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get()));
+    // private static final Cache<EntityDataAccessor<IncapacitatedSyncState>> DOG_INCAP_SYNC_STATE = Cache.make(() -> (EntityDataAccessor<IncapacitatedSyncState>) SynchedEntityData.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER.get()));
+    // private static final Cache<EntityDataAccessor<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (EntityDataAccessor<List<DoggyArtifactItem>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get()));
+    // private static final Cache<EntityDataAccessor<DogSize>> DOG_SIZE = Cache.make(() -> (EntityDataAccessor<DogSize>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER.get()));
+    // private static final Cache<EntityDataAccessor<DogSkinData>> CUSTOM_SKIN = Cache.make(() -> (EntityDataAccessor<DogSkinData>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER.get()));
     
     public static final void initDataParameters() { 
-        DOG_LEVEL.get();
-        GENDER.get();
-        MODE.get();
-        DOG_BED_LOCATION.get();
-        DOG_BOWL_LOCATION.get();
-        DOG_INCAP_SYNC_STATE.get();
-        ARTIFACTS.get();
-        DOG_SIZE.get();
-        CUSTOM_SKIN.get();
+        // DOG_LEVEL.get();
+        // GENDER.get();
+        // MODE.get();
+        // DOG_BED_LOCATION.get();
+        // DOG_BOWL_LOCATION.get();
+        // DOG_INCAP_SYNC_STATE.get();
+        // ARTIFACTS.get();
+        // DOG_SIZE.get();
+        // CUSTOM_SKIN.get();
     }
 
     // Cached values
@@ -312,17 +316,17 @@ public class Dog extends AbstractDog {
         super.defineSynchedData();
         this.entityData.define(LAST_KNOWN_NAME, Optional.empty());
         this.entityData.define(DOG_FLAGS, 0);
-        this.entityData.define(GENDER.get(), EnumGender.UNISEX);
-        this.entityData.define(MODE.get(), EnumMode.DOCILE);
+        //this.entityData.define(GENDER.get(), EnumGender.UNISEX);
+        //this.entityData.define(MODE.get(), EnumMode.DOCILE);
         this.entityData.define(HUNGER_INT, 60F);
-        this.entityData.define(CUSTOM_SKIN.get(), DogSkinData.NULL);
-        this.entityData.define(DOG_LEVEL.get(), new DogLevel(0, 0));
-        this.entityData.define(DOG_INCAP_SYNC_STATE.get(), IncapacitatedSyncState.NONE);
-        this.entityData.define(DOG_SIZE.get(), DogSize.MODERATO);
+        //this.entityData.define(CUSTOM_SKIN.get(), DogSkinData.NULL);
+        //this.entityData.define(DOG_LEVEL.get(), new DogLevel(0, 0));
+        //this.entityData.define(DOG_INCAP_SYNC_STATE.get(), IncapacitatedSyncState.NONE);
+        //this.entityData.define(DOG_SIZE.get(), DogSize.MODERATO);
         this.entityData.define(BONE_VARIANT, ItemStack.EMPTY);
-        this.entityData.define(ARTIFACTS.get(), new ArrayList<DoggyArtifactItem>(3));
-        this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
-        this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+        //this.entityData.define(ARTIFACTS.get(), new ArrayList<DoggyArtifactItem>(3));
+        //this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+        //this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
         this.entityData.define(INCAP_VAL, 0);
         this.entityData.define(ANIMATION, 0);
         this.entityData.define(ANIM_SYNC_TIME, 0);
@@ -331,6 +335,7 @@ public class Dog extends AbstractDog {
     @Override
     protected void registerGoals() {
         int trivial_p = 0, non_trivial_p = 0;
+        ItemStack stack = new ItemStack(Items.DIAMOND);
         DogSitWhenOrderedGoal sitGoal = null;
         
         int p = 1;
@@ -473,13 +478,13 @@ public class Dog extends AbstractDog {
         return this.wetSource.soaked();
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadingWhileWet(float partialTicks) {
         return Math.min(0.5F + Mth.lerp(partialTicks, this.prevTimeWolfIsShaking, this.timeWolfIsShaking) / 2.0F * 0.5F, 1.0F);
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShakeAngle(float partialTicks, float offset) {
         float f = (Mth.lerp(partialTicks, this.prevTimeWolfIsShaking, this.timeWolfIsShaking) + offset) / 1.8F;
         if (f < 0.0F) {
@@ -492,7 +497,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getInterestedAngle(float partialTicks) {
         return Mth.lerp(partialTicks, this.headRotationCourseOld, this.headRotationCourse) * 0.15F * (float)Math.PI;
     }
@@ -683,6 +688,11 @@ public class Dog extends AbstractDog {
 
         if (!this.level().isClientSide) {
             this.dogSyncedDataManager.tick();
+        }
+
+        //Fabric
+        if (!this.level().isClientSide) {
+            this.getDogFabricHelper().tick();
         }
     }
 
@@ -1459,7 +1469,7 @@ public class Dog extends AbstractDog {
         return true;
     }
 
-    @Override
+    //@Override
     public boolean canTrample(BlockState state, BlockPos pos, float fallDistance) {
         //Temporary to avoid wolf mount bug when trampling crops.
         return false;
@@ -1481,8 +1491,8 @@ public class Dog extends AbstractDog {
         }
 
         // Start: Logic copied from the super call and altered to apply the reduced fall damage to passengers too. #358
-        float[] ret = net.minecraftforge.common.ForgeHooks.onLivingFall(this, distance, damageMultiplier);
-        if (ret == null) return false;
+        float[] ret = /*net.minecraftforge.common.ForgeHooks.onLivingFall(this, distance, damageMultiplier);
+        if (ret == null) return false;*/ (new float[] {distance, damageMultiplier});
         distance = ret[0];
         damageMultiplier = ret[1];
 
@@ -2161,10 +2171,10 @@ public class Dog extends AbstractDog {
         return false;
     }
 
-    @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(DoggyItems.DOGGY_CHARM.get());
-    }
+    // @Override
+    // public ItemStack getPickedResult(HitResult target) {
+    //     return new ItemStack(DoggyItems.DOGGY_CHARM.get());
+    // }
 
     @Override
     public boolean isFood(ItemStack stack) {
@@ -2235,14 +2245,14 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public Entity changeDimension(ServerLevel worldIn, ITeleporter teleporter) {
+    public Entity changeDimension(ServerLevel worldIn/*, ITeleporter teleporter*/) {
         boolean flag = 
             !changeDimensionAuthorized
             && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.ALL_DOG_BLOCK_PORTAL);
         if (flag) return null;
         changeDimensionAuthorized = false;
         this.DTN_dogChangingDim = true;
-        Entity transportedEntity = super.changeDimension(worldIn, teleporter);
+        Entity transportedEntity = super.changeDimension(worldIn/*, teleporter*/);
         this.DTN_dogChangingDim = false;
         if (transportedEntity instanceof Dog) {
             DogLocationStorage.get(this.level()).getOrCreateData(this).update((Dog) transportedEntity);
@@ -2250,7 +2260,7 @@ public class Dog extends AbstractDog {
         return transportedEntity;
     }
 
-    @Override
+    //@Override
     public void onRemovedFromWorld() {
         if (this.level() instanceof ServerLevel serverLevel && this.isAlive()) {
             //Force location update when the dog is about to get untracked from world.
@@ -2259,10 +2269,10 @@ public class Dog extends AbstractDog {
             
             if (data != null) data.update(this);
         }
-        super.onRemovedFromWorld();
+        //super.onRemovedFromWorld();
     }
 
-    @Override
+    //@Override
     public void onAddedToWorld() {
         if (this.level() instanceof ServerLevel serverLevel && this.isAlive()) {
             var storage = DogLocationStorage.get(serverLevel);
@@ -2271,7 +2281,7 @@ public class Dog extends AbstractDog {
             if (data != null) data.update(this);
             storage.getOnlineDogsManager().onDogGoOnline(this);
         }
-        super.onAddedToWorld();
+        //super.onAddedToWorld();
     }
 
     @Override
@@ -2524,11 +2534,11 @@ public class Dog extends AbstractDog {
         this.alterations.forEach((alter) -> alter.dropInventory(this));
     }
 
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.alterations.forEach((alter) -> alter.invalidateCapabilities(this));
-    }
+    // @Override
+    // public void invalidateCaps() {
+    //     super.invalidateCaps();
+    //     this.alterations.forEach((alter) -> alter.invalidateCapabilities(this));
+    // }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
@@ -2592,7 +2602,7 @@ public class Dog extends AbstractDog {
         compound.putInt("level_kami", this.getDogLevel().getLevel(Type.KAMI));
         NBTUtil.writeItemStack(compound, "fetchItem", this.getBoneVariant());
 
-        DimensionDependantArg<Optional<BlockPos>> bedsData = this.entityData.get(DOG_BED_LOCATION.get());
+        DimensionDependantArg<Optional<BlockPos>> bedsData = this.dogFabricHelper.getBedPos();
 
         if (!bedsData.isEmpty()) {
             ListTag bedsList = new ListTag();
@@ -2607,7 +2617,7 @@ public class Dog extends AbstractDog {
             compound.put("beds", bedsList);
         }
 
-        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.entityData.get(DOG_BOWL_LOCATION.get());
+        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.dogFabricHelper.getBowlPos();
 
         if (!bowlsData.isEmpty()) {
             ListTag bowlsList = new ListTag();
@@ -2709,8 +2719,7 @@ public class Dog extends AbstractDog {
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load artifacts : " + e);
         }
-        
-        this.entityData.set(ARTIFACTS.get(), artifactsList);
+        this.dogFabricHelper.setArtifacts(artifactsList);
 
         try {
             this.spendablePoints.markForRefresh();
@@ -2769,13 +2778,13 @@ public class Dog extends AbstractDog {
             else if (compound.contains("level_dire", Tag.TAG_ANY_NUMERIC)) {
                 level_kami = compound.getInt("level_dire");    
             }
-            this.entityData.set(DOG_LEVEL.get(), new DogLevel(level_normal, level_kami));
+            this.dogFabricHelper.setDogLevel(new DogLevel(level_normal, level_kami));
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load levels: " + e.getMessage());
             e.printStackTrace();
         }
 
-        DimensionDependantArg<Optional<BlockPos>> bedsData = this.entityData.get(DOG_BED_LOCATION.get()).copyEmpty();
+        DimensionDependantArg<Optional<BlockPos>> bedsData = this.dogFabricHelper.getBedPos().copyEmpty();
 
         try {
             if (compound.contains("beds", Tag.TAG_LIST)) {
@@ -2794,9 +2803,9 @@ public class Dog extends AbstractDog {
             e.printStackTrace();
         }
 
-        this.entityData.set(DOG_BED_LOCATION.get(), bedsData);
+        this.dogFabricHelper.setBedPos(bedsData);
 
-        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.entityData.get(DOG_BOWL_LOCATION.get()).copyEmpty();
+        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.dogFabricHelper.getBowlPos().copyEmpty();
 
         try {
             if (compound.contains("bowls", Tag.TAG_LIST)) {
@@ -2815,7 +2824,7 @@ public class Dog extends AbstractDog {
             e.printStackTrace();
         }
 
-        this.entityData.set(DOG_BOWL_LOCATION.get(), bowlsData);
+        this.dogFabricHelper.setBowlPos(bowlsData);
 
         try {
             this.statsTracker.readAdditional(compound);
@@ -3083,27 +3092,28 @@ public class Dog extends AbstractDog {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (ARTIFACTS.get().equals(key)) {
-            this.refreshAlterations();
-        }
+        // if (ARTIFACTS.get().equals(key)) {
+        //     this.refreshAlterations();
+        // }
 
-        if (DOG_LEVEL.get().equals(key)) {
-            this.spendablePoints.markForRefresh();
-            float h = this.getDogLevel().getMaxHealth();
-            if (h != this.getMaxHealth())
-                this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
-        }
+        // if (DOG_LEVEL.get().equals(key)) {
+        //     this.spendablePoints.markForRefresh();
+        //     float h = this.getDogLevel().getMaxHealth();
+        //     if (h != this.getMaxHealth())
+        //         this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
+        //     this.maxHealth();
+        // }
 
-        if (DOG_SIZE.get().equals(key)) {
-            this.refreshDimensions();
-        }
+        // if (DOG_SIZE.get().equals(key)) {
+        //     this.refreshDimensions();
+        // }
 
-        if (this.level().isClientSide && CUSTOM_SKIN.get().equals(key)) {
-            this.setClientSkin(
-                DogTextureManager.INSTANCE
-                    .getDogSkin(
-                        this.getSkinData().getHash()));
-        }
+        // if (this.level().isClientSide && CUSTOM_SKIN.get().equals(key)) {
+        //     this.setClientSkin(
+        //         DogTextureManager.INSTANCE
+        //             .getDogSkin(
+        //                 this.getSkinData().getHash()));
+        // }
 
         if (ANIMATION.equals(key)) {
             this.animationManager.onAnimationChange(getAnim());
@@ -3116,14 +3126,14 @@ public class Dog extends AbstractDog {
             this.hungerManager.onHungerUpdated(this.getDogHunger());
         }
 
-        if (!this.level().isClientSide && MODE.get().equals(key)) {
-            var mode = getMode();
-            this.incapacitatedMananger.onModeUpdate(mode);
-            if (mode == EnumMode.INCAPACITATED) {
-                this.hungerManager.onBeingIncapacitated();
-            }
-            updateWanderState(mode);
-        }
+        // if (!this.level().isClientSide && MODE.get().equals(key)) {
+        //     var mode = getMode();
+        //     this.incapacitatedMananger.onModeUpdate(mode);
+        //     if (mode == EnumMode.INCAPACITATED) {
+        //         this.removeAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT);
+        //     }
+        //     updateWanderState(mode);
+        // }
     }
 
     public void onDogSyncedDataUpdated(boolean talents, boolean accessories) {
@@ -3147,6 +3157,8 @@ public class Dog extends AbstractDog {
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.dogSyncedDataManager.onStartBeingSeenBy(player);
+        //Fabric
+        getDogFabricHelper().onStartBeingSeenBy(player);
     }
 
     private void updateWanderState(EnumMode mode) {
@@ -3313,16 +3325,16 @@ public class Dog extends AbstractDog {
     }
 
     public EnumGender getGender() {
-        return this.entityData.get(GENDER.get());
+        return this.dogFabricHelper.getDogGender();
     }
 
     public void setGender(EnumGender collar) {
-        this.entityData.set(GENDER.get(), collar);
+        this.dogFabricHelper.setDogGender(collar);
     }
 
     @Override
     public EnumMode getMode() {
-        return this.entityData.get(MODE.get());
+        return this.dogFabricHelper.getDogMode();
     }
 
     public boolean isMode(EnumMode... modes) {
@@ -3337,7 +3349,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setMode(EnumMode collar) {
-        this.entityData.set(MODE.get(), collar);
+        this.dogFabricHelper.setDogMode(collar);
     }
 
     public Optional<BlockPos> getBedPos() {
@@ -3345,7 +3357,7 @@ public class Dog extends AbstractDog {
     }
 
     public Optional<BlockPos> getBedPos(ResourceKey<Level> registryKey) {
-        return this.entityData.get(DOG_BED_LOCATION.get()).getOrDefault(registryKey, Optional.empty());
+        return this.dogFabricHelper.getBedPos().getOrDefault(registryKey, Optional.empty());
     }
 
     public void setBedPos(@Nullable BlockPos pos) {
@@ -3357,7 +3369,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setBedPos(ResourceKey<Level> registryKey, Optional<BlockPos> pos) {
-        this.entityData.set(DOG_BED_LOCATION.get(), this.entityData.get(DOG_BED_LOCATION.get()).copy().set(registryKey, pos));
+        this.dogFabricHelper.setBedPos(this.dogFabricHelper.getBedPos().copy().set(registryKey, pos));
     }
 
     public Optional<BlockPos> getBowlPos() {
@@ -3365,7 +3377,7 @@ public class Dog extends AbstractDog {
     }
 
     public Optional<BlockPos> getBowlPos(ResourceKey<Level> registryKey) {
-        return this.entityData.get(DOG_BOWL_LOCATION.get()).getOrDefault(registryKey, Optional.empty());
+        return this.dogFabricHelper.getBowlPos().getOrDefault(registryKey, Optional.empty());
     }
 
     public void setBowlPos(@Nullable BlockPos pos) {
@@ -3377,7 +3389,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setBowlPos(ResourceKey<Level> registryKey, Optional<BlockPos> pos) {
-        this.entityData.set(DOG_BOWL_LOCATION.get(), this.entityData.get(DOG_BOWL_LOCATION.get()).copy().set(registryKey, pos));
+        this.dogFabricHelper.setBowlPos(this.dogFabricHelper.getBowlPos().copy().set(registryKey, pos));
     }
 
     @Override
@@ -3451,8 +3463,8 @@ public class Dog extends AbstractDog {
         //🥴
         if (add <= 0)
             return;
-        var add1 = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(this, add);
-        add = Math.max(add1, add);
+        // var add1 = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(this, add);
+        // add = Math.max(add1, add);
         
         float h = this.getHealth();
         if (h > 0.0F) {
@@ -3476,31 +3488,31 @@ public class Dog extends AbstractDog {
     }
 
     public DogSkinData getSkinData () {
-        return this.entityData.get(CUSTOM_SKIN.get());
+        return this.dogFabricHelper.getDogSkin();
     }
 
     public void setDogSkinData(DogSkinData data) {
         if (data == null) {
             data = DogSkinData.NULL;
         }
-        this.entityData.set(CUSTOM_SKIN.get(), data);
+        this.dogFabricHelper.setDogSkin(data);
     }
 
     @Override
     public DogLevel getDogLevel() {
-        return this.entityData.get(DOG_LEVEL.get());
+        return this.dogFabricHelper.getDogLevel();
     }
 
     public void setLevel(DogLevel level) {
-        this.entityData.set(DOG_LEVEL.get(), level);
+        this.dogFabricHelper.setDogLevel(level);
     }
 
     public IncapacitatedSyncState getIncapSyncState() {
-        return this.entityData.get(DOG_INCAP_SYNC_STATE.get());
+        return this.dogFabricHelper.getIncapSyncState();
     }
 
     public void setIncapSyncState(IncapacitatedSyncState state) {
-        this.entityData.set(DOG_INCAP_SYNC_STATE.get(), state);
+        this.dogFabricHelper.setIncapSyncState(state);
     }
 
     @Override
@@ -3512,12 +3524,12 @@ public class Dog extends AbstractDog {
 
     @Override
     public void setDogSize(DogSize size) {
-        this.entityData.set(DOG_SIZE.get(), size);
+        this.dogFabricHelper.setDogSize(size);
     }
 
     @Override
     public DogSize getDogSize() {
-        return this.entityData.get(DOG_SIZE.get());
+        return this.dogFabricHelper.getDogSize();
     }
 
     @Override
@@ -3759,7 +3771,7 @@ public class Dog extends AbstractDog {
     }
 
     public List<DoggyArtifactItem> getArtifactsList() {
-        var array = this.entityData.get(ARTIFACTS.get());
+        var array = this.dogFabricHelper.getArtifacts();
         return array;
     }
 
@@ -3791,7 +3803,7 @@ public class Dog extends AbstractDog {
 
 
     public void modifyArtifact(Consumer<List<DoggyArtifactItem>> modify) {
-        this.modifyListSyncedData(ARTIFACTS.get(), modify);
+        var list = new ArrayList<>(this.dogFabricHelper.getArtifacts()); modify.accept(list); this.dogFabricHelper.setArtifacts(list);
     }
 
     public <T> void modifyListSyncedData(EntityDataAccessor<List<T>> key, Consumer<List<T>> modify) {
@@ -3915,10 +3927,10 @@ public class Dog extends AbstractDog {
         return this.spendablePoints.get();
     }
 
-    @Override
-    public boolean canRiderInteract() {
-        return true;
-    }
+    // @Override
+    // public boolean canRiderInteract() {
+    //     return true;
+    // }
 
     @Override
     public LivingEntity getControllingPassenger() {
@@ -4300,15 +4312,15 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean isPushedByFluid(FluidType type) {
+    public boolean isPushedByFluid() {
         for (var alter : this.alterations) {
-            InteractionResult result = alter.canResistPushFromFluidType(type);
+            InteractionResult result = alter.canResistPushFromFluidType();
 
             if (result.shouldSwing()) {
                 return false;
             }
         }
-        return super.isPushedByFluid(type);
+        return super.isPushedByFluid();
     }
 
     @Override
@@ -5036,4 +5048,66 @@ public class Dog extends AbstractDog {
         }
     }
 
+    //Fabric
+    private final DogFabricHelper dogFabricHelper = new DogFabricHelper(this);
+    public DogFabricHelper getDogFabricHelper() { return dogFabricHelper; }
+
+    public void onFabricDataUpdated(SyncType<?> type) {
+        if (type == SyncTypes.ARTIFACTS) {
+            this.refreshAlterations();
+        }
+
+        if (type == SyncTypes.DOG_LEVEL) {
+            this.spendablePoints.markForRefresh();
+            float h = this.getDogLevel().getMaxHealth();
+            if (h != this.getMaxHealth())
+                this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
+        }
+
+        if (type == SyncTypes.DOG_SIZE) {
+            this.refreshDimensions();
+        }
+
+        if (this.level().isClientSide && type == SyncTypes.DOG_SKIN) {
+            this.setClientSkin(
+                DogTextureManager.INSTANCE
+                    .getDogSkin(
+                        this.getSkinData().getHash()));
+        }
+
+        if (!this.level().isClientSide && type == SyncTypes.DOG_MODE) {
+            var mode = getMode();
+            this.incapacitatedMananger.onModeUpdate(mode);
+            if (mode == EnumMode.INCAPACITATED) {
+                this.hungerManager.onBeingIncapacitated();
+            }
+            updateWanderState(mode);
+        }
+    }
+
+    private boolean isAddedToWorld = false;
+    public boolean isAddedToWorld() {
+        return isAddedToWorld;
+    }
+    public void setAddedToWorld(boolean val) {
+        this.isAddedToWorld = val;
+    }
+
+    public Optional<TagKey<Fluid>> getMaxFluidHeight() {
+        return this.fluidHeight.object2DoubleEntrySet()
+            .stream().max(java.util.Comparator.comparingDouble(Object2DoubleMap.Entry::getDoubleValue)).map(Object2DoubleMap.Entry::getKey);
+    }
+
+    @Override
+    protected PortalInfo findDimensionEntryPoint(ServerLevel serverLevel) {
+        var owner = this.getOwner();
+        if (owner != null) {
+            this.portalEntrancePos = owner.blockPosition();
+        } else {
+            this.portalEntrancePos = BlockPos.ZERO;
+        }
+        double tpScale = DimensionType.getTeleportationScale(this.level().dimensionType(), serverLevel.dimensionType());
+        var destPos = serverLevel.getWorldBorder().clampToBounds(this.getX() * tpScale, this.getY(), this.getZ() * tpScale);
+        return new PortalInfo(Vec3.atBottomCenterOf(destPos), this.getDeltaMovement(), this.getYRot(), this.getXRot());
+    }
 }

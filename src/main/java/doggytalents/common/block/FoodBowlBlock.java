@@ -38,11 +38,6 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.EmptyHandler;
 
 import javax.annotation.Nullable;
 
@@ -100,7 +95,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
             if (foodBowl != null) {
                 ItemEntity entityItem = (ItemEntity) entityIn;
 
-                IItemHandler bowlInventory = foodBowl.getInventory();
+                var bowlInventory = foodBowl.getInventory();
                 ItemStack remaining = InventoryUtil.addItem(bowlInventory, entityItem.getItem());
                 if (!remaining.isEmpty()) {
                     entityItem.setItem(remaining);
@@ -117,7 +112,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
         if (state.getBlock() != newState.getBlock()) {
             FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
             if (foodBowl != null) {
-                IItemHandler bowlInventory = foodBowl.getInventory();
+                var bowlInventory = foodBowl.getInventory();
                 for (int i = 0; i < bowlInventory.getSlots(); ++i) {
                     Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), bowlInventory.getStackInSlot(i));
                 }
@@ -135,12 +130,12 @@ public class FoodBowlBlock extends BaseEntityBlock {
 
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
-        FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
+        //FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
 
-        if (foodBowl != null) {
-            IItemHandler bowlInventory = foodBowl.getInventory();
-            return InventoryUtil.calcRedstoneFromInventory(bowlInventory);
-        }
+        // if (foodBowl != null) {
+        //     IItemHandler bowlInventory = foodBowl.getInventory();
+        //     return InventoryUtil.calcRedstoneFromInventory(bowlInventory);
+        // }
 
         return 0;
     }
@@ -157,11 +152,11 @@ public class FoodBowlBlock extends BaseEntityBlock {
                 ItemStack stack = playerIn.getItemInHand(handIn);
 
                 if (!stack.isEmpty() && stack.getItem() == DoggyItems.TREAT_BAG.get()) {
-                    IItemHandler bagInventory = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
-                    IItemHandler bowlInventory = foodBowl.getInventory();
+                    // IItemHandler bagInventory = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
+                    // IItemHandler bowlInventory = foodBowl.getInventory();
 
-                    InventoryUtil.transferStacks((IItemHandlerModifiable) bagInventory, bowlInventory);
-                } else if (playerIn instanceof ServerPlayer && !(playerIn instanceof FakePlayer)) {
+                    // InventoryUtil.transferStacks((IItemHandlerModifiable) bagInventory, bowlInventory);
+                } else if (playerIn instanceof ServerPlayer) {
                     ServerPlayer serverPlayer = (ServerPlayer)playerIn;
 
                     Screens.openFoodBowlScreen(serverPlayer, foodBowl);

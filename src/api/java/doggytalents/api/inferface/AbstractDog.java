@@ -1,5 +1,6 @@
 package doggytalents.api.inferface;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.BiFunction;
 
@@ -11,8 +12,12 @@ import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.feature.IDog;
 import doggytalents.api.impl.DogArmorItemHandler;
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -30,6 +35,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 
 public abstract class AbstractDog extends TamableAnimal implements IDog {
 
@@ -173,7 +180,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     //Start : Re-adjust armor behaviour
     //All dog start hurting Amrmor in armorItems regradless of anything.
     @Override
-    protected void hurtArmor(DamageSource p_36251_, float p_36252_) {
+    public void hurtArmor(DamageSource p_36251_, float p_36252_) {
         if (!(p_36252_ <= 0.0F)) {
             p_36252_ /= 4.0F;
             if (p_36252_ < 1.0F) {
@@ -196,7 +203,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     }
 
     @Override
-    protected void hurtHelmet(DamageSource p_150103_, float p_150104_) {
+    public void hurtHelmet(DamageSource p_150103_, float p_150104_) {
         if (!(p_150104_ <= 0.0F)) {
             p_150104_ /= 4.0F;
             if (p_150104_ < 1.0F) {
@@ -232,4 +239,5 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public boolean canStillEat() {
         return false;
     }
+
 }

@@ -21,6 +21,7 @@ import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.client.screen.widget.DoggySpin;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.item.WhistleItem.WhistleMode;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogMountData;
@@ -45,65 +46,63 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.client.event.MovementInputUpdateEvent;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.registries.ForgeRegistries;
+import doggytalents.forge_imitate.event.client.InputEvent;
+import doggytalents.forge_imitate.event.client.MovementInputUpdateEvent;
+import doggytalents.forge_imitate.event.client.ScreenEvent;
+import doggytalents.forge_imitate.network.PacketDistributor;
 
 import java.util.List;
 
 public class ClientEventHandler {
 
     DogInventoryButton activeInventoryButton;
+    
+    //Handled seperately on Fabric
+    // public static void registerModelForBaking(final ModelEvent.RegisterAdditional event) {
 
-    public static void registerModelForBaking(final ModelEvent.RegisterAdditional event) {
-
-        try {
-            ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(DoggyBlocks.DOG_BED.get());
-            ResourceLocation unbakedModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
-            event.register(unbakedModelLoc);
+    //     try {
+    //         ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(DoggyBlocks.DOG_BED.get());
+    //         ResourceLocation unbakedModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+    //         event.register(unbakedModelLoc);
             
-        }
-        catch(Exception e) {
-            DoggyTalentsNext.LOGGER.warn("Could not get base Dog Bed model. Reverting to default textures...");
-            e.printStackTrace();
-        }
-    }
+    //     }
+    //     catch(Exception e) {
+    //         DoggyTalentsNext.LOGGER.warn("Could not get base Dog Bed model. Reverting to default textures...");
+    //         e.printStackTrace();
+    //     }
+    // }
 
-    public static void modifyBakedModels(final ModelEvent.ModifyBakingResult event) {
-        try {
-            var modelRegistry = event.getModels();
+    // public static void modifyBakedModels(final ModelEvent.ModifyBakingResult event) {
+    //     try {
+    //         var modelRegistry = event.getModels();
 
-            ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(DoggyBlocks.DOG_BED.get());
-            ResourceLocation bakedModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+    //         ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(DoggyBlocks.DOG_BED.get());
+    //         ResourceLocation bakedModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
 
-            var model = modelRegistry.get(bakedModelLoc);
+    //         var model = modelRegistry.get(bakedModelLoc);
 
-            var modelUnbaked = (BlockModel) event.getModelBakery().getModel(bakedModelLoc);
+    //         var modelUnbaked = event.getUnbaked(bakedModelLoc);
 
-            BakedModel customModel = new DogBedModel(event.getModelBakery(), modelUnbaked, model);
+    //         BakedModel customModel = new DogBedModel(event.getModelBakery(), modelUnbaked, model);
 
-            // Replace all valid block states
-            DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {
-                modelRegistry.put(BlockModelShaper.stateToModelLocation(state), customModel);
-            });
+    //         // Replace all valid block states
+    //         DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {
+    //             modelRegistry.put(BlockModelShaper.stateToModelLocation(state), customModel);
+    //         });
 
-            // Replace inventory model
-            modelRegistry.put(new ModelResourceLocation(resourceLocation, "inventory"), customModel);
+    //         // Replace inventory model
+    //         modelRegistry.put(new ModelResourceLocation(resourceLocation, "inventory"), customModel);
             
-        }
-        catch(Exception e) {
-            DoggyTalentsNext.LOGGER.warn("Error modifying baking result. Reverting to default textures...");
-            e.printStackTrace();
-        }
+    //     }
+    //     catch(Exception e) {
+    //         DoggyTalentsNext.LOGGER.warn("Error modifying baking result. Reverting to default textures...");
+    //         e.printStackTrace();
+    //     }
         
 
-    }
+    // }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onInputEvent(final MovementInputUpdateEvent event) {
         if (!event.getInput().jumping)
             return;
@@ -118,7 +117,7 @@ public class ClientEventHandler {
         dog.setJumpPower(100);
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onScreenInit(final ScreenEvent.Init.Post event) {
         if (!ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV)) 
             return;
@@ -147,7 +146,7 @@ public class ClientEventHandler {
     }
 
     private DoggySpin spinWidget = new DoggySpin(0, 0, 128);
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onScreenDrawForeground(final ScreenEvent.Render.Post event) {
         if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
             return;
@@ -157,7 +156,7 @@ public class ClientEventHandler {
         spinWidget.render(event.getGuiGraphics(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onKeyboardInput(InputEvent.Key event) {
         proccessWhistle(event);
     }
@@ -173,14 +172,14 @@ public class ClientEventHandler {
             InventoryUtil.findStackWithItemFromHands(player, whistle);
         if (whistle_stack == null) return;
 
-        int hotkey_use = -1;
-        var hotkeys_whistle = DoggyKeybinds.hotkeys_whistle;
-        for (int i = 0; i < hotkeys_whistle.length; ++i) {
-            if (hotkeys_whistle[i].consumeClick()) {
-                hotkey_use = i;
-                break;
-            }
-        }
+        int hotkey_use = FabricUtil.getWhistleKey(player, event.keyCode);
+        // var hotkeys_whistle = DoggyKeybinds.hotkeys_whistle;
+        // for (int i = 0; i < hotkeys_whistle.length; ++i) {
+        //     if (hotkeys_whistle[i].consumeClick()) {
+        //         hotkey_use = i;
+        //         break;
+        //     }
+        // }
         if (hotkey_use < 0) return;
 
         if (player.getCooldowns().isOnCooldown(whistle)) return;
@@ -206,6 +205,11 @@ public class ClientEventHandler {
             player.level(), player, InteractionHand.MAIN_HAND, true);
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
             new WhistleUseData(mode_id));
+        
+        //Fabric
+        var keyHotbarSlots = mc.options.keyHotbarSlots[hotkey_use];
+        if (keyHotbarSlots.matches(event.keyCode, event.scanCode))
+            keyHotbarSlots.consumeClick();
     }
 
     public void drawSelectionBox(PoseStack matrixStackIn, Player player, float particleTicks, AABB boundingBox) {

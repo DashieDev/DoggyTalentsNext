@@ -20,6 +20,7 @@ import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.InventoryUtil;
+import doggytalents.forge_imitate.event.LivingDropsEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -41,19 +42,16 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.ObjectUtils;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class PackPuppyTalent extends TalentInstance {
 
@@ -524,32 +522,32 @@ public class PackPuppyTalent extends TalentInstance {
 
     private static int NOTIFY_RADIUS = 20;
     public static void mayNotifyNearbyPackPuppy(LivingDropsEvent event) {
-        var source = event.getSource();
-        var killed = event.getEntity();
-        var killer = source.getEntity();
-        if (killer == null)
-            return;
-        if (killer.level().isClientSide)
-            return;
+        // var source = event.getSource();
+        // var killed = event.getEntity();
+        // var killer = source.getEntity();
+        // if (killer == null)
+        //     return;
+        // if (killer.level().isClientSide)
+        //     return;
 
-        var drops = event.getDrops();
-        if (drops.isEmpty())
-            return;
+        // var drops = event.getDrops();
+        // if (drops.isEmpty())
+        //     return;
 
-        if (!(killer instanceof LivingEntity killerLiving))
-            return;
+        // if (!(killer instanceof LivingEntity killerLiving))
+        //     return;
         
-        boolean eligibleKiller = 
-            killerLiving instanceof Player
-            || killerLiving instanceof Dog;
-        if (!eligibleKiller)
-            return;
+        // boolean eligibleKiller = 
+        //     killerLiving instanceof Player
+        //     || killerLiving instanceof Dog;
+        // if (!eligibleKiller)
+        //     return;
         
-        var dogOptional = findNearestChestDogToNotify(killerLiving);
-        if (!dogOptional.isPresent())
-            return;
-        var dog = dogOptional.get();
-        dog.triggerAction(new DogCollectLootAction(dog, killed.blockPosition()));
+        // var dogOptional = findNearestChestDogToNotify(killerLiving);
+        // if (!dogOptional.isPresent())
+        //     return;
+        // var dog = dogOptional.get();
+        // dog.triggerAction(new DogCollectLootAction(dog, killed.blockPosition()));
     }
 
     private static Optional<Dog> findNearestChestDogToNotify(LivingEntity killer) {
@@ -630,7 +628,7 @@ public class PackPuppyTalent extends TalentInstance {
 
         private BlockPos target;
 
-        public DogCollectLootAction(Dog dog, @NonNull BlockPos target) {
+        public DogCollectLootAction(Dog dog, @Nonnull BlockPos target) {
             super(dog, false, false);
             this.target = target;
         }

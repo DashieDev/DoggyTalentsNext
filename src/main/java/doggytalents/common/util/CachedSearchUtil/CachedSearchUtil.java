@@ -1,6 +1,7 @@
 package doggytalents.common.util.CachedSearchUtil;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -400,7 +401,7 @@ public class CachedSearchUtil {
             break;
         }
         if (type == BlockPathTypes.OPEN) return OPEN;
-        if (type.getDanger() != null) return DAMAGE;
+        if (FabricUtil.getDanger(type) != null) return DAMAGE;
         if (type == BlockPathTypes.BLOCKED) return BLOCKED;
         //if (dog.getPathfindingMalus(type) < 0) return DANGER;
         return DANGER;
@@ -428,7 +429,7 @@ public class CachedSearchUtil {
 
         if (all_dog_OK) return OK;
         if (type == BlockPathTypes.OPEN) return OPEN;
-        if (type.getDanger() != null) return DAMAGE;
+        if (FabricUtil.getDanger(type) != null) return DAMAGE;
         if (type == BlockPathTypes.BLOCKED) return BLOCKED;
         // for (var dog : dogs) {
         //     if (dog.getPathfindingMalus(type) < 0) return DANGER;

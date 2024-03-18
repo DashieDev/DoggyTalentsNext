@@ -1,0 +1,7 @@
+// 1.20.1	2024-03-17T18:54:37.9237439	Doggy Talents Next/Tags for minecraft:item
+5ae12b92f428a8816a8e529b9481e042cb7320d0 data\doggytalents\tags\items\breeding_items.json
+c19666584183cf215bb73d81651ec259e1672c41 data\doggytalents\tags\items\beg_items_tamed.json
+2d3c39b0769e8bf7afde9907bd4db00479d9e3ec data\doggytalents\tags\items\treats.json
+cac0c5fa753b96a684ec2a4db2b3e99113ddcbf4 data\doggytalents\tags\items\pack_puppy_blacklist.json
+ed4cd386c33b60a80f7e21aa2e6f976ef324d656 data\doggytalents\tags\items\beg_items_untamed.json
+5d741620d51923758f7bfcaa8809cf3318a1bca0 data\minecraft\tags\items\music_discs.json

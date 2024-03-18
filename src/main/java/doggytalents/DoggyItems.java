@@ -20,7 +20,11 @@ import doggytalents.common.entity.accessory.TenguMask.TenguMaskItem;
 import doggytalents.common.item.*;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.event.RegisterColorHandlersEvent;
+import doggytalents.forge_imitate.registry.DeferredRegister;
+import doggytalents.forge_imitate.registry.RegistryObject;
 import net.minecraft.client.color.item.ItemColors;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -34,10 +38,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.item.SwordItem;
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -45,7 +45,7 @@ import java.util.function.Supplier;
 
 public class DoggyItems {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.Keys.ITEMS, Constants.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(() -> BuiltInRegistries.ITEM, Constants.MOD_ID);
 
     public static final RegistryObject<Item> THROW_BONE = registerThrowBone("throw_bone");
     public static final RegistryObject<Item> THROW_BONE_WET = registerThrowBoneWet("throw_bone_wet");
@@ -176,13 +176,13 @@ public class DoggyItems {
             () -> new FeatheredMantleArtifact(), props), 1);
 
     public static final RegistryObject<Item> MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO = register("disc_bwv_1080_fugue_11", 
-        () -> new RecordItem(13, () -> DoggySounds.BWV_1080_FUGUE_11_KIMIKO.get() , 
+        () -> new RecordItem(13, DoggySounds.BWV_1080_FUGUE_11_KIMIKO.get() , 
         (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 292*20));
     public static final RegistryObject<Item> MUSIC_DISC_BWV_849_FUGUE_KIMIKO = register("disc_bwv_849_fugue", 
-        () -> new RecordItem(13, () -> DoggySounds.BWV_849_FUGUE_KIMIKO.get() , 
+        () -> new RecordItem(13, DoggySounds.BWV_849_FUGUE_KIMIKO.get() , 
         (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 160*20));
     public static final RegistryObject<Item> MUSIC_DISC_OKAMI_1 = register("disc_okami_ryoshima_coast_arr", 
-        () -> new RecordItem(13, () -> DoggySounds.OKAMI_RYOSHIMA_COAST_ARR.get() , 
+        () -> new RecordItem(13, DoggySounds.OKAMI_RYOSHIMA_COAST_ARR.get() , 
         (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 111*20));
     public static final RegistryObject<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
         () -> new ChopinRecordItem(13, () -> DoggySounds.CHOPIN_OP64_NO1.get() , 
@@ -285,7 +285,7 @@ public class DoggyItems {
     }
 
     public static void registerItemColours(final RegisterColorHandlersEvent.Item event) {
-        ItemColors itemColors = event.getItemColors();
+        var itemColors = event.getItemColors();
         Util.acceptOrElse(DoggyItems.WOOL_COLLAR, (item) -> {
             event.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
@@ -378,7 +378,7 @@ public class DoggyItems {
         Util.acceptOrElse(DoggyBlocks.DOG_BATH, (item) -> {
             itemColors.register((stack, tintIndex) -> {
                 return 4159204;
-             }, item);
+             }, item.asItem());
         }, DoggyBlocks::logError);
     }
 }

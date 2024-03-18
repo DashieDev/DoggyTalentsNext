@@ -3,10 +3,10 @@ package doggytalents.common.config;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Talent;
+import doggytalents.common.lib.Constants;
+import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -31,7 +31,7 @@ public class ConfigHandler {
     public static final boolean DISPLAY_OTHER_DOG_SKINS = false;
     public static final boolean WHISTLE_SOUNDS = true;
 
-    public static void init(IEventBus modEventBus) {
+    public static void init() {
         Pair<ServerConfig, ForgeConfigSpec> commonPair = new ForgeConfigSpec.Builder().configure(ServerConfig::new);
         CONFIG_SERVER_SPEC = commonPair.getRight();
         SERVER = commonPair.getLeft();
@@ -39,8 +39,8 @@ public class ConfigHandler {
         CONFIG_CLIENT_SPEC = clientPair.getRight();
         CLIENT = clientPair.getLeft();
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_SERVER_SPEC);
-ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC);
+        ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_SERVER_SPEC);
+        ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC);
         initRespawnTagsConfig();
     }
 
@@ -49,7 +49,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         CONFIG_TALENT_SPEC = talentPair.getRight();
         TALENT = talentPair.getLeft();
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_TALENT_SPEC, "doggytalents-talents.toml");
+        ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_TALENT_SPEC, "doggytalents-talents.toml");
     }
 
     public static void initRespawnTagsConfig() {
@@ -57,7 +57,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         CONFIG_RESPAWN_TAG_SPEC = respawnPair.getRight();
         RESPAWN_TAGS = respawnPair.getLeft();
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_RESPAWN_TAG_SPEC, "doggytalents-respawn_tags_to_remove.toml");
+        ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_RESPAWN_TAG_SPEC, "doggytalents-respawn_tags_to_remove.toml");
     }
 
     public static class ClientConfig {

@@ -11,8 +11,10 @@ import com.google.common.collect.Maps;
 
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTileEntityTypes;
+import doggytalents.api.forge_imitate.inventory.ContainerWrapper;
 import doggytalents.common.block.RiceMillBlock;
 import doggytalents.common.inventory.container.RiceMillMenu;
+import doggytalents.forge_imitate.network.NetworkHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -50,8 +52,6 @@ import net.minecraft.world.level.block.entity.SmokerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.network.NetworkHooks;
 
 public class RiceMillBlockEntity extends BlockEntity { 
     
@@ -61,7 +61,7 @@ public class RiceMillBlockEntity extends BlockEntity {
     public static final int[] INPUT_SLOT = {0, 1};
     public static final int[] OUTPUT_SLOT = {2};
     private RiceMillContainer container = new RiceMillContainer(this);
-    private InvWrapper containerWrapper = new InvWrapper(container);
+    private ContainerWrapper containerWrapper = new ContainerWrapper(container);
 
     public static final int TOTOAL_DATA_SLOT = 2;
     public static final int GRINDING_TIME_ID = 0;
@@ -505,24 +505,24 @@ public class RiceMillBlockEntity extends BlockEntity {
         return this.container;
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        var pos = this.getBlockPos();
-        var state = this.getBlockState();
-        var aabb = new AABB(pos, pos.offset(1, 1, 1));
-        var facing = RiceMillBlock.getFacing(state);
-        var facing_norm = facing.getNormal();
-        var expand_vec = new Vec3(facing_norm.getX(), 1, facing_norm.getZ());
-        aabb = aabb.expandTowards(expand_vec);
-        var side_axis = facing.getClockWise().getAxis();
-        if (side_axis == Axis.X) {
-            aabb = aabb.inflate(1, 0, 0);
-        } else {
-            aabb = aabb.inflate(0, 0, 1);
-        }
+    // @Override
+    // public AABB getRenderBoundingBox() {
+    //     var pos = this.getBlockPos();
+    //     var state = this.getBlockState();
+    //     var aabb = new AABB(pos, pos.offset(1, 1, 1));
+    //     var facing = RiceMillBlock.getFacing(state);
+    //     var facing_norm = facing.getNormal();
+    //     var expand_vec = new Vec3(facing_norm.getX(), 1, facing_norm.getZ());
+    //     aabb = aabb.expandTowards(expand_vec);
+    //     var side_axis = facing.getClockWise().getAxis();
+    //     if (side_axis == Axis.X) {
+    //         aabb = aabb.inflate(1, 0, 0);
+    //     } else {
+    //         aabb = aabb.inflate(0, 0, 1);
+    //     }
 
-        return aabb;
-    }
+    //     return aabb;
+    // }
 
     @Override
     public void load(CompoundTag tag) {

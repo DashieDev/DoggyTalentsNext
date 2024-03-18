@@ -7,6 +7,8 @@ import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.api.events.RegisterDogSkinJsonPathEvent;
+import doggytalents.api.events.fabric_helper.DTNDogModelEventCallbacks;
+import doggytalents.api.fabric_helper.entry.DogModelConfiguationRegistry;
 import doggytalents.client.block.model.RiceMillModel;
 import doggytalents.client.block.render.RiceMillRenderer;
 import doggytalents.client.entity.model.DogArmorModel;
@@ -109,15 +111,13 @@ import doggytalents.client.screen.RiceMillScreen;
 import doggytalents.client.screen.TreatBagScreen;
 import doggytalents.client.tileentity.renderer.DogBedRenderer;
 import doggytalents.common.lib.Constants;
+import doggytalents.forge_imitate.client.ForgeGuiOverlayManager.RegisterGuiOverlaysEvent;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent;
+import doggytalents.forge_imitate.event.client.FMLClientSetupEvent;
+import doggytalents.forge_imitate.event.client.RegisterClientReloadListenersEvent;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.fml.ModLoader;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-
 public class ClientSetup {
 
     public static final ModelLayerLocation DOG = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "main");
@@ -205,7 +205,7 @@ public class ClientSetup {
     public static void setupScreenManagers(final FMLClientSetupEvent event) {
         MenuScreens.register(DoggyContainerTypes.FOOD_BOWL.get(), FoodBowlScreen::new);
         MenuScreens.register(DoggyContainerTypes.PACK_PUPPY.get(), PackPuppyScreen::new);
-        MenuScreens.register(DoggyContainerTypes.TREAT_BAG.get(), TreatBagScreen::new);
+        //MenuScreens.register(DoggyContainerTypes.TREAT_BAG.get(), TreatBagScreen::new);
         MenuScreens.register(DoggyContainerTypes.DOG_INVENTORIES.get(), DogInventoriesScreen::new);
         MenuScreens.register(DoggyContainerTypes.DOG_ARMOR.get(), DogArmorScreen::new);
         MenuScreens.register(DoggyContainerTypes.DOG_TOOLS.get(), DoggyToolsScreen::new);
@@ -299,14 +299,20 @@ public class ClientSetup {
         DogAnimationRegistry.init();
         DogModelRegistry.init();
 
-        gatherSkinJsonFromOtherMods();
+        //gatherSkinJsonFromOtherMods();
         // TODO: RenderingRegistry.registerEntityRenderingHandler(DoggyEntityTypes.DOG_BEAM.get(), manager -> new DoggyBeamRenderer<>(manager, event.getMinecraftSupplier().get().getItemRenderer()));
+    
+
+        //Fabric
+        DogModelConfiguationRegistry.doGatherFromOtherMods();
+        gatherSkinJsonFromOtherModsViaRegistry();
+        DogModelRegistry.registerFromRegistry();
     }
 
     private static void gatherSkinJsonFromOtherMods() {
         OTHER_MOD_SKIN_JSONS.clear();
         var paths = new ArrayList<ResourceLocation>();
-        ModLoader.get().postEvent(new RegisterDogSkinJsonPathEvent(paths));
+        DTNDogModelEventCallbacks.REGISTER_DOG_SKIN_JSON.invoker().onRegister(new RegisterDogSkinJsonPathEvent(paths));
         if (paths.isEmpty())
             return;
         OTHER_MOD_SKIN_JSONS.addAll(paths);
@@ -345,7 +351,17 @@ public class ClientSetup {
     }
 
     public static void addClientReloadListeners(final RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(DogTextureManager.INSTANCE);
-        event.registerReloadListener(DogRandomNameRegistry.getInstance());
+        event.registerReloadListener(DogTextureManager.INSTANCE, "dogskinmanager");
+        event.registerReloadListener(DogRandomNameRegistry.getInstance(), "dognamemanager");
+    }
+
+
+    //Fabric
+    private static void gatherSkinJsonFromOtherModsViaRegistry() {
+        OTHER_MOD_SKIN_JSONS.clear();
+        var paths = DogModelConfiguationRegistry.getJsonPaths();
+        if (paths.isEmpty())
+            return;
+        OTHER_MOD_SKIN_JSONS.addAll(paths);
     }
 }

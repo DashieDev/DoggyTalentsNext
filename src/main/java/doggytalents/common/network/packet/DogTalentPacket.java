@@ -8,7 +8,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
 
 import java.util.function.Supplier;
 
@@ -17,13 +17,13 @@ public class DogTalentPacket extends DogPacket<DogTalentData> {
     @Override
     public void encode(DogTalentData data, FriendlyByteBuf buf) {
         super.encode(data, buf);
-        buf.writeRegistryIdUnsafe(DoggyTalentsAPI.TALENTS.get(), data.talent);
+        buf.writeId(DoggyTalentsAPI.TALENTS.get(), data.talent);
     }
 
     @Override
     public DogTalentData decode(FriendlyByteBuf buf) {
         int entityId = buf.readInt();
-        Talent talent = buf.readRegistryIdUnsafe(DoggyTalentsAPI.TALENTS.get());
+        Talent talent = buf.readById(DoggyTalentsAPI.TALENTS.get());
         return new DogTalentData(entityId, talent);
     }
 

@@ -9,7 +9,6 @@ import doggytalents.common.block.tileentity.DogBedTileEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -78,9 +77,9 @@ public class DogBedUtil {
         return null;
     }
 
-    public static <T> T pickRandom(IForgeRegistry<T> registry) {
-        Collection<T> values = registry.getValues();
-        List<T> list = values instanceof List ? (List<T>) values : new ArrayList<>(values);
-        return list.get(RANDOM.nextInt(list.size()));
-    }
+    // public static <T> T pickRandom(IForgeRegistry<T> registry) {
+    //     Collection<T> values = registry.getValues();
+    //     List<T> list = values instanceof List ? (List<T>) values : new ArrayList<>(values);
+    //     return list.get(RANDOM.nextInt(list.size()));
+    // }
 }

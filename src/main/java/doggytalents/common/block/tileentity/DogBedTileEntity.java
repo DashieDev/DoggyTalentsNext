@@ -8,6 +8,7 @@ import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.DogBedBlock;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.block.dogbed.DogBedModelData;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.NBTUtil;
@@ -18,8 +19,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.client.model.data.ModelProperty;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -30,9 +29,9 @@ public class DogBedTileEntity extends PlacedTileEntity {
     private IBeddingMaterial beddingType = null;
 
 
-    public static ModelProperty<ICasingMaterial> CASING = new ModelProperty<>();
-    public static ModelProperty<IBeddingMaterial> BEDDING = new ModelProperty<>();
-    public static ModelProperty<Direction> FACING = new ModelProperty<>();
+    // public static ModelProperty<ICasingMaterial> CASING = new ModelProperty<>();
+    // public static ModelProperty<IBeddingMaterial> BEDDING = new ModelProperty<>();
+    // public static ModelProperty<Direction> FACING = new ModelProperty<>();
 
     private @Deprecated @Nullable Dog dog;
     private @Nullable UUID dogUUID;
@@ -54,7 +53,7 @@ public class DogBedTileEntity extends PlacedTileEntity {
         this.dogUUID = NBTUtil.getUniqueId(compound, "ownerId");
         this.name = NBTUtil.getTextComponent(compound, "name");
         this.ownerName = NBTUtil.getTextComponent(compound, "ownerName");
-        this.requestModelDataUpdate();
+        //this.requestModelDataUpdate();
     }
 
     @Override
@@ -72,13 +71,13 @@ public class DogBedTileEntity extends PlacedTileEntity {
     public void setCasing(ICasingMaterial casingType) {
         this.casingType = casingType;
         this.setChanged();
-        this.requestModelDataUpdate();
+        //this.requestModelDataUpdate();
     }
 
     public void setBedding(IBeddingMaterial beddingType) {
         this.beddingType = beddingType;
         this.setChanged();
-        this.requestModelDataUpdate();
+        //this.requestModelDataUpdate();
     }
 
     public ICasingMaterial getCasing() {
@@ -89,19 +88,19 @@ public class DogBedTileEntity extends PlacedTileEntity {
         return this.beddingType;
     }
 
-    @Override
-    public ModelData getModelData() {
-        var state = this.getBlockState();
-        var facing = Direction.NORTH;
-        if (state != null && state.hasProperty(DogBedBlock.FACING)) {
-            facing = state.getValue(DogBedBlock.FACING);
-        }
-        return ModelData.builder()
-                .with(CASING, this.casingType)
-                .with(BEDDING, this.beddingType)
-                .with(FACING, facing)
-                .build();
-    }
+    // @Override
+    // public ModelData getModelData() {
+    //     var state = this.getBlockState();
+    //     var facing = Direction.NORTH;
+    //     if (state != null && state.hasProperty(DogBedBlock.FACING)) {
+    //         facing = state.getValue(DogBedBlock.FACING);
+    //     }
+    //     return ModelData.builder()
+    //             .with(CASING, this.casingType)
+    //             .with(BEDDING, this.beddingType)
+    //             .with(FACING, facing)
+    //             .build();
+    // }
 
     public void setOwner(@Nullable Dog owner) {
         this.setOwner(owner == null ? null : owner.getUUID());
@@ -157,5 +156,21 @@ public class DogBedTileEntity extends PlacedTileEntity {
     public void setBedName(@Nullable Component nameIn) {
         this.name = nameIn;
         this.setChanged();
+    }
+
+
+    //Fabric
+    @Override
+    public @org.jetbrains.annotations.Nullable Object getRenderData() {
+        var state = this.getBlockState();
+        var facing = Direction.NORTH;
+        if (state != null && state.hasProperty(DogBedBlock.FACING)) {
+            facing = state.getValue(DogBedBlock.FACING);
+        }
+        return DogBedModelData.builder()
+                .casing(this.casingType)
+                .bedding(this.beddingType)
+                .facing(facing)
+                .build();
     }
 }

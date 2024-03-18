@@ -1,0 +1,25 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "doggytalents.fabric_mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+        "FarmBlockMixin",
+        "PersistentEntitySectionManagerMixin",
+        "ServerLevel_EntityCallbackMixin",
+        "SnowBallMixin",
+        "PlayerListMixin",
+        "ServerPlayerMixin",
+        "LivingEntityMixin",
+        "Minecraft_UtilMixin"
+    ],
+    "client": [
+        "LocalPlayerMixin",
+        "KeyboardHandlerMixin",
+        "MinecraftMixin"
+    ],
+    "server": [],
+    "injectors": {
+      "defaultRequire": 1
+    }
+  }

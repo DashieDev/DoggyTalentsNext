@@ -7,6 +7,7 @@ import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
@@ -42,7 +43,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
                     var owner = dog.getOwner();
                     if (owner != null) {
                         for (var stack : owner.getArmorSlots()) {
-                            if (stack.makesPiglinsNeutral(owner)) {
+                            if (FabricUtil.makesPiglinsNeutral(stack)) {
                                 return false;
                             }
                         }

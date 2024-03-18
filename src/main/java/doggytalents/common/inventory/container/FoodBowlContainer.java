@@ -2,6 +2,8 @@ package doggytalents.common.inventory.container;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyContainerTypes;
+import doggytalents.api.forge_imitate.inventory.SlotItemHandler;
+import doggytalents.common.block.tileentity.FoodBowlTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -11,9 +13,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 /**
  * @author ProPercivalalb
@@ -26,7 +25,9 @@ public class FoodBowlContainer extends AbstractContainerMenu {
     public FoodBowlContainer(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
         super(DoggyContainerTypes.FOOD_BOWL.get(), windowId);
         this.tileEntity = world.getBlockEntity(pos);
-        IItemHandler inventory = this.tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(() -> new RuntimeException("Item handler not present."));
+        var inventory = (tileEntity instanceof FoodBowlTileEntity) ? 
+            ((FoodBowlTileEntity) this.tileEntity).getInventory() : null;
+        if (inventory == null) return;
 
         for (int i = 0; i < 1; i++) {
             for (int l = 0; l < 5; l++) {

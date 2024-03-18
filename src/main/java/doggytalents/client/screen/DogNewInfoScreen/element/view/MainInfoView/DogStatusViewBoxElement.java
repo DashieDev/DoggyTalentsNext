@@ -12,6 +12,7 @@ import doggytalents.api.feature.DogLevel.Type;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -31,7 +32,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
     public DogStatusViewBoxElement(AbstractElement parent, Screen screen, Dog dog) {
         super(parent, screen);
         this.dog = dog;
-        var mc = this.getScreen().getMinecraft();
+        var mc = Minecraft.getInstance();
         this.font = mc.font;
     }
 

@@ -143,4 +143,13 @@ public class ScrollBar extends AbstractWidget {
     protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
         
     }
+
+
+    //Fabric
+    public void setHeight(int h) {
+        this.height = h;
+    }
+    public int getHeight() {
+        return this.height;
+    }
 }

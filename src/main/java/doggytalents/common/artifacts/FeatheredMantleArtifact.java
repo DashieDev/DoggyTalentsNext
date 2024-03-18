@@ -6,8 +6,8 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
+import doggytalents.forge_imitate.atrrib.ForgeMod;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraftforge.common.ForgeMod;
 
 public class FeatheredMantleArtifact extends DoggyArtifact {
 

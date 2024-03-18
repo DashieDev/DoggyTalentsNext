@@ -21,7 +21,7 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
         Screen screen, Dog dog) {
         super(parent, screen);
         this.dog = dog;
-        var mc = this.getScreen().getMinecraft();
+        var mc = Minecraft.getInstance();
         this.font = mc.font;
     }
 

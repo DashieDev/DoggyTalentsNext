@@ -515,7 +515,7 @@ public class DogModel extends EntityModel<Dog> {
             DogKeyframeAnimations.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
         }
     }
-
+    
     protected AnimationDefinition getAnimationSequence(DogAnimation anim) {
         return DogAnimationRegistry.getSequence(anim);
     }

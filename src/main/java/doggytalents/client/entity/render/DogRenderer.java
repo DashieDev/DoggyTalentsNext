@@ -138,7 +138,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         if (isDiffOwner && ConfigHandler.CLIENT.DONT_RENDER_DIFFOWNER_NAME.get())
             return;
 
-        if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0))
+        if (/*net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0)*/d0 <= 64 * 64)
             renderMainName(dog, text, stack, buffer, packedLight, renderDiffOwnerName && isDiffOwner, isDiffOwner);
         if (d0 <= 64 * 64)
             renderExtraInfo(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner, isDiffOwner);
@@ -315,7 +315,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         p_115311_.pushPose();
         this.model.attackTime = this.getAttackAnim(p_115308_, p_115310_);
   
-        boolean shouldSit = p_115308_.isPassenger() && (p_115308_.getVehicle() != null && p_115308_.getVehicle().shouldRiderSit());
+        boolean shouldSit = /*p_115308_.isPassenger() && (p_115308_.getVehicle() != null && p_115308_.getVehicle().shouldRiderSit())*/ false;
         this.model.riding = shouldSit;
         this.model.young = p_115308_.isBaby();
         float f = Mth.rotLerp(p_115310_, p_115308_.yBodyRotO, p_115308_.yBodyRot);

@@ -8,16 +8,15 @@ import doggytalents.common.block.crops.RiceCropBlock;
 import doggytalents.common.block.crops.SoyCropBlock;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.event.RegisterColorHandlersEvent;
+import doggytalents.forge_imitate.registry.DeferredRegister;
+import doggytalents.forge_imitate.registry.RegistryObject;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -25,7 +24,7 @@ import java.util.function.Supplier;
 
 public class DoggyBlocks {
 
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.Keys.BLOCKS, Constants.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(() -> BuiltInRegistries.BLOCK, Constants.MOD_ID);
     public static final DeferredRegister<Item> ITEMS = DoggyItems.ITEMS;
 
     public static final RegistryObject<DogBedBlock> DOG_BED = registerWithItem("dog_bed", DogBedBlock::new, (prop) -> prop);
@@ -68,7 +67,7 @@ public class DoggyBlocks {
     }
 
     public static void registerBlockColours(final RegisterColorHandlersEvent.Block event) {
-        BlockColors blockColors = event.getBlockColors();
+        var blockColors = event.getBlockColors();
 
         Util.acceptOrElse(DoggyBlocks.DOG_BATH, (block) -> {
             blockColors.register((state, world, pos, tintIndex) -> {

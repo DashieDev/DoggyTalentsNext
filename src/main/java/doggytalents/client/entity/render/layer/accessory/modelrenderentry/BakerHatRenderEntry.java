@@ -8,7 +8,8 @@ import doggytalents.client.entity.render.AccessoryModelManager;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLayerDefinitions;
+
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
 

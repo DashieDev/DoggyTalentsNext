@@ -3,10 +3,8 @@ package doggytalents.api.events;
 import java.util.List;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.fml.event.IModBusEvent;
 
-public class RegisterDogSkinJsonPathEvent extends Event implements IModBusEvent {
+public class RegisterDogSkinJsonPathEvent {
     
     private List<ResourceLocation> paths;
 
@@ -18,7 +16,7 @@ public class RegisterDogSkinJsonPathEvent extends Event implements IModBusEvent 
         this.paths.add(path);
     }
 
-    @Override
+    //@Override
     public boolean isCancelable() {
         return false;
     }

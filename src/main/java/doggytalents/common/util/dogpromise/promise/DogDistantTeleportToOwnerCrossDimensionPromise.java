@@ -22,8 +22,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.ITeleporter;
-import net.minecraftforge.common.world.ForgeChunkManager;
+import doggytalents.forge_imitate.chunk.ForgeChunkManager;
 
 public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractPromise {
     
@@ -89,7 +88,7 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
         int r = dog.getRandom().nextInt(safePosList.size());
         var safePos = safePosList.get(r);
         dog.authorizeChangeDimension();
-        var dogafterTp = dog.changeDimension(ownerLevel, new DogTeleporter(safePos));
+        var dogafterTp = dog.changeDimension(ownerLevel);  dog.moveTo(safePos, dog.getYRot(), dog.getXRot());
 
         if (dogafterTp instanceof Dog) {
             this.teleportedDog = (Dog) dogafterTp;
@@ -187,24 +186,24 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
         this.dogChunkForced = loaded;
     }
 
-    private static class DogTeleporter implements ITeleporter {
+    // private static class DogTeleporter implements ITeleporter {
 
-        private BlockPos safePos;
+    //     private BlockPos safePos;
 
-        public DogTeleporter(BlockPos safePos) {
-            this.safePos = safePos;
-        }
+    //     public DogTeleporter(BlockPos safePos) {
+    //         this.safePos = safePos;
+    //     }
 
-        @Override
-        public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld,
-                Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-            return new PortalInfo(
-                Vec3.atBottomCenterOf(safePos), 
-                Vec3.ZERO, 
-                entity.getYRot(), entity.getXRot()
-            );
-        }
+    //     @Override
+    //     public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld,
+    //             Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+    //         return new PortalInfo(
+    //             Vec3.atBottomCenterOf(safePos), 
+    //             Vec3.ZERO, 
+    //             entity.getYRot(), entity.getXRot()
+    //         );
+    //     }
 
-    }
+    // }
 
 }

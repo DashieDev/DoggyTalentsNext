@@ -11,6 +11,7 @@ import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.ChangeAccessoriesData;
 import doggytalents.common.network.packet.data.ChangeArtifactData;
+import doggytalents.forge_imitate.network.PacketDistributor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -22,8 +23,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.network.PacketDistributor;
-
 public class ArtifactShowBox extends AbstractWidget {
 
     private ItemRenderer itemRenderer;

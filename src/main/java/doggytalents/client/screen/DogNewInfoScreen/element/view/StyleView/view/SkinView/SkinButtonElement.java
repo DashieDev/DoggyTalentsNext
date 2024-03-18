@@ -3,8 +3,6 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.view.
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.checkerframework.checker.units.qual.C;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.DogTextureManager;
@@ -27,7 +25,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.forge_imitate.network.PacketDistributor;
 
 public class SkinButtonElement extends AbstractElement {
 

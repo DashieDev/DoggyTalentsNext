@@ -5,6 +5,7 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.NBTUtil;
+import doggytalents.forge_imitate.event.ServerStoppingEvent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -15,7 +16,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
-import net.minecraftforge.event.server.ServerStoppingEvent;
 
 import javax.annotation.Nullable;
 import java.util.*;

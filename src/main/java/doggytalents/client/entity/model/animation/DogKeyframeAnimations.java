@@ -11,6 +11,8 @@ import java.util.Optional;
 
 import org.joml.Vector3f;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
@@ -18,10 +20,8 @@ import net.minecraft.client.animation.AnimationChannel.Targets;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public class DogKeyframeAnimations {
    public static void animate(DogModel model, Dog dog,
         AnimationDefinition animation, long elapsed_in_millis, float interpolation_scale, 

@@ -2,13 +2,13 @@ package doggytalents.common.util;
 
 import doggytalents.DoggyTalentsNext;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -102,16 +102,16 @@ public class NBTUtil {
     }
 
     @Nullable
-    public static <T> T getRegistryValue(CompoundTag compound, String key, IForgeRegistry<T> registry) {
+    public static <T> T getRegistryValue(CompoundTag compound, String key, Registry<T> registry) {
         ResourceLocation rl = NBTUtil.getResourceLocation(compound, key);
         if (rl != null) {
             if (registry.containsKey(rl)) {
-                return registry.getValue(rl);
+                return registry.get(rl);
             } else {
-                DoggyTalentsNext.LOGGER.warn("Unable to load registry value in registry {} with resource location {}", registry.getRegistryName(), rl);
+                //DoggyTalentsNext.LOGGER.warn("Unable to load registry value in registry {} with resource location {}", registry.getRegistryName(), rl);
             }
         } else {
-            DoggyTalentsNext.LOGGER.warn("Unable to load resource location in NBT:{}, for {} registry", key, registry.getRegistryName());
+            //DoggyTalentsNext.LOGGER.warn("Unable to load resource location in NBT:{}, for {} registry", key, registry.getRegistryName());
         }
 
         return null;

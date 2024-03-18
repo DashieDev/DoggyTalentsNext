@@ -16,9 +16,6 @@ import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
 
 import java.util.UUID;
 
@@ -32,9 +29,9 @@ public class DoggyBeamEntity extends ThrowableProjectile {
         super(DoggyEntityTypes.DOG_BEAM.get(), livingEntityIn, worldIn);
     }
 
-    public DoggyBeamEntity(PlayMessages.SpawnEntity packet, Level worldIn) {
-        super(DoggyEntityTypes.DOG_BEAM.get(), worldIn);
-    }
+    // public DoggyBeamEntity(PlayMessages.SpawnEntity packet, Level worldIn) {
+    //     super(DoggyEntityTypes.DOG_BEAM.get(), worldIn);
+    // }
 
     @Override
     protected void onHit(HitResult result) {

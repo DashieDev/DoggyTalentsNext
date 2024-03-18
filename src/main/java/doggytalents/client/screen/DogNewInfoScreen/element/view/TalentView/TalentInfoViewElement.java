@@ -53,7 +53,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.forge_imitate.network.PacketDistributor;
 
 public class TalentInfoViewElement extends AbstractElement {
 
@@ -70,7 +70,7 @@ public class TalentInfoViewElement extends AbstractElement {
         super(parent, screen);
         this.dog = dog;
 
-        var mc = this.getScreen().getMinecraft();
+        var mc = Minecraft.getInstance();
         this.font = mc.font;
     }
 

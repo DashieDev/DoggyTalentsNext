@@ -3,6 +3,7 @@ package doggytalents.common.entity.ai;
 import doggytalents.DoggyTags;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.util.FabricUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -26,7 +27,7 @@ public class BerserkerModeGoal extends NearestAttackableTargetGoal<Mob> {
                     var owner = dog.getOwner();
                     if (owner != null) {
                         for (var stack : owner.getArmorSlots()) {
-                            if (stack.makesPiglinsNeutral(owner)) {
+                            if (FabricUtil.makesPiglinsNeutral(stack)) {
                                 return false;
                             }
                         }

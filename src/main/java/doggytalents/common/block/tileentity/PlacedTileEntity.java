@@ -65,8 +65,8 @@ public class PlacedTileEntity extends BlockEntity {
         return compound;
     }
 
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(pkt.getTag());
-    }
+    // @Override
+    // public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+    //     this.load(pkt.getTag());
+    // }
 }

@@ -13,10 +13,8 @@ import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.fml.event.IModBusEvent;
 
-public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent {
+public class RegisterCustomDogModelsEvent  {
 
     private List<DogModelProps> entries;
 
@@ -28,7 +26,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
         this.entries.add(builder.build());
     }
 
-    @Override
+    //@Override
     public boolean isCancelable() {
         return false;
     }
@@ -55,7 +53,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
             this.customRootPivot = customPivot;
             this.glowingEyes = glowingEyes;
         }
-
+        
         public Map<DogAnimation, AnimationDefinition> getAnimOverride() {
             return this.aninationOverride;
         }

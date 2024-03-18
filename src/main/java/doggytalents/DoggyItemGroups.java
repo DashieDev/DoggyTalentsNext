@@ -6,6 +6,9 @@ import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogBedUtil;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.registry.DeferredRegister;
+import doggytalents.forge_imitate.registry.RegistryObject;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -14,10 +17,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.CreativeModeTabRegistry;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.world.item.CreativeModeTab.Row;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,9 +32,9 @@ import static doggytalents.DoggyBlocks.*;
 public class DoggyItemGroups {
 
     //TODO using vanilla key, not forge's key ??? 
-    public static final DeferredRegister<CreativeModeTab> ITEM_GROUP = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
+    public static final DeferredRegister<CreativeModeTab> ITEM_GROUP = DeferredRegister.create(() -> BuiltInRegistries.CREATIVE_MODE_TAB, Constants.MOD_ID);
     public static RegistryObject<CreativeModeTab> GENERAL
-        = register("tabgeneral", () -> CreativeModeTab.builder()
+        = register("tabgeneral", () -> CreativeModeTab.builder(Row.TOP, 0)
             .title(Component.translatable("itemGroup.doggytalents"))
             .icon(() -> {
                 return new ItemStack(DoggyItems.DOGGY_CHARM.get());
@@ -52,10 +52,10 @@ public class DoggyItemGroups {
             }).build());
 
     public static RegistryObject<CreativeModeTab> DOG_BED
-        = register("tabdogbed", () -> CreativeModeTab.builder()
+        = register("tabdogbed", () -> CreativeModeTab.builder(Row.TOP, 0)
             .title(Component.translatable("itemGroup.doggytalents.dogbed"))
             .icon(DogBedUtil::createRandomBed)
-            .withTabsBefore(GENERAL.getKey())
+            //.withTabsBefore(GENERAL.getName())
             .displayItems((a, b) -> {
                 final int maxBeddingEntries = 13;
                 final int maxCasingEntries = 13;

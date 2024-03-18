@@ -2,13 +2,11 @@ package doggytalents.common.inventory.container;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.SlotItemHandler;
-
-import com.google.errorprone.annotations.Var;
 import com.mojang.datafixers.util.Pair;
 
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyTalents;
+import doggytalents.api.forge_imitate.inventory.SlotItemHandler;
 import doggytalents.api.impl.DogArmorItemHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.inventory.PackPuppyItemHandler;

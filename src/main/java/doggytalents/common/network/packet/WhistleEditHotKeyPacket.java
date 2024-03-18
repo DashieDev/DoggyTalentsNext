@@ -7,8 +7,7 @@ import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.WhisltleEditHotKeyData;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
 
 public class WhistleEditHotKeyPacket implements IPacket<WhisltleEditHotKeyData> {
 
@@ -28,9 +27,9 @@ public class WhistleEditHotKeyPacket implements IPacket<WhisltleEditHotKeyData> 
     @Override
     public void handle(WhisltleEditHotKeyData data, Supplier<Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            LogicalSide side = ctx.get().getDirection().getReceptionSide();
+            //LogicalSide side = ctx.get().getDirection().getReceptionSide();
 
-            if (!side.isServer()) return;
+            if (!ctx.get().isServerRecipent()) return;
             var player = ctx.get().getSender();
             var stack = player.getMainHandItem();
             if (!(stack.getItem() == DoggyItems.WHISTLE.get())) return;

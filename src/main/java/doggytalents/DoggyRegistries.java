@@ -1,12 +1,15 @@
 package doggytalents;
 
+import java.util.function.Supplier;
+
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.*;
 import doggytalents.common.util.Util;
+import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.NewRegistryEvent;
-import net.minecraftforge.registries.RegistryBuilder;
 
 public class DoggyRegistries {
 
@@ -18,14 +21,17 @@ public class DoggyRegistries {
         public static final ResourceLocation CASING_REGISTRY = Util.getResource("casing");
     }
 
-    public static void newRegistry(NewRegistryEvent event) {
-        DoggyTalentsAPI.TALENTS = event.create(makeRegistry(Keys.TALENTS_REGISTRY, Talent.class));
-        DoggyTalentsAPI.ACCESSORIES = event.create(makeRegistry(Keys.ACCESSORIES_REGISTRY, Accessory.class));
-        DoggyTalentsAPI.ACCESSORY_TYPE = event.create(makeRegistry(Keys.ACCESSORY_TYPE_REGISTRY, AccessoryType.class).disableSync());
+    public static void newRegistry() {
+        DoggyTalentsAPI.TALENTS = (makeRegistry(Keys.TALENTS_REGISTRY, Talent.class));
+        DoggyTalentsAPI.ACCESSORIES = (makeRegistry(Keys.ACCESSORIES_REGISTRY, Accessory.class));
+        DoggyTalentsAPI.ACCESSORY_TYPE = (makeRegistry(Keys.ACCESSORY_TYPE_REGISTRY, AccessoryType.class));//.disableSync());
     }
 
-    private static <T> RegistryBuilder<T> makeRegistry(final ResourceLocation rl, Class<T> type) {
-        return new RegistryBuilder<T>().setName(rl);
+    private static <T> Supplier<Registry<T>> makeRegistry(final ResourceLocation rl, Class<T> type) {
+        var ret =  FabricRegistryBuilder.createSimple(ResourceKey.<T>createRegistryKey(rl))
+            .attribute(RegistryAttribute.SYNCED)
+            .buildAndRegister();
+        return () -> ret;
     }
 //
 //    private static class AccessoryCallbacks implements IForgeRegistry.DummyFactory<Accessory> {

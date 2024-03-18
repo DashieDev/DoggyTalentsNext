@@ -87,7 +87,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             @Override
             public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
                 var mc = Minecraft.getInstance();
-                if (keyCode == mc.options.keyRight.getKey().getValue()) {
+                if (mc.options.keyRight.matches(keyCode, scanCode)) {
                     this.selected = true;
                 }
                 return false;
@@ -96,7 +96,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             @Override
             public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
                 this.selected = false;
-
+                
                 return false;
             }
 
@@ -139,7 +139,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             @Override
             public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
                 var mc = Minecraft.getInstance();
-                if (keyCode == mc.options.keyLeft.getKey().getValue()) {
+                if (mc.options.keyLeft.matches(keyCode, scanCode)) {
                     this.selected = true;
                 }
                 return false;
@@ -307,11 +307,11 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         
         if (!this.sideTabNavLocked) {
             this.sideTabNavLocked = true;
-            if (keyCode == options.keyLeft.getKey().getValue()) {
+            if (options.keyLeft.matches(keyCode, scanCode)) {
                 this.lefTabButton.playDownSound(mc.getSoundManager());
                 this.lefTabButton.onClick(0, 0);
                 this.lefTabButton.keyPressed(keyCode, scanCode, modifiers);
-            } else if (keyCode == options.keyRight.getKey().getValue()) {
+            } else if (options.keyRight.matches(keyCode, scanCode)) {
                 this.rightTabButton.playDownSound(mc.getSoundManager());
                 this.rightTabButton.onClick(0, 0);
                 this.rightTabButton.keyPressed(keyCode, scanCode, modifiers);
