@@ -166,6 +166,8 @@ public class DogFarmerAction extends ToolAction {
 
     private BlockPos findNextFarmBlock() {
         var bp = this.dog.blockPosition();
+        if (this.seedTarget == null || this.seedTarget.isEmpty())
+            return null;
         var owner = this.dog.getOwner();
         if (owner == null) return null;
         for (BlockPos pos : BlockPos.betweenClosed(
@@ -197,7 +199,9 @@ public class DogFarmerAction extends ToolAction {
 
     private FarmState getFarmState(BlockPos pos) { 
         if (pos == null) return FarmState.NONE;
-        var state = this.dog.level.getBlockState(pos);
+        if (this.seedTarget == null || this.seedTarget.isEmpty())
+            return FarmState.NONE;
+        var state = this.dog.level().getBlockState(pos);
         if(state.getBlock() != Blocks.FARMLAND) return FarmState.NONE;
         var state_above = this.dog.level.getBlockState(pos.above());
         if(state_above.getBlock() == Blocks.AIR) {
