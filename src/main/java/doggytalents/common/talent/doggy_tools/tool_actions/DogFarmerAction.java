@@ -160,6 +160,7 @@ public class DogFarmerAction extends ToolAction {
     public boolean shouldUse() {
         if (--this.cooldown > 0) return false;
         this.cooldown = 10;
+        this.refreshTargetSeed();
         this.nextFarmBlock = findNextFarmBlock();
         return this.nextFarmBlock != null;
     }
