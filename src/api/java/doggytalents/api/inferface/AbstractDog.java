@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
 
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.feature.IDog;
@@ -169,6 +170,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public abstract DogArmorItemHandler dogArmors();
     public abstract boolean canDogWearArmor();
     public abstract boolean canDogUseTools();
+    public abstract DogAnimation getAnim();
 
     //Start : Re-adjust armor behaviour
     //All dog start hurting Amrmor in armorItems regradless of anything.
