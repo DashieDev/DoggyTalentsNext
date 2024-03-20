@@ -180,6 +180,7 @@ public class Dog extends AbstractDog {
      *     15              32768               RESTING
      *     16              65536               REST_BELLY
      *     17              131072              DRUNK_POSE
+     *     18              262144              ACTION_FORCED_NONE_ANIM
      *     .
      *     31              2^31                <Reserved>
      */
@@ -3674,6 +3675,14 @@ public class Dog extends AbstractDog {
         this.setDogFlag(131072, val);
     }
 
+    public void setForcedActionAnim(boolean val) {
+        this.setDogFlag(262144, val);
+    }
+
+    public boolean forcedWhenNoneAnim() {
+        return getDogFlag(262144);
+    }
+
     public void setDrunkTicks(int ticks) {
         this.drunkTickLeft = ticks;
     }
@@ -4753,7 +4762,7 @@ public class Dog extends AbstractDog {
             this.setDogPose(this.isLying() ? DogPose.LYING_2 : DogPose.SIT);
             return;
         }
-        if (this.isDogFlying()) {
+        if (this.isDogFlying() && !this.forcedWhenNoneAnim()) {
             this.setDogPose(DogPose.FLYING);
             return;
         }
