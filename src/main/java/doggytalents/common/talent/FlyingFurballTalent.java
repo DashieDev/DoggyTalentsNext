@@ -94,7 +94,7 @@ public class FlyingFurballTalent extends TalentInstance {
 
         if (isDogFlying)
         if (this.wasFlying) {
-            if (dog.getAnim() == DogAnimation.NONE)
+            if (dog.getAnim() == DogAnimation.NONE && !dog.forcedWhenNoneAnim())
                 dog.setAnim(DogAnimation.FLY_AIR_BOURNE);
         } else {
             dog.setAnim(DogAnimation.FLY_JUMP_START);
@@ -103,14 +103,14 @@ public class FlyingFurballTalent extends TalentInstance {
 
         if (!isDogFlying){
             var anim = dog.getAnim();
-            if (anim == DogAnimation.FLY_AIR_BOURNE || anim == DogAnimation.FLY_JUMP_START || (wasFlying && anim == DogAnimation.NONE))
+            if (anim == DogAnimation.FLY_AIR_BOURNE || anim == DogAnimation.FLY_JUMP_START || (wasFlying && anim == DogAnimation.NONE && !dog.forcedWhenNoneAnim()))
                 dog.setAnim(DogAnimation.FLY_LANDING);
             this.wasFlying = false;
         }
     }
 
     private boolean canBeginFlying(AbstractDog dog) {
-        return dog.getAnim() == DogAnimation.NONE && shouldBeFlying(dog);
+        return dog.getAnim() == DogAnimation.NONE && !dog.forcedWhenNoneAnim() && shouldBeFlying(dog);
     }
 
     private boolean shouldStopFlying(AbstractDog dog) {
