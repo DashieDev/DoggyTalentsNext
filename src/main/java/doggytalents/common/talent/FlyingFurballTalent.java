@@ -80,12 +80,12 @@ public class FlyingFurballTalent extends TalentInstance {
             dog.setNavigation(navigation);
         }
 
-        if (isDogFlying && !shouldBeFlying(dog))  {
+        if (isDogFlying && shouldStopFlying(dog))  {
             dog.setDogFlying(false);
             dog.setNoGravity(false);
         }
 
-        if (!isDogFlying && shouldBeFlying(dog)) {
+        if (!isDogFlying && canBeginFlying(dog)) {
             dog.setDogFlying(true);
             this.flyHoldTick = 15;
         }
@@ -107,6 +107,14 @@ public class FlyingFurballTalent extends TalentInstance {
                 dog.setAnim(DogAnimation.FLY_LANDING);
             this.wasFlying = false;
         }
+    }
+
+    private boolean canBeginFlying(AbstractDog dog) {
+        return dog.getAnim() == DogAnimation.NONE && shouldBeFlying(dog);
+    }
+
+    private boolean shouldStopFlying(AbstractDog dog) {
+        return !shouldBeFlying(dog);
     }
 
     private boolean shouldBeFlying(AbstractDog dog) {
