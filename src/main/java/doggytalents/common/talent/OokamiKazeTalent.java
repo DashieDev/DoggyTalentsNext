@@ -119,6 +119,7 @@ public class OokamiKazeTalent extends TalentInstance {
                 this.setState(ActionState.FINISHED);
                 return;
             }
+            this.dog.setForcedActionAnim(true);
         }
 
         @Override
@@ -209,6 +210,7 @@ public class OokamiKazeTalent extends TalentInstance {
 
         @Override
         public void onStop() {
+            this.dog.setForcedActionAnim(false);
             if (phase == ActionPhase.EXPLODE) {
                 if (dog.getAnim() == DogAnimation.HOWL) {
                     dog.setAnim(DogAnimation.NONE);

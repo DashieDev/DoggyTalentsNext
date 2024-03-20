@@ -171,6 +171,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public abstract boolean canDogWearArmor();
     public abstract boolean canDogUseTools();
     public abstract DogAnimation getAnim();
+    public abstract boolean forcedWhenNoneAnim();
 
     //Start : Re-adjust armor behaviour
     //All dog start hurting Amrmor in armorItems regradless of anything.
