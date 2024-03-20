@@ -23,6 +23,7 @@ import doggytalents.common.artifacts.DoggyArtifact;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.ai.nav.DogBodyRotationControl;
+import doggytalents.common.entity.ai.nav.DogJumpControl;
 import doggytalents.common.entity.ai.nav.DogMoveControl;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import doggytalents.common.entity.ai.nav.IDogNavLock;
@@ -302,6 +303,7 @@ public class Dog extends AbstractDog {
         this.resetTickTillRest();
 
         this.moveControl = new DogMoveControl(this);
+        this.jumpControl = new DogJumpControl(this);
 
         this.defaultNavigation = this.navigation;
         this.defaultMoveControl = this.moveControl;
