@@ -20,6 +20,7 @@ import doggytalents.common.fabric_helper.storage.FabricRecievedStarterBundleStor
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.TrainWolfToDogData;
 import doggytalents.common.storage.DogLocationStorage;
+import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.talent.HunterDogTalent;
 import doggytalents.common.talent.PackPuppyTalent;
@@ -123,7 +124,12 @@ public class EventHandler {
 
         if (!checkValidWolf(wolf, trainer))
             return;
-        
+
+        if (!isWithinTrainWolfLimit(trainer)) {
+            level.broadcastEntityEvent(wolf, doggytalents.common.lib.Constants.EntityState.WOLF_SMOKE);
+            return;
+        }
+
         if (!trainer.getAbilities().instabuild) {
             stack.shrink(1);
         }
@@ -148,6 +154,25 @@ public class EventHandler {
         boolean condition2 = wolf.isTame() && wolf.isOwnedBy(owner);
         
         return condition1 || condition2;
+    }
+
+    private static boolean isWithinTrainWolfLimit(Player owner) {
+        int limit = ConfigHandler.SERVER.TRAIN_WOLF_LIMIT.get();
+        if (limit <= 0)
+            return true;
+        
+        var server = owner.level().getServer();
+        var locStore = DogLocationStorage.get(server);
+        var respawnStore = DogRespawnStorage.get(server);
+        
+        int locCnt = locStore.getAll().size();
+        int respawnCnt = respawnStore.getAll().size();
+        
+        int totalTrained = locCnt + respawnCnt;
+        if (totalTrained >= limit)
+            return false;
+        
+        return true;
     }
 
     public static void trainWolf(Wolf wolf, Player owner, Level level) {
