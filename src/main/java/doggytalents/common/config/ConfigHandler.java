@@ -242,6 +242,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue WOLF_MOUNT_PASSENGER_COLLISION;
         public ForgeConfigSpec.BooleanValue CONDUCTING_BONE_CROSS_ORIGIN;
         public ForgeConfigSpec.BooleanValue INCAP_VAL_RESET_WHEN_HURT;
+        public ForgeConfigSpec.IntValue TRAIN_WOLF_LIMIT;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -383,6 +384,13 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("while being Incapacitated.")
                 .translation("doggytalents.incap_val_reset_when_hurt")
                 .define("incap_val_reset_when_hurt", true);
+            TRAIN_WOLF_LIMIT = builder
+                .comment("Set the maximum amount of wolves each players can train to DTN's Dogs.")
+                .comment("If a player meet or exceed this cap, he will not be able to train more wolves into DTN's Dogs.")
+                .comment("Set this to a value greater than Zero to activate this cap, other value")
+                .comment("will disable the cap, meaning players can get unlimited dogs.")
+                .translation("doggytalents.train_wolf_limit")
+                .defineInRange("train_wolf_limit", -1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
             builder.pop();
         }
