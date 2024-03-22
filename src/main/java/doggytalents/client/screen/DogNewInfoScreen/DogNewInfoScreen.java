@@ -169,9 +169,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     }
 
     @Override
-    public void init() {
+    public void reRenderRoot() {
+        super.reRenderRoot();
         this.setupDropdown();
-        super.init();
     }
 
     @Override
