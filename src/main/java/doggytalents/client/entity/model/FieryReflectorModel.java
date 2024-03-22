@@ -14,14 +14,14 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class DivineRetributionModel extends ElytraCapeModel {
+public class FieryReflectorModel extends ElytraCapeModel {
 
     public DogModelPart reflector;
     public ModelPart divineCape;
 
     private boolean incapacitated;
 
-    public DivineRetributionModel(ModelPart root) {
+    public FieryReflectorModel(ModelPart root) {
         super(root);
     }
 

@@ -13,9 +13,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
-public class DivineRetributionItem extends AccessoryItem {
+public class FieryReflectorItem extends AccessoryItem {
 
-    public DivineRetributionItem(Supplier<? extends Accessory> type, Properties properties) {
+    public FieryReflectorItem(Supplier<? extends Accessory> type, Properties properties) {
         super(type, properties);
         //TODO Auto-generated constructor stub
     }
