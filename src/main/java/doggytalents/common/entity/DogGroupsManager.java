@@ -72,6 +72,8 @@ public class DogGroupsManager {
             this.color = color;
             if (name == null) {
                 this.name = "";
+            } else if (name.length() > MAX_GROUP_STRLEN) {
+                this.name = name.substring(0, MAX_GROUP_STRLEN);
             } else {
                 this.name = name;
             }
