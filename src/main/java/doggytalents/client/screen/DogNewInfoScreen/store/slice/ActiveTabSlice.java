@@ -97,7 +97,7 @@ public class ActiveTabSlice implements AbstractSlice {
     public static void dispatchGroupUpdates() {
         var screen = Minecraft.getInstance().screen;
         if (screen instanceof DogNewInfoScreen dogInfoScreen) {
-            Store.get(dogInfoScreen).dispatch(ActiveTabSlice.class, 
+            Store.get(dogInfoScreen).dispatch(GroupChangeHandlerSlice.class, 
                 new UIAction(UIActionTypes.DOG_GROUPS_RESPONSE, new Object()));
         }
     }
