@@ -30,16 +30,16 @@ import java.util.function.Supplier;
 
 import com.google.common.collect.Maps;
 
-public class DivineRetribution extends Accessory implements IAccessoryHasModel {
+public class FieryReflector extends Accessory implements IAccessoryHasModel {
     
-    public DivineRetribution(Supplier<? extends ItemLike> itemIn) {
+    public FieryReflector(Supplier<? extends ItemLike> itemIn) {
         super(DoggyAccessoryTypes.WINGS, itemIn);
         this.setAccessoryRenderType(AccessoryRenderType.MODEL);
     }
 
     @Override
     public Entry getRenderEntry() {
-        return AccessoryModelRenderEntries.DIVINE_RETRIB;
+        return AccessoryModelRenderEntries.FIERY_REFL;
     }
 
     @Override
