@@ -7,6 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.dropdown.AddGroupMenu.AddGroupMenu;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.GroupChangeHandlerSlice;
 import doggytalents.client.screen.framework.DropdownMenuManager;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.FlatButton;
@@ -41,6 +42,7 @@ public class GroupsListElement extends AbstractElement {
 
     @Override
     public AbstractElement init() {
+        getStateAndSubscribesTo(GroupChangeHandlerSlice.class, Object.class, null);
         int pX = this.getRealX();
         int pY = this.getRealY();
         
