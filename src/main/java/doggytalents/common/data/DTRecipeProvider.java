@@ -124,6 +124,11 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('S', Items.STRING)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.WOOL_COLLAR_THICC.get(), 1)
+            .requires(DoggyItems.WOOL_COLLAR.get(), 2)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
             
         ShapedRecipeBuilder.shaped(DoggyItems.TREAT_BAG.get(), 1)
             .pattern("LCL")
