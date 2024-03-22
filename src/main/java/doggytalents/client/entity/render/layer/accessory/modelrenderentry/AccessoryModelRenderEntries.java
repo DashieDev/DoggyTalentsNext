@@ -28,7 +28,7 @@ public class AccessoryModelRenderEntries {
     public static Entry FLYING_CAPE = new FlyingCapeRenderEntry();
     public static Entry BAT_WINGS = new BatWingsRenderEntry();
     public static Entry CROW_WINGS = new CrowWingsRenderEntry();
-    public static Entry DIVINE_RETRIB = new DivineRetributionRenderEntry();
+    public static Entry FIERY_REFL = new FieryReflectorRenderEntry();
     public static Entry LAB_COAT = new LabCoatRenderEntry();
     public static Entry CERE_GARB = new CeremonialGarbRenderEntry();
     public static Entry CONTACTS = new ContactsRenderEntry();
@@ -60,7 +60,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(FLYING_CAPE);
         AccessoryModelManager.register(BAT_WINGS);
         AccessoryModelManager.register(CROW_WINGS);
-        AccessoryModelManager.register(DIVINE_RETRIB);
+        AccessoryModelManager.register(FIERY_REFL);
         AccessoryModelManager.register(LAB_COAT);
         AccessoryModelManager.register(CERE_GARB);
         AccessoryModelManager.register(PROPELLAR);
