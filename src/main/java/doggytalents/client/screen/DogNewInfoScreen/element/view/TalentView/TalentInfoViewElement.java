@@ -76,7 +76,7 @@ public class TalentInfoViewElement extends AbstractElement {
 
     @Override
     public AbstractElement init() {
-        getStateAndSubscribesTo(TalentChangeHandlerSlice.class, TalentChangeHandlerSlice.class, null);
+        getStateAndSubscribesTo(TalentChangeHandlerSlice.class, Object.class, null);
         var talent = getStateAndSubscribesTo(ActiveTalentDescSlice.class, 
             ActiveTalentDescSlice.class, 
             new ActiveTalentDescSlice(null)).activeTalent;
