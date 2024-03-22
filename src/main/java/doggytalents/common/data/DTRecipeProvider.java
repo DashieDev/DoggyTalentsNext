@@ -670,12 +670,13 @@ public class DTRecipeProvider extends RecipeProvider {
             
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DIVINE_RETRIBUTON.get(), 1)
             .pattern("MPM")
-            .pattern("CCC")
+            .pattern("CXC")
             .pattern("BPB")
             .define('C', Items.COPPER_INGOT)
             .define('P', Items.PHANTOM_MEMBRANE)
             .define('M', Items.MAGMA_CREAM)
             .define('B', Items.BLAZE_POWDER)
+            .define('X', DoggyItems.KOJI.get())
             .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
             .save(consumer);
         
