@@ -12,6 +12,7 @@ import doggytalents.client.screen.framework.DropdownMenuManager;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogGroupsManager;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogForceSitData;
@@ -59,6 +60,8 @@ public class GroupsListElement extends AbstractElement {
             this.addChildren(groupButton);
             pX += GROUP_SPACING + groupButton.getWidth();
         }
+        if (dogGroups.size() >= DogGroupsManager.MAX_GROUP_SIZE)
+            return this;
         int addButtonSize = font.lineHeight + GroupEntryButton.PADDING_VERT*2;
         var addButton = new FlatButton(pX, pY, addButtonSize, addButtonSize, Component.literal("+"), 
             b -> {
