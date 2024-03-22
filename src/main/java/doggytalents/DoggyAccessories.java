@@ -18,6 +18,7 @@ public class DoggyAccessories {
     public static final DeferredRegister<Accessory> ACCESSORIES = DeferredRegister.create(DoggyRegistries.Keys.ACCESSORIES_REGISTRY, Constants.MOD_ID);
 
     public static final RegistryObject<DyeableAccessory> DYEABLE_COLLAR = register("dyeable_collar", () -> new DyeableAccessory(DoggyAccessoryTypes.COLLAR, DoggyItems.WOOL_COLLAR).setDogStillNakedWhenWear(true).setModelTexture(Resources.COLLAR_DEFAULT).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
+    public static final RegistryObject<DyeableAccessory> DYEABLE_COLLAR_THICC = register("dyeable_collar_thicc", () -> new DyeableAccessory(DoggyAccessoryTypes.COLLAR, DoggyItems.WOOL_COLLAR_THICC).setDogStillNakedWhenWear(true).setModelTexture(Resources.COLLAR_THICC).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
     public static final RegistryObject<Collar> GOLDEN_COLLAR = register("golden_collar", () -> new Collar(DoggyItems.CREATIVE_COLLAR).setModelTexture(Resources.COLLAR_GOLDEN).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
     public static final RegistryObject<Collar> SPOTTED_COLLAR = register("spotted_collar", () -> new Collar(DoggyItems.SPOTTED_COLLAR).setModelTexture(Resources.COLLAR_SPOTTED).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
     public static final RegistryObject<Collar> MULTICOLORED_COLLAR = register("multicolored_collar", () -> new Collar(DoggyItems.MULTICOLOURED_COLLAR).setModelTexture(Resources.COLLAR_MULTICOLORED).setAccessoryRenderType(AccessoryRenderType.OVERLAY));

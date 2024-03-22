@@ -29,6 +29,7 @@ public class Resources {
     public static final ResourceLocation DOG_MYSTERY = getEntity("dog", "custom/classical/wolf_nani");
 
     public static final ResourceLocation COLLAR_DEFAULT = getEntity("dog", "doggy_collar");
+    public static final ResourceLocation COLLAR_THICC = getEntity("dog", "doggy_collar_thicc");
     public static final ResourceLocation COLLAR_GOLDEN = getEntity("dog", "doggy_collar_0");
     public static final ResourceLocation COLLAR_SPOTTED = getEntity("dog", "doggy_collar_1");
     public static final ResourceLocation COLLAR_MULTICOLORED = getEntity("dog", "doggy_collar_2");
