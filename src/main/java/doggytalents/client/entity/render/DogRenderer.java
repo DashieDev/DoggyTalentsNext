@@ -3,6 +3,7 @@ package doggytalents.client.entity.render;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.joml.Matrix4f;
 
@@ -34,6 +35,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -43,6 +45,13 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
 public class DogRenderer extends MobRenderer<Dog, DogModel> {
+
+    private static final int TXTCLR_DIFFOWNER = 0x574a4a4a;
+    
+    private static final int TXTCLR_HEALTH_70_100 = 0x0aff43;
+    private static final int TXTCLR_HEALTH_30_70 = 0xeffa55;
+    private static final int TXTCLR_HEALTH_0_30 = 0xff3636;
+    private static final int TXTCLR_HEALTH_BKG = 0x4a4a4a;
 
     private DogModel defaultModel;
     private NullDogModel nullDogModel;
@@ -200,106 +209,132 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
 
     private void renderExtraInfo(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
         int packedLight, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
-        String tip = dog.getMode().getTip();
-        var hunger = Mth.ceil(
-            (dog.isDefeated()?
-            -dog.getDogIncapValue() :
-            dog.getDogHunger())
-        );
+        
+        renderInfoDogText(dog, text, stack, buffer, packedLight, d0, diffOwnerRender, isDiffOwner);
+        renderSecondaryInfoDogText(dog, text, stack, buffer, packedLight, d0, diffOwnerRender, isDiffOwner);
+    }
 
-        boolean flag1 = 
+    private void renderInfoDogText(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
+        int packedLight, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
+        
+        boolean renderHealthInNameActivated = 
             this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
             && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
 
-        var label = Component.translatable(tip);
+        var extra_info_c1 = Component.translatable(dog.getMode().getTip());
+        
+        var hunger_c1_optional = getHungerC1(dog, renderHealthInNameActivated);
+        var gender_c1_optional = getGenderC1(dog);
+
+        if (hunger_c1_optional.isPresent()) {
+            var hunger_c1 = hunger_c1_optional.get();
+            extra_info_c1.append(hunger_c1);
+        }
+
+        if (gender_c1_optional.isPresent()) {
+            var gender_c1 = gender_c1_optional.get();
+            extra_info_c1.append(gender_c1);
+        }
+
+        if (diffOwnerRender) {
+            extra_info_c1 = createC1WithColor(extra_info_c1, TXTCLR_DIFFOWNER);
+        }
+
+        renderDogText(dog, extra_info_c1, 0.12f, 0.01f, stack, buffer, packedLight, diffOwnerRender, isDiffOwner);
+
+    }
+
+    private void renderSecondaryInfoDogText(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
+        int packedLight, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
+
+        if (d0 > 5 * 5)
+            return;
+        if (!this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown())
+            return;
+
+        var ownerC0 = dog.getOwnersName().orElseGet(() -> this.getNameUnknown(dog));
+        if (diffOwnerRender) {
+            ownerC0 = createC1WithColor(ownerC0, TXTCLR_DIFFOWNER);
+        }
+
+        renderDogText(dog, ownerC0, -0.25f, 0.01f, stack, buffer, packedLight, diffOwnerRender, isDiffOwner);
+    }
+
+    private Optional<Component> getHungerC1(Dog dog, boolean renderHealthInNameActivated) {
+        int hunger = 0;
+        if (dog.isDefeated()) {
+            hunger = -dog.getDogIncapValue();
+        } else {
+            hunger = Mth.ceil(dog.getDogHunger());
+        }
         var hunger_c1 = Component.literal("(" + hunger + ")");
         boolean hightlight_red = 
-            (dog.getDogHunger() <= 10 && flag1)
+            (dog.getDogHunger() <= 10 && renderHealthInNameActivated)
             || dog.isDefeated();
         if (hightlight_red) {
             hunger_c1.withStyle(Style.EMPTY.withColor(0xff3636));
         }
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get() && !dog.isDefeated())
-            hunger_c1 = Component.empty();
-        label.append(hunger_c1);
-        if (!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER)) {
-            label.append(Component.translatable(dog.getGender().getUnlocalisedTip()));
-        }
-
-        final int TXTCLR_BKG = 0x574a4a4a;
-
-        if (diffOwnerRender) {
-            label = Component.literal(label.getString())
-            .withStyle(
-                Style.EMPTY
-                .withColor(TXTCLR_BKG)
-            );
-        }
-
-        renderDogText(dog, label, 0.12f, 0.01f, stack, buffer, packedLight, diffOwnerRender, isDiffOwner);
-
-        if (d0 <= 5 * 5 && this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()) {
-            var ownerC0 = dog.getOwnersName().orElseGet(() -> this.getNameUnknown(dog));
-            if (diffOwnerRender) {
-               ownerC0 = Component.literal(ownerC0.getString())
-                .withStyle(
-                    Style.EMPTY
-                    .withColor(TXTCLR_BKG)
-                );
-            }
-
-            renderDogText(dog, ownerC0, -0.25f, 0.01f, stack, buffer, packedLight, diffOwnerRender, isDiffOwner);
-        }
+            return Optional.empty();
+        return Optional.of(hunger_c1);
     }
 
-     private Component modifyMainText(Dog dog, Component text, boolean diffOwnerRender) {
-        final int TXTCLR_HEALTH_70_100 = 0x0aff43;
-        final int TXTCLR_HEALTH_30_70 = 0xeffa55;
-        final int TXTCLR_HEALTH_0_30 = 0xff3636;
-        final int TXTCLR_BKG = 0x4a4a4a;
-        
+    private Optional<Component> getGenderC1(Dog dog) {
+        if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER)) {
+            return Optional.empty();
+        }
+        var ret = Component.translatable(dog.getGender().getUnlocalisedTip());
+        return Optional.of(ret);
+    }
+
+    private Component modifyMainText(Dog dog, Component text, boolean diffOwnerRender) {
         if (diffOwnerRender) {
-            text = Component.literal(text.getString())
-                .withStyle(
-                    Style.EMPTY
-                    .withColor(TXTCLR_BKG)
-                );
+            text = createC1WithColor(text, TXTCLR_DIFFOWNER);
             return text;
         }
 
-        boolean flag1 = 
+        boolean diffOwnerRenderActive = 
                 this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
                 && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
-        if (flag1) {
-            int noCharsInName = text.getString().length();
-            float healthPercentage = dog.getHealth()/dog.getMaxHealth();
-            healthPercentage = Mth.clamp(healthPercentage, 0, 1);
-            int noCharHighlighted = Mth.ceil( noCharsInName * healthPercentage );
-            noCharHighlighted = Mth.clamp(noCharHighlighted, 0, noCharsInName);
-            var hlPart = text.getString().substring(0, noCharHighlighted);
-            String nonHlPart = "";
-            if (noCharHighlighted <= noCharsInName) {
-                nonHlPart = text.getString().substring(noCharHighlighted, noCharsInName);
-            }
-            int color = TXTCLR_HEALTH_0_30;
-            if (healthPercentage >= 0.7) {
-                color = TXTCLR_HEALTH_70_100;
-            } else if (healthPercentage >= 0.3) {
-                color = TXTCLR_HEALTH_30_70;
-            }
-            var newTxt = Component.literal(hlPart).withStyle(
-                Style.EMPTY
-                .withColor(color)
-            );
-            var restTxt = Component.literal(nonHlPart).withStyle(
-                Style.EMPTY
-                .withColor(TXTCLR_BKG)
-            );
-            newTxt.append(restTxt);
-            text = newTxt;
+        if (diffOwnerRenderActive) {
+            colorTextWithHealth(dog, text);
         }
         return text;
-     }
+    }
+
+    private void colorTextWithHealth(Dog dog, Component text) {
+        int noCharsInName = text.getString().length();
+        float healthPercentage = dog.getHealth()/dog.getMaxHealth();
+        healthPercentage = Mth.clamp(healthPercentage, 0, 1);
+        int noCharHighlighted = Mth.ceil( noCharsInName * healthPercentage );
+        noCharHighlighted = Mth.clamp(noCharHighlighted, 0, noCharsInName);
+        var hlPart = text.getString().substring(0, noCharHighlighted);
+        String nonHlPart = "";
+        if (noCharHighlighted <= noCharsInName) {
+            nonHlPart = text.getString().substring(noCharHighlighted, noCharsInName);
+        }
+        int color = TXTCLR_HEALTH_0_30;
+        if (healthPercentage >= 0.7) {
+            color = TXTCLR_HEALTH_70_100;
+        } else if (healthPercentage >= 0.3) {
+            color = TXTCLR_HEALTH_30_70;
+        }
+        var newTxt = createC1WithColor(hlPart, color);
+        var restTxt = createC1WithColor(nonHlPart, TXTCLR_HEALTH_BKG);
+        newTxt.append(restTxt);
+        text = newTxt;
+    }
+
+    private MutableComponent createC1WithColor(String str, int color) {
+        return Component.literal(str).withStyle(
+            Style.EMPTY
+            .withColor(color)
+        );
+    }
+
+    private MutableComponent createC1WithColor(Component c1, int color) {
+        return createC1WithColor(c1.getString(), color);
+    }
 
     //Super call Inlined without broastcasting any render event as an attempt to resolve render conflict, 
     //if users opt for it.
