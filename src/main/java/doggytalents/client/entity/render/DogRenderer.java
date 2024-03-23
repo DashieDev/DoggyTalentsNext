@@ -2,6 +2,7 @@ package doggytalents.client.entity.render;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -278,7 +279,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         } else {
             hunger = Mth.ceil(dog.getDogHunger());
         }
-        var hunger_c1 = Component.literal(String.format(hunger_format, hunger));
+        var hunger_c1 = Component.literal(String.format(Locale.ROOT, hunger_format, hunger));
         boolean hightlight_red = 
             (dog.getDogHunger() <= 10 && renderHealthInNameActivated)
             || dog.isDefeated();
