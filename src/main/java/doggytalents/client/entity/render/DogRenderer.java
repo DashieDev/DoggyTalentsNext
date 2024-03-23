@@ -51,6 +51,8 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     private static final int TXTCLR_HEALTH_30_70 = 0xeffa55;
     private static final int TXTCLR_HEALTH_0_30 = 0xff3636;
     private static final int TXTCLR_HEALTH_BKG = 0x4a4a4a;
+    
+    private static final int TXCLR_SEPERATOR = 0xffa1a1a1;
 
     private DogModel defaultModel;
     private NullDogModel nullDogModel;
@@ -219,6 +221,8 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         boolean renderHealthInNameActivated = 
             this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
             && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
+        final String seperator = ConfigHandler.CLIENT.DOG_INFO_SEPERATOR.get();
+        final Component seperator_c1 = createC1WithColor(seperator, TXCLR_SEPERATOR);
 
         var extra_info_c1 = Component.translatable(dog.getMode().getTip());
         
@@ -226,11 +230,13 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         var gender_c1_optional = getGenderC1(dog);
 
         if (hunger_c1_optional.isPresent()) {
+            extra_info_c1.append(seperator_c1);
             var hunger_c1 = hunger_c1_optional.get();
             extra_info_c1.append(hunger_c1);
         }
 
         if (gender_c1_optional.isPresent()) {
+            extra_info_c1.append(seperator_c1);
             var gender_c1 = gender_c1_optional.get();
             extra_info_c1.append(gender_c1);
         }
@@ -262,6 +268,8 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     private Optional<Component> getHungerC1(Dog dog, boolean renderHealthInNameActivated) {
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get() && !dog.isDefeated())
             return Optional.empty();
+
+        final String hunger_format = ConfigHandler.CLIENT.DOG_INFO_HUNGER_FORMAT.get();
         
         int hunger = 0;
         if (dog.isDefeated()) {
@@ -269,7 +277,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         } else {
             hunger = Mth.ceil(dog.getDogHunger());
         }
-        var hunger_c1 = Component.literal("(" + hunger + ")");
+        var hunger_c1 = Component.literal(String.format(hunger_format, hunger));
         boolean hightlight_red = 
             (dog.getDogHunger() <= 10 && renderHealthInNameActivated)
             || dog.isDefeated();

@@ -67,6 +67,8 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue ALWAYS_RENDER_CLASSICAL;
         public ForgeConfigSpec.BooleanValue RENDER_INCAPACITATED_TEXTURE;
         public ForgeConfigSpec.BooleanValue RENDER_HEALTH_IN_NAME;
+        public ConfigValue<String> DOG_INFO_SEPERATOR;
+        public ConfigValue<String> DOG_INFO_HUNGER_FORMAT;
         public ForgeConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
         public ForgeConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
         public ForgeConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
@@ -112,6 +114,18 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment(", the length of the part is based on the health percentage the dog has left")
                 .translation("doggytalents.config.client.render_health_in_name")
                 .define("render_health_in_name", true);
+            DOG_INFO_SEPERATOR = builder
+                .comment("Configure what will be displayed in the middle of")
+                .comment("each of the info section (e.g Hunger, Gender, Mode) when rendering ")
+                .comment("the Dog Status String located above the main Dog Name String.")
+                .translation("doggytalents.config.client.dog_info_seperator")
+                .define("dog_info_seperator", " · ");
+            DOG_INFO_HUNGER_FORMAT = builder
+                .comment("Configure the format that will be used to display hunger value")
+                .comment("when rendering the Dog Status String located above the main")
+                .comment("Dog Name String.")
+                .translation("doggytalents.config.client.dog_info_hunger_format")
+                .define("dog_info_hunger_format", "%d");
             DOG_INV_BUTTON_IN_INV = builder
                 .comment("Render a universal dog inventory access button in your inventory gui.")
                 .comment("If this is turned off, you can still access the button via the dog's")
