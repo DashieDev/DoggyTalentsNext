@@ -678,6 +678,15 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('X', DoggyItems.KOJI.get())
             .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
             .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SOUL_REFLECTOR.get(), 1)
+            .pattern(" S ")
+            .pattern("SXS")
+            .pattern(" S ")
+            .define('S', Items.SOUL_SAND)
+            .define('X', DoggyItems.DIVINE_RETRIBUTON.get())
+            .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+            .save(consumer);
         
         ShapedRecipeBuilder.shaped(DoggyItems.LAB_COAT.get(), 1)
             .pattern(" C ")
