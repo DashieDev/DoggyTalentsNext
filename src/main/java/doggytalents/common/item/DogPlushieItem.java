@@ -59,6 +59,9 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem {
         if (player != null && !player.getAbilities().instabuild)
             stack.shrink(1);
 
+        if (player != null)
+            player.getCooldowns().addCooldown(this, 20);
+
         return InteractionResult.SUCCESS;
     }
     
