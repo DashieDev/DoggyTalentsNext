@@ -13,6 +13,7 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.common.block.RiceMillBlock;
 import doggytalents.common.inventory.container.RiceMillMenu;
+import doggytalents.common.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -318,7 +319,8 @@ public class RiceMillBlockEntity extends BlockEntity {
             return false;
         if (!currentOutputStack.is(outputItemFromInput))
             return false;
-        return currentOutputStack.getCount() + recipe.outputAmount() < currentOutputStack.getMaxStackSize();
+        return currentOutputStack.getCount() + recipe.outputAmount() < InventoryUtil
+            .maxStackSizeWithContainer(mill.container, OUTPUT_SLOT[0], currentOutputStack);
     }
 
     private static boolean hasEnoughIngredient(RiceMillBlockEntity mill, ItemStack inputStack, MillRecipe recipe) {
@@ -444,7 +446,7 @@ public class RiceMillBlockEntity extends BlockEntity {
             ItemStack current_in = furnace.getItem(furnaceIn);
             if (!current_in.isEmpty() && !ItemStack.isSameItem(currentStack, current_in))
                 return currentStack;
-            if (!current_in.isEmpty() && current_in.getCount() >= current_in.getMaxStackSize())
+            if (!current_in.isEmpty() && current_in.getCount() >= InventoryUtil.maxStackSizeWithContainer(furnace, furnaceIn, current_in))
                 return currentStack;
             if (current_in.isEmpty()) {
                 current_in = new ItemStack(currentStack.getItem());
@@ -474,7 +476,7 @@ public class RiceMillBlockEntity extends BlockEntity {
             }
             if (!ItemStack.isSameItem(currentStack, item))
                 continue;
-            if (item.getCount() < item.getMaxStackSize()) {
+            if (item.getCount() < InventoryUtil.maxStackSizeWithContainer(target, i, item)) {
                 freeSlot = i;
                 break;
             }
@@ -485,7 +487,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         ItemStack targetItem = target.getItem(freeSlot);
         if (!targetItem.isEmpty() && !ItemStack.isSameItem(currentStack, targetItem))
             return currentStack;
-        if (!targetItem.isEmpty() && targetItem.getCount() >= targetItem.getMaxStackSize())
+        if (!targetItem.isEmpty() && targetItem.getCount() >= InventoryUtil.maxStackSizeWithContainer(target, freeSlot, targetItem))
             return currentStack;
         
         if (targetItem.isEmpty()) {
