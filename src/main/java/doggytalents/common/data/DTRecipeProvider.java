@@ -676,7 +676,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('P', Items.PHANTOM_MEMBRANE)
             .define('M', Items.MAGMA_CREAM)
             .define('B', Items.BLAZE_POWDER)
-            .define('X', DoggyItems.KOJI.get())
+            .define('X', DoggyItems.SAKE.get())
             .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
             .save(consumer);
 
