@@ -157,6 +157,10 @@ public class HellHoundTalent extends TalentInstance {
         return getMaxAccumulate() * 20;
     }
 
+    public boolean canGenerateHeat() {
+        return this.level() >= 4;
+    }
+
     @Override
     public InteractionResult shouldNotAfraidOfFire(AbstractDog dog) {
         if (this.level() < 3)
