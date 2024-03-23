@@ -6,6 +6,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -75,12 +76,18 @@ public class DogPlushie extends Entity {
     
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
+        if (this.isRemoved())
+            return true;
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
+            return false;
+        if (source.is(DamageTypeTags.IS_FIRE))
+            return false;
         return !(source.getDirectEntity() instanceof Player);
     }
 
     @Override
     public boolean fireImmune() {
-        return true;
+        return false;
     }
 
     @Override
