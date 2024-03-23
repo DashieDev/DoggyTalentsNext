@@ -31,10 +31,22 @@ import java.util.function.Supplier;
 import com.google.common.collect.Maps;
 
 public class FieryReflector extends Accessory implements IAccessoryHasModel {
+
+    public static enum Type {
+        DIVINE_RETRIBUTION, SOUL_REFLECTOR
+    }
+    private final Type type;
     
+    public FieryReflector(Supplier<? extends ItemLike> itemIn, Type type) {
+        super(DoggyAccessoryTypes.WINGS, itemIn);
+        this.setAccessoryRenderType(AccessoryRenderType.MODEL);
+        this.type = type;
+    }
+
     public FieryReflector(Supplier<? extends ItemLike> itemIn) {
         super(DoggyAccessoryTypes.WINGS, itemIn);
         this.setAccessoryRenderType(AccessoryRenderType.MODEL);
+        this.type = Type.DIVINE_RETRIBUTION;
     }
 
     @Override
@@ -44,7 +56,7 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
 
     @Override
     public AccessoryInstance getDefault() {
-        return new Inst(this);
+        return new Inst(this, this.type);
     }
 
     public static class Inst extends AccessoryInstance implements IDogAlteration {
@@ -54,9 +66,11 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
 
         private final Map<ItemEntity, Integer> cooking = Maps.newHashMap();
         private int tickTillRefresh = 0;
+        private final Type type;
 
-        public Inst(Accessory typeIn) {
+        public Inst(Accessory typeIn, Type type) {
             super(typeIn);
+            this.type = type;
         }
 
         @Override
@@ -86,7 +100,9 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
             var dz1 = Mth.cos(a1);
             float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getDogVisualBbWidth() * 0.5F;
             float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getDogVisualBbWidth() * 0.5F;
-            dog.level().addParticle(ParticleTypes.FLAME,
+            var flame_particle = this.type == Type.SOUL_REFLECTOR ? ParticleTypes.SOUL_FIRE_FLAME
+                : ParticleTypes.FLAME;
+            dog.level().addParticle(flame_particle,
             dog.getX() + f1 - dx1*(dog.getDogVisualBbWidth() * 1.8),
             dog.getY() + offsetY,
             dog.getZ() + f2 - dz1*(dog.getDogVisualBbWidth() * 1.8),
