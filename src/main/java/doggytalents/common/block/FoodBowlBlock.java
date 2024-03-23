@@ -130,7 +130,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
 
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
-        //FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
+        // FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
 
         // if (foodBowl != null) {
         //     IItemHandler bowlInventory = foodBowl.getInventory();
