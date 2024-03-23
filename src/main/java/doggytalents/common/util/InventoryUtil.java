@@ -132,11 +132,11 @@ public class InventoryUtil {
         return Math.min(stack_maxSize, container_maxSize);
     }
 
-    public static int maxStackSizeWithContainer(ItemStackHandler container, int slot, ItemStack stack) {
-        var stack_maxSize = stack.getMaxStackSize();
-        var container_maxSize = container.getSlotLimit(slot); 
-        return Math.min(stack_maxSize, container_maxSize);
-    }
+    // public static int maxStackSizeWithContainer(ItemStackHandler container, int slot, ItemStack stack) {
+    //     var stack_maxSize = stack.getMaxStackSize();
+    //     var container_maxSize = container.getSlotLimit(slot); 
+    //     return Math.min(stack_maxSize, container_maxSize);
+    // }
 
     //Fabric
     public static ItemStack addItem(Container target, ItemStack remaining) {
