@@ -261,6 +261,9 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     }
 
     private Optional<Component> getHungerC1(Dog dog, boolean renderHealthInNameActivated) {
+        if (ConfigHandler.SERVER.DISABLE_HUNGER.get() && !dog.isDefeated())
+            return Optional.empty();
+        
         int hunger = 0;
         if (dog.isDefeated()) {
             hunger = -dog.getDogIncapValue();
@@ -274,15 +277,13 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         if (hightlight_red) {
             hunger_c1.withStyle(Style.EMPTY.withColor(0xff3636));
         }
-        if (ConfigHandler.SERVER.DISABLE_HUNGER.get() && !dog.isDefeated())
-            return Optional.empty();
         return Optional.of(hunger_c1);
     }
 
     private Optional<Component> getGenderC1(Dog dog) {
-        if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER)) {
+        if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER))
             return Optional.empty();
-        }
+
         var ret = Component.translatable(dog.getGender().getUnlocalisedTip());
         return Optional.of(ret);
     }
