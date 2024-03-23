@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
+import org.joml.Math;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -125,7 +126,18 @@ public class InventoryUtil {
         return null; 
     }
 
-    
+    public static int maxStackSizeWithContainer(Container container, int slot, ItemStack stack) {
+        var stack_maxSize = stack.getMaxStackSize();
+        var container_maxSize = container.getMaxStackSize(); 
+        return Math.min(stack_maxSize, container_maxSize);
+    }
+
+    public static int maxStackSizeWithContainer(ItemStackHandler container, int slot, ItemStack stack) {
+        var stack_maxSize = stack.getMaxStackSize();
+        var container_maxSize = container.getSlotLimit(slot); 
+        return Math.min(stack_maxSize, container_maxSize);
+    }
+
     //Fabric
     public static ItemStack addItem(Container target, ItemStack remaining) {
         return addItem(new ContainerWrapper(target), remaining);
