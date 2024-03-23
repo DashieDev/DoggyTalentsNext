@@ -101,16 +101,22 @@ public class DogPlushie extends Entity {
     public boolean hurt(DamageSource source, float damage) {
         if (this.isInvulnerableTo(source))
             return false;
-        var killer = source.getDirectEntity();
-        boolean killedByCreative = 
-            (killer instanceof Player player)
-            && player.getAbilities().instabuild;
-        var drop = this.getDogPlusieItemDrop();
-        if (!drop.isEmpty() && !killedByCreative) {
-            this.spawnAtLocation(drop);
-        }
+        mayDropSelf(source);
         this.discard();
         return true;
+    }
+
+    private void mayDropSelf(DamageSource source) {
+        var entity = source.getEntity();
+        if (!(entity instanceof Player player))
+            return;
+        if (player.getAbilities().instabuild)
+            return;
+        
+        var drop = this.getDogPlusieItemDrop();
+        if (!drop.isEmpty()) {
+            this.spawnAtLocation(drop);
+        }
     }
 
     @Override
