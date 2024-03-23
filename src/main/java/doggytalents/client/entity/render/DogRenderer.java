@@ -294,16 +294,16 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             return text;
         }
 
-        boolean diffOwnerRenderActive = 
+        boolean renderHealthInNameActive = 
                 this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
                 && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
-        if (diffOwnerRenderActive) {
-            colorTextWithHealth(dog, text);
+        if (renderHealthInNameActive) {
+            text = colorTextWithHealth(dog, text);
         }
         return text;
     }
 
-    private void colorTextWithHealth(Dog dog, Component text) {
+    private Component colorTextWithHealth(Dog dog, Component text) {
         int noCharsInName = text.getString().length();
         float healthPercentage = dog.getHealth()/dog.getMaxHealth();
         healthPercentage = Mth.clamp(healthPercentage, 0, 1);
@@ -324,6 +324,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         var restTxt = createC1WithColor(nonHlPart, TXTCLR_HEALTH_BKG);
         newTxt.append(restTxt);
         text = newTxt;
+        return text;
     }
 
     private MutableComponent createC1WithColor(String str, int color) {
