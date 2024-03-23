@@ -319,7 +319,7 @@ public class RiceMillBlockEntity extends BlockEntity {
             return false;
         if (!currentOutputStack.is(outputItemFromInput))
             return false;
-        return currentOutputStack.getCount() + recipe.outputAmount() < InventoryUtil
+        return currentOutputStack.getCount() + recipe.outputAmount() <= InventoryUtil
             .maxStackSizeWithContainer(mill.container, OUTPUT_SLOT[0], currentOutputStack);
     }
 
