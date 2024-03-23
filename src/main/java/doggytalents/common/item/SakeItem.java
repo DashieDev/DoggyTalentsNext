@@ -31,7 +31,7 @@ public class SakeItem extends DogEddibleItem {
     
     public SakeItem() {
         super(b -> b
-            .stacksTo(8),
+            .stacksTo(8).craftRemainder(Items.POTION),
         b -> b
             .alwaysEat());
     }
