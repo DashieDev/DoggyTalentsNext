@@ -9,6 +9,7 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -75,6 +76,10 @@ public class Piano extends Entity {
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
+        if (this.isRemoved())
+            return true;
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
+            return false;
         return !(source.getDirectEntity() instanceof Player);
     }
 
