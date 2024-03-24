@@ -41,9 +41,9 @@ public class FisherDogTalent extends TalentInstance {
         if (!source.isWaterBlock())
             return;
         
-        // int r_fish = dogIn.getRandom().nextInt(15);
-        // if (r_fish >= this.level() * 2)
-        //     return;
+        int r_fish = dogIn.getRandom().nextInt(15);
+        if (r_fish >= this.level() * 2)
+            return;
         
         var fishItem = getRandomFish(dogIn);
         var fishStack = getFishedStack(dogIn, fishItem);
