@@ -1304,7 +1304,7 @@ public class Dog extends AbstractDog {
     }
 
     private InteractionResult handleBreeding(Player player, InteractionHand hand, ItemStack stack) {
-        if (!stack.is(DoggyTags.BREEDING_ITEMS))
+        if (!stack.is(DoggyItems.BREEDING_BONE.get()))
             return InteractionResult.PASS;
         if (!canInteract(player))
             return InteractionResult.PASS;
