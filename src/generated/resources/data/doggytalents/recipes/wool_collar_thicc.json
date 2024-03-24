@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "doggytalents:wool_collar"
+    },
+    {
+      "item": "doggytalents:wool_collar"
+    }
+  ],
+  "result": {
+    "item": "doggytalents:wool_collar_thicc"
+  }
+}

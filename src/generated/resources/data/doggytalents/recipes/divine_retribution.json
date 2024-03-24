@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "MPM",
-    "CCC",
+    "CXC",
     "BPB"
   ],
   "key": {
@@ -17,6 +17,9 @@
     },
     "B": {
       "item": "minecraft:blaze_powder"
+    },
+    "X": {
+      "item": "doggytalents:sake"
     }
   },
   "result": {

@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:gunpowder"
+    },
+    "title": {
+      "translate": "advancements.doggytalents.ookamikaze_trigger.title"
+    },
+    "description": {
+      "translate": "advancements.doggytalents.ookamikaze_trigger.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "ookamikaze_trigger": {
+      "trigger": "doggytalents:ookamikaze_trigger",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "ookamikaze_trigger"
+    ]
+  ]
+}
