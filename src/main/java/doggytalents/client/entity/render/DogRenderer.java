@@ -13,6 +13,7 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.model.DogModelRegistry;
@@ -225,7 +226,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         final String seperator = ConfigHandler.CLIENT.DOG_INFO_SEPERATOR.get();
         final Component seperator_c1 = createC1WithColor(seperator, TXCLR_SEPERATOR);
 
-        var extra_info_c1 = Component.translatable(dog.getMode().getTip());
+        MutableComponent extra_info_c1 = ComponentUtil.translatable(dog.getMode().getTip());
         
         var hunger_c1_optional = getHungerC1(dog, renderHealthInNameActivated);
         var gender_c1_optional = getGenderC1(dog);
@@ -278,7 +279,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         } else {
             hunger = Mth.ceil(dog.getDogHunger());
         }
-        var hunger_c1 = Component.literal(String.format(Locale.ROOT, hunger_format, hunger));
+        var hunger_c1 = ComponentUtil.literal(String.format(Locale.ROOT, hunger_format, hunger));
         boolean hightlight_red = 
             (dog.getDogHunger() <= 10 && renderHealthInNameActivated)
             || dog.isDefeated();
@@ -292,7 +293,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         if (ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER))
             return Optional.empty();
 
-        var ret = Component.translatable(dog.getGender().getUnlocalisedTip());
+        var ret = ComponentUtil.translatable(dog.getGender().getUnlocalisedTip());
         return Optional.of(ret);
     }
 
@@ -336,7 +337,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     }
 
     private MutableComponent createC1WithColor(String str, int color) {
-        return Component.literal(str).withStyle(
+        return ComponentUtil.literal(str).withStyle(
             Style.EMPTY
             .withColor(color)
         );

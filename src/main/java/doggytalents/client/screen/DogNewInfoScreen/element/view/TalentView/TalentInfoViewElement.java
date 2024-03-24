@@ -324,10 +324,10 @@ public class TalentInfoViewElement extends AbstractElement {
                 new ButtonOptionEntry(container, getScreen(), 
                     new FlatButton(
                         0, 0,
-                        40, 20, Component.literal("" + sweep.onlyAttackCreeper()), 
+                        40, 20, ComponentUtil.literal("" + sweep.onlyAttackCreeper()), 
                         b -> {
                             Boolean newVal = !sweep.onlyAttackCreeper();
-                            b.setMessage(Component.literal("" + newVal));
+                            b.setMessage(ComponentUtil.literal("" + newVal));
                             sweep.setOnlyAttackCreeper(newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), new CreeperSweeperData(
                                 dog.getId(), newVal

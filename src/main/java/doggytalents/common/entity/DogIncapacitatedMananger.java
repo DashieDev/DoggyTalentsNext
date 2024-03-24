@@ -6,6 +6,7 @@ import java.util.UUID;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;

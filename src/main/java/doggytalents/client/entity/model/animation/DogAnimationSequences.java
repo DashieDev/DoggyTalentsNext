@@ -12,10 +12,10 @@ import doggytalents.client.entity.model.animation.biganim.FaintStand1Animation;
 import doggytalents.client.entity.model.animation.biganim.ProtestAnimation;
 import doggytalents.client.entity.model.animation.biganim.ScratchAnimation;
 import doggytalents.client.entity.model.animation.biganim.StrechAnimation;
-import net.minecraft.client.animation.AnimationChannel;
-import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.client.animation.Keyframe;
-import net.minecraft.client.animation.KeyframeAnimations;
+import doggytalents.api.enu.forward_imitate.anim.AnimationChannel;
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
+import doggytalents.api.enu.forward_imitate.anim.Keyframe;
+import doggytalents.api.enu.forward_imitate.anim.KeyframeAnimations;
 
 public class DogAnimationSequences {
 

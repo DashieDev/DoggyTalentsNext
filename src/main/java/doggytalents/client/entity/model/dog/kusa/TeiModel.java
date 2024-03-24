@@ -4,7 +4,7 @@ import doggytalents.api.anim.AltDogAnimationSequences;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
-import net.minecraft.client.animation.AnimationDefinition;
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;

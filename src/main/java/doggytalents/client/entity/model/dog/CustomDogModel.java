@@ -11,7 +11,7 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.events.RegisterCustomDogModelsEvent.DogModelProps;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.entity.Dog;
-import net.minecraft.client.animation.AnimationDefinition;
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelPart;
 
 public class CustomDogModel extends DogModel {

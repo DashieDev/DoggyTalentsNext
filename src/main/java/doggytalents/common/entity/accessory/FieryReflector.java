@@ -265,22 +265,29 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
             if (stack.isEmpty())
                 return null;
             
-            var item = stack.getItem();
-            var firstCheck = getCachedRecipeLoc(item);
+            // var item = stack.getItem();
+            // var firstCheck = getCachedRecipeLoc(item);
             
-            var pairOptional = 
+            // var pairOptional = 
+            //     dog.level().getRecipeManager().getRecipeFor(RecipeType.SMELTING, 
+            //         new SimpleContainer(stack), dog.level(), firstCheck);
+            // if (!pairOptional.isPresent())
+            //     return null;
+            // var pair = pairOptional.get();
+            // var res = pair.getFirst();
+            // var recipe = pair.getSecond();
+            
+            // if (res == null || recipe == null)
+            //     return null;
+            
+            // cacheResult(item, res);
+            // return recipe;
+            var recipeOptional = 
                 dog.level().getRecipeManager().getRecipeFor(RecipeType.SMELTING, 
-                    new SimpleContainer(stack), dog.level(), firstCheck);
-            if (!pairOptional.isPresent())
+                    new SimpleContainer(stack), dog.level());
+            if (!recipeOptional.isPresent())
                 return null;
-            var pair = pairOptional.get();
-            var res = pair.getFirst();
-            var recipe = pair.getSecond();
-            
-            if (res == null || recipe == null)
-                return null;
-            
-            cacheResult(item, res);
+            var recipe = recipeOptional.get();
             return recipe;
         }
 

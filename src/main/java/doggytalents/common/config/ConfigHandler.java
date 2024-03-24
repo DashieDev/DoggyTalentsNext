@@ -474,10 +474,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         }
 
         public static<T> T getConfig(ConfigValue<T> config) {
-            if (CONFIG_RESPAWN_TAG_SPEC.isLoaded()) {
-                    return config.get();
-            }
-            return config.getDefault();
+            return config.get();
         }
 
     }

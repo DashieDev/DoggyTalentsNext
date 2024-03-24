@@ -283,7 +283,7 @@ public class OokamiKazeTalent extends TalentInstance {
         public void explode() {
             if (dog.level().isClientSide)
                 return;
-            dog.level().gameEvent(dog, GameEvent.EXPLODE, dog.position());
+            dog.level().gameEvent(dog, GameEvent.EXPLODE, dog.blockPosition());
             hurtEntities();
             broadcastExploisionToClient();
             

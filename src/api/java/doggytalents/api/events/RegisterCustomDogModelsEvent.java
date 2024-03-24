@@ -9,7 +9,7 @@ import com.mojang.math.Vector3f;
 import com.google.common.collect.Maps;
 
 import doggytalents.api.anim.DogAnimation;
-import net.minecraft.client.animation.AnimationDefinition;
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

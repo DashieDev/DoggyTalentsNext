@@ -294,7 +294,7 @@ public class DoggyItems {
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.WOOL_COLLAR_THICC, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
              }, item);
         }, DoggyBlocks::logError);
@@ -374,7 +374,7 @@ public class DoggyItems {
              }, item);
         }, DoggyBlocks::logError);
         Util.acceptOrElse(DoggyItems.DOGGY_CONTACTS, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 if (tintIndex == 1) {
                     return ((DoubleDyableAccessoryItem) stack.getItem()).getFgColor(stack);
                 }
