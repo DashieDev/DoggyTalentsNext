@@ -29,6 +29,13 @@ tasks.named("processResources") {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
+task apiJar(type: Jar) {
+    duplicatesStrategy(DuplicatesStrategy.FAIL)
+    archiveClassifier = 'api'
+    from sourceSets.api.output
+    from sourceSets.api.allJava
+}
+
 configurations {
     apiImplementation.extendsFrom(implementation)
     apiRuntimeOnly.extendsFrom(runtimeOnly)
