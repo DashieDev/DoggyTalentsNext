@@ -1171,23 +1171,20 @@ kick user out when load Dog's talents or accessories.
 * (Fabric Only) Fix Swimmer Dog unable to be ridden at full speed underwater.
 
 **1.18.11 - 24th March 2024**
-* Fix Doggy Tools Dog Farm Rice Grains when having no seed.
-# Flying Furball Dog Jump mechanic improve.
-# Improve Flying Furball Animations handling.
 + Implemented a way to limit how many dogs a player can tame (e.g: In a server)
 which is disabled by default.
-# Revert Tei model to ressemble Classical more.
-* Fix Dog Group GUI and synchronization.
-# Incapacitated Dogs now stop whining when healed to a point when its wounds
-is barely visible.
 + Added 1.20.5+ Thiccccccccc Collar:
 In preparation for the Offical Wolf Update from vanilla.
 Crafted by two normal collars.
 + Added Soul Reflector
 Soul flame version of Divine Retribution.
+===
+# Flying Furball Dog Jump mechanic improve.
+# Improve Flying Furball Animations handling.
+# Revert Tei model to ressemble Classical more.
+# Incapacitated Dogs now stop whining when healed to a point when its wounds
+is barely visible.
 # Added Sake to Divine Retribution recipe. Fire show!
-* Fix rice mill output slot considered full even when less than 1
-item from full.
 # Dog Name render format overhaul!
 The default format is now much easier to read
 "B · 99 · M" instead of "(B)(99)(M)" 
@@ -1202,3 +1199,9 @@ Hunger Format and updating the language file.
  - Instead of only give Cod, fisher dog now query every item with the FISHES Tag, 
  pick one random item to drop and try cook it if possible.
  - Hellhound max will 100% make the food cooked if possible.
+===
+* Fix Doggy Tools Dog Farm Rice Grains when having no seed.
+* Fix rice mill output slot considered full even when less than 1
+item from full.
+* Fix Dog Group GUI and synchronization.
+* (Fabric only) Implement egg -> Onsen Tamage caudron procedure.
