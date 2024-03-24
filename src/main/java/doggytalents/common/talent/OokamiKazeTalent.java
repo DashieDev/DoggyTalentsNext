@@ -23,6 +23,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
@@ -300,7 +301,7 @@ public class OokamiKazeTalent extends TalentInstance {
             
             final int notify_radius = 64;
             for (var player : playerList.getPlayers()) {
-                if (player.level() != level)
+                if (player.level != level)
                     continue;
                 var dist_sqr = player.distanceToSqr(dog);
                 if (dist_sqr > notify_radius * notify_radius)
@@ -403,7 +404,7 @@ public class OokamiKazeTalent extends TalentInstance {
             var t = impact_value * impact_value + impact_value;
             final int base_damage = 7;
             var hurt_amount = 1 + t * base_damage * this.radius;
-            e.hurt(e.damageSources().explosion(dog, owner), (float) hurt_amount);
+            e.hurt(DamageSource.explosion(dog), (float) hurt_amount);
 
             knockbackEntity(dog_pos, e, this.knockbackModifier * impact_value);
         }

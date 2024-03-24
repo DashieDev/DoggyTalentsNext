@@ -39,7 +39,7 @@ public class DogInventoriesContainer extends AbstractContainerMenu {
     public DogInventoriesContainer(int windowId, Inventory playerInventory, List<Dog> chestDogs) {
         super(DoggyContainerTypes.DOG_INVENTORIES.get(), windowId);
         
-        this.level = playerInventory.player.level();
+        this.level = playerInventory.player.level;
         this.player = playerInventory.player;
 
         this.slotViewOffset = DataSlot.standalone();

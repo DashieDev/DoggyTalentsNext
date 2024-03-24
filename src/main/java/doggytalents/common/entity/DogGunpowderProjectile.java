@@ -147,4 +147,9 @@ public class DogGunpowderProjectile extends ThrowableProjectile {
         this.discard();
     }
 
+    //Forward imitate
+    public Level level() {
+        return this.level;
+    }
+
 }

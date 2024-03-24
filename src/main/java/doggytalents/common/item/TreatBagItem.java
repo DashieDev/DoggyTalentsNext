@@ -96,20 +96,20 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     }
 
     private void throwFood(Player player, Item item) {
-        var dogFoodProj = new DogFoodProjectile(player.level(), player);
+        var dogFoodProj = new DogFoodProjectile(player.level, player);
         dogFoodProj.setDogFoodStack(new ItemStack(item));
         dogFoodProj.setOwner(player);
         dogFoodProj.shootFromRotation(player, 
             player.getXRot(), player.getYRot(), 0.0F, 0.8F, 1.0F);
-        player.level().addFreshEntity(dogFoodProj);
+        player.level.addFreshEntity(dogFoodProj);
     }
 
     private void throwGunpowder(Player player) {
-        var dogGunpowderProj = new DogGunpowderProjectile(player.level(), player);
+        var dogGunpowderProj = new DogGunpowderProjectile(player.level, player);
         dogGunpowderProj.setOwner(player);
         dogGunpowderProj.shootFromRotation(player, 
             player.getXRot(), player.getYRot(), 0.0F, 0.8F, 1.0F);
-        player.level().addFreshEntity(dogGunpowderProj);
+        player.level.addFreshEntity(dogGunpowderProj);
     }
 
     private int findThrowableInItemHandler(IItemHandler itemHandler) {

@@ -66,7 +66,7 @@ public class DoubleDyableAccessoryItem extends AccessoryItem {
         var item = stack.getItem();
         if (!(item instanceof DoubleDyableAccessoryItem accessory))
             return ItemStack.EMPTY;
-        stack = stack.copyWithCount(1);
+        stack = stack.copy(); stack.setCount(1);
         int color = Util.colorDye(-1, dye);
         if (fg_color) {
             accessory.setFgColor(stack, color);

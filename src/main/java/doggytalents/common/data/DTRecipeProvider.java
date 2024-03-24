@@ -126,7 +126,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.WOOL_COLLAR_THICC.get(), 1)
+        ShapelessRecipeBuilder.shapeless(DoggyItems.WOOL_COLLAR_THICC.get(), 1)
             .requires(DoggyItems.WOOL_COLLAR.get(), 2)
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
@@ -680,7 +680,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SOUL_REFLECTOR.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.SOUL_REFLECTOR.get(), 1)
             .pattern(" S ")
             .pattern("SXS")
             .pattern(" S ")
@@ -785,7 +785,7 @@ public class DTRecipeProvider extends RecipeProvider {
             DoggyItems.ABURAAGE.get(), 0.1F, 100, "has_dtn_tofu", 
             has(DoggyItems.TOFU.get()));
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.RICE_GRAINS.get(), 3)
+        ShapelessRecipeBuilder.shapeless(DoggyItems.RICE_GRAINS.get(), 3)
             .requires(DoggyItems.RICE_WHEAT.get())
             .unlockedBy("has_dtn_rice_wheat", has(DoggyItems.RICE_WHEAT.get()))
             .save(consumer);

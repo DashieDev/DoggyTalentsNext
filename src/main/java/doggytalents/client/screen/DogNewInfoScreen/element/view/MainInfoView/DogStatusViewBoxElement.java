@@ -49,7 +49,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
 
         var points = this.dog.getSpendablePoints();
 
-        renderHungerStatusStr(graphics, this.dog, this.getRealX(), this.getRealY());
+        renderHungerStatusStr(stack, this.dog, this.getRealX(), this.getRealY());
 
         
     }
@@ -112,7 +112,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         }
     }
 
-    public void renderHealthBar(GuiGraphics graphics, Dog dog, int x, int y) {
+    public void renderHealthBar(PoseStack stack, Dog dog, int x, int y) {
         
         int pX = x;
         int pY = y;
@@ -121,11 +121,12 @@ public class DogStatusViewBoxElement extends AbstractElement {
             + StatFormatter.DECIMAL_FORMAT.format(dog.getHealth()) + "/" 
             + ((int)dog.getMaxHealth());
         pX += (80 - (8 + font.width(healthStr)))/2; 
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
+        RenderSystem.setShaderTexture(0, Screen.GUI_ICONS_LOCATION);
+        blit(stack, pX, pY, 16, 0 ,9, 9);
+        blit(stack, pX, pY, 16 + 36, 0 ,9, 9);
         pX += 9;
         pY += 1;
-        graphics.drawString(font, healthStr, pX, pY, 0xffffffff);
+        font.draw(stack, healthStr, pX, pY, 0xffffffff);
         return;
         // Random random = new Random();
         // random.setSeed((long) (dog.tickCount * 312871));
@@ -214,10 +215,11 @@ public class DogStatusViewBoxElement extends AbstractElement {
         // this.minecraft.getProfiler().pop();
     }
 
-    private void renderHungerStatusStr(GuiGraphics graphics, Dog dog, int x, int y) {
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, x, y, 16 + 36, 27, 9, 9);
+    private void renderHungerStatusStr(PoseStack stack, Dog dog, int x, int y) {
+        RenderSystem.setShaderTexture(0, Screen.GUI_ICONS_LOCATION);
+        blit(stack, x, y, 16 + 36, 27, 9, 9);
         int hunger = (int) dog.getDogHunger();
-        graphics.drawString(font, "" + hunger, x + 10, y + 1, 0xffffffff);
+        font.draw(stack, "" + hunger, x + 10, y + 1, 0xffffffff);
     }
     
 }

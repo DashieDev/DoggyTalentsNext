@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import doggytalents.common.config.ConfigHandler;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -92,7 +93,7 @@ public class DogHungerManager {
 
         if (hurt_interval >= 0 && ++this.hungerDamageTick >= hurt_interval
                 && (hurt_last_health || dog.getHealth() > 1f)) {
-            dog.hurt(dog.damageSources().starve(), 0.5f);
+            dog.hurt(DamageSource.STARVE, 0.5f);
             
             this.hungerDamageTick = 0;
         }
