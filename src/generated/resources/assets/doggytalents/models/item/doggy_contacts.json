@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "doggytalents:item/doggy_contacts"
+    "layer0": "doggytalents:item/doggy_contacts",
+    "layer1": "doggytalents:item/doggy_contacts_overlay"
   }
 }

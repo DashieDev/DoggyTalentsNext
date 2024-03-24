@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:soul_sand"
+    },
+    "X": {
+      "item": "doggytalents:divine_retribution"
+    }
+  },
+  "pattern": [
+    " S ",
+    "SXS",
+    " S "
+  ],
+  "result": {
+    "item": "doggytalents:soul_reflector"
+  }
+}
