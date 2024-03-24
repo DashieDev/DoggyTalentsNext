@@ -2,6 +2,7 @@ package doggytalents.common.item;
 
 import doggytalents.DoggyEntityTypes;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.event.EventHandler;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -44,6 +45,12 @@ public class DoggyCharmItem extends Item {
             Direction enumfacing = context.getClickedFace();
             BlockState iblockstate = world.getBlockState(blockpos);
 
+            if (player == null)
+                return InteractionResult.SUCCESS;
+
+            if (!EventHandler.isWithinTrainWolfLimit(player))
+                return InteractionResult.SUCCESS;
+
             BlockPos blockpos1;
             if (iblockstate.getCollisionShape(world, blockpos).isEmpty()) {
                 blockpos1 = blockpos;
@@ -61,8 +68,11 @@ public class DoggyCharmItem extends Item {
                    dog.maxHealth();
                }
                itemstack.shrink(1);
-               if (player instanceof ServerPlayer sP)
+               if (player instanceof ServerPlayer sP) {
                    CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(sP, blockpos1, itemstack);
+                   sP.getCooldowns().addCooldown(this, 30);
+               }
+            
            }
 
            return InteractionResult.SUCCESS;
@@ -75,6 +85,11 @@ public class DoggyCharmItem extends Item {
         if (worldIn.isClientSide || !(worldIn instanceof ServerLevel)) {
             return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
         } else {
+            if (playerIn == null)
+                return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);;
+            if (!EventHandler.isWithinTrainWolfLimit(playerIn))
+                return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
+            
             HitResult raytraceresult = Item.getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.SOURCE_ONLY);
             if (raytraceresult != null && raytraceresult.getType() == HitResult.Type.BLOCK) {
                 BlockPos blockpos = ((BlockHitResult)raytraceresult).getBlockPos();
@@ -92,6 +107,8 @@ public class DoggyCharmItem extends Item {
                         if (playerIn instanceof ServerPlayer sP)
                             CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(sP, blockpos, itemstack);
                         playerIn.awardStat(Stats.ITEM_USED.get(this));
+                        
+                        playerIn.getCooldowns().addCooldown(this, 30);
                         return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
                     } else {
                         return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
