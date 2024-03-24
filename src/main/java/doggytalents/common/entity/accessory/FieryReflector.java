@@ -12,12 +12,14 @@ import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -29,6 +31,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Maps;
 
@@ -69,6 +75,9 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
         private final Map<ItemEntity, Integer> cooking = Maps.newHashMap();
         private int tickTillRefresh = 0;
         private final Type type;
+
+        private final ArrayList<Pair<Item, ResourceLocation>> recipeCache = new ArrayList<>(5);
+
         public Inst(Accessory typeIn, Type type) {
             super(typeIn);
             this.type = type;
@@ -76,7 +85,8 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
 
         @Override
         public void tick(AbstractDog dogIn) {
-            invalidateCooking(dogIn);  
+            invalidateCache();
+            invalidateCooking(dogIn);
 
             tickReflectorEffect(dogIn);
             tickDoingCooking(dogIn);
@@ -252,12 +262,25 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
         }
 
         private SmeltingRecipe getCookedRecipe(AbstractDog dog, ItemStack stack) {
-            var recipeOptional = 
-                dog.level().getRecipeManager().getRecipeFor(RecipeType.SMELTING, 
-                    new SimpleContainer(stack), dog.level());
-            if (!recipeOptional.isPresent())
+            if (stack.isEmpty())
                 return null;
-            var recipe = recipeOptional.get();
+            
+            var item = stack.getItem();
+            var firstCheck = getCachedRecipeLoc(item);
+            
+            var pairOptional = 
+                dog.level().getRecipeManager().getRecipeFor(RecipeType.SMELTING, 
+                    new SimpleContainer(stack), dog.level(), firstCheck);
+            if (!pairOptional.isPresent())
+                return null;
+            var pair = pairOptional.get();
+            var res = pair.getFirst();
+            var recipe = pair.getSecond();
+            
+            if (res == null || recipe == null)
+                return null;
+            
+            cacheResult(item, res);
             return recipe;
         }
 
@@ -269,6 +292,24 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
                 return cookingItems;
             Collections.shuffle(cookingItems);
             return cookingItems.subList(0, amount);
+        }
+
+        private void invalidateCache() {
+            this.recipeCache.clear();
+        }
+
+        private void cacheResult(Item item, ResourceLocation res) {
+            if (item == null || res == null)
+                return;
+            this.recipeCache.add(Pair.of(item, res));
+        }
+
+        private @Nullable ResourceLocation getCachedRecipeLoc(Item item) {
+            for (var pair : this.recipeCache) {
+                if (pair.getLeft() == item)
+                    return pair.getRight();
+            }
+            return null;
         }
     }
 }
