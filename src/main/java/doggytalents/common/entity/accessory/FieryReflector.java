@@ -25,6 +25,8 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -138,9 +140,9 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
         private void populateCooking(AbstractDog dog) {
             if (this.cooking.size() >= MAX_COOKED)
                 return;
-            var cookingItems = dog.level()
-                .getEntitiesOfClass(ItemEntity.class, dog.getBoundingBox().inflate(COOK_RADIUS));
-            for (var e : cookingItems) {
+                
+            var checkingItems = getRandomNearbyItemEntities(dog);
+            for (var e : checkingItems) {
                 if (this.cooking.size() >= MAX_COOKED)
                     break;
                 if (this.cooking.containsKey(e))
@@ -257,6 +259,16 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
                 return null;
             var recipe = recipeOptional.get();
             return recipe;
+        }
+
+        private List<ItemEntity> getRandomNearbyItemEntities(AbstractDog dog) {
+            final int amount = MAX_COOKED;
+            var cookingItems = dog.level()
+                .getEntitiesOfClass(ItemEntity.class, dog.getBoundingBox().inflate(COOK_RADIUS));
+            if (cookingItems.size() <= amount)
+                return cookingItems;
+            Collections.shuffle(cookingItems);
+            return cookingItems.subList(0, amount);
         }
     }
 }
