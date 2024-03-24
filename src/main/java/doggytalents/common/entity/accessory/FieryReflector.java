@@ -172,43 +172,56 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
         }
 
         private void cookAllCooking(AbstractDog dog) {
+            if (dog.level().isClientSide) {
+                cookAllCookingClient(dog);
+            } else {
+                cookAllCookingServer(dog);
+            }
+        }
+
+        private void cookAllCookingServer(AbstractDog dog) {
             if (this.cooking.isEmpty())
                 return;
-            if (dog.level().isClientSide) {
-                if (dog.getRandom().nextDouble() < 0.1D) {
-                    dog.level()
-                        .playLocalSound(
-                            dog.getX(), dog.getY(), dog.getZ(), 
-                            SoundEvents.FURNACE_FIRE_CRACKLE, 
-                            SoundSource.AMBIENT, 
-                            1.0F, 1.0F, 
-                            false
-                        );
-                }
-            }
+
             var finished = new ArrayList<ItemEntity>();
             for (var entry : this.cooking.entrySet()) {
-                if (dog.level().isClientSide) {
-                    var e = entry.getKey();
-                    if (dog.getRandom().nextInt(3) == 0) {
-                        float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * e.getBbWidth() * 0.5F;
-                        float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * e.getBbWidth() * 0.5F;
-                        dog.level().addParticle(ParticleTypes.SMOKE,
-                        e.getX() + f1,
-                        e.getY(),
-                        e.getZ() + f2,
-                        0, 0.05 , 0 );
-                    }
-                } else {
-                    entry.setValue(entry.getValue() - 1);
-                    if (entry.getValue() > 0)
-                        continue;
-                    finishCooking(dog, entry.getKey());
-                    finished.add(entry.getKey());
-                }
+                entry.setValue(entry.getValue() - 1);
+                if (entry.getValue() > 0)
+                    continue;
+                finishCooking(dog, entry.getKey());
+                finished.add(entry.getKey());
             } 
             for (var e : finished) {
                 this.cooking.remove(e);
+            }
+        }
+
+        private void cookAllCookingClient(AbstractDog dog) {
+            if (this.cooking.isEmpty())
+                return;
+
+            if (dog.getRandom().nextDouble() < 0.1D) {
+                dog.level()
+                    .playLocalSound(
+                        dog.getX(), dog.getY(), dog.getZ(), 
+                        SoundEvents.FURNACE_FIRE_CRACKLE, 
+                        SoundSource.AMBIENT, 
+                        1.0F, 1.0F, 
+                        false
+                    );
+            }
+
+            for (var entry : this.cooking.entrySet()) {
+                var e = entry.getKey();
+                if (dog.getRandom().nextInt(3) == 0) {
+                    float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * e.getBbWidth() * 0.5F;
+                    float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * e.getBbWidth() * 0.5F;
+                    dog.level().addParticle(ParticleTypes.SMOKE,
+                    e.getX() + f1,
+                    e.getY(),
+                    e.getZ() + f2,
+                    0, 0.05 , 0 );
+                }
             }
         }
 
