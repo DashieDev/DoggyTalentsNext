@@ -6,7 +6,6 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
-import doggytalents.common.entity.anim.DogAnimation;
 import doggytalents.common.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;

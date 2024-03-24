@@ -2381,7 +2381,7 @@ public class Dog extends AbstractDog {
         
         dogDeathCause = Optional.empty();
         if (ConfigHandler.SERVER.DOG_RESPAWN_INCAPACITATED_WHEN_KILLED.get()
-            && !cause.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            && !cause.isBypassInvul()) {
             dogDeathCause = Optional.ofNullable(cause);
             
             //This value will be saved to respawn storage and
@@ -2710,14 +2710,14 @@ public class Dog extends AbstractDog {
         tryReadAllTalents(compound, newTlInstLs);
         
         this.dogSyncedDataManager.talents().clear();
-        this.dogSyncedDataManager.talents().addAll(talentMap);
+        this.dogSyncedDataManager.talents().addAll(newTlInstLs);
         this.dogSyncedDataManager.setTalentsDirty();
 
         var newAccInstLs = new ArrayList<AccessoryInstance>();
         tryReadAllAccessories(compound, newAccInstLs);
 
         this.dogSyncedDataManager.accessories().clear();
-        this.dogSyncedDataManager.accessories().addAll(accessories);
+        this.dogSyncedDataManager.accessories().addAll(newAccInstLs);
         this.dogSyncedDataManager.setAccessoriesDirty();
 
         var artifactsList = new ArrayList<DoggyArtifactItem>(3);

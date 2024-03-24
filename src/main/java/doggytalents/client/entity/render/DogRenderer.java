@@ -193,14 +193,14 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         float tY = 0;
         
         boolean bkg_see_through = dog_not_sneaking && !is_diffowner;
-        var bkg_display_mode = bkg_see_through ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL;
+        var bkg_display_mode = bkg_see_through ? true : false;
         int bkg_color = getBkgTextColorWithOpacity(render_diffowner);
         int bkg_txtcolor = 0x20FFFFFF;
         font.drawInBatch(text, tX, tY, bkg_txtcolor, false, pose, buffer, bkg_display_mode, bkg_color, light);
         
         boolean draw_fg_text = dog_not_sneaking;
         if (draw_fg_text) {
-            var fg_display_mode = Font.DisplayMode.NORMAL;
+            var fg_display_mode = false;
             int fg_color = 0x0;
             int fg_txtcolor = 0xFFFFFFFF;
             font.drawInBatch(text, tX, tY, fg_txtcolor, false, pose, buffer, fg_display_mode, fg_color, light);

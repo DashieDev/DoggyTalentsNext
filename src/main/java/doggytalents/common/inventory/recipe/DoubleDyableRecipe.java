@@ -17,8 +17,8 @@ import net.minecraft.world.level.Level;
 
 public class DoubleDyableRecipe extends CustomRecipe {
 
-    public DoubleDyableRecipe(ResourceLocation p_252125_, CraftingBookCategory p_249010_) {
-        super(p_252125_, p_249010_);
+    public DoubleDyableRecipe(ResourceLocation p_252125_) {
+        super(p_252125_);
     }
 
     @Override

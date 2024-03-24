@@ -44,7 +44,7 @@ public class DoggyContainerTypes {
         int noDogs = data.readInt();
         List<Dog> dogs = new ArrayList<>(noDogs);
         for (int i = 0; i < noDogs; ++i) {
-            Entity entity = inv.player.level().getEntity(data.readInt());
+            Entity entity = inv.player.level.getEntity(data.readInt());
             if (entity instanceof Dog) {
                 dogs.add((Dog) entity);
             }

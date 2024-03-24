@@ -15,7 +15,6 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.joml.Math;
 
 import javax.annotation.Nullable;
 import java.util.Optional;

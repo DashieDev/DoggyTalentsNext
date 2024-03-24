@@ -34,7 +34,7 @@ public class TrainWolfToDogPacket implements IPacket<TrainWolfToDogData> {
                 return;
             
             var sender = ctx.get().getSender();
-            var level = sender.level();
+            var level = sender.level;
             var e = level.getEntity(data.wolfId);
             if (!(e instanceof Wolf wolf))
                 return;

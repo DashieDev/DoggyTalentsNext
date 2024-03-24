@@ -122,7 +122,7 @@ public class EventHandler {
     }
 
     public static void checkAndTrainWolf(Player trainer, Wolf wolf, float yBodyRot, float yHeadRot) {
-        var level = trainer.level();
+        var level = trainer.level;
         if (level.isClientSide)
             return;
         
@@ -169,7 +169,7 @@ public class EventHandler {
         if (limit <= 0)
             return true;
         
-        var server = owner.level().getServer();
+        var server = owner.level.getServer();
         var locStore = DogLocationStorage.get(server);
         var respawnStore = DogRespawnStorage.get(server);
         

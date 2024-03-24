@@ -96,7 +96,7 @@ public class FisherDogTalent extends TalentInstance {
         if (!recipeOptional.isPresent())
             return fish_raw;
         var recipe = recipeOptional.get();
-        var resultStack = recipe.getResultItem(dog.level().registryAccess());
+        var resultStack = recipe.getResultItem();
         if (resultStack == null || resultStack.isEmpty())
             return fish_raw;
         return resultStack.copy();
