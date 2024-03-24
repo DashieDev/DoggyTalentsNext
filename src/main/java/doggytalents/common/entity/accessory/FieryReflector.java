@@ -74,21 +74,31 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
 
         @Override
         public void tick(AbstractDog dogIn) {
-            invalidateCooking(dogIn);
-            
-            if (!dogIn.isDoingFine()) 
+            invalidateCooking(dogIn);  
+
+            tickReflectorEffect(dogIn);
+            tickDoingCooking(dogIn);
+        }
+
+        private void tickReflectorEffect(AbstractDog dogIn) {
+            if (dogIn.isDefeated())
                 return;
-            if (--tickTillRefresh <= 0) {
-                tickTillRefresh = 5;
-                populateCooking(dogIn);
-            }
-            
-            cookAllCooking(dogIn);
             if (dogIn.level().isClientSide) {
                 if (dogIn instanceof Dog dog)
                     addFlameParticles(dog);
                 playSizzleSound(dogIn);
             }
+        }
+
+        private void tickDoingCooking(AbstractDog dog) {
+            if (dog.isDefeated())
+                return;
+            if (--tickTillRefresh <= 0) {
+                tickTillRefresh = 5;
+                populateCooking(dog);
+            }
+            
+            cookAllCooking(dog);
         }
 
         private void addFlameParticles(Dog dog) {
