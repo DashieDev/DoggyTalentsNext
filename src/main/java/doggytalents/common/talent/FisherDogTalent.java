@@ -1,5 +1,6 @@
 package doggytalents.common.talent;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import doggytalents.DoggyTalents;
@@ -8,13 +9,13 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class FisherDogTalent extends TalentInstance {
 
@@ -52,9 +53,9 @@ public class FisherDogTalent extends TalentInstance {
     }
 
     private Item getRandomFish(AbstractDog dog) {
-        var tags = ForgeRegistries.ITEMS.tags();
-        var fishes = tags.getTag(ItemTags.FISHES)
-            .stream().collect(Collectors.toList());
+        var tags = BuiltInRegistries.ITEM;
+        var fishes = tags.getTag(ItemTags.FISHES).map(x -> x
+            .stream().map(y -> y.value()).collect(Collectors.toList())).orElse(List.of());
         if (fishes.isEmpty())
             return Items.COD;
         int r = dog.getRandom().nextInt(fishes.size());
