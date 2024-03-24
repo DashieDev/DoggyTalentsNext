@@ -67,7 +67,6 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
         private final Map<ItemEntity, Integer> cooking = Maps.newHashMap();
         private int tickTillRefresh = 0;
         private final Type type;
-
         public Inst(Accessory typeIn, Type type) {
             super(typeIn);
             this.type = type;
@@ -75,13 +74,15 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
 
         @Override
         public void tick(AbstractDog dogIn) {
-            if (!dogIn.isDoingFine())
+            invalidateCooking(dogIn);
+            
+            if (!dogIn.isDoingFine()) 
                 return;
             if (--tickTillRefresh <= 0) {
                 tickTillRefresh = 5;
                 populateCooking(dogIn);
             }
-            invalidateCooking(dogIn);
+            
             cookAllCooking(dogIn);
             if (dogIn.level().isClientSide) {
                 if (dogIn instanceof Dog dog)
@@ -145,6 +146,10 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
         private void invalidateCooking(AbstractDog dog) {
             if (this.cooking.isEmpty())
                 return;
+            if (dog.isDefeated()) {
+                this.cooking.clear();
+                return;
+            }
             var removeList = new ArrayList<ItemEntity>();
             for (var entry : this.cooking.entrySet()) {
                 if (stillValidCooking(dog, entry.getKey()))
