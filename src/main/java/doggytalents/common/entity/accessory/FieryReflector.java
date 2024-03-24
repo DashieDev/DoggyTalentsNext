@@ -96,7 +96,7 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
             if (dog.isDefeated())
                 return;
             if (--tickTillRefresh <= 0) {
-                tickTillRefresh = 5;
+                tickTillRefresh = 10;
                 populateCooking(dog);
             }
             
