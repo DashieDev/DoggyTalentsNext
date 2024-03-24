@@ -165,7 +165,7 @@ public class EventHandler {
         return condition1 || condition2;
     }
 
-    private static boolean isWithinTrainWolfLimit(Player owner) {
+    public static boolean isWithinTrainWolfLimit(Player owner) {
         int limit = ConfigHandler.SERVER.TRAIN_WOLF_LIMIT.get();
         if (limit <= 0)
             return true;

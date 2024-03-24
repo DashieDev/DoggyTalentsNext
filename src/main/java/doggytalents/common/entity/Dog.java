@@ -44,6 +44,7 @@ import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.stats.StatsTracker;
 import doggytalents.common.entity.texture.DogSkinData;
+import doggytalents.common.event.EventHandler;
 import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.ParticlePackets;
@@ -2220,6 +2221,29 @@ public class Dog extends AbstractDog {
         }
 
         return child;
+    }
+
+    @Override
+    public void spawnChildFromBreeding(ServerLevel level, Animal otherDog) {
+        if (!checkOwnerTrainLimitBeforeBreed()) {
+            this.setAge(6000);
+            otherDog.setAge(6000);
+            this.resetLove();
+            otherDog.resetLove();
+            this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_SMOKE);
+
+            return;
+        }
+        super.spawnChildFromBreeding(level, otherDog);
+    }
+
+    private boolean checkOwnerTrainLimitBeforeBreed() {
+        var owner = this.getOwner();
+        if (owner == null)
+            return false;
+        if (!(owner instanceof ServerPlayer sP))
+            return false;
+        return EventHandler.isWithinTrainWolfLimit(sP);
     }
 
     @Override
