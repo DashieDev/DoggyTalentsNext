@@ -34,27 +34,7 @@ For more informations, please consult the [wiki](https://github.com/DashieDev/Do
 
 -----------------
 
-### Installation
-
-##### Client
-- Download **Minecraft Forge** from the [official site](https://files.minecraftforge.net/).
-- Run the Installer jar and select the 'Install client' option and click OK. **Minecraft Forge** should now be installed!
-- Now open up the launcher and in the profile selector select ```Forge```, login and run Minecraft (*This may take a while*).
-- Close Minecraft once it is open and find your Minecraft installation directory
-  - For **Windows**, it is located at ```%appadata%/.minecraft```
-  - For **Mac**, it is located at ````~/Library/Application Support/minecraft````
-  - For **Linux**, it is located at ```~/.minecraft``` 
-- In this directory, there will be a new folder called ```mods``` (*create one if there isn't one*)
-- Download the mod from [here](https://www.curseforge.com/minecraft/mc-mods/doggy-talents/files), then drag n' drop the mod into the ```mods``` folder.
-- *Run Minecraft and enjoy!*
-
------------------
-
 ### FAQ
- <!-- - **Q:** Will there be a Fabric version?  
-   **A:** I will not be creating one, if someone wants to take up this task please contact me.
- - **Q:** Which Minecraft versions are supported?  
-   **A:** It is normally be the last two major releases, currently `1.16.x` and `1.17.x`. -->
  - **Q:** Are dogs no longer immortal?  
    **A:** Unlike the old versions, dog is not immortal by default, you can link them to a bed and they will respawn there. However, if you want immortal dogs, you can still enable the feature in your world. Visit [Immortal Dogs](https://github.com/DashieDev/DoggyTalentsNext/wiki/Immortal-Dogs) for more info.
  - **Q:** I have a wolf, how to get started?  
