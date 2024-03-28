@@ -492,7 +492,7 @@ public class DogModel extends EntityModel<Dog> {
         if (dog.getFreezeAnim() != DogAnimation.NONE) {
             this.resetAllPose();
             var sequence = DogAnimationRegistry.getSequence(dog.getFreezeAnim());
-            KeyframeAnimationsDelegate.animate(this, dog, sequence, dog.freezeTime(), 1.0F, vecObj);
+            DogKeyframeAnimations.animate(this, dog, sequence, dog.freezeTime(), 1.0F, vecObj);
             return;
         }
 
