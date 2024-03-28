@@ -574,6 +574,14 @@ public class Dog extends AbstractDog {
         super.tick();
 
         updateClassicalAnim();
+        if (this.freezeAnim != DogAnimation.NONE) {
+            this.yBodyRot = this.getFreezeYRot();
+            this.yHeadRot = this.yBodyRot;
+            this.setYRot(this.yBodyRot);
+            this.yBodyRotO = this.yBodyRot;
+            this.yHeadRotO = this.yHeadRot;
+            this.yRotO = this.getYRot();
+        }
 
         //this.setMaxUpStep(this.isVehicle() ? 1f : 0.6f);
         if (this.isAlive()) {
@@ -750,15 +758,6 @@ public class Dog extends AbstractDog {
 
         if (this.timeWolfIsShaking > 0.5) {
             if (this.shakeFire && random.nextInt(6) == 0) this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-        }
-
-        if (this.freezeAnim != DogAnimation.NONE) {
-            this.yBodyRot = this.getFreezeYRot();
-            this.yHeadRot = this.yBodyRot;
-            this.setYRot(this.yBodyRot);
-            this.yBodyRotO = this.yBodyRot;
-            this.yHeadRotO = this.yHeadRot;
-            this.yRotO = this.getYRot();
         }
     }
 
