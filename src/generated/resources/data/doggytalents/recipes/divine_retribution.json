@@ -13,11 +13,14 @@
     },
     "P": {
       "item": "minecraft:phantom_membrane"
+    },
+    "X": {
+      "item": "doggytalents:sake"
     }
   },
   "pattern": [
     "MPM",
-    "CCC",
+    "CXC",
     "BPB"
   ],
   "result": {

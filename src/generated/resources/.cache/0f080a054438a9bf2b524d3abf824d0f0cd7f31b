@@ -1,4 +1,4 @@
-// 1.20.1	2024-03-05T22:21:07.5388802	DoggyTalents Item Models
+// 1.20.1	2024-03-28T21:06:31.314735	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
@@ -93,6 +93,7 @@ f4eb65322d6283975c987d29cc2ce6427327842f assets/doggytalents/models/item/sake.js
 846f55137451d54b108cb05be5a3f66ff601401a assets/doggytalents/models/item/shrinking_mallet.json
 aa2f1cb07f093298438c6384ff408f9474117585 assets/doggytalents/models/item/smarty_glasses.json
 290198f286e62ba744a59e69a573202e99a86fb9 assets/doggytalents/models/item/snorkel.json
+1b3521380a941da75c14c0d64a628ee59a7e2e81 assets/doggytalents/models/item/soul_reflector.json
 a75e3c9772beb27a3f0e7e91825cfd70588cadcc assets/doggytalents/models/item/soy_beans.json
 15ebd2e86b9157cabc6cd5405b5164609f8bf238 assets/doggytalents/models/item/soy_beans_dried.json
 72179eb14d0bf234e91151227423e9c3cfe6f380 assets/doggytalents/models/item/soy_milk.json
@@ -121,3 +122,4 @@ b14edc33827d1a6a1a7e096d17bff000ff4fd37f assets/doggytalents/models/item/upright
 272f446b0708c9066160b62935c82364ebcffd02 assets/doggytalents/models/item/wig.json
 edfc173f2dcf439d7e9a9fb9cc54e18261ca75d6 assets/doggytalents/models/item/witch_hat.json
 32505edd273b78da5908fbaf134683e093d7b4eb assets/doggytalents/models/item/wool_collar.json
+5eb3a0e1e9eda456c40bbf63ee40b3083521e9c1 assets/doggytalents/models/item/wool_collar_thicc.json
