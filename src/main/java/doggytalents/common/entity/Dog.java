@@ -1107,6 +1107,10 @@ public class Dog extends AbstractDog {
             this.setAnim(DogAnimation.FAINT_STAND_2);
             return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.LIME_DYE) {
+            if (player.isShiftKeyDown()) {
+                this.setAnim(DogAnimation.DROWN);
+                return InteractionResult.SUCCESS;
+            }
             this.setAnim(DogAnimation.REST_BELLY_LOOP);
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.SOUL_TORCH) {
