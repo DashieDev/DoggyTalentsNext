@@ -1058,7 +1058,7 @@ public class Dog extends AbstractDog {
             else
             this.setAnim(DogAnimation.STRETCH);
             return InteractionResult.SUCCESS;
-        }else if (stack.getItem() == Items.GREEN_DYE) {
+        }else if (stack.getHoverName() == Items.GREEN_DYE) {
             if (player.isShiftKeyDown())
                 this.setAnim(DogAnimation.SNIFF_SNEEZE);
             else
