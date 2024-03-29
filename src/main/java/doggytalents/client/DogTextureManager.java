@@ -43,10 +43,14 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     }
 
     public DogSkin getDogSkin(String hash) {
+        if (hash == null || hash.isEmpty())
+            return DogSkin.CLASSICAL;
         return this.skinHashToLoc.getOrDefault(hash, DogSkin.MISSING); 
     }
 
     public String getHash(DogSkin loc) {
+        if (loc == DogSkin.MISSING || loc == DogSkin.CLASSICAL)
+            return "";
         return this.locToSkinHash.getOrDefault(loc, "");
     }
 
