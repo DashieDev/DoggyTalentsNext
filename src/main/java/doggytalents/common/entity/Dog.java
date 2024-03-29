@@ -683,7 +683,7 @@ public class Dog extends AbstractDog {
 
         //Client
         if (this.level().isClientSide) {
-            proccessCustomModelSkin();
+            
         }
 
         if (this.level().isClientSide 
@@ -878,13 +878,6 @@ public class Dog extends AbstractDog {
         if (this.animationManager.started())
             return false;
         return true;
-    }
-
-    private void proccessCustomModelSkin() {
-        var skin = this.getClientSkin();
-        if (!skin.useCustomModel()) return;
-        var model = skin.getCustomModel().getValue();
-        if (model.tickClient()) model.doTickClient(this);
     }
 
     @Override
