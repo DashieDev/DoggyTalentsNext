@@ -152,5 +152,8 @@ public class DogSkin {
     public String getDesc() { return this.description; }
     public String getTags() { return this.tags; }
     public boolean mystery() { return this.mystery; }
+    public boolean isCustom() {
+        return this != MISSING && this != CLASSICAL;
+    }
 
 }
