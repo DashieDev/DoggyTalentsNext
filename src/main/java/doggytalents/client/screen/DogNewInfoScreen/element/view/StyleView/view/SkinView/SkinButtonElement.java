@@ -131,8 +131,7 @@ public class SkinButtonElement extends AbstractElement {
         if (id >= size || id < 0) return;
         var selectedSkin = locList.get(id);
         String requestHash = null;
-        if (selectedSkin == DogSkin.CLASSICAL 
-            || selectedSkin == DogSkin.MISSING) 
+        if (selectedSkin == null || !selectedSkin.isCustom()) 
             requestHash = "";
         else {
             requestHash = DogTextureManager.INSTANCE.getHash((locList.get(id)));
