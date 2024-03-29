@@ -49,7 +49,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     }
 
     public String getHash(DogSkin loc) {
-        if (loc == DogSkin.MISSING || loc == DogSkin.CLASSICAL)
+        if (loc == null || !loc.isCustom())
             return "";
         return this.locToSkinHash.getOrDefault(loc, "");
     }
