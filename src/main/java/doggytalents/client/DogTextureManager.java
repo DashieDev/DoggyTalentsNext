@@ -10,6 +10,7 @@ import doggytalents.ChopinLogger;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.skin.DogSkin;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
@@ -56,7 +57,11 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
     public ResourceLocation getTexture(Dog dog) {
         var skin = dog.getClientSkin();
-        return skin.getPath();
+        if (skin != null && skin.isCustom()) {
+            return skin.getPath();
+        }
+        return dog.getClassicalVar().getTexture(
+            ConfigHandler.CLIENT.USE_VANILLA_RES_FOR_CLASSICAL.get());
     }
 
     private static enum RegisterState { SUCCESS, DUPLICATE, FAIL }
