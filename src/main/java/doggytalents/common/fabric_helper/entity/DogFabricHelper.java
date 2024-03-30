@@ -8,6 +8,7 @@ import doggytalents.api.feature.DogLevel;
 import doggytalents.api.feature.DogSize;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
+import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
@@ -26,6 +27,7 @@ public class DogFabricHelper {
     
     private final Dog dog;
     private DogLevel dogLevel = new DogLevel(0, 0);
+    private ClassicalVar classicalVar = ClassicalVar.PALE;
     private EnumGender dogGender = EnumGender.MALE;
     private EnumMode dogMode = EnumMode.DOCILE;
     private DimensionDependantArg<Optional<BlockPos>> bowlPos = new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS);    
@@ -76,6 +78,19 @@ public class DogFabricHelper {
         }
         this.dogLevel = dogLevel;
         this.dog.onFabricDataUpdated(SyncTypes.DOG_LEVEL);
+    }
+
+    public ClassicalVar getClassicalVar() {
+        return classicalVar;
+    }
+
+    public void setClassicalVar(ClassicalVar val) {
+        if (val == this.classicalVar)
+            return;
+        if (!dog.level().isClientSide) {
+            this.setDirty(SyncTypes.CLASSICAL_VAR);
+        }
+        this.classicalVar = val;
     }
 
     public EnumGender getDogGender() {

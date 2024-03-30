@@ -13,6 +13,7 @@ import doggytalents.api.feature.DogLevel;
 import doggytalents.api.feature.DogSize;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
+import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.fabric_helper.entity.DogFabricHelper;
@@ -31,6 +32,7 @@ public class SyncTypes {
     public static SyncType<List<DoggyArtifactItem>> ARTIFACTS = register(new SyncType<List<DoggyArtifactItem>>(4, DoggySerializers.ARTIFACTS_SERIALIZER, DogFabricHelper::setArtifacts, DogFabricHelper::getArtifacts));
     public static SyncType<DogSize> DOG_SIZE = register(new SyncType<DogSize>(5, DoggySerializers.DOG_SIZE_SERIALIZER, DogFabricHelper::setDogSize, DogFabricHelper::getDogSize));
     public static SyncType<DogSkinData> DOG_SKIN = register(new SyncType<DogSkinData>(6, DoggySerializers.DOG_SKIN_DATA_SERIALIZER, DogFabricHelper::setDogSkin, DogFabricHelper::getDogSkin));
+    public static SyncType<ClassicalVar> CLASSICAL_VAR = register(new SyncType<ClassicalVar>(7, DoggySerializers.CLASSICAL_VAR, DogFabricHelper::setClassicalVar, DogFabricHelper::getClassicalVar));
 
     public static void init() {}
 

@@ -318,6 +318,7 @@ public class Dog extends AbstractDog {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        //this.entityData.define(CLASSICAL_VAR.get(), ClassicalVar.PALE);
         this.entityData.define(LAST_KNOWN_NAME, Optional.empty());
         this.entityData.define(DOG_FLAGS, 0);
         //this.entityData.define(GENDER.get(), EnumGender.UNISEX);
@@ -1174,6 +1175,13 @@ public class Dog extends AbstractDog {
         if (this.isDefeated()) 
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
+
+        if (stack.getItem() == Items.STONE_AXE) {
+            if (!this.level().isClientSide) {
+                this.setClassicalVar(ClassicalVar.RUSTY);
+            }
+            return InteractionResult.SUCCESS;
+        }
         
         if (handleOpenDogScreenDedicated(player, stack).shouldSwing())
             return InteractionResult.SUCCESS;
@@ -2600,6 +2608,7 @@ public class Dog extends AbstractDog {
         }
         compound.put("doggy_artifacts", artifactsListTag);
 
+        compound.putString("classicalVariant", this.getClassicalVar().getId().toString());
         compound.putString("mode", this.getMode().getSaveName());
         compound.putString("dogGender", this.getGender().getSaveName());
         compound.putFloat("dogHunger", this.getDogHunger());
@@ -2763,6 +2772,9 @@ public class Dog extends AbstractDog {
                 this.setBoneVariant(NBTUtil.readItemStack(compound, "fetchItem"));
             }
 
+            this.setClassicalVar(
+                ClassicalVar.bySaveName(compound.getString("classicalVariant"))
+            );
             this.setHungerDirectly(compound.getFloat("dogHunger"));
             this.setDogIncapValue(compound.getInt("dogIncapacitatedValue"));
             this.setOwnersName(NBTUtil.getTextComponent(compound, "lastKnownOwnerName"));
@@ -3343,6 +3355,14 @@ public class Dog extends AbstractDog {
 
     public void setOwnersName(Optional<Component> collar) {
         this.entityData.set(LAST_KNOWN_NAME, collar);
+    }
+
+    public ClassicalVar getClassicalVar() {
+        return this.getDogFabricHelper().getClassicalVar();
+    }
+
+    public void setClassicalVar(ClassicalVar val) {
+        this.getDogFabricHelper().setClassicalVar(val);
     }
 
     public EnumGender getGender() {
