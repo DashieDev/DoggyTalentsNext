@@ -1751,7 +1751,7 @@ public class Dog extends AbstractDog {
 
         if (!this.level().isClientSide) {
             mayStandUpAndPlayHurtAnim(source, actual_hurt_amount, health0);   
-            this.dogAnimHurtImpules = true;
+            
         }
 
         if (this.level().isClientSide
@@ -1772,6 +1772,8 @@ public class Dog extends AbstractDog {
 
         if (this.stillIdleOrSitWhenHurt(source, real_hurt_amount))
             return;
+
+        this.dogAnimHurtImpules = true;
 
         this.setOrderedToSit(false);
         boolean wasSitting = this.isInSittingPose();
