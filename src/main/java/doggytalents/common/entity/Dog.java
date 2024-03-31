@@ -247,6 +247,7 @@ public class Dog extends AbstractDog {
         = new DogIncapacitatedMananger(this);
     private final DogHungerManager hungerManager
         = new DogHungerManager(this);
+    private DogAiManager dogAi;
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
 
@@ -262,8 +263,6 @@ public class Dog extends AbstractDog {
     protected TriggerableAction activeAction;
     protected int delayedActionStart = 0;
     protected int actionPendingTime = 0;
-    protected List<WrappedGoal> trivialBlocking;
-    protected List<WrappedGoal> nonTrivialBlocking;
     protected int switchNavCooldown = 0;
 
     private int healingTick;  
@@ -337,100 +336,8 @@ public class Dog extends AbstractDog {
 
     @Override
     protected void registerGoals() {
-        int trivial_p = 0, non_trivial_p = 0;
-        DogSitWhenOrderedGoal sitGoal = null;
-        
-        int p = 1;
-        registerDogGoal(p, new DogFloatGoal(this));
-        registerDogGoal(p, new DogDrunkGoal(this));
-        registerDogGoal(p, new DogAvoidPushWhenIdleGoal(this));
-        //registerDogGoal(1, new PatrolAreaGoal(this));
-        ++p;
-        registerDogGoal(p, new DogGoAwayFromFireGoal(this));
-        ++p;
-        sitGoal = new DogSitWhenOrderedGoal(this);
-        registerDogGoal(p, sitGoal);
-        registerDogGoal(p, new DogProtestSitOrderGoal(this));
-        ++p;
-        registerDogGoal(p, new DogLowHealthGoal.StickToOwner(this));
-        registerDogGoal(p, new DogLowHealthGoal.RunAway(this));
-        //registerDogGoal(4, new DogLeapAtTargetGoal(this, 0.4F));
-        ++p;
-        non_trivial_p = p;
-        registerDogGoal(p, new DogTriggerableGoal(this, false));
-        ++p; //Prioritize Talent Action
-        registerDogGoal(p, new DogHungryGoal(this, 1.0f, 2.0f));
-        ++p;
-        //All mutex by nature
-        registerDogGoal(p, new GuardModeGoal.Minor(this));
-        registerDogGoal(p, new GuardModeGoal.Major(this));
-        ++p;
-        registerDogGoal(p, new DogMeleeAttackGoal(this, 1.0D, true, 20, 40));
-        registerDogGoal(p, new DogGoRestOnBedGoalDefeated(this));
-        ++p;
-        registerDogGoal(p, new DogFindWaterGoal(this));
-        ++p;
-        trivial_p = p;
-        //Dog greet owner goal here
-        registerDogGoal(p, new DogTriggerableGoal(this, true));
-        //registerDogGoal(p, new FetchGoal(this, 1.0D, 32.0F));
-        registerDogGoal(p, new DogFollowOwnerGoalDefeated(this));
-        registerDogGoal(p, new DogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
-        ++p;
-        registerDogGoal(p, new DogMoveBackToRestrictGoal(this));
-        registerDogGoal(p, new DogBreedGoal(this, 1.0D));
-        ++p;
-        registerDogGoal(p, new DogRandomStrollGoal(this, 1.0D));
-        registerDogGoal(p, new DogRandomStandIdleGoal(this));
-        registerDogGoal(p, new DogRandomSniffGoal(this));
-        registerDogGoal(p, new DogCommonStandIdleGoal(this));
-        ++p;
-        registerDogGoal(p, new DogBegGoal(this, 8.0F));
-        ++p;
-        registerDogGoal(p, new DogFeelingNakeyGoal(this));
-        registerDogGoal(p, new DogLookAtPlayerGoal(this));
-        registerDogGoal(p, new RandomLookAroundGoal(this));
-        registerDogGoal(p, new DogRandomSitIdleGoal(this));
-        registerDogGoal(p, new DogCommonSitIdleGoal(this));
-        registerDogGoal(p, new DogRestWhenSitGoal(this));
-        
-        this.targetSelector.addGoal(1, new DogOwnerHurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new DogOwnerHurtTargetGoal(this));
-        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
-        this.targetSelector.addGoal(5, new DogNearestToOwnerAttackableTargetGoal<>(this, AbstractSkeleton.class, false));
-        this.targetSelector.addGoal(6, new BerserkerModeGoal(this));
-        this.targetSelector.addGoal(6, new GuardModeGoal(this));
-        this.targetSelector.addGoal(6, new PatrolAssistTargetGoal(this));
-        //registerDogGoal(1, new Wolf.WolfPanicGoal(1.5D)); //Stooopid...
-
-        populateActionBlockingGoals(trivial_p, non_trivial_p, sitGoal);
-    }
-
-    private void registerDogGoal(int priority, Goal goal) {
-        this.goalSelector.addGoal(priority, new DogWrappedGoal(goal));
-    }
-
-    private void populateActionBlockingGoals(int trivialP, int nonTrivialP, DogSitWhenOrderedGoal sitGoal) {
-        nonTrivialBlocking = new ArrayList<WrappedGoal>();
-        trivialBlocking = new ArrayList<WrappedGoal>();
-
-        var trivial = this.goalSelector.getAvailableGoals()
-            .stream().filter(x -> (
-                !(x.getGoal() instanceof DogWrappedGoal dogGoal && dogGoal.getGoal() == sitGoal)
-                && x.getPriority() <= trivialP
-                && x.getFlags().contains(Goal.Flag.MOVE)    
-            ))
-            .collect(Collectors.toList());
-        var nonTrivial = this.goalSelector.getAvailableGoals()
-            .stream().filter(x -> (
-                !(x.getGoal() instanceof DogWrappedGoal dogGoal && dogGoal.getGoal() == sitGoal)
-                && x.getPriority() <= nonTrivialP
-                && (x.getFlags().contains(Goal.Flag.MOVE)
-                    || x.getFlags().contains(Goal.Flag.LOOK)) 
-            ))
-            .collect(Collectors.toList());
-        nonTrivialBlocking.addAll(nonTrivial);
-        trivialBlocking.addAll(trivial);
+        this.dogAi = new DogAiManager(this, this.level().getProfilerSupplier());
+        this.dogAi.init();
     }
 
     @Override
@@ -883,6 +790,9 @@ public class Dog extends AbstractDog {
         
         validateGoalsAndTickNonRunningIfNeeded();
 
+        if (!this.level().isClientSide) 
+            this.dogAi.tickServer();
+
         super.aiStep();
 
         if (!this.level().isClientSide && this.delayedActionStart > 0)
@@ -1020,20 +930,9 @@ public class Dog extends AbstractDog {
         //Valiate goals
         if (this.level().isClientSide)
             return;
-        boolean needRemoved = false;
         var availableGoals = this.goalSelector.getAvailableGoals();
-        for (var goal : availableGoals) {
-            if (goal.getGoal() instanceof DogWrappedGoal dogGoal) {
-                if (goal.isRunning())
-                    continue;    
-                dogGoal.tickDogWhenGoalNotRunning();
-                continue;
-            }    
-            needRemoved = true;
-            break;
-        }
-        if (needRemoved)
-            availableGoals.removeIf(x -> (!(x.getGoal() instanceof DogWrappedGoal)));
+        if (!availableGoals.isEmpty())
+            availableGoals.clear();
     }
 
     public TriggerableAction getTriggerableAction() {
@@ -1091,10 +990,8 @@ public class Dog extends AbstractDog {
         if (!this.isDoingFine()) return true;
         if (this.isInSittingPose() && this.forceSit()) return true;
         if (this.activeAction != null) return true;
-        for (var x : this.trivialBlocking) {
-            if (x.isRunning())
-                return true;
-        }
+        if (this.dogAi.isBusy())
+            return true;
         if (this.hasControllingPassenger())
             return true;
         return false;
@@ -1105,10 +1002,8 @@ public class Dog extends AbstractDog {
         if (this.isInSittingPose() && this.forceSit()) return false;
         if (this.activeAction != null && !this.activeAction.isTrivial())
             return false;
-        for (var x : this.nonTrivialBlocking) {
-            if (x.isRunning())
-                return false;
-        }
+        if (!this.dogAi.readyForNonTrivivalAction())
+            return false; 
         if (this.hasControllingPassenger())
             return false;
         return true;
@@ -1161,6 +1056,10 @@ public class Dog extends AbstractDog {
 
     public boolean isOnSwitchNavCooldown() {
         return this.switchNavCooldown > 0;
+    }
+
+    public boolean canUpdateDogAi() {
+        return !this.isImmobile() && this.isEffectiveAi();
     }
 
     @Override
@@ -2454,7 +2353,7 @@ public class Dog extends AbstractDog {
         this.removeAllEffects();
         this.setDogIncapValue(this.getInitalDogIncapVal(source));
         this.updateControlFlags();
-        this.goalSelector.getRunningGoals().forEach(x -> { x.stop(); });
+        this.dogAi.forceStopAllGoal();
         
         this.getNavigation().stop();
         this.unRide();
@@ -3918,8 +3817,7 @@ public class Dog extends AbstractDog {
     public void untame() {
         this.navigation.stop();
         this.clearTriggerableAction();
-        this.goalSelector.getRunningGoals()
-            .map(goal -> { goal.stop(); return goal; } );
+        this.dogAi.forceStopAllGoal();
         this.setOrderedToSit(false);
         this.setHealth(8);
         this.setDogCustomName(null);
@@ -3937,8 +3835,7 @@ public class Dog extends AbstractDog {
     public void migrateOwner(UUID newOwnerUUID) {
         this.navigation.stop();
         this.clearTriggerableAction();
-        this.goalSelector.getRunningGoals()
-            .forEach(goal -> { goal.stop(); } );
+        this.dogAi.forceStopAllGoal();
         
         this.setMode(EnumMode.DOCILE);
         this.authorizedChangingOwner = true;
@@ -4689,10 +4586,10 @@ public class Dog extends AbstractDog {
         boolean animBlockedLook = this.animAction != null && this.animAction.blockLook();
         boolean notControlledByPlayer = !(this.getControllingPassenger() instanceof ServerPlayer);
         boolean notRidingBoat = !(this.getVehicle() instanceof Boat);
-        this.goalSelector.setControlFlag(Goal.Flag.MOVE, 
+        this.dogAi.setLockedFlag(Goal.Flag.MOVE, 
             notControlledByPlayer && !incapBlockedMove && !animBlockedMove);
-        this.goalSelector.setControlFlag(Goal.Flag.JUMP, notControlledByPlayer && notRidingBoat);
-        this.goalSelector.setControlFlag(Goal.Flag.LOOK, notControlledByPlayer && !animBlockedLook);
+        this.dogAi.setLockedFlag(Goal.Flag.JUMP, notControlledByPlayer && notRidingBoat);
+        this.dogAi.setLockedFlag(Goal.Flag.LOOK, notControlledByPlayer && !animBlockedLook);
     }
 
     @Override
@@ -4867,9 +4764,7 @@ public class Dog extends AbstractDog {
     }
 
     private void forceStopAllGoalWithFlag(Goal.Flag flag) {
-        this.goalSelector.getRunningGoals()
-            .filter(goal -> goal.getFlags().contains(flag))
-            .map(goal -> { goal.stop(); return goal; } );
+        this.dogAi.forceStopAllGoalWithFlag(flag);
     }
 
     protected void tickAnimAction() {
