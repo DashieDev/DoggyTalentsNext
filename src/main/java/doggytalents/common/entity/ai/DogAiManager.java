@@ -285,6 +285,8 @@ public class DogAiManager {
     public boolean isBusy() {
         int trivial_p = this.trivialActionGoal.getPriority();
         for (var flag : this.trivialActionGoal.getFlags()) {
+            if (this.lockedFlags.contains(flag))
+                return true;
             var runningGoal = this.runningGoalsWithFlag.get(flag);
             if (runningGoal == null)
                 continue;
@@ -299,6 +301,8 @@ public class DogAiManager {
     public boolean readyForNonTrivivalAction() {
         int non_trivial_p = this.nonTrivialActionGoal.getPriority();
         for (var flag : this.nonTrivialActionGoal.getFlags()) {
+            if (this.lockedFlags.contains(flag))
+                return false;
             var runningGoal = this.runningGoalsWithFlag.get(flag);
             if (runningGoal == null)
                 continue;
