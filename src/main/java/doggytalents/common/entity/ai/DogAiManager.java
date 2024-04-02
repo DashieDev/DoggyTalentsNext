@@ -18,6 +18,8 @@ import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 
 public class DogAiManager {
+
+    private static final String PROFILER_STR = "dogAi";
     
     private final Dog dog;
     private final Supplier<ProfilerFiller> profilerSup;
@@ -132,7 +134,7 @@ public class DogAiManager {
             return;
 
         var profiler = this.profilerSup.get();
-        profiler.push("dogAi");
+        profiler.push(PROFILER_STR);
 
         tickNonRunningGoalWithPrev();        
         
