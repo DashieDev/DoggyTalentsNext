@@ -712,5 +712,14 @@ public class DogUtil {
         return !INVALID_NAME_CHARS.contains(x) && SharedConstants.isAllowedChatCharacter(x);
     }
 
+    public static boolean checkIfOwnerIsLooking(Dog dog, LivingEntity owner) {
+        var v_look_owner = owner.getViewVector(1);
+        var v_look_wanted = dog.getEyePosition()
+            .subtract(owner.getEyePosition())
+            .normalize();
+        var dot = v_look_wanted.dot(v_look_owner);
+        return dot > 0.7;
+    }
+
 
 }
