@@ -794,6 +794,8 @@ public class Dog extends AbstractDog {
 
         if (!this.level().isClientSide) {
             this.getSensing().tick();
+            this.lerpSteps = 0;
+            this.lerpHeadSteps = 0;
             this.dogAi.tickServer();
         }
             
