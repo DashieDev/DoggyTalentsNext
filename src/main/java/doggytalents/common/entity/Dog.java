@@ -790,8 +790,11 @@ public class Dog extends AbstractDog {
         
         validateGoalsAndTickNonRunningIfNeeded();
 
-        if (!this.level().isClientSide) 
+        if (!this.level().isClientSide) {
+            this.getSensing().tick();
             this.dogAi.tickServer();
+        }
+            
 
         super.aiStep();
 
