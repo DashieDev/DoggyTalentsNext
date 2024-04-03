@@ -15,6 +15,7 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.item.ScentTreatItem;
+import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.BlockPos;
@@ -343,7 +344,7 @@ public class SnifferDogTalent extends TalentInstance {
             if (!checkIfCanSeeOwner(dog, owner)) {
                 return;
             }
-            if (checkIfOwnerIsLooking(dog, owner)) {
+            if (DogUtil.checkIfOwnerIsLooking(dog, owner)) {
                 this.isPointingToPos = true;
             }
         }
@@ -415,14 +416,7 @@ public class SnifferDogTalent extends TalentInstance {
             return dog.hasLineOfSight(owner);
         }
 
-        private boolean checkIfOwnerIsLooking(Dog dog, LivingEntity owner) {
-            var v_look_owner = owner.getViewVector(1);
-            var v_look_wanted = dog.getEyePosition()
-                .subtract(owner.getEyePosition())
-                .normalize();
-            var dot = v_look_wanted.dot(v_look_owner);
-            return dot > 0.7;
-        }
+        
 
         @Override
         public void onStop() {
