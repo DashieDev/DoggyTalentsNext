@@ -247,7 +247,7 @@ public class Dog extends AbstractDog {
         = new DogIncapacitatedMananger(this);
     private final DogHungerManager hungerManager
         = new DogHungerManager(this);
-    private DogAiManager dogAi;
+    private final DogAiManager dogAi;
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
 
@@ -310,6 +310,9 @@ public class Dog extends AbstractDog {
 
         this.defaultNavigation = this.navigation;
         this.defaultMoveControl = this.moveControl;
+
+        this.dogAi = new DogAiManager(this, this.level().getProfilerSupplier());
+        this.dogAi.init();
     }
 
     @Override
@@ -335,9 +338,8 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    protected void registerGoals() {
-        this.dogAi = new DogAiManager(this, this.level().getProfilerSupplier());
-        this.dogAi.init();
+    protected final void registerGoals() {
+        
     }
 
     @Override
