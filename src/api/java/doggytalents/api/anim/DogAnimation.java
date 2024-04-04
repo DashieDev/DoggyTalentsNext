@@ -49,7 +49,8 @@ public enum DogAnimation {
     DRUNK_START(42, 36, 1f, true),
     SNIFFER_DOG_POINT_STRAIGHT(43, 160, 1f, true),
     SNIFFER_DOG_POINT_DOWNARD(44, 180, 1f, true),
-    SNIFFER_DOG_POINT_UPWARD(45, 80, 1f, true);
+    SNIFFER_DOG_POINT_UPWARD(45, 80, 1f, true),
+    PLAY_WITH_MEH(46, 110, 1f, true, false, true);
 
     private final int id;
     private final int lengthTicks;
