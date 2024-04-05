@@ -43,10 +43,12 @@ public class DogAnimationManager {
 
     public void tick() {
         if (started && !this.dog.getAnim().freeHead()) {
-            this.dog.xRotO = 0;
             this.dog.yBodyRot = this.dog.yHeadRot;
-            this.dog.setXRot(0);
             this.dog.resetBeggingRotation();
+            if (!this.dog.getAnim().freeHeadXRotOnly()) {
+                this.dog.setXRot(0);
+                this.dog.xRotO = 0;
+            }
         }
         if (started && (!this.dog.level().isClientSide) && !looping) {
             if (this.animationTime <= 0) {
