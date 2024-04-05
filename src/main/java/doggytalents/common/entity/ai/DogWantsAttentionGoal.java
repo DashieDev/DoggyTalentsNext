@@ -44,7 +44,7 @@ public class DogWantsAttentionGoal extends Goal {
 
         if (this.dog.getClassicalVar() != ClassicalVar.CHESTNUT)
             return false;
-        if (this.dog.getRandom().nextFloat() >= 0.5f)
+        if (this.dog.getRandom().nextFloat() >= 0.01f)
             return false;
 
         var owner = this.dog.getOwner();
@@ -93,14 +93,20 @@ public class DogWantsAttentionGoal extends Goal {
             this.goToOwnerTimeout = 0;
             return;
         }
-            
-        if (--this.tickTillPathRecalc <= 0) {
-            dog.getNavigation().moveTo(owner, 1);
-            this.tickTillPathRecalc = 20;
-        }
 
         var d0 = dog.distanceToSqr(owner);
-        if (d0 < 4) {
+        boolean closeEnough = d0 < 6;
+            
+        if (--this.tickTillPathRecalc <= 0) {
+            if (!closeEnough)
+                dog.getNavigation().moveTo(owner, 1);
+            this.tickTillPathRecalc = 20;
+        }
+        
+        if (closeEnough) {
+            if (!dog.getNavigation().isDone()) {
+                dog.getNavigation().stop();
+            }
             if (!whinedToAttention) {
                 whinedToAttention = true;
                 this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
@@ -110,10 +116,6 @@ public class DogWantsAttentionGoal extends Goal {
     }
 
     private void checkAndSwitchToAttention() {
-        var eyeY_dog = dog.getEyeY();
-        var eyeY_owner = owner.getEyeY();
-        if (eyeY_owner < eyeY_dog + 0.2)
-            return;
         if (!DogUtil.checkIfOwnerIsLooking(dog, owner))
             return;
         
@@ -132,6 +134,9 @@ public class DogWantsAttentionGoal extends Goal {
         this.owner = null;
         this.lastStopTick = dog.tickCount;
         this.cooldownTime = 20 * (1 + dog.getRandom().nextInt(3));
+        if (this.dog.getAnim() == DogAnimation.PLAY_WITH_MEH) {
+            this.dog.setAnim(DogAnimation.NONE);
+        }
     }
 
     @Override
