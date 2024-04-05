@@ -508,6 +508,8 @@ public class DogModel extends EntityModel<Dog> {
             headXRot0 = this.head.xRot;
             headYRot0 = this.head.yRot;
             realHeadZRot0 = this.realHead.zRot;
+        } else if (pose.freeHead && anim.freeHeadXRotOnly()) {
+            headXRot0 = this.head.xRot;
         }
         
         if (animState.isStarted()) {
@@ -556,6 +558,11 @@ public class DogModel extends EntityModel<Dog> {
             this.realHead.zRot = realHeadZRot0;
             return;
         }
+        if (part == this.head && dog.getAnim().convertHeadZRot()) {
+            this.head.resetPose();
+            this.head.xRot = headXRot0;
+            return;
+        }
         part.resetPose();
     }
 
@@ -564,6 +571,10 @@ public class DogModel extends EntityModel<Dog> {
             if (part.xRot > 3f) {
                 part.xRot = 3f;
             }
+        }
+        if (part == this.head && part.zRot != 0 && dog.getAnim().convertHeadZRot()) {
+            this.realHead.zRot = part.zRot;
+            part.zRot = 0;
         }
     }
 

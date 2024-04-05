@@ -19,9 +19,9 @@ public enum DogAnimation {
     FAINT_STAND_2(12, 80),
     BACKFLIP(13, 20),
     PROTEST(14, 120),
-    STAND_IDLE_2(15, 80, 1f, true, false, true),
+    STAND_IDLE_2(15, 80, 1f, true, false, HeadHandling.FREE_HEAD),
     DIG(16, 120),
-    SIT_IDLE(17, 80, 1f, true, false, true),
+    SIT_IDLE(17, 80, 1f, true, false, HeadHandling.FREE_HEAD),
     SCRATCHIE(18, 70),
     CHOPIN_TAIL(19, 200),
     BELLY_RUB(20, 11*20, 1f, false),
@@ -31,9 +31,9 @@ public enum DogAnimation {
     SIT_TO_REST(24, 40, 0.5f),
     REST_IDLE(25, 20, 0.75f, true, true),
     REST_TO_SIT(26, 65),
-    FLY_JUMP_START(27, 10, 1f, false, false, true),
-    FLY_AIR_BOURNE(28, 40, 1f, false, true, true),
-    FLY_LANDING(29, 10, 1f, false, false, true),
+    FLY_JUMP_START(27, 10, 1f, false, false, HeadHandling.FREE_HEAD),
+    FLY_AIR_BOURNE(28, 40, 1f, false, true, HeadHandling.FREE_HEAD),
+    FLY_LANDING(29, 10, 1f, false, false, HeadHandling.FREE_HEAD),
     TOUCH_RETREAT(30, 11*20, 1f, true),
     SNIFF_HOT(31, 80, 1f, true),
     SNIFF_NEUTRAL(32, 80, 1f, true),
@@ -50,13 +50,13 @@ public enum DogAnimation {
     SNIFFER_DOG_POINT_STRAIGHT(43, 160, 1f, true),
     SNIFFER_DOG_POINT_DOWNARD(44, 180, 1f, true),
     SNIFFER_DOG_POINT_UPWARD(45, 80, 1f, true),
-    PLAY_WITH_MEH(46, 110, 1f, true, false, true);
+    PLAY_WITH_MEH(46, 110, 1f, true, false, HeadHandling.FREE_X_AND_REAL_Z);
 
     private final int id;
     private final int lengthTicks;
     private final float speedModifier;
     private final boolean freeTail;
-    private final boolean freeHead;
+    private final HeadHandling headHandling;
     private boolean looping = false;
     
     private DogAnimation(int id, int lengthTicks) {
@@ -64,7 +64,7 @@ public enum DogAnimation {
         this.lengthTicks = lengthTicks;
         this.speedModifier = 1;
         freeTail = true;
-        freeHead = false;
+        headHandling = HeadHandling.LOCKED;
     }
 
     private DogAnimation(int id, int lengthTicks, float speed) {
@@ -72,7 +72,7 @@ public enum DogAnimation {
         this.lengthTicks = Mth.ceil(((float)lengthTicks)/speed);
         this.speedModifier = speed;
         freeTail = true;
-        freeHead = false;
+        headHandling = HeadHandling.LOCKED;
     }
 
     private DogAnimation(int id, int lengthTicks, float speed, boolean freeTail) {
@@ -80,7 +80,7 @@ public enum DogAnimation {
         this.lengthTicks = Mth.ceil(((float)lengthTicks)/speed);
         this.speedModifier = speed;
         this.freeTail = freeTail;
-        freeHead = false;
+        headHandling = HeadHandling.LOCKED;
     }
 
     private DogAnimation(int id, int lengthTicks, float speed, boolean freeTail, boolean looping) {
@@ -89,16 +89,16 @@ public enum DogAnimation {
         this.speedModifier = speed;
         this.freeTail = freeTail;
         this.looping = looping;
-        freeHead = false;
+        headHandling = HeadHandling.LOCKED;
     }
 
-    private DogAnimation(int id, int lengthTicks, float speed, boolean freeTail, boolean looping, boolean freeHead) {
+    private DogAnimation(int id, int lengthTicks, float speed, boolean freeTail, boolean looping, HeadHandling headHandling) {
         this.id = id;
         this.lengthTicks = Mth.ceil(((float)lengthTicks)/speed);
         this.speedModifier = speed;
         this.freeTail = freeTail;
         this.looping = looping;
-        this.freeHead = freeHead;
+        this.headHandling = headHandling;
     }
 
     public static DogAnimation byId(int i) {
@@ -112,7 +112,13 @@ public enum DogAnimation {
     public int getLengthTicks() { return this.lengthTicks; }
     public float getSpeedModifier() { return this.speedModifier; }
     public boolean freeTail() { return this.freeTail; }
-    public boolean freeHead () { return this.freeHead; }
+    public boolean freeHead() { return this.headHandling == HeadHandling.FREE_HEAD; }
+    public boolean freeHeadXRotOnly() { return this.headHandling == HeadHandling.FREE_X_AND_REAL_Z; }
+    public boolean convertHeadZRot() { return this.headHandling == HeadHandling.FREE_X_AND_REAL_Z; }
     public boolean looping() { return this.looping; }
+
+    private enum HeadHandling {
+        LOCKED, FREE_HEAD, FREE_X_AND_REAL_Z
+    }
 
 }
