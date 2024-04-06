@@ -29,7 +29,7 @@ public class DogAiManager {
     private final Map<Goal.Flag, WrappedGoal> runningGoalsWithFlag = new EnumMap<>(Goal.Flag.class);
     private final EnumSet<Goal.Flag> lockedFlags = EnumSet.noneOf(Goal.Flag.class);
 
-    private DogSitWhenOrderedGoal sitGoal;
+    private DogWrappedGoal sitGoal;
     private WrappedGoal nonTrivialActionGoal;
     private WrappedGoal trivialActionGoal;
 
@@ -111,8 +111,10 @@ public class DogAiManager {
     }
 
     private void initSitGoal(int priority) {
-        this.sitGoal = new DogSitWhenOrderedGoal(dog);
-        registerDogGoal(priority, sitGoal);
+        var ret = registerDogGoal(priority, new DogSitWhenOrderedGoal(dog));
+        if (ret.getGoal() instanceof DogWrappedGoal sitGoal_wrapped) {
+            this.sitGoal = sitGoal_wrapped;
+        }
     }
 
     private WrappedGoal registerDogGoal(int priority, Goal goal) {
@@ -292,6 +294,8 @@ public class DogAiManager {
             var runningGoal = this.runningGoalsWithFlag.get(flag);
             if (runningGoal == null)
                 continue;
+            if (runningGoal.getGoal() == sitGoal)
+                continue;
             if (!runningGoal.isRunning())
                 continue;
             if (runningGoal.getPriority() <= trivial_p)
@@ -307,6 +311,8 @@ public class DogAiManager {
                 return false;
             var runningGoal = this.runningGoalsWithFlag.get(flag);
             if (runningGoal == null)
+                continue;
+            if (runningGoal.getGoal() == sitGoal)
                 continue;
             if (!runningGoal.isRunning())
                 continue;
