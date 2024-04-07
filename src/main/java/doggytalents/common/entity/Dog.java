@@ -3957,6 +3957,9 @@ public class Dog extends AbstractDog {
 
     @Override
     public void travel(Vec3 positionIn) {
+        if (this.isDogResistingPush()) {
+            mayDogResistPush();
+        }
         super.travel(positionIn);
         if (this.isDogFlying()) {
             var moveVec = this.getDeltaMovement();
@@ -3975,6 +3978,31 @@ public class Dog extends AbstractDog {
             this.setDeltaMovement(moveVec.x*0.67, down, moveVec.z*0.67);
         }
         this.addMovementStat(this.getX() - this.xo, this.getY() - this.yo, this.getZ() - this.zo)   ;
+    }
+
+    private void mayDogResistPush() {
+        if (!this.onGround())
+            return;
+        if (!this.isDoingFine()) return;
+        if (this.isVehicle()) return;
+        if (this.isPathFinding()) return;
+
+        final double max_XZ_push_len = 0.0005;
+        var move = this.getDeltaMovement();
+        if (this.tickCount % 2 == 0) {
+            this.setDeltaMovement(0, move.y, 0);
+            return;
+        }
+        double moveX = move.x();
+        double moveZ = move.z();
+        double moveXZ_lSqr = moveX*moveX + moveZ*moveZ;
+        if (moveXZ_lSqr <= max_XZ_push_len * max_XZ_push_len)
+            return;
+        double moveXZ_l = Math.sqrt(moveXZ_lSqr);
+        moveX = moveX / moveXZ_l * max_XZ_push_len;
+        moveZ = moveZ / moveXZ_l * max_XZ_push_len;
+
+        this.setDeltaMovement(new Vec3(moveX, move.y(), moveZ));
     }
 
     @Override
@@ -4445,6 +4473,16 @@ public class Dog extends AbstractDog {
 
     public void setDogFollowingSomeone(boolean val) {
         this.isDogFollowingSomeone = val;
+    }
+
+    private boolean isDogResistingPush;
+    
+    public void setDogResistingPush(boolean val) {
+        this.isDogResistingPush = val;
+    }
+
+    public boolean isDogResistingPush() {
+        return this.isDogResistingPush;
     }
 
     public List<IDogAlteration> getAlterations() {
