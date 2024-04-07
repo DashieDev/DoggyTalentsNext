@@ -50,24 +50,11 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
 
     @Override
     public void start() {
-        var v0 = this.dog.getDeltaMovement();
-        this.dog.setDeltaMovement(0, v0.y, 0);
-        this.dog.setZza(0);
-        this.dog.setXxa(0);
+        this.dog.setDogResistingPush(true);
     }
 
     @Override
-    public void tick() {
-        var v0 = this.dog.getDeltaMovement();
-        this.dog.setDeltaMovement(0, v0.y, 0);
-        this.dog.setZza(0);
-        this.dog.setXxa(0);
+    public void stop() {
+        this.dog.setDogResistingPush(false);
     }
-
-    @Override
-    public boolean requiresUpdateEveryTick() {
-        return true;
-    }
-
-    
 }
