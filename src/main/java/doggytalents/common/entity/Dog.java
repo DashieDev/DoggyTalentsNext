@@ -37,6 +37,7 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import doggytalents.common.entity.anim.DogAnimationManager;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.entity.datasync.DogDataSyncManager;
+import doggytalents.common.entity.personality.DogHappinessManager;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
@@ -196,6 +197,8 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ANIM_SYNC_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
 
+    private static final EntityDataAccessor<Integer> HAPPINESS = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
+
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
     private static final Cache<EntityDataAccessor<ClassicalVar>> CLASSICAL_VAR = Cache.make(() -> (EntityDataAccessor<ClassicalVar>) SynchedEntityData.defineId(Dog.class, DoggySerializers.CLASSICAL_VAR.get()));
     private static final Cache<EntityDataAccessor<DogLevel>> DOG_LEVEL = Cache.make(() -> (EntityDataAccessor<DogLevel>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get()));
@@ -335,6 +338,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(INCAP_VAL, 0);
         this.entityData.define(ANIMATION, 0);
         this.entityData.define(ANIM_SYNC_TIME, 0);
+        this.entityData.define(HAPPINESS, 60); 
     }
 
     @Override
@@ -3392,6 +3396,14 @@ public class Dog extends AbstractDog {
 
     private void setHungerDirectly(float hunger) {
         this.entityData.set(HUNGER_INT, hunger);
+    }
+
+    public void setDogHappiness(int val) {
+        this.entityData.set(HAPPINESS, Mth.clamp(val, 0, DogHappinessManager.MAX_HAPPINESS));
+    }
+
+    public int getDogHappiness() {
+        return this.entityData.get(HAPPINESS);
     }
 
     @Override
