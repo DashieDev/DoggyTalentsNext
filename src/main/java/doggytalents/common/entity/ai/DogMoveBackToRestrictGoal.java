@@ -38,6 +38,12 @@ public class DogMoveBackToRestrictGoal extends MoveTowardsRestrictionGoal {
         super.tick();
     }
 
+    @Override
+    public void stop() {
+        super.stop();
+        this.dog.getNavigation().stop();
+    }
+
     private boolean teleportBackIfNeeded() {
         if (!dog.hasRestriction())
             return false;
