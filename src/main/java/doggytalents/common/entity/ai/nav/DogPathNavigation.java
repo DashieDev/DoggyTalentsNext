@@ -41,7 +41,7 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         this.maxDistanceToWaypoint = 
             this.mob.getBbWidth() > 0.75F ? 
                 this.mob.getBbWidth() / 2.0F 
-                : 0.75F - this.mob.getBbWidth() / 2.0F;
+                : 0.57f;
 
         var nextPos = this.path.getNextNodePos();
         double dx = Math.abs(this.mob.getX() - ((double)nextPos.getX() + 0.5));
@@ -52,11 +52,11 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
             dx <= (double)this.maxDistanceToWaypoint 
             && dy < 1.0D
             && dz <= (double)this.maxDistanceToWaypoint;
-        boolean canCutCorner = 
-            this.mob.canCutCorner(this.path.getNextNode().type) 
-            && this.shouldTargetNextNodeInDirection(currentPos);
+        // boolean canCutCorner = 
+        //     this.canCutCorner(this.path.getNextNode().type) 
+        //     && this.shouldTargetNextNodeInDirection(currentPos);
 
-        if (isCloseEnough || canCutCorner) {
+        if (isCloseEnough) {
             this.path.advance();
         }
   
@@ -83,33 +83,33 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         return false;
     }
 
-    private boolean shouldTargetNextNodeInDirection(Vec3 current_pos) {
-        var path = this.path;
-        if (path == null) return false;
-        if (path.getNextNodeIndex() + 1 >= path.getNodeCount()) {
-           return false;
-        }
+    // private boolean shouldTargetNextNodeInDirection(Vec3 current_pos) {
+    //     var path = this.path;
+    //     if (path == null) return false;
+    //     if (path.getNextNodeIndex() + 1 >= path.getNodeCount()) {
+    //        return false;
+    //     }
         
-        var next_pos = Vec3.atBottomCenterOf(path.getNextNodePos());
-        if (!current_pos.closerThan(next_pos, 2.0D)) {
-            return false;
-        }
+    //     var next_pos = Vec3.atBottomCenterOf(path.getNextNodePos());
+    //     if (!current_pos.closerThan(next_pos, 2.0D)) {
+    //         return false;
+    //     }
 
-        Vec3 next2th_node = Vec3.atBottomCenterOf(path.getNodePos(path.getNextNodeIndex() + 1));
-        Vec3 v_next_next2th = next2th_node.subtract(next_pos);
-        Vec3 v_next_current = current_pos.subtract(next_pos);
-        //small alpha
-        if (v_next_next2th.dot(v_next_current) <= 0.0D) return false;
+    //     Vec3 next2th_node = Vec3.atBottomCenterOf(path.getNodePos(path.getNextNodeIndex() + 1));
+    //     Vec3 v_next_next2th = next2th_node.subtract(next_pos);
+    //     Vec3 v_next_current = current_pos.subtract(next_pos);
+    //     //small alpha
+    //     if (v_next_next2th.dot(v_next_current) <= 0.0D) return false;
 
-        Vec3 v_current_next2th = next2th_node.subtract(current_pos);
-        double v_current_next2th_lSqr = v_current_next2th.lengthSqr();
-        if (v_current_next2th_lSqr < 1) return true;
-        Vec3 v_add = v_current_next2th.normalize();
-        var check_b0 = new BlockPos(current_pos.add(v_add));
-        var type = WalkNodeEvaluator
-            .getBlockPathTypeStatic(level, check_b0.mutable());
-        return type == BlockPathTypes.WALKABLE;
-    }
+    //     Vec3 v_current_next2th = next2th_node.subtract(current_pos);
+    //     double v_current_next2th_lSqr = v_current_next2th.lengthSqr();
+    //     if (v_current_next2th_lSqr < 1) return true;
+    //     Vec3 v_add = v_current_next2th.normalize();
+    //     var check_b0 = BlockPos.containing(current_pos.add(v_add));
+    //     var type = WalkNodeEvaluator
+    //         .getBlockPathTypeStatic(level, check_b0.mutable());
+    //     return type == BlockPathTypes.WALKABLE;
+    // }
 
     @Override
     protected boolean canUpdatePath() {
