@@ -3846,11 +3846,13 @@ public class Dog extends AbstractDog {
         this.dogSyncedDataManager.talents().clear();
         this.dogSyncedDataManager.setTalentsDirty();
 
+        this.authorizedChangingOwner = true;
         this.setTame(false);
         this.setOwnerUUID(null);
         this.setWillObeyOthers(false);
         this.setCanPlayersAttack(true);
         this.setMode(EnumMode.DOCILE);
+        this.authorizedChangingOwner = false;
     }
 
     public void migrateOwner(UUID newOwnerUUID) {
