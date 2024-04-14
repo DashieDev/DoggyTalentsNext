@@ -481,7 +481,7 @@ public class DogUtil {
         
         boolean noWalkable = true;
         for (int i = 1; i <= dog.getMaxFallDistance(); ++i) {
-            var type = dog.getBlockPathTypeViaAlterations(dog_b1);
+            var type = dog.getBlockPathTypeViaAlterations(dog_b1.below(i));
             if (type == BlockPathTypes.OPEN)
                 continue;
             else {
