@@ -143,9 +143,9 @@ public class DogAiManager {
         boolean updateTime = isTimeToUpdateNonEveryTick(dog);
 
         if (updateTime) {
-            updateRunningGoalWithFlag();
             stopRunningGoalIfShouldBeStopped(this.goals);
             stopRunningGoalIfShouldBeStopped(this.targetGoals);
+            invalidateNotRunningFlags();
 
             findNewGoalToStart(this.goals);
             findNewGoalToStart(this.targetGoals);
@@ -175,7 +175,7 @@ public class DogAiManager {
         return timeLine % 2 == 0;
     }
 
-    private void updateRunningGoalWithFlag() {
+    private void invalidateNotRunningFlags() {
         var itr = runningGoalsWithFlag.entrySet().iterator();
         while (itr.hasNext()) {
             var entry = itr.next();
