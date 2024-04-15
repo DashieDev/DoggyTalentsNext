@@ -449,52 +449,6 @@ public class DogUtil {
     }
 
     /**
-     * This check if the dog is going to be pushed into a questionable block
-     * 
-     * @param dog
-     */
-    public static boolean mayGetPushedIntoHazard(Dog dog, Vec3 pushVec) {
-        //final var DISTANCE_HAZARD_CHECK = 0.5f;
-
-        if (!dog.onGround()) return false;
-
-        var dog_v0 = pushVec;
-        var dog_v01 = new Vec3(dog_v0.x, 0, dog_v0.z);
-        if (dog_v01.x == 0.0 && dog_v01.z == 0.0) return false;
-        //var dog_v1 = dog_v01.normalize().scale(DISTANCE_HAZARD_CHECK);
-        var dog_v1 = dog_v01;
-        var dog_p0 = dog.position();
-        Vec3 dog_p01 = new Vec3(
-            dog_p0.x + dog_v1.x,
-            dog_p0.y,
-            dog_p0.z + dog_v1.z
-        );
-        var dog_b1 = new BlockPos(Mth.floor(dog_p01.x), Mth.floor(dog_p01.y), Mth.floor(dog_p01.z));
-
-        var blockType = dog.getBlockPathTypeViaAlterations(dog_b1);
-
-        if (blockType.getDanger() != null)
-            return true;
-
-        if (blockType != BlockPathTypes.OPEN)
-            return false;
-        
-        boolean noWalkable = true;
-        for (int i = 1; i <= dog.getMaxFallDistance(); ++i) {
-            var type = dog.getBlockPathTypeViaAlterations(dog_b1.below(i));
-            if (type == BlockPathTypes.OPEN)
-                continue;
-            else {
-                noWalkable = type != BlockPathTypes.WALKABLE;
-                break;
-            }
-        }
-
-        return noWalkable;
-
-    }
-
-    /**
      * move to a position if can reach it, otherwise execute orElse
      * 
      * @param dog The dog
