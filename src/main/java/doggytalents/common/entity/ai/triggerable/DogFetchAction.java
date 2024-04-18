@@ -40,7 +40,7 @@ public class DogFetchAction extends TriggerableAction {
             this.setState(ActionState.FINISHED); return;
         }
 
-        this.tickTillPathRecalc = 1;
+        this.tickTillPathRecalc = 3;
         this.isBringingBack = false;
 
         initFetch();
