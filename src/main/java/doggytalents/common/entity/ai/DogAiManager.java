@@ -131,7 +131,6 @@ public class DogAiManager {
     }
 
     public void tickServer() {
-
         if (!dog.canUpdateDogAi())
             return;
 
@@ -142,20 +141,38 @@ public class DogAiManager {
         
         boolean updateTime = isTimeToUpdateNonEveryTick(dog);
 
-        if (updateTime) {
+        invalidateRunning(updateTime);
+        invalidateFlags(updateTime);
+        startNewGoalOrAction(updateTime);
+        tickRunning(updateTime);
+        
+        profiler.pop();
+    }
+
+    private void invalidateRunning(boolean goalUpdateTime) {
+        if (goalUpdateTime) {
             stopRunningGoalIfShouldBeStopped(this.goals);
             stopRunningGoalIfShouldBeStopped(this.targetGoals);
-            invalidateNotRunningFlags();
+        }
+    }
 
+    private void invalidateFlags(boolean goalUpdateTime) {
+        if (goalUpdateTime) {
+            invalidateNotRunningFlags();
+        }
+    }
+
+    private void startNewGoalOrAction(boolean goalUpdateTime) {
+        if (goalUpdateTime) {
             findNewGoalToStart(this.goals);
             findNewGoalToStart(this.targetGoals);
         }
+    }
 
-        boolean only_tick_always_update = !updateTime;
+    private void tickRunning(boolean goalUpdateTime) {
+        boolean only_tick_always_update = !goalUpdateTime;
         tickRunningGoals(this.goals, only_tick_always_update);
         tickRunningGoals(this.targetGoals, only_tick_always_update);
-
-        profiler.pop();
     }
 
     private void tickNonRunningGoalWithPrev() {
