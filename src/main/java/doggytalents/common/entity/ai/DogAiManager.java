@@ -196,7 +196,8 @@ public class DogAiManager {
         var itr = runningGoalsWithFlag.entrySet().iterator();
         while (itr.hasNext()) {
             var entry = itr.next();
-            if (!entry.getValue().isRunning())
+            var value = entry.getValue();
+            if (value == null || !value.isRunning())
                 itr.remove();
         }
     }
