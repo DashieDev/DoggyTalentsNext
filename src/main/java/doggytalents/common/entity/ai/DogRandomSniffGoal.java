@@ -4,8 +4,7 @@ import java.util.EnumSet;
 
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.ai.DogWrappedGoal.HasTickNonRunningPrev;
-import doggytalents.common.util.EntityUtil;
+import doggytalents.common.entity.ai.DogAiManager.IHasTickNonRunning;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -19,7 +18,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
-public class DogRandomSniffGoal extends Goal implements HasTickNonRunningPrev {
+public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
 
     private Dog dog;
     private int stopTick;
@@ -53,7 +52,7 @@ public class DogRandomSniffGoal extends Goal implements HasTickNonRunningPrev {
     }
 
     @Override
-    public void tickDogWhenGoalNotRunning() {
+    public void tickDogWhenNotRunning() {
         if (stillRememberBeingBurnedTick > 0)
             --stillRememberBeingBurnedTick;
     }
