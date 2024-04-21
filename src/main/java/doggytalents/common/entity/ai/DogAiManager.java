@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.ai.DogWrappedGoal.HasTickNonRunningPrev;
 import doggytalents.common.entity.ai.triggerable.DogTriggerableGoal;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -25,11 +24,11 @@ public class DogAiManager {
     private final Supplier<ProfilerFiller> profilerSup;
     private final ArrayList<WrappedGoal> goals = new ArrayList<>();
     private final ArrayList<WrappedGoal> targetGoals = new ArrayList<>();
-    private final ArrayList<WrappedGoal> tickNonRunningGoals = new ArrayList<>();
+    private final ArrayList<IHasTickNonRunning> tickNonRunningGoals = new ArrayList<>();
     private final Map<Goal.Flag, WrappedGoal> runningGoalsWithFlag = new EnumMap<>(Goal.Flag.class);
     private final EnumSet<Goal.Flag> lockedFlags = EnumSet.noneOf(Goal.Flag.class);
 
-    private DogWrappedGoal sitGoal;
+    private DogSitWhenOrderedGoal sitGoal;
     private WrappedGoal nonTrivialActionGoal;
     private WrappedGoal trivialActionGoal;
 
@@ -111,16 +110,14 @@ public class DogAiManager {
     }
 
     private void initSitGoal(int priority) {
-        var ret = registerDogGoal(priority, new DogSitWhenOrderedGoal(dog));
-        if (ret.getGoal() instanceof DogWrappedGoal sitGoal_wrapped) {
-            this.sitGoal = sitGoal_wrapped;
-        }
+        this.sitGoal = new DogSitWhenOrderedGoal(dog);
+        registerDogGoal(priority, this.sitGoal);
     }
 
     private WrappedGoal registerDogGoal(int priority, Goal goal) {
-        var ret = new WrappedGoal(priority, new DogWrappedGoal(goal));
-        if (goal instanceof HasTickNonRunningPrev) {
-            this.tickNonRunningGoals.add(ret);
+        var ret = new WrappedGoal(priority, goal);
+        if (goal instanceof IHasTickNonRunning ticker) {
+            this.tickNonRunningGoals.add(ticker);
         }
         this.goals.add(ret);
         return ret;
@@ -177,11 +174,7 @@ public class DogAiManager {
 
     private void tickNonRunningGoalWithPrev() {
         for (var goal : tickNonRunningGoals) {
-            if (goal.getGoal() instanceof DogWrappedGoal dogGoal) {
-                if (goal.isRunning())
-                    continue;    
-                dogGoal.tickDogWhenGoalNotRunning();
-            }
+            goal.tickDogWhenNotRunning();
         }
     }
 
@@ -338,6 +331,12 @@ public class DogAiManager {
                 return false;
         }
         return true;
+    }
+
+    public static interface IHasTickNonRunning {
+    
+        public void tickDogWhenNotRunning();
+        
     }
 
 }
