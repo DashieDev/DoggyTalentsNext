@@ -125,7 +125,7 @@ public class ShepherdDogTalent extends TalentInstance {
         if (animal.isInvisible()) return false;
         if (animal instanceof TamableAnimal) return false; 
         if (animal.distanceToSqr(dog) > VALID_FOLLOWING_DISTANCE) return false;
-        return animal.hasLineOfSight(dog);
+        return animal.getSensing().hasLineOfSight(dog);
     }
 
     public void refreshShepherdTargets(Dog dog, int searchRange) {

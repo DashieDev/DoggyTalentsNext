@@ -115,7 +115,7 @@ public class ChemiCanineTalent extends TalentInstance {
         var absorbTargets = new ArrayList<LivingEntity>();
         Predicate<LivingEntity> harmfulEffectAndWitness =
             e -> this.isTargetHaveNegativeEffect(dog, e) 
-                && (dog.hasLineOfSight(e));
+                && (dog.getSensing().hasLineOfSight(e));
         
         //Get owner 
         var owner = dog.getOwner();
@@ -239,7 +239,7 @@ public class ChemiCanineTalent extends TalentInstance {
     private boolean canAbsorbTarget(AbstractDog dog, LivingEntity e) {
         return (
             dog.distanceToSqr(e) <= 5
-            && dog.hasLineOfSight(e)
+            && dog.getSensing().hasLineOfSight(e)
         );
     }
 
