@@ -76,10 +76,6 @@ public class PackPuppyTalent extends TalentInstance {
         
     };
 
-    public static Predicate<ItemEntity> SHOULD_PICKUP_ENTITY_ITEM = (entity) -> {
-        return entity.isAlive() && !entity.hasPickUpDelay() && !entity.getItem().is(DoggyTags.PACK_PUPPY_BLACKLIST);// && !EntityAIFetch.BONE_PREDICATE.test(entity.getItem());
-    };
-
     public PackPuppyTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
         PackPuppyItemHandler handler = new PackPuppyItemHandler();
@@ -125,7 +121,7 @@ public class PackPuppyTalent extends TalentInstance {
         var itemList = dog.level().getEntitiesOfClass(
             ItemEntity.class, 
             dog.getBoundingBox().inflate(COLLECT_RADIUS, 1D, COLLECT_RADIUS), 
-            SHOULD_PICKUP_ENTITY_ITEM);
+            PackPuppyTalent::eligibleItemToPickUp);
         if (itemList.isEmpty())
             return;
         for (var entity : itemList) {
@@ -140,6 +136,15 @@ public class PackPuppyTalent extends TalentInstance {
                     ((dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
             }
         }
+    }
+
+    public static boolean eligibleItemToPickUp(ItemEntity entity) {
+        if (!entity.isAlive())
+            return false;
+        if (entity.hasPickUpDelay())
+            return false;
+        var stack = entity.getItem();
+        return !stack.is(DoggyTags.PACK_PUPPY_BLACKLIST);
     }
 
     private final int TRIGGER_RADIUS = 12;
