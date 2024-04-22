@@ -50,7 +50,8 @@ public enum DogAnimation {
     SNIFFER_DOG_POINT_STRAIGHT(43, 160, 1f, true),
     SNIFFER_DOG_POINT_DOWNARD(44, 180, 1f, true),
     SNIFFER_DOG_POINT_UPWARD(45, 80, 1f, true),
-    PLAY_WITH_MEH(46, 110, 1f, true, false, HeadHandling.FREE_X_AND_REAL_Z);
+    PLAY_WITH_MEH(46, 110, 1f, true, false, HeadHandling.FREE_X_AND_REAL_Z),
+    GREET(47, 40, 1.5f, true, false, HeadHandling.FREE_X_AND_REAL_Z);
 
     private final int id;
     private final int lengthTicks;

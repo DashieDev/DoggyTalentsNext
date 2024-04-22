@@ -68,6 +68,7 @@ public class DogAnimationRegistry {
         register(DogAnimation.SNIFFER_DOG_POINT_STRAIGHT, SnifferDogAnimationSequences.POINT_STRAIGHT);
         register(DogAnimation.SNIFFER_DOG_POINT_UPWARD, SnifferDogAnimationSequences.POINT_UPWARD);
         register(DogAnimation.PLAY_WITH_MEH, DogAnimationSequences3.PLAY_WITH_MEH);
+        register(DogAnimation.GREET, DogAnimationSequences.GREET);
     }
     
 }

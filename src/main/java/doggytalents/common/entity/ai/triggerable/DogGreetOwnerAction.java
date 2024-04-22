@@ -3,6 +3,7 @@ package doggytalents.common.entity.ai.triggerable;
 import javax.annotation.Nonnull;
 
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogOwnerDistanceManager;
@@ -41,6 +42,8 @@ public class DogGreetOwnerAction extends TriggerableAction {
 
     boolean tellOwner;
 
+    boolean isDoingAnim = false;
+
     final int greetStopTime;
     //24000
 
@@ -66,7 +69,7 @@ public class DogGreetOwnerAction extends TriggerableAction {
 
     @Override
     public void tick() {
-        if (this.greetTime >= this.greetStopTime) {
+        if (this.greetTime >= this.greetStopTime && !this.isDoingAnim) {
             this.setState(ActionState.FINISHED);
             return;
         }
@@ -103,20 +106,16 @@ public class DogGreetOwnerAction extends TriggerableAction {
 
     private void doGreet() {
         ++greetTime;
-        var n = this.dog.getNavigation();
-        if (n.isDone() && dog.tickCount % 2 != 0) {
-            this.rbAroundOwner = this.getRandomPosAroundOwner(owner);
-            n.moveTo(
-                this.rbAroundOwner.getX(),
-                this.rbAroundOwner.getY(),
-                this.rbAroundOwner.getZ(), 1
-            );
+        if (this.isDoingAnim) {
+            tickAnim();
+        } else {
+            jumpOrDoAnim();
         }
-        if (--tickTillJump <= 0) {
-            this.tickTillJump = JUMP_BASE_INTERVAL;
-            this.dog.getJumpControl().jump();
-            //ChopinLogger.l("jump");
+
+        if (!this.isDoingAnim) {
+            runAround();
         }
+        
         if (--tickTillWhine <= 0) {
             tickTillWhine = WHINE_BASE_INTERVAL
                 + dog.getRandom().nextInt(3) *20;
@@ -135,10 +134,56 @@ public class DogGreetOwnerAction extends TriggerableAction {
         } 
     }
 
+    private void runAround() {
+        var n = this.dog.getNavigation();
+        if (n.isDone() && dog.tickCount % 2 != 0) {
+            this.rbAroundOwner = this.getRandomPosAroundOwner(owner);
+            n.moveTo(
+                this.rbAroundOwner.getX(),
+                this.rbAroundOwner.getY(),
+                this.rbAroundOwner.getZ(), 1
+            );
+        }
+    }
+
+    private void jumpOrDoAnim() {
+        if (--tickTillJump <= 0) {
+            this.tickTillJump = JUMP_BASE_INTERVAL;
+            if (this.canDoAnim() && this.dog.getRandom().nextFloat() <= 0.5f) {
+                startDoingAnim();
+            } else 
+                this.dog.getJumpControl().jump();
+        }
+    }
+
+    private void startDoingAnim() {
+        this.isDoingAnim = true;
+        this.dog.getNavigation().stop();
+        this.dog.setAnim(DogAnimation.GREET);
+    }
+
+    private void tickAnim() {
+        if (this.dog.getAnim() != DogAnimation.GREET) {
+            this.isDoingAnim = false;
+        }
+    }
+
+    private boolean canDoAnim() {
+        if (!this.dog.onGround())
+            return false;
+        if (this.dog.distanceToSqr(owner) > 1.5 * 1.5)
+            return false;
+        return true;
+    }
+
     @Override
     public void onStop() {
-        if (isStarted())
-        DogOwnerDistanceManager.decGreetCountForOwner(owner);
+        if (isStarted()) {
+            DogOwnerDistanceManager.decGreetCountForOwner(owner);
+            if (dog.getAnim() == DogAnimation.GREET) {
+                dog.setAnim(DogAnimation.NONE);
+            }
+        }
     }
 
     @Override
