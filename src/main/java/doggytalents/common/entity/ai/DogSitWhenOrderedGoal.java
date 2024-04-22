@@ -21,17 +21,10 @@ public class DogSitWhenOrderedGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        var action = dog.getTriggerableAction();
-        if (
-            action != null 
-            && action.canPreventSit() 
-            && action.getState() == ActionState.RUNNING
-            && !dog.forceSit()
-        ) {
-            return false;
-        }
-        //Passaenger dog always wants to sit down.
         if (dog.isPassenger()) return true;
+        if (!dog.forceSit() && dog.dogAi.isActionBlockingSit())
+            return false;
+        //Passaenger dog always wants to sit down.
         if (!dog.onGround())
             return false;
         if (dog.isInWaterOrBubble())
@@ -41,14 +34,7 @@ public class DogSitWhenOrderedGoal extends Goal {
 
     @Override
     public void start() {
-        var stashed_action = dog.getStashedTriggerableAction();
-        if (stashed_action != null && !stashed_action.shouldPersistAfterSit()) {
-             dog.setStashedTriggerableAction(null);
-        }
-        var action = dog.getTriggerableAction();
-        if (action != null && !action.shouldPersistAfterSit()) {
-            dog.triggerAction(null);
-        }
+        dog.dogAi.clearTriggerableAction();
 
         //Fix dog repeatedly sitting and standing if
         //owner logged out without orderingDogToSit.
@@ -60,10 +46,6 @@ public class DogSitWhenOrderedGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        var action = dog.getTriggerableAction();
-        if (action != null && action.canPreventSit() && !dog.forceSit()) {
-            return false;
-        }
         if (this.dog.isPassenger()) {
             return true;
         }
