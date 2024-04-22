@@ -93,7 +93,7 @@ public class PuppyEyesTalent extends TalentInstance {
         List<Villager> list = dogIn.level.getEntitiesOfClass(
             Villager.class,
             dogIn.getBoundingBox().inflate(radiusIn, radiusIn, radiusIn),
-            (village) -> village.hasLineOfSight(dogIn)
+            (village) -> village.getSensing().hasLineOfSight(dogIn)
         );
 
         return EntityUtil.getClosestTo(dogIn, list);

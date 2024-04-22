@@ -411,7 +411,7 @@ public class SnifferDogTalent extends TalentInstance {
         private boolean checkIfCanSeeOwner(Dog dog, LivingEntity owner) {
             if (dog.tickCount % 5 != 0)
                 return false;
-            return dog.hasLineOfSight(owner);
+            return dog.getSensing().hasLineOfSight(owner);
         }
 
         
