@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
+import javax.annotation.Nullable;
+
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.ai.triggerable.DogTriggerableGoal;
+import doggytalents.common.entity.ai.triggerable.TriggerableAction;
+import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -29,8 +33,10 @@ public class DogAiManager {
     private final EnumSet<Goal.Flag> lockedFlags = EnumSet.noneOf(Goal.Flag.class);
 
     private DogSitWhenOrderedGoal sitGoal;
-    private WrappedGoal nonTrivialActionGoal;
-    private WrappedGoal trivialActionGoal;
+    private DogActionExecutorGoal nonTrivialActionGoal;
+    private DogActionExecutorGoal trivialActionGoal;
+    private int delayedActionStart = 0;
+    private int timeoutPending = 0;
 
     public DogAiManager(Dog dog, Supplier<ProfilerFiller> profileSup) {
         this.dog = dog;
@@ -101,16 +107,16 @@ public class DogAiManager {
 
     private void initTriggerableActionGoals(boolean trivial, int priority) {
         if (!trivial) {
-            this.nonTrivialActionGoal = 
-                registerDogGoal(priority, new DogTriggerableGoal(dog, false));
+            this.nonTrivialActionGoal = new DogActionExecutorGoal(this, trivial, priority);
+            registerDogGoal(priority, this.nonTrivialActionGoal);
         } else {
-            this.trivialActionGoal =
-                registerDogGoal(priority, new DogTriggerableGoal(dog, true));
+            this.trivialActionGoal = new DogActionExecutorGoal(this, trivial, priority);
+            registerDogGoal(priority, this.trivialActionGoal);
         }
     }
 
     private void initSitGoal(int priority) {
-        this.sitGoal = new DogSitWhenOrderedGoal(dog);
+        this.sitGoal = new DogSitWhenOrderedGoal(dog); 
         registerDogGoal(priority, this.sitGoal);
     }
 
@@ -134,7 +140,12 @@ public class DogAiManager {
         var profiler = this.profilerSup.get();
         profiler.push(PROFILER_STR);
 
-        tickNonRunningGoalWithPrev();        
+        if (this.delayedActionStart > 0)
+            --delayedActionStart;
+        else
+            timeoutPending();
+
+        tickNonRunningGoalWithPrev();
         
         boolean updateTime = isTimeToUpdateNonEveryTick(dog);
 
@@ -144,6 +155,17 @@ public class DogAiManager {
         tickRunning(updateTime);
         
         profiler.pop();
+    }
+
+    private void timeoutPending() {
+        var activeActionOptional = this.getActiveAction();
+        if (!activeActionOptional.isPresent())
+            return;
+        if (activeActionOptional.get().getState() != ActionState.PENDING)
+            return;
+        ++timeoutPending;
+        if (timeoutPending >= 20)
+            this.clearTriggerableAction();
     }
 
     private void invalidateRunning(boolean goalUpdateTime) {
@@ -284,6 +306,7 @@ public class DogAiManager {
     }
 
     public void forceStopAllGoal() {
+        this.clearTriggerableAction();
         for (var goal : this.goals) {
             if (goal.isRunning())
                 goal.stop();
@@ -291,13 +314,22 @@ public class DogAiManager {
     }
 
     public void forceStopAllGoalWithFlag(Goal.Flag flag) {
+        if (this.nonTrivialActionGoal.getFlags().contains(flag)) {
+            this.clearTriggerableAction();
+        }
         for (var goal : this.goals) {
             if (goal.isRunning() && goal.getFlags().contains(flag))
                 goal.stop();
         }
     }
 
+    private void onNonTrivialActionInterupted() {
+        this.trivialActionGoal.clearAction();
+    }
+
     public boolean isBusy() {
+        if (this.getActiveAction().isPresent())
+            return true;
         int trivial_p = this.trivialActionGoal.getPriority();
         for (var flag : this.trivialActionGoal.getFlags()) {
             if (this.lockedFlags.contains(flag))
@@ -316,6 +348,11 @@ public class DogAiManager {
     }
 
     public boolean readyForNonTrivivalAction() {
+        boolean hasNonTrivialAction = this.getActiveAction()
+            .map(x -> !x.isTrivial())
+            .orElse(false);
+        if (hasNonTrivialAction)
+            return false;
         int non_trivial_p = this.nonTrivialActionGoal.getPriority();
         for (var flag : this.nonTrivialActionGoal.getFlags()) {
             if (this.lockedFlags.contains(flag))
@@ -333,10 +370,190 @@ public class DogAiManager {
         return true;
     }
 
+    public boolean triggerAction(TriggerableAction action) {
+        if (action == null)
+            return false;
+        if (isOtherActionOccupied(action))
+            return false;
+        boolean sitBlock =
+            this.dog.isOrderedToSit() 
+            && (this.dog.forceSit() || !action.canOverrideSit());
+        if (sitBlock)
+            return false;
+        this.dog.setOrderedToSit(false);
+        putActionInExecutor(action);
+        this.delayedActionStart = 0;
+        this.timeoutPending = 0;
+        return true;
+    }
+    
+    private boolean isOtherActionOccupied(TriggerableAction action) {
+        var activeActionOptional = this.getActiveAction();
+        if (!activeActionOptional.isPresent())
+            return false;
+        var activeAction = activeActionOptional.get();
+        boolean override_condition =
+            activeAction.isTrivial() && !action.isTrivial();
+        return !override_condition;
+    }
+
+    private void putActionInExecutor(TriggerableAction action) {
+        if (action.isTrivial()) {
+            this.trivialActionGoal.setAction(action);
+            return;
+        }
+        var trivialAction = this.trivialActionGoal.getAction();
+        if (trivialAction != null) {
+            if (trivialAction.canPause()) {
+                trivialAction.setState(ActionState.PAUSED);
+            } else {
+                this.trivialActionGoal.clearAction();
+            }
+        }
+        this.nonTrivialActionGoal.setAction(action);
+    }
+
+    public boolean triggerActionDelayed(TriggerableAction action, int delayed) {
+        var ret = triggerAction(action);
+        if (ret)
+            this.delayedActionStart = delayed;
+        return ret;
+    }
+
+    public void clearTriggerableAction() {
+        this.nonTrivialActionGoal.clearAction();
+        this.trivialActionGoal.clearAction();
+    }
+
+    public boolean isActionBlockingSit() {
+        var actionOptional = getActiveAction();
+
+        if (!actionOptional.isPresent())
+            return false;
+        
+        var action = actionOptional.get();
+
+        return action.canPreventSit() && action.getState() == ActionState.RUNNING;
+    }
+
+    public Optional<TriggerableAction> getActiveAction() {
+        TriggerableAction action = null;
+        if (this.nonTrivialActionGoal.getAction() != null) {
+            action = this.nonTrivialActionGoal.getAction();
+        } else {
+            action = this.trivialActionGoal.getAction();
+        }
+        return Optional.ofNullable(action);
+    }
+
     public static interface IHasTickNonRunning {
     
         public void tickDogWhenNotRunning();
         
+    }
+
+    public static class DogActionExecutorGoal extends Goal {
+
+        private @Nullable TriggerableAction action = null;
+        private final DogAiManager dogAi;
+        private final int priority;
+        private final boolean isTrivial;
+
+        public DogActionExecutorGoal(DogAiManager dogAi, boolean trivial, int p) {
+            this.dogAi = dogAi;
+            this.isTrivial = trivial;
+            this.priority = p;
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        }
+
+        @Override
+        public boolean canUse() {
+            return this.action != null;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return this.action != null;
+        }
+
+        public void setAction(TriggerableAction action) {
+            if (this.action != null)
+                this.clearAction();
+            this.action = action;
+        }
+        
+        public void clearAction() {
+            if (this.action == null)
+                return;
+            this.action.stop();
+            this.action = null;
+        }
+
+        public boolean hasAction() {
+            return this.action != null;
+        }
+
+        public TriggerableAction getAction() {
+            return this.action;
+        }
+
+        @Override
+        public void stop() {
+            var action = this.action;
+            if (action == null)
+                return;
+            if (action.getState() == ActionState.FINISHED) {
+                this.clearAction();
+                return;
+            }
+            if (action.isStarted() && action.canPause()) {
+                action.setState(ActionState.PAUSED);
+                return;
+            }
+            this.clearAction();
+            if (!this.isTrivial) {
+                this.dogAi.onNonTrivialActionInterupted();
+            }
+        }
+
+        @Override
+        public void tick() {
+            var action = this.action;
+            if (action == null) return;
+            if (dogAi.delayedActionStart > 0)
+                return;
+            var state = action.getState();
+            boolean shouldTick = false;
+            if (state == ActionState.PENDING) {
+                action.setState(ActionState.RUNNING);
+                action.start();
+            } else if (state == ActionState.PAUSED) {
+                action.setState(ActionState.RUNNING);
+                //action.onResume()
+                if (action.isStarted()) 
+                    shouldTick = true;
+                else
+                    action.start();
+            } else if (state == ActionState.RUNNING) {
+                shouldTick = true;
+            }
+            if (shouldTick)
+                action.tick();
+            
+            state = action.getState();
+            if (state == ActionState.FINISHED)
+                clearAction();
+        }
+        
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
+
+        public int getPriority() {
+            return priority;
+        }
+
     }
 
 }
