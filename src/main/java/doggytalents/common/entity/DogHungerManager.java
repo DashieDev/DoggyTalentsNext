@@ -28,6 +28,11 @@ public class DogHungerManager {
     }
 
     public void tick() {
+        handleHunger();
+        mayHealWithSaturation();
+    }
+
+    private void handleHunger() {
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get())
             return;
 
@@ -42,8 +47,6 @@ public class DogHungerManager {
             
             this.hungerTick = 0;
         }
-
-        mayHealWithSaturation();
 
         if (this.zeroHunger)
             this.handleZeroHunger();
