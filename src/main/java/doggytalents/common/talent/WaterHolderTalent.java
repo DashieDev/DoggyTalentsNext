@@ -276,7 +276,7 @@ public class WaterHolderTalent extends TalentInstance {
                     )
 
                 //can see target
-                ) && (dog.hasLineOfSight(e))
+                ) && (dog.getSensing().hasLineOfSight(e))
 
         );
     } 
@@ -285,7 +285,7 @@ public class WaterHolderTalent extends TalentInstance {
         var targets = new ArrayList<LivingEntity>();
         Predicate<LivingEntity> onFireAndWitness =
             e -> e.isOnFire()
-                && (dog.hasLineOfSight(e));
+                && (dog.getSensing().hasLineOfSight(e));
         
         //Get owner 
         var owner = dog.getOwner();

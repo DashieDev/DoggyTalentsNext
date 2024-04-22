@@ -171,7 +171,7 @@ public class RescueDogTalent extends TalentInstance {
     private boolean canHealTarget(AbstractDog dog, LivingEntity e) {
         return (
             dog.distanceToSqr(e) <= 5
-            && dog.hasLineOfSight(e)
+            && dog.getSensing().hasLineOfSight(e)
         );
     }
 
@@ -179,7 +179,7 @@ public class RescueDogTalent extends TalentInstance {
         var healTargets = new ArrayList<LivingEntity>();
         Predicate<LivingEntity> lowHealthAndInWitness =
             e -> this.isTargetLowHealth(dog, e) 
-                && (dog.hasLineOfSight(e));
+                && (dog.getSensing().hasLineOfSight(e));
         
         //Get owner 
         var owner = dog.getOwner();
