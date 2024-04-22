@@ -38,9 +38,9 @@ public class DogAnimationSequences {
           new AnimationChannel(
               AnimationChannel.Targets.ROTATION,
               new Keyframe(0.0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM),
-              new Keyframe(0.25f, KeyframeAnimations.degreeVec(-28.83844f, -8.64738f, -15.27269f),
+              new Keyframe(0.25f, KeyframeAnimations.degreeVec(0f, -8.64738f, -15.27269f),
                   AnimationChannel.Interpolations.CATMULLROM),
-              new Keyframe(1.0f, KeyframeAnimations.degreeVec(-13.64973f, 6.27967f, 24.24769f),
+              new Keyframe(1.0f, KeyframeAnimations.degreeVec(0f, 6.27967f, 24.24769f),
                   AnimationChannel.Interpolations.CATMULLROM),
               new Keyframe(1.5f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM)))
       .addAnimation(
