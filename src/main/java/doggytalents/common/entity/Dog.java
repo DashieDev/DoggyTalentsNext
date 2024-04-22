@@ -31,7 +31,6 @@ import doggytalents.common.entity.ai.triggerable.AnimationAction;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogDrownAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
-import doggytalents.common.entity.ai.triggerable.DogTriggerableGoal;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import doggytalents.common.entity.anim.DogAnimationManager;
@@ -247,7 +246,7 @@ public class Dog extends AbstractDog {
         = new DogIncapacitatedMananger(this);
     private final DogHungerManager hungerManager
         = new DogHungerManager(this);
-    private final DogAiManager dogAi;
+    public final DogAiManager dogAi;
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
 
@@ -259,10 +258,6 @@ public class Dog extends AbstractDog {
     protected @Nullable IDogNavLock navigationLock;
     protected PathNavigation currentNavigation;
     
-    protected TriggerableAction stashedAction;
-    protected TriggerableAction activeAction;
-    protected int delayedActionStart = 0;
-    protected int actionPendingTime = 0;
     protected int switchNavCooldown = 0;
 
     private int healingTick;  
@@ -802,13 +797,6 @@ public class Dog extends AbstractDog {
 
         super.aiStep();
 
-        if (!this.level().isClientSide && this.delayedActionStart > 0)
-            --this.delayedActionStart;
-
-        if (!this.level().isClientSide) {
-            updateAndInvalidatePendingAction();
-        }   
-
         updateDogBeginShake();
         
         if (!this.level().isClientSide && !this.isDefeated()) {
@@ -942,61 +930,13 @@ public class Dog extends AbstractDog {
             availableGoals.clear();
     }
 
-    public TriggerableAction getTriggerableAction() {
-        return this.activeAction;
-    }
-
     public boolean triggerAction(TriggerableAction action) {
-        if (this.activeAction == action) {
-            return false;
-        }
-        //Trigger Action cancel.p@
-        //If dog have stashed action then will push the action back instead.
-        if (action == null) {
-            if (activeAction != null) this.activeAction.stop();
-            this.activeAction = null;
-            if (this.stashedAction != null) {
-                this.activeAction = this.stashedAction;
-                this.stashedAction = null;
-                ChopinLogger.lwn(this, "retrieved stashed action : " + this.activeAction);
-            }
-            return false;
-        }
-        //Replacement only happens if 
-        //old action is Trivial and new action is not.
-        if (this.activeAction != null) {
-            if (!this.activeAction.isTrivial()) return false;
-            else if (action.isTrivial()) return false;
-        }
-        //Only set action dog is not sitting or action can override sit.
-        if (this.isOrderedToSit()) {
-            if (this.forceSit()) return false;
-            if (!action.canOverrideSit()) return false;
-        }
-        this.setOrderedToSit(false);
-        //Check And Stash existing action.
-        if (activeAction != null) {
-            if (this.activeAction.canPause()) {
-                if (this.stashedAction != null) {
-                    this.stashedAction.stop();
-                }
-                this.activeAction.setState(ActionState.PAUSED);
-                this.stashedAction = this.activeAction;
-                ChopinLogger.lwn(this,"Stashed action : " + this.stashedAction);
-            } else {
-                this.activeAction.stop();
-            }
-        }
-        //Set.
-        this.activeAction = action;
-        ChopinLogger.lwn(this, "triggered action : " + action);
-        return true;
+        return this.dogAi.triggerAction(action);
     }
 
     public boolean isBusy() {
         if (!this.isDoingFine()) return true;
         if (this.isInSittingPose() && this.forceSit()) return true;
-        if (this.activeAction != null) return true;
         if (this.dogAi.isBusy())
             return true;
         if (this.hasControllingPassenger())
@@ -1007,8 +947,6 @@ public class Dog extends AbstractDog {
     public boolean readyForNonTrivialAction() {
         if (!this.isDoingFine()) return false;
         if (this.isInSittingPose() && this.forceSit()) return false;
-        if (this.activeAction != null && !this.activeAction.isTrivial())
-            return false;
         if (!this.dogAi.readyForNonTrivivalAction())
             return false; 
         if (this.hasControllingPassenger())
@@ -1016,49 +954,12 @@ public class Dog extends AbstractDog {
         return true;
     }
 
-    public TriggerableAction getStashedTriggerableAction() {
-        return this.stashedAction;
-    }
-
     public void clearTriggerableAction() {
-        if (this.stashedAction != null) {
-            this.stashedAction.stop();
-            this.stashedAction = null;
-        }
-        this.triggerAction(null);
-    }
-
-    public void setStashedTriggerableAction(TriggerableAction action) {
-        if (action == this.stashedAction) return;
-        if (this.stashedAction != null) this.stashedAction.stop();
-        this.stashedAction = action;
-    }
-
-    public boolean hasDelayedActionStart() {
-        return this.delayedActionStart > 0;
+        this.dogAi.clearTriggerableAction();
     }
 
     public boolean triggerActionDelayed(int delay, TriggerableAction action) {
-        boolean triggered = this.triggerAction(action);
-        if (triggered)
-            this.delayedActionStart = delay;
-        return triggered;
-    }
-
-    protected void updateAndInvalidatePendingAction() {
-        if (this.activeAction == null) {
-            this.actionPendingTime = 0;
-            return;
-        }
-        if (this.activeAction.getState() != ActionState.PENDING) {
-            this.actionPendingTime = 0;
-            return;
-        }
-        if (++this.actionPendingTime >= 20) {
-            ChopinLogger.sendToOwner(this, "action waited too long!");
-            this.actionPendingTime = 0;
-            this.clearTriggerableAction();
-        }
+        return this.dogAi.triggerActionDelayed(action, delay);
     }
 
     public boolean isOnSwitchNavCooldown() {
