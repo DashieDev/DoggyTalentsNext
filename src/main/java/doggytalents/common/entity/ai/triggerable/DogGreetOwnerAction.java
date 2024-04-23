@@ -28,21 +28,21 @@ public class DogGreetOwnerAction extends TriggerableAction {
     private static final int JUMP_BASE_INTERVAL = 7;
     private static final int WHINE_BASE_INTERVAL = 50;
     private static final int HEART_CHANCE_WINDOW = 8;
-    private static final int MSG_CHANCE_WINDOW = 10;
+    private static final float MSG_CHANCE = 0.75f;
 
-    int greetTime;
+    private int greetTime;
 
-    int tickTillPathRecalc;
+    private int tickTillPathRecalc;
 
-    BlockPos rbAroundOwner;
-    int tickTillWhine;
-    int tickTillJump;
+    private BlockPos rbAroundOwner;
+    private int tickTillWhine;
+    private int tickTillJump;
 
-    boolean tellOwner;
+    private boolean tellOwner;
 
-    boolean isDoingAnim = false;
+    private boolean isDoingAnim = false;
 
-    final int greetStopTime;
+    private final int greetStopTime;
     //24000
 
     public DogGreetOwnerAction(Dog dog, @Nonnull LivingEntity owner, long ownerLeftInterval) {
@@ -78,28 +78,38 @@ public class DogGreetOwnerAction extends TriggerableAction {
 
         var d0 = this.dog.distanceToSqr(this.owner);
         this.dog.getLookControl().setLookAt(this.owner, 10.0F, this.dog.getMaxHeadXRot());
-        if (d0 > START_GREET_DISTANCE_SQR) {
-            
-            if (--this.tickTillPathRecalc <= 0) {
-                this.tickTillPathRecalc = 20;
-                DogUtil.moveToOwnerOrTeleportIfFarAway(
-                    dog, owner, this.dog.getUrgentSpeedModifier(),
-                    400, 
-                    false, false, 
-                    400,
-                    dog.getMaxFallDistance());
-            }
-            
+        if (d0 > START_GREET_DISTANCE_SQR && !this.isDoingAnim) {
+            this.doGoToOwner();
         } else {
-            if (this.tellOwner) {
-                this.tellOwner = false;
-                int r = this.dog.getRandom().nextInt(MSG_CHANCE_WINDOW);
-                if (r < 5) {
-                    this.owner.sendSystemMessage(Component.translatable("dog.msg.greet_owner." + r, this.dog.getName().getString()));
-                }
-            }
+            this.tellOwner();
             this.doGreet();
         }
+    }
+
+    private void doGoToOwner() {
+        if (--this.tickTillPathRecalc <= 0) {
+            this.tickTillPathRecalc = 20;
+            DogUtil.moveToOwnerOrTeleportIfFarAway(
+                dog, owner, this.dog.getUrgentSpeedModifier(),
+                400, 
+                false, false, 
+                400,
+                dog.getMaxFallDistance());
+        }
+    }
+
+    private void tellOwner() {
+        if (!this.tellOwner)
+            return;
+        this.tellOwner = false;
+        float r = this.dog.getRandom().nextFloat();
+        if (r >= MSG_CHANCE)
+            return;
+        final int MSG_COUNT = 5;
+        float msg_id_step = (MSG_CHANCE / ((float)MSG_COUNT));
+        int msg_id = Mth.floor(r / msg_id_step);
+        msg_id = Mth.clamp(msg_id, 0, MSG_COUNT - 1);
+        this.owner.sendSystemMessage(Component.translatable("dog.msg.greet_owner." + msg_id, this.dog.getName().getString()));
     }
 
     private void doGreet() {
@@ -145,9 +155,15 @@ public class DogGreetOwnerAction extends TriggerableAction {
     }
 
     private void jumpOrDoAnim() {
-        if (--tickTillJump <= 0) {
+        if (tickTillJump > 0)
+            --tickTillJump;
+
+        if (!this.canJump())
+            return;
+
+        if (tickTillJump <= 0) {
             this.tickTillJump = JUMP_BASE_INTERVAL;
-            if (this.canDoAnim() && this.dog.getRandom().nextFloat() <= 0.5f) {
+            if (this.canDoAnimInsteadOfJump() && this.dog.getRandom().nextFloat() <= 0.5f) {
                 startDoingAnim();
             } else 
                 this.dog.getJumpControl().jump();
@@ -166,11 +182,18 @@ public class DogGreetOwnerAction extends TriggerableAction {
         }
     }
 
-    private boolean canDoAnim() {
+    private boolean canJump() {
         if (!this.dog.onGround())
             return false;
+        return true;
+    }
+
+    private boolean canDoAnimInsteadOfJump() {
         if (this.dog.distanceToSqr(owner) > 1.5 * 1.5)
             return false;
+        var dy = this.owner.getEyeY() - this.dog.getEyeY();
+        if (dy < 0.3)
+            return false; 
         return true;
     }
 
