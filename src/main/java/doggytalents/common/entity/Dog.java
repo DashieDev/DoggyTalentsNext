@@ -1022,6 +1022,7 @@ public class Dog extends AbstractDog {
             && checkRandomBackflip(r, sit_interval)
             && this.level().getBlockState(this.blockPosition().above()).isAir()) {
             this.setStandAnim(DogAnimation.NONE);
+            this.setInSittingPose(false);
             this.triggerAnimationAction(new DogBackFlipAction(this));
         }
         if (!this.level().isClientSide && !this.isOrderedToSit()) {
