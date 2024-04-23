@@ -30,12 +30,10 @@ import net.minecraft.world.phys.Vec3;
 public class DogMeleeAttackGoal extends Goal {
    protected final Dog dog;
    private final double speedModifier;
-   private final boolean followingTargetEvenIfNotSeen;
    private int ticksUntilPathRecalc = 10;
    private int ticksUntilNextAttack;
-   private int awayFromOwnerDistance;
 
-   private int timeOutTick;
+   private final int timeOutTick = 40;
    private int waitingTick;
    private BlockPos.MutableBlockPos dogPos0;
 
@@ -47,12 +45,9 @@ public class DogMeleeAttackGoal extends Goal {
    private final float LEAP_YD = 0.4F;
    
 
-   public DogMeleeAttackGoal(Dog dog, double speedModifier, boolean followingTargetIfNotSeen, int awayFromOwnerDistance, int timeOutTick) {
+   public DogMeleeAttackGoal(Dog dog) {
       this.dog = dog;
-      this.speedModifier = speedModifier;
-      this.followingTargetEvenIfNotSeen = followingTargetIfNotSeen;
-      this.awayFromOwnerDistance = awayFromOwnerDistance;
-      this.timeOutTick = timeOutTick;
+      this.speedModifier = 1;
       this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
    }
 
@@ -138,8 +133,6 @@ public class DogMeleeAttackGoal extends Goal {
          return false;
       } else if (!livingentity.isAlive()) {
          return false;
-      } else if (!this.followingTargetEvenIfNotSeen) {
-         return !this.dog.getNavigation().isDone();
       } else if (restriction && !this.dog.isWithinRestriction(livingentity.blockPosition())) {
          return false;
       } else {
@@ -200,10 +193,7 @@ public class DogMeleeAttackGoal extends Goal {
 
       this.dog.getLookControl().setLookAt(e, 30.0F, 30.0F);
       double d0 = this.dog.distanceToSqr(e.getX(), e.getY(), e.getZ());
-      if ((this.followingTargetEvenIfNotSeen
-            || this.dog.getSensing().hasLineOfSight(e))
-            && this.ticksUntilPathRecalc <= 0
-      ) {
+      if (this.ticksUntilPathRecalc <= 0) {
          this.ticksUntilPathRecalc = 10;
          n.moveTo(e, this.speedModifier);
       }
