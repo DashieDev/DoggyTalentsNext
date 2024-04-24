@@ -165,7 +165,7 @@ public class DogGreetOwnerAction extends TriggerableAction {
 
         if (tickTillJump <= 0) {
             this.tickTillJump = JUMP_BASE_INTERVAL;
-            if (this.canDoAnimInsteadOfJump() && this.dog.getRandom().nextFloat() <= 0.5f) {
+            if (this.canDoAnimInsteadOfJump() && this.dog.getRandom().nextFloat() <= 0.7f) {
                 startDoingAnim();
             } else 
                 this.dog.getJumpControl().jump();
