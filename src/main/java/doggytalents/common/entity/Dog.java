@@ -1278,6 +1278,12 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_,
+            MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_, @Nullable CompoundTag p_146750_) {
+        return null;
+    }
+
+    @Override
     public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
         if (dogFallImmune()) {
             return false;
