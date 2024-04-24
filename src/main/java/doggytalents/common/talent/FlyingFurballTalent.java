@@ -70,6 +70,7 @@ public class FlyingFurballTalent extends TalentInstance {
         if (!(dogIn instanceof Dog dog))
             return;
 
+        dog.fallDistance = 0;
         if (flyHoldTick > 0)
             --flyHoldTick;
 
