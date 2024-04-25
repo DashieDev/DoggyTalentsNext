@@ -41,6 +41,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -304,10 +305,52 @@ public class EventHandler {
     }
 
     private void proccessEntityProjectileHitEvent(final ProjectileImpactEvent event, EntityHitResult hit) {
+        if (detectAndCancelIfProjectileFromDogHitAllies(event, hit))
+            return;
         var entity = hit.getEntity();
-        if (!(entity instanceof Dog)) return;
-        var dog = (Dog) entity;
+        if (entity instanceof Dog dog) {
+            proccessDogProjectileHitEvent(event, hit, dog);
+        }
+    }
 
+    private boolean detectAndCancelIfProjectileFromDogHitAllies(final ProjectileImpactEvent event, EntityHitResult hit) {
+        var projectile = event.getProjectile();
+        var projectileOnwer = projectile.getOwner();
+        if (!(projectileOnwer instanceof Dog dog))
+            return false;
+        var hitEntity = hit.getEntity();
+        if (hitEntity == null || hitEntity == dog)
+            return false;
+        if (!(hitEntity instanceof LivingEntity living))
+            return false;
+        var owner = dog.getOwner();
+        if (owner == null)
+            return false;
+        if (!isAlliedToDog(living, owner))
+            return false;
+        projectile.discard();
+        event.setCanceled(true);
+        return true;
+    }
+
+    private boolean isAlliedToDog(LivingEntity entity, LivingEntity owner) {
+        if (owner == null || entity == null)
+            return false;
+        if (entity instanceof TamableAnimal otherDog) {
+            entity = otherDog.getOwner();
+        }
+        if (owner == entity)
+            return true;
+        if (owner.isAlliedTo(entity))
+            return true;
+        if (entity instanceof Player) {
+            if (ConfigHandler.SERVER.ALL_PLAYER_CANNOT_ATTACK_DOG.get())
+                return true;
+        }
+        return false;
+    }
+
+    private void proccessDogProjectileHitEvent(final ProjectileImpactEvent event, EntityHitResult hit, Dog dog) {
         var projectile = event.getProjectile();
         var projectileOnwer = projectile.getOwner();
         if (projectileOnwer == null) return;

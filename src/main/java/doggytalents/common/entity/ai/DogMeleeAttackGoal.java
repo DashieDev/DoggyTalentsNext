@@ -87,6 +87,8 @@ public class DogMeleeAttackGoal extends Goal {
       } else if (!target.isAlive()) {
          this.dog.setTarget(null); // Disacrd dead target no matter what
          return false;
+      } else if (this.dog.getDogRangedAttack().isApplicable(this.dog)) { 
+         return false; 
       } else if (restriction && !this.dog.isWithinRestriction(target.blockPosition())) {
          return false;
       }
