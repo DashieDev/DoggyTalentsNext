@@ -10,6 +10,7 @@ import doggytalents.api.feature.*;
 import doggytalents.api.feature.DogLevel.Type;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.impl.DogArmorItemHandler;
+import doggytalents.api.impl.IDogRangedAttackManager;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.api.inferface.IDogFoodHandler;
@@ -84,6 +85,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -127,6 +129,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -248,6 +251,8 @@ public class Dog extends AbstractDog {
     public final DogAiManager dogAi;
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
+    private IDogRangedAttackManager dogRangedAttackManager
+        = IDogRangedAttackManager.NONE;
 
     private final DogArmorItemHandler dogArmors = new DogArmorItemHandler(this);
     private ItemStack mouthStack = ItemStack.EMPTY;
@@ -1281,6 +1286,16 @@ public class Dog extends AbstractDog {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_,
             MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_, @Nullable CompoundTag p_146750_) {
         return null;
+    }
+
+    @Override
+    public double getAttributeValue(Attribute attrib) {
+        if (attrib == Attributes.FOLLOW_RANGE) {
+            var ranged_attack = this.getDogRangedAttack();
+            if (ranged_attack != null && ranged_attack.isApplicable(this))
+                return 20;
+        }
+        return super.getAttributeValue(attrib);
     }
 
     @Override
@@ -3034,6 +3049,7 @@ public class Dog extends AbstractDog {
         this.alterations.clear();
         this.foodHandlers.clear();
         this.alterationProps = new DogAlterationProps();
+        this.dogRangedAttackManager = IDogRangedAttackManager.NONE;
 
         for (AccessoryInstance inst : this.getAccessories()) {
             if (inst instanceof IDogAlteration) {
@@ -3062,6 +3078,10 @@ public class Dog extends AbstractDog {
         for (var inst : this.alterations) {
             inst.props(this, alterationProps);
             inst.init(this);
+            if (this.dogRangedAttackManager == IDogRangedAttackManager.NONE) {
+                if (inst.getRangedAttack().isPresent())
+                    this.dogRangedAttackManager = inst.getRangedAttack().get();
+            }
         }
 
         onPropsUpdated();
@@ -3071,6 +3091,12 @@ public class Dog extends AbstractDog {
         this.dogArmors.onPropsUpdated(alterationProps);
         if (!alterationProps.canUseTools())
             this.mouthStack = ItemStack.EMPTY;
+    }
+
+    public IDogRangedAttackManager getDogRangedAttack() {
+        if (this.dogRangedAttackManager == null)
+            return IDogRangedAttackManager.NONE;
+        return this.dogRangedAttackManager;
     }
 
     /**
