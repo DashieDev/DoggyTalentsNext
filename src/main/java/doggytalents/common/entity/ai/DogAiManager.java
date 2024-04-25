@@ -68,6 +68,7 @@ public class DogAiManager {
         registerDogGoal(p, new GuardModeGoal.Minor(this.dog));
         registerDogGoal(p, new GuardModeGoal.Major(this.dog));
         ++p;
+        registerDogGoal(p, new DogRangedAttackGoal(this.dog));
         registerDogGoal(p, new DogMeleeAttackGoal(this.dog));
         registerDogGoal(p, new DogGoRestOnBedGoalDefeated(this.dog));
         ++p;
