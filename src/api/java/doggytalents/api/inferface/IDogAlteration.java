@@ -1,9 +1,12 @@
 package doggytalents.api.inferface;
 
+import java.util.Optional;
+
 import javax.annotation.Nullable;
 
 import doggytalents.api.enu.WetSource;
 import doggytalents.api.impl.DogAlterationProps;
+import doggytalents.api.impl.IDogRangedAttackManager;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -242,5 +245,9 @@ public interface IDogAlteration {
 
     default InteractionResult canDogPassGate(AbstractDog dogIn) {
         return InteractionResult.PASS;
+    }
+
+    default Optional<IDogRangedAttackManager> getRangedAttack() {
+        return Optional.empty();
     }
 }
