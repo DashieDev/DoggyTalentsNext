@@ -5,6 +5,8 @@ import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.inferface.IDogFoodPredicate;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.util.ItemUtil;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -17,7 +19,7 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
 
     public static final IDogFoodPredicate INNER_DYN_PRED = (stackIn) -> {
         Item item = stackIn.getItem();
-        return (item.isEdible() && stackIn.is(ItemTags.FISHES));
+        return (ItemUtil.isEddible(stackIn) && stackIn.is(ItemTags.FISHES));
     };
 
     public HappyEaterTalent(Talent talentIn, int levelIn) {
@@ -41,7 +43,7 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
         
         Item item = stackIn.getItem();
 
-        if (this.level() >= 2 && item.isEdible() && stackIn.is(ItemTags.FISHES)) {
+        if (this.level() >= 2 && ItemUtil.isEddible(stackIn) && stackIn.is(ItemTags.FISHES)) {
             return true;
         }
 
@@ -55,8 +57,9 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
 
         Item item = stackIn.getItem();
 
-        if (this.level() >= 2 && item.isEdible() && stackIn.is(ItemTags.FISHES)) {
-            dogIn.addHunger(item.getFoodProperties().getNutrition() * 5);
+        var food_comp = stackIn.getOrDefault(DataComponents.FOOD, null);
+        if (this.level() >= 2 && food_comp != null && stackIn.is(ItemTags.FISHES)) {
+            dogIn.addHunger(food_comp.nutrition() * 5);
             dogIn.consumeItemFromStack(entityIn, stackIn);
             return InteractionResult.SUCCESS;
         }

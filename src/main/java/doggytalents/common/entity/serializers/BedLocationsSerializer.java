@@ -3,13 +3,14 @@ package doggytalents.common.entity.serializers;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
-public class BedLocationsSerializer<D, T extends EntityDataSerializer<D>> implements EntityDataSerializer<DimensionDependantArg<D>> {
+public class BedLocationsSerializer<D, T extends EntityDataSerializer<D>> extends DogSerializer<DimensionDependantArg<D>> {
 
     @Override
     public void write(FriendlyByteBuf buf, DimensionDependantArg<D> value) {
@@ -18,7 +19,7 @@ public class BedLocationsSerializer<D, T extends EntityDataSerializer<D>> implem
         buf.writeInt(value.size());
         value.entrySet().forEach((entry) -> {
             buf.writeResourceLocation(entry.getKey().location());
-            ser.write(buf, entry.getValue());
+            ser.codec().encode((RegistryFriendlyByteBuf) buf, entry.getValue());
         });
     }
 
@@ -31,7 +32,7 @@ public class BedLocationsSerializer<D, T extends EntityDataSerializer<D>> implem
         for (int i = 0; i < size; i++) {
             ResourceLocation loc = buf.readResourceLocation();
             ResourceKey<Level> type = ResourceKey.create(Registries.DIMENSION, loc);
-            D subV = ser.read(buf);
+            D subV = ser.codec().decode((RegistryFriendlyByteBuf)buf);
             value.map.put(type, subV);
         }
 

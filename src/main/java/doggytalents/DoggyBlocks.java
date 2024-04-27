@@ -10,14 +10,12 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -25,16 +23,16 @@ import java.util.function.Supplier;
 
 public class DoggyBlocks {
 
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.Keys.BLOCKS, Constants.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, Constants.MOD_ID);
     public static final DeferredRegister<Item> ITEMS = DoggyItems.ITEMS;
 
-    public static final RegistryObject<DogBedBlock> DOG_BED = registerWithItem("dog_bed", DogBedBlock::new, (prop) -> prop);
-    public static final RegistryObject<DogBathBlock> DOG_BATH = registerWithItem("dog_bath", DogBathBlock::new);
-    public static final RegistryObject<FoodBowlBlock> FOOD_BOWL = registerWithItem("food_bowl", FoodBowlBlock::new);
-    public static final RegistryObject<RiceMillBlock> RICE_MILL = registerWithItem("rice_mill", RiceMillBlock::new);
+    public static final Supplier<DogBedBlock> DOG_BED = registerWithItem("dog_bed", DogBedBlock::new, (prop) -> prop);
+    public static final Supplier<DogBathBlock> DOG_BATH = registerWithItem("dog_bath", DogBathBlock::new);
+    public static final Supplier<FoodBowlBlock> FOOD_BOWL = registerWithItem("food_bowl", FoodBowlBlock::new);
+    public static final Supplier<RiceMillBlock> RICE_MILL = registerWithItem("rice_mill", RiceMillBlock::new);
 
-    public static final RegistryObject<RiceCropBlock> RICE_CROP = register("rice_crop", RiceCropBlock::new);
-    public static final RegistryObject<SoyCropBlock> SOY_CROP = register("soy_crop", SoyCropBlock::new);
+    public static final Supplier<RiceCropBlock> RICE_CROP = register("rice_crop", RiceCropBlock::new);
+    public static final Supplier<SoyCropBlock> SOY_CROP = register("soy_crop", SoyCropBlock::new);
 
     private static Item.Properties createInitialProp() {
         return new Item.Properties();
@@ -49,32 +47,32 @@ public class DoggyBlocks {
         return new BlockItem(block, extraPropFunc != null ? extraPropFunc.apply(prop) : prop);
     }
 
-    private static <T extends Block> RegistryObject<T> registerWithItem(final String name, final Supplier<T> blockSupplier, @Nullable Function<Item.Properties, Item.Properties> extraPropFunc) {
+    private static <T extends Block> Supplier<T> registerWithItem(final String name, final Supplier<T> blockSupplier, @Nullable Function<Item.Properties, Item.Properties> extraPropFunc) {
         return register(name, blockSupplier, (b) -> makeItemBlock(b.get(), extraPropFunc));
     }
 
-    private static <T extends Block> RegistryObject<T> registerWithItem(final String name, final Supplier<T> blockSupplier) {
+    private static <T extends Block> Supplier<T> registerWithItem(final String name, final Supplier<T> blockSupplier) {
         return register(name, blockSupplier, (b) -> makeItemBlock(b.get()));
     }
 
-    private static <T extends Block> RegistryObject<T> register(final String name, final Supplier<T> blockSupplier, final Function<RegistryObject<T>, Item> itemFunction) {
-        RegistryObject<T> blockObj = register(name, blockSupplier);
+    private static <T extends Block> Supplier<T> register(final String name, final Supplier<T> blockSupplier, final Function<Supplier<T>, Item> itemFunction) {
+        Supplier<T> blockObj = register(name, blockSupplier);
         ITEMS.register(name, () -> itemFunction.apply(blockObj));
         return blockObj;
     }
 
-    private static <T extends Block> RegistryObject<T> register(final String name, final Supplier<T> blockSupplier) {
+    private static <T extends Block> Supplier<T> register(final String name, final Supplier<T> blockSupplier) {
         return BLOCKS.register(name, blockSupplier);
     }
 
     public static void registerBlockColours(final RegisterColorHandlersEvent.Block event) {
-        BlockColors blockColors = event.getBlockColors();
+        //BlockColors blockColors = event.getBlockColors();
 
-        Util.acceptOrElse(DoggyBlocks.DOG_BATH, (block) -> {
-            blockColors.register((state, world, pos, tintIndex) -> {
+        //Util.acceptOrElse(DoggyBlocks.DOG_BATH, (block) -> {
+            event.register((state, world, pos, tintIndex) -> {
                 return world != null && pos != null ? BiomeColors.getAverageWaterColor(world, pos) : -1;
-             }, block);
-        }, DoggyBlocks::logError);
+             }, DoggyBlocks.DOG_BATH.get());
+        //}, DoggyBlocks::logError);
     }
 
     public static void logError() {

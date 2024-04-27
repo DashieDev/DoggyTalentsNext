@@ -9,7 +9,7 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -388,25 +388,25 @@ public class CachedSearchUtil {
      * @param type
      * @return
      */
-    public static byte inferType(Dog dog, BlockPathTypes type) {
+    public static byte inferType(Dog dog, PathType type) {
         for (var x : dog.getAlterations()) {
             var type_res = x.inferType(dog, type);
             if (!type_res.getResult().shouldSwing())
                 continue;
-            if (type_res.getObject() == BlockPathTypes.WALKABLE) {
+            if (type_res.getObject() == PathType.WALKABLE) {
                 return OK;
             }
             type = type_res.getObject();
             break;
         }
-        if (type == BlockPathTypes.OPEN) return OPEN;
-        if (type.getDanger() != null) return DAMAGE;
-        if (type == BlockPathTypes.BLOCKED) return BLOCKED;
+        if (type == PathType.OPEN) return OPEN;
+        if (DogUtil.isDangerPathType(type)) return DAMAGE;
+        if (type == PathType.BLOCKED) return BLOCKED;
         //if (dog.getPathfindingMalus(type) < 0) return DANGER;
         return DANGER;
     }
 
-    public static byte inferType(List<Dog> dogs, BlockPathTypes type) {
+    public static byte inferType(List<Dog> dogs, PathType type) {
 
         //If the pos is OK for a dogs via talent, then it must be
         //OK for all the other dogs to be considered OK here. 
@@ -416,7 +416,7 @@ public class CachedSearchUtil {
             for (var x : dog.getAlterations()) {
                 var type_res = x.inferType(dog, type);
                 if (type_res.getResult().shouldSwing()
-                    && type_res.getObject() == BlockPathTypes.WALKABLE) {
+                    && type_res.getObject() == PathType.WALKABLE) {
                     is_ok = true;
                     break;
                 }
@@ -427,9 +427,9 @@ public class CachedSearchUtil {
         }
 
         if (all_dog_OK) return OK;
-        if (type == BlockPathTypes.OPEN) return OPEN;
-        if (type.getDanger() != null) return DAMAGE;
-        if (type == BlockPathTypes.BLOCKED) return BLOCKED;
+        if (type == PathType.OPEN) return OPEN;
+        if (DogUtil.isDangerPathType(type)) return DAMAGE;
+        if (type == PathType.BLOCKED) return BLOCKED;
         // for (var dog : dogs) {
         //     if (dog.getPathfindingMalus(type) < 0) return DANGER;
         // }
@@ -438,8 +438,8 @@ public class CachedSearchUtil {
 
     private static class WalkNodeEvaluatorDelegate extends WalkNodeEvaluator {
 
-        public static BlockPathTypes getTypeDelegate(BlockGetter getter, BlockPos pos) {
-            return WalkNodeEvaluator.getBlockPathTypeRaw(getter, pos);
+        public static PathType getTypeDelegate(BlockGetter getter, BlockPos pos) {
+            return WalkNodeEvaluator.getPathTypeFromState(getter, pos);
         }
 
     }

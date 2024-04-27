@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.api.feature.DogSize;
 import doggytalents.api.feature.DogLevel.Type;
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
@@ -101,7 +102,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
             dog.setDogCustomName(Component.literal(tempName));
         }
 
-        InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, dog_mX, dog_mY, size, 
+        ScreenUtil.renderEntityInInventoryFollowsMouse(graphics, dog_mX, dog_mY, size, 
             lookX, lookY, dog);
 
         if (nameTooLong) {

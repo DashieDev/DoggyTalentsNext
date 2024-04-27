@@ -80,7 +80,7 @@ import doggytalents.client.entity.model.dog.kusa.UmeModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.ModLoader;
+import net.neoforged.fml.ModLoader;
 
 public class DogModelRegistry {
     
@@ -191,7 +191,7 @@ public class DogModelRegistry {
 
     private static void registerFromEvent() {
         var entries = new ArrayList<DogModelProps>(); 
-        ModLoader.get().postEvent(new RegisterCustomDogModelsEvent(entries));
+        ModLoader.postEvent(new RegisterCustomDogModelsEvent(entries));
         if (entries.isEmpty())
             return;
         for (var entry : entries) {

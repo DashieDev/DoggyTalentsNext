@@ -21,7 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 
 public class DogUntameConfirmScreen extends Screen {
 
@@ -45,7 +45,7 @@ public class DogUntameConfirmScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-        this.renderBackground(graphics);
+        this.renderBackground(graphics, mouseX, mouseY, pTicks);
         super.render(graphics, mouseX, mouseY, pTicks);
 
         var stack = graphics.pose();
@@ -102,10 +102,10 @@ public class DogUntameConfirmScreen extends Screen {
                 Minecraft.getInstance().setScreen(null);
             }
         ) {
-            @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+            //@Override
+            public void renderWidgetMain(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
                 // TODO Auto-generated method stub
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                //super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 
                 // var costStr = dogLevel < talent.getMaxLevel() ?
                 //     "Cost : " + talent.getLevelCost(dogLevel + 1)
@@ -123,8 +123,9 @@ public class DogUntameConfirmScreen extends Screen {
             }
 
             @Override
-            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, pTicks);
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                renderWidgetMain(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 MutableComponent c1;
                 if (this.active) {

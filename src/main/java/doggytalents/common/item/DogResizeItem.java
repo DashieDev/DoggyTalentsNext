@@ -6,6 +6,7 @@ import doggytalents.api.inferface.IDogItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -55,9 +56,7 @@ public class DogResizeItem extends Item implements IDogItem {
                 DogSize size1 = (this.type == Type.BIG ? size0.grow() : size0.shrink());
                 dog.setDogSize(size1);
                 if (!playerIn.getAbilities().instabuild && size0 != size1)
-                itemInHand.hurtAndBreak(1, playerIn, (player_consume) -> {
-                    player_consume.broadcastBreakEvent(handIn);
-                });
+                itemInHand.hurtAndBreak(1, playerIn, LivingEntity.getSlotForHand(handIn));
             }
             return InteractionResult.SUCCESS;
         }

@@ -28,11 +28,11 @@ import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.fluids.FluidType;
 
 public class SwimmerDogTalent extends TalentInstance {
     
@@ -128,13 +128,13 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     private void applySwimAttributes(Dog dog){
-        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID, (dd, u) -> 
-            new AttributeModifier(u, "Swim Boost", 2*dog.getDogLevel(DoggyTalents.SWIMMER_DOG), Operation.ADDITION)
+        dog.setAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID, (dd, u) -> 
+            new AttributeModifier(u, "Swim Boost", 2*dog.getDogLevel(DoggyTalents.SWIMMER_DOG), Operation.ADD_VALUE)
         );
     }
 
     private void removeSwimAttributes(Dog dog) {
-        dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID);
+        dog.removeAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID);
     }
     
     private void startSwimming(Dog dog) {
@@ -187,7 +187,7 @@ public class SwimmerDogTalent extends TalentInstance {
 
     @Override
     public InteractionResult canResistPushFromFluidType(FluidType type) {
-        if (type != ForgeMod.WATER_TYPE.get())
+        if (type != NeoForgeMod.WATER_TYPE.value())
             return InteractionResult.PASS;
 
         if (this.level() >= 2) 
@@ -197,10 +197,10 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type) {
+    public InteractionResultHolder<PathType> inferType(AbstractDog dog, PathType type) {
         //This allows the owner to help the dog to reach the surface.
-        if (type == BlockPathTypes.WATER) {
-            return InteractionResultHolder.success(BlockPathTypes.WALKABLE);
+        if (type == PathType.WATER) {
+            return InteractionResultHolder.success(PathType.WALKABLE);
         }
         return super.inferType(dog, type);
     }
@@ -248,7 +248,7 @@ public class SwimmerDogTalent extends TalentInstance {
 
     //     private boolean checkSurroundingForLand(AbstractDog dogIn, BlockPos p) {
     //         for (BlockPos dp : BlockPos.betweenClosed(p.offset(-1, -1, -1), p.offset(1, 1, 1))) {
-    //             BlockPathTypes pn = WalkNodeEvaluator.getBlockPathTypeStatic(dogIn.level(), dp.mutable());
+    //             BlockPathTypes pn = WalkNodeEvaluator.getPathTypeStatic(dogIn.level(), dp.mutable());
     //             if (pn == BlockPathTypes.WALKABLE || pn == BlockPathTypes.WATER_BORDER) return true;
     //         }
     //         return false;

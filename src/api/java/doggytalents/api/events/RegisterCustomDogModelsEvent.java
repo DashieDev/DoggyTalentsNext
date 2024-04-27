@@ -13,8 +13,8 @@ import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.fml.event.IModBusEvent;
+import net.neoforged.bus.api.Event;
+import net.neoforged.fml.event.IModBusEvent;
 
 public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent {
 
@@ -28,10 +28,10 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
         this.entries.add(builder.build());
     }
 
-    @Override
-    public boolean isCancelable() {
-        return false;
-    }
+    // @Override
+    // public boolean isCancelable() {
+    //     return false;
+    // }
 
     public static class DogModelProps {
         public final ResourceLocation id;

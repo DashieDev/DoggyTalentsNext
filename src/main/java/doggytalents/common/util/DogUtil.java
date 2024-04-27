@@ -26,6 +26,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
@@ -33,7 +34,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.HitResult;
@@ -364,23 +365,23 @@ public class DogUtil {
     //Allow dog to teleportToLeaves, there is no reason to not to consider the existance of the push a.i
     //And height danger exist everywhere not just leaves
     public static boolean isTeleportSafeBlock(Dog dog, BlockPos pos) {
-        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
+        var pathnodetype = WalkNodeEvaluator.getPathTypeStatic(dog, pos.mutable());
         boolean alterationWalkable = false;
         for (var x : dog.getAlterations()) {
             var type_res = x.inferType(dog, pathnodetype);
             if (type_res.getResult().shouldSwing()
-                && type_res.getObject() == BlockPathTypes.WALKABLE) {
+                && type_res.getObject() == PathType.WALKABLE) {
                 alterationWalkable = true;
                 break;
             }
         }
         
-        if (dog.canDogFly() && pathnodetype == BlockPathTypes.OPEN)
+        if (dog.canDogFly() && pathnodetype == PathType.OPEN)
             alterationWalkable = true;
-        if (dog.fireImmune() && pathnodetype == BlockPathTypes.OPEN
+        if (dog.fireImmune() && pathnodetype == PathType.OPEN
             && dog.level().getFluidState(pos.below()).is(FluidTags.LAVA))
             alterationWalkable = true;
-        if (pathnodetype != BlockPathTypes.WALKABLE && !alterationWalkable) {
+        if (pathnodetype != PathType.WALKABLE && !alterationWalkable) {
             return false;
         } else {
             var blockpos = pos.subtract(dog.blockPosition());
@@ -389,8 +390,8 @@ public class DogUtil {
     }
 
     public static boolean isTeleportSafeBlockMidAir(Dog dog, BlockPos pos) {
-        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
-        if (pathnodetype != BlockPathTypes.OPEN) {
+        var pathnodetype = WalkNodeEvaluator.getPathTypeStatic(dog, pos.mutable());
+        if (pathnodetype != PathType.OPEN) {
             return false;
         } else {
             var blockpos = pos.subtract(dog.blockPosition());
@@ -663,7 +664,7 @@ public class DogUtil {
     } 
 
     private static boolean isValidChar(Character x) {
-        return !INVALID_NAME_CHARS.contains(x) && SharedConstants.isAllowedChatCharacter(x);
+        return !INVALID_NAME_CHARS.contains(x) && StringUtil.isAllowedChatCharacter(x);
     }
 
     public static boolean checkIfOwnerIsLooking(Dog dog, LivingEntity owner) {
@@ -673,6 +674,24 @@ public class DogUtil {
             .normalize();
         var dot = v_look_wanted.dot(v_look_owner);
         return dot > 0.7;
+    }
+
+    public static boolean isDangerPathType(PathType pathType) {
+        switch (pathType) {
+        case POWDER_SNOW:
+        case DANGER_POWDER_SNOW:
+        case LAVA:
+        case DANGER_FIRE:
+        case DAMAGE_FIRE:
+        case DANGER_OTHER:
+        case DAMAGE_OTHER:
+        case DAMAGE_CAUTIOUS:
+        case DANGER_TRAPDOOR:
+        case TRAPDOOR:
+            return true;
+        default:
+            return false;
+        }
     }
 
 

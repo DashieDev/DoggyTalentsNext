@@ -26,9 +26,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.PacketDistributor;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 /**
  * @Author DashieDev
@@ -50,9 +49,9 @@ public class ConductingBonePackets {
         public void handle(RequestDogsData data,
             Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                LogicalSide side = ctx.get().getDirection().getReceptionSide();
+                //LogicalSide side = ctx.get().getDirection().getReceptionSide();
     
-                if (side.isServer()) {
+                if (ctx.get().isServerRecipent()) {
                     var sender = ctx.get().getSender();
                     var storage = 
                         DogLocationStorage.get(sender.level());
@@ -113,7 +112,7 @@ public class ConductingBonePackets {
         public void handle(ResponseDogsData data, Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
 
-                if (ctx.get().getDirection().getReceptionSide().isClient()) { 
+                if (ctx.get().isClientRecipent()) { 
                     Minecraft mc = Minecraft.getInstance();
                     if (mc.screen != null && mc.screen instanceof ConductingBoneScreen scr) {
                         scr.assignResponse(data.entries);
@@ -146,9 +145,9 @@ public class ConductingBonePackets {
         public void handle(RequestDistantTeleportDogData data, Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
 
-                LogicalSide side = ctx.get().getDirection().getReceptionSide();
+                //LogicalSide side = ctx.get().getDirection().getReceptionSide();
     
-                if (side.isServer()) {
+                if (ctx.get().isServerRecipent()) {
                     var sender = ctx.get().getSender();
 
                     //Make sure the owner actually have the item in hand serverside.

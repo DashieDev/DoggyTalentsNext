@@ -109,14 +109,15 @@ import doggytalents.client.screen.RiceMillScreen;
 import doggytalents.client.screen.TreatBagScreen;
 import doggytalents.client.tileentity.renderer.DogBedRenderer;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.Util;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.fml.ModLoader;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.ModLoader;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 
 public class ClientSetup {
 
@@ -306,7 +307,7 @@ public class ClientSetup {
     private static void gatherSkinJsonFromOtherMods() {
         OTHER_MOD_SKIN_JSONS.clear();
         var paths = new ArrayList<ResourceLocation>();
-        ModLoader.get().postEvent(new RegisterDogSkinJsonPathEvent(paths));
+        ModLoader.postEvent(new RegisterDogSkinJsonPathEvent(paths));
         if (paths.isEmpty())
             return;
         OTHER_MOD_SKIN_JSONS.addAll(paths);
@@ -339,9 +340,9 @@ public class ClientSetup {
         CollarRenderManager.registerLayer(TorchDogRenderer::new);
     }
 
-    public static void registerOverlay(RegisterGuiOverlaysEvent e) {
-        e.registerAboveAll("dog_food_level", DogScreenOverlays.FOOD_LEVEL_ELEMENT);
-        e.registerAboveAll("dog_air_evel", DogScreenOverlays.AIR_LEVEL_ELEMENT);
+    public static void registerOverlay(RegisterGuiLayersEvent e) {
+        e.registerAboveAll(Util.getResource("dog_food_level"), DogScreenOverlays.FOOD_LEVEL_ELEMENT);
+        e.registerAboveAll(Util.getResource("dog_air_evel"), DogScreenOverlays.AIR_LEVEL_ELEMENT);
     }
 
     public static void addClientReloadListeners(final RegisterClientReloadListenersEvent event) {

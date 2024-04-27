@@ -5,7 +5,7 @@ import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.entity.texture.DogSkinData.Version;
 import doggytalents.common.network.packet.data.DogTextureData;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 import java.util.function.Supplier;
 

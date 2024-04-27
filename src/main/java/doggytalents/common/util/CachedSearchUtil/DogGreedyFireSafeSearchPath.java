@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
 public class DogGreedyFireSafeSearchPath extends Path {
@@ -79,10 +79,10 @@ public class DogGreedyFireSafeSearchPath extends Path {
                 if (i*j != 0) continue;
                 var node = checkPos(path, b0.offset(i, 0, j));
                 if (node == null) continue;
-                if (node.type == BlockPathTypes.WALKABLE) {
+                if (node.type == PathType.WALKABLE) {
                     return node;
                 }
-                if (node.type == BlockPathTypes.BLOCKED) {
+                if (node.type == PathType.BLOCKED) {
                     if (i != 0) {
                         Y0_BLOCKED[i > 0 ? 1 : 0] = true;
                     } else {
@@ -108,10 +108,10 @@ public class DogGreedyFireSafeSearchPath extends Path {
                 if (diagonal_blocked) continue;
                 var node = checkPos(path, b0.offset(i, 0, j));
                 if (node == null) continue;
-                if (node.type == BlockPathTypes.WALKABLE) {
+                if (node.type == PathType.WALKABLE) {
                     return node;
                 }
-                if (node.type == BlockPathTypes.BLOCKED) {
+                if (node.type == PathType.BLOCKED) {
                     if (i != 0) {
                         Y0_BLOCKED[i > 0 ? 1 : 0] = true;
                     } else {
@@ -136,24 +136,24 @@ public class DogGreedyFireSafeSearchPath extends Path {
 
     private static Node checkPos(DogGreedyFireSafeSearchPath path, BlockPos pos) {
         var b1 = pos.mutable();
-        var b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level(), b1.mutable());
+        var b1_type = WalkNodeEvaluator.getPathTypeStatic(path.dog, b1.mutable());
         int offsetY = 0;
-        if (b1_type == BlockPathTypes.BLOCKED) {
+        if (b1_type == PathType.BLOCKED) {
                 offsetY= 1;
-        } else if (b1_type == BlockPathTypes.OPEN) {
+        } else if (b1_type == PathType.OPEN) {
             offsetY = -1;
         }
         if (offsetY != 0) {
             b1.move(0, offsetY, 0);
-            b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level(), b1.mutable());
+            b1_type = WalkNodeEvaluator.getPathTypeStatic(path.dog, b1.mutable());
         }
-        if (b1_type == BlockPathTypes.WALKABLE 
-            || b1_type == BlockPathTypes.BLOCKED) {
+        if (b1_type == PathType.WALKABLE 
+            || b1_type == PathType.BLOCKED) {
             var ret_node = new Node(b1.getX(), b1.getY(), b1.getZ());
             ret_node.type = b1_type;
             return ret_node;
         }
-        if (b1_type == BlockPathTypes.OPEN) return null;
+        if (b1_type == PathType.OPEN) return null;
         if (path.containNode(b1)) return null;
         float malus = path.dog.getPathfindingMalus(b1_type);
         if (malus < 0) return null;

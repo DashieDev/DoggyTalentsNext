@@ -9,8 +9,9 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.DogSyncData;
+import doggytalents.common.util.NetworkUtil;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class DogSyncDataPacket implements IPacket<DogSyncData> {
 
@@ -39,7 +40,7 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
         buf.writeInt(talents.size());
 
         for (TalentInstance inst : talents) {
-            buf.writeRegistryIdUnsafe(DoggyTalentsAPI.TALENTS.get(), inst.getTalent());
+            NetworkUtil.writeTalentToBuf(buf, inst.getTalent());
             inst.writeToBuf(buf);
         }
     }
@@ -48,7 +49,7 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
         buf.writeInt(value.size());
 
         for (AccessoryInstance inst : value) {
-            buf.writeRegistryIdUnsafe(DoggyTalentsAPI.ACCESSORIES.get(), inst.getAccessory());
+            NetworkUtil.writeAccessoryToBuf(buf, inst.getAccessory());
             inst.getAccessory().write(inst, buf);
         }
     }
@@ -78,7 +79,7 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
         int size = buf.readInt();
         var newInst = new ArrayList<TalentInstance>(size);
         for (int i = 0; i < size; i++) {
-            var inst = buf.readRegistryIdUnsafe(DoggyTalentsAPI.TALENTS.get()).getDefault();
+            var inst = NetworkUtil.readTalentFromBuf(buf).getDefault();
             inst.readFromBuf(buf);
             newInst.add(inst);
         }
@@ -90,7 +91,7 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
         var newInst = new ArrayList<AccessoryInstance>(size);
 
         for (int i = 0; i < size; i++) {
-            var type = buf.readRegistryIdUnsafe(DoggyTalentsAPI.ACCESSORIES.get());
+            var type = NetworkUtil.readAccessoryFromBuf(buf);
             newInst.add(type.createInstance(buf));
         }
 
@@ -100,7 +101,7 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
     @Override
     public void handle(DogSyncData data, Supplier<Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            if (!ctx.get().getDirection().getReceptionSide().isClient())
+            if (!ctx.get().isClientRecipent())
                 return;
             ClientEventHandler.onDogSyncedDataUpdated(data);
         });

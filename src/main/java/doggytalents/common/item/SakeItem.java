@@ -20,6 +20,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
@@ -32,8 +34,7 @@ public class SakeItem extends DogEddibleItem {
     public SakeItem() {
         super(b -> b
             .stacksTo(8).craftRemainder(Items.GLASS_BOTTLE),
-        b -> b
-            .alwaysEat());
+        b -> b);
     }
 
     @Override
@@ -92,8 +93,9 @@ public class SakeItem extends DogEddibleItem {
     }
 
     @Override
-    public boolean isEdible() {
-        return false;
+    @Nullable
+    public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
+        return null;
     }
 
     @Override
@@ -152,7 +154,7 @@ public class SakeItem extends DogEddibleItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
         components.add(Component.translatable(desc_id).withStyle(

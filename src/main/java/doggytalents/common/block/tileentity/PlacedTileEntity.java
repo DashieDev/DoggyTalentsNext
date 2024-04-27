@@ -3,6 +3,7 @@ package doggytalents.common.block.tileentity;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.WorldUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -24,15 +25,15 @@ public class PlacedTileEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider prov) {
+        super.loadAdditional(compound, prov);
 
         this.placerUUID = NBTUtil.getUniqueId(compound, "placerId");
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    public void saveAdditional(CompoundTag compound, HolderLookup.Provider prov) {
+        super.saveAdditional(compound, prov);
         NBTUtil.putUniqueId(compound, "placerId", this.placerUUID);
     }
 
@@ -59,14 +60,14 @@ public class PlacedTileEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider prov) {
         CompoundTag compound = new CompoundTag();
-        this.saveAdditional(compound);
+        this.saveAdditional(compound, prov);
         return compound;
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(pkt.getTag());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider prov) {
+        this.loadAdditional(pkt.getTag(), prov);
     }
 }

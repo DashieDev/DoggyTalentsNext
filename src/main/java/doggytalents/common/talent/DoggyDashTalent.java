@@ -39,7 +39,7 @@ public class DoggyDashTalent extends TalentInstance {
                 speed += 0.04D;
             }
 
-            return new AttributeModifier(uuidIn, "Doggy Dash", speed, AttributeModifier.Operation.ADDITION);
+            return new AttributeModifier(uuidIn, "Doggy Dash", speed, AttributeModifier.Operation.ADD_VALUE);
         }
 
         return null;

@@ -10,7 +10,7 @@ import doggytalents.common.lib.Constants;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class HeadBandRenderEntry extends AccessoryModelManager.Entry {
     public static final ModelLayerLocation HEAD_BAND = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "head_band"), "main");

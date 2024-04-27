@@ -138,7 +138,7 @@ public class DogHungerManager {
     private void hungerHighToLow() {
         if (!dog.isDefeated())
         dog.setAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT,
-                (d, u) -> new AttributeModifier(u, "Hunger Slowness", -0.35f, Operation.MULTIPLY_TOTAL)
+                (d, u) -> new AttributeModifier(u, "Hunger Slowness", -0.35f, Operation.ADD_MULTIPLIED_TOTAL)
         );
 
     }

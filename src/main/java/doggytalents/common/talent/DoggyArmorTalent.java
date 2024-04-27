@@ -61,7 +61,7 @@ public class DoggyArmorTalent extends TalentInstance {
     public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
         super.writeToNBT(dogIn, compound);
 
-        compound.merge(dogIn.dogArmors().serializeNBT());
+        compound.merge(dogIn.dogArmors().serializeNBT(dogIn.registryAccess()));
         compound.putInt("armors_spareXp", level);
     }
 
@@ -70,7 +70,7 @@ public class DoggyArmorTalent extends TalentInstance {
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
         try {
-            dogIn.dogArmors().deserializeNBT(compound);
+            dogIn.dogArmors().deserializeNBT(dogIn.registryAccess(), compound);
             if (compound.contains("armors_spareXp")) {
                 this.spareValue = compound.getInt("armors_spareXp");
                 mayNeedsDataUpgrade = false;
@@ -89,7 +89,7 @@ public class DoggyArmorTalent extends TalentInstance {
         
         try {
             if (compound.contains("dogArmors", Tag.TAG_LIST))
-                dogIn.dogArmors().deserializeNBT(compound);
+                dogIn.dogArmors().deserializeNBT(dogIn.registryAccess(), compound);
             this.spareValue = compound.getInt("armors_spareXp");
         } catch (Exception e) {}
     }

@@ -6,11 +6,12 @@ import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AmnesiaBoneItem;
 import doggytalents.common.network.packet.data.DogMigrateOwnerData;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
 
@@ -43,19 +44,22 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
         if (ownerUUID == null) return;
         if (!ownerUUID.equals(sender.getUUID())) return;
         
-        var tag = stack.getTag();
+        var tag = ItemUtil.getTag(stack);
 
         //Nothing to do if required tag doesn't exist
         if (tag == null) return;
         if (!tag.hasUUID("request_uuid")) {
-            tag.remove("request_str"); return;
+            ItemUtil.modifyTag(stack, to_modify -> to_modify.remove("request_str"));
+            return;
         };
 
         var uuid = tag.getUUID("request_uuid");
         
         //Consume these tags
-        tag.remove("request_uuid");    
-        tag.remove("request_str");
+        ItemUtil.modifyTag(stack, to_modify -> {
+            to_modify.remove("request_uuid");    
+            to_modify.remove("request_str");
+        });
 
         //Migrating between same uuid is a NO-OP
         if (ownerUUID.equals(uuid)) return;
@@ -102,6 +106,7 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
                 dog.getName().getString(), dog.getGenderPronoun()
             )
         );
+        ItemUtil.putTag(stack, tag);
     }
     
 }

@@ -24,7 +24,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 
 public class DogCannotInteractWithScreen extends Screen {
 
@@ -54,8 +54,8 @@ public class DogCannotInteractWithScreen extends Screen {
             showCause, 
             b -> {}, font) {
             @Override
-            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, pTicks);
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 var msg = dog.incapacitatedMananger.getIncapMsg();
                 var msgList = ScreenUtil.splitInto(msg, 150, font);
@@ -68,7 +68,7 @@ public class DogCannotInteractWithScreen extends Screen {
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         var stack = graphics.pose();
-        this.renderBackground(graphics);
+        this.renderBackground(graphics, mouseX, mouseY, pTicks);
         super.render(graphics, mouseX, mouseY, pTicks);
         Component title;
         String help;

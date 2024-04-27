@@ -33,7 +33,7 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 
 public class OokamiKazeTalent extends TalentInstance {
 
@@ -333,8 +333,8 @@ public class OokamiKazeTalent extends TalentInstance {
             for (var e : entities) {
                 if (e == dog)
                     continue;
-                if (e.ignoreExplosion())
-                    continue;
+                // if (e.ignoreExplosion())
+                //     continue;
                 if (e instanceof LivingEntity living && isAlliedToDog(living, owner)) {
                     lightlyKnockback(owner, e, ext_radius);
                     continue;
@@ -434,7 +434,7 @@ public class OokamiKazeTalent extends TalentInstance {
         var dog_pos = dog.position();
         if (level.isClientSide) {
             level.playLocalSound(dog_pos.x, dog_pos.y, dog_pos.z, 
-                SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, 
+                SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 4.0F, 
                 (1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F, false);
         }
         level.addParticle(ParticleTypes.EXPLOSION, dog_pos.x, dog_pos.y, dog_pos.z, 1.0D, 0.0D, 0.0D);

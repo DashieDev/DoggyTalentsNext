@@ -16,6 +16,7 @@ import doggytalents.client.screen.framework.types.TextType.Align;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.framework.widget.MultiLineFlatButton;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -75,8 +76,8 @@ public class GeneralView extends AbstractElement {
                 this.openChangeOwnerScreen();
             }) {
                 @Override
-                public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-                    super.render(graphics, mouseX, mouseY, partialTicks);
+                public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+                    super.renderWidget(graphics, mouseX, mouseY, partialTicks);
                     int tX = this.getX() + this.width - 10;
                     int tY = this.getY() + this.height/2 - font.lineHeight/2;
                     graphics.drawString(font, ">", tX, tY, 0xffffffff);
@@ -90,8 +91,8 @@ public class GeneralView extends AbstractElement {
                 DogUntameConfirmScreen.open(dog);
             }) {
                 @Override
-                public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-                    super.render(graphics, mouseX, mouseY, partialTicks);
+                public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+                    super.renderWidget(graphics, mouseX, mouseY, partialTicks);
                     int tX = this.getX() + this.width - 10;
                     int tY = this.getY() + this.height/2 - font.lineHeight/2;
                     graphics.drawString(font, ">", tX, tY, 0xffffffff);
@@ -154,7 +155,7 @@ public class GeneralView extends AbstractElement {
         if (player == null) return;
         var stack = player.getItemInHand(InteractionHand.MAIN_HAND);
         if (stack.getItem() != DoggyItems.AMNESIA_BONE.get()) return;
-        var tag = stack.getTag();
+        var tag = ItemUtil.getTag(stack);
         UUID migrate_uuid = null;
         String migrate_str = "";
         if (tag != null && tag.hasUUID("request_uuid")) {

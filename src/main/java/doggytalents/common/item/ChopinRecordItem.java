@@ -38,7 +38,7 @@ public class ChopinRecordItem extends RecordItem {
 
     private void triggerChopinTailNearbyDogs(Level level, BlockPos pos) {
         var dogs = level.getEntitiesOfClass(Dog.class, 
-            new AABB(pos.offset(-EFFECT_RADIUS, -5, -EFFECT_RADIUS), 
+            AABB.encapsulatingFullBlocks(pos.offset(-EFFECT_RADIUS, -5, -EFFECT_RADIUS), 
                 pos.offset(EFFECT_RADIUS, 5, EFFECT_RADIUS)),
                 d -> canDoChopinTail(d));
         for (var dog : dogs) {

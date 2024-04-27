@@ -1,14 +1,14 @@
 plugins {
     id 'eclipse'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'net.neoforged.gradle.userdev' version '7.0.105'
 }
 
 version = '1.18.11'
 group = 'com.github.dashiedev'
 archivesBaseName = "DoggyTalentsNext-${project.target_mc_version}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 
@@ -41,40 +41,32 @@ configurations {
     apiRuntimeOnly.extendsFrom(runtimeOnly)
 }
 
-minecraft {
+minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
-    mappings channel: 'official', version: '1.20.1'
+runs {
+    client {
+        //taskName 'doggytalents_client'
+        workingDirectory file('run')
+        systemProperty 'forge.logging.console.level', 'debug'
+        modSources.add(project.getSourceSets().main)
+        modSources.add(project.getSourceSets().api)
+    }
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    server {
+        //taskName 'doggytalents_server'
+        workingDirectory file('run-server')
+        systemProperty 'forge.logging.console.level', 'debug'
+        modSources.add(project.getSourceSets().main)
+        modSources.add(project.getSourceSets().api)
+    }
 
-    runs {
-        client {
-            taskName 'doggytalents_client'
-            workingDirectory file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                doggytalents.sources((SourceSet[]) [sourceSets.main, sourceSets.api])
-            }
-        }
-
-        server {
-            taskName 'doggytalents_server'
-            workingDirectory file('run-server')
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                doggytalents.sources((SourceSet[]) [sourceSets.main, sourceSets.api])
-            }
-        }
-
-        data {
-            taskName 'doggytalents_data'
-            workingDirectory file('run')
-            property 'forge.logging.console.level', 'debug'
-            args '--mod', 'doggytalents', '--all', '--output', '"' + file('src/generated/resources/') + '"', '--existing', '"' + sourceSets.main.resources.srcDirs[0] + '"'
-            mods {
-                doggytalents.sources((SourceSet[]) [sourceSets.main, sourceSets.api])
-            }
-        }
+    data {
+        //taskName 'doggytalents_data'
+        workingDirectory file('run')
+        systemProperty 'forge.logging.console.level', 'debug'
+        programArguments.addAll '--mod', 'doggytalents', '--all', '--output', '"' + file('src/generated/resources/') + '"', '--existing', '"' + sourceSets.main.resources.srcDirs[0] + '"'
+        modSources.add(project.getSourceSets().main)
+        modSources.add(project.getSourceSets().api)
     }
 }
 
@@ -85,7 +77,7 @@ repositories {
 
 dependencies {
 
-    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
+    implementation "net.neoforged:neoforge:20.5.3-beta"
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
@@ -114,4 +106,27 @@ tasks.withType(JavaCompile).configureEach {
 
 test {
     useJUnitPlatform()
+}
+
+
+tasks.named("runClient") {
+    doFirst {
+
+        println("vmArgs:")
+        def vmArgs = "";
+        for (item in runs.client.realiseJvmArguments()) {
+            vmArgs = vmArgs + item + " "
+        }
+        println(vmArgs)
+        println("==================================")
+        println("args:")
+        def args1 = ""
+        for (item in runs.client.getProgramArguments().get()) {
+            args1 = args1 + item + " "
+        }
+        println(args1)
+        println("==================================")
+        println("")
+        println("")
+    }
 }

@@ -1,5 +1,6 @@
 package doggytalents.common.data;
 
+import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
@@ -14,7 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -22,8 +22,13 @@ import java.util.function.Supplier;
 
 public class DTItemTagsProvider extends ItemTagsProvider {
 
-    public DTItemTagsProvider(PackOutput generatorIn, CompletableFuture<HolderLookup.Provider> provider , CompletableFuture<TagsProvider.TagLookup<Block>> blockTagProvider , ExistingFileHelper existingFileHelper) {
-        super(generatorIn, provider, blockTagProvider, Constants.MOD_ID, existingFileHelper);
+    public DTItemTagsProvider(
+        PackOutput p_275204_,
+        CompletableFuture<HolderLookup.Provider> p_275194_,
+        CompletableFuture<TagsProvider.TagLookup<Block>> p_275634_,
+        @javax.annotation.Nullable net.neoforged.neoforge.common.data.ExistingFileHelper existingFileHelper
+     ) {
+        super(p_275204_, p_275194_, p_275634_, Constants.MOD_ID, existingFileHelper);
     }
 
     @Override
@@ -44,6 +49,22 @@ public class DTItemTagsProvider extends ItemTagsProvider {
             DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO.get(),
             DoggyItems.MUSIC_DISC_OKAMI_1.get(),
             DoggyItems.MUSIC_DISC_CHOPIN_OP64_NO1.get()
+        );
+        tag(ItemTags.DYEABLE).add(
+            DoggyItems.WOOL_COLLAR.get(),
+            DoggyItems.WOOL_COLLAR_THICC.get(),
+            DoggyItems.CAPE_COLOURED.get(),
+            DoggyItems.BOWTIE.get(),
+            DoggyItems.WIG.get(),
+            DoggyItems.FRISBEE.get(),
+            DoggyItems.BAKER_HAT.get(),
+            DoggyItems.CHEF_HAT.get(),
+            DoggyItems.LAB_COAT.get(),
+            DoggyItems.FRISBEE_WET.get(),
+            DoggyItems.FLYING_CAPE.get(),
+            DoggyItems.CERE_GARB.get(),
+            DoggyItems.DOG_PLUSHIE_TOY.get(),
+            DoggyBlocks.DOG_BATH.get().asItem()
         );
     }
 

@@ -18,7 +18,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
 
     @Override
     public boolean isFood(ItemStack stackIn) {
-        if (!stackIn.isEdible())
+        if (stackIn.getFoodProperties(null) == null)
             return false;
         return isWhiteListFood(stackIn) && !isBlackListFood(stackIn);
     }
@@ -37,11 +37,11 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
             if (!dog.level().isClientSide) {
                 var item = stack.getItem();
 
-                var props = item.getFoodProperties();
+                var props = stack.getFoodProperties(dog);
 
                 if (props == null) return InteractionResult.FAIL;
                 
-                int heal = Mth.floor(props.getNutrition() * 2.5);
+                int heal = Mth.floor(props.nutrition() * 2.5);
 
                 dog.addHunger(heal);
                 dog.consumeItemFromStack(entityIn, stack);

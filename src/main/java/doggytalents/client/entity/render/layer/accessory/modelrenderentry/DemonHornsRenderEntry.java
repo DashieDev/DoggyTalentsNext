@@ -11,7 +11,7 @@ import doggytalents.common.lib.Resources;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class DemonHornsRenderEntry extends AccessoryModelManager.Entry{
     public static final ModelLayerLocation DOG_DEMON_HORNS = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_demon_horns"), "main");

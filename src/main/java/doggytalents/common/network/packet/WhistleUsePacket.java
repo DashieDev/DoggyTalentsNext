@@ -11,7 +11,7 @@ import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class WhistleUsePacket implements IPacket<WhistleUseData> {
 
@@ -28,9 +28,9 @@ public class WhistleUsePacket implements IPacket<WhistleUseData> {
     @Override
     public void handle(WhistleUseData data, Supplier<Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            var side = ctx.get().getDirection().getReceptionSide();
+            //var side = ctx.get().getDirection().getReceptionSide();
 
-            if (!side.isServer()) return;
+            if (!ctx.get().isServerRecipent()) return;
             var player = ctx.get().getSender();
             var whistle = DoggyItems.WHISTLE.get();
             var whistle_stack = 

@@ -14,12 +14,13 @@ import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.client.model.data.ModelProperty;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelProperty;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -45,8 +46,8 @@ public class DogBedTileEntity extends PlacedTileEntity {
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider prov) {
+        super.loadAdditional(compound, prov);
 
         this.casingType = DogBedMaterialManager.getCasing(compound, "casingId");
         this.beddingType = DogBedMaterialManager.getBedding(compound, "beddingId");
@@ -58,8 +59,8 @@ public class DogBedTileEntity extends PlacedTileEntity {
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    public void saveAdditional(CompoundTag compound, HolderLookup.Provider prov) {
+        super.saveAdditional(compound, prov);
 
         NBTUtil.putRegistryValue(compound, "casingId", DogBedMaterialManager.getKey( this.casingType) );
         NBTUtil.putRegistryValue(compound, "beddingId", DogBedMaterialManager.getKey( this.beddingType) );

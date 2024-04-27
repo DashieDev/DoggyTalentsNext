@@ -54,7 +54,7 @@ public class DogMoveControl extends MoveControl {
             var b0_state = this.dog.level().getBlockState(b0);
             var b0_collision = b0_state.getCollisionShape(this.dog.level(), b0);
             boolean dyRequiresJump = 
-                (dy > (double)this.dog.getStepHeight() 
+                (dy > (double)this.dog.maxUpStep() 
                 && dx * dx + dz * dz < (double)Math.max(1.0F, this.dog.getBbWidth()));
             boolean collisionRequireJump =
                 !b0_collision.isEmpty() 

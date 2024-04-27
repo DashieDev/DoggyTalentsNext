@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -54,9 +55,7 @@ public class GenderBoneItem extends Item implements IDogItem{
             );
         }
         var stack = playerIn.getItemInHand(handIn);
-        stack.hurtAndBreak(1, playerIn, (player_consume) -> {
-            player_consume.broadcastBreakEvent(handIn);
-        });
+        stack.hurtAndBreak(1, playerIn, LivingEntity.getSlotForHand(handIn));
         return InteractionResult.SUCCESS;
     }
     

@@ -1,30 +1,34 @@
 package doggytalents.client.entity.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 public class DogScreenOverlays {
 
-    public static final ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation("textures/gui/icons.png");
+    public static final ResourceLocation GUI_ICONS_LOCATION = Util.getResource("textures/gui/minecraft/icons_health.png");
 
-    public static final IGuiOverlay FOOD_LEVEL_ELEMENT = (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+    public static final LayeredDraw.Layer FOOD_LEVEL_ELEMENT = (mStack, partialTicks) -> {
         Minecraft mc = Minecraft.getInstance();
+        var gui = mc.gui;
         boolean isMounted = mc.player.getVehicle() instanceof Dog;
-        if (isMounted && !mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
+        if (isMounted && !mc.options.hideGui && ScreenUtil.shouldRemderSurvivalElement(mc)) {
             Dog dog = (Dog) mc.player.getVehicle();
-            gui.setupOverlayRenderState(true, false);
+            //gui.setupOverlayRenderState(true, false);
 
             mc.getProfiler().push("food_dog");
 
             RenderSystem.enableBlend();
-            int left = screenWidth / 2 + 91;
-            int top = screenHeight - gui.rightHeight;
+            int left = mStack.guiWidth() / 2 + 91;
+            int top = mStack.guiHeight() - gui.rightHeight;
             gui.rightHeight += 10;
 
             int level = Mth.ceil((dog.getDogHunger() / dog.getMaxHunger()) * 20.0D);
@@ -53,17 +57,18 @@ public class DogScreenOverlays {
         }
     };
 
-    public static final IGuiOverlay AIR_LEVEL_ELEMENT = (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+    public static final LayeredDraw.Layer AIR_LEVEL_ELEMENT = (mStack, partialTicks) -> {
         Minecraft mc = Minecraft.getInstance();
+        var gui = mc.gui;
         boolean isMounted = mc.player.getVehicle() instanceof Dog;
-        if (isMounted && !mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
+        if (isMounted && !mc.options.hideGui && ScreenUtil.shouldRemderSurvivalElement(mc)) {
             Dog dog = (Dog) mc.player.getVehicle();
 
-            gui.setupOverlayRenderState(true, false);
+            //gui.setupOverlayRenderState(true, false);
             mc.getProfiler().push("air_dog");
             RenderSystem.enableBlend();
-            int left = screenWidth / 2 + 91;
-            int top = screenHeight - gui.rightHeight;
+            int left = mStack.guiWidth() / 2 + 91;
+            int top = mStack.guiHeight() - gui.rightHeight;
 
             int air = dog.getAirSupply();
             int maxAir = dog.getMaxAirSupply();

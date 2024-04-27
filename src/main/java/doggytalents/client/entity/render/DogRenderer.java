@@ -137,7 +137,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     }
 
     @Override
-    protected void renderNameTag(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight) {
+    protected void renderNameTag(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight, float pTicks) {
         double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
 
         var player = Minecraft.getInstance().player;
@@ -150,7 +150,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         if (isDiffOwner && ConfigHandler.CLIENT.DONT_RENDER_DIFFOWNER_NAME.get())
             return;
 
-        if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0))
+        if (net.neoforged.neoforge.client.ClientHooks.isNameplateInRenderDistance(dog, d0))
             renderMainName(dog, text, stack, buffer, packedLight, renderDiffOwnerName && isDiffOwner, isDiffOwner);
         if (d0 <= 64 * 64)
             renderExtraInfo(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner, isDiffOwner);
@@ -403,7 +403,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         // }
   
         float f7 = this.getBob(p_115308_, p_115310_);
-        this.setupRotations(p_115308_, p_115311_, f7, f, p_115310_);
+        this.setupRotations(p_115308_, p_115311_, f7, f, p_115310_, p_115308_.getScale());
         p_115311_.scale(-1.0F, -1.0F, 1.0F);
         this.scale(p_115308_, p_115311_, p_115310_);
         p_115311_.translate(0.0F, -1.501F, 0.0F);
@@ -442,14 +442,14 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
   
         p_115311_.popPose();
         if (this.shouldShowName(p_115308_)) {
-            this.renderNameTag(p_115308_, p_115308_.getDisplayName(), p_115311_, p_115312_, p_115313_);
+            this.renderNameTag(p_115308_, p_115308_.getDisplayName(), p_115311_, p_115312_, p_115313_, p_115310_);
          }
         //net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Post<T, M>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_));
     }
 
     @Override
     protected void setupRotations(Dog p_115317_, PoseStack p_115318_, float p_115319_, float p_115320_,
-            float p_115321_) {
+            float p_115321_, float x) {
         if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
             if (p_115317_.deathTime > 0) {
                 float f = ((float)p_115317_.deathTime + p_115321_ - 1.0F) / 20.0F * 1.6F;
@@ -463,7 +463,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             p_115318_.mulPose(Axis.YP.rotationDegrees(180.0F - p_115320_));
             return;
         }
-        super.setupRotations(p_115317_, p_115318_, p_115319_, p_115320_, p_115321_);
+        super.setupRotations(p_115317_, p_115318_, p_115319_, p_115320_, p_115321_, x);
     }
 
 

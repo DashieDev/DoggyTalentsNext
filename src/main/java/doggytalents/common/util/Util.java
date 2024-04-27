@@ -9,8 +9,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -179,19 +177,20 @@ public class Util {
     }
 
     // From net.minecraft.util.Util but for RegistryObject
-    public static <T> RegistryObject<T> acceptOrElse(RegistryObject<T> opt, Consumer<T> consumer, Runnable orElse) {
-        if (opt.isPresent()) {
-            consumer.accept(opt.get());
-        } else {
-            orElse.run();
-        }
+    // public static <T> RegistryObject<T> acceptOrElse(RegistryObject<T> opt, Consumer<T> consumer, Runnable orElse) {
+    //     if (opt.isPresent()) {
+    //         consumer.accept(opt.get());
+    //     } else {
+    //         orElse.run();
+    //     }
 
-        return opt;
-    }
+    //     return opt;
+    // }
 
-    public static <T> Optional<T> acceptOrElse(Optional<T> opt, Consumer<T> consumer, Runnable orElse) {
-        if (opt.isPresent()) {
-            consumer.accept(opt.get());
+    public static <T> Supplier<T> acceptOrElse(Supplier<T> opt, Consumer<T> consumer, Runnable orElse) {
+        var val = opt.get();
+        if (val != null) {
+            consumer.accept(val);
         } else {
             orElse.run();
         }
@@ -223,32 +222,32 @@ public class Util {
      * Takes various registry related objects and returns the
      * registry id of the object it is representing
      */
-    public static ResourceLocation getRegistryId(Object obj) {
-        if (obj instanceof ResourceLocation) {
-            return (ResourceLocation) obj;
-        }
+    // public static ResourceLocation getRegistryId(Object obj) {
+    //     if (obj instanceof ResourceLocation) {
+    //         return (ResourceLocation) obj;
+    //     }
 
-        if (obj instanceof String) {
-            // Returns null when namespace or path contain invalid
-            // characters
-            return ResourceLocation.tryParse((String) obj);
-        }
+    //     if (obj instanceof String) {
+    //         // Returns null when namespace or path contain invalid
+    //         // characters
+    //         return ResourceLocation.tryParse((String) obj);
+    //     }
 
-        // if (obj instanceof IForgeRegistryEntry) {
-        //     return ((IForgeRegistryEntry) obj).getRegistryName();
-        // }
+    //     // if (obj instanceof IForgeRegistryEntry) {
+    //     //     return ((IForgeRegistryEntry) obj).getRegistryName();
+    //     // }
 
-        // if (obj instanceof IRegistryDelegate) {
-        //     return ((IRegistryDelegate) obj).name();
-        // }
+    //     // if (obj instanceof IRegistryDelegate) {
+    //     //     return ((IRegistryDelegate) obj).name();
+    //     // }
 
-        if (obj instanceof RegistryObject) {
-            return ((RegistryObject) obj).getId();
-        }
+    //     if (obj instanceof RegistryObject) {
+    //         return ((RegistryObject) obj).getId();
+    //     }
 
 
-        return null;
-    }
+    //     return null;
+    // }
 
     public static long tickMayWithPartialToMillis(double tickMayWithPartial) {
         double second = tickMayWithPartial/20D;

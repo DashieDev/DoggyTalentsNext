@@ -7,7 +7,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.CreeperSweeperData;
 import doggytalents.common.talent.CreeperSweeperTalent;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class CreeperSweeperPacket extends DogPacket<CreeperSweeperData> {
 

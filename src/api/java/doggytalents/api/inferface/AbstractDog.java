@@ -12,6 +12,8 @@ import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.feature.IDog;
 import doggytalents.api.impl.DogArmorItemHandler;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
@@ -38,7 +40,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         super(type, worldIn);
     }
 
-    public void setAttributeModifier(Attribute attribute, UUID modifierUUID, BiFunction<AbstractDog, UUID, AttributeModifier> modifierGenerator) {
+    public void setAttributeModifier(Holder<Attribute> attribute, UUID modifierUUID, BiFunction<AbstractDog, UUID, AttributeModifier> modifierGenerator) {
         AttributeInstance attributeInst = this.getAttribute(attribute);
 
         AttributeModifier currentModifier = attributeInst.getModifier(modifierUUID);
@@ -58,7 +60,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         }
     }
 
-    public void removeAttributeModifier(Attribute attribute, UUID modifierUUID) {
+    public void removeAttributeModifier(Holder<Attribute> attribute, UUID modifierUUID) {
         var attrib = this.getAttribute(attribute);
         if (attrib == null) return;
         attrib.removeModifier(modifierUUID);
@@ -186,11 +188,9 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
             int j = 0;
             for(var i : this.getArmorSlots()) {
                 ItemStack itemstack = i;
-                if ((!p_36251_.is(DamageTypeTags.IS_FIRE) || !itemstack.getItem().isFireResistant()) && itemstack.getItem() instanceof ArmorItem) {
+                if ((!p_36251_.is(DamageTypeTags.IS_FIRE) || !itemstack.has(DataComponents.FIRE_RESISTANT)) && itemstack.getItem() instanceof ArmorItem) {
                     final var slot = EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, j);
-                    itemstack.hurtAndBreak((int)p_36252_, this, (p_35997_) -> {
-                        p_35997_.broadcastBreakEvent(slot);
-                    });
+                    itemstack.hurtAndBreak((int)p_36252_, this, slot);
                 }
                 ++j;
             }
@@ -210,10 +210,8 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
             var i = this.getItemBySlot(EquipmentSlot.HEAD);
 
             ItemStack itemstack = i;
-            if ((!p_150103_.is(DamageTypeTags.IS_FIRE) || !itemstack.getItem().isFireResistant()) && itemstack.getItem() instanceof ArmorItem) {
-                itemstack.hurtAndBreak((int)p_150104_, this, (p_35997_) -> {
-                    p_35997_.broadcastBreakEvent(EquipmentSlot.HEAD);
-                });
+            if ((!p_150103_.is(DamageTypeTags.IS_FIRE) || !itemstack.has(DataComponents.FIRE_RESISTANT)) && itemstack.getItem() instanceof ArmorItem) {
+                itemstack.hurtAndBreak((int)p_150104_, this, EquipmentSlot.HEAD);
             }
 
         }

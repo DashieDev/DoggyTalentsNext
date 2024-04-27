@@ -19,6 +19,7 @@ import doggytalents.common.inventory.DoggyToolsItemHandler;
 import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.talent.doggy_tools.tool_actions.ToolAction;
+import doggytalents.common.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -46,7 +47,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class DoggyToolsTalent extends TalentInstance  {
 
@@ -256,7 +257,7 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
 
     public static boolean isInfinityBow(ItemStack bowStack) {
-        return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) > 0;
+        return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY, bowStack) > 0;
     }
 
     @Override
@@ -273,7 +274,7 @@ public class DoggyToolsTalent extends TalentInstance  {
     public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
         super.writeToNBT(dogIn, compound);
         var tag = new CompoundTag();
-        tag.put("tool_inv", tools.serializeNBT());
+        tag.put("tool_inv", tools.serializeNBT(dogIn.registryAccess()));
         tag.putBoolean("pickFirstTool", this.alwaysPickSlot0);
         compound.put("doggy_tools", tag);
     }
@@ -286,7 +287,7 @@ public class DoggyToolsTalent extends TalentInstance  {
         alwaysPickSlot0 = tag.getBoolean("pickFirstTool");
         var inv_tag = tag.getCompound("tool_inv");
         if (inv_tag != null) {
-            this.tools.deserializeNBT(inv_tag);
+            this.tools.deserializeNBT(dogIn.registryAccess(), inv_tag);
         }
     }
 
@@ -436,9 +437,7 @@ public class DoggyToolsTalent extends TalentInstance  {
             if (inv != null && id >= 0)
                 inv.setStackInSlot(id, arrow_stack);
 
-            bowStack.hurtAndBreak(1, dog, (dog_1) -> {
-                dog_1.broadcastBreakEvent(InteractionHand.MAIN_HAND);
-            });
+            bowStack.hurtAndBreak(1, dog, EquipmentSlot.MAINHAND);
 
             return projArrowOptional;
         }
@@ -463,23 +462,23 @@ public class DoggyToolsTalent extends TalentInstance  {
             if (arrow_proj == null)
                 return Optional.empty();
     
-            arrow_proj = bow.customArrow(arrow_proj);
+            arrow_proj = bow.customArrow(arrow_proj, arrowStack);
             if (power >= 1.0F) {
                 arrow_proj.setCritArrow(true);
             }
     
-            int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, bow_stack);
+            int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, bow_stack);
             if (j > 0) {
                 arrow_proj.setBaseDamage(arrow_proj.getBaseDamage() + (double)j * 0.5D + 0.5D);
             }
     
-            int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, bow_stack);
+            int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH, bow_stack);
             if (k > 0) {
                 arrow_proj.setKnockback(k);
             }
     
-            if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, bow_stack) > 0) {
-                arrow_proj.setSecondsOnFire(100);
+            if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAME, bow_stack) > 0) {
+                EntityUtil.setSecondsOnFire(arrow_proj, 100);
             }
     
             if (is_infinity_bow) {

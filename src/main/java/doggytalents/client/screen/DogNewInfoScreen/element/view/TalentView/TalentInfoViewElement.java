@@ -53,7 +53,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 
 public class TalentInfoViewElement extends AbstractElement {
 
@@ -401,8 +401,8 @@ public class TalentInfoViewElement extends AbstractElement {
                         }     
                     ) {
                         @Override
-                        public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                            super.render(graphics, mouseX, mouseY, pTicks);
+                        public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                            super.renderWidget(graphics, mouseX, mouseY, pTicks);
                             if (!this.isHovered) return;
                             var c1 = Component.translatable("talent.doggytalents.pack_puppy.collect_kill_loot.desc");
                             ToolTipOverlayManager.get().setComponents(List.of(c1));
@@ -444,10 +444,10 @@ public class TalentInfoViewElement extends AbstractElement {
                 requestTrain();
             }
         ) {
-            @Override // TODO 1.19.4 ???
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+            //@Override // TODO 1.19.4 ???
+            public void renderWidgetMain(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
                 // TODO Auto-generated method stub
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                //super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 int tX = this.getX();
                 int tY = this.getY() - LINE_SPACING - font.lineHeight;
                 // var costStr = dogLevel < talent.getMaxLevel() ?
@@ -470,8 +470,9 @@ public class TalentInfoViewElement extends AbstractElement {
             }
 
             @Override
-            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, pTicks);
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, dogLevel);
+                renderWidgetMain(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 MutableComponent c1;
                 if (this.active) {

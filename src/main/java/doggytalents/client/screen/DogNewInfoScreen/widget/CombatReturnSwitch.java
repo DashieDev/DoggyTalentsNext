@@ -19,7 +19,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 
 public class CombatReturnSwitch extends AbstractWidget {
  
@@ -66,7 +66,7 @@ public class CombatReturnSwitch extends AbstractWidget {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         if (!this.visible) return;
 
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
@@ -157,8 +157,8 @@ public class CombatReturnSwitch extends AbstractWidget {
 	protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
 	}
 
-    @Override
-    public void renderWidget(GuiGraphics graphics, int p_268034_, int p_268009_, float p_268085_) {
-    }
+    // @Override
+    // public void renderWidget(GuiGraphics graphics, int p_268034_, int p_268009_, float p_268085_) {
+    // }
 
 }

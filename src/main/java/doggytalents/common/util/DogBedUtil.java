@@ -6,10 +6,10 @@ import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class DogBedUtil {
     }
 
     public static Pair<ICasingMaterial, IBeddingMaterial> getMaterials(ItemStack stack) {
-        CompoundTag tag = stack.getTagElement("doggytalents");
+        CompoundTag tag = ItemUtil.getTagElement(stack, "doggytalents");
         if (tag != null) {
             ICasingMaterial casingId = DogBedMaterialManager.getCasing(tag, "casingId");
             IBeddingMaterial beddingId = DogBedMaterialManager.getBedding(tag, "beddingId");
@@ -49,9 +49,12 @@ public class DogBedUtil {
     public static ItemStack createItemStack(ICasingMaterial casingId, IBeddingMaterial beddingId) {
         ItemStack stack = new ItemStack(DoggyBlocks.DOG_BED.get(), 1);
 
-        CompoundTag tag = stack.getOrCreateTagElement("doggytalents");
+        CompoundTag tag = new CompoundTag();
         NBTUtil.putRegistryValue(tag, "casingId", DogBedMaterialManager.getKey(casingId));
         NBTUtil.putRegistryValue(tag, "beddingId", DogBedMaterialManager.getKey(beddingId));
+        var maintag = new CompoundTag();
+        maintag.put("doggytalents", tag);
+        ItemUtil.putTag(stack, maintag);
 
         return stack;
     }
@@ -78,9 +81,9 @@ public class DogBedUtil {
         return null;
     }
 
-    public static <T> T pickRandom(IForgeRegistry<T> registry) {
-        Collection<T> values = registry.getValues();
-        List<T> list = values instanceof List ? (List<T>) values : new ArrayList<>(values);
-        return list.get(RANDOM.nextInt(list.size()));
-    }
+    // public static <T> T pickRandom( Registry<T> registry) {
+    //     Collection<T> values = registry.getValues();
+    //     List<T> list = values instanceof List ? (List<T>) values : new ArrayList<>(values);
+    //     return list.get(RANDOM.nextInt(list.size()));
+    // }
 }

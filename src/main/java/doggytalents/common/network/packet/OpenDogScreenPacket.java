@@ -9,8 +9,7 @@ import doggytalents.common.util.EntityUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 
 import java.util.Collections;
@@ -37,7 +36,7 @@ public class OpenDogScreenPacket implements IPacket<OpenDogScreenData>  {
     @Override
     public void handle(OpenDogScreenData data, Supplier<Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            if (ctx.get().getDirection().getReceptionSide() == LogicalSide.SERVER) {
+            if (ctx.get().isServerRecipent()) {
                 ServerPlayer player = ctx.get().getSender();
                 selectAndOpenDogScreen(data, player);
             }

@@ -6,6 +6,8 @@ import doggytalents.DoggyBlocks;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.WritableRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -13,6 +15,7 @@ import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
@@ -27,7 +30,7 @@ import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
-import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
+import net.minecraft.world.level.storage.loot.functions.CopyCustomDataFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -42,6 +45,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -52,17 +56,18 @@ public class DTLootTableProvider extends LootTableProvider {
 
     
 
-    public DTLootTableProvider(PackOutput p_254123_) {
+    public DTLootTableProvider(PackOutput p_254123_, CompletableFuture<HolderLookup.Provider> prov) {
         super(p_254123_, Collections.emptySet(),
             List.of(
                 new LootTableProvider.SubProviderEntry(Blocks::new, LootContextParamSets.BLOCK),
                 new LootTableProvider.SubProviderEntry(Entities::new, LootContextParamSets.ENTITY)
-            )  
+            ),
+            prov
         );
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationTracker) {}
+    protected void validate(WritableRegistry<LootTable> writableregistry, ValidationContext validationcontext, ProblemReporter.Collector problemreporter$collector) {}
 
     private static class Blocks extends BlockLootSubProvider {
 
@@ -79,7 +84,7 @@ public class DTLootTableProvider extends LootTableProvider {
                          .setRolls(ConstantValue.exactly(1)))
                          .add(LootItem.lootTableItem(block.get())
                                  .apply(
-                                         CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                         CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
                                          .copy("casingId", "doggytalents.casingId")
                                          .copy("beddingId", "doggytalents.beddingId")
                                          .copy("ownerId", "doggytalents.ownerId")
@@ -123,7 +128,7 @@ public class DTLootTableProvider extends LootTableProvider {
                     .apply(
                         ApplyBonusCount
                             .addBonusBinomialDistributionCount(
-                                Enchantments.BLOCK_FORTUNE, 0.5714286F, 3));
+                                Enchantments.FORTUNE, 0.5714286F, 3));
 
             final var RICE_LOOTABLE = 
                 LootTable.lootTable().withPool(

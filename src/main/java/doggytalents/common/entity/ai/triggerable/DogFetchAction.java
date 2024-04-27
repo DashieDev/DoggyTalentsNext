@@ -10,7 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 public class DogFetchAction extends TriggerableAction {
 
@@ -82,7 +82,7 @@ public class DogFetchAction extends TriggerableAction {
 
     private void initFetch() {
         this.tickTillPathRecalc = 1;
-        this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
+        this.oldWaterCost = this.dog.getPathfindingMalus(PathType.WATER);
         this.dog.setDogFollowingSomeone(true);
         var attrib = this.dog.getAttribute(Attributes.FOLLOW_RANGE);
         if (attrib == null) return;

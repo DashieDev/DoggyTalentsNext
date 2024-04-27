@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import doggytalents.DoggyItems;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
@@ -22,7 +23,7 @@ public class AccessoryStatusHover extends AbstractWidget {
         super(x, y, 20, 20, Component.empty());
         var collar = DoggyItems.WOOL_COLLAR.get();
         logoIcon = new ItemStack(collar);
-        collar.setColor(logoIcon, 0xFFB02E26);
+        ItemUtil.setDyeColorForStack(logoIcon, 0xFFB02E26);
         if (state == null)
             state = DogModel.AccessoryState.HAVE_NOT_TESTED;
         else

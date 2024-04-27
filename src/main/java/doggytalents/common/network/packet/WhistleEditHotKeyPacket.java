@@ -5,10 +5,10 @@ import java.util.function.Supplier;
 import doggytalents.DoggyItems;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.WhisltleEditHotKeyData;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class WhistleEditHotKeyPacket implements IPacket<WhisltleEditHotKeyData> {
 
@@ -28,20 +28,22 @@ public class WhistleEditHotKeyPacket implements IPacket<WhisltleEditHotKeyData> 
     @Override
     public void handle(WhisltleEditHotKeyData data, Supplier<Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            LogicalSide side = ctx.get().getDirection().getReceptionSide();
+            //LogicalSide side = ctx.get().getDirection().getReceptionSide();
 
-            if (!side.isServer()) return;
+            if (!ctx.get().isServerRecipent()) return;
             var player = ctx.get().getSender();
             var stack = player.getMainHandItem();
             if (!(stack.getItem() == DoggyItems.WHISTLE.get())) return;
-            var tag = stack.getOrCreateTag();
+            var tag = ItemUtil.getTag(stack);
             if (!tag.contains("hotkey_modes", Tag.TAG_INT_ARRAY)) {
                 tag.putIntArray("hotkey_modes", new int[]{-1, -1, -1, -1});
+                ItemUtil.putTag(stack, tag);
             }
             var keyarr = tag.getIntArray("hotkey_modes");
             if (keyarr == null) return;
             if (keyarr.length != 4) {
                 tag.putIntArray("hotkey_modes", new int[]{-1, -1, -1, -1});
+                ItemUtil.putTag(stack, tag);
                 return;
             }
             if (data.hotkey_id >= keyarr.length) return;
@@ -54,6 +56,7 @@ public class WhistleEditHotKeyPacket implements IPacket<WhisltleEditHotKeyData> 
 
             keyarr[data.hotkey_id] = data.new_mode_id;
             tag.putIntArray("hotkey_modes", keyarr);
+            ItemUtil.putTag(stack, tag);
         });
 
         ctx.get().setPacketHandled(true);

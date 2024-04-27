@@ -9,7 +9,7 @@ import doggytalents.common.talent.OokamiKazeTalent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class DogExplosionPacket implements IPacket<DogExplosionData> {
 
@@ -44,7 +44,7 @@ public class DogExplosionPacket implements IPacket<DogExplosionData> {
     public void handle(DogExplosionData data, Supplier<Context> ctx) {
         ctx.get().enqueueWork(() -> {
 
-            if (ctx.get().getDirection().getReceptionSide().isClient()) { 
+            if (ctx.get().isClientRecipent()) { 
                 var mc = Minecraft.getInstance();
                 var e = mc.level.getEntity(data.dogId);
                 if (e instanceof Dog dog) {

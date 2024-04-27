@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 
 public class ArtifactHolder extends AbstractWidget {
 
@@ -40,7 +40,7 @@ public class ArtifactHolder extends AbstractWidget {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
         this.active = !this.itemStack.isEmpty();
         if (!this.active) return;
@@ -77,9 +77,9 @@ public class ArtifactHolder extends AbstractWidget {
         this.inventorySlotId = id;
     }
 
-    @Override
-    public void renderWidget(GuiGraphics p_268228_, int p_268034_, int p_268009_, float p_268085_) {
-    }
+    // @Override
+    // public void renderWidget(GuiGraphics p_268228_, int p_268034_, int p_268009_, float p_268085_) {
+    // }
 
     @Override
     protected void updateWidgetNarration(NarrationElementOutput p_259858_) {

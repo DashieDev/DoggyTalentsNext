@@ -9,7 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 import java.util.EnumSet;
 
@@ -77,7 +77,7 @@ public class DogHungryGoal extends Goal {
     @Override
     public void start() {
         this.timeToRecalcPath = 0;
-        this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
+        this.oldWaterCost = this.dog.getPathfindingMalus(PathType.WATER);
         this.dog.setDogFollowingSomeone(true);
         this.looktime = 0;
     }

@@ -1,9 +1,7 @@
 package doggytalents.common.network;
 
-import doggytalents.DoggyTalentsNext;
 import doggytalents.common.network.packet.*;
 import doggytalents.common.network.packet.data.*;
-import net.minecraftforge.network.PacketDistributor;
 import doggytalents.common.network.packet.data.ParticleData.*;
 import doggytalents.common.network.packet.ParticlePackets.*;
 
@@ -72,11 +70,11 @@ public final class PacketHandler {
         registerPacket(new DogExplosionPacket(), DogExplosionData.class);
     }
 
-    public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
-        DoggyTalentsNext.HANDLER.send(target, message);
+    public static <MSG> void send(PacketDistributor.PacketTarget<?> target, MSG message) {
+        DTNNetworkHandler.send(target, message);
     }
 
     public static <D> void registerPacket(IPacket<D> packet, Class<D> dataClass) {
-        DoggyTalentsNext.HANDLER.registerMessage(PacketHandler.disc++, dataClass, packet::encode, packet::decode, packet::handle);
+        DTNNetworkHandler.registerMessage(PacketHandler.disc++, dataClass, packet::encode, packet::decode, packet::handle);
     }
 }

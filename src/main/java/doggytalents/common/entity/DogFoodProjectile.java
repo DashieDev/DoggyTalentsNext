@@ -6,9 +6,12 @@ import doggytalents.api.feature.FoodHandler;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.item.IDogEddible;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.NetworkUtil;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,11 +21,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 
-public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdditionalSpawnData {
+public class DogFoodProjectile extends ThrowableProjectile implements IEntityWithComplexSpawn {
 
     private ItemStack foodStack = ItemStack.EMPTY;
 
@@ -34,9 +35,9 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdd
         super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), livingEntityIn, worldIn);
     }
 
-    public DogFoodProjectile(PlayMessages.SpawnEntity packet, Level worldIn) {
-        super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), worldIn);
-    }
+    // public DogFoodProjectile(PlayMessages.SpawnEntity packet, Level worldIn) {
+    //     super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), worldIn);
+    // }
 
     @Override
     protected void onHit(HitResult hitResult) {
@@ -138,19 +139,19 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdd
     }   
 
     @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
         boolean hasStack = !this.foodStack.isEmpty();
         buffer.writeBoolean(hasStack);
         if (hasStack) {
-            buffer.writeItemStack(foodStack, true);
+            NetworkUtil.writeItemToBuf(buffer, foodStack);
         }
     }
 
     @Override
-    public void readSpawnData(FriendlyByteBuf buffer) {
+    public void readSpawnData(RegistryFriendlyByteBuf buffer) {
         boolean hasStack = buffer.readBoolean();
         if (hasStack) {
-            this.foodStack = buffer.readItem();
+            this.foodStack = NetworkUtil.readItemFromBuf(buffer);
         }
     }
 
@@ -178,13 +179,13 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdd
         return true;
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
-    }
+    // @Override
+    // public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    //     return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
+    // }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder b) {
         
     }
 

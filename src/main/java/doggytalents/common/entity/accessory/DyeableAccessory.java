@@ -8,6 +8,7 @@ import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.api.registry.AccessoryType;
 import doggytalents.common.util.ColourCache;
+import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -15,7 +16,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -61,11 +61,11 @@ public class DyeableAccessory extends Accessory {
         DyeableAccessoryInstance exact = instance.cast(DyeableAccessoryInstance.class);
 
         ItemStack returnStack = super.getReturnItem(instance);
-        if (returnStack.getItem() instanceof DyeableLeatherItem) {
-            ((DyeableLeatherItem) returnStack.getItem()).setColor(returnStack, exact.getColorInteger());
-        } else {
-            DoggyTalentsNext.LOGGER.info("Unable to set set dyable accessory color.");
-        }
+        //if (returnStack.getItem() instanceof DyeableLeatherItem) {
+            ItemUtil.setDyeColorForStack(returnStack, exact.getColorInteger());
+        //} else {
+            //DoggyTalentsNext.LOGGER.info("Unable to set set dyable accessory color.");
+        //}
 
         return returnStack;
     }
@@ -77,11 +77,11 @@ public class DyeableAccessory extends Accessory {
     @Override
     public AccessoryInstance createFromStack(ItemStack stackIn) {
         Item item = stackIn.getItem();
-        if (item instanceof DyeableLeatherItem) {
-            return this.create(((DyeableLeatherItem) item).getColor(stackIn));
-        }
+        //if (item instanceof DyeableLeatherItem) {
+            return this.create(ItemUtil.getDyeColorForStack(stackIn));
+        //}
 
-        return this.getDefault();
+        //return this.getDefault();
     }
 
     public class DyeableAccessoryInstance extends AccessoryInstance implements IDogAlteration, IColoredObject {

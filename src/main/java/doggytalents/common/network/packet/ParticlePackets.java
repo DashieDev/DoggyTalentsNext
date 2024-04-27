@@ -9,6 +9,7 @@ import doggytalents.common.network.packet.data.DogEatingParticleData;
 import doggytalents.common.network.packet.data.DogShakingData;
 import doggytalents.common.network.packet.data.DogShakingData.State;
 import doggytalents.common.network.packet.data.ParticleData.CritEmitterData;
+import doggytalents.common.util.NetworkUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,8 +17,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.PacketDistributor;
 
 import java.util.function.Supplier;
 
@@ -38,7 +39,7 @@ public class ParticlePackets {
         public void handle(CritEmitterData data, Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
 
-                if (ctx.get().getDirection().getReceptionSide().isClient()) { 
+                if (ctx.get().isClientRecipent()) { 
                     Minecraft mc = Minecraft.getInstance();
                     Entity e = mc.level.getEntity(data.targetId);
                     if (e != null) {
@@ -62,13 +63,13 @@ public class ParticlePackets {
         @Override
         public void encode(DogEatingParticleData data, FriendlyByteBuf buf) {
             buf.writeInt(data.dogId);
-            buf.writeItem(data.food);            
+            NetworkUtil.writeItemToBuf(buf, data.food);      
         }
 
         @Override
         public DogEatingParticleData decode(FriendlyByteBuf buf) {
             int dogId = buf.readInt();
-            var food = buf.readItem();       
+            var food = NetworkUtil.readItemFromBuf(buf);       
             return new DogEatingParticleData(dogId, food);
         }
 
@@ -76,7 +77,7 @@ public class ParticlePackets {
         public void handle(DogEatingParticleData data, Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
 
-                if (ctx.get().getDirection().getReceptionSide().isClient()) { 
+                if (ctx.get().isClientRecipent()) { 
                     Minecraft mc = Minecraft.getInstance();
                     Entity e = mc.level.getEntity(data.dogId);
                     if (e instanceof Dog dog && data.food != null) {
@@ -140,7 +141,7 @@ public class ParticlePackets {
             
             ctx.get().enqueueWork(() -> {
 
-                if (ctx.get().getDirection().getReceptionSide().isClient()) { 
+                if (ctx.get().isClientRecipent()) { 
                     Minecraft mc = Minecraft.getInstance();
                     Entity e = mc.level.getEntity(data.dogId);
                     if (e instanceof Dog) {

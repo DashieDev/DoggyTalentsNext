@@ -8,6 +8,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
+
+import doggytalents.common.chunk.DoggyChunkController;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
@@ -22,8 +24,9 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.ITeleporter;
-import net.minecraftforge.common.world.ForgeChunkManager;
+import net.neoforged.neoforge.common.ticket.ChunkTicketManager;
+import net.neoforged.neoforge.common.util.ITeleporter;
+import net.neoforged.neoforge.common.world.chunk.ForcedChunkManager;
 
 public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
 
@@ -137,8 +140,8 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
             if (this.forcedDogChunk.contains(chunkpos))
                 continue;
             this.forcedDogChunk.add(chunkpos);
-            ForgeChunkManager.forceChunk(
-                this.origin, Constants.MOD_ID, 
+            DoggyChunkController.get().forceChunk(
+                this.origin, 
                 this.getOwner().getUUID(),
                 chunkpos.x, chunkpos.z, 
                 true, true);
@@ -147,8 +150,8 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
 
     private void cleanDogChunk() {
         for (var chunkpos : this.forcedDogChunk) {
-            ForgeChunkManager.forceChunk(
-                this.origin, Constants.MOD_ID, 
+            DoggyChunkController.get().forceChunk(
+                this.origin,
                 this.getOwner().getUUID(),
                 chunkpos.x, chunkpos.z, 
                 false, true);

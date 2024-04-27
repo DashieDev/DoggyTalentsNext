@@ -14,6 +14,7 @@ import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAcces
 import doggytalents.common.item.DyeableAccessoryItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ItemLike;
@@ -40,7 +41,7 @@ public class ChefHat extends DyeableAccessory implements IAccessoryHasModel{
         }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
         components.add(Component.translatable(desc_id).withStyle(

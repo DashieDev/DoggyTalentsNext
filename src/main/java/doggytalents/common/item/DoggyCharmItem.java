@@ -63,7 +63,7 @@ public class DoggyCharmItem extends Item {
             if (entity instanceof Dog) {
                Dog dog = (Dog)entity;
                if (player != null) {
-                   dog.setTame(true);
+                   dog.setTame(true, true);
                    dog.setOwnerUUID(player.getUUID());
                    dog.maxHealth();
                }
@@ -99,7 +99,7 @@ public class DoggyCharmItem extends Item {
                     Entity entity = DoggyEntityTypes.DOG.get().spawn((ServerLevel) worldIn, itemstack, playerIn, blockpos, MobSpawnType.SPAWN_EGG, false, false);
                     if (entity instanceof Dog) {
                         Dog dog = (Dog)entity;
-                           dog.setTame(true);
+                           dog.setTame(true, true);
                            dog.setOwnerUUID(playerIn.getUUID());
                            dog.maxHealth();
                            itemstack.shrink(1);
