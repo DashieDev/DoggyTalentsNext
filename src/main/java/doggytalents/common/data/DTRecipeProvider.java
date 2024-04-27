@@ -6,6 +6,7 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyRecipeSerializers;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.HashCache;
 import net.minecraft.data.PackOutput;
@@ -16,19 +17,19 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class DTRecipeProvider extends RecipeProvider {
 
-    public DTRecipeProvider(PackOutput generatorIn) {
-        super(generatorIn);
+    public DTRecipeProvider(PackOutput generatorIn, CompletableFuture<HolderLookup.Provider> prov) {
+        super(generatorIn, prov);
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.THROW_BONE.get())
             .pattern(" X ")
             .pattern("XYX")

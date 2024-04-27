@@ -140,15 +140,9 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.util.ITeleporter;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import doggytalents.common.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -317,25 +311,25 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(CLASSICAL_VAR.get(), ClassicalVar.PALE);
-        this.entityData.define(LAST_KNOWN_NAME, Optional.empty());
-        this.entityData.define(DOG_FLAGS, 0);
-        this.entityData.define(GENDER.get(), EnumGender.UNISEX);
-        this.entityData.define(MODE.get(), EnumMode.DOCILE);
-        this.entityData.define(HUNGER_INT, 60F);
-        this.entityData.define(CUSTOM_SKIN.get(), DogSkinData.NULL);
-        this.entityData.define(DOG_LEVEL.get(), new DogLevel(0, 0));
-        this.entityData.define(DOG_INCAP_SYNC_STATE.get(), IncapacitatedSyncState.NONE);
-        this.entityData.define(DOG_SIZE.get(), DogSize.MODERATO);
-        this.entityData.define(BONE_VARIANT, ItemStack.EMPTY);
-        this.entityData.define(ARTIFACTS.get(), new ArrayList<DoggyArtifactItem>(3));
-        this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
-        this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
-        this.entityData.define(INCAP_VAL, 0);
-        this.entityData.define(ANIMATION, 0);
-        this.entityData.define(ANIM_SYNC_TIME, 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(CLASSICAL_VAR.get(), ClassicalVar.PALE);
+        builder.define(LAST_KNOWN_NAME, Optional.empty());
+        builder.define(DOG_FLAGS, 0);
+        builder.define(GENDER.get(), EnumGender.UNISEX);
+        builder.define(MODE.get(), EnumMode.DOCILE);
+        builder.define(HUNGER_INT, 60F);
+        builder.define(CUSTOM_SKIN.get(), DogSkinData.NULL);
+        builder.define(DOG_LEVEL.get(), new DogLevel(0, 0));
+        builder.define(DOG_INCAP_SYNC_STATE.get(), IncapacitatedSyncState.NONE);
+        builder.define(DOG_SIZE.get(), DogSize.MODERATO);
+        builder.define(BONE_VARIANT, ItemStack.EMPTY);
+        builder.define(ARTIFACTS.get(), new ArrayList<DoggyArtifactItem>(3));
+        builder.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+        builder.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+        builder.define(INCAP_VAL, 0);
+        builder.define(ANIMATION, 0);
+        builder.define(ANIM_SYNC_TIME, 0);
     }
 
     @Override
@@ -3832,7 +3826,7 @@ public class Dog extends AbstractDog {
         var newZ = this.getZ() + dz1;
         var newPos = new Vec3(newX, this.getY() + 0.5, newZ);
         var b0 = BlockPos.containing(newPos);
-        var type = WalkNodeEvaluator.getBlockPathTypeStatic(this.level(), b0.mutable());
+        var type = WalkNodeEvaluator.getPathTypeStatic(this.level(), b0.mutable());
         if (type == BlockPathTypes.WALKABLE) {
             return newPos;
         }
@@ -4665,7 +4659,7 @@ public class Dog extends AbstractDog {
     }
 
     public BlockPathTypes getBlockPathTypeViaAlterations(BlockPos pos) {
-        var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(
+        var blockType = WalkNodeEvaluator.getPathTypeStatic(
             this.level(), 
             pos.mutable()
         );

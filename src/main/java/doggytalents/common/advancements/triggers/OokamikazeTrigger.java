@@ -13,13 +13,6 @@ import net.minecraft.server.level.ServerPlayer;
 
 public class OokamikazeTrigger extends SimpleCriterionTrigger<OokamikazeTrigger.TriggerInstance> {
     
-    public static ResourceLocation ID = Util.getResource("ookamikaze_trigger");
-
-    @Override
-    public ResourceLocation getId() {
-        return ID;
-    }
-
     @Override
     protected TriggerInstance createInstance(JsonObject json, ContextAwarePredicate player,
             DeserializationContext context) {

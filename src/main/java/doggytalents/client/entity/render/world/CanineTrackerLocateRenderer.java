@@ -34,7 +34,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 
 public class CanineTrackerLocateRenderer {
 

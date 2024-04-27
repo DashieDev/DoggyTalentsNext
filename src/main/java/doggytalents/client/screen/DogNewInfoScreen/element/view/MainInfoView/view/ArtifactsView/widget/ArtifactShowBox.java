@@ -22,7 +22,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 
 public class ArtifactShowBox extends AbstractWidget {
 

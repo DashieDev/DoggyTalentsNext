@@ -7,7 +7,7 @@ import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.network.packet.data.ChangeArtifactData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class ChangeArtifactPacket extends DogPacket<ChangeArtifactData> {
 

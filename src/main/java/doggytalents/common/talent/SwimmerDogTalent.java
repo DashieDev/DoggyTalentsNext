@@ -248,7 +248,7 @@ public class SwimmerDogTalent extends TalentInstance {
 
     //     private boolean checkSurroundingForLand(AbstractDog dogIn, BlockPos p) {
     //         for (BlockPos dp : BlockPos.betweenClosed(p.offset(-1, -1, -1), p.offset(1, 1, 1))) {
-    //             BlockPathTypes pn = WalkNodeEvaluator.getBlockPathTypeStatic(dogIn.level(), dp.mutable());
+    //             BlockPathTypes pn = WalkNodeEvaluator.getPathTypeStatic(dogIn.level(), dp.mutable());
     //             if (pn == BlockPathTypes.WALKABLE || pn == BlockPathTypes.WATER_BORDER) return true;
     //         }
     //         return false;

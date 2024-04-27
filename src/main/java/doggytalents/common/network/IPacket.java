@@ -1,7 +1,7 @@
 package doggytalents.common.network;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent;
 
 import java.util.function.Supplier;
 

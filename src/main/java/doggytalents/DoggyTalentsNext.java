@@ -23,26 +23,25 @@ import doggytalents.common.entity.WhitelistFoodHandler;
 import doggytalents.common.entity.DogDrinkMilkHandler;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.network.DTNNetworkHandler;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.registration.NetworkRegistry;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,21 +50,21 @@ public class DoggyTalentsNext {
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID);
 
-    public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder.named(Constants.CHANNEL_NAME)
-            .clientAcceptedVersions(Constants.PROTOCOL_VERSION::equals)
-            .serverAcceptedVersions(Constants.PROTOCOL_VERSION::equals)
-            .networkProtocolVersion(Constants.PROTOCOL_VERSION::toString)
-            .simpleChannel();
+    // public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder.named(Constants.CHANNEL_NAME)
+    //         .clientAcceptedVersions(Constants.PROTOCOL_VERSION::equals)
+    //         .serverAcceptedVersions(Constants.PROTOCOL_VERSION::equals)
+    //         .networkProtocolVersion(Constants.PROTOCOL_VERSION::toString)
+    //         .simpleChannel();
             
     
     //TODO AUTOMATION CURSEFORGE !!!
     public DoggyTalentsNext() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Mod lifecycle
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::interModProcess);
+        //modEventBus.addListener(this::interModProcess);
 
         // Registries
         DoggyBlocks.BLOCKS.register(modEventBus);
@@ -82,20 +81,22 @@ public class DoggyTalentsNext {
         DoggyAttributes.ATTRIBUTES.register(modEventBus);
         DoggyItemGroups.ITEM_GROUP.register(modEventBus);
         DoggyEffects.EFFECTS.register(modEventBus);
+        DoggyAdvancementTriggers.TRIGGERS.register(modEventBus);
 
         DTLootModifierProvider.CODEC.register(modEventBus);
 
         modEventBus.addListener(DoggyRegistries::newRegistry);
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
+        modEventBus.addListener(DTNNetworkHandler::onRegisterPayloadEvent);
 
-        IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
+        var forgeEventBus = NeoForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
         forgeEventBus.addListener(this::registerCommands);
-
+        forgeEventBus.addListener(DoggyBrewingRecipes::onRegisterEvent);
+        
         forgeEventBus.register(new EventHandler());
 
-        // Client Events
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+        if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(DoggyKeybinds::registerDTKeyMapping);
             modEventBus.addListener(this::clientSetup);
             modEventBus.addListener(DoggyBlocks::registerBlockColours);
@@ -110,7 +111,7 @@ public class DoggyTalentsNext {
             forgeEventBus.addListener(BedFinderRenderer::onWorldRenderLast);
             forgeEventBus.addListener(CanineTrackerLocateRenderer::onWorldRenderLast);
             forgeEventBus.addListener(CanineTrackerLocateRenderer::tickUpdate);
-        });
+        }
 
         ConfigHandler.init(modEventBus);
 
@@ -118,6 +119,7 @@ public class DoggyTalentsNext {
     }
 
     public void commonSetup(final FMLCommonSetupEvent event) {
+        DTNNetworkHandler.init();
         PacketHandler.init();
         //TODO CriteriaTriggers.register(criterion)
         FoodHandler.registerHandler(new MeatFoodHandler());
@@ -129,10 +131,7 @@ public class DoggyTalentsNext {
         //InteractHandler.registerHandler(new HelmetInteractHandler());
         event.enqueueWork(() -> {
             Dog.initDataParameters();
-            DoggyAdvancementTriggers.registerAll();
-            DoggyBrewingRecipes.registerAll();
             ConfigHandler.initTalentConfig();
-            GarbageChunkCollector.init();
             RiceMillBlockEntity.initGrindMap();
         });
     }
@@ -152,11 +151,11 @@ public class DoggyTalentsNext {
         ClientSetup.setupCollarRenderers(event);
     }
 
-    protected void interModProcess(final InterModProcessEvent event) {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    // protected void interModProcess(final InterModProcessEvent event) {
+    //     IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        //AddonManager.init();
-    }
+    //     //AddonManager.init();
+    // }
 
     private void gatherData(final GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();

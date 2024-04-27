@@ -21,7 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 
 public class DogUntameConfirmScreen extends Screen {
 

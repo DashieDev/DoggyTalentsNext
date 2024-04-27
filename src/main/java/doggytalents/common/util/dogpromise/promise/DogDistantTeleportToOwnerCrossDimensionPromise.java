@@ -7,6 +7,7 @@ import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import doggytalents.common.chunk.DoggyChunkController;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
@@ -22,8 +23,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.ITeleporter;
-import net.minecraftforge.common.world.ForgeChunkManager;
+import net.neoforged.neoforge.common.util.ITeleporter;
 
 public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractPromise {
     
@@ -179,8 +179,8 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
         if (this.dogChunkForced == loaded) return;
         ChunkPos chunkpos = new ChunkPos(dogPos);
         //if (this.level.hasChunk(chunkpos.x, chunkpos.z)) return;
-        ForgeChunkManager.forceChunk(
-            this.dogLevel, Constants.MOD_ID, 
+        DoggyChunkController.get().forceChunk(
+            this.dogLevel,
             dogUUID,
             chunkpos.x, chunkpos.z, 
             loaded, true);

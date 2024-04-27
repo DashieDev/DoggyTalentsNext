@@ -90,7 +90,7 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
         //          var fluidstate = blockstate.getFluidState();
         //          if (checkLand && !blockstate.isPathfindable(level, checking_pos, PathComputationType.LAND)) {
         //             if (level.getBlockState(checking_pos.above()).isAir()) {
-        //                 var walkType = WalkNodeEvaluator.getBlockPathTypeStatic(level, checking_pos.above().mutable());
+        //                 var walkType = WalkNodeEvaluator.getPathTypeStatic(level, checking_pos.above().mutable());
         //                 if (walkType == BlockPathTypes.WALKABLE || walkType == BlockPathTypes.WATER_BORDER) {
         //                     return BlockPathTypes.WALKABLE;
         //                 }
@@ -113,7 +113,7 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
             return false;
         if (!level.getBlockState(currentPos.above()).isAir())
             return false;
-        var walkType = WalkNodeEvaluator.getBlockPathTypeStatic(level, currentPos.above().mutable());
+        var walkType = WalkNodeEvaluator.getPathTypeStatic(level, currentPos.above().mutable());
         return walkType == BlockPathTypes.WATER_BORDER
             || walkType == BlockPathTypes.WALKABLE;
     }

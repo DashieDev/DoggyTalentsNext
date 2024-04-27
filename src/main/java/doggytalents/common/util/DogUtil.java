@@ -33,7 +33,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.HitResult;
@@ -364,7 +364,7 @@ public class DogUtil {
     //Allow dog to teleportToLeaves, there is no reason to not to consider the existance of the push a.i
     //And height danger exist everywhere not just leaves
     public static boolean isTeleportSafeBlock(Dog dog, BlockPos pos) {
-        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
+        var pathnodetype = WalkNodeEvaluator.getPathTypeStatic(dog, pos.mutable());
         boolean alterationWalkable = false;
         for (var x : dog.getAlterations()) {
             var type_res = x.inferType(dog, pathnodetype);
@@ -389,7 +389,7 @@ public class DogUtil {
     }
 
     public static boolean isTeleportSafeBlockMidAir(Dog dog, BlockPos pos) {
-        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
+        var pathnodetype = WalkNodeEvaluator.getPathTypeStatic(dog.level(), pos.mutable());
         if (pathnodetype != BlockPathTypes.OPEN) {
             return false;
         } else {

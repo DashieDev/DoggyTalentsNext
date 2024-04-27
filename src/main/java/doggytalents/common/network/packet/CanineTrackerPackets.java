@@ -21,6 +21,7 @@ import doggytalents.common.network.packet.data.CanineTrackerData.ResponseDogsDat
 import doggytalents.common.network.packet.data.CanineTrackerData.ResponsePosUpdateData;
 import doggytalents.common.network.packet.data.CanineTrackerData.StartLocatingData;
 import doggytalents.common.storage.DogLocationStorage;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -28,9 +29,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.PacketDistributor;
 
 public class CanineTrackerPackets {
     
@@ -50,8 +50,8 @@ public class CanineTrackerPackets {
         public void handle(RequestDogsData data,
             Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                LogicalSide side = ctx.get().getDirection().getReceptionSide();
-                if (!side.isServer()) return;
+                //LogicalSide side = ctx.get().getDirection().getReceptionSide();
+                if (!ctx.get().isServerRecipent()) return;
                 
                 var sender = ctx.get().getSender();
                 var storage = 
@@ -120,7 +120,7 @@ public class CanineTrackerPackets {
         public void handle(ResponseDogsData data, Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
 
-                if (ctx.get().getDirection().getReceptionSide().isClient()) { 
+                if (ctx.get().isClientRecipent()) { 
                     Minecraft mc = Minecraft.getInstance();
                     if (mc.screen != null && mc.screen instanceof CanineTrackerScreen scr) {
                         scr.assignResponse(data.entries);
@@ -149,9 +149,9 @@ public class CanineTrackerPackets {
         @Override
         public void handle(StartLocatingData data, Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                LogicalSide side = ctx.get().getDirection().getReceptionSide();
+                //LogicalSide side = ctx.get().getDirection().getReceptionSide();
 
-                if (!side.isServer()) return;
+                if (!ctx.get().isServerRecipent()) return;
                 var player = ctx.get().getSender();
                 var stack = player.getMainHandItem();
                 if (!(stack.getItem() instanceof CanineTrackerItem)) return;
@@ -160,10 +160,10 @@ public class CanineTrackerPackets {
                 var dogData = storage.getData(data.uuid);
                 if (dogData == null) return;
                 
-                if (!stack.hasTag()) {
-                    stack.setTag(new CompoundTag());
-                }
-                var tag = stack.getTag();
+                // if (!stack.hasTag()) {
+                //     stack.setTag(new CompoundTag());
+                // }
+                var tag = ItemUtil.getTag(stack);
                 if (tag == null) return;
 
                 var pos = BlockPos.containing(dogData.getPos());
@@ -173,6 +173,7 @@ public class CanineTrackerPackets {
                 tag.putInt("posY",  pos.getY());
                 tag.putInt("posZ",  pos.getZ());
                 tag.putInt("locateColor", dogData.getLocateColor());
+                ItemUtil.putTag(stack, tag);
             });
 
             ctx.get().setPacketHandled(true);
@@ -197,8 +198,8 @@ public class CanineTrackerPackets {
         public void handle(RequestPosUpdateData data,
             Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                LogicalSide side = ctx.get().getDirection().getReceptionSide();
-                if (!side.isServer()) return;
+                //LogicalSide side = ctx.get().getDirection().getReceptionSide();
+                if (!ctx.get().isServerRecipent()) return;
 
                 var sender = ctx.get().getSender();
 
@@ -254,8 +255,8 @@ public class CanineTrackerPackets {
         public void handle(ResponsePosUpdateData data, Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
 
-                LogicalSide side = ctx.get().getDirection().getReceptionSide();
-                if (!side.isClient()) return;
+                //LogicalSide side = ctx.get().getDirection().getReceptionSide();
+                if (!ctx.get().isClientRecipent()) return;
                 
                 CanineTrackerLocateRenderer.correctPos(data.uuid, data.correctPos);
             });

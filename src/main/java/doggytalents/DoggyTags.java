@@ -1,12 +1,13 @@
 package doggytalents;
 
 import doggytalents.common.util.Util;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITagManager;
 
 public class DoggyTags {
 
@@ -26,7 +27,6 @@ public class DoggyTags {
     }
 
     private static TagKey<EntityType<?>> tagEntity(String name) {
-        return ForgeRegistries.ENTITY_TYPES.tags()
-            .createTagKey(Util.getResource(name));
+        return TagKey.create(Registries.ENTITY_TYPE, (Util.getResource(name)));
     }
 }

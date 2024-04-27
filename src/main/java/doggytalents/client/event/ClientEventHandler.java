@@ -50,7 +50,7 @@ import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;

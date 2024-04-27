@@ -6,8 +6,9 @@ import java.util.function.Supplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.brewing.BrewingRecipe;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.neoforged.neoforge.common.brewing.BrewingRecipe;
+import net.neoforged.neoforge.common.brewing.BrewingRecipeRegistry;
+import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 
 public class DoggyBrewingRecipes {
     
@@ -24,9 +25,9 @@ public class DoggyBrewingRecipes {
         return recipe;
     }
 
-    public static void registerAll() {
+    public static void onRegisterEvent(RegisterBrewingRecipesEvent event) {
         for (var x : RECIPES) {
-            BrewingRecipeRegistry.addRecipe(x.get());
+            event.getBuilder().addRecipe(x.get());
         }
     }
 

@@ -14,10 +14,8 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.CreativeModeTabRegistry;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +31,7 @@ public class DoggyItemGroups {
 
     //TODO using vanilla key, not forge's key ??? 
     public static final DeferredRegister<CreativeModeTab> ITEM_GROUP = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
-    public static RegistryObject<CreativeModeTab> GENERAL
+    public static DeferredHolder<CreativeModeTab, CreativeModeTab> GENERAL
         = register("tabgeneral", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.doggytalents"))
             .icon(() -> {
@@ -51,7 +49,7 @@ public class DoggyItemGroups {
                 }
             }).build());
 
-    public static RegistryObject<CreativeModeTab> DOG_BED
+    public static Supplier<CreativeModeTab> DOG_BED
         = register("tabdogbed", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.doggytalents.dogbed"))
             .icon(DogBedUtil::createRandomBed)
@@ -79,7 +77,7 @@ public class DoggyItemGroups {
                 }
             }).build()); 
 
-    public static RegistryObject<CreativeModeTab> register(String name, Supplier<CreativeModeTab> sup) {
+    public static DeferredHolder<CreativeModeTab, CreativeModeTab> register(String name, Supplier<CreativeModeTab> sup) {
         return ITEM_GROUP.register(name, sup);
     }
 }

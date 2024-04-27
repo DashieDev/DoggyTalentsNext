@@ -9,8 +9,8 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogIncapMsgData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.PacketDistributor;
 
 public class DogIncapMsgPackets {
     
@@ -59,7 +59,7 @@ public class DogIncapMsgPackets {
                 Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
 
-                if (ctx.get().getDirection().getReceptionSide().isClient()) { 
+                if (ctx.get().isClientRecipent()) { 
                     Minecraft mc = Minecraft.getInstance();
                     var e = mc.level.getEntity(data.entityId);
                     if (e instanceof Dog d) {

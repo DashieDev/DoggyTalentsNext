@@ -76,7 +76,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class EventHandler {

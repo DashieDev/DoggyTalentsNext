@@ -13,13 +13,6 @@ import net.minecraft.server.level.ServerPlayer;
 
 
 public class DogDrunkTrigger extends SimpleCriterionTrigger<DogDrunkTrigger.TriggerInstance> {
-    
-    public static ResourceLocation ID = Util.getResource("get_dog_drunk");
-
-    @Override
-    public ResourceLocation getId() {
-        return ID;
-    }
 
     @Override
     protected TriggerInstance createInstance(JsonObject json, ContextAwarePredicate player,

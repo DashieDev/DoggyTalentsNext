@@ -14,9 +14,9 @@ import doggytalents.common.entity.DogGroupsManager.DogGroup;
 import doggytalents.common.network.packet.data.DogGroupsData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import doggytalents.common.network.IPacket;
+import doggytalents.common.network.PacketDistributor;
 import doggytalents.common.network.PacketHandler;
 
 public class DogGroupPackets {
@@ -113,7 +113,7 @@ public class DogGroupPackets {
         public void handle(DogGroupsData.UPDATE data, Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
 
-                if (!ctx.get().getDirection().getReceptionSide().isClient()) return;
+                if (!ctx.get().isClientRecipent()) return;
                 var mc = Minecraft.getInstance();
                 var level = mc.level;
                 if (level == null) return;

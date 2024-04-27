@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import doggytalents.DoggyRecipeSerializers;
 import doggytalents.common.item.DoubleDyableAccessoryItem;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -18,8 +19,8 @@ import net.minecraft.world.level.Level;
 
 public class DoubleDyableRecipe extends CustomRecipe {
 
-    public DoubleDyableRecipe(ResourceLocation p_252125_, CraftingBookCategory p_249010_) {
-        super(p_252125_, p_249010_);
+    public DoubleDyableRecipe(CraftingBookCategory p_249010_) {
+        super(p_249010_);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class DoubleDyableRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingContainer container, HolderLookup.Provider registryAccess) {
         ItemStack paperStack = null;
         var dyeList = new ArrayList<DyeColor>();
         ItemStack targetStack = null;

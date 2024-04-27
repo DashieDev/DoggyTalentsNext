@@ -12,6 +12,7 @@ import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.feature.IDog;
 import doggytalents.api.impl.DogArmorItemHandler;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
@@ -38,7 +39,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         super(type, worldIn);
     }
 
-    public void setAttributeModifier(Attribute attribute, UUID modifierUUID, BiFunction<AbstractDog, UUID, AttributeModifier> modifierGenerator) {
+    public void setAttributeModifier(Holder<Attribute> attribute, UUID modifierUUID, BiFunction<AbstractDog, UUID, AttributeModifier> modifierGenerator) {
         AttributeInstance attributeInst = this.getAttribute(attribute);
 
         AttributeModifier currentModifier = attributeInst.getModifier(modifierUUID);
@@ -58,7 +59,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         }
     }
 
-    public void removeAttributeModifier(Attribute attribute, UUID modifierUUID) {
+    public void removeAttributeModifier(Holder<Attribute> attribute, UUID modifierUUID) {
         var attrib = this.getAttribute(attribute);
         if (attrib == null) return;
         attrib.removeModifier(modifierUUID);

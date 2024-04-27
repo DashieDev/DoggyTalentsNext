@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import doggytalents.common.chunk.DoggyChunkController;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.storage.DogLocationStorage;
@@ -18,7 +19,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.world.ForgeChunkManager;
 
 /**
  * @author DashieDev
@@ -171,8 +171,8 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
         if (this.dogChunkForced == loaded) return;
         ChunkPos chunkpos = new ChunkPos(dogPos);
         //if (this.level.hasChunk(chunkpos.x, chunkpos.z)) return;
-        ForgeChunkManager.forceChunk(
-            this.level, Constants.MOD_ID, 
+        DoggyChunkController.get().forceChunk(
+            this.level,
             dogUUID,
             chunkpos.x, chunkpos.z, 
             loaded, true);

@@ -33,7 +33,7 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 
 public class OokamiKazeTalent extends TalentInstance {
 

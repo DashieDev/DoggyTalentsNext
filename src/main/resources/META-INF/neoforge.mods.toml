@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="${fml_version_range}"
+loaderVersion="${neofml_version_range}"
 license="GNU LGPLv3"
 issueTrackerURL="https://github.com/DashieDev/DoggyTalentsNext/issues"
 displayURL="https://minecraft.curseforge.com/projects/doggy-talents-next/"
@@ -13,9 +13,9 @@ logoFile="dt_background.png"
     authors="dashiedev, mashxp"
     description="Minecraft Wolf, reimagined."
 [[dependencies.doggytalents]] #optional
-    modId="forge"
+    modId="neoforge"
     mandatory=true
-    versionRange="${forge_version_range}" #mandatory
+    versionRange="${neoforge_version_range}" #mandatory
     ordering="NONE"
     side="BOTH"
 

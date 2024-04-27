@@ -136,7 +136,7 @@ public class DogRespawnData implements IDogData {
         }
         var custom_name = dog.getCustomName();
         if (custom_name != null) {
-            target.putString(STORAGE_NAME_TAG, Component.Serializer.toJson(custom_name));
+            target.putString(STORAGE_NAME_TAG, Component.Serializer.toJson(custom_name, dog.registryAccess()));
         }
         keepAdditionalTag(target, dog);
     }
@@ -192,7 +192,7 @@ public class DogRespawnData implements IDogData {
 
     @Nullable
     public Dog respawn(ServerLevel worldIn, Player playerIn, BlockPos pos) {
-        Dog dog = DoggyEntityTypes.DOG.get().create(worldIn, null, null, pos, MobSpawnType.TRIGGERED, true, false);
+        Dog dog = DoggyEntityTypes.DOG.get().create(worldIn, null, pos, MobSpawnType.TRIGGERED, true, false);
 
         // Failed for some reason
         if (dog == null) {

@@ -4,14 +4,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class DoggyToolsItemHandler extends ItemStackHandler {
     public DoggyToolsItemHandler() {
         super(5);
     }
 
-    @Override
+    //@Override
     public CompoundTag serializeNBT() {
         ListTag itemsList = new ListTag();
 
@@ -31,7 +31,7 @@ public class DoggyToolsItemHandler extends ItemStackHandler {
         return compound;
     }
 
-    @Override
+    //@Override
     public void deserializeNBT(CompoundTag compound) {
         if (!compound.contains("item_list", Tag.TAG_LIST)) return;
         ListTag tagList = compound.getList("item_list", Tag.TAG_COMPOUND);

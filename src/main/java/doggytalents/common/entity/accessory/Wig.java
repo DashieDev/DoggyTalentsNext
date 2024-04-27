@@ -17,7 +17,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.RegistryObject;
 
 public class Wig extends DyeableAccessory implements IAccessoryHasModel {
 
@@ -36,7 +35,7 @@ public class Wig extends DyeableAccessory implements IAccessoryHasModel {
 
     public static class Inst extends AccessoryInstance implements IDogAlteration {
 
-        public static final List<RegistryObject<Item>> DISC_LIST = List.of(
+        public static final List<Supplier<Item>> DISC_LIST = List.of(
             DoggyItems.MUSIC_DISC_CHOPIN_OP64_NO1
         );
 

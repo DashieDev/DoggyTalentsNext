@@ -13,7 +13,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogGroupsData;
 import doggytalents.common.network.packet.data.StatsSyncData;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.PacketDistributor;
 
 public class ActiveTabSlice implements AbstractSlice {
 

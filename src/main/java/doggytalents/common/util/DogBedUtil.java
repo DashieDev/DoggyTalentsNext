@@ -9,7 +9,6 @@ import doggytalents.common.block.tileentity.DogBedTileEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;

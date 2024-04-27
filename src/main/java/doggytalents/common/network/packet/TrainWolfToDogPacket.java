@@ -8,7 +8,7 @@ import doggytalents.common.network.packet.data.TrainWolfToDogData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class TrainWolfToDogPacket implements IPacket<TrainWolfToDogData> {
 
@@ -30,7 +30,7 @@ public class TrainWolfToDogPacket implements IPacket<TrainWolfToDogData> {
     @Override
     public void handle(TrainWolfToDogData data, Supplier<Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            if (!ctx.get().getDirection().getReceptionSide().isServer())
+            if (!ctx.get().isServerRecipent())
                 return;
             
             var sender = ctx.get().getSender();

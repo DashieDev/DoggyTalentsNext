@@ -272,7 +272,7 @@ public class DogMeleeAttackGoal extends Goal {
                
       var tpos = target.blockPosition();
                
-      if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level(), tpos.mutable()) !=BlockPathTypes.WALKABLE) {
+      if (WalkNodeEvaluator.getPathTypeStatic(this.dog.level(), tpos.mutable()) !=BlockPathTypes.WALKABLE) {
          return false;
       }
                
@@ -280,7 +280,7 @@ public class DogMeleeAttackGoal extends Goal {
       var v_dog = dog.position();
       for (int i = 1; i <=3; ++i) {
          v_dog = v_dog.add(v_offset);
-         if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level(), BlockPos.containing(v_dog).mutable()) !=BlockPathTypes.WALKABLE)  {
+         if (WalkNodeEvaluator.getPathTypeStatic(this.dog.level(), BlockPos.containing(v_dog).mutable()) !=BlockPathTypes.WALKABLE)  {
             return false;
          }
       }
@@ -302,7 +302,7 @@ public class DogMeleeAttackGoal extends Goal {
    }
 
    protected boolean isTargetInSafeArea(Dog dog, LivingEntity target) {
-      var type = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), target.blockPosition().mutable());
+      var type = WalkNodeEvaluator.getPathTypeStatic(dog.level(), target.blockPosition().mutable());
       for (var x : dog.getAlterations()) {
          var type_result = x.inferType(dog, type);
          if (type_result.getResult().shouldSwing() 

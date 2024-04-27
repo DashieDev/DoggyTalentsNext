@@ -1,6 +1,7 @@
 package doggytalents.common.util.dogpromise.promise;
 
 import doggytalents.DoggyBlocks;
+import doggytalents.common.chunk.DoggyChunkController;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
@@ -11,7 +12,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
-import net.minecraftforge.common.world.ForgeChunkManager;
 
 /**
  * @author DashieDev
@@ -128,8 +128,8 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
         if (this.bedChunkForced == loaded) return;
         ChunkPos chunkpos = new ChunkPos(bedPos);
         //if (this.level.hasChunk(chunkpos.x, chunkpos.z)) return;
-        ForgeChunkManager.forceChunk(
-            this.level, Constants.MOD_ID, 
+        DoggyChunkController.get().forceChunk(
+            this.level, 
             this.dog.getUUID(),
             chunkpos.x, chunkpos.z, 
             loaded, true);

@@ -9,8 +9,8 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.StatsSyncData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.NetworkEvent.Context;
+import doggytalents.common.network.PacketDistributor;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class StatsSyncPackets {
     public static class Request extends DogPacket<StatsSyncData.Request> {
@@ -56,7 +56,7 @@ public class StatsSyncPackets {
         public void handle(StatsSyncData.Response data, Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
 
-                if (ctx.get().getDirection().getReceptionSide().isClient()) { 
+                if (ctx.get().isClientRecipent()) { 
                     Minecraft mc = Minecraft.getInstance();
                     var e = mc.level.getEntity(data.entityId);
                     if (e instanceof Dog d) {

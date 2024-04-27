@@ -21,8 +21,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundSource;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.PacketDistributor;
 
 public class HeelByGroupPackets {
     
@@ -42,8 +42,8 @@ public class HeelByGroupPackets {
         public void handle(HeelByGroupData.REQUEST_GROUP_LIST data,
                 Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                var side = ctx.get().getDirection().getReceptionSide();
-                if (!side.isServer()) return;
+                //var side = ctx.get().getDirection().getReceptionSide();
+                if (!ctx.get().isServerRecipent()) return;
                 var sender = ctx.get().getSender();
 
                 var dogsList = sender.level().getEntitiesOfClass(
@@ -106,7 +106,7 @@ public class HeelByGroupPackets {
                 Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
 
-                if (ctx.get().getDirection().getReceptionSide().isClient()) { 
+                if (ctx.get().isClientRecipent()) { 
                     var mc = Minecraft.getInstance();
                     var screen = mc.screen;
                     if (screen instanceof HeelByGroupScreen groupScreen) {
@@ -143,8 +143,8 @@ public class HeelByGroupPackets {
         public void handle(HeelByGroupData.REQUEST_HEEL data,
             Supplier<Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                var side = ctx.get().getDirection().getReceptionSide();
-                if (!side.isServer()) return;
+                //var side = ctx.get().getDirection().getReceptionSide();
+                if (!ctx.get().isServerRecipent()) return;
                 var sender = ctx.get().getSender();
                 if (sender.getCooldowns().isOnCooldown(DoggyItems.WHISTLE.get())) return;
 

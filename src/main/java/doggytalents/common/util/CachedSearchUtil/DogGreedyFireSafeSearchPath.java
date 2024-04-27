@@ -136,7 +136,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
 
     private static Node checkPos(DogGreedyFireSafeSearchPath path, BlockPos pos) {
         var b1 = pos.mutable();
-        var b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level(), b1.mutable());
+        var b1_type = WalkNodeEvaluator.getPathTypeStatic(path.dog.level(), b1.mutable());
         int offsetY = 0;
         if (b1_type == BlockPathTypes.BLOCKED) {
                 offsetY= 1;
@@ -145,7 +145,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
         }
         if (offsetY != 0) {
             b1.move(0, offsetY, 0);
-            b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(path.dog.level(), b1.mutable());
+            b1_type = WalkNodeEvaluator.getPathTypeStatic(path.dog.level(), b1.mutable());
         }
         if (b1_type == BlockPathTypes.WALKABLE 
             || b1_type == BlockPathTypes.BLOCKED) {
