@@ -11,7 +11,7 @@ import doggytalents.common.lib.Resources;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class LabCoatRenderEntry extends Entry{
     public static final ModelLayerLocation LAB_COAT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "lab_coat"), "main");

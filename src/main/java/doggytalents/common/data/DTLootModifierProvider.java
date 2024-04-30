@@ -1,8 +1,12 @@
 package doggytalents.common.data;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
+
 import org.jetbrains.annotations.NotNull;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import doggytalents.DoggyEntityTypes;
@@ -12,6 +16,7 @@ import doggytalents.common.lib.Constants;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -27,22 +32,21 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerC
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
-import net.minecraftforge.common.data.GlobalLootModifierProvider;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.common.loot.LootTableIdCondition;
+import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
+import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
-    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> CODEC = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Constants.MOD_ID);
-    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> RICE_FROM_GRASS_CODEC = CODEC.register("rice_from_grass", RiceFromGrass::getCodec);
-    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> SOY_FROM_ZOMBIE_CODEC = CODEC.register("soy_from_zombie", SoyFromZombies::getCodec);
+    public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> CODEC = DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Constants.MOD_ID);
+    public static final Supplier<MapCodec<? extends IGlobalLootModifier>> RICE_FROM_GRASS_CODEC = CODEC.register("rice_from_grass", RiceFromGrass::getCodec);
+    public static final Supplier<MapCodec<? extends IGlobalLootModifier>> SOY_FROM_ZOMBIE_CODEC = CODEC.register("soy_from_zombie", SoyFromZombies::getCodec);
 
-    public DTLootModifierProvider(PackOutput output) {
-        super(output, Constants.MOD_ID);
+    public DTLootModifierProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> prov) {
+        super(output, prov, Constants.MOD_ID);
     }
 
     @Override
@@ -53,7 +57,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
     private RiceFromGrass createGrassRiceModifer() {
         var correct_id_codition = 
-            LootTableIdCondition.builder(Blocks.GRASS.getLootTable())
+            LootTableIdCondition.builder(Blocks.SHORT_GRASS.getLootTable().location())
             .build();
         var not_shear_condtion = 
             MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
@@ -99,17 +103,17 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
     public static class RiceFromGrass extends LootModifier {
 
-        private static Codec<LootModifier> CODEC = 
-            RecordCodecBuilder.create(x -> codecStart(x).apply(x, RiceFromGrass::new));
+        private static MapCodec<LootModifier> CODEC = 
+            RecordCodecBuilder.mapCodec(x -> codecStart(x).apply(x, RiceFromGrass::new));
 
-        public static Codec<LootModifier> getCodec() { return CODEC; }
+        public static MapCodec<LootModifier> getCodec() { return CODEC; }
 
         protected RiceFromGrass(LootItemCondition[] conditionsIn) {
             super(conditionsIn);
         }
 
         @Override
-        public Codec<? extends IGlobalLootModifier> codec() {
+        public MapCodec<? extends IGlobalLootModifier> codec() {
             return RICE_FROM_GRASS_CODEC.get();
         }
 
@@ -124,17 +128,17 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
     
     public static class SoyFromZombies extends LootModifier {
 
-        private static Codec<LootModifier> CODEC = 
-            RecordCodecBuilder.create(x -> codecStart(x).apply(x, SoyFromZombies::new));
+        private static MapCodec<LootModifier> CODEC = 
+            RecordCodecBuilder.mapCodec(x -> codecStart(x).apply(x, SoyFromZombies::new));
 
-        public static Codec<LootModifier> getCodec() { return CODEC; }
+        public static MapCodec<LootModifier> getCodec() { return CODEC; }
 
         protected SoyFromZombies(LootItemCondition[] conditionsIn) {
             super(conditionsIn);
         }
 
         @Override
-        public Codec<? extends IGlobalLootModifier> codec() {
+        public MapCodec<? extends IGlobalLootModifier> codec() {
             return SOY_FROM_ZOMBIE_CODEC.get();
         }
 

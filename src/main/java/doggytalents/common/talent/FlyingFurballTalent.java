@@ -11,7 +11,7 @@ import doggytalents.common.entity.ai.nav.DogFlyingNavigation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 import java.util.UUID;
 
@@ -141,7 +141,7 @@ public class FlyingFurballTalent extends TalentInstance {
         if (this.level() > 0) {
             double speed = (this.level() - 1)* 0.1;
 
-            return new AttributeModifier(uuidIn, "Flying Furball", speed, AttributeModifier.Operation.ADDITION);
+            return new AttributeModifier(uuidIn, "Flying Furball", speed, AttributeModifier.Operation.ADD_VALUE);
         }
 
         return null;
@@ -153,15 +153,15 @@ public class FlyingFurballTalent extends TalentInstance {
     }
 
     public void startGliding(AbstractDog dog) {
-        dog.setAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), FLYING_FURBALL_GRAVITY_UUID, this::createGravityModifier);
+        dog.setAttributeModifier(Attributes.GRAVITY, FLYING_FURBALL_GRAVITY_UUID, this::createGravityModifier);
     }
 
     public void stopGliding(AbstractDog dog) {
-        dog.removeAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), FLYING_FURBALL_GRAVITY_UUID);
+        dog.removeAttributeModifier(Attributes.GRAVITY, FLYING_FURBALL_GRAVITY_UUID);
     }
 
     public AttributeModifier createGravityModifier(AbstractDog dogIn, UUID uuidIn) {
-        return new AttributeModifier(uuidIn, "Flying Furball Gravity", -0.8, AttributeModifier.Operation.MULTIPLY_BASE);
+        return new AttributeModifier(uuidIn, "Flying Furball Gravity", -0.8, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     }
 
 }

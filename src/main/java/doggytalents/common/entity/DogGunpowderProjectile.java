@@ -5,6 +5,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.talent.OokamiKazeTalent;
 import doggytalents.common.util.DogUtil;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
@@ -28,7 +29,7 @@ public class DogGunpowderProjectile extends ThrowableProjectile {
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder b) {
     }
 
     @Override

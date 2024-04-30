@@ -4,6 +4,7 @@ import doggytalents.DoggyItems;
 import doggytalents.client.screen.CanineTrackerScreen;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -40,11 +41,11 @@ public class CanineTrackerItem extends Item {
         var stack = playerIn.getItemInHand(handIn);
 
         if (!worldIn.isClientSide) {
-            if (stack.getItem() instanceof CanineTrackerItem && stack.hasTag()) {
-                stack.setTag(null);
+            if (stack.getItem() instanceof CanineTrackerItem && ItemUtil.hasTag(stack)) {
+                ItemUtil.clearTag(stack);
             }
         } else {
-            if (!stack.hasTag())
+            if (!ItemUtil.hasTag(stack))
                 CanineTrackerScreen.open();
         }
         return new InteractionResultHolder<ItemStack>(InteractionResult.FAIL, stack);
@@ -52,8 +53,8 @@ public class CanineTrackerItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        if (stack.hasTag()) {
-            var text = getStatusText(stack.getTag());
+        if (ItemUtil.hasTag(stack)) {
+            var text = getStatusText(ItemUtil.getTag(stack));
             if (text != null) return text; 
         }
         return Component.translatable(this.getDescriptionId(stack));

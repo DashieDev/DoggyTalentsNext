@@ -58,7 +58,9 @@ import doggytalents.common.util.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -84,6 +86,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -128,6 +131,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -136,12 +140,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.util.ITeleporter;
+import net.neoforged.neoforge.fluids.FluidType;
 import doggytalents.common.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
@@ -292,7 +298,7 @@ public class Dog extends AbstractDog {
 
     public Dog(EntityType<? extends Dog> type, Level worldIn) {
         super(type, worldIn);
-        this.setTame(false);
+        this.setTame(false, true);
         this.setGender(EnumGender.random(this.getRandom()));
         this.setLowHealthStrategy(LowHealthStrategy.STICK_TO_OWNER);
         this.authorizedChangingOwner = true;
@@ -456,13 +462,13 @@ public class Dog extends AbstractDog {
         return Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
     }
 
-    @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-        if (this.isVehicle()) {
-            return this.getDogVisualBbHeight() * 0.8F;
-        }
-        return sizeIn.height * 0.8F;
-    }
+    // @Override
+    // protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+    //     if (this.isVehicle()) {
+    //         return this.getDogVisualBbHeight() * 0.8F;
+    //     }
+    //     return sizeIn.height * 0.8F;
+    // }
 
     @Override
     public Vec3 getLeashOffset() {
@@ -474,10 +480,12 @@ public class Dog extends AbstractDog {
         return this.isInSittingPose() ? 20 : super.getMaxHeadXRot();
     }
 
-    @Override
-    public double getMyRidingOffset() {
-        return this.getVehicle() instanceof Player ? 0.5D : 0.2D;
-    }
+    // @Override
+    // public double getMyRidingOffset() {
+    //     return this.getVehicle() instanceof Player ? 0.5D : 0.2D;
+    // }
+
+
 
     @Override
     protected void addPassenger(Entity passanger) {
@@ -494,11 +502,11 @@ public class Dog extends AbstractDog {
     private EntityDimensions visualDimension = null;
 
     @Override
-    public EntityDimensions getDimensions(Pose p_19975_) {
-        var self_dim = super.getDimensions(p_19975_);
+    public EntityDimensions getDefaultDimensions(Pose p_19975_) {
+        var self_dim = super.getDefaultDimensions(p_19975_);
         visualDimension = null;
-        if (self_dim.width >= 1f) {
-            self_dim = new EntityDimensions(1f, self_dim.height, self_dim.fixed);
+        if (self_dim.width() >= 1f) {
+            self_dim = new EntityDimensions(1f, self_dim.height(), self_dim.eyeHeight(), self_dim.attachments(), self_dim.fixed());
         }
         
         boolean collide_passeneger = 
@@ -512,9 +520,9 @@ public class Dog extends AbstractDog {
         return self_dim;
     }
 
-    @Override
-    public double getPassengersRidingOffset() {
-        return (double)this.getRealDimensions().height * 0.75D;
+    //@Override
+    public double getPassengersRidingOffset(EntityDimensions self_dim) {
+        return self_dim.height() * 0.75D;
     }
 
     public EntityDimensions getRealDimensions() {
@@ -523,37 +531,38 @@ public class Dog extends AbstractDog {
 
     public float getDogVisualBbHeight() {
         if (this.visualDimension != null)
-            return this.visualDimension.height;
+            return this.visualDimension.height();
         return this.getBbHeight();
     }
 
     public float getDogVisualBbWidth() {
         if (this.visualDimension != null)
-            return this.visualDimension.width;
+            return this.visualDimension.width();
         return this.getBbWidth();
     }
 
     private EntityDimensions computeRidingDimension(EntityDimensions self_dim) {
-        float total_width = self_dim.width;
-        float total_height = (float) this.getPassengersRidingOffset();
+        float total_width = self_dim.width();
         
         var passenger = this.getPassengers().get(0);
+        
+        float total_height = (float) this.getPassengersRidingOffset(self_dim);
         total_width = Math.max(total_width, passenger.getBbWidth());
-        total_height += passenger.getBbHeight() + passenger.getMyRidingOffset();
+        total_height += passenger.getBbHeight() - passenger.getVehicleAttachmentPoint(this).y;
         
         if (total_width >= 1f)
             total_width = 1f;
 
-        return new EntityDimensions(total_width, total_height, self_dim.fixed);
+        return new EntityDimensions(total_width, total_height, self_dim.eyeHeight(), self_dim.attachments(), self_dim.fixed());
     }
 
     @Override
-    public void tick() {
+    public void tick() {    
         super.tick();
 
         updateClassicalAnim();
 
-        this.setMaxUpStep(this.isVehicle() ? 1f : 0.6f);
+        //this.setMaxUpStep(this.isVehicle() ? 1f : 0.6f);
         if (this.isAlive()) {
             this.updateDogPose();
         }
@@ -815,10 +824,10 @@ public class Dog extends AbstractDog {
         if (this.level().isClientSide && this.isInDrunkPose()) {
             if (this.tickCount % 16 == 0) {
                 int color = 0x9a24e3;
-                double d0 = (double)(color >> 16 & 255) / 255.0D;
-                double d1 = (double)(color >> 8 & 255) / 255.0D;
-                double d2 = (double)(color >> 0 & 255) / 255.0D;
-                this.level().addParticle(ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
+                // double d0 = (double)(color >> 16 & 255) / 255.0D;
+                // double d1 = (double)(color >> 8 & 255) / 255.0D;
+                // double d2 = (double)(color >> 0 & 255) / 255.0D;
+                this.level().addParticle(ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, color), this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 1, 1, 1);
             }
         }
 
@@ -1279,13 +1288,13 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_,
-            MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_, @Nullable CompoundTag p_146750_) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_332775_, 
+        DifficultyInstance p_332793_, MobSpawnType p_332761_, @Nullable SpawnGroupData p_332782_) {
         return null;
     }
 
     @Override
-    public double getAttributeValue(Attribute attrib) {
+    public double getAttributeValue(Holder<Attribute> attrib) {
         if (attrib == Attributes.FOLLOW_RANGE) {
             var ranged_attack = this.getDogRangedAttack();
             if (ranged_attack != null && ranged_attack.isApplicable(this))
@@ -1310,7 +1319,7 @@ public class Dog extends AbstractDog {
         }
 
         // Start: Logic copied from the super call and altered to apply the reduced fall damage to passengers too. #358
-        float[] ret = net.minecraftforge.common.ForgeHooks.onLivingFall(this, distance, damageMultiplier);
+        float[] ret = net.neoforged.neoforge.common.CommonHooks.onLivingFall(this, distance, damageMultiplier);
         if (ret == null) return false;
         distance = ret[0];
         damageMultiplier = ret[1];
@@ -1373,7 +1382,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean canBreatheUnderwater() {
+    public boolean canDrownInFluidType(FluidType type) {
         return alterationProps.canBreatheUnderwater();
     }
 
@@ -1399,14 +1408,14 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion x) {
         for (var alter : this.alterations) {
             var result = alter.negateExplosion(this);
             if (result.shouldSwing()) {
                 return true;
             }
         }
-        return super.ignoreExplosion();
+        return super.ignoreExplosion(x);
     }
 
 
@@ -1640,12 +1649,12 @@ public class Dog extends AbstractDog {
         }
 
         var attackDamageInst = this.getAttribute(Attributes.ATTACK_DAMAGE);
-        var critDamageInst = this.getAttribute(DoggyAttributes.CRIT_CHANCE.get());
+        var critDamageInst = this.getAttribute(DoggyAttributes.CRIT_CHANCE);
 
         Set<AttributeModifier> critModifiers = null;
 
         if (critDamageInst != null && critDamageInst.getValue() > this.getRandom().nextDouble()) {
-            var critBonusInst = this.getAttribute(DoggyAttributes.CRIT_BONUS.get());
+            var critBonusInst = this.getAttribute(DoggyAttributes.CRIT_BONUS);
             critModifiers = 
                 critBonusInst == null ? null 
                     : critBonusInst.getModifiers();
@@ -1660,7 +1669,7 @@ public class Dog extends AbstractDog {
         var stack = this.getMainHandItem();
         if (target instanceof LivingEntity && stack != null) {
             damage += EnchantmentHelper
-                .getDamageBonus(this.getMainHandItem(), ((LivingEntity)target).getMobType());
+                .getDamageBonus(this.getMainHandItem(), ((LivingEntity)target).getType());
         }
 
 
@@ -1686,7 +1695,7 @@ public class Dog extends AbstractDog {
             alter.doAdditionalAttackEffects(this, target);
         }
 
-        if (this.hasEffect(DoggyEffects.NATTO_BITE.get())
+        if (this.hasEffect(DoggyEffects.NATTO_BITE)
             && target instanceof LivingEntity living) {
             DoggyEffects.NATTO_BITE.get().doAdditionalAttackEffects(this, living);
         }
@@ -1703,7 +1712,7 @@ public class Dog extends AbstractDog {
     protected void doInitialEnchantDamageEffects(LivingEntity dog, Entity target) {
         int i = EnchantmentHelper.getFireAspect(this);
         if (i > 0) {
-            target.setSecondsOnFire(i * 4);
+            EntityUtil.setSecondsOnFire(target, i * 4);
         }
 
         float knockback = (float)this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
@@ -1742,16 +1751,16 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public void setSecondsOnFire(int second) {
+    public void setRemainingFireTicks(int ticks) {
         for (IDogAlteration alter : this.alterations) {
-            InteractionResultHolder<Integer> result = alter.setFire(this, second);
+            InteractionResultHolder<Integer> result = alter.setFire(this, ticks);
 
             if (result.getResult().shouldSwing()) {
-                second = result.getObject();
+                ticks = result.getObject();
             }
         }
 
-        super.setSecondsOnFire(second);
+        super.setRemainingFireTicks(ticks);
     }
 
     @Override
@@ -1886,9 +1895,9 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public void setTame(boolean tamed) {
-        super.setTame(tamed);
-        if (tamed) {
+    public void setTame(boolean tame, boolean update_tame_props) {
+        super.setTame(tame, update_tame_props);
+        if (tame) {
             var maxHealth = this.getDogLevel().getMaxHealth();
            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
         } else {
@@ -2034,7 +2043,7 @@ public class Dog extends AbstractDog {
 
         if (uuid != null) {
             child.setOwnerUUID(uuid);
-            child.setTame(true);
+            child.setTame(true, true);
             child.maxHealth();
         }
 
@@ -2378,11 +2387,11 @@ public class Dog extends AbstractDog {
         this.alterations.forEach((alter) -> alter.dropInventory(this));
     }
 
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.alterations.forEach((alter) -> alter.invalidateCapabilities(this));
-    }
+    // @Override
+    // public void invalidateCaps() {
+    //     super.invalidateCaps();
+    //     this.alterations.forEach((alter) -> alter.invalidateCapabilities(this));
+    // }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
@@ -2445,7 +2454,7 @@ public class Dog extends AbstractDog {
         compound.putInt("dogSize", this.getDogSize().getId());
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
         compound.putInt("level_kami", this.getDogLevel().getLevel(Type.KAMI));
-        NBTUtil.writeItemStack(compound, "fetchItem", this.getBoneVariant());
+        NBTUtil.writeItemStack(this.registryAccess(), compound, "fetchItem", this.getBoneVariant());
 
         DimensionDependantArg<Optional<BlockPos>> bedsData = this.entityData.get(DOG_BED_LOCATION.get());
 
@@ -2585,7 +2594,7 @@ public class Dog extends AbstractDog {
             this.setDogSkinData(dogSkinData);
 
             if (compound.contains("fetchItem", Tag.TAG_COMPOUND)) {
-                this.setBoneVariant(NBTUtil.readItemStack(compound, "fetchItem"));
+                this.setBoneVariant(NBTUtil.readItemStack(this.registryAccess(), compound, "fetchItem"));
             }
 
             this.setClassicalVar(
@@ -3328,7 +3337,7 @@ public class Dog extends AbstractDog {
         //🥴
         if (add <= 0)
             return;
-        var add1 = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(this, add);
+        var add1 = net.neoforged.neoforge.event.EventHooks.onLivingHeal(this, add);
         add = Math.max(add1, add);
         
         float h = this.getHealth();
@@ -3764,7 +3773,7 @@ public class Dog extends AbstractDog {
         this.dogSyncedDataManager.setTalentsDirty();
 
         this.authorizedChangingOwner = true;
-        this.setTame(false);
+        this.setTame(false, false);
         this.setOwnerUUID(null);
         this.setWillObeyOthers(false);
         this.setCanPlayersAttack(true);
@@ -3826,8 +3835,8 @@ public class Dog extends AbstractDog {
         var newZ = this.getZ() + dz1;
         var newPos = new Vec3(newX, this.getY() + 0.5, newZ);
         var b0 = BlockPos.containing(newPos);
-        var type = WalkNodeEvaluator.getPathTypeStatic(this.level(), b0.mutable());
-        if (type == BlockPathTypes.WALKABLE) {
+        var type = WalkNodeEvaluator.getPathTypeStatic(this, b0.mutable());
+        if (type == PathType.WALKABLE) {
             return newPos;
         }
         return super.getDismountLocationForPassenger(passenger);
@@ -3897,7 +3906,7 @@ public class Dog extends AbstractDog {
             double down = moveVec.y;
             
             double gravity = -0.112102;
-            var attrib = this.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+            var attrib = this.getAttribute(Attributes.GRAVITY);
             if (attrib != null)
                 gravity = -attrib.getValue();
             
@@ -4154,7 +4163,7 @@ public class Dog extends AbstractDog {
 
     private void doDogRideJump(double forward) {
         // Calculate jump value based of jump strength, power this jump and jump boosts
-        double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER.get()).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
+        double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
         if (this.hasEffect(MobEffects.JUMP)) {
             jumpValue += (this.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.1F;
         }
@@ -4355,7 +4364,7 @@ public class Dog extends AbstractDog {
         return dogPathNav;
     }
 
-    public float getPathfindingMalus(BlockPathTypes type) {
+    public float getPathfindingMalus(PathType type) {
         switch (type) {
         default:
             break;
@@ -4658,9 +4667,9 @@ public class Dog extends AbstractDog {
         return super.canCollideWith(otherEntity);
     }
 
-    public BlockPathTypes getBlockPathTypeViaAlterations(BlockPos pos) {
+    public PathType getBlockPathTypeViaAlterations(BlockPos pos) {
         var blockType = WalkNodeEvaluator.getPathTypeStatic(
-            this.level(), 
+            this,
             pos.mutable()
         );
 

@@ -13,6 +13,7 @@ import doggytalents.common.item.CanineTrackerItem;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.CanineTrackerData.RequestPosUpdateData;
+import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -30,10 +31,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
-import net.minecraftforge.event.TickEvent.ClientTickEvent;
-import net.minecraftforge.event.TickEvent.Phase;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
+import net.neoforged.neoforge.event.TickEvent.ClientTickEvent;
+import net.neoforged.neoforge.event.TickEvent.Phase;
 import doggytalents.common.network.PacketDistributor;
 
 public class CanineTrackerLocateRenderer {
@@ -198,8 +199,8 @@ public class CanineTrackerLocateRenderer {
         else if (item_off.getItem() instanceof CanineTrackerItem)
             radar = item_off;
         if (radar == null) return Optional.empty();
-        if (!radar.hasTag()) return Optional.empty();
-        var tag = radar.getTag();
+        if (!ItemUtil.hasTag(radar)) return Optional.empty();
+        var tag = ItemUtil.getTag(radar);
         if (tag == null || !tag.hasUUID("uuid")) return Optional.empty();
         return Optional.of(tag);
     }

@@ -4,10 +4,12 @@ import javax.annotation.Nonnull;
 
 import doggytalents.DoggyTags;
 import doggytalents.api.feature.FoodHandler;
+import doggytalents.common.item.TreatBagItem;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
@@ -18,16 +20,17 @@ public class TreatBagItemHandler extends ItemStackHandler {
     public TreatBagItemHandler(ItemStack bag) {
         super(5);
         this.bag = bag;
-
-        CompoundTag inventoryNBT = bag.getTagElement("inventory");
-        if (inventoryNBT != null) {
-            this.deserializeNBT(inventoryNBT);
+        
+        var bagList = TreatBagItem.inventory(bag);
+        for (int i = 0; i < bagList.size(); ++i) {
+            this.stacks.set(i, bagList.get(i));
         }
+        
     }
 
     @Override
     protected void onContentsChanged(int slot) {
-        this.bag.getOrCreateTagElement("inventory").merge(this.serializeNBT());
+        TreatBagItem.flushInveotory(bag, this.stacks);
     }
 
     @Override

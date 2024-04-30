@@ -3,8 +3,6 @@ package doggytalents.client.screen;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.antlr.v4.parse.ANTLRParser.parserRule_return;
-
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -17,6 +15,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.HeelByNameData;
 import doggytalents.common.network.packet.data.WhisltleEditHotKeyData;
 import doggytalents.common.network.packet.data.WhistleRequestModeData;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -30,6 +29,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.player.Player;
 import doggytalents.common.network.PacketDistributor;
 
@@ -75,8 +75,8 @@ public class WhistleScreen extends Screen{
 
         Button help = new CustomButton(3, 3, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, pTicks);
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
@@ -100,8 +100,8 @@ public class WhistleScreen extends Screen{
             }
         ) {
             @Override
-            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, pTicks);
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.screen.set_hotkey")
@@ -235,7 +235,7 @@ public class WhistleScreen extends Screen{
         var stack = player.getMainHandItem();
         if (stack == null) return;
         if (stack.getItem() != DoggyItems.WHISTLE.get()) return;
-        var tag = stack.getTag();
+        var tag = ItemUtil.getTag(stack);
         if (tag == null) return;
         var list = tag.getIntArray("hotkey_modes");
         if (list == null) return;
@@ -336,7 +336,7 @@ public class WhistleScreen extends Screen{
     @Override
     public boolean charTyped(char code, int p_231042_2_) {
 
-        if (SharedConstants.isAllowedChatCharacter(code)) {
+        if (StringUtil.isAllowedChatCharacter(code)) {
             this.insertText(Character.toString(code));
             return true;
         } else {

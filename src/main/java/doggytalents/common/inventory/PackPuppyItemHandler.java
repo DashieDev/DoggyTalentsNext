@@ -1,10 +1,11 @@
 package doggytalents.common.inventory;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class PackPuppyItemHandler extends ItemStackHandler {
 
@@ -13,7 +14,7 @@ public class PackPuppyItemHandler extends ItemStackHandler {
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider prov) {
         ListTag itemsList = new ListTag();
 
         for(int i = 0; i < this.stacks.size(); i++) {
@@ -21,7 +22,7 @@ public class PackPuppyItemHandler extends ItemStackHandler {
            if (!stack.isEmpty()) {
               CompoundTag itemTag = new CompoundTag();
               itemTag.putByte("Slot", (byte) i);
-              stack.save(itemTag);
+              stack.save(prov, itemTag);
               itemsList.add(itemTag);
            }
         }
@@ -33,7 +34,7 @@ public class PackPuppyItemHandler extends ItemStackHandler {
     }
 
     @Override
-    public void deserializeNBT(CompoundTag compound) {
+    public void deserializeNBT(HolderLookup.Provider prov, CompoundTag compound) {
         if (compound.contains("items", Tag.TAG_LIST)) {
             try {
                 ListTag tagList = compound.getList("items", Tag.TAG_COMPOUND);
@@ -42,7 +43,7 @@ public class PackPuppyItemHandler extends ItemStackHandler {
                     int slot = itemTag.getInt("Slot");
 
                     if (slot >= 0 && slot < this.stacks.size()) {
-                        this.stacks.set(slot, ItemStack.of(itemTag));
+                        ItemStack.parse(prov, itemTag).ifPresent(stack -> stacks.set(slot, stack));
                     }
                 }
                 this.onLoad();
@@ -56,7 +57,7 @@ public class PackPuppyItemHandler extends ItemStackHandler {
                 int slot = itemTag.getInt("Slot");
 
                 if (slot >= 0 && slot < this.stacks.size()) {
-                    this.stacks.set(slot, ItemStack.of(itemTag));
+                    ItemStack.parse(prov, itemTag).ifPresent(stack -> stacks.set(slot, stack));
                 }
             }
             this.onLoad();

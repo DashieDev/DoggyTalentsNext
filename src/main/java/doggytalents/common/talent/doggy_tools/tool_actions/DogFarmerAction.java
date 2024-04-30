@@ -79,9 +79,7 @@ public class DogFarmerAction extends ToolAction {
         if (hurtTools) {
             var hurtStack = dog.getMainHandItem();
             if (hurtStack != null && hurtStack.getItem() instanceof HoeItem) {
-                hurtStack.hurtAndBreak(1, dog, (p_150845_) -> {
-                    p_150845_.broadcastBreakEvent(InteractionHand.MAIN_HAND);
-                });
+                hurtStack.hurtAndBreak(1, dog, EquipmentSlot.MAINHAND);
             }
         }
         

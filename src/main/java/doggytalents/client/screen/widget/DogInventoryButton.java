@@ -64,7 +64,7 @@ public class DogInventoryButton extends AbstractButton {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
         if (this.parent instanceof CreativeModeInventoryScreen) {
             var cscreen = ((CreativeModeInventoryScreen) this.parent);
@@ -94,11 +94,11 @@ public class DogInventoryButton extends AbstractButton {
             }
         }
 
-        super.render(graphics, mouseX, mouseY, partialTicks);
+        renderWidget2(graphics, mouseX, mouseY, partialTicks);
     }
 
-    @Override
-    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    //@Override
+    public void renderWidget2(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
        Minecraft mc = Minecraft.getInstance();

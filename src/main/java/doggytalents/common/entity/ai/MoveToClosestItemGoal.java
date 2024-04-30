@@ -8,7 +8,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -83,8 +83,8 @@ public class MoveToClosestItemGoal extends Goal {
     @Override
     public void start() {
         this.timeToRecalcPath = 0;
-        this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
-        this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.oldWaterCost = this.dog.getPathfindingMalus(PathType.WATER);
+        this.dog.setPathfindingMalus(PathType.WATER, 0.0F);
         this.oldRangeSense = this.dog.getAttribute(Attributes.FOLLOW_RANGE).getValue();
         this.dog.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(this.maxDist);
     }
@@ -106,7 +106,7 @@ public class MoveToClosestItemGoal extends Goal {
     public void stop() {
         this.target = null;
         this.dogNavigator.stop();
-        this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+        this.dog.setPathfindingMalus(PathType.WATER, this.oldWaterCost);
         this.dog.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(this.oldRangeSense);
     }
 }

@@ -9,8 +9,8 @@ import doggytalents.common.advancements.triggers.DogDrunkTrigger;
 import doggytalents.common.advancements.triggers.OokamikazeTrigger;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.FrameType;
-import net.minecraft.advancements.RequirementsStrategy;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -25,13 +25,12 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeAdvancementProvider;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,11 +38,12 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class DTAdvancementProvider extends ForgeAdvancementProvider {
+public class DTAdvancementProvider extends AdvancementProvider {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
@@ -55,20 +55,20 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
     }   
 
 
-    private static Path getPath(Path pathIn, Advancement advancementIn) {
-        return pathIn.resolve("data/" + advancementIn.getId().getNamespace() + "/advancements/" + advancementIn.getId().getPath() + ".json");
-    }
+    // private static Path getPath(Path pathIn, Advancement advancementIn) {
+    //     return pathIn.resolve("data/" + advancementIn.getId().getNamespace() + "/advancements/" + advancementIn.getId().getPath() + ".json");
+    // }
 
-    public static class DoggyAdvancementsSubProvider implements ForgeAdvancementProvider.AdvancementGenerator {
+    public static class DoggyAdvancementsSubProvider implements AdvancementProvider.AdvancementGenerator {
 
         @Override
-        public void generate(Provider registries, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
+        public void generate(Provider registries, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {
             var charm_advancement =
                 Advancement.Builder.advancement()
                     .display(
                         DisplayInfoBuilder.create()
                             .icon(DoggyItems.DOGGY_CHARM)
-                            .frame(FrameType.TASK)
+                            .frame(AdvancementType.TASK)
                             .translate("doggy_charm_summon")
                             .background("adventure.png")
                             .build()
@@ -90,7 +90,7 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                     .display(
                         DisplayInfoBuilder.create()
                             .icon(DoggyItems.TRAINING_TREAT)
-                            .frame(FrameType.TASK)
+                            .frame(AdvancementType.TASK)
                             .translate("train_dog_hajimemashite")
                             .build()
                     )
@@ -100,10 +100,10 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                             .itemUsedOnEntity(
                                 ItemPredicate.Builder.item()
                                     .of(DoggyItems.TRAINING_TREAT.get()),
-                                EntityPredicate.wrap(
+                                Optional.of(EntityPredicate.wrap(
                                     EntityPredicate.Builder.entity()
                                         .of(EntityType.WOLF)
-                                        .build()
+                                        .build())
                                 )                              
                             )
                     )
@@ -114,13 +114,13 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                 .display(
                     DisplayInfoBuilder.create()
                         .icon(DoggyItems.SAKE)
-                        .frame(FrameType.TASK)
+                        .frame(AdvancementType.TASK)
                         .translate("get_dog_drunk")
                         .build()
                 )
                 .addCriterion(
                     "get_dog_drunk", 
-                    DogDrunkTrigger.getInstance()
+                    DogDrunkTrigger.getCriterion()
                 )
                 .save(consumer, Util.getResourcePath("default/get_dog_drunk"));
 
@@ -129,13 +129,13 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                 .display(
                     DisplayInfoBuilder.create()
                         .icon(() -> Items.GUNPOWDER)
-                        .frame(FrameType.TASK)
+                        .frame(AdvancementType.TASK)
                         .translate("ookamikaze_trigger")
                         .build()
                 )
                 .addCriterion(
                     "ookamikaze_trigger", 
-                    OokamikazeTrigger.getInstance()
+                    OokamikazeTrigger.getCriterion()
                 )
                 .save(consumer, Util.getResourcePath("default/ookamikaze_trigger"));
             // Old Advancement.

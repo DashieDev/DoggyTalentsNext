@@ -2,16 +2,25 @@ package doggytalents.common.util;
 
 import doggytalents.DoggyTalentsNext;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.mojang.serialization.JsonOps;
+
 import java.util.Optional;
 import java.util.UUID;
 
@@ -88,30 +97,62 @@ public class NBTUtil {
 
     public static void putTextComponent(CompoundTag compound, String key, @Nullable Component component) {
         if (component != null) {
-            compound.putString(key, Component.Serializer.toJson(component));
+            compound.putString(key, serializeComponentToJsonStr(component));
         }
     }
 
     @Nullable
     public static Component getTextComponent(CompoundTag compound, String key) {
-        if (compound.contains(key, Tag.TAG_STRING)) {
-            return Component.Serializer.fromJson(compound.getString(key));
+        
+        if (compound.contains(key, Tag.TAG_STRING)) { 
+            return parseComponentJsonStr(compound.getString(key));
         }
 
         return null;
     }
 
+    private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
+
+    private static Component parseComponentJsonStr(String str) {
+        var c1_json = JsonParser.parseString(str);
+        if (c1_json == null)
+            return Component.empty();
+        Component ret = null;
+        try {
+            ret = ComponentSerialization.CODEC.parse(JsonOps.INSTANCE, c1_json)
+                .getOrThrow();
+        } catch (Exception e) {
+            ret = Component.empty();
+        }
+        if (ret == null)
+            ret = Component.empty();
+        return ret;
+    }
+
+    private static String serializeComponentToJsonStr(Component c1) {
+        if (c1 == null)
+            return "";
+        JsonElement c1_json = null;
+        try {
+            c1_json = ComponentSerialization.CODEC.encodeStart(JsonOps.INSTANCE, c1)
+                .getOrThrow();
+        } catch (Exception e) {
+            c1_json = null;
+        }
+        return c1_json != null ? GSON.toJson(c1_json) : "";
+    }
+
     @Nullable
-    public static <T> T getRegistryValue(CompoundTag compound, String key, IForgeRegistry<T> registry) {
+    public static <T> T getRegistryValue(CompoundTag compound, String key, Registry<T> registry) {
         ResourceLocation rl = NBTUtil.getResourceLocation(compound, key);
         if (rl != null) {
             if (registry.containsKey(rl)) {
-                return registry.getValue(rl);
+                return registry.get(rl);
             } else {
-                DoggyTalentsNext.LOGGER.warn("Unable to load registry value in registry {} with resource location {}", registry.getRegistryName(), rl);
+                DoggyTalentsNext.LOGGER.warn("Unable to load registry value in registry {} with resource location {}", registry.key(), rl);
             }
         } else {
-            DoggyTalentsNext.LOGGER.warn("Unable to load resource location in NBT:{}, for {} registry", key, registry.getRegistryName());
+            DoggyTalentsNext.LOGGER.warn("Unable to load resource location in NBT:{}, for {} registry", key, registry.key());
         }
 
         return null;
@@ -174,16 +215,16 @@ public class NBTUtil {
 //        return null;
 //    }
 
-    public static void writeItemStack(CompoundTag compound, String key, ItemStack stackIn) {
+    public static void writeItemStack(HolderLookup.Provider prov, CompoundTag compound, String key, ItemStack stackIn) {
         if (!stackIn.isEmpty()) {
-            compound.put(key, stackIn.save(new CompoundTag()));
+            compound.put(key, stackIn.save(prov, new CompoundTag()));
         }
     }
 
     @Nonnull
-    public static ItemStack readItemStack(CompoundTag compound, String key) {
+    public static ItemStack readItemStack(HolderLookup.Provider prov, CompoundTag compound, String key) {
         if (compound.contains(key, Tag.TAG_COMPOUND)) {
-            return ItemStack.of(compound.getCompound(key));
+            return ItemStack.parse(prov, compound.getCompound(key)).orElse(ItemStack.EMPTY);
         }
 
         return ItemStack.EMPTY;

@@ -77,15 +77,15 @@ public class EntityUtil {
         return entityIn.getRandom().nextInt(maxIn - minIn + 1) + minIn;
     }
 
-    public static boolean isHolding(@Nullable Entity entity, Item item, Predicate<CompoundTag> nbtPredicate) {
-        return isHolding(entity, stack -> stack.getItem() == item && stack.hasTag() && nbtPredicate.test(stack.getTag()));
+    public static boolean isHolding(@Nullable LivingEntity entity, Item item, Predicate<CompoundTag> nbtPredicate) {
+        return isHolding(entity, stack -> stack.getItem() == item && ItemUtil.hasTag(stack) && nbtPredicate.test(ItemUtil.getTag(stack)));
     }
 
-    public static boolean isHolding(@Nullable Entity entity, Item item) {
+    public static boolean isHolding(@Nullable LivingEntity entity, Item item) {
         return isHolding(entity, stack -> stack.getItem() == item);
     }
 
-    public static boolean isHolding(@Nullable Entity entity, Predicate<ItemStack> matcher) {
+    public static boolean isHolding(@Nullable LivingEntity entity, Predicate<ItemStack> matcher) {
         if (entity == null) {
             return false;
         }
@@ -118,6 +118,10 @@ public class EntityUtil {
         }
 
         return closest;
+    }
+
+    public static void setSecondsOnFire(Entity e, int second) {
+        e.setRemainingFireTicks(second * 20);
     }
 
     public static class Sorter implements Comparator<Entity> {

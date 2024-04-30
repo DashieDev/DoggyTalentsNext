@@ -14,14 +14,14 @@ logoFile="dt_background.png"
     description="Minecraft Wolf, reimagined."
 [[dependencies.doggytalents]] #optional
     modId="neoforge"
-    mandatory=true
+    type="required"
     versionRange="${neoforge_version_range}" #mandatory
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.doggytalents]]
     modId="minecraft"
-    mandatory=true
+    type="required"
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"

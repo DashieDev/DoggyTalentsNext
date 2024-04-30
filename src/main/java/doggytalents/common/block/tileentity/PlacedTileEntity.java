@@ -60,14 +60,14 @@ public class PlacedTileEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider prov) {
         CompoundTag compound = new CompoundTag();
-        this.saveAdditional(compound);
+        this.saveAdditional(compound, prov);
         return compound;
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(pkt.getTag());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider prov) {
+        this.loadAdditional(pkt.getTag(), prov);
     }
 }

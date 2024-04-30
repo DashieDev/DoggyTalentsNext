@@ -11,6 +11,7 @@ import doggytalents.common.entity.accessory.HeadBandAccessory;
 import doggytalents.common.entity.accessory.LocatorOrbAccessory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -20,7 +21,7 @@ public class HeadBandItem extends AccessoryItem{
         super(type, properties);
     }
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         if (this == DoggyItems.HEAD_BAND_BLANK.get())
             return;

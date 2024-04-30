@@ -16,10 +16,11 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FenceGateBlock;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
@@ -107,8 +108,8 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
     //     Vec3 v_add = v_current_next2th.normalize();
     //     var check_b0 = BlockPos.containing(current_pos.add(v_add));
     //     var type = WalkNodeEvaluator
-    //         .getBlockPathTypeStatic(level, check_b0.mutable());
-    //     return type == BlockPathTypes.WALKABLE;
+    //         .getPathTypetatic(level, check_b0.mutable());
+    //     return type == PathType.WALKABLE;
     // }
 
     @Override
@@ -126,13 +127,13 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
     }
     
     @Override
-    protected boolean hasValidPathType(BlockPathTypes type) {
+    protected boolean hasValidPathType(PathType type) {
         if (dog.fireImmune()) {
-            if (type == BlockPathTypes.LAVA)
+            if (type == PathType.LAVA)
                 return true;
-            if (type == BlockPathTypes.DAMAGE_FIRE)
+            if (type == PathType.DAMAGE_FIRE)
                 return true;
-            if (type == BlockPathTypes.DANGER_FIRE)
+            if (type == PathType.DANGER_FIRE)
                 return true;
         }
         return super.hasValidPathType(type);
@@ -153,7 +154,7 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
             @Override
             protected double getFloorLevel(BlockPos pos) {
                 if (dog.fireImmune()) {
-                    if (this.level.getFluidState(pos).is(FluidTags.LAVA)) {
+                    if (dog.level().getFluidState(pos).is(FluidTags.LAVA)) {
                         return pos.getY();
                     }
                 }
@@ -163,21 +164,21 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
             @Override
             @Nullable
             protected Node findAcceptedNode(int x, int y, int z, int floorLevel,
-                    double maxUpStep, Direction dir, BlockPathTypes centerType) {
-                if (centerType == BlockPathTypes.DOOR_WOOD_CLOSED && dog.canDogPassGate()) {
-                    centerType = BlockPathTypes.WALKABLE;
+                    double maxUpStep, Direction dir, PathType centerType) {
+                if (centerType == PathType.DOOR_WOOD_CLOSED && dog.canDogPassGate()) {
+                    centerType = PathType.WALKABLE;
                 }
                 return super.findAcceptedNode(x, y, z, floorLevel, maxUpStep, dir, centerType);
             }
 
             @Override
-            public BlockPathTypes getBlockPathType(BlockGetter getter, int x, int y, int z) {
-                var retType =  super.getBlockPathType(getter, x, y, z);
+            public PathType getPathTypeOfMob(PathfindingContext context, int x, int y, int z, Mob mon) {
+                var retType =  super.getPathTypeOfMob(context, x, y, z, dog);
                 
-                if (retType == BlockPathTypes.FENCE && dog.canDogPassGate()) {
-                    var state = getter.getBlockState(new BlockPos(x, y, z));
+                if (retType == PathType.FENCE && dog.canDogPassGate()) {
+                    var state = dog.level().getBlockState(new BlockPos(x, y, z));
                     if (state.getBlock() instanceof FenceGateBlock) {
-                        retType = BlockPathTypes.WALKABLE;
+                        retType = PathType.WALKABLE;
                     }  
                 } 
                 return retType;

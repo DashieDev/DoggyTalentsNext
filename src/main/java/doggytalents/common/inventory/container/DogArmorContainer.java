@@ -2,7 +2,7 @@ package doggytalents.common.inventory.container;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 import com.google.errorprone.annotations.Var;
 import com.mojang.datafixers.util.Pair;

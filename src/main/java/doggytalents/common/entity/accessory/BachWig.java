@@ -20,7 +20,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.RegistryObject;
 
 public class BachWig extends Accessory implements IAccessoryHasModel {
 
@@ -39,7 +38,7 @@ public class BachWig extends Accessory implements IAccessoryHasModel {
 
     public static class Inst extends AccessoryInstance implements IDogAlteration {
 
-        public static final List<RegistryObject<Item>> DISC_LIST = List.of(
+        public static final List<Supplier<Item>> DISC_LIST = List.of(
             DoggyItems.MUSIC_DISC_OKAMI_1,
             DoggyItems.MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO,
             DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO

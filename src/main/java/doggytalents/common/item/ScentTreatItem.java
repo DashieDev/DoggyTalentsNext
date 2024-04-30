@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NBTUtil;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -16,7 +18,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class ScentTreatItem extends Item {
 
@@ -45,14 +46,14 @@ public class ScentTreatItem extends Item {
             return InteractionResult.PASS;
         
         var stack = context.getItemInHand();
-        var tag = stack.getOrCreateTag();
+        var tag = ItemUtil.getTag(stack);
         if (!tag.contains(SCENT_BLOCK_ID))
             return InteractionResult.PASS;
 
         if (context.getLevel().isClientSide)
             return InteractionResult.SUCCESS;
         
-        stack.setTag(new CompoundTag());
+        ItemUtil.clearTag(stack);
 
         return InteractionResult.SUCCESS;
     }
@@ -62,7 +63,7 @@ public class ScentTreatItem extends Item {
             return InteractionResult.PASS;
         
         var stack = context.getItemInHand();
-        var tag = stack.getOrCreateTag();
+        var tag = ItemUtil.getTag(stack);
         if (tag.contains(SCENT_BLOCK_ID))
             return InteractionResult.PASS;
 
@@ -70,23 +71,25 @@ public class ScentTreatItem extends Item {
             return InteractionResult.SUCCESS;
 
         var block = state.getBlock();
-        var id = ForgeRegistries.BLOCKS.getKey(block);
+        var id = BuiltInRegistries.BLOCK.getKey(block);
         NBTUtil.putResourceLocation(tag, SCENT_BLOCK_ID, id);
+
+        ItemUtil.putTag(stack, tag);
 
         return InteractionResult.SUCCESS;
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
-        var tag = stack.getOrCreateTag();
+        var tag = ItemUtil.getTag(stack);
         if (!tag.contains(SCENT_BLOCK_ID))
             return;
-        var block = NBTUtil.getRegistryValue(tag, SCENT_BLOCK_ID, ForgeRegistries.BLOCKS);
+        var block = NBTUtil.getRegistryValue(tag, SCENT_BLOCK_ID, BuiltInRegistries.BLOCK);
         if (block == null)
             return;
         components.add(Component.translatable(this.getDescriptionId() + ".scented_block"));

@@ -9,6 +9,7 @@ import doggytalents.common.inventory.container.PackPuppyContainer;
 import doggytalents.common.inventory.container.RiceMillMenu;
 import doggytalents.common.inventory.container.TreatBagContainer;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.NetworkUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
@@ -37,7 +38,7 @@ public class DoggyContainerTypes {
     });
     public static final Supplier<MenuType<TreatBagContainer>> TREAT_BAG = register("treat_bag", (windowId, inv, data) -> {
         int slotId = data.readByte();
-        return new TreatBagContainer(windowId, inv, slotId, data.readItem());
+        return new TreatBagContainer(windowId, inv, slotId, NetworkUtil.readItemFromBuf(data));
     });
     public static final Supplier<MenuType<DogInventoriesContainer>> DOG_INVENTORIES = register("dog_inventories", (windowId, inv, data) -> {
         int noDogs = data.readInt();

@@ -10,6 +10,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 
 public class NetworkUtil {
@@ -51,6 +52,20 @@ public class NetworkUtil {
     public static ItemStack readItemFromBuf(FriendlyByteBuf buf) {  
         var reg_buf = (RegistryFriendlyByteBuf) buf;
         return ItemStack.OPTIONAL_STREAM_CODEC.decode(reg_buf);
+    }
+
+    public static <T> void writeRegistryId(FriendlyByteBuf buf, ResourceKey<Registry<T>> regKey, T val) {
+        var regBuf = (RegistryFriendlyByteBuf) buf;
+        var reg = regBuf.registryAccess().registryOrThrow(regKey);
+        int id = reg.getIdOrThrow(val);
+        regBuf.writeInt(id);
+    }
+
+    public static <T> T readRegistryId(FriendlyByteBuf buf, ResourceKey<Registry<T>> regKey) {
+        var regBuf = (RegistryFriendlyByteBuf) buf;
+        var reg = regBuf.registryAccess().registryOrThrow(regKey);
+        int id = regBuf.readInt();
+        return reg.byIdOrThrow(id);
     }
 
 }

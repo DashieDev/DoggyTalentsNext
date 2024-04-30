@@ -50,7 +50,8 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         CONFIG_TALENT_SPEC = talentPair.getRight();
         TALENT = talentPair.getLeft();
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_TALENT_SPEC, "doggytalents-talents.toml");
+        ModLoadingContext.get()
+            .getActiveContainer().registerConfig(ModConfig.Type.SERVER, CONFIG_TALENT_SPEC, "doggytalents-talents.toml");
     }
 
     public static void initRespawnTagsConfig() {
@@ -58,7 +59,8 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         CONFIG_RESPAWN_TAG_SPEC = respawnPair.getRight();
         RESPAWN_TAGS = respawnPair.getLeft();
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_RESPAWN_TAG_SPEC, "doggytalents-respawn_tags_to_remove.toml");
+        ModLoadingContext.get()
+            .getActiveContainer().registerConfig(ModConfig.Type.SERVER, CONFIG_RESPAWN_TAG_SPEC, "doggytalents-respawn_tags_to_remove.toml");
     }
 
     public static class ClientConfig {

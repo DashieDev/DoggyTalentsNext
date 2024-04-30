@@ -11,7 +11,7 @@ import doggytalents.client.entity.render.world.BedFinderRenderer;
 import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
-import doggytalents.common.chunk.GarbageChunkCollector;
+import doggytalents.common.chunk.DoggyChunkController;
 //import doggytalents.common.addon.AddonManager;
 import doggytalents.common.command.DoggyCommands;
 import doggytalents.common.config.ConfigHandler;
@@ -88,6 +88,7 @@ public class DoggyTalentsNext {
         modEventBus.addListener(DoggyRegistries::newRegistry);
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
         modEventBus.addListener(DTNNetworkHandler::onRegisterPayloadEvent);
+        modEventBus.addListener(DoggyChunkController::onChunkControllerRegistryEvent);
 
         var forgeEventBus = NeoForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
@@ -175,9 +176,9 @@ public class DoggyTalentsNext {
             DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(packOutput, lookup, event.getExistingFileHelper());
             gen.addProvider(true, blockTagProvider);
             gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider.contentsGetter(), event.getExistingFileHelper()));
-            gen.addProvider(true, new DTRecipeProvider(packOutput));
-            gen.addProvider(true, new DTLootTableProvider(packOutput));
-            gen.addProvider(true, new DTLootModifierProvider(packOutput));
+            gen.addProvider(true, new DTRecipeProvider(packOutput, lookup));
+            gen.addProvider(true, new DTLootTableProvider(packOutput, lookup));
+            gen.addProvider(true, new DTLootModifierProvider(packOutput, lookup));
             gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup, event.getExistingFileHelper()));
         }
     }

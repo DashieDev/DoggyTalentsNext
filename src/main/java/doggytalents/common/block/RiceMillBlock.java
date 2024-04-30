@@ -2,6 +2,8 @@ package doggytalents.common.block;
 
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.MapCodec;
+
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.common.block.tileentity.FoodBowlTileEntity;
@@ -29,6 +31,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -48,13 +51,17 @@ public class RiceMillBlock extends BaseEntityBlock implements WorldlyContainerHo
     
     }
 
+    public RiceMillBlock(BlockBehaviour.Properties props) {
+        this();
+    }
+
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext selectionContext) {
         return SHAPE;
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide)
             return InteractionResult.SUCCESS;
         if (player instanceof ServerPlayer sP)
@@ -109,5 +116,12 @@ public class RiceMillBlock extends BaseEntityBlock implements WorldlyContainerHo
         if (facing.getAxis() == Axis.Y)
             return Direction.NORTH;
         return facing;
+    }
+
+    public static final MapCodec<RiceMillBlock> CODEC = simpleCodec(RiceMillBlock::new);
+    
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

@@ -16,6 +16,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Function;
@@ -36,7 +37,6 @@ public class DoggyEntityTypes {
             .setUpdateInterval(4)
             .setTrackingRange(10)
             .setShouldReceiveVelocityUpdates(true)
-            .setCustomClientFactory(DoggyBeamEntity::new)
             .noSummon());
 
     public static final Supplier<EntityType<Piano>> GRAND_PIANO_BLACK = register("grand_piano_black", Piano::new, MobCategory.MISC,
@@ -79,7 +79,6 @@ public class DoggyEntityTypes {
         .setUpdateInterval(4)
         .setTrackingRange(10)
         .setShouldReceiveVelocityUpdates(true)
-        .setCustomClientFactory(DogFoodProjectile::new)
         .noSummon());
 
     public static final Supplier<EntityType<DogGunpowderProjectile>> DOG_GUNPOWDER_PROJ = register("dog_gunpowder_projectile", DogGunpowderProjectile::new, MobCategory.MISC, (b) -> b
@@ -104,9 +103,9 @@ public class DoggyEntityTypes {
                  .add(Attributes.MOVEMENT_SPEED, 0.3D)
                  .add(Attributes.KNOCKBACK_RESISTANCE, 0.25D)
                  .add(Attributes.ATTACK_DAMAGE, 2.0D)
-                 .add(DoggyAttributes.JUMP_POWER.get(), 0.42D)
-                 .add(DoggyAttributes.CRIT_CHANCE.get(), 0.01D)
-                 .add(DoggyAttributes.CRIT_BONUS.get(), 1D)
+                 .add(DoggyAttributes.JUMP_POWER, 0.42D)
+                 .add(DoggyAttributes.CRIT_CHANCE, 0.01D)
+                 .add(DoggyAttributes.CRIT_BONUS, 1D)
                  .add(Attributes.FLYING_SPEED, 0.3D)
                  .build()
          );

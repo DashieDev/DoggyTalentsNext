@@ -18,6 +18,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
@@ -67,7 +68,7 @@ public class TenguMask extends Glasses implements IAccessoryHasModel {
             super(type, properties);
         }
         @Override
-        public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+        public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
                 TooltipFlag flags) {
             var desc_id = this.getDescriptionId(stack) + ".description";
             components.add(Component.translatable(desc_id).withStyle(

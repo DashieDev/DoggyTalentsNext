@@ -39,7 +39,7 @@ public class DogArmorScreen extends AbstractContainerScreen<DogArmorContainer> {
         int y = (this.height - this.imageHeight) / 2;
         graphics.blit(Resources.DOGGY_ARMOR_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
         //TODO 1.19.4 ??
-        InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, x + 85, y + 62, 30, x + 85 - mouseX,
+        ScreenUtil.renderEntityInInventoryFollowsMouse(graphics, x + 85, y + 62, 30, x + 85 - mouseX,
             y + 65 - mouseY, this.container.getDog());
         renderArmorBar(graphics, x + 90, y + 5);
 

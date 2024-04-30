@@ -25,6 +25,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.player.Player;
 import doggytalents.common.network.PacketDistributor;
 
@@ -93,8 +94,8 @@ public class ConductingBoneScreen extends Screen {
 
         Button help = new CustomButton(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, pTicks);
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.conducting_bone.help_title")
@@ -280,7 +281,7 @@ public class ConductingBoneScreen extends Screen {
 
     @Override
     public boolean charTyped(char code, int p_231042_2_) {
-        if (SharedConstants.isAllowedChatCharacter(code)) {
+        if (StringUtil.isAllowedChatCharacter(code)) {
             this.insertText(Character.toString(code));
             return true;
         } else {

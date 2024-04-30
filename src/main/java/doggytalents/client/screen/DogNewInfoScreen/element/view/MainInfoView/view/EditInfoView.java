@@ -115,8 +115,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                        super.render(graphics, mouseX, mouseY, pTicks);
+                    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                        super.renderWidget(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.regard_team_players.help"), 150, font));
                         }
@@ -139,8 +139,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                        super.render(graphics, mouseX, mouseY, pTicks);
+                    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                        super.renderWidget(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.force_sit.help"), 150, font));
                         }
@@ -163,8 +163,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                        super.render(graphics, mouseX, mouseY, pTicks);
+                    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                        super.renderWidget(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.cross_origin_tp.help"), 150, font));
                         }
@@ -187,8 +187,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                        super.render(graphics, mouseX, mouseY, pTicks);
+                    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                        super.renderWidget(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.patrol_target_lock.help"), 150, font));
                         }

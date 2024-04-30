@@ -5,7 +5,6 @@ import doggytalents.common.storage.DogLocationStorage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.DummySavedData;
 
 public class DogLocationStorageMigration {
 
@@ -14,14 +13,14 @@ public class DogLocationStorageMigration {
 
         DogLocationStorage newStorage = null;
         try {
-            newStorage = savedData.get(DogLocationStorage::load, Constants.STORAGE_DOG_LOCATION);
+            newStorage = savedData.get(DogLocationStorage.storageFactory(), Constants.STORAGE_DOG_LOCATION);
         } catch (Exception e) {}
         if (newStorage != null)
             return;
 
         DogLocationStorage oldStorage = null;
         try {
-            oldStorage = savedData.get(DogLocationStorage::load, Constants.STORAGE_DOG_LOCATION_OLD);
+            oldStorage = savedData.get(DogLocationStorage.storageFactory(), Constants.STORAGE_DOG_LOCATION_OLD);
         } catch (Exception e) {}
         if (oldStorage == null)
             return;

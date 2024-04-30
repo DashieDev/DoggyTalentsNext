@@ -7,7 +7,7 @@ import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncStat
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
-public class IncapacitatedSyncSerializer implements EntityDataSerializer<IncapacitatedSyncState> {
+public class IncapacitatedSyncSerializer extends DogSerializer<IncapacitatedSyncState> {
 
     @Override
     public void write(FriendlyByteBuf buf, IncapacitatedSyncState state) {

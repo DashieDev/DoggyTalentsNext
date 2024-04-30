@@ -14,12 +14,10 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class DTEntityTagsProvider extends EntityTypeTagsProvider {
 
-    public DTEntityTagsProvider(PackOutput p_256095_, CompletableFuture<Provider> p_256572_,
-            @Nullable ExistingFileHelper existingFileHelper) {
+    public DTEntityTagsProvider(PackOutput p_256095_, CompletableFuture<HolderLookup.Provider> p_256572_, @org.jetbrains.annotations.Nullable net.neoforged.neoforge.common.data.ExistingFileHelper existingFileHelper) {
         super(p_256095_, p_256572_, Constants.MOD_ID, existingFileHelper);
         //TODO Auto-generated constructor stub
     }

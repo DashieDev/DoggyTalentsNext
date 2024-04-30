@@ -7,12 +7,10 @@ import javax.annotation.Nullable;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.ICasingMaterial;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
@@ -39,7 +37,7 @@ public class CasingMaterial extends ICasingMaterial {
     @Override
     public ResourceLocation getTexture() {
         if (this.texture == null) {
-            ResourceLocation loc = ForgeRegistries.BLOCKS.getKey(this.block.get());
+            ResourceLocation loc = BuiltInRegistries.BLOCK.getKey(this.block.get());
             this.texture = new ResourceLocation(loc.getNamespace(), "block/" + loc.getPath());
         }
 

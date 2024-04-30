@@ -16,6 +16,7 @@ import doggytalents.common.inventory.container.RiceMillMenu;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -51,8 +52,7 @@ import net.minecraft.world.level.block.entity.SmokerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
 public class RiceMillBlockEntity extends BlockEntity { 
     
@@ -145,7 +145,8 @@ public class RiceMillBlockEntity extends BlockEntity {
         var blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof RiceMillBlockEntity mill))
             return;
-        NetworkHooks.openScreen(player, mill.menuProvider, mill.getBlockPos());
+
+        player.openMenu(mill.menuProvider, mill.getBlockPos());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
@@ -507,36 +508,36 @@ public class RiceMillBlockEntity extends BlockEntity {
         return this.container;
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        var pos = this.getBlockPos();
-        var state = this.getBlockState();
-        var aabb = new AABB(pos, pos.offset(1, 1, 1));
-        var facing = RiceMillBlock.getFacing(state);
-        var facing_norm = facing.getNormal();
-        var expand_vec = new Vec3(facing_norm.getX(), 1, facing_norm.getZ());
-        aabb = aabb.expandTowards(expand_vec);
-        var side_axis = facing.getClockWise().getAxis();
-        if (side_axis == Axis.X) {
-            aabb = aabb.inflate(1, 0, 0);
-        } else {
-            aabb = aabb.inflate(0, 0, 1);
-        }
+    // @Override
+    // public AABB getRenderBoundingBox() {
+    //     var pos = this.getBlockPos();
+    //     var state = this.getBlockState();
+    //     var aabb = new AABB(pos, pos.offset(1, 1, 1));
+    //     var facing = RiceMillBlock.getFacing(state);
+    //     var facing_norm = facing.getNormal();
+    //     var expand_vec = new Vec3(facing_norm.getX(), 1, facing_norm.getZ());
+    //     aabb = aabb.expandTowards(expand_vec);
+    //     var side_axis = facing.getClockWise().getAxis();
+    //     if (side_axis == Axis.X) {
+    //         aabb = aabb.inflate(1, 0, 0);
+    //     } else {
+    //         aabb = aabb.inflate(0, 0, 1);
+    //     }
 
-        return aabb;
-    }
+    //     return aabb;
+    // }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        container.deserializeNBT(tag);
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider prov) {
+        super.loadAdditional(tag, prov);
+        container.deserializeNBT(tag, prov);
         this.grindingTime = tag.getInt("grindingTime");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        container.serializeNBT(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider prov) {
+        super.saveAdditional(tag, prov);
+        container.serializeNBT(tag, prov);
         tag.putInt("grindingTime", this.grindingTime);
     }
 
@@ -619,7 +620,7 @@ public class RiceMillBlockEntity extends BlockEntity {
             return Container.stillValidBlockEntity(this.mill, player);
         }
         
-        public void serializeNBT(CompoundTag compound) {
+        public void serializeNBT(CompoundTag compound, HolderLookup.Provider prov) {
             var itemsList = new ListTag();
 
             for(int i = 0; i < this.getContainerSize(); i++) {
@@ -627,7 +628,7 @@ public class RiceMillBlockEntity extends BlockEntity {
                 if (!stack.isEmpty()) {
                     CompoundTag itemTag = new CompoundTag();
                     itemTag.putByte("Slot", (byte) i);
-                    stack.save(itemTag);
+                    stack.save(prov, itemTag);
                     itemsList.add(itemTag);
                 }
             }
@@ -635,7 +636,7 @@ public class RiceMillBlockEntity extends BlockEntity {
             compound.put("MillItems", itemsList);
         }
 
-        public void deserializeNBT(CompoundTag compound) {
+        public void deserializeNBT(CompoundTag compound, HolderLookup.Provider prov) {
             if (compound.contains("MillItems", Tag.TAG_LIST)) {
                 ListTag tagList = compound.getList("MillItems", Tag.TAG_COMPOUND);
                 for (int i = 0; i < tagList.size(); i++) {
@@ -643,7 +644,7 @@ public class RiceMillBlockEntity extends BlockEntity {
                     int slot = itemTag.getInt("Slot");
 
                     if (slot >= 0 && slot < this.getContainerSize()) {
-                        this.setItem(slot, ItemStack.of(itemTag));
+                        this.setItem(slot, ItemStack.parse(prov, itemTag).orElse(ItemStack.EMPTY));
                     }
                 }
             }

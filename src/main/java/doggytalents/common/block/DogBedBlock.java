@@ -13,6 +13,7 @@ import doggytalents.common.storage.DogRespawnData;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.util.DogBedUtil;
 import doggytalents.common.util.EntityUtil;
+import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.WorldUtil;
 import net.minecraft.ChatFormatting;
@@ -33,6 +34,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -41,6 +43,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -55,12 +58,14 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import doggytalents.common.lib.Constants;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.tuple.Pair;
+
+import com.mojang.serialization.MapCodec;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -80,6 +85,10 @@ public class DogBedBlock extends BaseEntityBlock {
     public DogBedBlock() {
         super(Block.Properties.of().mapColor(MapColor.WOOD).strength(1.0F, 5.0F).sound(SoundType.WOOD));
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+    }
+
+    public DogBedBlock(BlockBehaviour.Properties props) {
+        this();
     }
 
     @Override
@@ -123,7 +132,7 @@ public class DogBedBlock extends BaseEntityBlock {
             DogBedUtil.setBedVariant(dogBedTileEntity, stack);
 
             dogBedTileEntity.setPlacer(placer);
-            CompoundTag tag = stack.getTagElement("doggytalents");
+            CompoundTag tag = ItemUtil.getTagElement(stack, "doggytalents");
             if (tag != null) {
                 Component name = NBTUtil.getTextComponent(tag, "name");
                 UUID ownerId = NBTUtil.getUniqueId(tag, "ownerId");
@@ -160,7 +169,7 @@ public class DogBedBlock extends BaseEntityBlock {
 
     @Override
     @Deprecated
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
@@ -169,7 +178,7 @@ public class DogBedBlock extends BaseEntityBlock {
         if (tile == null) 
             return InteractionResult.SUCCESS;
 
-        var stack = player.getItemInHand(handIn);
+        var stack = player.getMainHandItem();
 
         if (handleNameTagBed(player, level, state, pos, tile, stack)
             .shouldSwing())
@@ -316,7 +325,7 @@ public class DogBedBlock extends BaseEntityBlock {
         BlockState state, BlockPos pos, DogBedTileEntity tile, ItemStack stack) {
         if (!stack.is(Items.NAME_TAG))
             return InteractionResult.PASS;
-        if (!stack.hasCustomHoverName())
+        if (!ItemUtil.hasCustomHoverName(stack))
             return InteractionResult.PASS;
         
         tile.setBedName(stack.getHoverName());
@@ -351,9 +360,9 @@ public class DogBedBlock extends BaseEntityBlock {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
-
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltip, flagIn);
+        
         Pair<ICasingMaterial, IBeddingMaterial> materials = DogBedUtil.getMaterials(stack);
 
         tooltip.add(Component.translatable("dogbed.casing.title"));
@@ -369,7 +378,7 @@ public class DogBedBlock extends BaseEntityBlock {
             tooltip.add(Component.translatable("dogbed.explain.missing").withStyle(ChatFormatting.ITALIC));
         }
 
-        CompoundTag tag = stack.getTagElement("doggytalents");
+        CompoundTag tag = ItemUtil.getTagElement(stack, "doggytalents");
         if (tag != null) {
             UUID ownerId = NBTUtil.getUniqueId(tag, "ownerId");
             Component name = NBTUtil.getTextComponent(tag, "name");
@@ -391,7 +400,7 @@ public class DogBedBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader world, BlockPos pos, Player player) {
         DogBedTileEntity dogBedTileEntity = WorldUtil.getTileEntity(world, pos, DogBedTileEntity.class);
 
         if (dogBedTileEntity != null) {
@@ -400,5 +409,12 @@ public class DogBedBlock extends BaseEntityBlock {
 
         DoggyTalentsNext.LOGGER.debug("Unable to pick block on dog bed.");
         return ItemStack.EMPTY;
+    }
+
+    public static final MapCodec<DogBedBlock> CODEC = simpleCodec(DogBedBlock::new);
+    
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

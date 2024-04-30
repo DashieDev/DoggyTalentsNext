@@ -11,6 +11,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,9 +35,9 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityWit
         super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), livingEntityIn, worldIn);
     }
 
-    public DogFoodProjectile(PlayMessages.SpawnEntity packet, Level worldIn) {
-        super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), worldIn);
-    }
+    // public DogFoodProjectile(PlayMessages.SpawnEntity packet, Level worldIn) {
+    //     super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), worldIn);
+    // }
 
     @Override
     protected void onHit(HitResult hitResult) {
@@ -178,15 +179,15 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityWit
         return true;
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
-    }
-
     // @Override
-    // protected void defineSynchedData() {
-        
+    // public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    //     return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
     // }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder b) {
+        
+    }
 
     public static class DogJumpAndEatAction extends TriggerableAction {
 

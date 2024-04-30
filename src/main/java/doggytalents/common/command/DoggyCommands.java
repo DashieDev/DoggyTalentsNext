@@ -32,8 +32,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -45,8 +43,8 @@ import static net.minecraft.commands.Commands.literal;
 public class DoggyCommands {
 
     
-    public static final DeferredRegister<ArgumentTypeInfo<?,?>> ARG_TYPE = DeferredRegister.create(ForgeRegistries.Keys.COMMAND_ARGUMENT_TYPES, Constants.MOD_ID);
-    public static final RegistryObject<SingletonArgumentInfo<UUIDArgument>> SUUID = ARG_TYPE.register("doggy_uuid", () -> SingletonArgumentInfo.contextFree(UUIDArgument::uuid));
+    //public static final DeferredRegister<ArgumentTypeInfo<?,?>> ARG_TYPE = DeferredRegister.create(ForgeRegistries.Keys.COMMAND_ARGUMENT_TYPES, Constants.MOD_ID);
+    //public static final RegistryObject<SingletonArgumentInfo<UUIDArgument>> SUUID = ARG_TYPE.register("doggy_uuid", () -> SingletonArgumentInfo.contextFree(UUIDArgument::uuid));
 
 
     public static final DynamicCommandExceptionType NOTFOUND_EXCEPTION = new DynamicCommandExceptionType((arg) -> {

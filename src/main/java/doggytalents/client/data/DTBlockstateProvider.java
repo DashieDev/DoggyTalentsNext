@@ -5,6 +5,7 @@ import doggytalents.common.block.crops.DogCropBlock;
 import doggytalents.common.lib.Constants;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.models.model.TextureSlot;
@@ -12,9 +13,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.client.model.generators.*;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.ModelProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -183,7 +188,7 @@ public class DTBlockstateProvider extends BlockStateProvider {
     }
 
     private String name(Block block) {
-        return ForgeRegistries.BLOCKS.getKey(block).getPath();
+        return BuiltInRegistries.BLOCK.getKey(block).getPath();
     }
 
     private String cropState(DogCropBlock block, int age) {
@@ -195,7 +200,7 @@ public class DTBlockstateProvider extends BlockStateProvider {
     }
 
     public ResourceLocation blockTexture(Block block) {
-        ResourceLocation base = ForgeRegistries.BLOCKS.getKey(block);
+        ResourceLocation base = BuiltInRegistries.BLOCK.getKey(block);
         return prextend(base, ModelProvider.BLOCK_FOLDER + "/");
     }
 

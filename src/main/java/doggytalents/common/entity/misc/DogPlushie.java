@@ -1,6 +1,7 @@
 package doggytalents.common.entity.misc;
 
 import doggytalents.DoggyItems;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -32,8 +33,8 @@ public class DogPlushie extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(COLLAR_COLOR, 11546150);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(COLLAR_COLOR, 11546150);
     }
 
     public void setCollarColor(int val) {
@@ -137,7 +138,7 @@ public class DogPlushie extends Entity {
     public ItemStack getDogPlusieItemDrop() {
         var item = DoggyItems.DOG_PLUSHIE_TOY.get();
         var stack = new ItemStack(item);
-        item.setColor(stack, this.getCollarColor());
+        ItemUtil.setDyeColorForStack(stack, this.getCollarColor());
         return stack;
     }
     

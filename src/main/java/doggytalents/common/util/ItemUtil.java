@@ -2,14 +2,22 @@ package doggytalents.common.util;
 
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
+
+import javax.annotation.Nullable;
+
+import doggytalents.common.item.IDyeableArmorItem;
 
 public class ItemUtil {
 
@@ -78,5 +86,57 @@ public class ItemUtil {
             current_tag = custom_data.copyTag();
         tag_modifier.accept(current_tag);
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(current_tag));
+    }
+
+    public static CompoundTag getTagElement(ItemStack stack, String id) {
+        var tag = getTag(stack);
+        if (!tag.contains(id, Tag.TAG_COMPOUND))
+            return null;
+        return tag.getCompound(id);
+    }
+
+    public static boolean hasTag(ItemStack stack) {
+        return stack.has(DataComponents.CUSTOM_DATA);
+    }
+
+    public static void copyTag(ItemStack from, ItemStack to) {
+        var fromTag = from.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
+            .copyTag();
+        to.set(DataComponents.CUSTOM_DATA, CustomData.of(fromTag));
+    }
+
+    public static boolean fireResistant(ItemStack stack) {
+        return stack.has(DataComponents.FIRE_RESISTANT);
+    }
+
+    public static boolean isEddible(ItemStack stack) {
+        return stack.has(DataComponents.FOOD);
+    }
+
+    public static boolean hasCustomHoverName(ItemStack stack) {
+        return stack.has(DataComponents.CUSTOM_NAME);
+    }
+
+    public static int getDyeColorForStack(ItemStack stack) {
+        int default_color = -1;
+        if (stack.getItem() instanceof IDyeableArmorItem dye) {
+            default_color = dye.getDefaultColor(stack);
+        }
+        if (!stack.has(DataComponents.DYED_COLOR))
+            return default_color;
+        return stack.getOrDefault(
+            DataComponents.DYED_COLOR, 
+            new DyedItemColor(default_color, false)
+        ).rgb();
+    }
+
+    public static void setDyeColorForStack(ItemStack stack, int color) {
+        stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color, true));
+    }
+
+    public static Optional<ArmorTrim> getTrim(ItemStack stack) {
+        if (!stack.has(DataComponents.TRIM))
+            return Optional.empty();
+        return Optional.ofNullable(stack.get(DataComponents.TRIM));
     }
 }

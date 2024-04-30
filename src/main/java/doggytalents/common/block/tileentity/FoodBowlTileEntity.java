@@ -7,6 +7,7 @@ import doggytalents.common.inventory.container.FoodBowlContainer;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 
@@ -19,10 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,7 +41,6 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
             return FoodHandler.isFood(stack).isPresent();
         }
     };
-    private final LazyOptional<ItemStackHandler> itemStackHandler = LazyOptional.of(() -> this.inventory);
 
 
     public int timeoutCounter;
@@ -53,15 +50,15 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        this.inventory.deserializeNBT(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider prov) {
+        super.loadAdditional(compound, prov);
+        this.inventory.deserializeNBT(prov, compound);
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
-        compound.merge(this.inventory.serializeNBT());
+    public void saveAdditional(CompoundTag compound, HolderLookup.Provider prov) {
+        super.saveAdditional(compound, prov);
+        compound.merge(this.inventory.serializeNBT(prov));
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
@@ -97,15 +94,6 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
 
     public ItemStackHandler getInventory() {
         return this.inventory;
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return (LazyOptional<T>) this.itemStackHandler;
-        }
-        return super.getCapability(cap, side);
     }
 
     @Override
