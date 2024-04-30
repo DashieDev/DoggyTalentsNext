@@ -80,6 +80,11 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     }
 
     @Override
+    protected void renderBlurredBackground(float p_330683_) {
+        super.renderBlurredBackground(p_330683_);
+    }
+
+    @Override
     public boolean mouseClicked(double p_94695_, double p_94696_, int p_94697_) {
         //invalidate focus every click. Prefer focus to be null if the click is outside of any bound.
         this.setFocused(null);
