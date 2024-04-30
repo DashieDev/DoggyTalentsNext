@@ -70,28 +70,6 @@ runs {
     }
 }
 
-tasks.named("runClient") {
-    doFirst {
-
-        println("vmArgs:")
-        def vmArgs = "";
-        for (item in runs.client.realiseJvmArguments()) {
-            vmArgs = vmArgs + item + " "
-        }
-        println(vmArgs)
-        println("==================================")
-        println("args:")
-        def args1 = ""
-        for (item in runs.client.getProgramArguments().get()) {
-            args1 = args1 + item + " "
-        }
-        println(args1)
-        println("==================================")
-        println("")
-        println("")
-    }
-}
-
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
@@ -128,4 +106,27 @@ tasks.withType(JavaCompile).configureEach {
 
 test {
     useJUnitPlatform()
+}
+
+
+tasks.named("runClient") {
+    doFirst {
+
+        println("vmArgs:")
+        def vmArgs = "";
+        for (item in runs.client.realiseJvmArguments()) {
+            vmArgs = vmArgs + item + " "
+        }
+        println(vmArgs)
+        println("==================================")
+        println("args:")
+        def args1 = ""
+        for (item in runs.client.getProgramArguments().get()) {
+            args1 = args1 + item + " "
+        }
+        println(args1)
+        println("==================================")
+        println("")
+        println("")
+    }
 }
