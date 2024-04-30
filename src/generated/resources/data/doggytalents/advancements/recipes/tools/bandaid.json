@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "doggytalents:koji"
-            ]
+            "items": "doggytalents:koji"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_koji",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_koji"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:bandaid"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

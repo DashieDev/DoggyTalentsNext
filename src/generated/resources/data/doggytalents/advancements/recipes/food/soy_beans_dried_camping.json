@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "doggytalents:soy_beans"
-            ]
+            "items": "doggytalents:soy_beans"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_dtn_soy_beans",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dtn_soy_beans"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:soy_beans_dried_camping"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

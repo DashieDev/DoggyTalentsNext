@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:elytra"
-            ]
+            "items": "minecraft:elytra"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_elytra",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_elytra"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:crow_wings"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

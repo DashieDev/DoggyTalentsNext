@@ -15,7 +15,7 @@
     "LWL"
   ],
   "result": {
-    "item": "doggytalents:leather_jacket"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:leather_jacket"
+  }
 }

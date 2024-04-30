@@ -14,7 +14,7 @@
     "SBS"
   ],
   "result": {
-    "item": "doggytalents:soy_milk"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:soy_milk"
+  }
 }

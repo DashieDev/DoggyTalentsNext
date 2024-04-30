@@ -6,5 +6,8 @@
   "ingredient": {
     "item": "doggytalents:uncooked_rice_bowl"
   },
-  "result": "doggytalents:rice_bowl"
+  "result": {
+    "count": 1,
+    "id": "doggytalents:rice_bowl"
+  }
 }

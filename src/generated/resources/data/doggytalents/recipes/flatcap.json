@@ -14,7 +14,7 @@
     "CTC"
   ],
   "result": {
-    "item": "doggytalents:flatcap"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:flatcap"
+  }
 }

@@ -18,7 +18,7 @@
     " C "
   ],
   "result": {
-    "item": "doggytalents:ceremonial_garb"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:ceremonial_garb"
+  }
 }

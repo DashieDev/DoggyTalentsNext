@@ -24,7 +24,7 @@
     "R R"
   ],
   "result": {
-    "item": "doggytalents:conan_suit"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:conan_suit"
+  }
 }

@@ -14,7 +14,7 @@
     "II "
   ],
   "result": {
-    "item": "doggytalents:whistle"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:whistle"
+  }
 }

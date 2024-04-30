@@ -15,7 +15,7 @@
     " W "
   ],
   "result": {
-    "item": "doggytalents:wig"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:wig"
+  }
 }

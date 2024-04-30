@@ -18,7 +18,7 @@
     "WLW"
   ],
   "result": {
-    "item": "doggytalents:cape_coloured"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:cape_coloured"
+  }
 }

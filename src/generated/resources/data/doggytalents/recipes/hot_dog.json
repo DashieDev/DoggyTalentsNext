@@ -23,7 +23,7 @@
     "BCB"
   ],
   "result": {
-    "item": "doggytalents:hot_dog"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:hot_dog"
+  }
 }

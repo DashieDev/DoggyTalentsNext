@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:paper"
-            ]
+            "items": "minecraft:paper"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_paper",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_paper"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:birthday_hat_alt"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

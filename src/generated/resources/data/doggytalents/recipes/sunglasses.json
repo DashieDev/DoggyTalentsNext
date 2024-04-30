@@ -14,7 +14,7 @@
     "GSG"
   ],
   "result": {
-    "item": "doggytalents:sunglasses"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:sunglasses"
+  }
 }

@@ -1,21 +1,17 @@
 {
   "criteria": {
     "get_dog_drunk": {
-      "conditions": {},
       "trigger": "doggytalents:get_dog_drunk"
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.doggytalents.get_dog_drunk.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
-      "item": "doggytalents:sake"
+      "count": 1,
+      "id": "doggytalents:sake"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.doggytalents.get_dog_drunk.title"
     }

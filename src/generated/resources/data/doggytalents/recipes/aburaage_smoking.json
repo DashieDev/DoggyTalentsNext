@@ -6,5 +6,8 @@
   "ingredient": {
     "item": "doggytalents:tofu"
   },
-  "result": "doggytalents:aburaage"
+  "result": {
+    "count": 1,
+    "id": "doggytalents:aburaage"
+  }
 }

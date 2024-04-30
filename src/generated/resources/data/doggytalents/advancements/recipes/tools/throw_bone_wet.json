@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "doggytalents:throw_bone"
-            ]
+            "items": "doggytalents:throw_bone"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_throw_bone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_throw_bone"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:throw_bone_wet"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
