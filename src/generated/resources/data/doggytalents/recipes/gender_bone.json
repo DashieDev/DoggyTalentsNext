@@ -24,7 +24,7 @@
     "PM "
   ],
   "result": {
-    "item": "doggytalents:gender_bone"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:gender_bone"
+  }
 }

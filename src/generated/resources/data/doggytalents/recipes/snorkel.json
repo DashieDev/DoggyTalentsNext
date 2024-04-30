@@ -17,7 +17,7 @@
     "GIG"
   ],
   "result": {
-    "item": "doggytalents:snorkel"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:snorkel"
+  }
 }

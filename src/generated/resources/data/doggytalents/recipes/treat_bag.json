@@ -14,7 +14,7 @@
     "LLL"
   ],
   "result": {
-    "item": "doggytalents:treat_bag"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:treat_bag"
+  }
 }

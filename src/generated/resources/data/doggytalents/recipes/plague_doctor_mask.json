@@ -24,7 +24,7 @@
     "LFL"
   ],
   "result": {
-    "item": "doggytalents:plague_doctor_mask"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:plague_doctor_mask"
+  }
 }

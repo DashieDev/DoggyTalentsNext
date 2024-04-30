@@ -24,7 +24,7 @@
     "SW "
   ],
   "result": {
-    "item": "doggytalents:amnesia_bone"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:amnesia_bone"
+  }
 }

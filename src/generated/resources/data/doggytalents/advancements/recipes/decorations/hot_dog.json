@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:bread"
-            ]
+            "items": "minecraft:bread"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_bread",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_bread"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:hot_dog"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

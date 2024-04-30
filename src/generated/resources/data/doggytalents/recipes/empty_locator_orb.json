@@ -21,7 +21,7 @@
     " G "
   ],
   "result": {
-    "item": "doggytalents:empty_locator_orb"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:empty_locator_orb"
+  }
 }

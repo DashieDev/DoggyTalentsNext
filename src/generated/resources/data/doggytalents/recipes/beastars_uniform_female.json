@@ -21,7 +21,7 @@
     "CCC"
   ],
   "result": {
-    "item": "doggytalents:beastars_uniform_female"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:beastars_uniform_female"
+  }
 }

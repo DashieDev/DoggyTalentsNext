@@ -13,25 +13,20 @@
           }
         ],
         "item": {
-          "items": [
-            "doggytalents:training_treat"
-          ]
+          "items": "doggytalents:training_treat"
         }
       },
       "trigger": "minecraft:player_interacted_with_entity"
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.doggytalents.train_dog_hajimemashite.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
-      "item": "doggytalents:training_treat"
+      "count": 1,
+      "id": "doggytalents:training_treat"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.doggytalents.train_dog_hajimemashite.title"
     }

@@ -18,7 +18,7 @@
     " G "
   ],
   "result": {
-    "item": "doggytalents:canine_tracker"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:canine_tracker"
+  }
 }

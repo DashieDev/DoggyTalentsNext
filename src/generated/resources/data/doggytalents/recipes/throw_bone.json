@@ -15,7 +15,7 @@
     " X "
   ],
   "result": {
-    "item": "doggytalents:throw_bone"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:throw_bone"
+  }
 }

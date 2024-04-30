@@ -17,7 +17,7 @@
     " R "
   ],
   "result": {
-    "item": "doggytalents:gyudon"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:gyudon"
+  }
 }

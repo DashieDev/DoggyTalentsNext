@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:wool"
+            "items": "#minecraft:wool"
           }
         ]
       },
@@ -20,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_wool",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_wool"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:lab_coat"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

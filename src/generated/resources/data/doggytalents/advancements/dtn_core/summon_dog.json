@@ -10,9 +10,7 @@
           {
             "condition": "minecraft:match_tool",
             "predicate": {
-              "items": [
-                "doggytalents:doggy_charm"
-              ]
+              "items": "doggytalents:doggy_charm"
             }
           }
         ]
@@ -21,17 +19,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
     "description": {
       "translate": "advancements.doggytalents.doggy_charm_summon.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
-      "item": "doggytalents:doggy_charm"
+      "count": 1,
+      "id": "doggytalents:doggy_charm"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.doggytalents.doggy_charm_summon.title"
     }

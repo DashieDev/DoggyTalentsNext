@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "doggytalents:super_treat"
-            ]
+            "items": "doggytalents:super_treat"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_master_treat",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_master_treat"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:master_treat"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -12,7 +12,7 @@
     " S "
   ],
   "result": {
-    "item": "doggytalents:giant_stick"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:giant_stick"
+  }
 }

@@ -15,7 +15,6 @@
   ],
   "result": {
     "count": 4,
-    "item": "doggytalents:bowtie"
-  },
-  "show_notification": true
+    "id": "doggytalents:bowtie"
+  }
 }

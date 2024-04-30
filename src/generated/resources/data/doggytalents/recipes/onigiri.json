@@ -14,7 +14,7 @@
     "K"
   ],
   "result": {
-    "item": "doggytalents:onigiri"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:onigiri"
+  }
 }

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "doggytalents:rice_grains"
-            ]
+            "items": "doggytalents:rice_grains"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_dtn_rice_grains",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dtn_rice_grains"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:training_treat"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

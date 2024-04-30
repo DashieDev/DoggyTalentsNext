@@ -24,7 +24,7 @@
     "BPB"
   ],
   "result": {
-    "item": "doggytalents:divine_retribution"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:divine_retribution"
+  }
 }

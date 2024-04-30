@@ -2,17 +2,15 @@
   "type": "doggytalents:rice_from_grass",
   "conditions": [
     {
-      "condition": "forge:loot_table_id",
-      "loot_table_id": "minecraft:blocks/grass"
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:blocks/short_grass"
     },
     {
       "condition": "minecraft:inverted",
       "term": {
         "condition": "minecraft:match_tool",
         "predicate": {
-          "items": [
-            "minecraft:shears"
-          ]
+          "items": "minecraft:shears"
         }
       }
     },

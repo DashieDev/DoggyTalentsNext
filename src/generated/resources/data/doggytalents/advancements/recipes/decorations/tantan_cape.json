@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:leather"
-            ]
+            "items": "minecraft:leather"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_leather",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_leather"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:tantan_cape"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

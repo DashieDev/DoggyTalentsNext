@@ -21,7 +21,7 @@
     "BWB"
   ],
   "result": {
-    "item": "doggytalents:pianist_suit"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:pianist_suit"
+  }
 }
