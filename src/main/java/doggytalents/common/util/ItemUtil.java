@@ -118,7 +118,8 @@ public class ItemUtil {
     }
 
     public static int getDyeColorForStack(ItemStack stack) {
-        int default_color = -1;
+        int default_color = 0xffffff;
+        int color_mask = 0xff000000;
         if (stack.getItem() instanceof IDyeableArmorItem dye) {
             default_color = dye.getDefaultColor(stack);
         }
@@ -127,7 +128,7 @@ public class ItemUtil {
         return stack.getOrDefault(
             DataComponents.DYED_COLOR, 
             new DyedItemColor(default_color, false)
-        ).rgb();
+        ).rgb() | color_mask;
     }
 
     public static void setDyeColorForStack(ItemStack stack, int color) {
