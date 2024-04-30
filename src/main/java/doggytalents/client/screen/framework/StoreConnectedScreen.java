@@ -81,7 +81,7 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
 
     @Override
     protected void renderBlurredBackground(float p_330683_) {
-        
+        super.renderBlurredBackground(p_330683_);
     }
 
     @Override
