@@ -32,11 +32,8 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
-import net.neoforged.neoforge.items.wrapper.EmptyHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -80,8 +77,8 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     }
 
     private void findFoodAndShootOut(ServerPlayer player, ItemStack stack) {
-        var itemHandler = (IItemHandlerModifiable) stack.getCapability(Capabilities.ItemHandler.ITEM);
-        if (itemHandler == null) return;
+        var itemHandler = new TreatBagItemHandler(stack);
+        //if (itemHandler == null) return;
         int foodStackId = findThrowableInItemHandler(itemHandler);
         if (foodStackId < 0)
             return;
@@ -146,9 +143,9 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     }
 
     private void displayContents(ItemStack stack, List<Component> tooltip, TooltipFlag flagIn) {
-        var inv = stack.getCapability(Capabilities.ItemHandler.ITEM);
-        if (inv == null)
-            return; 
+        var inv = new TreatBagItemHandler(stack);
+        // if (inv == null)
+        //     return; 
         var contentsOverview = ItemUtil.getContentOverview(inv);
         var contentsMap = contentsOverview.contents();
         if (contentsMap.isEmpty())
