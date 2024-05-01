@@ -67,7 +67,8 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     }
 
     private void findFoodAndShootOut(ServerPlayer player, ItemStack stack) {
-        var itemHandler = new ContainerWrapper(player.getInventory());
+        var itemHandler = new TreatBagItemHandler(stack);
+        //if (itemHandler == null) return;
         int foodStackId = findThrowableInItemHandler(itemHandler);
         if (foodStackId < 0)
             return;
@@ -131,56 +132,34 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         
     }
 
-    // private void displayContents(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    //     var inv = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
-    //     var contentsOverview = ItemUtil.getContentOverview(inv);
-    //     var contentsMap = contentsOverview.contents();
-    //     if (contentsMap.isEmpty())
-    //         return;
-    //     tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents"));
-    //     for (var entry : contentsMap.entrySet()) {
-    //         var c1 = Component.translatable("item.doggytalents.starter_bundle.contains",
-    //             entry.getValue(), entry.getKey().getDescription()).withStyle(
-    //                 Style.EMPTY.withColor(0xffa3a3a3)
-    //             );
-    //         tooltip.add(c1);
-    //     }
-    //     if (contentsOverview.isMore() > 0) {
-    //         tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents.more",
-    //             contentsOverview.isMore()).withStyle(
-    //             Style.EMPTY.withColor(0xffa3a3a3)
-    //         ));
-    //     }
-        
-        
-    // }
+    private void displayContents(ItemStack stack, List<Component> tooltip, TooltipFlag flagIn) {
+        var inv = new TreatBagItemHandler(stack);
+        // if (inv == null)
+        //     return; 
+        var contentsOverview = ItemUtil.getContentOverview(inv);
+        var contentsMap = contentsOverview.contents();
+        if (contentsMap.isEmpty())
+            return;
+        tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents"));
+        for (var entry : contentsMap.entrySet()) {
+            var c1 = Component.translatable("item.doggytalents.starter_bundle.contains",
+                entry.getValue(), entry.getKey().getDescription()).withStyle(
+                    Style.EMPTY.withColor(0xffa3a3a3)
+                );
+            tooltip.add(c1);
+        }
+        if (contentsOverview.isMore() > 0) {
+            tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents.more",
+                contentsOverview.isMore()).withStyle(
+                Style.EMPTY.withColor(0xffa3a3a3)
+            ));
+        }
 
-    // @Override
-    // public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundTag nbt) {
-    //     // https://github.com/MinecraftForge/MinecraftForge/issues/5989
-    //     if (ForgeCapabilities.ITEM_HANDLER == null) {
-    //         return null;
-    //     }
-
-    //     return new ICapabilityProvider() {
-    //         final LazyOptional<IItemHandler> itemHandlerInstance = LazyOptional.of(() -> new TreatBagItemHandler(stack));
-
-    //         @Override
-    //         @Nonnull
-    //         public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, final @Nullable Direction side) {
-    //             if (cap == ForgeCapabilities.ITEM_HANDLER) {
-    //                 return (LazyOptional<T>) this.itemHandlerInstance;
-    //             }
-    //             return LazyOptional.empty();
-    //         }
-    //     };
-    // }
-
-    // @Override
-    // public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-    //     //TODO : do we want to matches the tag as well ? As this one is currently do...
-    //     return !ItemStack.matches(oldStack, newStack);
-    // }
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        //TODO : do we want to matches the tag as well ? As this one is currently do...
+        return !ItemStack.matches(oldStack, newStack);
+    }
 
     @Override
     public boolean isFood(ItemStack stackIn) {
