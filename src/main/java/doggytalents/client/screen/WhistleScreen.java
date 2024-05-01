@@ -125,13 +125,13 @@ public class WhistleScreen extends Screen{
             this.mouseY0 = mouseY;
         }
 
+        super.render(graphics, mouseX, mouseY, partialTicks);
+
         int half_width = this.width >> 1;
         int half_height = this.height >> 1; 
       
         graphics.fill( half_width - 100, half_height - 100, half_width + 100, half_height + 100, Integer.MIN_VALUE);
         graphics.fill( half_width - 100, half_height + 105, half_width + 100, half_height + 117, Integer.MIN_VALUE);
-
-        super.render(graphics, mouseX, mouseY, partialTicks);
 
         if (this.settingKeysMode) {
             renderModeListSetHotkey(graphics, mouseX, mouseY, partialTicks);
