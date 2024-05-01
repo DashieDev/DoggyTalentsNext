@@ -30,8 +30,7 @@ public class DogArmorItemHandler extends ItemStackHandler {
            if (!stack.isEmpty()) {
               CompoundTag itemTag = new CompoundTag();
               itemTag.putByte("Slot", (byte) i);
-              stack.save(prov, itemTag);
-              itemsList.add(itemTag);
+              itemsList.add(stack.save(prov, itemTag));
            }
         }
 
