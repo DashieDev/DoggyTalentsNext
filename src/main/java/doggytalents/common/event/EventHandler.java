@@ -12,6 +12,7 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.config.ConfigHandler;
+import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.WolfBegAtTreatGoal;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
@@ -197,10 +198,11 @@ public class EventHandler {
 
         var wolf_collar_color = wolf.getCollarColor();
         var color = Util.srgbArrayToInt(wolf_collar_color.getTextureDiffuseColors());
-        var dog_collar = DoggyAccessories.DYEABLE_COLLAR.get()
+        var dog_collar = DoggyAccessories.DYEABLE_COLLAR_THICC.get()
             .create(color);
         if (dog_collar != null)
             dog.addAccessory(dog_collar);
+        migrateWolfVariant(wolf, dog);
             
         if (wolf.hasCustomName()) {
             dog.setDogCustomName(wolf.getCustomName());
@@ -224,6 +226,11 @@ public class EventHandler {
         if (level.getEntity(uuid) != null)
             return;
         dog.setUUID(uuid);
+    }
+
+    private static void migrateWolfVariant(Wolf wolf, Dog dog) {
+        var classical = ClassicalVar.getWolf(wolf);
+        dog.setClassicalVar(classical);
     }
 
     @SubscribeEvent
