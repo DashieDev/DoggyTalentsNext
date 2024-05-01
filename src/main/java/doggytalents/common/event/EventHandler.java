@@ -198,6 +198,7 @@ public class EventHandler {
         if (dog_collar != null)
             dog.addAccessory(dog_collar);
         migrateWolfVariant(wolf, dog);
+        migrateWolfArmor(wolf, dog);
             
         if (wolf.hasCustomName()) {
             dog.setDogCustomName(wolf.getCustomName());
@@ -226,6 +227,13 @@ public class EventHandler {
     private static void migrateWolfVariant(Wolf wolf, Dog dog) {
         var classical = ClassicalVar.getWolf(wolf);
         dog.setClassicalVar(classical);
+    }
+
+    private static void migrateWolfArmor(Wolf wolf, Dog dog) {
+        if (!wolf.hasArmor())
+            return;
+        var armor_stack = wolf.getBodyArmorItem().copyWithCount(1);
+        dog.setWolfArmor(armor_stack);
     }
 
     //@SubscribeEvent

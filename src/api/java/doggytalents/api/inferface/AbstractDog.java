@@ -177,6 +177,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public abstract float getDogVisualBbHeight();
     public abstract float getDogVisualBbWidth();
     public abstract DogArmorItemHandler dogArmors();
+    public abstract ItemStack wolfArmor();
     public abstract boolean canDogWearArmor();
     public abstract boolean canDogUseTools();
     public abstract DogAnimation getAnim();
