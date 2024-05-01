@@ -371,6 +371,10 @@ public class Dog extends AbstractDog {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        if (canWolfArmorAbsorb(damageSourceIn)) {
+            return SoundEvents.WOLF_ARMOR_DAMAGE;
+        }
+        
         return SoundEvents.WOLF_HURT;
     }
 
@@ -1686,9 +1690,7 @@ public class Dog extends AbstractDog {
     }
 
     private boolean mayWolfArmorAbsorb(DamageSource source, float amount) {
-        boolean is_wolf_armor_effective = 
-            this.hasWolfArmor() && !source.is(DamageTypeTags.BYPASSES_WOLF_ARMOR);
-        if (!is_wolf_armor_effective)
+        if (!canWolfArmorAbsorb(source))
             return false;
 
         var wolf_armor_stack = this.wolfArmor();
@@ -1698,6 +1700,10 @@ public class Dog extends AbstractDog {
         
         this.playWolfArmorCrackSound(useItem, damage_val0, damage_max0);
         return true;
+    }
+
+    private boolean canWolfArmorAbsorb(DamageSource source) {
+        return this.hasWolfArmor() && !source.is(DamageTypeTags.BYPASSES_WOLF_ARMOR);
     }
 
     private void playWolfArmorCrackSound(ItemStack wolf_armor_stack, int damage_val0, int damage_max0) {
