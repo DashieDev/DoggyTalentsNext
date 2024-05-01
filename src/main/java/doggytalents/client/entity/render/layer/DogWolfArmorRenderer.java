@@ -7,6 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -37,8 +38,11 @@ public class DogWolfArmorRenderer extends RenderLayer<Dog, DogModel> {
         new ResourceLocation("textures/entity/wolf/wolf_armor_crackiness_high.png")
     );
 
+    private DogModel defaultModel;
+
     public DogWolfArmorRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);
+        this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
     }
     
     @Override
@@ -65,9 +69,21 @@ public class DogWolfArmorRenderer extends RenderLayer<Dog, DogModel> {
             return;
         var wolfArmorPair = wolfArmorOptional.get();
 
-        renderWolfArmorLayerMain(poseStack, buffer, packedLight, wolfArmorPair.getRight());
-        renderWolfArmorLayerDyed(poseStack, buffer, packedLight, wolfArmorPair.getLeft(), wolfArmorPair.getRight());
-        renderWolfArmorLayerCracks(poseStack, buffer, packedLight, wolfArmorPair.getLeft());
+        var parentModel = this.getParentModel();
+        DogModel dogModel;
+        if (parentModel.useDefaultModelForAccessories()) {
+            dogModel = this.defaultModel;
+        } else {
+            dogModel = parentModel;
+        }
+        if (dogModel != parentModel) {
+            this.getParentModel().copyPropertiesTo(dogModel);
+            dogModel.copyFrom(parentModel);
+        }
+
+        renderWolfArmorLayerMain(dogModel, poseStack, buffer, packedLight, wolfArmorPair.getRight());
+        renderWolfArmorLayerDyed(dogModel, poseStack, buffer, packedLight, wolfArmorPair.getLeft(), wolfArmorPair.getRight());
+        renderWolfArmorLayerCracks(dogModel, poseStack, buffer, packedLight, wolfArmorPair.getLeft());
     }
 
     private Optional<Pair<ItemStack, AnimalArmorItem>> getWolfArmorItem(Dog dog) {
@@ -79,13 +95,12 @@ public class DogWolfArmorRenderer extends RenderLayer<Dog, DogModel> {
         return Optional.of(Pair.of(wolf_armor_stack, wolfArmorItem));
     }
 
-    private void renderWolfArmorLayerMain(PoseStack poseStack, MultiBufferSource buffer, int light, AnimalArmorItem item) {
+    private void renderWolfArmorLayerMain(DogModel model, PoseStack poseStack, MultiBufferSource buffer, int light, AnimalArmorItem item) {
         var vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(item.getTexture()));
-        var model = this.getParentModel();
         model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    private void renderWolfArmorLayerDyed(PoseStack stack, MultiBufferSource buffer, int light, 
+    private void renderWolfArmorLayerDyed(DogModel model, PoseStack stack, MultiBufferSource buffer, int light, 
         ItemStack itemStack, AnimalArmorItem item) {
         if (item != Items.WOLF_ARMOR)
             return;
@@ -101,7 +116,6 @@ public class DogWolfArmorRenderer extends RenderLayer<Dog, DogModel> {
         float g = (float)FastColor.ARGB32.green(i) / 255.0F;
         float b = (float)FastColor.ARGB32.blue(i) / 255.0F;
         
-        var model = this.getParentModel();
         model
             .renderToBuffer(
                 stack, buffer.getBuffer(RenderType.entityCutoutNoCull(armor_overlay)), light, 
@@ -109,13 +123,12 @@ public class DogWolfArmorRenderer extends RenderLayer<Dog, DogModel> {
             );
     }
 
-    private void renderWolfArmorLayerCracks(PoseStack stack, MultiBufferSource buffer, int light, ItemStack itemStack) {
+    private void renderWolfArmorLayerCracks(DogModel model, PoseStack stack, MultiBufferSource buffer, int light, ItemStack itemStack) {
         var crack_level = Crackiness.WOLF_ARMOR.byDamage(itemStack);
         if (crack_level == Crackiness.Level.NONE)
             return;
 
         var crack_rl = ARMOR_CRACK_LOCATIONS.get(crack_level);
-        var model = this.getParentModel();
         var vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(crack_rl));
         model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
