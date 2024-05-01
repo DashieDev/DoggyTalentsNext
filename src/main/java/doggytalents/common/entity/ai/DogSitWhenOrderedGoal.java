@@ -2,6 +2,7 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -29,7 +30,7 @@ public class DogSitWhenOrderedGoal extends Goal {
             return false;
         if (dog.isInWaterOrBubble())
             return false;
-        return dog.isOrderedToSit();
+        return dog.isOrderedToSit() || dog.getOwner() == null;
     }
 
     @Override
@@ -66,6 +67,13 @@ public class DogSitWhenOrderedGoal extends Goal {
     @Override
     public void stop() {
         this.dog.setInSittingPose(false);
+    }
+
+    @Override
+    public void tick() {
+        if (!this.dog.isInSittingPose() && this.dog.getAnim() == DogAnimation.NONE) {
+            this.dog.setInSittingPose(true);
+        }
     }
     
 }
