@@ -76,7 +76,8 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     }
 
     private void findFoodAndShootOut(ServerPlayer player, ItemStack stack) {
-        var itemHandler = (IItemHandlerModifiable) stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(EmptyHandler.INSTANCE);
+        var itemHandler = new TreatBagItemHandler(stack);
+        //if (itemHandler == null) return;
         int foodStackId = findThrowableInItemHandler(itemHandler);
         if (foodStackId < 0)
             return;
@@ -140,8 +141,10 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         
     }
 
-    private void displayContents(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        var inv = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(EmptyHandler.INSTANCE);
+    private void displayContents(ItemStack stack, List<Component> tooltip, TooltipFlag flagIn) {
+        var inv = new TreatBagItemHandler(stack);
+        // if (inv == null)
+        //     return; 
         var contentsOverview = ItemUtil.getContentOverview(inv);
         var contentsMap = contentsOverview.contents();
         if (contentsMap.isEmpty())
@@ -162,27 +165,6 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         }
     
         
-    }
-
-    @Override
-    public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundTag nbt) {
-        // https://github.com/MinecraftForge/MinecraftForge/issues/5989
-        if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY == null) {
-            return null;
-        }
-
-        return new ICapabilityProvider() {
-            final LazyOptional<IItemHandler> itemHandlerInstance = LazyOptional.of(() -> new TreatBagItemHandler(stack));
-
-            @Override
-            @Nonnull
-            public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, final @Nullable Direction side) {
-                if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-                    return (LazyOptional<T>) this.itemHandlerInstance;
-                }
-                return LazyOptional.empty();
-            }
-        };
     }
 
     @Override
