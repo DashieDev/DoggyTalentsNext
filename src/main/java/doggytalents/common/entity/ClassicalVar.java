@@ -110,5 +110,18 @@ public enum ClassicalVar {
         var classical = vanillToClassical.getOrDefault(variant_key, PALE);
         return classical;
     }
-
+     
+    public static Map<ClassicalVar, Integer> COLOR_MAP = 
+        new ImmutableMap.Builder<ClassicalVar, Integer>()
+        .put(ClassicalVar.PALE, 0xffdad7d8)
+        .put(ClassicalVar.CHESTNUT, 0xff9a8483)
+        .put(ClassicalVar.STRIPED, 0xffc9af80)
+        .put(ClassicalVar.WOOD, 0xff76583c)
+        .put(ClassicalVar.RUSTY, 0xffde8338)
+        .put(ClassicalVar.BLACK, 0xff292629)
+        .put(ClassicalVar.SNOWY, 0xffb8877e)
+        .put(ClassicalVar.ASHEN, 0xff928991)
+        .put(ClassicalVar.SPOTTED, 0xffc8bc30)
+        .build();
+    
 }
