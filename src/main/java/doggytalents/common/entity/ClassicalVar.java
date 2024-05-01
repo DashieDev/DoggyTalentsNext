@@ -4,10 +4,15 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import doggytalents.common.util.Util;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.WolfVariant;
+import net.minecraft.world.entity.animal.WolfVariants;
 
 public enum ClassicalVar {
     PALE(0, "pale"),
@@ -28,6 +33,18 @@ public enum ClassicalVar {
     private static final Map<ResourceLocation, ClassicalVar> idMap = 
         Arrays.stream(VALUES)
             .collect(Collectors.toMap(toKey -> toKey.id, toVal -> toVal));
+    private static final Map<ResourceKey<WolfVariant>, ClassicalVar> vanillToClassical =
+        new ImmutableMap.Builder<ResourceKey<WolfVariant>, ClassicalVar>()
+        .put(WolfVariants.PALE, ClassicalVar.PALE)
+        .put(WolfVariants.CHESTNUT, ClassicalVar.CHESTNUT)
+        .put(WolfVariants.STRIPED, ClassicalVar.STRIPED)
+        .put(WolfVariants.WOODS, ClassicalVar.WOOD)
+        .put(WolfVariants.RUSTY, ClassicalVar.RUSTY)
+        .put(WolfVariants.BLACK, ClassicalVar.BLACK)
+        .put(WolfVariants.SNOWY, ClassicalVar.SNOWY)
+        .put(WolfVariants.ASHEN, ClassicalVar.ASHEN)
+        .put(WolfVariants.SPOTTED, ClassicalVar.SPOTTED)
+        .build();
 
     private ClassicalVar(int idInt, String name) {
         this.idInt = idInt;
@@ -75,6 +92,13 @@ public enum ClassicalVar {
             return ClassicalVar.PALE;
         }
         return VALUES[id];
+    }
+
+    public static ClassicalVar getWolf(Wolf wolf) {
+        var variant = wolf.getVariant();
+        var variant_key = variant.unwrapKey().orElse(WolfVariants.PALE);
+        var classical = vanillToClassical.getOrDefault(variant_key, PALE);
+        return classical;
     }
 
 }
