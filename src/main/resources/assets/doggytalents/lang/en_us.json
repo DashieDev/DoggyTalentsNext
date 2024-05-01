@@ -461,6 +461,16 @@
    "entity.doggytalents.dog.unknown_owner": "Owner Unknown",
    "entity.doggytalents.dog.untamed": "Untamed",
 
+   "dog.classical.variant.pale": "Pale",
+   "dog.classical.variant.chestnut": "Chestnut",
+   "dog.classical.variant.striped": "Striped",
+   "dog.classical.variant.woods": "Woods",
+   "dog.classical.variant.rusty": "Rusty",
+   "dog.classical.variant.black": "Black",
+   "dog.classical.variant.snowy": "Snowy",
+   "dog.classical.variant.ashen": "Ashen",
+   "dog.classical.variant.spotted": "Spotted",
+
    "doggytalents.whistle.short": "Whistle Short",
    "doggytalents.whistle.long": "Whistle Long",
 
