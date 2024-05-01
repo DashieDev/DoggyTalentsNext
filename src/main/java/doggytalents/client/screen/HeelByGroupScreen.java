@@ -115,11 +115,12 @@ public class HeelByGroupScreen extends Screen {
             }
             
         }
-      
-        Gui.fill(stack, half_width - 100, half_height - 100, half_width + 100, half_height + 100, Integer.MIN_VALUE);
-        Gui.fill(stack, half_width - 100, half_height + 105, half_width + 100, half_height + 117, Integer.MIN_VALUE);
+        
+        super.render(graphics, mouseX, mouseY, partialTicks);
 
-        super.render(stack, mouseX, mouseY, partialTicks);
+        graphics.fill( half_width - 100, half_height - 100, half_width + 100, half_height + 100, Integer.MIN_VALUE);
+        graphics.fill( half_width - 100, half_height + 105, half_width + 100, half_height + 117, Integer.MIN_VALUE);
+
         int offset = 0;
         int textx = half_width - 100 + 2;
         int texty = half_height - 100 + 2;
