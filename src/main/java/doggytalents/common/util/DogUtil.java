@@ -28,6 +28,8 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -665,6 +667,34 @@ public class DogUtil {
             .normalize();
         var dot = v_look_wanted.dot(v_look_owner);
         return dot > 0.7;
+    }
+
+    public static boolean isDangerPathType(PathType pathType) {
+        switch (pathType) {
+        case POWDER_SNOW:
+        case DANGER_POWDER_SNOW:
+        case LAVA:
+        case DANGER_FIRE:
+        case DAMAGE_FIRE:
+        case DANGER_OTHER:
+        case DAMAGE_OTHER:
+        case DAMAGE_CAUTIOUS:
+        case DANGER_TRAPDOOR:
+        case TRAPDOOR:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    public static boolean isScute(ItemStack stack) {
+        return ArmorMaterials.ARMADILLO.value().repairIngredient()
+            .get().test(stack);
+    }
+
+    public static int getWolfArmorRepairVal(ItemStack stack) {
+        float repair_val = stack.getMaxDamage() * 0.125f;
+        return (int) repair_val;
     }
 
 
