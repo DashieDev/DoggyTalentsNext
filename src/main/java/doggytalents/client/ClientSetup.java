@@ -92,6 +92,7 @@ import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.client.entity.render.DoggyBeamRenderer;
 import doggytalents.client.entity.render.layer.DogMouthItemRenderer;
+import doggytalents.client.entity.render.layer.DogWolfArmorRenderer;
 import doggytalents.client.entity.render.layer.PackPuppyRenderer;
 import doggytalents.client.entity.render.layer.RescueDogRenderer;
 import doggytalents.client.entity.render.layer.TorchDogRenderer;
@@ -336,6 +337,7 @@ public class ClientSetup {
     public static void setupCollarRenderers(final FMLClientSetupEvent event) {
         
         CollarRenderManager.registerLayer(DefaultAccessoryRenderer::new);
+        CollarRenderManager.registerLayer(DogWolfArmorRenderer::new);
         CollarRenderManager.registerLayer(IncapacitatedRenderer::new);
         CollarRenderManager.registerLayer(DoggyArmorRenderer::new);
         CollarRenderManager.registerLayer(PackPuppyRenderer::new);

@@ -67,6 +67,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ColorParticleOption;
+import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -260,6 +262,7 @@ public class Dog extends AbstractDog {
 
     private final DogArmorItemHandler dogArmors = new DogArmorItemHandler(this);
     private ItemStack mouthStack = ItemStack.EMPTY;
+    private ItemStack wolfArmorStack = ItemStack.EMPTY;
 
     protected final PathNavigation defaultNavigation;
     protected final MoveControl defaultMoveControl;
@@ -1006,6 +1009,13 @@ public class Dog extends AbstractDog {
         if (dogCheckAndRidePlayer(player, stack).shouldSwing())
             return InteractionResult.SUCCESS;
 
+        if (handleSetWolfArmor(player, stack).shouldSwing())
+            return InteractionResult.SUCCESS;
+        if (handleRepairWolfArmor(player, stack).shouldSwing())
+            return InteractionResult.SUCCESS;
+        if (handleUnsetWolfArmor(player, stack, hand).shouldSwing())
+            return InteractionResult.SUCCESS;
+
         var otherHandlerResult = 
             handleAlterationsAndOtherHandlers(player, stack, hand);
         if (otherHandlerResult.isPresent())
@@ -1105,6 +1115,64 @@ public class Dog extends AbstractDog {
                     "talent.doggytalents.bed_finder.dog_mount", 
                     this.getGenderPronoun()), true);
         }
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleSetWolfArmor(Player player, ItemStack stack) {
+        if (!stack.is(Items.WOLF_ARMOR))
+            return InteractionResult.PASS;
+        if (this.hasWolfArmor())
+            return InteractionResult.PASS;
+        if (!this.canInteract(player))
+            return InteractionResult.PASS;
+
+        if (this.level().isClientSide)
+            return InteractionResult.SUCCESS;
+        this.setWolfArmor(stack.copyWithCount(1));
+        stack.consume(1, player);
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleRepairWolfArmor(Player player, ItemStack stack) {
+        if (!DogUtil.isScute(stack))
+            return InteractionResult.PASS;
+        if (!this.hasWolfArmor())
+            return InteractionResult.PASS;
+        if (!this.canInteract(player))
+            return InteractionResult.PASS;
+        
+        var wolf_armor = wolfArmor();
+        if (!wolf_armor.isDamaged())
+            return InteractionResult.PASS;
+
+        
+        if (this.level().isClientSide)
+            return InteractionResult.SUCCESS;
+        stack.shrink(1);
+        this.playSound(SoundEvents.WOLF_ARMOR_REPAIR);
+        int repair_val = DogUtil.getWolfArmorRepairVal(wolf_armor);
+        int new_damage_val = wolf_armor.getDamageValue() - repair_val;
+        if (new_damage_val < 0) new_damage_val = 0;
+        wolf_armor.setDamageValue(new_damage_val);
+        return InteractionResult.SUCCESS;
+    }
+
+    private InteractionResult handleUnsetWolfArmor(Player player, ItemStack stack, InteractionHand hand) {
+        if (!stack.is(Items.SHEARS))
+            return InteractionResult.PASS;
+        if (!this.hasWolfArmor())
+            return InteractionResult.PASS;
+        if (!this.canInteract(player))
+            return InteractionResult.PASS;
+
+        if (this.level().isClientSide)
+            return InteractionResult.SUCCESS;
+        stack.hurtAndBreak(1, player, getSlotForHand(hand));
+        this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
+
+        var wolf_armor0 = this.wolfArmor();
+        this.setWolfArmor(ItemStack.EMPTY);
+        this.spawnAtLocation(wolf_armor0);
         return InteractionResult.SUCCESS;
     }
 
@@ -1608,6 +1676,45 @@ public class Dog extends AbstractDog {
             this.hurtDuration = 0;
         }
         return ret;
+    }
+
+    @Override
+    protected void actuallyHurt(DamageSource source, float amount) {
+        if (mayWolfArmorAbsorb(source, amount))
+            return;
+        super.actuallyHurt(source, amount);
+    }
+
+    private boolean mayWolfArmorAbsorb(DamageSource source, float amount) {
+        boolean is_wolf_armor_effective = 
+            this.hasWolfArmor() && !source.is(DamageTypeTags.BYPASSES_WOLF_ARMOR);
+        if (!is_wolf_armor_effective)
+            return false;
+
+        var wolf_armor_stack = this.wolfArmor();
+        var damage_val0 = wolf_armor_stack.getDamageValue();
+        var damage_max0 = wolf_armor_stack.getMaxDamage();
+        wolf_armor_stack.hurtAndBreak(Mth.ceil(amount), this, EquipmentSlot.BODY);
+        
+        this.playWolfArmorCrackSound(useItem, damage_val0, damage_max0);
+        return true;
+    }
+
+    private void playWolfArmorCrackSound(ItemStack wolf_armor_stack, int damage_val0, int damage_max0) {
+        var crackiness0 = Crackiness.WOLF_ARMOR.byDamage(damage_val0, damage_max0);
+        var crackiness = Crackiness.WOLF_ARMOR.byDamage(wolf_armor_stack);
+        
+        if (crackiness == crackiness0)
+            return;
+
+        this.playSound(SoundEvents.WOLF_ARMOR_CRACK);
+        if (this.level() instanceof ServerLevel sLevel) {
+            sLevel.sendParticles(
+                new ItemParticleOption(ParticleTypes.ITEM, Items.ARMADILLO_SCUTE.getDefaultInstance()),
+                this.getX(), this.getY() + 1.0, this.getZ(),
+                20,   0.2, 0.1, 0.2,   0.1
+            );
+        }
     }
 
     private void mayStandUpAndPlayHurtAnim(DamageSource source, float real_hurt_amount, float health0) {
@@ -2466,6 +2573,9 @@ public class Dog extends AbstractDog {
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
         compound.putInt("level_kami", this.getDogLevel().getLevel(Type.KAMI));
         NBTUtil.writeItemStack(compound, "fetchItem", this.getBoneVariant());
+        var wolf_armor = this.wolfArmor();
+        if (wolf_armor != null && !wolf_armor.isEmpty())
+            NBTUtil.writeItemStack(this.registryAccess(), compound, "wolfArmorItem", wolf_armor);
 
         DimensionDependantArg<Optional<BlockPos>> bedsData = this.dogFabricHelper.getBedPos();
 
@@ -2603,6 +2713,9 @@ public class Dog extends AbstractDog {
             var dogSkinData = DogSkinData.readFromTag(compound);
             this.setDogSkinData(dogSkinData);
 
+            if (compound.contains("wolfArmorItem", Tag.TAG_COMPOUND)) {
+                this.setWolfArmor(NBTUtil.readItemStack(this.registryAccess(), compound, "wolfArmorItem"));
+            }
             if (compound.contains("fetchItem", Tag.TAG_COMPOUND)) {
                 this.setBoneVariant(NBTUtil.readItemStack(compound, "fetchItem"));
             }
@@ -4461,6 +4574,26 @@ public class Dog extends AbstractDog {
         return this.dogArmors;
     }
 
+    public ItemStack wolfArmor() {
+        var stack = this.getItemBySlot(EquipmentSlot.BODY);
+        if (stack == null || !stack.is(Items.WOLF_ARMOR))
+            return ItemStack.EMPTY;
+        return stack;
+    }
+
+    public void setWolfArmor(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            this.setItemSlot(EquipmentSlot.BODY, ItemStack.EMPTY);
+        }
+        if (!stack.is(Items.WOLF_ARMOR))
+            return;
+        this.setItemSlot(EquipmentSlot.BODY, stack);
+    }
+
+    public boolean hasWolfArmor() {
+        return !this.wolfArmor().isEmpty();
+    }
+
     public Iterable<ItemStack> getHandSlots() {
         if (!this.canDogUseTools() || this.mouthStack == null)
             return List.of(); 
@@ -4488,6 +4621,10 @@ public class Dog extends AbstractDog {
         if (getMouth) {
             return this.mouthStack;
         }
+        if (slot == EquipmentSlot.BODY && this.wolfArmorStack != null &&
+            this.wolfArmorStack.is(Items.WOLF_ARMOR)) {
+            return this.wolfArmorStack;
+        }
         return ItemStack.EMPTY;
     }
 
@@ -4496,6 +4633,8 @@ public class Dog extends AbstractDog {
         if (trySetDogArmorSlot(slot, stack))
             return;
         if (trySetDogToolSlot(slot, stack))
+            return;
+        if (trySetWolfArmor(slot, stack))
             return;
     }
 
@@ -4521,9 +4660,32 @@ public class Dog extends AbstractDog {
         return true;
     }
 
+    private boolean trySetWolfArmor(EquipmentSlot slot, ItemStack stack) {
+        if (slot != EquipmentSlot.BODY)
+            return false;
+        boolean is_not_empty_not_wolf_armor = 
+            stack != null
+            && !stack.isEmpty()
+            && !stack.is(Items.WOLF_ARMOR);
+
+        if (is_not_empty_not_wolf_armor)
+            return false;
+        if (stack == null) stack = ItemStack.EMPTY;
+        
+        var oldStack =  this.wolfArmorStack == null ? ItemStack.EMPTY : this.wolfArmorStack;
+        this.wolfArmorStack = stack;
+        onEquipItem(slot, oldStack, stack);
+        return true;
+    }
+
     @Override
     public void onEquipItem(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack) {
-        if (slot.getType() != EquipmentSlot.Type.ARMOR)
+        var type = slot.getType();
+        boolean is_slot_should_be_handled = 
+            type == EquipmentSlot.Type.ARMOR
+            || type == EquipmentSlot.Type.BODY;    
+
+        if (!is_slot_should_be_handled)
             return;
         super.onEquipItem(slot, oldStack, newStack);
     }
