@@ -256,7 +256,10 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
 
         if (d0 > 5 * 5)
             return;
-        if (!this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown())
+        var camera_entity = this.entityRenderDispatcher.camera.getEntity();
+        if (!camera_entity.isShiftKeyDown())
+            return;
+        if (dog.getOwner() == camera_entity)
             return;
 
         var ownerC0 = dog.getOwnersName().orElseGet(() -> this.getNameUnknown(dog));
