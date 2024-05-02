@@ -106,6 +106,9 @@ public class DogFeelingNakeyGoal extends Goal {
             }
             if (hasArmor)
                 return false;
+                
+            if (dog.hasWolfArmor())
+                return false;
         }
 
         var accessories = dog.getAccessories();
