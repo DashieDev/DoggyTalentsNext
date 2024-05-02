@@ -74,7 +74,7 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
             startX, pY, 0xffffffff);
         pY += this.font.lineHeight + 2;
         var variant = dog.getClassicalVar();
-        var variant_str = I18n.get("doggui.classical.variant")
+        var variant_str = I18n.get("doggui.classical.variant") + " "
         + I18n.get(variant.getTranslationKey());
         var variant_c1 = Component.literal(variant_str)
             .withStyle(
