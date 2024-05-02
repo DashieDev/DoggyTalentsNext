@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import doggytalents.common.network.PacketDistributor;
 
 public class AccessoryHolder extends AbstractWidget {
@@ -70,6 +71,13 @@ public class AccessoryHolder extends AbstractWidget {
 
     @Override
     public void onClick(double x, double y) {
+        if (this.itemStack == null || this.itemStack.isEmpty())
+            return;
+        if (this.itemStack.is(Items.WOLF_ARMOR)) {
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), 
+                new ChangeAccessoriesData(this.dog.getId(), add, inventorySlotId, true));
+            return;
+        }
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
             new ChangeAccessoriesData(this.dog.getId(), add, inventorySlotId));
     }

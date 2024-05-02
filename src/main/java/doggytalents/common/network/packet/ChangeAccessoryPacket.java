@@ -7,6 +7,10 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AccessoryItem;
 import doggytalents.common.network.packet.data.ChangeAccessoriesData;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
@@ -15,6 +19,7 @@ public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
     public void encode(ChangeAccessoriesData data, FriendlyByteBuf buf) {
         buf.writeInt(data.entityId);
         buf.writeBoolean(data.add);
+        buf.writeBoolean(data.wolfArmorSlot);
         buf.writeInt(data.slotId);
     }
 
@@ -22,8 +27,9 @@ public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
     public ChangeAccessoriesData decode(FriendlyByteBuf buf) {
         int dog_id = buf.readInt();
         boolean add =buf.readBoolean();
+        boolean wolf_armor = buf.readBoolean();
         int slot_id = buf.readInt();
-        return new ChangeAccessoriesData(dog_id, add, slot_id);
+        return new ChangeAccessoriesData(dog_id, add, slot_id, wolf_armor);
     }
 
     @Override
@@ -43,8 +49,14 @@ public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
                 }
                 
                 
+            } else if (item.getItem() == Items.WOLF_ARMOR) {
+                handleSetWolfArmor(sender, dog, item);
             }
         } else {
+            if (data.wolfArmorSlot) {
+                handleUnsetWolfArmor(sender, dog, data);
+                return;
+            }
             var accessories = dog.getAccessories();
             if (data.slotId >= accessories.size()) return;
             var toRemove = accessories.get(data.slotId);
@@ -58,6 +70,28 @@ public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
             dog.dogSyncedDataManager.accessories().remove(data.slotId);
             dog.dogSyncedDataManager.setAccessoriesDirty();
         }
+    }
+
+    private static void handleSetWolfArmor(ServerPlayer sender, Dog dog, ItemStack toConsume) {
+        if (dog.hasWolfArmor())
+            return;
+        if (!toConsume.is(Items.WOLF_ARMOR))
+            return;
+        dog.setWolfArmor(toConsume.copyWithCount(1));
+        dog.consumeItemFromStack(dog, toConsume);
+    }
+
+    private static void handleUnsetWolfArmor(ServerPlayer sender, Dog dog, ChangeAccessoriesData data) {
+        if (!dog.hasWolfArmor())
+            return;
+        var inventory = sender.getInventory();
+        if (inventory.getFreeSlot() < 0) return;
+
+        dog.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
+
+        var wolf_armor0 = dog.wolfArmor();
+        dog.setWolfArmor(ItemStack.EMPTY);
+        inventory.add(wolf_armor0.copyWithCount(1));
     }
     
 }
