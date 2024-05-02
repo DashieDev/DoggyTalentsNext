@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class AccessoryEditElement extends AbstractElement {
 
@@ -141,8 +142,8 @@ public class AccessoryEditElement extends AbstractElement {
 
     private boolean eligibleAccessory(@Nonnull ItemStack stack) {
         var item = stack.getItem();
-        if (!(item instanceof AccessoryItem)) return false;
-        return true;
+        return item instanceof AccessoryItem
+            || item == Items.WOLF_ARMOR;
     }
     
 }

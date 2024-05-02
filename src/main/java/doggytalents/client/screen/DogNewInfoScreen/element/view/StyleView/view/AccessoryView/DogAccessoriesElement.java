@@ -34,6 +34,8 @@ public class DogAccessoriesElement extends AbstractElement {
     DivElement accessoriesDiv;
     Font font;
 
+    AccessoryHolder wolfArmorHolder;
+
     public DogAccessoriesElement(AbstractElement parent, Screen screen, Dog dog) {
         super(parent, screen);
         this.dog = dog;
@@ -84,7 +86,10 @@ public class DogAccessoriesElement extends AbstractElement {
         
         this.addChildren(accessoriesDiv);
 
-        
+        int armorHolderX = this.getRealX() + 10;
+        int armorHolderY = this.getRealY() + 10;
+        this.wolfArmorHolder = new AccessoryHolder(armorHolderX, armorHolderY, mc.getItemRenderer(), dog, false);
+        this.addChildren(this.wolfArmorHolder);
 
         return this;
     }
@@ -138,6 +143,13 @@ public class DogAccessoriesElement extends AbstractElement {
             if (noRenderAccessory) {
                 drawNoRenderAccessoryWarning(stack, mouseX, mouseY, partialTicks);
             }
+        }
+
+        //Wolf Armor remove
+        if (this.dog.hasWolfArmor()) {
+            this.wolfArmorHolder.setStack(this.dog.wolfArmor());
+        } else {
+            this.wolfArmorHolder.setStack(ItemStack.EMPTY);
         }
         
     }

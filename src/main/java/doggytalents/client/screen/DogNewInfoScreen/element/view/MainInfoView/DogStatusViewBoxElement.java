@@ -18,6 +18,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.util.Mth;
@@ -116,17 +117,32 @@ public class DogStatusViewBoxElement extends AbstractElement {
         
         int pX = x;
         int pY = y;
+
+        String healthStrPrefix = " x " 
+                + StatFormatter.DECIMAL_FORMAT.format(dog.getHealth());
+
+        Component health_c0 = null;
+        if (dog.hasWolfArmor()) {
+            int wolf_armor_ext_hp = dog.wolfArmor().getMaxDamage() -
+                 dog.wolfArmor().getDamageValue();
+            var healthStrPosfix = "+" + wolf_armor_ext_hp;
+            health_c0 = Component.literal(healthStrPrefix)
+                .append(
+                    Component.literal(healthStrPosfix)
+                        .withStyle(Style.EMPTY.withColor(0xffd1926d))
+                );
+        } else {
+            var healthStrPosfix = "/" + ((int)dog.getMaxHealth());
+            String healthStr = healthStrPrefix + healthStrPosfix;
+            health_c0 = Component.literal(healthStr);
+        }
         
-        String healthStr = " x " 
-            + StatFormatter.DECIMAL_FORMAT.format(dog.getHealth()) + "/" 
-            + ((int)dog.getMaxHealth());
-        pX += (80 - (8 + font.width(healthStr)))/2; 
-        RenderSystem.setShaderTexture(0, Screen.GUI_ICONS_LOCATION);
-        blit(stack, pX, pY, 16, 0 ,9, 9);
-        blit(stack, pX, pY, 16 + 36, 0 ,9, 9);
+        pX += (80 - (8 + font.width(health_c0)))/2; 
+        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
+        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
         pX += 9;
         pY += 1;
-        font.draw(stack, healthStr, pX, pY, 0xffffffff);
+        graphics.drawString(font, health_c0, pX, pY, 0xffffffff);
         return;
         // Random random = new Random();
         // random.setSeed((long) (dog.tickCount * 312871));
