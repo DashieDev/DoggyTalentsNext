@@ -62,8 +62,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.DistExecutor;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
-import net.neoforged.neoforge.event.TickEvent.Phase;
-import net.neoforged.neoforge.event.TickEvent.ServerTickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
@@ -75,14 +73,15 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEven
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import doggytalents.common.network.PacketDistributor;
 
 public class EventHandler {
 
     @SubscribeEvent
-    public void onServerTickEnd(final ServerTickEvent event) {
+    public void onServerTickEnd(final ServerTickEvent.Post event) {
 
-        if (event.phase != Phase.END) return;
+        //if (event.phase != Phase.END) return;
 
         DogPromiseManager.tick();
         DogLocationStorage.get(event.getServer()).getOnlineDogsManager().tick();

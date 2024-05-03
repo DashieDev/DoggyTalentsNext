@@ -31,10 +31,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
-import net.neoforged.neoforge.event.TickEvent.ClientTickEvent;
-import net.neoforged.neoforge.event.TickEvent.Phase;
 import doggytalents.common.network.PacketDistributor;
 
 public class CanineTrackerLocateRenderer {
@@ -147,8 +146,8 @@ public class CanineTrackerLocateRenderer {
         return 0xff000000 | RenderUtil.rgbToInt(color);
     }
 
-    public static void tickUpdate(ClientTickEvent event) {
-        if (event.phase != Phase.END) return;
+    public static void tickUpdate(ClientTickEvent.Post event) {
+        //if (event.phase != Phase.END) return;
         var mc = Minecraft.getInstance();
         var player = mc.player;
         if (player == null || mc.level == null) return;

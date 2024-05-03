@@ -89,6 +89,7 @@ public class DoggyTalentsNext {
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
         modEventBus.addListener(DTNNetworkHandler::onRegisterPayloadEvent);
         modEventBus.addListener(DoggyChunkController::onChunkControllerRegistryEvent);
+        modEventBus.addListener(ClientSetup::setupScreenManagers);
 
         var forgeEventBus = NeoForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
@@ -147,7 +148,7 @@ public class DoggyTalentsNext {
 
     @OnlyIn(Dist.CLIENT)
     public void clientSetup(final FMLClientSetupEvent event) {
-        ClientSetup.setupScreenManagers(event);
+        //ClientSetup.setupScreenManagers(event);
 
         ClientSetup.setupCollarRenderers(event);
     }

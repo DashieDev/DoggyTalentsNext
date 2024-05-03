@@ -119,6 +119,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 public class ClientSetup {
 
@@ -204,14 +205,14 @@ public class ClientSetup {
 
     public static final List<ResourceLocation> OTHER_MOD_SKIN_JSONS = new ArrayList<ResourceLocation>();
 
-    public static void setupScreenManagers(final FMLClientSetupEvent event) {
-        MenuScreens.register(DoggyContainerTypes.FOOD_BOWL.get(), FoodBowlScreen::new);
-        MenuScreens.register(DoggyContainerTypes.PACK_PUPPY.get(), PackPuppyScreen::new);
-        MenuScreens.register(DoggyContainerTypes.TREAT_BAG.get(), TreatBagScreen::new);
-        MenuScreens.register(DoggyContainerTypes.DOG_INVENTORIES.get(), DogInventoriesScreen::new);
-        MenuScreens.register(DoggyContainerTypes.DOG_ARMOR.get(), DogArmorScreen::new);
-        MenuScreens.register(DoggyContainerTypes.DOG_TOOLS.get(), DoggyToolsScreen::new);
-        MenuScreens.register(DoggyContainerTypes.RICE_MILL.get(), RiceMillScreen::new);
+    public static void setupScreenManagers(final RegisterMenuScreensEvent event) {
+        event.register(DoggyContainerTypes.FOOD_BOWL.get(), FoodBowlScreen::new);
+        event.register(DoggyContainerTypes.PACK_PUPPY.get(), PackPuppyScreen::new);
+        event.register(DoggyContainerTypes.TREAT_BAG.get(), TreatBagScreen::new);
+        event.register(DoggyContainerTypes.DOG_INVENTORIES.get(), DogInventoriesScreen::new);
+        event.register(DoggyContainerTypes.DOG_ARMOR.get(), DogArmorScreen::new);
+        event.register(DoggyContainerTypes.DOG_TOOLS.get(), DoggyToolsScreen::new);
+        event.register(DoggyContainerTypes.RICE_MILL.get(), RiceMillScreen::new);
     }
 
     public static void setupEntityRenderers(final EntityRenderersEvent.RegisterLayerDefinitions event) {
