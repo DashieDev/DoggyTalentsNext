@@ -1040,6 +1040,19 @@ public class Dog extends AbstractDog {
 
         var stack = player.getItemInHand(hand);
 
+        if (stack.getItem() == Items.GOLDEN_AXE) {
+            if (!this.level().isClientSide) {
+                var current_var = this.getClassicalVar();
+                var current_var_id = current_var.getIdInt();
+                var var_vals = ClassicalVar.values();
+                var next_var_id = current_var_id + 1;
+                next_var_id = next_var_id % var_vals.length;
+                var next_var = var_vals[next_var_id];
+                this.setClassicalVar(next_var);
+            } 
+            return InteractionResult.SUCCESS;
+        }
+
         if (stack.getItem() == Items.STONE_PICKAXE) {
             if (this.freezeAnim != DogAnimation.NONE) {
                 this.entityData.set(FREEZE_ANIM, 0);
