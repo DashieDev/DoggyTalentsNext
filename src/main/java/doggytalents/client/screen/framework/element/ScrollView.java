@@ -95,7 +95,7 @@ public class ScrollView extends AbstractElement {
 
     //dir : -1.0 = down; 1.0 = up
     @Override
-    public boolean mouseScrolled(double x, double y, double dir) {
+    public boolean mouseScrolled(double x, double y, double dir_x, double dir) {
         scrollBarAppearDuration = 1500;
         millis0 = System.currentTimeMillis();
         int offset0 = container.getOffset();
@@ -107,7 +107,7 @@ public class ScrollView extends AbstractElement {
             container.setOffset(maxOff);
         int offset1 = container.getOffset();
         shiftWidgetOffsetRescursive(container.children(), -(offset1-offset0));
-        return super.mouseScrolled(x, y, dir);
+        return super.mouseScrolled(x, y, dir_x, dir);
     }
 
     @Override

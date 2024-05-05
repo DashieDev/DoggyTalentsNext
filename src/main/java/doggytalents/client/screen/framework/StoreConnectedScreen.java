@@ -65,7 +65,7 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
             this.isResizing = false;
         }
         if (doRenderBackground())
-            this.renderBackground(graphics);
+            this.renderBackground(graphics, mouseX, mouseY, pTicks);
         super.render(graphics, mouseX, mouseY, pTicks);
     }
 
