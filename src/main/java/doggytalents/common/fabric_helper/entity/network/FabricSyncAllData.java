@@ -9,6 +9,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.entity.DogFabricHelper;
 import doggytalents.common.fabric_helper.entity.network.SyncTypes.SyncType;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 
 public class FabricSyncAllData {
     
@@ -50,7 +51,7 @@ public class FabricSyncAllData {
     public <T> void getValAndWrite(SyncType<T> type, FriendlyByteBuf buf) {
         T val = getVal(type);
         var serializer = type.getSerializer();
-        serializer.write(buf, val);
+        serializer.codec().encode((RegistryFriendlyByteBuf) buf, val);
     }
 
     public void writeToPacket(FriendlyByteBuf buf) {
@@ -77,7 +78,7 @@ public class FabricSyncAllData {
     }
 
     private static <T> T readValFromPacket(SyncType<T> syncType, FriendlyByteBuf buf) {
-        var val = syncType.getSerializer().read(buf);
+        var val = syncType.getSerializer().codec().decode((RegistryFriendlyByteBuf)buf);
         return val;
     }
 

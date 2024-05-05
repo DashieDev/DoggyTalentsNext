@@ -11,7 +11,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
@@ -88,7 +88,7 @@ public class DogGoAwayFromFireGoal extends Goal {
         this.dog.getNavigation().stop();
         
         //Penalty
-        if (end_node.type != BlockPathTypes.WALKABLE)
+        if (end_node.type != PathType.WALKABLE)
             this.tickUntilSearch = 20 + dog.getRandom().nextInt(3)*10;
     }
 
@@ -152,9 +152,9 @@ public class DogGoAwayFromFireGoal extends Goal {
     }
 
     private boolean isSafePos(BlockPos pos) {
-        var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
+        var blockType = WalkNodeEvaluator.getPathTypeStatic(dog, pos.mutable());
 
-        if (blockType == BlockPathTypes.WALKABLE) {
+        if (blockType == PathType.WALKABLE) {
             return true;
         }
 

@@ -30,8 +30,8 @@ public class DeferredRegister<T> {
             var regObj = entry.getKey();
             var value = entry.getValue().get();
             var registry = this.registry.get();
-            Registry.register(registry, regObj.getId(), value);
-            regObj.resolve(value);
+            var holder = Registry.registerForHolder(registry, regObj.getId(), value);
+            regObj.resolve(holder);
         }
     }
 

@@ -1,6 +1,7 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyItems;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -25,8 +26,8 @@ public class DroolScentTreatItem extends Item {
 
         var returnStack = new ItemStack(DoggyItems.SCENT_TREAT.get());
 
-        if (stack.hasTag()) {
-            returnStack.setTag(stack.getTag().copy());
+        if (ItemUtil.hasTag(stack)) {
+            ItemUtil.copyTag(stack, returnStack);
         }
 
         playerIn.swing(handIn);

@@ -9,7 +9,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogIncapMsgData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import doggytalents.forge_imitate.network.PacketDistributor;
 
 public class DogIncapMsgPackets {

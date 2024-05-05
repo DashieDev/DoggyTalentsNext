@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 public class FabricUtil {
 
@@ -21,10 +21,10 @@ public class FabricUtil {
         return material == ArmorMaterials.GOLD;
     }
 
-    public static BlockPathTypes getDanger(BlockPathTypes type) {
-        return (type == BlockPathTypes.DAMAGE_FIRE   || type == BlockPathTypes.DANGER_FIRE  ) ? BlockPathTypes.DANGER_FIRE   :
-            (type == BlockPathTypes.DAMAGE_OTHER  || type == BlockPathTypes.DANGER_OTHER ) ? BlockPathTypes.DANGER_OTHER  :
-            (type == BlockPathTypes.LAVA) ? BlockPathTypes.DAMAGE_FIRE :
+    public static PathType getDanger(PathType type) {
+        return (type == PathType.DAMAGE_FIRE   || type == PathType.DANGER_FIRE  ) ? PathType.DANGER_FIRE   :
+            (type == PathType.DAMAGE_OTHER  || type == PathType.DANGER_OTHER ) ? PathType.DANGER_OTHER  :
+            (type == PathType.LAVA) ? PathType.DAMAGE_FIRE :
             null;
     }
 

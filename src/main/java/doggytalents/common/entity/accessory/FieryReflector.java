@@ -274,8 +274,8 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
             if (!pairOptional.isPresent())
                 return null;
             var pair = pairOptional.get();
-            var res = pair.getFirst();
-            var recipe = pair.getSecond();
+            var res = pair.id();
+            var recipe = pair.value();
             
             if (res == null || recipe == null)
                 return null;

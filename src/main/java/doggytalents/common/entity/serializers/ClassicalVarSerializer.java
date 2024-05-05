@@ -4,7 +4,7 @@ import doggytalents.common.entity.ClassicalVar;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
-public class ClassicalVarSerializer implements EntityDataSerializer<ClassicalVar> {
+public class ClassicalVarSerializer extends DogSerializer<ClassicalVar> {
 
     @Override
     public void write(FriendlyByteBuf buf, ClassicalVar value) {

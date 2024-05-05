@@ -8,7 +8,7 @@ import doggytalents.common.network.packet.data.TrainWolfToDogData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class TrainWolfToDogPacket implements IPacket<TrainWolfToDogData> {
 

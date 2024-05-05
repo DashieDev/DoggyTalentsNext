@@ -3,6 +3,7 @@ package doggytalents;
 import doggytalents.common.lib.Constants;
 import doggytalents.forge_imitate.registry.DeferredRegister;
 import doggytalents.forge_imitate.registry.RegistryObject;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;

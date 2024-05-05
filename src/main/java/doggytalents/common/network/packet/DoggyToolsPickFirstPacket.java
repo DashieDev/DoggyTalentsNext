@@ -8,7 +8,7 @@ import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.talent.DoggyTorchTalent;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import net.minecraft.network.FriendlyByteBuf;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class DoggyToolsPickFirstPacket extends DogPacket<DoggyToolsPickFirstData> {
 

@@ -16,6 +16,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.HeelByNameData;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -27,6 +28,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import doggytalents.forge_imitate.network.PacketDistributor;
@@ -99,8 +101,8 @@ public class HeelByNameScreen extends Screen {
         if (stack == null) return;
         if (!(stack.getItem() instanceof WhistleItem)) return;
         boolean softHeel = false;
-        if (stack.hasTag()) {
-            softHeel = stack.getTag().getBoolean("soft_heel");
+        if (ItemUtil.hasTag(stack)) {
+            softHeel = ItemUtil.getTag(stack).getBoolean("soft_heel");
         }
         var screen = new HeelByNameScreen(mc.player, softHeel);
         screen.blockCharInputMillis = blockCharInputMillis;
@@ -123,8 +125,8 @@ public class HeelByNameScreen extends Screen {
 
         Button help = new CustomButton(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, pTicks);
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
@@ -142,8 +144,8 @@ public class HeelByNameScreen extends Screen {
                 b.setMessage(Component.literal("" + this.softHeel));
         }) {
             @Override
-            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, pTicks);
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.soft_heel")
@@ -364,7 +366,7 @@ public class HeelByNameScreen extends Screen {
     public boolean charTyped(char code, int p_231042_2_) {
         if (this.blockCharInputMillis > 0)
             return false;
-        if (SharedConstants.isAllowedChatCharacter(code)) {
+        if (StringUtil.isAllowedChatCharacter(code)) {
             this.insertText(Character.toString(code));
             return true;
         } else {

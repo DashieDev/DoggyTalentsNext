@@ -13,12 +13,12 @@ import net.minecraft.resources.ResourceLocation;
 
 public class DoggyRegistries {
 
-    protected class Keys {
-        public static final ResourceLocation TALENTS_REGISTRY = Util.getResource("talents");
-        public static final ResourceLocation ACCESSORIES_REGISTRY = Util.getResource("accessories");
-        public static final ResourceLocation ACCESSORY_TYPE_REGISTRY = Util.getResource("accessory_type");
-        public static final ResourceLocation BEDDING_REGISTRY = Util.getResource("bedding");
-        public static final ResourceLocation CASING_REGISTRY = Util.getResource("casing");
+    public class Keys {
+        public static final ResourceKey<Registry<Talent>> TALENTS_REGISTRY = regKey("talents");
+        public static final ResourceKey<Registry<Accessory>> ACCESSORIES_REGISTRY = regKey("accessories");
+        public static final ResourceKey<Registry<AccessoryType>> ACCESSORY_TYPE_REGISTRY = regKey("accessory_type");
+        // public static final ResourceKey<Registry<Bed>> BEDDING_REGISTRY = regKey("bedding");
+        // public static final ResourceLocation CASING_REGISTRY = regKey("casing");
     }
 
     public static void newRegistry() {
@@ -27,32 +27,15 @@ public class DoggyRegistries {
         DoggyTalentsAPI.ACCESSORY_TYPE = (makeRegistry(Keys.ACCESSORY_TYPE_REGISTRY, AccessoryType.class));//.disableSync());
     }
 
-    private static <T> Supplier<Registry<T>> makeRegistry(final ResourceLocation rl, Class<T> type) {
-        var ret =  FabricRegistryBuilder.createSimple(ResourceKey.<T>createRegistryKey(rl))
+    private static <T> Supplier<Registry<T>> makeRegistry(final ResourceKey<Registry<T>> key, Class<T> type) {
+        var ret =  FabricRegistryBuilder.createSimple(key)
             .attribute(RegistryAttribute.SYNCED)
             .buildAndRegister();
         return () -> ret;
     }
-//
-//    private static class AccessoryCallbacks implements IForgeRegistry.DummyFactory<Accessory> {
-//
-//        static final AccessoryCallbacks INSTANCE = new AccessoryCallbacks();
-//
-//        @Override
-//        public Accessory createDummy(ResourceLocation key) {
-//            return new Accessory(() -> DoggyAccessoryTypes.CLOTHING).setRegistryName(key);
-//        }
-//    }
-//
-//    private static class AccessoryTypeCallbacks implements IForgeRegistry.DummyFactory<AccessoryType> {
-//
-//        static final AccessoryTypeCallbacks INSTANCE = new AccessoryTypeCallbacks();
-//        static final AccessoryType dummyType = new AccessoryType();
-//
-//        @Override
-//        public AccessoryType createDummy(ResourceLocation key) {
-//            return this.dummyType.set;
-//        }
-//
-//    }
+
+    private static <T> ResourceKey<Registry<T>> regKey(String key) {
+        var rl = Util.getResource(key);
+        return ResourceKey.createRegistryKey(rl);
+    }
 }

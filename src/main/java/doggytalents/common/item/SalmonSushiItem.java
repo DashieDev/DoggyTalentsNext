@@ -11,7 +11,7 @@ public class SalmonSushiItem extends DogEddibleItem {
         super(
             b -> b
                 .nutrition(8)
-                .saturationMod(0.6F)
+                .saturationModifier(0.6F)
         );
     }
     

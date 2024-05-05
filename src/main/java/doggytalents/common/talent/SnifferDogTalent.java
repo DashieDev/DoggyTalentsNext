@@ -16,6 +16,7 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.item.ScentTreatItem;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
+import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -180,7 +181,7 @@ public class SnifferDogTalent extends TalentInstance {
             return InteractionResult.SUCCESS;
         }
 
-        var tag = stack.getOrCreateTag();
+        var tag = ItemUtil.getTag(stack);;
         if (!tag.contains(ScentTreatItem.SCENT_BLOCK_ID)) {
             this.clearDetectBlock();
         } else {
@@ -196,8 +197,8 @@ public class SnifferDogTalent extends TalentInstance {
         );
 
         var retItem = new ItemStack(DoggyItems.DROOL_SCENT_TREAT.get());
-        if (stack.hasTag()) {
-            retItem.setTag(stack.getTag().copy());
+        if (ItemUtil.hasTag(stack)) {
+            ItemUtil.copyTag(stack, retItem);
         }
         dog.spawnAtLocation(retItem);
 

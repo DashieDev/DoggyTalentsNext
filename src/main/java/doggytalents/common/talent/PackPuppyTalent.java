@@ -20,6 +20,7 @@ import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.InventoryUtil;
+import doggytalents.common.util.ItemUtil;
 import doggytalents.forge_imitate.event.LivingDropsEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,6 +29,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -67,11 +69,11 @@ public class PackPuppyTalent extends TalentInstance {
 
         @Override
         public boolean isFood(ItemStack stack) {
-            var props = stack.getItem().getFoodProperties();
+            var props = ItemUtil.food(stack);
 
             if (props == null) return false;
-            return stack.isEdible() && props.isMeat() && stack.getItem() != Items.ROTTEN_FLESH
-                && props.getNutrition() >= 6;
+            return stack.is(ItemTags.MEAT) && stack.getItem() != Items.ROTTEN_FLESH
+                && props.nutrition() >= 6;
         }
         
     };
@@ -258,7 +260,7 @@ public class PackPuppyTalent extends TalentInstance {
     @Override
     public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
         super.writeToNBT(dogIn, compound);
-        compound.merge(this.packPuppyHandler.serializeNBT());
+        compound.merge(this.packPuppyHandler.serializeNBT(dogIn.registryAccess()));
         compound.putBoolean("renderChest", this.renderChest);
         compound.putBoolean("pickupNearby", this.pickupItems);
         compound.putBoolean("offerFood", this.offerFood);
@@ -268,7 +270,7 @@ public class PackPuppyTalent extends TalentInstance {
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
-        this.packPuppyHandler.deserializeNBT(compound);
+        this.packPuppyHandler.deserializeNBT(dogIn.registryAccess(), compound);
         this.renderChest = compound.getBoolean("renderChest");
         this.pickupItems = compound.getBoolean("pickupNearby");
         this.offerFood = compound.getBoolean("offerFood");
@@ -278,7 +280,7 @@ public class PackPuppyTalent extends TalentInstance {
     // Left in for backwards compatibility for versions <= 2.0.0.5
     @Override
     public void onRead(AbstractDog dogIn, CompoundTag compound) {
-        this.packPuppyHandler.deserializeNBT(compound);
+        this.packPuppyHandler.deserializeNBT(dogIn.registryAccess(), compound);
     }
 
     @Override
@@ -354,7 +356,7 @@ public class PackPuppyTalent extends TalentInstance {
     private boolean checkRegenEffects(AbstractDog target, ItemStack stack, DogEddibleItem item) {
         var effects = item.getAdditionalEffectsWhenDogConsume(stack, target);
         for (var pair : effects) {
-            var effect = pair.getFirst();
+            var effect = pair.effect();
             if (effect.getEffect() == MobEffects.REGENERATION)
                 return true;
         }

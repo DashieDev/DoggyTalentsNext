@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -45,13 +46,13 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem {
             spawnAt = pos.relative(face);
         }
         var plush = DoggyEntityTypes.DOG_PLUSHIE_TOY.get().create(
-            (ServerLevel) level, null, null, spawnAt, 
+            (ServerLevel) level, null, spawnAt, 
             MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 
         if (plush != null) {
             plush.setYRot(face.getOpposite().toYRot());
-            int color = this.getColor(stack);
+            int color = ItemUtil.getDyeColorForStack(stack);
             plush.setCollarColor(color);
             level.addFreshEntity(plush);
         }
@@ -66,7 +67,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = "item.doggytalents.dog_plushie_toy_item.description";
         components.add(Component.translatable(desc_id).withStyle(

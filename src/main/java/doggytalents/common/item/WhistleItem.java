@@ -19,6 +19,7 @@ import doggytalents.common.talent.MobRetrieverTalent;
 import doggytalents.common.talent.RoaringGaleTalent;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -113,8 +114,9 @@ public class WhistleItem extends Item implements IDogItem {
         ItemStack stack = player.getItemInHand(hand);  
         byte id_mode = 0;
 
-        if (stack.hasTag() && stack.getTag().contains("mode", Tag.TAG_ANY_NUMERIC)) {
-            id_mode = stack.getTag().getByte("mode");
+        var tag = ItemUtil.getTag(stack);
+        if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
+            id_mode = tag.getByte("mode");
         }
         if (id_mode >= WhistleMode.VALUES.length) id_mode = 0;
         var mode = WhistleMode.VALUES[id_mode];
@@ -139,8 +141,9 @@ public class WhistleItem extends Item implements IDogItem {
         else {
             byte id_mode = 0;
 
-            if (stack.hasTag() && stack.getTag().contains("mode", Tag.TAG_ANY_NUMERIC)) {
-                id_mode = stack.getTag().getByte("mode");
+            var tag = ItemUtil.getTag(stack);
+            if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
+                id_mode = tag.getByte("mode");
             }
 
             List<Dog> dogsList = world.getEntitiesOfClass(
@@ -462,19 +465,20 @@ public class WhistleItem extends Item implements IDogItem {
     public String getDescriptionId(ItemStack stack) {
         byte mode = 0;
 
-        if (stack.hasTag() && stack.getTag().contains("mode", Tag.TAG_ANY_NUMERIC)) {
-            mode = stack.getTag().getByte("mode");
+        var tag = ItemUtil.getTag(stack);
+        if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
+            mode = tag.getByte("mode");
         }
         return this.getDescriptionId() + "." + mode;
 
     }
 
+    // @Override
+    // public Rarity getRarity(ItemStack stack) {
+    //     return Rarity.UNCOMMON;
+    // }
     @Override
-    public Rarity getRarity(ItemStack stack) {
-        return Rarity.UNCOMMON;
-    }
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId() + ".description";
         components.add(Component.translatable(desc_id).withStyle(

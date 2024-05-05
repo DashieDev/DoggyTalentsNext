@@ -1,5 +1,6 @@
 package doggytalents.api.forge_imitate.inventory;
 
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 
@@ -48,7 +49,7 @@ public class ContainerWrapper implements IItemHandler {
             this.container.setItem(id, placeStack);
             return returnStack;
         }
-        if (current.hasTag() || stack.hasTag())
+        if (ItemUtil.hasTag(stack) || ItemUtil.hasTag(stack))
             return stack;
         int current_max_grow = Math.min(current.getMaxStackSize(), container_max_stack_size);
         int current_can_recieve = current_max_grow - current.getCount();

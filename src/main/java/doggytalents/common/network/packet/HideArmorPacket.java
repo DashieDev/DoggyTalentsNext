@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.HideArmorData;
 import net.minecraft.network.FriendlyByteBuf;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class HideArmorPacket extends DogPacket<HideArmorData> {
 

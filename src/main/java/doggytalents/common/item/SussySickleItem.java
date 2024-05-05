@@ -23,11 +23,11 @@ import net.minecraft.world.level.Level;
 public class SussySickleItem extends SwordItem {
 
     public SussySickleItem(Properties p_43272_) {
-        super(Tiers.IRON, 3, 0.0F, p_43272_);
+        super(Tiers.IRON, p_43272_);
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
         components.add(Component.translatable(desc_id).withStyle(

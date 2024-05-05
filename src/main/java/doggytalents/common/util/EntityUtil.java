@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -11,7 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
@@ -27,11 +28,11 @@ public class EntityUtil {
         return rangeAttribute == null ? 16.0D : rangeAttribute.getValue();
     }
 
-    public static boolean tryToTeleportNearEntity(LivingEntity entityIn, PathNavigation navigator, LivingEntity target, int radius) {
+    public static boolean tryToTeleportNearEntity(Mob entityIn, PathNavigation navigator, LivingEntity target, int radius) {
         return tryToTeleportNearEntity(entityIn, navigator, target.blockPosition(), radius);
     }
 
-    public static boolean tryToTeleportNearEntity(LivingEntity entityIn, PathNavigation navigator, BlockPos targetPos, int radius) {
+    public static boolean tryToTeleportNearEntity(Mob entityIn, PathNavigation navigator, BlockPos targetPos, int radius) {
         for (int i = 0; i < 10; ++i) {
             int j = getRandomNumber(entityIn, -radius, radius);
             int k = getRandomNumber(entityIn, -1, 1);
@@ -45,7 +46,7 @@ public class EntityUtil {
         return false;
     }
 
-    public static boolean tryToTeleportToLocation(LivingEntity entityIn, PathNavigation navigator, BlockPos targetPos, int x, int y, int z) {
+    public static boolean tryToTeleportToLocation(Mob entityIn, PathNavigation navigator, BlockPos targetPos, int x, int y, int z) {
         if (Math.abs(x - targetPos.getX()) < 2.0D && Math.abs(z - targetPos.getZ()) < 2.0D) {
             return false;
         } else if (!isTeleportFriendlyBlock(entityIn, new BlockPos(x, y, z), false)) {
@@ -57,9 +58,9 @@ public class EntityUtil {
         }
     }
 
-    private static boolean isTeleportFriendlyBlock(LivingEntity entityIn, BlockPos pos, boolean teleportToLeaves) {
-        BlockPathTypes pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(entityIn.level(), pos.mutable());
-        if (pathnodetype != BlockPathTypes.WALKABLE) {
+    private static boolean isTeleportFriendlyBlock(Mob entityIn, BlockPos pos, boolean teleportToLeaves) {
+        PathType pathnodetype = WalkNodeEvaluator.getPathTypeStatic(entityIn, pos.mutable());
+        if (pathnodetype != PathType.WALKABLE) {
             return false;
         } else {
             BlockState blockstate = entityIn.level().getBlockState(pos.below());
@@ -76,15 +77,15 @@ public class EntityUtil {
         return entityIn.getRandom().nextInt(maxIn - minIn + 1) + minIn;
     }
 
-    public static boolean isHolding(@Nullable Entity entity, Item item, Predicate<CompoundTag> nbtPredicate) {
-        return isHolding(entity, stack -> stack.getItem() == item && stack.hasTag() && nbtPredicate.test(stack.getTag()));
+    public static boolean isHolding(@Nullable LivingEntity entity, Item item, Predicate<CompoundTag> nbtPredicate) {
+        return isHolding(entity, stack -> stack.getItem() == item && ItemUtil.hasTag(stack) && nbtPredicate.test(ItemUtil.getTag(stack)));
     }
 
-    public static boolean isHolding(@Nullable Entity entity, Item item) {
+    public static boolean isHolding(@Nullable LivingEntity entity, Item item) {
         return isHolding(entity, stack -> stack.getItem() == item);
     }
 
-    public static boolean isHolding(@Nullable Entity entity, Predicate<ItemStack> matcher) {
+    public static boolean isHolding(@Nullable LivingEntity entity, Predicate<ItemStack> matcher) {
         if (entity == null) {
             return false;
         }
@@ -117,6 +118,10 @@ public class EntityUtil {
         }
 
         return closest;
+    }
+
+    public static void setSecondsOnFire(Entity e, int second) {
+        e.setRemainingFireTicks(second * 20);
     }
 
     public static class Sorter implements Comparator<Entity> {

@@ -8,10 +8,11 @@ import doggytalents.common.item.AmnesiaBoneItem;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.data.DogUntameData;
 import doggytalents.common.storage.DogLocationStorage;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class DogUntamePacket extends DogPacket<DogUntameData> {
 
@@ -36,7 +37,7 @@ public class DogUntamePacket extends DogPacket<DogUntameData> {
         
         dog.level().broadcastEntityEvent(dog, Constants.EntityState.WOLF_SMOKE);
         
-        var tag = stack.getOrCreateTag();
+        var tag = ItemUtil.getTag(stack);
         int usedTime = tag.getInt("amnesia_bone_used_time");
         
         ++usedTime;
@@ -48,6 +49,7 @@ public class DogUntamePacket extends DogPacket<DogUntameData> {
         tag.putInt("amnesia_bone_used_time", usedTime);
 
         sender.getCooldowns().addCooldown(DoggyItems.AMNESIA_BONE.get(), 60);
+        ItemUtil.putTag(stack, tag);
     }
     
 }

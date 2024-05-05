@@ -10,7 +10,7 @@ import doggytalents.common.network.packet.data.StatsSyncData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import doggytalents.forge_imitate.network.PacketDistributor;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class StatsSyncPackets {
     public static class Request extends DogPacket<StatsSyncData.Request> {

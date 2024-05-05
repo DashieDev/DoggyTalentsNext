@@ -19,7 +19,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -76,7 +76,7 @@ public class DogLowHealthGoal {
         @Override
         public void start() {
             this.timeToRecalcPath = 0;
-            this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
+            this.oldWaterCost = this.dog.getPathfindingMalus(PathType.WATER);
             this.dog.setDogFollowingSomeone(true);
             this.whine = true;
             if (this.tickTillInitTeleport <= 0) {
@@ -230,7 +230,7 @@ public class DogLowHealthGoal {
 
         @Override
         public void start() {
-            this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
+            this.oldWaterCost = this.dog.getPathfindingMalus(PathType.WATER);
             this.dog.setDogFollowingSomeone(true);
             this.dog.getNavigation().stop();
             this.moveAwayPos = this.findMoveAwayPos();

@@ -10,6 +10,7 @@ import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.screen.AmnesiaBoneScreen.AmneisaBoneScreen;
 import doggytalents.client.screen.AmnesiaBoneScreen.screen.DogForceMigrateOwnerScreen;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -81,18 +82,19 @@ public class AmnesiaBoneItem extends Item implements IDogItem  {
         }
         var stack = player.getItemInHand(hand);
         if (stack.getItem() != this) return;
-        var tag = stack.getOrCreateTag();
+        var tag = ItemUtil.getTag(stack);
         if (tag.hasUUID("request_uuid")
             && tag.getUUID("request_uuid").equals(playerUUID)) 
                 return;
         tag.putUUID("request_uuid", player.getUUID());
         tag.putString("request_str", player.getName().getString());
+        ItemUtil.putTag(stack, tag);
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flag) {
-        var tag = stack.getTag();
+        var tag = ItemUtil.getTag(stack);
         if (tag == null) return;
         if (tag.contains("amnesia_bone_used_time", Tag.TAG_INT)) {
             components.add(

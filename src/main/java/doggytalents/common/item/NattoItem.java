@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.FoodProperties.PossibleEffect;
 import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -25,11 +26,11 @@ public class NattoItem extends DogEddibleItem {
         super(
             b -> b
                 .nutrition(6)
-                .saturationMod(0.6F)
+                .saturationModifier(0.6F)
         );
     }
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
         components.add(Component.translatable(desc_id).withStyle(
@@ -38,9 +39,9 @@ public class NattoItem extends DogEddibleItem {
     }
 
     @Override
-    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+    public List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
-        return List.of(Pair.of(new MobEffectInstance(DoggyEffects.NATTO_BITE.get(), 180 * 20, 1), 1f));
+        return List.of(new PossibleEffect(new MobEffectInstance(DoggyEffects.NATTO_BITE.holder(), 180 * 20, 1), 1f));
     }
 
     @Override

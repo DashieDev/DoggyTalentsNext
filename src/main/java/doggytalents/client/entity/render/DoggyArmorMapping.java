@@ -63,20 +63,20 @@ public class DoggyArmorMapping {
         if (!(item instanceof ArmorItem armor))
             return Resources.DEFAULT_DOG_ARMOR;
 
-        // var preferedLocOptional = computePreferedArmorLoc(item, dog, stack);
+        // var preferedLocOptional = computePreferedArmorLoc(item, dog, stack, armor);
         // if (preferedLocOptional.isPresent())
         //     return preferedLocOptional.get();
 
-        var armorLoc = new ResourceLocation(armor.getMaterial().getName());
-        var namespace = armorLoc.getNamespace();
-        var path = armorLoc.getPath();
+        if (armor.getMaterial().value().layers().isEmpty())
+            return Resources.DEFAULT_DOG_ARMOR; 
 
-        String s = "textures/models/armor/" + path + "_layer_1.png";
-        var computedRes = new ResourceLocation(namespace, s);
-        if (!(ClientEventHandler.vertifyArmorTexture(computedRes)))
+        var armorLoc = armor.getMaterial()
+            .value().layers().get(0)
+            .texture(false);
+        if (!(ClientEventHandler.vertifyArmorTexture(armorLoc)))
             return Resources.DEFAULT_DOG_ARMOR;
         
-        return computedRes;
+        return armorLoc;
     }
 
     // private static Optional<ResourceLocation> computePreferedArmorLoc(Item item, Dog dog, ItemStack stack) {

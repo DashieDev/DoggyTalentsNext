@@ -8,8 +8,6 @@ import doggytalents.DoggyItems;
 import doggytalents.common.advancements.triggers.DogDrunkTrigger;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.FrameType;
-import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;

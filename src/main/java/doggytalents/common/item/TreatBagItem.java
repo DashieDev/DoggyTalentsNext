@@ -119,8 +119,8 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
 
     @Override
     //@OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltip, flagIn);
 
         tooltip.add(Component.translatable("item.doggytalents.treat_bag.help").withStyle(
             Style.EMPTY.withItalic(true)

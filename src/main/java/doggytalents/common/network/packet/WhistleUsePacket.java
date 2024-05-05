@@ -11,7 +11,7 @@ import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class WhistleUsePacket implements IPacket<WhistleUseData> {
 

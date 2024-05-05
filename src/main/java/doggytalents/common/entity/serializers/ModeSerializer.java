@@ -4,7 +4,7 @@ import doggytalents.api.feature.EnumMode;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
-public class ModeSerializer implements EntityDataSerializer<EnumMode> {
+public class ModeSerializer extends DogSerializer<EnumMode> {
 
     @Override
     public void write(FriendlyByteBuf buf, EnumMode value) {

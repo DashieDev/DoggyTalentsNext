@@ -4,6 +4,7 @@ import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.DogFetchAction;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -40,8 +41,8 @@ public class ThrowableItem extends Item implements IThrowableItem {
     @Override
     public ItemStack getReturnStack(ItemStack stack) {
         ItemStack returnStack = new ItemStack(this.altBone.get());
-        if (stack.hasTag()) {
-            returnStack.setTag(stack.getTag().copy());
+        if (ItemUtil.hasTag(stack)) {
+            ItemUtil.copyTag(stack, returnStack);
         }
 
         return returnStack;

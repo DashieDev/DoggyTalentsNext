@@ -21,7 +21,7 @@ public class PackPuppyScreen extends AbstractContainerScreen<PackPuppyContainer>
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(graphics);
+        this.renderBackground(graphics, mouseX, mouseY, partialTicks);
         super.render(graphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(graphics, mouseX, mouseY);
     }
@@ -44,6 +44,6 @@ public class PackPuppyScreen extends AbstractContainerScreen<PackPuppyContainer>
             for (int k1 = 0; k1 < Mth.clamp(this.getMenu().getDogLevel(), 0, 5); k1++)
                 graphics.blit(Resources.GUI_PACK_PUPPY, l + 78 + 18 * k1, i1 + 9 + 18 * j1 + 15, 197, 2, 18, 18);
 
-        InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, l + 42, i1 + 51, 30, (float)(l + 51) - xMouse, (float)((i1 + 75) - 50) - yMouse, this.getMenu().getDog());
+        ScreenUtil.renderEntityInInventoryFollowsMouse(graphics, l + 42, i1 + 51, 30, (float)(l + 51) - xMouse, (float)((i1 + 75) - 50) - yMouse, this.getMenu().getDog());
     }
 }

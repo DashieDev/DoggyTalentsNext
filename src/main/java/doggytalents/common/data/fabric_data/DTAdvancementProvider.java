@@ -1,5 +1,7 @@
 package doggytalents.common.data.fabric_data;
 
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import doggytalents.DoggyItems;
@@ -10,29 +12,31 @@ import doggytalents.common.util.Util;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.FrameType;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.PlayerInteractTrigger;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 
 public class DTAdvancementProvider extends FabricAdvancementProvider {
 
-    public DTAdvancementProvider(FabricDataOutput output) {
-        super(output);
+    public DTAdvancementProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+        super(output, registryLookup);
     }
 
     @Override
-    public void generateAdvancement(Consumer<Advancement> consumer) {
+    public void generateAdvancement(HolderLookup.Provider registryLookup, Consumer<AdvancementHolder> consumer) {
         var charm_advancement =
             Advancement.Builder.advancement()
                 .display(
                     DisplayInfoBuilder.create()
                         .icon(DoggyItems.DOGGY_CHARM)
-                        .frame(FrameType.TASK)
+                        .frame(AdvancementType.TASK)
                         .translate("doggy_charm_summon")
                         .background("adventure.png")
                         .build()
@@ -54,7 +58,7 @@ public class DTAdvancementProvider extends FabricAdvancementProvider {
                 .display(
                     DisplayInfoBuilder.create()
                         .icon(DoggyItems.TRAINING_TREAT)
-                        .frame(FrameType.TASK)
+                        .frame(AdvancementType.TASK)
                         .translate("train_dog_hajimemashite")
                         .build()
                 )
@@ -64,10 +68,10 @@ public class DTAdvancementProvider extends FabricAdvancementProvider {
                         .itemUsedOnEntity(
                             ItemPredicate.Builder.item()
                                 .of(DoggyItems.TRAINING_TREAT.get()),
-                            EntityPredicate.wrap(
+                            Optional.of(EntityPredicate.wrap(
                                 EntityPredicate.Builder.entity()
                                     .of(EntityType.WOLF)
-                                    .build()
+                                    .build())
                             )                              
                         )
                 )
@@ -78,13 +82,13 @@ public class DTAdvancementProvider extends FabricAdvancementProvider {
             .display(
                 DisplayInfoBuilder.create()
                     .icon(DoggyItems.SAKE)
-                    .frame(FrameType.TASK)
+                    .frame(AdvancementType.TASK)
                     .translate("get_dog_drunk")
                     .build()
             )
             .addCriterion(
                 "get_dog_drunk", 
-                DogDrunkTrigger.getInstance()
+                DogDrunkTrigger.getCriterion()
             )
             .save(consumer, Util.getResourcePath("default/get_dog_drunk"));
 
@@ -93,13 +97,13 @@ public class DTAdvancementProvider extends FabricAdvancementProvider {
             .display(
                 DisplayInfoBuilder.create()
                     .icon(() -> Items.GUNPOWDER)
-                    .frame(FrameType.TASK)
+                    .frame(AdvancementType.TASK)
                     .translate("ookamikaze_trigger")
                     .build()
             )
             .addCriterion(
                 "ookamikaze_trigger", 
-                OokamikazeTrigger.getInstance()
+                OokamikazeTrigger.getCriterion()
             )
             .save(consumer, Util.getResourcePath("default/ookamikaze_trigger"));
     }

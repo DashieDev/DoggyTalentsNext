@@ -29,6 +29,7 @@ import doggytalents.common.network.packet.data.DogSyncData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -184,7 +185,7 @@ public class ClientEventHandler {
 
         if (player.getCooldowns().isOnCooldown(whistle)) return;
         
-        var tag = whistle_stack.getTag();
+        var tag = ItemUtil.getTag(whistle_stack);
         if (tag == null) return;
         var hotkeyarr = tag.getIntArray("hotkey_modes");
         if (hotkeyarr == null) return;

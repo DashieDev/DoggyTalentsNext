@@ -1,6 +1,7 @@
 package doggytalents.api.forge_imitate.inventory;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
@@ -17,9 +18,9 @@ public class ItemStackHandler extends SimpleContainer {
         this.stacks = this.items;
     }
 
-    public CompoundTag serializeNBT() { return new CompoundTag(); }
+    public CompoundTag serializeNBT(HolderLookup.Provider prov) { return new CompoundTag(); }
 
-    public void deserializeNBT(CompoundTag compound) {}
+    public void deserializeNBT(HolderLookup.Provider prov, CompoundTag compound) {}
 
     public void onLoad() {}
 

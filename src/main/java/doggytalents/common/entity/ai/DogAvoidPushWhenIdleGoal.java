@@ -6,7 +6,7 @@ import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
@@ -89,16 +89,16 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
         if (FabricUtil.getDanger(blockType) != null)
             return true;
 
-        if (blockType != BlockPathTypes.OPEN)
+        if (blockType != PathType.OPEN)
             return false;
         
         boolean noWalkable = true;
         for (int i = 1; i <= dog.getMaxFallDistance(); ++i) {
             var type = dog.getBlockPathTypeViaAlterations(dog_b1.below(i));
-            if (type == BlockPathTypes.OPEN)
+            if (type == PathType.OPEN)
                 continue;
             else {
-                noWalkable = type != BlockPathTypes.WALKABLE;
+                noWalkable = type != PathType.WALKABLE;
                 break;
             }
         }

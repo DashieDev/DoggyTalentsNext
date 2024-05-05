@@ -8,6 +8,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
+import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
@@ -26,7 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -51,8 +52,8 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int second) {
-        return InteractionResultHolder.success(Mth.floor(second * this.getFireDecreasePercentage()));
+    public InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int ticks) {
+        return InteractionResultHolder.success(Mth.floor(ticks * this.getFireDecreasePercentage()));
     }
 
     private float getFireDecreasePercentage() {
@@ -91,9 +92,9 @@ public class HellHoundTalent extends TalentInstance {
     @Override
     public void doInitialAttackEffects(AbstractDog dogIn, Entity entity) {
         if (this.level() >= 5) {
-            entity.setSecondsOnFire(15);
+            EntityUtil.setSecondsOnFire(entity, 15);
         } else if (this.level() >= 4) {
-            entity.setSecondsOnFire(4);
+            EntityUtil.setSecondsOnFire(entity, 4);
         }
     }
 
@@ -230,25 +231,25 @@ public class HellHoundTalent extends TalentInstance {
             );
         for (var x : targets) {
             if (x instanceof Enemy) {
-                x.setSecondsOnFire(5);
+                EntityUtil.setSecondsOnFire(x, 5);
             }
         }
     }
 
     @Override
-    public InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type) {
+    public InteractionResultHolder<PathType> inferType(AbstractDog dog, PathType type) {
         if (level < 5) return super.inferType(dog, type);
         // CAUTION : MAGMA_BLOCK also returns DAMAGE_FIRE instead of BLOCKED
         // so the dog may suffocate.
-        // if (type == BlockPathTypes.DAMAGE_FIRE) {
+        // if (type == PathType.DAMAGE_FIRE) {
         //     return InteractionResult.SUCCESS;
         // }
         //Won't push owner due to A.I check
-        if (type == BlockPathTypes.DANGER_FIRE) {
-            return InteractionResultHolder.success(BlockPathTypes.WALKABLE);
+        if (type == PathType.DANGER_FIRE) {
+            return InteractionResultHolder.success(PathType.WALKABLE);
         }
-        if (type == BlockPathTypes.LAVA) {
-            return InteractionResultHolder.success(BlockPathTypes.BLOCKED);
+        if (type == PathType.LAVA) {
+            return InteractionResultHolder.success(PathType.BLOCKED);
         }
         return super.inferType(dog, type);
     }

@@ -1,17 +1,22 @@
 package doggytalents.common.data.fabric_data;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyRecipeSerializers;
+import doggytalents.common.inventory.recipe.DogBedRecipe;
+import doggytalents.common.inventory.recipe.DoubleDyableRecipe;
 import doggytalents.common.util.Util;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
@@ -24,12 +29,12 @@ import net.minecraft.world.level.block.Blocks;
 
 public class DTRecipeProvider extends FabricRecipeProvider {
 
-    public DTRecipeProvider(FabricDataOutput output) {
-        super(output);
+    public DTRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, registriesFuture);
     }
 
     @Override
-    public void buildRecipes(Consumer<FinishedRecipe> consumer) {
+    public void buildRecipes(RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.THROW_BONE.get())
             .pattern(" X ")
             .pattern("XYX")
@@ -465,8 +470,8 @@ public class DTRecipeProvider extends FabricRecipeProvider {
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
 
-        SpecialRecipeBuilder.special(DoggyRecipeSerializers.DOG_BED.get()).save(consumer, Util.getResourcePath("dog_bed"));
-        SpecialRecipeBuilder.special(DoggyRecipeSerializers.DOUBLE_DYABLE.get()).save(consumer, Util.getResourcePath("birthday_hat"));
+        SpecialRecipeBuilder.special(DogBedRecipe::new).save(consumer, Util.getResourcePath("dog_bed"));
+        SpecialRecipeBuilder.special(DoubleDyableRecipe::new).save(consumer, Util.getResourcePath("birthday_hat"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.HOT_DOG.get(), 1)
             .pattern("RTY")
@@ -766,7 +771,7 @@ public class DTRecipeProvider extends FabricRecipeProvider {
             .unlockedBy("has_dtn_soy_pods", has(DoggyItems.SOY_PODS.get()))
             .save(consumer);
 
-        registerTripleCooking(consumer, 
+            registerTripleCooking(consumer, 
             Ingredient.of(DoggyItems.SOY_PODS.get()), 
             DoggyItems.SOY_PODS_DRIED.get(), 0.35F, 200, "has_dtn_soy_pods", 
             has(DoggyItems.SOY_PODS.get()));
@@ -907,9 +912,9 @@ public class DTRecipeProvider extends FabricRecipeProvider {
             .save(consumer);
     }
 
-    private void registerTripleCooking(Consumer<FinishedRecipe> consumer, Ingredient input, Item output,
+    private void registerTripleCooking(RecipeOutput consumer, Ingredient input, Item output,
         float xp, int lengthTicks,
-        String unlockedByStr, InventoryChangeTrigger.TriggerInstance trigger) {
+        String unlockedByStr, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
         var baseNameId = BuiltInRegistries.ITEM.getKey(output).getPath();
         SimpleCookingRecipeBuilder.smelting(input, 
             RecipeCategory.FOOD, 

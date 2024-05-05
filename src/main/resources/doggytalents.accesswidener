@@ -5,3 +5,5 @@ accessible method net/minecraft/client/renderer/block/model/ItemOverrides <init>
 accessible field net/minecraft/client/renderer/block/model/BlockModel parentLocation Lnet/minecraft/resources/ResourceLocation;
 accessible field net/minecraft/client/renderer/block/model/BlockModel textureMap Ljava/util/Map;
 accessible field net/minecraft/client/renderer/block/model/BlockModel parent Lnet/minecraft/client/renderer/block/model/BlockModel;
+extendable method net/minecraft/world/entity/LivingEntity canBreatheUnderwater ()Z
+accessible method net/minecraft/world/level/block/state/BlockBehaviour getSoundType (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/SoundType;

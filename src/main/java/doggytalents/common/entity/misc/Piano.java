@@ -40,8 +40,8 @@ public class Piano extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(PIANO_FLAGS, 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(PIANO_FLAGS, 0);
     }
 
     @Override

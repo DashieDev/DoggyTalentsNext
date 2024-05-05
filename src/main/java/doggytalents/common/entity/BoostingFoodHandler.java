@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.gui.components.DebugScreenOverlay;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -32,18 +33,18 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
             
             var item = stack.getItem();
 
-            var props = item.getFoodProperties();
+            var props = ItemUtil.food(stack);
             
             if (props == null) return InteractionResult.FAIL;
 
-            int heal = props.getNutrition() * 5;
+            int heal = props.nutrition() * 5;
 
             dog.addHunger(heal);
             dog.consumeItemFromStack(entityIn, stack);
 
-            for(var pair : props.getEffects()) {
-                if (pair.getFirst() != null && dog.getRandom().nextFloat() < pair.getSecond()) {
-                   dog.addEffect(new MobEffectInstance(pair.getFirst()));
+            for(var pair : props.effects()) {
+                if (dog.getRandom().nextFloat() < pair.probability()) {
+                   dog.addEffect(pair.effect());
                 }
              }
 

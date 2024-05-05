@@ -1,7 +1,9 @@
 package doggytalents.forge_imitate.network;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
+import doggytalents.common.fabric_helper.entity.network.container_sync.data.BlockPosData;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,25 +16,25 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 
 public class NetworkHooks {
     
-    public static void openScreen(ServerPlayer player, MenuProvider provider, Consumer<FriendlyByteBuf> bufWriter) {
-        var wrapper = new ExtendedScreenHandlerFactoryWrapper(provider, bufWriter);
+    public static <D> void openScreen(ServerPlayer player, MenuProvider provider, Class<D> dataClass, Supplier<D> dataSup) {
+        var wrapper = new ExtendedScreenHandlerFactoryWrapper<D>(provider, dataSup);
         player.openMenu(wrapper);
     }
 
     public static void openScreen(ServerPlayer player, MenuProvider provider, BlockPos pos) {
-        openScreen(player, provider, buf -> {
-            buf.writeBlockPos(pos);
+        openScreen(player, provider, BlockPosData.class, () -> {
+            return new BlockPosData(pos);
         });
     }
 
-    private static class ExtendedScreenHandlerFactoryWrapper implements ExtendedScreenHandlerFactory {
+    private static class ExtendedScreenHandlerFactoryWrapper<D> implements ExtendedScreenHandlerFactory<D> {
 
         private MenuProvider provider;
-        private Consumer<FriendlyByteBuf> bufWriter;
+        private Supplier<D> dataSup;
 
-        public ExtendedScreenHandlerFactoryWrapper(MenuProvider provider, Consumer<FriendlyByteBuf> bufWriter) {
+        public ExtendedScreenHandlerFactoryWrapper(MenuProvider provider, Supplier<D> dataSup) {
             this.provider = provider;
-            this.bufWriter = bufWriter;
+            this.dataSup = dataSup;
         }
 
         @Override
@@ -46,10 +48,9 @@ public class NetworkHooks {
         }
 
         @Override
-        public void writeScreenOpeningData(ServerPlayer player, FriendlyByteBuf buf) {
-            bufWriter.accept(buf);
+        public D getScreenOpeningData(ServerPlayer player) {
+            return this.dataSup.get();
         }
-
     }
 
 }

@@ -1,13 +1,14 @@
 package doggytalents.common.data;
 
 import net.minecraft.advancements.DisplayInfo;
-import net.minecraft.advancements.FrameType;
+import net.minecraft.advancements.AdvancementType;
 import net.minecraft.network.chat.Component;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import doggytalents.common.lib.Constants;
@@ -21,7 +22,7 @@ public class DisplayInfoBuilder {
     private Component description;
     private ItemStack icon;
     private ResourceLocation background;
-    private FrameType frame;
+    private AdvancementType frame;
     private boolean showToast = true;
     private boolean announceToChat = true;
     private boolean hidden = false;
@@ -74,7 +75,7 @@ public class DisplayInfoBuilder {
         return this;
     }
 
-    public DisplayInfoBuilder frame(FrameType frameIn) {
+    public DisplayInfoBuilder frame(AdvancementType frameIn) {
         this.frame = frameIn;
         return this;
     }
@@ -95,7 +96,7 @@ public class DisplayInfoBuilder {
     }
 
     public DisplayInfo build() {
-        return new DisplayInfo(icon, title, description, background, frame, showToast, announceToChat, hidden);
+        return new DisplayInfo(icon, title, description, Optional.ofNullable(background), frame, showToast, announceToChat, hidden);
     }
 
     public static DisplayInfoBuilder create() {

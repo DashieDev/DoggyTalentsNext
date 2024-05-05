@@ -1,6 +1,7 @@
 package doggytalents.common.inventory;
 
 import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -12,7 +13,7 @@ public class DoggyToolsItemHandler extends ItemStackHandler {
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider prov) {
         ListTag itemsList = new ListTag();
 
         for(int i = 0; i < this.stacks.size(); i++) {
@@ -20,8 +21,7 @@ public class DoggyToolsItemHandler extends ItemStackHandler {
            if (!stack.isEmpty()) {
               CompoundTag itemTag = new CompoundTag();
               itemTag.putByte("Slot", (byte) i);
-              stack.save(itemTag);
-              itemsList.add(itemTag);
+              itemsList.add(stack.save(prov, itemTag));
            }
         }
 
@@ -32,7 +32,7 @@ public class DoggyToolsItemHandler extends ItemStackHandler {
     }
 
     @Override
-    public void deserializeNBT(CompoundTag compound) {
+    public void deserializeNBT(HolderLookup.Provider prov, CompoundTag compound) {
         if (!compound.contains("item_list", Tag.TAG_LIST)) return;
         ListTag tagList = compound.getList("item_list", Tag.TAG_COMPOUND);
         for (int i = 0; i < tagList.size(); i++) {
@@ -40,7 +40,7 @@ public class DoggyToolsItemHandler extends ItemStackHandler {
             int slot = itemTag.getInt("Slot");
 
             if (slot >= 0 && slot < this.stacks.size()) {
-                this.stacks.set(slot, ItemStack.of(itemTag));
+                ItemStack.parse(prov, itemTag).ifPresent(stack -> stacks.set(slot, stack));
             }
         }
         this.onLoad();
