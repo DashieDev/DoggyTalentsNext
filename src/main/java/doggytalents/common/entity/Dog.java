@@ -148,7 +148,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.HitResult;
@@ -3849,7 +3849,7 @@ public class Dog extends AbstractDog {
         var newPos = new Vec3(newX, this.getY() + 0.5, newZ);
         var b0 = BlockPos.containing(newPos);
         var type = WalkNodeEvaluator.getBlockPathTypeStatic(this.level(), b0.mutable());
-        if (type == BlockPathTypes.WALKABLE) {
+        if (type == PathType.WALKABLE) {
             return newPos;
         }
         return super.getDismountLocationForPassenger(passenger);
@@ -4377,7 +4377,7 @@ public class Dog extends AbstractDog {
         return dogPathNav;
     }
 
-    public float getPathfindingMalus(BlockPathTypes type) {
+    public float getPathfindingMalus(PathType type) {
         switch (type) {
         default:
             break;
@@ -4680,7 +4680,7 @@ public class Dog extends AbstractDog {
         return super.canCollideWith(otherEntity);
     }
 
-    public BlockPathTypes getBlockPathTypeViaAlterations(BlockPos pos) {
+    public PathType getBlockPathTypeViaAlterations(BlockPos pos) {
         var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(
             this.level(), 
             pos.mutable()

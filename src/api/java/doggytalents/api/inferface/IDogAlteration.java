@@ -9,7 +9,7 @@ import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.impl.IDogRangedAttackManager;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -224,7 +224,7 @@ public interface IDogAlteration {
      * @param pos
      * @return
      */
-    default InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type) {
+    default InteractionResultHolder<PathType> inferType(AbstractDog dog, PathType type) {
         return InteractionResultHolder.pass(type);
     }
 

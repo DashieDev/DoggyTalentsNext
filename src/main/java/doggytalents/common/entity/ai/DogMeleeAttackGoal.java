@@ -20,7 +20,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
@@ -272,7 +272,7 @@ public class DogMeleeAttackGoal extends Goal {
                
       var tpos = target.blockPosition();
                
-      if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level(), tpos.mutable()) !=BlockPathTypes.WALKABLE) {
+      if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level(), tpos.mutable()) !=PathType.WALKABLE) {
          return false;
       }
                
@@ -280,7 +280,7 @@ public class DogMeleeAttackGoal extends Goal {
       var v_dog = dog.position();
       for (int i = 1; i <=3; ++i) {
          v_dog = v_dog.add(v_offset);
-         if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level(), BlockPos.containing(v_dog).mutable()) !=BlockPathTypes.WALKABLE)  {
+         if (WalkNodeEvaluator.getBlockPathTypeStatic(this.dog.level(), BlockPos.containing(v_dog).mutable()) !=PathType.WALKABLE)  {
             return false;
          }
       }
@@ -306,12 +306,12 @@ public class DogMeleeAttackGoal extends Goal {
       for (var x : dog.getAlterations()) {
          var type_result = x.inferType(dog, type);
          if (type_result.getResult().shouldSwing() 
-            && type_result.getObject() == BlockPathTypes.WALKABLE) {
-            type = BlockPathTypes.WALKABLE;
+            && type_result.getObject() == PathType.WALKABLE) {
+            type = PathType.WALKABLE;
             break;
          }
       }
-      return type == BlockPathTypes.WALKABLE;
+      return type == PathType.WALKABLE;
    }
 
    protected boolean canReachTarget (LivingEntity target,  double distanceToTargetSqr) {

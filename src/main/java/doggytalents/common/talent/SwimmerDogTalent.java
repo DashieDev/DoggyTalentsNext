@@ -29,7 +29,7 @@ import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
@@ -196,10 +196,10 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type) {
+    public InteractionResultHolder<PathType> inferType(AbstractDog dog, PathType type) {
         //This allows the owner to help the dog to reach the surface.
-        if (type == BlockPathTypes.WATER) {
-            return InteractionResultHolder.success(BlockPathTypes.WALKABLE);
+        if (type == PathType.WATER) {
+            return InteractionResultHolder.success(PathType.WALKABLE);
         }
         return super.inferType(dog, type);
     }
@@ -247,8 +247,8 @@ public class SwimmerDogTalent extends TalentInstance {
 
     //     private boolean checkSurroundingForLand(AbstractDog dogIn, BlockPos p) {
     //         for (BlockPos dp : BlockPos.betweenClosed(p.offset(-1, -1, -1), p.offset(1, 1, 1))) {
-    //             BlockPathTypes pn = WalkNodeEvaluator.getBlockPathTypeStatic(dogIn.level(), dp.mutable());
-    //             if (pn == BlockPathTypes.WALKABLE || pn == BlockPathTypes.WATER_BORDER) return true;
+    //             PathType pn = WalkNodeEvaluator.getBlockPathTypeStatic(dogIn.level(), dp.mutable());
+    //             if (pn == PathType.WALKABLE || pn == PathType.WATER_BORDER) return true;
     //         }
     //         return false;
     //     }
@@ -271,10 +271,10 @@ public class SwimmerDogTalent extends TalentInstance {
     //             this.dog.setInSittingPose(false);
     //         }
     //         this.applySwimAttributes();
-    //         this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
-    //         this.oldWaterBorderCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER_BORDER);
-    //         this.dog.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 0);
-    //         this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0);
+    //         this.oldWaterCost = this.dog.getPathfindingMalus(PathType.WATER);
+    //         this.oldWaterBorderCost = this.dog.getPathfindingMalus(PathType.WATER_BORDER);
+    //         this.dog.setPathfindingMalus(PathType.WATER_BORDER, 0);
+    //         this.dog.setPathfindingMalus(PathType.WATER, 0);
     //         this.dog.setDogSwimming(true);
     //     }
 
@@ -282,8 +282,8 @@ public class SwimmerDogTalent extends TalentInstance {
     //         this.dog.resetMoveControl();
     //         this.dog.resetNavigation();
     //         this.removeSwimAttributes();
-    //         this.dog.setPathfindingMalus(BlockPathTypes.WATER_BORDER, this.oldWaterBorderCost);
-    //         this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+    //         this.dog.setPathfindingMalus(PathType.WATER_BORDER, this.oldWaterBorderCost);
+    //         this.dog.setPathfindingMalus(PathType.WATER, this.oldWaterCost);
     //         this.dog.setDogSwimming(false);
     //     }
     // }

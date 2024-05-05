@@ -24,7 +24,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
@@ -380,8 +380,8 @@ public class ShepherdDogTalent extends TalentInstance {
     //     @Override
     //     public void start() {
     //         this.timeToRecalcPath = 0;
-    //         this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
-    //         this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+    //         this.oldWaterCost = this.dog.getPathfindingMalus(PathType.WATER);
+    //         this.dog.setPathfindingMalus(PathType.WATER, 0.0F);
     //     }
 
     //     @Override
@@ -480,7 +480,7 @@ public class ShepherdDogTalent extends TalentInstance {
     //             target.getNavigation().stop();
     //         }
     //         this.dogPathfinder.stop();
-    //         this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+    //         this.dog.setPathfindingMalus(PathType.WATER, this.oldWaterCost);
     //     }
     // }
 }

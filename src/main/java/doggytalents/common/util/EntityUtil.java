@@ -11,7 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
@@ -58,8 +58,8 @@ public class EntityUtil {
     }
 
     private static boolean isTeleportFriendlyBlock(LivingEntity entityIn, BlockPos pos, boolean teleportToLeaves) {
-        BlockPathTypes pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(entityIn.level(), pos.mutable());
-        if (pathnodetype != BlockPathTypes.WALKABLE) {
+        PathType pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(entityIn.level(), pos.mutable());
+        if (pathnodetype != PathType.WALKABLE) {
             return false;
         } else {
             BlockState blockstate = entityIn.level().getBlockState(pos.below());

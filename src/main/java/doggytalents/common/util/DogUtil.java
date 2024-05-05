@@ -34,7 +34,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.HitResult;
@@ -370,18 +370,18 @@ public class DogUtil {
         for (var x : dog.getAlterations()) {
             var type_res = x.inferType(dog, pathnodetype);
             if (type_res.getResult().shouldSwing()
-                && type_res.getObject() == BlockPathTypes.WALKABLE) {
+                && type_res.getObject() == PathType.WALKABLE) {
                 alterationWalkable = true;
                 break;
             }
         }
         
-        if (dog.canDogFly() && pathnodetype == BlockPathTypes.OPEN)
+        if (dog.canDogFly() && pathnodetype == PathType.OPEN)
             alterationWalkable = true;
-        if (dog.fireImmune() && pathnodetype == BlockPathTypes.OPEN
+        if (dog.fireImmune() && pathnodetype == PathType.OPEN
             && dog.level().getFluidState(pos.below()).is(FluidTags.LAVA))
             alterationWalkable = true;
-        if (pathnodetype != BlockPathTypes.WALKABLE && !alterationWalkable) {
+        if (pathnodetype != PathType.WALKABLE && !alterationWalkable) {
             return false;
         } else {
             var blockpos = pos.subtract(dog.blockPosition());
@@ -391,7 +391,7 @@ public class DogUtil {
 
     public static boolean isTeleportSafeBlockMidAir(Dog dog, BlockPos pos) {
         var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
-        if (pathnodetype != BlockPathTypes.OPEN) {
+        if (pathnodetype != PathType.OPEN) {
             return false;
         } else {
             var blockpos = pos.subtract(dog.blockPosition());
@@ -447,6 +447,52 @@ public class DogUtil {
         var d_sqr = dx*dx + dz*dz;
         var dy = pos.getY() - endNode.y;
         return d_sqr <= 1 && ( -maxDY_down <= dy && dy <= maxDY_up);
+    }
+
+    /**
+     * This check if the dog is going to be pushed into a questionable block
+     * 
+     * @param dog
+     */
+    public static boolean mayGetPushedIntoHazard(Dog dog, Vec3 pushVec) {
+        //final var DISTANCE_HAZARD_CHECK = 0.5f;
+
+        if (!dog.onGround()) return false;
+
+        var dog_v0 = pushVec;
+        var dog_v01 = new Vec3(dog_v0.x, 0, dog_v0.z);
+        if (dog_v01.x == 0.0 && dog_v01.z == 0.0) return false;
+        //var dog_v1 = dog_v01.normalize().scale(DISTANCE_HAZARD_CHECK);
+        var dog_v1 = dog_v01;
+        var dog_p0 = dog.position();
+        Vec3 dog_p01 = new Vec3(
+            dog_p0.x + dog_v1.x,
+            dog_p0.y,
+            dog_p0.z + dog_v1.z
+        );
+        var dog_b1 = new BlockPos(Mth.floor(dog_p01.x), Mth.floor(dog_p01.y), Mth.floor(dog_p01.z));
+
+        var blockType = dog.getBlockPathTypeViaAlterations(dog_b1);
+
+        if (FabricUtil.getDanger(blockType) != null)
+            return true;
+
+        if (blockType != PathType.OPEN)
+            return false;
+        
+        boolean noWalkable = true;
+        for (int i = 1; i <= dog.getMaxFallDistance(); ++i) {
+            var type = dog.getBlockPathTypeViaAlterations(dog_b1);
+            if (type == PathType.OPEN)
+                continue;
+            else {
+                noWalkable = type != PathType.WALKABLE;
+                break;
+            }
+        }
+
+        return noWalkable;
+
     }
 
     /**

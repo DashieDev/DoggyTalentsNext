@@ -26,7 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -236,19 +236,19 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type) {
+    public InteractionResultHolder<PathType> inferType(AbstractDog dog, PathType type) {
         if (level < 5) return super.inferType(dog, type);
         // CAUTION : MAGMA_BLOCK also returns DAMAGE_FIRE instead of BLOCKED
         // so the dog may suffocate.
-        // if (type == BlockPathTypes.DAMAGE_FIRE) {
+        // if (type == PathType.DAMAGE_FIRE) {
         //     return InteractionResult.SUCCESS;
         // }
         //Won't push owner due to A.I check
-        if (type == BlockPathTypes.DANGER_FIRE) {
-            return InteractionResultHolder.success(BlockPathTypes.WALKABLE);
+        if (type == PathType.DANGER_FIRE) {
+            return InteractionResultHolder.success(PathType.WALKABLE);
         }
-        if (type == BlockPathTypes.LAVA) {
-            return InteractionResultHolder.success(BlockPathTypes.BLOCKED);
+        if (type == PathType.LAVA) {
+            return InteractionResultHolder.success(PathType.BLOCKED);
         }
         return super.inferType(dog, type);
     }
