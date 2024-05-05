@@ -90,7 +90,7 @@ public class AmnesiaBoneItem extends Item implements IDogItem  {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flag) {
         var tag = stack.getTag();
         if (tag == null) return;

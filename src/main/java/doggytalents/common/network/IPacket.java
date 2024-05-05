@@ -4,7 +4,8 @@ import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.function.Supplier;
 
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent;
+import doggytalents.common.network.DTNNetworkHandler
+.NetworkEvent;
 
 public interface IPacket<D> {
 

@@ -17,7 +17,8 @@ import doggytalents.common.talent.HappyEaterTalent;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
 import doggytalents.forge_imitate.event.EventHandlerRegisterer;
 import doggytalents.forge_imitate.event.ForgeCommonSetup;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler;
+import doggytalents.common.network.DTNNetworkHandler
+;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 

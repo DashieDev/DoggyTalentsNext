@@ -9,7 +9,7 @@ import doggytalents.common.network.packet.data.DogMountData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 /*
  * When dog dismount or mount from player, other players recieve the updated 

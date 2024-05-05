@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
+import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -34,6 +35,22 @@ public class DTItemTagsProvider extends ItemTagProvider {
             DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO.get(),
             DoggyItems.MUSIC_DISC_OKAMI_1.get(),
             DoggyItems.MUSIC_DISC_CHOPIN_OP64_NO1.get()
+        );
+        getOrCreateTagBuilder(ItemTags.DYEABLE).add(
+            DoggyItems.WOOL_COLLAR.get(),
+            DoggyItems.WOOL_COLLAR_THICC.get(),
+            DoggyItems.CAPE_COLOURED.get(),
+            DoggyItems.BOWTIE.get(),
+            DoggyItems.WIG.get(),
+            DoggyItems.FRISBEE.get(),
+            DoggyItems.BAKER_HAT.get(),
+            DoggyItems.CHEF_HAT.get(),
+            DoggyItems.LAB_COAT.get(),
+            DoggyItems.FRISBEE_WET.get(),
+            DoggyItems.FLYING_CAPE.get(),
+            DoggyItems.CERE_GARB.get(),
+            DoggyItems.DOG_PLUSHIE_TOY.get(),
+            DoggyBlocks.DOG_BATH.get().asItem()
         );
     }
 

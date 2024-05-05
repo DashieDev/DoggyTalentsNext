@@ -27,14 +27,14 @@ public class OyakodonItem extends DogEddibleBowlFoodItem {
         super(
             b -> b
                 .nutrition(14)
-                .saturationMod(1f)
+                .saturationModifier(1f)
                 .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400, 0), 1)
                 .effect(new MobEffectInstance(MobEffects.SLOW_FALLING, 1200, 0), 1)
                 .effect(new MobEffectInstance(MobEffects.ABSORPTION, 1200, 1), 1)
         );
     }
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
         components.add(Component.translatable(desc_id).withStyle(

@@ -44,7 +44,7 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
         boolean changed = false;
         if (actualFoodProps.canAlwaysEat()) {
             changed = true;
-            nullPropsBuilder.alwaysEat();
+            nullPropsBuilder.alwaysEdible();
         }
         if (changed)
             nullProps = nullPropsBuilder.build();

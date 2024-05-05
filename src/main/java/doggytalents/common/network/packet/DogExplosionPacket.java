@@ -9,7 +9,7 @@ import doggytalents.common.talent.OokamiKazeTalent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class DogExplosionPacket implements IPacket<DogExplosionData> {
 

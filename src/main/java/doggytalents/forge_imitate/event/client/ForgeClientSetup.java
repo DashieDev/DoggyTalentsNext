@@ -1,14 +1,14 @@
 package doggytalents.forge_imitate.event.client;
 
+import doggytalents.common.network.DTNNetworkHandlerClient;
 import doggytalents.forge_imitate.client.ForgeGuiOverlayManager;
-import doggytalents.forge_imitate.client.ForgeNetworkHandlerClient;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import doggytalents.forge_imitate.event.RegisterColorHandlersEvent;
 
 public class ForgeClientSetup {
     
     public static void init() {
-        ForgeNetworkHandlerClient.initClient();
+        DTNNetworkHandlerClient.initClient();
         ClientEventHandlerRegisterer.init();
         ForgeGuiOverlayManager.init();
         fireModelLayersRegistration();

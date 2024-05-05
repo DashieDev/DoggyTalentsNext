@@ -26,7 +26,7 @@ public class GyudonItem extends DogEddibleBowlFoodItem {
         super(
             b -> b
                 .nutrition(20)
-                .saturationMod(1f)
+                .saturationModifier(1f)
                 .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400, 1), 1)
                 .effect(new MobEffectInstance(MobEffects.REGENERATION, 1200, 1), 1)
                 .effect(new MobEffectInstance(MobEffects.ABSORPTION, 2400, 1), 1)
@@ -34,7 +34,7 @@ public class GyudonItem extends DogEddibleBowlFoodItem {
         );
     }
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
         components.add(Component.translatable(desc_id).withStyle(

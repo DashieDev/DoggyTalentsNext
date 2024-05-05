@@ -66,7 +66,7 @@ public class PianoItem extends Item {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = "items.doggytalents.piano_item_common.description";
         components.add(Component.translatable(desc_id).withStyle(

@@ -10,7 +10,7 @@ import doggytalents.common.network.packet.data.DogShakingData;
 import doggytalents.common.network.packet.data.DogShakingData.State;
 import doggytalents.common.network.packet.data.ParticleData.CritEmitterData;
 import doggytalents.forge_imitate.network.PacketDistributor;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;

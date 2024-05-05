@@ -3,7 +3,7 @@ package doggytalents.common.network.packet;
 import doggytalents.common.item.WhistleItem;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.WhistleRequestModeData;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.function.Supplier;

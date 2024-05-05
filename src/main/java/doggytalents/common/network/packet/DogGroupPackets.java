@@ -14,7 +14,7 @@ import doggytalents.common.entity.DogGroupsManager.DogGroup;
 import doggytalents.common.network.packet.data.DogGroupsData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import doggytalents.forge_imitate.network.PacketDistributor;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.PacketHandler;

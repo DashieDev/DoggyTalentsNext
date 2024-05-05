@@ -20,7 +20,7 @@ public class HeadBandItem extends AccessoryItem{
         super(type, properties);
     }
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
         if (this == DoggyItems.HEAD_BAND_BLANK.get())
             return;

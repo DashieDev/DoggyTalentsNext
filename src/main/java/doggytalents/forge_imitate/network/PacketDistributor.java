@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -46,7 +47,7 @@ public class PacketDistributor<T> {
         public static enum Type { TO_CLIENT, TO_SERVER }
         protected Type type;
         
-        public abstract void sendPacket(FriendlyByteBuf buf, ResourceLocation channelId);
+        public abstract void sendPacket(CustomPacketPayload payload);
 
         public Type getType() { return type; }
 
@@ -67,10 +68,10 @@ public class PacketDistributor<T> {
         }
 
         @Override
-        public void sendPacket(FriendlyByteBuf buf, ResourceLocation channelId) {
+        public void sendPacket(CustomPacketPayload payload) {
             var playerList = playerListSup.apply(arg);
             for (var player : playerList) {
-                ServerPlayNetworking.send(player, channelId, buf);
+                ServerPlayNetworking.send(player, payload);
             }
         }
 
@@ -92,8 +93,8 @@ public class PacketDistributor<T> {
         }
 
         @Override
-        public void sendPacket(FriendlyByteBuf buf, ResourceLocation channelId) {
-            ServerPlayNetworking.send(arg, channelId, buf);
+        public void sendPacket(CustomPacketPayload payload) {
+            ServerPlayNetworking.send(arg, payload);
         }
 
         @Override
@@ -107,9 +108,9 @@ public class PacketDistributor<T> {
 
     public static class ToServerPacketTarget extends PacketTarget<Void> {
 
-        private final BiConsumer<FriendlyByteBuf, ResourceLocation> clientSender = 
-            (a, b) -> {
-                ClientPlayNetworking.send(b, a);
+        private final Consumer<CustomPacketPayload> clientSender = 
+            (p) -> {
+                ClientPlayNetworking.send(p);
             };
         
         public ToServerPacketTarget() {
@@ -117,8 +118,8 @@ public class PacketDistributor<T> {
         }
 
         @Override
-        public void sendPacket(FriendlyByteBuf buf, ResourceLocation channelId) {
-            clientSender.accept(buf, channelId);
+        public void sendPacket(CustomPacketPayload payload) {
+            clientSender.accept(payload);
         }
 
         @Override

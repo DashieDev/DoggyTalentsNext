@@ -25,7 +25,7 @@ import doggytalents.common.event.EventHandler;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler;
+import doggytalents.common.network.DTNNetworkHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +36,7 @@ public class DoggyTalentsNext {
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID);
 
-    public static final ForgeNetworkHandler HANDLER = new ForgeNetworkHandler();
+    public static final DTNNetworkHandler HANDLER = new DTNNetworkHandler();
             
     
     public static void init() {

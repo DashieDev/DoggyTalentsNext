@@ -1,12 +1,12 @@
 package doggytalents.forge_imitate.event;
 
+import doggytalents.common.network.DTNNetworkHandler;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler;
 
 public class ForgeCommonSetup {
     
     public static void init() {
-        ForgeNetworkHandler.init();
+        DTNNetworkHandler.init();
         EventHandlerRegisterer.init();
         ForgeMod.init();
         fireAttributeEvent();

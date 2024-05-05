@@ -4,7 +4,8 @@ import doggytalents.forge_imitate.client.ForgeGuiOverlayManager;
 import doggytalents.forge_imitate.event.client.ClientEventHandlerRegisterer;
 import doggytalents.forge_imitate.event.client.FabricEventCallbackHandlerClient;
 import doggytalents.forge_imitate.event.client.ForgeClientSetup;
-import doggytalents.forge_imitate.network.ForgeNetworkHandler;
+import doggytalents.common.network.DTNNetworkHandler
+;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.renderer.RenderType;
