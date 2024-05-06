@@ -152,7 +152,7 @@ public class DogGoAwayFromFireGoal extends Goal {
     }
 
     private boolean isSafePos(BlockPos pos) {
-        var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
+        var blockType = WalkNodeEvaluator.getPathTypeStatic(dog, pos.mutable());
 
         if (blockType == PathType.WALKABLE) {
             return true;

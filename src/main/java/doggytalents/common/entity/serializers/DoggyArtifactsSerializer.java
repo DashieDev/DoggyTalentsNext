@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import doggytalents.common.item.DoggyArtifactItem;
+import doggytalents.common.util.NetworkUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
-public class DoggyArtifactsSerializer implements EntityDataSerializer<List<DoggyArtifactItem>> {
+public class DoggyArtifactsSerializer extends DogSerializer<List<DoggyArtifactItem>> {
 
     @Override
     public void write(FriendlyByteBuf buf, List<DoggyArtifactItem> value) {
         buf.writeInt(value.size());
         for (var x : value) {
-            buf.writeId(BuiltInRegistries.ITEM, x);
+            NetworkUtil.writeRegistryId(buf, Registries.ITEM, x);
         }
     }
 
@@ -23,7 +25,7 @@ public class DoggyArtifactsSerializer implements EntityDataSerializer<List<Doggy
         int size = buf.readInt();
         var list = new ArrayList<DoggyArtifactItem>(size);
         for (int i = 0; i < size; ++i) {
-            var item = buf.readById(BuiltInRegistries.ITEM);
+            var item = NetworkUtil.readRegistryId(buf, Registries.ITEM);
             if (item instanceof DoggyArtifactItem artifactItem) {
                 list.add(artifactItem);
             }

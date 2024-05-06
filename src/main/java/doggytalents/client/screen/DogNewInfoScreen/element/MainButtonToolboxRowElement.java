@@ -49,8 +49,8 @@ public class MainButtonToolboxRowElement extends AbstractElement {
             MainTab.EDIT_INFO 
         ) {
             @Override
-            public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.render(graphics, mouseX, mouseY, pTicks);
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
 
                 int mX = this.getX() + this.width/2;
                 int mY = this.getY() + this.height/2;

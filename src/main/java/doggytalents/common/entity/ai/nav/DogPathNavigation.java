@@ -16,10 +16,11 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FenceGateBlock;
-import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
@@ -107,8 +108,8 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
     //     Vec3 v_add = v_current_next2th.normalize();
     //     var check_b0 = BlockPos.containing(current_pos.add(v_add));
     //     var type = WalkNodeEvaluator
-    //         .getBlockPathTypeStatic(level, check_b0.mutable());
-    //     return type == BlockPathTypes.WALKABLE;
+    //         .getPathTypetatic(level, check_b0.mutable());
+    //     return type == PathType.WALKABLE;
     // }
 
     @Override
@@ -153,7 +154,7 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
             @Override
             protected double getFloorLevel(BlockPos pos) {
                 if (dog.fireImmune()) {
-                    if (this.level.getFluidState(pos).is(FluidTags.LAVA)) {
+                    if (dog.level().getFluidState(pos).is(FluidTags.LAVA)) {
                         return pos.getY();
                     }
                 }
@@ -171,11 +172,11 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
             }
 
             @Override
-            public PathType getBlockPathType(BlockGetter getter, int x, int y, int z) {
-                var retType =  super.getBlockPathType(getter, x, y, z);
+            public PathType getPathTypeOfMob(PathfindingContext context, int x, int y, int z, Mob mon) {
+                var retType =  super.getPathTypeOfMob(context, x, y, z, dog);
                 
                 if (retType == PathType.FENCE && dog.canDogPassGate()) {
-                    var state = getter.getBlockState(new BlockPos(x, y, z));
+                    var state = dog.level().getBlockState(new BlockPos(x, y, z));
                     if (state.getBlock() instanceof FenceGateBlock) {
                         retType = PathType.WALKABLE;
                     }  

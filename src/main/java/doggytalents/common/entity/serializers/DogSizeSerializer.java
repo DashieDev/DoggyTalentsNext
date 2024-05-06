@@ -4,7 +4,7 @@ import doggytalents.api.feature.DogSize;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
-public class DogSizeSerializer implements EntityDataSerializer<DogSize> {
+public class DogSizeSerializer extends DogSerializer<DogSize> {
 
     @Override
     public void write(FriendlyByteBuf buf, DogSize val) {

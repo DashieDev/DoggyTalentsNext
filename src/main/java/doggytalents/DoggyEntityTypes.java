@@ -112,8 +112,8 @@ public class DoggyEntityTypes {
                  .add(DoggyAttributes.CRIT_BONUS.get(), 1D)
                  .add(Attributes.FLYING_SPEED, 0.3D)
                  //Fabric
-                 .add(ForgeMod.SWIM_SPEED.get(), 1)
-                 .add(ForgeMod.ENTITY_GRAVITY.get(), 0.08)
+                 .add(DoggyAttributes.wrap(ForgeMod.SWIM_SPEED), 1)
+                 //.add(Attributes.GRAVITY.get(), 0.08)
                  .build()
          );
      }

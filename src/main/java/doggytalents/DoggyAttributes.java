@@ -3,6 +3,7 @@ package doggytalents;
 import doggytalents.common.lib.Constants;
 import doggytalents.forge_imitate.registry.DeferredRegister;
 import doggytalents.forge_imitate.registry.RegistryObject;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
@@ -19,6 +20,11 @@ public class DoggyAttributes {
 
     private static <T extends Attribute> RegistryObject<T> register(final String name, final Supplier<T> sup) {
         return ATTRIBUTES.register(name, sup);
+    }
+
+    public static Holder<Attribute> wrap(RegistryObject<Attribute> val) {
+        var value = val.get();
+        return BuiltInRegistries.ATTRIBUTE.wrapAsHolder(value);
     }
 }
 

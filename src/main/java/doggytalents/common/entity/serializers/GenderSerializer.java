@@ -4,7 +4,7 @@ import doggytalents.api.feature.EnumGender;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
-public class GenderSerializer implements EntityDataSerializer<EnumGender> {
+public class GenderSerializer extends DogSerializer<EnumGender> {
 
     @Override
     public void write(FriendlyByteBuf buf, EnumGender value) {

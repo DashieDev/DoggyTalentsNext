@@ -31,7 +31,7 @@ public class DogWaterBoundNavigation extends WaterBoundPathNavigation implements
 
     @Override
     protected boolean canUpdatePath() {
-        return this.isInLiquid() && !dog.isOnSwitchNavCooldown()
+        return this.dog.isInLiquid() && !dog.isOnSwitchNavCooldown()
             && !locked;
     }
 

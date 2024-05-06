@@ -2,6 +2,7 @@ package doggytalents.common.talent;
 import java.util.EnumSet;
 import java.util.UUID;
 
+import doggytalents.DoggyAttributes;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.impl.DogAlterationProps;
@@ -127,13 +128,13 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     private void applySwimAttributes(Dog dog){
-        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID, (dd, u) -> 
+        dog.setAttributeModifier(DoggyAttributes.wrap(ForgeMod.SWIM_SPEED), SWIM_BOOST_ID, (dd, u) -> 
             new AttributeModifier(u, "Swim Boost", 2*dog.getDogLevel(DoggyTalents.SWIMMER_DOG), Operation.ADDITION)
         );
     }
 
     private void removeSwimAttributes(Dog dog) {
-        dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID);
+        dog.removeAttributeModifier(DoggyAttributes.wrap(ForgeMod.SWIM_SPEED), SWIM_BOOST_ID);
     }
     
     private void startSwimming(Dog dog) {
