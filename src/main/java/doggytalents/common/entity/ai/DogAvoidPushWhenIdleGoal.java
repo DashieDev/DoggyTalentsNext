@@ -1,6 +1,7 @@
 package doggytalents.common.entity.ai;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -76,7 +77,7 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
 
         var blockType = dog.getBlockPathTypeViaAlterations(dog_b0);
         boolean currently_damaging = 
-            blockType.getDanger() != null    
+            FabricUtil.getDanger(blockType) != null    
             && dog.getPathfindingMalus(blockType) < 0;
         if (currently_damaging) {
             this.cooldown = 10;
@@ -85,7 +86,7 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
 
         if (!dog_b0.equals(dog_b1))
             blockType = dog.getBlockPathTypeViaAlterations(dog_b1);
-        if (blockType.getDanger() != null)
+        if (FabricUtil.getDanger(blockType) != null)
             return true;
 
         if (blockType != BlockPathTypes.OPEN)
