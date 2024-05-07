@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:golden_apple"
-            ]
+            "items": "minecraft:golden_apple"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_golden_apple",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_golden_apple"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:super_treat"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

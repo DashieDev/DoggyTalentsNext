@@ -14,7 +14,7 @@
     "P"
   ],
   "result": {
-    "item": "doggytalents:head_band_blank"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:head_band_blank"
+  }
 }

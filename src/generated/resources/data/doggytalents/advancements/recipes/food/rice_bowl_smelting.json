@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "doggytalents:uncooked_rice_bowl"
-            ]
+            "items": "doggytalents:uncooked_rice_bowl"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_dtn_uncooked_rice_bowl",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dtn_uncooked_rice_bowl"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:rice_bowl_smelting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

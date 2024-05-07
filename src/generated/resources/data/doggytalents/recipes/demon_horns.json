@@ -20,7 +20,7 @@
     "BCB"
   ],
   "result": {
-    "item": "doggytalents:demon_horns"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:demon_horns"
+  }
 }

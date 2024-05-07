@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:string"
-            ]
+            "items": "minecraft:string"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_string",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_string"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:wig"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

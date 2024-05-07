@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "doggytalents:item/disc_bwv_849_fugue"
+  }
+}

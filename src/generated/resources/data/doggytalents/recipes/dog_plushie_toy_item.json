@@ -24,7 +24,7 @@
     "WTW"
   ],
   "result": {
-    "item": "doggytalents:dog_plushie_toy_item"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:dog_plushie_toy_item"
+  }
 }

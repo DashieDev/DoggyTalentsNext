@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:feather"
-            ]
+            "items": "minecraft:feather"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_feather",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_feather"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:feathered_mantle"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

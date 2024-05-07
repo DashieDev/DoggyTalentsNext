@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "doggytalents:training_treat"
-            ]
+            "items": "doggytalents:training_treat"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_dtn_training_treat",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dtn_training_treat"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:scent_treat"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

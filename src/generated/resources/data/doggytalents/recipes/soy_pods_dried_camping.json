@@ -6,5 +6,8 @@
   "ingredient": {
     "item": "doggytalents:soy_pods"
   },
-  "result": "doggytalents:soy_pods_dried"
+  "result": {
+    "count": 1,
+    "id": "doggytalents:soy_pods_dried"
+  }
 }

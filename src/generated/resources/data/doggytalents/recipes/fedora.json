@@ -21,7 +21,7 @@
     " T "
   ],
   "result": {
-    "item": "doggytalents:fedora"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:fedora"
+  }
 }

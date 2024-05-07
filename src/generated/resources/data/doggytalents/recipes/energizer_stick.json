@@ -14,7 +14,7 @@
     "WS"
   ],
   "result": {
-    "item": "doggytalents:energizer_stick"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:energizer_stick"
+  }
 }

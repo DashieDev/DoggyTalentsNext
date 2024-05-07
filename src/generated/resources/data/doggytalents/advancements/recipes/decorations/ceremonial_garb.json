@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:lead"
-            ]
+            "items": "minecraft:lead"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_lead",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lead"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:ceremonial_garb"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

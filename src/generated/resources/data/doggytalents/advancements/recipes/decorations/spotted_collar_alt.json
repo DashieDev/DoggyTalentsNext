@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "doggytalents:wool_collar"
-            ]
+            "items": "doggytalents:wool_collar"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_wool_collar",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_wool_collar"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:spotted_collar_alt"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

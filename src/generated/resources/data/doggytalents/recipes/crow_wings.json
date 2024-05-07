@@ -18,7 +18,7 @@
     "FBF"
   ],
   "result": {
-    "item": "doggytalents:crow_wings"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:crow_wings"
+  }
 }

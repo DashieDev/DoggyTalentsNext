@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:bone"
-            ]
+            "items": "minecraft:bone"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_bone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_bone"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:throw_bone"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

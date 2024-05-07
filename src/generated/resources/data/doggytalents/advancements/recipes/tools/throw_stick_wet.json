@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "doggytalents:throw_stick"
-            ]
+            "items": "doggytalents:throw_stick"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_throw_stick",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_throw_stick"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:throw_stick_wet"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

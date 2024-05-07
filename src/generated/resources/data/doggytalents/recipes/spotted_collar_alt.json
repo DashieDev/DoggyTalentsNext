@@ -21,7 +21,7 @@
     "WSW"
   ],
   "result": {
-    "item": "doggytalents:spotted_collar"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:spotted_collar"
+  }
 }

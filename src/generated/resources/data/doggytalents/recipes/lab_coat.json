@@ -15,7 +15,7 @@
     "WWW"
   ],
   "result": {
-    "item": "doggytalents:lab_coat"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:lab_coat"
+  }
 }

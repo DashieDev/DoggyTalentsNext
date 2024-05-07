@@ -13,7 +13,7 @@
     "GKG"
   ],
   "result": {
-    "item": "doggytalents:doggy_contacts"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:doggy_contacts"
+  }
 }

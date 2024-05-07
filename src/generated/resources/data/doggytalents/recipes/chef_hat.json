@@ -15,7 +15,7 @@
     "WCW"
   ],
   "result": {
-    "item": "doggytalents:chef_hat"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:chef_hat"
+  }
 }
