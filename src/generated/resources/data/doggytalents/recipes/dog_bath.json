@@ -15,7 +15,7 @@
     "XXX"
   ],
   "result": {
-    "item": "doggytalents:dog_bath"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:dog_bath"
+  }
 }

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:cooked_porkchop"
-            ]
+            "items": "minecraft:cooked_porkchop"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_cooked_porkchop",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_cooked_porkchop"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:sausage"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

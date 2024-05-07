@@ -15,7 +15,7 @@
     " W "
   ],
   "result": {
-    "item": "doggytalents:scent_treat"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:scent_treat"
+  }
 }

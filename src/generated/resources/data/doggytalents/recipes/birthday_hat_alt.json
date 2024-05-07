@@ -14,7 +14,7 @@
     "PTP"
   ],
   "result": {
-    "item": "doggytalents:birthday_hat"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:birthday_hat"
+  }
 }

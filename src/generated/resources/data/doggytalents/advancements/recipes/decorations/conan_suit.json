@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:white_wool"
-            ]
+            "items": "minecraft:white_wool"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_wool",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_wool"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:conan_suit"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

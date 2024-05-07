@@ -24,7 +24,7 @@
     "R R"
   ],
   "result": {
-    "item": "doggytalents:beastars_uniform_male"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:beastars_uniform_male"
+  }
 }

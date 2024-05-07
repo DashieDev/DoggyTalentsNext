@@ -14,7 +14,7 @@
     "B"
   ],
   "result": {
-    "item": "doggytalents:natto_rice"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:natto_rice"
+  }
 }

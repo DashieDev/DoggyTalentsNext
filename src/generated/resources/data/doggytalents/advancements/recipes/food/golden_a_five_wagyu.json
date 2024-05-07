@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:cooked_beef"
-            ]
+            "items": "minecraft:cooked_beef"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_cooked_beef",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_cooked_beef"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:golden_a_five_wagyu"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

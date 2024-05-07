@@ -21,7 +21,7 @@
     "FDF"
   ],
   "result": {
-    "item": "doggytalents:rice_mill"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:rice_mill"
+  }
 }

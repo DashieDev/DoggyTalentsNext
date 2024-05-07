@@ -21,7 +21,7 @@
     "BYB"
   ],
   "result": {
-    "item": "doggytalents:tantan_cape"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:tantan_cape"
+  }
 }

@@ -13,7 +13,7 @@
     "SBS"
   ],
   "result": {
-    "item": "doggytalents:frisbee"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:frisbee"
+  }
 }

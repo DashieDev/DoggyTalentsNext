@@ -21,7 +21,7 @@
     "BG "
   ],
   "result": {
-    "item": "doggytalents:magnifying_bone"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:magnifying_bone"
+  }
 }

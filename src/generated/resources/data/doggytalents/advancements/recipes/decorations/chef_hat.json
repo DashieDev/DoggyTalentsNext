@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:leather_helmet"
-            ]
+            "items": "minecraft:leather_helmet"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_leather_helmet",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_leather_helmet"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:chef_hat"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

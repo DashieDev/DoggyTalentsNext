@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:redstone"
-            ]
+            "items": "minecraft:redstone"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_redstone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_redstone"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:smarty_glasses"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

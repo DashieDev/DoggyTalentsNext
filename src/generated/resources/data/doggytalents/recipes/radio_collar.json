@@ -14,7 +14,7 @@
     "YX"
   ],
   "result": {
-    "item": "doggytalents:radio_collar"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "doggytalents:radio_collar"
+  }
 }

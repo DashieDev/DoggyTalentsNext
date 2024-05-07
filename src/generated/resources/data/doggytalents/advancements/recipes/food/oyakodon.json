@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "doggytalents:rice_bowl"
-            ]
+            "items": "doggytalents:rice_bowl"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_rice_bowl",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_rice_bowl"
     ]
   ],
   "rewards": {
     "recipes": [
       "doggytalents:oyakodon"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
