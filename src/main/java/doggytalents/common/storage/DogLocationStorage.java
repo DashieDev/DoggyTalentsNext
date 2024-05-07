@@ -6,16 +6,19 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.forge_imitate.event.ServerStoppingEvent;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraft.world.level.saveddata.SavedData.Factory;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -40,14 +43,14 @@ public class DogLocationStorage extends SavedData {
         ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
 
         DimensionDataStorage storage = overworld.getDataStorage();
-        return storage.computeIfAbsent(DogLocationStorage::load, DogLocationStorage::new, Constants.STORAGE_DOG_LOCATION);
+        return storage.computeIfAbsent(storageFactory(), Constants.STORAGE_DOG_LOCATION);
     }
 
     public static DogLocationStorage get(MinecraftServer server) {
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
 
         DimensionDataStorage storage = overworld.getDataStorage();
-        return storage.computeIfAbsent(DogLocationStorage::load, DogLocationStorage::new, Constants.STORAGE_DOG_LOCATION);
+        return storage.computeIfAbsent(storageFactory(), Constants.STORAGE_DOG_LOCATION);
     }
 
     public Stream<DogLocationData> getDogs(LivingEntity owner) {
@@ -127,7 +130,7 @@ public class DogLocationStorage extends SavedData {
         return Collections.unmodifiableCollection(this.locationDataMap.values());
     }
 
-    public static DogLocationStorage load(CompoundTag nbt) {
+    public static DogLocationStorage load(CompoundTag nbt, HolderLookup.Provider prov) {
         DogLocationStorage store = new DogLocationStorage();
         store.locationDataMap.clear();
 
@@ -164,7 +167,7 @@ public class DogLocationStorage extends SavedData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public CompoundTag save(CompoundTag compound, HolderLookup.Provider prov) {
         ListTag list = new ListTag();
 
         for (Entry<UUID, DogLocationData> entry : this.locationDataMap.entrySet()) {
@@ -199,5 +202,11 @@ public class DogLocationStorage extends SavedData {
     public void onServerStop(ServerStoppingEvent event) {
         this.onlineDogManager.onServerStop();
         GREETING_DOG_LIMIT_MAP.clear();
+    }
+
+    private static SavedData.Factory<DogLocationStorage> FACTORY
+        = new SavedData.Factory<>(DogLocationStorage::new, DogLocationStorage::load, DataFixTypes.LEVEL);
+    public static SavedData.Factory<DogLocationStorage> storageFactory() {
+        return FACTORY;
     }
 }

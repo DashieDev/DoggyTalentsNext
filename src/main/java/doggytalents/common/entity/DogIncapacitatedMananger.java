@@ -80,7 +80,7 @@ public class DogIncapacitatedMananger {
         recoveryMultiplier = 1;
         this.bandagesCount = 0;
         this.dog.setAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT,
-            (d, u) -> new AttributeModifier(u, "Defeated Slowness", -0.5f, Operation.MULTIPLY_TOTAL)
+            (d, u) -> new AttributeModifier(u, "Defeated Slowness", -0.5f, Operation.ADD_MULTIPLIED_TOTAL)
         );
         this.dog.setDrunkTicks(0);
     }

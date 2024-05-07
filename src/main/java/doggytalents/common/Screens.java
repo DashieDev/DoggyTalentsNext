@@ -5,6 +5,8 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.block.tileentity.FoodBowlTileEntity;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.entity.network.container_sync.data.IntArrayData;
+import doggytalents.common.fabric_helper.entity.network.container_sync.data.IntData;
 import doggytalents.common.inventory.container.DogArmorContainer;
 import doggytalents.common.inventory.container.DogInventoriesContainer;
 import doggytalents.common.inventory.container.DoggyToolsMenu;
@@ -20,6 +22,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Screens {
@@ -125,19 +128,20 @@ public class Screens {
         if (!dogIn.canInteract(player))
             return;
         if (dogIn.isDoingFine()) {
-            NetworkHooks.openScreen(player, new PackPuppyContainerProvider(dogIn), (buf) -> {
-                buf.writeInt(dogIn.getId());
+            NetworkHooks.openScreen(player, new PackPuppyContainerProvider(dogIn), IntData.class, () -> {
+                return new IntData(dogIn.getId());
             });
         }
     }
 
     public static void openDogInventoriesScreen(ServerPlayer player, List<Dog> dogIn) {
         if (!dogIn.isEmpty()) {
-            NetworkHooks.openScreen(player, new DogInventoriesContainerProvider(dogIn), (buf) -> {
-                buf.writeInt(dogIn.size());
+            NetworkHooks.openScreen(player, new DogInventoriesContainerProvider(dogIn), IntArrayData.class, () -> {
+                var list = new ArrayList<Integer>(dogIn.size());
                 for (Dog dog : dogIn) {
-                    buf.writeInt(dog.getId());
+                    list.add(dog.getId());
                 }
+                return new IntArrayData(list);
             });
         }
     }
@@ -159,8 +163,8 @@ public class Screens {
         if (!dogIn.canInteract(player))
             return;
         if (dogIn.isDoingFine() && dogIn.getDogLevel(DoggyTalents.DOGGY_ARMOR) > 0) {
-            NetworkHooks.openScreen(player, new DogArmorContainerProvider(dogIn), (buf) -> {
-                buf.writeInt(dogIn.getId());
+            NetworkHooks.openScreen(player, new DogArmorContainerProvider(dogIn), IntData.class, () -> {
+                return new IntData(dogIn.getId());
             });
         }
     }
@@ -169,8 +173,8 @@ public class Screens {
         if (!dogIn.canInteract(player))
             return;
         if (dogIn.isDoingFine() && dogIn.getDogLevel(DoggyTalents.DOGGY_TOOLS) > 0) {
-            NetworkHooks.openScreen(player, new DoggyToolsMenuProvider(dogIn), (buf) -> {
-                buf.writeInt(dogIn.getId());
+            NetworkHooks.openScreen(player, new DoggyToolsMenuProvider(dogIn), IntData.class, () -> {
+                return new IntData(dogIn.getId());
             });
         }
     }

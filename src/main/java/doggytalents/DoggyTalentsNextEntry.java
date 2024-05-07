@@ -56,6 +56,7 @@ public class DoggyTalentsNextEntry implements ModInitializer {
         DoggyAttributes.ATTRIBUTES.initAll();
         DoggyItemGroups.ITEM_GROUP.initAll();
         DoggyEffects.EFFECTS.initAll();
+        DoggyAdvancementTriggers.TRIGGERS.initAll();
     }
 
     private void doModCommonSetup() {
@@ -69,7 +70,7 @@ public class DoggyTalentsNextEntry implements ModInitializer {
         FoodHandler.registerDynPredicate(HappyEaterTalent.INNER_DYN_PRED);
         //InteractHandler.registerHandler(new HelmetInteractHandler());
         //Dog.initDataParameters();
-        DoggyAdvancementTriggers.registerAll();
+        //DoggyAdvancementTriggers.registerAll();
         DoggyBrewingRecipes.registerAll();
         ConfigHandler.initTalentConfig();
         //GarbageChunkCollector.init();

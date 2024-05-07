@@ -8,6 +8,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class FeatheredMantleArtifact extends DoggyArtifact {
 
@@ -44,15 +45,15 @@ public class FeatheredMantleArtifact extends DoggyArtifact {
     }
 
     private void startGliding(AbstractDog dog) {
-        dog.setAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), PILLOW_PAW_BOOST_ID, this::createSpeedModifier);
+        dog.setAttributeModifier(Attributes.GRAVITY, PILLOW_PAW_BOOST_ID, this::createSpeedModifier);
     }
 
     private void stopGliding(AbstractDog dog) {
-        dog.removeAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), PILLOW_PAW_BOOST_ID);
+        dog.removeAttributeModifier(Attributes.GRAVITY, PILLOW_PAW_BOOST_ID);
     }
 
     public AttributeModifier createSpeedModifier(AbstractDog dogIn, UUID uuidIn) {
-        return new AttributeModifier(uuidIn, "Pillow Paw", -0.8, AttributeModifier.Operation.MULTIPLY_BASE);
+        return new AttributeModifier(uuidIn, "Pillow Paw", -0.8, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     }
     
 }

@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.FoodProperties.PossibleEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -33,7 +34,7 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
     private FoodProperties currentFoodProps;
 
     public DogEddibleItem(Properties itemProps, FoodProperties foodProps) {
-        super(itemProps.food(NULL_PROPS));
+        super(itemProps.food(foodProps));
         if (foodProps != null)
             actualFoodProps = foodProps;
         else 
@@ -73,11 +74,11 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
             propsCreator.apply(new FoodProperties.Builder()).build());
     }
 
-    @Override
-    @Nullable
-    public FoodProperties getFoodProperties() {
-        return this.currentFoodProps;
-    }
+    // @Override
+    // @Nullable
+    // public FoodProperties getFoodProperties() {
+    //     return this.currentFoodProps;
+    // }
 
     @Override
     public boolean isFood(ItemStack stack) {
@@ -133,13 +134,13 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
 
     @Override
     public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return actualFoodProps.getNutrition() * 5;
+        return actualFoodProps.nutrition() * 5;
     }
 
     @Override
-    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+    public List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
-        return actualFoodProps.getEffects();
+        return actualFoodProps.effects();
     }
 
     @Override

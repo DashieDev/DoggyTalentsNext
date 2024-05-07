@@ -14,7 +14,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.FoodProperties.PossibleEffect;
 import net.minecraft.world.item.BowlFoodItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
@@ -39,9 +41,9 @@ public class NattoRiceItem extends DogEddibleBowlFoodItem {
     }
 
     @Override
-    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+    public List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
-        return List.of(Pair.of(new MobEffectInstance(DoggyEffects.NATTO_BITE.get(), 300 * 20, 1), 1f));
+        return List.of(new PossibleEffect(new MobEffectInstance(DoggyEffects.NATTO_BITE.holder(), 300 * 20, 1), 1f));
     }
 
     @Override

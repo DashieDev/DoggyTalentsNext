@@ -14,6 +14,7 @@ import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAcces
 import doggytalents.common.item.AccessoryItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ItemLike;

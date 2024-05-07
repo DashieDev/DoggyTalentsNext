@@ -70,7 +70,7 @@ public class LivingEntityMixin {
             return;
         final int FLOAT_INDX = 0, VEC3_INDEX = 1;
         float current = (Float) args.get(FLOAT_INDX);
-        current *= dog.getAttributeValue(DoggyAttributes.wrap(ForgeMod.SWIM_SPEED));
+        current *= dog.getAttributeValue(ForgeMod.SWIM_SPEED.holder());
         args.set(FLOAT_INDX, current);
     }
 

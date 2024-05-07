@@ -5,6 +5,7 @@ import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.util.DogBedUtil;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
@@ -17,8 +18,8 @@ import net.minecraft.world.level.Level;
 
 public class DogBedRecipe extends CustomRecipe /*implements IShapedRecipe<CraftingContainer>*/ {
 
-    public DogBedRecipe(ResourceLocation resource, CraftingBookCategory p_249010_) {
-        super(resource, p_249010_);
+    public DogBedRecipe(CraftingBookCategory p_249010_) {
+        super(p_249010_);
     }
 
     @Override
@@ -84,17 +85,17 @@ public class DogBedRecipe extends CustomRecipe /*implements IShapedRecipe<Crafti
     }
 
     // @Override
-    // public int getRecipeWidth() {
+    // public int getWidth() {
     //     return 3;
     // }
 
     // @Override
-    // public int getRecipeHeight() {
+    // public int getHeight() {
     //     return 3;
     // }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv, RegistryAccess p_267165_) {
+    public ItemStack assemble(CraftingContainer inv, HolderLookup.Provider p_267165_) {
         IBeddingMaterial beddingId = DogBedUtil.getBeddingFromStack(inv.getItem(1));
         ICasingMaterial casingId = DogBedUtil.getCasingFromStack(inv.getItem(0));
 

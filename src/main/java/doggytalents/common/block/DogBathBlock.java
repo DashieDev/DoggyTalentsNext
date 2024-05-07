@@ -6,10 +6,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -51,30 +52,31 @@ public class DogBathBlock extends Block {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        ItemStack stack = player.getItemInHand(handIn);
+    public ItemInteractionResult useItemOn(
+        ItemStack stack, BlockState state, Level level, 
+        BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 
         if (stack.isEmpty()) {
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         } else {
             if (stack.getItem() == Items.GLASS_BOTTLE) {
-                if (!worldIn.isClientSide) {
+                if (!level.isClientSide) {
                     if (!player.getAbilities().instabuild) {
-                        ItemStack bottleStack = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
+                        ItemStack bottleStack = PotionContents.createItemStack(Items.POTION, Potions.WATER);
                         stack.shrink(1);
                         if (stack.isEmpty()) {
-                            player.setItemInHand(handIn, bottleStack);
+                            player.setItemInHand(hand, bottleStack);
                         } else if (!player.getInventory().add(bottleStack)) {
                             player.drop(bottleStack, false);
                         }
                     }
 
-                    worldIn.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                 }
 
-                return InteractionResult.SUCCESS;
+                return ItemInteractionResult.SUCCESS;
             } else {
-                return InteractionResult.FAIL;
+                return ItemInteractionResult.FAIL;
             }
         }
     }

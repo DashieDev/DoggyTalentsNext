@@ -3,6 +3,7 @@ package doggytalents.common.util;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.ArmorTrim;
@@ -137,5 +138,9 @@ public class ItemUtil {
         if (!stack.has(DataComponents.TRIM))
             return Optional.empty();
         return Optional.ofNullable(stack.get(DataComponents.TRIM));
+    }
+
+    public static FoodProperties food(ItemStack stack) {
+        return stack.get(DataComponents.FOOD);
     }
 }

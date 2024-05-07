@@ -31,7 +31,7 @@ public class DTLootModifiers {
     }
 
     private static void riceFromGrains_onBlockBreak(Level level, Player player, BlockPos pos, BlockState state) {
-        if (!state.is(Blocks.GRASS))
+        if (!state.is(Blocks.SHORT_GRASS))
             return;
         var item = player.getMainHandItem();
         if (item.is(Items.SHEARS))

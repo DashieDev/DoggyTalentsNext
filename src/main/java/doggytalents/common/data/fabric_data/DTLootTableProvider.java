@@ -1,5 +1,6 @@
 package doggytalents.common.data.fabric_data;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 import doggytalents.DoggyBlocks;
@@ -7,6 +8,7 @@ import doggytalents.DoggyItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -14,7 +16,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
-import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
+import net.minecraft.world.level.storage.loot.functions.CopyCustomDataFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
@@ -24,8 +26,8 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 public class DTLootTableProvider extends FabricBlockLootTableProvider {
 
-    public DTLootTableProvider(FabricDataOutput dataOutput) {
-        super(dataOutput);
+    public DTLootTableProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+        super(dataOutput, registryLookup);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class DTLootTableProvider extends FabricBlockLootTableProvider {
                 .apply(
                     ApplyBonusCount
                         .addBonusBinomialDistributionCount(
-                            Enchantments.BLOCK_FORTUNE, 0.5714286F, 3));
+                            Enchantments.FORTUNE, 0.5714286F, 3));
 
         final var RICE_LOOTABLE = 
             LootTable.lootTable().withPool(
@@ -89,7 +91,7 @@ public class DTLootTableProvider extends FabricBlockLootTableProvider {
                      .setRolls(ConstantValue.exactly(1)))
                      .add(LootItem.lootTableItem(block.get())
                              .apply(
-                                     CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                     CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
                                      .copy("casingId", "doggytalents.casingId")
                                      .copy("beddingId", "doggytalents.beddingId")
                                      .copy("ownerId", "doggytalents.ownerId")

@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.entity.accessory.DoubleDyableAccessory;
+import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +29,7 @@ public class DoubleDyableAccessoryItem extends AccessoryItem {
 
     public int getBgColor(ItemStack stack) { 
         var defColor = getDefaultBgColor();
-        var tag = stack.getTag();
+        var tag = ItemUtil.getTag(stack);
         if (tag == null)
             return defColor;
         if (tag.contains("doggytalents_bg_color", Tag.TAG_INT)) {
@@ -41,7 +42,7 @@ public class DoubleDyableAccessoryItem extends AccessoryItem {
 
     public int getFgColor(ItemStack stack) { 
         var defColor = getDefaultFgColor();
-        var tag = stack.getTag();
+        var tag = ItemUtil.getTag(stack);
         if (tag == null)
             return defColor;
         if (tag.contains("doggytalents_fg_color", Tag.TAG_INT)) {
@@ -53,13 +54,15 @@ public class DoubleDyableAccessoryItem extends AccessoryItem {
     }
 
     public void setBgColor(ItemStack stack, int color) {
-        var tag = stack.getOrCreateTag();
+        var tag = ItemUtil.getTag(stack);
         tag.putInt("doggytalents_bg_color", color);
+        ItemUtil.putTag(stack, tag);
     }
 
     public void setFgColor(ItemStack stack, int color) {
-        var tag = stack.getOrCreateTag();
+        var tag = ItemUtil.getTag(stack);
         tag.putInt("doggytalents_fg_color", color);
+        ItemUtil.putTag(stack, tag);
     }
 
     public static ItemStack copyAndSetColorForStack(ItemStack stack, List<DyeColor> dye, boolean fg_color) {

@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.FoodProperties.PossibleEffect;
 import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
@@ -43,22 +44,21 @@ public class GyudonItem extends DogEddibleBowlFoodItem {
     }
     
     @Override
-    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+    public List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
         var ret = super.getAdditionalEffectsWhenDogConsume(useStack, dog);
-        var newRet = new ArrayList<Pair<MobEffectInstance, Float>>(ret.size());
+        var newRet = new ArrayList<PossibleEffect>(ret.size());
         for (var pair : ret) {
-            var effect = pair.getFirst();
-            var newDuration = effect.getEffect().isInstantenous() ?
-                effect.getDuration()
-                : effect.getDuration() + 2 * 60 * 20;
-            var newEffect = new MobEffectInstance(
-                effect.getEffect(),
+            var effectInst = pair.effect();
+            var newDuration = effectInst.getEffect().value().isInstantenous() ?
+                effectInst.getDuration()
+                : effectInst.getDuration() + 2 * 60 * 20;
+            var new_pair = new PossibleEffect(new MobEffectInstance(
+                effectInst.getEffect(),
                 newDuration,
-                effect.getAmplifier()
-            );
-            var newPair = new Pair<>(newEffect, 1f);
-            newRet.add(newPair);
+                effectInst.getAmplifier()
+            ), 1f);
+            newRet.add(new_pair);
         }
         return newRet;
     }

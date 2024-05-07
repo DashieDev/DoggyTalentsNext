@@ -107,12 +107,12 @@ public class DoggyEntityTypes {
                  .add(Attributes.MOVEMENT_SPEED, 0.3D)
                  .add(Attributes.KNOCKBACK_RESISTANCE, 0.25D)
                  .add(Attributes.ATTACK_DAMAGE, 2.0D)
-                 .add(DoggyAttributes.JUMP_POWER.get(), 0.42D)
-                 .add(DoggyAttributes.CRIT_CHANCE.get(), 0.01D)
-                 .add(DoggyAttributes.CRIT_BONUS.get(), 1D)
+                 .add(DoggyAttributes.JUMP_POWER.holder(), 0.42D)
+                 .add(DoggyAttributes.CRIT_CHANCE.holder(), 0.01D)
+                 .add(DoggyAttributes.CRIT_BONUS.holder(), 1D)
                  .add(Attributes.FLYING_SPEED, 0.3D)
                  //Fabric
-                 .add(DoggyAttributes.wrap(ForgeMod.SWIM_SPEED), 1)
+                 .add(ForgeMod.SWIM_SPEED.holder(), 1)
                  //.add(Attributes.GRAVITY.get(), 0.08)
                  .build()
          );

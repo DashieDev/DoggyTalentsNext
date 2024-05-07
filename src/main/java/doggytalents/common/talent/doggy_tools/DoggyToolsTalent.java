@@ -256,7 +256,7 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
 
     public static boolean isInfinityBow(ItemStack bowStack) {
-        return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) > 0;
+        return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY, bowStack) > 0;
     }
 
     @Override

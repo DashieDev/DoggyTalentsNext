@@ -21,6 +21,7 @@ import doggytalents.common.network.packet.data.CanineTrackerData.ResponseDogsDat
 import doggytalents.common.network.packet.data.CanineTrackerData.ResponsePosUpdateData;
 import doggytalents.common.network.packet.data.CanineTrackerData.StartLocatingData;
 import doggytalents.common.storage.DogLocationStorage;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -159,10 +160,10 @@ public class CanineTrackerPackets {
                 var dogData = storage.getData(data.uuid);
                 if (dogData == null) return;
                 
-                if (!stack.hasTag()) {
-                    stack.setTag(new CompoundTag());
-                }
-                var tag = stack.getTag();
+                // if (!stack.hasTag()) {
+                //     stack.setTag(new CompoundTag());
+                // }
+                var tag = ItemUtil.getTag(stack);
                 if (tag == null) return;
 
                 var pos = BlockPos.containing(dogData.getPos());
@@ -172,6 +173,7 @@ public class CanineTrackerPackets {
                 tag.putInt("posY",  pos.getY());
                 tag.putInt("posZ",  pos.getZ());
                 tag.putInt("locateColor", dogData.getLocateColor());
+                ItemUtil.putTag(stack, tag);
             });
 
             ctx.get().setPacketHandled(true);

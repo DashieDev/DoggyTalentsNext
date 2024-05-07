@@ -15,6 +15,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.HeelByNameData;
 import doggytalents.common.network.packet.data.WhisltleEditHotKeyData;
 import doggytalents.common.network.packet.data.WhistleRequestModeData;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -234,7 +235,7 @@ public class WhistleScreen extends Screen{
         var stack = player.getMainHandItem();
         if (stack == null) return;
         if (stack.getItem() != DoggyItems.WHISTLE.get()) return;
-        var tag = stack.getTag();
+        var tag = ItemUtil.getTag(stack);
         if (tag == null) return;
         var list = tag.getIntArray("hotkey_modes");
         if (list == null) return;

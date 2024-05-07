@@ -11,6 +11,8 @@ import net.minecraft.world.level.Level;
 
 import java.util.function.Supplier;
 
+import doggytalents.common.util.ItemUtil;
+
 public class DroolBoneItem extends Item {
 
     public Supplier<? extends Item> altBone;
@@ -27,8 +29,8 @@ public class DroolBoneItem extends Item {
         if (itemStackIn.getItem() == this) {
 
             ItemStack returnStack = new ItemStack(this.altBone.get());
-            if (itemStackIn.hasTag()) {
-                returnStack.setTag(itemStackIn.getTag().copy());
+            if (ItemUtil.hasTag(itemStackIn)) {
+                ItemUtil.copyTag(itemStackIn, returnStack);
             }
 
             playerIn.swing(handIn);

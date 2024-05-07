@@ -19,6 +19,7 @@ import doggytalents.common.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -527,16 +528,16 @@ public class RiceMillBlockEntity extends BlockEntity {
     // }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        container.deserializeNBT(tag);
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider prov) {
+        super.loadAdditional(tag, prov);
+        container.deserializeNBT(tag, prov);
         this.grindingTime = tag.getInt("grindingTime");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        container.serializeNBT(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider prov) {
+        super.saveAdditional(tag, prov);
+        container.serializeNBT(tag, prov);
         tag.putInt("grindingTime", this.grindingTime);
     }
 
@@ -619,7 +620,7 @@ public class RiceMillBlockEntity extends BlockEntity {
             return Container.stillValidBlockEntity(this.mill, player);
         }
         
-        public void serializeNBT(CompoundTag compound) {
+        public void serializeNBT(CompoundTag compound, HolderLookup.Provider prov) {
             var itemsList = new ListTag();
 
             for(int i = 0; i < this.getContainerSize(); i++) {
@@ -627,15 +628,14 @@ public class RiceMillBlockEntity extends BlockEntity {
                 if (!stack.isEmpty()) {
                     CompoundTag itemTag = new CompoundTag();
                     itemTag.putByte("Slot", (byte) i);
-                    stack.save(itemTag);
-                    itemsList.add(itemTag);
+                    itemsList.add(stack.save(prov, itemTag));
                 }
             }
 
             compound.put("MillItems", itemsList);
         }
 
-        public void deserializeNBT(CompoundTag compound) {
+        public void deserializeNBT(CompoundTag compound, HolderLookup.Provider prov) {
             if (compound.contains("MillItems", Tag.TAG_LIST)) {
                 ListTag tagList = compound.getList("MillItems", Tag.TAG_COMPOUND);
                 for (int i = 0; i < tagList.size(); i++) {
@@ -643,7 +643,7 @@ public class RiceMillBlockEntity extends BlockEntity {
                     int slot = itemTag.getInt("Slot");
 
                     if (slot >= 0 && slot < this.getContainerSize()) {
-                        this.setItem(slot, ItemStack.of(itemTag));
+                        this.setItem(slot, ItemStack.parse(prov, itemTag).orElse(ItemStack.EMPTY));
                     }
                 }
             }

@@ -5,10 +5,12 @@ import javax.annotation.Nullable;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -19,10 +21,10 @@ public class MeatFoodHandler implements IDogFoodHandler {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        var props = stack.getItem().getFoodProperties();
+        var props = ItemUtil.food(stack);
 
         if (props == null) return false;
-        return stack.isEdible() && props.isMeat() && stack.getItem() != Items.ROTTEN_FLESH;
+        return stack.is(ItemTags.MEAT) && stack.getItem() != Items.ROTTEN_FLESH;
     }
 
     @Override
@@ -39,11 +41,11 @@ public class MeatFoodHandler implements IDogFoodHandler {
             if (!dog.level().isClientSide) {
                 var item = stack.getItem();
 
-                var props = item.getFoodProperties();
+                var props = ItemUtil.food(stack);
 
                 if (props == null) return InteractionResult.FAIL;
                 
-                int heal = props.getNutrition() * 5;
+                int heal = props.nutrition() * 5;
 
                 dog.addHunger(heal);
                 dog.consumeItemFromStack(entityIn, stack);

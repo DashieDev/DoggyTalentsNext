@@ -21,10 +21,5 @@ public class DoggyAttributes {
     private static <T extends Attribute> RegistryObject<T> register(final String name, final Supplier<T> sup) {
         return ATTRIBUTES.register(name, sup);
     }
-
-    public static Holder<Attribute> wrap(RegistryObject<Attribute> val) {
-        var value = val.get();
-        return BuiltInRegistries.ATTRIBUTE.wrapAsHolder(value);
-    }
 }
 

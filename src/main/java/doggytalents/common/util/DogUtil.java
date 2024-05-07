@@ -27,6 +27,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
@@ -365,7 +366,7 @@ public class DogUtil {
     //Allow dog to teleportToLeaves, there is no reason to not to consider the existance of the push a.i
     //And height danger exist everywhere not just leaves
     public static boolean isTeleportSafeBlock(Dog dog, BlockPos pos) {
-        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
+        var pathnodetype = WalkNodeEvaluator.getPathTypeStatic(dog, pos.mutable());
         boolean alterationWalkable = false;
         for (var x : dog.getAlterations()) {
             var type_res = x.inferType(dog, pathnodetype);
@@ -390,7 +391,7 @@ public class DogUtil {
     }
 
     public static boolean isTeleportSafeBlockMidAir(Dog dog, BlockPos pos) {
-        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
+        var pathnodetype = WalkNodeEvaluator.getPathTypeStatic(dog, pos.mutable());
         if (pathnodetype != PathType.OPEN) {
             return false;
         } else {
@@ -710,7 +711,7 @@ public class DogUtil {
     } 
 
     private static boolean isValidChar(Character x) {
-        return !INVALID_NAME_CHARS.contains(x) && SharedConstants.isAllowedChatCharacter(x);
+        return !INVALID_NAME_CHARS.contains(x) && StringUtil.isAllowedChatCharacter(x);
     }
 
     public static boolean checkIfOwnerIsLooking(Dog dog, LivingEntity owner) {

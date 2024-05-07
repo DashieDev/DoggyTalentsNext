@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.FoodProperties.PossibleEffect;
 import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
@@ -43,21 +44,20 @@ public class OyakodonItem extends DogEddibleBowlFoodItem {
     }
 
     @Override
-    public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+    public List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
         var ret = super.getAdditionalEffectsWhenDogConsume(useStack, dog);
-        var newRet = new ArrayList<Pair<MobEffectInstance, Float>>(ret.size());
+        var newRet = new ArrayList<PossibleEffect>(ret.size());
         for (var pair : ret) {
-            var effect = pair.getFirst();
-            var newDuration = effect.getEffect().isInstantenous() ?
+            var effect = pair.effect();
+            var newDuration = effect.getEffect().value().isInstantenous() ?
                 effect.getDuration()
                 : effect.getDuration() + 2 * 60 * 20;
-            var newEffect = new MobEffectInstance(
+            var newPair = new PossibleEffect(new MobEffectInstance(
                 effect.getEffect(),
                 newDuration,
                 effect.getAmplifier()
-            );
-            var newPair = new Pair<>(newEffect, 1f);
+            ), 1f);
             newRet.add(newPair);
         }
         return newRet;

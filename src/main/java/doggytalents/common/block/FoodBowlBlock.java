@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -41,6 +42,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.MapCodec;
+
 public class FoodBowlBlock extends BaseEntityBlock {
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -48,6 +51,10 @@ public class FoodBowlBlock extends BaseEntityBlock {
 
     public FoodBowlBlock() {
         super(Block.Properties.of().mapColor(MapColor.METAL).strength(1.0F, 5.0F).sound(SoundType.METAL));
+    }
+
+    public FoodBowlBlock(BlockBehaviour.Properties props) {
+        this();
     }
 
     @Override
@@ -141,7 +148,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState blockStateIn, Level worldIn, BlockPos posIn, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+    public InteractionResult useWithoutItem(BlockState blockStateIn, Level worldIn, BlockPos posIn, Player playerIn, BlockHitResult result) {
         if (worldIn.isClientSide) {
             return InteractionResult.SUCCESS;
         }
@@ -149,14 +156,14 @@ public class FoodBowlBlock extends BaseEntityBlock {
             FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, posIn, FoodBowlTileEntity.class);
 
             if (foodBowl != null) {
-                ItemStack stack = playerIn.getItemInHand(handIn);
+                //ItemStack stack = playerIn.getItemInHand(handIn);
 
-                if (!stack.isEmpty() && stack.getItem() == DoggyItems.TREAT_BAG.get()) {
+                //if (!stack.isEmpty() && stack.getItem() == DoggyItems.TREAT_BAG.get()) {
                     // IItemHandler bagInventory = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
                     // IItemHandler bowlInventory = foodBowl.getInventory();
 
                     // InventoryUtil.transferStacks((IItemHandlerModifiable) bagInventory, bowlInventory);
-                } else if (playerIn instanceof ServerPlayer) {
+                /*else*/ if (playerIn instanceof ServerPlayer) {
                     ServerPlayer serverPlayer = (ServerPlayer)playerIn;
 
                     Screens.openFoodBowlScreen(serverPlayer, foodBowl);
@@ -191,5 +198,13 @@ public class FoodBowlBlock extends BaseEntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(WATERLOGGED);
+    }
+
+    
+    public static final MapCodec<FoodBowlBlock> CODEC = simpleCodec(FoodBowlBlock::new);
+    
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

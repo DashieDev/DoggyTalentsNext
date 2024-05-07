@@ -89,16 +89,16 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
         if (FabricUtil.getDanger(blockType) != null)
             return true;
 
-        if (blockType != BlockPathTypes.OPEN)
+        if (blockType != PathType.OPEN)
             return false;
         
         boolean noWalkable = true;
         for (int i = 1; i <= dog.getMaxFallDistance(); ++i) {
             var type = dog.getBlockPathTypeViaAlterations(dog_b1.below(i));
-            if (type == BlockPathTypes.OPEN)
+            if (type == PathType.OPEN)
                 continue;
             else {
-                noWalkable = type != BlockPathTypes.WALKABLE;
+                noWalkable = type != PathType.WALKABLE;
                 break;
             }
         }

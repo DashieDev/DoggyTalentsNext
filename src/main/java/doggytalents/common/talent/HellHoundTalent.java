@@ -8,6 +8,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
+import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
@@ -51,8 +52,8 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int second) {
-        return InteractionResultHolder.success(Mth.floor(second * this.getFireDecreasePercentage()));
+    public InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int ticks) {
+        return InteractionResultHolder.success(Mth.floor(ticks * this.getFireDecreasePercentage()));
     }
 
     private float getFireDecreasePercentage() {
@@ -91,9 +92,9 @@ public class HellHoundTalent extends TalentInstance {
     @Override
     public void doInitialAttackEffects(AbstractDog dogIn, Entity entity) {
         if (this.level() >= 5) {
-            entity.setSecondsOnFire(15);
+            EntityUtil.setSecondsOnFire(entity, 15);
         } else if (this.level() >= 4) {
-            entity.setSecondsOnFire(4);
+            EntityUtil.setSecondsOnFire(entity, 4);
         }
     }
 
@@ -230,7 +231,7 @@ public class HellHoundTalent extends TalentInstance {
             );
         for (var x : targets) {
             if (x instanceof Enemy) {
-                x.setSecondsOnFire(5);
+                EntityUtil.setSecondsOnFire(x, 5);
             }
         }
     }

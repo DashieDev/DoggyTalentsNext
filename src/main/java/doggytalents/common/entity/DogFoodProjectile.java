@@ -253,8 +253,8 @@ public class DogFoodProjectile extends ThrowableProjectile {
     private static final EntityDataAccessor<ItemStack> FOOD_STACK = SynchedEntityData.defineId(DogFoodProjectile.class, EntityDataSerializers.ITEM_STACK);
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(FOOD_STACK, ItemStack.EMPTY);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(FOOD_STACK, ItemStack.EMPTY);
     }
 
 }

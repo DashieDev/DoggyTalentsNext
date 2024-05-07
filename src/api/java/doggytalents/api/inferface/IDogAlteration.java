@@ -166,8 +166,8 @@ public interface IDogAlteration {
         return InteractionResultHolder.pass(currentAir);
     }
 
-    default InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int second) {
-        return InteractionResultHolder.pass(second);
+    default InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int ticks) {
+        return InteractionResultHolder.pass(ticks);
     }
 
     default InteractionResult isInvulnerableTo(AbstractDog dogIn, DamageSource source) {

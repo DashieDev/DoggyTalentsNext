@@ -441,7 +441,7 @@ public class CachedSearchUtil {
     private static class WalkNodeEvaluatorDelegate extends WalkNodeEvaluator {
 
         public static PathType getTypeDelegate(BlockGetter getter, BlockPos pos) {
-            return WalkNodeEvaluator.getBlockPathTypeRaw(getter, pos);
+            return WalkNodeEvaluator.getPathTypeFromState(getter, pos);
         }
 
     }

@@ -128,13 +128,13 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     private void applySwimAttributes(Dog dog){
-        dog.setAttributeModifier(DoggyAttributes.wrap(ForgeMod.SWIM_SPEED), SWIM_BOOST_ID, (dd, u) -> 
-            new AttributeModifier(u, "Swim Boost", 2*dog.getDogLevel(DoggyTalents.SWIMMER_DOG), Operation.ADDITION)
+        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.holder(), SWIM_BOOST_ID, (dd, u) -> 
+            new AttributeModifier(u, "Swim Boost", 2*dog.getDogLevel(DoggyTalents.SWIMMER_DOG), Operation.ADD_VALUE)
         );
     }
 
     private void removeSwimAttributes(Dog dog) {
-        dog.removeAttributeModifier(DoggyAttributes.wrap(ForgeMod.SWIM_SPEED), SWIM_BOOST_ID);
+        dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.holder(), SWIM_BOOST_ID);
     }
     
     private void startSwimming(Dog dog) {
