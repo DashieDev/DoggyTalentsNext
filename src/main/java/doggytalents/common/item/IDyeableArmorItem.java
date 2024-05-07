@@ -12,6 +12,6 @@ public interface IDyeableArmorItem {
     // }
 
     default int getDefaultColor(ItemStack stack) {
-        return 0xFFFFFF;
+        return 0xFFFFFFFF;
     }
 }
