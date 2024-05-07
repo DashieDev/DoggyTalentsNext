@@ -197,9 +197,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
                 ItemStack itemstack = i;
                 if ((!p_36251_.is(DamageTypeTags.IS_FIRE) || !itemstack.has(DataComponents.FIRE_RESISTANT)) && itemstack.getItem() instanceof ArmorItem) {
                     final var slot = EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, j);
-                    itemstack.hurtAndBreak((int)p_36252_, this, (p_35997_) -> {
-                        p_35997_.broadcastBreakEvent(slot);
-                    });
+                    itemstack.hurtAndBreak((int)p_36252_, this, slot);
                 }
                 ++j;
             }
@@ -219,10 +217,8 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
             var i = this.getItemBySlot(EquipmentSlot.HEAD);
 
             ItemStack itemstack = i;
-            if ((!p_150103_.is(DamageTypeTags.IS_FIRE) || !itemstack.getItem().isFireResistant()) && itemstack.getItem() instanceof ArmorItem) {
-                itemstack.hurtAndBreak((int)p_150104_, this, (p_35997_) -> {
-                    p_35997_.broadcastBreakEvent(EquipmentSlot.HEAD);
-                });
+            if ((!p_150103_.is(DamageTypeTags.IS_FIRE) || !itemstack.has(DataComponents.FIRE_RESISTANT)) && itemstack.getItem() instanceof ArmorItem) {
+                itemstack.hurtAndBreak((int)p_150104_, this, EquipmentSlot.HEAD);
             }
 
         }

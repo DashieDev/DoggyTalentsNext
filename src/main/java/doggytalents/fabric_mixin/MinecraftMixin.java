@@ -45,7 +45,7 @@ public class MinecraftMixin {
             return;
 
         var camera_entity = self.getCameraEntity();
-        double pick_range = self.gameMode.getPickRange();
+        double pick_range = player.entityInteractionRange();
         var view_vec = camera_entity.getViewVector(1);
         var eye_pos = camera_entity.getEyePosition(0);
         var from_vec = eye_pos;

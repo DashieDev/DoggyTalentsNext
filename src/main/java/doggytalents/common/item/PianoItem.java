@@ -50,7 +50,7 @@ public class PianoItem extends Item {
             spawnAt = pos.relative(face);
         }
         var piano = pianoSup.get().create(
-            (ServerLevel) level, null, null, spawnAt, 
+            (ServerLevel) level, null, spawnAt, 
             MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 

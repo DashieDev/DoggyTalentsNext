@@ -39,10 +39,10 @@ public class GoldenAFiveWagyuItem extends DogEddibleItem {
             Style.EMPTY.withItalic(true)
         ));
     }
-    @Override
-    public Rarity getRarity(ItemStack stack) {
-        return Rarity.UNCOMMON;
-    }
+    // @Override
+    // public Rarity getRarity(ItemStack stack) {
+    //     return Rarity.UNCOMMON;
+    // }
     @Override
     public boolean alwaysEatWhenDogConsume(AbstractDog dog) {
         return true;

@@ -108,8 +108,8 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
             dog.consumeItemFromStack(entityIn, stack);
 
             for(var pair : dogEddible.getAdditionalEffectsWhenDogConsume(stack, dog)) {
-                if (pair.getFirst() != null && dog.getRandom().nextFloat() < pair.getSecond()) {
-                   dog.addEffect(new MobEffectInstance(pair.getFirst()));
+                if (dog.getRandom().nextFloat() < pair.probability()) {
+                   dog.addEffect(pair.effect());
                 }
              }
 

@@ -3,6 +3,7 @@ package doggytalents.common.network.packet;
 import doggytalents.common.item.WhistleItem;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.WhistleRequestModeData;
+import doggytalents.common.util.ItemUtil;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import net.minecraft.network.FriendlyByteBuf;
 
@@ -25,12 +26,13 @@ public class WhistleRequestModePacket implements IPacket<WhistleRequestModeData>
         ctx.get().enqueueWork(() -> {
             //LogicalSide side = ctx.get().getDirection().getReceptionSide();
 
-            if (ctx.get().isClientRecipent()) return;
+            if (!ctx.get().isServerRecipent()) return;
             var player = ctx.get().getSender();
             var stack = player.getMainHandItem();
             if (!(stack.getItem() instanceof WhistleItem)) return;
-            var tag = stack.getOrCreateTag();
+            var tag = ItemUtil.getTag(stack);
             tag.putByte("mode", (byte)data.id);
+            ItemUtil.putTag(stack, tag);
         });
 
         ctx.get().setPacketHandled(true);

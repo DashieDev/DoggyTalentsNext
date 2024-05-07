@@ -260,7 +260,7 @@ public class PackPuppyTalent extends TalentInstance {
     @Override
     public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
         super.writeToNBT(dogIn, compound);
-        compound.merge(this.packPuppyHandler.serializeNBT());
+        compound.merge(this.packPuppyHandler.serializeNBT(dogIn.registryAccess()));
         compound.putBoolean("renderChest", this.renderChest);
         compound.putBoolean("pickupNearby", this.pickupItems);
         compound.putBoolean("offerFood", this.offerFood);
@@ -270,7 +270,7 @@ public class PackPuppyTalent extends TalentInstance {
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
-        this.packPuppyHandler.deserializeNBT(compound);
+        this.packPuppyHandler.deserializeNBT(dogIn.registryAccess(), compound);
         this.renderChest = compound.getBoolean("renderChest");
         this.pickupItems = compound.getBoolean("pickupNearby");
         this.offerFood = compound.getBoolean("offerFood");
@@ -280,7 +280,7 @@ public class PackPuppyTalent extends TalentInstance {
     // Left in for backwards compatibility for versions <= 2.0.0.5
     @Override
     public void onRead(AbstractDog dogIn, CompoundTag compound) {
-        this.packPuppyHandler.deserializeNBT(compound);
+        this.packPuppyHandler.deserializeNBT(dogIn.registryAccess(), compound);
     }
 
     @Override
@@ -356,7 +356,7 @@ public class PackPuppyTalent extends TalentInstance {
     private boolean checkRegenEffects(AbstractDog target, ItemStack stack, DogEddibleItem item) {
         var effects = item.getAdditionalEffectsWhenDogConsume(stack, target);
         for (var pair : effects) {
-            var effect = pair.getFirst();
+            var effect = pair.effect();
             if (effect.getEffect() == MobEffects.REGENERATION)
                 return true;
         }

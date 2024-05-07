@@ -56,8 +56,8 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
 
         Item item = stackIn.getItem();
 
-        if (this.level() >= 2 && item.isEdible() && stackIn.is(ItemTags.FISHES)) {
-            dogIn.addHunger(item.getFoodProperties().getNutrition() * 5);
+        if (this.level() >= 2 && ItemUtil.isEddible(stackIn) && stackIn.is(ItemTags.FISHES)) {
+            dogIn.addHunger(ItemUtil.food(stackIn).nutrition() * 5);
             dogIn.consumeItemFromStack(entityIn, stackIn);
             return InteractionResult.SUCCESS;
         }

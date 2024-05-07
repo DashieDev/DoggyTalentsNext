@@ -9,6 +9,7 @@ import doggytalents.common.network.packet.data.DogEatingParticleData;
 import doggytalents.common.network.packet.data.DogShakingData;
 import doggytalents.common.network.packet.data.DogShakingData.State;
 import doggytalents.common.network.packet.data.ParticleData.CritEmitterData;
+import doggytalents.common.util.NetworkUtil;
 import doggytalents.forge_imitate.network.PacketDistributor;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import net.minecraft.client.Minecraft;
@@ -62,13 +63,13 @@ public class ParticlePackets {
         @Override
         public void encode(DogEatingParticleData data, FriendlyByteBuf buf) {
             buf.writeInt(data.dogId);
-            buf.writeItem(data.food);            
+            NetworkUtil.writeItemToBuf(buf, data.food);            
         }
 
         @Override
         public DogEatingParticleData decode(FriendlyByteBuf buf) {
             int dogId = buf.readInt();
-            var food = buf.readItem();       
+            var food = NetworkUtil.readItemFromBuf(buf);    
             return new DogEatingParticleData(dogId, food);
         }
 

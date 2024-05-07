@@ -10,6 +10,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -99,9 +100,7 @@ public class ChemiCanineTalent extends TalentInstance {
         tg0.putInt("tickTillEffectDecay", this.tickTillEffectDecay);
         var effectTags = new ListTag();
         for (var effect : this.storedEffects) {
-            var effectTag = new CompoundTag();
-            effect.save(effectTag);
-            effectTags.add(effectTag);
+            effectTags.add(effect.save());
         }
         tg0.put("effects", effectTags);
         compound.put("DTN_ChemiCanine", tg0);
@@ -178,7 +177,7 @@ public class ChemiCanineTalent extends TalentInstance {
     }
 
     private boolean isHarmfulEffect(MobEffectInstance effectInst) {
-        return effectInst.getEffect().getCategory() == MobEffectCategory.HARMFUL;
+        return effectInst.getEffect().value().getCategory() == MobEffectCategory.HARMFUL;
     }
 
     private LivingEntity selectAbsorbTarget(AbstractDog dog, ArrayList<LivingEntity> absorbTargets) {
@@ -245,7 +244,7 @@ public class ChemiCanineTalent extends TalentInstance {
 
     private void absorb(AbstractDog dog, LivingEntity e) {
         if (this.absorbEffectCooldown > 0) return;
-        MobEffect removeEffect = null;
+        Holder<MobEffect> removeEffect = null;
         for (var effectInst : e.getActiveEffects()) {
             if (isHarmfulEffect(effectInst)) {
                 removeEffect = effectInst.getEffect();
@@ -282,7 +281,7 @@ public class ChemiCanineTalent extends TalentInstance {
     public InteractionResult isPotionApplicable(AbstractDog dogIn, MobEffectInstance effectIn) {
         if (
             this.level() >= 5
-            && effectIn.getEffect().getCategory() == MobEffectCategory.HARMFUL
+            && effectIn.getEffect().value().getCategory() == MobEffectCategory.HARMFUL
         ) {
             return InteractionResult.FAIL;
         }

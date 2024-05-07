@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "doggytalents:item/birthday_hat_bg",
-    "layer1": "doggytalents:item/birthday_hat_fg"
-  }
-}

@@ -92,10 +92,10 @@ public class SakeItem extends DogEddibleItem {
         return ItemUtils.startUsingInstantly(p_42993_, p_42994_, p_42995_);
     }
 
-    @Override
-    public boolean isEdible() {
-        return false;
-    }
+    // @Override
+    // public boolean isEdible() {
+    //     return false;
+    // }
 
     @Override
     public SoundEvent getDogEatingSound(AbstractDog dog) {

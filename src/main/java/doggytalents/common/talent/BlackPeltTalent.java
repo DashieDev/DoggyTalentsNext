@@ -22,22 +22,22 @@ public class BlackPeltTalent extends TalentInstance {
     @Override
     public void init(AbstractDog dogIn) {
         dogIn.setAttributeModifier(Attributes.ATTACK_DAMAGE, BLACK_PELT_DAMAGE_ID, this::createPeltModifier);
-        dogIn.setAttributeModifier(DoggyAttributes.CRIT_CHANCE.get(), BLACK_PELT_CRIT_CHANCE_ID, this::createPeltCritChance);
-        dogIn.setAttributeModifier(DoggyAttributes.CRIT_BONUS.get(), BLACK_PELT_CRIT_BONUS_ID, this::createPeltCritBonus);
+        dogIn.setAttributeModifier(DoggyAttributes.CRIT_CHANCE.holder(), BLACK_PELT_CRIT_CHANCE_ID, this::createPeltCritChance);
+        dogIn.setAttributeModifier(DoggyAttributes.CRIT_BONUS.holder(), BLACK_PELT_CRIT_BONUS_ID, this::createPeltCritBonus);
     }
 
     @Override
     public void set(AbstractDog dogIn, int levelBefore) {
         dogIn.setAttributeModifier(Attributes.ATTACK_DAMAGE, BLACK_PELT_DAMAGE_ID, this::createPeltModifier);
-        dogIn.setAttributeModifier(DoggyAttributes.CRIT_CHANCE.get(), BLACK_PELT_CRIT_CHANCE_ID, this::createPeltCritChance);
-        dogIn.setAttributeModifier(DoggyAttributes.CRIT_BONUS.get(), BLACK_PELT_CRIT_BONUS_ID, this::createPeltCritBonus);
+        dogIn.setAttributeModifier(DoggyAttributes.CRIT_CHANCE.holder(), BLACK_PELT_CRIT_CHANCE_ID, this::createPeltCritChance);
+        dogIn.setAttributeModifier(DoggyAttributes.CRIT_BONUS.holder(), BLACK_PELT_CRIT_BONUS_ID, this::createPeltCritBonus);
     }
 
     @Override
     public void remove(AbstractDog dogIn) {
         dogIn.removeAttributeModifier(Attributes.ATTACK_DAMAGE, BLACK_PELT_DAMAGE_ID);
-        dogIn.removeAttributeModifier(DoggyAttributes.CRIT_CHANCE.get(), BLACK_PELT_CRIT_CHANCE_ID);
-        dogIn.removeAttributeModifier(DoggyAttributes.CRIT_BONUS.get(), BLACK_PELT_CRIT_BONUS_ID);
+        dogIn.removeAttributeModifier(DoggyAttributes.CRIT_CHANCE.holder(), BLACK_PELT_CRIT_CHANCE_ID);
+        dogIn.removeAttributeModifier(DoggyAttributes.CRIT_BONUS.holder(), BLACK_PELT_CRIT_BONUS_ID);
     }
 
     public AttributeModifier createPeltModifier(AbstractDog dogIn, UUID uuidIn) {
@@ -48,7 +48,7 @@ public class BlackPeltTalent extends TalentInstance {
                 damageBonus += 2;
             }
 
-            return new AttributeModifier(uuidIn, "Black Pelt", damageBonus, AttributeModifier.Operation.ADDITION);
+            return new AttributeModifier(uuidIn, "Black Pelt", damageBonus, AttributeModifier.Operation.ADD_VALUE);
         }
 
         return null;
@@ -65,7 +65,7 @@ public class BlackPeltTalent extends TalentInstance {
             damageBonus = 1D;
         }
 
-        return new AttributeModifier(uuidIn, "Black Pelt Crit Chance", damageBonus, AttributeModifier.Operation.ADDITION);
+        return new AttributeModifier(uuidIn, "Black Pelt Crit Chance", damageBonus, AttributeModifier.Operation.ADD_VALUE);
     }
 
     public AttributeModifier createPeltCritBonus(AbstractDog dogIn, UUID uuidIn) {
@@ -73,6 +73,6 @@ public class BlackPeltTalent extends TalentInstance {
             return null;
         }
 
-        return new AttributeModifier(uuidIn, "Black Pelt Crit Bonus", 1.0D, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        return new AttributeModifier(uuidIn, "Black Pelt Crit Bonus", 1.0D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     }
 }
