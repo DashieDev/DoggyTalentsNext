@@ -2,6 +2,7 @@ package doggytalents.client.entity.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.Util;
 import doggytalents.forge_imitate.client.ForgeGuiOverlayManager.IGuiOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -11,7 +12,7 @@ import net.minecraft.world.effect.MobEffects;
 
 public class DogScreenOverlays {
 
-    public static final ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation("textures/gui/icons.png");
+    public static final ResourceLocation GUI_ICONS_LOCATION = Util.getResource("textures/gui/minecraft/icons_health.png");
 
     public static final IGuiOverlay FOOD_LEVEL_ELEMENT = (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
         Minecraft mc = Minecraft.getInstance();
