@@ -211,6 +211,7 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Integer> FREEZE_ANIM = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Long> FREEZE_ANIM_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.LONG);
     private static final EntityDataAccessor<Float> FREEZE_YROT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> FREEZE_XROT = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.FLOAT);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
     // private static final Cache<EntityDataAccessor<DogLevel>> DOG_LEVEL = Cache.make(() -> (EntityDataAccessor<DogLevel>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get()));
@@ -351,6 +352,7 @@ public class Dog extends AbstractDog {
         builder.define(FREEZE_ANIM_TIME, 0L);
         builder.define(FREEZE_ANIM, 0);
         builder.define(FREEZE_YROT, 0f);
+        builder.define(FREEZE_XROT, 0f);
     }
 
     @Override
@@ -587,6 +589,8 @@ public class Dog extends AbstractDog {
             this.yBodyRotO = this.yBodyRot;
             this.yHeadRotO = this.yHeadRot;
             this.yRotO = this.getYRot();
+            this.setXRot(this.entityData.get(FREEZE_XROT));
+            this.xRotO = this.getXRot();
         }
 
         //this.setMaxUpStep(this.isVehicle() ? 1f : 0.6f);
@@ -1056,6 +1060,7 @@ public class Dog extends AbstractDog {
         if (stack.getItem() == Items.STONE_PICKAXE) {
             if (this.freezeAnim != DogAnimation.NONE) {
                 this.entityData.set(FREEZE_ANIM, 0);
+                this.entityData.set(FREEZE_XROT, 0f);
             } else
             this.setFreezePose();
             return InteractionResult.SUCCESS;
@@ -1071,7 +1076,7 @@ public class Dog extends AbstractDog {
             else
             this.setAnim(DogAnimation.STRETCH);
             return InteractionResult.SUCCESS;
-        }else if (stack.getHoverName() == Items.GREEN_DYE) {
+        }else if (stack.getItem() == Items.GREEN_DYE) {
             if (player.isShiftKeyDown())
                 this.setAnim(DogAnimation.SNIFF_SNEEZE);
             else
@@ -1120,16 +1125,29 @@ public class Dog extends AbstractDog {
             this.setAnim(DogAnimation.FAINT_STAND_1);
             return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.MAGENTA_DYE) {
+            if (player.isShiftKeyDown()) {
+                this.setAnim(DogAnimation.DROWN);
+                return InteractionResult.SUCCESS;
+            }
             this.setAnim(DogAnimation.FAINT_STAND_2);
             return InteractionResult.SUCCESS;
         }else if (stack.getItem() == Items.LIME_DYE) {
             if (player.isShiftKeyDown()) {
-                this.setAnim(DogAnimation.DROWN);
+                this.setAnim(DogAnimation.GREET);
                 return InteractionResult.SUCCESS;
             }
             this.setAnim(DogAnimation.REST_BELLY_LOOP);
             return InteractionResult.SUCCESS;
         } else if (stack.getItem() == Items.SOUL_TORCH) {
+            if (player.isShiftKeyDown()) {
+                var cur_freeXRot = this.entityData.get(FREEZE_XROT);
+                cur_freeXRot = Mth.wrapDegrees(cur_freeXRot + 5f);
+                if (cur_freeXRot > this.getMaxHeadXRot()) {
+                    cur_freeXRot = -(float)this.getMaxHeadXRot();
+                }
+                this.entityData.set(FREEZE_XROT, cur_freeXRot);
+                return InteractionResult.SUCCESS;
+            }
             this.setFreezeYRot(player.yHeadRot);
             return InteractionResult.SUCCESS;
         }

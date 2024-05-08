@@ -491,6 +491,10 @@ public class DogModel extends EntityModel<Dog> {
 
         if (dog.getFreezeAnim() != DogAnimation.NONE) {
             this.resetAllPose();
+            if (pose.freeHead && dog.getFreezeAnim().freeHeadXRotOnly()) {
+                this.head.xRot += headPitch * ((float)Math.PI / 180F); 
+                headXRot0 = this.head.xRot;
+            }
             var sequence = DogAnimationRegistry.getSequence(dog.getFreezeAnim());
             DogKeyframeAnimations.animate(this, dog, sequence, dog.freezeTime(), 1.0F, vecObj);
             return;
@@ -551,6 +555,12 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public void resetPart(ModelPart part, Dog dog) {
+        if (part == this.head && dog.getFreezeAnim() != DogAnimation.NONE && dog.getFreezeAnim().convertHeadZRot()) {
+            this.head.resetPose();
+            this.head.xRot = headXRot0;
+            return;
+        }
+
         if (part == this.tail && dog.getAnim().freeTail()) {
             this.tail.resetPose();
             this.tail.xRot = dog.getTailRotation();
@@ -573,6 +583,12 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public void adjustAnimatedPart(ModelPart part, Dog dog) {
+        if (dog.getFreezeAnim() != DogAnimation.NONE && dog.getFreezeAnim().convertHeadZRot()) {
+            this.realHead.zRot = part.zRot;
+            part.zRot = 0;
+            return;
+        }
+
         if (part == this.tail && dog.getAnim().freeTail()) {
             if (part.xRot > 3f) {
                 part.xRot = 3f;
