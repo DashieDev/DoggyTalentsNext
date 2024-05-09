@@ -76,6 +76,8 @@ public class DoggyToolsTalent extends TalentInstance  {
 
     @Override
     public void remove(AbstractDog dog) {
+        if (dog.level().isClientSide)
+            return;
         dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
     }
 
