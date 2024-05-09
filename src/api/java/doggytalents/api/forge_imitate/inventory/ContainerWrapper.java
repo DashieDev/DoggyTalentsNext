@@ -1,6 +1,6 @@
 package doggytalents.api.forge_imitate.inventory;
 
-import doggytalents.common.util.ItemUtil;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 
@@ -49,7 +49,7 @@ public class ContainerWrapper implements IItemHandler {
             this.container.setItem(id, placeStack);
             return returnStack;
         }
-        if (ItemUtil.hasTag(stack) || ItemUtil.hasTag(stack))
+        if (hasTag(stack) || hasTag(stack))
             return stack;
         int current_max_grow = Math.min(current.getMaxStackSize(), container_max_stack_size);
         int current_can_recieve = current_max_grow - current.getCount();
@@ -71,6 +71,10 @@ public class ContainerWrapper implements IItemHandler {
     @Override
     public boolean isItemValid(int id, ItemStack stack) {
         return this.container.canPlaceItem(id, stack);
+    }
+
+    public static boolean hasTag(ItemStack stack) {
+        return stack.has(DataComponents.CUSTOM_DATA);
     }
 
 }
