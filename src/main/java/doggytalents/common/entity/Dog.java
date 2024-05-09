@@ -514,8 +514,8 @@ public class Dog extends AbstractDog {
     private EntityDimensions visualDimension = null;
 
     @Override
-    public EntityDimensions getDefaultDimensions(Pose p_19975_) {
-        var self_dim = super.getDefaultDimensions(p_19975_);
+    public EntityDimensions getDimensions(Pose pose) {
+        var self_dim = super.getDimensions(pose);
         visualDimension = null;
         if (self_dim.width() >= 1f) {
             self_dim = new EntityDimensions(1f, self_dim.height(), self_dim.eyeHeight(), self_dim.attachments(), self_dim.fixed());
@@ -558,7 +558,7 @@ public class Dog extends AbstractDog {
         
         var passenger = this.getPassengers().get(0);
         
-        float total_height = (float) this.getPassengersRidingOffset(self_dim);
+        float total_height = (float) self_dim.height();
         total_width = Math.max(total_width, passenger.getBbWidth());
         total_height += passenger.getBbHeight() - passenger.getVehicleAttachmentPoint(this).y;
         
@@ -2212,6 +2212,11 @@ public class Dog extends AbstractDog {
         } else {
             return this.getDogSize().getScale();
         }
+    }
+
+    @Override
+    public float getAgeScale() {
+        return 1;
     }
 
     private boolean changeDimensionAuthorized = false;
