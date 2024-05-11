@@ -10,6 +10,9 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
@@ -85,6 +88,9 @@ public class HellHoundTalent extends TalentInstance {
     @Override
     public InteractionResult isInvulnerableTo(AbstractDog dogIn, DamageSource source) {
         if (source.is(DamageTypeTags.IS_FIRE)) {
+            return this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        }
+        if (source.is(DamageTypeTags.IS_FREEZING)) {
             return this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
         }
 
@@ -200,6 +206,7 @@ public class HellHoundTalent extends TalentInstance {
                 }
             }
         }
+        meltPoweredSnowIfFreeze(dog);
     }
 
     private void updateResistValues() {
@@ -236,6 +243,45 @@ public class HellHoundTalent extends TalentInstance {
                 EntityUtil.setSecondsOnFire(x, 5);
             }
         }
+    }
+
+    private int meltCooldown = 30;
+    private void meltPoweredSnowIfFreeze(AbstractDog dog) {
+        if (meltCooldown > 0)
+            --meltCooldown;
+        
+        if (!dog.isInPowderSnow)
+            return;
+        if (dog.isVehicle())
+            return;
+        if (meltCooldown > 0)
+            return;
+        
+        meltCooldown = 30;
+        var bb = dog.getBoundingBox();
+        
+        var block_itr = 
+            BlockPos.betweenClosed(
+                BlockPos.containing(bb.minX, bb.minY, bb.minZ), 
+                BlockPos.containing(bb.maxX, bb.maxY, bb.maxZ)
+            );
+        for (var pos : block_itr) {
+            var state = dog.level().getBlockState(pos);
+            if (!state.is(Blocks.POWDER_SNOW))
+                continue;
+            dog.level().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+        }
+        dog.playSound( 
+            SoundEvents.FIRE_EXTINGUISH,  
+            0.5F, 2.6F + dog.getRandom().nextFloat() - dog.getRandom().nextFloat() * 0.8F);
+        if (dog.level() instanceof ServerLevel serverLevel)
+            serverLevel.sendParticles(
+                ParticleTypes.SMOKE, 
+                dog.getX(), dog.getY(), dog.getZ(), 
+                30, 
+                dog.getBbWidth(), 0.8f, dog.getBbWidth(), 
+                0.1 //TODO Tune
+            );
     }
 
     @Override
