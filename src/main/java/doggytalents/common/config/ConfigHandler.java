@@ -257,6 +257,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue CONDUCTING_BONE_CROSS_ORIGIN;
         public ForgeConfigSpec.BooleanValue INCAP_VAL_RESET_WHEN_HURT;
         public ForgeConfigSpec.IntValue TRAIN_WOLF_LIMIT;
+        public ForgeConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -405,6 +406,11 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("will disable the cap, meaning players can get unlimited dogs.")
                 .translation("doggytalents.train_wolf_limit")
                 .defineInRange("train_wolf_limit", -1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            RANDOM_VAR_WITH_CHARM = builder
+                .comment("Determine if Dogs summoned from Doggy Charms will have")
+                .comment("random Classical Variants instead of always being summoned as Pale.")
+                .translation("doggytalents.random_var_with_charm")
+                .define("random_var_with_charm", true);
 
             builder.pop();
         }
