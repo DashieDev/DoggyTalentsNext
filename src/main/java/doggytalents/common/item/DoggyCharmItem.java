@@ -1,6 +1,8 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.common.config.ConfigHandler;
+import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -66,6 +68,9 @@ public class DoggyCharmItem extends Item {
                    dog.setTame(true, true);
                    dog.setOwnerUUID(player.getUUID());
                    dog.maxHealth();
+                   if (ConfigHandler.SERVER.RANDOM_VAR_WITH_CHARM.get()) {
+                        dog.setClassicalVar(ClassicalVar.random(dog));
+                   }
                }
                itemstack.shrink(1);
                if (player instanceof ServerPlayer sP) {
@@ -102,6 +107,9 @@ public class DoggyCharmItem extends Item {
                            dog.setTame(true, true);
                            dog.setOwnerUUID(playerIn.getUUID());
                            dog.maxHealth();
+                           if (ConfigHandler.SERVER.RANDOM_VAR_WITH_CHARM.get()) {
+                                dog.setClassicalVar(ClassicalVar.random(dog));
+                           }
                            itemstack.shrink(1);
 
                         if (playerIn instanceof ServerPlayer sP)
