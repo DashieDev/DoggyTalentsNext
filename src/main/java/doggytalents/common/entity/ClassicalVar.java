@@ -110,6 +110,12 @@ public enum ClassicalVar {
         var classical = vanillToClassical.getOrDefault(variant_key, PALE);
         return classical;
     }
+
+    public static ClassicalVar random(Dog dog) {
+        var vals = ClassicalVar.values();
+        int r = dog.getRandom().nextInt(vals.length);
+        return vals[r];
+    }
      
     public static Map<ClassicalVar, Integer> COLOR_MAP = 
         new ImmutableMap.Builder<ClassicalVar, Integer>()
