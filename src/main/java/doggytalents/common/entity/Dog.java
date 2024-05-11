@@ -1876,6 +1876,11 @@ public class Dog extends AbstractDog {
         return alterationProps.fireImmune();
     }
 
+    @Override
+    public boolean canFreeze() {
+        return alterationProps.fireImmune();
+    }
+
     public boolean shouldDogNotAfraidOfFire() {
         for (var alter : this.alterations) {
             var result = alter.shouldNotAfraidOfFire(this);
