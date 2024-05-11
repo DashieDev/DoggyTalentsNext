@@ -4707,9 +4707,23 @@ public class Dog extends AbstractDog {
     
     @Override
     public boolean canTakeItem(ItemStack stack) {
-        if (this.canDogWearArmor() && stack.getItem() instanceof ArmorItem)
+        if (checkEligibleArmorItemAndAvailableSlot(stack))
             return true;
         return false;
+    }
+
+    private boolean checkEligibleArmorItemAndAvailableSlot(ItemStack stack) {
+        if (!this.canDogWearArmor())
+            return false;
+        if (!(stack.getItem() instanceof ArmorItem))
+            return false;
+        var slot = Dog.getEquipmentSlotForItem(stack);
+        if (slot.getType() != EquipmentSlot.Type.ARMOR)
+            return false;
+        var current = this.getItemBySlot(slot);
+        if (current != null && !current.isEmpty())
+            return false;
+        return true;
     }
 
     //Dog dont drop from Lootables.
