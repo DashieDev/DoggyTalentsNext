@@ -3886,7 +3886,7 @@ public class DogAnimationSequences {
                 new Keyframe(6f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM))).build();
 
-    public static final AnimationDefinition SIT_IDLE = AnimationDefinition.Builder.withLength(2f)
+    public static final AnimationDefinition SIT_IDLE = AnimationDefinition.Builder.withLength(2f).looping()
         .addAnimation("head",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
                 new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
@@ -3935,9 +3935,9 @@ public class DogAnimationSequences {
                     AnimationChannel.Interpolations.CATMULLROM)))
         .addAnimation("right_hind_leg",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                new Keyframe(0f, KeyframeAnimations.posVec(0f, -6f, -5f),
+                new Keyframe(0f, KeyframeAnimations.posVec(-0.01f, -6f, -5f),
                     AnimationChannel.Interpolations.CATMULLROM), 
-                new Keyframe(2f, KeyframeAnimations.posVec(0f, -6f, -5f),
+                new Keyframe(2f, KeyframeAnimations.posVec(-0.01f, -6f, -5f),
                     AnimationChannel.Interpolations.CATMULLROM)))
         .addAnimation("right_hind_leg",
             new AnimationChannel(AnimationChannel.Targets.ROTATION,
@@ -3951,9 +3951,9 @@ public class DogAnimationSequences {
                     AnimationChannel.Interpolations.CATMULLROM)))
         .addAnimation("left_hind_leg",
             new AnimationChannel(AnimationChannel.Targets.POSITION, 
-                new Keyframe(0f, KeyframeAnimations.posVec(0f, -6f, -5f),
+                new Keyframe(0f, KeyframeAnimations.posVec(-0.01f, -6f, -5f),
                     AnimationChannel.Interpolations.CATMULLROM), 
-                new Keyframe(2f, KeyframeAnimations.posVec(0f, -6f, -5f),
+                new Keyframe(2f, KeyframeAnimations.posVec(-0.01f, -6f, -5f),
                     AnimationChannel.Interpolations.CATMULLROM)))
         .addAnimation("left_hind_leg",
             new AnimationChannel(AnimationChannel.Targets.ROTATION,
