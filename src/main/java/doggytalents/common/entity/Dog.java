@@ -352,8 +352,10 @@ public class Dog extends AbstractDog {
     @Override
     protected SoundEvent getAmbientSound() {
         if (this.isDefeated()) {
-            if (this.getDogIncapValue() > 12) {
-                return this.random.nextInt(2) == 0 ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
+            if (this.getDogIncapValue() > 20) {
+                int chance_window = 
+                    this.incapacitatedMananger.canMove() ? 5 : 8; 
+                return this.random.nextInt(chance_window) == 0 ? SoundEvents.WOLF_WHINE : null;
             } else {
                 return SoundEvents.WOLF_PANT;
             }
@@ -363,6 +365,18 @@ public class Dog extends AbstractDog {
         } else {
             return SoundEvents.WOLF_AMBIENT;
         }
+    }
+
+    @Override
+    public float getSoundVolume() {
+        float default_val = 0.4f;
+        if (this.isDefeated()) {
+            if (this.getDogIncapValue() > 20) {
+                default_val = this.incapacitatedMananger.canMove() ? 
+                    0.2f : 0.05f;
+            }
+        }
+        return default_val;
     }
 
     @Override
@@ -385,11 +399,6 @@ public class Dog extends AbstractDog {
 
     public void howl() {
         this.playSound(this.getHowlSound(), 1, this.getVoicePitch());
-    }
-
-    @Override
-    public float getSoundVolume() {
-        return 0.4F;
     }
 
     public boolean isDogSoaked() {
