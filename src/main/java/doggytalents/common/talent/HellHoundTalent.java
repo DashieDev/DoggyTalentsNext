@@ -246,11 +246,20 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     private int meltCooldown = 30;
+    private int meltingModeDuration = 0;
     private void meltPoweredSnowIfFreeze(AbstractDog dog) {
         if (meltCooldown > 0)
             --meltCooldown;
+
+        if (dog.isInPowderSnow)
+            meltingModeDuration = 5 * 20;
+        else {
+            if (meltingModeDuration > 0)
+                --meltingModeDuration;
+        }
         
-        if (!dog.isInPowderSnow)
+
+        if (!dog.isInPowderSnow && meltingModeDuration <= 0)
             return;
         if (dog.isVehicle())
             return;
@@ -258,30 +267,34 @@ public class HellHoundTalent extends TalentInstance {
             return;
         
         meltCooldown = 30;
-        var bb = dog.getBoundingBox();
+        var bb = dog.getBoundingBox().inflate(1);
         
         var block_itr = 
             BlockPos.betweenClosed(
                 BlockPos.containing(bb.minX, bb.minY, bb.minZ), 
                 BlockPos.containing(bb.maxX, bb.maxY, bb.maxZ)
             );
+        boolean melted = false;
         for (var pos : block_itr) {
             var state = dog.level().getBlockState(pos);
             if (!state.is(Blocks.POWDER_SNOW))
                 continue;
+            melted = true;
             dog.level().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         }
-        dog.playSound( 
+        if (melted) {
+            dog.playSound( 
             SoundEvents.FIRE_EXTINGUISH,  
             0.5F, 2.6F + dog.getRandom().nextFloat() - dog.getRandom().nextFloat() * 0.8F);
-        if (dog.level() instanceof ServerLevel serverLevel)
-            serverLevel.sendParticles(
-                ParticleTypes.SMOKE, 
-                dog.getX(), dog.getY(), dog.getZ(), 
-                30, 
-                dog.getBbWidth(), 0.8f, dog.getBbWidth(), 
-                0.1 //TODO Tune
-            );
+            if (dog.level() instanceof ServerLevel serverLevel)
+                serverLevel.sendParticles(
+                    ParticleTypes.SMOKE, 
+                    dog.getX(), dog.getY(), dog.getZ(), 
+                    30, 
+                    dog.getBbWidth(), 0.8f, dog.getBbWidth(), 
+                    0.1 //TODO Tune
+                );
+        }
     }
 
     @Override
