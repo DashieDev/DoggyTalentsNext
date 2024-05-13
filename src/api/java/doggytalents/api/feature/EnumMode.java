@@ -7,7 +7,7 @@ import doggytalents.api.inferface.AbstractDog;
 
 public enum EnumMode {
 
-    INCAPACITATED(-1, "incapacitated", false, false),
+    INJURED(-1, "incapacitated", false, false),
     DOCILE(0, "docile", true, false),
     WANDERING(1, "wandering", false, false, true),
     AGGRESIVE(2, "aggressive"),
@@ -119,7 +119,7 @@ public enum EnumMode {
 
     public static EnumMode byIndex(int i) {
         if (i == -1) {
-            return EnumMode.INCAPACITATED;
+            return EnumMode.INJURED;
         }
         if (i < 0 || i >= VALUES.length) {
             i = EnumMode.DOCILE.getIndex();

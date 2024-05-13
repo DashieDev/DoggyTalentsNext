@@ -220,7 +220,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     //End : Re-adjust armor behaviour
 
     public boolean isDefeated() {
-        return this.getMode() == EnumMode.INCAPACITATED;
+        return this.getMode() == EnumMode.INJURED;
     }
 
     public boolean isDoingFine() {
