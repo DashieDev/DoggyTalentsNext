@@ -2406,7 +2406,7 @@ public class Dog extends AbstractDog {
      */
     private void handleIncapacitated(DamageSource source) {
         this.setHealth(1);
-        this.setMode(EnumMode.INCAPACITATED);
+        this.setMode(EnumMode.INJURED);
         this.setDogHunger(0);
         this.removeAllEffects();
         this.setDogIncapValue(this.getInitalDogIncapVal(source));
@@ -2462,7 +2462,7 @@ public class Dog extends AbstractDog {
         var msg01 = Component.translatable(
             "dog.mode.incapacitated.msg.partition1",
             Component.literal(msg005),
-            Component.translatable(EnumMode.INCAPACITATED.getUnlocalisedName())
+            Component.translatable(EnumMode.INJURED.getUnlocalisedName())
             .withStyle(
                 Style.EMPTY
                 .withBold(true)
@@ -3113,7 +3113,7 @@ public class Dog extends AbstractDog {
         if (!this.level().isClientSide && MODE.get().equals(key)) {
             var mode = getMode();
             this.incapacitatedMananger.onModeUpdate(mode);
-            if (mode == EnumMode.INCAPACITATED) {
+            if (mode == EnumMode.INJURED) {
                 this.hungerManager.onBeingIncapacitated();
             }
             updateWanderState(mode);
