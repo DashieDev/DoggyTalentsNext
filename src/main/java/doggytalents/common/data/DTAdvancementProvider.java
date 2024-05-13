@@ -68,7 +68,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                 )
                 .addCriterion(
                     "summon_dog", 
-                    ItemInteractWithBlockTrigger.TriggerInstance
+                    ItemUsedOnLocationTrigger.TriggerInstance
                         .itemUsedOnBlock(
                             LocationPredicate.Builder.location(),
                             ItemPredicate.Builder.item()
@@ -93,7 +93,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                         .itemUsedOnEntity(
                             ItemPredicate.Builder.item()
                                 .of(DoggyItems.TRAINING_TREAT.get()),
-                            EntityPredicate.Composite.wrap(
+                            EntityPredicate.wrap(
                                 EntityPredicate.Builder.entity()
                                     .of(EntityType.WOLF)
                                     .build()
@@ -103,6 +103,8 @@ public class DTAdvancementProvider extends AdvancementProvider {
                 .save(consumer, Util.getResourcePath("dtn_core/train_dog"));
         
         var sake_advancement = 
+            Advancement.Builder.advancement()
+            .parent(train_dog_advancement)
             Advancement.Builder.advancement()
             .display(
                 DisplayInfoBuilder.create()
@@ -119,6 +121,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
 
         var ookamikaze_advancement = 
             Advancement.Builder.advancement()
+            .parent(train_dog_advancement)
             .display(
                 DisplayInfoBuilder.create()
                     .icon(() -> Items.GUNPOWDER)
