@@ -47,7 +47,7 @@
    "item.doggytalents.egg_sandwich": "Egg Sandwich",
    "item.doggytalents.egg_sandwich.description": "Delicious Tamago Sando! Legoshi and Legom approved.",
    "item.doggytalents.bandaid": "Band-Aid",
-   "item.doggytalents.bandaid.description": "- Use 8 Band-Aids to help your incapacitated dog stand up!\n- A Bed (Vanilla or DTN) is needed to further increase recovery speed! ",
+   "item.doggytalents.bandaid.description": "- Use 8 Band-Aids to help your Injured Dog stand up!\n- A Bed (Vanilla or DTN) is needed to further increase recovery speed! ",
    "item.doggytalents.tantan_cape": "Tartan Cape",
    "item.doggytalents.sunglasses": "Dog Sunglasses",
    "item.doggytalents.cape_coloured": "Cape",
@@ -369,7 +369,7 @@
    "dog.mode.guard": "Guard",
    "dog.mode.guard_flat": "G. Flat",
    "dog.mode.guard_minor": "G. Minor",
-   "dog.mode.incapacitated": "Incapacitated",
+   "dog.mode.incapacitated": "Injured",
 
    "dog.mode.wandering.indicator": "W",
    "dog.mode.tactical.indicator": "T",
@@ -555,7 +555,7 @@
    "doggui.stats.mob_kills" : "Mob Kills",
    "doggui.stats.mob_kills.no_kills" : "%s did not kill any mobs.",
 
-   "doggui.invalid_dog.incapacitated.title" : "Dog is Incapacitated!",
+   "doggui.invalid_dog.incapacitated.title" : "Dog is Injured!",
    "doggui.invalid_dog.incapacitated.subtitle" : "Don't worry! %s just need some rest. Give %s a nice little break and %s will feel better.",
    "doggui.invalid_dog.incapacitated.show_cause" : "Show Cause",
    "doggui.invalid_dog.no_permission.title" : "You are not the owner of %s!",
