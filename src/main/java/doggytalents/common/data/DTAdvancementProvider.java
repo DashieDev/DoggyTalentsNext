@@ -5,8 +5,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.common.advancements.triggers.DogBandaidApplyTrigger;
 import doggytalents.common.advancements.triggers.DogDrunkTrigger;
+import doggytalents.common.advancements.triggers.DogRecoveredTrigger;
 import doggytalents.common.advancements.triggers.OokamikazeTrigger;
+import doggytalents.common.util.DogBedUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
@@ -28,6 +31,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -138,6 +142,52 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                     OokamikazeTrigger.getInstance()
                 )
                 .save(consumer, Util.getResourcePath("default/ookamikaze_trigger"));
+
+            var bandaid_advancement = 
+                Advancement.Builder.advancement()
+                .parent(train_dog_advancement)
+                .display(
+                    DisplayInfoBuilder.create()
+                        .icon(() -> DoggyItems.BANDAID.get())
+                        .frame(AdvancementType.TASK)
+                        .translate("sterile")
+                        .build()
+                )
+                .addCriterion(
+                        "give_dog_bandaid", 
+                        DogBandaidApplyTrigger.getCriterion()
+                    )
+                .save(consumer, Util.getResourcePath("default/sterile"));
+            var recovered_advancement = 
+                Advancement.Builder.advancement()
+                .parent(bandaid_advancement)
+                .display(
+                    DisplayInfoBuilder.create()
+                        .icon(createFullRecoveryBed(false))
+                        .frame(AdvancementType.TASK)
+                        .translate("a_full_recovery")
+                        .build()
+                )
+                .addCriterion(
+                        "dog_recovered", 
+                        DogRecoveredTrigger.getCriterion(false)
+                    )
+                .save(consumer, Util.getResourcePath("default/dog_recovered"));
+            var best_dogtor_advancement = 
+                Advancement.Builder.advancement()
+                .parent(recovered_advancement)
+                .display(
+                    DisplayInfoBuilder.create()
+                        .icon(createFullRecoveryBed(true))
+                        .frame(AdvancementType.TASK)
+                        .translate("the_best_dogtor")
+                        .build()
+                )
+                .addCriterion(
+                        "dog_recovered_special", 
+                        DogRecoveredTrigger.getCriterion(true)
+                    )
+                .save(consumer, Util.getResourcePath("default/dog_recovered_special"));
             // Old Advancement.
 
             // Advancement advancement = Advancement.Builder.advancement()
@@ -168,5 +218,15 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
             
         }
         
+    }
+
+    private static ItemStack createFullRecoveryBed(boolean special) {
+        var casing = special ? 
+            Blocks.STRIPPED_CHERRY_LOG
+            : Blocks.STRIPPED_OAK_LOG;
+        var bedding = special ?
+            Blocks.RED_WOOL
+            : Blocks.WHITE_WOOL;
+        return DogBedUtil.createItemStackForced(casing, bedding);
     }
 }
