@@ -146,6 +146,8 @@
    "item.doggytalents.head_band_highhh.description": "The Dev's favorite emoji.",
 
    "item.doggytalents.gender_bone": "Gender Bone",
+   "item.doggytalents.variant_changer": "Variant Changer",
+   "item.doggytalents.variant_changer.description": "Variant: %s",
 
    "item.doggytalents.superdog_suit": "SuperDog Suit",
    "item.doggytalents.flying_cape": "Flying Cape",
