@@ -2,6 +2,7 @@ package doggytalents.client.data;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
+import doggytalents.common.item.VariantChangerItem;
 import doggytalents.common.lib.Constants;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.data.DataGenerator;
@@ -168,6 +169,16 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.UPRIGHT_PIANO_BROWN);
         plushieToy(DoggyItems.DOG_PLUSHIE_TOY);
 
+        generated(DoggyItems.VARIANT_CHANGER_PALE);
+        generated(DoggyItems.VARIANT_CHANGER_CHESNUT);
+        generated(DoggyItems.VARIANT_CHANGER_STRIPED);
+        generated(DoggyItems.VARIANT_CHANGER_WOODS);
+        generated(DoggyItems.VARIANT_CHANGER_RUSTY);
+        generated(DoggyItems.VARIANT_CHANGER_SNOWY);
+        generated(DoggyItems.VARIANT_CHANGER_ASHEN);
+        generated(DoggyItems.VARIANT_CHANGER_SPOTTED);
+        generated(DoggyItems.VARIANT_CHANGER_BLACK);
+
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);
         blockItem(DoggyBlocks.FOOD_BOWL);
@@ -229,6 +240,14 @@ public class DTItemModelProvider extends ItemModelProvider {
 
     private ItemModelBuilder contactLens(Supplier<? extends ItemLike> item) {
         return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
+    }
+
+    private ItemModelBuilder variantChanger(Supplier<VariantChangerItem> itemSup) {
+        var item = itemSup.get();
+        var iconTexturePath = item.variant.getIcon().getPath();
+        iconTexturePath = iconTexturePath.substring(0, iconTexturePath.indexOf(".png"));
+        iconTexturePath = iconTexturePath.substring("textures/".length(), iconTexturePath.length());
+        return generated(itemSup, Util.getResource(iconTexturePath));
     }
 
     private ItemModelBuilder generated2(Supplier<? extends ItemLike> item, ResourceLocation tex0, ResourceLocation tex1) {
