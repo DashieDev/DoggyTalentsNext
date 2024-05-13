@@ -129,7 +129,7 @@ public class DTAdvancementProvider /*extends ForgeAdvancementProvider*/ {
     //         //     .addCriterion("tame_dog", TameAnimalTrigger.TriggerInstance.tamedAnimal(EntityPredicate.Builder.entity().of(DoggyEntityTypes.DOG.get()).build()))
     //         //     //.withCriterion("get_dog", ItemUseTrigger.TameAnimalTrigger.Instance.create(EntityPredicate.Builder.create().type(DoggyEntityTypes.DOG.get()).build()))
     //         //     .requirements(RequirementsStrategy.OR)
-    //         //     .save(consumer, Util.getResourcePath("default/tame_dog"));=
+    //         //     .save(consumer, Util.getResourcePath("default/tame_dog"));
 
             
 
