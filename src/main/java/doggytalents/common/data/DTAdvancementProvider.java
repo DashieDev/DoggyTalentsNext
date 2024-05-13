@@ -115,6 +115,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
             
             var sake_advancement = 
                 Advancement.Builder.advancement()
+                .parent(train_dog_advancement)
                 .display(
                     DisplayInfoBuilder.create()
                         .icon(DoggyItems.SAKE)
@@ -130,6 +131,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
 
             var ookamikaze_advancement = 
                 Advancement.Builder.advancement()
+                .parent(train_dog_advancement)
                 .display(
                     DisplayInfoBuilder.create()
                         .icon(() -> Items.GUNPOWDER)
