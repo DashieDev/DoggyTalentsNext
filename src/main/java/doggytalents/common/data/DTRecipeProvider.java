@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.nio.file.Path;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class DTRecipeProvider /*extends RecipeProvider*/ {
 
