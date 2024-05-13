@@ -46,6 +46,8 @@ public class DogStatusViewBoxElement extends AbstractElement {
         int e_mX = this.getRealX() + this.getSizeX()/2; 
         int e_mY = this.getRealY() + this.getSizeY()/2; 
 
+        renderVariantIcon(graphics, dog, this.getRealX() + this.getSizeX() - 16 - 3, this.getRealY() - 4);
+
         renderDogInside(graphics, dog, e_mX, e_mY + 32, 50, e_mX - mouseX, e_mY - mouseY);
 
         this.renderHealthBar(graphics, dog, e_mX - 41, this.getRealY() + this.getSizeY() - 10);
@@ -53,8 +55,6 @@ public class DogStatusViewBoxElement extends AbstractElement {
         var points = this.dog.getSpendablePoints();
 
         renderHungerStatusStr(graphics, this.dog, this.getRealX(), this.getRealY());
-
-        
     }
 
     private void drawDogLevelKanji(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
@@ -237,6 +237,17 @@ public class DogStatusViewBoxElement extends AbstractElement {
         graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, x, y, 16 + 36, 27, 9, 9);
         int hunger = (int) dog.getDogHunger();
         graphics.drawString(font, "" + hunger, x + 10, y + 1, 0xffffffff);
+    }
+
+    private void renderVariantIcon(GuiGraphics graphics, Dog dog, int x, int y) {
+        var variant = dog.getClassicalVar();
+        var iconLoc = variant.getIcon();
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        int imgeSize = 16;
+        graphics.blit(iconLoc, x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
+        RenderSystem.disableBlend();
     }
     
 }
