@@ -1,0 +1,26 @@
+{
+  "parent": "doggytalents:dtn_core/train_dog",
+  "criteria": {
+    "give_dog_bandaid": {
+      "trigger": "doggytalents:dog_bandaid_apply_trigger"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.doggytalents.sterile.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "doggytalents:bandaid"
+    },
+    "title": {
+      "translate": "advancements.doggytalents.sterile.title"
+    }
+  },
+  "requirements": [
+    [
+      "give_dog_bandaid"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
