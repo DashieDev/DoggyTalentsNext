@@ -29,6 +29,7 @@ public enum ClassicalVar {
     private final ResourceLocation id;
     private final ResourceLocation textureLoc;
     private final ResourceLocation vanillaTextureLoc;
+    private final ResourceLocation iconLoc;
     private final String translationKey;
     private static final ClassicalVar[] VALUES = ClassicalVar.values();
     private static final Map<ResourceLocation, ClassicalVar> idMap = 
@@ -52,6 +53,7 @@ public enum ClassicalVar {
         this.id = new ResourceLocation(name);
         this.textureLoc = createTextureLoc(name);
         this.translationKey = createTranslationKey(name);
+        this.iconLoc = createIconLoc(name);
         
         //TODO Insert vanilla provided texture here.
         this.vanillaTextureLoc = textureLoc;
@@ -59,6 +61,10 @@ public enum ClassicalVar {
 
     private static ResourceLocation createTextureLoc(String name) {
         return Util.getResource("textures/entity/dog/classical/wolf_" + name + ".png");
+    }
+
+    private static ResourceLocation createIconLoc(String name) {
+        return Util.getResource("textures/entity/dog/classical_icon/" + name + ".png");
     }
 
     private static String createTranslationKey(String name) {
@@ -82,6 +88,10 @@ public enum ClassicalVar {
             return this.vanillaTextureLoc;
         }
         return this.textureLoc;
+    }
+
+    public ResourceLocation getIcon() {
+        return this.iconLoc;
     }
 
     public static ClassicalVar fromId(ResourceLocation id) {
