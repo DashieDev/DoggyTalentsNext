@@ -214,7 +214,7 @@ public class DogRespawnData implements IDogData {
             if (dog.getDogIncapValue() <= 0)
                 dog.setDogIncapValue(dog.getDefaultInitIncapVal());
             dog.setDogHunger(0);
-            dog.setMode(EnumMode.INCAPACITATED);
+            dog.setMode(EnumMode.INJURED);
             dog.setHealth(1);
             dog.setIncapSyncState(killedBy);
             if (dog.isInWater() || dog.isInLava()) {
