@@ -67,11 +67,11 @@ public class DogIncapacitatedMananger {
 
 
     public void onModeUpdate(EnumMode mode) {
-        if (mode != EnumMode.INCAPACITATED
+        if (mode != EnumMode.INJURED
             && this.appliedIncapChanges) {
             this.appliedIncapChanges = false;
             this.onExitingIncapMode();
-        } else if (mode == EnumMode.INCAPACITATED
+        } else if (mode == EnumMode.INJURED
             && !this.appliedIncapChanges) {
             this.appliedIncapChanges = true;
             this.onEnteringIncapMode();
