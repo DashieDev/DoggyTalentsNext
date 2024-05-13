@@ -6,6 +6,7 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyRecipeSerializers;
 import doggytalents.common.inventory.recipe.DogBedRecipe;
 import doggytalents.common.inventory.recipe.DoubleDyableRecipe;
+import doggytalents.common.item.VariantChangerItem;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class DTRecipeProvider extends RecipeProvider {
 
@@ -880,6 +882,16 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
             .save(consumer);
 
+        registerVariantChanger(DoggyItems.VARIANT_CHANGER_PALE, consumer);
+        registerVariantChanger(DoggyItems.VARIANT_CHANGER_CHESNUT, consumer);
+        registerVariantChanger(DoggyItems.VARIANT_CHANGER_STRIPED, consumer);
+        registerVariantChanger(DoggyItems.VARIANT_CHANGER_WOODS, consumer);
+        registerVariantChanger(DoggyItems.VARIANT_CHANGER_RUSTY, consumer);
+        registerVariantChanger(DoggyItems.VARIANT_CHANGER_ASHEN, consumer);
+        registerVariantChanger(DoggyItems.VARIANT_CHANGER_SNOWY, consumer);
+        registerVariantChanger(DoggyItems.VARIANT_CHANGER_SPOTTED, consumer);
+        registerVariantChanger(DoggyItems.VARIANT_CHANGER_BLACK, consumer);
+        
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_PLUSHIE_TOY.get(), 1)
             .pattern("WW ")
             .pattern("SCG")
@@ -928,6 +940,15 @@ public class DTRecipeProvider extends RecipeProvider {
         xp, lengthTicks/2)
         .unlockedBy(unlockedByStr, trigger)
             .save(consumer, Util.getResource(baseNameId) + "_smoking");
+    }
+
+    private void registerVariantChanger(Supplier<VariantChangerItem> itemSup, RecipeOutput consumer) {
+        var item = itemSup.get();
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, item, 1)
+            .requires(DoggyItems.CONDUCTING_BONE.get(), 1)
+            .requires(VariantChangerItem.REPR_ITEM.get(item.variant), 1)
+            .unlockedBy("has_amnesia_bone", has(DoggyItems.AMNESIA_BONE.get()))
+            .save(consumer);
     }
     
     // @Override
