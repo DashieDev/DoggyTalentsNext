@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.common.advancements.triggers.DogBandaidApplyTrigger;
 import doggytalents.common.advancements.triggers.DogDrunkTrigger;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Advancement;
@@ -27,6 +28,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
@@ -127,7 +129,7 @@ public class DTAdvancementProvider /*extends ForgeAdvancementProvider*/ {
     //         //     .addCriterion("tame_dog", TameAnimalTrigger.TriggerInstance.tamedAnimal(EntityPredicate.Builder.entity().of(DoggyEntityTypes.DOG.get()).build()))
     //         //     //.withCriterion("get_dog", ItemUseTrigger.TameAnimalTrigger.Instance.create(EntityPredicate.Builder.create().type(DoggyEntityTypes.DOG.get()).build()))
     //         //     .requirements(RequirementsStrategy.OR)
-    //         //     .save(consumer, Util.getResourcePath("default/tame_dog"));
+    //         //     .save(consumer, Util.getResourcePath("default/tame_dog"));=
 
             
 
