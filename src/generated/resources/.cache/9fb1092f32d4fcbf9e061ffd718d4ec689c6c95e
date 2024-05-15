@@ -1,4 +1,4 @@
-// 1.20.6	2024-05-13T22:09:16.1523259	Recipes
+// 1.20.6	2024-05-15T03:27:10.2417527	Recipes
 bbca6218af9c6665b272a2b26d607c67d9087527 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 06d4b3a9cd262399bbfc6828dc4510f10511ea09 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 668fa033a5c76698a21e984fa7d3ee54abb9a53a data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -34,6 +34,7 @@ a0615d1902e41d5fde705c59f783d13132de920d data/doggytalents/advancements/recipes/
 37b2920c8bf5a34d7d635195a91c996efb3a6e1c data/doggytalents/advancements/recipes/decorations/leather_jacket.json
 0aaa204d1c6eb2fb626ad2bf7b9fd8b881bc2cad data/doggytalents/advancements/recipes/decorations/locator_orb_chi.json
 f42fc7b928e31cefa9a7f91f5ccdc890a6076363 data/doggytalents/advancements/recipes/decorations/locator_orb_chu.json
+eae1b7c0ffbdc9e731552b67de799fe77ae8be9c data/doggytalents/advancements/recipes/decorations/locator_orb_dyable.json
 32bd536da0fae7ab575b042d7b554a184b7d9907 data/doggytalents/advancements/recipes/decorations/locator_orb_gi.json
 ea13fea55daa3c2920c1ca1af2bca6ad367b9825 data/doggytalents/advancements/recipes/decorations/locator_orb_jin.json
 7eab646d391712ff8d4f6f6e4922383f667ae017 data/doggytalents/advancements/recipes/decorations/locator_orb_ko.json
@@ -173,6 +174,7 @@ ade8d8cfc02a35220ca78674e55583f2d250ad06 data/doggytalents/recipes/kitsune_mask.
 c27aa22f01044e0070f3caa7166535cfc564ed26 data/doggytalents/recipes/leather_jacket.json
 7ff8f0cc39e6816963a3c8f36bd00ab3aa778b1c data/doggytalents/recipes/locator_orb_chi.json
 690947219f9422f1d80c6254232679d0a315c225 data/doggytalents/recipes/locator_orb_chu.json
+8823ec0c4cb4f575e0763fb4caafa57c0dc01d4d data/doggytalents/recipes/locator_orb_dyable.json
 7e2151c62510b7267d337b0e7d604f6f18c5972e data/doggytalents/recipes/locator_orb_gi.json
 85a45a0b952efd0f0bf6f52b24bce73a3286503d data/doggytalents/recipes/locator_orb_jin.json
 75e40c917fb2717a13ef4f979a60880c17407564 data/doggytalents/recipes/locator_orb_ko.json
