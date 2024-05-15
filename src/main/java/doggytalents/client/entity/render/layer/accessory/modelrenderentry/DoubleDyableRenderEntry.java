@@ -64,4 +64,9 @@ public abstract class DoubleDyableRenderEntry extends Entry {
         return getBgResource(inst);
     }
 
+    @Override
+    public boolean isTranslucent() {
+        return true;
+    }
+
 }

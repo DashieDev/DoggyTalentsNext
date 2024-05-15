@@ -105,6 +105,7 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> REI_ORB = registerLocatorOrb("locator_orb_rei", DoggyAccessories.REI_ORB);
     public static final RegistryObject<AccessoryItem> SHIN_ORB = registerLocatorOrb("locator_orb_shin", DoggyAccessories.SHIN_ORB);
     public static final RegistryObject<AccessoryItem> JIN_ORB = registerLocatorOrb("locator_orb_jin", DoggyAccessories.JIN_ORB);
+    public static final Supplier<AccessoryItem> DYED_ORB = register("locator_orb_dyable", () -> new DyableOrbItem(DoggyAccessories.DYED_ORB, createInitialProp()));
     public static final RegistryObject<Item> GENDER_BONE = registerTool("gender_bone", GenderBoneItem::new, 10);
     public static final RegistryObject<Item> GOLDEN_A_FIVE_WAGYU = register("golden_a_five_wagyu", GoldenAFiveWagyuItem::new);
     public static final RegistryObject<SwordItem> SUSSY_SICKLE = register("sussy_sickle", SussySickleItem::new);
@@ -391,6 +392,15 @@ public class DoggyItems {
              }, item);
         }, DoggyBlocks::logError);
         Util.acceptOrElse(DoggyItems.DOGGY_CONTACTS, (item) -> {
+            event.register((stack, tintIndex) -> {
+                if (tintIndex == 1) {
+                    return ((DoubleDyableAccessoryItem) stack.getItem()).getFgColor(stack);
+                }
+                return tintIndex > 0 ? -1 : ((DoubleDyableAccessoryItem) stack.getItem()).getBgColor(stack);
+             }, item);
+        }, DoggyBlocks::logError);
+
+        Util.acceptOrElse(DoggyItems.DYED_ORB, (item) -> {
             event.register((stack, tintIndex) -> {
                 if (tintIndex == 1) {
                     return ((DoubleDyableAccessoryItem) stack.getItem()).getFgColor(stack);

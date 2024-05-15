@@ -109,6 +109,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.REI_ORB);
         generated(DoggyItems.SHIN_ORB);
         generated(DoggyItems.JIN_ORB);
+        dyableOrb(DoggyItems.DYED_ORB);
 
         generated(DoggyItems.GENDER_BONE);
         generated(DoggyItems.STARTER_BUNDLE);
@@ -242,6 +243,10 @@ public class DTItemModelProvider extends ItemModelProvider {
     private ItemModelBuilder contactLens(Supplier<? extends ItemLike> item) {
         return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
     }
+
+    private ItemModelBuilder dyableOrb(Supplier<? extends ItemLike> item) {
+        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/locator_orb_dyable_bg"), modLoc(ModelProvider.ITEM_FOLDER + "/locator_orb_dyable_fg"));
+    } 
 
     private ItemModelBuilder variantChanger(Supplier<VariantChangerItem> itemSup) {
         var item = itemSup.get();
