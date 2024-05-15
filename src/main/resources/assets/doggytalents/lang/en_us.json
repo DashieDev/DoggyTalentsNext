@@ -139,7 +139,6 @@
    "item.doggytalents.locator_orb_jin": "Jin Orb",
    "item.doggytalents.locator_orb_jin.description": "The Orb of Humanity and Benevolence.",
    "item.doggytalents.locator_orb_dyable": "Dyable Locator Orb",
-
    "item.doggytalents.head_band_blank": "Head Band",
    "item.doggytalents.head_band_mystery": "Head Band - Mystery",
    "item.doggytalents.head_band_mystery.description": "Who's that wolfy boi?",
@@ -685,7 +684,7 @@
    "advancements.doggytalents.ookamikaze_trigger.title": "DTN.. T!!!!!",
    "advancements.doggytalents.ookamikaze_trigger.description": "Doggy TNT! Summon your first Doggy Explosion!",
    "advancements.doggytalents.sterile.title": "Don't worry! It's Sterile.",
-   "advancements.doggytalents.sterile.description": "Apply Bandaid on an Injured Dog.",
+   "advancements.doggytalents.sterile.description": "Apply a Band-Aid on an Injured Dog.",
    "advancements.doggytalents.a_full_recovery.title": "A Full Recovery!",
    "advancements.doggytalents.a_full_recovery.description": "Help your Injured Dog heal.",
    "advancements.doggytalents.the_best_dogtor.title": "The Best Dog-tor!",
