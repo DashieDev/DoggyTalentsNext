@@ -1211,3 +1211,97 @@ Hunger Format and updating the language file.
 item from full.
 * Fix Dog Group GUI and synchronization.
 * (Fabric only) Implement egg -> Onsen Tamage caudron procedure.
+
+**1.18.12 - 12th May 2024**
++ Ported to NeoForge/Fabric 1.20.6
+
+Change with respect to the Armored Paw Drop
+======================================================
+Integrate Offical Wolf Variants for DTN Dogs:
++ Each dog will now be one of the Offical Variants released:
+[Pale, Chestnut, Striped, Rusty, Woods, Ashen, Snowy, Spotted, Black]
++ The Variant system implemented on the Dog will be independent from the Skin 
+system. The corresponding texture of the variant the dog is will
+be rendered instead of the usual Pale skin when custom skins are not used, in other
+words, when the dog use the "Classical" skin or using a Missing skin, or when player forced
+always_render_classical=true in config.
++ The Variant will be shown in the Dog Info GUI regardless if the Dog have Custom Skin on or not.
++ (Configurable) Dog summoned from Doggy Charm will be a random variant instead of just being Pale.
+
+Integrate Wolf Armor for DTN Dogs (1.20.5+) 
++ DTN Dogs can wear Wolf Armors, the procedure is reflected from vanilla:
+ Right-Click with a Wolf Armor to equip it on the Dog.
+ Right-Click with a Armadillo Scute to repair the Wolf Armor that the Dog is wearing.
+ Right-Click with a Shear to remove the Wolf Armor from the Dog if wearing any.
+ Dog can also wear Dyed Wolf Armor.
++ The Wolf Armor System is seperated and independent from the current Dog Armor System
+meaning, it is more related to the Accessory System (which is also indepedent of), meaning that
+this won't conflict with Doggy Armor or the Accessories. The Dog (as current) can wear BOTH
+Wolf Armor AND Dog Armor (Player Armor + Doggy Armor) but the Dog Armor will not take effect when
+when the incoming damage is absorbed by the Wolf Armor.
++ The Wolf Armor also count towards the Dog "Nakey-ness"
++ Beside the vanilla way, player can also Equip/Remove the Wolf Armor of the Dog via its
+Dog Accessory GUI like one may do when adding/removing Accessories.
++ When a Dog is wearing Wolf Armor, the health shown in the Dog Info GUI will be
+[The dog remaining HP]+[Wolf Armor durability left]
+
+When a Vanilla Wolf is trained into DTN Wolf:  
++ It retains its variant.
++ It retains its Wolf Armor if wearing any. (1.20.5+)
++ It's Thick Collar will also be retained instead of the usual thin one. (1.20.5+)
+======================================================
+
+Push Resisting mechanic Overhaul
+======================================================
++ Instead of forcing Zero delta Movement, the move speed will be capped
+at a magnitude when Dog is idle resisting push
++ Dog won't resist push while is actually in hurting zone (ex: In lava itself)
+allowing players to push Dog out. Dog will continue to not resist for 1s 
+after being out of hurting area.
+======================================================
+
+Ranged Attack Mechanic for dogs
+======================================================
++ Dog can now carry out Ranged Attack aside Melee Attack.
++ Currently, this behaviour is available via the Doggy Tools Talents
+where if a Dog is holding a Bow with any Arrows in its Hotbar OR Pack Puppy Inventory,
+it will switch to Ranged Attack mode, and utilize the Bow to carry out the attack.
+======================================================
+
++ Dog Greeting Owners now also play a Cute Greet Anim while jumping around the Owner.
++ Tune Greeting Owner Anim/Jump frequency.
+New advancements
+======================================================
++ "Don't Worry! It's Sterile." - Apply a Bandage on an Injured Dog.
++ "A Full Recovery!" - Aid an Injured Dog to recover.
++ "The Best Dog-tor!" - Aid an Injured Dog to recover in the Best Condition.
+======================================================
+
+# Remove Cut-Corner mechanic for Dogs.
+ According to analysis and also the fact that the Dog hitbox width was never intended to exceed
+1 block in the first place, the Cut Corner mechanic is now redundant and as observed, is the 
+cause of some incident when the Dog trips and fall when doing sharp turn.
+This significantly improve the Dog pathfinding reliablity with minimal side effect.
+# Remove Nutrition Limit when feeding Dog Meat food, allowing dogs to eat certain Meat food again
+Rotten Flesh however, is strictly prohibited.
+# The Tag which shows the Dog's Owner when a player is Sneaking
+will no longer shown to the player if he is the Dog's owner.
+# Hellhound Max now Immune to Freezing and can Melt Powered Snow.
+# Incapacitated Dogs now Whine less when still being gravely injured,
+and being completely silent for the rest of the time, additionally the whining volume
+is significantly diminished to paint the state where the dog is half-unconcious and being
+too weak to do a normal whine. The dog whine frequency and volume will also be increased by a certain
+when the Dog is bandaged since it regained conciousness but still in pain.
+# Organized DTN Advancements.
+# Revert Ammy and Hayabusa Model to Classical Style to be consistent with the rest of the Kusa(s)
+and compatible with Wolf Armor.
+# Rebrand Incapacitated into Injured.
+
+* Fix Fire Drill Dogs cannot execute Stop Drop Roll.
+* Remove Client Tickable skin function, which caused unknown bugs for both modloaders.
+* Fix Dog Client Skin being selected to MISSING even when CLASSICAL is selected.
+* Fix Amnesia Bone being unable to untame Dogs.
+* Fix Dog navigation won't stop when DogMoveBackToRestrict stop.
+* Fix Dog Horzontal Danger detection mechanic
+* Fix dog cannot Heal by Saturation when Hunger is disabled.
+* Fix Dog ocassionaly stand up and stay still after owner logged out.
