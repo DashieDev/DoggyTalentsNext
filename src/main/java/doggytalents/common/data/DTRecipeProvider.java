@@ -453,6 +453,12 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DYED_ORB.get(), 1)
+            .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
+            .requires(Items.PAPER)
+            .unlockedBy("has_string", has(Items.STRING))
+            .save(consumer);
+
         ShapedRecipeBuilder.shaped(DoggyItems.GENDER_BONE.get(), 1)
             .pattern(" LB")
             .pattern("MAL")
