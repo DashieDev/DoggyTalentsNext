@@ -59,6 +59,8 @@ public class Resources {
     public static final ResourceLocation KITSUNE_MASK = getEntity("dog", "kitsune_mask");
     public static final ResourceLocation BIRTHDAY_HAT_BG = getEntity("dog", "birthday_hat_bg");
     public static final ResourceLocation BIRTHDAY_HAT_FG = getEntity("dog", "birthday_hat_fg");
+    public static final ResourceLocation DYABLE_ORB_BG = getEntity("dog", "dyable_orb_bg");
+    public static final ResourceLocation DYABLE_ORB_FG = getEntity("dog", "dyable_orb_fg");
 
     public static final ResourceLocation DEMON_HORNS = getEntity("dog", "demon_horns");
     public static final ResourceLocation WITCH_HAT = getEntity("dog", "witch_hat");
