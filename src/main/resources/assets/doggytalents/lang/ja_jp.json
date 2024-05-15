@@ -86,7 +86,7 @@
     "item.doggytalents.conan_suit": "コナン コスプレ衣装",
     "item.doggytalents.beastars_uniform_female": "ビースターズの女子制服",
     "item.doggytalents.beastars_uniform_male": "ビースターズの男子制服",
-    "item.doggytalents.empty_locator_orb": "空っぽな測位玉",
+    "item.doggytalents.empty_locator_orb": "空っぽなロケータ玉",
     
     "item.doggytalents.frisbee": "フリスビー",
     "item.doggytalents.frisbee_wet": "よだれたフリスビー",
@@ -123,22 +123,22 @@
     "item.doggytalents.doggy_contacts.description": "紙を使って2色のクラフトをします。",
  
     "item.doggytalents.locator_orb_chi": "智玉",
-    "item.doggytalents.locator_orb_chi.description": "知恵と知識のオーブ。",
+    "item.doggytalents.locator_orb_chi.description": "知恵と知識の玉。",
     "item.doggytalents.locator_orb_chu": "忠玉",
-    "item.doggytalents.locator_orb_chu.description": "忠誠と誠実のオーブ。",
+    "item.doggytalents.locator_orb_chu.description": "忠誠と誠実の玉。",
     "item.doggytalents.locator_orb_ko": "孝玉",
-    "item.doggytalents.locator_orb_ko.description": "親孝行のオーブ。",
+    "item.doggytalents.locator_orb_ko.description": "親孝行の玉。",
     "item.doggytalents.locator_orb_gi": "義玉",
-    "item.doggytalents.locator_orb_gi.description": "正義と道徳のオーブ",
+    "item.doggytalents.locator_orb_gi.description": "正義と道徳の玉",
     "item.doggytalents.locator_orb_tei": "悌玉",
-    "item.doggytalents.locator_orb_tei.description": "孝悌のオーブ。", 
+    "item.doggytalents.locator_orb_tei.description": "孝悌の玉。", 
     "item.doggytalents.locator_orb_rei": "礼玉",
-    "item.doggytalents.locator_orb_rei.description": "礼節と尊敬のオーブ。",
+    "item.doggytalents.locator_orb_rei.description": "礼節と尊敬の玉。",
     "item.doggytalents.locator_orb_shin": "信玉",
-    "item.doggytalents.locator_orb_shin.description": "信頼性と信用性のオーブ。",
+    "item.doggytalents.locator_orb_shin.description": "信頼性と信用性の玉。",
     "item.doggytalents.locator_orb_jin": "仁玉",
-    "item.doggytalents.locator_orb_jin.description": "人間性と仁愛のオーブ。",
- 
+    "item.doggytalents.locator_orb_jin.description": "人間性と仁愛の玉。",
+    "item.doggytalents.locator_orb_dyable": "染色ロケータ玉",
     "item.doggytalents.head_band_blank": "鉢巻き",
     "item.doggytalents.head_band_mystery": "鉢巻き ー 謎",
     "item.doggytalents.head_band_mystery.description": "だれだ？",
@@ -146,7 +146,9 @@
     "item.doggytalents.head_band_highhh.description": "ＤＥＶたちのお気に入りの絵文字だ。",
  
     "item.doggytalents.gender_bone": "性別変わる骨",
- 
+    "item.doggytalents.variant_changer": "種類チェンジャー",
+    "item.doggytalents.variant_changer.description": "種類: %s",
+
     "item.doggytalents.superdog_suit": "スーパードッグ仮装",
     "item.doggytalents.flying_cape": "飛行マント",
     "item.doggytalents.bat_wings": "コウモリ翼",
@@ -460,7 +462,16 @@
     "entity.doggytalents.dog": "犬",
     "entity.doggytalents.dog.unknown_owner": "飼い主UNKNOWN",
     "entity.doggytalents.dog.untamed": "野犬",
- 
+    "dog.classical.variant.pale": "白色",
+    "dog.classical.variant.chestnut": "栗色",
+    "dog.classical.variant.striped": "しま",
+    "dog.classical.variant.woods": "森",
+    "dog.classical.variant.rusty": "赤色",
+    "dog.classical.variant.black": "黒色",
+    "dog.classical.variant.snowy": "雪",
+    "dog.classical.variant.ashen": "灰色",
+    "dog.classical.variant.spotted": "まだら",
+
     "doggytalents.whistle.short": "口笛・短",
     "doggytalents.whistle.long": "口笛・長",
  
@@ -565,6 +576,7 @@
     "doggui.pointsleft": "残り点:",
     "doggui.textureindex": "テクスチャー指数",
     "doggui.obeyothers": "他人に従う？",
+    "doggui.classical.variant": "種類:",
     "doggui.regard_team_players": "チーム・プレーヤーを意識するか？",
     "doggui.regard_team_players.help": "その場合、犬は自分と同じチームの他の選手をサポートしなければなりません。",
     "doggui.force_sit": "強制的に座らせる？",
@@ -671,6 +683,12 @@
     "advancements.doggytalents.get_dog_drunk.description": "お酒で犬を酔わせました。",
     "advancements.doggytalents.ookamikaze_trigger.title": "エックスプロージョン～!!!",
     "advancements.doggytalents.ookamikaze_trigger.description": "最初のワンちゃん爆発を召喚する！",
+    "advancements.doggytalents.sterile.title": "安心して！無菌ですよ。",
+    "advancements.doggytalents.sterile.description": "敗れた犬に絆創膏を貼る。",
+    "advancements.doggytalents.a_full_recovery.title": "完治した！",
+    "advancements.doggytalents.a_full_recovery.description": "敗れた犬の回復を助ける。",
+    "advancements.doggytalents.the_best_dogtor.title": "ザ・ベスト・ドッグター！",
+    "advancements.doggytalents.the_best_dogtor.description": "最高の条件で敗れた犬を助ける。",
  
     "effect.doggytalents.natto_bite": "納豆バイット"
  }
