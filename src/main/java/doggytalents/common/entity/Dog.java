@@ -4373,6 +4373,8 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean isPushedByFluid() {
+        if (this.fireImmune() && type == NeoForgeMod.LAVA_TYPE.value())
+            return false;
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType();
 
