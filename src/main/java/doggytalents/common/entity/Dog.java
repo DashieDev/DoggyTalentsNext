@@ -2432,7 +2432,7 @@ public class Dog extends AbstractDog {
         this.getNavigation().stop();
         this.unRide();
         createAndSetIncapSyncState(source);
-        if (this.isInWater() || this.isInLava()) {
+        if (this.isInWater() || (!this.fireImmune() && this.isInLava())) {
             this.triggerAnimationAction(new DogDrownAction(this));
         } else
         this.setAnim(this.incapacitatedMananger.getAnim());
