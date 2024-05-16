@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_amnesia_bone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "doggytalents:amnesia_bone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "doggytalents:variant_changer_black"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_amnesia_bone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "doggytalents:variant_changer_black"
+    ]
+  }
+}

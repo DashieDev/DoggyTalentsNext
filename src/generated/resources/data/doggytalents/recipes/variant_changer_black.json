@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "doggytalents:conducting_bone"
+    },
+    {
+      "item": "minecraft:dark_oak_log"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "doggytalents:variant_changer_black"
+  }
+}

@@ -1,4 +1,5 @@
 {
+  "parent": "doggytalents:dtn_core/train_dog",
   "criteria": {
     "ookamikaze_trigger": {
       "trigger": "doggytalents:ookamikaze_trigger"
