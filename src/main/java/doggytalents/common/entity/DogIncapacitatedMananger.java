@@ -43,6 +43,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 public class DogIncapacitatedMananger {
 
@@ -500,7 +501,12 @@ public class DogIncapacitatedMananger {
     }
 
     private boolean isDogDeepInFluid() {
-        return this.dog.isInWater() || this.dog.isInLava();
+        var type = this.dog.getMaxHeightFluidType();
+        if (type.isAir()) return false;
+        if (type == NeoForgeMod.LAVA_TYPE.value() && dog.fireImmune())
+            return false;
+        double height = this.dog.getFluidTypeHeight(type);
+        return height > 0.5;
     }
 
     private boolean showDrownPose() {
