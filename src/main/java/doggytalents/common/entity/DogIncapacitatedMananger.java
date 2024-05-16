@@ -3,6 +3,7 @@ package doggytalents.common.entity;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import doggytalents.DoggyAdvancementTriggers;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
@@ -23,6 +24,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
@@ -148,6 +150,9 @@ public class DogIncapacitatedMananger {
         }
         if (this.bandagesCount >= MAX_BANDAID_COUNT) {
             this.dog.triggerAnimationAction(new DogFaintStandAction(dog, getFaintStandAnim()));
+        }
+        if (player instanceof ServerPlayer sP) {
+            DoggyAdvancementTriggers.DOG_BANDAID_APPLY_TRIGGER.trigger(dog, sP);
         }
     }
 
@@ -369,6 +374,7 @@ public class DogIncapacitatedMananger {
     }
 
     private void incapacitatedExit() {
+        int bandaid_count0 = this.bandagesCount;
         this.dog.maxHealth();
         this.dog.setMode(EnumMode.DOCILE);
         this.dog.setDogHunger(this.dog.getMaxHunger());
@@ -387,6 +393,29 @@ public class DogIncapacitatedMananger {
                 0.1
             );
         }
+        if (bandaid_count0 > 0) {
+            var owner = this.dog.getOwner();
+            triggerAdvancement(owner, bandaid_count0);
+        }
+    }
+
+    private void triggerAdvancement(LivingEntity player, int bandages_count0) {
+        if (!(player instanceof ServerPlayer sP))
+            return;
+        DoggyAdvancementTriggers.DOG_RECOVERED_TRIGGER.trigger(dog, sP, false);
+        if (isBestRecoveryCondition(bandages_count0))
+            DoggyAdvancementTriggers.DOG_RECOVERED_TRIGGER.trigger(dog, sP, true);
+    }
+
+    private boolean isBestRecoveryCondition(int bandaid_count0) {
+        if (bandaid_count0 < MAX_BANDAID_COUNT)
+            return false;
+        var dog_b0_state = this.dog.level().getBlockState(this.dog.blockPosition());
+        var dog_b0_block = dog_b0_state.getBlock();
+        boolean is_laying_bed = dog_b0_block == DoggyBlocks.DOG_BED.get()
+            || dog_b0_state.is(BlockTags.BEDS);
+        
+        return is_laying_bed;
     }
 
     private void incapacitatedHealWithBed(LivingEntity owner) {
