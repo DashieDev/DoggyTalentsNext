@@ -118,10 +118,6 @@ public class DogGoAwayFromFireGoal extends Goal {
                 && (x.getZ() == minZ || x.getZ() == maxZ);
             if (isCorner)
                 continue;
-            boolean isWithinDogBb =
-                dog.getBoundingBox().intersects(new AABB(x));
-            if (isWithinDogBb)
-                continue;
             var state = dog.level().getBlockState(x);
             var isBurning = WalkNodeEvaluator.isBurningBlock(state);
 
