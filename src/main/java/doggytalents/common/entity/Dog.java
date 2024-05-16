@@ -147,6 +147,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.util.ITeleporter;
 import net.neoforged.neoforge.fluids.FluidType;
 import doggytalents.common.network.PacketDistributor;
@@ -2425,7 +2426,7 @@ public class Dog extends AbstractDog {
         this.getNavigation().stop();
         this.unRide();
         createAndSetIncapSyncState(source);
-        if (this.isInWater() || this.isInLava()) {
+        if (this.isInWater() || (!this.fireImmune() && this.isInLava())) {
             this.triggerAnimationAction(new DogDrownAction(this));
         } else
         this.setAnim(this.incapacitatedMananger.getAnim());
