@@ -72,7 +72,7 @@ public class ItemUtil {
     }
 
     public static void clearTag(ItemStack stack) {
-        stack.set(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        stack.set(DataComponents.CUSTOM_DATA, null);
     }
 
     public static void putTag(ItemStack stack, CompoundTag tag) {
@@ -96,7 +96,8 @@ public class ItemUtil {
     }
 
     public static boolean hasTag(ItemStack stack) {
-        return stack.has(DataComponents.CUSTOM_DATA);
+        var custom = stack.get(DataComponents.CUSTOM_DATA);
+        return custom != null && !custom.isEmpty();
     }
 
     public static void copyTag(ItemStack from, ItemStack to) {
