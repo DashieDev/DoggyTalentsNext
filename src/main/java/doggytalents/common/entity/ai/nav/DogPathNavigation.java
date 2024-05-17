@@ -48,10 +48,7 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         if (invalidateIfNextNodeIsTooHigh()) return;
 
         var currentPos = this.getTempMobPos();
-        this.maxDistanceToWaypoint = 
-            this.mob.getBbWidth() > 0.75F ? 
-                this.mob.getBbWidth() / 2.0F 
-                : 0.57f;
+        this.maxDistanceToWaypoint = 0.45f;
 
         var nextPos = this.path.getNextNodePos();
         double dx = Math.abs(this.mob.getX() - ((double)nextPos.getX() + 0.5));
