@@ -34,6 +34,15 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if (this.isDone()) {
+            if (this.path != null && this.path.isDone())
+                this.stop();
+        }
+    }
+
+    @Override
     protected void followThePath() {
         if (invalidateIfNextNodeIsTooHigh()) return;
 
@@ -75,7 +84,10 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         }
 
         var nextNode = path.getNextNode();
-        if (dog.getPathfindingMalus(nextNode.type) < 0) {
+        boolean is_first_fence_node = 
+            nextNode.type == PathType.FENCE
+            && path.getNextNodeIndex() == 0;
+        if (!is_first_fence_node && dog.getPathfindingMalus(nextNode.type) < 0) {
             this.stop();
             return true;
         }
