@@ -558,7 +558,7 @@
    "doggui.stats.mob_kills.no_kills" : "%s did not kill any mobs.",
 
    "doggui.invalid_dog.incapacitated.title" : "Dog is Injured!",
-   "doggui.invalid_dog.incapacitated.subtitle" : "Don't worry! %s just need some rest. Give %s a nice little break and %s will feel better.",
+   "doggui.invalid_dog.incapacitated.subtitle" : "Don't worry! %s just need some rest. Take good care of %s and %s will get right back on %s feet!",
    "doggui.invalid_dog.incapacitated.show_cause" : "Show Cause",
    "doggui.invalid_dog.no_permission.title" : "You are not the owner of %s!",
    "doggui.invalid_dog.no_permission.subtitle" : "Please make sure that you have the right permission to interact with %s.",
