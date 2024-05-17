@@ -2525,6 +2525,15 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public void jumpInFluid(FluidType type) {
+        if (this.getNavigation().canFloat()) {
+            this.setDeltaMovement(this.getDeltaMovement().add(0.0, (double)0.04f, 0.0));
+        } else {
+            this.setDeltaMovement(this.getDeltaMovement().add(0.0, 0.3, 0.0));
+        }
+    }
+
+    @Override
     public void dropEquipment() {
         this.alterations.forEach((alter) -> alter.dropInventory(this));
     }
