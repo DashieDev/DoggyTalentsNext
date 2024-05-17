@@ -106,6 +106,7 @@ public class SwimmerDogTalent extends TalentInstance {
         if (
             (!dog.isInWater() && dog.onGround())
             || dog.isLowAirSupply()
+            || dog.isDefeated()
         ) {
             this.swimming = false;
             stopSwimming(dog);
@@ -115,6 +116,7 @@ public class SwimmerDogTalent extends TalentInstance {
     private void updateNotSwimming(Dog dog) {
         if (
             dog.isInWater()
+            && !dog.isDefeated()
             && readyToBeginSwimming(dog)
             && !dog.isDogSwimming()
         ) {
