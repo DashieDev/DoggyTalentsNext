@@ -3221,9 +3221,11 @@ public class Dog extends AbstractDog {
     }
 
     private void onPropsUpdated() {
+        if (this.level().isClientSide)
+            return;
         this.dogArmors.onPropsUpdated(alterationProps);
         if (!alterationProps.canUseTools())
-            this.mouthStack = ItemStack.EMPTY;
+            this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
     }
 
     public IDogRangedAttackManager getDogRangedAttack() {
