@@ -304,6 +304,8 @@ public class DogMeleeAttackGoal extends Goal {
 
    protected boolean isTargetInSafeArea(Dog dog, LivingEntity target) {
       var type = WalkNodeEvaluator.getPathTypeStatic(dog, target.blockPosition().mutable());
+      if (dog.fireImmune() && type == PathType.LAVA)
+         return true;
       for (var x : dog.getAlterations()) {
          var type_result = x.inferType(dog, type);
          if (type_result.getResult().shouldSwing() 
