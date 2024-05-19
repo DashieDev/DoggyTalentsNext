@@ -21,6 +21,7 @@ import doggytalents.common.util.dogpromise.promise.DogDistantTeleportToBedPromis
 import doggytalents.common.util.dogpromise.promise.DogDistantTeleportToOwnerCrossDimensionPromise;
 import doggytalents.common.util.dogpromise.promise.DogDistantTeleportToOwnerPromise;
 import net.minecraft.SharedConstants;
+import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -704,6 +705,12 @@ public class DogUtil {
     public static int getWolfArmorRepairVal(ItemStack stack) {
         float repair_val = stack.getMaxDamage() * 0.125f;
         return (int) repair_val;
+    }
+
+    public static void stopAndForceLook(Dog dog, Vec3 target) {
+        dog.setSpeed(0);
+        dog.setZza(0);
+        dog.lookAt(Anchor.EYES, target);
     }
 
 
