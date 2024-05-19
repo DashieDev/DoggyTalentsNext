@@ -45,12 +45,27 @@ public class DogGoAwayFromFireGoal extends Goal {
         if (dangerSpot == -1) return false;
 
         this.path = DogGreedyFireSafeSearchPath.create(dog, 10);
-        if (this.path == null) {
-            this.tickUntilSearch = 10;
+        if (this.path == null || !checkCanReplaceCurrentPath(dog, this.path)) {
+            this.tickUntilSearch = 5;
+            this.path = null;
             return false;
         }
 
         return true;
+    }
+
+    private boolean checkCanReplaceCurrentPath(Dog dog, DogGreedyFireSafeSearchPath new_path) {
+        var current_path = this.dog.getNavigation().getPath();
+        if (current_path == null)
+            return true;
+        if (current_path.isDone())
+            return true;
+        var current_next_node = current_path.getNextNode();
+        var current_next_malus = dog.getPathfindingMalus(current_next_node.type);
+        var new_next_malus = dog.getPathfindingMalus(new_path.getNode(0).type);
+        if (new_next_malus < current_next_malus)
+            return true;
+        return false;
     }
 
     @Override
@@ -67,12 +82,13 @@ public class DogGoAwayFromFireGoal extends Goal {
     public void start() {
         if (this.path == null) return;
         var n = this.dog.getNavigation();
-        n.moveTo((Path) null, 1);
+        n.stop();
         n.moveTo(this.path, this.dog.getUrgentSpeedModifier());
         
         if (this.path == null) return;
 
         var b0 = this.path.getNode(0).asBlockPos();
+        DogUtil.stopAndForceLook(dog, b0.getCenter());
         this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 
             this.dog.getUrgentSpeedModifier());
     }
@@ -90,6 +106,8 @@ public class DogGoAwayFromFireGoal extends Goal {
         //Penalty
         if (end_node.type != PathType.WALKABLE)
             this.tickUntilSearch = 20 + dog.getRandom().nextInt(3)*10;
+        else
+            this.tickUntilSearch = 3;
     }
 
     /**
