@@ -266,6 +266,7 @@ public class Dog extends AbstractDog {
     protected PathNavigation currentNavigation;
     
     protected int switchNavCooldown = 0;
+    private int pushFromOtherDogResistTick = 0;
 
     private int healingTick;  
     private int prevHealingTick;
@@ -889,6 +890,13 @@ public class Dog extends AbstractDog {
 
         if (!this.level().isClientSide && this.isInSittingPose() && !this.isDogResting() && this.tickUntilRest > 0 ) {
             --this.tickUntilRest;
+        }
+
+        if (this.getNavigation().isDone()) {
+            if (this.pushFromOtherDogResistTick > 0)
+                --this.pushFromOtherDogResistTick;
+        } else {
+            this.pushFromOtherDogResistTick = 20;
         }
 
         if (this.navigationLock != null)
@@ -4797,19 +4805,38 @@ public class Dog extends AbstractDog {
     }
 
     protected boolean shouldBlockPush(Entity target) {
-        boolean avoidPush = 
-            ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.PREVENT_DOGS_PUSHING_EACH_OTHER);
-        if (!avoidPush)
+        if (this.pushFromOtherDogResistTick <= 0)
+            return false;
+        if (this.isDefeated())
+            return false;
+        if (isDogInFluid())
             return false;
         if (!(target instanceof Dog otherDog)) {
             return false;
         }
+        if (!isPushingTeammateDog(otherDog))
+            return false;
         if (otherDog.isDogFlying() && this.isDogFlying())
             return false;
         boolean oneDogStillNotOnGround =
             !this.onGround()
             || !otherDog.onGround();
         return oneDogStillNotOnGround;
+    }
+
+    private boolean isPushingTeammateDog(Dog otherDog) {
+        var owner0 = this.getOwner();
+        var owner1 = otherDog.getOwner();
+        if (owner0 == null || owner1 == null)
+            return false;
+        if (owner0 == owner1)
+            return true;
+        
+        return owner0.isAlliedTo(owner1);
+    }
+
+    private boolean isDogInFluid() {
+        return !this.getMaxHeightFluidType().isAir();
     }
 
     @Override
