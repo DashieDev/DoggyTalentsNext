@@ -127,22 +127,18 @@ public class DoggySpin extends AbstractWidget {
     }
 
     public void chooseStyle() {
-        int r = random.nextInt(8);
-        switch (r) {
-        default:
-            this.style = Style.CHOPIN;
-            break;
-        case 0:
-        case 1:
-            this.style = Style.BACKFLIP;
-            break;
-        case 2:
-            this.style = Style.SIT;
-            break;
-        case 3:
-            this.style = Style.AMMY;
-            break;
+        float r = random.nextFloat();
+        var selected_style = Style.CHOPIN;
+        if (r >= 0.5f) {
+            selected_style = Style.CHOPIN;
+        } else if (r >= 0.27f) {
+            selected_style = Style.BACKFLIP;
+        } else if (r >= 0.04f) {
+            selected_style = Style.SIT;
+        } else {
+            selected_style = Style.AMMY;
         }
+        this.style = selected_style;
         indx = 0;
         lastRender = System.currentTimeMillis();
     }
