@@ -247,7 +247,6 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue ALL_PLAYER_CANNOT_ATTACK_DOG;
         public ForgeConfigSpec.BooleanValue ALL_DOG_BLOCK_PORTAL;
         public ForgeConfigSpec.IntValue MAX_HEEL_LIMIT;
-        public ForgeConfigSpec.BooleanValue PREVENT_DOGS_PUSHING_EACH_OTHER;
         public ForgeConfigSpec.DoubleValue HUNGER_MODIFIER;
         public ForgeConfigSpec.BooleanValue DISABLE_PRESERVE_UUID;
         public ForgeConfigSpec.IntValue DUPLICATION_RESOLVE_STRATEGY;
@@ -342,11 +341,6 @@ public class ConfigHandler {
                 .comment("at the same time. Set this to any negative value to remove the limit completely.")
                 .translation("doggytalents.max_heel_limit")
                 .defineInRange("max_heel_limit", 20, Integer.MIN_VALUE, Integer.MAX_VALUE);
-            PREVENT_DOGS_PUSHING_EACH_OTHER = builder
-                .comment("Prevent dogs from pushing each other when navigating, this prevents dogs from pushing")
-                .comment("another dog into a dangerous area and improves navigation.")
-                .translation("doggytalents.prevent_dogs_pushing_each_other")
-                .define("prevent_dogs_pushing_each_other", true);
             HUNGER_MODIFIER = builder
                 .comment("Adjust this value to increase or decrease the Dog's hunger speed to your liking.")
                 .comment("ex: Set this to 0.5 to halve the Dog Hunger decrease speed.")
