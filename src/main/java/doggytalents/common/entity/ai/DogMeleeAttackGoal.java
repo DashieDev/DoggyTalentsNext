@@ -209,7 +209,7 @@ public class DogMeleeAttackGoal extends Goal {
          && dog_bp.distSqr(target_bp) <= 2.25 
          && !this.canReachTarget(e, d0) 
          //Make sure target is still in safe area 
-         && this.isTargetInSafeArea(dog, e)
+         && this.isTargetInSafeArea(dog, e, target_bp)
       ) {
          dog.getMoveControl().setWantedPosition(e.getX(), e.getY(), e.getZ(), this.speedModifier);
       }
@@ -233,7 +233,7 @@ public class DogMeleeAttackGoal extends Goal {
       Vec3 vec3 = this.dog.getDeltaMovement();
       Vec3 vec31 = new Vec3(target.getX() - this.dog.getX(), 0.0D, target.getZ() - this.dog.getZ());
       if (vec31.lengthSqr() > 1.0E-7D) {
-         vec31 = vec31.normalize().scale(0.4D).add(vec3.scale(0.2D));
+         vec31 = vec31.normalize().scale(0.4D);
       }
 
       this.dog.setDeltaMovement(vec31.x, (double)this.LEAP_YD, vec31.z);
@@ -268,7 +268,7 @@ public class DogMeleeAttackGoal extends Goal {
 
       if (!(d0 >= DONT_LEAP_AT_DIS_SQR && d0 <= START_LEAPING_AT_DIS_SQR)) return false;
                
-      if (this.dog.getRandom().nextInt(reducedTickDelay(5)) != 0) return false;
+      if (this.dog.getRandom().nextInt(3) != 0) return false;
                
       var tpos = target.blockPosition();
                
@@ -301,19 +301,20 @@ public class DogMeleeAttackGoal extends Goal {
       return false;
    }
 
-   protected boolean isTargetInSafeArea(Dog dog, LivingEntity target) {
-      var type = WalkNodeEvaluator.getPathTypeStatic(dog, target.blockPosition().mutable());
-      if (dog.fireImmune() && type == PathType.LAVA)
-         return true;
+   protected boolean isTargetInSafeArea(Dog dog, LivingEntity target, BlockPos target_bp) {
+      var type = WalkNodeEvaluator.getPathTypeStatic(dog, target_bp.mutable());
+      if (type == PathType.OPEN)
+         return false;
       for (var x : dog.getAlterations()) {
          var type_result = x.inferType(dog, type);
-         if (type_result.getResult().shouldSwing() 
-            && type_result.getObject() == BlockPathTypes.WALKABLE) {
-            type = BlockPathTypes.WALKABLE;
+         if (type_result.getResult().shouldSwing()) {
+            type = type_result.getObject();
             break;
          }
       }
-      return type == BlockPathTypes.WALKABLE;
+      if (DogUtil.isDangerPathType(type))
+         return false;
+      return true;
    }
 
    protected boolean canReachTarget (LivingEntity target,  double distanceToTargetSqr) {
