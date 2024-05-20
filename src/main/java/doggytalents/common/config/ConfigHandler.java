@@ -249,7 +249,6 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue ALL_PLAYER_CANNOT_ATTACK_DOG;
         public ModConfigSpec.BooleanValue ALL_DOG_BLOCK_PORTAL;
         public ModConfigSpec.IntValue MAX_HEEL_LIMIT;
-        public ModConfigSpec.BooleanValue PREVENT_DOGS_PUSHING_EACH_OTHER;
         public ModConfigSpec.DoubleValue HUNGER_MODIFIER;
         public ModConfigSpec.BooleanValue DISABLE_PRESERVE_UUID;
         public ModConfigSpec.IntValue DUPLICATION_RESOLVE_STRATEGY;
@@ -344,11 +343,6 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("at the same time. Set this to any negative value to remove the limit completely.")
                 .translation("doggytalents.max_heel_limit")
                 .defineInRange("max_heel_limit", 20, Integer.MIN_VALUE, Integer.MAX_VALUE);
-            PREVENT_DOGS_PUSHING_EACH_OTHER = builder
-                .comment("Prevent dogs from pushing each other when navigating, this prevents dogs from pushing")
-                .comment("another dog into a dangerous area and improves navigation.")
-                .translation("doggytalents.prevent_dogs_pushing_each_other")
-                .define("prevent_dogs_pushing_each_other", true);
             HUNGER_MODIFIER = builder
                 .comment("Adjust this value to increase or decrease the Dog's hunger speed to your liking.")
                 .comment("ex: Set this to 0.5 to halve the Dog Hunger decrease speed.")
