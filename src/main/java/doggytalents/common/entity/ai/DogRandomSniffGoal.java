@@ -167,7 +167,8 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
     }
 
     private void tickMoveTo() {
-        if (this.dog.getNavigation().isDone()) {
+        if (this.dog.getNavigation().isDone() || almostOutOfRestrict()) {
+            this.dog.getNavigation().stop();
             this.isDoingAnim = true;
             if (!this.dog.onGround())
                 return;
@@ -177,7 +178,31 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         }
     }
 
+    private boolean almostOutOfRestrict() {
+        if (!this.dog.hasRestriction())
+            return false;
+        var restrict_b0 = this.dog.getRestrictCenter();
+        if (restrict_b0 == null)
+            return false;
+        var restrict_r = this.dog.getRestrictRadius();
+        var restrict_d0_sqr = this.dog.distanceToSqr(Vec3.atBottomCenterOf(restrict_b0));
+        var d_inside_sqr = restrict_r * restrict_r - restrict_d0_sqr;
+        return d_inside_sqr <= 1;
+    }
+
     private BlockPos findMoveToPos() {
+        if (dog.hasRestriction() && dog.getRestrictCenter() != null) {
+            var restrict_b0 = dog.getRestrictCenter();
+            var restrict_r = dog.getRestrictRadius();
+            int explore_r = Mth.floor(restrict_r) - 1;
+            if (explore_r <= 0)
+                return this.dog.blockPosition();
+            var r = this.dog.getRandom();
+            int offX = r.nextIntBetweenInclusive(-explore_r, explore_r);
+            int offY = r.nextIntBetweenInclusive(-1, 1);
+            int offZ = r.nextIntBetweenInclusive(-explore_r, explore_r);
+            return restrict_b0.offset(offX, offY, offZ);
+        }
         var r = this.dog.getRandom();
         int offX = r.nextIntBetweenInclusive(-EXPLORE_RADIUS, EXPLORE_RADIUS);
         int offY = r.nextIntBetweenInclusive(-1, 1);
