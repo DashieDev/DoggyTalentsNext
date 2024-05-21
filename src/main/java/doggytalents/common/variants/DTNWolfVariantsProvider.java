@@ -1,8 +1,7 @@
-package doggytalents.common.data;
+package doggytalents.common.variants;
 
 import java.util.Set;
 
-import doggytalents.DoggyWolfVariants;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.core.HolderSet;
@@ -19,12 +18,12 @@ import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
-public class DTWolfVariantsProvider {
+public class DTNWolfVariantsProvider {
     
     public static void start(GatherDataEvent event) {
         var wolf_variant_set = new RegistrySetBuilder()
-            .add(Registries.WOLF_VARIANT, DoggyWolfVariants::bootstrap)
-            .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, DTWolfVariantsProvider::registerWolfModifier);
+            .add(Registries.WOLF_VARIANT, DTNWolfVariants::bootstrap)
+            .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, DTNWolfVariantsProvider::registerWolfModifier);
             
         var datagen = event.getGenerator();
         datagen.addProvider(event.includeServer(),

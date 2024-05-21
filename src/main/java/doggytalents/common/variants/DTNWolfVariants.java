@@ -1,4 +1,4 @@
-package doggytalents;
+package doggytalents.common.variants;
 
 import doggytalents.common.util.Util;
 import net.minecraft.core.HolderSet;
@@ -9,7 +9,7 @@ import net.minecraft.world.entity.animal.WolfVariant;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 
-public class DoggyWolfVariants {
+public class DTNWolfVariants {
     
     public static final ResourceKey<WolfVariant> CHERRY = createKey("cherry");
 
