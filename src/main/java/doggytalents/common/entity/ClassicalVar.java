@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
+import doggytalents.DoggyWolfVariants;
 import doggytalents.common.util.Util;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.animal.WolfVariant;
 import net.minecraft.world.entity.animal.WolfVariants;
 
 public enum ClassicalVar {
+    //Minecraft
     PALE(0, "pale"),
     CHESTNUT(1, "chestnut"),
     STRIPED(2, "striped"),
@@ -23,7 +25,10 @@ public enum ClassicalVar {
     BLACK(5, "black"),
     SNOWY(6, "snowy"),
     ASHEN(7, "ashen"),
-    SPOTTED(8, "spotted");
+    SPOTTED(8, "spotted"),
+    
+    //Compl. DTN
+    CHERRY(9, "cherry", true);
 
     private final int idInt;
     private final ResourceLocation id;
@@ -46,28 +51,39 @@ public enum ClassicalVar {
         .put(WolfVariants.SNOWY, ClassicalVar.SNOWY)
         .put(WolfVariants.ASHEN, ClassicalVar.ASHEN)
         .put(WolfVariants.SPOTTED, ClassicalVar.SPOTTED)
+        .put(DoggyWolfVariants.CHERRY, ClassicalVar.CHERRY)
         .build();
 
     private ClassicalVar(int idInt, String name) {
+        this(idInt, name, false);
+    }
+
+    private ClassicalVar(int idInt, String name, boolean is_compl) {
         this.idInt = idInt;
         this.id = new ResourceLocation(name);
-        this.textureLoc = createTextureLoc(name);
-        this.translationKey = createTranslationKey(name);
-        this.iconLoc = createIconLoc(name);
+        this.textureLoc = createTextureLoc(name, is_compl);
+        this.translationKey = createTranslationKey(name, is_compl);
+        this.iconLoc = createIconLoc(name, is_compl);
         
         //TODO Insert vanilla provided texture here.
         this.vanillaTextureLoc = textureLoc;
     }
 
-    private static ResourceLocation createTextureLoc(String name) {
+    private static ResourceLocation createTextureLoc(String name, boolean is_compl) {
+        if (is_compl)
+            return Util.getResource("textures/entity/dog/classical/compl/wolf_" + name + ".png");
         return Util.getResource("textures/entity/dog/classical/wolf_" + name + ".png");
     }
 
-    private static ResourceLocation createIconLoc(String name) {
+    private static ResourceLocation createIconLoc(String name, boolean is_compl) {
+        if (is_compl)
+            return Util.getResource("textures/item/doggy_charm.png");
         return Util.getResource("textures/entity/dog/classical_icon/" + name + ".png");
     }
 
-    private static String createTranslationKey(String name) {
+    private static String createTranslationKey(String name, boolean is_compl) {
+        if (is_compl)
+            return "dog.classical.variant.compl." + name;
         return "dog.classical.variant." + name;
     }
 
@@ -138,6 +154,7 @@ public enum ClassicalVar {
         .put(ClassicalVar.SNOWY, 0xffb8877e)
         .put(ClassicalVar.ASHEN, 0xff928991)
         .put(ClassicalVar.SPOTTED, 0xffc8bc30)
+        .put(ClassicalVar.CHERRY, 0xfffa9de5)
         .build();
     
 }
