@@ -25,6 +25,7 @@ import doggytalents.common.event.EventHandler;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;
+import doggytalents.common.variants.DTNWolfVariantsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.api.distmarker.Dist;
@@ -182,6 +183,6 @@ public class DoggyTalentsNext {
             gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup, event.getExistingFileHelper()));
         }
 
-        DTWolfVariantsProvider.start(event);
+        DTNWolfVariantsProvider.start(event);
     }
 }
