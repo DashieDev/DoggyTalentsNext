@@ -159,7 +159,15 @@
             "use_model" : "arcanine",
             "based_on" : "Arcanine from Pokemon Gen 1",
             "author" : "MashXP, DashieDev, SilverstarShiro",
-            "tags" : "pokemon"
+            "tags" : "pokemon, anime, classical"
+        },
+        {
+            "skin_name" : "Ranga",
+            "skin_id" : "ranga",
+            "use_model" : "ranga",
+            "based_on" : "Ranga from Tensei Shitara Slime Datta Ken",
+            "author" : "MashXP",
+            "tags" : "anime, classical"
         },
         {
             "skin_name" : "Iwanko (RockRuff)",
