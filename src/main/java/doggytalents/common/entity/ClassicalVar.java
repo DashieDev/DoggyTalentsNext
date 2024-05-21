@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
-import doggytalents.DoggyWolfVariants;
 import doggytalents.common.util.Util;
+import doggytalents.common.variants.DTNWolfVariants;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Wolf;
@@ -51,7 +51,7 @@ public enum ClassicalVar {
         .put(WolfVariants.SNOWY, ClassicalVar.SNOWY)
         .put(WolfVariants.ASHEN, ClassicalVar.ASHEN)
         .put(WolfVariants.SPOTTED, ClassicalVar.SPOTTED)
-        .put(DoggyWolfVariants.CHERRY, ClassicalVar.CHERRY)
+        .put(DTNWolfVariants.CHERRY, ClassicalVar.CHERRY)
         .build();
 
     private ClassicalVar(int idInt, String name) {
