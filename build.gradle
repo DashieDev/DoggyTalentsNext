@@ -130,3 +130,25 @@ tasks.named("runClient") {
         println("")
     }
 }
+
+tasks.named("runData") {
+    doFirst {
+
+        println("vmArgs:")
+        def vmArgs = "";
+        for (item in runs.data.realiseJvmArguments()) {
+            vmArgs = vmArgs + item + " "
+        }
+        println(vmArgs)
+        println("==================================")
+        println("args:")
+        def args1 = ""
+        for (item in runs.data.getProgramArguments().get()) {
+            args1 = args1 + item + " "
+        }
+        println(args1)
+        println("==================================")
+        println("")
+        println("")
+    }
+}
