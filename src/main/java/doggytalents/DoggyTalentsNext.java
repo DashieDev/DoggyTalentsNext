@@ -182,5 +182,7 @@ public class DoggyTalentsNext {
             gen.addProvider(true, new DTLootModifierProvider(packOutput, lookup));
             gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup, event.getExistingFileHelper()));
         }
+
+        DTWolfVariantsProvider.start(event);
     }
 }
