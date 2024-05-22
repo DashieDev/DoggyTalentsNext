@@ -258,6 +258,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue INCAP_VAL_RESET_WHEN_HURT;
         public ForgeConfigSpec.IntValue TRAIN_WOLF_LIMIT;
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
+        public ForgeConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -406,7 +407,15 @@ public class ConfigHandler {
                 .comment("random Classical Variants instead of always being summoned as Pale.")
                 .translation("doggytalents.random_var_with_charm")
                 .define("random_var_with_charm", true);
-
+            EXTENDED_WOLVES_SPAWNABLE_BLOCK = builder
+                .comment("Some DTN's Wolf Variants are required to spawn on Biomes")
+                .comment("which does not contains the current Wolves_Spawnable_On Blocks.")
+                .comment("This option allows wolves to spawn on those block (if spawning in one")
+                .comment("of the biomes in question, this settings have no effect on the rest of")
+                .comment("the usual biomes.")
+                .translation("doggytalents.extended_wolves_spawnable_block")
+                .define("extended_wolves_spawnable_block", true);
+            
             builder.pop();
         }
 
