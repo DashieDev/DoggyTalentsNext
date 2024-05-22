@@ -28,7 +28,9 @@ public enum ClassicalVar {
     SPOTTED(8, "spotted"),
     
     //Compl. DTN
-    CHERRY(9, "cherry", true);
+    CHERRY(9, "cherry", true),
+    LEMONY_LIME(10, "lemony_lime", true),
+    HIMALAYAN_SALT(11, "himalayan_salt", true);
 
     private final int idInt;
     private final ResourceLocation id;
@@ -52,6 +54,8 @@ public enum ClassicalVar {
         .put(WolfVariants.ASHEN, ClassicalVar.ASHEN)
         .put(WolfVariants.SPOTTED, ClassicalVar.SPOTTED)
         .put(DTNWolfVariants.CHERRY, ClassicalVar.CHERRY)
+        .put(DTNWolfVariants.LEMONY_LIME, ClassicalVar.LEMONY_LIME)
+        .put(DTNWolfVariants.HIMALAYAN_SALT, ClassicalVar.HIMALAYAN_SALT)
         .build();
 
     private ClassicalVar(int idInt, String name) {
@@ -155,6 +159,8 @@ public enum ClassicalVar {
         .put(ClassicalVar.ASHEN, 0xff928991)
         .put(ClassicalVar.SPOTTED, 0xffc8bc30)
         .put(ClassicalVar.CHERRY, 0xfffa9de5)
+        .put(ClassicalVar.LEMONY_LIME, 0xffa8c882)
+        .put(ClassicalVar.HIMALAYAN_SALT, 0xffb55c63)
         .build();
     
 }

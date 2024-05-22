@@ -36,6 +36,8 @@ public class DTNWolfVariantsProvider {
 
     private static void registerWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerCherryWolfModifier(ctx);
+        registerLemonyLimeWolfModifier(ctx);
+        registerHimalayanSaltWolfModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
@@ -50,6 +52,34 @@ public class DTNWolfVariantsProvider {
         var cherry_wolf_spawn_modifier = BiomeModifiers.AddSpawnsBiomeModifier
             .singleSpawn(cherry_wolf_spawn_biome, cherry_wolf_spawner_data);
         ctx.register(cherry_wolf_spawn_id, cherry_wolf_spawn_modifier);
+    }
+
+    private static void registerLemonyLimeWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+        var lemony_lime_wolf_spawn_id = ResourceKey.create(
+            NeoForgeRegistries.Keys.BIOME_MODIFIERS, 
+            Util.getResource("lemony_lime_wolf_spawn_modifier")) ;
+        var lemony_lime_wolf_spawn_biome = HolderSet.direct(
+            ctx.lookup(Registries.BIOME).getOrThrow(Biomes.BEACH)
+        );
+        var lemony_lime_wolf_spawner_data = new MobSpawnSettings
+            .SpawnerData(EntityType.WOLF, 1, 1, 1);
+        var lemony_lime_wolf_spawn_modifier = BiomeModifiers.AddSpawnsBiomeModifier
+            .singleSpawn(lemony_lime_wolf_spawn_biome, lemony_lime_wolf_spawner_data);
+        ctx.register(lemony_lime_wolf_spawn_id, lemony_lime_wolf_spawn_modifier);
+    }
+
+    private static void registerHimalayanSaltWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+        var himalayan_salt_wolf_spawn_id = ResourceKey.create(
+            NeoForgeRegistries.Keys.BIOME_MODIFIERS, 
+            Util.getResource("himalayan_salt_wolf_spawn_modifier")) ;
+        var himalayan_salt_wolf_spawn_biome = HolderSet.direct(
+            ctx.lookup(Registries.BIOME).getOrThrow(Biomes.JAGGED_PEAKS)
+        );
+        var himalayan_salt_wolf_spawner_data = new MobSpawnSettings
+            .SpawnerData(EntityType.WOLF, 1, 1, 1);
+        var himalayan_salt_wolf_spawn_modifier = BiomeModifiers.AddSpawnsBiomeModifier
+            .singleSpawn(himalayan_salt_wolf_spawn_biome, himalayan_salt_wolf_spawner_data);
+        ctx.register(himalayan_salt_wolf_spawn_id, himalayan_salt_wolf_spawn_modifier);
     }
 
 }
