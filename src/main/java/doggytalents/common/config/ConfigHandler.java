@@ -260,6 +260,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue INCAP_VAL_RESET_WHEN_HURT;
         public ModConfigSpec.IntValue TRAIN_WOLF_LIMIT;
         public ModConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
+        public ModConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
 
         public Map<String, ModConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -408,7 +409,15 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("random Classical Variants instead of always being summoned as Pale.")
                 .translation("doggytalents.random_var_with_charm")
                 .define("random_var_with_charm", true);
-
+            EXTENDED_WOLVES_SPAWNABLE_BLOCK = builder
+                .comment("Some DTN's Wolf Variants are required to spawn on Biomes")
+                .comment("which does not contains the current Wolves_Spawnable_On Blocks.")
+                .comment("This option allows wolves to spawn on those block (if spawning in one")
+                .comment("of the biomes in question, this settings have no effect on the rest of")
+                .comment("the usual biomes.")
+                .translation("doggytalents.extended_wolves_spawnable_block")
+                .define("extended_wolves_spawnable_block", true);
+            
             builder.pop();
         }
 
