@@ -12,6 +12,8 @@ import net.minecraft.world.level.biome.Biomes;
 public class DTNWolfVariants {
     
     public static final ResourceKey<WolfVariant> CHERRY = createKey("cherry");
+    public static final ResourceKey<WolfVariant> LEMONY_LIME = createKey("lemony_lime");
+    public static final ResourceKey<WolfVariant> HIMALAYAN_SALT = createKey("himalayan_salt");
 
     private static ResourceKey<WolfVariant> createKey(String name) {
         return ResourceKey.create(Registries.WOLF_VARIANT, Util.getResource(name));
@@ -19,6 +21,8 @@ public class DTNWolfVariants {
 
     public static void bootstrap(BootstrapContext<WolfVariant> ctx) {
         register(ctx, CHERRY, "cherry", Biomes.CHERRY_GROVE);
+        register(ctx, LEMONY_LIME, "lemony_lime", Biomes.BEACH);
+        register(ctx, HIMALAYAN_SALT, "himalayan_salt", Biomes.JAGGED_PEAKS);
     }
 
     private static void register(BootstrapContext<WolfVariant> ctx, ResourceKey<WolfVariant> key, 
