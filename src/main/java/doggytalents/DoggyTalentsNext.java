@@ -26,6 +26,7 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;
 import doggytalents.common.variants.DTNWolfVariantsProvider;
+import doggytalents.common.variants.DTNWolfVariantsSpawnPlacements;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.api.distmarker.Dist;
@@ -88,6 +89,10 @@ public class DoggyTalentsNext {
 
         modEventBus.addListener(DoggyRegistries::newRegistry);
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
+        modEventBus.addListener(DTNNetworkHandler::onRegisterPayloadEvent);
+        modEventBus.addListener(DoggyChunkController::onChunkControllerRegistryEvent);
+        modEventBus.addListener(ClientSetup::setupScreenManagers);
+        modEventBus.addListener(DTNWolfVariantsSpawnPlacements::onRegisterSpawnPlacements);
 
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
