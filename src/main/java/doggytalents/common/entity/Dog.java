@@ -4543,6 +4543,9 @@ public class Dog extends AbstractDog {
             if (this.canDogPassGate())
                 return 8;
             break;
+        case DANGER_POWDER_SNOW:
+        case POWDER_SNOW:
+            return -1;
         }
         return super.getPathfindingMalus(type);
     }
