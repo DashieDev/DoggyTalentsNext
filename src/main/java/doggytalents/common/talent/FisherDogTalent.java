@@ -13,13 +13,16 @@ import doggytalents.common.util.TagUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
 public class FisherDogTalent extends TalentInstance {
 
@@ -51,24 +54,32 @@ public class FisherDogTalent extends TalentInstance {
         if (r_fish >= this.level() * 2)
             return;
         
-        var fishItem = getRandomFish(dogIn);
+        var fishItem = getRandomFishingLoot(dogIn);
         var fishStack = getFishedStack(dogIn, fishItem);
 
         dogIn.spawnAtLocation(fishStack);
     }
 
-    private Item getRandomFish(AbstractDog dog) {
-        var tags = ForgeRegistries.ITEMS.tags();
-        var fishes = tags.getTag(ItemTags.FISHES)
-            .stream().collect(Collectors.toList());
-        if (fishes.isEmpty())
-            return Items.COD;
-        int r = dog.getRandom().nextInt(fishes.size());
-        return fishes.get(r);
+    private ItemStack getRandomFishingLoot(AbstractDog dog) {
+        if (!(dog.level() instanceof ServerLevel sLevel))
+            return ItemStack.EMPTY;
+        var loot_table = BuiltInLootTables.FISHING_FISH;
+        var r = dog.getRandom();
+        if (this.level() >= 5 && r.nextFloat() < 0.0125) {
+            loot_table = BuiltInLootTables.FISHING_TREASURE;
+        }
+        var loot_param = new LootParams.Builder(sLevel)
+            .create(LootContextParamSets.EMPTY);
+        var loot_list = sLevel.getServer().reloadableRegistries()
+            .getLootTable(loot_table)
+            .getRandomItems(loot_param);
+        if (loot_list.isEmpty())
+            return ItemStack.EMPTY;
+        var ret = loot_list.get(r.nextInt(loot_list.size()));
+        return ret.copy(); 
     }
 
-    private ItemStack getFishedStack(AbstractDog dog, Item raw_item) {
-        var raw_stack = new ItemStack(raw_item);
+    private ItemStack getFishedStack(AbstractDog dog, ItemStack raw_stack) {
         raw_stack = mayCookFish(dog, raw_stack);
         return raw_stack;
     }
