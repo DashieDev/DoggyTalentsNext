@@ -72,6 +72,7 @@ public final class PacketHandler {
         registerPacket(new GatePasserPacket(), GatePasserData.class);
         registerPacket(new DogSyncDataPacket(), DogSyncData.class);
         registerPacket(new DogExplosionPacket(), DogExplosionData.class);
+        registerPacket(new FisherDogPacket(), FisherDogData.class);
 
         //Fabric
         registerPacket(new FabricSyncAllPacket(), FabricSyncAllData.class);

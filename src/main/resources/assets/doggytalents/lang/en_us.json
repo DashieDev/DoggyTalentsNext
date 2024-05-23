@@ -343,6 +343,7 @@
    "talent.doggytalents.pack_puppy.collect_kill_loot": "Collect Kill Loot",
    "talent.doggytalents.pack_puppy.collect_kill_loot.desc": "This option only take effect if Pickup Nearby Items is true. When You or your other Dogs kill an entity and cause it to drop something, it will run towards that entity and collect the loot.",
    "talent.doggytalents.rescue_dog.render_box": "Render Box",
+   "talent.doggytalents.fisher_dog.render_hat": "Render Fisher Hat",
    "talent.doggytalents.sniffer_dog.notify_owner.0.near": "%s: Hey, come check this out! I think I found something! It is VERY CLOSE!",
    "talent.doggytalents.sniffer_dog.notify_owner.0.mid": "%s: Hey, come check this out! I think I found something! It is a bit further away.",
    "talent.doggytalents.sniffer_dog.notify_owner.0.far": "%s: Uhm hey, come check this out! I think I found something! Although it is quite far away!",
