@@ -30,12 +30,14 @@ import doggytalents.common.network.packet.data.CreeperSweeperData;
 import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.network.packet.data.DoggyTorchData;
+import doggytalents.common.network.packet.data.FisherDogData;
 import doggytalents.common.network.packet.data.GatePasserData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.network.packet.data.RescueDogRenderData;
 import doggytalents.common.talent.CreeperSweeperTalent;
 import doggytalents.common.talent.DoggyTorchTalent;
+import doggytalents.common.talent.FisherDogTalent;
 import doggytalents.common.talent.GatePasserTalent;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.talent.RescueDogTalent;
@@ -336,6 +338,31 @@ public class TalentInfoViewElement extends AbstractElement {
                         }     
                     ),
                     I18n.get("talent.doggytalents.creeper_sweeper.only_attack_creeper")
+                )
+                .init()
+            );
+        } else if (talent == DoggyTalents.FISHER_DOG.get()) {
+            var talentInstOptional = dog.getTalent(DoggyTalents.FISHER_DOG);
+            if (!talentInstOptional.isPresent())
+                return;
+            var talentInst = talentInstOptional.get();
+            if (!(talentInst instanceof FisherDogTalent fisher))
+                return;
+            container.addChildren(
+                new ButtonOptionEntry(container, getScreen(), 
+                    new FlatButton(
+                        0, 0,
+                        40, 20, Component.literal("" + fisher.renderHat()), 
+                        b -> {
+                            Boolean newVal = !fisher.renderHat();
+                            b.setMessage(Component.literal("" + newVal));
+                            fisher.setRenderHat(newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new FisherDogData(
+                                dog.getId(), newVal
+                            ));
+                        }     
+                    ),
+                    I18n.get("talent.doggytalents.fisher_dog.render_hat")
                 )
                 .init()
             );

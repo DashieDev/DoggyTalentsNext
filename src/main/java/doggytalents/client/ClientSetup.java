@@ -14,6 +14,7 @@ import doggytalents.client.entity.model.DogBackpackModel;
 import doggytalents.client.entity.model.DogFrontLegsSeperate;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.DogRescueModel;
+import doggytalents.client.entity.model.FisherDogModel;
 import doggytalents.client.entity.model.SyncedRenderFunctionWithHeadModel;
 import doggytalents.client.entity.model.TorchDogModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
@@ -90,6 +91,7 @@ import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.client.entity.render.DoggyBeamRenderer;
 import doggytalents.client.entity.render.layer.DogMouthItemRenderer;
 import doggytalents.client.entity.render.layer.DogWolfArmorRenderer;
+import doggytalents.client.entity.render.layer.FisherDogRenderer;
 import doggytalents.client.entity.render.layer.PackPuppyRenderer;
 import doggytalents.client.entity.render.layer.RescueDogRenderer;
 import doggytalents.client.entity.render.layer.TorchDogRenderer;
@@ -193,7 +195,8 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_RESCUE_BOX = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_rescue_box"), "main");
     public static final ModelLayerLocation DOG_SYNCED_FUNCTION_WITH_HEAD = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_mouth_item"), "main");
     public static final ModelLayerLocation DOG_TORCHIE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_torchie"), "main");
-    
+    public static final ModelLayerLocation DOG_FISHER_HAT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_fisher_hat"), "main");
+
     public static final ModelLayerLocation DOG_NULL = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_null"), "main");
 
     public static final ModelLayerLocation PIANO = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "piano"), "main");
@@ -285,7 +288,8 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_RESCUE_BOX, DogRescueModel::createRescueBoxLayer);
         event.registerLayerDefinition(DOG_SYNCED_FUNCTION_WITH_HEAD, SyncedRenderFunctionWithHeadModel::createLayer);
         event.registerLayerDefinition(DOG_TORCHIE, TorchDogModel::createLayer);
-        
+        event.registerLayerDefinition(DOG_FISHER_HAT, FisherDogModel::createLayer);
+
         event.registerLayerDefinition(DOG_NULL, NullDogModel::createBodyLayer);
 
         event.registerLayerDefinition(PIANO, GrandPianoModel::creatPianoLayer);
@@ -338,6 +342,7 @@ public class ClientSetup {
         CollarRenderManager.registerLayer(AccessoryModelRenderer::new);
         CollarRenderManager.registerLayer(DogMouthItemRenderer::new);
         CollarRenderManager.registerLayer(TorchDogRenderer::new);
+        CollarRenderManager.registerLayer(FisherDogRenderer::new);
     }
 
     public static void registerOverlay(RegisterGuiLayersEvent e) {
