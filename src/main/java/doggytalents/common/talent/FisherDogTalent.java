@@ -8,6 +8,11 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.network.packet.data.FisherDogData;
+import doggytalents.common.util.TagUtil;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
@@ -19,6 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class FisherDogTalent extends TalentInstance {
 
     private int cookCooldown = 10;
+    private boolean renderHat = true;
 
     public FisherDogTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -101,4 +107,55 @@ public class FisherDogTalent extends TalentInstance {
             return fish_raw;
         return resultStack.copy();
     }
+
+    @Override
+    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.readFromNBT(dogIn, compound);
+
+        this.renderHat = compound.getBoolean("renderHat");
+    }
+
+    @Override
+    public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.writeToNBT(dogIn, compound);
+
+        compound.putBoolean("renderHat", renderHat);
+    }
+
+    @Override
+    public void writeToBuf(FriendlyByteBuf buf) {
+        super.writeToBuf(buf);
+        buf.writeBoolean(renderHat);
+    }
+
+    @Override
+    public void readFromBuf(FriendlyByteBuf buf) {
+        super.readFromBuf(buf);
+        renderHat = buf.readBoolean();
+    }
+
+    @Override
+    public void updateOptionsFromServer(TalentInstance fromServer) {
+        if (!(fromServer instanceof FisherDogTalent fish))
+            return;
+        this.setRenderHat(fish.renderHat);
+    }
+
+    public void updateFromPacket(FisherDogData data) {
+        this.renderHat = data.val;
+    }
+
+    @Override
+    public TalentInstance copy() {
+        var ret = super.copy();
+        if (!(ret instanceof FisherDogTalent fish))
+            return ret;
+        fish.setRenderHat(this.renderHat);
+        return fish;
+    }
+
+    public boolean canRenderHat() { return this.level() >= this.getTalent().getMaxLevel(); }
+    public boolean renderHat() { return this.renderHat; }
+    public void setRenderHat(boolean hat) { this.renderHat = hat; }    
+
 }
