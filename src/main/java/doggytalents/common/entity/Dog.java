@@ -1053,13 +1053,16 @@ public class Dog extends AbstractDog {
         int sit_interval = this.tickCount - this.lastOrderedToSitTick;
         float r = this.getRandom().nextFloat();
 
-        if (!this.level().isClientSide && this.isOrderedToSit() 
+        if (!this.level().isClientSide && this.isOrderedToSit()
+            && this.isInSittingPose()
             && checkRandomBackflip(r, sit_interval)
             && this.level().getBlockState(this.blockPosition().above()).isAir()) {
+                
             this.setStandAnim(DogAnimation.NONE);
             this.setInSittingPose(false);
             this.triggerAnimationAction(new DogBackFlipAction(this));
         }
+
         if (!this.level().isClientSide && !this.isOrderedToSit()) {
             this.lastOrderedToSitTick = this.tickCount;
         }
