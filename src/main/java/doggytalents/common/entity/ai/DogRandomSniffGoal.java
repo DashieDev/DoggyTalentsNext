@@ -273,6 +273,11 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         boolean invalidated = false;
         if (sniffAtPos == null)
             invalidated = true;
+        
+        if (!invalidated) {
+            if (dog.distanceToSqr(Vec3.atBottomCenterOf(sniffAtPos)) > 4)
+                invalidated = true; 
+        }
 
         if (!invalidated) {
             var newAtState = dog.level().getBlockState(sniffAtPos);
