@@ -15,21 +15,22 @@ import net.minecraft.world.item.ItemStack;
 
 public class FoodHandler {
 
-    private static final List<IDogFoodHandler> HANDLERS = Collections.synchronizedList(new ArrayList<>(4));
-    private static final List<IDogFoodPredicate> DYN_PREDICATES = Collections.synchronizedList(new ArrayList<>(2));
-
-    public static void registerHandler(IDogFoodHandler handler) {
-        HANDLERS.add(handler);
-    }
-
-    public static void registerDynPredicate(IDogFoodPredicate handler) {
-        DYN_PREDICATES.add(handler);
+    private static final List<IDogFoodHandler> commonHandlers = new ArrayList<>(4);
+    
+    public static synchronized void registerHandler(IDogFoodHandler handler) {
+        commonHandlers.add(handler);
     }
 
     public static Optional<IDogFoodPredicate> isFood(ItemStack stackIn) {
-        for (IDogFoodPredicate predicate : DYN_PREDICATES) {
-            if (predicate.isFood(stackIn)) {
-                return Optional.of(predicate);
+        return isFood(stackIn, null);
+    }
+
+    public static Optional<IDogFoodPredicate> isFood(ItemStack stackIn, @Nullable AbstractDog dog) {
+        if (dog != null) {
+            for (var handler : dog.getFoodHandlers()) {
+                if (!handler.isFood(stackIn))
+                    continue;
+                return Optional.of(handler);
             }
         }
 
@@ -39,7 +40,7 @@ public class FoodHandler {
             }
         }
 
-        for (IDogFoodHandler handler : HANDLERS) {
+        for (IDogFoodHandler handler : commonHandlers) {
             if (handler.isFood(stackIn)) {
                 return Optional.of(handler);
             }
@@ -66,7 +67,7 @@ public class FoodHandler {
             }
         }
 
-        for (IDogFoodHandler handler : HANDLERS) {
+        for (IDogFoodHandler handler : commonHandlers) {
             if (handler.canConsume(dogIn, stackIn, entityIn)) {
                 return Optional.of(handler);
             }

@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.EnumSet;
+import java.util.Optional;
 
 public class DogBegGoal extends Goal {
 
@@ -87,11 +88,7 @@ public class DogBegGoal extends Goal {
                 return true;
             }
 
-            if (FoodHandler.isFood(itemstack).isPresent()) {
-                return true;
-            }
-
-            if (this.dog.isFood(itemstack)) {
+            if (FoodHandler.isFood(itemstack, this.dog).isPresent()) {
                 return true;
             }
         }
