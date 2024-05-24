@@ -1,6 +1,8 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.inferface.IDogItem;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.Dog;
@@ -27,9 +29,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
-public class DoggyCharmItem extends Item {
+public class DoggyCharmItem extends Item implements IDogItem {
 
     public DoggyCharmItem(Properties properties) {
         super(properties);
@@ -48,6 +52,9 @@ public class DoggyCharmItem extends Item {
             BlockState iblockstate = world.getBlockState(blockpos);
 
             if (player == null)
+                return InteractionResult.SUCCESS;
+
+            if (player.isShiftKeyDown())
                 return InteractionResult.SUCCESS;
 
             if (!EventHandler.isWithinTrainWolfLimit(player))
@@ -87,6 +94,9 @@ public class DoggyCharmItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
+        if (playerIn.isShiftKeyDown())
+            return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
+        
         if (worldIn.isClientSide || !(worldIn instanceof ServerLevel)) {
             return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
         } else {
@@ -128,5 +138,32 @@ public class DoggyCharmItem extends Item {
                 return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
             }
         }
+    }
+
+    @Override
+    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player player,
+            InteractionHand handIn) {
+        if (!(dogIn instanceof Dog dog))
+            return InteractionResult.FAIL;
+        if (!player.isCreative())
+            return InteractionResult.FAIL;
+        if (!player.isShiftKeyDown())
+            return InteractionResult.FAIL;
+        if (!dog.canInteract(player))
+            return InteractionResult.FAIL;
+        var complsList = Arrays.asList(ClassicalVar.getCompls());
+        if (complsList.isEmpty())
+            return InteractionResult.FAIL;
+        
+        if (dog.level().isClientSide)
+            return InteractionResult.SUCCESS;
+        
+        var current_indx = complsList.indexOf(dog.getClassicalVar());
+        int next_indx = 0;
+        if (current_indx >= 0)
+            next_indx = (current_indx + 1) % complsList.size();
+        var next_compl = complsList.get(next_indx);
+        dog.setClassicalVar(next_compl);
+        return InteractionResult.SUCCESS;
     }
 }
