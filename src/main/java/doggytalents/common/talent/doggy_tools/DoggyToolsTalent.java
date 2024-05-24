@@ -388,16 +388,21 @@ public class DoggyToolsTalent extends TalentInstance  {
                 return;
 
             var arrow = arrowOptional.get();
-            final double aim_y_offset_l_xz_influence = 0.07;
+            final double aim_y_offset_l_xz_influence = 0.2;
+            final double aim_y_offset_l_xz_influence_down = 0.1;
     
             double dx = target.getX() - dog.getX();
             double dz = target.getZ() - dog.getZ();
             double l_xz = Math.sqrt(dx * dx + dz * dz);
     
             double aim_y = target.getY()
-                + 0.5 * target.getBbHeight()
-                + l_xz * aim_y_offset_l_xz_influence; 
+                + 0.5 * target.getBbHeight(); 
             double dy = aim_y - arrow.getY();
+            if (dy > 0) {
+                dy += l_xz * aim_y_offset_l_xz_influence;
+            } else {
+                dy += l_xz * aim_y_offset_l_xz_influence_down;
+            }
             
             double shoot_dir_x = dx;
             double shoot_dir_y = dy;
