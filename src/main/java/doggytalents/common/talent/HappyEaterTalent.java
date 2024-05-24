@@ -16,11 +16,6 @@ import net.minecraft.world.item.Items;
 
 public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler {
 
-    public static final IDogFoodPredicate INNER_DYN_PRED = (stackIn) -> {
-        Item item = stackIn.getItem();
-        return (ItemUtil.isEddible(stackIn) && stackIn.is(ItemTags.FISHES));
-    };
-
     public HappyEaterTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
     }
@@ -33,7 +28,11 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
 
     @Override
     public boolean isFood(ItemStack stackIn) {
-        return HappyEaterTalent.INNER_DYN_PRED.isFood(stackIn);
+        if (this.level() < 2)
+            return false;
+        if (!ItemUtil.isEddible(stackIn))
+            return false;
+        return stackIn.is(ItemTags.FISHES);
     }
 
     @Override
