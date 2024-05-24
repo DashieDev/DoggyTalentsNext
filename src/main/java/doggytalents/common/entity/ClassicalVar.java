@@ -33,12 +33,17 @@ public enum ClassicalVar {
     HIMALAYAN_SALT(11, "himalayan_salt", true);
 
     private final int idInt;
+    private final boolean isCompl;
     private final ResourceLocation id;
     private final ResourceLocation textureLoc;
     private final ResourceLocation vanillaTextureLoc;
     private final ResourceLocation iconLoc;
     private final String translationKey;
     private static final ClassicalVar[] VALUES = ClassicalVar.values();
+    private static final ClassicalVar[] COMPLS = 
+        Arrays.stream(VALUES)
+            .filter(x -> x.isCompl)
+            .toArray(ClassicalVar[]::new);
     private static final Map<ResourceLocation, ClassicalVar> idMap = 
         Arrays.stream(VALUES)
             .collect(Collectors.toMap(toKey -> toKey.id, toVal -> toVal));
@@ -68,6 +73,7 @@ public enum ClassicalVar {
         this.textureLoc = createTextureLoc(name, is_compl);
         this.translationKey = createTranslationKey(name, is_compl);
         this.iconLoc = createIconLoc(name, is_compl);
+        this.isCompl = is_compl;
         
         //TODO Insert vanilla provided texture here.
         this.vanillaTextureLoc = textureLoc;
@@ -145,6 +151,10 @@ public enum ClassicalVar {
         var vals = ClassicalVar.values();
         int r = dog.getRandom().nextInt(vals.length);
         return vals[r];
+    }
+
+    public static ClassicalVar[] getCompls() {
+        return COMPLS;
     }
      
     public static Map<ClassicalVar, Integer> COLOR_MAP = 
