@@ -1312,6 +1312,8 @@ non-hellhound dog to get cooked fish.
     + New Ultimate Form! Your dog will wear a cute little hat!
     + Your dog now has the ability to fish up treasure loot!
 
++ New Skin Variant! : Ranga.
+
 ==================
 
 #Improve Dog Navigation.
