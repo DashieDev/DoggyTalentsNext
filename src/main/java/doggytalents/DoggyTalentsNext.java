@@ -106,6 +106,7 @@ public class DoggyTalentsNext {
         forgeEventBus.addListener(VSCodeWolfSpawnHandler::onRightClickBlock);
 
         forgeEventBus.register(new EventHandler());
+        forgeEventBus.register(new ChopinLogger());
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(DoggyKeybinds::registerDTKeyMapping);
