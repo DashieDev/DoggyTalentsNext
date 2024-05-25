@@ -174,7 +174,8 @@ public class DogRangedAttackGoal extends Goal {
             flyAndShootTarget(target, d_dog_target_sqr, can_see_target);
         } else {
             boolean can_shoot_target = 
-                d_dog_target_sqr <= (double)(this.attackRadius * this.attackRadius);
+                d_dog_target_sqr <= (double)(this.attackRadius * this.attackRadius)
+                && seeTime >= -40;
             if (!can_shoot_target) {
                 chaseTarget(target);
             } else {
