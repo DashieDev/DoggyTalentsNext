@@ -175,7 +175,7 @@
             "use_model" : "iwanko",
             "based_on" : "Rockruff from Pokemon Gen 7",
             "author" : "MashXP, DashieDev",
-            "tags" : "pokemon"
+            "tags" : "pokemon ,classical"
         },
         {
             "skin_name" : "Houndstone (Hakadoggu)",
@@ -183,7 +183,7 @@
             "use_model" : "houndstone",
             "based_on" : "Houndstone from Pokemon Gen 9",
             "author" : "MashXP",
-            "tags" : "pokemon"
+            "tags" : "pokemon anime"
         },
         {
             "skin_name" : "Cheems",
@@ -191,7 +191,7 @@
             "use_model" : "kusa_ume",
             "based_on" : "In honor of Baltze, the popular Shiba Inu. *bonk*",
             "author" : "MashXP, DashieDev",
-            "tags" : "shiba, meme"
+            "tags" : "shiba, meme ,classical"
         },
         {
             "skin_name" : "Grey Wolf",
@@ -210,7 +210,7 @@
             "use_model" : "legoshi",
             "based_on" : "Legoshi from Beastars",
             "author" : "MashXP, DashieDev",
-            "tags" : "beastars"
+            "tags" : "beastars anime classical"
         },
         {
             "skin_name" : "Jack",
@@ -218,7 +218,7 @@
             "use_model" : "jack",
             "based_on" : "Jack from Beastars",
             "author" : "MashXP, DashieDev",
-            "tags" : "beastars"
+            "tags" : "beastars anime classical"
         },
         {
             "skin_name" : "Juno",
@@ -226,13 +226,14 @@
             "use_model" : "juno",
             "based_on" : "Juno from Beastars",
             "author" : "MashXP, DashieDev",
-            "tags" : "beastars"
+            "tags" : "beastars anime classical"
         },
         {
             "skin_name" : "St Bernard",
             "skin_id" : "st_bernard",
             "use_model" : "st_bernard",
-            "author" : "MashXP, DashieDev"
+            "author" : "MashXP, DashieDev",
+            "tags" : "classical"
         },
         {
             "skin_name" : "German Shepherd (Legacy)",
@@ -285,7 +286,8 @@
             "skin_id" : "pochita",
             "use_model" : "pochita",
             "based_on" : "Pochita from Chainsaw Man",
-            "author" : "MashXP"
+            "author" : "MashXP",
+            "tags" : "anime"
         },
         {
             "skin_name" : "Pug #1",
@@ -501,7 +503,7 @@
             "use_model" : "lucario",
             "based_on" : "Lucario from Pokemon",
             "author" : "MashXP, DashieDev",
-            "tags" :"pokemon"
+            "tags" :"pokemon anime"
         },
         {
             "skin_name" : "Akita Inu (Legacy)",
@@ -624,7 +626,8 @@
             "skin_id" : "death",
             "use_model" : "death",
             "based_on" : "Death from Puss In Boots : The Last Wish",
-            "author" : "MashXP, DashieDev"
+            "author" : "MashXP, DashieDev",
+            "tags" :"cartoon classical"            
         },
         {
             "skin_name" : "Racoon",
@@ -712,7 +715,7 @@
             "use_model" : "bolt",
             "author" : "MashXP",
             "based_on" : "Bolt from Bolt (2008) - Disney Films.",
-            "tags" : "cartoon"
+            "tags" : "cartoon classical"
         },
         {
             "skin_name" : "Sparky",
