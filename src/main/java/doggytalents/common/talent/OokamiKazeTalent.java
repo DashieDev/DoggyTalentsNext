@@ -16,6 +16,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogGunpowderProjectile;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
+import doggytalents.common.event.EventHandler;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogExplosionData;
 import net.minecraft.core.particles.ParticleTypes;
@@ -335,7 +336,7 @@ public class OokamiKazeTalent extends TalentInstance {
                     continue;
                 // if (e.ignoreExplosion())
                 //     continue;
-                if (e instanceof LivingEntity living && isAlliedToDog(living, owner)) {
+                if (e instanceof LivingEntity living && EventHandler.isAlliedToDog(living, owner)) {
                     lightlyKnockback(owner, e, ext_radius);
                     continue;
                 }
@@ -406,23 +407,6 @@ public class OokamiKazeTalent extends TalentInstance {
             e.hurt(e.damageSources().explosion(dog, owner), (float) hurt_amount);
 
             knockbackEntity(dog_pos, e, this.knockbackModifier * impact_value);
-        }
-
-        private boolean isAlliedToDog(LivingEntity entity, LivingEntity owner) {
-            if (owner == null || entity == null)
-                return false;
-            if (entity instanceof TamableAnimal otherDog) {
-                entity = otherDog.getOwner();
-            }
-            if (owner == entity)
-                return true;
-            if (owner.isAlliedTo(entity))
-                return true;
-            if (entity instanceof Player player) {
-                if (ConfigHandler.SERVER.ALL_PLAYER_CANNOT_ATTACK_DOG.get())
-                    return true;
-            }
-            return false;
         }
 
     }

@@ -335,12 +335,14 @@ public class EventHandler {
         return true;
     }
 
-    private boolean isAlliedToDog(LivingEntity entity, LivingEntity owner) {
+    public static boolean isAlliedToDog(LivingEntity entity, LivingEntity owner) {
         if (owner == null || entity == null)
             return false;
         if (entity instanceof TamableAnimal otherDog) {
             entity = otherDog.getOwner();
         }
+        if (entity == null)
+            return false;
         if (owner == entity)
             return true;
         if (owner.isAlliedTo(entity))
