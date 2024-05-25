@@ -32,6 +32,7 @@ import doggytalents.client.entity.model.dog.ArcanineModel;
 import doggytalents.client.entity.model.dog.BassetHoundModel;
 import doggytalents.client.entity.model.dog.BelgianMalinoisModel;
 import doggytalents.client.entity.model.dog.BichonMaltaisModel;
+import doggytalents.client.entity.model.dog.BoltModel;
 import doggytalents.client.entity.model.dog.BorzoiLongModel;
 import doggytalents.client.entity.model.dog.BorzoiModel;
 import doggytalents.client.entity.model.dog.BoxerFloppyModel;
@@ -189,6 +190,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_POINTER_WIRE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "german_pointer_wirehaired"), "main");
     public static final ModelLayerLocation DOG_SAMOYED = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "samoyed"), "main");
     public static final ModelLayerLocation RANGA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ranga"), "main");
+    public static final ModelLayerLocation BOLT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "bolt"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_ARMOR_LEGACY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor_legacy");
@@ -283,6 +285,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_POINTER_WIRE, GermanPointerWirehaired::createBodyLayer);
         event.registerLayerDefinition(DOG_SAMOYED, SamoyedModel::createBodyLayer);
         event.registerLayerDefinition(RANGA, RangaModel::createBodyLayer);
+        event.registerLayerDefinition(BOLT, BoltModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ARMOR_LEGACY, DogArmorModel::createLegacyLayer);
