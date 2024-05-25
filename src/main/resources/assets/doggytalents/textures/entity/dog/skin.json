@@ -707,6 +707,14 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Bolt",
+            "skin_id" : "bolt",
+            "use_model" : "bolt",
+            "author" : "MashXP",
+            "based_on" : "Bolt from Bolt (2008) - Disney Films.",
+            "tags" : "cartoon"
+        },
+        {
             "skin_name" : "Sparky",
             "skin_id" : "sparky",
             "use_model" : "sparky",
