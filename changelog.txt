@@ -1293,3 +1293,42 @@ and compatible with Wolf Armor.
 * Fix Dog Horzontal Danger detection mechanic
 * Fix dog cannot Heal by Saturation when Hunger is disabled.
 * Fix Dog ocassionaly stand up and stay still after owner logged out.
+
+**1.18.13 - 24th March 2024**
+==================
+
+## The Wolf Variant Triplet of DTN!
+
++ Cherry Wolf - Spawns in Cherry Grove
++ Himalayan Salt Wolf - Spawns in Jagged Peak
++ Lemony Lime Wolf -Spawns in Beaches
+
++ All above variants have a spawn rate the same as Snowy (with spawn weight of 1 and max pack size of 1) making them also very rare!
+
+# Fisher Dog Talent:
++ Dog no longer query the FISHES tag which includes cooked fish causing
+non-hellhound dog to get cooked fish.
++ When Maxing the Talent:
+    + New Ultimate Form! Your dog will wear a cute little hat!
+    + Your dog now has the ability to fish up treasure loot!
+
+==================
+
+#Improve Dog Navigation.
+#Improve Hellhound attack while in Lava.
+#Improve Doggy Tools Ranged attack.
+#Dogs no longer prioritize skeletons when in Berserker Mode.
+#Dogs will avoid Powdered Snow.
+
+==================
+
+* Fix and Improve: Dogs don't run away while in fire.
+* HOTFIX: Canine Tracker can only be used once.
+* Fix: Normal Dogs can't Freeze, while Hellhound can.
+* Fix: Normal Dogs can breathe underwater, while Swimmer Dogs can't. 
+* Fix: Injured Swimmer Dogs don't float.
+* Fix: Sit Animation flickers.
+* Fix: Dog will go and sniff area outside of zone restricted by Wandering/Patrol Mode.
+* Fix: Dog backflip underwater.
+* Fix: Dog beg for Fish despite not having Happy Eater.
+* Fix: Game crashes when Dog tries to attack Tameable Mobs.
