@@ -144,6 +144,7 @@ public class EventHandler {
             stack.shrink(1);
         }
 
+        tameWolfIfNeccessary(wolf, trainer);
         rotateWolfIfNecceassary(wolf, yHeadRot, yBodyRot);
         trainWolf(wolf, trainer, level);
     }
@@ -183,6 +184,14 @@ public class EventHandler {
             return false;
         
         return true;
+    }
+
+    public static void tameWolfIfNeccessary(Wolf wolf, Player owner) {
+        //Using training treat to convert a vanilla wolf to DTN wolf
+        //also counts as taming that wolf.
+        if (wolf.isTame())
+            return;
+        wolf.tame(owner);
     }
 
     public static void trainWolf(Wolf wolf, Player owner, Level level) {
