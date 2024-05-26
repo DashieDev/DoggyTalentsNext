@@ -471,6 +471,20 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Norfolk Terrier",
+            "skin_id" : "norfolk_terrier",
+            "use_model" : "norfolk_terrier",
+            "author" : "MashXP",
+            "tags" : "classical"
+        },
+        {
+            "skin_name" : "Norfolk Terrier #2",
+            "skin_id" : "norfolk_terrier_2",
+            "use_model" : "norfolk_terrier",
+            "author" : "MashXP",
+            "tags" : "classical"
+        },
+        {
             "skin_name" : "Rottweiler",
             "skin_id" : "rottweiler",
             "use_model" : "default"
