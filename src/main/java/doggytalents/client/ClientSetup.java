@@ -59,6 +59,7 @@ import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.client.entity.model.dog.MiniaturePinscherModel;
+import doggytalents.client.entity.model.dog.NorfolkTerrierModel;
 import doggytalents.client.entity.model.dog.NullDogModel;
 import doggytalents.client.entity.model.dog.OtterModel;
 import doggytalents.client.entity.model.dog.PochitaModel;
@@ -191,6 +192,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_SAMOYED = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "samoyed"), "main");
     public static final ModelLayerLocation RANGA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ranga"), "main");
     public static final ModelLayerLocation BOLT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "bolt"), "main");
+    public static final ModelLayerLocation DOG_NORFOLK_TERRIER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "norfolk_terrier"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_ARMOR_LEGACY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor_legacy");
@@ -286,6 +288,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_SAMOYED, SamoyedModel::createBodyLayer);
         event.registerLayerDefinition(RANGA, RangaModel::createBodyLayer);
         event.registerLayerDefinition(BOLT, BoltModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_NORFOLK_TERRIER, NorfolkTerrierModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ARMOR_LEGACY, DogArmorModel::createLegacyLayer);
