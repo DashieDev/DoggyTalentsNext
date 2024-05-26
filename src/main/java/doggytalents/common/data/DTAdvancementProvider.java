@@ -5,14 +5,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.DoggyEntitySubPredicates.RawWolfVariantIdSubPredicate;
 import doggytalents.common.advancements.triggers.DogBandaidApplyTrigger;
 import doggytalents.common.advancements.triggers.DogDrunkTrigger;
 import doggytalents.common.advancements.triggers.DogRecoveredTrigger;
 import doggytalents.common.advancements.triggers.OokamikazeTrigger;
+import doggytalents.common.item.DoggyCharmItem;
 import doggytalents.common.util.DogBedUtil;
 import doggytalents.common.util.Util;
+import doggytalents.common.variants.DTNWolfVariants;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
@@ -28,8 +32,10 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.data.PackOutput;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.WolfVariants;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -190,6 +196,8 @@ public class DTAdvancementProvider extends AdvancementProvider {
                         DogRecoveredTrigger.getCriterion(true)
                     )
                 .save(consumer, Util.getResourcePath("default/dog_recovered_special"));
+
+            addOssiaWolfVariantsAdvancement(consumer, registries);
             // Old Advancement.
 
             // Advancement advancement = Advancement.Builder.advancement()
@@ -230,5 +238,51 @@ public class DTAdvancementProvider extends AdvancementProvider {
             Blocks.RED_WOOL
             : Blocks.WHITE_WOOL;
         return DogBedUtil.createItemStackForced(casing, bedding);
+    }
+
+    private static void addOssiaWolfVariantsAdvancement(Consumer<AdvancementHolder> consumer, HolderLookup.Provider prov) {
+        final var ossia_variant_set = List.of(
+            WolfVariants.CHESTNUT,
+            WolfVariants.STRIPED,
+            WolfVariants.RUSTY,
+            WolfVariants.WOODS,
+            DTNWolfVariants.HIMALAYAN_SALT, // Ossia for WolfVariants.ASHEN
+            DTNWolfVariants.CHERRY, // Ossia for WolfVariants.SNOWY
+            DTNWolfVariants.LEMONY_LIME, // Ossia for WolfVariants.SPOTTED
+            WolfVariants.BLACK,
+            WolfVariants.PALE
+        );
+
+        var builder = Advancement.Builder.advancement();
+        for (var ossia : ossia_variant_set) {
+            builder.addCriterion(
+                ossia.location().toString(),
+                TameAnimalTrigger.TriggerInstance.tamedAnimal(
+                    EntityPredicate.Builder.entity().subPredicate(
+                        RawWolfVariantIdSubPredicate.of(ossia)
+                    )
+                )
+            );
+        }
+
+        var parent_advancement_path = 
+            new ResourceLocation("husbandry/tame_an_animal");
+        builder.parent(new AdvancementHolder(parent_advancement_path, null));
+        
+        var display_stack = new ItemStack(DoggyItems.DOGGY_CHARM.get());
+        DoggyCharmItem.setCharmForcedGlint(display_stack, true);
+
+        builder.display(
+            display_stack,
+            Component.translatable("advancements.doggytalents.whole_pack_ossia.title"),
+            Component.translatable("advancements.husbandry.whole_pack.description"),
+            null,
+            AdvancementType.CHALLENGE,
+            true,
+            true,
+            false
+        );
+        builder.rewards(AdvancementRewards.Builder.experience(50));
+        builder.save(consumer, Util.getResourcePath("default/whole_pack_ossia"));
     }
 }
