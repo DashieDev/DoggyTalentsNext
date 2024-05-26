@@ -7,6 +7,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -165,5 +166,24 @@ public class DoggyCharmItem extends Item implements IDogItem {
         var next_compl = complsList.get(next_indx);
         dog.setClassicalVar(next_compl);
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return isCharmForcedGlint(stack) || super.isFoil(stack);
+    }
+
+    public static boolean isCharmForcedGlint(ItemStack stack) {
+        return ItemUtil.getWrappedTag(stack).contains("dtn_charm_forced_glint");
+    }
+
+    public static void setCharmForcedGlint(ItemStack stack, boolean glint) {
+        ItemUtil.modifyTag(stack, tg -> {
+            if (glint) {
+                tg.putBoolean("dtn_charm_forced_glint", true);
+            } else {
+                tg.remove("dtn_charm_forced_glint");
+            }
+        });
     }
 }
