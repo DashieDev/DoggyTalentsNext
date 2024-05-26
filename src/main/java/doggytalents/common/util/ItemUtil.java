@@ -141,4 +141,9 @@ public class ItemUtil {
             return Optional.empty();
         return Optional.ofNullable(stack.get(DataComponents.TRIM));
     }
+
+    public static CustomData getWrappedTag(ItemStack stack) {
+        var custom_data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        return custom_data;
+    }
 }
