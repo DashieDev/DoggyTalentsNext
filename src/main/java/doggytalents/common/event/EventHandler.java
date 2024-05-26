@@ -195,7 +195,8 @@ public class EventHandler {
         if (dog == null) {
             throw new IllegalStateException("Creator function for the dog returned \"null\"");
         }
-        dog.tame(owner);
+        dog.setTame(true, true);
+        dog.setOwnerUUID(owner.getUUID());
         dog.maxHealth();
         dog.setOrderedToSit(false);
         dog.setAge(wolf.getAge());
