@@ -90,7 +90,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(Items.BONE)
             .requires(Items.GUNPOWDER)
             .requires(Items.SUGAR)
-            .requires(DoggyItems.RICE_BOWL.get())
+            .requires(DoggyItems.UNCOOKED_RICE.get())
             .unlockedBy("has_dtn_rice_grains", has(DoggyItems.RICE_GRAINS.get()))
             .save(consumer);
             
