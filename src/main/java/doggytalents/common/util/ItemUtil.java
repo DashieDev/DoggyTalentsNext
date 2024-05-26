@@ -145,4 +145,9 @@ public class ItemUtil {
     public static FoodProperties food(ItemStack stack) {
         return stack.get(DataComponents.FOOD);
     }
+    
+    public static CustomData getWrappedTag(ItemStack stack) {
+        var custom_data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        return custom_data;
+    }
 }
