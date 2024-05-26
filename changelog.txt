@@ -1306,7 +1306,7 @@ and compatible with Wolf Armor.
 * Fix dog cannot Heal by Saturation when Hunger is disabled.
 * Fix Dog ocassionaly stand up and stay still after owner logged out.
 
-**1.18.13 - 24th March 2024**
+**1.18.13 - 25th May 2024**
 ==================
 
 ## The Wolf Variant Triplet of DTN!
