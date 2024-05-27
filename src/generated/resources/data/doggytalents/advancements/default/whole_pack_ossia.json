@@ -1,6 +1,23 @@
 {
   "parent": "minecraft:husbandry/tame_an_animal",
   "criteria": {
+    "doggytalents:bamboo": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "doggytalents:wolf_raw_variant",
+                "variant": "doggytalents:bamboo"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    },
     "doggytalents:cherry": {
       "conditions": {
         "entity": [
@@ -103,23 +120,6 @@
       },
       "trigger": "minecraft:tame_animal"
     },
-    "minecraft:rusty": {
-      "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "doggytalents:wolf_raw_variant",
-                "variant": "minecraft:rusty"
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:tame_animal"
-    },
     "minecraft:striped": {
       "conditions": {
         "entity": [
@@ -181,7 +181,7 @@
       "minecraft:striped"
     ],
     [
-      "minecraft:rusty"
+      "doggytalents:bamboo"
     ],
     [
       "minecraft:woods"
@@ -203,7 +203,7 @@
     ]
   ],
   "rewards": {
-    "experience": 50
+    "experience": 400
   },
   "sends_telemetry_event": true
 }
