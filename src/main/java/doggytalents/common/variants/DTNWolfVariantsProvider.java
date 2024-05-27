@@ -41,6 +41,7 @@ public class DTNWolfVariantsProvider {
         registerCherryWolfModifier(ctx);
         registerLemonyLimeWolfModifier(ctx);
         registerHimalayanSaltWolfModifier(ctx);
+        registerBambooWolfModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
@@ -67,6 +68,21 @@ public class DTNWolfVariantsProvider {
             Biomes.JAGGED_PEAKS, 
             new MobSpawnSettings
                 .SpawnerData(EntityType.WOLF, 1, 1, 1)
+        );
+    }
+
+    private static void registerBambooWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_bamboo", 
+            Biomes.JUNGLE, 
+            new MobSpawnSettings
+                .SpawnerData(EntityType.WOLF, 1, 1, 1)
+        );
+        registerSingleSpawnModifier(
+            ctx, "wolf_bamboo_dedicated", 
+            Biomes.BAMBOO_JUNGLE,
+            new MobSpawnSettings
+                .SpawnerData(EntityType.WOLF, 60, 1, 1)
         );
     }
 
