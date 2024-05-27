@@ -45,7 +45,7 @@ public class DTNWolfVariantsProvider {
 
     private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
-            ctx, "cherry_wolf_spawn_modifier", 
+            ctx, "wolf_cherry", 
             Biomes.CHERRY_GROVE, 
             new MobSpawnSettings
                 .SpawnerData(EntityType.WOLF, 1, 1, 1)
@@ -54,7 +54,7 @@ public class DTNWolfVariantsProvider {
 
     private static void registerLemonyLimeWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
-            ctx, "lemony_lime_wolf_spawn_modifier", 
+            ctx, "wolf_lemony_lime", 
             Biomes.BEACH, 
             new MobSpawnSettings
                 .SpawnerData(EntityType.WOLF, 1, 1, 1)
@@ -63,7 +63,7 @@ public class DTNWolfVariantsProvider {
 
     private static void registerHimalayanSaltWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
-            ctx, "himalayan_salt_wolf_spawn_modifier", 
+            ctx, "wolf_himalayan_salt", 
             Biomes.JAGGED_PEAKS, 
             new MobSpawnSettings
                 .SpawnerData(EntityType.WOLF, 1, 1, 1)
