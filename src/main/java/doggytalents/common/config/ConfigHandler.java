@@ -259,6 +259,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.IntValue TRAIN_WOLF_LIMIT;
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
         public ForgeConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
+        public ForgeConfigSpec.BooleanValue WOLF_VARIANT_OVERRIDE_EXCLUSIVE;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -415,6 +416,20 @@ public class ConfigHandler {
                 .comment("the usual biomes.")
                 .translation("doggytalents.extended_wolves_spawnable_block")
                 .define("extended_wolves_spawnable_block", true);
+            WOLF_VARIANT_OVERRIDE_EXCLUSIVE = builder
+                .comment("Some vanilla Wolf Variants are bound to not one but a family of biome")
+                .comment("in which some of them they don't actually chunk-generated spawn on")
+                .comment("Allowing some of the DTN Wolf Variants in theory to override")
+                .comment("those biome without affecting the spawn chance of vanilla.")
+                .comment("For instance, Bamboo would override Rusty's chunk-generated/")
+                .comment("spawn-egg/summon spawn if the spawn happened specifically in the")
+                .comment("Bamboo Jungle Biome and because Rusty doesn't actually chunk-generated")
+                .comment("there (they only generate in Sparse Jungle), Bamboo wouldn't affect Rusty's")
+                .comment("spawn chance.")
+                .comment("Disable this if you prefer to keep the vanilla Wolf Variants bouned")
+                .comment("in those biomes previously mentioned instead of being overriden by DTN.")
+                .translation("doggytalents.wolf_variant_override_exclusive")
+                .define("wolf_variant_override_exclusive", true);
             
             builder.pop();
         }
