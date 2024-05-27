@@ -1,6 +1,8 @@
 package doggytalents.common.variants;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
@@ -10,6 +12,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
@@ -41,45 +44,58 @@ public class DTNWolfVariantsProvider {
     }
 
     private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
-        var cherry_wolf_spawn_id = ResourceKey.create(
-            NeoForgeRegistries.Keys.BIOME_MODIFIERS, 
-            Util.getResource("cherry_wolf_spawn_modifier")) ;
-        var cherry_wolf_spawn_biome = HolderSet.direct(
-            ctx.lookup(Registries.BIOME).getOrThrow(Biomes.CHERRY_GROVE)
+        registerSingleSpawnModifier(
+            ctx, "cherry_wolf_spawn_modifier", 
+            Biomes.CHERRY_GROVE, 
+            new MobSpawnSettings
+                .SpawnerData(EntityType.WOLF, 1, 1, 1)
         );
-        var cherry_wolf_spawner_data = new MobSpawnSettings
-            .SpawnerData(EntityType.WOLF, 1, 1, 1);
-        var cherry_wolf_spawn_modifier = BiomeModifiers.AddSpawnsBiomeModifier
-            .singleSpawn(cherry_wolf_spawn_biome, cherry_wolf_spawner_data);
-        ctx.register(cherry_wolf_spawn_id, cherry_wolf_spawn_modifier);
     }
 
     private static void registerLemonyLimeWolfModifier(BootstrapContext<BiomeModifier> ctx) {
-        var lemony_lime_wolf_spawn_id = ResourceKey.create(
-            NeoForgeRegistries.Keys.BIOME_MODIFIERS, 
-            Util.getResource("lemony_lime_wolf_spawn_modifier")) ;
-        var lemony_lime_wolf_spawn_biome = HolderSet.direct(
-            ctx.lookup(Registries.BIOME).getOrThrow(Biomes.BEACH)
+        registerSingleSpawnModifier(
+            ctx, "lemony_lime_wolf_spawn_modifier", 
+            Biomes.BEACH, 
+            new MobSpawnSettings
+                .SpawnerData(EntityType.WOLF, 1, 1, 1)
         );
-        var lemony_lime_wolf_spawner_data = new MobSpawnSettings
-            .SpawnerData(EntityType.WOLF, 1, 1, 1);
-        var lemony_lime_wolf_spawn_modifier = BiomeModifiers.AddSpawnsBiomeModifier
-            .singleSpawn(lemony_lime_wolf_spawn_biome, lemony_lime_wolf_spawner_data);
-        ctx.register(lemony_lime_wolf_spawn_id, lemony_lime_wolf_spawn_modifier);
     }
 
     private static void registerHimalayanSaltWolfModifier(BootstrapContext<BiomeModifier> ctx) {
-        var himalayan_salt_wolf_spawn_id = ResourceKey.create(
-            NeoForgeRegistries.Keys.BIOME_MODIFIERS, 
-            Util.getResource("himalayan_salt_wolf_spawn_modifier")) ;
-        var himalayan_salt_wolf_spawn_biome = HolderSet.direct(
-            ctx.lookup(Registries.BIOME).getOrThrow(Biomes.JAGGED_PEAKS)
+        registerSingleSpawnModifier(
+            ctx, "himalayan_salt_wolf_spawn_modifier", 
+            Biomes.JAGGED_PEAKS, 
+            new MobSpawnSettings
+                .SpawnerData(EntityType.WOLF, 1, 1, 1)
         );
-        var himalayan_salt_wolf_spawner_data = new MobSpawnSettings
-            .SpawnerData(EntityType.WOLF, 1, 1, 1);
-        var himalayan_salt_wolf_spawn_modifier = BiomeModifiers.AddSpawnsBiomeModifier
-            .singleSpawn(himalayan_salt_wolf_spawn_biome, himalayan_salt_wolf_spawner_data);
-        ctx.register(himalayan_salt_wolf_spawn_id, himalayan_salt_wolf_spawn_modifier);
+    }
+
+    private static void registerSingleSpawnModifier(BootstrapContext<BiomeModifier> ctx,
+        String name, ResourceKey<Biome> biome, MobSpawnSettings.SpawnerData spawner_data) {
+        
+        registerSingleSpawnModifier(ctx, name, List.of(biome), spawner_data);
+    }
+
+    private static void registerSingleSpawnModifier(BootstrapContext<BiomeModifier> ctx,
+        String name, List<ResourceKey<Biome>> biomes, MobSpawnSettings.SpawnerData spawner_data) {
+        
+        var spawn_id = ResourceKey.create(
+            NeoForgeRegistries.Keys.BIOME_MODIFIERS, 
+            Util.getResource(name));
+        
+        var biome_reg = ctx.lookup(Registries.BIOME);
+        var biome_holders = biomes.stream()
+            .map(x -> biome_reg.get(x))
+            .filter(x -> x.isPresent())
+            .map(x -> x.get())
+            .collect(Collectors.toList());
+        if (biome_holders.isEmpty())
+            return;
+        var spawn_biomes = HolderSet.direct(biome_holders);
+        var spawn_modifier = BiomeModifiers.AddSpawnsBiomeModifier
+            .singleSpawn(spawn_biomes, spawner_data);
+        
+        ctx.register(spawn_id, spawn_modifier);
     }
 
 }
