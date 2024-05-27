@@ -242,7 +242,7 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
         final var ossia_variant_set = List.of(
             WolfVariants.CHESTNUT,
             WolfVariants.STRIPED,
-            WolfVariants.RUSTY,
+            DTNWolfVariants.BAMBOO, // Ossia for WolfVariants.RUSTY
             WolfVariants.WOODS,
             DTNWolfVariants.HIMALAYAN_SALT, // Ossia for WolfVariants.ASHEN
             DTNWolfVariants.CHERRY, // Ossia for WolfVariants.SNOWY
@@ -280,7 +280,7 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
             true,
             false
         );
-        builder.rewards(AdvancementRewards.Builder.experience(50));
+        builder.rewards(AdvancementRewards.Builder.experience(400));
         builder.save(consumer, Util.getResourcePath("default/whole_pack_ossia"));
     }
 }
