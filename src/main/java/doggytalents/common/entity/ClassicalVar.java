@@ -30,7 +30,8 @@ public enum ClassicalVar {
     //Compl. DTN
     CHERRY(9, "cherry", true),
     LEMONY_LIME(10, "lemony_lime", true),
-    HIMALAYAN_SALT(11, "himalayan_salt", true);
+    HIMALAYAN_SALT(11, "himalayan_salt", true),
+    BAMBOO(12, "bamboo", true);
 
     private final int idInt;
     private final boolean isCompl;
@@ -61,6 +62,7 @@ public enum ClassicalVar {
         .put(DTNWolfVariants.CHERRY, ClassicalVar.CHERRY)
         .put(DTNWolfVariants.LEMONY_LIME, ClassicalVar.LEMONY_LIME)
         .put(DTNWolfVariants.HIMALAYAN_SALT, ClassicalVar.HIMALAYAN_SALT)
+        .put(DTNWolfVariants.BAMBOO, ClassicalVar.BAMBOO)
         .build();
 
     private ClassicalVar(int idInt, String name) {
@@ -171,6 +173,7 @@ public enum ClassicalVar {
         .put(ClassicalVar.CHERRY, 0xfffa9de5)
         .put(ClassicalVar.LEMONY_LIME, 0xffa8c882)
         .put(ClassicalVar.HIMALAYAN_SALT, 0xffb55c63)
+        .put(ClassicalVar.BAMBOO, 0xff629122)
         .build();
     
 }

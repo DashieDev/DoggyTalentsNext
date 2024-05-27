@@ -50,8 +50,19 @@ public class DTNWolfVariantsSpawnOverride {
     }
 
     private static Optional<Holder<WolfVariant>> checkForOssiaVariant(HolderLookup.Provider prov, Holder<Biome> biome, MobSpawnType spawn_type) {
-        
+        if (isBamboWolfSpawn(biome, spawn_type)) {
+            return DogUtil.getWolfVariantHolderIfLoaded(prov, DTNWolfVariants.BAMBOO);
+        }
         return Optional.empty();
+    }
+
+    private static boolean isBamboWolfSpawn(Holder<Biome> biome, MobSpawnType spawn_type) {
+        //Rusty Wolf only chunk-generated spawn in Biomes.SPARSE_JUNGLE
+        if (biome.is(Biomes.BAMBOO_JUNGLE))
+            return true;
+        if (biome.is(Biomes.JUNGLE) && spawn_type == MobSpawnType.CHUNK_GENERATION)
+            return true;
+        return false;
     }
 
 }
