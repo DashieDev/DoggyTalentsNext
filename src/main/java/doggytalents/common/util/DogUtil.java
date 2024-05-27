@@ -3,6 +3,7 @@ package doggytalents.common.util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -24,12 +25,17 @@ import doggytalents.common.util.dogpromise.promise.DogDistantTeleportToOwnerProm
 import net.minecraft.SharedConstants;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.WolfVariant;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
@@ -760,5 +766,15 @@ public class DogUtil {
         dog.lookAt(Anchor.EYES, target);
     }
 
+    public static Optional<Holder<WolfVariant>> getWolfVariantHolderIfLoaded(
+            HolderLookup.Provider prov, ResourceKey<WolfVariant> key) {
+        var wolf_variant_reg = prov.lookupOrThrow(Registries.WOLF_VARIANT);
+        var holder_optional = wolf_variant_reg.get(key);
+        if (holder_optional.isEmpty())
+            return Optional.empty();
+        
+        var holder = holder_optional.get();
+        return Optional.of(holder);
+    }
 
 }
