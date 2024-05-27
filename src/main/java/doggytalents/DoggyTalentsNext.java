@@ -26,6 +26,7 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.network.DTNNetworkHandler;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;
+import doggytalents.common.variants.DTNWolfVariantsSpawnOverride;
 import doggytalents.common.variants.DTNWolfVariantsProvider;
 import doggytalents.common.variants.DTNWolfVariantsSpawnPlacements;
 import net.minecraft.data.DataGenerator;
@@ -99,6 +100,7 @@ public class DoggyTalentsNext {
         forgeEventBus.addListener(this::serverStarting);
         forgeEventBus.addListener(this::registerCommands);
         forgeEventBus.addListener(DoggyBrewingRecipes::onRegisterEvent);
+        forgeEventBus.addListener(DTNWolfVariantsSpawnOverride::onWolfSpawn);
         
         forgeEventBus.register(new EventHandler());
 
