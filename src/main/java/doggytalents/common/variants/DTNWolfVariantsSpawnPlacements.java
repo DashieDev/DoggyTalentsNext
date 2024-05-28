@@ -15,13 +15,12 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
 
 public class DTNWolfVariantsSpawnPlacements {
     
-    public static void onRegisterSpawnPlacements(SpawnPlacementRegisterEvent event) {
-        event.register(EntityType.WOLF, DTNWolfVariantsSpawnPlacements::DTNWolfVariantsSpawnableOn);
-    }
+    // public static void onRegisterSpawnPlacements(SpawnPlacementRegisterEvent event) {
+    //     event.register(EntityType.WOLF, DTNWolfVariantsSpawnPlacements::DTNWolfVariantsSpawnableOn);
+    // }
 
     public static boolean DTNWolfVariantsSpawnableOn(EntityType<Wolf> wolf_type, 
         LevelAccessor level, MobSpawnType spawn_type, 

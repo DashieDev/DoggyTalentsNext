@@ -12,7 +12,8 @@
         "ServerPlayerMixin",
         "LivingEntityMixin",
         "Minecraft_UtilMixin",
-        "ThrownEggMixin"
+        "ThrownEggMixin",
+        "WolfMixin"
     ],
     "client": [
         "LocalPlayerMixin",

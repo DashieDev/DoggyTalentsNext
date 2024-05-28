@@ -14,6 +14,7 @@ import doggytalents.common.fabric_helper.entity.network.SyncTypes;
 import doggytalents.common.fabric_helper.lootmodifer_imitate.DTLootModifiers;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;
+import doggytalents.common.variants.fabric.DTNWolfVariantsFabricSpawn;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
 import doggytalents.forge_imitate.event.EventHandlerRegisterer;
 import doggytalents.forge_imitate.event.ForgeCommonSetup;
@@ -67,7 +68,6 @@ public class DoggyTalentsNextEntry implements ModInitializer {
         FoodHandler.registerHandler(new DogDrinkMilkHandler());
         FoodHandler.registerHandler(new WhitelistFoodHandler());
 
-        FoodHandler.registerDynPredicate(HappyEaterTalent.INNER_DYN_PRED);
         //InteractHandler.registerHandler(new HelmetInteractHandler());
         //Dog.initDataParameters();
         //DoggyAdvancementTriggers.registerAll();
@@ -75,6 +75,7 @@ public class DoggyTalentsNextEntry implements ModInitializer {
         ConfigHandler.initTalentConfig();
         //GarbageChunkCollector.init();
         RiceMillBlockEntity.initGrindMap();
+        DTNWolfVariantsFabricSpawn.init();
     }
 
     private void registerCommands() {
