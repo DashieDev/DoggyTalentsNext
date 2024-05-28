@@ -299,11 +299,11 @@
     "talent.doggytalents.hell_hound.description": "この才能は、犬が極度の灼熱に耐えられるように訓練します。レベルが高いほど、犬が耐える熱量が増え、燃えにくくなります。マスターした犬は完全に燃えないようになり、溶岩を水のように扱うようになります。溶岩の厚みがマッサージになるため、溶岩浴を好むこともある。また、溶岩の上を歩くことができるようになり、MOBレトリバーと組み合わせて他の犬を移動させるときに便利だ。十分な訓練を積めば、攻撃時に物を燃やすこともできる。",
     "talent.doggytalents.wolf_mount.description": "犬をスピードに乗ってどこへでも連れて行けます。レベルが上がるごとに、犬はより高くジャンプできるようになります。犬に乗るには、手を空にしてから、犬をすばやく右クリック2回以上で乗ることができます。",
     "talent.doggytalents.pack_puppy.description": "各レベルの箱犬GUIには3つのインベントリスロットがあります。GUIを開くには、Eボタンを押してインベントリにアクセスし、「犬のインベントリ」に進みます！また、ここから直接GUIにアクセスすることも可能で、さらにスニークキーを押しながらここの犬インベントリー・ボタンをクリックすると、1匹の犬インベントリーだけにアクセスすることができます。レベル3になると、犬はインベントリに余裕があれば、近くのアイテムを自動的に拾います。さらに、レベル4になると、インベントリに肉があれば、近くにいるお腹を空かせた他の犬に提供します。また、他の犬の体力が低下している場合は、卵サンドも提供します。",
-    "talent.doggytalents.pillow_paw.description": "レベルが上がるごとに、犬はダメージを受ける前にさらに3ブロック落下できるようになります。マスターすれば、落下ダメージを完全に無効化することができます。",
+    "talent.doggytalents.pillow_paw.description": "レベルが上がるごとに、犬はダメージを受ける前にさらに3ブロック落下できるようになります。マスターすれば、落下ダメージを完全に無効化することができます。この才能と「天飛犬」は併用できないことを覚えておいてください。",
     "talent.doggytalents.quick_healer.description": "犬が休まずに回復する速度を向上させる。マスターすれば、座っている間の犬の回復速度が50%%速くなります。",
     "talent.doggytalents.creeper_sweeper.description": "この能力を持つ犬はエリア内の匠を嗅ぎつけ、唸って警告することができます。犬が匠を感知できる範囲は1レベルにつき6ブロック増加し、マスターすると犬が匠を攻撃して即座に匠を殺せます。",
     "talent.doggytalents.doggy_dash.description": "犬の移動速度を増加させます。レベルが上がるごとに12%%上昇し、マスターするとさらに15%%上昇します。",
-    "talent.doggytalents.fisher_dog.description": "ワンちゃんが水に入るたびに、魚を捕まえることがあります。魚を捕まえる確率はレベルに応じて上昇し、地獄犬のポイントがあれば魚を調理することができます。マスターすると、犬は水中で呼吸できるようになります。",
+    "talent.doggytalents.fisher_dog.description": "犬が水に入るたびに、魚が釣れるかもしれない。魚を釣る確率はレベルに応じて上昇し、地獄犬のポイントによって魚が調理されることもあります。この才能を使いこなすと、犬は時折お宝を釣り上げるようになります。",
     "talent.doggytalents.happy_eater.description": "フードアイテムから得られる満腹度がレベルごとに10%%増加します。また、レベル2からは好き嫌いが減り、調理された魚を自ら食べるようになります。",
     "talent.doggytalents.pest_fighter.description": "近くのシルバーフィッシュ全てにランダムな刻みで1ポイントのダメージを与えます。才能レベルを上げると範囲が3ブロック広がり、マスターするとダメージが2倍になります。",
     "talent.doggytalents.poison_fang.description": "犬の攻撃は対象を毒状態にし、毒の持続時間はレベルに応じて増加します。 レベル3になると、犬は毒に対する免疫を持つようになり、マスターすること、毒を含むすべてのポーションの効果を、クモの目を持った犬に右クリックすることで浄化することができます【30満腹度掛かります】。",
@@ -315,7 +315,7 @@
     "talent.doggytalents.doggy_torch.description": "犬のインベントリ（箱犬）にある松明を1本消費すると、光量が少ないときに松明を使えるようになります。松明を与えるには、松明を近くに落とすと拾われます。レベル5になると、犬インベントリに松明を入れる必要がなくなります。",
     "talent.doggytalents.doggy_armor.description": "犬が防具を着用できるようになります。この才能を持つ犬を右クリックするとGUIが表示され、犬に鎧を着せることができます。レベル3になると、犬は修繕 (エンチャント)で防具を修繕するための経験値を自動的に得ることができます。",
     "talent.doggytalents.water_holder.description": "犬の毛皮に注目してほしい。そして犬はそれを振って乾かすのが大好物だ。この才能により、犬は水を蓄えることができます。あなたや他の狼や犬が燃えている場合、それぞれのところに走って行って毛を振り、燃焼時間を短くしたり、完全に消したりします。レベルが高ければ高いほど、犬はより多くの水を貯めることができ、燃焼時間を短縮することができます！水入りバケツを補給するか、雨や水源に触れると自動的に水を吸収します。水の残量は、犬にどんなバケツを使っても、スニークを押しながら確認することができます。この才能をマスターすると、犬の毛皮に無限の水量を与えることができます。",
-    "talent.doggytalents.doggy_tools.description": "犬が特定の道具を使えるようになり、特定の作業を手助けしてくれるようになります。道具は道具犬のツールバーに加えることができ、どんなのツルハシを右クリックすることでアクセスできます。レベルが高いほど、ツールバーの容量が大きくなります。例えば クワを持った犬がツールバーの中にいて、小麦の種か米粒を持っていれば、それぞれ小麦と籾を収穫することができます。また、攻撃するとき、ツールバーに武器を装備している犬は、左から最も近い武器を見つけて装備します。",
+    "talent.doggytalents.doggy_tools.description": "犬が特定の道具を使うことで、特定の作業を手助けしてくれるようになります。道具は犬のツールバーに追加することができ、ツルハシの種類に関係なく犬を右クリックすることでアクセスできます。レベルが高いほど、ツールバーの容量が大きくなります。\n\nツールバーの中に鍬を持った犬と米粒や小麦の種があれば、それぞれ米や小麦を収穫することができます。\n\nまた、攻撃するとき、ツールバーに武器（斧、剣、弓）を持っている犬は、左から最も近い武器を見つけて装備します（範囲攻撃が優先されます）。\n弓の矢はツールバーか箱犬のインベントリに格納できます。",
     "talent.doggytalents.shock_absorber.description": "ノックバック耐性を増加さ せます。マスターするとノックバックへの完全な耐性が得られる。",
     "talent.doggytalents.mob_retriever.description": "MOBを背中に乗せて回収することができます。まず、この能力を持つ犬を近くに連れておく。そしてMOBレトリーバー口笛を使い、犬に拾わせたい目標を指さして「使い」を押す。犬は目標を取りに行きます。対象は犬が座るまで犬に乗り続けます。レベルはドッグが回収できるMOBのヒットボックスの最大量を決定します。マスターするとヒットボックスの制約が解除さ れます。",
     "talent.doggytalents.flying_furball.description": "愛犬に空の限界を征服させよう！レベルが高いほど、犬はより速く飛ぶことができます。",
@@ -343,6 +343,7 @@
     "talent.doggytalents.pack_puppy.collect_kill_loot": "戦利品を集める",
     "talent.doggytalents.pack_puppy.collect_kill_loot.desc": "このオプションは「近くアイテムを拾う」がtrueの場合のみ有効です。あなたや他の犬がエンティティーを殺して何かを落とすと、そのエンティティーに向かって走り、戦利品を集めます。",
     "talent.doggytalents.rescue_dog.render_box": "表示・箱",
+    "talent.doggytalents.fisher_dog.render_hat": "表示・帽子",
     "talent.doggytalents.sniffer_dog.notify_owner.0.near": "%s: ねえ、これ見てよ！何か見つけたよ！すごく近い！",
     "talent.doggytalents.sniffer_dog.notify_owner.0.mid": "%s: ねえ、これ見てよ！何か見つけたよ！ちょっと遠いけど。",
     "talent.doggytalents.sniffer_dog.notify_owner.0.far": "%s: えぇっと、これ見て！何か見つけた…かなり遠いけど！",
@@ -471,7 +472,11 @@
     "dog.classical.variant.snowy": "雪",
     "dog.classical.variant.ashen": "灰色",
     "dog.classical.variant.spotted": "まだら",
-
+    "dog.classical.variant.compl.cherry": "さくら",
+    "dog.classical.variant.compl.lemony_lime": "レモン二　ライム",
+    "dog.classical.variant.compl.himalayan_salt": "ヒマラヤ岩塩",
+    "dog.classical.variant.compl.bamboo": "たけ",
+ 
     "doggytalents.whistle.short": "口笛・短",
     "doggytalents.whistle.long": "口笛・長",
  
@@ -558,7 +563,7 @@
     "doggui.stats.mob_kills.no_kills" : "%sはモブを殺していません。",
  
     "doggui.invalid_dog.incapacitated.title" : "犬が敗れた！",
-    "doggui.invalid_dog.incapacitated.subtitle" : "心配しないで！%sには休息が必要なだけです。%sを少し休ませてあげれば、%sは元気になるでしょう。",
+    "doggui.invalid_dog.incapacitated.subtitle" : "心配しないで！%sには休息が必要なだけです。%の世話をすれば、%sはすぐに%sの足元に戻れるでしょう！",
     "doggui.invalid_dog.incapacitated.show_cause" : "表示・原因",
     "doggui.invalid_dog.no_permission.title" : "あなたは %s の飼い主ではありません！",
     "doggui.invalid_dog.no_permission.subtitle" : "あなたが %s と対話する正しい権限を持っていることを確認してください。",
@@ -689,6 +694,7 @@
     "advancements.doggytalents.a_full_recovery.description": "敗れた犬の回復を助ける。",
     "advancements.doggytalents.the_best_dogtor.title": "ザ・ベスト・ドッグター！",
     "advancements.doggytalents.the_best_dogtor.description": "最高の条件で敗れた犬を助ける。",
+    "advancements.doggytalents.whole_pack_ossia.title": "ホール・パック - オッシア",
  
     "effect.doggytalents.natto_bite": "納豆バイット"
  }
