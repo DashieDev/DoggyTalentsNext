@@ -6,6 +6,7 @@ import java.util.Map;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.client.block.model.DogBedModel;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Constants;
 import doggytalents.forge_imitate.event.Event;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;
@@ -61,6 +62,9 @@ public class RegisterAndModifyBakingManager {
 
         private BakedModel onModifyModel(BakedModel current_model, net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier.AfterBake.Context ctx) {
             if (!isTargetingDogBed(ctx))
+                return current_model;
+            
+            if (ConfigHandler.CLIENT.DOGBED_FORCE_DEFAULT_MODEL.get())
                 return current_model;
             
             var bakery = ctx.loader();

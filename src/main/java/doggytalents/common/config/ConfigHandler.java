@@ -88,6 +88,9 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue USE_THIRD_PARTY_PLAYER_HELMET_MODEL;
         public ForgeConfigSpec.BooleanValue ENABLE_STARTER_BUNDLE_BY_DEFAULT;
 
+        //Fabric only
+        public ForgeConfigSpec.BooleanValue DOGBED_FORCE_DEFAULT_MODEL;
+
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
 
@@ -219,6 +222,18 @@ public class ConfigHandler {
                 .comment("regardless of the world's serverconfig.")
                 .translation("doggytalents.config.client.enable_starter_bundle_by_default")
                 .define("enable_starter_bundle_by_default", false);
+
+            //Fabric Only
+            DOGBED_FORCE_DEFAULT_MODEL = builder
+                .comment("Currently, DTN Dog Bed renders with missing texture when Sodium/Iris")
+                .comment("is installed. That is due to Iris/Sodium causing some problems with Fabric")
+                .comment("Indigo rendering API which DTN utilize to render any supported material on")
+                .comment("the Dog Bed, which is out of our control. This option force DTN")
+                .comment("to not use its Custom Model and revert back to using vanilla's baked model.")
+                .comment("This prevent the Missing Texture with Iris/Sodium but also means that")
+                .comment("the Dog Bed can only render one casing and one bedding material.")
+                .translation("doggytalents.config.client.dogbed_force_default_model")
+                .define("dogbed_force_default_model", false);
             
             builder.pop();
         }
