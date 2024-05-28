@@ -4,6 +4,7 @@ import doggytalents.DoggyBlocks;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.event.EventHandler;
+import doggytalents.common.variants.DTNWolfVariantsSpawnOverride;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry.InstanceEventCallBack;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry.SingleEventCallBack;
 
@@ -88,6 +89,12 @@ public class EventHandlerRegisterer {
             new SingleEventCallBack<EntityAttributeCreationEvent>(
                 EntityAttributeCreationEvent.class,
                 DoggyEntityTypes::addEntityAttributes
+            )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new SingleEventCallBack<MobSpawnEvent.FinalizeSpawn>(
+                MobSpawnEvent.FinalizeSpawn.class,
+                DTNWolfVariantsSpawnOverride::onWolfSpawn
             )
         );
     }

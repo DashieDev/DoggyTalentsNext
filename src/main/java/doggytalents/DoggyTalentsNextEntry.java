@@ -58,6 +58,7 @@ public class DoggyTalentsNextEntry implements ModInitializer {
         DoggyItemGroups.ITEM_GROUP.initAll();
         DoggyEffects.EFFECTS.initAll();
         DoggyAdvancementTriggers.TRIGGERS.initAll();
+        DoggyEntitySubPredicates.ENTITY_SUB_PREDICATES.initAll();
     }
 
     private void doModCommonSetup() {

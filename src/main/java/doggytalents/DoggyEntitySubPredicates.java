@@ -9,6 +9,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import doggytalents.common.lib.Constants;
+import doggytalents.forge_imitate.registry.DeferredRegister;
 import net.minecraft.advancements.critereon.EntitySubPredicate;
 import net.minecraft.advancements.critereon.EntitySubPredicates;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,11 +20,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.WolfVariant;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class DoggyEntitySubPredicates {
     
-    public static final DeferredRegister<MapCodec<? extends EntitySubPredicate>> ENTITY_SUB_PREDICATES = DeferredRegister.create(BuiltInRegistries.ENTITY_SUB_PREDICATE_TYPE, Constants.MOD_ID);
+    public static final DeferredRegister<MapCodec<? extends EntitySubPredicate>> ENTITY_SUB_PREDICATES = DeferredRegister.create(() -> BuiltInRegistries.ENTITY_SUB_PREDICATE_TYPE, Constants.MOD_ID);
 
     public static final Supplier<MapCodec<? extends EntitySubPredicate>> WOLF_RAW_VARIANT = ENTITY_SUB_PREDICATES
         .register(
