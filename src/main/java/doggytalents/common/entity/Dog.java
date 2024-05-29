@@ -1887,7 +1887,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean canFreeze() {
-        return alterationProps.fireImmune();
+        return !alterationProps.fireImmune();
     }
 
     public boolean shouldDogNotAfraidOfFire() {
