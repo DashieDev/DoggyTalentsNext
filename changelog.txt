@@ -1341,7 +1341,7 @@ non-hellhound dog to get cooked fish.
 * Fix: Dog beg for Fish despite not having Happy Eater.
 * Fix: Game crashes when Dog tries to attack Tameable Mobs.
 
-**1.18.14 - 25th May 2024**
+**1.18.15 - 29th May 2024**
 ## New DTN Wolf Variant!
 
 + Bamboo Wolf - Spawns in Bamboo Jungle
@@ -1352,6 +1352,9 @@ They, like the previous DTN Wolf Variant Triplet, spawn rarely.
 
 + "The Whole Pack - Ossia" : Tame one of each of the wolf variants listed below
 [Chestnut, Striped, Bamboo, Woods, Himalayan Salt, Cherry, Lemony Lime, Black, Pale]
+
+## New skin:
++ Norfolk Terrier.
 
 *Directly training Vanilla Wolf to DTN now counts towards "The Whole Pack"/"The Whole Pack - Ossia"
 advancement too!
