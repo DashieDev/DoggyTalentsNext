@@ -26,7 +26,7 @@ public class DTRecipeProvider /*extends RecipeProvider*/ {
 
     // public DTRecipeProvider(PackOutput generatorIn) {
     //     super(generatorIn);
-    // }x
+    // }
 
     // @Override
     // protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
