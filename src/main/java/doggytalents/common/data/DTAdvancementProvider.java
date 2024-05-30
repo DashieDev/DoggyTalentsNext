@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
-import doggytalents.DoggyEntitySubPredicates.RawWolfVariantIdSubPredicate;
 import doggytalents.common.advancements.triggers.DogBandaidApplyTrigger;
 import doggytalents.common.advancements.triggers.DogDrunkTrigger;
 import doggytalents.common.advancements.triggers.DogRecoveredTrigger;
@@ -34,7 +33,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.WolfVariants;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -155,13 +153,13 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                 .display(
                     DisplayInfoBuilder.create()
                         .icon(() -> DoggyItems.BANDAID.get())
-                        .frame(AdvancementType.TASK)
+                        .frame(FrameType.TASK)
                         .translate("sterile")
                         .build()
                 )
                 .addCriterion(
                         "give_dog_bandaid", 
-                        DogBandaidApplyTrigger.getCriterion()
+                        DogBandaidApplyTrigger.getInstance()
                     )
                 .save(consumer, Util.getResourcePath("default/sterile"));
             var recovered_advancement = 
@@ -170,13 +168,13 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                 .display(
                     DisplayInfoBuilder.create()
                         .icon(createFullRecoveryBed(false))
-                        .frame(AdvancementType.TASK)
+                        .frame(FrameType.TASK)
                         .translate("a_full_recovery")
                         .build()
                 )
                 .addCriterion(
                         "dog_recovered", 
-                        DogRecoveredTrigger.getCriterion(false)
+                        DogRecoveredTrigger.getInstance(false)
                     )
                 .save(consumer, Util.getResourcePath("default/dog_recovered"));
             var best_dogtor_advancement = 
@@ -185,17 +183,17 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
                 .display(
                     DisplayInfoBuilder.create()
                         .icon(createFullRecoveryBed(true))
-                        .frame(AdvancementType.TASK)
+                        .frame(FrameType.TASK)
                         .translate("the_best_dogtor")
                         .build()
                 )
                 .addCriterion(
                         "dog_recovered_special", 
-                        DogRecoveredTrigger.getCriterion(true)
+                        DogRecoveredTrigger.getInstance(true)
                     )
                 .save(consumer, Util.getResourcePath("default/dog_recovered_special"));
 
-            addOssiaWolfVariantsAdvancement(consumer, registries);
+            //addOssiaWolfVariantsAdvancement(consumer, registries);
             // Old Advancement.
 
             // Advancement advancement = Advancement.Builder.advancement()
@@ -238,49 +236,49 @@ public class DTAdvancementProvider extends ForgeAdvancementProvider {
         return DogBedUtil.createItemStackForced(casing, bedding);
     }
 
-    private static void addOssiaWolfVariantsAdvancement(Consumer<AdvancementHolder> consumer, HolderLookup.Provider prov) {
-        final var ossia_variant_set = List.of(
-            WolfVariants.CHESTNUT,
-            WolfVariants.STRIPED,
-            DTNWolfVariants.BAMBOO, // Ossia for WolfVariants.RUSTY
-            WolfVariants.WOODS,
-            DTNWolfVariants.HIMALAYAN_SALT, // Ossia for WolfVariants.ASHEN
-            DTNWolfVariants.CHERRY, // Ossia for WolfVariants.SNOWY
-            DTNWolfVariants.LEMONY_LIME, // Ossia for WolfVariants.SPOTTED
-            WolfVariants.BLACK,
-            WolfVariants.PALE
-        );
+    // private static void addOssiaWolfVariantsAdvancement(Consumer<AdvancementHolder> consumer, HolderLookup.Provider prov) {
+    //     final var ossia_variant_set = List.of(
+    //         WolfVariants.CHESTNUT,
+    //         WolfVariants.STRIPED,
+    //         DTNWolfVariants.BAMBOO, // Ossia for WolfVariants.RUSTY
+    //         WolfVariants.WOODS,
+    //         DTNWolfVariants.HIMALAYAN_SALT, // Ossia for WolfVariants.ASHEN
+    //         DTNWolfVariants.CHERRY, // Ossia for WolfVariants.SNOWY
+    //         DTNWolfVariants.LEMONY_LIME, // Ossia for WolfVariants.SPOTTED
+    //         WolfVariants.BLACK,
+    //         WolfVariants.PALE
+    //     );
 
-        var builder = Advancement.Builder.advancement();
-        for (var ossia : ossia_variant_set) {
-            builder.addCriterion(
-                ossia.location().toString(),
-                TameAnimalTrigger.TriggerInstance.tamedAnimal(
-                    EntityPredicate.Builder.entity().subPredicate(
-                        RawWolfVariantIdSubPredicate.of(ossia)
-                    )
-                )
-            );
-        }
+    //     var builder = Advancement.Builder.advancement();
+    //     for (var ossia : ossia_variant_set) {
+    //         builder.addCriterion(
+    //             ossia.location().toString(),
+    //             TameAnimalTrigger.TriggerInstance.tamedAnimal(
+    //                 EntityPredicate.Builder.entity().subPredicate(
+    //                     RawWolfVariantIdSubPredicate.of(ossia)
+    //                 )
+    //             )
+    //         );
+    //     }
 
-        var parent_advancement_path = 
-            new ResourceLocation("husbandry/tame_an_animal");
-        builder.parent(new AdvancementHolder(parent_advancement_path, null));
+    //     var parent_advancement_path = 
+    //         new ResourceLocation("husbandry/tame_an_animal");
+    //     builder.parent(new AdvancementHolder(parent_advancement_path, null));
         
-        var display_stack = new ItemStack(DoggyItems.DOGGY_CHARM.get());
-        DoggyCharmItem.setCharmForcedGlint(display_stack, true);
+    //     var display_stack = new ItemStack(DoggyItems.DOGGY_CHARM.get());
+    //     DoggyCharmItem.setCharmForcedGlint(display_stack, true);
 
-        builder.display(
-            display_stack,
-            Component.translatable("advancements.doggytalents.whole_pack_ossia.title"),
-            Component.translatable("advancements.husbandry.whole_pack.description"),
-            null,
-            AdvancementType.CHALLENGE,
-            true,
-            true,
-            false
-        );
-        builder.rewards(AdvancementRewards.Builder.experience(400));
-        builder.save(consumer, Util.getResourcePath("default/whole_pack_ossia"));
-    }
+    //     builder.display(
+    //         display_stack,
+    //         Component.translatable("advancements.doggytalents.whole_pack_ossia.title"),
+    //         Component.translatable("advancements.husbandry.whole_pack.description"),
+    //         null,
+    //         AdvancementType.CHALLENGE,
+    //         true,
+    //         true,
+    //         false
+    //     );
+    //     builder.rewards(AdvancementRewards.Builder.experience(400));
+    //     builder.save(consumer, Util.getResourcePath("default/whole_pack_ossia"));
+    // }
 }

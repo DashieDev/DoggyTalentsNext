@@ -135,7 +135,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
             Style.EMPTY.withItalic(true)
         ));
 
-        displayContents(stack, worldIn, tooltip, flagIn);
+        displayContents(stack, tooltip, flagIn);
         
         
     }

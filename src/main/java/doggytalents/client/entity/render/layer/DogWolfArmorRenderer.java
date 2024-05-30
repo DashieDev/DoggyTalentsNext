@@ -16,121 +16,117 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.layers.WolfArmorLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
-import net.minecraft.world.entity.Crackiness;
-import net.minecraft.world.item.AnimalArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.component.DyedItemColor;
 
-public class DogWolfArmorRenderer extends RenderLayer<Dog, DogModel> {
+public class DogWolfArmorRenderer /*extends RenderLayer<Dog, DogModel>*/ {
 
-    private static final Map<Crackiness.Level, ResourceLocation> ARMOR_CRACK_LOCATIONS = Map.of(
-        Crackiness.Level.LOW,
-        new ResourceLocation("textures/entity/wolf/wolf_armor_crackiness_low.png"),
-        Crackiness.Level.MEDIUM,
-        new ResourceLocation("textures/entity/wolf/wolf_armor_crackiness_medium.png"),
-        Crackiness.Level.HIGH,
-        new ResourceLocation("textures/entity/wolf/wolf_armor_crackiness_high.png")
-    );
+    // private static final Map<Crackiness.Level, ResourceLocation> ARMOR_CRACK_LOCATIONS = Map.of(
+    //     Crackiness.Level.LOW,
+    //     new ResourceLocation("textures/entity/wolf/wolf_armor_crackiness_low.png"),
+    //     Crackiness.Level.MEDIUM,
+    //     new ResourceLocation("textures/entity/wolf/wolf_armor_crackiness_medium.png"),
+    //     Crackiness.Level.HIGH,
+    //     new ResourceLocation("textures/entity/wolf/wolf_armor_crackiness_high.png")
+    // );
 
-    private DogModel defaultModel;
+    // private DogModel defaultModel;
 
-    public DogWolfArmorRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
-        super(parentRenderer);
-        this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
-    }
+    // public DogWolfArmorRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
+    //     super(parentRenderer);
+    //     this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
+    // }
     
-    @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!dog.isTame() || dog.isInvisible()) {
-            return;
-        }
+    // @Override
+    // public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    //     if (!dog.isTame() || dog.isInvisible()) {
+    //         return;
+    //     }
 
-        if (!ConfigHandler.CLIENT.RENDER_ARMOR.get() || dog.hideArmor())
-            return;
+    //     if (!ConfigHandler.CLIENT.RENDER_ARMOR.get() || dog.hideArmor())
+    //         return;
 
-        var skin = dog.getClientSkin();
-        if (skin.useCustomModel()) {
-            var model = skin.getCustomModel().getValue();
-            if (!model.armorShouldRender(dog))
-                return;
-        }
+    //     var skin = dog.getClientSkin();
+    //     if (skin.useCustomModel()) {
+    //         var model = skin.getCustomModel().getValue();
+    //         if (!model.armorShouldRender(dog))
+    //             return;
+    //     }
 
-        if (dog.wolfArmor().isEmpty())
-            return;
+    //     if (dog.wolfArmor().isEmpty())
+    //         return;
 
-        var wolfArmorOptional = getWolfArmorItem(dog);
-        if (!wolfArmorOptional.isPresent())
-            return;
-        var wolfArmorPair = wolfArmorOptional.get();
+    //     var wolfArmorOptional = getWolfArmorItem(dog);
+    //     if (!wolfArmorOptional.isPresent())
+    //         return;
+    //     var wolfArmorPair = wolfArmorOptional.get();
 
-        var parentModel = this.getParentModel();
-        DogModel dogModel;
-        if (parentModel.useDefaultModelForAccessories()) {
-            dogModel = this.defaultModel;
-        } else {
-            dogModel = parentModel;
-        }
-        if (dogModel != parentModel) {
-            this.getParentModel().copyPropertiesTo(dogModel);
-            dogModel.copyFrom(parentModel);
-        }
+    //     var parentModel = this.getParentModel();
+    //     DogModel dogModel;
+    //     if (parentModel.useDefaultModelForAccessories()) {
+    //         dogModel = this.defaultModel;
+    //     } else {
+    //         dogModel = parentModel;
+    //     }
+    //     if (dogModel != parentModel) {
+    //         this.getParentModel().copyPropertiesTo(dogModel);
+    //         dogModel.copyFrom(parentModel);
+    //     }
 
-        renderWolfArmorLayerMain(dogModel, poseStack, buffer, packedLight, wolfArmorPair.getRight());
-        renderWolfArmorLayerDyed(dogModel, poseStack, buffer, packedLight, wolfArmorPair.getLeft(), wolfArmorPair.getRight());
-        renderWolfArmorLayerCracks(dogModel, poseStack, buffer, packedLight, wolfArmorPair.getLeft());
-    }
+    //     renderWolfArmorLayerMain(dogModel, poseStack, buffer, packedLight, wolfArmorPair.getRight());
+    //     renderWolfArmorLayerDyed(dogModel, poseStack, buffer, packedLight, wolfArmorPair.getLeft(), wolfArmorPair.getRight());
+    //     renderWolfArmorLayerCracks(dogModel, poseStack, buffer, packedLight, wolfArmorPair.getLeft());
+    // }
 
-    private Optional<Pair<ItemStack, AnimalArmorItem>> getWolfArmorItem(Dog dog) {
-        var wolf_armor_stack = dog.wolfArmor();
-        if (!(wolf_armor_stack.getItem() instanceof AnimalArmorItem wolfArmorItem))
-            return Optional.empty();
-        if (wolfArmorItem.getBodyType() != AnimalArmorItem.BodyType.CANINE)
-            return Optional.empty();
-        return Optional.of(Pair.of(wolf_armor_stack, wolfArmorItem));
-    }
+    // private Optional<Pair<ItemStack, AnimalArmorItem>> getWolfArmorItem(Dog dog) {
+    //     var wolf_armor_stack = dog.wolfArmor();
+    //     if (!(wolf_armor_stack.getItem() instanceof AnimalArmorItem wolfArmorItem))
+    //         return Optional.empty();
+    //     if (wolfArmorItem.getBodyType() != AnimalArmorItem.BodyType.CANINE)
+    //         return Optional.empty();
+    //     return Optional.of(Pair.of(wolf_armor_stack, wolfArmorItem));
+    // }
 
-    private void renderWolfArmorLayerMain(DogModel model, PoseStack poseStack, MultiBufferSource buffer, int light, AnimalArmorItem item) {
-        var vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(item.getTexture()));
-        model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-    }
+    // private void renderWolfArmorLayerMain(DogModel model, PoseStack poseStack, MultiBufferSource buffer, int light, AnimalArmorItem item) {
+    //     var vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(item.getTexture()));
+    //     model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+    // }
 
-    private void renderWolfArmorLayerDyed(DogModel model, PoseStack stack, MultiBufferSource buffer, int light, 
-        ItemStack itemStack, AnimalArmorItem item) {
-        if (item != Items.WOLF_ARMOR)
-            return;
-        int i = DyedItemColor.getOrDefault(itemStack, 0);
-        if (FastColor.ARGB32.alpha(i) == 0)
-            return;
+    // private void renderWolfArmorLayerDyed(DogModel model, PoseStack stack, MultiBufferSource buffer, int light, 
+    //     ItemStack itemStack, AnimalArmorItem item) {
+    //     if (item != Items.WOLF_ARMOR)
+    //         return;
+    //     int i = DyedItemColor.getOrDefault(itemStack, 0);
+    //     if (FastColor.ARGB32.alpha(i) == 0)
+    //         return;
 
-        var armor_overlay = item.getOverlayTexture();
-        if (armor_overlay == null)
-            return;
+    //     var armor_overlay = item.getOverlayTexture();
+    //     if (armor_overlay == null)
+    //         return;
             
-        float r = (float)FastColor.ARGB32.red(i) / 255.0F;
-        float g = (float)FastColor.ARGB32.green(i) / 255.0F;
-        float b = (float)FastColor.ARGB32.blue(i) / 255.0F;
+    //     float r = (float)FastColor.ARGB32.red(i) / 255.0F;
+    //     float g = (float)FastColor.ARGB32.green(i) / 255.0F;
+    //     float b = (float)FastColor.ARGB32.blue(i) / 255.0F;
         
-        model
-            .renderToBuffer(
-                stack, buffer.getBuffer(RenderType.entityCutoutNoCull(armor_overlay)), light, 
-                OverlayTexture.NO_OVERLAY, r, g, b, 1.0F
-            );
-    }
+    //     model
+    //         .renderToBuffer(
+    //             stack, buffer.getBuffer(RenderType.entityCutoutNoCull(armor_overlay)), light, 
+    //             OverlayTexture.NO_OVERLAY, r, g, b, 1.0F
+    //         );
+    // }
 
-    private void renderWolfArmorLayerCracks(DogModel model, PoseStack stack, MultiBufferSource buffer, int light, ItemStack itemStack) {
-        var crack_level = Crackiness.WOLF_ARMOR.byDamage(itemStack);
-        if (crack_level == Crackiness.Level.NONE)
-            return;
+    // private void renderWolfArmorLayerCracks(DogModel model, PoseStack stack, MultiBufferSource buffer, int light, ItemStack itemStack) {
+    //     var crack_level = Crackiness.WOLF_ARMOR.byDamage(itemStack);
+    //     if (crack_level == Crackiness.Level.NONE)
+    //         return;
 
-        var crack_rl = ARMOR_CRACK_LOCATIONS.get(crack_level);
-        var vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(crack_rl));
-        model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-    }
+    //     var crack_rl = ARMOR_CRACK_LOCATIONS.get(crack_level);
+    //     var vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(crack_rl));
+    //     model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+    // }
     
 }

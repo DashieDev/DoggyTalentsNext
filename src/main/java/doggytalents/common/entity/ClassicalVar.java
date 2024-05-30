@@ -12,8 +12,6 @@ import doggytalents.common.variants.DTNWolfVariants;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.entity.animal.WolfVariant;
-import net.minecraft.world.entity.animal.WolfVariants;
 
 public enum ClassicalVar {
     //Minecraft
@@ -48,22 +46,22 @@ public enum ClassicalVar {
     private static final Map<ResourceLocation, ClassicalVar> idMap = 
         Arrays.stream(VALUES)
             .collect(Collectors.toMap(toKey -> toKey.id, toVal -> toVal));
-    private static final Map<ResourceKey<WolfVariant>, ClassicalVar> vanillToClassical =
-        new ImmutableMap.Builder<ResourceKey<WolfVariant>, ClassicalVar>()
-        .put(WolfVariants.PALE, ClassicalVar.PALE)
-        .put(WolfVariants.CHESTNUT, ClassicalVar.CHESTNUT)
-        .put(WolfVariants.STRIPED, ClassicalVar.STRIPED)
-        .put(WolfVariants.WOODS, ClassicalVar.WOOD)
-        .put(WolfVariants.RUSTY, ClassicalVar.RUSTY)
-        .put(WolfVariants.BLACK, ClassicalVar.BLACK)
-        .put(WolfVariants.SNOWY, ClassicalVar.SNOWY)
-        .put(WolfVariants.ASHEN, ClassicalVar.ASHEN)
-        .put(WolfVariants.SPOTTED, ClassicalVar.SPOTTED)
-        .put(DTNWolfVariants.CHERRY, ClassicalVar.CHERRY)
-        .put(DTNWolfVariants.LEMONY_LIME, ClassicalVar.LEMONY_LIME)
-        .put(DTNWolfVariants.HIMALAYAN_SALT, ClassicalVar.HIMALAYAN_SALT)
-        .put(DTNWolfVariants.BAMBOO, ClassicalVar.BAMBOO)
-        .build();
+    // private static final Map<ResourceKey<WolfVariant>, ClassicalVar> vanillToClassical =
+    //     new ImmutableMap.Builder<ResourceKey<WolfVariant>, ClassicalVar>()
+    //     .put(WolfVariants.PALE, ClassicalVar.PALE)
+    //     .put(WolfVariants.CHESTNUT, ClassicalVar.CHESTNUT)
+    //     .put(WolfVariants.STRIPED, ClassicalVar.STRIPED)
+    //     .put(WolfVariants.WOODS, ClassicalVar.WOOD)
+    //     .put(WolfVariants.RUSTY, ClassicalVar.RUSTY)
+    //     .put(WolfVariants.BLACK, ClassicalVar.BLACK)
+    //     .put(WolfVariants.SNOWY, ClassicalVar.SNOWY)
+    //     .put(WolfVariants.ASHEN, ClassicalVar.ASHEN)
+    //     .put(WolfVariants.SPOTTED, ClassicalVar.SPOTTED)
+    //     .put(DTNWolfVariants.CHERRY, ClassicalVar.CHERRY)
+    //     .put(DTNWolfVariants.LEMONY_LIME, ClassicalVar.LEMONY_LIME)
+    //     .put(DTNWolfVariants.HIMALAYAN_SALT, ClassicalVar.HIMALAYAN_SALT)
+    //     .put(DTNWolfVariants.BAMBOO, ClassicalVar.BAMBOO)
+    //     .build();
 
     private ClassicalVar(int idInt, String name) {
         this(idInt, name, false);
@@ -143,10 +141,7 @@ public enum ClassicalVar {
     }
 
     public static ClassicalVar getWolf(Wolf wolf) {
-        var variant = wolf.getVariant();
-        var variant_key = variant.unwrapKey().orElse(WolfVariants.PALE);
-        var classical = vanillToClassical.getOrDefault(variant_key, PALE);
-        return classical;
+        return ClassicalVar.PALE;
     }
 
     public static ClassicalVar random(Dog dog) {

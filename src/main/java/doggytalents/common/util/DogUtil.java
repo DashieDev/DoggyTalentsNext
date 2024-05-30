@@ -33,7 +33,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.WolfVariant;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
@@ -684,28 +683,28 @@ public class DogUtil {
         return dot > 0.7;
     }
 
-    public static boolean isDangerPathType(PathType pathType) {
-        switch (pathType) {
-        case POWDER_SNOW:
-        case DANGER_POWDER_SNOW:
-        case LAVA:
-        case DANGER_FIRE:
-        case DAMAGE_FIRE:
-        case DANGER_OTHER:
-        case DAMAGE_OTHER:
-        case DAMAGE_CAUTIOUS:
-        case DANGER_TRAPDOOR:
-        case TRAPDOOR:
-            return true;
-        default:
-            return false;
-        }
-    }
+    // public static boolean isDangerPathType(BlockPathTypes pathType) {
+    //     switch (pathType) {
+    //     case POWDER_SNOW:
+    //     case DANGER_POWDER_SNOW:
+    //     case LAVA:
+    //     case DANGER_FIRE:
+    //     case DAMAGE_FIRE:
+    //     case DANGER_OTHER:
+    //     case DAMAGE_OTHER:
+    //     case DAMAGE_CAUTIOUS:
+    //     //case DANGER_TRAPDOOR:
+    //     case TRAPDOOR:
+    //         return true;
+    //     default:
+    //         return false;
+    //     }
+    // }
 
-    public static boolean isScute(ItemStack stack) {
-        return ArmorMaterials.ARMADILLO.value().repairIngredient()
-            .get().test(stack);
-    }
+    // public static boolean isScute(ItemStack stack) {
+    //     return ArmorMaterials.ARMADILLO.value().repairIngredient()
+    //         .get().test(stack);
+    // }
 
     public static int getWolfArmorRepairVal(ItemStack stack) {
         float repair_val = stack.getMaxDamage() * 0.125f;
@@ -718,15 +717,15 @@ public class DogUtil {
         dog.lookAt(Anchor.EYES, target);
     }
 
-    public static Optional<Holder<WolfVariant>> getWolfVariantHolderIfLoaded(
-            HolderLookup.Provider prov, ResourceKey<WolfVariant> key) {
-        var wolf_variant_reg = prov.lookupOrThrow(Registries.WOLF_VARIANT);
-        var holder_optional = wolf_variant_reg.get(key);
-        if (holder_optional.isEmpty())
-            return Optional.empty();
+    // public static Optional<Holder<WolfVariant>> getWolfVariantHolderIfLoaded(
+    //         HolderLookup.Provider prov, ResourceKey<WolfVariant> key) {
+    //     var wolf_variant_reg = prov.lookupOrThrow(Registries.WOLF_VARIANT);
+    //     var holder_optional = wolf_variant_reg.get(key);
+    //     if (holder_optional.isEmpty())
+    //         return Optional.empty();
         
-        var holder = holder_optional.get();
-        return Optional.of(holder);
-    }
+    //     var holder = holder_optional.get();
+    //     return Optional.of(holder);
+    // }
 
 }

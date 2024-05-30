@@ -88,7 +88,7 @@ public class DogBedUtil {
         NBTUtil.putRegistryValue(tag, "beddingId", BuiltInRegistries.BLOCK.getKey(bedding));
         var maintag = new CompoundTag();
         maintag.put("doggytalents", tag);
-        ItemUtil.putTag(stack, maintag);
+        stack.setTag(maintag);
 
         return stack;
     }

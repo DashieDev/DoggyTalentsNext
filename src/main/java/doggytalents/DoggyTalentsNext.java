@@ -85,20 +85,18 @@ public class DoggyTalentsNext {
         DoggyAttributes.ATTRIBUTES.register(modEventBus);
         DoggyItemGroups.ITEM_GROUP.register(modEventBus);
         DoggyEffects.EFFECTS.register(modEventBus);
-        DoggyEntitySubPredicates.ENTITY_SUB_PREDICATES.register(modEventBus);
+        //DoggyEntitySubPredicates.ENTITY_SUB_PREDICATES.register(modEventBus);
 
         DTLootModifierProvider.CODEC.register(modEventBus);
 
         modEventBus.addListener(DoggyRegistries::newRegistry);
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
-        modEventBus.addListener(DTNNetworkHandler::onRegisterPayloadEvent);
-        modEventBus.addListener(DoggyChunkController::onChunkControllerRegistryEvent);
-        modEventBus.addListener(ClientSetup::setupScreenManagers);
-        modEventBus.addListener(DTNWolfVariantsSpawnPlacements::onRegisterSpawnPlacements);
+        // modEventBus.addListener(DTNWolfVariantsSpawnPlacements::onRegisterSpawnPlacements);
 
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
         forgeEventBus.addListener(this::registerCommands);
+
         forgeEventBus.register(new EventHandler());
 
         // Client Events
@@ -188,6 +186,6 @@ public class DoggyTalentsNext {
             gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup, event.getExistingFileHelper()));
         }
 
-        DTNWolfVariantsProvider.start(event);
+        //DTNWolfVariantsProvider.start(event);
     }
 }
