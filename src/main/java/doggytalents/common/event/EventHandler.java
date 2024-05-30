@@ -211,7 +211,7 @@ public class EventHandler {
 
         var wolf_collar_color = wolf.getCollarColor();
         var color = Util.srgbArrayToInt(wolf_collar_color.getTextureDiffuseColors());
-        var dog_collar = DoggyAccessories.DYEABLE_COLLAR_THICC.get()
+        var dog_collar = DoggyAccessories.DYEABLE_COLLAR.get()
             .create(color);
         if (dog_collar != null)
             dog.addAccessory(dog_collar);
