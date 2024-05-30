@@ -260,6 +260,9 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
         public ForgeConfigSpec.BooleanValue WOLF_VARIANT_OVERRIDE_EXCLUSIVE;
 
+        //(Non 1.20.5+)
+        public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
+
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
         public ServerConfig(ForgeConfigSpec.Builder builder) {
@@ -429,6 +432,15 @@ public class ConfigHandler {
                 .comment("in those biomes previously mentioned instead of being overriden by DTN.")
                 .translation("doggytalents.wolf_variant_override_exclusive")
                 .define("wolf_variant_override_exclusive", true);
+
+            //(Non 1.20.5+)
+            RANDOM_VAR_ON_TRAIN = builder
+                .comment("For Minecraft version below 1.20.5")
+                .comment("When this option is enabled, upon training a vanilla wolf")
+                .comment("to DTN Wolf, DTN will asign a random Classical Variant")
+                .comment("(DTN and Armored Paw) instead of sticking with default.")
+                .translation("doggytalents.random_var_on_train")
+                .define("random_var_on_train", false);
             
             builder.pop();
         }

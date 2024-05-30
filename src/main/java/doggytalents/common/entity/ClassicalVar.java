@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.util.Util;
 import doggytalents.common.variants.DTNWolfVariants;
 import net.minecraft.resources.ResourceKey;
@@ -141,6 +142,12 @@ public enum ClassicalVar {
     }
 
     public static ClassicalVar getWolf(Wolf wolf) {
+        //(Non 1.20.5+)
+        if (ConfigHandler.SERVER.RANDOM_VAR_ON_TRAIN.get()) {
+            var vals = ClassicalVar.values();
+            int r = wolf.getRandom().nextInt(vals.length);
+            return vals[r];
+        }
         return ClassicalVar.PALE;
     }
 
