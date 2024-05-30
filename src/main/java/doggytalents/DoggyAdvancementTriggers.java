@@ -17,7 +17,8 @@ public class DoggyAdvancementTriggers {
     private static final Map<ResourceLocation, CriterionTrigger<?>> TRIGGERS = Maps.newHashMap();
     public static final DogDrunkTrigger DOG_DRUNK_TRIGGER = register(new DogDrunkTrigger());
     public static final OokamikazeTrigger OOKAMIKAZE_TRIGGER  = register(new OokamikazeTrigger());
-    public static final DogRecoveredTrigger DOG_RECOVERED_TRIGGER  = register("dog_recovered_trigger", new DogRecoveredTrigger());
+    public static final DogBandaidApplyTrigger DOG_BANDAID_APPLY_TRIGGER  = register(new DogBandaidApplyTrigger());
+    public static final DogRecoveredTrigger DOG_RECOVERED_TRIGGER  = register(new DogRecoveredTrigger());
 
     public static <T extends CriterionTrigger<?>> T register(T p_10596_) {
         if (!TRIGGERS.containsKey(p_10596_.getId())) {

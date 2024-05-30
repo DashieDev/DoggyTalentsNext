@@ -75,7 +75,9 @@ public class VariantChangerItem extends Item implements IDogItem {
             );
         }
         var stack = playerIn.getItemInHand(handIn);
-        stack.hurtAndBreak(1, playerIn, LivingEntity.getSlotForHand(handIn));
+        stack.hurtAndBreak(1, playerIn, (player_consume) -> {
+            player_consume.broadcastBreakEvent(handIn);
+        });
         return InteractionResult.SUCCESS;
     }
 
@@ -90,7 +92,7 @@ public class VariantChangerItem extends Item implements IDogItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext p_339594_, List<Component> list,
+    public void appendHoverText(ItemStack stack, Level p_339594_, List<Component> list,
             TooltipFlag p_41424_) {
         super.appendHoverText(stack, p_339594_, list, p_41424_);
         var item = stack.getItem();

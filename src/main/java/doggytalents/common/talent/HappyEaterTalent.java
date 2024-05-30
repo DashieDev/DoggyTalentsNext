@@ -5,6 +5,7 @@ import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.inferface.IDogFoodPredicate;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;

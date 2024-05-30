@@ -5,6 +5,7 @@ import doggytalents.DoggyItems;
 import doggytalents.common.item.VariantChangerItem;
 import doggytalents.common.lib.Constants;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+import doggytalents.common.util.Util;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;

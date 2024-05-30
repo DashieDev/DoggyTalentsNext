@@ -141,8 +141,7 @@ public class AccessoryEditElement extends AbstractElement {
 
     private boolean eligibleAccessory(@Nonnull ItemStack stack) {
         var item = stack.getItem();
-        return item instanceof AccessoryItem
-            || item == Items.WOLF_ARMOR;
+        return item instanceof AccessoryItem;
     }
     
 }
