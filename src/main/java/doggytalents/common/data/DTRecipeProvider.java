@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyRecipeSerializers;
+import doggytalents.common.item.VariantChangerItem;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
@@ -942,7 +943,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer, Util.getResource(baseNameId) + "_smoking");
     }
 
-    private void registerVariantChanger(Supplier<VariantChangerItem> itemSup, RecipeOutput consumer) {
+    private void registerVariantChanger(Supplier<VariantChangerItem> itemSup, Consumer<FinishedRecipe>  consumer) {
         var item = itemSup.get();
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, item, 1)
             .requires(DoggyItems.CONDUCTING_BONE.get(), 1)
