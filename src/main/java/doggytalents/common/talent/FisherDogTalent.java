@@ -10,7 +10,6 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.FisherDogData;
-import doggytalents.common.util.TagUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -71,7 +70,7 @@ public class FisherDogTalent extends TalentInstance {
         }
         var loot_param = new LootParams.Builder(sLevel)
             .create(LootContextParamSets.EMPTY);
-        var loot_list = sLevel.getServer().reloadableRegistries()
+        var loot_list = sLevel.getServer().getLootData()
             .getLootTable(loot_table)
             .getRandomItems(loot_param);
         if (loot_list.isEmpty())

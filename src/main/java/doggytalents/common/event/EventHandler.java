@@ -191,7 +191,7 @@ public class EventHandler {
         if (dog == null) {
             throw new IllegalStateException("Creator function for the dog returned \"null\"");
         }
-        dog.setTame(true, true);
+        dog.setTame(true);
         dog.setOwnerUUID(owner.getUUID());
         dog.maxHealth();
         dog.setOrderedToSit(false);
@@ -240,10 +240,11 @@ public class EventHandler {
     }
 
     private static void migrateWolfArmor(Wolf wolf, Dog dog) {
-        if (!wolf.hasArmor())
-            return;
-        var armor_stack = wolf.getBodyArmorItem().copyWithCount(1);
-        dog.setWolfArmor(armor_stack);
+        // if (!wolf.hasArmor())
+        //     return;
+        // var armor_stack = wolf.getBodyArmorItem().copyWithCount(1);
+        // dog.setWolfArmor(armor_stack);
+        return;
     }
 
     //@SubscribeEvent

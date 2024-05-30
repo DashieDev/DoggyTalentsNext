@@ -1,22 +1,36 @@
 package doggytalents.common.advancements.triggers;
 
 import java.util.Optional;
+
+import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import doggytalents.DoggyAdvancementTriggers;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.common.util.Util;
 import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 public class DogBandaidApplyTrigger extends SimpleCriterionTrigger<DogBandaidApplyTrigger.TriggerInstance> {
 
+    public static ResourceLocation ID = Util.getResource("dog_bandaid_apply_trigger");
+
     @Override
-    public Codec<TriggerInstance> codec() {
-        return TriggerInstance.CODEC;
+    public ResourceLocation getId() {
+        return ID;
+    }
+
+    @Override
+    protected TriggerInstance createInstance(JsonObject json, ContextAwarePredicate player,
+            DeserializationContext context) {
+        return new TriggerInstance(player);
     }
 
     public void trigger(AbstractDog dog, ServerPlayer player) {
@@ -24,31 +38,13 @@ public class DogBandaidApplyTrigger extends SimpleCriterionTrigger<DogBandaidApp
     }
 
     public static TriggerInstance getInstance() {
-        return new TriggerInstance(Optional.empty());
+        return new TriggerInstance(ContextAwarePredicate.ANY);
     }
 
-    public static Criterion<TriggerInstance> getCriterion() {
-        return DoggyAdvancementTriggers.DOG_BANDAID_APPLY_TRIGGER.createCriterion(getInstance());
-    }
+    public static class TriggerInstance extends AbstractCriterionTriggerInstance {
 
-    public static class TriggerInstance implements SimpleCriterionTrigger.SimpleInstance {
-
-        public static final Codec<DogBandaidApplyTrigger.TriggerInstance> CODEC = RecordCodecBuilder.create(
-            p_337345_ -> p_337345_.group(
-                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(DogBandaidApplyTrigger.TriggerInstance::player)
-            )
-            .apply(p_337345_, DogBandaidApplyTrigger.TriggerInstance::new)
-        );
-
-        private final Optional<ContextAwarePredicate> player;
-
-        public TriggerInstance(Optional<ContextAwarePredicate> player) {
-            this.player = player;
-        }
-
-        @Override
-        public Optional<ContextAwarePredicate> player() {
-            return player;
+        public TriggerInstance(ContextAwarePredicate player) {
+            super(ID, player);
         }
         
     }

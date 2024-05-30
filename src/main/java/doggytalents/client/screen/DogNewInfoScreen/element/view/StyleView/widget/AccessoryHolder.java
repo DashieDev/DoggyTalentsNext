@@ -72,11 +72,11 @@ public class AccessoryHolder extends AbstractWidget {
     public void onClick(double x, double y) {
         if (this.itemStack == null || this.itemStack.isEmpty())
             return;
-        if (this.itemStack.is(Items.WOLF_ARMOR)) {
-            PacketHandler.send(PacketDistributor.SERVER.noArg(), 
-                new ChangeAccessoriesData(this.dog.getId(), add, inventorySlotId, true));
-            return;
-        }
+        // if (this.itemStack.is(Items.WOLF_ARMOR)) {
+        //     PacketHandler.send(PacketDistributor.SERVER.noArg(), 
+        //         new ChangeAccessoriesData(this.dog.getId(), add, inventorySlotId, true));
+        //     return;
+        // }
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
             new ChangeAccessoriesData(this.dog.getId(), add, inventorySlotId));
     }

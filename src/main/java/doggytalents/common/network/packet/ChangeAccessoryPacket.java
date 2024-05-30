@@ -12,7 +12,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
 
@@ -50,9 +49,9 @@ public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
                 }
                 
                 
-            } else if (item.getItem() == Items.WOLF_ARMOR) {
+            } /*else if (item.getItem() == Items.WOLF_ARMOR) {
                 handleSetWolfArmor(sender, dog, item);
-            }
+            }*/
         } else {
             if (data.wolfArmorSlot) {
                 handleUnsetWolfArmor(sender, dog, data);
@@ -76,23 +75,23 @@ public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
     private static void handleSetWolfArmor(ServerPlayer sender, Dog dog, ItemStack toConsume) {
         if (dog.hasWolfArmor())
             return;
-        if (!toConsume.is(Items.WOLF_ARMOR))
-            return;
+        // if (!toConsume.is(Items.WOLF_ARMOR))
+        //     return;
         dog.setWolfArmor(toConsume.copyWithCount(1));
         dog.consumeItemFromStack(dog, toConsume);
     }
 
     private static void handleUnsetWolfArmor(ServerPlayer sender, Dog dog, ChangeAccessoriesData data) {
-        if (!dog.hasWolfArmor())
-            return;
-        var inventory = sender.getInventory();
-        if (inventory.getFreeSlot() < 0) return;
+        // if (!dog.hasWolfArmor())
+        //     return;
+        // var inventory = sender.getInventory();
+        // if (inventory.getFreeSlot() < 0) return;
 
-        dog.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
+        // dog.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
 
-        var wolf_armor0 = dog.wolfArmor();
-        dog.setWolfArmor(ItemStack.EMPTY);
-        inventory.add(wolf_armor0.copyWithCount(1));
+        // var wolf_armor0 = dog.wolfArmor();
+        // dog.setWolfArmor(ItemStack.EMPTY);
+        // inventory.add(wolf_armor0.copyWithCount(1));
     }
     
 }

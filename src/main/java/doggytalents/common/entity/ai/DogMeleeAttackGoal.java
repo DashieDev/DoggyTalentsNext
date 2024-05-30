@@ -302,8 +302,8 @@ public class DogMeleeAttackGoal extends Goal {
    }
 
    protected boolean isTargetInSafeArea(Dog dog, LivingEntity target, BlockPos target_bp) {
-      var type = WalkNodeEvaluator.getPathTypeStatic(dog, target_bp.mutable());
-      if (type == PathType.OPEN)
+      var type = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), target_bp.mutable());
+      if (type == BlockPathTypes.OPEN)
          return false;
       for (var x : dog.getAlterations()) {
          var type_result = x.inferType(dog, type);
@@ -312,7 +312,7 @@ public class DogMeleeAttackGoal extends Goal {
             break;
          }
       }
-      if (DogUtil.isDangerPathType(type))
+      if (type.getDanger() != null)
          return false;
       return true;
    }

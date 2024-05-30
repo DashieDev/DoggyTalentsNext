@@ -344,7 +344,7 @@ public class ClientSetup {
     public static void setupCollarRenderers(final FMLClientSetupEvent event) {
         
         CollarRenderManager.registerLayer(DefaultAccessoryRenderer::new);
-        CollarRenderManager.registerLayer(DogWolfArmorRenderer::new);
+        //CollarRenderManager.registerLayer(DogWolfArmorRenderer::new);
         CollarRenderManager.registerLayer(IncapacitatedRenderer::new);
         CollarRenderManager.registerLayer(DoggyArmorRenderer::new);
         CollarRenderManager.registerLayer(PackPuppyRenderer::new);

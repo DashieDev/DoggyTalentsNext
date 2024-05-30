@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyRecipeSerializers;
+import doggytalents.common.item.VariantChangerItem;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
@@ -25,7 +26,7 @@ public class DTRecipeProvider /*extends RecipeProvider*/ {
 
     // public DTRecipeProvider(PackOutput generatorIn) {
     //     super(generatorIn);
-    // }
+    // }x
 
     // @Override
     // protected void buildRecipes(Consumer<FinishedRecipe> consumer) {

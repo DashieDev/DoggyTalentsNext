@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
-import doggytalents.DoggyEntitySubPredicates.RawWolfVariantIdSubPredicate;
 import doggytalents.common.advancements.triggers.DogBandaidApplyTrigger;
 import doggytalents.common.advancements.triggers.DogDrunkTrigger;
 import doggytalents.common.util.Util;
@@ -30,7 +29,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.WolfVariants;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -155,5 +153,5 @@ public class DTAdvancementProvider /*extends ForgeAdvancementProvider*/ {
             
     //     }
         
-    // }
+    // }x
 }

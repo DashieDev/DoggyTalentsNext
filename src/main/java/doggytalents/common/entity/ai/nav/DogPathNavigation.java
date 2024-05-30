@@ -82,7 +82,7 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
 
         var nextNode = path.getNextNode();
         boolean is_first_fence_node = 
-            nextNode.type == PathType.FENCE
+            nextNode.type == BlockPathTypes.FENCE
             && path.getNextNodeIndex() == 0;
         if (!is_first_fence_node && dog.getPathfindingMalus(nextNode.type) < 0) {
             this.stop();
