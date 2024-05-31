@@ -12,7 +12,6 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SerializationContext;
@@ -30,7 +29,7 @@ public class DogRecoveredTrigger extends SimpleCriterionTrigger<DogRecoveredTrig
     }
 
     @Override
-    protected TriggerInstance createInstance(JsonObject json, ContextAwarePredicate player,
+    protected TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite player,
             DeserializationContext context) {
         var special = json.get("best_dog_condition").getAsBoolean();
         return new TriggerInstance(player, Optional.of(special));
@@ -41,14 +40,14 @@ public class DogRecoveredTrigger extends SimpleCriterionTrigger<DogRecoveredTrig
     }
     
     public static TriggerInstance getInstance(boolean special) {
-        return new TriggerInstance(ContextAwarePredicate.ANY, Optional.of(special));
+        return new TriggerInstance(EntityPredicate.Composite.ANY, Optional.of(special));
     }
 
     public static class TriggerInstance extends AbstractCriterionTriggerInstance {
 
         private final boolean special;
 
-        public TriggerInstance(ContextAwarePredicate player, Optional<Boolean> special) {
+        public TriggerInstance(EntityPredicate.Composite player, Optional<Boolean> special) {
             super(ID, player);
             this.special = special.orElse(false);
         }

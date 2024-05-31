@@ -73,8 +73,8 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
             stack.scale(1, 1, -1);
             stack.translate(0, 0, -0.1);
         }
-        stack.mulPose(Axis.YP.rotationDegrees(45.0F));
-        stack.mulPose(Axis.XP.rotationDegrees(90.0F));
+        stack.mulPose(Vector3f.YP.rotationDegrees(45.0F));
+        stack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
 
         this.itemInHandRenderer.renderItem(dog, itemStack, TransformType.GROUND, false, stack, bufferSource, packedLight);
         stack.popPose();

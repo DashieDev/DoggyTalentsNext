@@ -4,7 +4,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.HashMap;
@@ -127,9 +126,9 @@ public class ItemUtil {
         dye.setColor(stack, color);
     }
 
-    public static Optional<ArmorTrim> getTrim(Dog dog, ItemStack stack) {
-        return ArmorTrim.getTrim(dog.level().registryAccess(), stack);
-    }
+    // public static Optional<ArmorTrim> getTrim(Dog dog, ItemStack stack) {
+    //     return ArmorTrim.getTrim(dog.level().registryAccess(), stack);
+    // }
 
     public static CompoundTag getWrappedTag(ItemStack stack) {
         return getTag(stack);

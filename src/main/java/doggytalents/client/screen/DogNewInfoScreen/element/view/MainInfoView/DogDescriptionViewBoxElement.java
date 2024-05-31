@@ -80,7 +80,7 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
                 Style.EMPTY.withBold(true)
                 .withColor(ClassicalVar.COLOR_MAP.getOrDefault(variant, 0xffdad7d8))
             );
-        graphics.drawString(font, variant_c1,
+        font.draw(stack, variant_c1,
             startX, pY, 0xffffffff);
     }
 

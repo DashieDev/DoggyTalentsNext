@@ -139,7 +139,7 @@ public class CanineTrackerScreen extends Screen {
             this.mouseY0 = mouseY;
         }
 
-        super.render(graphics, mouseX, mouseY, partialTicks);
+        super.render(stack, mouseX, mouseY, partialTicks);
 
         int half_width = this.width >> 1;
         int half_height = this.height >> 1; 

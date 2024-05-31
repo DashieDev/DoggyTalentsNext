@@ -2,7 +2,6 @@ package doggytalents.common.variants;
 
 import doggytalents.common.util.Util;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;

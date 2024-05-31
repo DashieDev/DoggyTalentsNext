@@ -211,7 +211,7 @@ public class HeelByNameScreen extends Screen {
             
         }
 
-        super.render(graphics, mouseX, mouseY, partialTicks);
+        super.render(stack, mouseX, mouseY, partialTicks);
       
         Gui.fill(stack, half_width - 100, half_height - 100, half_width + 100, half_height + 100, Integer.MIN_VALUE);
         Gui.fill(stack, half_width - 100, half_height + 105, half_width + 100, half_height + 117, Integer.MIN_VALUE);

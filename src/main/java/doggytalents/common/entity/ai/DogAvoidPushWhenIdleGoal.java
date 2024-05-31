@@ -71,8 +71,8 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
             dog_pos.z + delta.z
         );
         
-        var dog_b0 = BlockPos.containing(dog_pos);
-        var dog_b1 = BlockPos.containing(dog_pos_1);
+        var dog_b0 = new BlockPos(dog_pos);
+        var dog_b1 = new BlockPos(dog_pos_1);
 
         var blockType = dog.getBlockPathTypeViaAlterations(dog_b0);
         boolean currently_damaging = 

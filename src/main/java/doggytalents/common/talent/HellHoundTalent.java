@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
@@ -88,7 +87,7 @@ public class HellHoundTalent extends TalentInstance {
         if (source.isFire()) {
             return this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
         }
-        if (source.is(DamageTypeTags.IS_FREEZING)) {
+        if (source == (DamageSource.FREEZE)) {
             return this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
         }
 
@@ -269,8 +268,8 @@ public class HellHoundTalent extends TalentInstance {
         
         var block_itr = 
             BlockPos.betweenClosed(
-                BlockPos.containing(bb.minX, bb.minY, bb.minZ), 
-                BlockPos.containing(bb.maxX, bb.maxY, bb.maxZ)
+                new BlockPos(bb.minX, bb.minY, bb.minZ), 
+                new BlockPos(bb.maxX, bb.maxY, bb.maxZ)
             );
         boolean melted = false;
         for (var pos : block_itr) {

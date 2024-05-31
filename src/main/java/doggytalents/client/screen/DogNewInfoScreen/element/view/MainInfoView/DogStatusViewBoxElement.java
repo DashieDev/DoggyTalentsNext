@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.api.feature.DogSize;
 import doggytalents.api.feature.DogLevel.Type;
 import doggytalents.client.entity.render.DogScreenOverlays;
+import doggytalents.client.entity.render.RenderUtil;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
@@ -43,15 +44,15 @@ public class DogStatusViewBoxElement extends AbstractElement {
         int e_mX = this.getRealX() + this.getSizeX()/2; 
         int e_mY = this.getRealY() + this.getSizeY()/2; 
 
-        renderVariantIcon(graphics, dog, this.getRealX() + this.getSizeX() - 16 - 3, this.getRealY() - 4);
+        renderVariantIcon(stack, dog, this.getRealX() + this.getSizeX() - 16 - 3, this.getRealY() - 4);
 
-        renderDogInside(graphics, dog, e_mX, e_mY + 32, 50, e_mX - mouseX, e_mY - mouseY);
+        renderDogInside(stack, dog, e_mX, e_mY + 32, 50, e_mX - mouseX, e_mY - mouseY);
 
         this.renderHealthBar(stack, dog, e_mX - 41, this.getRealY() + this.getSizeY() - 10);
 
         var points = this.dog.getSpendablePoints();
 
-        renderHungerStatusStr(graphics, this.dog, this.getRealX(), this.getRealY());
+        renderHungerStatusStr(stack, this.dog, this.getRealX(), this.getRealY());
     }
 
     private void drawDogLevelKanji(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
@@ -137,11 +138,11 @@ public class DogStatusViewBoxElement extends AbstractElement {
         }
         
         pX += (80 - (8 + font.width(health_c0)))/2; 
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
+        RenderUtil.blit_for_1_19_2below(this, stack, Screen.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
+        RenderUtil.blit_for_1_19_2below(this, stack, Screen.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
         pX += 9;
         pY += 1;
-        graphics.drawString(font, health_c0, pX, pY, 0xffffffff);
+        font.draw(stack, health_c0, pX, pY, 0xffffffff);
         return;
         // Random random = new Random();
         // random.setSeed((long) (dog.tickCount * 312871));
@@ -237,14 +238,14 @@ public class DogStatusViewBoxElement extends AbstractElement {
         font.draw(stack, "" + hunger, x + 10, y + 1, 0xffffffff);
     }
 
-    private void renderVariantIcon(GuiGraphics graphics, Dog dog, int x, int y) {
+    private void renderVariantIcon(PoseStack graphics, Dog dog, int x, int y) {
         var variant = dog.getClassicalVar();
         var iconLoc = variant.getIcon();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = 16;
-        graphics.blit(iconLoc, x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
+        RenderUtil.blit_for_1_19_2below(this, graphics, iconLoc, x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         RenderSystem.disableBlend();
     }
     

@@ -453,7 +453,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_string", has(Items.STRING))
             .save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DYED_ORB.get(), 1)
+        ShapelessRecipeBuilder.shapeless(DoggyItems.DYED_ORB.get(), 1)
             .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
             .requires(Items.PAPER)
             .unlockedBy("has_string", has(Items.STRING))
@@ -944,7 +944,7 @@ public class DTRecipeProvider extends RecipeProvider {
 
     private void registerVariantChanger(Supplier<VariantChangerItem> itemSup, Consumer<FinishedRecipe>  consumer) {
         var item = itemSup.get();
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, item, 1)
+        ShapelessRecipeBuilder.shapeless(item, 1)
             .requires(DoggyItems.CONDUCTING_BONE.get(), 1)
             .requires(VariantChangerItem.REPR_ITEM.get(item.variant), 1)
             .unlockedBy("has_amnesia_bone", has(DoggyItems.AMNESIA_BONE.get()))

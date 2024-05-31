@@ -107,4 +107,21 @@ public class RenderUtil {
         }
         comp.blit(stack, x, y, imgX, imgY, imgW, imgH);
     }
+
+    public static void blit_for_1_19_2below(GuiComponent comp, PoseStack stack, ResourceLocation blitLoc, int x, int y,
+        int imgX, int imgY, int imgW, int imgH) {
+        blit_for_1_19_2below(comp, stack, blitLoc, x, y, imgX, imgY, imgW, imgH, true);
+    }
+
+    public static void blit_for_1_19_2below(GuiComponent comp, PoseStack stack, ResourceLocation blitLoc, int x, int y,
+        int imgX, int imgY, int imgW, int imgH, int a, int b, int c) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1);
+        RenderSystem.setShaderTexture(0, blitLoc);
+        if (true) {
+            RenderSystem.enableBlend();
+            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        }
+        GuiComponent.blit(stack, x, y, imgX, imgY, imgW, imgH, a, b, c);
+    }
 }
