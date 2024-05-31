@@ -7,6 +7,7 @@ import doggytalents.common.block.tileentity.FoodBowlTileEntity;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.entity.network.container_sync.data.IntArrayData;
 import doggytalents.common.fabric_helper.entity.network.container_sync.data.IntData;
+import doggytalents.common.fabric_helper.entity.network.container_sync.data.ItemAndSlotData;
 import doggytalents.common.inventory.container.DogArmorContainer;
 import doggytalents.common.inventory.container.DogInventoriesContainer;
 import doggytalents.common.inventory.container.DoggyToolsMenu;
@@ -65,26 +66,26 @@ public class Screens {
         }
     }
 
-    // public static class TreatBagContainerProvider implements MenuProvider {
+    public static class TreatBagContainerProvider implements MenuProvider {
 
-    //     private ItemStack stack;
-    //     private int slotId;
+        private ItemStack stack;
+        private int slotId;
 
-    //     public TreatBagContainerProvider(ItemStack stackIn, int slotId) {
-    //         this.stack = stackIn;
-    //         this.slotId = slotId;
-    //     }
+        public TreatBagContainerProvider(ItemStack stackIn, int slotId) {
+            this.stack = stackIn;
+            this.slotId = slotId;
+        }
 
-    //     @Override
-    //     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
-    //         return new TreatBagContainer(windowId, inventory, this.slotId, this.stack);
-    //     }
+        @Override
+        public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
+            return new TreatBagContainer(windowId, inventory, this.slotId, this.stack);
+        }
 
-    //     @Override
-    //     public Component getDisplayName() {
-    //         return Component.translatable("container.doggytalents.treat_bag");
-    //     }
-    // }
+        @Override
+        public Component getDisplayName() {
+            return Component.translatable("container.doggytalents.treat_bag");
+        }
+    }
 
     public static class DogArmorContainerProvider implements MenuProvider {
 
@@ -150,14 +151,13 @@ public class Screens {
         NetworkHooks.openScreen(player, foodBowl, foodBowl.getBlockPos());
     }
 
-    // public static void openTreatBagScreen(ServerPlayer player, ItemStack stackIn, int slotId) {
-    //     if (stackIn.getItem() == DoggyItems.TREAT_BAG.get()) {
-    //         NetworkHooks.openScreen(player, new TreatBagContainerProvider(stackIn, slotId), buf -> {
-    //             buf.writeVarInt(slotId);
-    //             buf.writeItem(stackIn);
-    //         });
-    //     }
-    // }
+    public static void openTreatBagScreen(ServerPlayer player, ItemStack stackIn, int slotId) {
+        if (stackIn.getItem() == DoggyItems.TREAT_BAG.get()) {
+            NetworkHooks.openScreen(player, new TreatBagContainerProvider(stackIn, slotId), ItemAndSlotData.class, () -> {
+                return new ItemAndSlotData(stackIn, slotId);
+            });
+        }
+    }
 
     public static void openArmorScreen(ServerPlayer player, Dog dogIn) {
         if (!dogIn.canInteract(player))

@@ -4,6 +4,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.entity.network.container_sync.data.BlockPosData;
 import doggytalents.common.fabric_helper.entity.network.container_sync.data.IntArrayData;
 import doggytalents.common.fabric_helper.entity.network.container_sync.data.IntData;
+import doggytalents.common.fabric_helper.entity.network.container_sync.data.ItemAndSlotData;
 import doggytalents.common.inventory.container.DogArmorContainer;
 import doggytalents.common.inventory.container.DogInventoriesContainer;
 import doggytalents.common.inventory.container.DoggyToolsMenu;
@@ -42,10 +43,10 @@ public class DoggyContainerTypes {
         Entity entity = inv.player.level().getEntity(data.val);
         return entity instanceof Dog ? new PackPuppyContainer(windowId, inv, (Dog) entity) : null;
     }, IntData.CODEC);
-    // public static final RegistryObject<MenuType<TreatBagContainer>> TREAT_BAG = register("treat_bag", (windowId, inv, data) -> {
-    //     int slotId = data.readByte();
-    //     return new TreatBagContainer(windowId, inv, slotId, data.readItem());
-    // });
+    public static final Supplier<MenuType<TreatBagContainer>> TREAT_BAG = register("treat_bag", ItemAndSlotData.class, (windowId, inv, data) -> {
+        int slotId = data.slot;
+        return new TreatBagContainer(windowId, inv, slotId, data.val);
+    }, ItemAndSlotData.CODEC);
     public static final RegistryObject<MenuType<DogInventoriesContainer>> DOG_INVENTORIES = register("dog_inventories", IntArrayData.class, (windowId, inv, data) -> {
         int noDogs = data.val.size();
         List<Dog> dogs = new ArrayList<>(noDogs);
