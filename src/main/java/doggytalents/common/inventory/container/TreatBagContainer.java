@@ -2,6 +2,7 @@ package doggytalents.common.inventory.container;
 
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyItems;
+import doggytalents.common.inventory.TreatBagItemHandler;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -21,7 +22,7 @@ public class TreatBagContainer extends AbstractContainerMenu {
         super(DoggyContainerTypes.TREAT_BAG.get(), windowId);
         this.slot = slotIn;
         this.itemstack = itemstackIn;
-        this.bagInventory = itemstackIn.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(() -> new RuntimeException("Item handler not present."));
+        this.bagInventory = new TreatBagItemHandler(itemstackIn);
 
         checkContainerSize(playerInventory, 3 * 5);
 
