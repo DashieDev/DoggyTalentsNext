@@ -1,5 +1,8 @@
-// 1.19.2	2024-03-25T02:45:10.4753171	DoggyTalents Advancements
-c3b74fcdd9f51b8b96ee226de6bf06b60d21568b data/doggytalents/advancements/default/get_dog_drunk.json
-746d6faecae40ab26729b1bcc484210ee8c23350 data/doggytalents/advancements/default/ookamikaze_trigger.json
+// 1.19.2	2024-05-31T10:51:29.6445697	DoggyTalents Advancements
+a0ba2db6506ff241b60aaa1ca006e404f004a36b data/doggytalents/advancements/default/dog_recovered.json
+0064126e028c4e3ef7a133d4eaa3e2d2c0c8d4f8 data/doggytalents/advancements/default/dog_recovered_special.json
+c179568424aa988a265c55c03230ea80f7c217e3 data/doggytalents/advancements/default/get_dog_drunk.json
+5fd39dabb076e357b1297f7452c6987ad8009601 data/doggytalents/advancements/default/ookamikaze_trigger.json
+c65ad838df22ff706bbadb78cd44ac774e4e035e data/doggytalents/advancements/default/sterile.json
 d10bc6f468de382d422ed9590c92605c86eeb393 data/doggytalents/advancements/dtn_core/summon_dog.json
 5ec6f1faf79f7aa36bfac264cc5fc923763edff2 data/doggytalents/advancements/dtn_core/train_dog.json

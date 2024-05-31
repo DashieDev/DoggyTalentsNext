@@ -1,29 +1,29 @@
 {
   "parent": "doggytalents:dtn_core/train_dog",
   "criteria": {
-    "ookamikaze_trigger": {
+    "give_dog_bandaid": {
       "conditions": {},
-      "trigger": "doggytalents:ookamikaze_trigger"
+      "trigger": "doggytalents:dog_bandaid_apply_trigger"
     }
   },
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.doggytalents.ookamikaze_trigger.description"
+      "translate": "advancements.doggytalents.sterile.description"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "minecraft:gunpowder"
+      "item": "doggytalents:bandaid"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.doggytalents.ookamikaze_trigger.title"
+      "translate": "advancements.doggytalents.sterile.title"
     }
   },
   "requirements": [
     [
-      "ookamikaze_trigger"
+      "give_dog_bandaid"
     ]
   ]
 }
