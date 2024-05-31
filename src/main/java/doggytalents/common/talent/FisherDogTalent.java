@@ -9,7 +9,6 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.FisherDogData;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
@@ -20,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
 public class FisherDogTalent extends TalentInstance {
@@ -67,10 +66,10 @@ public class FisherDogTalent extends TalentInstance {
         if (this.level() >= 5 && r.nextFloat() < 0.0125) {
             loot_table = BuiltInLootTables.FISHING_TREASURE;
         }
-        var loot_param = new LootParams.Builder(sLevel)
+        var loot_param = new LootContext.Builder(sLevel)
             .create(LootContextParamSets.EMPTY);
-        var loot_list = sLevel.getServer().getLootData()
-            .getLootTable(loot_table)
+        var loot_list = sLevel.getServer().getLootTables()
+            .get(loot_table)
             .getRandomItems(loot_param);
         if (loot_list.isEmpty())
             return ItemStack.EMPTY;

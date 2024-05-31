@@ -7,7 +7,6 @@ import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -15,6 +14,8 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.ForgeRegistries;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -87,8 +88,8 @@ public class DogBedUtil {
         ItemStack stack = new ItemStack(DoggyBlocks.DOG_BED.get(), 1);
 
         CompoundTag tag = new CompoundTag();
-        NBTUtil.putRegistryValue(tag, "casingId", BuiltInRegistries.BLOCK.getKey(casing));
-        NBTUtil.putRegistryValue(tag, "beddingId", BuiltInRegistries.BLOCK.getKey(bedding));
+        NBTUtil.putRegistryValue(tag, "casingId", ForgeRegistries.BLOCKS.getKey(casing));
+        NBTUtil.putRegistryValue(tag, "beddingId", ForgeRegistries.BLOCKS.getKey(bedding));
         var maintag = new CompoundTag();
         maintag.put("doggytalents", tag);
         stack.setTag(maintag);

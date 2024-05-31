@@ -11,7 +11,6 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
@@ -28,7 +27,7 @@ public class DogBandaidApplyTrigger extends SimpleCriterionTrigger<DogBandaidApp
     }
 
     @Override
-    protected TriggerInstance createInstance(JsonObject json, ContextAwarePredicate player,
+    protected TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite player,
             DeserializationContext context) {
         return new TriggerInstance(player);
     }
@@ -38,12 +37,12 @@ public class DogBandaidApplyTrigger extends SimpleCriterionTrigger<DogBandaidApp
     }
 
     public static TriggerInstance getInstance() {
-        return new TriggerInstance(ContextAwarePredicate.ANY);
+        return new TriggerInstance(EntityPredicate.Composite.ANY);
     }
 
     public static class TriggerInstance extends AbstractCriterionTriggerInstance {
 
-        public TriggerInstance(ContextAwarePredicate player) {
+        public TriggerInstance(EntityPredicate.Composite player) {
             super(ID, player);
         }
         

@@ -77,7 +77,7 @@ public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
             return;
         // if (!toConsume.is(Items.WOLF_ARMOR))
         //     return;
-        dog.setWolfArmor(toConsume.copyWithCount(1));
+        // dog.setWolfArmor(toConsume.copyWithCount(1));
         dog.consumeItemFromStack(dog, toConsume);
     }
 

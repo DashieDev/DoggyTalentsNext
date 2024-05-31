@@ -69,7 +69,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                 )
                 .addCriterion(
                     "summon_dog", 
-                    ItemUsedOnLocationTrigger.TriggerInstance
+                    ItemInteractWithBlockTrigger.TriggerInstance
                         .itemUsedOnBlock(
                             LocationPredicate.Builder.location(),
                             ItemPredicate.Builder.item()
@@ -95,7 +95,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                             EntityPredicate.Composite.ANY,
                             ItemPredicate.Builder.item()
                                 .of(DoggyItems.TRAINING_TREAT.get()),
-                            EntityPredicate.wrap(
+                            EntityPredicate.Composite.wrap(
                                 EntityPredicate.Builder.entity()
                                     .of(EntityType.WOLF)
                                     .build()
@@ -107,7 +107,6 @@ public class DTAdvancementProvider extends AdvancementProvider {
         var sake_advancement = 
             Advancement.Builder.advancement()
             .parent(train_dog_advancement)
-            Advancement.Builder.advancement()
             .display(
                 DisplayInfoBuilder.create()
                     .icon(DoggyItems.SAKE)
@@ -216,7 +215,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
 
     private static ItemStack createFullRecoveryBed(boolean special) {
         var casing = special ? 
-            Blocks.STRIPPED_CHERRY_LOG
+            Blocks.STRIPPED_MANGROVE_LOG
             : Blocks.STRIPPED_OAK_LOG;
         var bedding = special ?
             Blocks.RED_WOOL
