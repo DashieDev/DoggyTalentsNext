@@ -1,5 +1,7 @@
 package doggytalents.common.inventory.container;
 
+import java.util.Optional;
+
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyContainerTypes;
 import doggytalents.api.forge_imitate.inventory.SlotItemHandler;
@@ -19,16 +21,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
  */
 public class FoodBowlContainer extends AbstractContainerMenu {
 
-    private BlockEntity tileEntity;
+    private FoodBowlTileEntity tileEntity;
 
     //Server method
     public FoodBowlContainer(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
         super(DoggyContainerTypes.FOOD_BOWL.get(), windowId);
-        this.tileEntity = world.getBlockEntity(pos);
-        var inventory = (tileEntity instanceof FoodBowlTileEntity) ? 
-            ((FoodBowlTileEntity) this.tileEntity).getInventory() : null;
-        if (inventory == null) return;
-
+        this.tileEntity = getFoodBow(world, pos).orElse(null);
+        if (this.tileEntity == null)
+            return;
+        var inventory = this.tileEntity.getInventory();
         for (int i = 0; i < 1; i++) {
             for (int l = 0; l < 5; l++) {
                 this.addSlot(new SlotItemHandler(inventory, l + i * 9, 44 + l * 18, 22 + i * 18));
@@ -81,5 +82,13 @@ public class FoodBowlContainer extends AbstractContainerMenu {
         }
 
         return itemstack;
+    }
+
+    private Optional<FoodBowlTileEntity> getFoodBow(Level level, BlockPos pos) {
+        var tileEntity = level.getBlockEntity(pos);
+        if (tileEntity instanceof FoodBowlTileEntity foodBow) {
+            return Optional.of(foodBow);
+        }
+        return Optional.empty();
     }
 }

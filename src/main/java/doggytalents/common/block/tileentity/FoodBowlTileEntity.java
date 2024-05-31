@@ -40,7 +40,6 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
             return FoodHandler.isFood(stack).isPresent();
         }
     };
-    //private final LazyOptional<ItemStackHandler> itemStackHandler = LazyOptional.of(() -> this.inventory);
 
 
     public int timeoutCounter;
@@ -95,15 +94,6 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
     public ItemStackHandler getInventory() {
         return this.inventory;
     }
-
-    // @Nonnull
-    // @Override
-    // public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-    //     if (cap == ForgeCapabilities.ITEM_HANDLER) {
-    //         return (LazyOptional<T>) this.itemStackHandler;
-    //     }
-    //     return super.getCapability(cap, side);
-    // }
 
     @Override
     public Component getDisplayName() {

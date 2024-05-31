@@ -149,14 +149,14 @@ public class FoodBowlBlock extends BaseEntityBlock {
             FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, posIn, FoodBowlTileEntity.class);
 
             if (foodBowl != null) {
-                ItemStack stack = playerIn.getItemInHand(handIn);
+                //ItemStack stack = playerIn.getItemInHand(handIn);
 
-                if (!stack.isEmpty() && stack.getItem() == DoggyItems.TREAT_BAG.get()) {
+                //if (!stack.isEmpty() && stack.getItem() == DoggyItems.TREAT_BAG.get()) {
                     // IItemHandler bagInventory = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(EmptyHandler.INSTANCE);
                     // IItemHandler bowlInventory = foodBowl.getInventory();
 
                     // InventoryUtil.transferStacks((IItemHandlerModifiable) bagInventory, bowlInventory);
-                } else if (playerIn instanceof ServerPlayer) {
+                /*else*/ if (playerIn instanceof ServerPlayer) {
                     ServerPlayer serverPlayer = (ServerPlayer)playerIn;
 
                     Screens.openFoodBowlScreen(serverPlayer, foodBowl);
