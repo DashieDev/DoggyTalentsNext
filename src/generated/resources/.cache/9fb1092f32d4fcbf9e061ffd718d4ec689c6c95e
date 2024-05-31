@@ -1,4 +1,4 @@
-// 1.19.2	2024-05-31T10:51:29.6496075	Recipes
+// 1.19.2	2024-05-31T11:27:43.2573027	Recipes
 8270e2d1b39576e6e8cb2935e5ce69880a3a1cf1 data/doggytalents/advancements/recipes/doggytalents.dogbed/dog_bed_def.json
 f9244aae308ae864c6472ffa1c9d9d7909edab19 data/doggytalents/advancements/recipes/doggytalents/aburaage_camping.json
 03eece750f815043a23ab7eda11e6c985deade36 data/doggytalents/advancements/recipes/doggytalents/aburaage_smelting.json
@@ -226,7 +226,7 @@ aaf276de6c16c05dffa739aaf45d4b31b44e1f29 data/doggytalents/recipes/super_treat.j
 48808c991587ce77a1d933036654d67ddf719aeb data/doggytalents/recipes/throw_stick.json
 caf291990f6571d104b0e8f87b459e88f2e4c2f0 data/doggytalents/recipes/throw_stick_wet.json
 0f439b307c80436d015fc4346a6933fde0d44355 data/doggytalents/recipes/tofu.json
-2d97b18dd6bcd1a18a5334a45835627c81ed6b6c data/doggytalents/recipes/training_treat.json
+8b08e987d0c39a0fcb146a1bc40074e6ca68a42a data/doggytalents/recipes/training_treat.json
 9df55d48be23737263345498ee3899ab3b32c94a data/doggytalents/recipes/treat_bag.json
 455427167b88e105aa6edf9d20f92e8401268c78 data/doggytalents/recipes/uncooked_rice_bowl.json
 24c239273c3757cd595af61c09c2b42a734da70c data/doggytalents/recipes/variant_changer_ashen.json
