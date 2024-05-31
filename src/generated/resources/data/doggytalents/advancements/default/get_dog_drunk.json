@@ -1,4 +1,5 @@
 {
+  "parent": "doggytalents:dtn_core/train_dog",
   "display": {
     "icon": {
       "item": "doggytalents:sake"

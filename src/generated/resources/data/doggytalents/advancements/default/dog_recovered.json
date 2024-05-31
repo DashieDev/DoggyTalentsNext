@@ -1,0 +1,32 @@
+{
+  "parent": "doggytalents:default/sterile",
+  "display": {
+    "icon": {
+      "item": "doggytalents:dog_bed",
+      "nbt": "{doggytalents:{beddingId:\"minecraft:white_wool\",casingId:\"minecraft:stripped_oak_log\"}}"
+    },
+    "title": {
+      "translate": "advancements.doggytalents.a_full_recovery.title"
+    },
+    "description": {
+      "translate": "advancements.doggytalents.a_full_recovery.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "dog_recovered": {
+      "trigger": "doggytalents:dog_recovered_trigger",
+      "conditions": {
+        "best_dog_condition": false
+      }
+    }
+  },
+  "requirements": [
+    [
+      "dog_recovered"
+    ]
+  ]
+}

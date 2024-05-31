@@ -1,0 +1,32 @@
+{
+  "parent": "doggytalents:default/dog_recovered",
+  "display": {
+    "icon": {
+      "item": "doggytalents:dog_bed",
+      "nbt": "{doggytalents:{beddingId:\"minecraft:red_wool\",casingId:\"minecraft:stripped_dark_oak_log\"}}"
+    },
+    "title": {
+      "translate": "advancements.doggytalents.the_best_dogtor.title"
+    },
+    "description": {
+      "translate": "advancements.doggytalents.the_best_dogtor.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "dog_recovered_special": {
+      "trigger": "doggytalents:dog_recovered_trigger",
+      "conditions": {
+        "best_dog_condition": true
+      }
+    }
+  },
+  "requirements": [
+    [
+      "dog_recovered_special"
+    ]
+  ]
+}
