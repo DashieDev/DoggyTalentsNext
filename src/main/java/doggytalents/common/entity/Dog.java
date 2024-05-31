@@ -56,6 +56,7 @@ import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.util.*;
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -84,6 +85,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -135,6 +137,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
@@ -199,7 +202,7 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Integer> ANIM_SYNC_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
-    private static final Cache<EntityDataAccessor<ClassicalVar>> CLASSICAL_VAR = Cache.make(() -> (EntityDataAccessor<ClassicalVar>) SynchedEntityData.defineId(Dog.class, DoggySerializers.CLASSICAL_VAR.get()));
+    private static final Cache<EntityDataAccessor<ClassicalVar>> CLASSICAL_VAR = Cache.make(() -> (EntityDataAccessor<ClassicalVar>) SynchedEntityData.defineId(Dog.class, DoggySerializers.CLASSICAL_VAR.get().getSerializer()));
     private static final Cache<EntityDataAccessor<DogLevel>> DOG_LEVEL = Cache.make(() -> (EntityDataAccessor<DogLevel>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<EnumGender>> GENDER = Cache.make(() -> (EntityDataAccessor<EnumGender>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<EnumMode>> MODE = Cache.make(() -> (EntityDataAccessor<EnumMode>) SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER.get().getSerializer()));
@@ -2475,8 +2478,8 @@ public class Dog extends AbstractDog {
             + " ";
         var msg01 = ComponentUtil.translatable(
             "dog.mode.incapacitated.msg.partition1",
-            Component.literal(msg005),
-            Component.translatable(EnumMode.INJURED.getUnlocalisedName())
+            ComponentUtil.literal(msg005),
+            ComponentUtil.translatable(EnumMode.INJURED.getUnlocalisedName())
             .withStyle(
                 Style.EMPTY
                 .withBold(true)
@@ -2519,7 +2522,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public void jumpInFluid(FluidType type) {
+    public void jumpInLiquid(TagKey<Fluid> type) {
         if (this.getNavigation().canFloat()) {
             this.setDeltaMovement(this.getDeltaMovement().add(0.0, (double)0.04f, 0.0));
         } else {
@@ -4383,8 +4386,8 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean isPushedByFluid(FluidType type) {
-        if (this.fireImmune() && type == ForgeMod.LAVA_TYPE.get())
+    public boolean isPushedByFluid() {
+        if (this.fireImmune() && this.isInLava())
             return false;
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType();
@@ -4720,16 +4723,16 @@ public class Dog extends AbstractDog {
         // return true;
     }
 
-    @Override
-    public void onEquipItem(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack) {
-        var type = slot.getType();
-        boolean is_slot_should_be_handled = 
-            type == EquipmentSlot.Type.ARMOR;
+    // @Override
+    // public void onEquipItem(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack) {
+    //     var type = slot.getType();
+    //     boolean is_slot_should_be_handled = 
+    //         type == EquipmentSlot.Type.ARMOR;
 
-        if (!is_slot_should_be_handled)
-            return;
-        super.onEquipItem(slot, oldStack, newStack);
-    }
+    //     if (!is_slot_should_be_handled)
+    //         return;
+    //     super.onEquipItem(slot, oldStack, newStack);
+    // }
     
     @Override
     public boolean canTakeItem(ItemStack stack) {
@@ -4855,7 +4858,7 @@ public class Dog extends AbstractDog {
     }
 
     private boolean isDogInFluid() {
-        return !this.getMaxHeightFluidType().isAir();
+        return this.getMaxHeightFluidType().isPresent();
     }
 
     @Override
@@ -5123,6 +5126,14 @@ public class Dog extends AbstractDog {
             this.setDeltaMovement(Vec3.ZERO);
             this.calculateEntityAnimation(this, false);
         }
+    }
+    //1.18.2-
+    public Optional<TagKey<Fluid>> getMaxHeightFluidType() {
+        return this.fluidHeight.object2DoubleEntrySet()
+            .stream().max(java.util.Comparator.comparingDouble(Object2DoubleMap.Entry::getDoubleValue)).map(Object2DoubleMap.Entry::getKey);
+    }
+    public double getFluidTypeHeight(TagKey<Fluid> type) {
+        return this.getFluidHeight(type);
     }
 
     /**

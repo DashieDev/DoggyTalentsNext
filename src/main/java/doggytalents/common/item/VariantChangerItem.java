@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
@@ -63,7 +64,7 @@ public class VariantChangerItem extends Item implements IDogItem {
             return InteractionResult.SUCCESS;
         
         dog.setClassicalVar(this.variant);
-        dog.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
+        dog.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1, 1);
         if (dog.level() instanceof ServerLevel sL) {
             var item = REPR_ITEM.get(this.variant);
             sL.sendParticles(
@@ -99,8 +100,8 @@ public class VariantChangerItem extends Item implements IDogItem {
         if (!(item instanceof VariantChangerItem changer))
             return;
         var variant = changer.variant;
-        var variant_c1 = (Component.translatable(variant.getTranslationKey()));
-        list.add(Component.translatable("item.doggytalents.variant_changer.description", variant_c1));
+        var variant_c1 = (ComponentUtil.translatable(variant.getTranslationKey()));
+        list.add(ComponentUtil.translatable("item.doggytalents.variant_changer.description", variant_c1));
     }
     
     //TODO ADD RECI PE

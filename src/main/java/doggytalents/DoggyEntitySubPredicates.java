@@ -9,7 +9,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import doggytalents.common.lib.Constants;
-import net.minecraft.advancements.critereon.EntitySubPredicate;
 
 public class DoggyEntitySubPredicates {
     

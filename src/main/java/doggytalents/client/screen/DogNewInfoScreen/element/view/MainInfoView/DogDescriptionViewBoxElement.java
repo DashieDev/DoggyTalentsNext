@@ -76,7 +76,7 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
         var variant = dog.getClassicalVar();
         var variant_str = I18n.get("doggui.classical.variant") + " "
         + I18n.get(variant.getTranslationKey());
-        var variant_c1 = Component.literal(variant_str)
+        var variant_c1 = ComponentUtil.literal(variant_str)
             .withStyle(
                 Style.EMPTY.withBold(true)
                 .withColor(ClassicalVar.COLOR_MAP.getOrDefault(variant, 0xffdad7d8))

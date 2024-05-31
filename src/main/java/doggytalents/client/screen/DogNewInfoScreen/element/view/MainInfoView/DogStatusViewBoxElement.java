@@ -127,15 +127,15 @@ public class DogStatusViewBoxElement extends AbstractElement {
             int wolf_armor_ext_hp = dog.wolfArmor().getMaxDamage() -
                  dog.wolfArmor().getDamageValue();
             var healthStrPosfix = "+" + wolf_armor_ext_hp;
-            health_c0 = Component.literal(healthStrPrefix)
+            health_c0 = ComponentUtil.literal(healthStrPrefix)
                 .append(
-                    Component.literal(healthStrPosfix)
+                    ComponentUtil.literal(healthStrPosfix)
                         .withStyle(Style.EMPTY.withColor(0xffd1926d))
                 );
         } else {
             var healthStrPosfix = "/" + ((int)dog.getMaxHealth());
             String healthStr = healthStrPrefix + healthStrPosfix;
-            health_c0 = Component.literal(healthStr);
+            health_c0 = ComponentUtil.literal(healthStr);
         }
         
         pX += (80 - (8 + font.width(health_c0)))/2; 

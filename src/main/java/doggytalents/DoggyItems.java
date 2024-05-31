@@ -400,7 +400,7 @@ public class DoggyItems {
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.DYED_ORB, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 if (tintIndex == 1) {
                     return ((DoubleDyableAccessoryItem) stack.getItem()).getFgColor(stack);
                 }

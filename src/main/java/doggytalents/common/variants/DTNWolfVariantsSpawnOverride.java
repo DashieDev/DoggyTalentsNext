@@ -5,7 +5,6 @@ import java.util.Optional;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Wolf;

@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.DogAiManager.IHasTickNonRunning;
+import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -198,9 +199,9 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
             if (explore_r <= 0)
                 return this.dog.blockPosition();
             var r = this.dog.getRandom();
-            int offX = r.nextIntBetweenInclusive(-explore_r, explore_r);
-            int offY = r.nextIntBetweenInclusive(-1, 1);
-            int offZ = r.nextIntBetweenInclusive(-explore_r, explore_r);
+            int offX = EntityUtil.getRandomNumber(dog, -explore_r, explore_r);
+            int offY = EntityUtil.getRandomNumber(dog, -1, 1);
+            int offZ = EntityUtil.getRandomNumber(dog, -explore_r, explore_r);
             return restrict_b0.offset(offX, offY, offZ);
         }
         var r = this.dog.getRandom();

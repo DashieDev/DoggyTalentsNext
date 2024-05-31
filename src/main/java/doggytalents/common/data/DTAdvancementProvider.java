@@ -69,7 +69,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                 )
                 .addCriterion(
                     "summon_dog", 
-                    ItemInteractWithBlockTrigger.TriggerInstance
+                    ItemUsedOnBlockTrigger.TriggerInstance
                         .itemUsedOnBlock(
                             LocationPredicate.Builder.location(),
                             ItemPredicate.Builder.item()
@@ -215,7 +215,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
 
     private static ItemStack createFullRecoveryBed(boolean special) {
         var casing = special ? 
-            Blocks.STRIPPED_MANGROVE_LOG
+            Blocks.STRIPPED_DARK_OAK_LOG
             : Blocks.STRIPPED_OAK_LOG;
         var bedding = special ?
             Blocks.RED_WOOL
