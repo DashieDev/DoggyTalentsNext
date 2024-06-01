@@ -19,8 +19,9 @@ import net.minecraft.world.phys.Vec3;
 
 public class DogRangedAttackGoal extends Goal {
     
+    private static final int default_attack_radius = 20;
+
     private final Dog dog;
-    private int attackRadius;
     
     private final int timeOutTick = 40;
     private int waitingTick;
@@ -32,7 +33,6 @@ public class DogRangedAttackGoal extends Goal {
 
     public DogRangedAttackGoal(Dog dog ) {
         this.dog = dog;
-        this.attackRadius = 20;
         
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
@@ -101,7 +101,8 @@ public class DogRangedAttackGoal extends Goal {
             restriction = !this.dog.patrolTargetLock();
         }
         
-        if (this.waitingTick > this.timeOutTick) return false;
+        if (this.waitingTick > this.timeOutTick) 
+            return false;
         
         LivingEntity livingentity = this.dog.getTarget();
 
@@ -126,7 +127,7 @@ public class DogRangedAttackGoal extends Goal {
         var restrict_r = dog.getRestrictRadius();
         if (restrict_r < 0)
             return false;
-        var max_dist = attackRadius - 2 + restrict_r; 
+        var max_dist = getAttackRadius(target) - 2 + restrict_r; 
         if (target.distanceToSqr(Vec3.atBottomCenterOf(restrict_pos)) <= max_dist * max_dist)
             return false;
         return true;
@@ -147,6 +148,7 @@ public class DogRangedAttackGoal extends Goal {
     public void start() {
         this.seeTime = 0;
         this.tickTillPathRecalc = 0;
+        this.waitingTick = 0;
         this.dogPos0 = this.dog.blockPosition().mutable();
         this.dog.getDogRangedAttack().onStart(dog);
     }
@@ -169,38 +171,15 @@ public class DogRangedAttackGoal extends Goal {
         boolean can_see_target = this.dog.getSensing().hasLineOfSight(target);
         
         updateSeeTime(can_see_target);
-
-        if (dog.canDogFly()) {
-            flyAndShootTarget(target, d_dog_target_sqr, can_see_target);
-        } else {
-            boolean can_shoot_target = 
-                d_dog_target_sqr <= (double)(this.attackRadius * this.attackRadius)
-                && seeTime >= -40;
-            if (!can_shoot_target) {
-                chaseTarget(target);
-            } else {
-                strafeAndShootTarget(target, d_dog_target_sqr, can_see_target, false);
-            }
-        }
-        
-
+        chaseTargetOrPositionSelf(target, d_dog_target_sqr, can_see_target);
+        updateUsingWeapon(can_see_target, target);
     }
 
-    private void flyAndShootTarget(LivingEntity target, double d_dog_target_sqr, boolean can_see_target) {
-        boolean can_shoot_target = 
-                d_dog_target_sqr <= (double)(this.attackRadius * this.attackRadius);
-        
-        double stop_chase_dist = 6 + target.getBbWidth()/2;
-
-        if (d_dog_target_sqr > stop_chase_dist * stop_chase_dist)
-            chaseTarget(target);
-        else {
-            this.waitingTick = 0;
-            dog.getNavigation().stop();
+    private float getAttackRadius(LivingEntity target) {
+        if (this.dog.canDogFly()) {
+            return 6 + target.getBbWidth()/2;
         }
-
-        if (can_shoot_target)
-            strafeAndShootTarget(target, d_dog_target_sqr, can_see_target, true);
+        return default_attack_radius;
     }
 
     private void updateSeeTime(boolean canSeeTarget) {
@@ -214,6 +193,17 @@ public class DogRangedAttackGoal extends Goal {
         } else {
            --this.seeTime;
         }
+    }
+
+    private void chaseTargetOrPositionSelf(LivingEntity target, double d_dog_target_sqr, boolean can_see_target) {
+        var attack_r = this.getAttackRadius(target);
+        boolean should_chase_target = 
+            d_dog_target_sqr > (double)(attack_r * attack_r)
+            || seeTime < -40;
+        if (should_chase_target)
+            chaseTarget(target);
+        else
+            positionSelf(target, d_dog_target_sqr, can_see_target);
     }
 
     private void chaseTarget(LivingEntity target) {
@@ -231,18 +221,15 @@ public class DogRangedAttackGoal extends Goal {
         }
     }
 
-    private void strafeAndShootTarget(LivingEntity target, double d_dog_target_sqr, boolean can_see_target, boolean fly) {
-        if (!fly) {
-            this.dog.getNavigation().stop();
-            this.waitingTick = 0;
-        }
-
+    private void positionSelf(LivingEntity target, double d_dog_target_sqr, boolean can_see_target) {
+        this.dog.getNavigation().stop();
+        this.waitingTick = 0;
+        
         this.dog.getLookControl().setLookAt(target, 30.0F, this.dog.getMaxHeadXRot());
         this.dog.lookAt(target, 30.0F, this.dog.getMaxHeadXRot());
-        if (!fly)
-            strafeIfNeccessary(target, d_dog_target_sqr);
-
-        updateUsingWeapon(can_see_target, target);
+        
+        if (!this.dog.canDogFly())
+            strafeAtTarget(target, d_dog_target_sqr);
     }
 
     private void updateUsingWeapon(boolean can_see_target, LivingEntity target) {
@@ -257,10 +244,10 @@ public class DogRangedAttackGoal extends Goal {
             this.attackCooldown = 20;
     }
 
-    private void strafeIfNeccessary(LivingEntity target, double d_dog_target_sqr) {
+    private void strafeAtTarget(LivingEntity target, double d_dog_target_sqr) {
         int strafe_dir = 0;
 
-        double foward_threshold = this.attackRadius * 0.75F;
+        double foward_threshold = this.getAttackRadius(target) * 0.75F;
         double backup_threshold = 6;
         if (d_dog_target_sqr > foward_threshold * foward_threshold) {
             strafe_dir = 1;
