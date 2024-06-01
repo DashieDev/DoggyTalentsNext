@@ -456,6 +456,32 @@ public class DogUtil {
         return d_sqr <= 1 && ( -maxDY_down <= dy && dy <= maxDY_up);
     }
 
+    public static boolean pathObstructOwnerMining(Dog dog) {
+
+        var n = dog.getNavigation(); 
+        var p = n.getPath();
+        if (p == null || p.getNodeCount() <= 0) return false;
+
+        var owner = dog.getOwner();
+        if (owner == null) return false;
+        
+        //Iterate through the next 5 blocks of the path and check if obstruct owner.
+        int i0 = p.getNextNodeIndex();
+        int i_end = Mth.clamp(i0+5, i0, p.getNodeCount());
+        for (int i = i0; i < i_end; ++i) {
+
+            boolean flag = 
+                DogUtil.posWillCollideWithOwnerMovingForward(dog, owner, p.getNodePos(i));
+
+            if (flag) {
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
     /**
      * move to a position if can reach it, otherwise execute orElse
      * 
