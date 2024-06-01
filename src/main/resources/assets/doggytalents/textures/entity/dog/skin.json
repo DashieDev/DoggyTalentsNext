@@ -485,6 +485,20 @@
             "tags" : "classical"
         },
         {
+            "skin_name" : "Australian Kelpie (Chocolate)",
+            "skin_id" : "australian_kelpie",
+            "use_model" : "australian_kelpie",
+            "author" : "MashXP",
+            "tags" : "classical"
+        },
+        {
+            "skin_name" : "Australian Kelpie (Black Tan)",
+            "skin_id" : "australian_kelpie_2",
+            "use_model" : "australian_kelpie",
+            "author" : "MashXP",
+            "tags" : "classical"
+        },
+        {
             "skin_name" : "Rottweiler",
             "skin_id" : "rottweiler",
             "use_model" : "default"

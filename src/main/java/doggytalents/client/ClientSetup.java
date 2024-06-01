@@ -29,6 +29,7 @@ import doggytalents.client.entity.model.dog.AmmyShinModel;
 import doggytalents.client.entity.model.dog.AmmyShiranuiModel;
 import doggytalents.client.entity.model.dog.AmmyTeiModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
+import doggytalents.client.entity.model.dog.AustralianKelpieModel;
 import doggytalents.client.entity.model.dog.BassetHoundModel;
 import doggytalents.client.entity.model.dog.BelgianMalinoisModel;
 import doggytalents.client.entity.model.dog.BichonMaltaisModel;
@@ -194,6 +195,7 @@ public class ClientSetup {
     public static final ModelLayerLocation RANGA = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ranga"), "main");
     public static final ModelLayerLocation BOLT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "bolt"), "main");
     public static final ModelLayerLocation DOG_NORFOLK_TERRIER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "norfolk_terrier"), "main");
+    public static final ModelLayerLocation DOG_AUSTRALIAN_KELPIE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "australian_kelpie"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor");
     public static final ModelLayerLocation DOG_ARMOR_LEGACY = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog"), "armor_legacy");
@@ -290,6 +292,7 @@ public class ClientSetup {
         event.registerLayerDefinition(RANGA, RangaModel::createBodyLayer);
         event.registerLayerDefinition(BOLT, BoltModel::createBodyLayer);
         event.registerLayerDefinition(DOG_NORFOLK_TERRIER, NorfolkTerrierModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_AUSTRALIAN_KELPIE, AustralianKelpieModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ARMOR_LEGACY, DogArmorModel::createLegacyLayer);
