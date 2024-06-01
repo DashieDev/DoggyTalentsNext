@@ -25,6 +25,7 @@ import doggytalents.client.entity.model.dog.AmmyShiranuiModel;
 import doggytalents.client.entity.model.dog.AmmyRebirthModel;
 import doggytalents.client.entity.model.dog.AmmyTeiModel;
 import doggytalents.client.entity.model.dog.ArcanineModel;
+import doggytalents.client.entity.model.dog.AustralianKelpieModel;
 import doggytalents.client.entity.model.dog.CustomDogModel;
 import doggytalents.client.entity.model.dog.BassetHoundModel;
 import doggytalents.client.entity.model.dog.BelgianMalinoisModel;
@@ -188,6 +189,7 @@ public class DogModelRegistry {
         register("ranga", ctx ->  new RangaModel(ctx.bakeLayer(ClientSetup.RANGA)));
         register("bolt", ctx ->  new BoltModel(ctx.bakeLayer(ClientSetup.BOLT)));
         register("norfolk_terrier", ctx ->  new NorfolkTerrierModel(ctx.bakeLayer(ClientSetup.DOG_NORFOLK_TERRIER)));
+        register("australian_kelpie", ctx ->  new AustralianKelpieModel(ctx.bakeLayer(ClientSetup.DOG_AUSTRALIAN_KELPIE)));
 
         //registerFromEvent();
     }
