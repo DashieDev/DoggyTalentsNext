@@ -122,7 +122,6 @@ public class DoggyToolsTalent extends TalentInstance  {
         };
 
         var mainHandItem = dog.getMainHandItem();
-        boolean mainHandNotEmpty = mainHandItem != null && !mainHandItem.isEmpty();
 
         if (dog.isBusy() || dog.getTarget() != null)
             return;
