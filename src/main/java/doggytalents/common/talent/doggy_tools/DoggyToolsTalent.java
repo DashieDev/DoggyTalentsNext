@@ -24,6 +24,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
@@ -35,6 +36,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BowItem;
@@ -44,6 +47,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -54,6 +58,9 @@ public class DoggyToolsTalent extends TalentInstance  {
     private DoggyToolsItemHandler tools;
     private Map<Item, ToolAction> TOOL_ACTION_MAP;
     private boolean alwaysPickSlot0;
+
+    private Optional<ThrownTrident> awaitingTrident = Optional.empty();
+    private int awaitingTridentTime = 0;
 
     public DoggyToolsTalent(Talent talentIn, int level) {
         super(talentIn, level);
@@ -167,6 +174,12 @@ public class DoggyToolsTalent extends TalentInstance  {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
             }
+            if (stack.is(Items.TRIDENT) &&
+                EnchantmentHelper.getLoyalty(stack) > 0){
+                dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
+                break;
+            }
+                
         }
     }
 
@@ -271,7 +284,7 @@ public class DoggyToolsTalent extends TalentInstance  {
 
     @Override
     public Optional<IDogRangedAttackManager> getRangedAttack() {
-        return Optional.of(new DoggyToolsRangedAttack());
+        return Optional.of(new DoggyToolsRangedAttack(this));
     }
 
     @Override
@@ -308,6 +321,39 @@ public class DoggyToolsTalent extends TalentInstance  {
         return 8*8;
     } 
 
+    public boolean isAwaitingTridentReturn() {
+        return this.awaitingTrident.isPresent();
+    }
+
+    public void setAwaitingTrident(ThrownTrident proj) {
+        this.awaitingTrident = Optional.ofNullable(proj);
+        this.awaitingTridentTime = 0;
+    }
+    
+    public void validateAwaitingTrident(Dog dog) {
+        if (!this.awaitingTrident.isPresent())
+            return;
+        var trident = this.awaitingTrident.get();
+        if (!trident.isAlive()) {
+            this.awaitingTrident = Optional.empty();
+            this.awaitingTridentTime = 0;
+            return;
+        }
+        if (trident.noPhysics && trident.distanceToSqr(dog) < 2 * 2) {
+            this.awaitingTridentTime = 0;
+            this.awaitingTrident = Optional.empty();
+            trident.discard();
+            return;
+        }
+        if (this.awaitingTridentTime > 70) {
+            this.awaitingTridentTime = 0;
+            this.awaitingTrident = Optional.empty();
+            trident.discard();
+            return;
+        }
+        ++this.awaitingTridentTime;
+    }
+    
 
     @Override
     public void writeToBuf(FriendlyByteBuf buf) {
@@ -346,10 +392,22 @@ public class DoggyToolsTalent extends TalentInstance  {
 
     private static class DoggyToolsRangedAttack implements IDogRangedAttackManager {
 
+        private final DoggyToolsTalent inst;
+
+        public DoggyToolsRangedAttack(DoggyToolsTalent inst) {
+            this.inst = inst;
+        } 
+
         @Override
         public boolean isApplicable(AbstractDog dog) {
-            return dog.getMainHandItem().getItem() instanceof BowItem
-                && findArrowsInInventory(dog).isPresent();
+            var mainhand_item = dog.getMainHandItem();
+            if (mainhand_item.getItem() instanceof BowItem) {
+                return findArrowsInInventory(dog).isPresent();
+            }
+            if (mainhand_item.getItem() instanceof TridentItem) {
+                return EnchantmentHelper.getLoyalty(mainhand_item) > 0;
+            }
+            return false;
         }
 
         @Override
@@ -370,13 +428,20 @@ public class DoggyToolsTalent extends TalentInstance  {
     
             if (ctx.canSeeTarget) {
                 int i = dog.getTicksUsingItem();
-                if (i >= 20) {
+                if (i >= 20 && !inst.isAwaitingTridentReturn()) {
                     dog.stopUsingItem();
-                    shoot(dog, ctx.target, BowItem.getPowerForTime(i));
+                    shoot(dog, ctx.target, i);
                     return true;
                 }
             }
             return false;
+        }
+
+        private boolean readyToShoot(AbstractDog dog, int tick_using) {
+            if (i < 20)
+                return false;
+            var mainhand_item = dog.getMainHandItem();
+            if (mainhand_item.is(Items.TRIDENT))
         }
     
         private void mayStartUsingWeapon(UsingWeaponContext ctx) {
@@ -384,13 +449,36 @@ public class DoggyToolsTalent extends TalentInstance  {
                 ctx.dog.startUsingItem(InteractionHand.MAIN_HAND);
             }
         }
+
+        private void shoot(AbstractDog dog, LivingEntity target, int tick_using) {
+            var mainhand_item = dog.getMainHandItem();
+            if (mainhand_item.getItem() instanceof BowItem)
+                shootFromBow(dog, target, BowItem.getPowerForTime(tick_using));
+            else if (mainhand_item.getItem() instanceof TridentItem)
+                shootFromTrident(dog, target);
+        }
     
-        private void shoot(AbstractDog dog, LivingEntity target, float damage) {
+        private void shootFromBow(AbstractDog dog, LivingEntity target, float damage) {
             var arrowOptional = getAndConsumeDogArrow(dog, damage);
             if (!arrowOptional.isPresent())
                 return;
 
             var arrow = arrowOptional.get();
+            shootProjectile(dog, arrow, target, SoundEvents.SKELETON_SHOOT);
+        }
+
+        private void shootFromTrident(AbstractDog dog, LivingEntity target) {
+            var tridentOptional = getAndConsumeDogTrident(dog);
+            if (!tridentOptional.isPresent())
+                return;
+
+            var trident = tridentOptional.get();
+            inst.setAwaitingProjectile(trident);
+            shootProjectile(dog, trident, target, SoundEvents.TRIDENT_THROW);
+        }
+
+        private void shootProjectile(AbstractDog dog, Projectile proj, LivingEntity target,
+            SoundEvent shoot_sound) {
             final double aim_y_offset_l_xz_influence = 0.2;
             final double aim_y_offset_l_xz_influence_down = 0.1;
     
@@ -400,7 +488,7 @@ public class DoggyToolsTalent extends TalentInstance  {
     
             double aim_y = target.getY()
                 + 0.5 * target.getBbHeight(); 
-            double dy = aim_y - arrow.getY();
+            double dy = aim_y - proj.getY();
             if (dy > 0) {
                 dy += l_xz * aim_y_offset_l_xz_influence;
             } else {
@@ -412,11 +500,11 @@ public class DoggyToolsTalent extends TalentInstance  {
             double shoot_dir_z = dz;
             float power = 1.6f;
             float error_window = 2;
-            arrow.shoot(shoot_dir_x, shoot_dir_y, shoot_dir_z, 
+            proj.shoot(shoot_dir_x, shoot_dir_y, shoot_dir_z, 
                 power, error_window);
     
-            dog.playSound(SoundEvents.SKELETON_SHOOT, 1.0F, 1.0F / (dog.getRandom().nextFloat() * 0.4F + 0.8F));
-            dog.level().addFreshEntity(arrow);
+            dog.playSound(shoot_sound, 1.0F, 1.0F / (dog.getRandom().nextFloat() * 0.4F + 0.8F));
+            dog.level().addFreshEntity(proj);
         }
 
         public Optional<AbstractArrow> getAndConsumeDogArrow(AbstractDog dog, float damage) {
@@ -505,6 +593,18 @@ public class DoggyToolsTalent extends TalentInstance  {
             if (!is_infinity_bow)
                 arrowStack.shrink(1);
     
+        }
+
+        private Optional<ThrownTrident> getAndConsumeDogTrident(AbstractDog dog) {
+            var trident_stack = dog.getMainHandItem();
+            if (!trident_stack.is(Items.TRIDENT))
+                return Optional.empty();
+            
+            var proj = new ThrownTrident(dog.level(), dog, trident_stack);
+            proj.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
+            trident_stack.hurtAndBreak(1, dog, EquipmentSlot.MAINHAND);
+            
+            return Optional.of(proj);
         }
 
         @Override
