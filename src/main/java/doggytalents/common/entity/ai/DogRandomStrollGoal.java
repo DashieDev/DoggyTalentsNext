@@ -56,46 +56,11 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
         super.tick();
         
         if (this.dog.isMiningCautious()) {
-            if (this.pathObstructOwnerMining()) {
+            if (DogUtil.pathObstructOwnerMining(this.dog)) {
                 this.stop();
             }
         }
-    }
-
-    //TODO Mining genius : the dog will follow owner while putting torch down 
-    //Closely and also run with him
-    //And lead any other dogs which is close too .... 
-    //TODO CHANGE : make the logic make more sense and efficent
-    //Check if owner is swinging with a digger item in hand.
-    /**
-     * Check if the forward nodes in dog's path is obstructing owner mining,
-     * an obstructing path is defined in {@link DogUtil#posWillCollideWithOwnerMovingForward}
-     */
-    private boolean pathObstructOwnerMining() {
-
-        var n = this.dog.getNavigation(); 
-        var p = n.getPath();
-        if (p == null || p.getNodeCount() <= 0) return false;
-
-        var owner = dog.getOwner();
-        if (owner == null) return false;
-        
-        //Iterate through the next 5 blocks of the path and check if obstruct owner.
-        int i0 = p.getNextNodeIndex();
-        int i_end = Mth.clamp(i0+5, i0, p.getNodeCount());
-        for (int i = i0; i < i_end; ++i) {
-
-            boolean flag = 
-                DogUtil.posWillCollideWithOwnerMovingForward(dog, owner, p.getNodePos(i));
-
-            if (flag) {
-                return true;
-            }
-
-        }
-
-        return false;
-    }
+    }    
 
     
 }
