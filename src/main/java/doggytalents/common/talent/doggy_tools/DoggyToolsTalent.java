@@ -105,6 +105,10 @@ public class DoggyToolsTalent extends TalentInstance  {
         
         if (!(d instanceof Dog dog)) return;
 
+        updateMainHandItem(dog);
+    }
+
+    private void updateMainHandItem(Dog dog) {
         if (this.alwaysPickSlot0) {
             var firstTool = this.tools.getStackInSlot(0);
             if (!firstTool.isEmpty()) {
@@ -136,7 +140,6 @@ public class DoggyToolsTalent extends TalentInstance  {
         }
 
         pickActionTool(dog);
-        
     }
 
     private void validateAndSync(AbstractDog d) {
