@@ -6,6 +6,7 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.DogAiManager.IHasTickNonRunning;
 import doggytalents.common.util.EntityUtil;
+import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -168,7 +169,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
     }
 
     private void tickMoveTo() {
-        if (this.dog.getNavigation().isDone() || almostOutOfRestrict()) {
+        if (this.dog.getNavigation().isDone() || almostOutOfRestrict() || checkMiningCautious()) {
             this.dog.getNavigation().stop();
             this.isDoingAnim = true;
             if (!this.dog.onGround())
@@ -189,6 +190,15 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         var restrict_d0_sqr = this.dog.distanceToSqr(Vec3.atBottomCenterOf(restrict_b0));
         var d_inside_sqr = restrict_r * restrict_r - restrict_d0_sqr;
         return d_inside_sqr <= 1;
+    }
+
+    private boolean checkMiningCautious() {
+        if (this.dog.isMiningCautious()) {
+            if (DogUtil.pathObstructOwnerMining(this.dog)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private BlockPos findMoveToPos() {
