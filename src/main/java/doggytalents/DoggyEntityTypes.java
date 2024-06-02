@@ -4,6 +4,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.misc.DogFoodProjectile;
 import doggytalents.common.entity.misc.DogGunpowderProjectile;
 import doggytalents.common.entity.misc.DogPlushie;
+import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.entity.misc.DoggyBeamEntity;
 import doggytalents.common.entity.misc.Piano;
 import doggytalents.common.entity.misc.Piano.PianoColor;
@@ -90,6 +91,15 @@ public class DoggyEntityTypes {
         .setTrackingRange(10)
         .setShouldReceiveVelocityUpdates(true)
         .noSummon());
+
+    public static final Supplier<EntityType<DogThrownTrident>> DOG_TRIDENT_PROJ = register("dog_trident_proj", DogThrownTrident::new, MobCategory.MISC, b -> b
+        .sized(0.5F, 0.5F)
+        .eyeHeight(0.13F)
+        .setTrackingRange(4)
+        .updateInterval(20)
+        .setShouldReceiveVelocityUpdates(true)
+        .noSummon()
+    );
 
     private static <E extends Entity, T extends EntityType<E>> RegistryObject<EntityType<E>> register(final String name, final EntityType.EntityFactory<E> sup, final MobCategory classification, final Function<EntityType.Builder<E>, EntityType.Builder<E>> builder) {
          return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(Util.getResourcePath(name)));
