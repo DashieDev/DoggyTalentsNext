@@ -15,6 +15,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.Screens;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.inventory.DoggyToolsItemHandler;
@@ -172,7 +173,8 @@ public class DoggyToolsTalent extends TalentInstance  {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
             }
-            if (DogUtil.isTrident(stack)){
+            if (DogUtil.isTrident(stack)
+                && ConfigHandler.SERVER.DOGGY_TOOLS_USE_TRIDENT.get()){
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
             }
@@ -362,7 +364,8 @@ public class DoggyToolsTalent extends TalentInstance  {
             if (mainhand_item.getItem() instanceof BowItem) {
                 return findArrowsInInventory(dog).isPresent();
             }
-            if (DogUtil.isTrident(mainhand_item)) {
+            if (DogUtil.isTrident(mainhand_item)
+                && ConfigHandler.SERVER.DOGGY_TOOLS_USE_TRIDENT.get()) {
                 return true;
             }
             return false;
