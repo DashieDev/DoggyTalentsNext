@@ -176,7 +176,7 @@ public class DogRangedAttackGoal extends Goal {
     }
 
     private float getAttackRadius(LivingEntity target) {
-        if (this.dog.canDogFly()) {
+        if (!this.dog.isDefaultNavigation()) {
             return 6 + target.getBbWidth()/2;
         }
         return default_attack_radius;
@@ -228,7 +228,7 @@ public class DogRangedAttackGoal extends Goal {
         this.dog.getLookControl().setLookAt(target, 30.0F, this.dog.getMaxHeadXRot());
         this.dog.lookAt(target, 30.0F, this.dog.getMaxHeadXRot());
         
-        if (!this.dog.canDogFly())
+        if (this.dog.isDefaultNavigation())
             strafeAtTarget(target, d_dog_target_sqr);
     }
 
