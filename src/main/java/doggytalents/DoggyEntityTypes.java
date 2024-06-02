@@ -1,10 +1,10 @@
 package doggytalents;
 
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.DogFoodProjectile;
-import doggytalents.common.entity.DogGunpowderProjectile;
-import doggytalents.common.entity.DoggyBeamEntity;
+import doggytalents.common.entity.misc.DogFoodProjectile;
+import doggytalents.common.entity.misc.DogGunpowderProjectile;
 import doggytalents.common.entity.misc.DogPlushie;
+import doggytalents.common.entity.misc.DoggyBeamEntity;
 import doggytalents.common.entity.misc.Piano;
 import doggytalents.common.entity.misc.Piano.PianoColor;
 import doggytalents.common.entity.misc.Piano.PianoType;
