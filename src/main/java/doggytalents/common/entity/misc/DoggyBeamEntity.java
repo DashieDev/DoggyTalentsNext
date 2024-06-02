@@ -1,8 +1,9 @@
-package doggytalents.common.entity;
+package doggytalents.common.entity.misc;
 
 import com.google.common.base.Predicates;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.api.feature.EnumMode;
+import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.particles.ParticleTypes;
