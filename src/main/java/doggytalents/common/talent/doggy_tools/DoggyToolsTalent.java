@@ -15,6 +15,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.Screens;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.inventory.DoggyToolsItemHandler;
 import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.talent.PackPuppyTalent;
@@ -369,6 +370,9 @@ public class DoggyToolsTalent extends TalentInstance  {
 
         @Override
         public boolean updateUsingWeapon(UsingWeaponContext ctx) {
+
+            this.validateAwaitingTrident();
+
             var dog = ctx.dog;
             if (!dog.isUsingItem()) {
                 mayStartUsingWeapon(ctx);
@@ -384,14 +388,24 @@ public class DoggyToolsTalent extends TalentInstance  {
             }
     
             if (ctx.canSeeTarget) {
-                int i = dog.getTicksUsingItem();
-                if (i >= 20) {
+                int using_tick = dog.getTicksUsingItem();
+                if (isToolReadyToShoot(dog, using_tick)) {
                     dog.stopUsingItem();
-                    shoot(dog, ctx.target, i);
+                    shoot(dog, ctx.target, using_tick);
                     return true;
                 }
             }
             return false;
+        }
+
+        private boolean isToolReadyToShoot(AbstractDog dog, int tick_using) {
+            if (tick_using < 20)
+                return false;
+            
+            var mainhand_item = dog.getMainHandItem();
+            if (mainhand_item.is(Items.TRIDENT) && this.hasAwaitingTrident())
+                return false;
+            return true;
         }
     
         private void mayStartUsingWeapon(UsingWeaponContext ctx) {
@@ -417,13 +431,16 @@ public class DoggyToolsTalent extends TalentInstance  {
             shootProjectile(dog, arrow, target, SoundEvents.SKELETON_SHOOT);
         }
 
-        private void shootFromTrident(AbstractDog dog, LivingEntity target) {
+        private void shootFromTrident(AbstractDog ddog, LivingEntity target) {
+            if (!(ddog instanceof Dog dog))
+                return;
             var tridentOptional = getAndConsumeDogTrident(dog);
             if (!tridentOptional.isPresent())
                 return;
 
             var trident = tridentOptional.get();
             shootProjectile(dog, trident, target, SoundEvents.TRIDENT_THROW);
+            this.awaitingTrident = Optional.of(trident);
         }
 
         private void shootProjectile(AbstractDog dog, Projectile proj, LivingEntity target,
@@ -544,12 +561,12 @@ public class DoggyToolsTalent extends TalentInstance  {
     
         }
 
-        private Optional<ThrownTrident> getAndConsumeDogTrident(AbstractDog dog) {
+        private Optional<DogThrownTrident> getAndConsumeDogTrident(Dog dog) {
             var trident_stack = dog.getMainHandItem();
             if (!trident_stack.is(Items.TRIDENT))
                 return Optional.empty();
             
-            var proj = new ThrownTrident(dog.level(), dog, new ItemStack(Items.TRIDENT));
+            var proj = new DogThrownTrident(dog, trident_stack.copy());
             proj.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             trident_stack.hurtAndBreak(1, dog, EquipmentSlot.MAINHAND);
             
@@ -559,10 +576,26 @@ public class DoggyToolsTalent extends TalentInstance  {
         @Override
         public void onStop(AbstractDog dog) {
             dog.stopUsingItem();
+            this.awaitingTrident = Optional.empty();
         }
 
-        
-        
+        private Optional<DogThrownTrident> awaitingTrident = Optional.empty();
+
+        private void validateAwaitingTrident() {
+            if (awaitingTrident == null)
+                return;
+            if (!awaitingTrident.isPresent())
+                return;
+            var trident = awaitingTrident.get();
+            if (!trident.isAlive()) {
+                this.awaitingTrident = Optional.empty();
+                return;
+            }
+        }
+
+        private boolean hasAwaitingTrident() {
+            return this.awaitingTrident != null && this.awaitingTrident.isPresent();
+        }
     }
     
 }

@@ -322,22 +322,7 @@ public class EventHandler {
             proccessEntityProjectileHitEvent(event, hitEntity);
         else if (hitResult instanceof BlockHitResult hitBlock)
             proccessBlockProjectileHitEvent(event, hitBlock);
-
-        handleTridentHit(event);
-            
-    }
-
-    private boolean handleTridentHit(ProjectileImpactEvent event) {
-        var proj = event.getProjectile();
-        if (!(proj instanceof ThrownTrident trident))
-            return false;
-        if (!proj.isAlive())
-            return false;
-        if (!(proj.getOwner() instanceof Dog))
-            return false;
-        proj.discard();
-        return true;
-    }
+    }    
 
     private void proccessEntityProjectileHitEvent(final ProjectileImpactEvent event, EntityHitResult hit) {
         if (detectAndCancelIfProjectileFromDogHitAllies(event, hit))
