@@ -262,6 +262,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
         public ModConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
         public ModConfigSpec.BooleanValue WOLF_VARIANT_OVERRIDE_EXCLUSIVE;
+        public ModConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
 
         public Map<String, ModConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -432,7 +433,10 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("in those biomes previously mentioned instead of being overriden by DTN.")
                 .translation("doggytalents.wolf_variant_override_exclusive")
                 .define("wolf_variant_override_exclusive", true);
-            
+            DOGGY_TOOLS_USE_TRIDENT = builder
+                .comment("Allow Doggy Tools Dogs to use Trident")
+                .translation("doggytalents.doggy_tools_trident")
+                .define("doggy_tools_trident", true);
             builder.pop();
         }
 
