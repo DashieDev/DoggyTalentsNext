@@ -21,6 +21,7 @@ import doggytalents.common.inventory.DoggyToolsItemHandler;
 import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.talent.doggy_tools.tool_actions.ToolAction;
+import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -49,7 +50,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -172,7 +172,7 @@ public class DoggyToolsTalent extends TalentInstance  {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
             }
-            if (stack.is(Items.TRIDENT)){
+            if (DogUtil.isTrident(stack)){
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
             }
@@ -362,7 +362,7 @@ public class DoggyToolsTalent extends TalentInstance  {
             if (mainhand_item.getItem() instanceof BowItem) {
                 return findArrowsInInventory(dog).isPresent();
             }
-            if (mainhand_item.getItem() instanceof TridentItem) {
+            if (DogUtil.isTrident(mainhand_item)) {
                 return true;
             }
             return false;
@@ -403,7 +403,7 @@ public class DoggyToolsTalent extends TalentInstance  {
                 return false;
             
             var mainhand_item = dog.getMainHandItem();
-            if (mainhand_item.is(Items.TRIDENT) && this.hasAwaitingTrident())
+            if (DogUtil.isTrident(mainhand_item) && this.hasAwaitingTrident())
                 return false;
             return true;
         }
@@ -418,7 +418,7 @@ public class DoggyToolsTalent extends TalentInstance  {
             var mainhand_item = dog.getMainHandItem();
             if (mainhand_item.getItem() instanceof BowItem)
                 shootFromBow(dog, target, BowItem.getPowerForTime(tick_using));
-            else if (mainhand_item.getItem() instanceof TridentItem)
+            else if (DogUtil.isTrident(mainhand_item))
                 shootFromTrident(dog, target);
         }
     
@@ -563,7 +563,7 @@ public class DoggyToolsTalent extends TalentInstance  {
 
         private Optional<DogThrownTrident> getAndConsumeDogTrident(Dog dog) {
             var trident_stack = dog.getMainHandItem();
-            if (!trident_stack.is(Items.TRIDENT))
+            if (!DogUtil.isTrident(trident_stack))
                 return Optional.empty();
             
             var proj = new DogThrownTrident(dog, trident_stack.copy());

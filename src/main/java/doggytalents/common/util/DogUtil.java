@@ -39,6 +39,7 @@ import net.minecraft.world.entity.animal.WolfVariant;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -756,6 +757,10 @@ public class DogUtil {
             .normalize();
         var dot = v_look_wanted.dot(v_look_owner);
         return dot > 0.7;
+    }
+
+    public static boolean isTrident(ItemStack stack) {
+        return stack.is(Items.TRIDENT);
     }
 
     public static boolean isDangerPathType(PathType pathType) {
