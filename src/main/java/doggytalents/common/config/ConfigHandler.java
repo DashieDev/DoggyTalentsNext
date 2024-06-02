@@ -256,6 +256,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
         public ForgeConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
         public ForgeConfigSpec.BooleanValue WOLF_VARIANT_OVERRIDE_EXCLUSIVE;
+        public ModConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
@@ -429,6 +430,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("in those biomes previously mentioned instead of being overriden by DTN.")
                 .translation("doggytalents.wolf_variant_override_exclusive")
                 .define("wolf_variant_override_exclusive", true);
+            DOGGY_TOOLS_USE_TRIDENT = builder
+                .comment("Allow Doggy Tools Dogs to use Trident")
+                .translation("doggytalents.doggy_tools_trident")
+                .define("doggy_tools_trident", true);
 
             //(Non 1.20.5+)
             RANDOM_VAR_ON_TRAIN = builder
