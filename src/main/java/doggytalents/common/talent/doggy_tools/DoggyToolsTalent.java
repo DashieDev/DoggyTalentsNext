@@ -173,8 +173,7 @@ public class DoggyToolsTalent extends TalentInstance  {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
             }
-            if (DogUtil.isTrident(stack)
-                && ConfigHandler.SERVER.DOGGY_TOOLS_USE_TRIDENT.get()){
+            if (isTridentAndEligible(stack)){
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
             }
@@ -320,6 +319,15 @@ public class DoggyToolsTalent extends TalentInstance  {
         return 8*8;
     } 
 
+    public static boolean isTridentAndEligible(ItemStack stack) {
+        if (!DogUtil.isTrident(stack))
+            return false;
+        if (!ConfigHandler.SERVER.DOGGY_TOOLS_USE_TRIDENT.get())
+            return false;
+        if (stack.getEnchantmentLevel(Enchantments.LOYALTY) < 2)
+            return false; 
+        return true;
+    }
 
     @Override
     public void writeToBuf(FriendlyByteBuf buf) {
@@ -364,8 +372,7 @@ public class DoggyToolsTalent extends TalentInstance  {
             if (mainhand_item.getItem() instanceof BowItem) {
                 return findArrowsInInventory(dog).isPresent();
             }
-            if (DogUtil.isTrident(mainhand_item)
-                && ConfigHandler.SERVER.DOGGY_TOOLS_USE_TRIDENT.get()) {
+            if (isTridentAndEligible(mainhand_item)) {
                 return true;
             }
             return false;
