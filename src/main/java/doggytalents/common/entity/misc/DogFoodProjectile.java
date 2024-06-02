@@ -1,8 +1,9 @@
-package doggytalents.common.entity;
+package doggytalents.common.entity.misc;
 
 import doggytalents.DoggyEntityTypes;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.feature.FoodHandler;
+import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.item.IDogEddible;
 import doggytalents.common.util.DogUtil;

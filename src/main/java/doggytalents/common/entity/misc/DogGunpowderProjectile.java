@@ -1,7 +1,8 @@
-package doggytalents.common.entity;
+package doggytalents.common.entity.misc;
 
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalents;
+import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.talent.OokamiKazeTalent;
 import doggytalents.common.util.DogUtil;
