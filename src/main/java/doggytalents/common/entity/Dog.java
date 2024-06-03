@@ -4496,8 +4496,8 @@ public class Dog extends AbstractDog {
     public void setNavigation(PathNavigation p) {
         super.setNavigation(p);
         this.switchNavCooldown = 5;
-        this.currentNavigation = p;
         if (p instanceof IDogNavLock lock) {
+            this.currentNavigation = p;
             this.navigationLock = lock;
         }
     }
