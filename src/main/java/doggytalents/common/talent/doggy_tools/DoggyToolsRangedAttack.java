@@ -36,36 +36,9 @@ public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
 
         this.validateAwaitingTrident();
 
-        var dog = ctx.dog;
-        if (!dog.isUsingItem()) {
-            mayStartUsingWeapon(ctx);
-            return false;
-        }
+        var handler = getActiveShootHandler(ctx.dog);
 
-        boolean should_stop_using = 
-            !ctx.canSeeTarget && ctx.seeTime < -60;
-
-        if (should_stop_using) {
-            dog.stopUsingItem();
-            return false;
-        }
-
-        if (ctx.canSeeTarget) {
-            int using_tick = dog.getTicksUsingItem();
-            var handler = getActiveShootHandler(dog);
-            if (handler.isToolReadyToShoot(this, dog, using_tick)) {
-                dog.stopUsingItem();
-                handler.shoot(this, dog, ctx.target, using_tick);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void mayStartUsingWeapon(UsingWeaponContext ctx) {
-        if (ctx.cooldown <= 0 && ctx.seeTime >= -60) {
-            ctx.dog.startUsingItem(InteractionHand.MAIN_HAND);
-        }
+        return handler.updateUsingWeapon(this, ctx);
     }
 
     public void shootProjectile(AbstractDog dog, Projectile proj, LivingEntity target,
