@@ -2,12 +2,14 @@ package doggytalents.common.talent.doggy_tools;
 
 import java.util.Optional;
 
+import doggytalents.api.impl.IDogRangedAttackManager.UsingWeaponContext;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -21,24 +23,57 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 public interface ShootHandler {
 
-    boolean isToolReadyToShoot(DoggyToolsRangedAttack ranged_manager, AbstractDog dog, int tick_using);
+    boolean updateUsingWeapon(DoggyToolsRangedAttack ranged_manager, UsingWeaponContext ctx);
 
-    void shoot(DoggyToolsRangedAttack ranged_manager, AbstractDog dog, LivingEntity target, int tick_using);
+    public static abstract class BowlikeShootHandler implements ShootHandler {
+        @Override
+        public boolean updateUsingWeapon(DoggyToolsRangedAttack ranged_manager, UsingWeaponContext ctx) {
+            var dog = ctx.dog;
+            if (!dog.isUsingItem()) {
+                mayStartUsingWeapon(ctx);
+                return false;
+            }
+
+            boolean should_stop_using = 
+                !ctx.canSeeTarget && ctx.seeTime < -60;
+
+            if (should_stop_using) {
+                dog.stopUsingItem();
+                return false;
+            }
+
+            if (ctx.canSeeTarget) {
+                int using_tick = dog.getTicksUsingItem();
+                if (this.isToolReadyToShoot(ranged_manager, dog, using_tick)) {
+                    dog.stopUsingItem();
+                    this.shoot(ranged_manager, dog, ctx.target, using_tick);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void mayStartUsingWeapon(UsingWeaponContext ctx) {
+            if (ctx.cooldown <= 0 && ctx.seeTime >= -60) {
+                ctx.dog.startUsingItem(InteractionHand.MAIN_HAND);
+            }
+        }
+
+        public abstract boolean isToolReadyToShoot(DoggyToolsRangedAttack ranged_manager, AbstractDog dog, int tick_using);
+
+        public abstract void shoot(DoggyToolsRangedAttack ranged_manager, AbstractDog dog, LivingEntity target, int tick_using);
+    }
 
     public static ShootHandler NONE = new ShootHandler() {
 
         @Override
-        public boolean isToolReadyToShoot(DoggyToolsRangedAttack ranged_manager, AbstractDog dog, int tick_using) {
+        public boolean updateUsingWeapon(DoggyToolsRangedAttack ranged_manager, UsingWeaponContext ctx) {
             return false;
-        }
-
-        @Override
-        public void shoot(DoggyToolsRangedAttack ranged_manager, AbstractDog dog, LivingEntity target, int tick_using) {
         }
         
     };
 
-    public static ShootHandler BOW = new ShootHandler() {
+    public static ShootHandler BOW = new BowlikeShootHandler() {
 
         @Override
         public boolean isToolReadyToShoot(DoggyToolsRangedAttack ranged_manager, AbstractDog dog, int tick_using) {
@@ -149,7 +184,7 @@ public interface ShootHandler {
 
     };
 
-    public static ShootHandler TRIDENT = new ShootHandler() {
+    public static ShootHandler TRIDENT = new BowlikeShootHandler() {
 
         @Override
         public boolean isToolReadyToShoot(DoggyToolsRangedAttack ranged_manager, AbstractDog dog, int tick_using) {
