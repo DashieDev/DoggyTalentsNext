@@ -2,6 +2,7 @@ package doggytalents.common.talent.doggy_tools;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -342,6 +343,32 @@ public interface ShootHandler {
             crossbowitem.performShooting(
                 dog.level(), dog, InteractionHand.MAIN_HAND, crossbow_stack, 1.6f, 2, target
             );
+            hellHoundSetFireToOwnedArrows(dog);
+        }
+
+        private boolean hellHoundSetFireToOwnedArrows(AbstractDog dog) {
+            if (!dog.fireImmune())
+                return false;
+            
+            Predicate<AbstractArrow> is_target_arrow = e -> {
+                if (!e.isAlive())
+                    return false;
+                if (e.getOwner() != dog)
+                    return false;
+                return true;
+            };
+
+            var bb = dog.getBoundingBox().inflate(1);
+
+            var targets = dog.level()
+                .getEntitiesOfClass(AbstractArrow.class, bb, is_target_arrow);
+            
+            if (targets.isEmpty())
+                return false;
+            
+            for (var target : targets)
+                EntityUtil.setSecondsOnFire(target, 20);
+            return true;
         }
 
         private void mayStartUsingWeapon(UsingWeaponContext ctx) {
