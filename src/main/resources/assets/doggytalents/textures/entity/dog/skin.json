@@ -707,6 +707,13 @@
             "use_model" : "default"
         },
         {
+            "skin_name" : "Na",
+            "skin_id" : "na",
+            "use_model" : "na",
+            "author" : "Na",
+            "tags" : "na"
+        },
+        {
             "skin_name" : "Classical III",
             "skin_id" : "wolf_var_2",
             "use_model" : "default",
