@@ -71,7 +71,7 @@ public enum ClassicalVar {
 
     private ClassicalVar(int idInt, String name, boolean is_compl) {
         this.idInt = idInt;
-        this.id = new ResourceLocation(name);
+        this.id = is_compl ? Util.getResource(name) : new ResourceLocation(name);
         this.textureLoc = createTextureLoc(name, is_compl);
         this.translationKey = createTranslationKey(name, is_compl);
         this.iconLoc = createIconLoc(name, is_compl);
@@ -124,9 +124,13 @@ public enum ClassicalVar {
 
     public static ClassicalVar fromId(ResourceLocation id) {
         var ret = idMap.get(id);
-        if (ret == null)
-            ret = ClassicalVar.PALE;
-        return ret;
+        if (ret != null)
+            return ret;
+        var alt_id = Util.getResource(id.getPath());
+        ret = idMap.get(alt_id); 
+        if (ret != null)
+            return ret;
+        return ClassicalVar.PALE;
     }
 
     public static ClassicalVar bySaveName(String id) {
