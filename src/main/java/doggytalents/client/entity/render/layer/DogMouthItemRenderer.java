@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -69,7 +70,7 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
         if (item instanceof SwordItem || item instanceof DiggerItem) {
             stack.translate(0.25, 0, 0);
         }
-        if (item instanceof BowItem) {
+        if (item instanceof BowItem || item instanceof CrossbowItem) {
             stack.scale(1, 1, -1);
             stack.translate(0, 0, -0.1);
         }
