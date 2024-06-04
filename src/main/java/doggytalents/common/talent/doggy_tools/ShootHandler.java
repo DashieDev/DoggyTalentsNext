@@ -1,6 +1,9 @@
 package doggytalents.common.talent.doggy_tools;
 
+import java.util.ArrayList;
 import java.util.Optional;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import doggytalents.api.impl.IDogRangedAttackManager.UsingWeaponContext;
 import doggytalents.api.inferface.AbstractDog;
@@ -8,6 +11,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -15,8 +19,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ChargedProjectiles;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -218,6 +224,130 @@ public interface ShootHandler {
             trident_stack.hurtAndBreak(1, dog, EquipmentSlot.MAINHAND);
             
             return Optional.of(proj);
+        }
+        
+    };
+
+    public static ShootHandler CROSSBOW = new ShootHandler() {
+
+        @Override
+        public boolean updateUsingWeapon(DoggyToolsRangedAttack ranged_manager, UsingWeaponContext ctx) {
+            var dog = ctx.dog;
+            var crossbow_stack = dog.getMainHandItem();
+            if (!(crossbow_stack.getItem() instanceof CrossbowItem)) {
+                if (dog.isUsingItem())
+                    dog.stopUsingItem();
+                return false;
+            }
+            var arrow_optional = DoggyToolsRangedAttack.findArrowsInInventory(dog);
+            if (!arrow_optional.isPresent()) {
+                if (dog.isUsingItem())
+                    dog.stopUsingItem();
+                return false;
+            }
+            
+            var arrow_stack = arrow_optional.get();
+
+            boolean attack_result = false;
+
+            if (isCrossbowCharged(crossbow_stack)) {
+                attack_result = updateCrossbowAttack(ranged_manager, dog, ctx.target, crossbow_stack);
+            } else {
+                updateChargeCrossbow(ranged_manager, dog, crossbow_stack, arrow_stack, ctx);
+            }
+
+            return attack_result;
+        }
+
+        private boolean isCrossbowCharged(ItemStack crossbow_stack) {
+            return CrossbowItem.isCharged(crossbow_stack);
+        }
+
+        private void updateChargeCrossbow(DoggyToolsRangedAttack ranged_manager, AbstractDog dog,
+            ItemStack crossbow_stack, Pair<ItemStackHandler, Integer> arrow_getter, UsingWeaponContext ctx) {
+            ranged_manager.setDelayedCrossbowAttack(10);
+            
+            if (!dog.isUsingItem()) {
+                mayStartUsingWeapon(ctx);
+                return;
+            }
+
+            boolean should_stop_using = 
+                !ctx.canSeeTarget && ctx.seeTime < -60;
+
+            if (should_stop_using) {
+                dog.stopUsingItem();
+                return;
+            }
+
+            int using_tick = dog.getTicksUsingItem();
+            if (using_tick >= CrossbowItem.getChargeDuration(crossbow_stack)) {
+                dog.stopUsingItem();
+                chargeCrossbowAndConsumeArrow(dog, crossbow_stack, arrow_getter);
+            } 
+
+        }
+
+        private void chargeCrossbowAndConsumeArrow(AbstractDog dog, ItemStack crossbow_stack, Pair<ItemStackHandler, Integer> arrow_getter) {
+            ItemStackHandler inv = null;
+            int id = -1;
+            inv = arrow_getter.getLeft();
+            id = arrow_getter.getRight();
+
+            ItemStack arrow_stack = ItemStack.EMPTY;
+            if (inv != null && id >= 0) {
+                arrow_stack = inv.getStackInSlot(id).copy();
+            }
+
+            if (arrow_stack.isEmpty())
+                return;
+            
+            boolean is_multishot = EnchantmentHelper
+                .getItemEnchantmentLevel(Enchantments.MULTISHOT, crossbow_stack) > 0;
+            int shoot_amount = is_multishot ? 3 : 1;
+            var item_list = new ArrayList<ItemStack>(shoot_amount);
+            for (int i = 0; i < shoot_amount; ++i) {
+                item_list.add(arrow_stack.copyWithCount(1));   
+            }
+            if (item_list.isEmpty()) 
+                return;
+            crossbow_stack.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.of(item_list));
+            
+            if (inv != null) {
+                arrow_stack = arrow_stack.copy();
+                arrow_stack.shrink(1);
+                inv.setStackInSlot(id, arrow_stack);
+            }
+
+
+            dog.playSound(SoundEvents.CROSSBOW_LOADING_END, 1.0F,
+                1.0F / (dog.getRandom().nextFloat() * 0.5F + 1.0F) + 0.2F);
+        }
+
+        private boolean updateCrossbowAttack(DoggyToolsRangedAttack ranged_manager, AbstractDog dog,
+            LivingEntity target, ItemStack crossbow_stack) {
+            ranged_manager.decDelayedCrossbowAttack();
+
+            if (ranged_manager.getDelayedCrossbowAttack() <= 0) {
+                ranged_manager.setDelayedCrossbowAttack(20);
+                shootViaCrossbow(dog, target, crossbow_stack);
+                return true;
+            }
+            return false;
+        }
+
+        private void shootViaCrossbow(AbstractDog dog, LivingEntity target, ItemStack crossbow_stack) {
+            if (!(crossbow_stack.getItem() instanceof CrossbowItem crossbowitem))
+                return;
+            crossbowitem.performShooting(
+                dog.level(), dog, InteractionHand.MAIN_HAND, crossbow_stack, 1.6f, 2, target
+            );
+        }
+
+        private void mayStartUsingWeapon(UsingWeaponContext ctx) {
+            if (ctx.cooldown <= 0 && ctx.seeTime >= -60) {
+                ctx.dog.startUsingItem(InteractionHand.MAIN_HAND);
+            }
         }
         
     };
