@@ -29,13 +29,20 @@ public class DTNWolfVariants {
 
     private static void register(BootstrapContext<WolfVariant> ctx, ResourceKey<WolfVariant> key, 
         String name, ResourceKey<Biome> biome) {
-            //src\main\resources\assets\doggytalents\textures\entity\dog\classical\compl\vanilla_only\wolf_cherry_angry.png
+       
+        var reg = ctx.lookup(Registries.BIOME);
+        var biome_set = HolderSet.direct(reg.getOrThrow(biome));
+        
+        register(ctx, key, name, biome_set);
+    }
+
+    private static void register(BootstrapContext<WolfVariant> ctx, ResourceKey<WolfVariant> key, 
+        String name, HolderSet<Biome> biome_set) {
+
         var textureLoc = Util.getResource("entity/dog/classical/compl/vanilla_only/wolf_" + name + "_tame" );
         var textureLoc_wild = Util.getResource("entity/dog/classical/compl/vanilla_only/wolf_" + name);
         var textureLoc_angry = Util.getResource("entity/dog/classical/compl/vanilla_only/wolf_" + name + "_angry" );
 
-        var reg = ctx.lookup(Registries.BIOME);
-        var biome_set = HolderSet.direct(reg.getOrThrow(biome));
         var variant = new WolfVariant(textureLoc_wild, textureLoc, textureLoc_angry, biome_set);
         ctx.register(key, variant);
     }
