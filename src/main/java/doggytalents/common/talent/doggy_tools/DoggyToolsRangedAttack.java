@@ -19,6 +19,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -99,6 +100,21 @@ public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
         this.awaitingTrident = Optional.ofNullable(trident);
     }
 
+    private int delayedCrossbowAttack;
+
+    public void decDelayedCrossbowAttack() {
+        if (delayedCrossbowAttack > 0)
+            --delayedCrossbowAttack;
+    }
+
+    public void setDelayedCrossbowAttack(int x) {
+        this.delayedCrossbowAttack = x;
+    }
+
+    public int getDelayedCrossbowAttack() {
+        return delayedCrossbowAttack;
+    }
+
     public static boolean isTridentAndEligible(ItemStack stack) {
         if (!DogUtil.isTrident(stack))
             return false;
@@ -166,6 +182,11 @@ public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
                 || findArrowsInInventory(dog).isPresent();
             if (eligible)
                 return ShootHandler.BOW;
+        }
+        if (stack.getItem() instanceof CrossbowItem) {
+            boolean eligible =  findArrowsInInventory(dog).isPresent();
+            if (eligible)
+                return ShootHandler.CROSSBOW;
         }
         if (isTridentAndEligible(stack))
             return ShootHandler.TRIDENT;
