@@ -31,12 +31,15 @@ public class DTNWolfVariantsProvider {
     //     );
     // }
 
-    // private static void registerWolfModifier(BootstrapContext<BiomeModifier> ctx) {
-    //     registerCherryWolfModifier(ctx);
-    //     registerLemonyLimeWolfModifier(ctx);
-    //     registerHimalayanSaltWolfModifier(ctx);
-    //     registerBambooWolfModifier(ctx);
-    // }
+    private static void registerWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+        registerCherryWolfModifier(ctx);
+        registerLemonyLimeWolfModifier(ctx);
+        registerHimalayanSaltWolfModifier(ctx);
+        registerBambooWolfModifier(ctx);
+        registerCrimsonWolfModifier(ctx);
+        registerWarpedWolfModifier(ctx);
+        registerBirchWolfModifier(ctx);
+    }
 
     // private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
     //     registerSingleSpawnModifier(
@@ -80,8 +83,35 @@ public class DTNWolfVariantsProvider {
     //     );
     // }
 
-    // private static void registerSingleSpawnModifier(BootstrapContext<BiomeModifier> ctx,
-    //     String name, ResourceKey<Biome> biome, MobSpawnSettings.SpawnerData spawner_data) {
+    private static void registerCrimsonWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_crimson", 
+            Biomes.CRIMSON_FOREST, 
+            new MobSpawnSettings
+                .SpawnerData(EntityType.WOLF, 20, 1, 1)
+        );
+    }
+
+    private static void registerWarpedWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_warped", 
+            Biomes.WARPED_FOREST, 
+            new MobSpawnSettings
+                .SpawnerData(EntityType.WOLF, 40, 1, 1)
+        );
+    }
+
+    private static void registerBirchWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_birch", 
+            Biomes.BIRCH_FOREST, 
+            new MobSpawnSettings
+                .SpawnerData(EntityType.WOLF, 1, 1, 1)
+        );
+    }
+
+    private static void registerSingleSpawnModifier(BootstrapContext<BiomeModifier> ctx,
+        String name, ResourceKey<Biome> biome, MobSpawnSettings.SpawnerData spawner_data) {
         
     //     registerSingleSpawnModifier(ctx, name, List.of(biome), spawner_data);
     // }
