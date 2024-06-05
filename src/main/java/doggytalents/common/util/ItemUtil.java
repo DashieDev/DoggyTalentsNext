@@ -4,6 +4,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.ArmorTrim;
@@ -117,6 +118,14 @@ public class ItemUtil {
 
     public static boolean hasCustomHoverName(ItemStack stack) {
         return stack.has(DataComponents.CUSTOM_NAME);
+    }
+
+    public static Component getCustomHoverName(ItemStack stack) {
+        return stack.get(DataComponents.CUSTOM_NAME);
+    }
+
+    public static void clearCustomHoverName(ItemStack stack) {
+        stack.set(DataComponents.CUSTOM_NAME, null);
     }
 
     public static int getDyeColorForStack(ItemStack stack) {

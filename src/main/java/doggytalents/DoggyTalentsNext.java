@@ -28,6 +28,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;
 import doggytalents.common.variants.DTNWolfVariantsProvider;
 import doggytalents.common.variants.DTNWolfVariantsSpawnPlacements;
+import doggytalents.common.variants.VSCodeWolfSpawnHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import org.apache.logging.log4j.LogManager;
