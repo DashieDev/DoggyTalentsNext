@@ -28,6 +28,7 @@ import doggytalents.common.talent.HappyEaterTalent;
 import doggytalents.common.variants.DTNWolfVariantsSpawnOverride;
 import doggytalents.common.variants.DTNWolfVariantsProvider;
 import doggytalents.common.variants.DTNWolfVariantsSpawnPlacements;
+import doggytalents.common.variants.VSCodeWolfSpawnHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.api.distmarker.Dist;
@@ -96,6 +97,7 @@ public class DoggyTalentsNext {
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
         forgeEventBus.addListener(this::registerCommands);
+        forgeEventBus.addListener(VSCodeWolfSpawnHandler::onRightClickBlock);
 
         forgeEventBus.register(new EventHandler());
 
