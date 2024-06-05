@@ -11,6 +11,8 @@ import doggytalents.common.util.ItemUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -22,6 +24,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -32,6 +35,7 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class DoggyCharmItem extends Item implements IDogItem {
@@ -152,19 +156,19 @@ public class DoggyCharmItem extends Item implements IDogItem {
             return InteractionResult.FAIL;
         if (!dog.canInteract(player))
             return InteractionResult.FAIL;
-        var complsList = Arrays.asList(ClassicalVar.getCompls());
-        if (complsList.isEmpty())
+        var variant_list = Arrays.asList(ClassicalVar.values());
+        if (variant_list.isEmpty())
             return InteractionResult.FAIL;
         
         if (dog.level().isClientSide)
             return InteractionResult.SUCCESS;
         
-        var current_indx = complsList.indexOf(dog.getClassicalVar());
+        var current_indx = variant_list.indexOf(dog.getClassicalVar());
         int next_indx = 0;
         if (current_indx >= 0)
-            next_indx = (current_indx + 1) % complsList.size();
-        var next_compl = complsList.get(next_indx);
-        dog.setClassicalVar(next_compl);
+            next_indx = (current_indx + 1) % variant_list.size();
+        var next_variant = variant_list.get(next_indx);
+        dog.setClassicalVar(next_variant);
         return InteractionResult.SUCCESS;
     }
 
@@ -185,5 +189,12 @@ public class DoggyCharmItem extends Item implements IDogItem {
                 tg.remove("dtn_charm_forced_glint");
             }
         });
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+            TooltipFlag flags) {
+        var desc_id = this.getDescriptionId(stack) + ".description";
+        components.add(Component.translatable(desc_id));
     }
 }

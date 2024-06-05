@@ -174,16 +174,6 @@ public class DoggyItems {
     public static final Supplier<Item> SCENT_TREAT = register("scent_treat", ScentTreatItem::new);
     public static final Supplier<Item> DROOL_SCENT_TREAT = register("drool_scent_treat", DroolScentTreatItem::new);
 
-    public static final Supplier<VariantChangerItem> VARIANT_CHANGER_PALE = registerVariantChanger("pale", ClassicalVar.PALE);
-    public static final Supplier<VariantChangerItem> VARIANT_CHANGER_CHESNUT = registerVariantChanger("chestnut", ClassicalVar.CHESTNUT);
-    public static final Supplier<VariantChangerItem> VARIANT_CHANGER_STRIPED = registerVariantChanger("striped", ClassicalVar.STRIPED);
-    public static final Supplier<VariantChangerItem> VARIANT_CHANGER_WOODS = registerVariantChanger("woods", ClassicalVar.WOOD);
-    public static final Supplier<VariantChangerItem> VARIANT_CHANGER_RUSTY = registerVariantChanger("rusty", ClassicalVar.RUSTY);
-    public static final Supplier<VariantChangerItem> VARIANT_CHANGER_ASHEN = registerVariantChanger("ashen", ClassicalVar.ASHEN);
-    public static final Supplier<VariantChangerItem> VARIANT_CHANGER_SNOWY = registerVariantChanger("snowy", ClassicalVar.SNOWY);
-    public static final Supplier<VariantChangerItem> VARIANT_CHANGER_SPOTTED = registerVariantChanger("spotted", ClassicalVar.SPOTTED);
-    public static final Supplier<VariantChangerItem> VARIANT_CHANGER_BLACK = registerVariantChanger("black", ClassicalVar.BLACK);
-
     public static final Supplier<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
             () -> new FeatheredMantleArtifact(), props), 1);
@@ -266,11 +256,6 @@ public class DoggyItems {
 
     private static Supplier<AccessoryItem> registerHeadBand(final String name, Supplier<? extends HeadBandAccessory> type) {
         return register(name, () -> new HeadBandItem(type, createInitialProp()));
-    }
-
-    private static Supplier<VariantChangerItem> registerVariantChanger(String name, ClassicalVar var) {
-        var item_name = "variant_changer_" + name;
-        return registerTool(item_name, (p) -> new VariantChangerItem(p, var), 10);
     }
 
     private static <T extends Item> Supplier<T> registerWith(final String name, Function<Item.Properties, T> itemConstructor, int maxStackSize) {
