@@ -2,6 +2,7 @@ package doggytalents.common.util;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
@@ -110,6 +111,14 @@ public class ItemUtil {
 
     public static boolean hasCustomHoverName(ItemStack stack) {
         return stack.hasCustomHoverName();
+    }
+
+    public static Component getCustomHoverName(ItemStack stack) {
+        return stack.get(DataComponents.CUSTOM_NAME);
+    }
+
+    public static void clearCustomHoverName(ItemStack stack) {
+        stack.set(DataComponents.CUSTOM_NAME, null);
     }
 
     public static int getDyeColorForStack(ItemStack stack) {

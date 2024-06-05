@@ -257,6 +257,8 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
         public ForgeConfigSpec.BooleanValue WOLF_VARIANT_OVERRIDE_EXCLUSIVE;
         public ModConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
+        public ModConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
+        public ModConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
@@ -430,6 +432,18 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("in those biomes previously mentioned instead of being overriden by DTN.")
                 .translation("doggytalents.wolf_variant_override_exclusive")
                 .define("wolf_variant_override_exclusive", true);
+            NETHER_WOLF_SPAWN_BYPASS = builder
+                .comment("Some DTN Wolf Variants are required to spawn in the Nether. This option")
+                .comment("enables them to bypass the Default animal spawn rule which make them unable")
+                .comment("to spawn in darker place such as the Nether. This bypass only applies when")
+                .comment("the wolf in question chunk-generated spawns in the Nether.")
+                .translation("doggytalents.nether_wolf_spawn_bypass")
+                .define("nether_wolf_spawn_bypass", true);
+            VSCODE_WOLF_SPAWN_EGG = builder
+                .comment("Using a Wolf Spawn Egg with a special custom name on a block")
+                .comment("will spawn a special DTN wolf variant.")
+                .translation("doggytalents.vscode_wolf_spawn_egg")
+                .define("vscode_wolf_spawn_egg", true);
             DOGGY_TOOLS_USE_TRIDENT = builder
                 .comment("Allow Doggy Tools Dogs to use Trident")
                 .translation("doggytalents.doggy_tools_trident")
