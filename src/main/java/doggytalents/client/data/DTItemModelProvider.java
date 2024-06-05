@@ -2,7 +2,6 @@ package doggytalents.client.data;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
-import doggytalents.common.item.VariantChangerItem;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.data.DataGenerator;
