@@ -168,6 +168,10 @@ public class DoggyToolsTalent extends TalentInstance  {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
             }
+            if (stack.is(Items.TRIDENT)) {
+                dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
+                break;
+            }
             var shoot_handler = DoggyToolsRangedAttack.getShootHandler(stack, dog);
             if (shoot_handler != ShootHandler.NONE) {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
