@@ -6,6 +6,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
+import doggytalents.client.screen.AllStandSwitchModeScreen;
 import doggytalents.client.screen.HeelByGroupScreen;
 import doggytalents.client.screen.HeelByNameScreen;
 import doggytalents.client.screen.WhistleScreen;
@@ -70,7 +71,8 @@ public class WhistleItem extends Item implements IDogItem {
         MOB_RETRIEVER(11, WhistleSound.SHORT),
         HEEL_BY_LOOK(12, WhistleSound.SHORT),
         RIDE_WITH_ME(13, WhistleSound.SHORT),
-        HOWL(14, WhistleSound.NONE);
+        HOWL(14, WhistleSound.NONE),
+        ALL_STAND_SWITCH_MODE(15, WhistleSound.NONE);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -362,6 +364,10 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         case HOWL:
             howl(world, player);
+            return;
+        case ALL_STAND_SWITCH_MODE:
+            if (world.isClientSide) 
+                AllStandSwitchModeScreen.open(player);
             return;
         }
     }
