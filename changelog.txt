@@ -1364,3 +1364,61 @@ They, like the previous DTN Wolf Variant Triplet, spawn rarely.
 
 *Directly training Vanilla Wolf to DTN now counts towards "The Whole Pack"/"The Whole Pack - Ossia"
 advancement too!
+
+**1.18.16 - 7th June 2024**
+## New DTN Wolf Variants!!!!!
+
++ The Nether Pair:
+  + Crimson Wolf - Spawns in Crimson Forest
+  + Warped Wolf - Spawns in Warped Forest
+
++ The Overworld One:
+  + Birch Wolf - Spawns in Birch Forest
+
++ The Easter Egg One:
+  + VSCode Wolf - Creative only. Summoned by "genVSCodeRuns" the Wolf egg 🥴
+
+## Doggy Tools Ranged Attack Expansion:
+
++ Dogs with Doggy Tools now can use these for ranged attack instead of just limiting to the bow:
+  + Trident : 
+    For it to be utilized by the Dog for ranged attack, Loyalty 2 or greater is required. The Dog will,
+  however, still use it as a Melee weapon similar to the Sword or Axe otherwise.
+    Will return to dog after being thrown by the dog. The thrown trident simply despawn
+  without providing any drops when it arrived back at the dog, getting to far from the dog, 
+  the dog goes offline or timed out and does not count against the stack count that the dog use to throw,
+  instead the durability of the stack is consumed each time the Dog throws it.
+    A couple of Trident Specific Enchantments is applicable when being used by the Dog, this includes, but not
+  limited to: 
+    + Channeling: Lightning will be summoned at the target upon hit similar to when a player use it.
+    It is however, not friendly-fire protected as the lightning and the fire appeared still does damage
+    to self and allies in range.
+    + Loytalty: Default and only ranged-attack behaviour.
+  + Crossbow :
+    Dog uses an attack-pattern dedicated for the Crossbow similar to how players use it unlike the Bow.
+  It charges it first if not charged and shoot it with a small delay upon charging finished. 
+   A couple of Crossbow Specific Enchantments also have been confirmed to works, and most of them would
+  likely work. These includes, but not limited to:
+    + Multi-shot: Dog shoot 3 arrows at once but consume only 1 arrow.
+    + Piercing: Dog's arrows can pierce through entities like player's.
+    + Quick-charge: Quicker Crossbow Charging time for Dog.
+
+## 2 New Skins!
+  
+  + Australian Kelpie (Fan request)
+  + Na
+
++ New Whistle Mode: 
+
+  + All Stand Switch Mode : Command all Standing and Following dogs to swith to
+  a Following mode.
+
+# Hellhound Max dogs will always shoot fiery arrows with Crossbow and Bow regardless
+if it have the Flame Enchament or not.
+# Removed the Variant Changers, its function is integrated into Doggy Charm instead.
+# Dog can still play the Common Stand Idle Anim if not On Ground.
+
+* HOTFIX: Idle Sniffing Dog bypassing Mining Cautious mechanic, causing dog to
+cause some trouble again.
+
+
