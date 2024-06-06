@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import doggytalents.DoggyTalents;
 import doggytalents.api.impl.IDogRangedAttackManager.UsingWeaponContext;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
@@ -168,7 +169,10 @@ public interface ShootHandler {
                 arrow_proj.setKnockback(k);
             }
     
-            if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAME, bow_stack) > 0) {
+            boolean flaming_arrow = 
+                EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAME, bow_stack) > 0
+                || dog.getDogLevel(DoggyTalents.HELL_HOUND) >= 5;
+            if (flaming_arrow) {
                 EntityUtil.setSecondsOnFire(arrow_proj, 100);
             }
     
