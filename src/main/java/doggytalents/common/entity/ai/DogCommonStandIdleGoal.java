@@ -21,15 +21,15 @@ public class DogCommonStandIdleGoal extends Goal {
         if (!dog.canDoIdileAnim()) return false;
         if (dog.isOnFire()) return false;
         if (dog.isLowHunger()) return false;
-        if (!this.dog.onGround()) return false;
+        //if (!this.dog.onGround()) return false;
         double use_chance = 0.02f;
         return this.dog.getRandom().nextFloat() < use_chance;
     }
 
     @Override
     public boolean canContinueToUse() {
-        if (!this.dog.onGround())
-            return false;
+        // if (!this.dog.onGround())
+        //     return false;
         if (dog.isLowHunger()) return false;
         if (!dog.canContinueDoIdileAnim()) return false;
         return this.dog.tickCount < this.stopTick;
