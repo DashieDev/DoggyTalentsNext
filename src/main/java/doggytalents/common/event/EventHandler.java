@@ -205,7 +205,7 @@ public class EventHandler {
         dog.maxHealth();
         dog.setOrderedToSit(false);
         dog.setAge(wolf.getAge());
-        dog.absMoveTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
+        dog.moveTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
         dog.setYHeadRot(wolf.yBodyRot);
         dog.setYBodyRot(wolf.yBodyRot);
         dog.setYRot(wolf.yBodyRot);
