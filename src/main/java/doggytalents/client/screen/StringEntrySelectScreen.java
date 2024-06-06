@@ -48,11 +48,11 @@ public class StringEntrySelectScreen extends Screen {
     protected void addPageButtons() {
         int half_width = this.width / 2;
         int half_height = this.height / 2; 
-        var prevPage = new TextOnlyButton(half_width - 120, 
+        var prevPage = new TextOnlyButton(half_width - getSelectAreaSize() / 2 - 20, 
             half_height - 10, 20, 20, Component.literal("<"), b -> {
                 this.prevPage();
             }, font);
-        var nextPage = new TextOnlyButton(half_width + 100, 
+        var nextPage = new TextOnlyButton(half_width + getSelectAreaSize() / 2, 
             half_height - 10, 20, 20, Component.literal(">"), b -> {
                 this.nextPage();
             }, font);
@@ -171,7 +171,8 @@ public class StringEntrySelectScreen extends Screen {
         int half_width = this.width / 2;
         int half_height = this.height / 2; 
       
-        graphics.fill( half_width - 100, half_height - 100, half_width + 100, half_height + 100, Integer.MIN_VALUE);
+        graphics.fill( half_width - getSelectAreaSize() / 2 , half_height - getSelectAreaSize() / 2 , 
+            half_width + getSelectAreaSize() / 2 , half_height + getSelectAreaSize() / 2 , Integer.MIN_VALUE);
     }
 
     protected void drawEntries(GuiGraphics graphics) {
@@ -179,14 +180,14 @@ public class StringEntrySelectScreen extends Screen {
         int half_height = this.height / 2;
 
         int entry_offset = 0;
-        int entry_start_x = half_width - 100 + 2;
-        int entry_start_y = half_height - 100 + 2;
+        int entry_start_x = half_width - getSelectAreaSize() / 2 + 2;
+        int entry_start_y = half_height - getSelectAreaSize() / 2 + 2;
 
         int startIndx = this.activePage * getMaxEntriesPerPage();
         int drawNo = 0;
         for (int i = startIndx; i < this.filteredIndexes.size(); ++i) {
             drawEntry(graphics, entry_start_x, entry_start_y + entry_offset, startIndx, i);
-            entry_offset+=10;   
+            entry_offset += getSpacePerEntry();   
             if (++drawNo >= getMaxEntriesPerPage()) break;
         }
     }
@@ -209,10 +210,12 @@ public class StringEntrySelectScreen extends Screen {
         int half_width = this.width / 2;
         int half_height = this.height / 2;
         
-        int txtorgx = half_width - 90;
+        int txtorgx = half_width - this.getSelectAreaSize() / 2 + 10;
         int txtorgy = half_height + this.getSelectAreaSize() / 2 + this.getSearchBarOffset();
         
-        graphics.fill( half_width - 100, half_height + 105, half_width + 100, half_height + 117, Integer.MIN_VALUE);
+        graphics.fill( half_width - this.getSelectAreaSize() / 2 , 
+            half_height + this.getSelectAreaSize() / 2 + 5, half_width + this.getSelectAreaSize() / 2, 
+            half_height + this.getSelectAreaSize() / 2 + 17, Integer.MIN_VALUE);
         graphics.drawString(font, this.searchString + "_", txtorgx, txtorgy,  0xffffffff);
     }
 
@@ -278,12 +281,13 @@ public class StringEntrySelectScreen extends Screen {
     @Override
     public boolean mouseClicked(double x, double y, int p_94697_) {
         boolean ret = super.mouseClicked(x, y, p_94697_);
+        if (this.filteredIndexes.isEmpty()) return ret; 
         int indx = getHoveredIndex(x, y, getCurrentPageEntries());
         if (indx < 0)
             return ret;
         int selected_id = this.getSelectedFilterId(indx);
         if (selected_id >= 0 && selected_id < this.filteredIndexes.size()) {
-            onEntrySelected(selected_id);
+            onEntrySelected(this.filteredIndexes.get(selected_id));
         }
         return ret;
     }
@@ -338,7 +342,10 @@ public class StringEntrySelectScreen extends Screen {
     private void updatePages() {
         int filter_size = this.filteredIndexes.size();
         this.activePage = 0;
-        this.pageCount = 1 + filter_size / this.getMaxEntriesPerPage();
+        this.pageCount = filter_size / this.getMaxEntriesPerPage();
+        if (filter_size % this.getMaxEntriesPerPage() > 0) {
+            this.pageCount += 1;
+        }
         onPageUpdated();
     }
 
