@@ -67,7 +67,8 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
         stack.translate(-0.025F, 0.125F, -0.32F);
         var item = itemStack.getItem();
 
-        if (item instanceof SwordItem || item instanceof DiggerItem) {
+        if (item instanceof SwordItem || item instanceof DiggerItem
+            || itemStack.is(Items.TRIDENT)) {
             stack.translate(0.25, 0, 0);
         }
         if (item instanceof BowItem || item instanceof CrossbowItem) {
