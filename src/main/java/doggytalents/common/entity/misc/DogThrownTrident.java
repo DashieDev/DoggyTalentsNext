@@ -6,6 +6,9 @@ import javax.annotation.Nullable;
 
 import doggytalents.DoggyEntityTypes;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.event.EventHandler;
+import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.EntityUtil;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -18,6 +21,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -176,6 +180,9 @@ public class DogThrownTrident extends AbstractArrow {
         var owner = this.getOwner();
         var indirect_entity_source = owner == null ? this : owner;
         var trident_source = this.damageSources().arrow(this, indirect_entity_source);
+        if (this.isOnFire()) {
+            EntityUtil.setSecondsOnFire(target, 5);
+        }
         var result = target.hurt(trident_source, damage);
         if (!result)
             return false;

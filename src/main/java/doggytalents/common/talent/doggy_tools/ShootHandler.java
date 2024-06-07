@@ -215,6 +215,10 @@ public interface ShootHandler {
                 return;
 
             var trident = tridentOptional.get();
+            boolean flaming_trident = dog.getDogLevel(DoggyTalents.HELL_HOUND) >= 5;
+            if (flaming_trident) {
+                EntityUtil.setSecondsOnFire(trident, 100);
+            }
             ranged_manager.shootProjectile(dog, trident, target, SoundEvents.TRIDENT_THROW);
             ranged_manager.setAwaitingTrident(trident);
         }
