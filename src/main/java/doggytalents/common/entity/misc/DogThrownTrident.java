@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.util.DogUtil;
@@ -261,6 +262,27 @@ public class DogThrownTrident extends AbstractArrow {
     @Override
     public boolean shouldRender(double p_37588_, double p_37589_, double p_37590_) {
         return true;
+    }
+
+    @Override
+    protected boolean canHitEntity(Entity target) {
+        if (ConfigHandler.SERVER.DOGGY_TOOLS_PROJECTILE_PASS_ALLIES.get()
+            && target instanceof LivingEntity living) {
+            if (checkAlliesToDog(living))
+                return false;
+        }
+        return super.canHitEntity(target);
+    }
+
+    private boolean checkAlliesToDog(LivingEntity target) {
+        var owner = this.getOwner();
+        if (!(owner instanceof Dog dog)) {
+            return false;
+        }
+        var dog_owner = dog.getOwner();
+        if (dog_owner == null)
+            return false;
+        return EventHandler.isAlliedToDog(target, dog_owner);
     }
 
 }
