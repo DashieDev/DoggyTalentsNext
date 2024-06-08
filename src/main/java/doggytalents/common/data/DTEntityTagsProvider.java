@@ -6,12 +6,14 @@ import java.util.function.Supplier;
 
 import org.jetbrains.annotations.Nullable;
 
+import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 
