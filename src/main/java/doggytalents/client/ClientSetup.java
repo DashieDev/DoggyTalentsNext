@@ -105,6 +105,7 @@ import doggytalents.client.entity.render.layer.accessory.DoggyArmorRenderer;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
 import doggytalents.client.entity.render.layer.accessory.IncapacitatedRenderer;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.AccessoryModelRenderEntries;
+import doggytalents.client.entity.render.misc.DogArrowRenderer;
 import doggytalents.client.entity.render.misc.DogPlushieRenderer;
 import doggytalents.client.entity.render.misc.DogThrownTridentRenderer;
 import doggytalents.client.entity.render.misc.PianoRenderer;
@@ -336,6 +337,7 @@ public class ClientSetup {
         event.registerEntityRenderer(DoggyEntityTypes.DOG_GUNPOWDER_PROJ.get(), DogGunpowderProjectileRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.DOG_BEAM.get(), DoggyBeamRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.DOG_TRIDENT_PROJ.get(), DogThrownTridentRenderer::new);
+        event.registerEntityRenderer(DoggyEntityTypes.DOG_ARROW_PROJ.get(), DogArrowRenderer::new);
         event.registerBlockEntityRenderer(DoggyTileEntityTypes.DOG_BED.get(), DogBedRenderer::new);
         event.registerBlockEntityRenderer(DoggyTileEntityTypes.RICE_MILL.get(), RiceMillRenderer::new);
 
