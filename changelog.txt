@@ -1421,4 +1421,8 @@ if it have the Flame Enchament or not.
 * HOTFIX: Idle Sniffing Dog bypassing Mining Cautious mechanic, causing dog to
 cause some trouble again.
 
-
+**1.18.17 - 8th June 2024**
++ Projectiles shot from Bow and Trident from Dogs now ignores all allies (they simply pass
+through them) (Configurable)
+# Hellhound Max dogs will always shoot fiery Tridents which set target on fire when hit. 
+*HOTFIX: Dog Find Water AI doesn't stop navigation when stop.
