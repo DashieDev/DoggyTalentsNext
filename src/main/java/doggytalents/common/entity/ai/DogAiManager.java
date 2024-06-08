@@ -222,7 +222,7 @@ public class DogAiManager {
             if (!goal.isRunning())
                 continue;
             if (goalMustStop(goal))
-                goal.stop();
+                stopGoal(goal);
         }
     }
 
@@ -248,7 +248,7 @@ public class DogAiManager {
         for (var flag : goal.getFlags()) {
             var runningGoal = this.runningGoalsWithFlag.get(flag);
             if (runningGoal != null) {
-                runningGoal.stop();
+                stopGoal(runningGoal);
             }
             this.runningGoalsWithFlag.put(flag, goal);
         }
@@ -298,6 +298,12 @@ public class DogAiManager {
         return false;
     }
 
+    private void stopGoal(WrappedGoal goal) {
+        goal.stop();
+        if (goal.getFlags().contains(Goal.Flag.MOVE))
+            dog.getNavigation().stop();
+    }
+
     public void setLockedFlag(Goal.Flag flag, boolean free) {
         if (!free)
             this.lockedFlags.add(flag);
@@ -309,7 +315,7 @@ public class DogAiManager {
         this.clearTriggerableAction();
         for (var goal : this.goals) {
             if (goal.isRunning())
-                goal.stop();
+                stopGoal(goal);
         }
     }
 
@@ -319,7 +325,7 @@ public class DogAiManager {
         }
         for (var goal : this.goals) {
             if (goal.isRunning() && goal.getFlags().contains(flag))
-                goal.stop();
+                stopGoal(goal);
         }
     }
 
