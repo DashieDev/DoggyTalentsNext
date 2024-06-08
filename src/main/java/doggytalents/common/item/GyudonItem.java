@@ -53,7 +53,7 @@ public class GyudonItem extends DogEddibleBowlFoodItem {
             var newDuration = effectInst.getEffect().value().isInstantenous() ?
                 effectInst.getDuration()
                 : effectInst.mapDuration(x -> x + 2 * 60 * 20);
-            var new_pair = new PossibleEffect(() -> new MobEffectInstance(
+            var new_pair = new PossibleEffect(new MobEffectInstance(
                 effectInst.getEffect(),
                 newDuration,
                 effectInst.getAmplifier()

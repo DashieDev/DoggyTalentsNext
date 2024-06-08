@@ -53,7 +53,7 @@ public class OyakodonItem extends DogEddibleBowlFoodItem {
             var newDuration = effect.getEffect().value().isInstantenous() ?
                 effect.getDuration()
                 : effect.mapDuration(x -> x + 2 * 60 * 20);
-            var newPair = new PossibleEffect(() -> new MobEffectInstance(
+            var newPair = new PossibleEffect(new MobEffectInstance(
                 effect.getEffect(),
                 newDuration,
                 effect.getAmplifier()
