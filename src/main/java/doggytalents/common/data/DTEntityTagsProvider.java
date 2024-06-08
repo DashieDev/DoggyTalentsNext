@@ -6,11 +6,13 @@ import java.util.function.Supplier;
 
 import org.jetbrains.annotations.Nullable;
 
+import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -37,6 +39,9 @@ public class DTEntityTagsProvider extends EntityTypeTagsProvider {
             () -> EntityType.SPIDER);
         createTag(DoggyTags.MOB_RETRIEVER_MUST_IGNORE, 
             () -> EntityType.CREEPER);
+        createTag(EntityTypeTags.IMPACT_PROJECTILES, 
+            DoggyEntityTypes.DOG_ARROW_PROJ, DoggyEntityTypes.DOG_TRIDENT_PROJ);
+        createTag(EntityTypeTags.ARROWS, DoggyEntityTypes.DOG_ARROW_PROJ);
     }
 
     @SafeVarargs
