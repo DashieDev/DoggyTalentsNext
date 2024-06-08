@@ -10,7 +10,9 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.api.impl.IDogRangedAttackManager.UsingWeaponContext;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.misc.DogArrow;
 import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
@@ -150,7 +152,7 @@ public interface ShootHandler {
             if (arrow == null)  
                 return Optional.empty();
     
-            var arrow_proj = arrow.createArrow(dog.level(), arrowStack, dog);
+            var arrow_proj = createDogArrow(dog, arrow, arrowStack);
             if (arrow_proj == null)
                 return Optional.empty();
     
@@ -183,6 +185,13 @@ public interface ShootHandler {
             }
     
             return Optional.of(arrow_proj);
+        }
+
+        private AbstractArrow createDogArrow(AbstractDog dog, ArrowItem arrow_item, ItemStack arrow_stack) {
+            if (!ConfigHandler.SERVER.DOGGY_TOOLS_PROJECTILE_PASS_ALLIES.get()) {
+                return arrow_item.createArrow(dog.level(), arrow_stack, dog);
+            }
+            return new DogArrow(dog.level(), dog, arrow_stack.copyWithCount(1));
         }
     
         private void consumeArrow(AbstractDog dog, ItemStack bow_stack, ItemStack arrowStack) {

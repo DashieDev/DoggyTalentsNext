@@ -276,6 +276,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
         public ForgeConfigSpec.BooleanValue WOLF_VARIANT_OVERRIDE_EXCLUSIVE;
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
+        public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
         public ForgeConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
         public ForgeConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
 
@@ -464,6 +465,14 @@ public class ConfigHandler {
                 .comment("Allow Doggy Tools Dogs to use Trident")
                 .translation("doggytalents.doggy_tools_trident")
                 .define("doggy_tools_trident", true);
+            DOGGY_TOOLS_PROJECTILE_PASS_ALLIES = builder
+                .comment("Allow Doggy Tools Dogs's projectiles to pass through allies instead of just")
+                .comment("despawning if hit. Notice that this option does not affect Crossbow")
+                .comment("projectile and will cause Dog to interpret any third-party")
+                .comment("arrows as vanilla's arrow. Disable this, if you prefer Dogs to utilize third-party")
+                .comment("Arrows as it is. Regardless, the arrows fired from Dog will do no harm to allies.")
+                .translation("doggytalents.doggy_tools_projectile_pass_allies")
+                .define("doggy_tools_projectile_pass_allies", true);
             builder.pop();
         }
 
