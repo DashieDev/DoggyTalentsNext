@@ -1,0 +1,6 @@
+{
+  "angry_texture": "doggytalents:entity/dog/classical/compl/vanilla_only/wolf_birch_angry",
+  "biomes": "minecraft:birch_forest",
+  "tame_texture": "doggytalents:entity/dog/classical/compl/vanilla_only/wolf_birch_tame",
+  "wild_texture": "doggytalents:entity/dog/classical/compl/vanilla_only/wolf_birch"
+}

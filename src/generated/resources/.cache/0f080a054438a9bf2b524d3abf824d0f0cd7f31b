@@ -1,4 +1,4 @@
-// 1.20.6	2024-05-15T03:18:04.9796197	DoggyTalents Item Models
+// 1.20.6	2024-06-06T00:48:13.2176995	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
@@ -119,15 +119,6 @@ dbf6c9d6d5424690074e56d4aee155bcc19a4320 assets/doggytalents/models/item/uncooke
 e081fc66cdca04bf058bd612ec5da337f2171fe3 assets/doggytalents/models/item/uncooked_rice_bowl.json
 b14edc33827d1a6a1a7e096d17bff000ff4fd37f assets/doggytalents/models/item/upright_piano_black_item.json
 30cb8ec02f9f5c9def702a9ab527562cc63aa856 assets/doggytalents/models/item/upright_piano_brown_item.json
-df6a6913778941d39706fca500bda93b87369f39 assets/doggytalents/models/item/variant_changer_ashen.json
-e35011aa094f92251aa16edccaf25901d9be64cf assets/doggytalents/models/item/variant_changer_black.json
-ee9cf4df24128aa116af8bc21b752a4666962223 assets/doggytalents/models/item/variant_changer_chestnut.json
-2708061fbc963ffa66250b4b2ea06377a3f6be80 assets/doggytalents/models/item/variant_changer_pale.json
-c216338f40f82f325e37e84b4d86e521db43ce7d assets/doggytalents/models/item/variant_changer_rusty.json
-e775b6ef11a9a202b7b6d53e3a5ecff741f8ae25 assets/doggytalents/models/item/variant_changer_snowy.json
-9f0767d1997828f1cd4dbd1612479c2d5736c77d assets/doggytalents/models/item/variant_changer_spotted.json
-faecb327d434a660e44bc2d1b2a0b2f782af1358 assets/doggytalents/models/item/variant_changer_striped.json
-8fc5b23df322a045d9321fd920780ec101a94e29 assets/doggytalents/models/item/variant_changer_woods.json
 7463378ef868b9e2a5743e3fc7837c28e1c8222e assets/doggytalents/models/item/whistle.json
 272f446b0708c9066160b62935c82364ebcffd02 assets/doggytalents/models/item/wig.json
 edfc173f2dcf439d7e9a9fb9cc54e18261ca75d6 assets/doggytalents/models/item/witch_hat.json
