@@ -13,7 +13,8 @@
         "LivingEntityMixin",
         "Minecraft_UtilMixin",
         "ThrownEggMixin",
-        "WolfMixin"
+        "WolfMixin",
+        "PathFinderMobMixin"
     ],
     "client": [
         "LocalPlayerMixin",

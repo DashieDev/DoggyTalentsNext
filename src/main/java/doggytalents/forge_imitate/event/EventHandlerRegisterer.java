@@ -5,6 +5,8 @@ import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.variants.DTNWolfVariantsSpawnOverride;
+import doggytalents.common.variants.DTNWolfVariantsSpawnPlacements;
+import doggytalents.common.variants.VSCodeWolfSpawnHandler;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry.InstanceEventCallBack;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry.SingleEventCallBack;
 
@@ -95,6 +97,18 @@ public class EventHandlerRegisterer {
             new SingleEventCallBack<MobSpawnEvent.FinalizeSpawn>(
                 MobSpawnEvent.FinalizeSpawn.class,
                 DTNWolfVariantsSpawnOverride::onWolfSpawn
+            )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new SingleEventCallBack<MobSpawnEvent.PositionCheck>(
+                MobSpawnEvent.PositionCheck.class,
+                DTNWolfVariantsSpawnPlacements::onPositionCheck
+            )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new SingleEventCallBack<PlayerInteractEvent.RightClickBlock>(
+                PlayerInteractEvent.RightClickBlock.class,
+                VSCodeWolfSpawnHandler::onRightClickBlock
             )
         );
     }

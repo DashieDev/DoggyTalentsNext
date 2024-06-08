@@ -96,9 +96,9 @@ public class DoggyEntityTypes {
     public static final Supplier<EntityType<DogThrownTrident>> DOG_TRIDENT_PROJ = register("dog_trident_proj", DogThrownTrident::new, MobCategory.MISC, b -> b
         .sized(0.5F, 0.5F)
         .eyeHeight(0.13F)
-        .setTrackingRange(4)
+        .clientTrackingRange(4)
         .updateInterval(20)
-        .setShouldReceiveVelocityUpdates(true)
+        //.setShouldReceiveVelocityUpdates(true)
         .noSummon()
     );
 

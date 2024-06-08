@@ -76,6 +76,7 @@ public class DogFindWaterGoal extends Goal {
     @Override
     public void stop() {
         this.tempPath = null;
+        //this.dog.getNavigation().stop();
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.Objects;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.forge_imitate.event.PlayerInteractEvent;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,7 +16,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class VSCodeWolfSpawnHandler {
     

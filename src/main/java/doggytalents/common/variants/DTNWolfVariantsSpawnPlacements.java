@@ -1,6 +1,8 @@
 package doggytalents.common.variants;
 
 import doggytalents.common.config.ConfigHandler;
+import doggytalents.forge_imitate.event.MobSpawnEvent.PositionCheck;
+import doggytalents.forge_imitate.event.MobSpawnEvent.PositionCheck.Result;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -18,9 +20,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.bus.api.Event.Result;
-import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent.PositionCheck;
 
 public class DTNWolfVariantsSpawnPlacements {
     

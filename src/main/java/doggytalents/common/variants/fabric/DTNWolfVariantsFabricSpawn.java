@@ -17,6 +17,9 @@ public class DTNWolfVariantsFabricSpawn {
         addHimalayanSaltWolfSpawn();
         addLemonyLimeWolfSpawn();
         addBambooWolfSpawn();
+        addCrimsonWolfSpawn();
+        addWarpedWolfModifier();
+        addBirchWolfModifier();
     } 
 
     private static void addCherryWolfSpawn() {
@@ -39,6 +42,21 @@ public class DTNWolfVariantsFabricSpawn {
             MobCategory.CREATURE, EntityType.WOLF, 1, 1, 1);
         BiomeModifications.addSpawn(selectForKey(Biomes.BAMBOO_JUNGLE),
             MobCategory.CREATURE, EntityType.WOLF, 60, 1, 1);
+    }
+
+    private static void addCrimsonWolfSpawn() {
+        BiomeModifications.addSpawn(selectForKey(Biomes.CRIMSON_FOREST),
+            MobCategory.CREATURE, EntityType.WOLF, 20, 1, 1);
+    }
+
+    private static void addWarpedWolfModifier() {
+        BiomeModifications.addSpawn(selectForKey(Biomes.WARPED_FOREST),
+            MobCategory.CREATURE, EntityType.WOLF, 40, 1, 1);
+    }
+
+    private static void addBirchWolfModifier() {
+        BiomeModifications.addSpawn(selectForKey(Biomes.BIRCH_FOREST),
+            MobCategory.CREATURE, EntityType.WOLF, 1, 1, 1);
     }
 
     private static Predicate<BiomeSelectionContext> selectForKey(ResourceKey<Biome> biomeKey) {
