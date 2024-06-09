@@ -42,7 +42,7 @@ public class DogThrownTrident extends AbstractArrow {
     private int timeOutTick = 0;
 
     //1.20.2 under
-    private ItemStack tridentStack;
+    private ItemStack tridentStack = ItemStack.EMPTY;
 
     public DogThrownTrident(EntityType<DogThrownTrident> p_37561_, Level p_37562_) {
         super(p_37561_, p_37562_);
