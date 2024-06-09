@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
@@ -162,5 +163,7 @@ public class ItemUtil {
         }
         
         crossbow_tag.put(CHARGED_PROJ_TAG, listtag);
+        
+        CrossbowItem.setCharged(crossbow_stack, true);
     } 
 }
