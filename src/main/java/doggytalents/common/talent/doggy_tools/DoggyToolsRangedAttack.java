@@ -23,7 +23,7 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
 
@@ -165,7 +165,7 @@ public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
     }
 
     public static boolean isInfinityBow(ItemStack bowStack) {
-        return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY, bowStack) > 0;
+        return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bowStack) > 0;
     }
 
     public static ShootHandler getActiveShootHandler(AbstractDog dog) {

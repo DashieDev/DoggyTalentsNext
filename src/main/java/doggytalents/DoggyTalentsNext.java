@@ -99,8 +99,6 @@ public class DoggyTalentsNext {
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
         forgeEventBus.addListener(this::registerCommands);
-        forgeEventBus.addListener(VSCodeWolfSpawnHandler::onRightClickBlock);
-
         forgeEventBus.register(new EventHandler());
 
         // Client Events

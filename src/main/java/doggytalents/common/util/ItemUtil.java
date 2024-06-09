@@ -1,6 +1,7 @@
 package doggytalents.common.util;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -8,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -114,11 +116,11 @@ public class ItemUtil {
     }
 
     public static Component getCustomHoverName(ItemStack stack) {
-        return stack.get(DataComponents.CUSTOM_NAME);
+        return stack.getHoverName();
     }
 
     public static void clearCustomHoverName(ItemStack stack) {
-        stack.set(DataComponents.CUSTOM_NAME, null);
+        stack.resetHoverName();
     }
 
     public static int getDyeColorForStack(ItemStack stack) {
@@ -142,4 +144,23 @@ public class ItemUtil {
     public static CompoundTag getWrappedTag(ItemStack stack) {
         return getTag(stack);
     }
+
+    public static void addCrossbowProj(ItemStack crossbow_stack, List<ItemStack> proj_stacks) {
+        final String CHARGED_PROJ_TAG = "ChargedProjectiles";
+        var crossbow_tag = crossbow_stack.getOrCreateTag();
+        ListTag listtag;
+        if (crossbow_tag.contains(CHARGED_PROJ_TAG, Tag.TAG_LIST)) {
+            listtag = crossbow_tag.getList(CHARGED_PROJ_TAG, Tag.TAG_COMPOUND);
+        } else {
+            listtag = new ListTag();
+        }
+
+        for (var proj_stack : proj_stacks) {
+            var proj_tag = new CompoundTag();
+            proj_stack.save(proj_tag);
+            listtag.add(proj_tag);
+        }
+        
+        crossbow_tag.put(CHARGED_PROJ_TAG, listtag);
+    } 
 }
