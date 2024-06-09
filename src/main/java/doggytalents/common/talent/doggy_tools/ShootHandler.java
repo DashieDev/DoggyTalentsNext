@@ -359,6 +359,7 @@ public interface ShootHandler {
             CrossbowItem.performShooting(
                 dog.level(), dog, InteractionHand.MAIN_HAND, crossbow_stack, 1.6f, 2
             );
+            CrossbowItem.setCharged(crossbow_stack, false);
             hellHoundSetFireToOwnedArrows(dog);
         }
 
