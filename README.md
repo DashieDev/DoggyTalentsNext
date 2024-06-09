@@ -1,7 +1,7 @@
 # Doggy Talents Next 
 [![Curseforge](http://cf.way2muchnoise.eu/full_doggy-talents-next_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/doggy-talents-next) [![Curseforge](http://cf.way2muchnoise.eu/versions/For%20MC_doggy-talents-next_all.svg)](https://www.curseforge.com/minecraft/mc-mods/doggy-talents-next)
 
-![DT Logo](https://github.com/DashieDev/DoggyTalentsNext/blob/225f4b95d39e4890046bcf6ac30ad8e6b467a9a5/images/logo_curse4.png?raw=true)
+![DT Logo](https://github.com/DashieDev/DoggyTalentsNext/assets/122363761/831af77a-1e00-4471-9655-d652c81b92ff)
 
 **Doggy Talents Next** - Minecraft Wolf, reimagined.
 
@@ -25,7 +25,7 @@ A Big Thanks to everyone that has contributed. This includes but is not limited 
 * 🦴 **DashieDev** - ダシデーブ
 * 🦴 **MashXP** - マッシーXP
 
-For more informations, please consult the [wiki](https://github.com/DashieDev/DoggyTalentsNext/wiki)
+For more informations, please consult the [wiki](https://doggytalentsnext.wiki.gg/wiki/Doggy_Talents_Next_Wiki)
 
 -----------------
 
@@ -41,10 +41,7 @@ For more informations, please consult the [wiki](https://github.com/DashieDev/Do
 -----------------
 
 ### FAQ
- - **Q:** Are dogs no longer immortal?  
-   **A:** Unlike the old versions, dog is not immortal by default, you can link them to a bed and they will respawn there. However, if you want immortal dogs, you can still enable the feature in your world. Visit [Immortal Dogs](https://github.com/DashieDev/DoggyTalentsNext/wiki/Immortal-Dogs) for more info.
- - **Q:** I have a wolf, how to get started?  
-   **A:** Use a **Training Treat** to turn him into a **DoggyTalents Dog**. Visit the [Getting Started wiki](https://github.com/DashieDev/DoggyTalentsNext/wiki/Getting-Started) for more info.
+See more at the [wiki](https://doggytalentsnext.wiki.gg/wiki/FAQ)
 
 -----------------
 ### License
