@@ -9,7 +9,6 @@ import doggytalents.DoggySounds;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.AllStandSwitchModeData;
 import doggytalents.common.util.EntityUtil;
@@ -17,6 +16,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundSource;
+import net.minecraftforge.network.NetworkEvent.Context;
 
 public class AllStandSwitchModePacket implements IPacket<AllStandSwitchModeData> {
 
@@ -35,8 +35,8 @@ public class AllStandSwitchModePacket implements IPacket<AllStandSwitchModeData>
     @Override
     public void handle(AllStandSwitchModeData data, Supplier<Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            //var side = ctx.get().getDirection().getReceptionSide();
-            if (!ctx.get().isServerRecipent()) return;
+            var side = ctx.get().getDirection().getReceptionSide();
+            if (!side.isServer()) return;
             var sender = ctx.get().getSender();
             if (sender.getCooldowns().isOnCooldown(DoggyItems.WHISTLE.get())) return;
 

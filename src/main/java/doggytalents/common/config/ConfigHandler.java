@@ -259,10 +259,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
         public ForgeConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
         public ForgeConfigSpec.BooleanValue WOLF_VARIANT_OVERRIDE_EXCLUSIVE;
-        public ModConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
-        public ModConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
-        public ModConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
-        public ModConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
+        public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
+        public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
+        public ForgeConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
+        public ForgeConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;

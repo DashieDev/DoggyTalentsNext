@@ -15,7 +15,7 @@ import doggytalents.common.entity.misc.DogArrow;
 import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
-import net.minecraft.core.component.DataComponents;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,10 +26,9 @@ import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.component.ChargedProjectiles;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public interface ShootHandler {
 
@@ -131,7 +130,7 @@ public interface ShootHandler {
             if (inv != null && id >= 0)
                 inv.setStackInSlot(id, arrow_stack);
 
-            bowStack.hurtAndBreak(1, dog, EquipmentSlot.MAINHAND);
+            bowStack.hurtAndBreak(1, dog, (p_150845_) -> {p_150845_.broadcastBreakEvent(InteractionHand.MAIN_HAND);});
 
             return projArrowOptional;
         }
@@ -156,26 +155,26 @@ public interface ShootHandler {
             if (arrow_proj == null)
                 return Optional.empty();
     
-            arrow_proj = bow.customArrow(arrow_proj, arrowStack);
+            arrow_proj = bow.customArrow(arrow_proj);
             if (power >= 1.0F) {
                 arrow_proj.setCritArrow(true);
             }
     
-            int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, bow_stack);
+            int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, bow_stack);
             if (j > 0) {
                 arrow_proj.setBaseDamage(arrow_proj.getBaseDamage() + (double)j * 0.5D + 0.5D);
             }
     
-            int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH, bow_stack);
+            int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, bow_stack);
             if (k > 0) {
                 arrow_proj.setKnockback(k);
             }
     
             boolean flaming_arrow = 
-                EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAME, bow_stack) > 0
+                EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, bow_stack) > 0
                 || dog.getDogLevel(DoggyTalents.HELL_HOUND) >= 5;
             if (flaming_arrow) {
-                EntityUtil.setSecondsOnFire(arrow_proj, 100);
+                arrow_proj.setSecondsOnFire(100);
             }
     
             if (is_infinity_bow) {
@@ -226,7 +225,7 @@ public interface ShootHandler {
             var trident = tridentOptional.get();
             boolean flaming_trident = dog.getDogLevel(DoggyTalents.HELL_HOUND) >= 5;
             if (flaming_trident) {
-                EntityUtil.setSecondsOnFire(trident, 100);
+                trident.setSecondsOnFire(100);
             }
             ranged_manager.shootProjectile(dog, trident, target, SoundEvents.TRIDENT_THROW);
             ranged_manager.setAwaitingTrident(trident);
@@ -239,7 +238,7 @@ public interface ShootHandler {
             
             var proj = new DogThrownTrident(dog, trident_stack.copy());
             proj.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
-            trident_stack.hurtAndBreak(1, dog, EquipmentSlot.MAINHAND);
+            trident_stack.hurtAndBreak(1, dog, (p_150845_) -> {p_150845_.broadcastBreakEvent(InteractionHand.MAIN_HAND);});
             
             return Optional.of(proj);
         }
@@ -329,7 +328,7 @@ public interface ShootHandler {
             }
             if (item_list.isEmpty()) 
                 return;
-            crossbow_stack.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.of(item_list));
+            ItemUtil.addCrossbowProj(crossbow_stack, item_list);
             
             if (inv != null) {
                 arrow_stack = arrow_stack.copy();
@@ -357,8 +356,8 @@ public interface ShootHandler {
         private void shootViaCrossbow(AbstractDog dog, LivingEntity target, ItemStack crossbow_stack) {
             if (!(crossbow_stack.getItem() instanceof CrossbowItem crossbowitem))
                 return;
-            crossbowitem.performShooting(
-                dog.level(), dog, InteractionHand.MAIN_HAND, crossbow_stack, 1.6f, 2, target
+            CrossbowItem.performShooting(
+                dog.level(), dog, InteractionHand.MAIN_HAND, crossbow_stack, 1.6f, 2
             );
             hellHoundSetFireToOwnedArrows(dog);
         }
@@ -384,7 +383,7 @@ public interface ShootHandler {
                 return false;
             
             for (var target : targets)
-                EntityUtil.setSecondsOnFire(target, 20);
+                target.setSecondsOnFire(20);
             return true;
         }
 

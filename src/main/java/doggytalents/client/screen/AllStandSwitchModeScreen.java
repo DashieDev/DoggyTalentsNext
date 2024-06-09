@@ -6,13 +6,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import doggytalents.api.feature.EnumMode;
-import doggytalents.common.network.PacketDistributor;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.AllStandSwitchModeData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.network.PacketDistributor;
 
 public class AllStandSwitchModeScreen extends StringEntrySelectScreen {
 

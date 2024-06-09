@@ -705,7 +705,7 @@ public class DogUtil {
         return stack.is(Items.TRIDENT);
     }
 
-    public static boolean isDangerPathType(PathType pathType) {
+    public static boolean isDangerPathType(BlockPathTypes pathType) {
         switch (pathType) {
         case POWDER_SNOW:
         case DANGER_POWDER_SNOW:
@@ -715,7 +715,7 @@ public class DogUtil {
         case DANGER_OTHER:
         case DAMAGE_OTHER:
         case DAMAGE_CAUTIOUS:
-        case DANGER_TRAPDOOR:
+        //case DANGER_TRAPDOOR:
         case TRAPDOOR:
             return true;
         default:
