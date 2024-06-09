@@ -714,7 +714,7 @@ public class DogUtil {
         case DAMAGE_FIRE:
         case DANGER_OTHER:
         case DAMAGE_OTHER:
-        case DAMAGE_CAUTIOUS:
+        //case DAMAGE_CAUTIOUS:
         //case DANGER_TRAPDOOR:
         case TRAPDOOR:
             return true;
