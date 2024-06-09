@@ -550,8 +550,15 @@ public class EventHandler {
         DogLocationStorageMigration.checkAndMigrate(level_overworld);
     }
 
-    //Prevent passenger suffocate when riding dog.
     @SubscribeEvent
+    public void onLivingHurt(LivingHurtEvent event) {
+        onDogPassenegerHurtInWall(event);
+        if (event.isCanceled())
+            return;
+        
+    }
+
+    //Prevent passenger suffocate when riding dog.
     public void onDogPassenegerHurtInWall(LivingHurtEvent event) {
         var entity = event.getEntity();
         if (entity == null)
