@@ -16,6 +16,7 @@ import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.forward_imitate.Util_1_19_2;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -190,7 +191,7 @@ public interface ShootHandler {
             if (!ConfigHandler.SERVER.DOGGY_TOOLS_PROJECTILE_PASS_ALLIES.get()) {
                 return arrow_item.createArrow(dog.level(), arrow_stack, dog);
             }
-            return new DogArrow(dog.level(), dog, arrow_stack.copyWithCount(1));
+            return new DogArrow(dog.level(), dog, Util_1_19_2.copyWithCount(arrow_stack, 1));
         }
     
         private void consumeArrow(AbstractDog dog, ItemStack bow_stack, ItemStack arrowStack) {
@@ -324,7 +325,7 @@ public interface ShootHandler {
             int shoot_amount = is_multishot ? 3 : 1;
             var item_list = new ArrayList<ItemStack>(shoot_amount);
             for (int i = 0; i < shoot_amount; ++i) {
-                item_list.add(arrow_stack.copyWithCount(1));   
+                item_list.add(Util_1_19_2.copyWithCount(arrow_stack, 1));   
             }
             if (item_list.isEmpty()) 
                 return;

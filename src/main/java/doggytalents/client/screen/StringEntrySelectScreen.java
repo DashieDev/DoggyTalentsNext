@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import net.minecraft.SharedConstants;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -82,7 +82,7 @@ public class StringEntrySelectScreen extends Screen {
     }
     
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
 
         updateBlockCharInputMillis();
 
@@ -163,20 +163,20 @@ public class StringEntrySelectScreen extends Screen {
         return getMaxEntriesPerPage();
     }
 
-    protected void drawSelectArea(GuiGraphics graphics) {
+    protected void drawSelectArea(PoseStack graphics) {
         drawSelectAreaBackground(graphics);
         drawEntries(graphics);
     }
 
-    protected void drawSelectAreaBackground(GuiGraphics graphics) {
+    protected void drawSelectAreaBackground(PoseStack graphics) {
         int half_width = this.width / 2;
         int half_height = this.height / 2; 
       
-        graphics.fill( half_width - getSelectAreaSize() / 2 , half_height - getSelectAreaSize() / 2 , 
+        fill(graphics, half_width - getSelectAreaSize() / 2 , half_height - getSelectAreaSize() / 2 , 
             half_width + getSelectAreaSize() / 2 , half_height + getSelectAreaSize() / 2 , Integer.MIN_VALUE);
     }
 
-    protected void drawEntries(GuiGraphics graphics) {
+    protected void drawEntries(PoseStack graphics) {
         int half_width = this.width / 2;
         int half_height = this.height / 2;
 
@@ -193,7 +193,7 @@ public class StringEntrySelectScreen extends Screen {
         }
     }
 
-    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y, int start_indx, int render_indx) {
+    protected void drawEntry(PoseStack graphics, int entry_x, int entry_y, int start_indx, int render_indx) {
         int color = 0xffffffff;
 
         boolean is_selected_entry =
@@ -204,29 +204,29 @@ public class StringEntrySelectScreen extends Screen {
         
         int entry_id = this.filteredIndexes.get(render_indx);
         var text = this.entries.get(entry_id);
-        graphics.drawString(font, text, entry_x, entry_y, color);
+        font.draw(graphics, text, entry_x, entry_y, color);
     }
 
-    protected void drawSearchBar(GuiGraphics graphics) {
+    protected void drawSearchBar(PoseStack graphics) {
         int half_width = this.width / 2;
         int half_height = this.height / 2;
         
         int txtorgx = half_width - this.getSelectAreaSize() / 2 + 10;
         int txtorgy = half_height + this.getSelectAreaSize() / 2 + this.getSearchBarOffset();
         
-        graphics.fill( half_width - this.getSelectAreaSize() / 2 , 
+        fill(graphics, half_width - this.getSelectAreaSize() / 2 , 
             half_height + this.getSelectAreaSize() / 2 + 5, half_width + this.getSelectAreaSize() / 2, 
             half_height + this.getSelectAreaSize() / 2 + 17, Integer.MIN_VALUE);
-        graphics.drawString(font, this.searchString + "_", txtorgx, txtorgy,  0xffffffff);
+        font.draw(graphics,  this.searchString + "_", txtorgx, txtorgy,  0xffffffff);
     }
 
-    protected void drawPageIndicator(GuiGraphics graphics) {
+    protected void drawPageIndicator(PoseStack graphics) {
         int half_width = this.width / 2;
         int half_height = this.height / 2;
         
         var pageStr = (activePage + 1) + "/" + pageCount;
         var pageStrWidth = font.width(pageStr);
-        graphics.drawString(font, pageStr, half_width - pageStrWidth/2, 
+        font.draw(graphics, pageStr, half_width - pageStrWidth/2, 
             half_height - this.getSelectAreaSize() / 2 - this.getPageIndicatorOffset(), 0xffffffff);
     }
 

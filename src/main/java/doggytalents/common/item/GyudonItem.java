@@ -8,6 +8,7 @@ import com.mojang.datafixers.util.Pair;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.common.util.forward_imitate.Util_1_19_2;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -52,7 +53,7 @@ public class GyudonItem extends DogEddibleBowlFoodItem {
             var effect = pair.getFirst();
             var newDuration = effect.getEffect().isInstantenous() ?
                 effect.getDuration()
-                : effect.mapDuration(x -> x + 2 * 60 * 20);
+                : Util_1_19_2.mapDuration(effect, x -> x + 2 * 60 * 20);
             var newEffect = new MobEffectInstance(
                 effect.getEffect(),
                 newDuration,

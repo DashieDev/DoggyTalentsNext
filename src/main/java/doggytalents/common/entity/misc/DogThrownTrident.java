@@ -17,6 +17,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -184,7 +185,7 @@ public class DogThrownTrident extends AbstractArrow {
         }
         var owner = this.getOwner();
         var indirect_entity_source = owner == null ? this : owner;
-        var trident_source = this.damageSources().arrow(this, indirect_entity_source);
+        var trident_source = DamageSource.arrow(this, indirect_entity_source);
         if (this.isOnFire()) {
             target.setSecondsOnFire(5);
         }
@@ -288,5 +289,8 @@ public class DogThrownTrident extends AbstractArrow {
             return false;
         return EventHandler.isAlliedToDog(target, dog_owner);
     }
+
+    //Forward sugar
+    public Level level() { return this.level; }
 
 }

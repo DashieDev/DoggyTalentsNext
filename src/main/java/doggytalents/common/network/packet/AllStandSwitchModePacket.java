@@ -50,7 +50,7 @@ public class AllStandSwitchModePacket implements IPacket<AllStandSwitchModeData>
                 && filter_dog.isOwnedBy(sender)
                 && filter_dog.getMode() != target_mode
                 && !filter_dog.getMode().canWander();
-            var dogs = sender.level().getEntitiesOfClass(
+            var dogs = sender.level.getEntitiesOfClass(
                 Dog.class, 
                 sender.getBoundingBox().inflate(100D, 50D, 100D), 
                 switch_mode_target
@@ -61,7 +61,7 @@ public class AllStandSwitchModePacket implements IPacket<AllStandSwitchModeData>
             }
 
             if (ConfigHandler.WHISTLE_SOUNDS)
-            sender.level().playSound(null, sender.blockPosition(), DoggySounds.WHISTLE_LONG.get(), SoundSource.PLAYERS, 0.6F + sender.level().random.nextFloat() * 0.1F, 0.4F + sender.level().random.nextFloat() * 0.2F);
+            sender.level.playSound(null, sender.blockPosition(), DoggySounds.WHISTLE_LONG.get(), SoundSource.PLAYERS, 0.6F + sender.level.random.nextFloat() * 0.1F, 0.4F + sender.level.random.nextFloat() * 0.2F);
             sender.sendSystemMessage(Component.translatable("dogcommand.all_stand_switch_mode", 
                 Component.translatable(data.mode.getUnlocalisedName())
                 .withStyle(

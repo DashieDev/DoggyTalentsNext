@@ -7,8 +7,8 @@ import java.util.Set;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
+import doggytalents.common.util.forward_imitate.Util_1_19_2;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -193,7 +193,7 @@ public class DogArrow extends AbstractArrow {
                 target.addEffect(
                     new MobEffectInstance(
                         effect_inst.getEffect(),
-                        Math.max(effect_inst.mapDuration(x -> x / 8), 1),
+                        Math.max(Util_1_19_2.mapDuration(effect_inst, x -> x / 8), 1),
                         effect_inst.getAmplifier(),
                         effect_inst.isAmbient(),
                         effect_inst.isVisible()
@@ -348,5 +348,8 @@ public class DogArrow extends AbstractArrow {
             return stack;
         }
     }
+
+    //Forward sugar
+    public Level level() { return this.level; }
 
 }
