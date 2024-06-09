@@ -40,19 +40,23 @@ public class DogThrownTrident extends AbstractArrow {
     private boolean playedClientReturnSound;
     private int timeOutTick = 0;
 
+    //1.20.2 under
+    private ItemStack tridentStack;
+
     public DogThrownTrident(EntityType<DogThrownTrident> p_37561_, Level p_37562_) {
         super(p_37561_, p_37562_);
     }
 
     public DogThrownTrident(Dog dog, ItemStack trident_stack) {
-        super(DoggyEntityTypes.DOG_TRIDENT_PROJ.get(), dog, dog.level(), trident_stack);
+        super(DoggyEntityTypes.DOG_TRIDENT_PROJ.get(), dog, dog.level());
         this.entityData.set(FOIL, trident_stack.hasFoil());
+        this.tridentStack = trident_stack;
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder p_326249_) {
-        super.defineSynchedData(p_326249_);
-        p_326249_.define(FOIL, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(FOIL, false);
     }
 
     @Override
@@ -176,13 +180,13 @@ public class DogThrownTrident extends AbstractArrow {
     private boolean hurtDogTridentTarget(Entity target) {
         float damage = 8;
         if (target instanceof LivingEntity living) {
-            damage += EnchantmentHelper.getDamageBonus(this.getPickupItemStackOrigin(), living.getType());
+            damage += EnchantmentHelper.getDamageBonus(tridentStack, living.getMobType());
         }
         var owner = this.getOwner();
         var indirect_entity_source = owner == null ? this : owner;
         var trident_source = this.damageSources().arrow(this, indirect_entity_source);
         if (this.isOnFire()) {
-            EntityUtil.setSecondsOnFire(target, 5);
+            target.setSecondsOnFire(5);
         }
         var result = target.hurt(trident_source, damage);
         if (!result)
@@ -204,7 +208,7 @@ public class DogThrownTrident extends AbstractArrow {
     }
 
     public boolean isChanneling() {
-        return EnchantmentHelper.hasChanneling(this.getPickupItemStackOrigin());
+        return EnchantmentHelper.hasChanneling(tridentStack);
     }
 
     private boolean maySummonLightningBolt(Entity target) {
@@ -240,7 +244,7 @@ public class DogThrownTrident extends AbstractArrow {
     }
 
     @Override
-    protected ItemStack getDefaultPickupItem() {
+    protected ItemStack getPickupItem() {
         return new ItemStack(Items.TRIDENT);
     }
 
