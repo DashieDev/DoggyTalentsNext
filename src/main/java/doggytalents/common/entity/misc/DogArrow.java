@@ -15,6 +15,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -225,7 +226,7 @@ public class DogArrow extends AbstractArrow {
         if (!(target instanceof Creeper creeper))
             return;
         creeper.setHealth(0);
-        creeper.die(dog.damageSources().mobAttack(dog));
+        creeper.die(DamageSource.mobAttack(dog));
     }
 
     @Override
