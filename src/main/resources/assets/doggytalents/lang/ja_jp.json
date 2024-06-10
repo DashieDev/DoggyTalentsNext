@@ -16,6 +16,7 @@
     "item.doggytalents.kami_treat": "神級おやつ",
     "item.doggytalents.breeding_bone": "繁殖用骨",
     "item.doggytalents.doggy_charm": "犬のお守り",
+    "item.doggytalents.doggy_charm.description": "Shift + 右クリックで、利用可能なすべてのクラシッカル種類を切り替えることができます。",
     "item.doggytalents.radio_collar": "無線首輪",
     "item.doggytalents.wool_collar": "羊毛首輪",
     "item.doggytalents.wool_collar_thicc": "厚い羊毛首輪",
@@ -41,7 +42,8 @@
     "item.doggytalents.whistle.12": "見るとでおいで口笛", 
     "item.doggytalents.whistle.13": "一緒に乗って口笛", 
     "item.doggytalents.whistle.14": "口笛命令: 吠え！",
- 
+    "item.doggytalents.whistle.15": "全体（立っている）：モードスイッチ",
+
     "item.doggytalents.treat_bag": "おやつ袋",
     "item.doggytalents.energizer_stick": "エネルギースティック",
     "item.doggytalents.egg_sandwich": "卵サンド",
@@ -463,6 +465,7 @@
     "entity.doggytalents.dog": "犬",
     "entity.doggytalents.dog.unknown_owner": "飼い主UNKNOWN",
     "entity.doggytalents.dog.untamed": "野犬",
+
     "dog.classical.variant.pale": "白色",
     "dog.classical.variant.chestnut": "栗色",
     "dog.classical.variant.striped": "しま",
@@ -478,8 +481,11 @@
     "dog.classical.variant.compl.bamboo": "たけ",
     "dog.classical.variant.compl.crimson": "真紅",
     "dog.classical.variant.compl.warped": "歪んだ",
-    "dog.classical.variant.compl.vscode": "ＶＳコード",
     "dog.classical.variant.compl.birch": "シラカバ",
+    "dog.classical.variant.compl.pistachio": "ピスタチオ",
+    "dog.classical.variant.compl.guacamole": "グワカモーレ",
+    
+    "dog.classical.variant.compl.vscode": "ＶＳコード",
 
     "doggytalents.whistle.short": "口笛・短",
     "doggytalents.whistle.long": "口笛・長",
@@ -491,6 +497,8 @@
     "dogcommand.heel_by_name": "%s, おいで!",
     "dogcommand.heel_by_group": "%s, おいで!",
     "dogcommand.ride_with_me": "%s, ほら、行こうぜ!",
+    "dogcommand.all_stand_switch_mode": "立っている犬たちのモードは %s!",
+
  
     "doggytalents.screen.whistler.screen.help_title" : "口笛・モード選択",
     "doggytalents.screen.whistler.screen.help" : "上下の矢印を使い、口笛に設定したいモードを選択します。タイプして探すこともできます。Enterキーを押してコマンドを終了します。さらに、オレンジ色の名前の前に表示されている対応する数字キーを押すことで、モードをクイック選択することができます。Escでキャンセルをします。.", 
@@ -550,10 +558,10 @@
     "doggui.style.skins.selected" : "厳選された",
     "doggui.style.skins.search_by_tags" : "タグで探す",
     "doggui.style.skins.search_by_name" : "名前で探す",
-    "doggui.style.skins.accessory_state.0" : "This model have not been tested with Accessories.",
-    "doggui.style.skins.accessory_state.1" : "This model is not compatible with Accessories.",
-    "doggui.style.skins.accessory_state.2" : "This model is recommended for Accessories!",
-    "doggui.style.skins.accessory_state.3" : "This model is compatible with some Accessories.",
+    "doggui.style.skins.accessory_state.0" : "このモデルはアクセサリーのテストは行っておりません。",
+    "doggui.style.skins.accessory_state.1" : "このモデルはアクセサリーに対応していません。",
+    "doggui.style.skins.accessory_state.2" : "アクセサリーにおすすめのモデルです。",
+    "doggui.style.skins.accessory_state.3" : "このモデルは一部のアクセサリーに対応しています。",
 
     "doggui.stats.general" : "一般的",
     "doggui.stats.general.damageDealt" : "与えたダメージ",
