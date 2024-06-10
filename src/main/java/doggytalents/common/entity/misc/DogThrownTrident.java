@@ -220,7 +220,7 @@ public class DogThrownTrident extends AbstractArrow {
         if (!(target instanceof Creeper creeper))
             return;
         creeper.setHealth(0);
-        creeper.die(dog.damageSources().mobAttack(dog));
+        creeper.die(DamageSource.mobAttack(dog));
     }
 
     public boolean isChanneling() {
