@@ -4645,6 +4645,10 @@ public class Dog extends AbstractDog {
         return this.dogArmors.armors();
     }
 
+    public Iterable<ItemStack> getArmorAndBodyArmorSlots() {
+        return getArmorSlots();
+    }
+
     public ItemStack getItemBySlot(EquipmentSlot slot) {
         var type = slot.getType();
         boolean getArmor = 
