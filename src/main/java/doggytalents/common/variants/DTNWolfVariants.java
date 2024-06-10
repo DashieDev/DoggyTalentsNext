@@ -18,6 +18,8 @@ public class DTNWolfVariants {
     public static final ResourceKey<WolfVariant> CRIMSON = createKey("crimson");
     public static final ResourceKey<WolfVariant> BIRCH = createKey("birch");
     public static final ResourceKey<WolfVariant> WARPED = createKey("warped");
+    public static final ResourceKey<WolfVariant> PISTACHIO = createKey("pistachio");
+    public static final ResourceKey<WolfVariant> GUACAMOLE = createKey("guacamole");
 
     public static final ResourceKey<WolfVariant> VSCODE = createKey("vscode");
     
@@ -34,6 +36,8 @@ public class DTNWolfVariants {
         register(ctx, CRIMSON, "crimson", Biomes.CRIMSON_FOREST);
         register(ctx, BIRCH, "birch", Biomes.BIRCH_FOREST);
         register(ctx, WARPED, "warped", Biomes.WARPED_FOREST);
+        register(ctx, PISTACHIO, "pistachio", Biomes.MANGROVE_SWAMP);
+        register(ctx, GUACAMOLE, "guacamole", Biomes.MEADOW);
 
         register(ctx, VSCODE, "vscode", HolderSet.empty());
     }

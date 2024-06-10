@@ -35,7 +35,9 @@ public enum ClassicalVar {
     CRIMSON(13, "crimson", true),
     WARPED(14, "warped", true),
     BIRCH(15, "birch", true),
-    VSCODE(16, "vscode", true);
+    PISTACHIO(16, "pistachio", true),
+    GUACAMOLE(17, "guacamole", true),
+    VSCODE(18, "vscode", true);
 
     private final int idInt;
     private final boolean isCompl;
@@ -70,6 +72,8 @@ public enum ClassicalVar {
         .put(DTNWolfVariants.CRIMSON, ClassicalVar.CRIMSON)
         .put(DTNWolfVariants.WARPED, ClassicalVar.WARPED)
         .put(DTNWolfVariants.BIRCH, ClassicalVar.BIRCH)
+        .put(DTNWolfVariants.PISTACHIO, ClassicalVar.PISTACHIO)
+        .put(DTNWolfVariants.GUACAMOLE, ClassicalVar.GUACAMOLE)
         .put(DTNWolfVariants.VSCODE, ClassicalVar.VSCODE)
         .build();
 
@@ -189,6 +193,8 @@ public enum ClassicalVar {
         .put(ClassicalVar.CRIMSON, 0xff822f33)
         .put(ClassicalVar.WARPED, 0xff235c5d)
         .put(ClassicalVar.BIRCH, 0xffcec192)
+        .put(ClassicalVar.PISTACHIO, 0xffa3a25b)
+        .put(ClassicalVar.GUACAMOLE, 0xff9ab123)
         .put(ClassicalVar.VSCODE, 0xff0078d4)
         .build();
     
