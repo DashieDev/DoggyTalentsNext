@@ -37,26 +37,26 @@ public class DTNWolfVariantsSpawnPlacements {
     //     return false;
     // }
 
-        if (checkCrimsonWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
-            return true;
+    //     if (checkCrimsonWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
+    //         return true;
 
-        if (checkWarpedWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
-            return true;
+    //     if (checkWarpedWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
+    //         return true;
 
-        if (checkPistachioWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
-            return true;
+    //     if (checkPistachioWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
+    //         return true;
 
-        return false;
-    }
+    //     return false;
+    // }
 
-    public static boolean checkLemonyLimeWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
-        BlockState spawn_state, Holder<Biome> spawn_biome) {
-        if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.LEMONY_LIME))
-            return false;
-        if (!spawn_state.is(Blocks.SAND))
-            return false;
-        if (!spawn_biome.is(Biomes.BEACH))
-            return false;
+    // public static boolean checkLemonyLimeWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
+    //     BlockState spawn_state, Holder<Biome> spawn_biome) {
+    //     if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.LEMONY_LIME))
+    //         return false;
+    //     if (!spawn_state.is(Blocks.SAND))
+    //         return false;
+    //     if (!spawn_biome.is(Biomes.BEACH))
+    //         return false;
         
     //     var spawn_state = level.getBlockState(spawn_pos.below());
     //     if (!spawn_state.is(Blocks.SAND))
@@ -82,25 +82,25 @@ public class DTNWolfVariantsSpawnPlacements {
     //     return true;
     // }
 
-    public static boolean checkPistachioWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
-        BlockState spawn_state, Holder<Biome> spawn_biome) {
-        if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.PISTACHIO))
-            return false;
+    // public static boolean checkPistachioWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
+    //     BlockState spawn_state, Holder<Biome> spawn_biome) {
+    //     if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.PISTACHIO))
+    //         return false;
         
-        if (!spawn_state.is(Blocks.MUD))
-            return false;
-        if (!spawn_biome.is(Biomes.MANGROVE_SWAMP))
-            return false;
+    //     if (!spawn_state.is(Blocks.MUD))
+    //         return false;
+    //     if (!spawn_biome.is(Biomes.MANGROVE_SWAMP))
+    //         return false;
         
-        return true;
-    }
+    //     return true;
+    // }
 
-    private static boolean isWolfVariantRegistered(HolderLookup.Provider prov, 
-        ResourceKey<WolfVariant> variant) {
-        var reg = prov.lookupOrThrow(Registries.WOLF_VARIANT);
-        var variantOptional = reg.get(variant);
-        return variantOptional.isPresent();
-    }
+    // private static boolean isWolfVariantRegistered(HolderLookup.Provider prov, 
+    //     ResourceKey<WolfVariant> variant) {
+    //     var reg = prov.lookupOrThrow(Registries.WOLF_VARIANT);
+    //     var variantOptional = reg.get(variant);
+    //     return variantOptional.isPresent();
+    // }
 
     // private static boolean isWolfVariantRegistered(HolderLookup.Provider prov, 
     //     ResourceKey<WolfVariant> variant) {

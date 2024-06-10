@@ -53,28 +53,28 @@ public enum ClassicalVar {
     private static final Map<ResourceLocation, ClassicalVar> idMap = 
         Arrays.stream(VALUES)
             .collect(Collectors.toMap(toKey -> toKey.id, toVal -> toVal));
-    private static final Map<ResourceKey<WolfVariant>, ClassicalVar> vanillToClassical =
-        new ImmutableMap.Builder<ResourceKey<WolfVariant>, ClassicalVar>()
-        .put(WolfVariants.PALE, ClassicalVar.PALE)
-        .put(WolfVariants.CHESTNUT, ClassicalVar.CHESTNUT)
-        .put(WolfVariants.STRIPED, ClassicalVar.STRIPED)
-        .put(WolfVariants.WOODS, ClassicalVar.WOOD)
-        .put(WolfVariants.RUSTY, ClassicalVar.RUSTY)
-        .put(WolfVariants.BLACK, ClassicalVar.BLACK)
-        .put(WolfVariants.SNOWY, ClassicalVar.SNOWY)
-        .put(WolfVariants.ASHEN, ClassicalVar.ASHEN)
-        .put(WolfVariants.SPOTTED, ClassicalVar.SPOTTED)
-        .put(DTNWolfVariants.CHERRY, ClassicalVar.CHERRY)
-        .put(DTNWolfVariants.LEMONY_LIME, ClassicalVar.LEMONY_LIME)
-        .put(DTNWolfVariants.HIMALAYAN_SALT, ClassicalVar.HIMALAYAN_SALT)
-        .put(DTNWolfVariants.BAMBOO, ClassicalVar.BAMBOO)
-        .put(DTNWolfVariants.CRIMSON, ClassicalVar.CRIMSON)
-        .put(DTNWolfVariants.WARPED, ClassicalVar.WARPED)
-        .put(DTNWolfVariants.BIRCH, ClassicalVar.BIRCH)
-        .put(DTNWolfVariants.PISTACHIO, ClassicalVar.PISTACHIO)
-        .put(DTNWolfVariants.GUACAMOLE, ClassicalVar.GUACAMOLE)
-        .put(DTNWolfVariants.VSCODE, ClassicalVar.VSCODE)
-        .build();
+    // private static final Map<ResourceKey<WolfVariant>, ClassicalVar> vanillToClassical =
+    //     new ImmutableMap.Builder<ResourceKey<WolfVariant>, ClassicalVar>()
+    //     .put(WolfVariants.PALE, ClassicalVar.PALE)
+    //     .put(WolfVariants.CHESTNUT, ClassicalVar.CHESTNUT)
+    //     .put(WolfVariants.STRIPED, ClassicalVar.STRIPED)
+    //     .put(WolfVariants.WOODS, ClassicalVar.WOOD)
+    //     .put(WolfVariants.RUSTY, ClassicalVar.RUSTY)
+    //     .put(WolfVariants.BLACK, ClassicalVar.BLACK)
+    //     .put(WolfVariants.SNOWY, ClassicalVar.SNOWY)
+    //     .put(WolfVariants.ASHEN, ClassicalVar.ASHEN)
+    //     .put(WolfVariants.SPOTTED, ClassicalVar.SPOTTED)
+    //     .put(DTNWolfVariants.CHERRY, ClassicalVar.CHERRY)
+    //     .put(DTNWolfVariants.LEMONY_LIME, ClassicalVar.LEMONY_LIME)
+    //     .put(DTNWolfVariants.HIMALAYAN_SALT, ClassicalVar.HIMALAYAN_SALT)
+    //     .put(DTNWolfVariants.BAMBOO, ClassicalVar.BAMBOO)
+    //     .put(DTNWolfVariants.CRIMSON, ClassicalVar.CRIMSON)
+    //     .put(DTNWolfVariants.WARPED, ClassicalVar.WARPED)
+    //     .put(DTNWolfVariants.BIRCH, ClassicalVar.BIRCH)
+    //     .put(DTNWolfVariants.PISTACHIO, ClassicalVar.PISTACHIO)
+    //     .put(DTNWolfVariants.GUACAMOLE, ClassicalVar.GUACAMOLE)
+    //     .put(DTNWolfVariants.VSCODE, ClassicalVar.VSCODE)
+    //     .build();
 
     private ClassicalVar(int idInt, String name) {
         this(idInt, name, false);
