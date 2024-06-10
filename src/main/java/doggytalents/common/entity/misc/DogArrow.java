@@ -1,6 +1,7 @@
 package doggytalents.common.entity.misc;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.DoggyTalents;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
 import net.minecraft.core.component.DataComponents;
@@ -14,6 +15,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -155,6 +157,7 @@ public class DogArrow extends AbstractArrow {
         } else {
             doNormalDogArrowEffectHurt(target);
         }
+        killCreeperIfCreeperSweeper(target);
     }
 
     private void doNormalDogArrowEffectHurt(LivingEntity target) {
@@ -183,6 +186,18 @@ public class DogArrow extends AbstractArrow {
     private void doDogSpectralArrowEffectHurt(LivingEntity target) {
         var glow_inst = new MobEffectInstance(MobEffects.GLOWING, 200, 0);
         target.addEffect(glow_inst, this.getEffectSource());
+    }
+
+    private void killCreeperIfCreeperSweeper(LivingEntity target) {
+        var owner = this.getOwner();
+        if (!(owner instanceof Dog dog))
+            return;
+        if (dog.getDogLevel(DoggyTalents.CREEPER_SWEEPER) < 5)
+            return;
+        if (!(target instanceof Creeper creeper))
+            return;
+        creeper.setHealth(0);
+        creeper.die(dog.damageSources().mobAttack(dog));
     }
 
     @Override
