@@ -1420,3 +1420,15 @@ cause some trouble again.
 through them) (Configurable)
 # Hellhound Max dogs will always shoot fiery Tridents which set target on fire when hit. 
 *HOTFIX: Dog Find Water AI doesn't stop navigation when stop.
+
+**1.18.18 - 10th June 2024
++ New Wolf Variants!
+  
+  + Guacamole: Spawns rarely in meadows.
+  + Pistachios: Spawns rarely in Mangrove Swamps.
+   
+# Creeper Sweeper Dog now can instant kill creeper with Bow and Trident.
+* Fix Doggy Charm Description.
+* Fix some textures
+* (1.20.6+ only) Fix Armor Enchantments wont apply to Dog (ex: Protection)
+* (1.20.6+ Neoforge only) Fix breaking changes from newer NeoForge
