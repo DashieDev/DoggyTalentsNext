@@ -37,9 +37,9 @@ public class CreeperSweeperTalent extends TalentInstance {
     public void tick(AbstractDog dog) {
         if (this.level() > 0) {
 
-            if (dog.getTarget() instanceof Creeper creeper) {
-                creeper.setSwellDir(-1);
-            }
+            // if (dog.getTarget() instanceof Creeper creeper) {
+            //     creeper.setSwellDir(-1);
+            // }
 
             if (
                 this.level() >= this.talent.getMaxLevel()
