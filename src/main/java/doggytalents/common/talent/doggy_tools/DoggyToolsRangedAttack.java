@@ -120,7 +120,7 @@ public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
             return false;
         if (!ConfigHandler.SERVER.DOGGY_TOOLS_USE_TRIDENT.get())
             return false;
-        if (stack.getEnchantmentLevel(Enchantments.LOYALTY) < 2)
+        if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.LOYALTY, stack) < 2)
             return false; 
         return true;
     }

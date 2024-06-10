@@ -6,6 +6,7 @@ import java.util.List;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.screens.Screen;
@@ -50,11 +51,11 @@ public class StringEntrySelectScreen extends Screen {
         int half_width = this.width / 2;
         int half_height = this.height / 2; 
         var prevPage = new TextOnlyButton(half_width - getSelectAreaSize() / 2 - 20, 
-            half_height - 10, 20, 20, Component.literal("<"), b -> {
+            half_height - 10, 20, 20, ComponentUtil.literal("<"), b -> {
                 this.prevPage();
             }, font);
         var nextPage = new TextOnlyButton(half_width + getSelectAreaSize() / 2, 
-            half_height - 10, 20, 20, Component.literal(">"), b -> {
+            half_height - 10, 20, 20, ComponentUtil.literal(">"), b -> {
                 this.nextPage();
             }, font);
         prevPage.active = this.activePage > 0;

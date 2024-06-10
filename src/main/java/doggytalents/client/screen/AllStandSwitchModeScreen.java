@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.AllStandSwitchModeData;
@@ -20,7 +21,7 @@ public class AllStandSwitchModeScreen extends StringEntrySelectScreen {
     private Player player;
 
     protected AllStandSwitchModeScreen(Player player) {
-        super(Component.empty());
+        super(ComponentUtil.empty());
         this.player = player;
     }
 

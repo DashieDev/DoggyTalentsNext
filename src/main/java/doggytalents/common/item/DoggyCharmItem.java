@@ -1,6 +1,7 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.common.config.ConfigHandler;
@@ -195,6 +196,6 @@ public class DoggyCharmItem extends Item implements IDogItem {
     public void appendHoverText(ItemStack stack, Level level, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id));
+        components.add(ComponentUtil.translatable(desc_id));
     }
 }
