@@ -47,6 +47,9 @@ public class DTNWolfVariantsSpawnPlacements {
         if (checkWarpedWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
             return true;
 
+        if (checkPistachioWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
+            return true;
+
         return false;
     }
 
@@ -83,6 +86,19 @@ public class DTNWolfVariantsSpawnPlacements {
         if (!spawn_state.is(Blocks.CRIMSON_NYLIUM))
             return false;
         if (!spawn_biome.is(Biomes.CRIMSON_FOREST))
+            return false;
+        
+        return true;
+    }
+
+    public static boolean checkPistachioWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
+        BlockState spawn_state, Holder<Biome> spawn_biome) {
+        if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.PISTACHIO))
+            return false;
+        
+        if (!spawn_state.is(Blocks.MUD))
+            return false;
+        if (!spawn_biome.is(Biomes.MANGROVE_SWAMP))
             return false;
         
         return true;
