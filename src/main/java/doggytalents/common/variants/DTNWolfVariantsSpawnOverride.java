@@ -13,11 +13,12 @@ import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.WolfVariant;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
+import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 
 public class DTNWolfVariantsSpawnOverride {
     
-    public static void onWolfSpawn(MobSpawnEvent.FinalizeSpawn event) {
+    public static void onWolfSpawn(FinalizeSpawnEvent event) {
         if (!ConfigHandler.SERVER.WOLF_VARIANT_OVERRIDE_EXCLUSIVE.get())
             return;
 

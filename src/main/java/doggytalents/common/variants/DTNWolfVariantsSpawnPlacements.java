@@ -18,9 +18,9 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.bus.api.Event.Result;
 import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent.PositionCheck;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent.PositionCheck.Result;
 
 public class DTNWolfVariantsSpawnPlacements {
     
@@ -128,7 +128,7 @@ public class DTNWolfVariantsSpawnPlacements {
             return;
         
         if (wolf.checkSpawnObstruction(spawn_level))
-            event.setResult(Result.ALLOW);
+            event.setResult(Result.SUCCEED);
     }
 
     public static boolean isSpawningInNether(ServerLevelAccessor spawn_level) {
