@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.DoggyTalents;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
@@ -20,6 +21,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
@@ -193,6 +195,7 @@ public class DogThrownTrident extends AbstractArrow {
             return false;
 
         doDogTridentEnchantDamageEffects(owner, target);
+        killCreeperIfCreeperSweeper(target);
         return true;
     }
 
@@ -205,6 +208,18 @@ public class DogThrownTrident extends AbstractArrow {
 
             this.doPostHurtEffects(target_living);
         }
+    }
+
+    private void killCreeperIfCreeperSweeper(Entity target) {
+        var owner = this.getOwner();
+        if (!(owner instanceof Dog dog))
+            return;
+        if (dog.getDogLevel(DoggyTalents.CREEPER_SWEEPER) < 5)
+            return;
+        if (!(target instanceof Creeper creeper))
+            return;
+        creeper.setHealth(0);
+        creeper.die(dog.damageSources().mobAttack(dog));
     }
 
     public boolean isChanneling() {
