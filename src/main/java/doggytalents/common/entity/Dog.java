@@ -1568,7 +1568,6 @@ public class Dog extends AbstractDog {
             return false;
         }
 
-        //TODO make wolves not able to attack dogs
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.shouldAttackEntity(this, target, owner);
 
@@ -1579,25 +1578,11 @@ public class Dog extends AbstractDog {
             }
         }
 
-        // Stop dogs being able to attack creepers. If the dog has lvl 5 creeper
-        // sweeper then we will return true in the for loop above.
-        if (target instanceof Creeper || target instanceof Ghast) {
+        if (target instanceof Creeper) {
             return false;
         }
 
-        if (target instanceof Wolf) {
-            Wolf wolfentity = (Wolf)target;
-            return !wolfentity.isTame() || wolfentity.getOwner() != owner;
-        } else if (target instanceof Dog) {
-            Dog dogEntity = (Dog)target;
-            return !dogEntity.isTame() || dogEntity.getOwner() != owner;
-         } else if (target instanceof Player && owner instanceof Player && !((Player)owner).canHarmPlayer((Player)target)) {
-             return false;
-        } else if (target instanceof AbstractHorse && ((AbstractHorse)target).isTamed()) {
-            return false;
-        } else {
-            return !(target instanceof TamableAnimal) || !((TamableAnimal)target).isTame();
-        }
+        return !EventHandler.isAlliedToDog(target, owner);
     }
 
     // TODO
