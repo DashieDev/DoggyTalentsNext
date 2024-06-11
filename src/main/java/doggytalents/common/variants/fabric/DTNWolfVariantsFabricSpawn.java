@@ -20,6 +20,8 @@ public class DTNWolfVariantsFabricSpawn {
         addCrimsonWolfSpawn();
         addWarpedWolfModifier();
         addBirchWolfModifier();
+        addPistachioWolfModifier();
+        addGuacamoleWolfModifier();
     } 
 
     private static void addCherryWolfSpawn() {
@@ -56,6 +58,16 @@ public class DTNWolfVariantsFabricSpawn {
 
     private static void addBirchWolfModifier() {
         BiomeModifications.addSpawn(selectForKey(Biomes.BIRCH_FOREST),
+            MobCategory.CREATURE, EntityType.WOLF, 1, 1, 1);
+    }
+
+    private static void addPistachioWolfModifier() {
+        BiomeModifications.addSpawn(selectForKey(Biomes.MANGROVE_SWAMP),
+            MobCategory.CREATURE, EntityType.WOLF, 1, 1, 1);
+    }
+
+    private static void addGuacamoleWolfModifier() {
+        BiomeModifications.addSpawn(selectForKey(Biomes.MEADOW),
             MobCategory.CREATURE, EntityType.WOLF, 1, 1, 1);
     }
 

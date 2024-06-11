@@ -16,7 +16,7 @@ public class Event {
         this.cancelled = val;
     }
 
-    public boolean isCancelled() {
+    public boolean isCanceled() {
         return this.cancelled;
     }
 

@@ -32,17 +32,17 @@ public class DTNWolfVariantsProvider {
     //     );
     // }
 
-    private static void registerWolfModifier(BootstrapContext<BiomeModifier> ctx) {
-        registerCherryWolfModifier(ctx);
-        registerLemonyLimeWolfModifier(ctx);
-        registerHimalayanSaltWolfModifier(ctx);
-        registerBambooWolfModifier(ctx);
-        registerCrimsonWolfModifier(ctx);
-        registerWarpedWolfModifier(ctx);
-        registerBirchWolfModifier(ctx);
-        registerPistachioWolfModifier(ctx);
-        registerGuacamoleWolfModifier(ctx);
-    }
+    // private static void registerWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+    //     registerCherryWolfModifier(ctx);
+    //     registerLemonyLimeWolfModifier(ctx);
+    //     registerHimalayanSaltWolfModifier(ctx);
+    //     registerBambooWolfModifier(ctx);
+    //     registerCrimsonWolfModifier(ctx);
+    //     registerWarpedWolfModifier(ctx);
+    //     registerBirchWolfModifier(ctx);
+    //     registerPistachioWolfModifier(ctx);
+    //     registerGuacamoleWolfModifier(ctx);
+    // }
 
     // private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
     //     registerSingleSpawnModifier(
@@ -113,23 +113,23 @@ public class DTNWolfVariantsProvider {
     //     );
     // }
 
-    private static void registerPistachioWolfModifier(BootstrapContext<BiomeModifier> ctx) {
-        registerSingleSpawnModifier(
-            ctx, "wolf_pistachio", 
-            Biomes.MANGROVE_SWAMP, 
-            new MobSpawnSettings
-                .SpawnerData(EntityType.WOLF, 1, 1, 1)
-        );
-    }
+    // private static void registerPistachioWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+    //     registerSingleSpawnModifier(
+    //         ctx, "wolf_pistachio", 
+    //         Biomes.MANGROVE_SWAMP, 
+    //         new MobSpawnSettings
+    //             .SpawnerData(EntityType.WOLF, 1, 1, 1)
+    //     );
+    // }
 
-    private static void registerGuacamoleWolfModifier(BootstrapContext<BiomeModifier> ctx) {
-        registerSingleSpawnModifier(
-            ctx, "wolf_guacamole", 
-            Biomes.MEADOW, 
-            new MobSpawnSettings
-                .SpawnerData(EntityType.WOLF, 1, 1, 1)
-        );
-    }
+    // private static void registerGuacamoleWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+    //     registerSingleSpawnModifier(
+    //         ctx, "wolf_guacamole", 
+    //         Biomes.MEADOW, 
+    //         new MobSpawnSettings
+    //             .SpawnerData(EntityType.WOLF, 1, 1, 1)
+    //     );
+    // }
 
     // private static void registerSingleSpawnModifier(BootstrapContext<BiomeModifier> ctx,
     //     String name, ResourceKey<Biome> biome, MobSpawnSettings.SpawnerData spawner_data) {

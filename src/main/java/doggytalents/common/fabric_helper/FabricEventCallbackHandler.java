@@ -32,7 +32,7 @@ public class FabricEventCallbackHandler {
         UseEntityCallback.EVENT.register((player, level, hand, entity, hitResult) -> {
             var stack = player.getItemInHand(hand);
             var ret = EventCallbacksRegistry.postEvent(new PlayerInteractEvent.EntityInteract(player, entity, stack));
-            if (!ret.isCancelled())
+            if (!ret.isCanceled())
                 return InteractionResult.PASS;
             var res = ret.getCancelInteractionResult();
             if (res != null && res != InteractionResult.PASS)
@@ -41,7 +41,7 @@ public class FabricEventCallbackHandler {
         });
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             var ret = EventCallbacksRegistry.postEvent(new LivingHurtEvent(entity, source, amount));
-            if (ret.isCancelled())
+            if (ret.isCanceled())
                 return false;
             return true;
         });
@@ -49,7 +49,7 @@ public class FabricEventCallbackHandler {
             var stack = player.getItemInHand(hand);
             var ret = EventCallbacksRegistry.postEvent(new PlayerInteractEvent
                 .RightClickBlock(player, hitResult.getBlockPos(), hitResult.getDirection(), stack));
-            if (!ret.isCancelled())
+            if (!ret.isCanceled())
                 return InteractionResult.PASS;
             var res = ret.getCancelInteractionResult();
             if (res != null && res != InteractionResult.PASS)
