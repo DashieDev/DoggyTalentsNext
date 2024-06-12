@@ -159,6 +159,7 @@ public class DogRangedAttackGoal extends Goal {
         this.attackCooldown = -1;
         this.dog.getDogRangedAttack().onStop(dog);
         this.dog.getNavigation().stop();
+        this.dog.setTarget(null);
     }
 
     @Override
