@@ -2000,6 +2000,21 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public boolean isPersistenceRequired() {
+        return true;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distance) {
+        return false;
+    }
+
+    @Override
+    public void checkDespawn() {
+        this.noActionTime = 0;
+    }
+
+    @Override
     public void setUUID(UUID uniqueIdIn) {
 
         // If the UUID is changed remove old one and add new one
