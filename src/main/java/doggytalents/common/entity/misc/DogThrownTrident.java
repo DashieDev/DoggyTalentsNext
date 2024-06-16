@@ -37,7 +37,6 @@ public class DogThrownTrident extends AbstractArrow {
     
     private static final int loyalty_amount = 3;
 
-    private static final EntityDataAccessor<Boolean> FOIL = SynchedEntityData.defineId(DogThrownTrident.class, EntityDataSerializers.BOOLEAN);
     private boolean isReturning;
     private boolean playedClientReturnSound;
     private int timeOutTick = 0;
@@ -48,13 +47,11 @@ public class DogThrownTrident extends AbstractArrow {
 
     public DogThrownTrident(Dog dog, ItemStack trident_stack) {
         super(DoggyEntityTypes.DOG_TRIDENT_PROJ.get(), dog, dog.level(), trident_stack);
-        this.entityData.set(FOIL, trident_stack.hasFoil());
     }
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder p_326249_) {
         super.defineSynchedData(p_326249_);
-        p_326249_.define(FOIL, false);
     }
 
     @Override
@@ -143,7 +140,7 @@ public class DogThrownTrident extends AbstractArrow {
     }
 
     public boolean isFoil() {
-        return this.entityData.get(FOIL);
+        return true;
     }
 
     @Nullable
