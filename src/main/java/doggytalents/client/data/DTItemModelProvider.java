@@ -109,11 +109,6 @@ public class DTItemModelProvider /*extends ItemModelProvider*/ {
     //     generated(DoggyItems.HEAD_BAND_MYSTERY);
     //     generated(DoggyItems.HEAD_BAND_HIGHHH);
 
-    //     generated(DoggyItems.SUPERDOG_SUIT);
-    //     generated(DoggyItems.FLYING_CAPE);
-    //     generated(DoggyItems.BAT_WINGS);
-    //     generated(DoggyItems.CROW_WINGS);
-    //     generated(DoggyItems.DIVINE_RETRIBUTON);
 
     //     generated(DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO);
     //     generated(DoggyItems.MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO);
@@ -236,5 +231,5 @@ public class DTItemModelProvider /*extends ItemModelProvider*/ {
 
     // private ItemModelBuilder blockItem(Supplier<? extends Block> block, String suffix) {
     //     return withExistingParent(name(block), modLoc(ModelProvider.BLOCK_FOLDER + "/" + name(block) + suffix));
-    // }
+    // }x
 }
