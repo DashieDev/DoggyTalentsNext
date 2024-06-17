@@ -4,6 +4,7 @@ import doggytalents.api.feature.DogLevel;
 import doggytalents.api.registry.Accessory;
 import doggytalents.common.artifacts.FeatheredMantleArtifact;
 import doggytalents.common.entity.ClassicalVar;
+import doggytalents.common.entity.accessory.AngelWings;
 import doggytalents.common.entity.accessory.BakerHat;
 import doggytalents.common.entity.accessory.CeremonialGarb;
 import doggytalents.common.entity.accessory.ChefHat;
@@ -124,6 +125,7 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> CROW_WINGS = registerAccessory("crow_wings", DoggyAccessories.CROW_WINGS);
     public static final RegistryObject<AccessoryItem> DIVINE_RETRIBUTON = register("divine_retribution", () -> new FieryReflectorItem(DoggyAccessories.DIVINE_RETRIBUTION, createInitialProp()));
     public static final RegistryObject<AccessoryItem> SOUL_REFLECTOR = register("soul_reflector", () -> new FieryReflectorItem(DoggyAccessories.SOUL_REFLECTOR, createInitialProp()));
+    public static final Supplier<DyeableAccessoryItem> ANGEL_WINGS = register("angel_wings", () -> new AngelWings.Item(DoggyAccessories.ANGEL_WINGS, createInitialProp()));
 
     public static final RegistryObject<AccessoryItem> TENGU_MASK = register("tengu_mask", () -> new TenguMaskItem(DoggyAccessories.TENGU_MASK, createInitialProp()));
     public static final RegistryObject<AccessoryItem> DEMON_HORNS = register("demon_horns", () -> new DemonHornsItem(DoggyAccessories.DEMON_HORNS, createInitialProp()));
@@ -367,6 +369,12 @@ public class DoggyItems {
         Util.acceptOrElse(DoggyItems.CERE_GARB, (item) -> {
             itemColors.register((stack, tintIndex) -> {
                 return tintIndex != 1 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
+             }, item);
+        }, DoggyBlocks::logError);
+
+        Util.acceptOrElse(DoggyItems.ANGEL_WINGS, (item) -> {
+            event.register((stack, tintIndex) -> {
+                return tintIndex > 0 ? -1 : ItemUtil.getDyeColorForStack(stack);
              }, item);
         }, DoggyBlocks::logError);
 
