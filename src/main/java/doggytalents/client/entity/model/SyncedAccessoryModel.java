@@ -100,18 +100,18 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
             // float f1 = 1.0F / 2f;
             // stack.scale(f1, f1, f1);
             // stack.translate(0.0D, (double)(24 / 16.0F), 0.0D);
-            this.root.render(stack, p_103014_, p_103015_, p_103016_, 0xffffffff);
+            this.root.render(stack, p_103014_, p_103015_, p_103016_, color_overlay);
             stack.popPose();
             if (headSync) {
                 this.head.get().visible = headVisible0;
                 stack.pushPose();
                 stack.scale(2, 2, 2);
                 stack.translate(0, -0.5, 0.15);
-                this.head.get().render(stack, p_103014_, p_103015_, p_103016_, 0xffffffff);
+                this.head.get().render(stack, p_103014_, p_103015_, p_103016_, color_overlay);
                 stack.popPose();  
             }
         } else
-        this.root.render(stack, p_103014_, p_103015_, p_103016_, 0xffffffff);
+        this.root.render(stack, p_103014_, p_103015_, p_103016_, color_overlay);
         
         stack.popPose();
         stack.popPose();

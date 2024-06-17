@@ -73,8 +73,8 @@ public class DogPlushieModel extends EntityModel<DogPlushie> {
     }
 
     @Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int unused) {
-		root.render(poseStack, vertexConsumer, packedLight, packedOverlay, 0xffffffff);
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color_overlay) {
+		root.render(poseStack, vertexConsumer, packedLight, packedOverlay, color_overlay);
 	}
     
 }
