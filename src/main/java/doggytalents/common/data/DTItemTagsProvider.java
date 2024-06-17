@@ -64,6 +64,7 @@ public class DTItemTagsProvider extends ItemTagsProvider {
             DoggyItems.FLYING_CAPE.get(),
             DoggyItems.CERE_GARB.get(),
             DoggyItems.DOG_PLUSHIE_TOY.get(),
+            DoggyItems.ANGEL_WINGS.get(),
             DoggyBlocks.DOG_BATH.get().asItem()
         );
     }
