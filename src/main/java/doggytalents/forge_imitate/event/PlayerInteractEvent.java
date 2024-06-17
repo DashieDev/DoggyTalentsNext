@@ -2,11 +2,14 @@ package doggytalents.forge_imitate.event;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class PlayerInteractEvent {
     
@@ -56,12 +59,17 @@ public class PlayerInteractEvent {
         private final Direction clickedDir;
         private ItemStack stack = ItemStack.EMPTY;
         private InteractionResult cancelResult = InteractionResult.PASS;
+        private InteractionHand hand;
+        private BlockHitResult hitVec;
 
-        public RightClickBlock(Player interact, BlockPos pos, Direction dir, ItemStack stack) {
+        public RightClickBlock(Player interact, BlockPos pos, Direction dir, ItemStack stack,
+            InteractionHand hand, BlockHitResult hitVec) {
             this.interactor = interact;
             this.pos = pos;
             this.clickedDir = dir;
             this.stack = stack;
+            this.hand = hand;
+            this.hitVec = hitVec;
         }
 
         public Player getEntity() {
@@ -86,6 +94,14 @@ public class PlayerInteractEvent {
 
         public InteractionResult getCancelInteractionResult() {
             return this.cancelResult;
+        }
+
+        public InteractionHand getHand() {
+            return this.hand;
+        }
+
+        public BlockHitResult getHitVec() {
+            return this.hitVec;
         }
 
     }

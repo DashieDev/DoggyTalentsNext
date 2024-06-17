@@ -4,6 +4,7 @@ import doggytalents.DoggyBlocks;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.event.EventHandler;
+import doggytalents.common.item.ChopinRecordItem;
 import doggytalents.common.variants.DTNWolfVariantsSpawnOverride;
 import doggytalents.common.variants.DTNWolfVariantsSpawnPlacements;
 import doggytalents.common.variants.VSCodeWolfSpawnHandler;
@@ -109,6 +110,12 @@ public class EventHandlerRegisterer {
             new SingleEventCallBack<PlayerInteractEvent.RightClickBlock>(
                 PlayerInteractEvent.RightClickBlock.class,
                 VSCodeWolfSpawnHandler::onRightClickBlock
+            )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new SingleEventCallBack<PlayerInteractEvent.RightClickBlock>(
+                PlayerInteractEvent.RightClickBlock.class,
+                ChopinRecordItem::onRightClickBlock
             )
         );
     }

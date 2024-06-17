@@ -48,7 +48,8 @@ public class FabricEventCallbackHandler {
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             var stack = player.getItemInHand(hand);
             var ret = EventCallbacksRegistry.postEvent(new PlayerInteractEvent
-                .RightClickBlock(player, hitResult.getBlockPos(), hitResult.getDirection(), stack));
+                .RightClickBlock(player, hitResult.getBlockPos(), hitResult.getDirection(), stack,
+                    hand, hitResult));
             if (!ret.isCanceled())
                 return InteractionResult.PASS;
             var res = ret.getCancelInteractionResult();

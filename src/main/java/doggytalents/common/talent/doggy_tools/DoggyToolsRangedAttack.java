@@ -126,7 +126,7 @@ public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
             return false;
         if (!(dog.level() instanceof ServerLevel sLevel))
             return false;
-        if (EnchantmentHelper.getTridentReturnToOwnerAcceleration(sLevel, stack, dog) < 2)
+        if (ItemUtil.getEnchantmentLevelForItem(Enchantments.LOYALTY, dog.registryAccess(), stack) < 2)
             return false; 
         return true;
     }
