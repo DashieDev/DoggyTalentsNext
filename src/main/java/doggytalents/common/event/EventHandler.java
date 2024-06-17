@@ -61,7 +61,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.DistExecutor;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
@@ -69,7 +69,6 @@ import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
-import net.neoforged.neoforge.event.entity.living.LootingLevelEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
@@ -207,7 +206,7 @@ public class EventHandler {
         dog.setYRot(wolf.yBodyRot);
 
         var wolf_collar_color = wolf.getCollarColor();
-        var color = Util.srgbArrayToInt(wolf_collar_color.getTextureDiffuseColors());
+        var color = wolf_collar_color.getTextureDiffuseColor();
         var dog_collar = DoggyAccessories.DYEABLE_COLLAR_THICC.get()
             .create(color);
         if (dog_collar != null)
@@ -293,20 +292,20 @@ public class EventHandler {
 
     private boolean isEnableStarterBundle() {
         final var retMut = new MutableBoolean(false);
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+        if (FMLEnvironment.dist == Dist.CLIENT) {
             if (ConfigHandler.ClientConfig
                 .getConfig(ConfigHandler.CLIENT.ENABLE_STARTER_BUNDLE_BY_DEFAULT))
                 retMut.setTrue();
-        });
+        }
         if (retMut.getValue())
             return true;
         return ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.STARTING_ITEMS);
     }
 
-    @SubscribeEvent
-    public void onLootDrop(final LootingLevelEvent event) {
-        HunterDogTalent.onLootDrop(event);
-    }
+    // @SubscribeEvent
+    // public void onLootDrop(final LootingLevelEvent event) {
+    //     HunterDogTalent.onLootDrop(event);
+    // }
 
     @SubscribeEvent
     public void onProjectileHit(final ProjectileImpactEvent event) {

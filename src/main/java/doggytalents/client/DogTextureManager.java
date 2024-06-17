@@ -201,7 +201,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             
             ResourceLocation text_rl;
             if (id.indexOf(':') >= 0) {
-                text_rl = new ResourceLocation(id + ".png");
+                text_rl = ResourceLocation.parse(id + ".png");
             } else {
                 text_rl = Util.getResource("textures/entity/dog/custom/" + id + ".png");
             }

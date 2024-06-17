@@ -48,7 +48,7 @@ import java.util.function.Function;
 public class DogBedModel implements BakedModel {
 
     public static DogBedItemOverride ITEM_OVERIDE = new DogBedItemOverride();
-    private static final ResourceLocation MISSING_TEXTURE = new ResourceLocation("missingno");
+    private static final ResourceLocation MISSING_TEXTURE = Util.getVanillaResource("missingno");
 
     private ModelBakery modelLoader;
 private BlockModel model;
@@ -120,8 +120,7 @@ private BlockModel model;
             public @Nullable BakedModel bake(ResourceLocation location, ModelState state,
                     Function<Material, TextureAtlasSprite> sprites) {
                 return newModel.bake(this, newModel, Material::sprite, 
-                    getModelRotation(facing), 
-                    createResourceVariant(casingResource, beddingResource, facing), 
+                    getModelRotation(facing),
                     true
                 );
             }
@@ -141,13 +140,25 @@ private BlockModel model;
             public BakedModel bake(ResourceLocation p_250776_, ModelState p_251280_) {
                 return this.bake(p_250776_, p_251280_, getModelTextureGetter());
             }
+
+            @Override
+            public @org.jetbrains.annotations.Nullable UnbakedModel getTopLevelModel(ModelResourceLocation location) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+            @Override
+            public @org.jetbrains.annotations.Nullable BakedModel bakeUncached(UnbakedModel model, ModelState state,
+                    Function<Material, TextureAtlasSprite> sprites) {
+                return null;
+            }
             
         }).bake(null, null, null);
 
         return newModelBaked;
     }
 
-    private ResourceLocation createResourceVariant(@Nonnull ICasingMaterial casingResource, @Nonnull IBeddingMaterial beddingResource, @Nonnull Direction facing) {
+    private ModelResourceLocation createResourceVariant(@Nonnull ICasingMaterial casingResource, @Nonnull IBeddingMaterial beddingResource, @Nonnull Direction facing) {
         String beddingKey = beddingResource != null
                 ? DogBedMaterialManager.getKey(beddingResource).toString().replace(':', '.')
                 : "doggytalents.dogbed.bedding.missing";

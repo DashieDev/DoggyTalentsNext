@@ -4,7 +4,9 @@ import doggytalents.DoggyAttributes;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.util.Util;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -18,7 +20,7 @@ import java.util.UUID;
 
 public class WolfMountTalent extends TalentInstance {
 
-    private static final UUID WOLF_MOUNT_JUMP = UUID.fromString("7f338124-f223-4630-8515-70ee0bfbc653");
+    private static final ResourceLocation WOLF_MOUNT_JUMP = Util.getResource("wolf_mount_jump");
     private int lastClickTick;
 
     public WolfMountTalent(Talent talentIn, int levelIn) {
@@ -40,7 +42,7 @@ public class WolfMountTalent extends TalentInstance {
         dog.removeAttributeModifier(DoggyAttributes.JUMP_POWER, WOLF_MOUNT_JUMP);
     }
 
-    public AttributeModifier createSpeedModifier(AbstractDog dogIn, UUID uuidIn) {
+    public AttributeModifier createSpeedModifier(AbstractDog dogIn, ResourceLocation uuidIn) {
         if (this.level() > 0) {
             double speed = 0.06D * this.level();
 
@@ -48,7 +50,7 @@ public class WolfMountTalent extends TalentInstance {
                 speed += 0.04D;
             }
 
-            return new AttributeModifier(uuidIn, "Wolf Mount", speed, AttributeModifier.Operation.ADD_VALUE);
+            return new AttributeModifier(uuidIn, speed, AttributeModifier.Operation.ADD_VALUE);
         }
 
         return null;

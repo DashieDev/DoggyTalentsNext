@@ -11,6 +11,7 @@ import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,7 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class BeastarsUniformMaleEntry extends AccessoryModelManager.Entry  {
-    public static final ModelLayerLocation BEASTARS_UNIFORM_M_AUGMENT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "beastars_tie"), "main");
+    public static final ModelLayerLocation BEASTARS_UNIFORM_M_AUGMENT = new ModelLayerLocation(Util.getResource("beastars_tie"), "main");
 
     private BeastarsUniformMaleAugmentModel model;
 

@@ -7,20 +7,20 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JukeboxBlock;
 import net.minecraft.world.phys.AABB;
 
-public class ChopinRecordItem extends RecordItem {
+public class ChopinRecordItem extends Item {
 
     public final int EFFECT_RADIUS = 20;
 
     public ChopinRecordItem(int comparatorValue, Supplier<SoundEvent> soundSupplier, Properties builder,
             int lengthInTicks) {
-        super(comparatorValue, soundSupplier, builder, lengthInTicks);
+        super(builder);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ChopinRecordItem extends RecordItem {
                 pos.offset(EFFECT_RADIUS, 5, EFFECT_RADIUS)),
                 d -> canDoChopinTail(d));
         for (var dog : dogs) {
-            dog.setChopinTailFor(this.getLengthInTicks());
+            //dog.setChopinTailFor(this.getLengthInTicks());
         }
     }
 

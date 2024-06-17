@@ -34,10 +34,10 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -63,7 +63,7 @@ public class DoggyTalentsNext {
     
     //TODO AUTOMATION CURSEFORGE !!!
     public DoggyTalentsNext() {
-        var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        var modEventBus = ModLoadingContext.get().getActiveContainer().getEventBus();
 
         // Mod lifecycle
         modEventBus.addListener(this::gatherData);

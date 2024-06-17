@@ -173,7 +173,7 @@ public class UprightPianoModel extends EntityModel<Piano> {
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		piano.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int unused) {
+		piano.render(poseStack, vertexConsumer, packedLight, packedOverlay, 0xffffffff);
 	}
 }

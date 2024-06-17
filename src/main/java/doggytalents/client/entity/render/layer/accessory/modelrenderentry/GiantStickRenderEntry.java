@@ -7,13 +7,14 @@ import doggytalents.client.entity.model.WigModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class GiantStickRenderEntry extends AccessoryModelManager.Entry{
-    public static final ModelLayerLocation GIANT_STICK = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "giant_stick"), "main");
+    public static final ModelLayerLocation GIANT_STICK = new ModelLayerLocation(Util.getResource("giant_stick"), "main");
     
     private GiantStickModel model;
 

@@ -14,6 +14,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.accessory.SmartyGlasses;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -26,7 +27,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDef
 
 public class SmartyGlassesRenderEntry extends AccessoryModelManager.Entry {
 
-    public static final ModelLayerLocation DOG_SMARTY_GLASSES = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_smarty_glasses"), "main");
+    public static final ModelLayerLocation DOG_SMARTY_GLASSES = new ModelLayerLocation(Util.getResource("dog_smarty_glasses"), "main");
     
     public SmartyGlassesModel model;
 

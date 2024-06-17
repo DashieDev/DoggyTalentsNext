@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import doggytalents.common.data.DTMusicProvider;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.core.HolderSet;
@@ -26,7 +27,8 @@ public class DTNWolfVariantsProvider {
     public static void start(GatherDataEvent event) {
         var wolf_variant_set = new RegistrySetBuilder()
             .add(Registries.WOLF_VARIANT, DTNWolfVariants::bootstrap)
-            .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, DTNWolfVariantsProvider::registerWolfModifier);
+            .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, DTNWolfVariantsProvider::registerWolfModifier)
+            .add(Registries.JUKEBOX_SONG, DTMusicProvider::bootstrap);;
             
         var datagen = event.getGenerator();
         datagen.addProvider(event.includeServer(),

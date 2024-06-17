@@ -7,13 +7,14 @@ import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class ContactsRenderEntry extends DoubleDyableRenderEntry {
-    public static final ModelLayerLocation DOG_CONTACTS = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_contacts"), "main");
+    public static final ModelLayerLocation DOG_CONTACTS = new ModelLayerLocation(Util.getResource("dog_contacts"), "main");
 
     private ContactsModel model;
     @Override

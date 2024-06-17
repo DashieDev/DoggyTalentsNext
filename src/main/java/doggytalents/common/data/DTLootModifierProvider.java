@@ -30,7 +30,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
@@ -78,7 +78,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
         var killed_by_dog_condition =
             LootItemEntityPropertyCondition
                 .hasProperties(
-                    EntityTarget.KILLER, 
+                    EntityTarget.ATTACKER, 
                     EntityPredicate.Builder.entity().of(
                         DoggyEntityTypes.DOG.get())
                 )
@@ -91,7 +91,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
                 )
                 .build();
         var random_condition = 
-            LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.125F, 0.05F)
+            LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.125F, 0.05F)
             .build();
         var conditions = new LootItemCondition[] {
             killed_by_dog_condition,

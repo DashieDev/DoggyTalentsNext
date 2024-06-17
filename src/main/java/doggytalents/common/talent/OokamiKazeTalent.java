@@ -27,9 +27,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
@@ -367,7 +368,8 @@ public class OokamiKazeTalent extends TalentInstance {
 
         private void knockbackEntity(Vec3 dog_pos, Entity e, double knockback_value) {
             if (e instanceof LivingEntity living) {
-                knockback_value = ProtectionEnchantment.getExplosionKnockbackAfterDampener(living, knockback_value);
+                knockback_value *= (1.0 - living.getAttributeValue(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE));
+                if (knockback_value < 0) knockback_value = 0;
             }
             Vec3 e_pos;
             if (e instanceof PrimedTnt)

@@ -7,13 +7,14 @@ import doggytalents.client.entity.model.WitchHatModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class WitchHatRenderEntry  extends AccessoryModelManager.Entry{
-    public static final ModelLayerLocation DOG_WITCH_HAT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_witch_hat"), "main");
+    public static final ModelLayerLocation DOG_WITCH_HAT = new ModelLayerLocation(Util.getResource("dog_witch_hat"), "main");
     
     public WitchHatModel model;
     @Override

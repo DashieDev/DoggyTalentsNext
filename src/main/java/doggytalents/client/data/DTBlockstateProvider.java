@@ -3,6 +3,7 @@ package doggytalents.client.data;
 import doggytalents.DoggyBlocks;
 import doggytalents.common.block.crops.DogCropBlock;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.Util;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -219,10 +220,10 @@ public class DTBlockstateProvider extends BlockStateProvider {
     }
 
     private ResourceLocation prextend(ResourceLocation rl, String prefix) {
-        return new ResourceLocation(rl.getNamespace(), prefix + rl.getPath());
+        return Util.getResource(rl.getNamespace(), prefix + rl.getPath());
     }
 
     private ResourceLocation extend(ResourceLocation rl, String suffix) {
-        return new ResourceLocation(rl.getNamespace(), rl.getPath() + suffix);
+        return Util.getResource(rl.getNamespace(), rl.getPath() + suffix);
     }
 }

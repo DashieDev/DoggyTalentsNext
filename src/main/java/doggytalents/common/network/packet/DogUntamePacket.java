@@ -43,7 +43,7 @@ public class DogUntamePacket extends DogPacket<DogUntameData> {
         ++usedTime;
         if (usedTime >= AmnesiaBoneItem.getUseCap()) {
             stack.shrink(1);
-            sender.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+            sender.onEquippedItemBroken(stack.getItem(), EquipmentSlot.MAINHAND);
         }
 
         tag.putInt("amnesia_bone_used_time", usedTime);

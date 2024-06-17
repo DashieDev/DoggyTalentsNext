@@ -3,6 +3,7 @@ package doggytalents;
 import doggytalents.api.feature.DogLevel;
 import doggytalents.api.registry.Accessory;
 import doggytalents.common.artifacts.FeatheredMantleArtifact;
+import doggytalents.common.data.DTMusicProvider;
 import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.accessory.BakerHat;
 import doggytalents.common.entity.accessory.CeremonialGarb;
@@ -34,7 +35,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.item.SwordItem;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -179,17 +179,17 @@ public class DoggyItems {
             () -> new FeatheredMantleArtifact(), props), 1);
 
     public static final Supplier<Item> MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO = register("disc_bwv_1080_fugue_11", 
-        () -> new RecordItem(13, () -> DoggySounds.BWV_1080_FUGUE_11_KIMIKO.get() , 
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 292*20));
+        () -> new Item(
+        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.BWV_1080)));
     public static final Supplier<Item> MUSIC_DISC_BWV_849_FUGUE_KIMIKO = register("disc_bwv_849_fugue", 
-        () -> new RecordItem(13, () -> DoggySounds.BWV_849_FUGUE_KIMIKO.get() , 
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 160*20));
+        () -> new Item(
+        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.BWV_849)));
     public static final Supplier<Item> MUSIC_DISC_OKAMI_1 = register("disc_okami_ryoshima_coast_arr", 
-        () -> new RecordItem(13, () -> DoggySounds.OKAMI_RYOSHIMA_COAST_ARR.get() , 
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 111*20));
+        () -> new Item(
+        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.OKAMI)));
     public static final Supplier<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
-        () -> new ChopinRecordItem(13, () -> DoggySounds.CHOPIN_OP64_NO1.get() , 
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 132*20));
+        () -> new Item(
+        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.CHOPIN_OP64_NO_1)));
 
     public static final Supplier<PianoItem> GRAND_PIANO_BLACK = register("grand_piano_black_item", 
         () -> new PianoItem(DoggyEntityTypes.GRAND_PIANO_BLACK));

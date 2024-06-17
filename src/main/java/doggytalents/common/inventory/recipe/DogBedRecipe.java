@@ -12,26 +12,27 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.IShapedRecipe;
 
-public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<CraftingContainer> {
+public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<CraftingInput> {
 
     public DogBedRecipe(CraftingBookCategory p_249010_) {
         super(p_249010_);
     }
 
     @Override
-    public boolean matches(CraftingContainer inv, Level worldIn) {
+    public boolean matches(CraftingInput inv, Level worldIn) {
         IBeddingMaterial beddingId = null;
         ICasingMaterial casingId = null;
 
         for (int col = 0; col < 3; col++) {
             for (int row = 0; row < 3; row++) {
                 if (col == 1 && row < 2) {
-                    IBeddingMaterial id = DogBedUtil.getBeddingFromStack(inv.getItem(row * inv.getWidth() + col));
+                    IBeddingMaterial id = DogBedUtil.getBeddingFromStack(inv.getItem(row * inv.width() + col));
 
                     if (id == null) {
                         return false;
@@ -44,7 +45,7 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
                     }
                 }
                 else {
-                    ICasingMaterial id = DogBedUtil.getCasingFromStack(inv.getItem(row * inv.getWidth() + col));
+                    ICasingMaterial id = DogBedUtil.getCasingFromStack(inv.getItem(row * inv.width() + col));
 
                     if (id == null) {
                         return false;
@@ -96,7 +97,7 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv, HolderLookup.Provider p_267165_) {
+    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider p_267165_) {
         IBeddingMaterial beddingId = DogBedUtil.getBeddingFromStack(inv.getItem(1));
         ICasingMaterial casingId = DogBedUtil.getCasingFromStack(inv.getItem(0));
 

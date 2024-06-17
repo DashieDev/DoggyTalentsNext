@@ -8,6 +8,7 @@ import doggytalents.DoggyItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.WritableRegistry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -73,8 +74,8 @@ public class DTLootTableProvider extends LootTableProvider {
 
         private static final Set<Item> EXPLOSION_RESISTANT = Stream.of(DoggyBlocks.DOG_BED.get()).map(ItemLike::asItem).collect(Collectors.toSet());
 
-        protected Blocks() {
-            super(EXPLOSION_RESISTANT, FeatureFlags.VANILLA_SET);
+        protected Blocks(HolderLookup.Provider prov) {
+            super(EXPLOSION_RESISTANT, FeatureFlags.VANILLA_SET, prov);
             //TODO Auto-generated constructor stub
         }
 
@@ -128,7 +129,7 @@ public class DTLootTableProvider extends LootTableProvider {
                     .apply(
                         ApplyBonusCount
                             .addBonusBinomialDistributionCount(
-                                Enchantments.FORTUNE, 0.5714286F, 3));
+                                this.registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3));
 
             final var RICE_LOOTABLE = 
                 LootTable.lootTable().withPool(
@@ -162,8 +163,8 @@ public class DTLootTableProvider extends LootTableProvider {
 
     private static class Entities extends EntityLootSubProvider {
 
-        protected Entities() {
-            super(FeatureFlags.VANILLA_SET);
+        protected Entities(HolderLookup.Provider prov) {
+            super(FeatureFlags.VANILLA_SET, prov);
         }
 
         protected void registerNoLoot(Supplier<? extends EntityType<?>> type) {

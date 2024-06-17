@@ -13,6 +13,7 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -24,11 +25,11 @@ public class DoubleDyableRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer container, Level level) {
+    public boolean matches(CraftingInput container, Level level) {
         ItemStack paperStack = null;
         ItemStack dyeStack = null;
         ItemStack targetStack = null;
-        for (int i = 0; i < container.getContainerSize(); ++i) {
+        for (int i = 0; i < container.size(); ++i) {
             var stack = container.getItem(i);
             if (stack.isEmpty())
                 continue;
@@ -55,12 +56,12 @@ public class DoubleDyableRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container, HolderLookup.Provider registryAccess) {
+    public ItemStack assemble(CraftingInput container, HolderLookup.Provider registryAccess) {
         ItemStack paperStack = null;
         var dyeList = new ArrayList<DyeColor>();
         ItemStack targetStack = null;
         boolean fg_color = false;
-        for (int i = 0; i < container.getContainerSize(); ++i) {
+        for (int i = 0; i < container.size(); ++i) {
             var stack = container.getItem(i);
             if (stack.isEmpty())
                 continue;

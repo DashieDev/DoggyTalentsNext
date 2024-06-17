@@ -11,6 +11,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.accessory.TenguMask;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
@@ -20,7 +21,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDef
 
 public class TenguMaskRenderEmtry extends Entry {
     
-    public static final ModelLayerLocation DOG_TENGU_MASK_MODEL = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_tengu_mask"), "main");
+    public static final ModelLayerLocation DOG_TENGU_MASK_MODEL = new ModelLayerLocation(Util.getResource("dog_tengu_mask"), "main");
     
     public TenguMaskModel model;
 

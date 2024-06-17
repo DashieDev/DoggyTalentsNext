@@ -266,7 +266,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
         }
 
         var parent_advancement_path = 
-            new ResourceLocation("husbandry/tame_an_animal");
+            Util.getVanillaResource("husbandry/tame_an_animal");
         builder.parent(new AdvancementHolder(parent_advancement_path, null));
         
         var display_stack = new ItemStack(DoggyItems.DOGGY_CHARM.get());

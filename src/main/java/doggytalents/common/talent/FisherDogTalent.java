@@ -20,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -109,7 +110,7 @@ public class FisherDogTalent extends TalentInstance {
     private ItemStack tryCookFish(AbstractDog dog, ItemStack fish_raw) {
         var recipeMan = dog.level().getRecipeManager();
         var recipeOptional = recipeMan.getRecipeFor(RecipeType.SMELTING, 
-            new SimpleContainer(fish_raw.copy()), dog.level());
+            new SingleRecipeInput(fish_raw.copy()), dog.level());
         if (!recipeOptional.isPresent())
             return fish_raw;
         var recipe = recipeOptional.get();

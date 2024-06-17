@@ -95,7 +95,7 @@ public class Util {
     public static int colorDye(int startColor, Collection<DyeColor> dyes) {
         var colors = new ArrayList<int[]>(dyes.size());
         for (var dye : dyes) {
-            var color_srgb = dye.getTextureDiffuseColors();
+            var color_srgb = rgbIntToFloatArray(dye.getTextureDiffuseColor());
             var color_rgb = new int[color_srgb.length];
             for (int i = 0; i < color_srgb.length; ++i) {
                 color_rgb[i] = (int)(color_srgb[i]*255);
@@ -145,7 +145,11 @@ public class Util {
     }
 
     public static ResourceLocation getResource(String modId, String name) {
-        return new ResourceLocation(modId, name);
+        return ResourceLocation.fromNamespaceAndPath(modId, name);
+    }
+
+    public static ResourceLocation getVanillaResource(String name) {
+        return ResourceLocation.withDefaultNamespace(name);
     }
 
     public static String getResourcePath(String name) {

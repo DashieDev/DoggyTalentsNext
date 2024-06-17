@@ -11,6 +11,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -18,6 +19,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,6 +31,7 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -46,7 +49,7 @@ public class DogThrownTrident extends AbstractArrow {
     }
 
     public DogThrownTrident(Dog dog, ItemStack trident_stack) {
-        super(DoggyEntityTypes.DOG_TRIDENT_PROJ.get(), dog, dog.level(), trident_stack);
+        super(DoggyEntityTypes.DOG_TRIDENT_PROJ.get(), dog, dog.level(), trident_stack, null);
     }
 
     @Override
@@ -161,7 +164,7 @@ public class DogThrownTrident extends AbstractArrow {
         
         SoundEvent play_sound = null;
         if (did_lightning) {
-            play_sound = SoundEvents.TRIDENT_THUNDER;
+            play_sound = null;
         } else if (hurt_success) {
             play_sound = SoundEvents.TRIDENT_HIT;
         } else {
@@ -174,12 +177,15 @@ public class DogThrownTrident extends AbstractArrow {
 
     private boolean hurtDogTridentTarget(Entity target) {
         float damage = 8;
-        if (target instanceof LivingEntity living) {
-            damage += EnchantmentHelper.getDamageBonus(this.getPickupItemStackOrigin(), living.getType());
-        }
+        // if (target instanceof LivingEntity living) {
+        //     damage += EnchantmentHelper.getDamageBonus(this.getPickupItemStackOrigin(), living.getType());
+        // }
         var owner = this.getOwner();
         var indirect_entity_source = owner == null ? this : owner;
         var trident_source = this.damageSources().arrow(this, indirect_entity_source);
+        if (this.level() instanceof ServerLevel serverlevel) {
+            damage = EnchantmentHelper.modifyDamage(serverlevel, this.getWeaponItem(), target, trident_source, damage);
+        }
         if (this.isOnFire()) {
             EntityUtil.setSecondsOnFire(target, 5);
         }
@@ -187,19 +193,19 @@ public class DogThrownTrident extends AbstractArrow {
         if (!result)
             return false;
 
-        doDogTridentEnchantDamageEffects(owner, target);
+        doDogTridentEnchantDamageEffects(owner, target, trident_source);
         killCreeperIfCreeperSweeper(target);
         return true;
     }
 
-    private void doDogTridentEnchantDamageEffects(Entity owner, Entity target) {
-        if (target instanceof LivingEntity target_living) {
-            if (owner instanceof LivingEntity owner_living) {
-                EnchantmentHelper.doPostHurtEffects(target_living, owner_living);
-                EnchantmentHelper.doPostDamageEffects(owner_living, target_living);
-            }
+    private void doDogTridentEnchantDamageEffects(Entity owner, Entity target, DamageSource source) {
+        if (this.level() instanceof ServerLevel serverlevel1) {
+            EnchantmentHelper.doPostAttackEffectsWithItemSource(serverlevel1, target, source, this.getWeaponItem());
+        }
 
-            this.doPostHurtEffects(target_living);
+        if (target instanceof LivingEntity livingentity) {
+            this.doKnockback(livingentity, source);
+            this.doPostHurtEffects(livingentity);
         }
     }
 
@@ -216,7 +222,10 @@ public class DogThrownTrident extends AbstractArrow {
     }
 
     public boolean isChanneling() {
-        return EnchantmentHelper.hasChanneling(this.getPickupItemStackOrigin());
+        var channel = this.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(Enchantments.CHANNELING);
+        if (!channel.isPresent())
+            return false;
+        return this.getPickupItemStackOrigin().getEnchantmentLevel(channel.get()) > 0;
     }
 
     private boolean maySummonLightningBolt(Entity target) {
@@ -295,6 +304,11 @@ public class DogThrownTrident extends AbstractArrow {
         if (dog_owner == null)
             return false;
         return EventHandler.isAlliedToDog(target, dog_owner);
+    }
+
+    @Override
+    public ItemStack getWeaponItem() {
+        return this.getPickupItemStackOrigin();
     }
 
 }

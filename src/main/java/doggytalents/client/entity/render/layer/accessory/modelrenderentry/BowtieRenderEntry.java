@@ -14,6 +14,7 @@ import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -24,7 +25,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDef
 
 public class BowtieRenderEntry extends AccessoryModelManager.Entry {
 
-    public static final ModelLayerLocation DOG_BOWTIE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_bowtie"), "main");
+    public static final ModelLayerLocation DOG_BOWTIE = new ModelLayerLocation(Util.getResource("dog_bowtie"), "main");
 
     private BowTieModel model;
 

@@ -11,6 +11,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -20,9 +21,9 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.MendingEnchantment;
 import net.minecraft.world.level.Level;
 
 /**
@@ -144,16 +145,18 @@ public class DoggyArmorTalent extends TalentInstance {
             this.tickUntilXPSearch = 10;
 
             var entry = EnchantmentHelper.getRandomItemWith(
-                Enchantments.MENDING, dog, ItemStack::isDamaged
+                EnchantmentEffectComponents.REPAIR_WITH_XP, dog, ItemStack::isDamaged
             );
 
-            if (entry == null) return;
+            if (!entry.isPresent()) return;
+            if (!(dog.level() instanceof ServerLevel sLevel)) return;
 
-            var itemstack = entry.getValue();
+            var enchant_stack = entry.get(); var itemstack = enchant_stack.itemStack();
 
             if (spareValue > 0) {
                 
                 int i = Math.min((int) (spareValue * itemstack.getXpRepairRatio()), itemstack.getDamageValue());
+                i = EnchantmentHelper.modifyDurabilityToRepairFromXp(sLevel, itemstack, i);
                 itemstack.setDamageValue(itemstack.getDamageValue() - i);
 
                 spareValue -= i / itemstack.getXpRepairRatio();
@@ -172,6 +175,7 @@ public class DoggyArmorTalent extends TalentInstance {
                 if (itemstack.getDamageValue() <= 0) break;
                 
                 int j = Math.min((int) (x.getValue() * itemstack.getXpRepairRatio()), itemstack.getDamageValue());
+                j = EnchantmentHelper.modifyDurabilityToRepairFromXp(sLevel, itemstack, j);
                 itemstack.setDamageValue(itemstack.getDamageValue() - j);
                 dog.take(x, 1);
                 this.spareValue += j / itemstack.getXpRepairRatio();

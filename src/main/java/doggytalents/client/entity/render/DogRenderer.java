@@ -188,7 +188,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
 
         stack.translate(0.0D, (double)render_y_offset, 0.0D);
         stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-        stack.scale(-scale, -scale, scale);
+        stack.scale(scale, -scale, scale);
         
         var pose = stack.last().pose();
         var font = this.getFont();
@@ -436,7 +436,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         if (rendertype != null) {
            VertexConsumer vertexconsumer = p_115312_.getBuffer(rendertype);
            int i = getOverlayCoords(p_115308_, this.getWhiteOverlayProgress(p_115308_, p_115310_));
-           this.model.renderToBuffer(p_115311_, vertexconsumer, p_115313_, i, 1.0F, 1.0F, 1.0F, flag1 ? 0.15F : 1.0F);
+           this.model.renderToBuffer(p_115311_, vertexconsumer, p_115313_, i, flag1 ? 654311423 : -1);
         }
   
         if (!p_115308_.isSpectator()) {

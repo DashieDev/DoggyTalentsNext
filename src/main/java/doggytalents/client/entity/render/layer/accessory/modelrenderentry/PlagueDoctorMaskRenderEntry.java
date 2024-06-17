@@ -7,13 +7,14 @@ import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class PlagueDoctorMaskRenderEntry extends AccessoryModelManager.Entry{
-    public static final ModelLayerLocation DOG_PLAGUE_DOC = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_plague_doc"), "main");
+    public static final ModelLayerLocation DOG_PLAGUE_DOC = new ModelLayerLocation(Util.getResource("dog_plague_doc"), "main");
     
     public PlagueDoctorMaskModel model;
     @Override

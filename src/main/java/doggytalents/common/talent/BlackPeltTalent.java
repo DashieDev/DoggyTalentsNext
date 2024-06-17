@@ -4,6 +4,8 @@ import doggytalents.DoggyAttributes;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.util.Util;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
@@ -11,9 +13,9 @@ import java.util.UUID;
 
 public class BlackPeltTalent extends TalentInstance {
 
-    private static final UUID BLACK_PELT_DAMAGE_ID = UUID.fromString("9abeafa9-3913-4b4c-b46e-0f1548fb19b3");
-    private static final UUID BLACK_PELT_CRIT_CHANCE_ID = UUID.fromString("f07b5d39-a8cc-4d32-b458-6efdf1dc6836");
-    private static final UUID BLACK_PELT_CRIT_BONUS_ID = UUID.fromString("e19e0d42-6ee3-4ee1-af1c-7519af4354cd");
+    private static final ResourceLocation BLACK_PELT_DAMAGE_ID = Util.getResource("black_pelt_damage");
+    private static final ResourceLocation BLACK_PELT_CRIT_CHANCE_ID = Util.getResource("black_pelt_crit_chance");
+    private static final ResourceLocation BLACK_PELT_CRIT_BONUS_ID = Util.getResource("black_pelt_crit_bonus");
 
     public BlackPeltTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -40,7 +42,7 @@ public class BlackPeltTalent extends TalentInstance {
         dogIn.removeAttributeModifier(DoggyAttributes.CRIT_BONUS, BLACK_PELT_CRIT_BONUS_ID);
     }
 
-    public AttributeModifier createPeltModifier(AbstractDog dogIn, UUID uuidIn) {
+    public AttributeModifier createPeltModifier(AbstractDog dogIn, ResourceLocation uuidIn) {
         if (this.level() > 0) {
             double damageBonus = this.level();
 
@@ -48,13 +50,13 @@ public class BlackPeltTalent extends TalentInstance {
                 damageBonus += 2;
             }
 
-            return new AttributeModifier(uuidIn, "Black Pelt", damageBonus, AttributeModifier.Operation.ADD_VALUE);
+            return new AttributeModifier(uuidIn, damageBonus, AttributeModifier.Operation.ADD_VALUE);
         }
 
         return null;
     }
 
-    public AttributeModifier createPeltCritChance(AbstractDog dogIn, UUID uuidIn) {
+    public AttributeModifier createPeltCritChance(AbstractDog dogIn, ResourceLocation uuidIn) {
         if (this.level() <= 0) {
             return null;
         }
@@ -65,14 +67,14 @@ public class BlackPeltTalent extends TalentInstance {
             damageBonus = 1D;
         }
 
-        return new AttributeModifier(uuidIn, "Black Pelt Crit Chance", damageBonus, AttributeModifier.Operation.ADD_VALUE);
+        return new AttributeModifier(uuidIn, damageBonus, AttributeModifier.Operation.ADD_VALUE);
     }
 
-    public AttributeModifier createPeltCritBonus(AbstractDog dogIn, UUID uuidIn) {
+    public AttributeModifier createPeltCritBonus(AbstractDog dogIn, ResourceLocation uuidIn) {
         if (this.level() <= 0) {
             return null;
         }
 
-        return new AttributeModifier(uuidIn, "Black Pelt Crit Bonus", 1.0D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        return new AttributeModifier(uuidIn, 1.0D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     }
 }

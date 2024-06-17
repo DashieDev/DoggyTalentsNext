@@ -22,10 +22,9 @@ import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ticket.ChunkTicketManager;
-import net.neoforged.neoforge.common.util.ITeleporter;
 import net.neoforged.neoforge.common.world.chunk.ForcedChunkManager;
 
 public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
@@ -116,7 +115,7 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
         if (!dogValidator.test(dog0)) return;
 
         dog0.authorizeChangeDimension();
-        dog0.changeDimension(targetLevel, new DogTeleporter(pos));
+        dog0.changeDimension(getDogTransition(targetLevel, dog0, pos));
     }
 
     @Override
@@ -158,24 +157,33 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
         }
     }
 
-    private static class DogTeleporter implements ITeleporter {
-
-        private BlockPos safePos;
-
-        public DogTeleporter(BlockPos safePos) {
-            this.safePos = safePos;
-        }
-
-        @Override
-        public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld,
-                Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-            return new PortalInfo(
-                Vec3.atBottomCenterOf(safePos), 
-                Vec3.ZERO, 
-                entity.getYRot(), entity.getXRot()
-            );
-        }
-
+    private static DimensionTransition getDogTransition(ServerLevel level, Dog dog, BlockPos safePos) {
+        return new DimensionTransition(level, 
+            Vec3.atBottomCenterOf(safePos), 
+            Vec3.ZERO, 
+            dog.getYRot(), dog.getXRot(),
+            false,
+            DimensionTransition.DO_NOTHING);
     }
+
+    // private static class DogTeleporter implements ITeleporter {
+
+    //     private BlockPos safePos;
+
+    //     public DogTeleporter(BlockPos safePos) {
+    //         this.safePos = safePos;
+    //     }
+
+    //     @Override
+    //     public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld,
+    //             Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+    //         return new PortalInfo(
+    //             Vec3.atBottomCenterOf(safePos), 
+    //             Vec3.ZERO, 
+    //             entity.getYRot(), entity.getXRot()
+    //         );
+    //     }
+
+    // }
     
 }

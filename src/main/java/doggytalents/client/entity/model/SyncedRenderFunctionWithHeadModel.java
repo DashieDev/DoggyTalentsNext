@@ -62,8 +62,7 @@ public class SyncedRenderFunctionWithHeadModel extends SyncedAccessoryModel {
 
 
     @Override
-    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, float p_103017_,
-            float p_103018_, float p_103019_, float p_103020_) {
+    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, int unused) {
     }
 
     public void startRenderFromRoot(PoseStack stack, Renderer actualRendering) {

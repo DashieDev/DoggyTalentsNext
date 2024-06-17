@@ -95,15 +95,15 @@ public class DoggyArmorMapping {
 
     public static ResourceLocation getMappedResource(Item item, Dog dog, ItemStack stack) {
         if (ConfigHandler.CLIENT.USE_LEGACY_DOG_ARMOR_RENDER.get())
-            return getLegacyMappedResource(item);
+            return getLegacyMappedResource(dog, item);
 
         return MAPPING.computeIfAbsent(item, x -> computeArmorTexture(x, dog, stack));
     }
 
-    public static ResourceLocation getLegacyMappedResource(Item item) {
+    public static ResourceLocation getLegacyMappedResource(Dog dog, Item item) {
         var x = LEGACY_MAPPING.get(item);
         if (x != null) return x;
-        var slot = LivingEntity.getEquipmentSlotForItem(new ItemStack(item));
+        var slot = dog.getEquipmentSlotForItem(new ItemStack(item));
         switch (slot) {
             case CHEST:
                 return Resources.IRON_BODY_PIECE; 

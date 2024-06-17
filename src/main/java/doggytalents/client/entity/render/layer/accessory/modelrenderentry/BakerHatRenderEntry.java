@@ -11,9 +11,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 
 public class BakerHatRenderEntry extends AccessoryModelManager.Entry{
-    public static final ModelLayerLocation DOG_BAKER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_baker"), "main");
+    public static final ModelLayerLocation DOG_BAKER = new ModelLayerLocation(Util.getResource("dog_baker"), "main");
     
     public BakerHatModel model;
     @Override

@@ -109,7 +109,7 @@ public class SakeItem extends DogEddibleItem {
     }
 
     @Override
-    public int getUseDuration(ItemStack p_41454_) {
+    public int getUseDuration(ItemStack p_41454_, LivingEntity p_344979_) {
         return 32;
     }
 
