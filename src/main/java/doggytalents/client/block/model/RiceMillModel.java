@@ -175,7 +175,7 @@ public class RiceMillModel extends SimpleAnimatedModel {
 
     @Override
     public void renderToBuffer(PoseStack p_103111_, VertexConsumer p_103112_, int p_103113_, int p_103114_, int color_overlay) {
-        this.root.render(p_103111_, p_103112_, p_103113_, p_103114_, 0xffffffff);
+        this.root.render(p_103111_, p_103112_, p_103113_, p_103114_, color_overlay);
     }
 
 	private static final AnimationDefinition GRIND_ANIM = AnimationDefinition.Builder.withLength(10f).looping()

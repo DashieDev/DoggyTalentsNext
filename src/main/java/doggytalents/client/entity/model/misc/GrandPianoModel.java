@@ -222,8 +222,8 @@ public class GrandPianoModel extends EntityModel<Piano> {
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int unused) {
-		piano.render(poseStack, vertexConsumer, packedLight, packedOverlay, 0xffffffff);
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color_overlay) {
+		piano.render(poseStack, vertexConsumer, packedLight, packedOverlay, color_overlay);
 	}
 
 	public void setFallboard(boolean open) {

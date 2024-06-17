@@ -42,7 +42,7 @@ public class GlowingEyeDogModel extends DogModel {
     }
     
     @Override
-    public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, int unused) {
+    public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, int color_overlay) {
         var pivot = DEFAULT_ROOT_PIVOT;
         var custom_pivot = getCustomRootPivotPoint();
         if (custom_pivot != null) {
@@ -78,7 +78,7 @@ public class GlowingEyeDogModel extends DogModel {
             //float f1 = 1.0F / 2f;
             //p_102034_.scale(f1, f1, f1);
             //p_102034_.translate(0.0D, (double)(24 / 16.0F), 0.0D);
-            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, 0xffffffff);
+            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, color_overlay);
             p_102034_.popPose();
             
             this.head.visible = headVisible0;
@@ -86,14 +86,14 @@ public class GlowingEyeDogModel extends DogModel {
             //p_102034_.translate(0.0D, (double)(5f / 16.0F), (double)(2f / 16.0F));
             p_102034_.scale(2, 2, 2);
             p_102034_.translate(0, -0.5, 0.15);
-            this.head.render(p_102034_, p_102035_, p_102036_, p_102037_, 0xffffffff);
+            this.head.render(p_102034_, p_102035_, p_102036_, p_102037_, color_overlay);
             p_102034_.popPose();            
         } else {
             boolean glowingEyes_visible0 = false;
             glowingEyes_visible0 = this.glowingEyes.visible;
-            this.glowingEyes.render(p_102034_, p_102035_, 15728880, p_102037_, 0xffffffff);
+            this.glowingEyes.render(p_102034_, p_102035_, 15728880, p_102037_, color_overlay);
             this.glowingEyes.visible = false;
-            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, 0xffffffff);
+            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, color_overlay);
             this.glowingEyes.visible = glowingEyes_visible0;
         }
 

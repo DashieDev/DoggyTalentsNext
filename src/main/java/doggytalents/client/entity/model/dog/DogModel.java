@@ -686,7 +686,7 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, int unused) {
+    public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, int color_overlay) {
         // p_102038_ *= this.wetShade;
         // p_102039_ *= this.wetShade;
         // p_102040_ *= this.wetShade;
