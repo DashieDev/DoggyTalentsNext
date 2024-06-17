@@ -27,7 +27,7 @@ public class DoggyTalents {
     public static final Supplier<Talent> GUARD_DOG = registerInst("guard_dog", GuardDogTalent::new);
     public static final Supplier<Talent> HAPPY_EATER = registerInst("happy_eater", HappyEaterTalent::new);
     public static final Supplier<Talent> HELL_HOUND = registerInst("hell_hound", HellHoundTalent::new);
-    public static final Supplier<Talent> HUNTER_DOG = registerInst("hunter_dog", null);
+    //public static final Supplier<Talent> HUNTER_DOG = registerInst("hunter_dog", null);
     public static final Supplier<Talent> PACK_PUPPY = registerInst("pack_puppy", PackPuppyTalent::new);
     public static final Supplier<Talent> PEST_FIGHTER = registerInst("pest_fighter", PestFighterTalent::new);
     public static final Supplier<Talent> PILLOW_PAW = register("pillow_paw", () -> new Talent(PillowPawTalent::new) {
