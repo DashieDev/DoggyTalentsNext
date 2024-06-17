@@ -29,6 +29,7 @@ public class AccessoryModelRenderEntries {
     public static Entry BAT_WINGS = new BatWingsRenderEntry();
     public static Entry CROW_WINGS = new CrowWingsRenderEntry();
     public static Entry FIERY_REFL = new FieryReflectorRenderEntry();
+    public static Entry ANGEL_WINGS = new AngelWingsRenderEntry();
     public static Entry LAB_COAT = new LabCoatRenderEntry();
     public static Entry CERE_GARB = new CeremonialGarbRenderEntry();
     public static Entry CONTACTS = new ContactsRenderEntry();
@@ -69,6 +70,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(FEDORA);
         AccessoryModelManager.register(FLATCAP);
         AccessoryModelManager.register(DYABLE_LOCATOR_ORB);
+        AccessoryModelManager.register(ANGEL_WINGS);
     }
 
 }
