@@ -188,8 +188,8 @@ public class DoggyItems {
         () -> new Item(
         (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.OKAMI)));
     public static final Supplier<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
-        () -> new Item(
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.CHOPIN_OP64_NO_1)));
+        () -> new ChopinRecordItem(
+        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.CHOPIN_OP64_NO_1), 132*20));
 
     public static final Supplier<PianoItem> GRAND_PIANO_BLACK = register("grand_piano_black_item", 
         () -> new PianoItem(DoggyEntityTypes.GRAND_PIANO_BLACK));

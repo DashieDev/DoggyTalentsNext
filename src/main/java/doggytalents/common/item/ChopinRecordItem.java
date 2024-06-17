@@ -2,6 +2,7 @@ package doggytalents.common.item;
 
 import java.util.function.Supplier;
 
+import doggytalents.DoggyItems;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
@@ -13,14 +14,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JukeboxBlock;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 
 public class ChopinRecordItem extends Item {
 
     public final int EFFECT_RADIUS = 20;
+    private final int length_ticks;
 
-    public ChopinRecordItem(int comparatorValue, Supplier<SoundEvent> soundSupplier, Properties builder,
-            int lengthInTicks) {
+    public ChopinRecordItem(Properties builder, int length_ticks) {
         super(builder);
+        this.length_ticks = length_ticks;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class ChopinRecordItem extends Item {
                 pos.offset(EFFECT_RADIUS, 5, EFFECT_RADIUS)),
                 d -> canDoChopinTail(d));
         for (var dog : dogs) {
-            //dog.setChopinTailFor(this.getLengthInTicks());
+            dog.setChopinTailFor(length_ticks);
         }
     }
 
@@ -52,6 +55,14 @@ public class ChopinRecordItem extends Item {
         if (!dog.isMode(EnumMode.DOCILE, EnumMode.WANDERING))
             return false;
         return true;
+    }
+
+    public static void onRightClickBlock(RightClickBlock event) {
+        var stack = event.getItemStack();
+        if (!stack.is(DoggyItems.MUSIC_DISC_CHOPIN_OP64_NO1.get()))
+            return;
+        
+        stack.getItem().useOn(new UseOnContext(event.getEntity(), event.getHand(), event.getHitVec()));
     }
     
 }

@@ -22,6 +22,7 @@ import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.entity.WhitelistFoodHandler;
 import doggytalents.common.entity.DogDrinkMilkHandler;
 import doggytalents.common.event.EventHandler;
+import doggytalents.common.item.ChopinRecordItem;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.DTNNetworkHandler;
 import doggytalents.common.network.PacketHandler;
@@ -103,7 +104,9 @@ public class DoggyTalentsNext {
         forgeEventBus.addListener(DoggyBrewingRecipes::onRegisterEvent);
         forgeEventBus.addListener(DTNWolfVariantsSpawnOverride::onWolfSpawn);
         forgeEventBus.addListener(DTNWolfVariantsSpawnPlacements::onPositionCheck);
-        forgeEventBus.addListener(VSCodeWolfSpawnHandler::onRightClickBlock);
+        forgeEventBus.addListener(VSCodeWolfSpawnHandler::onRightClickBlock);        
+        forgeEventBus.addListener(ChopinRecordItem::onRightClickBlock);
+
 
         forgeEventBus.register(new EventHandler());
 
