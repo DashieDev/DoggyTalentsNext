@@ -81,7 +81,7 @@ public class ClientEventHandler {
             ResourceLocation resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
             ResourceLocation bakedModelLoc = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
 
-            var model = modelRegistry.get(bakedModelLoc);
+            var model = modelRegistry.get(ModelResourceLocation.standalone(bakedModelLoc));
 
             var modelUnbaked = (BlockModel) event.getModelBakery().getModel(bakedModelLoc);
 
