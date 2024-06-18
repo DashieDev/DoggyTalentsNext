@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import doggytalents.common.util.Util;
-import doggytalents.common.variants.DTNWolfVariants;
+import doggytalents.common.variants_legacy.DTNWolfVariants;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Wolf;
