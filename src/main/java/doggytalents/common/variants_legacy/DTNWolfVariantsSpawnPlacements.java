@@ -1,4 +1,4 @@
-package doggytalents.common.variants;
+package doggytalents.common.variants_legacy;
 
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.forge_imitate.event.MobSpawnEvent.PositionCheck;

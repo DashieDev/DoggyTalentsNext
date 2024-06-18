@@ -1,4 +1,4 @@
-package doggytalents.common.variants;
+package doggytalents.common.variants_legacy;
 
 import java.util.Optional;
 
