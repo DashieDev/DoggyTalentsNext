@@ -83,7 +83,7 @@ public class ClientEventHandler {
 
             var model = modelRegistry.get(ModelResourceLocation.standalone(bakedModelLoc));
 
-            var modelUnbaked = (BlockModel) event.getModelBakery().getModel(bakedModelLoc);
+            var modelUnbaked = (BlockModel) event.getModelBakery().topLevelModels.get(ModelResourceLocation.standalone(bakedModelLoc));
 
             BakedModel customModel = new DogBedModel(event.getModelBakery(), modelUnbaked, model);
 
