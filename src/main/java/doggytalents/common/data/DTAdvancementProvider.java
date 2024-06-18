@@ -8,7 +8,7 @@ import doggytalents.DoggyItems;
 import doggytalents.common.advancements.triggers.DogBandaidApplyTrigger;
 import doggytalents.common.advancements.triggers.DogDrunkTrigger;
 import doggytalents.common.util.Util;
-import doggytalents.common.variants.DTNWolfVariants;
+import doggytalents.common.variants_legacy.DTNWolfVariants;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
