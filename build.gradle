@@ -77,7 +77,7 @@ repositories {
 
 dependencies {
 
-    implementation "net.neoforged:neoforge:21.0.10-beta"
+    implementation "net.neoforged:neoforge:21.0.16-beta"
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
