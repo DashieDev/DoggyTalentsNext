@@ -12,7 +12,7 @@ import doggytalents.common.advancements.triggers.OokamikazeTrigger;
 import doggytalents.common.item.DoggyCharmItem;
 import doggytalents.common.util.DogBedUtil;
 import doggytalents.common.util.Util;
-import doggytalents.common.variants.DTNWolfVariants;
+import doggytalents.common.variants_legacy.DTNWolfVariants;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
