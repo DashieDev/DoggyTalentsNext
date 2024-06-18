@@ -26,13 +26,17 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
 
     @Override
     public boolean matches(CraftingInput inv, Level worldIn) {
+        //Validate for 1.21
+        if (inv.width() != 3 || inv.height() != 3)
+            return false;
+        
         IBeddingMaterial beddingId = null;
         ICasingMaterial casingId = null;
 
         for (int col = 0; col < 3; col++) {
             for (int row = 0; row < 3; row++) {
                 if (col == 1 && row < 2) {
-                    IBeddingMaterial id = DogBedUtil.getBeddingFromStack(inv.getItem(row * inv.width() + col));
+                    IBeddingMaterial id = DogBedUtil.getBeddingFromStack(inv.getItem(col, row));
 
                     if (id == null) {
                         return false;
@@ -45,7 +49,7 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
                     }
                 }
                 else {
-                    ICasingMaterial id = DogBedUtil.getCasingFromStack(inv.getItem(row * inv.width() + col));
+                    ICasingMaterial id = DogBedUtil.getCasingFromStack(inv.getItem(col, row));
 
                     if (id == null) {
                         return false;
