@@ -37,6 +37,8 @@ public class AccessoryModelRenderEntries {
     public static Entry FEDORA = new FedoraRenderEntry();
     public static Entry FLATCAP = new FlatCapRenderEntry();
     public static Entry DYABLE_LOCATOR_ORB = new DyableLocatorOrbEntry();
+    public static Entry ANGEL_HALO = new AngelHaloRenderEntry();
+
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -71,6 +73,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(FLATCAP);
         AccessoryModelManager.register(DYABLE_LOCATOR_ORB);
         AccessoryModelManager.register(ANGEL_WINGS);
+        AccessoryModelManager.register(ANGEL_HALO);
     }
 
 }
