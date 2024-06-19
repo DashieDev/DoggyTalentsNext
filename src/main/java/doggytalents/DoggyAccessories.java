@@ -64,6 +64,7 @@ public class DoggyAccessories {
     public static final RegistryObject<Accessory> DIVINE_RETRIBUTION = register("divine_retribution", () -> new FieryReflector(DoggyItems.DIVINE_RETRIBUTON).setModelTexture(Resources.DIVINE_RETRIBUTION).setRenderTranslucent(true));
     public static final RegistryObject<Accessory> SOUL_REFLECTOR = register("soul_reflector", () -> new FieryReflector(DoggyItems.SOUL_REFLECTOR, FieryReflector.Type.SOUL_REFLECTOR).setModelTexture(Resources.SOUL_REFLECTOR).setRenderTranslucent(true));
     public static final RegistryObject<AngelWings> ANGEL_WINGS = register("angel_wings", () -> new AngelWings(DoggyItems.ANGEL_WINGS).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<Accessory> ANGEL_HALO = register("angel_halo", () -> new AngelHalo(DoggyItems.ANGEL_HALO).setModelTexture(Resources.ANGEL_HALO).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
     public static final RegistryObject<TenguMask> TENGU_MASK = register("tengu_mask", () -> new TenguMask(DoggyItems.TENGU_MASK).setModelTexture(Resources.TENGU_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<KitsuneMask> KITSUNE_MASK = register("kitsune_mask", () -> new KitsuneMask(DoggyItems.KITSUNE_MASK).setModelTexture(Resources.KITSUNE_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
