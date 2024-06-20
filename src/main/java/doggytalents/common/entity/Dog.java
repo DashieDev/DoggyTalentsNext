@@ -55,6 +55,8 @@ import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.util.*;
+import doggytalents.common.variant.DogVariant;
+import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -201,7 +203,7 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Integer> ANIM_SYNC_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
-    private static final Cache<EntityDataAccessor<ClassicalVar>> CLASSICAL_VAR = Cache.make(() -> (EntityDataAccessor<ClassicalVar>) SynchedEntityData.defineId(Dog.class, DoggySerializers.CLASSICAL_VAR.get()));
+    private static final Cache<EntityDataAccessor<DogVariant>> DOG_VARIANT = Cache.make(() -> (EntityDataAccessor<DogVariant>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_VARIANT_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<DogLevel>> DOG_LEVEL = Cache.make(() -> (EntityDataAccessor<DogLevel>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<EnumGender>> GENDER = Cache.make(() -> (EntityDataAccessor<EnumGender>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER.get()));
     private static final Cache<EntityDataAccessor<EnumMode>> MODE = Cache.make(() -> (EntityDataAccessor<EnumMode>) SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER.get()));
@@ -213,7 +215,7 @@ public class Dog extends AbstractDog {
     private static final Cache<EntityDataAccessor<DogSkinData>> CUSTOM_SKIN = Cache.make(() -> (EntityDataAccessor<DogSkinData>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER.get()));
     
     public static final void initDataParameters() { 
-        CLASSICAL_VAR.get();
+        DOG_VARIANT.get();
         DOG_LEVEL.get();
         GENDER.get();
         MODE.get();
@@ -322,7 +324,7 @@ public class Dog extends AbstractDog {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(CLASSICAL_VAR.get(), ClassicalVar.PALE);
+        this.entityData.define(DOG_VARIANT.get(), DogVariants.PALE.get());
         this.entityData.define(LAST_KNOWN_NAME, Optional.empty());
         this.entityData.define(DOG_FLAGS, 0);
         this.entityData.define(GENDER.get(), EnumGender.UNISEX);
@@ -618,6 +620,8 @@ public class Dog extends AbstractDog {
         if (!this.level().isClientSide) {
             this.dogSyncedDataManager.tick();
         }
+
+        this.dogVariant().tickDog(this);
     }
 
     private void addAdditionalOnFireEffect() {
@@ -809,7 +813,7 @@ public class Dog extends AbstractDog {
         
         validateGoalsAndTickNonRunningIfNeeded();
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide) {   
             this.getSensing().tick();
             this.lerpSteps = 0;
             this.lerpHeadSteps = 0;
@@ -2579,7 +2583,7 @@ public class Dog extends AbstractDog {
         }
         compound.put("doggy_artifacts", artifactsListTag);
 
-        compound.putString("classicalVariant", this.getClassicalVar().getId().toString());
+        compound.putString("classicalVariant", DogVariantUtil.toSaveString(this.dogVariant()));
         compound.putString("mode", this.getMode().getSaveName());
         compound.putString("dogGender", this.getGender().getSaveName());
         compound.putFloat("dogHunger", this.getDogHunger());
@@ -2750,9 +2754,10 @@ public class Dog extends AbstractDog {
                 this.setBoneVariant(NBTUtil.readItemStack(compound, "fetchItem"));
             }
 
-            this.setClassicalVar(
-                ClassicalVar.bySaveName(compound.getString("classicalVariant"))
+            this.setDogVariant(
+                DogVariantUtil.fromSaveString(compound.getString("classicalVariant"))
             );
+            
             this.setHungerDirectly(compound.getFloat("dogHunger"));
             this.setDogIncapValue(compound.getInt("dogIncapacitatedValue"));
             this.setOwnersName(NBTUtil.getTextComponent(compound, "lastKnownOwnerName"));
@@ -3345,12 +3350,12 @@ public class Dog extends AbstractDog {
         this.entityData.set(LAST_KNOWN_NAME, collar);
     }
 
-    public ClassicalVar getClassicalVar() {
-        return this.entityData.get(CLASSICAL_VAR.get());
+    public DogVariant dogVariant() {
+        return this.entityData.get(DOG_VARIANT.get());
     }
 
-    public void setClassicalVar(ClassicalVar val) {
-        this.entityData.set(CLASSICAL_VAR.get(), val);
+    public void setDogVariant(DogVariant val) {
+        this.entityData.set(DOG_VARIANT.get(), val);
     }
 
     public EnumGender getGender() {

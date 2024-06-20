@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -161,6 +162,13 @@ public class Util {
      */
     public static String getResourcePath(String modId, String name) {
         return getResource(modId, name).toString();
+    }
+
+    public static ResourceLocation modifyPath(ResourceLocation target, Function<String, String> modifier) {
+        var namespace = target.getNamespace();
+        var path = target.getPath();
+        var new_path = modifier.apply(path);
+        return Util.getResource(namespace, new_path);
     }
 
     public static FriendlyByteBuf createBuf() {

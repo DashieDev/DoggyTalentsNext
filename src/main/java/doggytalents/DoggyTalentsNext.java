@@ -72,6 +72,8 @@ public class DoggyTalentsNext {
         modEventBus.addListener(this::interModProcess);
 
         // Registries
+        DogVariants.DOG_VARIANT.register(modEventBus);
+        DogVariants.DOG_VARIANT_VANILLA.register(modEventBus);
         DoggyBlocks.BLOCKS.register(modEventBus);
         DoggyTileEntityTypes.TILE_ENTITIES.register(modEventBus);
         DoggyItems.ITEMS.register(modEventBus);
