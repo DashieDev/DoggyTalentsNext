@@ -4937,14 +4937,20 @@ public class Dog extends AbstractDog {
             pos.mutable()
         );
 
+        blockType = inferType(blockType);
+        
+        return blockType;
+    }
+
+    public PathType inferType(PathType type) {
         for (var alt : this.alterations) {
-            var result = alt.inferType(this, blockType);
+            var result = alt.inferType(this, type);
             if (result.getResult().shouldSwing()) {
-                blockType = result.getObject();
+                type = result.getObject();
                 break;
             }
         }
-        return blockType;
+        return type;
     }
 
     public boolean canDogPassGate() {
