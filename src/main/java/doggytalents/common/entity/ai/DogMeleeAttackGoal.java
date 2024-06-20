@@ -306,13 +306,7 @@ public class DogMeleeAttackGoal extends Goal {
       var type = WalkNodeEvaluator.getPathTypeStatic(dog, target_bp.mutable());
       if (type == PathType.OPEN)
          return false;
-      for (var x : dog.getAlterations()) {
-         var type_result = x.inferType(dog, type);
-         if (type_result.getResult().shouldSwing()) {
-            type = type_result.getObject();
-            break;
-         }
-      }
+      type = dog.inferType(type);
       if (DogUtil.isDangerPathType(type))
          return false;
       return true;

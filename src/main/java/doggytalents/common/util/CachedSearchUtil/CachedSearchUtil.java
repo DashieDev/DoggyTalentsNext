@@ -389,16 +389,8 @@ public class CachedSearchUtil {
      * @return
      */
     public static byte inferType(Dog dog, PathType type) {
-        for (var x : dog.getAlterations()) {
-            var type_res = x.inferType(dog, type);
-            if (!type_res.getResult().shouldSwing())
-                continue;
-            if (type_res.getObject() == PathType.WALKABLE) {
-                return OK;
-            }
-            type = type_res.getObject();
-            break;
-        }
+        type = dog.inferType(type);
+        if (type == PathType.WALKABLE) return OK;
         if (type == PathType.OPEN) return OPEN;
         if (DogUtil.isDangerPathType(type)) return DAMAGE;
         if (type == PathType.BLOCKED) return BLOCKED;
@@ -413,13 +405,9 @@ public class CachedSearchUtil {
         boolean all_dog_OK = true;
         for (var dog : dogs) {
             boolean is_ok = false;
-            for (var x : dog.getAlterations()) {
-                var type_res = x.inferType(dog, type);
-                if (type_res.getResult().shouldSwing()
-                    && type_res.getObject() == PathType.WALKABLE) {
-                    is_ok = true;
-                    break;
-                }
+            var infer_type = dog.inferType(type);
+            if (infer_type == PathType.WALKABLE) {
+                is_ok = true;
             }
             if (!is_ok) {
                 all_dog_OK = false; break;
