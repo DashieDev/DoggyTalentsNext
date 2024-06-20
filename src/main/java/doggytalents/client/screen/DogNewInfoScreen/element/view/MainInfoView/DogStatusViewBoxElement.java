@@ -239,8 +239,10 @@ public class DogStatusViewBoxElement extends AbstractElement {
     }
 
     private void renderVariantIcon(GuiGraphics graphics, Dog dog, int x, int y) {
-        var variant = dog.getClassicalVar();
-        var iconLoc = variant.getIcon();
+        var variant = dog.dogVariant();
+        var iconLoc = variant.icon().orElse(null);
+        if (iconLoc == null)
+            return;
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);

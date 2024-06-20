@@ -2,10 +2,11 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
+import doggytalents.DogVariants;
 import doggytalents.api.anim.DogAnimation;
-import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.variant.DogVariant;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -42,7 +43,7 @@ public class DogWantsAttentionGoal extends Goal {
         if (this.dog.tickCount - this.lastStopTick < this.cooldownTime)
             return false;
 
-        if (this.dog.getClassicalVar() != ClassicalVar.CHESTNUT)
+        if (this.dog.dogVariant() != DogVariants.CHESTNUT.get())
             return false;
         if (this.dog.getRandom().nextFloat() >= 0.01f)
             return false;
