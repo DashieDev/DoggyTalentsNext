@@ -378,14 +378,9 @@ public class DogUtil {
     public static boolean isTeleportSafeBlock(Dog dog, BlockPos pos) {
         var pathnodetype = WalkNodeEvaluator.getPathTypeStatic(dog, pos.mutable());
         boolean alterationWalkable = false;
-        for (var x : dog.getAlterations()) {
-            var type_res = x.inferType(dog, pathnodetype);
-            if (type_res.getResult().shouldSwing()
-                && type_res.getObject() == PathType.WALKABLE) {
-                alterationWalkable = true;
-                break;
-            }
-        }
+        var infer_type = dog.inferType(pathnodetype);
+        if (infer_type == PathType.WALKABLE)
+            alterationWalkable = true;
         
         if (dog.canDogFly() && pathnodetype == PathType.OPEN)
             alterationWalkable = true;
