@@ -150,6 +150,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -160,6 +161,12 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.fluids.FluidType;
+import doggytalents.common.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -917,6 +924,10 @@ public class Dog extends AbstractDog {
                 --this.pushFromOtherDogResistTick;
         } else {
             this.pushFromOtherDogResistTick = 20;
+        }
+
+        if (!this.level().isClientSide && this.fireImmune()) {
+            mayFloatDogInLava();
         }
 
         if (this.navigationLock != null)
@@ -4125,6 +4136,18 @@ public class Dog extends AbstractDog {
         this.setDeltaMovement(new Vec3(moveX, move.y(), moveZ));
     }
 
+    private void mayFloatDogInLava() {
+        if (!this.isInLava()) return;
+        var collisioncontext = CollisionContext.of(this);
+        if (collisioncontext.isAbove(LiquidBlock.STABLE_SHAPE, 
+            this.blockPosition(), true) 
+            && !this.level().getFluidState(this.blockPosition().above()).is(FluidTags.LAVA)) {
+            this.setOnGround(true);
+        } else {
+            this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.085D, 0.0D));
+        }
+    }
+
     @Override
     protected float getFlyingSpeed() {
         return this.isDogFlying() ? 0.49f : super.getFlyingSpeed();
@@ -4954,6 +4977,14 @@ public class Dog extends AbstractDog {
     }
 
     public PathType inferType(PathType type) {
+        if (this.fireImmune()) {
+            if (type == PathType.DANGER_FIRE) {
+                return PathType.WALKABLE;
+            }
+            if (type == PathType.LAVA) {
+                return PathType.BLOCKED;
+            }
+        }
         for (var alt : this.alterations) {
             var result = alt.inferType(this, type);
             if (result.getResult().shouldSwing()) {

@@ -193,7 +193,6 @@ public class HellHoundTalent extends TalentInstance {
         };
         if (!(d instanceof Dog dog))
             return;
-        floatHellhound(dog);
         if (dog != null) {
             if (dog.isShakingLava()) {
                 if (dog.getTimeDogIsShaking() > 0.8) {
@@ -216,18 +215,6 @@ public class HellHoundTalent extends TalentInstance {
         }
         if (this.fireResistTickLeft > 0)
             --this.fireResistTickLeft;
-    }
-
-    private void floatHellhound(AbstractDog dog) {
-        if (!dog.isInLava()) return;
-        var collisioncontext = CollisionContext.of(dog);
-        if (collisioncontext.isAbove(LiquidBlock.STABLE_SHAPE, 
-            dog.blockPosition(), true) 
-            && !dog.level().getFluidState(dog.blockPosition().above()).is(FluidTags.LAVA)) {
-            dog.setOnGround(true);
-        } else {
-            dog.setDeltaMovement(dog.getDeltaMovement().add(0.0D, 0.085D, 0.0D));
-        }
     }
 
     private void fireSpreadToEnermies(AbstractDog dog) {
@@ -293,23 +280,5 @@ public class HellHoundTalent extends TalentInstance {
                     0.1 //TODO Tune
                 );
         }
-    }
-
-    @Override
-    public InteractionResultHolder<PathType> inferType(AbstractDog dog, PathType type) {
-        if (level < 5) return super.inferType(dog, type);
-        // CAUTION : MAGMA_BLOCK also returns DAMAGE_FIRE instead of BLOCKED
-        // so the dog may suffocate.
-        // if (type == PathType.DAMAGE_FIRE) {
-        //     return InteractionResult.SUCCESS;
-        // }
-        //Won't push owner due to A.I check
-        if (type == PathType.DANGER_FIRE) {
-            return InteractionResultHolder.success(PathType.WALKABLE);
-        }
-        if (type == PathType.LAVA) {
-            return InteractionResultHolder.success(PathType.BLOCKED);
-        }
-        return super.inferType(dog, type);
     }
 }
