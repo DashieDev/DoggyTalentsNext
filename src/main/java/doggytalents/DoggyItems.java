@@ -3,7 +3,6 @@ package doggytalents;
 import doggytalents.api.feature.DogLevel;
 import doggytalents.api.registry.Accessory;
 import doggytalents.common.artifacts.FeatheredMantleArtifact;
-import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.accessory.AngelHalo;
 import doggytalents.common.entity.accessory.AngelWings;
 import doggytalents.common.entity.accessory.BakerHat;

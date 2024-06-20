@@ -5,10 +5,10 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.common.config.ConfigHandler;
-import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -82,7 +82,7 @@ public class DoggyCharmItem extends Item implements IDogItem {
                    dog.setOwnerUUID(player.getUUID());
                    dog.maxHealth();
                    if (ConfigHandler.SERVER.RANDOM_VAR_WITH_CHARM.get()) {
-                        dog.setClassicalVar(ClassicalVar.random(dog));
+                        dog.setDogVariant(DogVariantUtil.getRandom(dog.getRandom()));
                    }
                }
                itemstack.shrink(1);
@@ -124,7 +124,7 @@ public class DoggyCharmItem extends Item implements IDogItem {
                            dog.setOwnerUUID(playerIn.getUUID());
                            dog.maxHealth();
                            if (ConfigHandler.SERVER.RANDOM_VAR_WITH_CHARM.get()) {
-                                dog.setClassicalVar(ClassicalVar.random(dog));
+                                dog.setDogVariant(DogVariantUtil.getRandom(dog.getRandom()));
                            }
                            itemstack.shrink(1);
 
@@ -157,19 +157,13 @@ public class DoggyCharmItem extends Item implements IDogItem {
             return InteractionResult.FAIL;
         if (!dog.canInteract(player))
             return InteractionResult.FAIL;
-        var variant_list = Arrays.asList(ClassicalVar.values());
-        if (variant_list.isEmpty())
-            return InteractionResult.FAIL;
         
         if (dog.level().isClientSide)
             return InteractionResult.SUCCESS;
         
-        var current_indx = variant_list.indexOf(dog.getClassicalVar());
-        int next_indx = 0;
-        if (current_indx >= 0)
-            next_indx = (current_indx + 1) % variant_list.size();
-        var next_variant = variant_list.get(next_indx);
-        dog.setClassicalVar(next_variant);
+        var current_variant = dog.dogVariant();
+        var next_variant = DogVariantUtil.cycle(current_variant);
+        dog.setDogVariant(next_variant);
         return InteractionResult.SUCCESS;
     }
 
