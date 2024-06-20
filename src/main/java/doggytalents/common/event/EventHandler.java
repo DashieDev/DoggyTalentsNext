@@ -12,7 +12,6 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.config.ConfigHandler;
-import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.WolfBegAtTreatGoal;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
@@ -42,6 +41,7 @@ import doggytalents.forge_imitate.event.ServerTickEvent;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent;
 import doggytalents.forge_imitate.event.ServerTickEvent.Phase;
 import doggytalents.forge_imitate.network.PacketDistributor;
+import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -57,6 +57,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.WolfVariant;
+import net.minecraft.world.entity.animal.WolfVariants;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
@@ -236,8 +238,8 @@ public class EventHandler {
     }
 
     private static void migrateWolfVariant(Wolf wolf, Dog dog) {
-        var classical = ClassicalVar.getWolf(wolf);
-        dog.setClassicalVar(classical);
+        var dog_variant = DogVariantUtil.fromVanila(wolf.getVariant().unwrapKey().orElse(WolfVariants.PALE));
+        dog.setDogVariant(dog_variant);
     }
 
     private static void migrateWolfArmor(Wolf wolf, Dog dog) {

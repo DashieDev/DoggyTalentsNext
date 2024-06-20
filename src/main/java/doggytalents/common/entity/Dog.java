@@ -63,6 +63,8 @@ import doggytalents.forge_imitate.network.PacketDistributor;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import doggytalents.common.variant.DogVariant;
+import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -324,7 +326,7 @@ public class Dog extends AbstractDog {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        //this.entityData.define(CLASSICAL_VAR.get(), ClassicalVar.PALE);
+        this.entityData.define(DOG_VARIANT.get(), DogVariants.PALE.get());
         this.entityData.define(LAST_KNOWN_NAME, Optional.empty());
         this.entityData.define(DOG_FLAGS, 0);
         //this.entityData.define(GENDER.get(), EnumGender.UNISEX);
@@ -621,6 +623,8 @@ public class Dog extends AbstractDog {
             this.dogSyncedDataManager.tick();
         }
 
+        this.dogVariant().tickDog(this);
+
         //Fabric
         if (!this.level().isClientSide) {
             this.getDogFabricHelper().tick();
@@ -816,7 +820,7 @@ public class Dog extends AbstractDog {
         
         validateGoalsAndTickNonRunningIfNeeded();
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide) {   
             this.getSensing().tick();
             this.lerpSteps = 0;
             this.lerpHeadSteps = 0;
@@ -2593,7 +2597,7 @@ public class Dog extends AbstractDog {
         }
         compound.put("doggy_artifacts", artifactsListTag);
 
-        compound.putString("classicalVariant", this.getClassicalVar().getId().toString());
+        compound.putString("classicalVariant", DogVariantUtil.toSaveString(this.dogVariant()));
         compound.putString("mode", this.getMode().getSaveName());
         compound.putString("dogGender", this.getGender().getSaveName());
         compound.putFloat("dogHunger", this.getDogHunger());
@@ -2763,9 +2767,10 @@ public class Dog extends AbstractDog {
                 this.setBoneVariant(NBTUtil.readItemStack(compound, "fetchItem"));
             }
 
-            this.setClassicalVar(
-                ClassicalVar.bySaveName(compound.getString("classicalVariant"))
+            this.setDogVariant(
+                DogVariantUtil.fromSaveString(compound.getString("classicalVariant"))
             );
+            
             this.setHungerDirectly(compound.getFloat("dogHunger"));
             this.setDogIncapValue(compound.getInt("dogIncapacitatedValue"));
             this.setOwnersName(NBTUtil.getTextComponent(compound, "lastKnownOwnerName"));
@@ -3361,12 +3366,12 @@ public class Dog extends AbstractDog {
         this.entityData.set(LAST_KNOWN_NAME, collar);
     }
 
-    public ClassicalVar getClassicalVar() {
-        return this.getDogFabricHelper().getClassicalVar();
+    public DogVariant dogVariant() {
+        return this.entityData.get(DOG_VARIANT.get());
     }
 
-    public void setClassicalVar(ClassicalVar val) {
-        this.getDogFabricHelper().setClassicalVar(val);
+    public void setDogVariant(DogVariant val) {
+        this.entityData.set(DOG_VARIANT.get(), val);
     }
 
     public EnumGender getGender() {
