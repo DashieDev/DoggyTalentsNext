@@ -43,6 +43,8 @@ public class DoggyTalentsNextEntry implements ModInitializer {
     private void initAllModRegistries() {
         DoggyRegistries.newRegistry();
         
+        DogVariants.DOG_VARIANT.register(modEventBus);
+        DogVariants.DOG_VARIANT_VANILLA.register(modEventBus);
         DoggyBlocks.BLOCKS.initAll();
         DoggyTileEntityTypes.TILE_ENTITIES.initAll();
         DoggyItems.ITEMS.initAll();

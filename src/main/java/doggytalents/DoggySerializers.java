@@ -10,7 +10,7 @@ public class DoggySerializers {
 
     //public static final DeferredRegister<EntityDataSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, Constants.MOD_ID);
 
-    public static final EntityDataSerializer CLASSICAL_VAR = register2("classical_var", ClassicalVarSerializer::new);    
+    public static final Supplier<EntityDataSerializer> DOG_VARIANT_SERIALIZER = register2("dog_variant", DogVariantSerializer::new);
     //public static final EntityDataSerializer COLLAR_TYPE_SERIALIZER = register2("collar", CollarSerializer::new);
     public static final EntityDataSerializer GENDER_SERIALIZER = register2("gender", GenderSerializer::new);
     public static final EntityDataSerializer MODE_SERIALIZER = register2("mode", ModeSerializer::new);

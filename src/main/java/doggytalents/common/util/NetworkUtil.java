@@ -4,6 +4,7 @@ import doggytalents.DoggyRegistries;
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.Talent;
+import doggytalents.common.variant.DogVariant;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,6 +23,10 @@ public class NetworkUtil {
     public static StreamCodec
         <RegistryFriendlyByteBuf, Accessory> 
         ACCESSORY_CODEC = ByteBufCodecs.registry(DoggyRegistries.Keys.ACCESSORIES_REGISTRY);
+
+    public static StreamCodec
+        <RegistryFriendlyByteBuf, DogVariant> 
+        DOG_VARIANT_CODEC = ByteBufCodecs.registry(DoggyRegistries.Keys.DOG_VARIANT);
     
 
     public static void writeTalentToBuf(FriendlyByteBuf buf, Talent val) {
@@ -66,6 +71,16 @@ public class NetworkUtil {
         var reg = regBuf.registryAccess().registryOrThrow(regKey);
         int id = regBuf.readInt();
         return reg.byIdOrThrow(id);
+    }
+
+    public static void writeDogVariantToBuf(FriendlyByteBuf buf, DogVariant val) {
+        var reg_buf = (RegistryFriendlyByteBuf) buf;
+        DOG_VARIANT_CODEC.encode(reg_buf, val);
+    }
+
+    public static DogVariant readDogVariantFromBuf(FriendlyByteBuf buf) {
+        var reg_buf = (RegistryFriendlyByteBuf) buf;
+        return DOG_VARIANT_CODEC.decode(reg_buf);
     }
 
 }
