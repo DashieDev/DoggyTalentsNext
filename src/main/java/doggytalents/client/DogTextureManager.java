@@ -59,8 +59,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         if (skin != null && skin.isCustom()) {
             return skin.getPath();
         }
-        return dog.getClassicalVar().getTexture(
-            ConfigHandler.CLIENT.USE_VANILLA_RES_FOR_CLASSICAL.get());
+        return dog.dogVariant().texture();
     }
 
     private static enum RegisterState { SUCCESS, DUPLICATE, FAIL }

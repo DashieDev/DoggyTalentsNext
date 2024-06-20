@@ -3,8 +3,8 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.framework.element.AbstractElement;
-import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.variant.DogVariant;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
@@ -72,16 +72,23 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
                 this.dog.willObeyOthers() ? 0xffcda700: 0xffffffff),
             startX, pY, 0xffffffff);
         pY += this.font.lineHeight + 2;
-        var variant = dog.getClassicalVar();
+        var variant = dog.dogVariant();
         var variant_str = I18n.get("doggui.classical.variant") + " "
-        + I18n.get(variant.getTranslationKey());
+        + getTranslatedVariantStr(variant);
         var variant_c1 = Component.literal(variant_str)
             .withStyle(
                 Style.EMPTY.withBold(true)
-                .withColor(ClassicalVar.COLOR_MAP.getOrDefault(variant, 0xffdad7d8))
+                .withColor(variant.guiColor())
             );
         font.draw(stack, variant_c1,
             startX, pY, 0xffffffff);
+    }
+
+    private String getTranslatedVariantStr(DogVariant variant) {
+        var translation_key = variant.translation();
+        if (I18n.exists(translation_key))
+            return I18n.get(translation_key);
+        return variant.id().toString();
     }
 
     private Component createDescEntry(String descName, String descVal, int valColor) {
