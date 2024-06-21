@@ -37,7 +37,7 @@ public class VanillaToClassicalMapping {
         .build();
 
     public static Supplier<DogVariant> fromVanilla(ResourceKey<WolfVariant> variant) {
-        return vanillToClassical.getOrDefault(variant, DogVariants.PALE);
+        return vanillToClassical.getOrDefault(variant, DogVariantUtil::getDefault);
     }
 
 }
