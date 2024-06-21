@@ -46,7 +46,7 @@ public class DogVariantUtil {
     public static DogVariant getRandom(RandomSource random) {
         var entries = getAll();
         if (entries.isEmpty())
-            return DogVariants.PALE.get();
+            return getDefault();
         var r = random.nextInt(entries.size());
         return entries.get(r);
     }
@@ -54,7 +54,7 @@ public class DogVariantUtil {
     public static DogVariant cycle(DogVariant current) {
         var entries = getAll();
         if (entries.isEmpty())
-            return DogVariants.PALE.get();
+            return getDefault();
         var current_indx = entries.indexOf(current); 
         var next_indx = (current_indx + 1) % entries.size();
         var next_variant = entries.get(next_indx);
