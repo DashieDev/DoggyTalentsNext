@@ -42,6 +42,8 @@ public class DogVariant {
             return "dog.classical.variant.compl." + props.name.getPath();
         if (props.namespaceType == NamespaceType.VANILLA)
             return "dog.classical.variant." + props.name.getPath();
+        if (props.customTranslation.isPresent())
+            return props.customTranslation.get();
         return "dog.classical.variant.custom." + props.name.getNamespace() + "." + props.name.getPath();
     }
 
@@ -92,6 +94,7 @@ public class DogVariant {
         private Optional<ResourceLocation> icon = Optional.empty();
         private int guiColor = 0xffdad7d8;
         private Optional<ResourceLocation> customTexture = Optional.empty();
+        private Optional<String> customTranslation = Optional.empty();
         private Optional<ResourceLocation> glowingOverlay = Optional.empty();
 
         private Props(ResourceLocation name, NamespaceType namespaceType) {
@@ -111,6 +114,11 @@ public class DogVariant {
 
         public Props customTexture(ResourceLocation texture) {
             this.customTexture = Optional.of(texture);
+            return this;
+        }
+
+        public Props customTranslation(String string) {
+            this.customTranslation = Optional.of(string);
             return this;
         }
 
