@@ -624,8 +624,6 @@ public class Dog extends AbstractDog {
             this.dogSyncedDataManager.tick();
         }
 
-        this.dogVariant().tickDog(this);
-
         //Fabric
         if (!this.level().isClientSide) {
             this.getDogFabricHelper().tick();
@@ -3126,9 +3124,6 @@ public class Dog extends AbstractDog {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        // if (ARTIFACTS.get().equals(key)) {
-        //     this.refreshAlterations();
-        // }
 
         // if (DOG_LEVEL.get().equals(key)) {
         //     this.spendablePoints.markForRefresh();
@@ -3235,6 +3230,10 @@ public class Dog extends AbstractDog {
         this.foodHandlers.clear();
         this.alterationProps = new DogAlterationProps();
         this.dogRangedAttackManager = IDogRangedAttackManager.NONE;
+
+        if (this.dogVariant() instanceof IDogAlteration alter_var) {
+            this.alterations.add(alter_var);
+        }
 
         for (AccessoryInstance inst : this.getAccessories()) {
             if (inst instanceof IDogAlteration) {
@@ -5275,6 +5274,14 @@ public class Dog extends AbstractDog {
 
     public void onFabricDataUpdated(SyncType<?> type) {
         if (type == SyncTypes.ARTIFACTS) {
+            this.refreshAlterations();
+        }
+
+        if (DOG_VARIANT.get().equals(key)) {
+            this.refreshAlterations();
+        }
+        
+        if (ARTIFACTS.get().equals(key)) {
             this.refreshAlterations();
         }
 

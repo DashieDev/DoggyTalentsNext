@@ -1,5 +1,8 @@
 package doggytalents.common.variant;
 
+import doggytalents.api.impl.DogAlterationProps;
+import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.util.Util;
@@ -8,14 +11,12 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 
-public class MoltenWolfVariant extends DogVariant {
+public class MoltenWolfVariant extends DogVariant implements IDogAlteration {
 
     public MoltenWolfVariant(String name) {
         super(
             DogVariant.props(name)
             .guiColor(0xffcb4e2c)
-            .fireImmune()
-            .fallImmune()
             .glowingOverlay(
                 Util.getResource("textures/entity/dog/classical/compl/overlay/wolf_molten_overlay.png")
             )
@@ -23,8 +24,13 @@ public class MoltenWolfVariant extends DogVariant {
     }
 
     @Override
-    public void tickDog(Dog dog) {
-        super.tickDog(dog);
+    public void props(AbstractDog dog, DogAlterationProps props) {
+        props.setFallImmune();
+        props.setFireImmune();
+    }
+
+    @Override
+    public void tick(AbstractDog dog) {
 
         if (!dog.level().isClientSide)
             return;
