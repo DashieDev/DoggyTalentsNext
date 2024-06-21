@@ -14,7 +14,7 @@ import net.minecraft.world.entity.animal.WolfVariant;
 public class DogVariantUtil {
     
     public static DogVariant getDefault() {
-        return DogVariants.PALE.get();
+        return DogVariant.PALE;
     }
 
     public static DogVariant fromSaveString(String string) {
