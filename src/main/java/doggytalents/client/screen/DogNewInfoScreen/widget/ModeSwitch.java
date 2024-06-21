@@ -33,6 +33,7 @@ public class ModeSwitch extends AbstractWidget {
     Font font;
     Screen screen;
 
+    boolean localIsHovered = false;
     boolean hoveredLeft = false;
     boolean hoveredRight = false;
     boolean isHolding = false;
@@ -160,8 +161,9 @@ public class ModeSwitch extends AbstractWidget {
     }
 
     private void updateHover(int mouseX, int mouseY) {
-        boolean isHovered0 = this.isHovered;
-        this.isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+        boolean isHovered0 = this.localIsHovered;
+        this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
+        this.localIsHovered = this.isHovered;
         if (isHovered0 != this.isHovered) {
             this.stillHovered = this.isHovered;
             if (this.isHovered) {
