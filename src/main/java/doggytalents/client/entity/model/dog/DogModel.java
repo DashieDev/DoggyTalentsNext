@@ -691,7 +691,7 @@ public class DogModel extends EntityModel<Dog> {
         // p_102039_ *= this.wetShade;
         // p_102040_ *= this.wetShade;
         int wet_color = FastColor.ARGB32.colorFromFloat(1, this.wetShade, this.wetShade, this.wetShade);
-        int render_color = FastColor.ARGB32.multiply(0xffffffff, wet_color);
+        int render_color = FastColor.ARGB32.multiply(color_overlay, wet_color);
         
         var pivot = DEFAULT_ROOT_PIVOT;
         var custom_pivot = getCustomRootPivotPoint();
