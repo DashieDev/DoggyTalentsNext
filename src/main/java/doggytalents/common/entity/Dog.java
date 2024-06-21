@@ -619,8 +619,6 @@ public class Dog extends AbstractDog {
         if (!this.level().isClientSide) {
             this.dogSyncedDataManager.tick();
         }
-
-        this.dogVariant().tickDog(this);
     }
 
     private void addAdditionalOnFireEffect() {
@@ -3110,6 +3108,10 @@ public class Dog extends AbstractDog {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
+        if (DOG_VARIANT.get().equals(key)) {
+            this.refreshAlterations();
+        }
+        
         if (ARTIFACTS.get().equals(key)) {
             this.refreshAlterations();
         }
@@ -3216,6 +3218,10 @@ public class Dog extends AbstractDog {
         this.foodHandlers.clear();
         this.alterationProps = new DogAlterationProps();
         this.dogRangedAttackManager = IDogRangedAttackManager.NONE;
+
+        if (this.dogVariant() instanceof IDogAlteration alter_var) {
+            this.alterations.add(alter_var);
+        }
 
         for (AccessoryInstance inst : this.getAccessories()) {
             if (inst instanceof IDogAlteration) {

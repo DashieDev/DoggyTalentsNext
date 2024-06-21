@@ -2,7 +2,6 @@ package doggytalents.common.variant;
 
 import java.util.Optional;
 
-import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.resources.ResourceLocation;
@@ -16,8 +15,6 @@ public class DogVariant {
     private Optional<ResourceLocation> icon;
     private int guiColor;
     private Optional<ResourceLocation> glowingOverlay;
-    private boolean fireImmune;
-    private boolean fallImmune;
 
     public DogVariant(Props props) {
         this.id = props.name;
@@ -27,8 +24,6 @@ public class DogVariant {
         this.icon = props.icon;
         this.guiColor = props.guiColor;
         this.glowingOverlay = props.glowingOverlay;
-        this.fireImmune = props.fireImmune;
-        this.fallImmune = props.fallImmune;
     }
 
     private static ResourceLocation createTextureLoc(Props props) {
@@ -74,16 +69,6 @@ public class DogVariant {
         return this.glowingOverlay;
     }
 
-    public boolean fireImmune() {
-        return this.fireImmune;
-    }
-
-    public boolean fallImmune() {
-        return this.fallImmune;
-    }
-
-    public void tickDog(Dog dog) {}
-
     public static Props propsVanilla(String name) {
         return new Props(Util.getVanillaResource(name), NamespaceType.VANILLA);
     }
@@ -107,8 +92,6 @@ public class DogVariant {
         private Optional<ResourceLocation> icon = Optional.empty();
         private int guiColor = 0xffdad7d8;
         private Optional<ResourceLocation> customTexture = Optional.empty();
-        private boolean fireImmune;
-        private boolean fallImmune;
         private Optional<ResourceLocation> glowingOverlay = Optional.empty();
 
         private Props(ResourceLocation name, NamespaceType namespaceType) {
@@ -128,16 +111,6 @@ public class DogVariant {
 
         public Props customTexture(ResourceLocation texture) {
             this.customTexture = Optional.of(texture);
-            return this;
-        }
-        
-        public Props fireImmune() {
-            this.fireImmune = true;
-            return this;
-        }
-
-        public Props fallImmune() {
-            this.fallImmune = true;
             return this;
         }
 
