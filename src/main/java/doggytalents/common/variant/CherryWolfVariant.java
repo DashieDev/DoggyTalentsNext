@@ -1,17 +1,18 @@
 package doggytalents.common.variant;
 
+import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.particles.ParticleTypes;
 
-public class CherryWolfVariant extends DogVariant {
+public class CherryWolfVariant extends DogVariant implements IDogAlteration {
 
     public CherryWolfVariant(String name) {
         super(DogVariant.props(name).guiColor(0xfffa9de5));       
     }
 
     @Override
-    public void tickDog(Dog dog) {
-        super.tickDog(dog);
+    public void tick(AbstractDog dog) {
 
         if (!dog.level().isClientSide)
             return;
