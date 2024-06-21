@@ -337,7 +337,7 @@ public class Dog extends AbstractDog {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        builder.define(DOG_VARIANT.get(), DogVariants.PALE.get());
+        builder.define(DOG_VARIANT.get(), DogVariantUtil.getDefault());
         builder.define(LAST_KNOWN_NAME, Optional.empty());
         builder.define(DOG_FLAGS, 0);
         //builder.define(GENDER.get(), EnumGender.UNISEX);
