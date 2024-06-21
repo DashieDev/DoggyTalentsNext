@@ -17,7 +17,7 @@ public class DogVariants {
     public static final DeferredRegister<DogVariant> DOG_VARIANT_VANILLA = DeferredRegister.create(DoggyRegistries.Keys.DOG_VARIANT, Constants.VANILLA_ID);
     
     //Minecraft's
-    public static final Supplier<DogVariant> PALE = registerVanilla("pale", 0xffdad7d8);
+    public static final Supplier<DogVariant> PALE = registerDefault();
     public static final Supplier<DogVariant> CHESTNUT = registerVanilla("chestnut", 0xff9a8483);
     public static final Supplier<DogVariant> STRIPED = registerVanilla("striped", 0xffc9af80);
     public static final Supplier<DogVariant> WOOD = registerVanilla("woods", 0xff76583c);
@@ -63,6 +63,10 @@ public class DogVariants {
         props.guiColor(color);
         final var captured_variant = new DogVariant(props);
         return DOG_VARIANT_VANILLA.register(name, () -> captured_variant);
+    }
+
+    private static Supplier<DogVariant> registerDefault() {
+        return DOG_VARIANT_VANILLA.register("pale", () -> DogVariant.PALE);
     }
 
 }
