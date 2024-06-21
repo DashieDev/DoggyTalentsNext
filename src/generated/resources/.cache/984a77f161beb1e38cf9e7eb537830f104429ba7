@@ -1,4 +1,5 @@
-// 1.21	2024-06-17T18:02:36.3313502	DoggyTalents Entity Tags
+// 1.21	2024-06-22T00:57:18.4443446	DoggyTalents Entity Tags
+205e598a118ec91b83746029d2825ac0418a5688 data/c/tags/entity_type/capturing_not_supported.json
 6f8bc3eb93347d4d15c38a3b7cfbd2b796ac201c data/doggytalents/tags/entity_type/dog_should_ignore.json
 f3609980f3e2bcb853c5f166645acc2dec216659 data/doggytalents/tags/entity_type/drop_soy_when_dog_kill.json
 da9ec5f7ed64a0d225e00ee60b8e6d6408b431fb data/doggytalents/tags/entity_type/mob_retriever_must_ignore.json
