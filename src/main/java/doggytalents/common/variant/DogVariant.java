@@ -8,6 +8,10 @@ import net.minecraft.resources.ResourceLocation;
 
 public class DogVariant {
     
+    public static final DogVariant PALE = new DogVariant(DogVariant.propsVanilla("pale")
+        .icon(Util.getResource("textures/entity/dog/classical_icon/pale.png"))
+        .guiColor(0xffdad7d8));
+
     private final ResourceLocation id;
     private final ResourceLocation texture;
     private final String translation;
