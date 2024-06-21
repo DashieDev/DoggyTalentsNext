@@ -32,6 +32,7 @@ public class CombatReturnSwitch extends AbstractWidget {
     Font font;
     Screen screen;
 
+    boolean localIsHovered = false;
     boolean hoveredLeft = false;
     boolean hoveredRight = false;
 
@@ -125,8 +126,9 @@ public class CombatReturnSwitch extends AbstractWidget {
     }
 
     private void updateHover(int mouseX, int mouseY) {
-        boolean isHovered0 = this.isHovered;
+        boolean isHovered0 = this.localIsHovered;
         this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
+        this.localIsHovered = this.isHovered;
         if (isHovered0 != this.isHovered) {
             this.stillHovered = this.isHovered;
             if (this.isHovered) {
