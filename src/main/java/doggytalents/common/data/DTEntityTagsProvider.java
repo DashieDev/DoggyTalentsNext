@@ -16,6 +16,7 @@ import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.neoforged.neoforge.common.Tags;
 
 public class DTEntityTagsProvider extends EntityTypeTagsProvider {
 
@@ -42,6 +43,7 @@ public class DTEntityTagsProvider extends EntityTypeTagsProvider {
         createTag(EntityTypeTags.IMPACT_PROJECTILES, 
             DoggyEntityTypes.DOG_ARROW_PROJ, DoggyEntityTypes.DOG_TRIDENT_PROJ);
         createTag(EntityTypeTags.ARROWS, DoggyEntityTypes.DOG_ARROW_PROJ);
+        createTag(Tags.EntityTypes.CAPTURING_NOT_SUPPORTED, DoggyEntityTypes.DOG);
     }
 
     @SafeVarargs
