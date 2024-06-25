@@ -29,7 +29,7 @@ public class DogVariantGlowRenderer extends RenderLayer<Dog, DogModel> {
         
         var glow_layer = glow_layer_optional.get();
         VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(glow_layer));
-        this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728880, OverlayTexture.NO_OVERLAY, 0xffffffff);
+        this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728880, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
     }
 
 }

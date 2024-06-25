@@ -154,6 +154,14 @@ public class Util {
         return new ResourceLocation(modId, name);
     }
 
+    public static ResourceLocation getVanillaResource(String name) {
+        return new ResourceLocation(name);
+    }
+
+    public static ResourceLocation parseResource(String str) {
+        return ResourceLocation.tryParse(str);
+    }
+
     public static String getResourcePath(String name) {
         return getResourcePath(Constants.MOD_ID, name);
     }

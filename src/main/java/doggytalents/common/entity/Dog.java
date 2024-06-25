@@ -145,6 +145,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
@@ -4965,13 +4966,13 @@ public class Dog extends AbstractDog {
         return blockType;
     }
 
-    public PathType inferType(PathType type) {
+    public BlockPathTypes inferType(BlockPathTypes type) {
         if (this.fireImmune()) {
-            if (type == PathType.DANGER_FIRE) {
-                return PathType.WALKABLE;
+            if (type == BlockPathTypes.DANGER_FIRE) {
+                return BlockPathTypes.WALKABLE;
             }
-            if (type == PathType.LAVA) {
-                return PathType.BLOCKED;
+            if (type == BlockPathTypes.LAVA) {
+                return BlockPathTypes.BLOCKED;
             }
         }
         for (var alt : this.alterations) {
