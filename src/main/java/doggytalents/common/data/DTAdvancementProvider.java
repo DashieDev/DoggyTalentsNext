@@ -46,7 +46,7 @@ import java.util.function.Consumer;
 public class DTAdvancementProvider /*extends ForgeAdvancementProvider*/ {
 
     // private static final Logger LOGGER = LogManager.getLogger();
-    // private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
+    // private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();x
 
     // public DTAdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper existingFileHelper) {
     //     super(output, registries, existingFileHelper,
