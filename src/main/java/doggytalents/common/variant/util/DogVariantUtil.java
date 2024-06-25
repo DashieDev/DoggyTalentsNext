@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 
 import doggytalents.DogVariants;
 import doggytalents.DoggyRegistries;
+import doggytalents.common.util.Util;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.animal.WolfVariant;
 
 public class DogVariantUtil {
     
@@ -20,13 +20,13 @@ public class DogVariantUtil {
     public static DogVariant fromSaveString(String string) {
         ResourceLocation id = null;
         try {
-            id = ResourceLocation.parse(string);
+            id = Util.parseResource(string);
         } catch (Exception e) {
             
         }
         if (id == null)
             return getDefault();
-        var variant = DoggyRegistries.DOG_VARIANT.get().get(id);
+        var variant = DoggyRegistries.DOG_VARIANT.get().getValue(id);
         if (variant == null)
             return getDefault();
         return variant;
@@ -38,7 +38,7 @@ public class DogVariantUtil {
 
     public static List<DogVariant> getAll() {
         var variant_reg = DoggyRegistries.DOG_VARIANT.get();
-        var entries = variant_reg.stream()
+        var entries = variant_reg.getValues().stream()
             .collect(Collectors.toList());
         return entries;
     }
@@ -61,8 +61,8 @@ public class DogVariantUtil {
         return next_variant;
     }
 
-    public static DogVariant fromVanila(ResourceKey<WolfVariant> variant) {
-        return VanillaToClassicalMapping.fromVanilla(variant).get();
-    }
+    // public static DogVariant fromVanila(ResourceKey<WolfVariant> variant) {
+    //     return VanillaToClassicalMapping.fromVanilla(variant).get();
+    // }
 
 }

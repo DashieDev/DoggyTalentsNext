@@ -94,8 +94,8 @@ public class AngelHaloModel extends AnimatedSyncedAccessoryModel {
 	}
 
 	@Override
-    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, int color_overlay) {
-        super.renderToBuffer(stack, p_103014_, 15728880, p_103016_, color_overlay);
+    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, float r, float g, float b, float a) {
+        super.renderToBuffer(stack, p_103014_, 15728880, p_103016_, r, g, b, a);
     }
 
 }

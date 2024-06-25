@@ -1,19 +1,20 @@
 package doggytalents.common.entity.serializers;
 
-import doggytalents.common.util.NetworkUtil;
+import doggytalents.DoggyRegistries;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.syncher.EntityDataSerializer;
 
-public class DogVariantSerializer extends DogSerializer<DogVariant> {
+public class DogVariantSerializer implements EntityDataSerializer<DogVariant> {
 
     @Override
     public void write(FriendlyByteBuf buf, DogVariant val) {
-        NetworkUtil.writeDogVariantToBuf(buf, val);
+        buf.writeRegistryIdUnsafe(DoggyRegistries.DOG_VARIANT.get(), val);
     }
 
     @Override
     public DogVariant read(FriendlyByteBuf buf) {
-        return NetworkUtil.readDogVariantFromBuf(buf);
+        return buf.readRegistryIdUnsafe(DoggyRegistries.DOG_VARIANT.get());
     }
 
     @Override
