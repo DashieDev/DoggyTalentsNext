@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class DoggyRegistries {
 
-    protected class Keys {
+    public class Keys {
         public static final ResourceLocation TALENTS_REGISTRY = Util.getResource("talents");
         public static final ResourceLocation ACCESSORIES_REGISTRY = Util.getResource("accessories");
         public static final ResourceLocation ACCESSORY_TYPE_REGISTRY = Util.getResource("accessory_type");
