@@ -57,8 +57,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.entity.animal.WolfVariant;
-import net.minecraft.world.entity.animal.WolfVariants;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
@@ -238,8 +236,8 @@ public class EventHandler {
     }
 
     private static void migrateWolfVariant(Wolf wolf, Dog dog) {
-        var dog_variant = DogVariantUtil.fromVanila(wolf.getVariant().unwrapKey().orElse(WolfVariants.PALE));
-        dog.setDogVariant(dog_variant);
+        // var dog_variant = DogVariantUtil.fromVanila(wolf.getVariant().unwrapKey().orElse(WolfVariants.PALE));
+        // dog.setDogVariant(dog_variant);
     }
 
     private static void migrateWolfArmor(Wolf wolf, Dog dog) {

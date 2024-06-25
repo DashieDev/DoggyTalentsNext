@@ -23,7 +23,7 @@ public class DoggyRegistries {
         public static final ResourceLocation DOG_VARIANT = Util.getResource("dog_variant");
     }
 
-    public static Supplier<Registry<DogVariant>> DOG_VARIANT;
+    public static Supplier<IForgeRegistry<DogVariant>> DOG_VARIANT;
 
     public static void newRegistry(NewRegistryEvent event) {
         DoggyTalentsAPI.TALENTS = event.create(makeRegistry(Keys.TALENTS_REGISTRY, Talent.class));
@@ -39,12 +39,12 @@ public class DoggyRegistries {
         return () -> ret;
     }
 
-    private static <T> Supplier<Registry<T>> makeRegistry(NewRegistryEvent event, 
-        final ResourceKey<Registry<T>> key, Class<T> type, ResourceLocation defaultKey) {
-        var builder = new RegistryBuilder<T>(key);
-        builder.sync(true);
-        builder.defaultKey(defaultKey);
+    private static <T> Supplier<IForgeRegistry<T>> makeRegistry(NewRegistryEvent event, 
+        final ResourceLocation key, Class<T> type, ResourceLocation defaultKey) {
+        var builder = new RegistryBuilder<T>().setName(key);
+        //builder.sync(true);
+        builder.setDefaultKey(defaultKey);
         var ret = event.create(builder);
-        return () -> ret;
+        return ret;
     }
 }
