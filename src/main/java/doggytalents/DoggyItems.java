@@ -21,6 +21,7 @@ import doggytalents.common.entity.accessory.KitsuneMask.KitsuneMaskItem;
 import doggytalents.common.entity.accessory.TenguMask.TenguMaskItem;
 import doggytalents.common.item.*;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.world.effect.MobEffectInstance;
