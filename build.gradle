@@ -21,10 +21,6 @@ sourceSets {
         runtimeClasspath += sourceSets.api.output
         resources.srcDirs += 'src/generated/resources'
     }
-    test {
-        compileClasspath += sourceSets.api.output
-        runtimeClasspath += sourceSets.api.output
-    }
 }
 
 tasks.named("processResources") {
@@ -118,10 +114,6 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-test {
-    useJUnitPlatform()
-}
-
 processResources {
 	inputs.property "version", project.version
 
@@ -129,3 +121,4 @@ processResources {
 		expand "version": project.version
 	}
 }
+    
