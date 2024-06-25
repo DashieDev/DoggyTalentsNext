@@ -19,10 +19,6 @@ sourceSets {
         runtimeClasspath += sourceSets.api.output
         resources.srcDirs += 'src/generated/resources'
     }
-    test {
-        compileClasspath += sourceSets.api.output
-        runtimeClasspath += sourceSets.api.output
-    }
 }
 
 tasks.named("processResources") {
@@ -87,8 +83,6 @@ dependencies {
 
     minecraft 'net.minecraftforge:forge:1.19.2-43.1.47'
 
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
 }
 
 jar {
@@ -110,8 +104,4 @@ jar {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
-}
-
-test {
-    useJUnitPlatform()
 }
