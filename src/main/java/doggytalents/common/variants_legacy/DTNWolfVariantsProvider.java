@@ -40,15 +40,15 @@ public class DTNWolfVariantsProvider {
     }
 
     private static void registerWolfModifier(BootstrapContext<BiomeModifier> ctx) {
-        registerCherryWolfModifier(ctx);
-        registerLemonyLimeWolfModifier(ctx);
-        registerHimalayanSaltWolfModifier(ctx);
-        registerBambooWolfModifier(ctx);
-        registerCrimsonWolfModifier(ctx);
-        registerWarpedWolfModifier(ctx);
-        registerBirchWolfModifier(ctx);
-        registerPistachioWolfModifier(ctx);
-        registerGuacamoleWolfModifier(ctx);
+        // registerCherryWolfModifier(ctx);
+        // registerLemonyLimeWolfModifier(ctx);
+        // registerHimalayanSaltWolfModifier(ctx);
+        // registerBambooWolfModifier(ctx);
+        // registerCrimsonWolfModifier(ctx);
+        // registerWarpedWolfModifier(ctx);
+        // registerBirchWolfModifier(ctx);
+        // registerPistachioWolfModifier(ctx);
+        // registerGuacamoleWolfModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {

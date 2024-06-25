@@ -197,7 +197,6 @@ public class DTAdvancementProvider extends AdvancementProvider {
                     )
                 .save(consumer, Util.getResourcePath("default/dog_recovered_special"));
 
-            addOssiaWolfVariantsAdvancement(consumer, registries);
             // Old Advancement.
 
             // Advancement advancement = Advancement.Builder.advancement()
@@ -240,49 +239,4 @@ public class DTAdvancementProvider extends AdvancementProvider {
         return DogBedUtil.createItemStackForced(casing, bedding);
     }
 
-    private static void addOssiaWolfVariantsAdvancement(Consumer<AdvancementHolder> consumer, HolderLookup.Provider prov) {
-        final var ossia_variant_set = List.of(
-            WolfVariants.CHESTNUT,
-            WolfVariants.STRIPED,
-            DTNWolfVariants.BAMBOO, // Ossia for WolfVariants.RUSTY
-            WolfVariants.WOODS,
-            DTNWolfVariants.HIMALAYAN_SALT, // Ossia for WolfVariants.ASHEN
-            DTNWolfVariants.CHERRY, // Ossia for WolfVariants.SNOWY
-            DTNWolfVariants.LEMONY_LIME, // Ossia for WolfVariants.SPOTTED
-            WolfVariants.BLACK,
-            WolfVariants.PALE
-        );
-
-        var builder = Advancement.Builder.advancement();
-        for (var ossia : ossia_variant_set) {
-            builder.addCriterion(
-                ossia.location().toString(),
-                TameAnimalTrigger.TriggerInstance.tamedAnimal(
-                    EntityPredicate.Builder.entity().subPredicate(
-                        RawWolfVariantIdSubPredicate.of(ossia)
-                    )
-                )
-            );
-        }
-
-        var parent_advancement_path = 
-            Util.getVanillaResource("husbandry/tame_an_animal");
-        builder.parent(new AdvancementHolder(parent_advancement_path, null));
-        
-        var display_stack = new ItemStack(DoggyItems.DOGGY_CHARM.get());
-        DoggyCharmItem.setCharmForcedGlint(display_stack, true);
-
-        builder.display(
-            display_stack,
-            Component.translatable("advancements.doggytalents.whole_pack_ossia.title"),
-            Component.translatable("advancements.husbandry.whole_pack.description"),
-            null,
-            AdvancementType.CHALLENGE,
-            true,
-            true,
-            false
-        );
-        builder.rewards(AdvancementRewards.Builder.experience(400));
-        builder.save(consumer, Util.getResourcePath("default/whole_pack_ossia"));
-    }
 }
