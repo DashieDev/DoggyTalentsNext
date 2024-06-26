@@ -38,6 +38,7 @@ public class AccessoryModelRenderEntries {
     public static Entry FLATCAP = new FlatCapRenderEntry();
     public static Entry DYABLE_LOCATOR_ORB = new DyableLocatorOrbEntry();
     public static Entry ANGEL_HALO = new AngelHaloRenderEntry();
+    public static Entry YETI_GOOSE = new YetiGooseRenderEntry();
 
 
     public static void registerEntries() {
@@ -74,6 +75,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(DYABLE_LOCATOR_ORB);
         AccessoryModelManager.register(ANGEL_WINGS);
         AccessoryModelManager.register(ANGEL_HALO);
+        AccessoryModelManager.register(YETI_GOOSE);
     }
 
 }

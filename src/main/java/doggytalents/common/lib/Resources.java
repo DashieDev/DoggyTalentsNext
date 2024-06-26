@@ -85,6 +85,7 @@ public class Resources {
     public static final ResourceLocation SOUL_REFLECTOR = getEntity("dog", "soul_reflector");
     public static final ResourceLocation ANGEL_WINGS = getEntity("dog", "angel_wings");
     public static final ResourceLocation ANGEL_HALO = getEntity("dog", "angel_halo");
+    public static final ResourceLocation YETI_GOOSE = getEntity("dog", "goose");
 
     public static final ResourceLocation CHI_ORB = getEntity("dog", "chi_orb");
     public static final ResourceLocation CHU_ORB = getEntity("dog", "chu_orb");
