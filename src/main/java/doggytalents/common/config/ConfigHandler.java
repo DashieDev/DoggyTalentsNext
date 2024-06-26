@@ -86,6 +86,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue USE_PLAYER_HELMET_MODEL_BY_DEFAULT;
         public ForgeConfigSpec.BooleanValue USE_THIRD_PARTY_PLAYER_HELMET_MODEL;
         public ForgeConfigSpec.BooleanValue ENABLE_STARTER_BUNDLE_BY_DEFAULT;
+        public ForgeConfigSpec.BooleanValue DOG_VARIANT_CLIENT_EFFECT;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -218,6 +219,11 @@ public class ConfigHandler {
                 .comment("regardless of the world's serverconfig.")
                 .translation("doggytalents.config.client.enable_starter_bundle_by_default")
                 .define("enable_starter_bundle_by_default", false);
+            DOG_VARIANT_CLIENT_EFFECT = builder
+                .comment("Some special Dog Variants may display some special effects")
+                .comment("clientside. Set this to false to disable this behaviour.")
+                .translation("doggytalents.config.client.dog_variant_client_effect")
+                .define("dog_variant_client_effect", true);
             
             builder.pop();
         }
