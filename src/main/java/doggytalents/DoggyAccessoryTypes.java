@@ -20,6 +20,7 @@ public class DoggyAccessoryTypes {
     public static final Supplier<AccessoryType> FEET = register("feet");
     public static final Supplier<AccessoryType> TAIL = register("tail");
     public static final Supplier<AccessoryType> WINGS = register("wings");
+    public static final Supplier<AccessoryType> BODY = register("body");
 
     private static Supplier<AccessoryType> register(final String name) {
         return register(name, () -> new AccessoryType());
