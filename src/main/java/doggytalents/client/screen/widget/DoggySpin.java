@@ -6,6 +6,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -136,7 +137,7 @@ public class DoggySpin extends AbstractWidget {
         } else if (r >= 0.04f) {
             selected_style = Style.SIT;
         } else {
-            selected_style = Style.AMMY;
+            selected_style = ConfigHandler.CLIENT.AMMY_SPINNA.get() ? Style.AMMY : Style.BACKFLIP;
         }
         this.style = selected_style;
         indx = 0;
