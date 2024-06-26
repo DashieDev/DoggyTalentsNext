@@ -2,6 +2,7 @@ package doggytalents.common.variant;
 
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.particles.ParticleTypes;
 
@@ -15,6 +16,8 @@ public class CherryWolfVariant extends DogVariant implements IDogAlteration {
     public void tick(AbstractDog dog) {
 
         if (!dog.level().isClientSide)
+            return;
+        if (!ConfigHandler.CLIENT.DOG_VARIANT_CLIENT_EFFECT.get())
             return;
         
         var random = dog.getRandom();
