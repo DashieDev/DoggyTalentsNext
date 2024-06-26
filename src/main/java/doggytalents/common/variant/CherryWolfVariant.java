@@ -4,6 +4,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.RandomUtil;
 import net.minecraft.core.particles.ParticleTypes;
 
 public class CherryWolfVariant extends DogVariant implements IDogAlteration {
@@ -26,9 +27,9 @@ public class CherryWolfVariant extends DogVariant implements IDogAlteration {
         double dz = dog.getZ() - dog.zo;
         var is_moving = dx * dx + dz * dz > (double)2.5000003E-7F;
         if (is_moving && random.nextInt(3) == 0) {
-            double d0 = (double)dog.getX() + random.nextFloat() * (dog.getBbWidth()/2);
+            double d0 = (double)dog.getX() + RandomUtil.nextFloatRemapped(random) * (dog.getBbWidth()/2);
             double d1 = (double)dog.getY() + random.nextFloat() * (dog.getBbHeight() * 0.8);
-            double d2 = (double)dog.getZ() + random.nextFloat() * (dog.getBbWidth()/2);
+            double d2 = (double)dog.getZ() + RandomUtil.nextFloatRemapped(random) * (dog.getBbWidth()/2);
             level.addParticle(ParticleTypes.CHERRY_LEAVES, d0, d1, d2, 0.0D, 0.0D, 0.0D);
         }
 
