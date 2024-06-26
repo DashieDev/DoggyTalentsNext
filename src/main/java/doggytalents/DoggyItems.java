@@ -17,6 +17,7 @@ import doggytalents.common.entity.accessory.LabCoat;
 import doggytalents.common.entity.accessory.LocatorOrbAccessory;
 import doggytalents.common.entity.accessory.Propellar;
 import doggytalents.common.entity.accessory.Wig;
+import doggytalents.common.entity.accessory.YetiGoose;
 import doggytalents.common.entity.accessory.KitsuneMask.KitsuneMaskItem;
 import doggytalents.common.entity.accessory.TenguMask.TenguMaskItem;
 import doggytalents.common.item.*;
@@ -128,6 +129,7 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> SOUL_REFLECTOR = register("soul_reflector", () -> new FieryReflectorItem(DoggyAccessories.SOUL_REFLECTOR, createInitialProp()));
     public static final Supplier<DyeableAccessoryItem> ANGEL_WINGS = register("angel_wings", () -> new AngelWings.Item(DoggyAccessories.ANGEL_WINGS, createInitialProp()));
     public static final Supplier<AccessoryItem> ANGEL_HALO = register("angel_halo", () -> new AngelHalo.AngelHaloItem(DoggyAccessories.ANGEL_HALO, createInitialProp()));
+    public static final Supplier<AccessoryItem> YETI_GOOSE = register("goose", () -> new YetiGoose.YetiGooseItem(DoggyAccessories.YETI_GOOSE, createInitialProp()));
 
     public static final RegistryObject<AccessoryItem> TENGU_MASK = register("tengu_mask", () -> new TenguMaskItem(DoggyAccessories.TENGU_MASK, createInitialProp()));
     public static final RegistryObject<AccessoryItem> DEMON_HORNS = register("demon_horns", () -> new DemonHornsItem(DoggyAccessories.DEMON_HORNS, createInitialProp()));
