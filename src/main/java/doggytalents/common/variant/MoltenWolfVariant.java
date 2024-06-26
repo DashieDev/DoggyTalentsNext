@@ -6,6 +6,7 @@ import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.RandomUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -41,9 +42,9 @@ public class MoltenWolfVariant extends DogVariant implements IDogAlteration {
         var random = dog.getRandom();
         var level = dog.level();
         if (random.nextInt(100) == 0) {
-            double d0 = (double)dog.getX() + random.nextFloat() * (dog.getBbWidth()/2);
+            double d0 = (double)dog.getX() + RandomUtil.nextFloatRemapped(random) * (dog.getBbWidth()/2);
             double d1 = (double)dog.getY() + random.nextFloat() * (dog.getBbHeight());
-            double d2 = (double)dog.getZ() + random.nextFloat() * (dog.getBbWidth()/2);
+            double d2 = (double)dog.getZ() + RandomUtil.nextFloatRemapped(random) * (dog.getBbWidth()/2);
             level.addParticle(ParticleTypes.LAVA, d0, d1, d2, 0.0D, 0.0D, 0.0D);
             level.playLocalSound(d0, d1, d2, SoundEvents.LAVA_POP, SoundSource.AMBIENT, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
         }
@@ -59,9 +60,9 @@ public class MoltenWolfVariant extends DogVariant implements IDogAlteration {
             else
                 type = ParticleTypes.LANDING_LAVA;
             if (type != null) {
-                double d0 = (double)dog.getX() + random.nextFloat() * (dog.getBbWidth()/2);
+                double d0 = (double)dog.getX() + RandomUtil.nextFloatRemapped(random) * (dog.getBbWidth()/2);
                 double d1 = (double)dog.getY() + random.nextFloat() * (dog.getBbHeight() * 0.8);
-                double d2 = (double)dog.getZ() + random.nextFloat() * (dog.getBbWidth()/2);
+                double d2 = (double)dog.getZ() + RandomUtil.nextFloatRemapped(random) * (dog.getBbWidth()/2);
                 level.addParticle(type, d0, d1, d2, 0.0D, 0.0D, 0.0D);
             }
             
