@@ -80,6 +80,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
         public ModConfigSpec.BooleanValue USE_VANILLA_RES_FOR_CLASSICAL;
         public ModConfigSpec.BooleanValue WORD_LOAD_ICON;
+        public ModConfigSpec.BooleanValue AMMY_SPINNA;
         public ModConfigSpec.BooleanValue RENDER_ARMOR;
         public ModConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
         public ModConfigSpec.BooleanValue DISPLAY_SMOKE_WHEN_ON_FIRE;
@@ -171,6 +172,12 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("Show a fun icon on world loading screen.")
                 .translation("doggytalents.config.client.world_load_icon")
                 .define("world_load_icon", true);
+            AMMY_SPINNA = builder
+                .comment("DTN's fun little world loading icon will occasionally")
+                .comment("show Ammy instead of Classical Pale. Disable this")
+                .comment("to force the icon to always show Classical Pale.")
+                .translation("doggytalents.config.client.ammy_spinna")
+                .define("ammy_spinna", true);
             RENDER_ARMOR = builder
                 .comment("Determine if dogs will render their armor.")
                 .translation("doggytalents.config.client.render_armor")
