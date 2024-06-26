@@ -231,5 +231,5 @@ public class DTItemModelProvider /*extends ItemModelProvider*/ {
 
     // private ItemModelBuilder blockItem(Supplier<? extends Block> block, String suffix) {
     //     return withExistingParent(name(block), modLoc(ModelProvider.BLOCK_FOLDER + "/" + name(block) + suffix));
-    // }x
+    // }
 }
