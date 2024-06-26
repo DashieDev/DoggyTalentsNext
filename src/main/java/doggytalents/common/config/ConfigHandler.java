@@ -77,6 +77,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
         public ForgeConfigSpec.BooleanValue USE_VANILLA_RES_FOR_CLASSICAL;
         public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON;
+        public ModConfigSpec.BooleanValue AMMY_SPINNA;
         public ForgeConfigSpec.BooleanValue RENDER_ARMOR;
         public ForgeConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
         public ForgeConfigSpec.BooleanValue DISPLAY_SMOKE_WHEN_ON_FIRE;
@@ -171,6 +172,12 @@ public class ConfigHandler {
                 .comment("Show a fun icon on world loading screen.")
                 .translation("doggytalents.config.client.world_load_icon")
                 .define("world_load_icon", true);
+            AMMY_SPINNA = builder
+                .comment("DTN's fun little world loading icon will occasionally")
+                .comment("show Ammy instead of Classical Pale. Disable this")
+                .comment("to force the icon to always show Classical Pale.")
+                .translation("doggytalents.config.client.ammy_spinna")
+                .define("ammy_spinna", true);
             RENDER_ARMOR = builder
                 .comment("Determine if dogs will render their armor.")
                 .translation("doggytalents.config.client.render_armor")
