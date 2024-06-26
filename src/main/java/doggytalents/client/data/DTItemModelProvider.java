@@ -126,6 +126,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.SOUL_REFLECTOR);
         generated(DoggyItems.ANGEL_WINGS);
         generated(DoggyItems.ANGEL_HALO);
+        generated(DoggyItems.YETI_GOOSE);
 
         generated(DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO);
         generated(DoggyItems.MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO);
