@@ -12,9 +12,9 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
-public class DogVariantGlowRenderer extends RenderLayer<Dog, DogModel> {
+public class DogVariantRenderer extends RenderLayer<Dog, DogModel> {
     
-    public DogVariantGlowRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
+    public DogVariantRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);
     }
 
