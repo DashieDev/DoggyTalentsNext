@@ -13,6 +13,7 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.lib.Resources;
 import net.minecraft.Util;
 import net.minecraft.client.model.EntityModel;
@@ -62,32 +63,7 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
             dogModel = defaultModel;
         }
         var sync_state = dog.getIncapSyncState();
-        var type = sync_state.type;
-        var texture_rl = Resources.INCAPACITATED_BLOOD;
-        switch (type) {
-        case BLOOD:
-            texture_rl = Resources.INCAPACITATED_BLOOD;
-            break;
-        case BURN:
-            texture_rl = Resources.INCAPACITATED_BURN;
-            break;
-        case POISON:
-            texture_rl = Resources.INCAPACITATED_POISON;
-            break;
-        case DROWN:
-            texture_rl = Resources.INCAPACITATED_DROWN;
-            break;
-        case STARVE:
-            texture_rl = null;
-            break;
-        default:
-            break; 
-        }
-        boolean isLowGraphic = 
-            ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
-        if (isLowGraphic) {
-            texture_rl = Resources.INCAPACITATED_LESS_GRAPHIC;
-        }
+        var texture_rl = pickInjuredTexture(dog, sync_state);
         if (texture_rl == null) return;
         var alpha = getInjureOpascity(dog);
         renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
@@ -108,6 +84,38 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
 
         if (bandaid_texture_rl != null)
         renderTranslucentModel(dogModel, bandaid_texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, 1);
+    }
+
+    private ResourceLocation pickInjuredTexture(Dog dog, IncapacitatedSyncState state) {
+        boolean isLowGraphic = 
+            ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
+        if (isLowGraphic) {
+            return Resources.INCAPACITATED_LESS_GRAPHIC;
+        }
+        
+        var type = state.type;
+        var ret = Resources.INCAPACITATED_BLOOD;
+        switch (type) {
+        case BLOOD:
+            ret = Resources.INCAPACITATED_BLOOD;
+            break;
+        case BURN:
+            ret = Resources.INCAPACITATED_BURN;
+            break;
+        case POISON:
+            ret = Resources.INCAPACITATED_POISON;
+            break;
+        case DROWN:
+            ret = Resources.INCAPACITATED_DROWN;
+            break;
+        case STARVE:
+            ret = null;
+            break;
+        default:
+            break; 
+        }
+        
+        return ret;
     }
 
     private float getInjureOpascity(Dog dog) {
