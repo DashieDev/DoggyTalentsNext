@@ -20,6 +20,7 @@ A Big Thanks to everyone that has contributed. This includes but is not limited 
 
  * 💚**zNexwr** for Translation in "FR"
  * 💚**Arkathus** for Translation in "ES"
+ * 💚**克洛伊** for Translation in "ZN_TW"
     
 **Mod Authors:**
 * 🦴 **DashieDev** - ダシデーブ
