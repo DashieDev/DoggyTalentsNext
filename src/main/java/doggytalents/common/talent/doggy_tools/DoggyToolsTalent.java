@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
 import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.api.impl.DogAlterationProps;
@@ -118,7 +119,7 @@ public class DoggyToolsTalent extends TalentInstance  {
         if (this.alwaysPickSlot0) {
             var firstTool = this.tools.getStackInSlot(0);
             if (!firstTool.isEmpty()) {
-                if (dog.getMainHandItem() != firstTool) {
+                if (dog.getMainHandItem() != firstTool && !isItemBlacklisted(firstTool)) {
                     dog.setItemInHand(InteractionHand.MAIN_HAND, firstTool);
                 }
                 return;
@@ -159,6 +160,8 @@ public class DoggyToolsTalent extends TalentInstance  {
         for (int i = 0; i < getSize(this.level()); ++i) {
             var stack = this.tools.getStackInSlot(i);
             if (stack.isEmpty()) continue;
+            if (isItemBlacklisted(stack))
+                continue;
             var item = stack.getItem();
             if (item instanceof SwordItem) {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
@@ -184,6 +187,8 @@ public class DoggyToolsTalent extends TalentInstance  {
         for (int i = 0; i < getSize(this.level()); ++i) {
             var stack = this.tools.getStackInSlot(i);
             if (stack.isEmpty()) continue;
+            if (isItemBlacklisted(stack))
+                continue;
             var item = stack.getItem();
             var action = TOOL_ACTION_MAP.get(item);
             if (action == null) continue;
@@ -268,12 +273,18 @@ public class DoggyToolsTalent extends TalentInstance  {
         var item = stack.getItem();
         if (!(target instanceof LivingEntity living))
             return;
+        if (isItemBlacklisted(stack))
+            return;
         item.hurtEnemy(stack, living, dogIn);
     }
 
     public int getMaxOwnerDistSqr() {
         return 8*8;
     } 
+
+    private boolean isItemBlacklisted(ItemStack stack) {
+        return stack.is(DoggyTags.DOGGY_TOOLS_BLACKLIST);
+    }
 
     @Override
     public void writeToBuf(FriendlyByteBuf buf) {
