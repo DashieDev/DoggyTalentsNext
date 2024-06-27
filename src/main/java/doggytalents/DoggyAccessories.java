@@ -66,6 +66,7 @@ public class DoggyAccessories {
     public static final RegistryObject<AngelWings> ANGEL_WINGS = register("angel_wings", () -> new AngelWings(DoggyItems.ANGEL_WINGS).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<Accessory> ANGEL_HALO = register("angel_halo", () -> new AngelHalo(DoggyItems.ANGEL_HALO).setModelTexture(Resources.ANGEL_HALO).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<Accessory> YETI_GOOSE = register("goose", () -> new YetiGoose(DoggyItems.YETI_GOOSE).setModelTexture(Resources.YETI_GOOSE).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final RegistryObject<MidiKeyboard> MIDI_KEYBOARD = register("midi_keyboard", () -> new MidiKeyboard(DoggyItems.MIDI_KEYBOARD).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
     public static final RegistryObject<TenguMask> TENGU_MASK = register("tengu_mask", () -> new TenguMask(DoggyItems.TENGU_MASK).setModelTexture(Resources.TENGU_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<KitsuneMask> KITSUNE_MASK = register("kitsune_mask", () -> new KitsuneMask(DoggyItems.KITSUNE_MASK).setModelTexture(Resources.KITSUNE_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));

@@ -39,6 +39,7 @@ public class AccessoryModelRenderEntries {
     public static Entry DYABLE_LOCATOR_ORB = new DyableLocatorOrbEntry();
     public static Entry ANGEL_HALO = new AngelHaloRenderEntry();
     public static Entry YETI_GOOSE = new YetiGooseRenderEntry();
+    public static Entry MIDI_KEYBOARD = new MidiKeyboardRenderEntry();
 
 
     public static void registerEntries() {
@@ -76,6 +77,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(ANGEL_WINGS);
         AccessoryModelManager.register(ANGEL_HALO);
         AccessoryModelManager.register(YETI_GOOSE);
+        AccessoryModelManager.register(MIDI_KEYBOARD);
     }
 
 }
