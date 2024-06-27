@@ -65,6 +65,7 @@ public class DoggyAccessories {
     public static final Supplier<AngelWings> ANGEL_WINGS = register("angel_wings", () -> new AngelWings(DoggyItems.ANGEL_WINGS).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final Supplier<Accessory> ANGEL_HALO = register("angel_halo", () -> new AngelHalo(DoggyItems.ANGEL_HALO).setModelTexture(Resources.ANGEL_HALO).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final Supplier<Accessory> YETI_GOOSE = register("goose", () -> new YetiGoose(DoggyItems.YETI_GOOSE).setModelTexture(Resources.YETI_GOOSE).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final Supplier<MidiKeyboard> MIDI_KEYBOARD = register("midi_keyboard", () -> new MidiKeyboard(DoggyItems.MIDI_KEYBOARD).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
     public static final Supplier<TenguMask> TENGU_MASK = register("tengu_mask", () -> new TenguMask(DoggyItems.TENGU_MASK).setModelTexture(Resources.TENGU_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final Supplier<DemonHornsAccessory> DEMON_HORNS = register("demon_horns", () -> new DemonHornsAccessory(DoggyItems.DEMON_HORNS).setModelTexture(Resources.DEMON_HORNS).setAccessoryRenderType(AccessoryRenderType.MODEL));
