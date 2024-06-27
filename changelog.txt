@@ -1438,3 +1438,19 @@ through them) (Configurable)
 * Fix some textures
 * (1.20.6+ only) Fix Armor Enchantments wont apply to Dog (ex: Protection)
 * (1.20.6+ Neoforge only) Fix breaking changes from newer NeoForge
+
+**1.18.19 - 27th June 2024
++ New Accessories:
+  + Angel Wings
+  + Angel Halo
+  + MrBlueYeti's Goose ft. MrBlueYeti
+  + MIDI Keyboard
++ New Dog Variant System which complements DTN's Palette Of Paws more Special Variant
++ Added a blacklist for Doggy Tools.
+# Fix and refine some Dog Variant texture:
+[Pistachio, VSCode, Birch]
+# Doggy World Loading Spin Icon showing Ammy now is optional and configurable.
+* (1.20.6+ only) fix some DTN's GUI Button's Hover and Hold to show description feature.
+Player can disable it to make the spin icon only shows Classical Pale.
+- (1.20.6+ only) remove DTN's vanilla wolf spawn complementary. DTN's variants now have a
+seperate ground to shine - DTN's Palette Of Paws.
