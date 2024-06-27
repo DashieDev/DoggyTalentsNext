@@ -30,7 +30,7 @@ public class DogVariantRenderer extends RenderLayer<Dog, DogModel> {
             
             var custom_injured = custom_injured_optional.get();
             VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(custom_injured));
-            this.getParentModel().renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 0xffffffff);
+            this.getParentModel().renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 1f, 1f, 1f, 1f);
             return;
         }
         
