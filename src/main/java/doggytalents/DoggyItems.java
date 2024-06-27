@@ -15,6 +15,7 @@ import doggytalents.common.entity.accessory.GiantStick;
 import doggytalents.common.entity.accessory.HeadBandAccessory;
 import doggytalents.common.entity.accessory.LabCoat;
 import doggytalents.common.entity.accessory.LocatorOrbAccessory;
+import doggytalents.common.entity.accessory.MidiKeyboard;
 import doggytalents.common.entity.accessory.Propellar;
 import doggytalents.common.entity.accessory.Wig;
 import doggytalents.common.entity.accessory.YetiGoose;
@@ -147,6 +148,7 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
     public static final RegistryObject<DyeableAccessoryItem> CERE_GARB = register("ceremonial_garb", () -> new CeremonialGarb.Item(DoggyAccessories.CERE_GARB, createInitialProp()));
     public static final RegistryObject<AccessoryItem> DOGGY_CONTACTS = register("doggy_contacts", () -> new DoggyContactsItem(DoggyAccessories.DOGGY_CONTACTS, createInitialProp()));
+    public static final RegistryObject<DyeableAccessoryItem> MIDI_KEYBOARD = register("midi_keyboard", () -> new MidiKeyboard.Item(DoggyAccessories.MIDI_KEYBOARD, createInitialProp()));
     
     public static final RegistryObject<Item> FRISBEE = registerFrisbee("frisbee");
     public static final RegistryObject<Item> FRISBEE_WET = registerFrisbeeWet("frisbee_wet");
@@ -374,6 +376,11 @@ public class DoggyItems {
         Util.acceptOrElse(DoggyItems.CERE_GARB, (item) -> {
             event.register((stack, tintIndex) -> {
                 return tintIndex != 1 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
+             }, item);
+        }, DoggyBlocks::logError);
+        Util.acceptOrElse(DoggyItems.MIDI_KEYBOARD, (item) -> {
+            event.register((stack, tintIndex) -> {
+                return tintIndex != 1 ? -1 : ItemUtil.getDyeColorForStack(stack);
              }, item);
         }, DoggyBlocks::logError);
 
