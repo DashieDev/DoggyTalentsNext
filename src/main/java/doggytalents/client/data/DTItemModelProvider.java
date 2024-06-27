@@ -141,6 +141,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.FLATCAP);
         
         ceremonialGarb(DoggyItems.CERE_GARB);
+        midiKeyboard(DoggyItems.MIDI_KEYBOARD);
 
         generated(DoggyItems.RICE_GRAINS);
         generated(DoggyItems.RICE_WHEAT);
@@ -222,6 +223,10 @@ public class DTItemModelProvider extends ItemModelProvider {
     }
 
     private ItemModelBuilder ceremonialGarb(Supplier<? extends ItemLike> item) {
+        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
+    }
+
+    private ItemModelBuilder midiKeyboard(Supplier<? extends ItemLike> item) {
         return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
     }
 
