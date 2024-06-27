@@ -21,6 +21,18 @@ public class DogVariantRenderer extends RenderLayer<Dog, DogModel> {
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (dog.isInvisible())
             return;
+
+        if (dog.isDefeated()) {
+            var custom_injured_optional = dog.dogVariant().customInjuredTexture();
+
+            if (!custom_injured_optional.isPresent())
+                return;
+            
+            var custom_injured = custom_injured_optional.get();
+            VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(custom_injured));
+            this.getParentModel().renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 0xffffffff);
+            return;
+        }
         
         var glow_layer_optional = dog.dogVariant().glowingOverlay();
 
