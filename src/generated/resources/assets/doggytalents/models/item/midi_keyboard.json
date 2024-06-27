@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "doggytalents:item/midi_keyboard",
+    "layer1": "doggytalents:item/midi_keyboard_overlay"
+  }
+}
