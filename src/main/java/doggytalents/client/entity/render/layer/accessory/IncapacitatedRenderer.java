@@ -88,6 +88,10 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
     }
 
     private ResourceLocation pickInjuredTexture(Dog dog, IncapacitatedSyncState state) {
+        var variant_custom_overlay = dog.dogVariant().customInjuredTexture();
+        if (variant_custom_overlay.isPresent())
+            return null;
+        
         boolean isLowGraphic = 
             ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_INCAP_TXT_LESS_GRAPHIC);
         if (isLowGraphic) {
