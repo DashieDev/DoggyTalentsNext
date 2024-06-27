@@ -19,6 +19,7 @@ public class DogVariant {
     private Optional<ResourceLocation> icon;
     private int guiColor;
     private Optional<ResourceLocation> glowingOverlay;
+    private Optional<ResourceLocation> customInjuredTexture;
 
     public DogVariant(Props props) {
         this.id = props.name;
@@ -28,6 +29,7 @@ public class DogVariant {
         this.icon = props.icon;
         this.guiColor = props.guiColor;
         this.glowingOverlay = props.glowingOverlay;
+        this.customInjuredTexture = props.customInjuredTexture;
     }
 
     private static ResourceLocation createTextureLoc(Props props) {
@@ -75,6 +77,10 @@ public class DogVariant {
         return this.glowingOverlay;
     }
 
+    public Optional<ResourceLocation> customInjuredTexture() {
+        return this.customInjuredTexture;
+    }
+
     public static Props propsVanilla(String name) {
         return new Props(Util.getVanillaResource(name), NamespaceType.VANILLA);
     }
@@ -100,6 +106,7 @@ public class DogVariant {
         private Optional<ResourceLocation> customTexture = Optional.empty();
         private Optional<String> customTranslation = Optional.empty();
         private Optional<ResourceLocation> glowingOverlay = Optional.empty();
+        private Optional<ResourceLocation> customInjuredTexture = Optional.empty();
 
         private Props(ResourceLocation name, NamespaceType namespaceType) {
             this.name = name;
@@ -130,6 +137,13 @@ public class DogVariant {
             if (overlay == null)
                 return this;
             this.glowingOverlay = Optional.of(overlay);
+            return this;
+        }
+
+        public Props customInjuredTexture(ResourceLocation texture) {
+            if (texture == null)
+                return this;
+            this.customInjuredTexture = Optional.of(texture);
             return this;
         }
 
