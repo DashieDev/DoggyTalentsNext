@@ -64,10 +64,10 @@ public class IncapacitatedRenderer extends RenderLayer<Dog, DogModel> {
         }
         var sync_state = dog.getIncapSyncState();
         var texture_rl = pickInjuredTexture(dog, sync_state);
-        if (texture_rl == null) return;
-        var alpha = getInjureOpascity(dog);
-        renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
-        
+        if (texture_rl != null) {
+            var alpha = getInjureOpascity(dog);
+            renderTranslucentModel(dogModel, texture_rl, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F, alpha);
+        }
         //Bandaid layer
         var bandaid_state = sync_state.bandaid;
         ResourceLocation bandaid_texture_rl = null;
