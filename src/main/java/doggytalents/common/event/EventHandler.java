@@ -69,8 +69,8 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -553,22 +553,22 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void onLivingHurt(LivingHurtEvent event) {
+    public void onLivingHurt(LivingDamageEvent.Pre event) {
         onDogPassenegerHurtInWall(event);
-        if (event.isCanceled())
-            return;
+        // if (event.isCanceled())
+        //     return;
         
     }
 
     //Prevent passenger suffocate when riding dog.
-    public void onDogPassenegerHurtInWall(LivingHurtEvent event) {
+    public void onDogPassenegerHurtInWall(LivingDamageEvent.Pre event) {
         var entity = event.getEntity();
         if (entity == null)
             return;
         if (!entity.isPassenger())
             return;
         
-        var source = event.getSource();
+        var source = event.getContainer().getSource();
         if (!source.is(DamageTypes.IN_WALL))
             return;
         
@@ -576,7 +576,7 @@ public class EventHandler {
         if (!(vehicle instanceof Dog dog))
             return;
         
-        event.setAmount(0);
-        event.setCanceled(true);
+        event.getContainer().setNewDamage(0);
+        //event.setCanceled(true);
     }
 }
