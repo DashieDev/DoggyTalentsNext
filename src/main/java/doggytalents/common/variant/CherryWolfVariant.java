@@ -20,7 +20,7 @@ public class CherryWolfVariant extends DogVariant implements IDogAlteration {
             return;
         if (!ConfigHandler.CLIENT.DOG_VARIANT_CLIENT_EFFECT.get())
             return;
-        if (dog.isDefeated())
+        if (dog.isDefeated() || !dog.isDogVariantRenderEffective())
             return;
         
         var random = dog.getRandom();
