@@ -19,7 +19,7 @@ public class DogVariantRenderer extends RenderLayer<Dog, DogModel> {
     }
 
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (dog.isInvisible())
+        if (dog.isInvisible() || !dog.isDogVariantRenderEffective())
             return;
 
         if (dog.isDefeated()) {

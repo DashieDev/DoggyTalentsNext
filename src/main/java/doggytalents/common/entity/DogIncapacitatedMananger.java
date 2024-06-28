@@ -259,7 +259,7 @@ public class DogIncapacitatedMananger {
             drownPoseTick = 0;
         }
 
-        if (dog.dogVariant().customInjuredTexture().isPresent())
+        if (dog.isDogVariantRenderEffective() && dog.dogVariant().customInjuredTexture().isPresent())
             return;
 
         var sync_state = this.dog.getIncapSyncState();
