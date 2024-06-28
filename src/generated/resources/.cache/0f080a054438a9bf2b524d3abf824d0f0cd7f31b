@@ -1,4 +1,4 @@
-// 1.19.2	2024-06-10T02:58:25.7328796	DoggyTalents Item Models
+// 1.20.1	2024-06-28T15:58:56.1674357	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
@@ -47,6 +47,7 @@ d9ec650c08c3440406bc3653fa92dd165d4045aa assets/doggytalents/models/item/frisbee
 4589fc682d17c442a91272bf3c12ab74b2fe6a27 assets/doggytalents/models/item/gender_bone.json
 ef520dd816cdadca205239f47708c42b2d3e818b assets/doggytalents/models/item/giant_stick.json
 daaaeb5312e241ac287f000bf92a2a39e95e5758 assets/doggytalents/models/item/golden_a_five_wagyu.json
+4b6da404762b9190c2097a495b263969b6f91abe assets/doggytalents/models/item/goose.json
 4eeef293822b443b6f78e41c1c7fb88f46013992 assets/doggytalents/models/item/grand_piano_black_item.json
 0f45c10b5a2f65056fb82ea99f3fdf5a4beb280b assets/doggytalents/models/item/grand_piano_white_item.json
 bbbddd194d8bce956f46ef7e0e9c24bef18cf451 assets/doggytalents/models/item/guard_suit.json
@@ -71,6 +72,7 @@ a84fa15e27bd04869ef9f08bc1d902a113e9ec82 assets/doggytalents/models/item/locator
 ad27b58fb356975677ba214fdf0851101b7d1622 assets/doggytalents/models/item/locator_orb_tei.json
 06a0e62363bace2c84c1e53fe38a76af334dddec assets/doggytalents/models/item/magnifying_bone.json
 c78372cc5d3fb956867a2378707fdf0de6287dd0 assets/doggytalents/models/item/master_treat.json
+52d7499e4b98f65f426590763c3464068a681b96 assets/doggytalents/models/item/midi_keyboard.json
 7357c749fd8e4f3e12a29c41b9dbd4777aa04dbc assets/doggytalents/models/item/miso_paste.json
 20876e8a278849e51c753ed80ddf10d661e303ac assets/doggytalents/models/item/miso_soup.json
 2898b9dfb81537fc36b6033c98081737b04b1f80 assets/doggytalents/models/item/multicoloured_collar.json
