@@ -1427,7 +1427,7 @@ through them) (Configurable)
 * (1.20.6+ only) Fix Armor Enchantments wont apply to Dog (ex: Protection)
 * (1.20.6+ Neoforge only) Fix breaking changes from newer NeoForge
 
-**1.18.19 - 27th June 2024
+**1.18.19 - 27th June 2024**
 + New Accessories:
   + Angel Wings
   + Angel Halo
@@ -1442,3 +1442,6 @@ through them) (Configurable)
 Player can disable it to make the spin icon only shows Classical Pale.
 - (1.20.6+ only) remove DTN's vanilla wolf spawn complementary. DTN's variants now have a
 seperate ground to shine - DTN's Palette Of Paws.
+
+**1.18.19 - 28th June 2024**
+*HOTFIX: Dog Variants features still get rendered on Dogs with Custom Skins.
