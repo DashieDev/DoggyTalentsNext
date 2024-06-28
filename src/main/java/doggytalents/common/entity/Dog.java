@@ -5111,6 +5111,12 @@ public class Dog extends AbstractDog {
     }
 
     //Client
+    public boolean isDogVariantRenderEffective() {
+        var skin = this.getClientSkin();
+        return skin == null || !skin.isCustom();
+    }
+
+    //Client
     public void setClientSkin(DogSkin skin) {
         if (skin == null) {
             this.clientSkin = DogSkin.CLASSICAL;
