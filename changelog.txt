@@ -1443,5 +1443,5 @@ Player can disable it to make the spin icon only shows Classical Pale.
 - (1.20.6+ only) remove DTN's vanilla wolf spawn complementary. DTN's variants now have a
 seperate ground to shine - DTN's Palette Of Paws.
 
-**1.18.19 - 28th June 2024**
+**1.18.20 - 28th June 2024**
 *HOTFIX: Dog Variants features still get rendered on Dogs with Custom Skins.
