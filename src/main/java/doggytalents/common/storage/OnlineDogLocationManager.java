@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.ChopinLogger;
 import doggytalents.common.entity.Dog;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
@@ -40,6 +41,14 @@ public class OnlineDogLocationManager {
         }
         if (toRemove.isEmpty())
             return;
+        for (var log : toRemove) {
+            var dog_log = onlineDogs.get(log);
+            var reason = dog_log.getRemovalReason();
+            ChopinLogger.l("Dog " + "[ "
+                + dog_log.getName().getString() 
+                + " ] went offline. Type [ "
+                + (reason == null ? "null" : reason.toString()) + " ]");
+        }
         for (var x : toRemove) {
             onlineDogs.remove(x);
         }

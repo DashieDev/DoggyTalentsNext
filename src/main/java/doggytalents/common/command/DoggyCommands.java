@@ -10,6 +10,8 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+
+import doggytalents.ChopinLogger;
 import doggytalents.common.command.arguments.UUIDArgument;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.CanineTrackerItem;
@@ -69,6 +71,9 @@ public class DoggyCommands {
         dispatcher.register(
                 literal("dog")
                     .requires(s -> s.hasPermission(2))
+                    .then(
+                        Commands.literal("dump_location_storage")
+                        .executes(c -> dumpLocationStorage(c)))
                     .then(
                         Commands.literal("locate")
                         .then(
@@ -413,5 +418,22 @@ public class DoggyCommands {
         var dogName = loc.getDogName();
         if (dogName == null) dogName = "noname";
         return Component.translatable("command.doglocate.info", dogName, posStr, dimStr);
+    }
+
+    public static int dumpLocationStorage(CommandContext<CommandSourceStack> ctx) {
+        var level = ctx.getSource().getLevel();
+        var loc_storage = DogLocationStorage.get(level);
+
+        var str_builder = new StringBuilder();
+        for (var entry : loc_storage.getAll()) {
+            str_builder.append(entry.toString());
+            str_builder.append("\n");
+        }
+
+        ChopinLogger.outputToFile(str_builder.toString());
+        
+        ctx.getSource().sendSuccess(() -> Component.literal("Dumped all Dog Location Data to {gameDirectory}/chopin.txt"), false);
+
+        return 1;
     }
 }
