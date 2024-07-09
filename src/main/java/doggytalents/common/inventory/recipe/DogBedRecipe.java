@@ -16,9 +16,8 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.crafting.IShapedRecipe;
 
-public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<CraftingInput> {
+public class DogBedRecipe extends CustomRecipe /*implements IShapedRecipe<CraftingInput>*/ {
 
     public DogBedRecipe(CraftingBookCategory p_249010_) {
         super(p_249010_);
@@ -90,15 +89,15 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
         return DoggyRecipeSerializers.DOG_BED.get();
     }
 
-    @Override
-    public int getWidth() {
-        return 3;
-    }
+    // @Override
+    // public int getWidth() {
+    //     return 3;
+    // }
 
-    @Override
-    public int getHeight() {
-        return 3;
-    }
+    // @Override
+    // public int getHeight() {
+    //     return 3;
+    // }
 
     @Override
     public ItemStack assemble(CraftingInput inv, HolderLookup.Provider p_267165_) {

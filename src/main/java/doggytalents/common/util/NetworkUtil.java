@@ -70,6 +70,7 @@ public class NetworkUtil {
         var regBuf = (RegistryFriendlyByteBuf) buf;
         var reg = regBuf.registryAccess().registryOrThrow(regKey);
         int id = regBuf.readInt();
+
         return reg.byIdOrThrow(id);
     }
 

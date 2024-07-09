@@ -18,13 +18,13 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent.PositionCheck;
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent.PositionCheck.Result;
 
 public class DTNWolfVariantsSpawnPlacements {
     
-    public static void onRegisterSpawnPlacements(SpawnPlacementRegisterEvent event) {
+    public static void onRegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         event.register(EntityType.WOLF, DTNWolfVariantsSpawnPlacements::DTNWolfVariantsSpawnableOn);
     }
 
