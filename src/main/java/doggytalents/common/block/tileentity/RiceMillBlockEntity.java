@@ -102,6 +102,11 @@ public class RiceMillBlockEntity extends BlockEntity {
             MillRecipe.Builder.withInput(DoggyItems.RICE_WHEAT.get(), 1)
                 .withOutput(DoggyItems.UNCOOKED_RICE.get(), 3)
                 .build());
+        MILL_RECIPES.add(
+            MillRecipe.Builder.withInput(DoggyItems.UNCOOKED_RICE.get(), 3)
+                .needsBowl()
+                .withOutput(DoggyItems.UNCOOKED_RICE_BOWL.get(), 1)
+                .build());
 
         MILL_RECIPES.add(
             MillRecipe.Builder.withInput(DoggyItems.SOY_BEANS_DRIED.get(), 3)
