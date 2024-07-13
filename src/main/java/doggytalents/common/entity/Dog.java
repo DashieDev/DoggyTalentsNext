@@ -764,7 +764,7 @@ public class Dog extends AbstractDog {
             return false;
         if (this.idleAnimHurtCooldown > 0)
             return false;
-        return !this.isShaking && !this.animationManager.started();
+        return !this.isShaking;
     }
 
     public boolean canContinueDoIdileAnim() {

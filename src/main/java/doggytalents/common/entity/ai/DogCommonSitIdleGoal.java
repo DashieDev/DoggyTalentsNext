@@ -20,7 +20,7 @@ public class DogCommonSitIdleGoal extends Goal {
             return false;
         if (this.dog.getDogPose() != DogPose.SIT)
             return false;
-        if (!this.dog.getAnim().freeHead() && this.dog.getAnim() != DogAnimation.NONE)
+        if (this.dog.getAnim() != DogAnimation.NONE)
             return false;
         if (!dog.canDoIdileAnim()) return false;
         if (!dog.onGround()) return false;

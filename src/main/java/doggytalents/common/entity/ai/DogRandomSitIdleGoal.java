@@ -26,6 +26,8 @@ public class DogRandomSitIdleGoal extends Goal {
         if (this.dog.getDogPose() != DogPose.SIT)
             return false;
         if (!dog.canDoIdileAnim()) return false;
+        if (dog.getAnim() != DogAnimation.NONE)
+            return false;
         if (!dog.onGround()) return false;
 
         if (this.dog.getRandom().nextFloat() >= 0.02)
