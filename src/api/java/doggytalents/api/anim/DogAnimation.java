@@ -9,14 +9,14 @@ public enum DogAnimation {
     NONE(0, 0), //emgniypocpots_redrehtac
     STRETCH(1, 70),
     FAINT(2, 80),
-    SIT_DOWN(3, 25, p -> p.speedMod(1.75f)),
-    STAND_UP(4, 40, p -> p.speedMod(1.25f)),
+    SIT_DOWN(3, 25, p -> p.speedMod(1.75f).interupting()),
+    STAND_UP(4, 40, p -> p.speedMod(1.25f).interupting()),
     FAINT_2(5, 80),
     LYING_DOWN(6, 80),
-    STAND_QUICK(7, 15, p -> p.speedMod(1.25f)),
+    STAND_QUICK(7, 15, p -> p.speedMod(1.25f).interupting()),
     DROWN(8, 145),
-    HURT_1(9, 15, p -> p.speedMod(1.25f)),
-    HURT_2(10, 10, p -> p.speedMod(1.25f)),
+    HURT_1(9, 15, p -> p.speedMod(1.25f).interupting()),
+    HURT_2(10, 10, p -> p.speedMod(1.25f).interupting()),
     FAINT_STAND_1(11, 80),
     FAINT_STAND_2(12, 80),
     BACKFLIP(13, 20),
@@ -62,6 +62,7 @@ public enum DogAnimation {
     private final boolean freeTail;
     private final HeadHandling headHandling;
     private final TimelineMode timelineMode;
+    private final boolean interupting;
 
     private DogAnimation(int id, int lengthTicks, Function<Props, Props> props_consumer) {
         this.id = id;
@@ -72,6 +73,7 @@ public enum DogAnimation {
         this.freeTail = props.freeTail;
         this.headHandling = props.headHandling;
         this.timelineMode = props.timelineMode;
+        this.interupting = props.interupting;
     }
     
     private DogAnimation(int id, int lengthTicks) {
@@ -94,6 +96,7 @@ public enum DogAnimation {
     public boolean convertHeadZRot() { return this.headHandling == HeadHandling.FREE_X_AND_REAL_Z; }
     public boolean looping() { return this.timelineMode == TimelineMode.LOOP; }
     public boolean holdOnLastTick() { return this.timelineMode == TimelineMode.HOLD_ON_LAST_TICK; }
+    public boolean interupting() { return this.interupting; }
 
     public boolean isNone() { return this == DogAnimation.NONE; }
 
@@ -111,6 +114,7 @@ public enum DogAnimation {
         private boolean freeTail = true;
         private HeadHandling headHandling = HeadHandling.LOCKED;
         private TimelineMode timelineMode = TimelineMode.STOP_ON_LAST_TICK;
+        private boolean interupting = false;
 
         public Props speedMod(float val) {
             this.speedModifier = val;
@@ -139,6 +143,11 @@ public enum DogAnimation {
 
         public Props holdOnLastTick() {
             this.timelineMode = TimelineMode.HOLD_ON_LAST_TICK;
+            return this;
+        }
+
+        public Props interupting() {
+            this.interupting = true;
             return this;
         }
 

@@ -90,7 +90,8 @@ public class DogRestWhenSitGoal extends Goal {
     public void stop() {
         this.dog.resetTickTillRest();
         this.dog.setDogRestingState(RestingState.NONE);
-        if (this.dog.getAnim() == getLoopAnim()) {
+        var anim = this.dog.getAnim();
+        if (!anim.isNone() && !anim.interupting()) {
             this.dog.setAnim(DogAnimation.NONE);
         }
     }
