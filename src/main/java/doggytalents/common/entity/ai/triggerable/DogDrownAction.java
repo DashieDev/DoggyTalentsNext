@@ -49,15 +49,5 @@ public class DogDrownAction extends AnimationAction {
     private boolean stillInLiquid() {
         return this.dog.isInLava() || this.dog.isInWater();
     }
-
-    @Override
-    public boolean blockMove() {
-        return true;
-    }
-
-    @Override
-    public boolean blockLook() {
-        return true;
-    }
     
 }

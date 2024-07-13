@@ -4455,7 +4455,7 @@ public class Dog extends AbstractDog {
     @Override
     public void setInSittingPose(boolean sit) {
         if (!this.level().isClientSide
-            && !(this.animAction != null && this.animAction.blockSitStandAnim())) {
+            && this.animAction == null) {
             boolean sit0 = this.isInSittingPose();
             if (sit0 != sit) {
                 var anim = sit ? this.getSitAnim() : this.getStandAnim();
@@ -4827,8 +4827,8 @@ public class Dog extends AbstractDog {
     @Override
     protected void updateControlFlags() {
         boolean incapBlockedMove = this.isDefeated() && !this.incapacitatedMananger.canMove();
-        boolean animBlockedMove = this.animAction != null && this.animAction.blockMove();
-        boolean animBlockedLook = this.animAction != null && this.animAction.blockLook();
+        boolean animBlockedMove = this.animAction != null;
+        boolean animBlockedLook = this.animAction != null;
         boolean notControlledByPlayer = !(this.getControllingPassenger() instanceof ServerPlayer);
         boolean notRidingBoat = !(this.getVehicle() instanceof Boat);
         this.dogAi.setLockedFlag(Goal.Flag.MOVE, 
@@ -5031,12 +5031,8 @@ public class Dog extends AbstractDog {
         if (this.animAction != null) {
             this.getNavigation().stop();
             updateControlFlags();
-            if (this.animAction.blockMove()) {
-                forceStopAllGoalWithFlag(Goal.Flag.MOVE);
-            }
-            if (this.animAction.blockLook()) {
-                forceStopAllGoalWithFlag(Goal.Flag.LOOK);
-            }
+            forceStopAllGoalWithFlag(Goal.Flag.MOVE);
+            forceStopAllGoalWithFlag(Goal.Flag.LOOK);
             this.animAction.start();
         }
     }
