@@ -65,10 +65,10 @@ public enum DogAnimation {
 
     private DogAnimation(int id, int lengthTicks, Function<Props, Props> props_consumer) {
         this.id = id;
-        this.lengthTicks = lengthTicks;
         var props = new Props();
         props = props_consumer.apply(props);
         this.speedModifier = props.speedModifier;
+        this.lengthTicks = Mth.ceil(((float)lengthTicks)/this.speedModifier);
         this.freeTail = props.freeTail;
         this.headHandling = props.headHandling;
         this.timelineMode = props.timelineMode;
