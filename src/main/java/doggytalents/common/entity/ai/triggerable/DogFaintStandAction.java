@@ -16,9 +16,4 @@ public class DogFaintStandAction extends AnimationAction {
         }
         return super.validateAnim();
     }
-
-    @Override
-    public boolean blockMove() {
-        return true;
-    }
 }

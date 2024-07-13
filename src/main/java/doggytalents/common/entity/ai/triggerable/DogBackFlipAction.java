@@ -19,13 +19,6 @@ public class DogBackFlipAction extends AnimationAction {
         if (--this.tickTillJump == 0) {
             this.dog.getJumpControl().jump();
         }
-    }
-
-    @Override
-    public boolean blockMove() {
-        return true;
-    }
-
-    
+    }    
     
 }
