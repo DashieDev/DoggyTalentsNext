@@ -46,17 +46,5 @@ public class AnimationAction extends TriggerableAction {
             return false;
         return this.dog.getNavigation().isDone();
     }
-
-    public boolean blockMove() {
-        return false;
-    }
-
-    public boolean blockLook() {
-        return false;
-    }
-
-    public boolean blockSitStandAnim() {
-        return false;
-    }
     
 }
