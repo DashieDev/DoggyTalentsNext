@@ -95,6 +95,8 @@ public enum DogAnimation {
     public boolean looping() { return this.timelineMode == TimelineMode.LOOP; }
     public boolean holdOnLastTick() { return this.timelineMode == TimelineMode.HOLD_ON_LAST_TICK; }
 
+    public boolean isNone() { return this == DogAnimation.NONE; }
+
     private enum HeadHandling {
         LOCKED, FREE_HEAD, FREE_X_AND_REAL_Z
     }
