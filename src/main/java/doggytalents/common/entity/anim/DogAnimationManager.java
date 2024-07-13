@@ -20,15 +20,19 @@ public class DogAnimationManager {
     private int animationTime;
     private final Dog dog;
     private boolean looping = false;
+    private boolean holdOnLastTick = false;
+    private boolean isHolding = false;
     private int tickTillSync = 0;
 
     public DogAnimationManager(Dog dog) { this.dog = dog; }
 
     public void onAnimationChange(DogAnimation anim) {
         animationTime = 0;
+        this.isHolding = false;
         if (anim != DogAnimation.NONE) {
             started = true;
             looping = anim.looping();
+            holdOnLastTick = anim.holdOnLastTick();
             this.animationTime = anim.getLengthTicks();
             animationState.start(dog.tickCount);
             tickTillSync = SYNC_INTERVAL_TICK;
@@ -53,7 +57,10 @@ public class DogAnimationManager {
         if (started && (!this.dog.level().isClientSide) && !looping) {
             if (this.animationTime <= 0) {
                 this.animationTime = 0;
-                this.dog.setAnim(DogAnimation.NONE);
+                if (this.holdOnLastTick)
+                    this.isHolding = true;
+                else
+                    this.dog.setAnim(DogAnimation.NONE);
             } else {
                 if (--tickTillSync <= 0) {
                     tickTillSync = SYNC_INTERVAL_TICK;
@@ -65,6 +72,8 @@ public class DogAnimationManager {
         if (started && (this.dog.level().isClientSide) && !looping) {
             if (this.animationTime <= 0) {
                 this.animationTime = 0;
+                if (this.holdOnLastTick)
+                    this.isHolding = true;
             } else {
                 --this.animationTime;
             }
@@ -105,6 +114,10 @@ public class DogAnimationManager {
 
     public boolean started() {
         return this.started;
+    }
+
+    public boolean isHolding() {
+        return this.isHolding;
     }
 
 }
