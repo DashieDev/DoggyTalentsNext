@@ -19,6 +19,8 @@ public class DogCommonStandIdleGoal extends Goal {
     @Override
     public boolean canUse() {
         if (!dog.canDoIdileAnim()) return false;
+        if (dog.getAnim() != DogAnimation.NONE)
+            return false;
         if (dog.isOnFire()) return false;
         if (dog.isLowHunger()) return false;
         //if (!this.dog.onGround()) return false;
