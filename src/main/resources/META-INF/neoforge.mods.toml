@@ -12,6 +12,8 @@ logoFile="dtn_icon.png"
     credits="silverstarshiro, stefanbech and the DTN Discord Server."
     authors="dashiedev, mashxp"
     description="   The Art of Minecraft Wolf."
+
+    enumExtensions="META-INF/enumextensions.json"
 [[dependencies.doggytalents]] #optional
     modId="neoforge"
     type="required"
