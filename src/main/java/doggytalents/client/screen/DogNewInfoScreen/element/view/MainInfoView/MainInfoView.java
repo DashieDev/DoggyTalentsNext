@@ -57,6 +57,7 @@ public class MainInfoView extends AbstractElement {
             new DogStatusViewBoxElement(this, this.getScreen(), this.dog)
             .setPosition(PosType.FIXED, mX - 105 - 10, mY - 105/2)
             .setSize(105)
+            .init()
             //.setBackgroundColor(0xffe39c02)
         );
         this.addChildren(

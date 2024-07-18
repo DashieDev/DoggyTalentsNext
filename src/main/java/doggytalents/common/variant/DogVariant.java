@@ -20,6 +20,7 @@ public class DogVariant {
     private int guiColor;
     private Optional<ResourceLocation> glowingOverlay;
     private Optional<ResourceLocation> customInjuredTexture;
+    private final boolean burnsPetter;
 
     public DogVariant(Props props) {
         this.id = props.name;
@@ -30,6 +31,7 @@ public class DogVariant {
         this.guiColor = props.guiColor;
         this.glowingOverlay = props.glowingOverlay;
         this.customInjuredTexture = props.customInjuredTexture;
+        this.burnsPetter = props.burnsPetter; 
     }
 
     private static ResourceLocation createTextureLoc(Props props) {
@@ -81,6 +83,10 @@ public class DogVariant {
         return this.customInjuredTexture;
     }
 
+    public boolean burnsPetter() {
+        return this.burnsPetter;
+    }
+
     public static Props propsVanilla(String name) {
         return new Props(Util.getVanillaResource(name), NamespaceType.VANILLA);
     }
@@ -107,6 +113,7 @@ public class DogVariant {
         private Optional<String> customTranslation = Optional.empty();
         private Optional<ResourceLocation> glowingOverlay = Optional.empty();
         private Optional<ResourceLocation> customInjuredTexture = Optional.empty();
+        private boolean burnsPetter = false;
 
         private Props(ResourceLocation name, NamespaceType namespaceType) {
             this.name = name;
@@ -144,6 +151,11 @@ public class DogVariant {
             if (texture == null)
                 return this;
             this.customInjuredTexture = Optional.of(texture);
+            return this;
+        }
+
+        public Props burnsPetter() {
+            this.burnsPetter = true;
             return this;
         }
 

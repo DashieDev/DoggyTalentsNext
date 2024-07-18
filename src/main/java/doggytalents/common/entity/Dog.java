@@ -17,6 +17,7 @@ import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.api.registry.*;
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.DTNClientPettingManager;
 import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
@@ -41,6 +42,7 @@ import doggytalents.common.entity.datasync.DogDataSyncManager;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
+import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.stats.StatsTracker;
@@ -215,6 +217,7 @@ public class Dog extends AbstractDog {
     private static final Cache<EntityDataAccessor<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (EntityDataAccessor<List<DoggyArtifactItem>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<DogSize>> DOG_SIZE = Cache.make(() -> (EntityDataAccessor<DogSize>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<DogSkinData>> CUSTOM_SKIN = Cache.make(() -> (EntityDataAccessor<DogSkinData>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER.get().getSerializer()));
+    private static final Cache<EntityDataAccessor<DogPettingState>> DOG_PETTING_STATE = Cache.make(() -> (EntityDataAccessor<DogPettingState>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_PETTING_STATE.get()));
 
     public static final void initDataParameters() { 
         DOG_VARIANT.get();
@@ -227,6 +230,7 @@ public class Dog extends AbstractDog {
         ARTIFACTS.get();
         DOG_SIZE.get();
         CUSTOM_SKIN.get();
+        DOG_PETTING_STATE.get();
     }
 
     // Cached values
@@ -255,6 +259,8 @@ public class Dog extends AbstractDog {
         = new DogIncapacitatedMananger(this);
     private final DogHungerManager hungerManager
         = new DogHungerManager(this);
+    public final DogPettingManager pettingManager
+        = new DogPettingManager(this);
     public final DogAiManager dogAi;
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
@@ -343,6 +349,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(INCAP_VAL, 0);
         this.entityData.define(ANIMATION, 0);
         this.entityData.define(ANIM_SYNC_TIME, 0);
+        this.entityData.define(DOG_PETTING_STATE.get(), DogPettingState.NULL);
     }
 
     @Override
@@ -365,6 +372,9 @@ public class Dog extends AbstractDog {
             } else {
                 return SoundEvents.WOLF_PANT;
             }
+        }
+        if (this.pettingManager.isPetting()) {
+            return null;
         }
         if (this.random.nextInt(3) == 0) {
             return this.isTame() && this.getHealth() < 10.0F ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
@@ -608,6 +618,8 @@ public class Dog extends AbstractDog {
             if (!this.level.isClientSide)
                 this.tickAnimAction();
         }
+
+        this.pettingManager.tick();
 
         //Client
         if (this.level().isClientSide) {
@@ -3156,6 +3168,11 @@ public class Dog extends AbstractDog {
             }
             updateWanderState(mode);
         }
+
+        if (DOG_PETTING_STATE.get().equals(key)) {
+            if (this.level().isClientSide)
+                DTNClientPettingManager.get().onPettingUpdate(this, getPettingState());
+        }
     }
 
     public void onDogSyncedDataUpdated(boolean talents, boolean accessories) {
@@ -3558,6 +3575,14 @@ public class Dog extends AbstractDog {
 
     public void setIncapSyncState(IncapacitatedSyncState state) {
         this.entityData.set(DOG_INCAP_SYNC_STATE.get(), state);
+    }
+
+    public DogPettingState getPettingState() {
+        return this.entityData.get(DOG_PETTING_STATE.get());
+    }
+
+    public void setPettingState(DogPettingState state) {
+        this.entityData.set(DOG_PETTING_STATE.get(), state);
     }
 
     @Override

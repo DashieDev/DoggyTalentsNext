@@ -273,6 +273,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
         public ForgeConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
         public ForgeConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
+        public ForgeConfigSpec.BooleanValue DOG_PETTING;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
@@ -470,6 +471,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Arrows as it is. Regardless, the arrows fired from Dog will do no harm to allies.")
                 .translation("doggytalents.doggy_tools_projectile_pass_allies")
                 .define("doggy_tools_projectile_pass_allies", true);
+            DOG_PETTING = builder
+                .comment("Allow Players to Pet their Dogs.")
+                .translation("doggytalents.dog_petting")
+                .define("dog_petting", true);
 
             //(Non 1.20.5+)
             RANDOM_VAR_ON_TRAIN = builder
