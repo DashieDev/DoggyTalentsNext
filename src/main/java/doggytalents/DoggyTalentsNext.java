@@ -4,6 +4,7 @@ import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.feature.InteractHandler;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DoggyKeybinds;
+import doggytalents.client.DTNClientPettingManager;
 import doggytalents.client.data.DTBlockstateProvider;
 import doggytalents.client.data.DTItemModelProvider;
 import doggytalents.client.entity.render.DoggyArmorMapping;
@@ -116,6 +117,7 @@ public class DoggyTalentsNext {
             forgeEventBus.addListener(BedFinderRenderer::onWorldRenderLast);
             forgeEventBus.addListener(CanineTrackerLocateRenderer::onWorldRenderLast);
             forgeEventBus.addListener(CanineTrackerLocateRenderer::tickUpdate);
+            forgeEventBus.register(DTNClientPettingManager.get());
         });
 
         ConfigHandler.init(modEventBus);
