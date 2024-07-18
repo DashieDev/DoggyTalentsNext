@@ -74,6 +74,7 @@ public final class PacketHandler {
         registerPacket(new DogExplosionPacket(), DogExplosionData.class);
         registerPacket(new FisherDogPacket(), FisherDogData.class);
         registerPacket(new AllStandSwitchModePacket(), AllStandSwitchModeData.class);
+        registerPacket(new DogPettingPacket(), DogPettingData.class);
 
         //Fabric
         registerPacket(new FabricSyncAllPacket(), FabricSyncAllData.class);

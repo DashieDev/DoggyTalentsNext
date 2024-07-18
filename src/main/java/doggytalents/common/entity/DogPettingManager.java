@@ -1,0 +1,199 @@
+package doggytalents.common.entity;
+
+import java.util.UUID;
+
+import org.apache.commons.lang3.ObjectUtils;
+
+import doggytalents.api.feature.DogSize;
+import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.util.RandomUtil;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.player.Player;
+
+public class DogPettingManager {
+    
+    private final Dog dog;
+    private boolean locked = false;
+
+    public DogPettingManager(Dog dog) {
+        this.dog = dog;
+    }
+
+    public boolean isPetting() {
+        return dog.getPettingState().is_petting();
+    }
+
+    public UUID getPetterId() {
+        return dog.getPettingState().petting_id();
+    }
+
+    public void setPetting(Player petter, DogPettingType type) {
+        if (petter == null || type == null || !canPet(petter))
+            return;
+        if (isPetting())
+            return;
+        dog.setPettingState(new DogPettingState(petter.getUUID(), true, type));
+        petter.yBodyRot = petter.yHeadRot;
+    }
+
+    public void stopPetting() {
+        dog.setPettingState(DogPettingState.NULL);
+    }
+
+    public void tick() {
+        if (!this.dog.level().isClientSide && this.isPetting() && !canPet(getPetterFromDog()))
+            this.stopPetting();
+        if (this.dog.level().isClientSide && this.isPetting()) {
+            playParticleEffect();    
+        }
+        if (!this.dog.level().isClientSide && this.isPetting() && dog.dogVariant().burnsPetter())
+            mayDoLoveBurns();
+    }
+
+    private int burn_cooldown = 10;
+    public void mayDoLoveBurns() {
+        if (--burn_cooldown > 0)
+            return;
+        var random = this.dog.getRandom();
+        if (random.nextInt(100) != 0)
+            return;
+        burn_cooldown = (7 + random.nextInt(9)) * 20;
+        var petter = this.getPetterFromDog();
+        if (petter == null)
+            return;
+        var hurt_result = petter.hurt(petter.damageSources().lava(), 0.1f);
+        if (hurt_result) {
+            petter.playSound(SoundEvents.GENERIC_BURN, 0.4F, 2.0F + random.nextFloat() * 0.4F);
+            if (dog.level() instanceof ServerLevel) {
+                ((ServerLevel) dog.level()).sendParticles(
+                    ParticleTypes.CAMPFIRE_COSY_SMOKE, 
+                    petter.getX(), petter.getY(), petter.getZ(), 
+                    random.nextIntBetweenInclusive(2, 4), 
+                    petter.getBbWidth(), 0.8f, petter.getBbWidth(), 
+                    0.1
+                );
+            }
+        }
+        
+    }
+
+    public void playParticleEffect() {
+        var random = this.dog.getRandom();
+        if (this.dog.getRandom().nextInt(20) == 0) {
+            double x = (double)dog.getX() + RandomUtil.nextFloatRemapped(random) * (dog.getBbWidth()/2 + 0.3);
+            double y = (double)dog.getY() + 0.4 + random.nextFloat() * (dog.getBbHeight() - 0.4);
+            double z = (double)dog.getZ() + RandomUtil.nextFloatRemapped(random) * (dog.getBbWidth()/2 + 0.3);
+            double dx = random.nextGaussian() * 0.02;
+            double dy = random.nextGaussian() * 0.02;
+            double dz = random.nextGaussian() * 0.02;
+            dog.level().addParticle(ParticleTypes.HEART, x, y, z, dx, dy, dz);
+        }
+    }
+
+    //Common check
+    public boolean canPet(Player player) {
+        if (player == null)
+            return false;
+        if (ObjectUtils.notEqual(dog.getOwnerUUID(), player.getUUID()))
+            return false;
+        if (!player.getMainHandItem().isEmpty())
+            return false;
+        if (!player.getOffhandItem().isEmpty())
+            return false;
+        if (player.isVehicle() || player.isPassenger())
+            return false;
+        if (player.isSpectator())
+            return false;
+        if (!player.isShiftKeyDown())
+            return false;
+        if (this.locked)
+            return false;
+        if (!dog.isDoingFine())
+            return false;
+        if (!dog.isInSittingPose() || dog.getDogPose() != DogPose.SIT)
+            return false;
+        if (dog.isOnFire())
+            return false;
+        if (dog.isVehicle() || dog.isPassenger())
+            return false;
+        if (dog.getDogSize() != DogSize.MODERATO)
+            return false;
+        if (!isInPetDistance(dog, player))
+            return false;
+        
+        return isSelectingDog(player, dog);   
+    }
+
+    public boolean isInPetDistance(Dog dog, Player player) {
+        var max_dist = getMaxPetDistance(dog, player);
+        if (dog.distanceToSqr(player) >= max_dist * max_dist)
+            return false;
+        if (!checkEyeDistance(dog, player))
+            return false;
+        return true;
+    }
+
+    private double getMaxPetDistance(Dog dog, Player player) {
+        var dog_bbw = dog.getBbWidth();
+        return dog_bbw/2 + player.getBbWidth()/2 + 0.5;
+    }
+
+    private boolean checkEyeDistance(Dog dog, Player player) {
+        var player_eye_y = player.getEyeY();
+        var dog_eye_y = dog.getEyeY();
+        var d_eye_y = player_eye_y - dog_eye_y;
+        return 0.3 <= d_eye_y || d_eye_y <= 0.5;
+    }
+
+    private boolean isSelectingDog(Player player, Dog dog) {
+        double pick_range = player.entityInteractionRange();
+        var view_vec = player.getViewVector(1);
+        var eye_pos = player.getEyePosition(0);
+        var from_vec = eye_pos;
+        var to_vec = eye_pos.add(view_vec.scale(pick_range));
+        var dog_bb = dog.getBoundingBox();
+        boolean hit_dog = dog_bb.clip(from_vec, to_vec).isPresent();
+
+        return hit_dog;
+    }
+
+    private Player getPetterFromDog() {
+        if (!this.isPetting())
+            return null;
+        var pet_uuid = this.getPetterId();
+        var petter = this.dog.level().getPlayerByUUID(pet_uuid);
+        return petter;
+    }
+
+    public void setLocked(boolean lock) {
+        this.locked = lock;
+    }
+
+    public static record DogPettingState(UUID petting_id, boolean is_petting, DogPettingType type) {
+        public static DogPettingState NULL = new DogPettingState(net.minecraft.Util.NIL_UUID, false, DogPettingType.FACERUB);
+    }
+
+    public static enum DogPettingType {
+        FACERUB(0),
+        HUG(1);
+
+        private final int id;
+
+        private DogPettingType(int id) {
+            this.id = id;
+        }
+
+        public int getId() { return this.id; }
+
+        public static DogPettingType fromId(int id) {
+            var vals = DogPettingType.values();
+            if (id < 0 || id >= vals.length)
+                id = 0;
+            return vals[id];
+        }
+
+    }
+
+}
