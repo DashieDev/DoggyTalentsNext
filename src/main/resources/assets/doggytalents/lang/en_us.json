@@ -494,6 +494,9 @@
 
    "dog.classical.variant.compl.vscode": "VSCode",
 
+   "dog.petmode.facerub": "Face Rub",
+   "dog.petmode.hug": "Hug",
+
    "doggytalents.whistle.short": "Whistle Short",
    "doggytalents.whistle.long": "Whistle Long",
 
@@ -528,6 +531,7 @@
    "doggytalents.screen.heel_by_group.help_title": "Heel By Group",
    "doggytalents.screen.heel_by_group.help": "Use the Up and Down arrow to select the group you want to heel. Type to search for the group by name. Press Enter to finish the command. Esc to Cancel.",
    "doggytalents.screen.heel_by_group.no_group_found": "No Group Found.",
+   "doggytalents.screen.pet_select.exit": "Exit Pet Mode",
 
    "amnesia_bone_gui.navbar.general" : "General",
    "amnesia_bone_gui.navbar.talents" : "Talents",
@@ -541,6 +545,7 @@
    "doggui.navbar.stats" : "Stats",
 
    "doggui.home.name" : "Name:",
+   "doggui.home.pet_hint" : "Click to Pet %s!",
    "doggui.home.edit_info" : "Edit Info",
    "doggui.home.edit_info.substitude_name" : "Will be: %s",
    "doggui.home.artifacts" : "Doggy Artifacts",
