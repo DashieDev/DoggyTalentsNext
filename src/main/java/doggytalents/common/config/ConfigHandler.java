@@ -279,6 +279,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
         public ModConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
         public ModConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
+        public ModConfigSpec.BooleanValue DOG_PETTING;
 
         public Map<String, ModConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -473,6 +474,10 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("Arrows as it is. Regardless, the arrows fired from Dog will do no harm to allies.")
                 .translation("doggytalents.doggy_tools_projectile_pass_allies")
                 .define("doggy_tools_projectile_pass_allies", true);
+            DOG_PETTING = builder
+                .comment("Allow Players to Pet their Dogs.")
+                .translation("doggytalents.dog_petting")
+                .define("dog_petting", true);
             builder.pop();
         }
 

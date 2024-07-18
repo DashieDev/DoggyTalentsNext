@@ -86,6 +86,7 @@ public class DogAiManager {
         registerDogGoal(p, new DogRandomStandIdleGoal(this.dog));
         registerDogGoal(p, new DogRandomSniffGoal(this.dog));
         registerDogGoal(p, new DogCommonStandIdleGoal(this.dog));
+        registerDogGoal(p, new DogBeingPetGoal(this.dog));
         ++p;
         registerDogGoal(p, new DogBegGoal(this.dog, 8.0F));
         ++p;
