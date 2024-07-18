@@ -1,5 +1,6 @@
 package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView;
 
+import java.util.List;
 import java.util.Random;
 
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -9,8 +10,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.api.feature.DogSize;
 import doggytalents.api.feature.DogLevel.Type;
+import doggytalents.client.screen.PetSelectScreen;
 import doggytalents.client.screen.ScreenUtil;
+import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.client.screen.framework.element.AbstractElement;
+import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.Minecraft;
@@ -30,12 +34,35 @@ public class DogStatusViewBoxElement extends AbstractElement {
 
     private Dog dog;
     private Font font;
+    private FlatButton petButton;
 
     public DogStatusViewBoxElement(AbstractElement parent, Screen screen, Dog dog) {
         super(parent, screen);
         this.dog = dog;
         var mc = Minecraft.getInstance();
         this.font = mc.font;
+    }
+
+    @Override
+    public AbstractElement init() {
+        petButton = new FlatButton(0, 0, 30, 50, Component.empty(), (b) -> {
+            PetSelectScreen.open();
+        }) {
+            @Override
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                // TODO Auto-generated method stub
+                // super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                if (this.isHovered) {
+                    ToolTipOverlayManager.get().setComponents(
+                        List.of(Component.translatable("doggui.home.pet_hint", 
+                            dog.getGenderPronoun())));
+                }
+            }
+        };
+        petButton.setX(this.getRealX() + this.getSizeX()/2 - petButton.getWidth()/2);
+        petButton.setY(this.getRealY() + this.getSizeY()/2 - petButton.getHeight()/2 + 10);
+        this.addChildren(petButton);
+        return this;
     }
 
     @Override

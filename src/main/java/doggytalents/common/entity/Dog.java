@@ -16,6 +16,7 @@ import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.api.registry.*;
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.DTNClientPettingManager;
 import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
@@ -41,6 +42,7 @@ import doggytalents.common.entity.datasync.DogDataSyncManager;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
+import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.stats.StatsTracker;
@@ -266,6 +268,8 @@ public class Dog extends AbstractDog {
         = new DogIncapacitatedMananger(this);
     private final DogHungerManager hungerManager
         = new DogHungerManager(this);
+    public final DogPettingManager pettingManager
+        = new DogPettingManager(this);
     public final DogAiManager dogAi;
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
@@ -354,6 +358,7 @@ public class Dog extends AbstractDog {
         builder.define(INCAP_VAL, 0);
         builder.define(ANIMATION, 0);
         builder.define(ANIM_SYNC_TIME, 0);
+        builder.define(DOG_PETTING_STATE.get(), DogPettingState.NULL);
     }
 
     @Override
@@ -376,6 +381,9 @@ public class Dog extends AbstractDog {
             } else {
                 return SoundEvents.WOLF_PANT;
             }
+        }
+        if (this.pettingManager.isPetting()) {
+            return null;
         }
         if (this.random.nextInt(3) == 0) {
             return this.isTame() && this.getHealth() < 10.0F ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
@@ -622,6 +630,8 @@ public class Dog extends AbstractDog {
             if (!this.level().isClientSide)
                 this.tickAnimAction();
         }
+
+        this.pettingManager.tick();
 
         //Client
         if (this.level().isClientSide) {
@@ -3578,6 +3588,14 @@ public class Dog extends AbstractDog {
         this.dogFabricHelper.setIncapSyncState(state);
     }
 
+    public DogPettingState getPettingState() {
+        return this.entityData.get(DOG_PETTING_STATE.get());
+    }
+
+    public void setPettingState(DogPettingState state) {
+        this.entityData.set(DOG_PETTING_STATE.get(), state);
+    }
+
     @Override
     public void increaseLevel(DogLevel.Type typeIn) {
         var copy = this.getDogLevel().copy();
@@ -5283,6 +5301,10 @@ public class Dog extends AbstractDog {
     public DogFabricHelper getDogFabricHelper() { return dogFabricHelper; }
 
     public void onFabricDataUpdated(SyncType<?> type) {
+        if (DOG_PETTING_STATE.get().equals(key)) {
+            if (this.level().isClientSide)
+                DTNClientPettingManager.get().onPettingUpdate(this, getPettingState());
+        }
         if (DOG_VARIANT.get().equals(key)) {
             this.refreshAlterations();
         }

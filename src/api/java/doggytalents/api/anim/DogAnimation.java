@@ -54,7 +54,27 @@ public enum DogAnimation {
     SNIFFER_DOG_POINT_UPWARD(45, 80),
     PLAY_WITH_MEH(46, 110, p -> p.headHandling(HeadHandling.FREE_X_AND_REAL_Z)),
     GREET(47, 40, p -> p.speedMod(1.5f).headHandling(HeadHandling.FREE_X_AND_REAL_Z)),
-    SNIFF_AWW_HAPPY(48, 200);
+    SNIFF_AWW_HAPPY(48, 200),
+    FACERUB_START(49, 30, p -> p.holdOnLastTick()),
+    FACERUB_PP(50, 20, p -> p.looping()),
+    FACERUB_PP2(51, 60, p -> p.looping()),
+    FACERUB_P(52, 20, p -> p.looping()),
+    FACERUB_P2(53, 20, p -> p.looping()),
+    FACERUB_F(54, 20, p -> p.looping()),
+    FACERUB_F2(55, 20, p -> p.looping()),
+    FACERUB_FF(56, 20, p -> p.looping()),
+    FACERUB_FF2(57, 60, p -> p.looping()),
+    FACERUB_END(58, 40),
+    HUG_START(59, 30, p -> p.holdOnLastTick()),
+    HUG_PP(60, 60, p -> p.looping()),
+    HUG_PP2(61, 60, p -> p.looping()),
+    HUG_P(62, 60, p -> p.looping()),
+    HUG_P2(63, 60, p -> p.looping()),
+    HUG_F(64, 60, p -> p.looping()),
+    HUG_F2(65, 60, p -> p.looping()),
+    HUG_FF(66, 60, p -> p.looping()),
+    HUG_FF2(67, 60, p -> p.looping()),
+    HUG_END(68, 40);
 
     private final int id;
     private final int lengthTicks;

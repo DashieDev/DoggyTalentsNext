@@ -291,6 +291,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
         public ForgeConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
         public ForgeConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
+        public ModConfigSpec.BooleanValue DOG_PETTING;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -485,6 +486,10 @@ public class ConfigHandler {
                 .comment("Arrows as it is. Regardless, the arrows fired from Dog will do no harm to allies.")
                 .translation("doggytalents.doggy_tools_projectile_pass_allies")
                 .define("doggy_tools_projectile_pass_allies", true);
+            DOG_PETTING = builder
+                .comment("Allow Players to Pet their Dogs.")
+                .translation("doggytalents.dog_petting")
+                .define("dog_petting", true);
             builder.pop();
         }
 
