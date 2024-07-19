@@ -50,6 +50,11 @@ public class DogPettingManager {
         }
         if (!this.dog.level().isClientSide && this.isPetting() && dog.dogVariant().burnsPetter())
             mayDoLoveBurns();
+        if (this.isPetting()) {
+            var petter = this.getPetterFromDog();
+            if (petter != null)
+                petter.yBodyRot = petter.yHeadRot;
+        }
     }
 
     private int burn_cooldown = 10;
