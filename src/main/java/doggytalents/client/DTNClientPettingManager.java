@@ -176,7 +176,7 @@ public class DTNClientPettingManager {
             event.setCanceled(true);
             return;
         }
-        if (handleOpenPettingScreen(action, dog, mc.player)) {
+        if (handleOpenPettingScreen(action, dog_optional.get(), mc.player)) {
             event.setCanceled(true);
             return;
         }
@@ -216,7 +216,9 @@ public class DTNClientPettingManager {
             return false;
         if (player.isShiftKeyDown())
             return false;
-        
+        if (!dog.pettingManager.isInPetDistance(dog, player))
+            return false;
+
         PetSelectScreen.open();
         return true;
     }
