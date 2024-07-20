@@ -19,6 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class EntityUtil {
@@ -122,6 +123,22 @@ public class EntityUtil {
 
     public static void setSecondsOnFire(Entity e, int second) {
         e.setRemainingFireTicks(second * 20);
+    }
+
+    public static <T extends Entity> Optional<T> getRandomEntityAround(LivingEntity entity, 
+        Class<T> entity_class, int radius_xz, int radius_y, Predicate<T> entity_pred) {
+        var level = entity.level();
+        var bb = entity.getBoundingBox().inflate(radius_xz, radius_y, radius_xz);
+        Predicate<T> compound_pred = filter ->
+            filter != entity && entity_pred.test(filter);
+        var list = level.getEntitiesOfClass(entity_class, bb, compound_pred);
+        if (list.isEmpty())
+            return Optional.empty();
+        if (list.size() == 1)
+            return Optional.of(list.get(0));
+        var random = entity.getRandom();
+        var r = random.nextInt(list.size());
+        return Optional.of(list.get(r));
     }
 
     public static class Sorter implements Comparator<Entity> {
