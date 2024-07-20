@@ -8,14 +8,18 @@ import doggytalents.api.feature.DogSize;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.util.RandomUtil;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
 public class DogPettingManager {
     
     private final Dog dog;
     private boolean locked = false;
+    private long lastPetTimestamp = 0;
 
     public DogPettingManager(Dog dog) {
         this.dog = dog;
@@ -39,7 +43,33 @@ public class DogPettingManager {
     }
 
     public void stopPetting() {
+        if (!dog.level().isClientSide)
+            this.lastPetTimestamp = dog.level().getDayTime();
         dog.setPettingState(DogPettingState.NULL);
+    }
+
+    public long getTimeSinceLastPet() {
+        long ret = dog.level().getDayTime() - this.lastPetTimestamp;
+        if (ret < 0) ret = 0;
+        return ret;
+    }
+
+    public float getJealousChance() {
+        final long chance_time_start = 20 * 20;
+        final long chance_time_end = 5 * 60 * 20;
+        final float max_chance = 0.2f;
+        final float min_chance = 0.05f;
+
+        long last_pet_time = getTimeSinceLastPet();
+        if (last_pet_time <= chance_time_start)
+            return -1;
+        long chance_time = 
+            last_pet_time - chance_time_start;
+        double progress = chance_time / 
+            (double)(chance_time_end - chance_time_start);
+        progress = Mth.clamp(progress, 0, 1);
+        var ret = min_chance + progress * (max_chance - min_chance);
+        return (float) ret;
     }
 
     public void tick() {
@@ -174,6 +204,20 @@ public class DogPettingManager {
 
     public void setLocked(boolean lock) {
         this.locked = lock;
+    }
+
+    public void save(CompoundTag tag) {
+        var tag0 = new CompoundTag();
+        tag0.putLong("dog_last_pet_time", this.lastPetTimestamp);
+        tag.put("dogPettingManager", tag0);
+    }
+
+    public void load(CompoundTag tag) {
+        this.lastPetTimestamp = 0;
+        if (tag.contains("dogPettingManager", Tag.TAG_COMPOUND)) {
+            var tag0 = tag.getCompound("dogPettingManager");
+            this.lastPetTimestamp = tag0.getLong("dog_last_pet_time");
+        }
     }
 
     public static record DogPettingState(UUID petting_id, boolean is_petting, DogPettingType type) {
