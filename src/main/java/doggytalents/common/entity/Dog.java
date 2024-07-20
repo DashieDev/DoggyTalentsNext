@@ -279,8 +279,7 @@ public class Dog extends AbstractDog {
     protected int switchNavCooldown = 0;
     private int pushFromOtherDogResistTick = 0;
 
-    private int healingTick;  
-    private int prevHealingTick;
+    private int healingTick;
     //private int wanderRestTime = 0;
     private int wanderCooldown = 0;
     private int drunkTickLeft = 0;
@@ -925,20 +924,22 @@ public class Dog extends AbstractDog {
     }
 
     private void tickDogHealing() {
-        this.prevHealingTick = this.healingTick;
-        this.healingTick += 8;
+        int healingTick_add = 8;
 
         if (this.isInSittingPose()) {
-            this.healingTick += 4;
+            healingTick_add += 4;
         }
 
         for (var alter : this.alterations) {
-            var result = alter.healingTick(this, this.healingTick - this.prevHealingTick);
+            var result = alter.healingTick(this, healingTick_add);
 
             if (result.getResult().shouldSwing()) {
-                this.healingTick = result.getObject() + this.prevHealingTick;
+                healingTick_add = result.getObject();
             }
         }
+
+        if (healingTick_add < 0) healingTick_add = 0;
+        this.healingTick += healingTick_add;
 
         if (this.healingTick >= 6000) {
             if (this.getHealth() < this.getMaxHealth()) {
