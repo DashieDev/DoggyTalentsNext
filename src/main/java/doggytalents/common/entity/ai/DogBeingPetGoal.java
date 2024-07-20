@@ -11,7 +11,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.goal.Goal;
 
-//TODO make the 3 second anim loop only once (mostly)
 public class DogBeingPetGoal extends Goal {
 
     private Dog dog;
