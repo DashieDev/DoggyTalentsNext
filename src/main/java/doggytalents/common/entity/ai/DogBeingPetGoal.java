@@ -6,7 +6,9 @@ import java.util.List;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogPettingManager.DogPettingType;
+import doggytalents.common.entity.ai.triggerable.DogWantAttentionAction;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.util.EntityUtil;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -45,6 +47,7 @@ public class DogBeingPetGoal extends Goal {
     private int petTick_ff_threshold = 0;
     private int petTick = 0;
     private int sound_cooldown;
+    private int triggerCooldown;
 
     public DogBeingPetGoal(Dog dog) {
         this.dog = dog;
@@ -99,6 +102,7 @@ public class DogBeingPetGoal extends Goal {
         int r = dog.getRandom().nextIntBetweenInclusive(0, 25);
         this.petTick_ff_threshold = (5 + r) * 20;
         this.sound_cooldown = 0;
+        this.triggerCooldown = startTriggerCooldown(dog);
     }
 
     private void resetLoopAnim() {
@@ -142,6 +146,8 @@ public class DogBeingPetGoal extends Goal {
             this.dog.getLookControl().setLookAt(owner, 10.0F, this.dog.getMaxHeadXRot());
         ++petTick;
         updateAmbientSound();
+        updateTriggerNearbyDogsJealous();
+        rejuvinateDog();
     }
 
     private void updateAmbientSound() {
@@ -172,6 +178,67 @@ public class DogBeingPetGoal extends Goal {
         if (selectedEvent != null) {
             dog.playSound(selectedEvent, sound, dog.getVoicePitch());
         }
+    }
+
+    private void updateTriggerNearbyDogsJealous() {
+        if (--this.triggerCooldown > 0)
+            return;
+        this.triggerCooldown = shortTriggerCooldown(dog);
+        //--triggerAttemptLeft;
+        var target_optional = EntityUtil.getRandomEntityAround(
+            dog, Dog.class, 7, 1, filter_dog -> isTargetJealousDog(filter_dog));
+        if (!target_optional.isPresent())
+            return;
+        
+        var target = target_optional.get();
+        float r = this.dog.getRandom().nextFloat();
+        if (r > target.pettingManager.getJealousChance())
+            return;
+        triggerCooldown = longTriggerCooldown(dog);
+        var owner = target.getOwner();
+        if (owner == null)
+            return;
+        target.triggerAction(new DogWantAttentionAction(target, 
+            owner, target.isOrderedToSit()));
+    }
+
+    private void rejuvinateDog() {
+        if (dog.getRandom().nextInt(400) != 0)
+            return;
+        boolean add_hunger = dog.getRandom().nextBoolean();
+        if (add_hunger) {
+            if (dog.getDogHunger() < 20)
+                dog.addHunger(1);
+        } else {
+            if (dog.getHealth() / dog.getMaxHealth() < 0.25f)
+                dog.heal(1);
+        }
+    }
+
+    private int startTriggerCooldown(Dog dog) {
+        return 5 * 20;
+    }
+
+    private int longTriggerCooldown(Dog dog) {
+        return 10 * 20 + dog.getRandom().nextInt(6) * 20;
+    }
+
+    private int shortTriggerCooldown(Dog dog) {
+        return 2 * 20 + dog.getRandom().nextInt(6) * 20;
+    }
+
+    private boolean isTargetJealousDog(Dog target) {
+        if (!target.isDoingFine())
+            return false;
+        if (target.isBusy())
+            return false;
+        var owner = target.getOwner();
+        if (owner == null || owner != dog.getOwner())
+            return false;
+        var pet_manager = target.pettingManager;
+        if (pet_manager.getJealousChance() <= 0)
+            return false;
+        return true;
     }
 
     @Override
