@@ -467,6 +467,10 @@
    "dog.msg.play_tag.dog_win": "You have lost %s in tag! What a speedy Doggo!",
    "dog.msg.play_tag.you_win": "You have won %s in tag!",
 
+   "dog.msg.want_attention.0": "%s: Uhm, hey...",
+   "dog.msg.want_attention.1": "%s: Heeelloooo...",
+   "dog.msg.want_attention.2": "%s: Over heree...",
+
    "entity.doggytalents.dog": "Dog",
    "entity.doggytalents.dog.unknown_owner": "Owner Unknown",
    "entity.doggytalents.dog.untamed": "Untamed",

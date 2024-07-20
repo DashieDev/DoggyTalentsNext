@@ -2679,6 +2679,7 @@ public class Dog extends AbstractDog {
 
         this.statsTracker.writeAdditional(compound);
         this.dogOwnerDistanceManager.save(compound);
+        this.pettingManager.save(compound);
 
         this.alterations.forEach((alter) -> alter.onWrite(this, compound));
 
@@ -2888,6 +2889,12 @@ public class Dog extends AbstractDog {
             this.dogOwnerDistanceManager.load(compound);
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load owner distance manager: " + e.getMessage());
+            e.printStackTrace();
+        }
+        try {
+            this.pettingManager.load(compound);
+        } catch (Exception e) {
+            DoggyTalentsNext.LOGGER.error("Failed to load dog petting manager: " + e.getMessage());
             e.printStackTrace();
         }
         this.alterations.forEach((alter) -> {
