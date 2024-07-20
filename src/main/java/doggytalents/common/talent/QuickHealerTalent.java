@@ -12,22 +12,14 @@ public class QuickHealerTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<Integer> healingTick(AbstractDog dogIn, int healingTick) {
-        if (this.level() > 0) {
-            if (dogIn.isInSittingPose() && this.level() >= 5) {
-                if (dogIn.getNoActionTime() > 100) {
-                    healingTick *= 15;
-                } else {
-                    healingTick *= 10;
-                }
-            } else {
-                healingTick *= this.level();
-            }
+    public InteractionResultHolder<Integer> healingTick(AbstractDog dogIn, int healingTick_add) {
+        if (this.level() <= 0)
+            return InteractionResultHolder.pass(healingTick_add);
 
-            return InteractionResultHolder.success(healingTick);
-        }
+        boolean super_fast_healing = dogIn.isInSittingPose() && this.level() >= 5;
 
+        healingTick_add *= super_fast_healing ? 10 : this.level();
 
-        return InteractionResultHolder.pass(healingTick);
+        return InteractionResultHolder.success(healingTick_add);
     }
 }
