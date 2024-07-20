@@ -537,7 +537,7 @@
    "doggytalents.screen.heel_by_group.no_group_found": "No Group Found.",
    "doggytalents.screen.pet_select.exit": "Exit Pet Mode",
    "doggytalents.screen.pet_select.help.0": "Select a Style to enter Pet Mode. While in Pet Mode, interact with a Dog in Pet distance without Sneaking to bring this GUI up again for switching to anotther Style or exiting Pet Mode.",
-   "doggytalents.screen.pet_select.help.1": "While in Pet mode, Hold Sneak and Hold Right-Click while in Pet distance and looking at the Dog to begin Petting. The Petting stops when either the Sneak key or Right-Click are Released. While Petting in Third-Person, movement is locked, allowing the Movement Keys to be used to Rotate the Camera without disrupting the Petting Action.",
+   "doggytalents.screen.pet_select.help.1": "While in Pet mode, Hold Sneak and Hold Right-Click while in Pet distance and looking at the Dog to begin Petting. The Petting stops when either the Sneak key or Right-Click are Released. While Petting in Third-Person, movement is locked, thus allowing the Movement Keys to be used to Rotate the Camera without disrupting the Petting Action.",
 
    "amnesia_bone_gui.navbar.general" : "General",
    "amnesia_bone_gui.navbar.talents" : "Talents",
