@@ -55,6 +55,10 @@ public class DTNClientPettingManager {
         this.selectedType = type;
     }
 
+    public DogPettingType getPetMode() {
+        return this.selectedType;
+    }
+
     public synchronized void setPetting(Dog dog) {
         isPetting = dog != null;
         this.dog = dog;
