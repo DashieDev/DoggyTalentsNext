@@ -84,12 +84,12 @@ public interface IDogAlteration {
 
     }
 
-    default InteractionResultHolder<Float> hungerTick(AbstractDog dogIn, float hungerTick) {
-        return InteractionResultHolder.pass(hungerTick);
+    default InteractionResultHolder<Float> hungerTick(AbstractDog dogIn, float hungerTick_add) {
+        return InteractionResultHolder.pass(hungerTick_add);
     }
 
-    default InteractionResultHolder<Integer> healingTick(AbstractDog dogIn, int healingTick) {
-        return InteractionResultHolder.pass(healingTick);
+    default InteractionResultHolder<Integer> healingTick(AbstractDog dogIn, int healingTick_add) {
+        return InteractionResultHolder.pass(healingTick_add);
     }
 
     default InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
