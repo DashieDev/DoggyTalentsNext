@@ -300,6 +300,7 @@ public class PackPuppyTalent extends TalentInstance {
         private int tickTillPathRecalc;
         private final int stopDist = 2;
         private boolean enoughHealingFood = false;
+        private int goToTimeout = 0;
         private int feedCooldown = 0;
         private boolean failedEating = false;
 
@@ -310,6 +311,7 @@ public class PackPuppyTalent extends TalentInstance {
 
         @Override
         public void onStart() {
+            this.goToTimeout = 10 * 20;
         }
 
         @Override
@@ -328,10 +330,19 @@ public class PackPuppyTalent extends TalentInstance {
                 return;
             }
 
+            boolean is_close_to_target = this.dog.distanceToSqr(this.target) <= stopDist*stopDist;
+            if (!is_close_to_target) {
+                --this.goToTimeout;
+            }
+            if (this.goToTimeout <= 0 && !is_close_to_target) {
+                setState(ActionState.FINISHED);
+                return;
+            }
+
             if (feedCooldown > 0)
                 --feedCooldown;
             
-            if (this.dog.distanceToSqr(this.target) > stopDist*stopDist) {
+            if (!is_close_to_target) {
 
                 this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
                 if (--this.tickTillPathRecalc <= 0) {

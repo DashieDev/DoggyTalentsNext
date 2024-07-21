@@ -136,7 +136,7 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
         private final FoodBowlTileEntity bowl;
         private int tickTillPathRecalc;
         private boolean enoughHealingFood = false;
-        private int goToBowlTimeout = 20 * 20;
+        private int goToBowlTimeout = 0;
         private int feedCooldown = 0;
         private boolean failedEating = false;
 
@@ -147,7 +147,7 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
 
         @Override
         public void onStart() {
-            this.goToBowlTimeout = 20 * 20;
+            this.goToBowlTimeout = 10 * 20;
         }
 
         @Override
