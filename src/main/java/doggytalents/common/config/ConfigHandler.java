@@ -88,6 +88,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue USE_THIRD_PARTY_PLAYER_HELMET_MODEL;
         public ForgeConfigSpec.BooleanValue ENABLE_STARTER_BUNDLE_BY_DEFAULT;
         public ForgeConfigSpec.BooleanValue DOG_VARIANT_CLIENT_EFFECT;
+        public ForgeConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -231,6 +232,11 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("clientside. Set this to false to disable this behaviour.")
                 .translation("doggytalents.config.client.dog_variant_client_effect")
                 .define("dog_variant_client_effect", true);
+            RENDER_RADIO_COLLAR = builder
+                .comment("Disable this to prevent Radio Collars from being rendered in case if")
+                .comment("the server requires those or Locator Orb to be present to be tracked")
+                .comment("using the Canine Tracker and you prefer to make the tracker invisible.")
+                .define("render_radio_collar", true);
             
             builder.pop();
         }
@@ -277,6 +283,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
         public ForgeConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
         public ForgeConfigSpec.BooleanValue DOG_PETTING;
+        public ForgeConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
@@ -478,6 +485,11 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Allow Players to Pet their Dogs.")
                 .translation("doggytalents.dog_petting")
                 .define("dog_petting", true);
+            ALLOW_TRACK_ANY_DOG = builder
+                .comment("Allow Players to track Dogs using the Canine Tracker despite")
+                .comment("not having neither Radio Collars nor Locator Orbs equipped.")
+                .translation("doggytalents.allow_track_any_dog")
+                .define("allow_track_any_dog", false);
 
             //(Non 1.20.5+)
             RANDOM_VAR_ON_TRAIN = builder

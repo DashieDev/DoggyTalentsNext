@@ -95,6 +95,10 @@ public class Accessory {
     public boolean isDogStillNakedWhenWear() {
         return isDogStillNakedWhenWear;
     }
+    
+    public boolean shouldRender() {
+        return true;
+    }
 
     public <T extends Accessory> T setDogStillNakedWhenWear(boolean val) {
         this.isDogStillNakedWhenWear = val;
