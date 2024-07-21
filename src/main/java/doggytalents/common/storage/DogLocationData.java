@@ -5,6 +5,7 @@ import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyItems;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.registry.AccessoryType;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.accessory.LocatorOrbAccessory;
 import doggytalents.common.util.NBTUtil;
@@ -149,6 +150,8 @@ public class DogLocationData implements IDogData {
     }
 
     public boolean shouldDisplay(Level worldIn, Player playerIn, InteractionHand handIn) {
+        if (ConfigHandler.SERVER.ALLOW_TRACK_ANY_DOG.get())
+            return true;
         return this.hasRadarCollar || playerIn.isCreative() || playerIn.getItemInHand(handIn).getItem() == DoggyItems.CREATIVE_CANINE_TRACKER.get();
     }
 
