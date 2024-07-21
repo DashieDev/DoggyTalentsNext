@@ -10,6 +10,7 @@ import doggytalents.common.entity.misc.DogFoodProjectile;
 import doggytalents.common.entity.misc.DogGunpowderProjectile;
 import doggytalents.common.inventory.TreatBagItemHandler;
 import doggytalents.common.util.Cache;
+import doggytalents.common.util.DogFoodUtil;
 import doggytalents.common.util.InventoryUtil;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.Direction;
@@ -202,7 +203,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         if (dogIn.level().isClientSide)
             return InteractionResult.SUCCESS;
 
-        var treatBag = new TreatBagItemHandler(stackIn);
-        return InventoryUtil.feedDogFrom(dogIn, entityIn, treatBag);
+        IItemHandlerModifiable treatBag = new TreatBagItemHandler(stackIn);
+        return DogFoodUtil.tryFeedAny(dogIn, entityIn, treatBag);
     }
 }
