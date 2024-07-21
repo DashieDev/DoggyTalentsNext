@@ -3571,6 +3571,8 @@ public class Dog extends AbstractDog {
      }
 
     public void setTarget(@Nullable LivingEntity target) {
+        if (target == this.getOwner())
+            target = null;
         var oldTarget = this.getTarget();
         super.setTarget(target);
         var newTarget = this.getTarget();
