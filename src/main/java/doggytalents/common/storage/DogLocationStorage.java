@@ -204,6 +204,10 @@ public class DogLocationStorage extends SavedData {
         GREETING_DOG_LIMIT_MAP.clear();
     }
 
+    public void onServerStopped(ServerStoppedEvent event) {
+        this.onlineDogManager.onServerStopped();
+    }
+
     private static SavedData.Factory<DogLocationStorage> FACTORY
         = new SavedData.Factory<>(DogLocationStorage::new, DogLocationStorage::load, DataFixTypes.LEVEL);
     public static SavedData.Factory<DogLocationStorage> storageFactory() {
