@@ -19,6 +19,7 @@ import doggytalents.common.item.IDogEddible;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.network.packet.data.PackPuppyData;
+import doggytalents.common.util.DogFoodUtil;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
@@ -197,19 +198,7 @@ public class PackPuppyTalent extends TalentInstance {
     }
 
     private boolean tryFeed(Dog dog, Dog feeder, boolean findHealingFood) {
-        int foodSlot = findFoodInInv(feeder, dog, findHealingFood);
-        if (foodSlot < 0)
-            return false;
-        var feedStack = this.inventory().getStackInSlot(foodSlot)
-            .copy();
-        var feedItem = feedStack.getItem();
-        if (feedItem instanceof IDogEddible eddible) {
-            eddible.consume(dog, feedStack, feeder);
-        } else {
-            meatFoodHandler.consume(dog, feedStack, feeder);
-        }
-        this.inventory().setStackInSlot(foodSlot, feedStack);
-        return true;
+        return DogFoodUtil.tryFeed(dog, feeder, findHealingFood, this.inventory());
     }
 
     private List<Dog> getNearbyHungryDogs(Dog dog) {
@@ -294,74 +283,7 @@ public class PackPuppyTalent extends TalentInstance {
     }
 
     public boolean hasFood(Dog finder, Dog forWho) {
-        return findFoodInInv(finder, forWho, false) >= 0;
-    }
-
-    public int findFoodInInv(Dog finder, Dog target, boolean findHealingFood) {
-        int eddibleFoodId = findBestDogEddibleFood(finder, target, findHealingFood);
-        if (eddibleFoodId >= 0)
-            return eddibleFoodId;
-        int meatFoodId = findMeatFood(finder, target);
-        if (meatFoodId >= 0)
-            return meatFoodId;
-
-        return -1;
-    }
-
-    private int findBestDogEddibleFood(Dog finder, Dog target, boolean findHealingFood) {
-        var inventory = this.inventory();
-        if (inventory == null)
-            return -1;
-
-        float minNutrition = -1; 
-        int selectedStack = -1;
-        
-        for (int i = 0; i < inventory.getSlots(); i++) {
-            var stack = inventory.getStackInSlot(i);
-            var item = stack.getItem();
-            if (!(item instanceof DogEddibleItem eddible))
-                continue;
-            if (!eddible.canConsume(target, stack, finder))
-                continue;
-            if (findHealingFood && checkRegenEffects(target, stack, eddible)) {
-                return i;
-            }
-            float addedNutrition = eddible.getAddedHungerWhenDogConsume(stack, target);
-            if (minNutrition < 0) {
-                minNutrition = addedNutrition;
-                selectedStack = i;
-                continue;
-            }
-            if (minNutrition > addedNutrition) {
-                minNutrition = addedNutrition;
-                selectedStack = i;
-            }
-        }
-        return selectedStack;
-    }
-
-    private int findMeatFood(Dog finder, Dog target) {
-        var inventory = this.inventory();
-        if (inventory == null)
-            return -1;
-
-        for (int i = 0; i < inventory.getSlots(); i++) {
-            var stack = inventory.getStackInSlot(i);
-            if (meatFoodHandler.canConsume(target, stack, finder)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private boolean checkRegenEffects(AbstractDog target, ItemStack stack, DogEddibleItem item) {
-        var effects = item.getAdditionalEffectsWhenDogConsume(stack, target);
-        for (var pair : effects) {
-            var effect = pair.getFirst();
-            if (effect.getEffect() == MobEffects.REGENERATION)
-                return true;
-        }
-        return false;
+        return DogFoodUtil.dogFindFoodInInv(finder, forWho, false, inventory()) >= 0;
     }
 
     public static PackPuppyTalent getInstanceFromDog(AbstractDog dog) {
