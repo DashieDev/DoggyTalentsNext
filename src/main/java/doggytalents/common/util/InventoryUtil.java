@@ -23,23 +23,6 @@ import java.util.function.Predicate;
 
 public class InventoryUtil {
 
-    public static InteractionResult feedDogFrom(AbstractDog dogIn, @Nullable Entity entity, IItemHandlerModifiable source) {
-
-        for (int i = 0; i < source.getSlots(); i++) {
-
-            ItemStack stack = source.getStackInSlot(i).copy();
-            Optional<IDogFoodHandler> foodHandler = FoodHandler.getMatch(dogIn, stack, entity);
-
-            if (foodHandler.isPresent()) {
-                InteractionResult response = foodHandler.get().consume(dogIn, stack, entity);
-                source.setStackInSlot(i, stack);
-                return response;
-            }
-        }
-
-        return InteractionResult.PASS;
-    }
-
     public static Pair<ItemStack, Integer> findStack(IItemHandler source, Predicate<ItemStack> searchCriteria) {
         for (int i = 0; i < source.getSlots(); i++) {
 
