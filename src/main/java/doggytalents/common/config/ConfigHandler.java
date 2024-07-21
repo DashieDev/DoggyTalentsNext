@@ -88,6 +88,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue USE_THIRD_PARTY_PLAYER_HELMET_MODEL;
         public ForgeConfigSpec.BooleanValue ENABLE_STARTER_BUNDLE_BY_DEFAULT;
         public ModConfigSpec.BooleanValue DOG_VARIANT_CLIENT_EFFECT;
+        public ModConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
 
         //Fabric only
         public ForgeConfigSpec.BooleanValue DOGBED_FORCE_DEFAULT_MODEL;
@@ -234,6 +235,11 @@ public class ConfigHandler {
                 .comment("clientside. Set this to false to disable this behaviour.")
                 .translation("doggytalents.config.client.dog_variant_client_effect")
                 .define("dog_variant_client_effect", true);
+            RENDER_RADIO_COLLAR = builder
+                .comment("Disable this to prevent Radio Collars from being rendered in case if")
+                .comment("the server requires those or Locator Orb to be present to be tracked")
+                .comment("using the Canine Tracker and you prefer to make the tracker invisible.")
+                .define("render_radio_collar", true);
 
             //Fabric Only
             DOGBED_FORCE_DEFAULT_MODEL = builder
@@ -292,6 +298,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
         public ForgeConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
         public ModConfigSpec.BooleanValue DOG_PETTING;
+        public ModConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -490,6 +497,11 @@ public class ConfigHandler {
                 .comment("Allow Players to Pet their Dogs.")
                 .translation("doggytalents.dog_petting")
                 .define("dog_petting", true);
+            ALLOW_TRACK_ANY_DOG = builder
+                .comment("Allow Players to track Dogs using the Canine Tracker despite")
+                .comment("not having neither Radio Collars nor Locator Orbs equipped.")
+                .translation("doggytalents.allow_track_any_dog")
+                .define("allow_track_any_dog", false);
             builder.pop();
         }
 

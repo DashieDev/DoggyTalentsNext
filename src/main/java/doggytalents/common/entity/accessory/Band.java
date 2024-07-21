@@ -3,6 +3,7 @@ package doggytalents.common.entity.accessory;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.common.config.ConfigHandler;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.function.Supplier;
@@ -21,5 +22,10 @@ public class Band extends Accessory {
     @Override
     public boolean isDogStillNakedWhenWear() {
         return true;
+    }
+
+    @Override
+    public boolean shouldRender() {
+        return ConfigHandler.CLIENT.RENDER_RADIO_COLLAR.get();
     }
 }
