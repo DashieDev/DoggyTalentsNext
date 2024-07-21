@@ -73,7 +73,8 @@ public class WhistleItem extends Item implements IDogItem {
         HEEL_BY_LOOK(12, WhistleSound.SHORT),
         RIDE_WITH_ME(13, WhistleSound.SHORT),
         HOWL(14, WhistleSound.NONE),
-        ALL_STAND_SWITCH_MODE(15, WhistleSound.NONE);
+        ALL_STAND_SWITCH_MODE(15, WhistleSound.NONE),
+        SSSSSHHHH(16, WhistleSound.NONE);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -370,6 +371,9 @@ public class WhistleItem extends Item implements IDogItem {
             if (world.isClientSide) 
                 AllStandSwitchModeScreen.open(player);
             return;
+        case SSSSSHHHH:
+            sssshhhh(world, player, dogsList);
+            return;
         }
     }
 
@@ -463,6 +467,34 @@ public class WhistleItem extends Item implements IDogItem {
             0.6F + player.level().random.nextFloat() * 0.1F, 
             0.8F + player.level().random.nextFloat() * 0.2F
         );
+    }
+
+    private void sssshhhh(Level level, Player player, List<Dog> dogs) {
+        if (level.isClientSide)
+            return;
+        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+        boolean shh_ed = false;
+        for (var dog : dogs) {
+            if (!canShh(player, dog))
+                continue;
+            shh_ed = true;
+            dog.setSilentTickLeft(20 * 20);
+        }
+        if (shh_ed) {
+            player.sendSystemMessage(Component.translatable("dogcommand.ssshhh"));
+            level.playSound(null, player.blockPosition(), 
+                DoggySounds.WHISTLE_LONG.get(), 
+                SoundSource.PLAYERS, 
+                0.1f, 
+                0.8F + level.random.nextFloat() * 0.2F
+            );
+        }
+    }
+
+    private boolean canShh(Player player, Dog dog) {
+        if (dog.distanceToSqr(player) > 16 * 16)
+            return false;
+        return true;
     }
 
     @Override
