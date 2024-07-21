@@ -2284,7 +2284,7 @@ public class Dog extends AbstractDog {
         return transportedEntity;
     }
 
-    @Override
+    //@Override
     public void onRemovedFromWorld() {
         if (this.level() instanceof ServerLevel serverLevel && this.isAlive()) {
             //Force location update when the dog is about to get untracked from world.
@@ -2293,10 +2293,10 @@ public class Dog extends AbstractDog {
             
             if (data != null) data.update(this);
         }
-        super.onRemovedFromWorld();
+        //super.onRemovedFromWorld();
     }
 
-    @Override
+    //@Override
     public void onAddedToWorld() {
         if (this.level() instanceof ServerLevel serverLevel && this.isAlive()) {
             var storage = DogLocationStorage.get(serverLevel);
@@ -2305,7 +2305,7 @@ public class Dog extends AbstractDog {
             if (data != null) data.update(this);
             storage.getOnlineDogsManager().onDogGoOnline(this);
         }
-        super.onAddedToWorld();
+        //super.onAddedToWorld();
     }
 
     @Override
@@ -5312,6 +5312,21 @@ public class Dog extends AbstractDog {
             }
             return VALUES[i];
         }
+    }
+
+    //Neo
+    @Override
+    public void onAddedToLevel() {
+        super.onAddedToLevel();
+        this.onAddedToWorld();
+    }
+    @Override
+    public void onRemovedFromLevel() {
+        super.onRemovedFromLevel();
+        this.onRemovedFromWorld();
+    }
+    public boolean isAddedToWorld() {
+        return this.isAddedToLevel();
     }
 
 }
