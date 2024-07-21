@@ -50,6 +50,8 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel> {
                 }
             }
             var accessory = accessoryInst.getAccessory();
+            if (!accessory.shouldRender())
+                continue;
             if (!isOverlay(accessory)) continue;               
             if (accessory.hasHindLegDiffTex()) {
                 this.renderHindLegDifferentAccessory(poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, accessoryInst);
