@@ -97,3 +97,47 @@ jar {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
+
+task vscodePrintRunClient {
+    doFirst {
+
+        println("vmArgs:")
+        def vmArgs = "";
+        for (item in runs.client.realiseJvmArguments()) {
+            vmArgs = vmArgs + item + " "
+        }
+        println(vmArgs)
+        println("==================================")
+        println("args:")
+        def args1 = ""
+        for (item in runs.client.getProgramArguments().get()) {
+            args1 = args1 + item + " "
+        }
+        println(args1)
+        println("==================================")
+        println("")
+        println("")
+    }
+}
+
+task vscodePrintRunData {
+    doFirst {
+
+        println("vmArgs:")
+        def vmArgs = "";
+        for (item in runs.data.realiseJvmArguments()) {
+            vmArgs = vmArgs + item + " "
+        }
+        println(vmArgs)
+        println("==================================")
+        println("args:")
+        def args1 = ""
+        for (item in runs.data.getProgramArguments().get()) {
+            args1 = args1 + item + " "
+        }
+        println(args1)
+        println("==================================")
+        println("")
+        println("")
+    }
+}
