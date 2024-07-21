@@ -7,13 +7,18 @@ import java.util.UUID;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.lib.Constants;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.server.ServerStoppingEvent;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class OnlineDogLocationManager {
 
@@ -39,6 +44,8 @@ public class OnlineDogLocationManager {
             if (!dog.isRemoved())
                 continue;
             toRemove.add(entry.getKey());
+            if (ConfigHandler.SERVER.LOG_WHEN_DOG_GO_OFFLINE.get())
+                logOfflineDog(entry.getValue());
         }
         if (toRemove.isEmpty())
             return;
@@ -83,10 +90,38 @@ public class OnlineDogLocationManager {
     public void onServerStop() {
         unrideAllDogOnPlayer();
         
-        this.onlineDogs.clear();
+        //Preserve to log offline info
+        if (!ConfigHandler.SERVER.LOG_WHEN_DOG_GO_OFFLINE.get())
+            this.onlineDogs.clear();
         this.toRemove.clear();
     }
+    
+    public void onServerStopped() {
+        if (!ConfigHandler.SERVER.LOG_WHEN_DOG_GO_OFFLINE.get())
+            return;
+        
+        for (var entry : this.onlineDogs.entrySet()) {
+            logOfflineDog(entry.getValue());
+        }
 
+        this.onlineDogs.clear();
+    }
+
+    public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID + "/dogOnlineTracker");
+    public static void logOfflineDog(Dog dog) {
+        var remove_reason = dog.getRemovalReason();
+        var type_str = remove_reason == null ? "WHAT?"
+            : remove_reason.toString();
+        var pos = dog.blockPosition();
+        var pos_str = pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
+        var log_str = "Dog [ "
+            + dog.getName().getString()
+            + " ] has gone Offline at [ "
+            + pos_str
+            + " ] with type [ "
+            + type_str + " ]";
+        LOGGER.debug(log_str);
+    }
 
     private void unrideAllDogOnPlayer() {
         for (var entry : this.onlineDogs.entrySet()) {

@@ -99,6 +99,11 @@ public class EventHandler {
     }
 
     @SubscribeEvent
+    public void onServerStopped(final ServerStoppedEvent event) {
+        DogLocationStorage.get(event.getServer()).onServerStopped(event);
+    }
+
+    @SubscribeEvent
     public void onWolfRightClickWithTreat(final PlayerInteractEvent.EntityInteract event) {
         var level = event.getWorld();
         var stack = event.getItemStack();
