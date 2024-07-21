@@ -113,6 +113,10 @@ public enum EnumMode {
         return shouldAttack;
     }
 
+    public boolean minorAttack() {
+        return this == BERSERKER_MINOR || this == GUARD_FLAT;
+    }
+
     public boolean canWander() {
         return canWander;
     }

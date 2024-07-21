@@ -38,21 +38,6 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
     public GuardModeGoal(Dog dog) {
         super(dog, Mob.class, 3, false, false, (e) -> {
             if (!(e instanceof Enemy)) return false;
-            if (dog.isMode(EnumMode.GUARD_FLAT)) {
-                if (e instanceof AbstractPiglin) {
-                    var owner = dog.getOwner();
-                    if (owner != null) {
-                        for (var stack : owner.getArmorSlots()) {
-                            if (FabricUtil.makesPiglinsNeutral(stack)) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-                if (e instanceof ZombifiedPiglin) return false;
-                if (e.getType().is(DoggyTags.DOG_SHOULD_IGNORE))
-                    return false;
-            }
             return true;
         });
         this.dog = dog;
