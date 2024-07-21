@@ -291,6 +291,7 @@ public class Dog extends AbstractDog {
     //private int wanderRestTime = 0;
     private int wanderCooldown = 0;
     private int drunkTickLeft = 0;
+    private int silentTickLeft = 0;
 
     private float headRotationCourse;
     private float headRotationCourseOld;
@@ -366,7 +367,8 @@ public class Dog extends AbstractDog {
 
     @Override
     public void playStepSound(BlockPos pos, BlockState blockIn) {
-        this.playSound(SoundEvents.WOLF_STEP, 0.15F, 1.0F);
+        var vol = this.isDogSilent() ? 0.01f : 0.15f;
+        this.playSound(SoundEvents.WOLF_STEP, vol, 1.0F);
     }
 
     @Override
@@ -380,7 +382,7 @@ public class Dog extends AbstractDog {
                 return SoundEvents.WOLF_PANT;
             }
         }
-        if (this.pettingManager.isPetting()) {
+        if (this.pettingManager.isPetting() || this.isDogSilent()) {
             return null;
         }
         if (this.random.nextInt(3) == 0) {
@@ -906,6 +908,9 @@ public class Dog extends AbstractDog {
 
         if (this.drunkTickLeft > 0)
             --this.drunkTickLeft;
+
+        if (this.silentTickLeft > 0)
+            --this.silentTickLeft;
 
         // if (!this.level().isClientSide && this.getMode().canWander()) {
         //     if (!this.getMode().shouldAttack()) {
@@ -3789,6 +3794,14 @@ public class Dog extends AbstractDog {
 
     public boolean isDogDrunk() {
         return this.drunkTickLeft > 0;
+    }
+
+    public void setSilentTickLeft(int ticks) {
+        this.silentTickLeft = ticks;
+    }
+
+    public boolean isDogSilent() {
+        return this.silentTickLeft > 0;
     }
 
     public void setPatrolTargetLock(boolean val) {
