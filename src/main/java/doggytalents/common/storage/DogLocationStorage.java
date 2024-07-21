@@ -200,4 +200,8 @@ public class DogLocationStorage extends SavedData {
         this.onlineDogManager.onServerStop();
         GREETING_DOG_LIMIT_MAP.clear();
     }
+
+    public void onServerStopped(ServerStoppedEvent event) {
+        this.onlineDogManager.onServerStopped();
+    }
 }

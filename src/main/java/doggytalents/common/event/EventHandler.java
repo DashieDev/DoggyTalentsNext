@@ -90,6 +90,11 @@ public class EventHandler {
         DogLocationStorage.get(event.getServer()).onServerStop(event);
     }
 
+    @SubscribeEvent
+    public void onServerStopped(final ServerStoppedEvent event) {
+        DogLocationStorage.get(event.getServer()).onServerStopped(event);
+    }
+
     //@SubscribeEvent
     public void onWolfRightClickWithTreat(final PlayerInteractEvent.EntityInteract event) {
         var level = event.getLevel();
