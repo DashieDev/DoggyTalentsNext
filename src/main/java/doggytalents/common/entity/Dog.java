@@ -122,6 +122,8 @@ import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.ZombifiedPiglin;
+import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Snowball;
@@ -1591,6 +1593,19 @@ public class Dog extends AbstractDog {
     public boolean wantsToAttack(LivingEntity target, LivingEntity owner) {
         if (!this.getMode().shouldAttack()) {
             return false;
+        }
+
+        if (this.getMode().minorAttack()) {
+            if (target instanceof ZombifiedPiglin) return false;
+            if (target instanceof AbstractPiglin) {
+                for (var stack : owner.getArmorSlots()) {
+                    if (stack.makesPiglinsNeutral(owner)) {
+                        return false;
+                    }
+                }
+            }
+            if (target.getType().is(DoggyTags.DOG_SHOULD_IGNORE))
+                return false;
         }
 
         for (IDogAlteration alter : this.alterations) {
