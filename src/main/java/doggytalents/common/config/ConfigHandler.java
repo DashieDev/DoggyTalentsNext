@@ -287,6 +287,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
         public ModConfigSpec.BooleanValue DOG_PETTING;
         public ModConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
+        public ModConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
 
         public Map<String, ModConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -490,6 +491,11 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("not having neither Radio Collars nor Locator Orbs equipped.")
                 .translation("doggytalents.allow_track_any_dog")
                 .define("allow_track_any_dog", false);
+            LOG_WHEN_DOG_GO_OFFLINE = builder
+                .comment("When this option is enabled, Debug Information is Logged when")
+                .comment("a dog goes Offline, for example, being Unloaded To Chunk.")
+                .translation("doggytalents.log_when_dog_go_offline")
+                .define("log_when_dog_go_offline", true);
             builder.pop();
         }
 

@@ -75,6 +75,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEven
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import doggytalents.common.network.PacketDistributor;
@@ -94,6 +95,11 @@ public class EventHandler {
     public void onServerStop(final ServerStoppingEvent event) {
         DogPromiseManager.forceStop();
         DogLocationStorage.get(event.getServer()).onServerStop(event);
+    }
+
+    @SubscribeEvent
+    public void onServerStopped(final ServerStoppedEvent event) {
+        DogLocationStorage.get(event.getServer()).onServerStopped(event);
     }
 
     @SubscribeEvent
