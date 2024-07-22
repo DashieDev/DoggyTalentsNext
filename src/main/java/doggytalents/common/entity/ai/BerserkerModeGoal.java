@@ -2,6 +2,7 @@ package doggytalents.common.entity.ai;
 
 import doggytalents.DoggyTags;
 import doggytalents.api.feature.EnumMode;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.util.FabricUtil;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,11 +21,22 @@ public class BerserkerModeGoal extends NearestAttackableTargetGoal<Mob> {
 
     public BerserkerModeGoal(Dog dog) {
         super(dog, Mob.class, false , (e) -> {
+            if (targetingOwnerCheck(dog, e))
+                return true;
             if (!(e instanceof Enemy)) return false;
             
             return true;
         });
         this.dog = dog;
+    }
+
+    private static boolean targetingOwnerCheck(Dog dog, LivingEntity e) {
+        if (!ConfigHandler.SERVER.BG_MODE_LESS_STRICT.get())
+            return false;
+        if (!(e instanceof Mob mob))
+            return false;
+        var owner = dog.getOwner();
+        return mob.getTarget() == owner;
     }
 
     @Override
