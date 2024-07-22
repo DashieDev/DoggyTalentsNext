@@ -163,7 +163,7 @@
    "doggytalents.whistle.long": "Whistle Long",
    "dogcommand.come": "일어나!",
    "dogcommand.stay": "앉아!",
-   "dogcommand.ok": "그만!",
+   "dogcommand.stop_attacking": "그만!",
    "dogcommand.heel": "이리와!",
    "doggui.prevpage": "이전 페이지",
    "doggui.nextpage": "다음 페이지",

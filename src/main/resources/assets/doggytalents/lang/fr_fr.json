@@ -466,7 +466,7 @@
 
    "dogcommand.come": "Au pied !",
    "dogcommand.stay": "Reste !",
-   "dogcommand.ok": "Okay !",
+   "dogcommand.stop_attacking": "Okay !",
    "dogcommand.heel": "Heel!",
    "dogcommand.heel_by_name": "%s, Au pied !",
    "dogcommand.heel_by_group": "%s, Au pied !",
