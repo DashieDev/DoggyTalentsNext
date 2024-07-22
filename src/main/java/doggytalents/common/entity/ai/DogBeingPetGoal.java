@@ -203,11 +203,11 @@ public class DogBeingPetGoal extends Goal {
     }
 
     private void rejuvinateDog() {
-        if (dog.getRandom().nextInt(100) != 0)
+        if (dog.getRandom().nextInt(60) != 0)
             return;
         boolean add_hunger = dog.getRandom().nextBoolean();
         if (add_hunger) {
-            if (dog.getDogHunger() < 20)
+            if (dog.getDogHunger() < 25)
                 dog.addHunger(1);
         } else {
             if (dog.getHealth() / dog.getMaxHealth() < 0.25f)
