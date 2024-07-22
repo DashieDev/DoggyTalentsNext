@@ -492,7 +492,7 @@
  
     "dogcommand.come": "立て!",
     "dogcommand.stay": "待て!",
-    "dogcommand.ok": "OK!",
+    "dogcommand.stop_attacking": "OK!",
     "dogcommand.heel": "おいで!",
     "dogcommand.heel_by_name": "%s, おいで!",
     "dogcommand.heel_by_group": "%s, おいで!",
