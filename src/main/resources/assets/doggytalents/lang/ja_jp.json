@@ -30,7 +30,7 @@
     "item.doggytalents.whistle.0": "口笛命令: 立て",
     "item.doggytalents.whistle.1": "口笛命令: おいで",
     "item.doggytalents.whistle.2": "口笛命令: 待て",
-    "item.doggytalents.whistle.3": "口笛命令: Ok?",
+    "item.doggytalents.whistle.3": "口笛命令:　攻撃を止めて",
     "item.doggytalents.whistle.4": "牧羊犬口笛",
     "item.doggytalents.whistle.5": "作戦的な口笛",
     "item.doggytalents.whistle.6": "烈風口笛",
@@ -43,6 +43,7 @@
     "item.doggytalents.whistle.13": "一緒に乗って口笛", 
     "item.doggytalents.whistle.14": "口笛命令: 吠え！",
     "item.doggytalents.whistle.15": "全体（立っている）：モードスイッチ",
+    "item.doggytalents.whistle.16": "シーッ！",
 
     "item.doggytalents.treat_bag": "おやつ袋",
     "item.doggytalents.energizer_stick": "エネルギースティック",
@@ -154,8 +155,13 @@
     "item.doggytalents.superdog_suit": "スーパードッグ仮装",
     "item.doggytalents.flying_cape": "飛行マント",
     "item.doggytalents.bat_wings": "コウモリ翼",
-    "item.doggytalents.crow_wings": "カラス翼",
-    
+    "item.doggytalents.crow_wings": "カラス翼",    
+    "item.doggytalents.angel_wings": "天使の羽",
+    "item.doggytalents.angel_halo": "天使の光輪",
+    "item.doggytalents.goose": "MrBlueYetiさんのガチョウ",
+    "item.doggytalents.goose.description": "ガアガアァァ！",
+    "item.doggytalents.midi_keyboard": "MIDIキーボード",
+
     "item.doggytalents.divine_retribution": "真経の鏡",
     "item.doggytalents.divine_retribution.description": "\"暑っち！アッチ！背中が焼けてしまった！\" - とバニラ狼君と言った。",
     "item.doggytalents.divine_retribution.description2": "\"すぐに慣れるよ。\" - クミーが答えた。",
@@ -462,6 +468,11 @@
     "dog.msg.play_tag.dog_win": "タグで%sを失った！なんてスピーディーなワンちゃんなんだ！",
     "dog.msg.play_tag.you_win": "タグで %s を勝ちました！おめでとう！",
  
+    "dog.msg.want_attention.0": "%s: あの、ちょっと...",
+    "dog.msg.want_attention.1": "%s: もしもし～",
+    "dog.msg.want_attention.2": "%s: こっちこっち！",
+
+
     "entity.doggytalents.dog": "犬",
     "entity.doggytalents.dog.unknown_owner": "飼い主UNKNOWN",
     "entity.doggytalents.dog.untamed": "野犬",
@@ -484,21 +495,26 @@
     "dog.classical.variant.compl.birch": "シラカバ",
     "dog.classical.variant.compl.pistachio": "ピスタチオ",
     "dog.classical.variant.compl.guacamole": "グワカモーレ",
-    
+    "dog.classical.variant.compl.molten": "溶岩",
+    "dog.classical.variant.compl.yuzu": "柚子",
+
     "dog.classical.variant.compl.vscode": "ＶＳコード",
+
+    "dog.petmode.facerub": "顔こすり",
+    "dog.petmode.hug": "抱きしめり",
 
     "doggytalents.whistle.short": "口笛・短",
     "doggytalents.whistle.long": "口笛・長",
  
     "dogcommand.come": "立て!",
     "dogcommand.stay": "待て!",
-    "dogcommand.stop_attacking": "OK!",
+    "dogcommand.stop_attacking": "攻撃はすべて止めて！",
     "dogcommand.heel": "おいで!",
     "dogcommand.heel_by_name": "%s, おいで!",
     "dogcommand.heel_by_group": "%s, おいで!",
     "dogcommand.ride_with_me": "%s, ほら、行こうぜ!",
     "dogcommand.all_stand_switch_mode": "立っている犬たちのモードは %s!",
-
+    "dogcommand.ssshhh": "みんな、シーッ！",
  
     "doggytalents.screen.whistler.screen.help_title" : "口笛・モード選択",
     "doggytalents.screen.whistler.screen.help" : "上下の矢印を使い、口笛に設定したいモードを選択します。タイプして探すこともできます。Enterキーを押してコマンドを終了します。さらに、オレンジ色の名前の前に表示されている対応する数字キーを押すことで、モードをクイック選択することができます。Escでキャンセルをします。.", 
@@ -522,7 +538,10 @@
     "doggytalents.screen.heel_by_group.help_title": "グループでおいで口笛",
     "doggytalents.screen.heel_by_group.help": "上下の矢印を使用して、「おいで」したいグループを選択します。名前を入力してグループを検索します。Enterを押してコマンドを終了します。Escでキャンセルをします。",
     "doggytalents.screen.heel_by_group.no_group_found": "グループが見つかりません。",
- 
+    "doggytalents.screen.pet_select.exit": "ペットモード終了",
+    "doggytalents.screen.pet_select.help.0": "ペットモードに入るにはスタイルを選択します。ペットモード中に、スニーキングをせずにペット距離で犬と触れ合うと、他のスタイルに切り替えたり、ペットモードを終了するために、このGUIが再び表示されます。",
+    "doggytalents.screen.pet_select.help.1": "ペットモードで、スニークを押したまま、ペット距離で右クリックを押したまま、犬を見ると撫で始めます。スニークキーまたは右クリックを離すと、撫でが止まります。三人称視点でのペット操作中は、移動がロックされるため、ペット操作を中断することなく、移動キーでカメラを回転させることができます。",
+
     "amnesia_bone_gui.navbar.general" : "一般的",
     "amnesia_bone_gui.navbar.talents" : "才能",
  
@@ -536,6 +555,7 @@
     "doggui.navbar.stats" : "統計",
  
     "doggui.home.name" : "名前:",
+    "doggui.home.pet_hint" : "右クリックで%sへの愛撫を開始します。",
     "doggui.home.edit_info" : "情報を編集",
     "doggui.home.edit_info.substitude_name" : "と呼んで： %s",
     "doggui.home.artifacts" : "神飾",
