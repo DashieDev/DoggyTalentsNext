@@ -4,6 +4,7 @@ import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.feature.InteractHandler;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DoggyKeybinds;
+import doggytalents.client.PettingArmPose;
 import doggytalents.client.DTNClientPettingManager;
 import doggytalents.client.data.DTBlockstateProvider;
 import doggytalents.client.data.DTItemModelProvider;

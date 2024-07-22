@@ -16,7 +16,6 @@ import doggytalents.client.screen.PetSelectScreen;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.DogPettingManager.DogPettingType;
-import doggytalents.common.network.PacketDistributor;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogPettingData;
 import net.minecraft.client.Minecraft;
@@ -26,13 +25,15 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.EntityHitResult;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
-import net.neoforged.neoforge.client.event.RenderArmEvent;
-import net.neoforged.neoforge.client.event.RenderPlayerEvent;
-import net.neoforged.neoforge.client.event.ViewportEvent.ComputeCameraAngles;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.MovementInputUpdateEvent;
+import net.minecraftforge.client.event.RenderArmEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.ViewportEvent.ComputeCameraAngles;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
+import net.minecraftforge.event.TickEvent.Phase;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.network.PacketDistributor;
 
 public class DTNClientPettingManager {
 
@@ -78,7 +79,10 @@ public class DTNClientPettingManager {
     }
 
     @SubscribeEvent
-    public void tickClient(ClientTickEvent.Post event) {
+    public void tickClient(ClientTickEvent event) {
+        if (event.phase != Phase.END)
+            return;
+
         if (isPetting)
             updatePetCameraRotation();
         invalidatePetterCache();
@@ -135,7 +139,7 @@ public class DTNClientPettingManager {
         //configurable
         var stack = event.getPoseStack();
         var mc = Minecraft.getInstance();
-        var pTicks = mc.getTimer().getGameTimeDeltaPartialTick(true);
+        var pTicks = mc.getPartialTick();
         
         var player = event.getPlayer();
         float anim_timeline = (float)(player.tickCount + player.getId() + pTicks ) * 0.04f;
@@ -272,7 +276,7 @@ public class DTNClientPettingManager {
 
     public void applyTransform(HumanoidModel<?> model, LivingEntity player, HumanoidArm arm) {
         var mc = Minecraft.getInstance();
-        var pTicks = mc.getTimer().getGameTimeDeltaPartialTick(true);
+        var pTicks = mc.getPartialTick();
         float anim_timeline = (float)(player.getId() + player.tickCount + pTicks ) * 0.04f;
         float occill, rotating_x;
         var petting_type = getPettingTypeFor(player);
@@ -404,4 +408,5 @@ public class DTNClientPettingManager {
             PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogPettingData(dog.getId(), false, null));
     }
 
+    
 }
