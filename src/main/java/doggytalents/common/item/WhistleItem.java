@@ -62,7 +62,7 @@ public class WhistleItem extends Item implements IDogItem {
         STAND(0, WhistleSound.LONG),
         HEEL(1, WhistleSound.LONG),
         STAY(2, WhistleSound.SHORT),
-        OKAY(3, WhistleSound.LONG),
+        STOP_ATTACKING(3, WhistleSound.SHORT),
         SHELPERD(4, WhistleSound.SHORT),
         TACTICAL(5, WhistleSound.NONE),
         ROAR(6, WhistleSound.NONE),
@@ -252,18 +252,14 @@ public class WhistleItem extends Item implements IDogItem {
             }
             player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;
-        case OKAY:
+        case STOP_ATTACKING:
             if (world.isClientSide) return;
             for (var dog : dogsList) {
                 successful = true;
-                dog.getNavigation().stop();
                 dog.setTarget(null);
-                dog.setOrderedToSit(
-                    dog.getMaxHealth() / 2 >= dog.getHealth()
-                );
             }
             if (successful) {
-                player.sendMessage(ComponentUtil.translatable("dogcommand.ok"), net.minecraft.Util.NIL_UUID);
+                player.sendMessage(ComponentUtil.translatable("dogcommand.stop_attacking"), net.minecraft.Util.NIL_UUID);
             }
             player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
             return;

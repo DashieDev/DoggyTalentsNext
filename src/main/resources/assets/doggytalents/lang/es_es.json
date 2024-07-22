@@ -460,7 +460,7 @@
 
    "dogcommand.come": "¡Quieto!",
    "dogcommand.stay": "¡Quieto!",
-   "dogcommand.ok": "¡Listo!",
+   "dogcommand.stop_attacking": "¡Listo!",
    "dogcommand.heel": "¡Junto!",
    "dogcommand.heel_by_name": "%s, ¡Junto!",
    "dogcommand.heel_by_group": "%s, ¡Junto!",

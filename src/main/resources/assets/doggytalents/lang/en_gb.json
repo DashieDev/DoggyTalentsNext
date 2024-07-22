@@ -191,7 +191,7 @@
 
    "dogcommand.come": "Stand!",
    "dogcommand.stay": "Stay!",
-   "dogcommand.ok": "Okay!",
+   "dogcommand.stop_attacking": "Okay!",
    "dogcommand.heel": "Heel!",
 
    "doggui.prevpage": "Previous Page",
