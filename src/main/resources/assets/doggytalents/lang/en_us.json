@@ -30,7 +30,7 @@
    "item.doggytalents.whistle.0": "Whistle: Command Stand",
    "item.doggytalents.whistle.1": "Whistle: Command Heel",
    "item.doggytalents.whistle.2": "Whistle: Command Stay",
-   "item.doggytalents.whistle.3": "Whistle: Command Ok?",
+   "item.doggytalents.whistle.3": "Whistle: Command Stop Attacking",
    "item.doggytalents.whistle.4": "Shepherds Whistle",
    "item.doggytalents.whistle.5": "Tactical Whistle",
    "item.doggytalents.whistle.6": "Roaring Whistle",
@@ -507,7 +507,7 @@
 
    "dogcommand.come": "Stand!",
    "dogcommand.stay": "Stay!",
-   "dogcommand.ok": "Okay!",
+   "dogcommand.stop_attacking": "All Stop Attacking!",
    "dogcommand.heel": "Heel!",
    "dogcommand.heel_by_name": "%s, Heel!",
    "dogcommand.heel_by_group": "%s, Heel!",

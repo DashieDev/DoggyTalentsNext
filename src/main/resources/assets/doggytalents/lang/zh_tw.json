@@ -465,7 +465,7 @@
 
    "dogcommand.come": "過來!",
    "dogcommand.stay": "坐下!",
-   "dogcommand.ok": "OK!",
+   "dogcommand.stop_attacking": "OK!",
    "dogcommand.heel": "おいで!",
    "dogcommand.heel_by_name": "%s, 過來!",
    "dogcommand.heel_by_group": "%s, 過來!",

@@ -209,7 +209,7 @@
 
    "dogcommand.come": "Встать!",
    "dogcommand.stay": "Ждать!",
-   "dogcommand.ok": "Хорошо!",
+   "dogcommand.stop_attacking": "Хорошо!",
    "dogcommand.heel": "Рядом!",
 
    "doggui.prevpage": "Предыдущая страница",
