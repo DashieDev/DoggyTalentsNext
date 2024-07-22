@@ -31,8 +31,14 @@ public class DogVariants {
     public static final Supplier<DogVariant> LEMONY_LIME = register("lemony_lime", 0xffa8c882);
     public static final Supplier<DogVariant> HIMALAYAN_SALT = register("himalayan_salt", 0xffb55c63);
     public static final Supplier<DogVariant> BAMBOO = register("bamboo", 0xff629122);
-    public static final Supplier<DogVariant> CRIMSON = register("crimson", 0xff822f33);
-    public static final Supplier<DogVariant> WARPED = register("warped", 0xff235c5d);
+    public static final Supplier<DogVariant> CRIMSON = register("crimson", 
+        p -> { p.guiColor(0xff822f33).glowingOverlay(
+            Util.getResource("textures/entity/dog/classical/compl/overlay/wolf_crimson_overlay.png")
+        ); });
+    public static final Supplier<DogVariant> WARPED = register("warped", 
+        p -> { p.guiColor(0xff235c5d).glowingOverlay(
+            Util.getResource("textures/entity/dog/classical/compl/overlay/wolf_warped_overlay.png")
+        ); });
     public static final Supplier<DogVariant> BIRCH = register("birch", 0xffcec192);
     public static final Supplier<DogVariant> PISTACHIO = register("pistachio", 0xffa3a25b);
     public static final Supplier<DogVariant> GUACAMOLE = register("guacamole", 0xff9ab123);
