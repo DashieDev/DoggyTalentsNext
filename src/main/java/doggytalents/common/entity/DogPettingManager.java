@@ -183,7 +183,7 @@ public class DogPettingManager {
     }
 
     private boolean isSelectingDog(Player player, Dog dog) {
-        double pick_range = player.entityInteractionRange();
+        double pick_range = player.getEntityReach();
         var view_vec = player.getViewVector(1);
         var eye_pos = player.getEyePosition(0);
         var from_vec = eye_pos;

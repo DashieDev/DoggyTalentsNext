@@ -17,8 +17,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class DogFoodUtil {
     
@@ -29,8 +29,8 @@ public class DogFoodUtil {
             var props = stack.getFoodProperties(null);
 
             if (props == null) return false;
-            return stack.is(ItemTags.MEAT) && stack.getItem() != Items.ROTTEN_FLESH
-                && props.nutrition() >= 6;
+            return props.isMeat() && stack.getItem() != Items.ROTTEN_FLESH
+                && props.getNutrition() >= 6;
         }
         
     };
@@ -90,7 +90,7 @@ public class DogFoodUtil {
     private static boolean checkRegenEffects(AbstractDog target, ItemStack stack, DogEddibleItem item) {
         var effects = item.getAdditionalEffectsWhenDogConsume(stack, target);
         for (var pair : effects) {
-            var effect = pair.effect();
+            var effect = pair.getFirst();
             if (effect.getEffect() == MobEffects.REGENERATION)
                 return true;
         }
