@@ -3,8 +3,9 @@ package doggytalents.common.entity.serializers;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.DogPettingManager.DogPettingType;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.syncher.EntityDataSerializer;
 
-public class PettingStateSerializer extends DogSerializer<DogPettingState> {
+public class PettingStateSerializer implements EntityDataSerializer<DogPettingState> {
 
     @Override
     public void write(FriendlyByteBuf buf, DogPettingState value) {

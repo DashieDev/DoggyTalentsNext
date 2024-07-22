@@ -285,7 +285,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DOG_PETTING;
         public ForgeConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
         public ForgeConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
-        public ModConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
+        public ForgeConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
