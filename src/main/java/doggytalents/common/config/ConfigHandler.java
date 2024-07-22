@@ -285,6 +285,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DOG_PETTING;
         public ForgeConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
         public ForgeConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
+        public ModConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
@@ -496,6 +497,11 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("a dog goes Offline, for example, being Unloaded To Chunk.")
                 .translation("doggytalents.log_when_dog_go_offline")
                 .define("log_when_dog_go_offline", true);
+            BG_MODE_LESS_STRICT = builder
+                .comment("Enable this to allow Besserker&Guard Dogs to consider any entity that is")
+                .comment("targetting the player a potential danger instead of just 'Enemy'(s)")
+                .translation("doggytalents.besserker_less_strict")
+                .define("b_g_mode_less_strict", false);
 
             //(Non 1.20.5+)
             RANDOM_VAR_ON_TRAIN = builder
