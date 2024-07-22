@@ -1457,3 +1457,50 @@ seperate ground to shine - DTN's Palette Of Paws.
 
 **1.18.20 - 28th June 2024**
 *HOTFIX: Dog Variants features still get rendered on Dogs with Custom Skins.
+
+**1.18.21 - 22th July 2024**
+=============
+YOU CAN NOW PET YOUR DOGS (WITH STYLE)!!!!!!!!
+  + 2 Petting Style: Facerub and Hug, more in the future!
+  + To start petting the dog, click on the dog in the Home tab
+  of the Dog Gui, a menu will show up prompting you to select the
+  pet mode. After selecting, you will now opt in pet mode
+Pet Mode:
+  + it will take over your right click, which mean you cannot properly interact with the dog (the game wont handle the interaction)
+  + Instead Right clicking the dog will bring up the Pet menu again
+  allowing you to either change pet style or terminate pet mode to regain interaction
+  control
+  + Sneak + Hold Right Click will begin a petting the dog if the dog
+  is in a position to be pet.
+  + Release Right Click or Unsneak to stop petting.
+  + You can continue to pet other dogs without opting out of the mode.
+To be able to pet the dog:
+  + The dog must be in the Sitting Pose , he must not be lying.
+  + You must be close to it.
+  + All of your hand must be empty.
+  + Both you and dog must not riding or being ridden
+  + You must be the owner of the dog.
+  + You must be sneaking
+  + Dog is not in Injured Mode
+  + dog is not onFire
+  + (For now) Dog's size must be MODERATO
+  + Your view vector must cut the dog's bounding box.
+  + You cannot be in spectator.
+For the Dog:
+  + The dog will do some cute reaction to the pet and it will get more happy the longer you pet it.
+  + Some dog variants may give you a little love burn when you pet it.
+  + If you pet this Dog too much, other Dogs around might get jealous. 
+  + If the Dog's Health is under 25% it will slowly heal until it is no longer under that point.
+  + If the Dog's Hunger is under 25 it will slowly recover until it is no longer under that point. 
+===
++ New Whistle Mode: 
+  Ssshhh! : Make nearby Dogs go silent for a while.
+  Stop Attacking: Force nearby Dogs to clear their targets.
+
+# Food Bowl now offer food in the same way Pack Puppy does.
+# Configurable solutions to Optionally avoid Radio Collars on Dogs but still be able to track them:
+  + Serverside: Option to disable the requirement of Tracking Accessories in other to track Dog
+  + Clientside: Option to prevent Radio Collar from rendering.
+# Glowing Overlay for Crimson and Warped Variant.
+
+- Removed Ok? Mode from Whistle
