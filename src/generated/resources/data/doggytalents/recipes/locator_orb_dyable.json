@@ -3,13 +3,13 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "minecraft:potion"
+      "item": "doggytalents:empty_locator_orb"
     },
     {
-      "item": "doggytalents:koji"
+      "item": "minecraft:paper"
     }
   ],
   "result": {
-    "item": "doggytalents:sake"
+    "item": "doggytalents:locator_orb_dyable"
   }
 }

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_koji": {
+    "has_string": {
       "conditions": {
         "items": [
           {
             "items": [
-              "doggytalents:koji"
+              "minecraft:string"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:sake"
+        "recipe": "doggytalents:locator_orb_dyable"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_koji",
+      "has_string",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:sake"
+      "doggytalents:locator_orb_dyable"
     ]
   },
   "sends_telemetry_event": false

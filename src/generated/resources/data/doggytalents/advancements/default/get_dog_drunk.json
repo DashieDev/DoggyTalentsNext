@@ -1,4 +1,5 @@
 {
+  "parent": "doggytalents:dtn_core/train_dog",
   "criteria": {
     "get_dog_drunk": {
       "conditions": {},
