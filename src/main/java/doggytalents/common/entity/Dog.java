@@ -1565,6 +1565,10 @@ public class Dog extends AbstractDog {
             return false;
         }
 
+        if (this.getMode().minorAttack() && this.dogMinorAttackCheckToAvoid(target)) {
+            return false;
+        }
+
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.canAttack(this, target);
 
@@ -1584,6 +1588,23 @@ public class Dog extends AbstractDog {
         return super.canAttack(target);
     }
 
+    private boolean dogMinorAttackCheckToAvoid(LivingEntity target) {
+        if (target instanceof ZombifiedPiglin) return true;
+        if (target instanceof AbstractPiglin) {
+            var owner = this.getOwner();
+            if (owner != null) {
+                for (var stack : owner.getArmorSlots()) {
+                    if (stack.makesPiglinsNeutral(owner)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        if (target.getType().is(DoggyTags.DOG_SHOULD_IGNORE))
+            return true;
+        return false;
+    }
+
     @Override
     public boolean canAttackType(EntityType<?> entityType) {
         if (!this.getMode().shouldAttack()) {
@@ -1599,19 +1620,6 @@ public class Dog extends AbstractDog {
     public boolean wantsToAttack(LivingEntity target, LivingEntity owner) {
         if (!this.getMode().shouldAttack()) {
             return false;
-        }
-
-        if (this.getMode().minorAttack()) {
-            if (target instanceof ZombifiedPiglin) return false;
-            if (target instanceof AbstractPiglin) {
-                for (var stack : owner.getArmorSlots()) {
-                    if (FabricUtil.makesPiglinsNeutral(stack)) {
-                        return false;
-                    }
-                }
-            }
-            if (target.getType().is(DoggyTags.DOG_SHOULD_IGNORE))
-                return false;
         }
 
         for (IDogAlteration alter : this.alterations) {
