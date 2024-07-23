@@ -36,10 +36,10 @@ public class DoggyContainerTypes {
         Entity entity = inv.player.level().getEntity(data.readInt());
         return entity instanceof Dog ? new PackPuppyContainer(windowId, inv, (Dog) entity) : null;
     });
-    // public static final RegistryObject<MenuType<TreatBagContainer>> TREAT_BAG = register("treat_bag", (windowId, inv, data) -> {
-    //     int slotId = data.readByte();
-    //     return new TreatBagContainer(windowId, inv, slotId, data.readItem());
-    // });
+    public static final RegistryObject<MenuType<TreatBagContainer>> TREAT_BAG = register("treat_bag", (windowId, inv, data) -> {
+        int slotId = data.readByte();
+        return new TreatBagContainer(windowId, inv, slotId, data.readItem());
+    });
     public static final RegistryObject<MenuType<DogInventoriesContainer>> DOG_INVENTORIES = register("dog_inventories", (windowId, inv, data) -> {
         int noDogs = data.readInt();
         List<Dog> dogs = new ArrayList<>(noDogs);

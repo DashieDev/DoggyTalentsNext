@@ -16,32 +16,35 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import doggytalents.common.entity.Dog;
+import javax.annotation.Nullable;
+
+import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.common.item.IDyeableArmorItem;
 
 public class ItemUtil {
 
     private static int MAX_OVERVIEW = 3;
-    // public static ContentOverview getContentOverview(IItemHandler inventory) {
-    //     var retMap = new HashMap<Item, Integer>(MAX_OVERVIEW);
-    //     int isMore = 0;
-    //     for (int i = 0; i < inventory.getSlots(); ++i) {
-    //         var stack = inventory.getStackInSlot(i);
-    //         if (stack.isEmpty())
-    //             continue;
-    //         var item = stack.getItem();
-    //         var existing = retMap.get(item);
-    //         if (existing != null) {
-    //             retMap.put(item, existing + stack.getCount());
-    //             continue;
-    //         }
-    //         if (retMap.size() >= MAX_OVERVIEW) {
-    //             ++isMore;
-    //             continue;
-    //         }
-    //         retMap.put(item, stack.getCount());
-    //     }
-    //     return new ContentOverview(retMap, isMore);        
-    // }
+    public static ContentOverview getContentOverview(ItemStackHandler inventory) {
+        var retMap = new HashMap<Item, Integer>(MAX_OVERVIEW);
+        int isMore = 0;
+        for (int i = 0; i < inventory.getSlots(); ++i) {
+            var stack = inventory.getStackInSlot(i);
+            if (stack.isEmpty())
+                continue;
+            var item = stack.getItem();
+            var existing = retMap.get(item);
+            if (existing != null) {
+                retMap.put(item, existing + stack.getCount());
+                continue;
+            }
+            if (retMap.size() >= MAX_OVERVIEW) {
+                ++isMore;
+                continue;
+            }
+            retMap.put(item, stack.getCount());
+        }
+        return new ContentOverview(retMap, isMore);        
+    }
 
     public static class ContentOverview {
         

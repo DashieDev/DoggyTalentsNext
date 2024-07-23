@@ -5,32 +5,36 @@ import javax.annotation.Nonnull;
 import doggytalents.DoggyTags;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
+import doggytalents.common.item.TreatBagItem;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import javax.annotation.Nonnull;
 
-public class TreatBagItemHandler /*extends ItemStackHandler*/ {
+public class TreatBagItemHandler extends ItemStackHandler {
 
-    // private ItemStack bag;
+    private ItemStack bag;
 
-    // public TreatBagItemHandler(ItemStack bag) {
-    //     super(5);
-    //     this.bag = bag;
+    public TreatBagItemHandler(ItemStack bag) {
+        super(5);
+        this.bag = bag;
+        
+        var inventoryNBT = bag.getTagElement("inventory");
+        if (inventoryNBT != null) {
+            this.deserializeNBT(inventoryNBT);
+        }
+        
+    }
 
-    //     CompoundTag inventoryNBT = bag.getTagElement("inventory");
-    //     if (inventoryNBT != null) {
-    //         this.deserializeNBT(inventoryNBT);
-    //     }
-    // }
+    @Override
+    protected void onContentsChanged() {
+        this.bag.getOrCreateTagElement("inventory").merge(this.serializeNBT());
+    }
 
-    // @Override
-    // protected void onContentsChanged(int slot) {
-    //     this.bag.getOrCreateTagElement("inventory").merge(this.serializeNBT());
-    // }
-
-    // @Override
-    // public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-    //     return stack.is(DoggyTags.TREATS) || FoodHandler.isFood(stack).isPresent();
-    // }
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return stack.is(DoggyTags.TREATS) || FoodHandler.isFood(stack).isPresent() || stack.is(Items.GUNPOWDER);
+    }
 }

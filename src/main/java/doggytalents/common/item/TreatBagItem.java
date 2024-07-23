@@ -1,8 +1,8 @@
 package doggytalents.common.item;
 
+import doggytalents.DoggyItems;
 import doggytalents.api.feature.FoodHandler;
-import doggytalents.api.forge_imitate.inventory.ContainerWrapper;
-import doggytalents.api.forge_imitate.inventory.IItemHandler;
+import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.Screens;
@@ -14,6 +14,7 @@ import doggytalents.common.util.DogFoodUtil;
 import doggytalents.common.util.InventoryUtil;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -33,13 +34,16 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TreatBagItem extends Item implements IDogFoodHandler {
 
     private Cache<String> contentsTranslationKey = Cache.make(() -> this.getDescriptionId() + ".contents");
 
     public TreatBagItem(Properties properties) {
-        super(properties);
+        super(
+            properties
+        );
     }
 
     @Override
@@ -58,9 +62,9 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
                 return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
             }
             if (playerIn instanceof ServerPlayer) {
-                // ServerPlayer serverPlayer = (ServerPlayer) playerIn;
+                ServerPlayer serverPlayer = (ServerPlayer) playerIn;
 
-                // Screens.openTreatBagScreen(serverPlayer, stack, playerIn.getInventory().selected);
+                Screens.openTreatBagScreen(serverPlayer, stack, playerIn.getInventory().selected);
             }
 
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
@@ -105,7 +109,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         player.level().addFreshEntity(dogGunpowderProj);
     }
 
-    private int findThrowableInItemHandler(IItemHandler itemHandler) {
+    private int findThrowableInItemHandler(ItemStackHandler itemHandler) {
         for (int i = 0; i < itemHandler.getSlots(); ++i) {
             var stack = itemHandler.getStackInSlot(i);
             if (stack.isEmpty())
@@ -155,7 +159,24 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
                 Style.EMPTY.withColor(0xffa3a3a3)
             ));
         }
+        
+        
     }
+
+    // public static List<ItemStack> inventory(ItemStack stack) {
+    //     if (!stack.is(DoggyItems.TREAT_BAG.get()))
+    //         return List.of();
+    //     var itemList = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
+    //     if (itemList == ItemContainerContents.EMPTY)
+    //         return List.of();
+    //     return itemList.stream().collect(Collectors.toList());
+    // }
+
+    // public static void flushInveotory(ItemStack stack, NonNullList<ItemStack> inv) {
+    //     if (!stack.is(DoggyItems.TREAT_BAG.get()))
+    //         return;
+    //     stack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(inv));
+    // }
 
     // @Override
     // public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
