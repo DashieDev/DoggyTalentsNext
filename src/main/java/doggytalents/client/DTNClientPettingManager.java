@@ -266,7 +266,8 @@ public class DTNClientPettingManager {
         
         // model.leftArmPose = PettingArmPose.VALUE;
         // model.rightArmPose = PettingArmPose.VALUE;
-        PettingArmPose.activate = true;
+        PettingArmPose.activateLeft = true;
+        PettingArmPose.activateRight = true;
     }
 
     private boolean isPettingPlayer(Player player) {
