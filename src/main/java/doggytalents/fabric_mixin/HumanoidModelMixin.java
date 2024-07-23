@@ -15,9 +15,9 @@ public class HumanoidModelMixin {
     
     @Inject(at = @At("HEAD"), cancellable = true, method = "poseRightArm(Lnet/minecraft/world/entity/LivingEntity;)V")
     public void dtn__poseRightArm(LivingEntity player, CallbackInfo info) {
-        if (!PettingArmPose.activate)
+        if (!PettingArmPose.activateRight)
             return;
-        PettingArmPose.activate = false;
+        PettingArmPose.activateRight = false;
         var self = (HumanoidModel<?>)(Object)this;
         PettingArmPose.applyTransform(self, player, HumanoidArm.RIGHT);
         info.cancel();
@@ -25,9 +25,9 @@ public class HumanoidModelMixin {
 
     @Inject(at = @At("HEAD"), cancellable = true, method = "poseLeftArm(Lnet/minecraft/world/entity/LivingEntity;)V")
     public void dtn__poseLeftArm(LivingEntity player, CallbackInfo info) {
-        if (!PettingArmPose.activate)
+        if (!PettingArmPose.activateLeft)
             return;
-        PettingArmPose.activate = false;
+        PettingArmPose.activateLeft = false;
         var self = (HumanoidModel<?>)(Object)this;
         PettingArmPose.applyTransform(self, player, HumanoidArm.LEFT);
         info.cancel();

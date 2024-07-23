@@ -18,7 +18,8 @@ public class PettingArmPose {
     public static void init() {}
 
     //Fabric
-    public static boolean activate = false;
+    public static boolean activateRight = false;
+    public static boolean activateLeft = false;
     
 
 }
