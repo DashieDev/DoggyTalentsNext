@@ -148,8 +148,6 @@ public class DoggyTalentsNext {
             GarbageChunkCollector.init();
             RiceMillBlockEntity.initGrindMap();
         });
-
-        PettingArmPose.init();
     }
 
     public void serverStarting(final ServerStartingEvent event) {
@@ -165,6 +163,11 @@ public class DoggyTalentsNext {
         ClientSetup.setupScreenManagers(event);
 
         ClientSetup.setupCollarRenderers(event);
+
+        PettingArmPose.init();
+
+
+        //1.18.2-
         DogBlockRenderTypeSetup.init();
     }
 
