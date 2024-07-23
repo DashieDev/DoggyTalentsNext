@@ -1492,3 +1492,6 @@ For the Dog:
 # Glowing Overlay for Crimson and Warped Variant.
 
 - Removed Ok? Mode from Whistle
+
+**1.18.22 - 23th July 2024**
+*(1.20.1- only)HOTFIX: Fix Dedicated Server Crashing when loading DTN's Petting System.
