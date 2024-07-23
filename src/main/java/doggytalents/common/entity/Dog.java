@@ -1594,7 +1594,7 @@ public class Dog extends AbstractDog {
             var owner = this.getOwner();
             if (owner != null) {
                 for (var stack : owner.getArmorSlots()) {
-                    if (stack.makesPiglinsNeutral(owner)) {
+                    if (FabricUtil.makesPiglinsNeutral(stack)) {
                         return true;
                     }
                 }
