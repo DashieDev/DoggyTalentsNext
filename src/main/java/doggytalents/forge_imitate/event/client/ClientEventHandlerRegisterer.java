@@ -1,6 +1,7 @@
 package doggytalents.forge_imitate.event.client;
 
 import doggytalents.client.ClientSetup;
+import doggytalents.client.DTNClientPettingManager;
 import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.entity.render.world.BedFinderRenderer;
 import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
@@ -97,6 +98,43 @@ public class ClientEventHandlerRegisterer {
             new InstanceEventCallBack<ClientEventHandler, InputEvent.Key>
                 (INST, InputEvent.Key.class,
                     ClientEventHandler::onKeyboardInput
+                )
+        );
+        
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<DTNClientPettingManager, ClientTickEvent>
+                (DTNClientPettingManager.get(), ClientTickEvent.class,
+                    DTNClientPettingManager::tickClient
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<DTNClientPettingManager, RenderArmEvent>
+                (DTNClientPettingManager.get(), RenderArmEvent.class,
+                    DTNClientPettingManager::onRenderHand
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<DTNClientPettingManager, InputEvent.MouseButton.Pre>
+                (DTNClientPettingManager.get(), InputEvent.MouseButton.Pre.class,
+                    DTNClientPettingManager::onMouseInput
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<DTNClientPettingManager, RenderPlayerEvent.Pre>
+                (DTNClientPettingManager.get(), RenderPlayerEvent.Pre.class,
+                    DTNClientPettingManager::onPlayerRender
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<DTNClientPettingManager, ComputeCameraAngles>
+                (DTNClientPettingManager.get(), ComputeCameraAngles.class,
+                    DTNClientPettingManager::modifyCameraAngle
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<DTNClientPettingManager, MovementInputUpdateEvent>
+                (DTNClientPettingManager.get(), MovementInputUpdateEvent.class,
+                    DTNClientPettingManager::onMovementInput
                 )
         );
     }

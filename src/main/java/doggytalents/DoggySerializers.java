@@ -11,8 +11,7 @@ public class DoggySerializers {
 
     //public static final DeferredRegister<EntityDataSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, Constants.MOD_ID);
 
-    public static final Supplier<EntityDataSerializer> DOG_VARIANT_SERIALIZER = register2("dog_variant", DogVariantSerializer::new);
-    public static final EntityDataSerializer CLASSICAL_VAR = register2("classical_var", ClassicalVarSerializer::new);    
+    public static final EntityDataSerializer DOG_VARIANT_SERIALIZER = register2("dog_variant", DogVariantSerializer::new);
     public static final EntityDataSerializer COLLAR_TYPE_SERIALIZER = register2("collar", CollarSerializer::new);
     public static final EntityDataSerializer GENDER_SERIALIZER = register2("gender", GenderSerializer::new);
     public static final EntityDataSerializer MODE_SERIALIZER = register2("mode", ModeSerializer::new);
@@ -22,7 +21,7 @@ public class DoggySerializers {
     public static final EntityDataSerializer ARTIFACTS_SERIALIZER = register2("doggy_artifacts", DoggyArtifactsSerializer::new);
     public static final EntityDataSerializer DOG_SIZE_SERIALIZER = register2("dog_size", DogSizeSerializer::new);
     public static final EntityDataSerializer DOG_SKIN_DATA_SERIALIZER = register2("dog_skin_data", DogSkinDataSerializer::new);
-    public static final Supplier<EntityDataSerializer> DOG_PETTING_STATE = register2("dog_petting_state", PettingStateSerializer::new);
+    public static final EntityDataSerializer DOG_PETTING_STATE = register2("dog_petting_state", PettingStateSerializer::new);
 
     private static <X extends EntityDataSerializer<?>> EntityDataSerializer register2(final String name, final Supplier<X> factory) {
         return register(name, () -> factory.get());

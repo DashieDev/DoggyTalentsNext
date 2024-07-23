@@ -23,13 +23,13 @@ public class DoggyRegistries {
         public static final ResourceLocation DOG_VARIANT = Util.getResource("dog_variant");
     }
 
-    public static Supplier<IForgeRegistry<DogVariant>> DOG_VARIANT;
+    public static Supplier<Registry<DogVariant>> DOG_VARIANT;
 
-    public static void newRegistry(NewRegistryEvent event) {
-        DoggyTalentsAPI.TALENTS = event.create(makeRegistry(Keys.TALENTS_REGISTRY, Talent.class));
-        DoggyTalentsAPI.ACCESSORIES = event.create(makeRegistry(Keys.ACCESSORIES_REGISTRY, Accessory.class));
-        DoggyTalentsAPI.ACCESSORY_TYPE = event.create(makeRegistry(Keys.ACCESSORY_TYPE_REGISTRY, AccessoryType.class).disableSync());
-        DOG_VARIANT = makeRegistry(event, Keys.DOG_VARIANT, DogVariant.class, Util.getVanillaResource("pale"));
+    public static void newRegistry() {
+        DoggyTalentsAPI.TALENTS = makeRegistry(Keys.TALENTS_REGISTRY, Talent.class);
+        DoggyTalentsAPI.ACCESSORIES = makeRegistry(Keys.ACCESSORIES_REGISTRY, Accessory.class);
+        DoggyTalentsAPI.ACCESSORY_TYPE = makeRegistry(Keys.ACCESSORY_TYPE_REGISTRY, AccessoryType.class);
+        DOG_VARIANT = makeRegistry(Keys.DOG_VARIANT, DogVariant.class, Util.getVanillaResource("pale"));
     }
 
     private static <T> Supplier<Registry<T>> makeRegistry(final ResourceLocation rl, Class<T> type) {
@@ -39,12 +39,11 @@ public class DoggyRegistries {
         return () -> ret;
     }
 
-    private static <T> Supplier<IForgeRegistry<T>> makeRegistry(NewRegistryEvent event, 
+    private static <T> Supplier<Registry<T>> makeRegistry(
         final ResourceLocation key, Class<T> type, ResourceLocation defaultKey) {
-        var builder = new RegistryBuilder<T>().setName(key);
-        //builder.sync(true);
-        builder.setDefaultKey(defaultKey);
-        var ret = event.create(builder);
-        return ret;
+        var ret =  FabricRegistryBuilder.createDefaulted(ResourceKey.<T>createRegistryKey(key), defaultKey)
+            .attribute(RegistryAttribute.SYNCED)
+            .buildAndRegister();
+        return () -> ret;
     }
 }

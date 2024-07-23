@@ -12,11 +12,11 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.AllStandSwitchModeData;
 import doggytalents.common.util.EntityUtil;
+import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundSource;
-import net.minecraftforge.network.NetworkEvent.Context;
 
 public class AllStandSwitchModePacket implements IPacket<AllStandSwitchModeData> {
 
@@ -35,8 +35,8 @@ public class AllStandSwitchModePacket implements IPacket<AllStandSwitchModeData>
     @Override
     public void handle(AllStandSwitchModeData data, Supplier<Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            var side = ctx.get().getDirection().getReceptionSide();
-            if (!side.isServer()) return;
+            //var side = ctx.get().getDirection().getReceptionSide();
+            if (!ctx.get().isServerRecipent()) return;
             var sender = ctx.get().getSender();
             if (sender.getCooldowns().isOnCooldown(DoggyItems.WHISTLE.get())) return;
 

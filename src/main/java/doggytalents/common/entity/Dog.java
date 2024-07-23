@@ -49,6 +49,7 @@ import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.fabric_helper.entity.DogFabricHelper;
 import doggytalents.common.fabric_helper.entity.network.SyncTypes;
 import doggytalents.common.fabric_helper.entity.network.SyncTypes.SyncType;
+import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.network.PacketHandler;
@@ -162,15 +163,6 @@ import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.util.ITeleporter;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -242,6 +234,7 @@ public class Dog extends AbstractDog {
         // ARTIFACTS.get();
         // DOG_SIZE.get();
         // CUSTOM_SKIN.get();
+    }
 
     // Cached values
     private final Cache<Integer> spendablePoints = Cache.make(this::getSpendablePointsInternal);
@@ -342,7 +335,7 @@ public class Dog extends AbstractDog {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DOG_VARIANT.get(), DogVariantUtil.getDefault());
+        //this.entityData.define(DOG_VARIANT.get(), DogVariantUtil.getDefault());
         this.entityData.define(LAST_KNOWN_NAME, Optional.empty());
         this.entityData.define(DOG_FLAGS, 0);
         //this.entityData.define(GENDER.get(), EnumGender.UNISEX);
@@ -359,7 +352,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(INCAP_VAL, 0);
         this.entityData.define(ANIMATION, 0);
         this.entityData.define(ANIM_SYNC_TIME, 0);
-        this.entityData.define(DOG_PETTING_STATE.get(), DogPettingState.NULL);
+        //this.entityData.define(DOG_PETTING_STATE.get(), DogPettingState.NULL);
     }
 
     @Override
@@ -1048,13 +1041,6 @@ public class Dog extends AbstractDog {
         if (this.isDefeated()) 
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
-
-        if (stack.getItem() == Items.STONE_AXE) {
-            if (!this.level().isClientSide) {
-                this.setClassicalVar(ClassicalVar.RUSTY);
-            }
-            return InteractionResult.SUCCESS;
-        }
         
         if (handleOpenDogScreenDedicated(player, stack).shouldSwing())
             return InteractionResult.SUCCESS;
@@ -1619,7 +1605,7 @@ public class Dog extends AbstractDog {
             if (target instanceof ZombifiedPiglin) return false;
             if (target instanceof AbstractPiglin) {
                 for (var stack : owner.getArmorSlots()) {
-                    if (stack.makesPiglinsNeutral(owner)) {
+                    if (FabricUtil.makesPiglinsNeutral(stack)) {
                         return false;
                     }
                 }
@@ -2582,7 +2568,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public void jumpInFluid(FluidType type) {
+    public void jumpInLiquid(TagKey<Fluid> tagKey) {
         if (this.getNavigation().canFloat()) {
             this.setDeltaMovement(this.getDeltaMovement().add(0.0, (double)0.04f, 0.0));
         } else {
@@ -3418,11 +3404,11 @@ public class Dog extends AbstractDog {
     }
 
     public DogVariant dogVariant() {
-        return this.entityData.get(DOG_VARIANT.get());
+        return this.dogFabricHelper.getDogVariant();
     }
 
     public void setDogVariant(DogVariant val) {
-        this.entityData.set(DOG_VARIANT.get(), val);
+        this.dogFabricHelper.setDogVariant(val);
     }
 
     public EnumGender getGender() {
@@ -3619,11 +3605,11 @@ public class Dog extends AbstractDog {
     }
 
     public DogPettingState getPettingState() {
-        return this.entityData.get(DOG_PETTING_STATE.get());
+        return this.dogFabricHelper.getDogPettingState();
     }
 
     public void setPettingState(DogPettingState state) {
-        this.entityData.set(DOG_PETTING_STATE.get(), state);
+        this.dogFabricHelper.setDogPettingState(state);
     }
 
     @Override
@@ -4479,8 +4465,8 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean isPushedByFluid(FluidType type) {
-        if (this.fireImmune() && type == ForgeMod.LAVA_TYPE.get())
+    public boolean isPushedByFluid() {
+        if (this.fireImmune())
             return false;
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType();
@@ -4959,7 +4945,7 @@ public class Dog extends AbstractDog {
     }
 
     private boolean isDogInFluid() {
-        return !this.getMaxHeightFluidType().isAir();
+        return this.getMaxFluidHeight().isPresent();
     }
 
     @Override
@@ -5344,16 +5330,12 @@ public class Dog extends AbstractDog {
             this.refreshAlterations();
         }
 
-        if (DOG_PETTING_STATE.get().equals(key)) {
+        if (type == SyncTypes.DOG_PETTING_STATE) {
             if (this.level().isClientSide)
                 DTNClientPettingManager.get().onPettingUpdate(this, getPettingState());
         }
 
-        if (DOG_VARIANT.get().equals(key)) {
-            this.refreshAlterations();
-        }
-        
-        if (ARTIFACTS.get().equals(key)) {
+        if (type == SyncTypes.DOG_VARIANT) {
             this.refreshAlterations();
         }
 

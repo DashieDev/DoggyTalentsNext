@@ -21,7 +21,7 @@ public class LocalPlayerMixin {
             shift = At.Shift.AFTER
         )
     )
-    public void dtn__onTrackingEnd(CallbackInfo info) {
+    public void dtn__aiStep(CallbackInfo info) {
         var self = (LocalPlayer)(Object) this;
         var input = self.input;
         EventCallbacksRegistry.postEvent(new MovementInputUpdateEvent(input, self));

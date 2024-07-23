@@ -4,9 +4,9 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.model.dog.kusa.LocatorOrbModel;
 import doggytalents.common.lib.Resources;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLayerDefinitions;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class DyableLocatorOrbEntry extends DoubleDyableRenderEntry {
     

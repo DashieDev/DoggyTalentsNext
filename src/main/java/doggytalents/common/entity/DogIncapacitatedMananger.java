@@ -27,6 +27,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -42,7 +43,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeMod;
 
 public class DogIncapacitatedMananger {
 
@@ -503,11 +503,11 @@ public class DogIncapacitatedMananger {
     }
 
     private boolean isDogDeepInFluid() {
-        var type = this.dog.getMaxHeightFluidType();
-        if (type.isAir()) return false;
-        if (type == ForgeMod.LAVA_TYPE.get() && dog.fireImmune())
+        var type = this.dog.getMaxFluidHeight();
+        if (!type.isPresent()) return false;
+        if (type.get().equals(FluidTags.LAVA) && dog.fireImmune())
             return false;
-        double height = this.dog.getFluidTypeHeight(type);
+        double height = this.dog.getFluidHeight(type.get());
         return height > 0.5;
     }
 

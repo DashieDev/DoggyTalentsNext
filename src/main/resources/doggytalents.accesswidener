@@ -5,3 +5,7 @@ accessible method net/minecraft/client/renderer/block/model/ItemOverrides <init>
 accessible field net/minecraft/client/renderer/block/model/BlockModel parentLocation Lnet/minecraft/resources/ResourceLocation;
 accessible field net/minecraft/client/renderer/block/model/BlockModel textureMap Ljava/util/Map;
 accessible field net/minecraft/client/renderer/block/model/BlockModel parent Lnet/minecraft/client/renderer/block/model/BlockModel;
+accessible method net/minecraft/client/Camera move (DDD)V
+accessible method net/minecraft/client/Camera setPosition (DDD)V
+accessible method net/minecraft/client/Camera getMaxZoom (D)D
+accessible method net/minecraft/client/Camera setRotation (FF)V

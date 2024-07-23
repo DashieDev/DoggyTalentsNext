@@ -26,7 +26,7 @@ public class DogVariantUtil {
         }
         if (id == null)
             return getDefault();
-        var variant = DoggyRegistries.DOG_VARIANT.get().getValue(id);
+        var variant = DoggyRegistries.DOG_VARIANT.get().get(id);
         if (variant == null)
             return getDefault();
         return variant;
@@ -38,7 +38,8 @@ public class DogVariantUtil {
 
     public static List<DogVariant> getAll() {
         var variant_reg = DoggyRegistries.DOG_VARIANT.get();
-        var entries = variant_reg.getValues().stream()
+        var entries = variant_reg.entrySet().stream()
+            .map(x -> x.getValue())
             .collect(Collectors.toList());
         return entries;
     }

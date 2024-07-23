@@ -25,6 +25,12 @@ public class EventHandlerRegisterer {
                 )
         );
         EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, ServerStoppedEvent>
+                (handlerIst, ServerStoppedEvent.class,
+                    (x, y) -> x.onServerStopped(y)
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
             new InstanceEventCallBack<EventHandler, PlayerInteractEvent.EntityInteract>
                 (handlerIst, PlayerInteractEvent.EntityInteract.class,
                     (x, y) -> x.onWolfRightClickWithTreat(y)
@@ -63,7 +69,7 @@ public class EventHandlerRegisterer {
         EventCallbacksRegistry.registerCallback(
             new InstanceEventCallBack<EventHandler, LivingHurtEvent>
                 (handlerIst, LivingHurtEvent.class,
-                    (x, y) -> x.onDogPassenegerHurtInWall(y)
+                    (x, y) -> x.onLivingHurt(y)
                 )
         );
         EventCallbacksRegistry.registerCallback(

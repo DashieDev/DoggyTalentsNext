@@ -28,7 +28,6 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class DogArrow extends AbstractArrow {
 
@@ -335,7 +334,7 @@ public class DogArrow extends AbstractArrow {
         super.addAdditionalSaveData(compound);
         if (this.potionContents.potion.isPresent()) {
             var potion = this.potionContents.potion.get();
-            compound.putString("Potion", ForgeRegistries.POTIONS.getKey(potion).toString());
+            compound.putString("Potion", BuiltInRegistries.POTION.getKey(potion).toString());
         }
         if (this.potionContents.customEffects.isPresent()) {
             var customEffects = this.potionContents.customEffects.get();

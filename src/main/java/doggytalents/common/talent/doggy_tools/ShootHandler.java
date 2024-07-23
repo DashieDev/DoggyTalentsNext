@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import org.apache.commons.lang3.tuple.Pair;
 
 import doggytalents.DoggyTalents;
+import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.api.impl.IDogRangedAttackManager.UsingWeaponContext;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.config.ConfigHandler;
@@ -28,8 +29,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.items.ItemStackHandler;
-
 public interface ShootHandler {
 
     boolean updateUsingWeapon(DoggyToolsRangedAttack ranged_manager, UsingWeaponContext ctx);
@@ -155,7 +154,7 @@ public interface ShootHandler {
             if (arrow_proj == null)
                 return Optional.empty();
     
-            arrow_proj = bow.customArrow(arrow_proj);
+            //arrow_proj = bow.customArrow(arrow_proj);
             if (power >= 1.0F) {
                 arrow_proj.setCritArrow(true);
             }

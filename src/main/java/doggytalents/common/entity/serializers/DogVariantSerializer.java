@@ -9,12 +9,12 @@ public class DogVariantSerializer implements EntityDataSerializer<DogVariant> {
 
     @Override
     public void write(FriendlyByteBuf buf, DogVariant val) {
-        buf.writeRegistryIdUnsafe(DoggyRegistries.DOG_VARIANT.get(), val);
+        buf.writeId(DoggyRegistries.DOG_VARIANT.get(), val);
     }
 
     @Override
     public DogVariant read(FriendlyByteBuf buf) {
-        return buf.readRegistryIdUnsafe(DoggyRegistries.DOG_VARIANT.get());
+        return buf.readById(DoggyRegistries.DOG_VARIANT.get());
     }
 
     @Override

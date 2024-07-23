@@ -306,7 +306,7 @@ public class DogMeleeAttackGoal extends Goal {
       if (type == BlockPathTypes.OPEN)
          return false;
       type = dog.inferType(type);
-      if (type.getDanger() != null)
+      if (DogUtil.isDangerPathType(type))
          return false;
       return true;
    }

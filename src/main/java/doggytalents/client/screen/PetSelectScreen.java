@@ -54,7 +54,7 @@ public class PetSelectScreen extends StringEntrySelectScreen {
             break;
         }
         
-        this.getMinecraft().setScreen(null);
+        this.minecraft.setScreen(null);
     }
 
     @Override

@@ -5,8 +5,8 @@ import java.util.function.Supplier;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogPettingManager.DogPettingType;
 import doggytalents.common.network.packet.data.DogPettingData;
+import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
 
 public class DogPettingPacket extends DogPacket<DogPettingData> {
 

@@ -16,8 +16,17 @@ import doggytalents.client.screen.PetSelectScreen;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.DogPettingManager.DogPettingType;
+import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogPettingData;
+import doggytalents.forge_imitate.event.client.ClientTickEvent;
+import doggytalents.forge_imitate.event.client.ClientTickEvent.Phase;
+import doggytalents.forge_imitate.event.client.ComputeCameraAngles;
+import doggytalents.forge_imitate.event.client.InputEvent;
+import doggytalents.forge_imitate.event.client.MovementInputUpdateEvent;
+import doggytalents.forge_imitate.event.client.RenderArmEvent;
+import doggytalents.forge_imitate.event.client.RenderPlayerEvent;
+import doggytalents.forge_imitate.network.PacketDistributor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -26,15 +35,6 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.MovementInputUpdateEvent;
-import net.minecraftforge.client.event.RenderArmEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.client.event.ViewportEvent.ComputeCameraAngles;
-import net.minecraftforge.event.TickEvent.ClientTickEvent;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.network.PacketDistributor;
 
 public class DTNClientPettingManager {
 
@@ -79,7 +79,7 @@ public class DTNClientPettingManager {
         pet_camera_yRot0_add = 0;
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void tickClient(ClientTickEvent event) {
         if (event.phase != Phase.END)
             return;
@@ -131,7 +131,7 @@ public class DTNClientPettingManager {
         this.pet_camera_yRot0_add = pet_camera_yRot_add - y_rot_change;
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onRenderHand(RenderArmEvent event) {
         if (event.getArm() != HumanoidArm.RIGHT)
             return;
@@ -140,7 +140,7 @@ public class DTNClientPettingManager {
         //configurable
         var stack = event.getPoseStack();
         var mc = Minecraft.getInstance();
-        var pTicks = mc.getPartialTick();
+        var pTicks = FabricUtil.getPartialTick(mc);
         
         var player = event.getPlayer();
         float anim_timeline = (float)(player.tickCount + player.getId() + pTicks ) * 0.04f;
@@ -163,7 +163,7 @@ public class DTNClientPettingManager {
         }
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onMouseInput(InputEvent.MouseButton.Pre event) {
         var button = event.getButton();
         if (selectedType == null)
@@ -256,16 +256,17 @@ public class DTNClientPettingManager {
         return dog.getPettingState().type();
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onPlayerRender(RenderPlayerEvent.Pre event) {
         if (!isPettingPlayer(event.getEntity()))
             return;
         
-        var renderer = event.getRenderer();
-        var model = renderer.getModel();
+        //var renderer = event.getRenderer();
+        //var model = renderer.getModel();
         
-        model.leftArmPose = PettingArmPose.VALUE;
-        model.rightArmPose = PettingArmPose.VALUE;
+        // model.leftArmPose = PettingArmPose.VALUE;
+        // model.rightArmPose = PettingArmPose.VALUE;
+        PettingArmPose.activate = true;
     }
 
     private boolean isPettingPlayer(Player player) {
@@ -277,7 +278,7 @@ public class DTNClientPettingManager {
 
     public void applyTransform(HumanoidModel<?> model, LivingEntity player, HumanoidArm arm) {
         var mc = Minecraft.getInstance();
-        var pTicks = mc.getPartialTick();
+        var pTicks = FabricUtil.getPartialTick(mc);
         float anim_timeline = (float)(player.getId() + player.tickCount + pTicks ) * 0.04f;
         float occill, rotating_x;
         var petting_type = getPettingTypeFor(player);
@@ -324,7 +325,7 @@ public class DTNClientPettingManager {
         }
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void modifyCameraAngle(ComputeCameraAngles event) {
         if (!this.isPetting)
             return;
@@ -334,17 +335,17 @@ public class DTNClientPettingManager {
         if (view_type.isFirstPerson())
             return;
         
-        var pTicks = event.getPartialTick();
+        var pTicks = FabricUtil.getPartialTick(mc);
         float camera_xRot = (float) Mth.lerp(pTicks, pet_camera_xRot0_add, pet_camera_xRot_add);
         camera_xRot = Mth.clamp(camera_xRot, -75, 75);
         event.setPitch(camera_xRot);
         event.setYaw(event.getYaw() + (float) Mth.lerp(pTicks, pet_camera_yRot0_add, pet_camera_yRot_add));
     
         //1.20 under
-        fixCameraPosition_1_20_under(event.getCamera(), event.getPartialTick(), event.getYaw(), event.getPitch());
+        fixCameraPosition_1_20_under(event.getCamera(), FabricUtil.getPartialTick(mc), event.getYaw(), event.getPitch());
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onMovementInput(MovementInputUpdateEvent event) {
         if (!this.isPetting)
             return;

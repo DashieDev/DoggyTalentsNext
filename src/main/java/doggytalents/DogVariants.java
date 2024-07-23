@@ -9,12 +9,12 @@ import doggytalents.common.util.Util;
 import doggytalents.common.variant.CherryWolfVariant;
 import doggytalents.common.variant.DogVariant;
 import doggytalents.common.variant.MoltenWolfVariant;
-import net.minecraftforge.registries.DeferredRegister;
+import doggytalents.forge_imitate.registry.DeferredRegister;
 
 public class DogVariants {
     
-    public static final DeferredRegister<DogVariant> DOG_VARIANT = DeferredRegister.create(DoggyRegistries.Keys.DOG_VARIANT, Constants.MOD_ID);
-    public static final DeferredRegister<DogVariant> DOG_VARIANT_VANILLA = DeferredRegister.create(DoggyRegistries.Keys.DOG_VARIANT, Constants.VANILLA_ID);
+    public static final DeferredRegister<DogVariant> DOG_VARIANT = DeferredRegister.create(DoggyRegistries.DOG_VARIANT, Constants.MOD_ID);
+    public static final DeferredRegister<DogVariant> DOG_VARIANT_VANILLA = DeferredRegister.create(DoggyRegistries.DOG_VARIANT, Constants.VANILLA_ID);
     
     //Minecraft's
     public static final Supplier<DogVariant> PALE = registerDefault();

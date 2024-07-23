@@ -8,7 +8,6 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.ArmorTrim;
-import net.minecraftforge.items.IItemHandler;
 
 import java.util.HashMap;
 import java.util.List;

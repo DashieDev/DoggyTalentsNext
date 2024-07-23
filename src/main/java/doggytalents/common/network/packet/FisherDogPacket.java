@@ -6,8 +6,8 @@ import doggytalents.DoggyTalents;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.FisherDogData;
 import doggytalents.common.talent.FisherDogTalent;
+import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
 
 public class FisherDogPacket extends DogPacket<FisherDogData> {
 

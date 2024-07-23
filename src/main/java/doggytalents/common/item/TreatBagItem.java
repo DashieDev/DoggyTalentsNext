@@ -155,12 +155,13 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
                 Style.EMPTY.withColor(0xffa3a3a3)
             ));
         }
-
-    @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        //TODO : do we want to matches the tag as well ? As this one is currently do...
-        return !ItemStack.matches(oldStack, newStack);
     }
+
+    // @Override
+    // public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+    //     //TODO : do we want to matches the tag as well ? As this one is currently do...
+    //     return !ItemStack.matches(oldStack, newStack);
+    // }
 
     @Override
     public boolean isFood(ItemStack stackIn) {
@@ -178,7 +179,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         if (dogIn.level().isClientSide)
             return InteractionResult.SUCCESS;
 
-        IItemHandlerModifiable treatBag = new TreatBagItemHandler(stackIn);
+        var treatBag = new TreatBagItemHandler(stackIn);
         return DogFoodUtil.tryFeedAny(dogIn, entityIn, treatBag);
     }
 }
