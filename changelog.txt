@@ -1504,3 +1504,6 @@ For the Dog:
 # Glowing Overlay for Crimson and Warped Variant.
 
 - Removed Ok? Mode from Whistle
+
+**1.18.23 - 23th July 2024**
+*HOTFIX: Berserker Minor/Guard Flat Dog still attack avoided Entities.
