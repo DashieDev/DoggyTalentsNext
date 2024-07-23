@@ -5,9 +5,6 @@ import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.item.ChopinRecordItem;
-import doggytalents.common.variants.DTNWolfVariantsSpawnOverride;
-import doggytalents.common.variants.DTNWolfVariantsSpawnPlacements;
-import doggytalents.common.variants.VSCodeWolfSpawnHandler;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry.InstanceEventCallBack;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry.SingleEventCallBack;
 
@@ -26,6 +23,12 @@ public class EventHandlerRegisterer {
             new InstanceEventCallBack<EventHandler, ServerStoppingEvent>
                 (handlerIst, ServerStoppingEvent.class,
                     (x, y) -> x.onServerStop(y)
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, ServerStoppedEvent>
+                (handlerIst, ServerStoppedEvent.class,
+                    (x, y) -> x.onServerStopped(y)
                 )
         );
         EventCallbacksRegistry.registerCallback(
@@ -67,7 +70,7 @@ public class EventHandlerRegisterer {
         EventCallbacksRegistry.registerCallback(
             new InstanceEventCallBack<EventHandler, LivingHurtEvent>
                 (handlerIst, LivingHurtEvent.class,
-                    (x, y) -> x.onDogPassenegerHurtInWall(y)
+                    (x, y) -> x.onLivingHurt(y)
                 )
         );
         // EventCallbacksRegistry.registerCallback(
@@ -94,24 +97,24 @@ public class EventHandlerRegisterer {
                 DoggyEntityTypes::addEntityAttributes
             )
         );
-        EventCallbacksRegistry.registerCallback(
-            new SingleEventCallBack<MobSpawnEvent.FinalizeSpawn>(
-                MobSpawnEvent.FinalizeSpawn.class,
-                DTNWolfVariantsSpawnOverride::onWolfSpawn
-            )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new SingleEventCallBack<MobSpawnEvent.PositionCheck>(
-                MobSpawnEvent.PositionCheck.class,
-                DTNWolfVariantsSpawnPlacements::onPositionCheck
-            )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new SingleEventCallBack<PlayerInteractEvent.RightClickBlock>(
-                PlayerInteractEvent.RightClickBlock.class,
-                VSCodeWolfSpawnHandler::onRightClickBlock
-            )
-        );
+        // EventCallbacksRegistry.registerCallback(
+        //     new SingleEventCallBack<MobSpawnEvent.FinalizeSpawn>(
+        //         MobSpawnEvent.FinalizeSpawn.class,
+        //         DTNWolfVariantsSpawnOverride::onWolfSpawn
+        //     )
+        // );
+        // EventCallbacksRegistry.registerCallback(
+        //     new SingleEventCallBack<MobSpawnEvent.PositionCheck>(
+        //         MobSpawnEvent.PositionCheck.class,
+        //         DTNWolfVariantsSpawnPlacements::onPositionCheck
+        //     )
+        // );
+        // EventCallbacksRegistry.registerCallback(
+        //     new SingleEventCallBack<PlayerInteractEvent.RightClickBlock>(
+        //         PlayerInteractEvent.RightClickBlock.class,
+        //         VSCodeWolfSpawnHandler::onRightClickBlock
+        //     )
+        // );
         EventCallbacksRegistry.registerCallback(
             new SingleEventCallBack<PlayerInteractEvent.RightClickBlock>(
                 PlayerInteractEvent.RightClickBlock.class,

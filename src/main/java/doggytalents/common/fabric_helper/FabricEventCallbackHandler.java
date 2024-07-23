@@ -3,6 +3,7 @@ package doggytalents.common.fabric_helper;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import doggytalents.forge_imitate.event.LivingHurtEvent;
 import doggytalents.forge_imitate.event.PlayerInteractEvent;
+import doggytalents.forge_imitate.event.ServerStoppedEvent;
 import doggytalents.forge_imitate.event.ServerStoppingEvent;
 import doggytalents.forge_imitate.event.ServerTickEvent;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent;
@@ -20,6 +21,9 @@ public class FabricEventCallbackHandler {
     public static void init() {
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
             EventCallbacksRegistry.postEvent(new ServerStoppingEvent(server));         
+        });
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+            EventCallbacksRegistry.postEvent(new ServerStoppedEvent(server));         
         });
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             EventCallbacksRegistry.postEvent(new ServerTickEvent(server));      

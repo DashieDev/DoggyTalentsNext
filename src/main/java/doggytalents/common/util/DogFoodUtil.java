@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 import doggytalents.api.feature.FoodHandler;
+import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.entity.Dog;
@@ -17,8 +18,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
-import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class DogFoodUtil {
     
@@ -26,7 +25,7 @@ public class DogFoodUtil {
 
         @Override
         public boolean isFood(ItemStack stack) {
-            var props = stack.getFoodProperties(null);
+            var props = ItemUtil.food(stack);
 
             if (props == null) return false;
             return stack.is(ItemTags.MEAT) && stack.getItem() != Items.ROTTEN_FLESH
@@ -135,7 +134,7 @@ public class DogFoodUtil {
     }
 
     public static InteractionResult tryFeedAny(
-        AbstractDog dog, @Nullable Entity feeder, IItemHandlerModifiable inv) {
+        AbstractDog dog, @Nullable Entity feeder, ItemStackHandler inv) {
 
         int found_food_id = -1;
         IDogFoodHandler found_food = null;

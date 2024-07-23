@@ -7,10 +7,10 @@ import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLayerDefinitions;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class AngelWingsRenderEntry extends Entry{
     public static final ModelLayerLocation ANGEL_WINGS = new ModelLayerLocation(Util.getResource("angel_wings"), "main");

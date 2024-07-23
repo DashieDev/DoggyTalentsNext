@@ -25,11 +25,11 @@ public class DoggyRegistries {
 
     public static Supplier<Registry<DogVariant>> DOG_VARIANT;
 
-    public static void newRegistry(NewRegistryEvent event) {
-        DoggyTalentsAPI.TALENTS = makeRegistry(event, Keys.TALENTS_REGISTRY, Talent.class);
-        DoggyTalentsAPI.ACCESSORIES = makeRegistry(event, Keys.ACCESSORIES_REGISTRY, Accessory.class);
-        DoggyTalentsAPI.ACCESSORY_TYPE = makeRegistry(event, Keys.ACCESSORY_TYPE_REGISTRY, AccessoryType.class, true);
-        DOG_VARIANT = makeRegistry(event, Keys.DOG_VARIANT, DogVariant.class, Util.getVanillaResource("pale"));
+    public static void newRegistry() {
+        DoggyTalentsAPI.TALENTS = makeRegistry(Keys.TALENTS_REGISTRY, Talent.class);
+        DoggyTalentsAPI.ACCESSORIES = makeRegistry(Keys.ACCESSORIES_REGISTRY, Accessory.class);
+        DoggyTalentsAPI.ACCESSORY_TYPE = makeRegistry(Keys.ACCESSORY_TYPE_REGISTRY, AccessoryType.class);
+        DOG_VARIANT = makeRegistry(Keys.DOG_VARIANT, DogVariant.class, Util.getVanillaResource("pale"));
     }
 
     private static <T> Supplier<Registry<T>> makeRegistry(final ResourceKey<Registry<T>> key, Class<T> type) {
@@ -44,12 +44,11 @@ public class DoggyRegistries {
         return ResourceKey.createRegistryKey(rl);
     }
 
-    private static <T> Supplier<Registry<T>> makeRegistry(NewRegistryEvent event, 
+    private static <T> Supplier<Registry<T>> makeRegistry(
         final ResourceKey<Registry<T>> key, Class<T> type, ResourceLocation defaultKey) {
-        var builder = new RegistryBuilder<T>(key);
-        builder.sync(true);
-        builder.defaultKey(defaultKey);
-        var ret = event.create(builder);
+        var ret =  FabricRegistryBuilder.createDefaulted(key, defaultKey)
+            .attribute(RegistryAttribute.SYNCED)
+            .buildAndRegister();
         return () -> ret;
     }
 }

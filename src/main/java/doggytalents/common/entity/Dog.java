@@ -50,6 +50,7 @@ import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.fabric_helper.entity.DogFabricHelper;
 import doggytalents.common.fabric_helper.entity.network.SyncTypes;
 import doggytalents.common.fabric_helper.entity.network.SyncTypes.SyncType;
+import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.network.PacketHandler;
@@ -166,11 +167,6 @@ import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.fluids.FluidType;
-import doggytalents.common.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -343,7 +339,7 @@ public class Dog extends AbstractDog {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        builder.define(DOG_VARIANT.get(), DogVariantUtil.getDefault());
+        //builder.define(DOG_VARIANT.get(), DogVariantUtil.getDefault());
         builder.define(LAST_KNOWN_NAME, Optional.empty());
         builder.define(DOG_FLAGS, 0);
         //builder.define(GENDER.get(), EnumGender.UNISEX);
@@ -360,7 +356,7 @@ public class Dog extends AbstractDog {
         builder.define(INCAP_VAL, 0);
         builder.define(ANIMATION, 0);
         builder.define(ANIM_SYNC_TIME, 0);
-        builder.define(DOG_PETTING_STATE.get(), DogPettingState.NULL);
+        //builder.define(DOG_PETTING_STATE.get(), DogPettingState.NULL);
     }
 
     @Override
@@ -1613,7 +1609,7 @@ public class Dog extends AbstractDog {
             if (target instanceof ZombifiedPiglin) return false;
             if (target instanceof AbstractPiglin) {
                 for (var stack : owner.getArmorSlots()) {
-                    if (stack.makesPiglinsNeutral(owner)) {
+                    if (FabricUtil.makesPiglinsNeutral(stack)) {
                         return false;
                     }
                 }
@@ -2582,7 +2578,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    protected void jumpInLiquid(TagKey<Fluid> tagKey) {
+    public void jumpInLiquid(TagKey<Fluid> tagKey) {
         if (this.getNavigation().canFloat()) {
             this.setDeltaMovement(this.getDeltaMovement().add(0.0, (double)0.04f, 0.0));
         } else {
@@ -3418,11 +3414,11 @@ public class Dog extends AbstractDog {
     }
 
     public DogVariant dogVariant() {
-        return this.entityData.get(DOG_VARIANT.get());
+        return this.dogFabricHelper.getDogVariant();
     }
 
     public void setDogVariant(DogVariant val) {
-        this.entityData.set(DOG_VARIANT.get(), val);
+        this.dogFabricHelper.setDogVariant(val);
     }
 
     public EnumGender getGender() {
@@ -3619,11 +3615,11 @@ public class Dog extends AbstractDog {
     }
 
     public DogPettingState getPettingState() {
-        return this.entityData.get(DOG_PETTING_STATE.get());
+        return this.dogFabricHelper.getDogPettingState();
     }
 
     public void setPettingState(DogPettingState state) {
-        this.entityData.set(DOG_PETTING_STATE.get(), state);
+        this.dogFabricHelper.setDogPettingState(state);
     }
 
     @Override
@@ -4480,8 +4476,8 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean isPushedByFluid() {
-        // if (this.fireImmune() && type == NeoForgeMod.LAVA_TYPE.value())
-        //     return false;
+        if (this.fireImmune())
+            return false;
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType();
 
@@ -5339,19 +5335,16 @@ public class Dog extends AbstractDog {
     public DogFabricHelper getDogFabricHelper() { return dogFabricHelper; }
 
     public void onFabricDataUpdated(SyncType<?> type) {
-        if (DOG_PETTING_STATE.get().equals(key)) {
+        if (type == SyncTypes.ARTIFACTS) {
+            this.refreshAlterations();
+        }
+
+        if (type == SyncTypes.DOG_PETTING_STATE) {
             if (this.level().isClientSide)
                 DTNClientPettingManager.get().onPettingUpdate(this, getPettingState());
         }
-        if (DOG_VARIANT.get().equals(key)) {
-            this.refreshAlterations();
-        }
-        
-        if (ARTIFACTS.get().equals(key)) {
-            this.refreshAlterations();
-        }
-        
-        if (type == SyncTypes.ARTIFACTS) {
+
+        if (type == SyncTypes.DOG_VARIANT) {
             this.refreshAlterations();
         }
 

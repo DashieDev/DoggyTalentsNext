@@ -8,9 +8,9 @@ import doggytalents.api.feature.DogLevel;
 import doggytalents.api.feature.DogSize;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
-import doggytalents.common.entity.ClassicalVar;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
+import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.fabric_helper.entity.network.FabricSyncAllData;
@@ -18,6 +18,8 @@ import doggytalents.common.fabric_helper.entity.network.SyncTypes;
 import doggytalents.common.fabric_helper.entity.network.SyncTypes.SyncType;
 import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.network.PacketHandler;
+import doggytalents.common.variant.DogVariant;
+import doggytalents.common.variant.util.DogVariantUtil;
 import doggytalents.forge_imitate.network.PacketDistributor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -27,7 +29,7 @@ public class DogFabricHelper {
     
     private final Dog dog;
     private DogLevel dogLevel = new DogLevel(0, 0);
-    private ClassicalVar classicalVar = ClassicalVar.PALE;
+    private DogVariant dogVariant = DogVariantUtil.getDefault();
     private EnumGender dogGender = EnumGender.MALE;
     private EnumMode dogMode = EnumMode.DOCILE;
     private DimensionDependantArg<Optional<BlockPos>> bowlPos = new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS);    
@@ -36,6 +38,7 @@ public class DogFabricHelper {
     private List<DoggyArtifactItem> artifacts = new ArrayList<>();
     private DogSize dogSize = DogSize.MODERATO;
     private DogSkinData dogSkin = DogSkinData.NULL;
+    private DogPettingState dogPettingState = DogPettingState.NULL;
 
     private final ArrayList<SyncType<?>> dirtyEntries = new ArrayList<>();
 
@@ -80,17 +83,17 @@ public class DogFabricHelper {
         this.dog.onFabricDataUpdated(SyncTypes.DOG_LEVEL);
     }
 
-    public ClassicalVar getClassicalVar() {
-        return classicalVar;
+    public DogVariant getDogVariant() {
+        return dogVariant;
     }
 
-    public void setClassicalVar(ClassicalVar val) {
-        if (val == this.classicalVar)
+    public void setDogVariant(DogVariant val) {
+        if (val == this.dogVariant)
             return;
         if (!dog.level().isClientSide) {
-            this.setDirty(SyncTypes.CLASSICAL_VAR);
+            this.setDirty(SyncTypes.DOG_VARIANT);
         }
-        this.classicalVar = val;
+        this.dogVariant = val;
     }
 
     public EnumGender getDogGender() {
@@ -189,6 +192,20 @@ public class DogFabricHelper {
         }
         this.dogSkin = data;
         dog.onFabricDataUpdated(SyncTypes.DOG_SKIN);
+    }
+
+    public DogPettingState getDogPettingState() {
+        return this.dogPettingState;
+    }
+
+    public void setDogPettingState(DogPettingState data) {
+        if (this.dogPettingState.equals(data))
+            return;
+        if (!dog.level().isClientSide) {
+            this.setDirty(SyncTypes.DOG_PETTING_STATE);
+        }
+        this.dogPettingState = data;
+        dog.onFabricDataUpdated(SyncTypes.DOG_PETTING_STATE);
     }
 
     public void onStartBeingSeenBy(ServerPlayer player) {

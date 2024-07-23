@@ -128,9 +128,9 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> CROW_WINGS = registerAccessory("crow_wings", DoggyAccessories.CROW_WINGS);
     public static final RegistryObject<AccessoryItem> DIVINE_RETRIBUTON = register("divine_retribution", () -> new FieryReflectorItem(DoggyAccessories.DIVINE_RETRIBUTION, createInitialProp()));
     public static final RegistryObject<AccessoryItem> SOUL_REFLECTOR = register("soul_reflector", () -> new FieryReflectorItem(DoggyAccessories.SOUL_REFLECTOR, createInitialProp()));
-    public static final Supplier<DyeableAccessoryItem> ANGEL_WINGS = register("angel_wings", () -> new AngelWings.Item(DoggyAccessories.ANGEL_WINGS, createInitialProp()));
-    public static final Supplier<AccessoryItem> ANGEL_HALO = register("angel_halo", () -> new AngelHalo.AngelHaloItem(DoggyAccessories.ANGEL_HALO, createInitialProp()));
-    public static final Supplier<AccessoryItem> YETI_GOOSE = register("goose", () -> new YetiGoose.YetiGooseItem(DoggyAccessories.YETI_GOOSE, createInitialProp()));
+    public static final RegistryObject<DyeableAccessoryItem> ANGEL_WINGS = register("angel_wings", () -> new AngelWings.Item(DoggyAccessories.ANGEL_WINGS, createInitialProp()));
+    public static final RegistryObject<AccessoryItem> ANGEL_HALO = register("angel_halo", () -> new AngelHalo.AngelHaloItem(DoggyAccessories.ANGEL_HALO, createInitialProp()));
+    public static final RegistryObject<AccessoryItem> YETI_GOOSE = register("goose", () -> new YetiGoose.YetiGooseItem(DoggyAccessories.YETI_GOOSE, createInitialProp()));
 
     public static final RegistryObject<AccessoryItem> TENGU_MASK = register("tengu_mask", () -> new TenguMaskItem(DoggyAccessories.TENGU_MASK, createInitialProp()));
     public static final RegistryObject<AccessoryItem> DEMON_HORNS = register("demon_horns", () -> new DemonHornsItem(DoggyAccessories.DEMON_HORNS, createInitialProp()));
@@ -147,7 +147,7 @@ public class DoggyItems {
     public static final RegistryObject<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
     public static final RegistryObject<DyeableAccessoryItem> CERE_GARB = register("ceremonial_garb", () -> new CeremonialGarb.Item(DoggyAccessories.CERE_GARB, createInitialProp()));
     public static final RegistryObject<AccessoryItem> DOGGY_CONTACTS = register("doggy_contacts", () -> new DoggyContactsItem(DoggyAccessories.DOGGY_CONTACTS, createInitialProp()));
-    public static final Supplier<DyeableAccessoryItem> MIDI_KEYBOARD = register("midi_keyboard", () -> new MidiKeyboard.Item(DoggyAccessories.MIDI_KEYBOARD, createInitialProp()));
+    public static final RegistryObject<DyeableAccessoryItem> MIDI_KEYBOARD = register("midi_keyboard", () -> new MidiKeyboard.Item(DoggyAccessories.MIDI_KEYBOARD, createInitialProp()));
     
     public static final RegistryObject<Item> FRISBEE = registerFrisbee("frisbee");
     public static final RegistryObject<Item> FRISBEE_WET = registerFrisbeeWet("frisbee_wet");

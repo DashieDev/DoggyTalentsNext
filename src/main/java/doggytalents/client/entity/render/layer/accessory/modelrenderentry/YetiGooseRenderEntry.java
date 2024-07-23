@@ -9,7 +9,7 @@ import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class YetiGooseRenderEntry extends Entry{
     public static final ModelLayerLocation YETI_GOOSE = new ModelLayerLocation(Util.getResource("goose"), "main");

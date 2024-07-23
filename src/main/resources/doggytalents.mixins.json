@@ -19,7 +19,10 @@
     "client": [
         "LocalPlayerMixin",
         "KeyboardHandlerMixin",
-        "MinecraftMixin"
+        "MinecraftMixin",
+        "PlayerRendererMixin",
+        "HumanoidModelMixin",
+        "CameraMixin"
     ],
     "server": [],
     "injectors": {

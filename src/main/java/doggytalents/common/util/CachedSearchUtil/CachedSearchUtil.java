@@ -394,7 +394,7 @@ public class CachedSearchUtil {
         type = dog.inferType(type);
         if (type == PathType.WALKABLE) return OK;
         if (type == PathType.OPEN) return OPEN;
-        if (FabricUtil.getDanger(type) != null) return DAMAGE;
+        if (DogUtil.isDangerPathType(type)) return DAMAGE;
         if (type == PathType.BLOCKED) return BLOCKED;
         //if (dog.getPathfindingMalus(type) < 0) return DANGER;
         return DANGER;

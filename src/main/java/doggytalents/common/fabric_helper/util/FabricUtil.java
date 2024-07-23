@@ -2,6 +2,7 @@ package doggytalents.common.fabric_helper.util;
 
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.TagKey;
@@ -47,6 +48,10 @@ public class FabricUtil {
         default:
             return -1;
         }
+    }
+
+    public static float getPartialTick(Minecraft mc) {
+        return mc.getTimer().getGameTimeDeltaPartialTick(true);
     }
 
 }

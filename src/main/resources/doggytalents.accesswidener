@@ -10,3 +10,7 @@ accessible method net/minecraft/world/level/block/state/BlockBehaviour getSoundT
 extendable method net/minecraft/world/entity/LivingEntity getDimensions (Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;
 accessible method net/minecraft/client/resources/model/ModelBakery getModel (Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/resources/model/UnbakedModel;
 accessible method net/minecraft/world/entity/projectile/AbstractArrow setPierceLevel (B)V
+accessible method net/minecraft/client/Camera move (FFF)V
+accessible method net/minecraft/client/Camera setPosition (DDD)V
+accessible method net/minecraft/client/Camera getMaxZoom (F)F
+accessible method net/minecraft/client/Camera setRotation (FF)V

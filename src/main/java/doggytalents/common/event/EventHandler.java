@@ -36,6 +36,7 @@ import doggytalents.forge_imitate.event.LootingLevelEvent;
 import doggytalents.forge_imitate.event.PlayerInteractEvent;
 import doggytalents.forge_imitate.event.PlayerLoggedInEvent;
 import doggytalents.forge_imitate.event.ProjectileImpactEvent;
+import doggytalents.forge_imitate.event.ServerStoppedEvent;
 import doggytalents.forge_imitate.event.ServerStoppingEvent;
 import doggytalents.forge_imitate.event.ServerTickEvent;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent;
@@ -92,7 +93,7 @@ public class EventHandler {
         DogLocationStorage.get(event.getServer()).onServerStop(event);
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onServerStopped(final ServerStoppedEvent event) {
         DogLocationStorage.get(event.getServer()).onServerStopped(event);
     }
@@ -552,8 +553,8 @@ public class EventHandler {
     //@SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
         onDogPassenegerHurtInWall(event);
-        if (event.isCanceled())
-            return;
+        // if (event.isCanceled())
+        //     return;
         
     }
 

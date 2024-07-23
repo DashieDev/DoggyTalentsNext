@@ -507,7 +507,7 @@ public class DogIncapacitatedMananger {
     private boolean isDogDeepInFluid() {
         var type = this.dog.getMaxFluidHeight();
         if (!type.isPresent()) return false;
-        if (type.get() == FluidTags.LAVA && dog.fireImmune())
+        if (type.get().equals(FluidTags.LAVA) && dog.fireImmune())
             return false;
         double height = this.dog.getFluidHeight(type.get());
         return height > 0.5;

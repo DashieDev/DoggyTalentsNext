@@ -5,6 +5,7 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.NBTUtil;
+import doggytalents.forge_imitate.event.ServerStoppedEvent;
 import doggytalents.forge_imitate.event.ServerStoppingEvent;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

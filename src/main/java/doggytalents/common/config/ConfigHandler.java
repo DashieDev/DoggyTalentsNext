@@ -77,7 +77,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
         public ForgeConfigSpec.BooleanValue USE_VANILLA_RES_FOR_CLASSICAL;
         public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON;
-        public ModConfigSpec.BooleanValue AMMY_SPINNA;
+        public ForgeConfigSpec.BooleanValue AMMY_SPINNA;
         public ForgeConfigSpec.BooleanValue RENDER_ARMOR;
         public ForgeConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
         public ForgeConfigSpec.BooleanValue DISPLAY_SMOKE_WHEN_ON_FIRE;
@@ -87,8 +87,8 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue USE_PLAYER_HELMET_MODEL_BY_DEFAULT;
         public ForgeConfigSpec.BooleanValue USE_THIRD_PARTY_PLAYER_HELMET_MODEL;
         public ForgeConfigSpec.BooleanValue ENABLE_STARTER_BUNDLE_BY_DEFAULT;
-        public ModConfigSpec.BooleanValue DOG_VARIANT_CLIENT_EFFECT;
-        public ModConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
+        public ForgeConfigSpec.BooleanValue DOG_VARIANT_CLIENT_EFFECT;
+        public ForgeConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
 
         //Fabric only
         public ForgeConfigSpec.BooleanValue DOGBED_FORCE_DEFAULT_MODEL;
@@ -297,10 +297,10 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
         public ForgeConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
         public ForgeConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
-        public ModConfigSpec.BooleanValue DOG_PETTING;
-        public ModConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
-        public ModConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
-        public ModConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
+        public ForgeConfigSpec.BooleanValue DOG_PETTING;
+        public ForgeConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
+        public ForgeConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
+        public ForgeConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 

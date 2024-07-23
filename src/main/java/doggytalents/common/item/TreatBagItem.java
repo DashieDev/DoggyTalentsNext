@@ -203,7 +203,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         if (dogIn.level().isClientSide)
             return InteractionResult.SUCCESS;
 
-        IItemHandlerModifiable treatBag = new TreatBagItemHandler(stackIn);
+        var treatBag = new TreatBagItemHandler(stackIn);
         return DogFoodUtil.tryFeedAny(dogIn, entityIn, treatBag);
     }
 }

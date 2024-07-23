@@ -16,9 +16,18 @@ import doggytalents.client.screen.PetSelectScreen;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.DogPettingManager.DogPettingType;
-import doggytalents.common.network.PacketDistributor;
+import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogPettingData;
+import doggytalents.forge_imitate.event.client.ClientTickEvent;
+import doggytalents.forge_imitate.event.client.ClientTickEvent.Phase;
+import doggytalents.forge_imitate.event.client.ComputeCameraAngles;
+import doggytalents.forge_imitate.event.client.InputEvent;
+import doggytalents.forge_imitate.event.client.MovementInputUpdateEvent;
+import doggytalents.forge_imitate.event.client.RenderArmEvent;
+import doggytalents.forge_imitate.event.client.RenderPlayerEvent;
+import doggytalents.forge_imitate.network.PacketDistributor;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.util.Mth;
@@ -26,13 +35,6 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.EntityHitResult;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
-import net.neoforged.neoforge.client.event.RenderArmEvent;
-import net.neoforged.neoforge.client.event.RenderPlayerEvent;
-import net.neoforged.neoforge.client.event.ViewportEvent.ComputeCameraAngles;
 
 public class DTNClientPettingManager {
 
@@ -77,8 +79,11 @@ public class DTNClientPettingManager {
         pet_camera_yRot0_add = 0;
     }
 
-    @SubscribeEvent
-    public void tickClient(ClientTickEvent.Post event) {
+    //@SubscribeEvent
+    public void tickClient(ClientTickEvent event) {
+        if (event.phase != Phase.END)
+            return;
+
         if (isPetting)
             updatePetCameraRotation();
         invalidatePetterCache();
@@ -126,7 +131,7 @@ public class DTNClientPettingManager {
         this.pet_camera_yRot0_add = pet_camera_yRot_add - y_rot_change;
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onRenderHand(RenderArmEvent event) {
         if (event.getArm() != HumanoidArm.RIGHT)
             return;
@@ -135,7 +140,8 @@ public class DTNClientPettingManager {
         //configurable
         var stack = event.getPoseStack();
         var mc = Minecraft.getInstance();
-        var pTicks = mc.getTimer().getGameTimeDeltaPartialTick(true);
+
+        var pTicks = FabricUtil.getPartialTick(mc);
         
         var player = event.getPlayer();
         float anim_timeline = (float)(player.tickCount + player.getId() + pTicks ) * 0.04f;
@@ -158,7 +164,7 @@ public class DTNClientPettingManager {
         }
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onMouseInput(InputEvent.MouseButton.Pre event) {
         var button = event.getButton();
         if (selectedType == null)
@@ -251,16 +257,17 @@ public class DTNClientPettingManager {
         return dog.getPettingState().type();
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onPlayerRender(RenderPlayerEvent.Pre event) {
         if (!isPettingPlayer(event.getEntity()))
             return;
         
-        var renderer = event.getRenderer();
-        var model = renderer.getModel();
+        //var renderer = event.getRenderer();
+        //var model = renderer.getModel();
         
-        model.leftArmPose = PettingArmPose.VALUE;
-        model.rightArmPose = PettingArmPose.VALUE;
+        // model.leftArmPose = PettingArmPose.VALUE;
+        // model.rightArmPose = PettingArmPose.VALUE;
+        PettingArmPose.activate = true;
     }
 
     private boolean isPettingPlayer(Player player) {
@@ -272,7 +279,8 @@ public class DTNClientPettingManager {
 
     public void applyTransform(HumanoidModel<?> model, LivingEntity player, HumanoidArm arm) {
         var mc = Minecraft.getInstance();
-        var pTicks = mc.getTimer().getGameTimeDeltaPartialTick(true);
+
+        var pTicks = FabricUtil.getPartialTick(mc);
         float anim_timeline = (float)(player.getId() + player.tickCount + pTicks ) * 0.04f;
         float occill, rotating_x;
         var petting_type = getPettingTypeFor(player);
@@ -319,7 +327,7 @@ public class DTNClientPettingManager {
         }
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void modifyCameraAngle(ComputeCameraAngles event) {
         if (!this.isPetting)
             return;
@@ -329,14 +337,17 @@ public class DTNClientPettingManager {
         if (view_type.isFirstPerson())
             return;
         
-        var pTicks = event.getPartialTick();
+        var pTicks = FabricUtil.getPartialTick(mc);
         float camera_xRot = (float) Mth.lerp(pTicks, pet_camera_xRot0_add, pet_camera_xRot_add);
         camera_xRot = Mth.clamp(camera_xRot, -75, 75);
         event.setPitch(camera_xRot);
         event.setYaw(event.getYaw() + (float) Mth.lerp(pTicks, pet_camera_yRot0_add, pet_camera_yRot_add));
+    
+        //1.20 under
+        fixCameraPosition_1_20_under(event.getCamera(), FabricUtil.getPartialTick(mc), event.getYaw(), event.getPitch());
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onMovementInput(MovementInputUpdateEvent event) {
         if (!this.isPetting)
             return;
@@ -403,5 +414,27 @@ public class DTNClientPettingManager {
         else
             PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogPettingData(dog.getId(), false, null));
     }
+
+    //1.20 and under
+    private void fixCameraPosition_1_20_under(Camera camera, double pTicks, float new_yRot, float new_xRot) {
+        var mc = Minecraft.getInstance();
+        var camera_entity = mc.getCameraEntity();
+        if (camera_entity == null)
+            camera_entity = mc.player;
+        if (camera_entity == null)
+            return;
+        
+        camera.setRotation(new_yRot, new_xRot);
+        camera.setPosition(
+            Mth.lerp(pTicks, camera_entity.xo, camera_entity.getX()),
+            Mth.lerp(pTicks, camera_entity.yo, camera_entity.getY()) + camera_entity.getEyeHeight(),
+            Mth.lerp(pTicks, camera_entity.zo, camera_entity.getZ())
+        );
+        float scale = (camera_entity instanceof LivingEntity living) ?
+            living.getScale() : 1;
+        camera.move(-camera.getMaxZoom(4.0F * scale), 0.0f, 0.0f);
+        
+    }
+
 
 }
