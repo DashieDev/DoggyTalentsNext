@@ -5,6 +5,7 @@ import java.util.List;
 
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogPettingManager;
 import doggytalents.common.entity.DogPettingManager.DogPettingType;
 import doggytalents.common.entity.ai.triggerable.DogWantAttentionAction;
 import doggytalents.common.entity.anim.DogPose;
@@ -292,7 +293,7 @@ public class DogBeingPetGoal extends Goal {
         if (owner == null || owner != dog.getOwner())
             return false;
         var pet_manager = target.pettingManager;
-        if (!pet_manager.isDogAbleToBePet(target))
+        if (!DogPettingManager.isDogAbleToBePet(target))
             return false;
         if (pet_manager.getJealousChance() <= 0)
             return false;
