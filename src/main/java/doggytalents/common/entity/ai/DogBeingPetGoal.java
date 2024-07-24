@@ -292,6 +292,8 @@ public class DogBeingPetGoal extends Goal {
         if (owner == null || owner != dog.getOwner())
             return false;
         var pet_manager = target.pettingManager;
+        if (!pet_manager.isDogAbleToBePet(target))
+            return false;
         if (pet_manager.getJealousChance() <= 0)
             return false;
         return true;
