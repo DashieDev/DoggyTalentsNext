@@ -28,7 +28,7 @@ public class ItemStackHandler extends SimpleContainer {
            if (!stack.isEmpty()) {
               CompoundTag itemTag = new CompoundTag();
               itemTag.putByte("Slot", (byte) i);
-              stack.save(itemTag);
+              stack.save(prov, itemTag);
               itemsList.add(itemTag);
            }
         }
@@ -47,7 +47,7 @@ public class ItemStackHandler extends SimpleContainer {
             int slot = itemTag.getInt("Slot");
 
             if (slot >= 0 && slot < this.stacks.size()) {
-                this.stacks.set(slot, ItemStack.of(itemTag));
+                this.stacks.set(slot, ItemStack.parse(prov, tagList).orElse(ItemStack.EMPTY));
             }
         }
         this.onLoad();
