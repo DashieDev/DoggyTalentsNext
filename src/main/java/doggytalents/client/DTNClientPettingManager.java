@@ -14,10 +14,12 @@ import com.mojang.math.Axis;
 
 import doggytalents.client.screen.PetSelectScreen;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogPettingManager;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.DogPettingManager.DogPettingType;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogPettingData;
+import doggytalents.common.util.EntityUtil;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -226,6 +228,8 @@ public class DTNClientPettingManager {
         if (player.isShiftKeyDown())
             return false;
         if (!dog.pettingManager.isInPetDistance(dog, player))
+            return false;
+        if (!EntityUtil.allHandEmpty(player))
             return false;
 
         PetSelectScreen.open();
