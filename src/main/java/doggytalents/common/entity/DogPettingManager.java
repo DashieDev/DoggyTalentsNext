@@ -13,6 +13,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
 public class DogPettingManager {
@@ -200,6 +201,27 @@ public class DogPettingManager {
         var pet_uuid = this.getPetterId();
         var petter = this.dog.level().getPlayerByUUID(pet_uuid);
         return petter;
+    }
+
+    public boolean checkPush(Entity source) {
+        if (!this.isPetting())
+            return false;
+        var petting = getPetterFromDog();
+        if (petting != source)
+            return false;
+        float max_go_inside_bb_dist = getMinClipDistanceWhenPet(); 
+        if (max_go_inside_bb_dist <= 0)
+            return false;
+        if (petting.distanceToSqr(dog) < max_go_inside_bb_dist * max_go_inside_bb_dist)
+            return false;
+        return true;
+    }
+
+    private float getMinClipDistanceWhenPet() {
+        var type = dog.getPettingState().type();
+        if (type == DogPettingType.BACK_HUG || type == DogPettingType.BELLY_RUB)
+            return 0.7f * this.dog.getBbWidth()/2;
+        return -1;
     }
 
     public void setLocked(boolean lock) {

@@ -4909,6 +4909,8 @@ public class Dog extends AbstractDog {
 
     @Override
     protected void doPush(Entity pushTarget) {
+        if (this.pettingManager.checkPush(pushTarget))
+            return;
         if (shouldBlockPush(pushTarget))
             return;
         if (pushTarget.getVehicle() == this
@@ -4960,6 +4962,8 @@ public class Dog extends AbstractDog {
     public void push(Entity source) {
         if (source.getVehicle() == this
             || this.getVehicle() == source)
+            return;
+        if (this.pettingManager.checkPush(source))
             return;
         if (this.isVehicle() && !this.hasControllingPassenger())
             Entity_push(source);
