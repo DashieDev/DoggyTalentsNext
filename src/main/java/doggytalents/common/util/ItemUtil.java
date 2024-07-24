@@ -170,6 +170,6 @@ public class ItemUtil {
         var holder = reg.getHolder(key);
         if (!holder.isPresent())
             return 0;
-        return stack.getEnchantmentLevel(holder.get());
+        return stack.getEnchantments().getLevel(holder.get());
     }
 }

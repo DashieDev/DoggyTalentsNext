@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.common.util.Util;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 
@@ -36,7 +37,7 @@ public class DeferredRegister<T> {
     }
 
     public <T1 extends T> RegistryObject<T1> register(String name, Supplier<T1> sup) {
-        var regObj = new RegistryObject<T1>(new ResourceLocation(modid, name));
+        var regObj = new RegistryObject<T1>(Util.getResource(modid, name));
         toResolve.put((RegistryObject<T>) regObj, sup);
         orderedView.add((RegistryObject<T>) regObj);
         return regObj;

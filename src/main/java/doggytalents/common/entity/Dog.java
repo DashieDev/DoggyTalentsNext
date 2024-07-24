@@ -158,11 +158,6 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.fluids.FluidType;
-import doggytalents.common.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -5290,16 +5285,16 @@ public class Dog extends AbstractDog {
             .stream().max(java.util.Comparator.comparingDouble(Object2DoubleMap.Entry::getDoubleValue)).map(Object2DoubleMap.Entry::getKey);
     }
 
-    @Override
-    protected PortalInfo findDimensionEntryPoint(ServerLevel serverLevel) {
-        var owner = this.getOwner();
-        if (owner != null) {
-            this.portalEntrancePos = owner.blockPosition();
-        } else {
-            this.portalEntrancePos = BlockPos.ZERO;
-        }
-        double tpScale = DimensionType.getTeleportationScale(this.level().dimensionType(), serverLevel.dimensionType());
-        var destPos = serverLevel.getWorldBorder().clampToBounds(this.getX() * tpScale, this.getY(), this.getZ() * tpScale);
-        return new PortalInfo(Vec3.atBottomCenterOf(destPos), this.getDeltaMovement(), this.getYRot(), this.getXRot());
-    }
+    // @Override
+    // protected PortalInfo findDimensionEntryPoint(ServerLevel serverLevel) {
+    //     var owner = this.getOwner();
+    //     if (owner != null) {
+    //         this.portalEntrancePos = owner.blockPosition();
+    //     } else {
+    //         this.portalEntrancePos = BlockPos.ZERO;
+    //     }
+    //     double tpScale = DimensionType.getTeleportationScale(this.level().dimensionType(), serverLevel.dimensionType());
+    //     var destPos = serverLevel.getWorldBorder().clampToBounds(this.getX() * tpScale, this.getY(), this.getZ() * tpScale);
+    //     return new PortalInfo(Vec3.atBottomCenterOf(destPos), this.getDeltaMovement(), this.getYRot(), this.getXRot());
+    // }
 }

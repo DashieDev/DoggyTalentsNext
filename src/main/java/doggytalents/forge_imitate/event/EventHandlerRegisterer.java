@@ -69,12 +69,12 @@ public class EventHandlerRegisterer {
                     (x, y) -> x.onDogPassenegerHurtInWall(y)
                 )
         );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, LootingLevelEvent>
-                (handlerIst, LootingLevelEvent.class,
-                    (x, y) -> x.onLootDrop(y)
-                )
-        );
+        // EventCallbacksRegistry.registerCallback(
+        //     new InstanceEventCallBack<EventHandler, LootingLevelEvent>
+        //         (handlerIst, LootingLevelEvent.class,
+        //             (x, y) -> x.onLootDrop(y)
+        //         )
+        // );
         EventCallbacksRegistry.registerCallback(
             new SingleEventCallBack<RegisterColorHandlersEvent.Block>(
                 RegisterColorHandlersEvent.Block.class,

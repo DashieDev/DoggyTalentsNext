@@ -156,7 +156,7 @@ public class DoggyArmorTalent extends TalentInstance {
 
             if (spareValue > 0) {
                 
-                int i = Math.min((int) (spareValue * itemstack.getXpRepairRatio()), itemstack.getDamageValue());
+                int i = Math.min((int) (spareValue * FabricUtil.getRepairRatio(itemstack)), itemstack.getDamageValue());
                 i = EnchantmentHelper.modifyDurabilityToRepairFromXp(sLevel, itemstack, i);
                 itemstack.setDamageValue(itemstack.getDamageValue() - i);
 
@@ -175,7 +175,7 @@ public class DoggyArmorTalent extends TalentInstance {
             for (var x : orbs) {
                 if (itemstack.getDamageValue() <= 0) break;
                 
-                int j = Math.min((int) (x.getValue() * itemstack.getXpRepairRatio()), itemstack.getDamageValue());
+                int j = Math.min((int) (x.getValue() * FabricUtil.getRepairRatio(itemstack)), itemstack.getDamageValue());
                 j = EnchantmentHelper.modifyDurabilityToRepairFromXp(sLevel, itemstack, j);
                 itemstack.setDamageValue(itemstack.getDamageValue() - j);
                 dog.take(x, 1);

@@ -187,12 +187,12 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     //Start : Re-adjust armor behaviour
     //All dog start hurting Amrmor in armorItems regradless of anything.
     @Override
-    protected void hurtArmor(DamageSource p_36251_, float p_36252_) {
+    public void hurtArmor(DamageSource p_36251_, float p_36252_) {
         this.doHurtEquipment(p_36251_, p_36252_, new EquipmentSlot[]{EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD, EquipmentSlot.BODY});
     }
 
     @Override
-    protected void hurtHelmet(DamageSource p_150103_, float p_150104_) {
+    public void hurtHelmet(DamageSource p_150103_, float p_150104_) {
         this.doHurtEquipment(p_150103_, p_150104_, new EquipmentSlot[]{EquipmentSlot.HEAD});
     }
     //End : Re-adjust armor behaviour

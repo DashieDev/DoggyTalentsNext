@@ -284,14 +284,14 @@ public class EventHandler {
     }
 
     private boolean isEnableStarterBundle() {
-        final var retMut = new MutableBoolean(false);
-        if (FMLEnvironment.dist == Dist.CLIENT) {
-            if (ConfigHandler.ClientConfig
-                .getConfig(ConfigHandler.CLIENT.ENABLE_STARTER_BUNDLE_BY_DEFAULT))
-                retMut.setTrue();
-        }
-        if (retMut.getValue())
-            return true;
+        // final var retMut = new MutableBoolean(false);
+        // if (FMLEnvironment.dist == Dist.CLIENT) {
+        //     if (ConfigHandler.ClientConfig
+        //         .getConfig(ConfigHandler.CLIENT.ENABLE_STARTER_BUNDLE_BY_DEFAULT))
+        //         retMut.setTrue();
+        // }
+        // if (retMut.getValue())
+        //     return true;
         return ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.STARTING_ITEMS);
     }
 

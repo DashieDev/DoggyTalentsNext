@@ -14,6 +14,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.atrrib.ForgeMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
@@ -130,7 +131,7 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     private void applySwimAttributes(Dog dog){
-        dog.setAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID, (dd, u) -> 
+        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.holder(), SWIM_BOOST_ID, (dd, u) -> 
             new AttributeModifier(u, 2*dog.getDogLevel(DoggyTalents.SWIMMER_DOG), Operation.ADD_VALUE)
         );
     }

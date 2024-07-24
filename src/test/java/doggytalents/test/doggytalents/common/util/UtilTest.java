@@ -12,7 +12,7 @@ public class UtilTest {
 
     @Test
     public void testGetRegistryId() {
-        ResourceLocation dirtRL = new ResourceLocation("minecraft:dirt");
+        ResourceLocation dirtRL = ResourceLocation.parse("minecraft:dirt");
         assertEquals(dirtRL, getRegistryId("minecraft:dirt"));
         assertEquals(dirtRL, getRegistryId(dirtRL));
         //assertEquals(dirtRL, getRegistryId(RegistryObject.of(dirtRL, Block.class, "dummy_mod")));

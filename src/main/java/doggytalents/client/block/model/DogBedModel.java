@@ -143,23 +143,22 @@ private BlockModel model;
             @javax.annotation.Nullable
             public BakedModel bake(ResourceLocation p_250776_, ModelState p_251280_) {
                 return newModel.bake(this, newModel, Material::sprite, 
-                    getModelRotation(facing), 
-                    createResourceVariant(casingResource, beddingResource, facing), 
+                    getModelRotation(facing),
                     true
                 );
             }
 
-            @Override
-            public @org.jetbrains.annotations.Nullable UnbakedModel getTopLevelModel(ModelResourceLocation location) {
-                // TODO Auto-generated method stub
-                return null;
-            }
+            // @Override
+            // public @org.jetbrains.annotations.Nullable UnbakedModel getTopLevelModel(ModelResourceLocation location) {
+            //     // TODO Auto-generated method stub
+            //     return null;
+            // }
 
-            @Override
-            public @org.jetbrains.annotations.Nullable BakedModel bakeUncached(UnbakedModel model, ModelState state,
-                    Function<Material, TextureAtlasSprite> sprites) {
-                return null;
-            }
+            // @Override
+            // public @org.jetbrains.annotations.Nullable BakedModel bakeUncached(UnbakedModel model, ModelState state,
+            //         Function<Material, TextureAtlasSprite> sprites) {
+            //     return null;
+            // }
             
         }).bake(null, null);
 

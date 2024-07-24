@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.forge_imitate.event.Event;
 import net.minecraft.client.Camera;
+import net.minecraft.client.DeltaTracker;
 
 public class RenderLevelStageEvent extends Event {
 
@@ -13,10 +14,10 @@ public class RenderLevelStageEvent extends Event {
 
     private Stage stage = Stage.AFTER_TRANSLUCENT_BLOCKS;
     private final PoseStack stack;
-    private float pTicks;
+    private DeltaTracker pTicks;
     private Camera camera;
 
-    public RenderLevelStageEvent(PoseStack stack, float pTicks, Camera camera) {
+    public RenderLevelStageEvent(PoseStack stack, DeltaTracker pTicks, Camera camera) {
         this.stack =stack;
         this.pTicks = pTicks;
         this.camera = camera;
@@ -30,7 +31,7 @@ public class RenderLevelStageEvent extends Event {
         return this.stack;
     }
 
-    public float getPartialTick() {
+    public DeltaTracker getPartialTick() {
         return this.pTicks;
     }
 

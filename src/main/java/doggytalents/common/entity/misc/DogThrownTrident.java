@@ -225,7 +225,7 @@ public class DogThrownTrident extends AbstractArrow {
         var channel = this.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(Enchantments.CHANNELING);
         if (!channel.isPresent())
             return false;
-        return this.getPickupItemStackOrigin().getEnchantmentLevel(channel.get()) > 0;
+        return this.getPickupItemStackOrigin().getEnchantments().getLevel(channel.get()) > 0;
     }
 
     private boolean maySummonLightningBolt(Entity target) {

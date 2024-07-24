@@ -8,6 +8,7 @@ import doggytalents.DoggyBlocks;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.Util;
 import doggytalents.forge_imitate.event.Event;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
@@ -57,7 +58,7 @@ public class RegisterAndModifyBakingManager {
         }
 
         private ResourceLocation makeBlockodelLoc(ResourceLocation inLoc) {
-            return new ResourceLocation(inLoc.getNamespace(), "block/" + inLoc.getPath());
+            return Util.getResource(inLoc.getNamespace(), "block/" + inLoc.getPath());
         }
 
         private BakedModel onModifyModel(BakedModel current_model, net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier.AfterBake.Context ctx) {
@@ -81,15 +82,16 @@ public class RegisterAndModifyBakingManager {
         }
 
         private boolean isTargetingDogBed(net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier.AfterBake.Context ctx) {
-            var targetId = ctx.id();
-            var namespace = targetId.getNamespace();
+            var targetId = ctx.topLevelId();
+            if (targetId == null)
+                return false;
+            var namespace = targetId.id().getNamespace();
             if (!namespace.equals(Constants.MOD_ID))
                 return false;
-            if (!(targetId instanceof ModelResourceLocation modelLoc))
-                return false;
+            var modelLoc = targetId;
             
-            var modelLocTarget = modelLoc.getPath();
-            var modelLocNamespace = modelLoc.getNamespace();
+            var modelLocTarget = modelLoc.id().getPath();
+            var modelLocNamespace = modelLoc.id().getNamespace();
             var dogBedLoc = DoggyBlocks.DOG_BED.getId();
             if (!modelLocNamespace.equals(dogBedLoc.getNamespace()))
                 return false;

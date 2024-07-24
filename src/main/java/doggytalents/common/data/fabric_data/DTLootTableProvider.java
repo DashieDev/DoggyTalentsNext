@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -54,7 +55,7 @@ public class DTLootTableProvider extends FabricBlockLootTableProvider {
                 .apply(
                     ApplyBonusCount
                         .addBonusBinomialDistributionCount(
-                            Enchantments.FORTUNE, 0.5714286F, 3));
+                            this.registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3));
 
         final var RICE_LOOTABLE = 
             LootTable.lootTable().withPool(

@@ -10,7 +10,7 @@ public class FabricEventCallbackHandlerClient {
     public static void init() {
         WorldRenderEvents.AFTER_TRANSLUCENT.register(render_ctx -> {
             var stack = render_ctx.matrixStack();
-            float pTicks = render_ctx.tickDelta();
+            var pTicks = render_ctx.tickCounter();
             var camera = render_ctx.camera();
             EventCallbacksRegistry.postEvent(new RenderLevelStageEvent(stack, pTicks, camera));
         });
