@@ -143,7 +143,7 @@ public class DTNClientPettingManager {
         //occill = (occill + 1)/2;
         float rotating_x = -15.0F * occill;
         var petting_type = getPettingTypeFor(player);
-        if (petting_type == DogPettingType.HUG) {        
+        if (petting_type == DogPettingType.HUG || petting_type == DogPettingType.BACK_HUG) {        
             stack.mulPose(Axis.XP.rotationDegrees(-20));
             stack.mulPose(Axis.ZP.rotationDegrees(0));
             stack.mulPose(Axis.YP.rotationDegrees(60));
@@ -276,7 +276,7 @@ public class DTNClientPettingManager {
         float anim_timeline = (float)(player.getId() + player.tickCount + pTicks ) * 0.04f;
         float occill, rotating_x;
         var petting_type = getPettingTypeFor(player);
-        if (petting_type == DogPettingType.HUG) {
+        if (petting_type == DogPettingType.HUG || petting_type == DogPettingType.BACK_HUG) {
             if (arm == HumanoidArm.RIGHT) {
                 occill = Mth.sin(anim_timeline * 12);
                 //occill = (occill + 1)/2;
