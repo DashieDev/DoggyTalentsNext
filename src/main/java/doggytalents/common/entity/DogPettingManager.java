@@ -130,10 +130,27 @@ public class DogPettingManager {
 
     //Common check
     public boolean canPet(Player player) {
+        if (this.locked)
+            return false;
+        
         if (player == null)
             return false;
         if (ObjectUtils.notEqual(dog.getOwnerUUID(), player.getUUID()))
             return false;
+        if (!isInPetDistance(dog, player))
+            return false;
+        if (!isSelectingDog(player, dog))
+            return false;
+
+        if (!isPlayerAbleToPet(player))
+            return false;
+        if (!isDogAbleToBePet(dog))
+            return false;
+        
+        return true;
+    }
+
+    public boolean isPlayerAbleToPet(Player player) {
         if (!player.getMainHandItem().isEmpty())
             return false;
         if (!player.getOffhandItem().isEmpty())
@@ -144,8 +161,11 @@ public class DogPettingManager {
             return false;
         if (!player.isShiftKeyDown())
             return false;
-        if (this.locked)
-            return false;
+        
+        return true;
+    }
+
+    public boolean isDogAbleToBePet(Dog dog) {
         if (!dog.isDoingFine())
             return false;
         if (!dog.isInSittingPose() || dog.getDogPose() != DogPose.SIT)
@@ -156,10 +176,8 @@ public class DogPettingManager {
             return false;
         if (dog.getDogSize() != DogSize.MODERATO)
             return false;
-        if (!isInPetDistance(dog, player))
-            return false;
         
-        return isSelectingDog(player, dog);   
+        return true;
     }
 
     public boolean isInPetDistance(Dog dog, Player player) {
