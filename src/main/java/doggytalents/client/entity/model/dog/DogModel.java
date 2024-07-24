@@ -509,6 +509,10 @@ public class DogModel extends EntityModel<Dog> {
         } else if (pose.freeHead && anim.freeHeadXRotOnly()) {
             headXRot0 = this.head.xRot;
         }
+
+        anim.rootRotaton().ifPresent(x -> {
+            this.root.yRot += x * Mth.DEG_TO_RAD;
+        });
         
         if (animState.isStarted()) {
             animState.updateTime(ageInTicks, anim.getSpeedModifier());
