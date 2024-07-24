@@ -1498,3 +1498,14 @@ For the Dog:
 
 **1.18.23 - 23th July 2024**
 *HOTFIX: Berserker Minor/Guard Flat Dog still attack avoided Entities.
+
+**1.18.24 - 24th July 2024**
+NEW PET MODE !!!!!
+  + Belly rub: For the first time! You can give your beloved dog a nice scratch in just the right spot!
+  + Back hug: Scratch his back and get a very tight hug!
+# Allow players who is petting Dogs in [Belly Rub, Back Hug] style to clip into the Dog's boundingBox a bit
+without getting pushed back, thus getting closer to it.
+# Dogs who stop being Pet but still playing the start anim will always play the FACERUB_END anim as the closing anim.
+ 
+*(1.20.1- only)HOTFIX: Game crashes when Ranged Attack Dog started shooting their Potion Arrows.
+
