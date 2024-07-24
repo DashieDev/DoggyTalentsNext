@@ -36,6 +36,7 @@ public class PetSelectScreen extends StringEntrySelectScreen {
         this.updateEntries(List.of(
             I18n.get("dog.petmode.facerub"), 
             I18n.get("dog.petmode.hug"),
+            I18n.get("dog.petmode.belly_rub"),
             I18n.get("doggytalents.screen.pet_select.exit")    
         ));
     }
@@ -48,6 +49,9 @@ public class PetSelectScreen extends StringEntrySelectScreen {
             break;
         case 1:
             DTNClientPettingManager.get().setPetMode(DogPettingType.HUG);
+            break;
+        case 2:
+            DTNClientPettingManager.get().setPetMode(DogPettingType.BELLY_RUB);
             break;
         default:
             DTNClientPettingManager.get().setPetMode(null);

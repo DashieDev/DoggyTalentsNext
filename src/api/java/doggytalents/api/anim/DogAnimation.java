@@ -74,7 +74,17 @@ public enum DogAnimation {
     HUG_F2(65, 60, p -> p.looping()),
     HUG_FF(66, 60, p -> p.looping()),
     HUG_FF2(67, 60, p -> p.looping()),
-    HUG_END(68, 40);
+    HUG_END(68, 40),
+    BELLY_PET_START(69, 30, p -> p.holdOnLastTick()),
+    BELLY_PET_PP(70, 30, p -> p.looping()),
+    BELLY_PET_PP2(71, 30, p -> p.looping()),
+    BELLY_PET_P(72, 30, p -> p.looping()),
+    BELLY_PET_P2(73, 30, p -> p.looping()),
+    BELLY_PET_F(74, 30, p -> p.looping()),
+    BELLY_PET_F2(75, 30, p -> p.looping()),
+    BELLY_PET_FF(76, 100, p -> p.looping()),
+    BELLY_PET_FF2(77, 30, p -> p.looping()),
+    BELLY_PET_END(78, 70);
 
     private final int id;
     private final int lengthTicks;
