@@ -227,7 +227,8 @@ public class DogPettingManager {
     public static enum DogPettingType {
         FACERUB(0),
         HUG(1),
-        BELLY_RUB(2);
+        BELLY_RUB(2),
+        BACK_HUG(3);
 
         private final int id;
 

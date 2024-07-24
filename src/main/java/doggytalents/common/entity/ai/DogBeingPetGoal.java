@@ -57,6 +57,18 @@ public class DogBeingPetGoal extends Goal {
         DogAnimation.BELLY_PET_FF,
         DogAnimation.BELLY_PET_FF2
     );
+    private static final List<DogAnimation> backhugloopAnims_p_pp = List.of(
+        DogAnimation.BACKHUG_PP,
+        DogAnimation.BACKHUG_PP2,
+        DogAnimation.BACKHUG_P,
+        DogAnimation.BACKHUG_P2
+    );
+    private static final List<DogAnimation> backhugloopAnims_f_ff = List.of(
+        DogAnimation.BACKHUG_F,
+        DogAnimation.BACKHUG_F2,
+        DogAnimation.BACKHUG_F,
+        DogAnimation.BACKHUG_FF2
+    );
     private DogPettingType currentType = DogPettingType.FACERUB;
     private int tickTillChangeLoop = 0;
     private int petTick_ff_threshold = 0;
@@ -305,6 +317,8 @@ public class DogBeingPetGoal extends Goal {
         var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return DogAnimation.HUG_START;
+        } else if (type == DogPettingType.BACK_HUG) {
+            return DogAnimation.BACKHUG_START;
         } else if (type == DogPettingType.BELLY_RUB) {
             return DogAnimation.BELLY_PET_START;
         } else {
@@ -316,6 +330,8 @@ public class DogBeingPetGoal extends Goal {
         var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return DogAnimation.HUG_PP;
+        } else if (type == DogPettingType.BACK_HUG) {
+            return DogAnimation.BACKHUG_PP;
         } else if (type == DogPettingType.BELLY_RUB) {
             return DogAnimation.BELLY_PET_PP;
         } else {
@@ -327,6 +343,8 @@ public class DogBeingPetGoal extends Goal {
         var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return DogAnimation.HUG_END;
+        } else if (type == DogPettingType.BACK_HUG) {
+            return DogAnimation.BACKHUG_END;
         } else if (type == DogPettingType.BELLY_RUB) {
             return DogAnimation.BELLY_PET_END;
         } else {
@@ -346,6 +364,8 @@ public class DogBeingPetGoal extends Goal {
         var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return hugloopAnims_p_pp;
+        } else if (type == DogPettingType.BACK_HUG) {
+            return backhugloopAnims_p_pp;
         } else if (type == DogPettingType.BELLY_RUB) {
             return bellyloopAnims_p_pp;
         } else {
@@ -357,6 +377,8 @@ public class DogBeingPetGoal extends Goal {
         var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return hugloopAnims_f_ff;
+        } else if (type == DogPettingType.BACK_HUG) {
+            return backhugloopAnims_f_ff;
         } else if (type == DogPettingType.BELLY_RUB) {
             return bellyloopAnims_f_ff;
         } else {
