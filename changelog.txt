@@ -1509,3 +1509,7 @@ without getting pushed back, thus getting closer to it.
  
 *(1.20.1- only)HOTFIX: Game crashes when Ranged Attack Dog started shooting their Potion Arrows.
 
+**1.18.25 - 24th July 2024**
++ You can now Pet Dogs with size greater or equals to MODERATO!
+# Only dog whose can be petted may be jealous (Size larger or equals to MODERATO)
+# Pet screen now only opened if both hand is empty, otherwise player will interact with Dog as usual.
