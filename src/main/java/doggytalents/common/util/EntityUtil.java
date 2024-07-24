@@ -141,6 +141,16 @@ public class EntityUtil {
         return Optional.of(list.get(r));
     }
 
+    public static boolean allHandEmpty(LivingEntity entity) {
+        var mainhand = entity.getMainHandItem();
+        if (mainhand != null && !mainhand.isEmpty())
+            return false;
+        var offhand = entity.getOffhandItem();
+        if (offhand != null && !offhand.isEmpty())
+            return false;
+        return true;    
+    }
+
     public static class Sorter implements Comparator<Entity> {
 
         private final Vec3 vec3d;
