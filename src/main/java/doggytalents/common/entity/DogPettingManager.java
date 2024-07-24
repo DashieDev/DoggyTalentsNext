@@ -151,7 +151,7 @@ public class DogPettingManager {
         return true;
     }
 
-    public boolean isPlayerAbleToPet(Player player) {
+    public static boolean isPlayerAbleToPet(Player player) {
         if (!EntityUtil.allHandEmpty(player))
             return false;
         if (player.isVehicle() || player.isPassenger())
@@ -164,7 +164,7 @@ public class DogPettingManager {
         return true;
     }
 
-    public boolean isDogAbleToBePet(Dog dog) {
+    public static boolean isDogAbleToBePet(Dog dog) {
         if (!dog.isDoingFine())
             return false;
         if (!dog.isInSittingPose() || dog.getDogPose() != DogPose.SIT)
