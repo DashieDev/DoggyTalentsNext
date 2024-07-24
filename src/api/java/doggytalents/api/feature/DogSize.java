@@ -45,4 +45,8 @@ public enum DogSize {
     public DogSize shrink() {
         return VALUES[Mth.clamp(id - 1, 0, VALUES.length - 1)];
     }
+
+    public boolean largerOrEquals(DogSize size) {
+        return this.getId() >= size.getId();
+    }
 }
