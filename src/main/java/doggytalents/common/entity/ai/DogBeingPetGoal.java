@@ -43,6 +43,7 @@ public class DogBeingPetGoal extends Goal {
         DogAnimation.HUG_F,
         DogAnimation.HUG_FF2
     );
+    private DogPettingType currentType = DogPettingType.FACERUB;
     private int tickTillChangeLoop = 0;
     private int petTick_ff_threshold = 0;
     private int petTick = 0;
@@ -90,6 +91,7 @@ public class DogBeingPetGoal extends Goal {
 
     @Override
     public void start() {
+        currentType = this.dog.getPettingState().type();
         var start_anim = getStartAnim();
         var first_anim = getFirstAnim();
         var end_anim = getEndAnim();
@@ -258,7 +260,7 @@ public class DogBeingPetGoal extends Goal {
     }
 
     private DogAnimation getStartAnim() {
-        var type = dog.getPettingState().type();
+        var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return DogAnimation.HUG_START;
         } else {
@@ -267,7 +269,7 @@ public class DogBeingPetGoal extends Goal {
     }
 
     private DogAnimation getFirstAnim() {
-        var type = dog.getPettingState().type();
+        var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return DogAnimation.HUG_PP;
         } else {
@@ -276,7 +278,7 @@ public class DogBeingPetGoal extends Goal {
     }
 
     private DogAnimation getEndAnim() {
-        var type = dog.getPettingState().type();
+        var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return DogAnimation.HUG_END;
         } else {
@@ -285,7 +287,7 @@ public class DogBeingPetGoal extends Goal {
     }
 
     private List<DogAnimation> getLoopAnims_pp_p() {
-        var type = dog.getPettingState().type();
+        var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return hugloopAnims_p_pp;
         } else {
@@ -294,7 +296,7 @@ public class DogBeingPetGoal extends Goal {
     }
 
     private List<DogAnimation> getLoopAnims_ff_f() {
-        var type = dog.getPettingState().type();
+        var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return hugloopAnims_f_ff;
         } else {
