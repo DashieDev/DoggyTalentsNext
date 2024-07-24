@@ -304,6 +304,25 @@ public class DTNClientPettingManager {
                 model.leftArm.yRot = Mth.DEG_TO_RAD * 4;
                 //AnimationUtils.bobModelPart(model.leftArm, player.tickCount + pTicks, 1);
             }    
+        } else if (petting_type == DogPettingType.BELLY_RUB) {
+            if (arm == HumanoidArm.RIGHT) {
+                occill = Mth.sin(anim_timeline * 12);
+                //occill = (occill + 1)/2;
+                rotating_x = 15.0F * occill;
+                model.rightArm.xRot = -Mth.HALF_PI + (30 * Mth.DEG_TO_RAD);
+                model.rightArm.xRot += rotating_x * Mth.DEG_TO_RAD;
+                model.rightArm.yRot = Mth.DEG_TO_RAD * -20;
+                //AnimationUtils.bobModelPart(model.rightArm, player.tickCount + pTicks, -1);
+            } else if (arm == HumanoidArm.LEFT) {
+                occill = Mth.sin(Mth.PI + anim_timeline * 12);
+                //occill = (occill + 1)/2;
+                rotating_x = 15.0F * occill;
+                model.leftArm.xRot = -Mth.HALF_PI + (30 * Mth.DEG_TO_RAD);
+                model.leftArm.xRot += rotating_x * Mth.DEG_TO_RAD;
+                //
+                model.leftArm.yRot = Mth.DEG_TO_RAD * 20;
+                //AnimationUtils.bobModelPart(model.leftArm, player.tickCount + pTicks, 1);
+            }    
         } else {
             if (arm == HumanoidArm.RIGHT) {
                 occill = Mth.sin(anim_timeline * 12);
