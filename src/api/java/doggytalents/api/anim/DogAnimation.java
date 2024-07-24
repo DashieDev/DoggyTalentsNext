@@ -1,5 +1,6 @@
 package doggytalents.api.anim;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 import net.minecraft.util.Mth;
@@ -84,7 +85,17 @@ public enum DogAnimation {
     BELLY_PET_F2(75, 30, p -> p.looping()),
     BELLY_PET_FF(76, 100, p -> p.looping()),
     BELLY_PET_FF2(77, 30, p -> p.looping()),
-    BELLY_PET_END(78, 70);
+    BELLY_PET_END(78, 70),
+    BACKHUG_START(79, 30, p -> p.holdOnLastTick()),
+    BACKHUG_PP(80, 20, p -> p.looping().rootRotation(180)),
+    BACKHUG_PP2(81, 60, p -> p.looping().rootRotation(180)),
+    BACKHUG_P(82, 20, p -> p.looping().rootRotation(180)),
+    BACKHUG_P2(83, 20, p -> p.looping().rootRotation(180)),
+    BACKHUG_F(84, 20, p -> p.looping().rootRotation(180)),
+    BACKHUG_F2(85, 20, p -> p.looping().rootRotation(180)),
+    BACKHUG_FF(86, 20, p -> p.looping().rootRotation(180)),
+    BACKHUG_FF2(87, 60, p -> p.looping().rootRotation(180)),
+    BACKHUG_END(88, 60);
 
     private final int id;
     private final int lengthTicks;
@@ -93,6 +104,7 @@ public enum DogAnimation {
     private final HeadHandling headHandling;
     private final TimelineMode timelineMode;
     private final boolean interupting;
+    private final Optional rootRotation;
 
     private DogAnimation(int id, int lengthTicks, Function<Props, Props> props_consumer) {
         this.id = id;
@@ -104,6 +116,7 @@ public enum DogAnimation {
         this.headHandling = props.headHandling;
         this.timelineMode = props.timelineMode;
         this.interupting = props.interupting;
+        this.rootRotation = props.rootRotation;
     }
     
     private DogAnimation(int id, int lengthTicks) {
@@ -127,6 +140,7 @@ public enum DogAnimation {
     public boolean looping() { return this.timelineMode == TimelineMode.LOOP; }
     public boolean holdOnLastTick() { return this.timelineMode == TimelineMode.HOLD_ON_LAST_TICK; }
     public boolean interupting() { return this.interupting; }
+    public Optional<Float> rootRotaton() { return this.rootRotation; }
 
     public boolean isNone() { return this == DogAnimation.NONE; }
 
@@ -145,6 +159,7 @@ public enum DogAnimation {
         private HeadHandling headHandling = HeadHandling.LOCKED;
         private TimelineMode timelineMode = TimelineMode.STOP_ON_LAST_TICK;
         private boolean interupting = false;
+        private Optional<Float> rootRotation = Optional.empty();
 
         public Props speedMod(float val) {
             this.speedModifier = val;
@@ -178,6 +193,11 @@ public enum DogAnimation {
 
         public Props interupting() {
             this.interupting = true;
+            return this;
+        }
+
+        public Props rootRotation(float val) {
+            this.rootRotation = Optional.of(val);
             return this;
         }
 

@@ -100,6 +100,16 @@ public class DogAnimationRegistry {
         register(DogAnimation.BELLY_PET_FF, DogBellyRubPetAnimationSequences.BELLY_FF);
         register(DogAnimation.BELLY_PET_FF2, DogBellyRubPetAnimationSequences.BELLY_FF2);
         register(DogAnimation.BELLY_PET_END, DogBellyRubPetAnimationSequences.BELLY_END);
+        register(DogAnimation.BACKHUG_START, DogBackHugAnimationSequences.BACKHUG_START);
+        register(DogAnimation.BACKHUG_PP, DogFaceRubAnimationSequences.FACERUB_PP);
+        register(DogAnimation.BACKHUG_PP2, DogFaceRubAnimationSequences.FACERUB_PP2);
+        register(DogAnimation.BACKHUG_P, DogFaceRubAnimationSequences.FACERUB_P);
+        register(DogAnimation.BACKHUG_P2, DogFaceRubAnimationSequences.FACERUB_P2);
+        register(DogAnimation.BACKHUG_F, DogFaceRubAnimationSequences.FACERUB_F);
+        register(DogAnimation.BACKHUG_F2, DogFaceRubAnimationSequences.FACERUB_F2);
+        register(DogAnimation.BACKHUG_FF, DogFaceRubAnimationSequences.FACERUB_FF);
+        register(DogAnimation.BACKHUG_FF2, DogFaceRubAnimationSequences.FACERUB_FF2);
+        register(DogAnimation.BACKHUG_END, DogBackHugAnimationSequences.BACKHUG_END);
     }
     
 }
