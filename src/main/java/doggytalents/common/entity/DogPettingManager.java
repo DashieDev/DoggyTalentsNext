@@ -6,6 +6,7 @@ import org.apache.commons.lang3.ObjectUtils;
 
 import doggytalents.api.feature.DogSize;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.RandomUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -151,9 +152,7 @@ public class DogPettingManager {
     }
 
     public boolean isPlayerAbleToPet(Player player) {
-        if (!player.getMainHandItem().isEmpty())
-            return false;
-        if (!player.getOffhandItem().isEmpty())
+        if (!EntityUtil.allHandEmpty(player))
             return false;
         if (player.isVehicle() || player.isPassenger())
             return false;
