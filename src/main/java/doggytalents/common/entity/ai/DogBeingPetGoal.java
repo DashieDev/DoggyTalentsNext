@@ -45,6 +45,18 @@ public class DogBeingPetGoal extends Goal {
         DogAnimation.HUG_F,
         DogAnimation.HUG_FF2
     );
+    private static final List<DogAnimation> bellyloopAnims_p_pp = List.of(
+        DogAnimation.BELLY_PET_PP,
+        DogAnimation.BELLY_PET_PP2,
+        DogAnimation.BELLY_PET_P,
+        DogAnimation.BELLY_PET_P2
+    );
+    private static final List<DogAnimation> bellyloopAnims_f_ff = List.of(
+        DogAnimation.BELLY_PET_F,
+        DogAnimation.BELLY_PET_F2,
+        DogAnimation.BELLY_PET_FF,
+        DogAnimation.BELLY_PET_FF2
+    );
     private DogPettingType currentType = DogPettingType.FACERUB;
     private int tickTillChangeLoop = 0;
     private int petTick_ff_threshold = 0;
@@ -154,12 +166,32 @@ public class DogBeingPetGoal extends Goal {
             this.dog.setAnim(this.currentLoopAnim);
         }
         var owner = this.dog.getOwner();
-        if (owner != null)
-            this.dog.getLookControl().setLookAt(owner, 10.0F, this.dog.getMaxHeadXRot());
+        if (owner != null) {
+            lookWhenPet(owner);
+        }
+            
         ++petTick;
         updateAmbientSound();
         updateTriggerNearbyDogsJealous();
         rejuvinateDog();
+    }
+
+    private void lookWhenPet(LivingEntity owner) {
+        if (this.currentType == DogPettingType.BELLY_RUB)
+            lookPerpenticullarToOwner(owner);
+        else
+            this.dog.getLookControl().setLookAt(owner, 10.0F, this.dog.getMaxHeadXRot());
+    }
+
+    private void lookPerpenticullarToOwner(LivingEntity owner) {
+        var dog_pos = dog.getEyePosition();
+        var owner_pos = owner.position();
+        var v_dog_owner = owner_pos.subtract(dog_pos);
+        v_dog_owner = v_dog_owner.subtract(0, v_dog_owner.y, 0)
+            .normalize()
+            .yRot(90)
+            .add(dog_pos);
+        this.dog.getLookControl().setLookAt(v_dog_owner);
     }
 
     private void updateAmbientSound() {
@@ -273,6 +305,8 @@ public class DogBeingPetGoal extends Goal {
         var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return DogAnimation.HUG_START;
+        } else if (type == DogPettingType.BELLY_RUB) {
+            return DogAnimation.BELLY_PET_START;
         } else {
             return DogAnimation.FACERUB_START;
         }
@@ -282,6 +316,8 @@ public class DogBeingPetGoal extends Goal {
         var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return DogAnimation.HUG_PP;
+        } else if (type == DogPettingType.BELLY_RUB) {
+            return DogAnimation.BELLY_PET_PP;
         } else {
             return DogAnimation.FACERUB_PP;
         }
@@ -291,12 +327,18 @@ public class DogBeingPetGoal extends Goal {
         var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return DogAnimation.HUG_END;
+        } else if (type == DogPettingType.BELLY_RUB) {
+            return DogAnimation.BELLY_PET_END;
         } else {
             return DogAnimation.FACERUB_END;
         }
     }
 
     private DogAnimation getEndAnimWhileStartInterupt(DogAnimation current) {
+        var type = this.currentType;
+        if (type == DogPettingType.BELLY_RUB) {
+            return DogAnimation.FACERUB_END;
+        }
         return current;
     }
 
@@ -304,6 +346,8 @@ public class DogBeingPetGoal extends Goal {
         var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return hugloopAnims_p_pp;
+        } else if (type == DogPettingType.BELLY_RUB) {
+            return bellyloopAnims_p_pp;
         } else {
             return facerubloopAnims_p_pp;
         }
@@ -313,6 +357,8 @@ public class DogBeingPetGoal extends Goal {
         var type = this.currentType;
         if (type == DogPettingType.HUG) {
             return hugloopAnims_f_ff;
+        } else if (type == DogPettingType.BELLY_RUB) {
+            return bellyloopAnims_f_ff;
         } else {
             return facerubloopAnims_f_ff;
         }
