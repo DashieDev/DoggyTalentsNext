@@ -174,7 +174,8 @@ public class DogPettingManager {
             return false;
         if (dog.isVehicle() || dog.isPassenger())
             return false;
-        if (dog.getDogSize() != DogSize.MODERATO)
+        var size = dog.getDogSize();
+        if (!size.largerOrEquals(DogSize.MODERATO))
             return false;
         
         return true;
