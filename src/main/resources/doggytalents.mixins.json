@@ -12,9 +12,7 @@
         "ServerPlayerMixin",
         "LivingEntityMixin",
         "Minecraft_UtilMixin",
-        "ThrownEggMixin",
-        "WolfMixin",
-        "PathFinderMobMixin"
+        "ThrownEggMixin"
     ],
     "client": [
         "LocalPlayerMixin",
@@ -22,7 +20,8 @@
         "MinecraftMixin",
         "PlayerRendererMixin",
         "HumanoidModelMixin",
-        "CameraMixin"
+        "CameraMixin",
+        "MouseHandlerMixin"
     ],
     "server": [],
     "injectors": {

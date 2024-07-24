@@ -22,25 +22,25 @@ import net.minecraft.world.phys.Vec3;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
     
-    @ModifyArgs(
-        method = "dropAllDeathLoot(Lnet/minecraft/world/damagesource/DamageSource;)V",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/LivingEntity;dropCustomDeathLoot(Lnet/minecraft/world/damagesource/DamageSource;IZ)V"
-        )
-    )
-    private void dtn__lootingLevelEvent(Args args) {
-        final int SOURCE_INDX = 0, LOOTING_LEVEL_INDX = 1;
-        var source = (DamageSource) args.get(SOURCE_INDX);
-        int oldLevel = (Integer) args.get(LOOTING_LEVEL_INDX);
-        if (source == null)
-            return;
-        var ret = EventCallbacksRegistry.postEvent(new LootingLevelEvent(source, oldLevel));
-        int newLevel = ret.getLootingLevel();
-        if (newLevel != oldLevel) {
-            args.set(LOOTING_LEVEL_INDX, newLevel);
-        }
-    }
+    // @ModifyArgs(
+    //     method = "dropAllDeathLoot(Lnet/minecraft/world/damagesource/DamageSource;)V",
+    //     at = @At(
+    //         value = "INVOKE",
+    //         target = "Lnet/minecraft/world/entity/LivingEntity;dropCustomDeathLoot(Lnet/minecraft/world/damagesource/DamageSource;IZ)V"
+    //     )
+    // )
+    // private void dtn__lootingLevelEvent(Args args) {
+    //     final int SOURCE_INDX = 0, LOOTING_LEVEL_INDX = 1;
+    //     var source = (DamageSource) args.get(SOURCE_INDX);
+    //     int oldLevel = (Integer) args.get(LOOTING_LEVEL_INDX);
+    //     if (source == null)
+    //         return;
+    //     var ret = EventCallbacksRegistry.postEvent(new LootingLevelEvent(source, oldLevel));
+    //     int newLevel = ret.getLootingLevel();
+    //     if (newLevel != oldLevel) {
+    //         args.set(LOOTING_LEVEL_INDX, newLevel);
+    //     }
+    // }
 
     // @ModifyVariable(
     //     method = "travel(Lnet/minecraft/world/phys/Vec3;)V",

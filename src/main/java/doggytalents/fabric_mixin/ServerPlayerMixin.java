@@ -11,6 +11,7 @@ import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.portal.DimensionTransition;
 
 @Mixin(ServerPlayer.class)
 public class ServerPlayerMixin {
@@ -23,10 +24,10 @@ public class ServerPlayerMixin {
         }
     }
 
-    @Inject(at = @At("HEAD"),  method = "changeDimension(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;")
-    public void dtn_changeDimension(ServerLevel level, CallbackInfoReturnable<Entity> info) {
+    @Inject(at = @At("HEAD"),  method = "changeDimension(Lnet/minecraft/world/level/portal/DimensionTransition;)Lnet/minecraft/world/entity/Entity;")
+    public void dtn_changeDimension(DimensionTransition level, CallbackInfoReturnable<Entity> info) {
         var self = (ServerPlayer)(Object)this;
-        EventCallbacksRegistry.postEvent(new EntityTravelToDimensionEvent(self, level.dimension()));
+        EventCallbacksRegistry.postEvent(new EntityTravelToDimensionEvent(self, level.newLevel().dimension()));
     }
 
 
