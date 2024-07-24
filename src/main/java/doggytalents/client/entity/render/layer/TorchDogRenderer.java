@@ -48,7 +48,7 @@ public class TorchDogRenderer extends RenderLayer<Dog, DogModel>  {
             res = Resources.TORCH_DOG_UNLIT;
             renderLight = packedLight;
         }
-        RenderLayer.renderColoredCutoutModel(this.model, res, poseStack, buffer, renderLight, dog, 1.0F, 1.0F, 1.0F);
+        RenderLayer.renderColoredCutoutModel(this.model, res, poseStack, buffer, renderLight, dog, 0xffffffff);
 
     }
 

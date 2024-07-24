@@ -14,6 +14,8 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.ItemUtil;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,6 +25,7 @@ import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 
@@ -116,12 +119,14 @@ public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
         return delayedCrossbowAttack;
     }
 
-    public static boolean isTridentAndEligible(ItemStack stack) {
+    public static boolean isTridentAndEligible(AbstractDog dog, ItemStack stack) {
         if (!DogUtil.isTrident(stack))
             return false;
         if (!ConfigHandler.SERVER.DOGGY_TOOLS_USE_TRIDENT.get())
             return false;
-        if (EnchantmentHelper.getLoyalty(stack) < 2)
+        if (!(dog.level() instanceof ServerLevel sLevel))
+            return false;
+        if (EnchantmentHelper.getTridentReturnToOwnerAcceleration(sLevel, stack, dog) < 2)
             return false; 
         return true;
     }
@@ -165,8 +170,10 @@ public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
         return selected_id;
     }
 
-    public static boolean isInfinityBow(ItemStack bowStack) {
-        return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY, bowStack) > 0;
+    public static boolean isInfinityBow(ItemStack bowStack, AbstractDog dog) {
+        if (!(dog.level() instanceof ServerLevel sLevel))
+            return false;
+        return ItemUtil.getEnchantmentLevelForItem(Enchantments.INFINITY, dog.registryAccess(), bowStack) > 0;
     }
 
     public static ShootHandler getActiveShootHandler(AbstractDog dog) {
@@ -179,7 +186,7 @@ public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
             return ShootHandler.NONE;
         if (stack.getItem() instanceof BowItem) {
             boolean eligible = 
-                isInfinityBow(stack)
+                isInfinityBow(stack, dog)
                 || findArrowsInInventory(dog).isPresent();
             if (eligible)
                 return ShootHandler.BOW;
@@ -189,7 +196,7 @@ public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
             if (eligible)
                 return ShootHandler.CROSSBOW;
         }
-        if (isTridentAndEligible(stack))
+        if (isTridentAndEligible(dog, stack))
             return ShootHandler.TRIDENT;
         return ShootHandler.NONE;
     }

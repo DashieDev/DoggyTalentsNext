@@ -20,7 +20,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import doggytalents.forge_imitate.chunk.ForgeChunkManager;
 
@@ -88,7 +88,7 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
         int r = dog.getRandom().nextInt(safePosList.size());
         var safePos = safePosList.get(r);
         dog.authorizeChangeDimension();
-        var dogafterTp = dog.changeDimension(ownerLevel);  dog.moveTo(safePos, dog.getYRot(), dog.getXRot());
+        var dogafterTp = dog.changeDimension(getDogTransition(ownerLevel, dog, safePos));
 
         if (dogafterTp instanceof Dog) {
             this.teleportedDog = (Dog) dogafterTp;
@@ -186,6 +186,15 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
         this.dogChunkForced = loaded;
     }
 
+    private static DimensionTransition getDogTransition(ServerLevel level, Dog dog, BlockPos safePos) {
+        return new DimensionTransition(level, 
+            Vec3.atBottomCenterOf(safePos), 
+            Vec3.ZERO, 
+            dog.getYRot(), dog.getXRot(),
+            false,
+            DimensionTransition.DO_NOTHING);
+    }
+    
     // private static class DogTeleporter implements ITeleporter {
 
     //     private BlockPos safePos;

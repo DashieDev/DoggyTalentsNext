@@ -6,6 +6,7 @@ import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +15,7 @@ import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLaye
 
 public class FlyingCapeRenderEntry extends Entry {
 
-    public static final ModelLayerLocation FLYING_CAPE = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "flying_cape"), "main");
+    public static final ModelLayerLocation FLYING_CAPE = new ModelLayerLocation(Util.getResource("flying_cape"), "main");
 
     private ElytraCapeModel model;
 

@@ -78,9 +78,8 @@ public class FieryReflectorModel extends ElytraCapeModel {
 	}
 
     @Override
-    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, float p_103017_,
-            float p_103018_, float p_103019_, float p_103020_) {
-        super.renderToBuffer(stack, p_103014_, incapacitated ? p_103015_ :15728880, p_103016_, p_103017_, p_103018_, p_103019_, p_103020_);
+    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, int color_overlay) {
+        super.renderToBuffer(stack, p_103014_, incapacitated ? p_103015_ :15728880, p_103016_, 0xffffffff);
     }
     
 }

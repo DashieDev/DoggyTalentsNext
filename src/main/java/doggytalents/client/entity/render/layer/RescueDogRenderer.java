@@ -55,7 +55,7 @@ public class RescueDogRenderer extends RenderLayer<Dog, DogModel> {
             dogModel.copyPropertiesTo(this.model);
             this.model.sync(dogModel);
 
-            RenderLayer.renderColoredCutoutModel(this.model, Resources.TALENT_RESCUE, poseStack, buffer, packedLight, dog, 1.0F, 1.0F, 1.0F);
+            RenderLayer.renderColoredCutoutModel(this.model, Resources.TALENT_RESCUE, poseStack, buffer, packedLight, dog, 0xffffffff);
         }
 
     }

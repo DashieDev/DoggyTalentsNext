@@ -39,7 +39,7 @@ import doggytalents.forge_imitate.network.PacketDistributor;
 
 public class CanineTrackerLocateRenderer {
 
-    private static ResourceLocation DEFAULT_0 = new ResourceLocation("default/0");
+    private static ResourceLocation DEFAULT_0 = Util.getVanillaResource("default/0");
 
     private static boolean locating;
     private static UUID locatingUUID;
@@ -57,9 +57,9 @@ public class CanineTrackerLocateRenderer {
         if (player != null && player.isSpectator()) return;
         Vec3 dog_pos = null;
         if (cachedDog.get() != null) {
-            double d0 = Mth.lerp((double)event.getPartialTick(), cachedDog.get().xOld, cachedDog.get().getX());
-            double d1 = Mth.lerp((double)event.getPartialTick(), cachedDog.get().yOld, cachedDog.get().getY());
-            double d2 = Mth.lerp((double)event.getPartialTick(), cachedDog.get().zOld, cachedDog.get().getZ());
+            double d0 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().xOld, cachedDog.get().getX());
+            double d1 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().yOld, cachedDog.get().getY());
+            double d2 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().zOld, cachedDog.get().getZ());
             dog_pos = new Vec3(d0, d1 + 1, d2);
         } else {
             dog_pos = new Vec3(locatingPos.getX(), locatingPos.getY() + 1, locatingPos.getZ());

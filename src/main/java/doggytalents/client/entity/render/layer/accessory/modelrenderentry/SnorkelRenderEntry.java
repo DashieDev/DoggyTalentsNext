@@ -7,6 +7,7 @@ import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +15,7 @@ import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLaye
 
 
 public class SnorkelRenderEntry extends AccessoryModelManager.Entry {
-    public static final ModelLayerLocation DOG_SNORKEL = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "snorkel"), "main");
+    public static final ModelLayerLocation DOG_SNORKEL = new ModelLayerLocation(Util.getResource("snorkel"), "main");
     
     public SnorkelModel model;
     @Override

@@ -8,6 +8,7 @@ import doggytalents.client.entity.model.WigModel;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +16,7 @@ import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLaye
 
 
 public class LabCoatRenderEntry extends Entry{
-    public static final ModelLayerLocation LAB_COAT = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "lab_coat"), "main");
+    public static final ModelLayerLocation LAB_COAT = new ModelLayerLocation(Util.getResource("lab_coat"), "main");
     
     public LabCoatModel model;
 

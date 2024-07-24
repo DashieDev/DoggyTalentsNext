@@ -155,9 +155,14 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
-import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.fluids.FluidType;
+import doggytalents.common.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -1790,14 +1795,13 @@ public class Dog extends AbstractDog {
             critModifiers.forEach(attackDamageInst::addTransientModifier);
         }
 
-        int damage = (int)(attackDamageInst == null ? 0
+        float damage = (float)(attackDamageInst == null ? 0
             : attackDamageInst.getValue());
 
         //Vanilla hardcoded enchantment effect bonus
         var stack = this.getMainHandItem();
-        if (target instanceof LivingEntity && stack != null) {
-            damage += EnchantmentHelper
-                .getDamageBonus(this.getMainHandItem(), ((LivingEntity)target).getType());
+        if (this.level() instanceof ServerLevel serverlevel) {
+            damage = EnchantmentHelper.modifyDamage(serverlevel, stack, target, this.damageSources().mobAttack(this), damage);
         }
 
 
@@ -1810,7 +1814,9 @@ public class Dog extends AbstractDog {
         boolean flag = target.hurt(this.damageSources().mobAttack(this), damage);
         if (!flag) return false;
 
-        this.doEnchantDamageEffects(this, target);
+        if (this.level() instanceof ServerLevel serverlevel1) {
+            EnchantmentHelper.doPostAttackEffects(serverlevel1, target, this.damageSources().mobAttack(this));
+        }
         this.statsTracker.increaseDamageDealt(damage);
 
         if (critModifiers != null) {
@@ -1828,6 +1834,8 @@ public class Dog extends AbstractDog {
             ((NattoBiteEffect)DoggyEffects.NATTO_BITE.get()).doAdditionalAttackEffects(this, living);
         }
 
+        this.setLastHurtMob(target);
+
         return true;
     }
 
@@ -1838,13 +1846,12 @@ public class Dog extends AbstractDog {
     }
 
     protected void doInitialEnchantDamageEffects(LivingEntity dog, Entity target) {
-        int i = EnchantmentHelper.getFireAspect(this);
-        if (i > 0) {
-            EntityUtil.setSecondsOnFire(target, i * 4);
-        }
+        // int i = EnchantmentHelper.getFireAspect(this);
+        // if (i > 0) {
+        //     EntityUtil.setSecondsOnFire(target, i * 4);
+        // }
 
-        float knockback = (float)this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
-        knockback += (float)EnchantmentHelper.getKnockbackBonus(this);
+        float knockback = this.getKnockback(target, this.damageSources().mobAttack(this));
         if (knockback > 0 && target instanceof LivingEntity living) {
             living.knockback(
                 (double)(knockback * 0.5F), 
@@ -1975,7 +1982,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean canBeLeashed(Player player) {
+    public boolean canHaveALeashAttachedToIt() {
         return false;
     }
 
@@ -2251,14 +2258,14 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public Entity changeDimension(ServerLevel worldIn/*, ITeleporter teleporter*/) {
+    public Entity changeDimension(DimensionTransition tansition) {
         boolean flag = 
             !changeDimensionAuthorized
             && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.ALL_DOG_BLOCK_PORTAL);
         if (flag) return null;
         changeDimensionAuthorized = false;
         this.DTN_dogChangingDim = true;
-        Entity transportedEntity = super.changeDimension(worldIn/*, teleporter*/);
+        Entity transportedEntity = super.changeDimension(tansition);
         this.DTN_dogChangingDim = false;
         if (transportedEntity instanceof Dog) {
             DogLocationStorage.get(this.level()).getOrCreateData(this).update((Dog) transportedEntity);
@@ -2401,7 +2408,7 @@ public class Dog extends AbstractDog {
             ServerLevel serverlevel = (ServerLevel)level;
             if (entity == null || entity.killedEntity(serverlevel, this)) {
                 this.gameEvent(GameEvent.ENTITY_DIE);
-                this.dropAllDeathLoot(cause);
+                this.dropAllDeathLoot(serverlevel, cause);
             }
 
             this.level().broadcastEntityEvent(this, (byte)3);
@@ -4668,7 +4675,7 @@ public class Dog extends AbstractDog {
     public ItemStack getItemBySlot(EquipmentSlot slot) {
         var type = slot.getType();
         boolean getArmor = 
-            type == EquipmentSlot.Type.ARMOR 
+            type == EquipmentSlot.Type.HUMANOID_ARMOR
             && (alterationProps.canWearArmor() || this.level().isClientSide);
         if (getArmor) {
             return this.dogArmors.getArmorFromSlot(slot);
@@ -4698,7 +4705,7 @@ public class Dog extends AbstractDog {
     }
 
     private boolean trySetDogArmorSlot(EquipmentSlot slot, ItemStack stack) {
-        if (slot.getType() != EquipmentSlot.Type.ARMOR)
+        if (slot.getType() != EquipmentSlot.Type.HUMANOID_ARMOR)
             return false;
         if (!this.level().isClientSide && !this.canDogWearArmor())
             return false;
@@ -4741,8 +4748,8 @@ public class Dog extends AbstractDog {
     public void onEquipItem(EquipmentSlot slot, ItemStack oldStack, ItemStack newStack) {
         var type = slot.getType();
         boolean is_slot_should_be_handled = 
-            type == EquipmentSlot.Type.ARMOR
-            || type == EquipmentSlot.Type.BODY;    
+            type == EquipmentSlot.Type.HUMANOID_ARMOR
+            || type == EquipmentSlot.Type.ANIMAL_ARMOR;    
 
         if (!is_slot_should_be_handled)
             return;
@@ -4761,8 +4768,8 @@ public class Dog extends AbstractDog {
             return false;
         if (!(stack.getItem() instanceof ArmorItem))
             return false;
-        var slot = Dog.getEquipmentSlotForItem(stack);
-        if (slot.getType() != EquipmentSlot.Type.ARMOR)
+        var slot = this.getEquipmentSlotForItem(stack);
+        if (slot.getType() != EquipmentSlot.Type.HUMANOID_ARMOR)
             return false;
         var current = this.getItemBySlot(slot);
         if (current != null && !current.isEmpty())
@@ -4772,7 +4779,7 @@ public class Dog extends AbstractDog {
 
     //Dog dont drop from Lootables.
     @Override
-    protected void dropAllDeathLoot(DamageSource source) {
+    protected void dropAllDeathLoot(ServerLevel p_348524_, DamageSource source) {
         this.dropEquipment();
     }
 

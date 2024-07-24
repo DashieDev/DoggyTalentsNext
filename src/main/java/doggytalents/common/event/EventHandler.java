@@ -203,7 +203,7 @@ public class EventHandler {
         dog.setYRot(wolf.yBodyRot);
 
         var wolf_collar_color = wolf.getCollarColor();
-        var color = Util.srgbArrayToInt(wolf_collar_color.getTextureDiffuseColors());
+        var color = wolf_collar_color.getTextureDiffuseColor();
         var dog_collar = DoggyAccessories.DYEABLE_COLLAR_THICC.get()
             .create(color);
         if (dog_collar != null)
@@ -284,21 +284,21 @@ public class EventHandler {
     }
 
     private boolean isEnableStarterBundle() {
-        // final var retMut = new MutableBoolean(false);
-        // DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-        //     if (ConfigHandler.ClientConfig
-        //         .getConfig(ConfigHandler.CLIENT.ENABLE_STARTER_BUNDLE_BY_DEFAULT))
-        //         retMut.setTrue();
-        // });
-        // if (retMut.getValue())
-        //     return true;
+        final var retMut = new MutableBoolean(false);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            if (ConfigHandler.ClientConfig
+                .getConfig(ConfigHandler.CLIENT.ENABLE_STARTER_BUNDLE_BY_DEFAULT))
+                retMut.setTrue();
+        }
+        if (retMut.getValue())
+            return true;
         return ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.STARTING_ITEMS);
     }
 
-    //@SubscribeEvent
-    public void onLootDrop(final LootingLevelEvent event) {
-        HunterDogTalent.onLootDrop(event);
-    }
+    // @SubscribeEvent
+    // public void onLootDrop(final LootingLevelEvent event) {
+    //     HunterDogTalent.onLootDrop(event);
+    // }
 
     //@SubscribeEvent
     public void onProjectileHit(final ProjectileImpactEvent event) {

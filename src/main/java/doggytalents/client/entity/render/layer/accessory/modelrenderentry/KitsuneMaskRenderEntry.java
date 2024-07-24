@@ -11,6 +11,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.accessory.KitsuneMask;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
@@ -21,7 +22,7 @@ import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLaye
 
 public class KitsuneMaskRenderEntry extends Entry {
     
-    public static final ModelLayerLocation DOG_KITSUNE_MASK = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "dog_kitsune_mask"), "main");
+    public static final ModelLayerLocation DOG_KITSUNE_MASK = new ModelLayerLocation(Util.getResource("dog_kitsune_mask"), "main");
     
     public KitsuneMaskModel model;
 

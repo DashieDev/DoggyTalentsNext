@@ -64,11 +64,11 @@ public class PianoRenderer extends EntityRenderer<Piano> {
         stack.mulPose(Axis.YP.rotationDegrees(Mth.wrapDegrees(piano.getYRot())));
         if (piano.getPianoType() == PianoType.UPRIGHT) {
             var consumer = bufferSource.getBuffer(getRenderType(piano));
-            this.modelUpright.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.modelUpright.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
         } else {
             model.preparePianoModel(piano);
             var consumer = bufferSource.getBuffer(getRenderType(piano));
-            this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
         }
         
         stack.popPose();

@@ -19,6 +19,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -47,30 +48,30 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         super(type, worldIn);
     }
 
-    public void setAttributeModifier(Holder<Attribute> attribute, UUID modifierUUID, BiFunction<AbstractDog, UUID, AttributeModifier> modifierGenerator) {
+    public void setAttributeModifier(Holder<Attribute> attribute, ResourceLocation modifierLoc, BiFunction<AbstractDog, ResourceLocation, AttributeModifier> modifierGenerator) {
         AttributeInstance attributeInst = this.getAttribute(attribute);
 
-        AttributeModifier currentModifier = attributeInst.getModifier(modifierUUID);
+        AttributeModifier currentModifier = attributeInst.getModifier(modifierLoc);
 
         // Remove modifier if it exists
         if (currentModifier != null) {
 
             // Use UUID version as it is more efficient since
             // getModifier would need to be called again
-            attributeInst.removeModifier(modifierUUID);
+            attributeInst.removeModifier(modifierLoc);
         }
 
-        AttributeModifier newModifier = modifierGenerator.apply(this, modifierUUID);
+        AttributeModifier newModifier = modifierGenerator.apply(this, modifierLoc);
 
         if (newModifier != null) {
             attributeInst.addTransientModifier(newModifier);
         }
     }
 
-    public void removeAttributeModifier(Holder<Attribute> attribute, UUID modifierUUID) {
+    public void removeAttributeModifier(Holder<Attribute> attribute, ResourceLocation modifierLoc) {
         var attrib = this.getAttribute(attribute);
         if (attrib == null) return;
-        attrib.removeModifier(modifierUUID);
+        attrib.removeModifier(modifierLoc);
     }
 
     @Override
@@ -186,43 +187,13 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     //Start : Re-adjust armor behaviour
     //All dog start hurting Amrmor in armorItems regradless of anything.
     @Override
-    public void hurtArmor(DamageSource p_36251_, float p_36252_) {
-        if (!(p_36252_ <= 0.0F)) {
-            p_36252_ /= 4.0F;
-            if (p_36252_ < 1.0F) {
-                p_36252_ = 1.0F;
-            }
-
-            int j = 0;
-            for(var i : this.getArmorSlots()) {
-                ItemStack itemstack = i;
-                if ((!p_36251_.is(DamageTypeTags.IS_FIRE) || !itemstack.has(DataComponents.FIRE_RESISTANT)) && itemstack.getItem() instanceof ArmorItem) {
-                    final var slot = EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, j);
-                    itemstack.hurtAndBreak((int)p_36252_, this, slot);
-                }
-                ++j;
-            }
-
-        }
+    protected void hurtArmor(DamageSource p_36251_, float p_36252_) {
+        this.doHurtEquipment(p_36251_, p_36252_, new EquipmentSlot[]{EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD, EquipmentSlot.BODY});
     }
 
     @Override
-    public void hurtHelmet(DamageSource p_150103_, float p_150104_) {
-        if (!(p_150104_ <= 0.0F)) {
-            p_150104_ /= 4.0F;
-            if (p_150104_ < 1.0F) {
-                p_150104_ = 1.0F;
-            }
-
-
-            var i = this.getItemBySlot(EquipmentSlot.HEAD);
-
-            ItemStack itemstack = i;
-            if ((!p_150103_.is(DamageTypeTags.IS_FIRE) || !itemstack.has(DataComponents.FIRE_RESISTANT)) && itemstack.getItem() instanceof ArmorItem) {
-                itemstack.hurtAndBreak((int)p_150104_, this, EquipmentSlot.HEAD);
-            }
-
-        }
+    protected void hurtHelmet(DamageSource p_150103_, float p_150104_) {
+        this.doHurtEquipment(p_150103_, p_150104_, new EquipmentSlot[]{EquipmentSlot.HEAD});
     }
     //End : Re-adjust armor behaviour
 

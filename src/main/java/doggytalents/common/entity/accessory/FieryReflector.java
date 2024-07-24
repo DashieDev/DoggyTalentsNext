@@ -23,6 +23,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.ItemLike;
 
@@ -270,7 +271,7 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
             
             var pairOptional = 
                 dog.level().getRecipeManager().getRecipeFor(RecipeType.SMELTING, 
-                    new SimpleContainer(stack), dog.level(), firstCheck);
+                    new SingleRecipeInput(stack), dog.level(), firstCheck);
             if (!pairOptional.isPresent())
                 return null;
             var pair = pairOptional.get();

@@ -16,7 +16,9 @@ import doggytalents.common.entity.misc.DogArrow;
 import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -139,7 +141,7 @@ public interface ShootHandler {
         private Optional<AbstractArrow> getArrowFromBow(AbstractDog dog, ItemStack bow_stack, ItemStack arrowStack, float power) {
             if (!(bow_stack.getItem() instanceof BowItem bow))
                 return Optional.empty();
-            boolean is_infinity_bow = DoggyToolsRangedAttack.isInfinityBow(bow_stack);
+            boolean is_infinity_bow = DoggyToolsRangedAttack.isInfinityBow(bow_stack, dog);
     
             ArrowItem arrow = null;
     
@@ -152,7 +154,7 @@ public interface ShootHandler {
             if (arrow == null)  
                 return Optional.empty();
     
-            var arrow_proj = createDogArrow(dog, arrow, arrowStack);
+            var arrow_proj = createDogArrow(dog, arrow, arrowStack, bow_stack);
             if (arrow_proj == null)
                 return Optional.empty();
     
@@ -161,19 +163,19 @@ public interface ShootHandler {
                 arrow_proj.setCritArrow(true);
             }
     
-            int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, bow_stack);
-            if (j > 0) {
-                arrow_proj.setBaseDamage(arrow_proj.getBaseDamage() + (double)j * 0.5D + 0.5D);
-            }
+            // int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, bow_stack);
+            // if (j > 0) {
+            //     arrow_proj.setBaseDamage(arrow_proj.getBaseDamage() + (double)j * 0.5D + 0.5D);
+            // }
     
-            int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH, bow_stack);
-            if (k > 0) {
-                arrow_proj.setKnockback(k);
-            }
+            // int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH, bow_stack);
+            // if (k > 0) {
+            //     arrow_proj.setKnockback(k);
+            // }
     
             boolean flaming_arrow = 
-                EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAME, bow_stack) > 0
-                || dog.getDogLevel(DoggyTalents.HELL_HOUND) >= 5;
+                //EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAME, bow_stack) > 0
+                /*||*/dog.getDogLevel(DoggyTalents.HELL_HOUND) >= 5;
             if (flaming_arrow) {
                 EntityUtil.setSecondsOnFire(arrow_proj, 100);
             }
@@ -187,15 +189,15 @@ public interface ShootHandler {
             return Optional.of(arrow_proj);
         }
 
-        private AbstractArrow createDogArrow(AbstractDog dog, ArrowItem arrow_item, ItemStack arrow_stack) {
+        private AbstractArrow createDogArrow(AbstractDog dog, ArrowItem arrow_item, ItemStack arrow_stack, ItemStack bow_stack) {
             if (!ConfigHandler.SERVER.DOGGY_TOOLS_PROJECTILE_PASS_ALLIES.get()) {
-                return arrow_item.createArrow(dog.level(), arrow_stack, dog);
+                return arrow_item.createArrow(dog.level(), arrow_stack, dog, bow_stack);
             }
-            return new DogArrow(dog.level(), dog, arrow_stack.copyWithCount(1));
+            return new DogArrow(dog.level(), dog, arrow_stack.copyWithCount(1), bow_stack.copyWithCount(1));
         }
     
         private void consumeArrow(AbstractDog dog, ItemStack bow_stack, ItemStack arrowStack) {
-            boolean is_infinity_bow = DoggyToolsRangedAttack.isInfinityBow(bow_stack);
+            boolean is_infinity_bow = DoggyToolsRangedAttack.isInfinityBow(bow_stack, dog);
             
             if (!is_infinity_bow)
                 arrowStack.shrink(1);
@@ -228,7 +230,7 @@ public interface ShootHandler {
             if (flaming_trident) {
                 EntityUtil.setSecondsOnFire(trident, 100);
             }
-            ranged_manager.shootProjectile(dog, trident, target, SoundEvents.TRIDENT_THROW);
+            ranged_manager.shootProjectile(dog, trident, target, SoundEvents.TRIDENT_THROW.value());
             ranged_manager.setAwaitingTrident(trident);
         }
 
@@ -299,7 +301,7 @@ public interface ShootHandler {
             }
 
             int using_tick = dog.getTicksUsingItem();
-            if (using_tick >= CrossbowItem.getChargeDuration(crossbow_stack)) {
+            if (using_tick >= CrossbowItem.getChargeDuration(crossbow_stack, dog)) {
                 dog.stopUsingItem();
                 chargeCrossbowAndConsumeArrow(dog, crossbow_stack, arrow_getter);
             } 
@@ -320,8 +322,8 @@ public interface ShootHandler {
             if (arrow_stack.isEmpty())
                 return;
             
-            boolean is_multishot = EnchantmentHelper
-                .getItemEnchantmentLevel(Enchantments.MULTISHOT, crossbow_stack) > 0;
+            boolean is_multishot = ItemUtil
+                .getEnchantmentLevelForItem(Enchantments.MULTISHOT, dog.registryAccess(), crossbow_stack) > 0;
             int shoot_amount = is_multishot ? 3 : 1;
             var item_list = new ArrayList<ItemStack>(shoot_amount);
             for (int i = 0; i < shoot_amount; ++i) {
@@ -338,7 +340,7 @@ public interface ShootHandler {
             }
 
 
-            dog.playSound(SoundEvents.CROSSBOW_LOADING_END, 1.0F,
+            dog.playSound(SoundEvents.CROSSBOW_LOADING_END.value(), 1.0F,
                 1.0F / (dog.getRandom().nextFloat() * 0.5F + 1.0F) + 0.2F);
         }
 

@@ -32,6 +32,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 
 public class DogModel extends EntityModel<Dog> {
@@ -685,10 +686,12 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, float p_102038_, float p_102039_, float p_102040_, float p_102041_) {
-        p_102038_ *= this.wetShade;
-        p_102039_ *= this.wetShade;
-        p_102040_ *= this.wetShade;
+    public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, int unused) {
+        // p_102038_ *= this.wetShade;
+        // p_102039_ *= this.wetShade;
+        // p_102040_ *= this.wetShade;
+        int wet_color = FastColor.ARGB32.colorFromFloat(1, this.wetShade, this.wetShade, this.wetShade);
+        int render_color = FastColor.ARGB32.multiply(0xffffffff, wet_color);
         
         var pivot = DEFAULT_ROOT_PIVOT;
         var custom_pivot = getCustomRootPivotPoint();
@@ -725,7 +728,7 @@ public class DogModel extends EntityModel<Dog> {
             //float f1 = 1.0F / 2f;
             //p_102034_.scale(f1, f1, f1);
             //p_102034_.translate(0.0D, (double)(24 / 16.0F), 0.0D);
-            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
+            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, render_color);
             p_102034_.popPose();
             
             this.head.visible = headVisible0;
@@ -733,10 +736,10 @@ public class DogModel extends EntityModel<Dog> {
             //p_102034_.translate(0.0D, (double)(5f / 16.0F), (double)(2f / 16.0F));
             p_102034_.scale(2, 2, 2);
             p_102034_.translate(0, -0.5, 0.15);
-            this.head.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
+            this.head.render(p_102034_, p_102035_, p_102036_, p_102037_, render_color);
             p_102034_.popPose();            
         } else {
-            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, p_102038_, p_102039_, p_102040_, p_102041_);
+            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, render_color);
         }
 
         p_102034_.popPose();

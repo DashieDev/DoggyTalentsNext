@@ -1,15 +1,19 @@
 package doggytalents.common.util;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -159,5 +163,13 @@ public class ItemUtil {
     public static CustomData getWrappedTag(ItemStack stack) {
         var custom_data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         return custom_data;
+    }
+
+    public static int getEnchantmentLevelForItem(ResourceKey<Enchantment> key, RegistryAccess prov, ItemStack stack) {
+        var reg = prov.registryOrThrow(Registries.ENCHANTMENT);
+        var holder = reg.getHolder(key);
+        if (!holder.isPresent())
+            return 0;
+        return stack.getEnchantmentLevel(holder.get());
     }
 }

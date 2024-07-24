@@ -17,12 +17,14 @@ import doggytalents.common.entity.ai.triggerable.DogFaintStandAction;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.Util;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -49,7 +51,7 @@ public class DogIncapacitatedMananger {
     private final Dog dog;
 
     private int recoveryMultiplier = 1;
-    private static final UUID INCAP_MOVEMENT = UUID.fromString("9576c796-c7c7-4995-90d5-f60eafc58805");
+    private static final ResourceLocation INCAP_MOVEMENT = Util.getResource("injured_slowdown");
     private boolean appliedIncapChanges = false;
     
     private static final int MAX_BANDAID_COUNT = 8;
@@ -83,7 +85,7 @@ public class DogIncapacitatedMananger {
         recoveryMultiplier = 1;
         this.bandagesCount = 0;
         this.dog.setAttributeModifier(Attributes.MOVEMENT_SPEED, INCAP_MOVEMENT,
-            (d, u) -> new AttributeModifier(u, "Defeated Slowness", -0.5f, Operation.ADD_MULTIPLIED_TOTAL)
+            (d, u) -> new AttributeModifier(u, -0.5f, Operation.ADD_MULTIPLIED_TOTAL)
         );
         this.dog.setDrunkTicks(0);
     }

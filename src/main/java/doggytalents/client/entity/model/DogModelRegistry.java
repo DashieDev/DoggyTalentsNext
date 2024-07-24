@@ -82,6 +82,7 @@ import doggytalents.client.entity.model.dog.kusa.TakeModel;
 import doggytalents.client.entity.model.dog.kusa.TeiModel;
 import doggytalents.client.entity.model.dog.kusa.UmeModel;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.Util;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
@@ -94,7 +95,7 @@ public class DogModelRegistry {
     }
 
     public static void register(String name, Function<EntityRendererProvider.Context, DogModel>  getter) {
-        register(new ResourceLocation("doggytalents", name), getter);
+        register(Util.getResource(name), getter);
     }
 
     public static DogModelHolder getDogModelHolder(ResourceLocation id) {
@@ -104,9 +105,9 @@ public class DogModelRegistry {
     public static DogModelHolder getDogModelHolder(String name) {
         ResourceLocation loc;
         if (name.indexOf(':') >= 0) {
-            loc = new ResourceLocation(name);
+            loc = ResourceLocation.parse(name);
         } else {
-            loc = new ResourceLocation("doggytalents", name);
+            loc = Util.getResource(name);
         }
         return getDogModelHolder(loc);
     }

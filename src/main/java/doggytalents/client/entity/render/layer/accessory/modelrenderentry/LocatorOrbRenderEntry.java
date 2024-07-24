@@ -6,6 +6,7 @@ import doggytalents.client.entity.model.WigModel;
 import doggytalents.client.entity.model.dog.kusa.LocatorOrbModel;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +15,7 @@ import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLaye
 
 public class LocatorOrbRenderEntry extends Entry {
 
-    public static final ModelLayerLocation LOCATOR_ORB = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "locator_orb"), "main");
+    public static final ModelLayerLocation LOCATOR_ORB = new ModelLayerLocation(Util.getResource("locator_orb"), "main");
 
     public LocatorOrbModel model;
 

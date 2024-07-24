@@ -14,6 +14,7 @@ import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRendere
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
@@ -23,7 +24,7 @@ import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLaye
 
 
 public class CeremonialGarbRenderEntry extends Entry{
-    public static final ModelLayerLocation CERE_GARB = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "ceremonial_garb"), "main");
+    public static final ModelLayerLocation CERE_GARB = new ModelLayerLocation(Util.getResource("ceremonial_garb"), "main");
     public CeremonialGarbModel model;
 
     @Override

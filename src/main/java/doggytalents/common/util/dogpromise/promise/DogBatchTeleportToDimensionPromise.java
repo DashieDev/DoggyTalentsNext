@@ -20,7 +20,7 @@ import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import doggytalents.forge_imitate.chunk.ForgeChunkManager;
 
@@ -112,7 +112,8 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
         if (!dogValidator.test(dog0)) return;
 
         dog0.authorizeChangeDimension();
-        var dog = dog0.changeDimension(targetLevel); dog.moveTo(pos, dog.getYRot(), dog.getXRot());
+
+        dog0.changeDimension(getDogTransition(targetLevel, dog0, pos));
     }
 
     @Override
@@ -152,6 +153,15 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
                 chunkpos.x, chunkpos.z, 
                 false, true);
         }
+    }
+
+    private static DimensionTransition getDogTransition(ServerLevel level, Dog dog, BlockPos safePos) {
+        return new DimensionTransition(level, 
+            Vec3.atBottomCenterOf(safePos), 
+            Vec3.ZERO, 
+            dog.getYRot(), dog.getXRot(),
+            false,
+            DimensionTransition.DO_NOTHING);
     }
 
     // private static class DogTeleporter implements ITeleporter {

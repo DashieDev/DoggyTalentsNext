@@ -30,6 +30,7 @@ import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -214,33 +215,33 @@ public class ClientEventHandler {
     }
 
     public void drawSelectionBox(PoseStack matrixStackIn, Player player, float particleTicks, AABB boundingBox) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        // RenderSystem.disableAlphaTest();
-        RenderSystem.depthMask(false);
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 0.7F);
-        //TODO Used when drawing outline of bounding box
-        RenderSystem.lineWidth(2.0F);
+        // RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        // RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        // // RenderSystem.disableAlphaTest();
+        // RenderSystem.depthMask(false);
+        // RenderSystem.enableBlend();
+        // RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        // RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 0.7F);
+        // //TODO Used when drawing outline of bounding box
+        // RenderSystem.lineWidth(2.0F);
 
 
-        //RenderSystem.disableTexture();
-        Vec3 vec3d = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-        double d0 = vec3d.x();
-        double d1 = vec3d.y();
-        double d2 = vec3d.z();
+        // //RenderSystem.disableTexture();
+        // Vec3 vec3d = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+        // double d0 = vec3d.x();
+        // double d1 = vec3d.y();
+        // double d2 = vec3d.z();
 
-        BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
-        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-        LevelRenderer.renderLineBox(matrixStackIn, bufferbuilder, boundingBox.move(-d0, -d1, -d2), 1F, 1F, 0F, 0.8F);
-        Tesselator.getInstance().end();
-        RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 0.3F);
-        RenderSystem.depthMask(true);
-        //RenderSystem.enableTexture();
-        RenderSystem.disableBlend();
-        //RenderSystem.enableAlphaTest();
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        // BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
+        // bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+        // LevelRenderer.renderLineBox(matrixStackIn, bufferbuilder, boundingBox.move(-d0, -d1, -d2), 1F, 1F, 0F, 0.8F);
+        // Tesselator.getInstance().end();
+        // RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 0.3F);
+        // RenderSystem.depthMask(true);
+        // //RenderSystem.enableTexture();
+        // RenderSystem.disableBlend();
+        // //RenderSystem.enableAlphaTest();
+        // RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     public static void onDogMountEvent(DogMountData data) {
@@ -264,7 +265,7 @@ public class ClientEventHandler {
     }
 
     public static ResourceLocation getAbsoluteBlockTexture(ResourceLocation loc) {
-        return new ResourceLocation(loc.getNamespace(), "textures/" + loc.getPath() + ".png");
+        return Util.getResource(loc.getNamespace(), "textures/" + loc.getPath() + ".png");
     }
 
     public static boolean vertifyArmorTexture(ResourceLocation loc) {

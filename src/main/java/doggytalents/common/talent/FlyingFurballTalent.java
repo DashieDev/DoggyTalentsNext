@@ -8,7 +8,8 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogFlyingMoveControl;
 import doggytalents.common.entity.ai.nav.DogFlyingNavigation;
-import doggytalents.forge_imitate.atrrib.ForgeMod;
+import doggytalents.common.util.Util;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -17,8 +18,8 @@ import java.util.UUID;
 
 public class FlyingFurballTalent extends TalentInstance {
 
-    private static UUID FLYING_FURBALL_BOOST_UUID = UUID.fromString("2a802049-97d0-4de5-934e-e24ed1d2ab9f");
-    private static UUID FLYING_FURBALL_GRAVITY_UUID = UUID.fromString("76390e7e-e38d-4de5-8fce-83af09b03a3e");
+    private static ResourceLocation FLYING_FURBALL_BOOST_UUID = Util.getResource("flying_furball_boost");
+    private static ResourceLocation FLYING_FURBALL_GRAVITY_UUID = Util.getResource("flying_furball_gravity");
 
     private DogFlyingMoveControl moveControl;
     private DogFlyingNavigation navigation;
@@ -137,11 +138,11 @@ public class FlyingFurballTalent extends TalentInstance {
             && !dog.isInWater();
     }
 
-    public AttributeModifier createSpeedModifier(AbstractDog dogIn, UUID uuidIn) {
+    public AttributeModifier createSpeedModifier(AbstractDog dogIn, ResourceLocation uuidIn) {
         if (this.level() > 0) {
             double speed = (this.level() - 1)* 0.1;
 
-            return new AttributeModifier(uuidIn, "Flying Furball", speed, AttributeModifier.Operation.ADD_VALUE);
+            return new AttributeModifier(uuidIn, speed, AttributeModifier.Operation.ADD_VALUE);
         }
 
         return null;
@@ -160,8 +161,8 @@ public class FlyingFurballTalent extends TalentInstance {
         dog.removeAttributeModifier(Attributes.GRAVITY, FLYING_FURBALL_GRAVITY_UUID);
     }
 
-    public AttributeModifier createGravityModifier(AbstractDog dogIn, UUID uuidIn) {
-        return new AttributeModifier(uuidIn, "Flying Furball Gravity", -0.8, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+    public AttributeModifier createGravityModifier(AbstractDog dogIn, ResourceLocation uuidIn) {
+        return new AttributeModifier(uuidIn, -0.8, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     }
 
 }

@@ -29,7 +29,7 @@ public class DTNNetworkHandler {
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID + "/network");
 
     public static final CustomPacketPayload.Type<DTNNetworkPayload<?>> CHANNEL_ID =
-        CustomPacketPayload.createType(Util.getResource("payload_channel").toString());
+        new CustomPacketPayload.Type<>(Util.getResource("payload_channel"));
     private static Map<Integer, PacketCodec<?>> PACKET_MAP = Maps.newHashMap(); 
     private static Map<Class<?>, Integer> DATACLASS_ID_MAP = Maps.newHashMap();
 

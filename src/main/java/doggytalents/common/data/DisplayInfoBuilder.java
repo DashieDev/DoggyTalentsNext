@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.Util;
 
 /**
  * Defaults are to show toast, announce to chat and not to be hidden
@@ -63,11 +64,11 @@ public class DisplayInfoBuilder {
     }
 
     public DisplayInfoBuilder background(String path) {
-        return background(new ResourceLocation("textures/gui/advancements/backgrounds/" + path));
+        return background(Util.getVanillaResource("textures/gui/advancements/backgrounds/" + path));
     }
 
     public DisplayInfoBuilder background(String modId, String path) {
-        return background(new ResourceLocation(modId, "textures/gui/advancements/backgrounds/" + path));
+        return background(Util.getResource(modId, "textures/gui/advancements/backgrounds/" + path));
     }
 
     public DisplayInfoBuilder background(ResourceLocation backgroundIn) {

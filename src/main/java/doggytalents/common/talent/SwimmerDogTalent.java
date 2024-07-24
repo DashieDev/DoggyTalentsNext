@@ -13,9 +13,9 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
-import doggytalents.forge_imitate.atrrib.ForgeMod;
-import net.minecraft.Util;
+import doggytalents.common.util.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -41,7 +41,7 @@ public class SwimmerDogTalent extends TalentInstance {
     private DogSwimMoveControl moveControl;
     private DogWaterBoundNavigation navigator;
 
-    private static final UUID SWIM_BOOST_ID = UUID.fromString("50671e42-1ded-4f97-9e2b-78bbeb1e8772");
+    private static final ResourceLocation SWIM_BOOST_ID = Util.getResource("swim_boost");
 
     //private static DataKey<SwimmerDogGoal> SWIM_AI = DataKey.make();
 
@@ -130,8 +130,8 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     private void applySwimAttributes(Dog dog){
-        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.holder(), SWIM_BOOST_ID, (dd, u) -> 
-            new AttributeModifier(u, "Swim Boost", 2*dog.getDogLevel(DoggyTalents.SWIMMER_DOG), Operation.ADD_VALUE)
+        dog.setAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID, (dd, u) -> 
+            new AttributeModifier(u, 2*dog.getDogLevel(DoggyTalents.SWIMMER_DOG), Operation.ADD_VALUE)
         );
     }
 

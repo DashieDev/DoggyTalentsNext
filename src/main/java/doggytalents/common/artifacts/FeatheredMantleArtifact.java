@@ -6,13 +6,14 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
-import doggytalents.forge_imitate.atrrib.ForgeMod;
+import doggytalents.common.util.Util;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class FeatheredMantleArtifact extends DoggyArtifact {
 
-    private static final UUID PILLOW_PAW_BOOST_ID = UUID.fromString("1f002df0-9d35-49c6-a863-b8945caa4af4");
+    private static final ResourceLocation PILLOW_PAW_BOOST_ID = Util.getResource("pillow_paw_boost");
 
     private boolean glide = false;
 
@@ -52,8 +53,8 @@ public class FeatheredMantleArtifact extends DoggyArtifact {
         dog.removeAttributeModifier(Attributes.GRAVITY, PILLOW_PAW_BOOST_ID);
     }
 
-    public AttributeModifier createSpeedModifier(AbstractDog dogIn, UUID uuidIn) {
-        return new AttributeModifier(uuidIn, "Pillow Paw", -0.8, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+    public AttributeModifier createSpeedModifier(AbstractDog dogIn, ResourceLocation uuidIn) {
+        return new AttributeModifier(uuidIn, -0.8, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     }
     
 }

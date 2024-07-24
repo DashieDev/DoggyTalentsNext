@@ -64,7 +64,7 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, float p_103017_, float p_103018_, float p_103019_, float p_103020_) {
+    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, int color_overlay) {
         stack.pushPose();
         stack.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
         stack.translate((double)(pivot.x / 16.0F), (double)(pivot.y / 16.0F), (double)(pivot.z / 16.0F));
@@ -100,18 +100,18 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
             // float f1 = 1.0F / 2f;
             // stack.scale(f1, f1, f1);
             // stack.translate(0.0D, (double)(24 / 16.0F), 0.0D);
-            this.root.render(stack, p_103014_, p_103015_, p_103016_, p_103017_, p_103018_, p_103019_, p_103020_);
+            this.root.render(stack, p_103014_, p_103015_, p_103016_, 0xffffffff);
             stack.popPose();
             if (headSync) {
                 this.head.get().visible = headVisible0;
                 stack.pushPose();
                 stack.scale(2, 2, 2);
                 stack.translate(0, -0.5, 0.15);
-                this.head.get().render(stack, p_103014_, p_103015_, p_103016_, p_103017_, p_103018_, p_103019_, p_103020_);
+                this.head.get().render(stack, p_103014_, p_103015_, p_103016_, 0xffffffff);
                 stack.popPose();  
             }
         } else
-        this.root.render(stack, p_103014_, p_103015_, p_103016_, p_103017_, p_103018_, p_103019_, p_103020_);
+        this.root.render(stack, p_103014_, p_103015_, p_103016_, 0xffffffff);
         
         stack.popPose();
         stack.popPose();

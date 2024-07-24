@@ -33,16 +33,16 @@ public class DogArrow extends AbstractArrow {
         super(p_36858_, p_36859_);
     }
 
-    public DogArrow(Level p_36866_, double p_308912_, double p_308958_, double p_309185_, ItemStack stack) {
-        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), p_308912_, p_308958_, p_309185_, p_36866_, stack);
+    public DogArrow(Level p_36866_, double p_308912_, double p_308958_, double p_309185_, ItemStack stack, ItemStack proj_stack) {
+        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), p_308912_, p_308958_, p_309185_, p_36866_, stack, proj_stack);
         this.updateColor();
         if (stack.is(Items.SPECTRAL_ARROW)) {
             this.entityData.set(IS_SPECTRAL, true);
         }
     }
 
-    public DogArrow(Level p_36861_, LivingEntity p_308924_, ItemStack stack) {
-        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), p_308924_, p_36861_, stack);
+    public DogArrow(Level p_36861_, LivingEntity p_308924_, ItemStack stack, ItemStack proj_stack) {
+        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), p_308924_, p_36861_, stack, proj_stack);
         this.updateColor();
         if (stack.is(Items.SPECTRAL_ARROW)) {
             this.entityData.set(IS_SPECTRAL, true);

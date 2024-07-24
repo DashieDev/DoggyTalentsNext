@@ -3,6 +3,8 @@ package doggytalents.common.entity;
 import java.util.UUID;
 
 import doggytalents.common.config.ConfigHandler;
+import doggytalents.common.util.Util;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -10,7 +12,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class DogHungerManager {
     
-    public static final UUID HUNGER_MOVEMENT = UUID.fromString("50671f49-1dfd-4397-242b-78bb6b178115");
+    public static final ResourceLocation HUNGER_MOVEMENT = Util.getResource("dog_hunger_slowndown");
     public static final float MAX_HUNGER_TICK = 800;
 
     private final Dog dog;
@@ -138,7 +140,7 @@ public class DogHungerManager {
     private void hungerHighToLow() {
         if (!dog.isDefeated())
         dog.setAttributeModifier(Attributes.MOVEMENT_SPEED, HUNGER_MOVEMENT,
-                (d, u) -> new AttributeModifier(u, "Hunger Slowness", -0.35f, Operation.ADD_MULTIPLIED_TOTAL)
+                (d, u) -> new AttributeModifier(u, -0.35f, Operation.ADD_MULTIPLIED_TOTAL)
         );
 
     }

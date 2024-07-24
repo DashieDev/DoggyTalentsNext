@@ -3,6 +3,8 @@ package doggytalents.common.talent;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.util.Util;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
@@ -10,7 +12,7 @@ import java.util.UUID;
 
 public class DoggyDashTalent extends TalentInstance {
 
-    private static final UUID DASH_BOOST_ID = UUID.fromString("50671e49-1ded-4097-902b-78bb6b178772");
+    private static final ResourceLocation DASH_BOOST_ID = Util.getResource("doggy_dash_boost");
 
     public DoggyDashTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -31,7 +33,7 @@ public class DoggyDashTalent extends TalentInstance {
         dogIn.removeAttributeModifier(Attributes.MOVEMENT_SPEED, DASH_BOOST_ID);
     }
 
-    public AttributeModifier createSpeedModifier(AbstractDog dogIn, UUID uuidIn) {
+    public AttributeModifier createSpeedModifier(AbstractDog dogIn, ResourceLocation uuidIn) {
         if (this.level() > 0) {
             double speed = 0.03D * this.level();
 
@@ -39,7 +41,7 @@ public class DoggyDashTalent extends TalentInstance {
                 speed += 0.04D;
             }
 
-            return new AttributeModifier(uuidIn, "Doggy Dash", speed, AttributeModifier.Operation.ADD_VALUE);
+            return new AttributeModifier(uuidIn, speed, AttributeModifier.Operation.ADD_VALUE);
         }
 
         return null;

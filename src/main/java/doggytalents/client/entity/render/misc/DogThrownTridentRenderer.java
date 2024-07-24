@@ -31,7 +31,7 @@ public class DogThrownTridentRenderer extends EntityRenderer<DogThrownTrident> {
         var vertexconsumer = ItemRenderer.getFoilBufferDirect(
             p_116115_, this.model.renderType(this.getTextureLocation(p_116111_)), false, p_116111_.isFoil()
         );
-        this.model.renderToBuffer(p_116114_, vertexconsumer, p_116116_, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.model.renderToBuffer(p_116114_, vertexconsumer, p_116116_, OverlayTexture.NO_OVERLAY, 0xffffffff);
         p_116114_.popPose();
         super.render(p_116111_, p_116112_, p_116113_, p_116114_, p_116115_, p_116116_);
     }
