@@ -353,11 +353,7 @@ public class DogBeingPetGoal extends Goal {
     }
 
     private DogAnimation getEndAnimWhileStartInterupt(DogAnimation current) {
-        var type = this.currentType;
-        if (type == DogPettingType.BELLY_RUB) {
-            return DogAnimation.FACERUB_END;
-        }
-        return current;
+        return DogAnimation.FACERUB_END;
     }
 
     private List<DogAnimation> getLoopAnims_pp_p() {
