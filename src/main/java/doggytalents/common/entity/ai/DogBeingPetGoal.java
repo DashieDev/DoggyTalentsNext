@@ -11,12 +11,14 @@ import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 public class DogBeingPetGoal extends Goal {
 
     private Dog dog;
     private boolean petEnd = false;
+    private boolean startInterupt = false;
     private int petEndTickLeft = 0;
     private DogAnimation currentLoopAnim = DogAnimation.FACERUB_PP;
     private static final List<DogAnimation> facerubloopAnims_p_pp = List.of(
@@ -86,7 +88,7 @@ public class DogBeingPetGoal extends Goal {
             return false;
         if (!this.dog.onGround())
             return false;
-        return this.petEndTickLeft > 0;
+        return !(this.petEnd && this.petEndTickLeft <= 0);
     }
 
     @Override
@@ -100,6 +102,7 @@ public class DogBeingPetGoal extends Goal {
         this.currentLoopAnim = first_anim;
         this.tickTillChangeLoop = first_anim.getLengthTicks() * 3;
         this.petEnd = false;
+        this.startInterupt = false;
         this.petTick = 0;
         int r = dog.getRandom().nextIntBetweenInclusive(0, 25);
         this.petTick_ff_threshold = (5 + r) * 20;
@@ -121,8 +124,16 @@ public class DogBeingPetGoal extends Goal {
     public void tick() {
         var end_anim = getEndAnim();
         var start_anim = getStartAnim();
-        if (!this.dog.pettingManager.isPetting()) {
+        if (startInterupt) {
+            end_anim = getEndAnimWhileStartInterupt(end_anim);
+        }
+        if (!this.petEnd && !this.dog.pettingManager.isPetting()) {
             this.petEnd = true;
+            if (dog.getAnim() == this.getStartAnim()) {
+                this.startInterupt = true;
+                end_anim = getEndAnimWhileStartInterupt(end_anim);
+            }
+            this.petEndTickLeft = end_anim.getLengthTicks();
         }
         if (this.petEnd) {
             --this.petEndTickLeft;
@@ -131,7 +142,6 @@ public class DogBeingPetGoal extends Goal {
             this.dog.pettingManager.setLocked(true);
             return;
         }
-        this.petEndTickLeft = end_anim.getLengthTicks();
         if (this.dog.getAnim() == DogAnimation.NONE 
         || (this.dog.getAnim() == start_anim && this.dog.animationManager.isHolding())) {
             this.dog.setAnim(this.currentLoopAnim);
@@ -284,6 +294,10 @@ public class DogBeingPetGoal extends Goal {
         } else {
             return DogAnimation.FACERUB_END;
         }
+    }
+
+    private DogAnimation getEndAnimWhileStartInterupt(DogAnimation current) {
+        return current;
     }
 
     private List<DogAnimation> getLoopAnims_pp_p() {
