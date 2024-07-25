@@ -1,8 +1,7 @@
-// 1.20.6	2024-05-13T12:28:56.2887377	DoggyTalents Item Tags
-1ade03ba9a879be231ed9a1b8cb5ce17689f92bd data/doggytalents/tags/items/beg_items_tamed.json
-8028613ac4c93680be80fa4e6e43a1e3b35be1f1 data/doggytalents/tags/items/beg_items_untamed.json
-79f9f87a319d8a1fb2cf5bc1cc287288a490eaea data/doggytalents/tags/items/breeding_items.json
-e02fbe1fd70ae94b24bef7cbbe39885e2546aed4 data/doggytalents/tags/items/pack_puppy_blacklist.json
-153d488fcea4bee30689a6359a73ea55f3986284 data/doggytalents/tags/items/treats.json
-382f8d9f2ef6e3adbc0f49cf2c0ee0c192f17375 data/minecraft/tags/items/dyeable.json
-f0c70df2a0d22f1d54ed11508b67836c4c9c1024 data/minecraft/tags/items/music_discs.json
+// 1.21	2024-06-27T19:29:04.8849318	DoggyTalents Item Tags
+1ade03ba9a879be231ed9a1b8cb5ce17689f92bd data/doggytalents/tags/item/beg_items_tamed.json
+8028613ac4c93680be80fa4e6e43a1e3b35be1f1 data/doggytalents/tags/item/beg_items_untamed.json
+79f9f87a319d8a1fb2cf5bc1cc287288a490eaea data/doggytalents/tags/item/breeding_items.json
+e02fbe1fd70ae94b24bef7cbbe39885e2546aed4 data/doggytalents/tags/item/pack_puppy_blacklist.json
+153d488fcea4bee30689a6359a73ea55f3986284 data/doggytalents/tags/item/treats.json
+e6ed8b91a24bca648cc007000172a33b70d08166 data/minecraft/tags/item/dyeable.json

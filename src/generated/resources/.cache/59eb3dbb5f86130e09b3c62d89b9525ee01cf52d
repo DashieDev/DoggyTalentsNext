@@ -1,8 +1,8 @@
-// 1.20.6	2024-05-13T12:28:56.292915	Loot Tables
-ed7adaacd20a615f8c13de392b94c4416d1c7427 data/doggytalents/loot_tables/blocks/dog_bath.json
-39bd80feb485922b0d1b46af69284ff322c2333f data/doggytalents/loot_tables/blocks/dog_bed.json
-4832af6582ca6062426b3cbaa7619a0ecb113a9e data/doggytalents/loot_tables/blocks/food_bowl.json
-3dcb84795e13de25d4cb20dbe18dc10e3211bda8 data/doggytalents/loot_tables/blocks/rice_crop.json
-0c26060bfed10178449005eee255b98481d4ca59 data/doggytalents/loot_tables/blocks/rice_mill.json
-8777be09297f1d8b8785af75ed2a8d294fe8f977 data/doggytalents/loot_tables/blocks/soy_crop.json
-92a218fe3eb8045713c2aab9553feeadbe23e152 data/doggytalents/loot_tables/entities/dog.json
+// 1.21	2024-06-17T18:02:36.3313502	Loot Tables
+ed7adaacd20a615f8c13de392b94c4416d1c7427 data/doggytalents/loot_table/blocks/dog_bath.json
+39bd80feb485922b0d1b46af69284ff322c2333f data/doggytalents/loot_table/blocks/dog_bed.json
+4832af6582ca6062426b3cbaa7619a0ecb113a9e data/doggytalents/loot_table/blocks/food_bowl.json
+3dcb84795e13de25d4cb20dbe18dc10e3211bda8 data/doggytalents/loot_table/blocks/rice_crop.json
+0c26060bfed10178449005eee255b98481d4ca59 data/doggytalents/loot_table/blocks/rice_mill.json
+8777be09297f1d8b8785af75ed2a8d294fe8f977 data/doggytalents/loot_table/blocks/soy_crop.json
+92a218fe3eb8045713c2aab9553feeadbe23e152 data/doggytalents/loot_table/entities/dog.json

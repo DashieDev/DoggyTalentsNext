@@ -1,6 +1,7 @@
-// 1.20.6	2024-06-08T17:16:49.0594172	DoggyTalents Entity Tags
-6f8bc3eb93347d4d15c38a3b7cfbd2b796ac201c data/doggytalents/tags/entity_types/dog_should_ignore.json
-f3609980f3e2bcb853c5f166645acc2dec216659 data/doggytalents/tags/entity_types/drop_soy_when_dog_kill.json
-da9ec5f7ed64a0d225e00ee60b8e6d6408b431fb data/doggytalents/tags/entity_types/mob_retriever_must_ignore.json
-e6bf44a9fc93ee6a76262704095496e440034997 data/minecraft/tags/entity_types/arrows.json
-8ed2154d2b8bcb42afcaf5198988c8237d2efcd6 data/minecraft/tags/entity_types/impact_projectiles.json
+// 1.21	2024-06-22T00:57:18.4443446	DoggyTalents Entity Tags
+205e598a118ec91b83746029d2825ac0418a5688 data/c/tags/entity_type/capturing_not_supported.json
+6f8bc3eb93347d4d15c38a3b7cfbd2b796ac201c data/doggytalents/tags/entity_type/dog_should_ignore.json
+f3609980f3e2bcb853c5f166645acc2dec216659 data/doggytalents/tags/entity_type/drop_soy_when_dog_kill.json
+da9ec5f7ed64a0d225e00ee60b8e6d6408b431fb data/doggytalents/tags/entity_type/mob_retriever_must_ignore.json
+e6bf44a9fc93ee6a76262704095496e440034997 data/minecraft/tags/entity_type/arrows.json
+8ed2154d2b8bcb42afcaf5198988c8237d2efcd6 data/minecraft/tags/entity_type/impact_projectiles.json

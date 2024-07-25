@@ -1,0 +1,8 @@
+{
+  "comparator_output": 13,
+  "description": {
+    "translate": "item.doggytalents.disc_chopin_op64_no1.desc"
+  },
+  "length_in_seconds": 2640.0,
+  "sound_event": "doggytalents:chopin_op64_no1"
+}
