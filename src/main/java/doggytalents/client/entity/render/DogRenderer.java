@@ -199,6 +199,9 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         int bkg_txtcolor = 0x20FFFFFF;
         font.drawInBatch(text, tX, tY, bkg_txtcolor, false, pose, buffer, bkg_display_mode, bkg_color, light);
         
+        //for 1.21 to resolve text conflict, no effect on below versions.
+        stack.translate(0.0D, (double)0.0D, 0.1D);
+
         boolean draw_fg_text = dog_not_sneaking;
         if (draw_fg_text) {
             var fg_display_mode = Font.DisplayMode.NORMAL;
