@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_koji": {
+      "conditions": {
+        "items": [
+          {
+            "items": "doggytalents:koji"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "doggytalents:sake"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_koji"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "doggytalents:sake"
+    ]
+  }
+}
