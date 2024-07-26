@@ -41,6 +41,9 @@ configurations {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+//Fabric
+sourceSets.main.resources { srcDir 'src/fabric_generated/resources' }
+
 repositories {
 
     // Add repositories to retrieve artifacts from in here.
@@ -63,7 +66,7 @@ loom {
             inherit server
             name "Data Generation"
             vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated/resources")}"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/fabric_generated/resources")}"
             vmArg "-Dfabric-api.datagen.modid=doggytalents"
  
             runDir "build/datagen"
