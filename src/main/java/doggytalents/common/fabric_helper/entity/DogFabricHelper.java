@@ -94,6 +94,7 @@ public class DogFabricHelper {
             this.setDirty(SyncTypes.DOG_VARIANT);
         }
         this.dogVariant = val;
+        this.dog.onFabricDataUpdated(SyncTypes.DOG_VARIANT);
     }
 
     public EnumGender getDogGender() {
