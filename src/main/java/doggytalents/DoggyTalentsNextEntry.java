@@ -1,5 +1,6 @@
 package doggytalents;
 
+import doggytalents.api.fabric_helper.entry.PostInitEntry;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import doggytalents.common.command.DoggyCommands;
@@ -36,6 +37,8 @@ public class DoggyTalentsNextEntry implements ModInitializer {
         //Last
         ForgeCommonSetup.init();
         doModCommonSetup();
+        
+        PostInitEntry.firePosInitEntry();
     }
 
     private void initAllModRegistries() {
