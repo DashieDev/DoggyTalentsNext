@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import doggytalents.api.registry.Talent;
 import doggytalents.common.config.ConfigHandler;
+import doggytalents.common.config.ConfigHandler.DogCustomSkinConfig.DataStrategy;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
@@ -681,6 +682,28 @@ public class DogUtil {
 
         return str;
     } 
+
+    public static boolean vertifySkinData(String hash) {
+        if (hash == null || hash.isEmpty())
+            return true;
+        var strategy = ConfigHandler.DogCustomSkinConfig.getStrategy();
+        if (strategy == DataStrategy.NONE)
+            return true;
+        var config = ConfigHandler.DogCustomSkinConfig.getInstance();
+        if (config == null)
+            return true;
+        if (
+            strategy == DataStrategy.ALLOW_EXCEPT
+            && config.isBlacklisted(hash)
+        )
+            return false;
+        if (
+            strategy == DataStrategy.DISALLOW_EXCEPT
+            && !config.isWhitelisted(hash)
+        )
+            return false;
+        return true;
+    }
 
     private static boolean isValidChar(Character x) {
         return !INVALID_NAME_CHARS.contains(x) && SharedConstants.isAllowedChatCharacter(x);
