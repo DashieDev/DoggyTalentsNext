@@ -50,8 +50,14 @@ public class DogSkinElement extends AbstractElement {
 
     @Override
     public AbstractElement init() {
+        if (this.locList.isEmpty())
+            return this;
+        if (this.activeSkinId < 0)
+            return this;
+        if (this.activeSkinId >= this.locList.size())
+            return this;
+            
         addAccStateHover();
-
         
         this.showInfo = 
             getStateAndSubscribesTo(
@@ -93,12 +99,6 @@ public class DogSkinElement extends AbstractElement {
     }
 
     private void addAccStateHover() {
-        if (this.locList.isEmpty())
-            return;
-        if (this.activeSkinId < 0)
-            return;
-        if (this.activeSkinId >= this.locList.size())
-            return;
         var skin = this.locList.get(this.activeSkinId);
         var state = getStateFromSkin(skin);
         var button = new AccessoryStatusHover(0, 0, state);
