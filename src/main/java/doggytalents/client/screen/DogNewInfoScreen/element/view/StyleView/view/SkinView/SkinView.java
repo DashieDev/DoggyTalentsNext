@@ -16,7 +16,11 @@ import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.framework.widget.ScrollBar;
 import doggytalents.client.screen.framework.widget.ScrollBar.Direction;
+import doggytalents.common.config.ConfigHandler;
+import doggytalents.common.config.ConfigHandler.DogCustomSkinConfig.DataStrategy;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.DogUtil;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -67,6 +71,7 @@ public class SkinView extends AbstractElement {
     @Override
     public AbstractElement init() {
         this.textureList = DogTextureManager.INSTANCE.getAll();
+        this.textureList = filterValidDogSkin(textureList);
         var searchMsg = this.filterBox.getValue();
         if (!searchMsg.isEmpty())
             this.textureList = filterDogSkin(textureList, searchMsg);
@@ -175,6 +180,18 @@ public class SkinView extends AbstractElement {
             }
         }
         return true;
+    }
+
+    private List<DogSkin> filterValidDogSkin(List<DogSkin> locList) {
+        if (ConfigHandler.DogCustomSkinConfig.getStrategy() == DataStrategy.NONE)
+            return locList;
+        var filtered = new ArrayList<DogSkin>(locList.size());
+        for (var filter : locList) {
+            var hash = DogTextureManager.INSTANCE.getHash(filter);
+            if (DogUtil.vertifySkinData(hash))
+                filtered.add(filter);
+        }
+        return filtered;
     }
 
     private void decreaseActiveId(GuiEventListener b) {
