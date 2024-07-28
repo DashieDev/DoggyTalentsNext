@@ -18,6 +18,7 @@ import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.client.screen.framework.element.ScrollView;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
+import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.Minecraft;
@@ -40,6 +41,8 @@ public class DogSkinElement extends AbstractElement {
     int activeSkinId;
     Font font;
     boolean showInfo;
+
+    private TextOnlyButton copy_sha1_button;
 
     public DogSkinElement(AbstractElement parent, Screen screen, Dog dog, List<DogSkin> locList, int active_id) {
         super(parent, screen);
@@ -95,6 +98,23 @@ public class DogSkinElement extends AbstractElement {
         if (!manifestSkin.getTags().isEmpty()) 
         scroll.addChildren(new SkinStrEntry(scroll, getScreen(), Component.literal("Tags: "), 
             Component.literal(manifestSkin.getTags())).init());
+        if (manifestSkin.isCustom()) {
+            this.initSha1Button();
+            scroll.addChildren((new DivElement(scroll, getScreen()) {
+                @Override
+                public AbstractElement init() {
+                    this.setPosition(PosType.RELATIVE, 0, 0);
+                    this.setSize(1f, 20);
+                    var button = DogSkinElement.this.copy_sha1_button;
+                    button.setHeight(font.lineHeight + 5);
+                    button.setX(this.getRealX() + 10);
+                    button.setY(this.getRealY() + this.getSizeY() - button.getHeight());
+                    this.addChildren(button);
+                    return super.init();
+                }
+            }).init());
+        }
+        
         
         return this;
     }
@@ -113,6 +133,29 @@ public class DogSkinElement extends AbstractElement {
             return AccessoryState.RECOMMENDED;
         var model = skin.getCustomModel();
         return model.getValue().getAccessoryState();
+    }
+
+    private void copySha1() {
+        var skin = this.locList.get(this.activeSkinId);
+        if (!skin.isCustom())
+            return;
+        var sha1 = DogTextureManager.INSTANCE.getHash(skin);
+        if (sha1 == null || sha1.isEmpty())
+            return;
+        Minecraft.getInstance().keyboardHandler.setClipboard(sha1);
+    }
+
+    
+    private void initSha1Button() {
+        var sha1_txt = Component.literal("Copy SHA-1").withStyle(
+            Style.EMPTY.withColor(0x696868)
+        );
+        this.copy_sha1_button = new TextOnlyButton(0, 0, font.width(sha1_txt), 10, sha1_txt, b -> {
+            this.copySha1();
+            b.setMessage(Component.literal("SHA-1 Copied!").withStyle(
+                Style.EMPTY.withColor(0xff1fa800)
+            ));
+        }, font);
     }
 
     public static class SkinStrEntry extends AbstractElement {
