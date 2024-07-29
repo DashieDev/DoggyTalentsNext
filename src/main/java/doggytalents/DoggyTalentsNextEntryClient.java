@@ -22,6 +22,7 @@ public class DoggyTalentsNextEntryClient implements ClientModInitializer {
 
     private void registerBlockRenderTypes() {
         BlockRenderLayerMap.INSTANCE.putBlock(DoggyBlocks.RICE_CROP.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(DoggyBlocks.SOY_CROP.get(), RenderType.cutout());
     }
     
 }
