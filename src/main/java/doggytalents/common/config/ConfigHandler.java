@@ -8,6 +8,7 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -28,7 +29,7 @@ public class ConfigHandler {
     private static ForgeConfigSpec CONFIG_CLIENT_SPEC;
     private static ForgeConfigSpec CONFIG_TALENT_SPEC;
     private static ForgeConfigSpec CONFIG_RESPAWN_TAG_SPEC;
-    private static ModConfigSpec CONFIG_CUSTOM_SKINS_SPEC;
+    private static ForgeConfigSpec CONFIG_CUSTOM_SKINS_SPEC;
 
     public static final boolean ALWAYS_SHOW_DOG_NAME = true;
     public static final float DEFAULT_MAX_HUNGER = 120F;
@@ -68,12 +69,11 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
     }
 
     public static void initCustomSkinsConfig() {
-        var customSkinPair = new ModConfigSpec.Builder().configure(DogCustomSkinConfig::new);
+        var customSkinPair = new ForgeConfigSpec.Builder().configure(DogCustomSkinConfig::new);
         CONFIG_CUSTOM_SKINS_SPEC = customSkinPair.getRight();
         CUSTOM_SKINS = customSkinPair.getLeft();
 
-        ModLoadingContext.get()
-            .getActiveContainer().registerConfig(ModConfig.Type.SERVER, CONFIG_CUSTOM_SKINS_SPEC, "doggytalents-dog_custom_skins.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_CUSTOM_SKINS_SPEC, "doggytalents-dog_custom_skins.toml");
     }
 
     public static class ClientConfig {
@@ -299,7 +299,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
         public ForgeConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
         public ForgeConfigSpec.BooleanValue DOG_PETTING;
-        public ModConfigSpec.BooleanValue DOG_PETITNG_JEALOUS;
+        public ForgeConfigSpec.BooleanValue DOG_PETITNG_JEALOUS;
         public ForgeConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
         public ForgeConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
         public ForgeConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
@@ -621,14 +621,14 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
 
     public static class DogCustomSkinConfig {
 
-        public ModConfigSpec.IntValue STRATEGY;
+        public ForgeConfigSpec.IntValue STRATEGY;
         public ConfigValue<List<? extends String>> WHITELISTED_SHA1;
         public ConfigValue<List<? extends String>> BLACKLISTED_SHA1;
 
         private Set<String> whitelistedSet = Set.of();
         private Set<String> blacklistedSet = Set.of(); 
 
-        public DogCustomSkinConfig(ModConfigSpec.Builder builder) {
+        public DogCustomSkinConfig(ForgeConfigSpec.Builder builder) {
             builder.comment("Specify the Strategy to be used when picking which Dog Custom Skin");
             builder.comment("could be set for a Dog. The texture's Hash Value is required to be");
             builder.comment("the entry for these lists, they can be obtained via the Show Info");
