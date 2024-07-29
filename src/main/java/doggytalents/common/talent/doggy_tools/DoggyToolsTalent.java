@@ -276,7 +276,7 @@ public class DoggyToolsTalent extends TalentInstance  {
         if (isItemBlacklisted(stack))
             return;
         item.hurtEnemy(stack, living, dogIn);
-        item.postHurtEnemy(stack, living, dogIn);
+        //item.postHurtEnemy(stack, living, dogIn);
     }
 
     public int getMaxOwnerDistSqr() {
