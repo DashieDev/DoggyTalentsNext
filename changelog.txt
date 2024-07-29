@@ -1519,3 +1519,13 @@ without getting pushed back, thus getting closer to it.
 + You can now Pet Dogs with size greater or equals to MODERATO!
 # Only dog whose can be petted may be jealous (Size larger or equals to MODERATO)
 # Pet screen now only opened if both hand is empty, otherwise player will interact with Dog as usual.
+
+**1.18.26 - 29th July 2024**
+Option to determine which Dog Custom Skin can be applied to a Dog for a World/Server:
+  + Two type of strategy, "Allow Except" or "Disabllow Except", set via config.
+  + The Entries only accept the SHA-1 of the Skin. 
+  + The SHA-1 of a Dog Skin can be obtained and copied to clipboard
+  via the Show Info Page of that Skin in the Skin Tab of The Dog GUI.
+* Fix Conflicting Text when rendering the name of Dogs who have different Owner than the current player 
+* (1.20.6+) Fix Doggy Tools no longers consume durability on Melee Weapons.
+* (Fabric only) Fix soy crops rendering.
