@@ -30,7 +30,7 @@
    "item.doggytalents.whistle.0": "哨子命令: 起立",
    "item.doggytalents.whistle.1": "哨子命令: 跟我來",
    "item.doggytalents.whistle.2": "哨子命令: 坐下",
-   "item.doggytalents.whistle.3": "哨子命令: Ok?",
+   "item.doggytalents.whistle.3": "哨子：命令停止攻擊",
    "item.doggytalents.whistle.4": "牧羊犬哨子",
    "item.doggytalents.whistle.5": "作戰哨子",
    "item.doggytalents.whistle.6": "咆嘯哨子",
@@ -43,6 +43,7 @@
    "item.doggytalents.whistle.13": "上車哨子", 
    "item.doggytalents.whistle.14": "哨子命令: 嗷嗚！",
    "item.doggytalents.whistle.15": "所有站立開關模式",
+   "item.doggytalents.whistle.16": "嘘！",
 
    "item.doggytalents.treat_bag": "零食袋",
    "item.doggytalents.energizer_stick": "能量餅乾",
@@ -159,8 +160,8 @@
    "item.doggytalents.angel_wings": "天使翅膀",
    "item.doggytalents.angel_halo": "天使光環",
    "item.doggytalents.goose": "MrBlueYeti的鵝",
-   "item.doggytalents.goose.description": "HONK HONK!",
-   "item.doggytalents.midi_keyboard": "Midi鍵盤",
+   "item.doggytalents.goose.description": "嘖嘖！",
+   "item.doggytalents.midi_keyboard": "MIDI鍵盤",
 
    "item.doggytalents.divine_retribution": "真經之鏡",
    "item.doggytalents.divine_retribution.description": "\"好熱啊！好燙阿！他在我背上燒起來了！\" - 普通小狗說。",
@@ -330,7 +331,7 @@
    "talent.doggytalents.fire_drill.description": "當您的狗燒起來時，教導牠自行滅火的方法。停下、滾動、壓灭火焰！",
    "talent.doggytalents.sniffer_dog.description": "擁有這個技能的狗可以嗅出貴重的礦石。隨著等級的提升，狗的嗅覺範圍會增加，找到目標礦石的機會也會增加。要讓狗找到特定的礦石，需要使用「香氣零食」來標記礦石的氣味。給狗一個零食後，狗會舔一下，記住氣味，然後把零食交還給你。如果要讓狗停止探測，給它一個空的「香味零食」。要確認狗正在探測哪個方塊，請右鍵點擊「香氣零食」。值得注意的是，狗不太擅長垂直探測方塊，即使在每個等級的半徑沿水平面增加的情況下，狗只能探測比它所站的位置高或低約3個方塊的方塊。請仔細注意狗所傳達的信息，以更準確地知道方塊的位置。",
   "talent.doggytalents.gate_passer.description": "擁有這個技能的狗可以打開柵欄門或木門並穿過。牠們會在通過後關上門，但有時可能會忘記(´・ω・`)",
-  "talent.doggytalents.ookamikaze.description": "「這是世界上最可愛的混亂和破壞的預兆！餵它火藥，它會創造一個不會傷害它的爆炸！」——RaustBlackDragon，DoggyTalents的原創作者，2011年。\n\n使用口袋零食丟給狗狗一個火藥使其召喚爆炸，這確實不會傷害它自己、你或你的隊伍！請注意，狗狗爆炸對附近的其他實體仍然造成全額傷害，你已被警告！",
+  "talent.doggytalents.ookamikaze.description": "\"世界上最可愛的混亂與毀滅的預兆！餵它火藥，它會製造出不會傷害它自己的爆炸！\" - RaustBlackDragon，《DoggyTalents》的原創者，2011年。\n\n使用獎勵袋向狗狗丟火藥，使它召喚爆炸，這確實不會傷害它自己、你或你的隊伍！請注意，狗狗的爆炸仍會對上述之外的任何實體造成全部傷害，已警告！",
   
    "talent.doggytalents.roaring_gale.cooldown": "烈風咆哮技能正在冷卻中。",
    "talent.doggytalents.roaring_gale.level": "並未學習技能-烈風咆哮！",
@@ -467,6 +468,10 @@
    "dog.msg.play_tag.dog_win": "你輸給%s ！真是一隻敏捷的小狗！",
    "dog.msg.play_tag.you_win": "你贏了%s ！恭喜你！",
 
+   "dog.msg.want_attention.0": "%s：嗯，嘿...",
+   "dog.msg.want_attention.1": "%s：嘿咻...",
+   "dog.msg.want_attention.2": "%s：這裡呀...",
+
    "entity.doggytalents.dog": "狗",
    "entity.doggytalents.dog.unknown_owner": "主人未知",
    "entity.doggytalents.dog.untamed": "野狗",
@@ -494,17 +499,23 @@
 
    "dog.classical.variant.compl.vscode": "VSCode",
 
+   "dog.petmode.facerub": "臉部揉揉",
+   "dog.petmode.hug": "擁抱",
+   "dog.petmode.belly_rub": "[!]揉肚",
+   "dog.petmode.back_hug": "[!]背抱",
+
    "doggytalents.whistle.short": "哨子・短",
    "doggytalents.whistle.long": "哨子・長",
 
    "dogcommand.come": "過來!",
    "dogcommand.stay": "坐下!",
-   "dogcommand.stop_attacking": "OK!",
+   "dogcommand.stop_attacking": "所有人停止攻擊！",
    "dogcommand.heel": "おいで!",
    "dogcommand.heel_by_name": "%s, 過來!",
    "dogcommand.heel_by_group": "%s, 過來!",
    "dogcommand.ride_with_me": "%s, 來吧,我們走",
    "dogcommand.all_stand_switch_mode": "所有站立的狗狗切換到%s！",
+   "dogcommand.ssshhh": "所有人，嘘！",
 
    "doggytalents.screen.whistler.screen.help_title" : "哨子模式選擇",
    "doggytalents.screen.whistler.screen.help" : "使用滑鼠來選擇您想要設定的哨子模式。您也可以輸入文字來搜索。按下Enter鍵完成命令。另外，您也可以按下對應橘色名稱前的數字鍵來快速選擇模式。按下Esc鍵取消操作。", 
@@ -528,6 +539,9 @@
    "doggytalents.screen.heel_by_group.help_title": "團體過來哨子",
    "doggytalents.screen.heel_by_group.help": "請使用滑鼠來選擇您想要召喚的團體。輸入名字以搜尋團體。按下Enter以完成命令。按下Esc以取消。",
    "doggytalents.screen.heel_by_group.no_group_found": "找不到團體。",
+   "doggytalents.screen.pet_select.exit": "退出寵物模式",
+   "doggytalents.screen.pet_select.help.0": "選擇一個風格進入寵物模式。在寵物模式下，不在潛行狀態與狗狗互動，在寵物距離內會再次打開此GUI以切換到另一個風格或退出寵物模式。",
+   "doggytalents.screen.pet_select.help.1": "在寵物模式下，保持潛行並保持右鍵，在寵物距離內並看著狗狗開始撫摸。撫摸在潛行鍵或右鍵釋放時停止。在第三人稱撫摸時，移動被鎖定，從而允許使用移動鍵旋轉攝像機而不打斷撫摸動作。",
 
    "amnesia_bone_gui.navbar.general" : "一般的",
    "amnesia_bone_gui.navbar.talents" : "才能",
@@ -542,6 +556,7 @@
    "doggui.navbar.stats" : "統計",
 
    "doggui.home.name" : "名字:",
+   "doggui.home.pet_hint" : "點擊撫摸%s！",
    "doggui.home.edit_info" : "編輯訊息",
    "doggui.home.edit_info.substitude_name" : "稱呼： %s",
    "doggui.home.artifacts" : "神飾",
