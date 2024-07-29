@@ -42,7 +42,7 @@ public class DogWantAttentionAction extends TriggerableAction {
     public void tick() {
         if (this.phase == Phase.GO_TO_OWNER) {
             if (this.goToOwnerTimeout <= 0) {
-                this.setState(ActionState.FINISHED);
+                stopAndMaySitDown();
                 return;
             }
         } else {
