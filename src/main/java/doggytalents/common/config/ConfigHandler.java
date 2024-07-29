@@ -13,6 +13,7 @@ import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -658,8 +659,8 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public synchronized void reloadSets() {
             var blacklist = DogCustomSkinConfig.getConfig(CUSTOM_SKINS.BLACKLISTED_SHA1);
             var whitelist = DogCustomSkinConfig.getConfig(CUSTOM_SKINS.WHITELISTED_SHA1);
-            this.blacklistedSet = Set.copyOf(blacklist);
-            this.whitelistedSet = Set.copyOf(whitelist);
+            this.blacklistedSet = new HashSet<>(blacklist);
+            this.whitelistedSet = new HashSet<>(whitelist);
         }
 
         public static DogCustomSkinConfig getInstance() {
