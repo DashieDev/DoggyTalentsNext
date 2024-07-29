@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogPettingManager;
 import doggytalents.common.entity.DogPettingManager.DogPettingType;
@@ -239,6 +240,8 @@ public class DogBeingPetGoal extends Goal {
 
     private void updateTriggerNearbyDogsJealous() {
         if (--this.triggerCooldown > 0)
+            return;
+        if (!ConfigHandler.SERVER.DOG_PETITNG_JEALOUS.get())
             return;
         this.triggerCooldown = shortTriggerCooldown(dog);
         //--triggerAttemptLeft;

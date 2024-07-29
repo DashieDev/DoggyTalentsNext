@@ -314,6 +314,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
         public ForgeConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
         public ForgeConfigSpec.BooleanValue DOG_PETTING;
+        public ModConfigSpec.BooleanValue DOG_PETITNG_JEALOUS;
         public ForgeConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
         public ForgeConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
         public ForgeConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
@@ -515,6 +516,11 @@ public class ConfigHandler {
                 .comment("Allow Players to Pet their Dogs.")
                 .translation("doggytalents.dog_petting")
                 .define("dog_petting", true);
+            DOG_PETITNG_JEALOUS = builder
+                .comment("By default, one of the nearby Dogs will get jealous if you")
+                .comment("pet a Dog for too long.")
+                .translation("doggytalents.dog_petting_jealous")
+                .define("dog_petting_jealous", true);
             ALLOW_TRACK_ANY_DOG = builder
                 .comment("Allow Players to track Dogs using the Canine Tracker despite")
                 .comment("not having neither Radio Collars nor Locator Orbs equipped.")
