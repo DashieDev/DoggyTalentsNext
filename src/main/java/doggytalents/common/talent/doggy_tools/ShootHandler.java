@@ -26,6 +26,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ChargedProjectiles;
@@ -143,17 +144,26 @@ public interface ShootHandler {
                 return Optional.empty();
             boolean is_infinity_bow = DoggyToolsRangedAttack.isInfinityBow(bow_stack, dog);
     
-            ArrowItem arrow = null;
+            ItemStack select_arrowStack = null;
+            Item select_arrow = null;
     
-            if (is_infinity_bow)
-                arrow = (ArrowItem) Items.ARROW;
+            if (is_infinity_bow) {
+                select_arrow = Items.ARROW;
+                select_arrowStack = new ItemStack(select_arrow);
+            }
     
-            if (arrowStack.getItem() instanceof ArrowItem arrowItem)
-                arrow = arrowItem;
+            if (arrowStack.getItem() instanceof ArrowItem arrowItem) {
+                select_arrow = arrowItem;
+                select_arrowStack = arrowStack;
+            }
             
-            if (arrow == null)  
+            if (select_arrowStack == null || select_arrowStack.isEmpty())
                 return Optional.empty();
-    
+            if (!(select_arrow instanceof ArrowItem arrow))
+                return Optional.empty();
+                
+            arrowStack = select_arrowStack;
+
             var arrow_proj = createDogArrow(dog, arrow, arrowStack, bow_stack);
             if (arrow_proj == null)
                 return Optional.empty();
