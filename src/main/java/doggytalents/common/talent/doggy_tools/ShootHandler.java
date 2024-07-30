@@ -162,7 +162,7 @@ public interface ShootHandler {
                 
             arrowStack = select_arrowStack;
 
-            var arrow_proj = createDogArrow(dog, arrow, arrowStack, bow_stack);
+            var arrow_proj = createDogArrow(dog, arrow, arrowStack);
             if (arrow_proj == null)
                 return Optional.empty();
     
