@@ -4,11 +4,11 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Talent;
 import doggytalents.common.lib.Constants;
-import fuzs.forgeconfigapiport.fabric.api.forge.v4.ForgeConfigRegistry;
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeModConfigEvents;
+import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
+import fuzs.forgeconfigapiport.api.config.v2.ModConfigEvents;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.neoforged.fml.config.ModConfig;
+import net.minecraftforge.fml.config.ModConfig;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -49,7 +49,7 @@ public class ConfigHandler {
         ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC);
         initRespawnTagsConfig();
         initCustomSkinsConfig();
-        NeoForgeModConfigEvents.loading(Constants.MOD_ID).register(ConfigHandler::onConfigLoad);
+        ModConfigEvents.loading(Constants.MOD_ID).register(ConfigHandler::onConfigLoad);
     }
 
     public static void initTalentConfig() {
@@ -701,7 +701,7 @@ public class ConfigHandler {
 
     }
 
-    public static void onConfigLoad(net.neoforged.fml.config.ModConfig config) {
+    public static void onConfigLoad(ModConfig config) {
         var loaded_config = config;
         if (loaded_config.getSpec() == CONFIG_CUSTOM_SKINS_SPEC) {
             if (CUSTOM_SKINS != null)
