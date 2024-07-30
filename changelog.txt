@@ -1529,3 +1529,6 @@ Option to determine which Dog Custom Skin can be applied to a Dog for a World/Se
 * Fix Conflicting Text when rendering the name of Dogs who have different Owner than the current player 
 * (1.20.6+) Fix Doggy Tools no longers consume durability on Melee Weapons.
 * (Fabric only) Fix soy crops rendering.
+
+**1.18.27 - 29th July 2024**
+* HOTFIX: Potential Crash when giving Dogs an infinity Bow.
