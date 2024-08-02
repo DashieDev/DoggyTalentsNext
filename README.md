@@ -3,7 +3,7 @@
 
 ![DT Logo](https://github.com/DashieDev/DoggyTalentsNext/assets/122363761/831af77a-1e00-4471-9655-d652c81b92ff)
 
-**Doggy Talents Next** - Minecraft Wolf, reimagined.
+**Doggy Talents Next** - The Art of Minecraft Wolf.
 
 
 * 🦴 Enhancements to the experience of having dogs as companions throughout the game 
