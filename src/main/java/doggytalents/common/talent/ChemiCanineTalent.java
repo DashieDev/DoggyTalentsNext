@@ -86,7 +86,8 @@ public class ChemiCanineTalent extends TalentInstance {
             try {
                 var effectTag = effectTags.getCompound(i);
                 var effectInst = MobEffectInstance.load(effectTag);
-                this.storedEffects.add(effectInst);   
+                if (effectInst != null)
+                    this.storedEffects.add(effectInst);   
             } catch (Exception e) {
                 
             }
