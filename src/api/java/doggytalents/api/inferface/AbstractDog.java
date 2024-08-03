@@ -118,6 +118,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     }
 
     public void setNavigation(PathNavigation p) {
+        if (p == null) p = this.getDefaultNavigation();
         if (this.navigation == p) return;
         this.navigation.stop();
         this.navigation = p;
@@ -125,6 +126,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
 
     //TODO try to replicate the bug and check if moveControl.haveWantedPosition using debug magic
     public void setMoveControl(MoveControl m) {
+        if (m == null) m = this.getDefaultMoveControl();
         breakMoveControl();
 
         this.moveControl = m;
