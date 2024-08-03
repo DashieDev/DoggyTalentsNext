@@ -8,18 +8,6 @@
     "sounds": [ "doggytalents:whistle/long" ]
   },
 
-  "bwv_849_fugue_kimiko": {
-    "subtitle": "doggytalents.music.bwv_849_fugue_kimiko",
-    "sounds": [ "doggytalents:music/kimiko_ishizaka_fugue_no_4_in_c_sharp_minor_bwv_849" ]
-  },
-  "bwv_1080_fugue_11_kimiko" : {
-    "subtitle": "doggytalents.music.bwv_1080_fugue_11_kimiko",
-    "sounds": [ "doggytalents:music/kimiko_ishizaka_art_of_fugue_contrapunctus_11" ]
-  },
-  "okami_ryoshima_coast_arr" : {
-    "subtitle": "doggytalents.music.okami_ryoshima_coast_arr",
-    "sounds": [ "doggytalents:music/okami_ryoshima_coast_arr" ]
-  },
   "chopin_op64_no1" : {
     "subtitle": "doggytalents.music.chopin_op64_no1",
     "sounds": [ "doggytalents:music/chopin_op64_no_1_dashiedev" ]

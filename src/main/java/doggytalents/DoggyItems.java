@@ -186,15 +186,6 @@ public class DoggyItems {
         props -> new DoggyArtifactItem(
             () -> new FeatheredMantleArtifact(), props), 1);
 
-    public static final Supplier<Item> MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO = register("disc_bwv_1080_fugue_11", 
-        () -> new Item(
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.BWV_1080)));
-    public static final Supplier<Item> MUSIC_DISC_BWV_849_FUGUE_KIMIKO = register("disc_bwv_849_fugue", 
-        () -> new Item(
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.BWV_849)));
-    public static final Supplier<Item> MUSIC_DISC_OKAMI_1 = register("disc_okami_ryoshima_coast_arr", 
-        () -> new Item(
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.OKAMI)));
     public static final Supplier<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
         () -> new ChopinRecordItem(
         (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.CHOPIN_OP64_NO_1), 132*20));
