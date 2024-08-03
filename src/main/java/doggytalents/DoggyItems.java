@@ -187,18 +187,9 @@ public class DoggyItems {
         props -> new DoggyArtifactItem(
             () -> new FeatheredMantleArtifact(), props), 1);
 
-    public static final RegistryObject<Item> MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO = register("disc_bwv_1080_fugue_11", 
-        () -> new RecordItem(13, () -> DoggySounds.BWV_1080_FUGUE_11_KIMIKO.get() , 
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 292*20));
-    public static final RegistryObject<Item> MUSIC_DISC_BWV_849_FUGUE_KIMIKO = register("disc_bwv_849_fugue", 
-        () -> new RecordItem(13, () -> DoggySounds.BWV_849_FUGUE_KIMIKO.get() , 
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 160*20));
-    public static final RegistryObject<Item> MUSIC_DISC_OKAMI_1 = register("disc_okami_ryoshima_coast_arr", 
-        () -> new RecordItem(13, () -> DoggySounds.OKAMI_RYOSHIMA_COAST_ARR.get() , 
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 111*20));
-    public static final RegistryObject<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
-        () -> new ChopinRecordItem(13, () -> DoggySounds.CHOPIN_OP64_NO1.get() , 
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 132*20));
+    public static final Supplier<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
+        () -> new ChopinRecordItem(
+        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.CHOPIN_OP64_NO_1), 132*20));
 
     public static final RegistryObject<PianoItem> GRAND_PIANO_BLACK = register("grand_piano_black_item", 
         () -> new PianoItem(DoggyEntityTypes.GRAND_PIANO_BLACK));

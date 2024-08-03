@@ -15,27 +15,9 @@ public class DoggySounds {
 
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.Keys.SOUND_EVENTS, Constants.MOD_ID);
 
-    public static final RegistryObject<SoundEvent> WHISTLE_SHORT = register("whistle_short");
-    public static final RegistryObject<SoundEvent> WHISTLE_LONG = register("whistle_long");
-
-    /* 
-        Recordings obtained via The Open Well-Tempered Clavier Project
-        by Kimiko Ishizaka, which, according to the project, licensed
-        with the CC0 - Public Domain. Project website:
-        https://www.welltemperedclavier.org/index.html
-    */
-    public static final RegistryObject<SoundEvent> BWV_849_FUGUE_KIMIKO = register("bwv_849_fugue_kimiko");
+    public static final Supplier<SoundEvent> WHISTLE_SHORT = register("whistle_short");
+    public static final Supplier<SoundEvent> WHISTLE_LONG = register("whistle_long");
     
-    /* 
-        Recordings obtained via The Art Of Fugue Recordings Set
-        by Kimiko Ishizaka, which, according to the set, licensed
-        with the CC0 - Public Domain. Project website:
-        https://kimikoishizaka.bandcamp.com/album/j-s-bach-the-art-of-the-fugue-kunst-der-fuge-bwv-1080
-    */
-    public static final RegistryObject<SoundEvent> BWV_1080_FUGUE_11_KIMIKO = register("bwv_1080_fugue_11_kimiko");
-
-    public static final RegistryObject<SoundEvent> OKAMI_RYOSHIMA_COAST_ARR = register("okami_ryoshima_coast_arr");
-
     /*
         Performed and recorded by DashieDev (one of the authors of the mod) 
         himself on his Kawai Upright Piano. Recorded using his smartphone. 
