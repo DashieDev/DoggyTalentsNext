@@ -81,7 +81,7 @@ public class CanineTrackerLocateRenderer {
         stack.pushPose();
         stack.translate(off_from_player.x(), off_from_player.y(), off_from_player.z());
         stack.mulPose(camera.rotation());
-        stack.scale(-0.02F, -0.02F, 0.02F);
+        stack.scale(0.02F, -0.02F, 0.02F);
         var font = Minecraft.getInstance().font;
 
         var dog_name = name;
