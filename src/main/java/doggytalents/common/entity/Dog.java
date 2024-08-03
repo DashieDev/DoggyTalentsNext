@@ -2962,7 +2962,7 @@ public class Dog extends AbstractDog {
             compound.putBoolean("DTN_DupeDetect_marked", true);
             if (strategy == 0)
                 throw new IllegalStateException(
-                    "This dog has been restored from third-party storage which may leads to duplications."
+                    "This dog has been restored from third-party storage which may leads to duplications. Please restore this Dog via its Dog Bed, by using a Totem of Undying on an Unlinked Dog Bed or via [ /dog revive ] instead. This Exception usually wouldn't cause a Crash and instead silently prevent the Dog to be restored, although if a Game Breaking Crash does happen, set duplication_resolve_strategy = 1 in serverconfig to prevent this Exception to be thrown again."
                 );
             return;
         } else {
