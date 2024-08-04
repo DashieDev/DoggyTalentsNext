@@ -1,4 +1,4 @@
-// 1.21	2024-06-27T19:29:04.8869306	DoggyTalents Item Models
+// 1.21	2024-08-04T17:42:54.9172387	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 576747e29ded49df195a33e020635920692b8bce assets/doggytalents/models/item/angel_halo.json
@@ -23,10 +23,7 @@ c32b03263dcdad77d9e68e3140b94f5d71fba4a5 assets/doggytalents/models/item/creativ
 773f9870103756dae329357172bb4108b438b6f7 assets/doggytalents/models/item/crow_wings.json
 86388a3f26ad0ad39a8943914a87b8bbb9936640 assets/doggytalents/models/item/death_hood.json
 a9e58121d02090f9d410e13f06ad832283e4218b assets/doggytalents/models/item/demon_horns.json
-27cfbd51adf771e5e7adc06f79b7d66139b2a7c2 assets/doggytalents/models/item/disc_bwv_1080_fugue_11.json
-9b5c30a93518dc583317b811ecdf0e3dbc1ca61e assets/doggytalents/models/item/disc_bwv_849_fugue.json
 fbe17ada2b6ffe9226a5bbbdd8c745c34b646581 assets/doggytalents/models/item/disc_chopin_op64_no1.json
-2dec9cdd315e206867ecbee0502a488cf6963b7a assets/doggytalents/models/item/disc_okami_ryoshima_coast_arr.json
 cdb690c3c98fba77899a3d74a472c37ebd73ab44 assets/doggytalents/models/item/divine_retribution.json
 ad0c76a4a4a7e72ea4214910a014102656cb3a7a assets/doggytalents/models/item/doggy_charm.json
 e6928e128e709eed661a926a6341052c5dee3952 assets/doggytalents/models/item/doggy_contacts.json
