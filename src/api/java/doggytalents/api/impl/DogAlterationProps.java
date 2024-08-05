@@ -4,11 +4,13 @@ public class DogAlterationProps {
     
     private boolean fireImmune = false;
     private boolean canSwimUnderwater = false;
+    private boolean resistWaterPush = false;
     private boolean canBreatheUnderwater = false;
     private boolean canFly = false;
     private boolean canWearArmor = false;
     private boolean canUseTools = false;
     private boolean fallImmune = false;
+    private float bonusSwimSpeed = 0f;
 
     public DogAlterationProps() {}
 
@@ -19,6 +21,8 @@ public class DogAlterationProps {
     public boolean canWearArmor() { return canWearArmor; }
     public boolean canUseTools() { return canUseTools; }
     public boolean fallImmune() { return fallImmune; }
+    public float bonusSwimSpeed() { return this.bonusSwimSpeed; }
+    public boolean resistWaterPush() { return this.resistWaterPush; }
 
     public DogAlterationProps setFireImmune() {
         this.fireImmune = true;
@@ -52,6 +56,16 @@ public class DogAlterationProps {
 
     public DogAlterationProps setFallImmune() {
         this.fallImmune = true;
+        return this;
+    }
+
+    public DogAlterationProps addBonusSwimSpeed(float val) {
+        this.bonusSwimSpeed += val;
+        return this;
+    }
+
+    public DogAlterationProps setResistWaterPush() {
+        this.resistWaterPush = true;
         return this;
     }
 }
