@@ -16,6 +16,7 @@ import doggytalents.common.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -36,19 +37,6 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidType;
 
 public class SwimmerDogTalent extends TalentInstance {
-    
-    //private SwimmerDogGoal goal;
-
-    private DogSwimMoveControl moveControl;
-    private DogWaterBoundNavigation navigator;
-
-    private static final ResourceLocation SWIM_BOOST_ID = Util.getResource("swim_boost");
-
-    //private static DataKey<SwimmerDogGoal> SWIM_AI = DataKey.make();
-
-    private boolean swimming;
-    private float oldWaterCost;
-    private float oldWaterBorderCost;
                      
     public SwimmerDogTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -56,20 +44,6 @@ public class SwimmerDogTalent extends TalentInstance {
 
     @Override
     public void init(AbstractDog dogIn) {
-        if (!(dogIn instanceof Dog dog)) return;
-        this.moveControl = 
-            new DogSwimMoveControl(dog);
-        this.navigator = 
-            new DogWaterBoundNavigation(dog, dog.level());
-        swimming = false;
-        // if (!(dogIn instanceof Dog)) return;
-        // if (!dogIn.hasData(SWIM_AI)) {
-        //     SwimmerDogGoal swimmerDogGoal = new SwimmerDogGoal((Dog)dogIn);
-        //     dogIn.goalSelector.addGoal(7, swimmerDogGoal);
-        //     dogIn.setData(SWIM_AI, swimmerDogGoal);
-        // } else {
-        //     dogIn.getData(SWIM_AI).applySwimAttributes();
-        // }
     }
     
     @Override
@@ -78,84 +52,16 @@ public class SwimmerDogTalent extends TalentInstance {
             return;
         }
 
-        if (!(abstractDog instanceof Dog)) return;
-
-        var dog = (Dog) abstractDog;
-
-        if (this.level() >= 5 && dog.isVehicle()) {
+        if (this.level() >= 5 && abstractDog.isVehicle()) {
             // canBeSteered checks entity is LivingEntity
-            var control = dog.getControllingPassenger();
+            var control = abstractDog.getControllingPassenger();
             if (control != null && control.isInWater()) {
                 control.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 80, 1, true, false));
             }
         }
 
-        if (this.swimming) updateSwimming(dog);
-        else updateNotSwimming(dog);
         
-    }
-
-    @Override
-    public void remove(AbstractDog abstractDog) {
-        if (this.swimming && abstractDog instanceof Dog dog) {
-            this.swimming = false;
-            stopSwimming(dog);
-        }
-    }
-
-    private void updateSwimming(Dog dog) {
-        if (
-            (!dog.isInWater() && dog.onGround())
-            || dog.isLowAirSupply()
-            || dog.isDefeated()
-        ) {
-            this.swimming = false;
-            stopSwimming(dog);
-        }
-    }
-
-    private void updateNotSwimming(Dog dog) {
-        if (
-            dog.isInWater()
-            && !dog.isDefeated()
-            && readyToBeginSwimming(dog)
-            && !dog.isDogSwimming()
-        ) {
-            this.swimming = true;
-            this.startSwimming(dog);
-        }
-    }
-
-    private boolean readyToBeginSwimming(Dog dog) {
-        return dog.getAirSupply() == dog.getMaxAirSupply();
-    }
-
-    private void applySwimAttributes(Dog dog){
-        dog.setAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID, (dd, u) -> 
-            new AttributeModifier(u, 2*dog.getDogLevel(DoggyTalents.SWIMMER_DOG), Operation.ADD_VALUE)
-        );
-    }
-
-    private void removeSwimAttributes(Dog dog) {
-        dog.removeAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID);
-    }
-    
-    private void startSwimming(Dog dog) {
-        dog.setJumping(false);
-        dog.setNavigation(this.navigator);
-        dog.setMoveControl(this.moveControl);
-        if (dog.isInSittingPose()) { 
-            dog.setInSittingPose(false);
-        }
-        applySwimAttributes(dog);
-        dog.setDogSwimming(true);
-    }
-
-    private void stopSwimming(Dog dog) {
-        dog.resetMoveControl();
-        dog.resetNavigation();
-        removeSwimAttributes(dog);
-        dog.setDogSwimming(false);
+        
     }
 
     @Override
@@ -186,17 +92,11 @@ public class SwimmerDogTalent extends TalentInstance {
         props.setCanSwimUnderwater();
         if (this.level() >= 5)
             props.setCanBreatheUnderwater();
-    }
-
-    @Override
-    public InteractionResult canResistPushFromFluidType(FluidType type) {
-        if (type != NeoForgeMod.WATER_TYPE.value())
-            return InteractionResult.PASS;
-
-        if (this.level() >= 2) 
-            return InteractionResult.SUCCESS;
-
-        return InteractionResult.PASS;
+        if (this.level() > 1) {
+            props.addBonusSwimSpeed(Mth.clamp(this.level(), 2, 5) * 2);
+        }
+        if (this.level() >= 2)
+            props.setResistWaterPush();
     }
 
     @Override
@@ -207,89 +107,4 @@ public class SwimmerDogTalent extends TalentInstance {
         }
         return super.inferType(dog, type);
     }
-
-    //TODO Maybe incoproate this into tick()
-    // public static class SwimmerDogGoal extends Goal {
-
-    //     //TODO Something's not right, need to re look at the dog goal enable pattern while riding
-    //     private Dog dog;
-    //     //private boolean isGettingAir = false;
-    //     private SmoothSwimmingMoveControl moveControl;
-    //     private WaterBoundPathNavigation navigator;
-    //     private float oldWaterCost;
-    //     private float oldWaterBorderCost;
-
-    //     public SwimmerDogGoal(Dog d) {
-    //         this.dog = d;
-    //         this.moveControl = new SmoothSwimmingMoveControl(d, d.getMaxHeadXRot(), d.getMaxHeadYRot(), 1, 1, false);
-    //         this.navigator = new DogWaterBoundNavigation(d, d.level);
-    //     }                 
-        
-    //     @Override
-    //     public boolean canUse() {
-    //         if (this.dog.getDogLevel(DoggyTalents.SWIMMER_DOG) <= 0) return false;
-    //         return this.dog.isInWater() && this.dog.canSwimUnderwater() && dog.getAirSupply() == dog.getMaxAirSupply() && !this.checkSurroundingForLand(this.dog, this.dog.blockPosition()) ;
-    //     }
-
-    //     @Override
-    //     public boolean canContinueToUse() {
-    //         if (!this.dog.isInWater()) return false;
-    //         if (!this.dog.canSwimUnderwater()) return false;
-    //         if (this.checkSurroundingForLand(this.dog, this.dog.blockPosition())) return false;
-    //         return !this.dog.isLowAirSupply();
-    //     }
-
-    //     @Override
-    //     public void start() {
-    //         this.startSwimming();
-    //     }
-
-    //     @Override
-    //     public void stop() {
-    //         this.stopSwimming();
-    //     }
-
-    //     private boolean checkSurroundingForLand(AbstractDog dogIn, BlockPos p) {
-    //         for (BlockPos dp : BlockPos.betweenClosed(p.offset(-1, -1, -1), p.offset(1, 1, 1))) {
-    //             BlockPathTypes pn = WalkNodeEvaluator.getPathTypeStatic(dogIn.level(), dp.mutable());
-    //             if (pn == BlockPathTypes.WALKABLE || pn == BlockPathTypes.WATER_BORDER) return true;
-    //         }
-    //         return false;
-    //     }
-
-    //     private void applySwimAttributes(){
-    //         this.dog.setAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID, (dd, u) -> 
-    //             new AttributeModifier(u, "Swim Boost", 2*this.dog.getDogLevel(DoggyTalents.SWIMMER_DOG), Operation.ADDITION)
-    //         );
-    //     }
-
-    //     private void removeSwimAttributes() {
-    //         this.dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID);
-    //     }
-        
-    //     private void startSwimming() {
-    //         this.dog.setJumping(false);
-    //         this.dog.setNavigation(this.navigator);
-    //         this.dog.setMoveControl(this.moveControl);
-    //         if (this.dog.isInSittingPose()) { 
-    //             this.dog.setInSittingPose(false);
-    //         }
-    //         this.applySwimAttributes();
-    //         this.oldWaterCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER);
-    //         this.oldWaterBorderCost = this.dog.getPathfindingMalus(BlockPathTypes.WATER_BORDER);
-    //         this.dog.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 0);
-    //         this.dog.setPathfindingMalus(BlockPathTypes.WATER, 0);
-    //         this.dog.setDogSwimming(true);
-    //     }
-
-    //     private void stopSwimming() {
-    //         this.dog.resetMoveControl();
-    //         this.dog.resetNavigation();
-    //         this.removeSwimAttributes();
-    //         this.dog.setPathfindingMalus(BlockPathTypes.WATER_BORDER, this.oldWaterBorderCost);
-    //         this.dog.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
-    //         this.dog.setDogSwimming(false);
-    //     }
-    // }
-
 }
