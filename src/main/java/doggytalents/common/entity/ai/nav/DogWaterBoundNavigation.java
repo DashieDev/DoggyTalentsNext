@@ -25,7 +25,7 @@ public class DogWaterBoundNavigation extends WaterBoundPathNavigation implements
 
     @Override
     protected PathFinder createPathFinder(int p_26598_) {
-        this.nodeEvaluator = new DogSwimNodeEvaluator();
+        this.nodeEvaluator = new DogSwimNodeEvaluator((Dog) this.mob);
         return new PathFinder(this.nodeEvaluator, p_26598_);
      }
 
