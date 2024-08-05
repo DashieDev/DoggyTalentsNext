@@ -17,9 +17,11 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
 
     private boolean checkLand = false;
+    private Dog dog;
 
-    public DogSwimNodeEvaluator() {
+    public DogSwimNodeEvaluator(Dog dog) {
         super(false);
+        this.dog = dog;
     }
 
     @Override
@@ -55,6 +57,14 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
         }
 
         return node;
+    }
+
+    @Override
+    public Node getStart() {
+        var ret = super.getStart();
+        if (this.dog.isInWater())
+            ret.type = PathType.WATER;
+        return ret;
     }
 
     @Override
@@ -111,11 +121,9 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
     private boolean checkLand(BlockPos currentPos, BlockState currenState, BlockGetter level) {
         if (currenState.isPathfindable(level, currentPos, PathComputationType.LAND))
             return false;
-        if (!level.getBlockState(currentPos.above()).isAir())
-            return false;
-        var walkType = WalkNodeEvaluator.getBlockPathTypeStatic(level, currentPos.above().mutable());
-        return walkType == BlockPathTypes.WATER_BORDER
-            || walkType == BlockPathTypes.WALKABLE;
+        var walkType = WalkNodeEvaluator.getPathTypeStatic(dog, currentPos.above().mutable());
+        return walkType == PathType.WATER_BORDER
+            || walkType == PathType.WALKABLE;
     }
     
 }
