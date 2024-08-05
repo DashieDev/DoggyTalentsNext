@@ -263,6 +263,8 @@ public class Dog extends AbstractDog {
         = new DogHungerManager(this);
     public final DogPettingManager pettingManager
         = new DogPettingManager(this);
+    public final DogSwimmingManager dogSwimmingManager
+        = new DogSwimmingManager(this);
     public final DogAiManager dogAi;
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
@@ -833,6 +835,7 @@ public class Dog extends AbstractDog {
             this.lerpSteps = 0;
             this.lerpHeadSteps = 0;
             this.dogAi.tickServer();
+            this.dogSwimmingManager.tickServer();
         }
             
 
@@ -3321,6 +3324,7 @@ public class Dog extends AbstractDog {
         this.dogArmors.onPropsUpdated(alterationProps);
         if (!alterationProps.canUseTools())
             this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        this.dogSwimmingManager.onPropsUpdated(alterationProps);
     }
 
     public IDogRangedAttackManager getDogRangedAttack() {
@@ -4489,6 +4493,8 @@ public class Dog extends AbstractDog {
     @Override
     public boolean isPushedByFluid() {
         if (this.fireImmune() && this.isInLava())
+            return false;
+        if (this.alterationProps.resistWaterPush() && type == NeoForgeMod.WATER_TYPE.value())
             return false;
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType();
