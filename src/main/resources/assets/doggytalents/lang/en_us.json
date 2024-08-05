@@ -171,7 +171,7 @@
    "item.doggytalents.soul_reflector": "Soul Reflector",
 
    "item.doggytalents.rice_grains": "Rice Grains",
-   "block.doggytalents.rice_crop.description": "Sneak Right-Click on a Grindstone to Dehusk the rice.",
+   "block.doggytalents.rice_crop.description": "Right-click on Farmland to plant Rice Crops. Sneak + Right-Click on a Grindstone to Dehusk the rice.",
    "item.doggytalents.uncooked_rice": "Uncooked Rice",
    "item.doggytalents.uncooked_rice_bowl": "Uncooked Rice in a Bowl",
    "item.doggytalents.uncooked_rice_bowl.description": "In the furnace it goes!",
