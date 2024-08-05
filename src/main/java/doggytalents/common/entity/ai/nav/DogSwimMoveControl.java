@@ -7,6 +7,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
+import net.minecraft.world.level.pathfinder.PathType;
 
 public class DogSwimMoveControl extends MoveControl {
 
@@ -60,6 +61,8 @@ public class DogSwimMoveControl extends MoveControl {
             float f4 = Mth.sin(this.dog.getXRot() * ((float)Math.PI / 180F));
             this.dog.zza = f6 * speed;
             this.dog.yya = -f4 * speed;
+
+            this.maySwimALittleBitUpToReachLand();
         } else {
             this.dog.setSpeed(0.0F);
             this.dog.setXxa(0.0F);
@@ -67,5 +70,25 @@ public class DogSwimMoveControl extends MoveControl {
             this.dog.setZza(0.0F);
         }
      }
+
+    private void maySwimALittleBitUpToReachLand() {
+        var path = this.dog.getNavigation().getPath();
+        if (path == null || path.isDone())
+            return;
+        if (!this.dog.isInWater())
+            return;
+        int next_node_id = path.getNextNodeIndex();
+        if (next_node_id >= path.getNodeCount() || next_node_id < 0)
+            return;
+        var nextNode = path.getNextNode();
+        boolean reach_land = 
+            nextNode.type == PathType.WALKABLE
+            && nextNode.y - dog.getY() > 0;
+        if (!reach_land)
+            return;
+        final float upward_add = 0.05f;
+        var current_move = dog.getDeltaMovement();
+        dog.setDeltaMovement(current_move.add(0, upward_add, 0));
+    }
 
 }
