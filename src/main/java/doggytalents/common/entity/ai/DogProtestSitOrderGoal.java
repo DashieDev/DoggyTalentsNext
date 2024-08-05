@@ -1,5 +1,7 @@
 package doggytalents.common.entity.ai;
 
+import java.util.EnumSet;
+
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -17,6 +19,7 @@ public class DogProtestSitOrderGoal extends Goal {
     public DogProtestSitOrderGoal(Dog dog) {
         this.dog = dog;
         this.spamTimeMax = MIN_TOLERABLE_SPAM_TIME + dog.getRandom().nextInt(4);
+        this.setFlags(EnumSet.of(Goal.Flag.LOOK));
     }
 
     @Override
