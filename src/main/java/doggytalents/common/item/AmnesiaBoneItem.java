@@ -23,6 +23,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
+import net.minecraft.network.chat.Style;
+
 
 public class AmnesiaBoneItem extends Item implements IDogItem  {
 
@@ -92,7 +94,11 @@ public class AmnesiaBoneItem extends Item implements IDogItem  {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
             TooltipFlag flag) {
-        var tag = stack.getTag();
+        var desc_id = this.getDescriptionId(stack) + ".description";
+        components.add(Component.translatable(desc_id).withStyle(
+            Style.EMPTY.withItalic(true)
+        ));
+        var tag = ItemUtil.getTag(stack);
         if (tag == null) return;
         if (tag.contains("amnesia_bone_used_time", Tag.TAG_INT)) {
             components.add(
@@ -109,7 +115,6 @@ public class AmnesiaBoneItem extends Item implements IDogItem  {
             );
         }
     }
-
     public static int getUseCap() { return 8; }
     public static int getUntameXPCost() { return 3; }
     public static int getMigrateOwnerXPCost() { return 5; }
