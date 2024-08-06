@@ -244,8 +244,8 @@
    "container.doggytalents.dog_armor" : "Armure du chien",
    "container.doggytalents.doggy_tools": "Outils du chien",
 
-   "itemGroup.doggytalents": "Doggy Talents Next",
-   "itemGroup.doggytalents.dogbed": "Variantes de lit pour chien",
+   "doggytalents.item_group.main": "Doggy Talents Next",
+   "doggytalents.item_group.dog_bed": "Variantes de lit pour chien",
 
    "treat.kami_treat.low_level": "Le pouvoir impressionnant de ces friandises est trop difficile à gérer pour votre chien.",
    "treat.kami_treat.level_up": "Niveau supérieur !",
