@@ -36,7 +36,6 @@ public class DTNItemCategory {
             DoggyItems.KAMI_TREAT.get(),
             DoggyItems.CONDUCTING_BONE.get(),
             DoggyItems.CANINE_TRACKER.get(),
-            DoggyItems.CREATIVE_CANINE_TRACKER.get(),
             DoggyItems.WHISTLE.get(),
             DoggyItems.SCENT_TREAT.get(),
             DoggyItems.AMNESIA_BONE.get(),
