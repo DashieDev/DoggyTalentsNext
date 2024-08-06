@@ -24,7 +24,9 @@
    "item.doggytalents.spotted_collar": "Spotted Collar",
    "item.doggytalents.multicoloured_collar": "Multicolored Collar",
    "item.doggytalents.canine_tracker": "Canine Tracker",
+   "item.doggytalents.canine_tracker.description": "Right-click to start Tracking",
    "item.doggytalents.creative_canine_tracker": "Creative Canine Tracker",
+   "item.doggytalents.creative_canine_tracker.description": "Right-click to start Tracking",
    "item.doggytalents.whistle": "Whistle",
    "item.doggytalents.whistle.description": "Sneak + Right-click to access other Whistle Modes",
    "item.doggytalents.whistle.0": "Whistle: Command Stand",
@@ -59,6 +61,7 @@
    "item.doggytalents.magnifying_bone": "Magnifying Bone",
    "item.doggytalents.owner_change": "Change Dog Owner",
    "item.doggytalents.amnesia_bone": "Amnesia Bone",
+   "item.doggytalents.amnesia_bone.description": "Right-click your Dog to Change Owner/Untame/Untrain Talents. If OP is enabled, Sneak + Right-click to Force Claim",
    "item.doggytalents.guard_suit" : "Guard Suit",
    "item.doggytalents.conducting_bone": "Conducting Bone",
 
