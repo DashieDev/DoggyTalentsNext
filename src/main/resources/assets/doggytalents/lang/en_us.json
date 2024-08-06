@@ -254,8 +254,11 @@
    "container.doggytalents.dog_armor" : "Dog Armor",
    "container.doggytalents.doggy_tools": "Doggy Tools",
 
-   "itemGroup.doggytalents": "Doggy Talents Next",
-   "itemGroup.doggytalents.dogbed": "Dog Bed Variants",
+   "doggytalents.item_group.main": "Doggy Talents Next",
+   "doggytalents.item_group.agri": "DTN Agriculture",
+   "doggytalents.item_group.style": "DTN Style",
+   "doggytalents.item_group.misc": "DTN Miscellaneous",
+   "doggytalents.item_group.dog_bed": "DTN Dog Beds",
 
    "treat.kami_treat.low_level": "The awesome power in these treats is too much for your Dog to handle.",
    "treat.kami_treat.level_up": "Level up!",

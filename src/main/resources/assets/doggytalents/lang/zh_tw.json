@@ -254,8 +254,8 @@
    "container.doggytalents.dog_armor" : "小狗盔甲",
    "container.doggytalents.doggy_tools": "狗狗工具欄",
 
-   "itemGroup.doggytalents": "天才小狗",
-   "itemGroup.doggytalents.dogbed": "更多狗床",
+   "doggytalents.item_group.main": "天才小狗",
+   "doggytalents.item_group.dog_bed": "更多狗床",
 
    "treat.kami_treat.low_level": "這些零食中蘊含強大的能量、你的狗狗無法承受。",
    "treat.kami_treat.level_up": "升級！",
