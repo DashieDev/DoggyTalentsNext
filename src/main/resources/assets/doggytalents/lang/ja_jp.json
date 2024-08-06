@@ -254,8 +254,8 @@
     "container.doggytalents.dog_armor" : "防具犬のインベントリ",
     "container.doggytalents.doggy_tools": "ドーグドッグのツールバー",
  
-    "itemGroup.doggytalents": "狼才能次",
-    "itemGroup.doggytalents.dogbed": "犬ベッドのヴァリアント",
+    "doggytalents.item_group.main": "狼才能次",
+    "doggytalents.item_group.dog_bed": "犬ベッドのヴァリアント",
  
     "treat.kami_treat.low_level": "このおやつに含まれるすごいパワーは、犬には手に負えません。",
     "treat.kami_treat.level_up": "レベルアップ！",

@@ -241,8 +241,8 @@
    "container.doggytalents.dog_armor" : "Armadura de Perro",
    "container.doggytalents.doggy_tools": "Herramientas de Perro",
 
-   "itemGroup.doggytalents": "Doggy Talents Next",
-   "itemGroup.doggytalents.dogbed": "Variantes de Cama para Perro",
+   "doggytalents.item_group.main": "Doggy Talents Next",
+   "doggytalents.item_group.dog_bed": "Variantes de Cama para Perro",
 
    "treat.kami_treat.low_level": "El increíble poder en estos premios es demasiado para que tu perro lo maneje.",
    "treat.kami_treat.level_up": "¡Nivel ascendido!",

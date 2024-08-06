@@ -55,8 +55,8 @@
    "container.doggytalents.dog_inventories.link" : "Dog Inventories",
    "container.doggytalents.dog_inventories" : "Dog Inventories",
 
-   "itemGroup.doggytalents": "Doggy Talents",
-   "itemGroup.doggytalents.dogbed": "Dog Bed Variants",
+   "doggytalents.item_group.main": "Doggy Talents",
+   "doggytalents.item_group.dog_bed": "Dog Bed Variants",
 
    "treat.dire_treat.low_level": "Your dog can't possibly handle the awesome power contained in these treats.",
    "treat.dire_treat.level_up": "Level up!",
