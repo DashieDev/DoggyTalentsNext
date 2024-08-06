@@ -194,9 +194,6 @@ public class HeelByNameScreen extends Screen {
             }
         }
 
-        var soft_heel = I18n.get("doggytalents.screen.whistler.heel_by_name.soft_heel");
-        graphics.drawString(font, soft_heel, 3, 52, 0xffffffff);
-
         int half_width = this.width >> 1;
         int half_height = this.height >> 1; 
         
@@ -265,6 +262,9 @@ public class HeelByNameScreen extends Screen {
             half_height - 110, 0xffffffff);
         prevPageButton.active = this.pageNumber > 0;
         nextPageButton.active = this.pageNumber < maxPages - 1;
+
+        var soft_heel = I18n.get("doggytalents.screen.whistler.heel_by_name.soft_heel");
+        graphics.drawString(font, soft_heel, 3, 52, 0xffffffff);
     }
 
     private int getHoveredIndex(double x, double y, int entry_size) {
