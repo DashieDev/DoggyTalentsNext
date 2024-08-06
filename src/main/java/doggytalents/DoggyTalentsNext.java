@@ -24,6 +24,8 @@ import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.entity.WhitelistFoodHandler;
 import doggytalents.common.entity.DogDrinkMilkHandler;
 import doggytalents.common.event.EventHandler;
+import doggytalents.common.item.ChopinRecordItem;
+import doggytalents.common.item.itemgroup.DTNItemCategory;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;

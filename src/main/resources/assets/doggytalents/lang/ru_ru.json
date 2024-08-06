@@ -55,8 +55,8 @@
    "container.doggytalents.dog_inventories.link" : "Собачий инвентарь",
    "container.doggytalents.dog_inventories" : "Собачий инвентарь",
 
-   "itemGroup.doggytalents": "Doggy Talents",
-   "itemGroup.doggytalents.dogbed": "Разновидность собачьих лежанок",
+   "doggytalents.item_group.main": "Doggy Talents",
+   "doggytalents.item_group.dog_bed": "Разновидность собачьих лежанок",
 
    "treat.dire_treat.low_level": "Твоя собака не способна справиться с потрясающей силой в этих угощениях.",
    "treat.dire_treat.level_up": "Уровень повышен!",
