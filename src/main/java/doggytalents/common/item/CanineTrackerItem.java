@@ -7,6 +7,7 @@ import doggytalents.common.storage.DogLocationStorage;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
@@ -73,5 +74,13 @@ public class CanineTrackerItem extends Item {
         return ret.withStyle(
             Style.EMPTY.withColor(ret_color)
         );
+    }
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+            TooltipFlag flags) {
+        var desc_id = this.getDescriptionId(stack) + ".description";
+        components.add(Component.translatable(desc_id).withStyle(
+            Style.EMPTY.withItalic(true)
+        ));
     }
 }
