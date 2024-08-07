@@ -6,7 +6,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
-
+import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
@@ -99,11 +99,11 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type) {
+    public InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type, InferTypeContext context) {
         //This allows the owner to help the dog to reach the surface.
         if (type == BlockPathTypes.WATER) {
             return InteractionResultHolder.success(BlockPathTypes.WALKABLE);
         }
-        return super.inferType(dog, type);
+        return super.inferType(dog, type, context);
     }
 }

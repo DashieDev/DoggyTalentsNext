@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import org.jetbrains.annotations.NotNull;
 
 import doggytalents.api.feature.EnumMode;
+import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.CombatReturnStrategy;
 import doggytalents.common.entity.Dog.LowHealthStrategy;
@@ -305,7 +306,7 @@ public class DogMeleeAttackGoal extends Goal {
       var type = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), target_bp.mutable());
       if (type == BlockPathTypes.OPEN)
          return false;
-      type = dog.inferType(type);
+      type = dog.inferType(type, InferTypeContext.getDefault());
       if (type.getDanger() != null)
          return false;
       return true;
