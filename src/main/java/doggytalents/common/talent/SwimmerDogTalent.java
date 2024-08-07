@@ -99,9 +99,19 @@ public class SwimmerDogTalent extends TalentInstance {
     @Override
     public InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type, InferTypeContext context) {
         //This allows the owner to help the dog to reach the surface.
-        if (type == BlockPathTypes.WATER) {
+        if (this.level() < this.getTalent().getMaxLevel() 
+            && type == BlockPathTypes.WATER && checkOverrideWalkableForWater(context)) {
             return InteractionResultHolder.success(BlockPathTypes.WALKABLE);
         }
         return super.inferType(dog, type, context);
+    }
+
+    public boolean checkOverrideWalkableForWater(InferTypeContext context) {
+        if (!context.teleport())
+            return true;
+        var owner = context.owner().orElse(null);
+        if (owner == null)
+            return false;
+        return owner.isInWater();
     }
 }
