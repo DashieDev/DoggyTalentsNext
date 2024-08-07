@@ -70,7 +70,7 @@ public class DoggyItemGroups {
             }).build());
 
     public static DeferredHolder<CreativeModeTab, CreativeModeTab> DOG_BED
-        = register("tabdogbed", () -> CreativeModeTab.builder()
+        = register("dog_bed", () -> CreativeModeTab.builder()
             .title(Component.translatable("doggytalents.item_group.dog_bed"))
             .icon(
                 DogBedUtil::createRandomBed
