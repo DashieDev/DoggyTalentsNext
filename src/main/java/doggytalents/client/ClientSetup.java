@@ -43,6 +43,7 @@ import doggytalents.client.entity.model.dog.BoxerPointyModel;
 import doggytalents.client.entity.model.dog.BullTerrierModel;
 import doggytalents.client.entity.model.dog.ChihuahuaModel;
 import doggytalents.client.entity.model.dog.CollieBorderModel;
+import doggytalents.client.entity.model.dog.CollieBorderShortModel;
 import doggytalents.client.entity.model.dog.CollieRoughModel;
 import doggytalents.client.entity.model.dog.CollieSmoothModel;
 import doggytalents.client.entity.model.dog.DachshundModel;
@@ -177,6 +178,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_COLLIE_SMOOTH = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "collie_smooth"), "main");
     public static final ModelLayerLocation DOG_COLLIE_ROUGH = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "collie_rough"), "main");
     public static final ModelLayerLocation DOG_COLLIE_BORDER = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "collie_border"), "main");
+    public static final ModelLayerLocation DOG_COLLIE_BORDER_SHORT = new ModelLayerLocation(new ResourceLocation("collie_border_short"), "main");
     public static final ModelLayerLocation DOG_BICHON_MALTAIS = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "bichon_maltais"), "main");
     public static final ModelLayerLocation DOG_BELGIAN_MALINOIS = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "belgian_malinois"), "main");
     public static final ModelLayerLocation DOG_GERMAN_SHEPHERD = new ModelLayerLocation(new ResourceLocation(Constants.MOD_ID, "german_shepherd"), "main");
@@ -275,6 +277,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_COLLIE_SMOOTH, CollieSmoothModel::createBodyLayer);
         event.registerLayerDefinition(DOG_COLLIE_ROUGH, CollieRoughModel::createBodyLayer);
         event.registerLayerDefinition(DOG_COLLIE_BORDER, CollieBorderModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_COLLIE_BORDER_SHORT, CollieBorderShortModel::createBodyLayer);
         event.registerLayerDefinition(DOG_BICHON_MALTAIS, BichonMaltaisModel::createBodyLayer);
         event.registerLayerDefinition(DOG_BELGIAN_MALINOIS, BelgianMalinoisModel::createBodyLayer);
         event.registerLayerDefinition(DOG_GERMAN_SHEPHERD, GermanShepherdModel::createBodyLayer);
