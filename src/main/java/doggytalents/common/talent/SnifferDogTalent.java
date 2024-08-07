@@ -86,9 +86,9 @@ public class SnifferDogTalent extends TalentInstance {
         if (--tickTillDetect > 0)
             return;
         tickTillDetect = 10;
-        long startTime = System.nanoTime();
+        //long startTime = System.nanoTime();
         doDetectBlockAround(dog);
-        long stopTime = System.nanoTime();
+        //long stopTime = System.nanoTime();
         //ChopinLogger.lwn(dog, "Detected ore in " + (stopTime - startTime) + "ns");
     }
 
