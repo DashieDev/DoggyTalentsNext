@@ -5051,6 +5051,13 @@ public class Dog extends AbstractDog {
                 return BlockPathTypes.BLOCKED;
             }
         }
+        if (
+            this.canSwimUnderwater()
+            && this.alterationProps.canBreatheUnderwater()
+        ) {
+            if (type == PathType.WATER)
+                return PathType.WALKABLE;
+        }
         for (var alt : this.alterations) {
             var result = alt.inferType(this, type, context);
             if (result.getResult().shouldSwing()) {
