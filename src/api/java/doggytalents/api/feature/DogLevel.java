@@ -76,4 +76,8 @@ public class DogLevel {
         return this.kamiLevel >= 30;
     }
 
+    public static DogLevel kamiReady() {
+        return new DogLevel(60, 0);
+    }
+
 }
