@@ -471,6 +471,12 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Shorthaired Border Collie",
+            "skin_id" : "collie_border_short",
+            "use_model" : "collie_border_short",
+            "author" : "MashXP"
+        },
+        {
             "skin_name" : "Norfolk Terrier",
             "skin_id" : "norfolk_terrier",
             "use_model" : "norfolk_terrier",
