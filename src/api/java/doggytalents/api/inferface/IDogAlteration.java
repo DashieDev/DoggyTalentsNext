@@ -225,7 +225,7 @@ public interface IDogAlteration {
      * @param pos
      * @return
      */
-    default InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type) {
+    default InteractionResultHolder<BlockPathTypes> inferType(AbstractDog dog, BlockPathTypes type, InferTypeContext context) {
         return InteractionResultHolder.pass(type);
     }
 

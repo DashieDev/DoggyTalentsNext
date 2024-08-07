@@ -15,6 +15,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.inferface.IThrowableItem;
+import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.api.registry.*;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.DTNClientPettingManager;
@@ -5044,12 +5045,12 @@ public class Dog extends AbstractDog {
             pos.mutable()
         );
 
-        blockType = inferType(blockType);
+        blockType = inferType(blockType, InferTypeContext.getDefault());
         
         return blockType;
     }
 
-    public BlockPathTypes inferType(BlockPathTypes type) {
+    public BlockPathTypes inferType(BlockPathTypes type, InferTypeContext context) {
         if (this.fireImmune()) {
             if (type == BlockPathTypes.DANGER_FIRE) {
                 return BlockPathTypes.WALKABLE;
@@ -5059,7 +5060,7 @@ public class Dog extends AbstractDog {
             }
         }
         for (var alt : this.alterations) {
-            var result = alt.inferType(this, type);
+            var result = alt.inferType(this, type, context);
             if (result.getResult().shouldSwing()) {
                 type = result.getObject();
                 break;

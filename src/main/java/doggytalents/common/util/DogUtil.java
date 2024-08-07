@@ -8,9 +8,11 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
+import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.api.registry.Talent;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.DogCustomSkinConfig.DataStrategy;
@@ -262,7 +264,7 @@ public class DogUtil {
             int randZ = pos.getZ() + EntityUtil.getRandomNumber(dog, -radius, radius);
             var b0 = new BlockPos(randX, randY, randZ);
 
-            if (isTeleportSafeBlock(dog, b0)) {
+            if (isTeleportSafeBlock(dog, b0, null)) {
                 teleportInternal(dog, b0);
                 return true;
             }
@@ -294,7 +296,7 @@ public class DogUtil {
                 ) 
 
                 // safe?
-                && isTeleportSafeBlock(dog, pos) 
+                && isTeleportSafeBlock(dog, pos, owner) 
 
                 // Can see owner at that pos
                 // && hasLineOfSightToOwnerAtPos(dog, pos)
@@ -363,10 +365,10 @@ public class DogUtil {
     //check is Walakable Block according to the IDogAlteration
     //Allow dog to teleportToLeaves, there is no reason to not to consider the existance of the push a.i
     //And height danger exist everywhere not just leaves
-    public static boolean isTeleportSafeBlock(Dog dog, BlockPos pos) {
-        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level, pos.mutable());
+    public static boolean isTeleportSafeBlock(Dog dog, BlockPos pos, @Nullable LivingEntity owner) {
+        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable())
         boolean alterationWalkable = false;
-        var infer_type = dog.inferType(pathnodetype);
+        var infer_type = dog.inferType(pathnodetype, InferTypeContext.forTeleport(owner));
         if (infer_type == BlockPathTypes.WALKABLE)
             alterationWalkable = true;
         
