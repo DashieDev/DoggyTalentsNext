@@ -505,6 +505,20 @@
             "tags" : "classical"
         },
         {
+            "skin_name" : "Newfoundland (Black)",
+            "skin_id" : "newfoundland_black",
+            "use_model" : "newfoundland",
+            "author" : "MashXP",
+            "tags" : "classical"
+        },
+        {
+            "skin_name" : "Newfoundland (Brown)",
+            "skin_id" : "newfoundland_brown",
+            "use_model" : "newfoundland",
+            "author" : "MashXP",
+            "tags" : "classical"
+        },
+        {
             "skin_name" : "Rottweiler",
             "skin_id" : "rottweiler",
             "use_model" : "default"
