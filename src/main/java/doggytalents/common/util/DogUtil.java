@@ -109,6 +109,8 @@ public class DogUtil {
         
         if (dogs.isEmpty()) return false;
 
+        //long startTime = System.nanoTime();
+
         List<BlockPos> safePosList;
         if (owner.isSprinting()) {
             safePosList = CachedSearchUtil
@@ -125,12 +127,16 @@ public class DogUtil {
             teleportInternal(dog, safePosList.get(r_indx));
         }
 
+        //long stopTime = System.nanoTime();
+
         return true;
     }
 
     public static boolean dynamicSearchAndTeleportToOwnwerInBatchMaxDensity(Level level, List<Dog> dogs, LivingEntity owner, int radius, int max_density) {
         
         if (dogs.isEmpty()) return false;
+
+        //long startTime = System.nanoTime();
 
         List<BlockPos> safePosList;
         if (owner.isSprinting()) {
@@ -163,7 +169,9 @@ public class DogUtil {
                 densityMap.set(r_indx, density_count);
             }
         }
-        
+
+        //long stopTime = System.nanoTime();
+
         return true;
     }
 
