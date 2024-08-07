@@ -112,7 +112,7 @@ public class DogUtil {
         
         if (dogs.isEmpty()) return false;
 
-        long startTime = System.nanoTime();
+        //long startTime = System.nanoTime();
 
         List<BlockPos> safePosList;
         if (owner.isSprinting()) {
@@ -130,7 +130,7 @@ public class DogUtil {
             teleportInternal(dog, safePosList.get(r_indx));
         }
 
-        long stopTime = System.nanoTime();
+        //long stopTime = System.nanoTime();
 
         return true;
     }
@@ -139,7 +139,7 @@ public class DogUtil {
         
         if (dogs.isEmpty()) return false;
 
-        long startTime = System.nanoTime();
+        //long startTime = System.nanoTime();
 
         List<BlockPos> safePosList;
         if (owner.isSprinting()) {
@@ -173,7 +173,7 @@ public class DogUtil {
             }
         }
 
-        long stopTime = System.nanoTime();
+        //long stopTime = System.nanoTime();
 
         return true;
     }
