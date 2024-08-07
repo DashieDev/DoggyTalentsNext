@@ -32,6 +32,10 @@ public class TreatItem extends Item implements IDogItem {
             return InteractionResult.FAIL;
         }
 
+        return handleTreatTrain(dog, worldIn, playerIn, handIn);   
+    }
+
+    private InteractionResult handleTreatTrain(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
         if (dog.getAge() < 0) {
             treatFailPrompt(dog, worldIn, playerIn, 
                 Component.translatable("treat."+this.type.getName()+".too_young"));
