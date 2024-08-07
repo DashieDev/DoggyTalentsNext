@@ -75,7 +75,8 @@ public class WhistleItem extends Item implements IDogItem {
         RIDE_WITH_ME(13, WhistleSound.SHORT),
         HOWL(14, WhistleSound.NONE),
         ALL_STAND_SWITCH_MODE(15, WhistleSound.NONE),
-        SSSSSHHHH(16, WhistleSound.NONE);
+        SSSSSHHHH(16, WhistleSound.NONE),
+        CROSS_ORIGIN_TP(17, WhistleSound.SHORT);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -371,6 +372,9 @@ public class WhistleItem extends Item implements IDogItem {
         case SSSSSHHHH:
             sssshhhh(world, player, dogsList);
             return;
+        case CROSS_ORIGIN_TP:
+            crossOriginTpForDogs(world, player, dogsList);
+            return;
         }
     }
 
@@ -485,6 +489,36 @@ public class WhistleItem extends Item implements IDogItem {
                 0.1f, 
                 0.8F + level.random.nextFloat() * 0.2F
             );
+        }
+    }
+
+    private void crossOriginTpForDogs(Level level, Player player, List<Dog> dogs) {
+        if (level.isClientSide)
+            return;
+        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+
+        dogs = dogs.stream().filter(x -> !x.isInSittingPose())
+            .collect(Collectors.toList());
+        if (dogs.isEmpty())
+            return;
+        
+        boolean all_cross_origin = true;
+        for (var dog : dogs) {
+            if (!dog.crossOriginTp()) {
+                all_cross_origin = false;
+                break;
+            }
+        }
+
+        boolean switch_to = !all_cross_origin;
+
+        for (var dog : dogs) {
+            dog.setCrossOriginTp(switch_to);
+        }
+        if (switch_to) {
+            player.sendSystemMessage(Component.translatable("dogcommand.cross_origin.set"));
+        } else {
+            player.sendSystemMessage(Component.translatable("dogcommand.cross_origin.unset"));
         }
     }
 
