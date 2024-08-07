@@ -1,5 +1,6 @@
 package doggytalents.common.util.CachedSearchUtil;
 
+import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.util.DogUtil;
@@ -39,12 +40,13 @@ public class CachedSearchUtil {
         var bMin = b0.offset(-radiusXZ, -radiusY, -radiusXZ);
         int maxXZ = radiusXZ * 2;
         int maxY = radiusY * 2;
+        var infer_ctx = InferTypeContext.forTeleport(dog.getOwner());
         for (int i = 0; i <= maxXZ; ++i) {
             for (int j = 0; j <= maxY; ++j) {
                 for (int k = 0; k <= maxXZ; ++k) {
                     var type = WalkNodeEvaluatorDelegate
                         .getTypeDelegate(dog.level(), bMin.offset(i, j, k));
-                    byte val = inferType(dog, type);
+                    byte val = inferType(dog, type, infer_ctx);
                     pool.setPoolValue(dog.level(), i, j, k, val);
                 }
             }
@@ -389,8 +391,8 @@ public class CachedSearchUtil {
      * @param type
      * @return
      */
-    public static byte inferType(Dog dog, BlockPathTypes type) {
-        type = dog.inferType(type);
+    public static byte inferType(Dog dog, BlockPathTypes type, InferTypeContext context) {
+        type = dog.inferType(type, context);
         if (type == BlockPathTypes.WALKABLE) return OK;
         if (type == BlockPathTypes.OPEN) return OPEN;
         if (DogUtil.isDangerPathType(type)) return DAMAGE;
@@ -406,7 +408,7 @@ public class CachedSearchUtil {
         boolean all_dog_OK = true;
         for (var dog : dogs) {
             boolean is_ok = false;
-            var infer_type = dog.inferType(type);
+            var infer_type = dog.inferType(type, InferTypeContext.forTeleport());
             if (infer_type == BlockPathTypes.WALKABLE) {
                 is_ok = true;
             }
