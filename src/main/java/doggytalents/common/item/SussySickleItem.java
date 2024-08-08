@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level;
 public class SussySickleItem extends SwordItem {
 
     public SussySickleItem(Properties p_43272_) {
-        super(Tiers.IRON, p_43272_);
+        super(Tiers.IRON, p_43272_.attributes(SwordItem.createAttributes(Tiers.IRON, 3, -2.4F)));
     }
 
     @Override
