@@ -108,6 +108,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue ENABLE_STARTER_BUNDLE_BY_DEFAULT;
         public ModConfigSpec.BooleanValue DOG_VARIANT_CLIENT_EFFECT;
         public ModConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
+        public ModConfigSpec.BooleanValue TRANSLUCENT_ALL_OVERLAY;
 
         public ClientConfig(ModConfigSpec.Builder builder) {
             builder.push("General");
@@ -256,7 +257,10 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("the server requires those or Locator Orb to be present to be tracked")
                 .comment("using the Canine Tracker and you prefer to make the tracker invisible.")
                 .define("render_radio_collar", true);
-            
+            TRANSLUCENT_ALL_OVERLAY = builder
+                .comment("Always render Overlay Accessories on Dogs as Translucent ")
+                .comment("This is to prevent Special Variant's overlay to override on the Overlay Accessories")
+                .define("translucent_all_overlay", true);
             builder.pop();
         }
 
