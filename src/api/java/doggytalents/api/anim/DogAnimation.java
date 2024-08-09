@@ -141,7 +141,7 @@ public enum DogAnimation {
     public boolean looping() { return this.timelineMode == TimelineMode.LOOP; }
     public boolean holdOnLastTick() { return this.timelineMode == TimelineMode.HOLD_ON_LAST_TICK; }
     public boolean interupting() { return this.interupting; }
-    public Optional<Float> rootRotaton() { return this.rootRotation; }
+    public Optional<Float> rootRotation() { return this.rootRotation; }
 
     public boolean isNone() { return this == DogAnimation.NONE; }
 
