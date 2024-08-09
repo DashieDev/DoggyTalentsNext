@@ -17,7 +17,7 @@ public class CollieBorderShortModel extends DogModel{
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 9.5F, -6.5F));
+		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 10.5F, -6.5F));
 
 		PartDefinition real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, new CubeDeformation(-0.4F))
 		.texOffs(0, 0).addBox(-3.0F, -3.75F, -2.25F, 6.0F, 6.0F, 4.0F, new CubeDeformation(-0.8F)), PartPose.offset(0.0F, 0.0F, 0.0F));
@@ -72,9 +72,9 @@ public class CollieBorderShortModel extends DogModel{
 
 		PartDefinition bone5 = bone9.addOrReplaceChild("bone5", CubeListBuilder.create(), PartPose.offsetAndRotation(2.25F, 8.5189F, -0.0335F, 0.0F, 1.5708F, -1.5708F));
 
-		PartDefinition bone = bone9.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, -2.3561F, -3.0176F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.3F)), PartPose.offsetAndRotation(0.0F, 4.3898F, 0.1785F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition bone = bone9.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(21, 0).addBox(-4.0F, -2.2561F, -3.1176F, 8.0F, 6.0F, 7.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(0.0F, 4.3898F, 0.1785F, 1.5708F, 0.0F, 0.0F));
 
-		PartDefinition mane_rotation_r1 = bone.addOrReplaceChild("mane_rotation_r1", CubeListBuilder.create().texOffs(0, 32).addBox(-3.0F, -2.1441F, -0.6384F, 6.0F, 5.0F, 7.0F, new CubeDeformation(-1.0F)), PartPose.offsetAndRotation(0.0F, -0.462F, 0.6208F, 0.48F, 0.0F, 0.0F));
+		PartDefinition mane_rotation_r1 = bone.addOrReplaceChild("mane_rotation_r1", CubeListBuilder.create().texOffs(0, 33).addBox(-3.0F, -2.1441F, -0.6384F, 6.0F, 5.0F, 6.0F, new CubeDeformation(-0.75F)), PartPose.offsetAndRotation(0.0F, 0.288F, -0.1292F, 0.7418F, 0.0F, 0.0F));
 
 		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 15.0F, 1.0F, 1.5708F, 0.0F, 0.0F));
 
@@ -102,7 +102,7 @@ public class CollieBorderShortModel extends DogModel{
 
 		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.5F, 16.5F, 7.0F));
 
-		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 13.1F, 7.0F, 1.6144F, 0.0F, 0.0F));
+		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(0.0F, 13.1F, 7.0F));
 
 		PartDefinition real_tail = tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(31, 39).addBox(-1.0F, 8.15F, 1.8F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.35F))
 		.texOffs(32, 39).addBox(-1.0F, 7.05F, 1.3F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.15F))
