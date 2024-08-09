@@ -11,6 +11,7 @@ import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.DogFrontLegsSeperate;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -74,7 +75,7 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel> {
             dogModel = parentModel;
         }
         var texture_rl = accessoryInst.getModelTexture(dog);
-        boolean isTranslucent = accessoryInst.getAccessory().renderTranslucent();
+        boolean isTranslucent = isAcceossryRenderTranslucent(accessoryInst.getAccessory());
         if (texture_rl == null) return;
         boolean tailVisible0 = dogModel.tail.visible;
         if (dog.getClientSkin().useCustomModel())
@@ -108,7 +109,7 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel> {
             dogModel.copyFrom(parentModel);
         }
         var texture_rl = accessoryInst.getModelTexture(dog);
-        boolean isTranslucent = accessoryInst.getAccessory().renderTranslucent();
+        boolean isTranslucent = isAcceossryRenderTranslucent(accessoryInst.getAccessory());
         if (texture_rl == null) return;
         boolean tailVisible0 = dogModel.tail.visible;
         if (dog.getClientSkin().useCustomModel())
@@ -157,6 +158,13 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel> {
         return
             type == AccessoryRenderType.OVERLAY
             || type == AccessoryRenderType.OVERLAY_AND_MODEL;
+    }
+
+    public boolean isAcceossryRenderTranslucent(Accessory accessory) {
+        if (ConfigHandler.CLIENT.TRANSLUCENT_ALL_OVERLAY.get()) {
+            return true;
+        }
+        return accessory.renderTranslucent();
     }
 
     public static <T extends LivingEntity> void renderTranslucentModel(EntityModel<T> p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, T p_117382_, float p_117383_, float p_117384_, float p_117385_, float opascity) {

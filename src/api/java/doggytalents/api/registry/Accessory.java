@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import doggytalents.api.DoggyTalentsAPI;
-import doggytalents.common.config.ConfigHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -121,9 +120,6 @@ public class Accessory {
     private boolean renderTranslucent = false;
 
     public boolean renderTranslucent() {
-        if (ConfigHandler.CLIENT.TRANSLUCENT_ALL_OVERLAY.get()) {
-            return true;
-        }
         return renderTranslucent;
     }
 
