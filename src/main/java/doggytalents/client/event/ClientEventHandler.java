@@ -43,6 +43,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -285,7 +286,12 @@ public class ClientEventHandler {
         var anim = dog.getAnim();
         var animSeq = DogAnimationRegistry.getSequence(anim);
         var animState = dog.animationManager.animationState;
-        return DogKeyframeAnimations.getCurrentAnimatedYRot(dog, animSeq, animState.getAccumulatedTimeMillis(), 1);
+        var ret = DogKeyframeAnimations.getCurrentAnimatedYRot(dog, animSeq, animState.getAccumulatedTimeMillis(), 1);
+        if (anim.rootRotaton().isPresent()) {
+            var root_rotation = anim.rootRotaton().get();
+            ret += root_rotation * Mth.DEG_TO_RAD;
+        }
+        return ret;
     }
 
     public static void onDogSyncedDataUpdated(DogSyncData data) {
