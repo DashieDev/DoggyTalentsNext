@@ -310,6 +310,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
         public ModConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
         public ModConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
+        public ModConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
 
         public Map<String, ModConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -528,6 +529,10 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("targetting the player a potential danger instead of just 'Enemy'(s)")
                 .translation("doggytalents.besserker_less_strict")
                 .define("b_g_mode_less_strict", false);
+            DOG_DONT_PUSH_OWNER = builder
+                .comment("Enable this to prevent Dogs from pushing their Owners")
+                .translation("doggytalents.dog_dont_push_owner")
+                .define("dog_dont_push_owner", false);
             
             builder.pop();
         }
