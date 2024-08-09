@@ -105,7 +105,7 @@ public enum DogAnimation {
     private final HeadHandling headHandling;
     private final TimelineMode timelineMode;
     private final boolean interupting;
-    private final Optional rootRotation;
+    private final Optional<Float> rootRotation;
 
     private DogAnimation(int id, int lengthTicks, Function<Props, Props> props_consumer) {
         this.id = id;
