@@ -1,5 +1,11 @@
 package doggytalents.common.block;
 
+import javax.annotation.Nullable;
+
+import com.mojang.serialization.MapCodec;
+
+import doggytalents.DoggyTileEntityTypes;
+import doggytalents.common.block.tileentity.DogBathBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -16,9 +22,15 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -30,7 +42,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class DogBathBlock extends Block {
+public class DogBathBlock extends BaseEntityBlock {
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
@@ -38,6 +50,10 @@ public class DogBathBlock extends Block {
 
     public DogBathBlock() {
         super(Block.Properties.of().mapColor(MapColor.METAL).strength(1F, 5.0F).sound(SoundType.METAL));
+    }
+
+    public DogBathBlock(BlockBehaviour.Properties props) {
+        this();
     }
 
     @Override
@@ -109,4 +125,28 @@ public class DogBathBlock extends Block {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(WATERLOGGED);
     }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState) {
+        return new DogBathBlockEntity(pos, blockState);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+        return createTickerHelper(blockEntityType, DoggyTileEntityTypes.DOG_BATH.get(), DogBathBlockEntity::tick);
+    }
+
+    public static final MapCodec<DogBathBlock> CODEC = simpleCodec(DogBathBlock::new);
+    
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
 }
