@@ -271,8 +271,8 @@ public class ClientEventHandler {
         var animSeq = DogAnimationRegistry.getSequence(anim);
         var animState = dog.animationManager.animationState;
         var ret = DogKeyframeAnimations.getCurrentAnimatedYRot(dog, animSeq, animState.getAccumulatedTimeMillis(), 1);
-        if (anim.rootRotaton().isPresent()) {
-            var root_rotation = anim.rootRotaton().get();
+        if (anim.rootRotation().isPresent()) {
+            var root_rotation = anim.rootRotation().get();
             ret += root_rotation * Mth.DEG_TO_RAD;
         }
         return ret;

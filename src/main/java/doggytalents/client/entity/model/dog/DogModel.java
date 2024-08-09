@@ -515,7 +515,7 @@ public class DogModel extends EntityModel<Dog> {
             headXRot0 = this.head.xRot;
         }
 
-        anim.rootRotaton().ifPresent(x -> {
+        anim.rootRotation().ifPresent(x -> {
             this.root.yRot += x * Mth.DEG_TO_RAD;
         });
         
