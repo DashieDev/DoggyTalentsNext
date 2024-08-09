@@ -4942,6 +4942,10 @@ public class Dog extends AbstractDog {
     }
 
     protected boolean shouldBlockPush(Entity target) {
+        if (ConfigHandler.SERVER.DOG_DONT_PUSH_OWNER.get()) {
+            if (!ObjectUtils.notEqual(target.getUUID(), this.getOwnerUUID()))
+                return true;
+        }
         if (this.pushFromOtherDogResistTick <= 0)
             return false;
         if (this.isDefeated())
