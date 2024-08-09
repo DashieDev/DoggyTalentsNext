@@ -4,7 +4,7 @@ plugins {
     id 'net.neoforged.gradle.userdev' version '7.0.142'
 }
 
-version = '1.18.27'
+version = '1.18.28'
 group = 'com.github.dashiedev'
 archivesBaseName = "DoggyTalentsNext-${project.target_mc_version}"
 

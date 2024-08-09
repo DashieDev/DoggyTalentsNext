@@ -1535,3 +1535,36 @@ Option to determine which Dog Custom Skin can be applied to a Dog for a World/Se
 
 **1.18.27 - 29th July 2024**
 * HOTFIX: Potential Crash when giving Dogs an infinity Bow.
+
+**1.18.28 - 9th August 2024**
+
+## DTN has updated to Neoforge 1.21.1! Also works for 1.21
+=================
++ Added new Skin: Shorthaired Border Collie! suggested by @alphawolfsnowy 
++ Added new Skin: Newfoundlands! (2 variants) suggested by R3dwoodbranch3s
+
++ Added new Whistle Mode: All Stand Cross Origin TP! to make it easier for players to manage which dog should teleport with you to another dimension.
+
++ Added new Option: Always render Overlay Accessories on Dogs as Translucent.
+
++ Added new Animation: Drinking Water! suggested by @ashleylee2000
++ Creative Menu Categorization. Items are now properly divided into 4 tabs: Main, DTN Agriculture, DTN Style, and DTN Miscellaneous
+
+=================
+- Remove most of the DTN Discs, except the Chopin (for now).
+=================
+#Update Rice Mill Recipe: 3 Uncooked Rice + 1 bowl = Uncooked Rice Bowl.
+#Canine Tracker, Scent Treat and Amnesia Bone description update.
+#Update Rice Grain description to clarify.
+#Kami Treat will now one-shot Dogs to Kami level in Creative Mode.
+#Swimmer Dogs who can both swim underwater and breathe indefinitely underwater can always tp to water
+otherwise they only tp when owner is in water.
+#Suspicious Sickle fix + buff attack speed.
+#Make Soy Beans drop rarer.
+=================
+* Fix: Canine Tracker not rendering properly.
+* Fix: Preventing potential NPE Crash caused by ChemiCanine when migrating from Forge to Fabric
+* Fix: Soft Heel text got blurred.
+* Prevent Swimmer Dogs from being stuck in a 1x1 water area.
+* Prevent spamming sit stand animation from playing while dog is drunk.
+* Fix Idle Animations sometimes overriding Drunk.
