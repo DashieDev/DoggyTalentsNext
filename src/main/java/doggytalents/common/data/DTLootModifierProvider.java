@@ -139,6 +139,6 @@ public class DTLootModifierProvider /*extends GlobalLootModifierProvider*/ {
     //         return generatedLoot;
     //     }
 
-    // }
+    // }x
 
 }

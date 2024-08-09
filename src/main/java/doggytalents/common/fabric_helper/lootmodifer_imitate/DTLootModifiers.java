@@ -37,7 +37,7 @@ public class DTLootModifiers {
         if (item.is(Items.SHEARS))
             return;
         float r = player.getRandom().nextFloat();
-        if (r > 0.125F)
+        if (r > 0.01F)
             return;
         var resultEntity = new ItemEntity(
             level, 
