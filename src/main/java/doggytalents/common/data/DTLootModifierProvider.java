@@ -94,7 +94,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
                 )
                 .build();
         var random_condition = 
-            LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.125F, 0.05F)
+            LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.01F, 0.05F)
             .build();
         var conditions = new LootItemCondition[] {
             killed_by_dog_condition,
