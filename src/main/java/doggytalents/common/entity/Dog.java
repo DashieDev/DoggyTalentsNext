@@ -1326,18 +1326,21 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean rideableUnderWater() {
+    public boolean dismountsUnderwater() {
+        if (this.canSwimUnderwater() && this.alterationProps.canBreatheUnderwater())
+            return false;
+
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.canBeRiddenInWater(this);
 
             if (result.shouldSwing()) {
-                return true;
-            } else if (result == InteractionResult.FAIL) {
                 return false;
+            } else if (result == InteractionResult.FAIL) {
+                return true;
             }
         }
 
-        return super.rideableUnderWater();
+        return true;
     }
 
     @Override
