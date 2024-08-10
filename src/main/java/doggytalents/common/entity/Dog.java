@@ -1329,6 +1329,9 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean dismountsUnderwater() {
+        if (this.canSwimUnderwater() && this.alterationProps.canBreatheUnderwater())
+            return false;
+
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.canBeRiddenInWater(this);
 
