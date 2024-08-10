@@ -24,7 +24,9 @@
     "item.doggytalents.spotted_collar": "水玉首輪",
     "item.doggytalents.multicoloured_collar": "多色首輪",
     "item.doggytalents.canine_tracker": "犬の追跡印籠",
+    "item.doggytalents.canine_tracker.description": "右クリックで犬の追跡を開始します。",
     "item.doggytalents.creative_canine_tracker": "クリエイティブ犬の追跡印籠",
+    "item.doggytalents.creative_canine_tracker.description": "右クリックで犬の追跡を開始します。",
     "item.doggytalents.whistle": "口笛",
     "item.doggytalents.whistle.description": "スニーク＋右クリックで他の口笛モードにアクセスします。",
     "item.doggytalents.whistle.0": "口笛命令: 立て",
@@ -44,6 +46,7 @@
     "item.doggytalents.whistle.14": "口笛命令: 吠え！",
     "item.doggytalents.whistle.15": "全体（立っている）：モードスイッチ",
     "item.doggytalents.whistle.16": "シーッ！",
+    "item.doggytalents.whistle.17": "全体（立っている）： クロスオリジン・テレポート",
 
     "item.doggytalents.treat_bag": "おやつ袋",
     "item.doggytalents.energizer_stick": "エネルギースティック",
@@ -59,6 +62,7 @@
     "item.doggytalents.magnifying_bone": "拡大骨",
     "item.doggytalents.owner_change": "飼い主を変える",
     "item.doggytalents.amnesia_bone": "記憶喪失の骨", 
+    "item.doggytalents.amnesia_bone.description": "犬を右クリックし、飼い主の変更/Untame/才能の訓練解除を行います。OPが有効な場合、スニーク＋右クリックで強制的飼い主権の移転します。",
     "item.doggytalents.guard_suit" : "警備服",
     "item.doggytalents.conducting_bone": "指揮骨",
  
@@ -168,7 +172,7 @@
     "item.doggytalents.soul_reflector": "魂炎鏡",
 
     "item.doggytalents.rice_grains": "米粒",
-    "block.doggytalents.rice_crop.description": "砥石をスニーク＋右クリックして米の籾殻を剥きます。",
+    "block.doggytalents.rice_crop.description": "耕地を右クリックして稲を植える。砥石をスニーク＋右クリックして米の籾殻を剥きます。",
     "item.doggytalents.uncooked_rice": "生米",
     "item.doggytalents.uncooked_rice_bowl": "生米入りボウル",
     "item.doggytalents.uncooked_rice_bowl.description": "かまどの中に入れ！",
@@ -255,8 +259,11 @@
     "container.doggytalents.doggy_tools": "ドーグドッグのツールバー",
  
     "doggytalents.item_group.main": "狼才能次",
-    "doggytalents.item_group.dog_bed": "犬ベッドのヴァリアント",
- 
+    "doggytalents.item_group.agri": "狼才能次：「農業」",
+    "doggytalents.item_group.style": "狼才能次：「スタイル」",
+    "doggytalents.item_group.misc": "狼才能次：「雑多」",
+    "doggytalents.item_group.dog_bed": "狼才能次：「犬ベッド」",
+  
     "treat.kami_treat.low_level": "このおやつに含まれるすごいパワーは、犬には手に負えません。",
     "treat.kami_treat.level_up": "レベルアップ！",
     "treat.kami_treat.too_young": "この犬はこのスキルを習うにはまだ少し若すぎます。",
@@ -472,7 +479,6 @@
     "dog.msg.want_attention.1": "%s: もしもし～",
     "dog.msg.want_attention.2": "%s: こっちこっち！",
 
-
     "entity.doggytalents.dog": "犬",
     "entity.doggytalents.dog.unknown_owner": "飼い主UNKNOWN",
     "entity.doggytalents.dog.untamed": "野犬",
@@ -513,9 +519,12 @@
     "dogcommand.heel_by_name": "%s, おいで!",
     "dogcommand.heel_by_group": "%s, おいで!",
     "dogcommand.ride_with_me": "%s, ほら、行こうぜ!",
-    "dogcommand.all_stand_switch_mode": "立っている犬たちのモードは %s!",
+    "dogcommand.all_stand_switch_mode": "全ての立ち犬が%sモードに切り替わる!",
     "dogcommand.ssshhh": "みんな、シーッ！",
  
+    "dogcommand.cross_origin.set": "全ての立ち犬がクロスオリジン・テレポートしろ！",
+    "dogcommand.cross_origin.unset": "全ての立ち犬がクロスオリジン・テレポートを止めいろ！",
+    
     "doggytalents.screen.whistler.screen.help_title" : "口笛・モード選択",
     "doggytalents.screen.whistler.screen.help" : "上下の矢印を使い、口笛に設定したいモードを選択します。タイプして探すこともできます。Enterキーを押してコマンドを終了します。さらに、オレンジ色の名前の前に表示されている対応する数字キーを押すことで、モードをクイック選択することができます。Escでキャンセルをします。.", 
  
