@@ -20,6 +20,7 @@ public class DogVariant {
     private int guiColor;
     private Optional<ResourceLocation> glowingOverlay;
     private Optional<ResourceLocation> customInjuredTexture;
+    private final boolean swimUnderwater;
     private final boolean burnsPetter;
 
     public DogVariant(Props props) {
@@ -31,6 +32,7 @@ public class DogVariant {
         this.guiColor = props.guiColor;
         this.glowingOverlay = props.glowingOverlay;
         this.customInjuredTexture = props.customInjuredTexture;
+        this.canSwimUnderWater = props.swimUnderwater;
         this.burnsPetter = props.burnsPetter; 
     }
 
@@ -87,6 +89,10 @@ public class DogVariant {
         return this.burnsPetter;
     }
 
+    public boolean swimUnderwater() {
+        return this.swimUnderwater;
+    }
+
     public static Props propsVanilla(String name) {
         return new Props(Util.getVanillaResource(name), NamespaceType.VANILLA);
     }
@@ -114,6 +120,7 @@ public class DogVariant {
         private Optional<ResourceLocation> glowingOverlay = Optional.empty();
         private Optional<ResourceLocation> customInjuredTexture = Optional.empty();
         private boolean burnsPetter = false;
+        private boolean swimUnderwater = false;
 
         private Props(ResourceLocation name, NamespaceType namespaceType) {
             this.name = name;
@@ -156,6 +163,11 @@ public class DogVariant {
 
         public Props burnsPetter() {
             this.burnsPetter = true;
+            return this;
+        }
+
+        public Props swimUnderwater() {
+            this.swimUnderwater = true;
             return this;
         }
 
