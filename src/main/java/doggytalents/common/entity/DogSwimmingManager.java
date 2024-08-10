@@ -5,6 +5,7 @@ import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
 import doggytalents.common.util.Util;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.neoforged.neoforge.common.NeoForgeMod;
@@ -18,6 +19,7 @@ public class DogSwimmingManager {
     private DogWaterBoundNavigation navigator_water;
     private boolean swimming = false;
     private static final float baseSwimSpeedModifierAdd = 2;
+    public static final float swimSpeedModifierAddCap = 10;
     private float swimSpeedModifierAdd = baseSwimSpeedModifierAdd;
 
     public DogSwimmingManager(Dog dog) {
@@ -41,7 +43,8 @@ public class DogSwimmingManager {
         if (props.canSwimUnderwater()) {
             this.moveControl_water = new DogSwimMoveControl(dog);
             this.navigator_water = new DogWaterBoundNavigation(dog, dog.level());
-            this.swimSpeedModifierAdd = baseSwimSpeedModifierAdd + props.bonusSwimSpeed();
+            this.swimSpeedModifierAdd = baseSwimSpeedModifierAdd 
+                + Mth.clamp(props.bonusSwimSpeed(), 0, swimSpeedModifierAddCap);
         } else {
             this.moveControl_water = null;
             this.navigator_water = null;   
