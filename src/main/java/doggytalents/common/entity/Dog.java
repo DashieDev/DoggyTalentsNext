@@ -4673,7 +4673,7 @@ public class Dog extends AbstractDog {
             return true;
         if (!this.isInWater())
             return false;
-        if (this.canBreatheUnderwater())
+        if (this.alterationProps.canBreatheUnderwater())
             return true;
         if (this.canSwimUnderwater() && !this.isLowAirSupply())
             return true;
