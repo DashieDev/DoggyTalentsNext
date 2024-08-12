@@ -254,7 +254,7 @@ private BlockModel model;
             bakedModel = this.getModelVariant(DogBedModelData.EMPTY);
         }
         
-        VanillaModelEncoder.emitBlockQuads(bakedModel, state, randomSupplier, context, context.getEmitter());
+        VanillaModelEncoder.emitBlockQuads(bakedModel, state, randomSupplier, context);
     }
 
     @Override
