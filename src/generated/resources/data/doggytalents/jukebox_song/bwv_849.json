@@ -1,8 +1,0 @@
-{
-  "comparator_output": 13,
-  "description": {
-    "translate": "item.doggytalents.disc_bwv_849_fugue.desc"
-  },
-  "length_in_seconds": 3200.0,
-  "sound_event": "doggytalents:bwv_849_fugue_kimiko"
-}
