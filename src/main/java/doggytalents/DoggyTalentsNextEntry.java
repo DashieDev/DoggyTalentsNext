@@ -13,6 +13,7 @@ import doggytalents.common.entity.WhitelistFoodHandler;
 import doggytalents.common.fabric_helper.FabricEventCallbackHandler;
 import doggytalents.common.fabric_helper.entity.network.SyncTypes;
 import doggytalents.common.fabric_helper.lootmodifer_imitate.DTLootModifiers;
+import doggytalents.common.item.itemgroup.DTNItemCategory;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.talent.HappyEaterTalent;
 import doggytalents.common.variants.fabric.DTNWolfVariantsFabricSpawn;
@@ -82,6 +83,7 @@ public class DoggyTalentsNextEntry implements ModInitializer {
         //GarbageChunkCollector.init();
         RiceMillBlockEntity.initGrindMap();
         DTNWolfVariantsFabricSpawn.init();
+        DTNItemCategory.init();
     }
 
     private void registerCommands() {
