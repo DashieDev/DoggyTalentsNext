@@ -9,6 +9,7 @@ import doggytalents.common.util.DogBedUtil;
 import doggytalents.common.util.Util;
 import doggytalents.forge_imitate.registry.DeferredRegister;
 import doggytalents.forge_imitate.registry.RegistryObject;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -33,9 +34,9 @@ import static doggytalents.DoggyBlocks.*;
 public class DoggyItemGroups {
 
     //TODO using vanilla key, not forge's key ??? 
-    public static final DeferredRegister<CreativeModeTab> ITEM_GROUP = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN
-        = register("main", () -> CreativeModeTab.builder()
+    public static final DeferredRegister<CreativeModeTab> ITEM_GROUP = DeferredRegister.create(() -> BuiltInRegistries.CREATIVE_MODE_TAB, Constants.MOD_ID);
+    public static RegistryObject<CreativeModeTab> MAIN
+        = register("main", () -> FabricItemGroup.builder()
             .title(Component.translatable("doggytalents.item_group.main"))
             .icon(() -> {
                 return new ItemStack(DoggyItems.DOGGY_CHARM.get());
@@ -45,54 +46,54 @@ public class DoggyItemGroups {
                     .forEach(b::accept);
             }).build());
 
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> AGRI
-        = register("agri", () -> CreativeModeTab.builder()
+    public static RegistryObject<CreativeModeTab> AGRI
+        = register("agri", () -> FabricItemGroup.builder()
             .title(Component.translatable("doggytalents.item_group.agri"))
             .icon(() -> {
                 return new ItemStack(DoggyItems.RICE_WHEAT.get());
             })
-            .withTabsBefore(MAIN.getKey())
+            //.withTabsBefore(MAIN.getKey())
             .displayItems((a, b) -> {
                 DTNItemCategory.getAllItemOfCategory(DTNItemCategory::isAgri)
                     .forEach(b::accept);
             }).build());
 
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> STYLE
-        = register("style", () -> CreativeModeTab.builder()
+    public static RegistryObject<CreativeModeTab> STYLE
+        = register("style", () -> FabricItemGroup.builder()
             .title(Component.translatable("doggytalents.item_group.style"))
             .icon(() -> {
                 return new ItemStack(DoggyItems.DIVINE_RETRIBUTON.get());
             })
-            .withTabsBefore(AGRI.getKey())
+            //.withTabsBefore(AGRI.getKey())
             .displayItems((a, b) -> {
                 DTNItemCategory.getAllItemOfCategory(DTNItemCategory::isStyle)
                     .forEach(b::accept);
             }).build());
 
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> DOG_BED
-        = register("dog_bed", () -> CreativeModeTab.builder()
+    public static RegistryObject<CreativeModeTab> DOG_BED
+        = register("dog_bed", () -> FabricItemGroup.builder()
             .title(Component.translatable("doggytalents.item_group.dog_bed"))
             .icon(
                 DogBedUtil::createRandomBed
             )
-            .withTabsBefore(STYLE.getKey())
+            //.withTabsBefore(STYLE.getKey())
             .displayItems((a, b) -> {
                 DTNItemCategory.getRandomBedsForTab().forEach(b::accept);
             }).build()); 
 
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> MISC
-        = register("misc", () -> CreativeModeTab.builder()
+    public static RegistryObject<CreativeModeTab> MISC
+        = register("misc", () -> FabricItemGroup.builder()
             .title(Component.translatable("doggytalents.item_group.misc"))
             .icon(() -> {
                 return new ItemStack(DoggyItems.DOG_PLUSHIE_TOY.get());
             })
-            .withTabsBefore(DOG_BED.getKey())
+            //.withTabsBefore(DOG_BED.getId())
             .displayItems((a, b) -> {
                 DTNItemCategory.getAllItemOfCategory(DTNItemCategory::isMisc)
                     .forEach(b::accept);
             }).build());
 
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> register(String name, Supplier<CreativeModeTab> sup) {
+    public static RegistryObject<CreativeModeTab> register(String name, Supplier<CreativeModeTab> sup) {
         return ITEM_GROUP.register(name, sup);
     }
 }

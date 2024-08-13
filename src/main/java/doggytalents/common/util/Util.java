@@ -190,19 +190,20 @@ public class Util {
     }
 
     // From net.minecraft.util.Util but for RegistryObject
-    public static <T> RegistryObject<T> acceptOrElse(RegistryObject<T> opt, Consumer<T> consumer, Runnable orElse) {
-        if (opt.isPresent()) {
-            consumer.accept(opt.get());
-        } else {
-            orElse.run();
-        }
+    // public static <T> RegistryObject<T> acceptOrElse(RegistryObject<T> opt, Consumer<T> consumer, Runnable orElse) {
+    //     if (opt.isPresent()) {
+    //         consumer.accept(opt.get());
+    //     } else {
+    //         orElse.run();
+    //     }
 
-        return opt;
-    }
+    //     return opt;
+    // }
 
-    public static <T> Optional<T> acceptOrElse(Optional<T> opt, Consumer<T> consumer, Runnable orElse) {
-        if (opt.isPresent()) {
-            consumer.accept(opt.get());
+    public static <T> Supplier<T> acceptOrElse(Supplier<T> opt, Consumer<T> consumer, Runnable orElse) {
+        var val = opt.get();
+        if (val != null) {
+            consumer.accept(val);
         } else {
             orElse.run();
         }

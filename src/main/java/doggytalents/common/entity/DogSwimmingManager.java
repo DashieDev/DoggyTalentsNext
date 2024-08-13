@@ -4,11 +4,11 @@ import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.atrrib.ForgeMod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.neoforged.neoforge.common.NeoForgeMod;
 
 public class DogSwimmingManager {
     
@@ -79,13 +79,13 @@ public class DogSwimmingManager {
     }
 
     private void applySwimAttributes(Dog dog){
-        dog.setAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID, (dd, u) -> 
+        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.holder(), SWIM_BOOST_ID, (dd, u) -> 
             new AttributeModifier(u, this.swimSpeedModifierAdd, Operation.ADD_VALUE)
         );
     }
 
     private void removeSwimAttributes(Dog dog) {
-        dog.removeAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID);
+        dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.holder(), SWIM_BOOST_ID);
     }
     
     private void startSwimming(Dog dog) {

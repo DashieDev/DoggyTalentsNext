@@ -323,7 +323,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
         public ForgeConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
         public ForgeConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
-        public ModConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
+        public ForgeConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
