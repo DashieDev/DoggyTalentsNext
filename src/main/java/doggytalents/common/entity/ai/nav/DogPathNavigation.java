@@ -68,6 +68,42 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         }
   
         this.doStuckDetection(currentPos);
+        this.dogCheckIfMissedFirstNodeAndMaybeSkip();
+    }
+
+    /*
+    * TODO Absoluteness of dog bbW.
+    * Currently this implementation relies on the fact that currently a dog's bbWidth never
+    * surpass one block like DogSwimNodeEval
+    */
+    private void dogCheckIfMissedFirstNodeAndMaybeSkip() {
+        if (this.isDone())
+            return; 
+        var path = this.getPath();
+        if (path == null || path.getNodeCount() < 2)
+            return;
+        boolean missed_first_node = path.getNextNodeIndex() == 0;
+        if (!missed_first_node)
+            return;
+        var first_node = path.getNode(0);
+        var second_node = path.getNode(1);
+        if (second_node.type != PathType.WALKABLE)
+            return;
+        final double min_bb_clip = 0.1;
+        double max_dist_from_first_node = 0.5 + dog.getBbWidth()/2 - min_bb_clip;
+        double dog_dist_from_first_node_sqr = 
+            dog.distanceToSqr(new Vec3(first_node.x + 0.5, dog.getY(), first_node.z + 0.5));
+        boolean kinda_far_from_first_node =
+            dog_dist_from_first_node_sqr > max_dist_from_first_node * max_dist_from_first_node;
+        if (kinda_far_from_first_node)
+            return;
+        var pos = this.dog.blockPosition();
+        var y_diff = second_node.y - pos.getY();
+        if (y_diff > 0 || y_diff < -1)
+            return;
+        if (second_node.distanceToSqr(pos) > 3)
+            return;
+        path.advance();
     }
 
     protected boolean invalidateIfNextNodeIsTooHigh() {
