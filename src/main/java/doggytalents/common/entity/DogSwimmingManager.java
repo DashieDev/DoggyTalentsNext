@@ -1,5 +1,7 @@
 package doggytalents.common.entity;
 
+import java.util.UUID;
+
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
@@ -8,13 +10,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.neoforged.neoforge.common.NeoForgeMod;
+import net.minecraftforge.common.ForgeMod;
 
 public class DogSwimmingManager {
     
     private final Dog dog;
 
-    private static final ResourceLocation SWIM_BOOST_ID = Util.getResource("swim_boost");
+    private static final UUID SWIM_BOOST_ID = UUID.fromString("50671e42-1ded-4f97-9e2b-78bbeb1e8772");
     private DogSwimMoveControl moveControl_water;
     private DogWaterBoundNavigation navigator_water;
     private boolean swimming = false;
@@ -79,13 +81,13 @@ public class DogSwimmingManager {
     }
 
     private void applySwimAttributes(Dog dog){
-        dog.setAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID, (dd, u) -> 
-            new AttributeModifier(u, this.swimSpeedModifierAdd, Operation.ADD_VALUE)
+        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID, (dd, u) -> 
+            new AttributeModifier(u, "Swim Boost", this.swimSpeedModifierAdd, Operation.ADDITION)
         );
     }
 
     private void removeSwimAttributes(Dog dog) {
-        dog.removeAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID);
+        dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID);
     }
     
     private void startSwimming(Dog dog) {

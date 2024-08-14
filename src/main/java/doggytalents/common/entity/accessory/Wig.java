@@ -36,7 +36,7 @@ public class Wig extends DyeableAccessory implements IAccessoryHasModel {
 
     public static class Inst extends AccessoryInstance implements IDogAlteration {
 
-        public static final List<RegistryObject<Item>> DISC_LIST = List.of(
+        public static final List<Supplier<Item>> DISC_LIST = List.of(
             DoggyItems.MUSIC_DISC_CHOPIN_OP64_NO1
         );
 
