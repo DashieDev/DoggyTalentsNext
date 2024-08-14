@@ -34,7 +34,7 @@ public class DoggyItemGroups {
 
     //TODO using vanilla key, not forge's key ??? 
     public static final DeferredRegister<CreativeModeTab> ITEM_GROUP = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN
+    public static RegistryObject<CreativeModeTab> MAIN
         = register("main", () -> CreativeModeTab.builder()
             .title(Component.translatable("doggytalents.item_group.main"))
             .icon(() -> {
@@ -45,7 +45,7 @@ public class DoggyItemGroups {
                     .forEach(b::accept);
             }).build());
 
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> AGRI
+    public static RegistryObject<CreativeModeTab> AGRI
         = register("agri", () -> CreativeModeTab.builder()
             .title(Component.translatable("doggytalents.item_group.agri"))
             .icon(() -> {
@@ -57,7 +57,7 @@ public class DoggyItemGroups {
                     .forEach(b::accept);
             }).build());
 
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> STYLE
+    public static RegistryObject<CreativeModeTab> STYLE
         = register("style", () -> CreativeModeTab.builder()
             .title(Component.translatable("doggytalents.item_group.style"))
             .icon(() -> {
@@ -69,7 +69,7 @@ public class DoggyItemGroups {
                     .forEach(b::accept);
             }).build());
 
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> DOG_BED
+    public static RegistryObject<CreativeModeTab> DOG_BED
         = register("dog_bed", () -> CreativeModeTab.builder()
             .title(Component.translatable("doggytalents.item_group.dog_bed"))
             .icon(
@@ -80,7 +80,7 @@ public class DoggyItemGroups {
                 DTNItemCategory.getRandomBedsForTab().forEach(b::accept);
             }).build()); 
 
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> MISC
+    public static RegistryObject<CreativeModeTab> MISC
         = register("misc", () -> CreativeModeTab.builder()
             .title(Component.translatable("doggytalents.item_group.misc"))
             .icon(() -> {
@@ -92,7 +92,7 @@ public class DoggyItemGroups {
                     .forEach(b::accept);
             }).build());
 
-    public static DeferredHolder<CreativeModeTab, CreativeModeTab> register(String name, Supplier<CreativeModeTab> sup) {
+    public static RegistryObject<CreativeModeTab> register(String name, Supplier<CreativeModeTab> sup) {
         return ITEM_GROUP.register(name, sup);
     }
 }

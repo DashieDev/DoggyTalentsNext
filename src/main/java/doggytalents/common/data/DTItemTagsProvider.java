@@ -40,9 +40,6 @@ public class DTItemTagsProvider extends ItemTagsProvider {
         createTag(DoggyTags.PACK_PUPPY_BLACKLIST, DoggyItems.THROW_BONE, DoggyItems.THROW_BONE_WET, DoggyItems.THROW_STICK, DoggyItems.THROW_STICK_WET);
         createTag(DoggyTags.TREATS, DoggyItems.TRAINING_TREAT, DoggyItems.SUPER_TREAT, DoggyItems.MASTER_TREAT, DoggyItems.KAMI_TREAT);
         tag(ItemTags.MUSIC_DISCS).add(
-            DoggyItems.MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO.get(), 
-            DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO.get(),
-            DoggyItems.MUSIC_DISC_OKAMI_1.get(),
             DoggyItems.MUSIC_DISC_CHOPIN_OP64_NO1.get()
         );
     }

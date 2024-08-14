@@ -2,6 +2,7 @@ package doggytalents.common.entity.ai.nav;
 
 import javax.annotation.Nullable;
 
+import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
@@ -63,7 +64,7 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
     public Node getStart() {
         var ret = super.getStart();
         if (this.dog.isInWater())
-            ret.type = PathType.WATER;
+            ret.type = BlockPathTypes.WATER;
         return ret;
     }
 
@@ -121,9 +122,9 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
     private boolean checkLand(BlockPos currentPos, BlockState currenState, BlockGetter level) {
         if (currenState.isPathfindable(level, currentPos, PathComputationType.LAND))
             return false;
-        var walkType = WalkNodeEvaluator.getPathTypeStatic(dog, currentPos.above().mutable());
-        return walkType == PathType.WATER_BORDER
-            || walkType == PathType.WALKABLE;
+        var walkType = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), currentPos.above().mutable());
+        return walkType == BlockPathTypes.WATER_BORDER
+            || walkType == BlockPathTypes.WALKABLE;
     }
     
 }

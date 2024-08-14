@@ -71,7 +71,7 @@ public class TreatItem extends Item implements IDogItem {
             return;
         var dog_pos = dog.position();
         level.playLocalSound(dog_pos.x, dog_pos.y, dog_pos.z, 
-            SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 4.0F, 
+            SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, 
             (1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F, false);
         level.addParticle(ParticleTypes.EXPLOSION, dog_pos.x, dog_pos.y, dog_pos.z, 1.0D, 0.0D, 0.0D);
         level.addParticle(ParticleTypes.EXPLOSION_EMITTER, dog_pos.x, dog_pos.y, dog_pos.z, 1.0D, 0.0D, 0.0D);
