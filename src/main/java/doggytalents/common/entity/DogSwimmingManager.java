@@ -6,11 +6,11 @@ import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.atrrib.ForgeMod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraftforge.common.ForgeMod;
 
 public class DogSwimmingManager {
     

@@ -4486,7 +4486,7 @@ public class Dog extends AbstractDog {
     public boolean isPushedByFluid() {
         if (this.fireImmune())
             return false;
-        if (this.alterationProps.resistWaterPush() && type == ForgeMod.WATER_TYPE.get())
+        if (this.alterationProps.resistWaterPush())
             return false;
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType();
