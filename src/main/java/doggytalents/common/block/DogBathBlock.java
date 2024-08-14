@@ -142,11 +142,11 @@ public class DogBathBlock extends BaseEntityBlock {
         return createTickerHelper(blockEntityType, DoggyTileEntityTypes.DOG_BATH.get(), DogBathBlockEntity::tick);
     }
 
-    public static final MapCodec<DogBathBlock> CODEC = simpleCodec(DogBathBlock::new);
+    // public static final MapCodec<DogBathBlock> CODEC = simpleCodec(DogBathBlock::new);
     
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
+    // @Override
+    // protected MapCodec<? extends BaseEntityBlock> codec() {
+    //     return CODEC;
+    // }
 
 }
