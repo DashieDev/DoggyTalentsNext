@@ -86,7 +86,7 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
             return;
         var first_node = path.getNode(0);
         var second_node = path.getNode(1);
-        if (second_node.type != PathType.WALKABLE)
+        if (second_node.type != BlockPathTypes.WALKABLE)
             return;
         final double min_bb_clip = 0.1;
         double max_dist_from_first_node = 0.5 + dog.getBbWidth()/2 - min_bb_clip;
