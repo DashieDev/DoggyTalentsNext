@@ -374,7 +374,7 @@ public class DogUtil {
     //Allow dog to teleportToLeaves, there is no reason to not to consider the existance of the push a.i
     //And height danger exist everywhere not just leaves
     public static boolean isTeleportSafeBlock(Dog dog, BlockPos pos, @Nullable LivingEntity owner) {
-        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable())
+        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
         boolean alterationWalkable = false;
         var infer_type = dog.inferType(pathnodetype, InferTypeContext.forTeleport(owner));
         if (infer_type == BlockPathTypes.WALKABLE)

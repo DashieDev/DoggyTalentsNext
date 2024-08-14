@@ -4498,7 +4498,7 @@ public class Dog extends AbstractDog {
     public boolean isPushedByFluid() {
         if (this.fireImmune() && this.isInLava())
             return false;
-        if (this.alterationProps.resistWaterPush() && type == NeoForgeMod.WATER_TYPE.value())
+        if (this.alterationProps.resistWaterPush() && type == ForgeMod.WATER_TYPE.get())
             return false;
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType();
@@ -5070,8 +5070,8 @@ public class Dog extends AbstractDog {
             this.canSwimUnderwater()
             && this.alterationProps.canBreatheUnderwater()
         ) {
-            if (type == PathType.WATER)
-                return PathType.WALKABLE;
+            if (type == BlockPathTypes.WATER)
+                return BlockPathTypes.WALKABLE;
         }
         for (var alt : this.alterations) {
             var result = alt.inferType(this, type, context);

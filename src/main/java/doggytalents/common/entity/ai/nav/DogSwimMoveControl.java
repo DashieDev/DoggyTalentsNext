@@ -6,7 +6,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 public class DogSwimMoveControl extends MoveControl {
 
@@ -81,7 +81,7 @@ public class DogSwimMoveControl extends MoveControl {
             return;
         var nextNode = path.getNextNode();
         boolean reach_land = 
-            nextNode.type == PathType.WALKABLE
+            nextNode.type == BlockPathTypes.WALKABLE
             && nextNode.y - dog.getY() > 0;
         if (!reach_land)
             return;
