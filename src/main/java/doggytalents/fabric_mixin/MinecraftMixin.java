@@ -21,11 +21,7 @@ public class MinecraftMixin {
     @Inject(at = @At("HEAD"),  method = "startUseItem()V")
     public void dtn_startUseItem(CallbackInfo info) {
         var self = (Minecraft)(Object) this;
-        var hitResult = self.hitResult;
         var player = self.player;
-
-        if (hitResult != null && hitResult.getType() != HitResult.Type.MISS)
-            return;
         
         if (player == null)
             return;
