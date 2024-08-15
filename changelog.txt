@@ -1569,3 +1569,5 @@ otherwise they only tp when owner is in water.
 **1.18.29 - 13th August 2024**
 # Support future Water Wolf Variants. 
 # Improve Dog's Default Navigation, reduce spinna chance.
+*(Fabric 1.21.1 only) Fix newer Fabric API causing Dog Bed to crash.
+*(Fabric only) Fix player unable to dismount Dog in some cases.
