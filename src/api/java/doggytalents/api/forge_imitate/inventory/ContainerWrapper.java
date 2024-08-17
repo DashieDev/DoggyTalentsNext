@@ -48,7 +48,9 @@ public class ContainerWrapper implements IItemHandler {
             this.container.setItem(id, placeStack);
             return returnStack;
         }
-        if (current.hasTag() || stack.hasTag())
+        if (hasTag(stack) || hasTag(current))
+            return stack;
+        if (!ItemStack.isSameItem(stack, current))
             return stack;
         int current_max_grow = Math.min(current.getMaxStackSize(), container_max_stack_size);
         int current_can_recieve = current_max_grow - current.getCount();
