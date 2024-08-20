@@ -48,6 +48,11 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         if (invalidateIfNextNodeIsTooHigh()) return;
 
         var currentPos = this.getTempMobPos();
+        /*
+        * TODO Absoluteness of dog bbW.
+        * Currently this implementation relies on the fact that currently a dog's bbWidth never
+        * surpass one block like DogSwimNodeEval
+        */
         this.maxDistanceToWaypoint = 0.45f;
 
         var nextPos = this.path.getNextNodePos();
