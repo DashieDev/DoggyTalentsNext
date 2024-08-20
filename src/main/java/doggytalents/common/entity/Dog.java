@@ -280,7 +280,8 @@ public class Dog extends AbstractDog {
     protected PathNavigation currentNavigation;
     
     protected int switchNavCooldown = 0;
-    private int pushFromOtherDogResistTick = 0;
+    private short pushFromOtherDogResistTick = 0;
+    private short pushFromOtherDogOnGroundBypassTick = 0;
 
     private int healingTick;
     //private int wanderRestTime = 0;
@@ -917,11 +918,19 @@ public class Dog extends AbstractDog {
             --this.tickUntilRest;
         }
 
+        if (!this.level().isClientSide)
         if (this.getNavigation().isDone()) {
             if (this.pushFromOtherDogResistTick > 0)
                 --this.pushFromOtherDogResistTick;
+            this.pushFromOtherDogOnGroundBypassTick = 0;
         } else {
-            this.pushFromOtherDogResistTick = 20;
+            this.pushFromOtherDogResistTick = 5;
+            if (this.onGround()) {
+                if (this.pushFromOtherDogOnGroundBypassTick > 0)
+                    --this.pushFromOtherDogOnGroundBypassTick;
+            } else {
+                this.pushFromOtherDogOnGroundBypassTick = 5;
+            }
         }
 
         if (!this.level().isClientSide && this.fireImmune()) {
@@ -4943,8 +4952,6 @@ public class Dog extends AbstractDog {
             if (!ObjectUtils.notEqual(target.getUUID(), this.getOwnerUUID()))
                 return true;
         }
-        if (this.pushFromOtherDogResistTick <= 0)
-            return false;
         if (this.isDefeated())
             return false;
         if (isDogInFluid())
@@ -4952,14 +4959,31 @@ public class Dog extends AbstractDog {
         if (!(target instanceof Dog otherDog)) {
             return false;
         }
+        if (this.pushFromOtherDogResistTick <= 0 && otherDog.pushFromOtherDogResistTick <= 0)
+            return false;
         if (!isPushingTeammateDog(otherDog))
             return false;
         if (otherDog.isDogFlying() && this.isDogFlying())
             return false;
+
         boolean oneDogStillNotOnGround =
-            !this.onGround()
-            || !otherDog.onGround();
-        return oneDogStillNotOnGround;
+            ( !this.onGround() || this.pushFromOtherDogOnGroundBypassTick > 0)
+            || (!otherDog.onGround() || otherDog.pushFromOtherDogOnGroundBypassTick > 0);
+        if (oneDogStillNotOnGround)
+            return true;
+        if (checkBlockPushResistingDogWhileNav(otherDog))
+            return true;
+        
+        return false;
+    }
+
+    protected boolean checkBlockPushResistingDogWhileNav(Dog otherDog) {
+        boolean dog0_nav = !this.getNavigation().isDone();
+        boolean dog1_nav = !otherDog.getNavigation().isDone();
+        if (dog0_nav == dog1_nav)
+            return false;
+        Dog not_nav_dog = !dog0_nav ? this : otherDog;
+        return not_nav_dog.isDogResistingPush();
     }
 
     private boolean isPushingTeammateDog(Dog otherDog) {
