@@ -1649,6 +1649,8 @@ public class Dog extends AbstractDog {
     protected boolean stillIdleOrSitWhenHurt(DamageSource source, float amount) {
         if (this.isDogDrunk())
             return true;
+        if (this.isPassenger())
+            return true;
         for (var alt : this.alterations) {
             if (alt.stillIdleOrSitWhenHurt(this, source, amount).shouldSwing())
                 return true;
