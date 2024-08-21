@@ -264,6 +264,8 @@ public class Dog extends AbstractDog {
         = new DogPettingManager(this);
     public final DogSwimmingManager dogSwimmingManager
         = new DogSwimmingManager(this);
+    public final DogPushAvoidManager dogPushAvoidManager
+        = new DogPushAvoidManager(this);
     public final DogAiManager dogAi;
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
@@ -280,8 +282,6 @@ public class Dog extends AbstractDog {
     protected PathNavigation currentNavigation;
     
     protected int switchNavCooldown = 0;
-    private short pushFromOtherDogResistTick = 0;
-    private short pushFromOtherDogOnGroundBypassTick = 0;
 
     private int healingTick;
     //private int wanderRestTime = 0;
@@ -850,6 +850,9 @@ public class Dog extends AbstractDog {
             this.dogMiningCautiousManager.tick();
         }
 
+        if (!this.level().isClientSide)
+            this.dogPushAvoidManager.tickServer();
+
         if (this.level().isClientSide && this.getDogLevel().isFullKami() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.KAMI_PARTICLES)) {
             for (int i = 0; i < 2; i++) {
                 this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2D);
@@ -916,21 +919,6 @@ public class Dog extends AbstractDog {
 
         if (!this.level().isClientSide && this.isInSittingPose() && !this.isDogResting() && this.tickUntilRest > 0 ) {
             --this.tickUntilRest;
-        }
-
-        if (!this.level().isClientSide)
-        if (this.getNavigation().isDone()) {
-            if (this.pushFromOtherDogResistTick > 0)
-                --this.pushFromOtherDogResistTick;
-            this.pushFromOtherDogOnGroundBypassTick = 0;
-        } else {
-            this.pushFromOtherDogResistTick = 5;
-            if (this.onGround()) {
-                if (this.pushFromOtherDogOnGroundBypassTick > 0)
-                    --this.pushFromOtherDogOnGroundBypassTick;
-            } else {
-                this.pushFromOtherDogOnGroundBypassTick = 5;
-            }
         }
 
         if (!this.level().isClientSide && this.fireImmune()) {
@@ -4929,7 +4917,7 @@ public class Dog extends AbstractDog {
     protected void doPush(Entity pushTarget) {
         if (this.pettingManager.checkPush(pushTarget))
             return;
-        if (shouldBlockPush(pushTarget))
+        if (this.dogPushAvoidManager.shouldBlockPush(pushTarget))
             return;
         if (pushTarget.getVehicle() == this
             || this.getVehicle() == pushTarget) {
@@ -4939,60 +4927,6 @@ public class Dog extends AbstractDog {
             Entity_push(pushTarget);
         else
             super.doPush(pushTarget);
-    }
-
-    protected boolean shouldBlockPush(Entity target) {
-        if (ConfigHandler.SERVER.DOG_DONT_PUSH_OWNER.get()) {
-            if (!ObjectUtils.notEqual(target.getUUID(), this.getOwnerUUID()))
-                return true;
-        }
-        if (this.isDefeated())
-            return false;
-        if (isDogInFluid())
-            return false;
-        if (!(target instanceof Dog otherDog)) {
-            return false;
-        }
-        if (this.pushFromOtherDogResistTick <= 0 && otherDog.pushFromOtherDogResistTick <= 0)
-            return false;
-        if (!isPushingTeammateDog(otherDog))
-            return false;
-        if (otherDog.isDogFlying() && this.isDogFlying())
-            return false;
-
-        boolean oneDogStillNotOnGround =
-            ( !this.onGround() || this.pushFromOtherDogOnGroundBypassTick > 0)
-            || (!otherDog.onGround() || otherDog.pushFromOtherDogOnGroundBypassTick > 0);
-        if (oneDogStillNotOnGround)
-            return true;
-        if (checkBlockPushResistingDogWhileNav(otherDog))
-            return true;
-        
-        return false;
-    }
-
-    protected boolean checkBlockPushResistingDogWhileNav(Dog otherDog) {
-        boolean dog0_nav = !this.getNavigation().isDone();
-        boolean dog1_nav = !otherDog.getNavigation().isDone();
-        if (dog0_nav == dog1_nav)
-            return false;
-        Dog not_nav_dog = !dog0_nav ? this : otherDog;
-        return not_nav_dog.isDogResistingPush();
-    }
-
-    private boolean isPushingTeammateDog(Dog otherDog) {
-        var owner0 = this.getOwner();
-        var owner1 = otherDog.getOwner();
-        if (owner0 == null || owner1 == null)
-            return false;
-        if (owner0 == owner1)
-            return true;
-        
-        return owner0.isAlliedTo(owner1);
-    }
-
-    private boolean isDogInFluid() {
-        return !this.getMaxHeightFluidType().isAir();
     }
 
     @Override
@@ -5045,7 +4979,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean canCollideWith(Entity otherEntity) {
-        if (shouldBlockPush(otherEntity)) {
+        if (this.dogPushAvoidManager.shouldBlockPush(otherEntity)) {
             return false;
         }
 
