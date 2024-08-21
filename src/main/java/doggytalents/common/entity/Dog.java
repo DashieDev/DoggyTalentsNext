@@ -1673,12 +1673,6 @@ public class Dog extends AbstractDog {
         var attacker = source.getEntity();
 
         if (this.isDefeated() && !source.isBypassInvul()) {
-            if (ConfigHandler.SERVER.INCAP_VAL_RESET_WHEN_HURT.get()) {
-                var currentIncapVal = this.getDogIncapValue();
-                if (currentIncapVal < this.getDefaultInitIncapVal()) {
-                    this.setDogIncapValue(this.getDefaultInitIncapVal());
-                }
-            }
             this.incapacitatedMananger.onHurt();
 
             //Invalidate dog as a target for whatever killed him.
