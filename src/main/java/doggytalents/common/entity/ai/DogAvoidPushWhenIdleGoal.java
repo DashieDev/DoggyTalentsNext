@@ -29,15 +29,8 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
             return false;
         }
 
-        if (!this.dog.onGround()) return false;
-
-        if (!this.dog.isDoingFine()) return false;
-
-        if (this.dog.isDogCurious()) return false;
-
-        if (this.dog.isVehicle()) return false;
-
-        if (this.dog.isPathFinding()) return false;
+        if (!dog.canDogResistPush())
+            return false;
 
         if (!checkIfShouldBeginResisting()) return false;
 

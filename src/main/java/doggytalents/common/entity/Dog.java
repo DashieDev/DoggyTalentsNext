@@ -4163,11 +4163,8 @@ public class Dog extends AbstractDog {
     }
 
     private void mayDogResistPush() {
-        if (!this.onGround())
+        if (!canDogResistPush())
             return;
-        if (!this.isDoingFine()) return;
-        if (this.isVehicle()) return;
-        if (this.isPathFinding()) return;
 
         final double max_XZ_push_len = 0.0005;
         var move = this.getDeltaMovement();
@@ -4185,6 +4182,16 @@ public class Dog extends AbstractDog {
         moveZ = moveZ / moveXZ_l * max_XZ_push_len;
 
         this.setDeltaMovement(new Vec3(moveX, move.y(), moveZ));
+    }
+
+    public boolean canDogResistPush() {
+        if (!this.onGround()) return false;
+        if (!this.isDoingFine()) return false;
+        if (this.isDogCurious()) return false;
+        if (this.isVehicle()) return false;
+        if (this.isPathFinding()) return false;
+        
+        return true;
     }
 
     private void mayFloatDogInLava() {
