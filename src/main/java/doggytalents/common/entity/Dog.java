@@ -4167,7 +4167,7 @@ public class Dog extends AbstractDog {
         if (!canDogResistPush())
             return;
 
-        final double max_XZ_push_len = 0.0005;
+        final double max_XZ_push_len = getDogPushResistXZCap();
         var move = this.getDeltaMovement();
         if (this.tickCount % 2 == 0) {
             this.setDeltaMovement(0, move.y, 0);
@@ -4696,6 +4696,10 @@ public class Dog extends AbstractDog {
 
     public boolean isDogResistingPush() {
         return this.isDogResistingPush;
+    }
+
+    public double getDogPushResistXZCap() {
+        return 0.0005;
     }
 
     public List<IDogAlteration> getAlterations() {
