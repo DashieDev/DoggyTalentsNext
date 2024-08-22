@@ -16,6 +16,7 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
 
     private Dog dog;
     private int cooldown = 0;
+    private int grace = 0;
     
     public DogAvoidPushWhenIdleGoal(Dog dog) {
         this.dog = dog;
@@ -38,16 +39,29 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return canUse();
+        if (!dog.canDogResistPush())
+            return false;
+        if (this.grace <= 0)
+            return false;
+        
+        return true;
     }
 
     @Override
     public void start() {
+        //grace period 5 tick
+        this.grace = 3;
         this.dog.setDogResistingPush(true);
     }
 
     @Override
+    public void tick() {
+        if (grace > 0) --this.grace;
+    }
+
+    @Override
     public void stop() {
+        this.grace = 0;
         this.dog.setDogResistingPush(false);
     }
 
