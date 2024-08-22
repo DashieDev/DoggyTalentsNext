@@ -54,7 +54,8 @@ public class DogAvoidPushWhenIdleGoal extends Goal {
     private boolean checkIfShouldBeginResisting() {
         var delta = dog.getDeltaMovement();
         var delta_l = delta.x*delta.x + delta.z*delta.z;
-        if (delta_l < (double)2.5000003E-7F)
+        var xz_cap = this.dog.getDogPushResistXZCap();
+        if (delta_l <= xz_cap * xz_cap)
             return false;
 
         var dog_pos = dog.position();
