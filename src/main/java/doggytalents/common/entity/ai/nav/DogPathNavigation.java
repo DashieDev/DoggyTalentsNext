@@ -102,11 +102,15 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
             dog_dist_from_first_node_sqr > max_dist_from_first_node * max_dist_from_first_node;
         if (kinda_far_from_first_node)
             return;
-        var pos = this.dog.blockPosition();
-        var y_diff = second_node.y - pos.getY();
+        var bpos = this.dog.blockPosition();
+        var y_diff = second_node.y - bpos.getY();
         if (y_diff > 0 || y_diff < -1)
             return;
-        if (second_node.distanceToSqr(pos) > 3)
+        var pos = this.dog.position();
+        var second_node_pos = Vec3.atBottomCenterOf(second_node.asBlockPos());
+        var dist_vec = pos.subtract(second_node_pos);
+        var len_xz_sqr = dist_vec.x * dist_vec.x + dist_vec.z * dist_vec.z;
+        if (len_xz_sqr > 2)
             return;
         path.advance();
     }
