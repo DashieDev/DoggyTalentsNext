@@ -324,6 +324,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
         public ForgeConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
         public ForgeConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
+        public ForgeConfigSpec.BooleanValue INJURED_DOG_BLOCK_PORTAL;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -546,7 +547,13 @@ public class ConfigHandler {
                 .comment("Enable this to prevent Dogs from pushing their Owners")
                 .translation("doggytalents.dog_dont_push_owner")
                 .define("dog_dont_push_owner", false);
-            
+            INJURED_DOG_BLOCK_PORTAL = builder
+                .comment("By default, Injured Dogs won't block portal, allowing them to")
+                .comment("be brought back from another dimension. Enable this")
+                .comment("to make Injured Dogs still block portals.")
+                .translation("doggytalents.injured_dog_block_portal")
+                .define("injured_dog_block_portal", false);
+
             builder.pop();
         }
 
