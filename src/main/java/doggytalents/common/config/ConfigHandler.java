@@ -308,6 +308,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
         public ForgeConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
         public ForgeConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
+        public ForgeConfigSpec.BooleanValue INJURED_DOG_BLOCK_PORTAL;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
@@ -533,6 +534,12 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Enable this to prevent Dogs from pushing their Owners")
                 .translation("doggytalents.dog_dont_push_owner")
                 .define("dog_dont_push_owner", false);
+            INJURED_DOG_BLOCK_PORTAL = builder
+                .comment("By default, Injured Dogs won't block portal, allowing them to")
+                .comment("be brought back from another dimension. Enable this")
+                .comment("to make Injured Dogs still block portals.")
+                .translation("doggytalents.injured_dog_block_portal")
+                .define("injured_dog_block_portal", false);
 
             //(Non 1.20.5+)
             RANDOM_VAR_ON_TRAIN = builder
