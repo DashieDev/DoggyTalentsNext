@@ -86,6 +86,7 @@ import doggytalents.client.entity.model.dog.kusa.ShinModel;
 import doggytalents.client.entity.model.dog.kusa.TakeModel;
 import doggytalents.client.entity.model.dog.kusa.TeiModel;
 import doggytalents.client.entity.model.dog.kusa.UmeModel;
+import doggytalents.client.entity.model.dog.oina.*;
 import doggytalents.client.entity.model.misc.DogPlushieModel;
 import doggytalents.client.entity.model.misc.GrandPianoModel;
 import doggytalents.client.entity.model.misc.UprightPianoModel;
@@ -161,8 +162,21 @@ public class ClientSetup {
     public static final ModelLayerLocation KUSA_TAKE = new ModelLayerLocation(Util.getResource("kusa_take"), "main");   
     public static final ModelLayerLocation KUSA_TEI = new ModelLayerLocation(Util.getResource("kusa_tei"), "main");   
     public static final ModelLayerLocation KUSA_UME = new ModelLayerLocation(Util.getResource("kusa_ume"), "main");   
-    public static final ModelLayerLocation DOG_ARCANINE = new ModelLayerLocation(Util.getResource("dog_arcanine"), "main");
     
+    public static final ModelLayerLocation OINA_KAIPOKU = new ModelLayerLocation(Util.getResource("oina_kaipoku"), "main");
+    public static final ModelLayerLocation OINA_KAWAUSO = new ModelLayerLocation(Util.getResource("oina_kawauso"), "main");
+    public static final ModelLayerLocation OINA_KEMU = new ModelLayerLocation(Util.getResource("oina_kemu"), "main");
+    public static final ModelLayerLocation OINA_MERCHANT = new ModelLayerLocation(Util.getResource("oina_merchant"), "main");
+    public static final ModelLayerLocation OINA_MERCHANT2 = new ModelLayerLocation(Util.getResource("oina_merchant2"), "main");
+    public static final ModelLayerLocation OINA_OKIKURUMI = new ModelLayerLocation(Util.getResource("oina_okikurumi"), "main");
+    public static final ModelLayerLocation OINA_PIRIKO = new ModelLayerLocation(Util.getResource("oina_piriko"), "main");
+    public static final ModelLayerLocation OINA_RISU = new ModelLayerLocation(Util.getResource("oina_risu"), "main");
+    public static final ModelLayerLocation OINA_SHAMIKURU = new ModelLayerLocation(Util.getResource("oina_shamikuru"), "main");
+    public static final ModelLayerLocation OINA_TODO = new ModelLayerLocation(Util.getResource("oina_todo"), "main");
+    public static final ModelLayerLocation OINA_TUSUKURU = new ModelLayerLocation(Util.getResource("oina_tusukuru"), "main");
+    public static final ModelLayerLocation OINA_WARI = new ModelLayerLocation(Util.getResource("oina_wari"), "main");
+
+    public static final ModelLayerLocation DOG_ARCANINE = new ModelLayerLocation(Util.getResource("dog_arcanine"), "main");
     public static final ModelLayerLocation DOG_POCHITA = new ModelLayerLocation(Util.getResource("pochita"), "main");   
     public static final ModelLayerLocation DOG_DACHSHUND = new ModelLayerLocation(Util.getResource("dachshund"), "main");
     public static final ModelLayerLocation DOG_DOBERMAN = new ModelLayerLocation(Util.getResource("doberman"), "main");
@@ -261,8 +275,21 @@ public class ClientSetup {
         event.registerLayerDefinition(KUSA_TAKE, TakeModel::createBodyLayer);
         event.registerLayerDefinition(KUSA_TEI, TeiModel::createBodyLayer);
         event.registerLayerDefinition(KUSA_UME, UmeModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_ARCANINE, ArcanineModel::createBodyLayer);
 
+        event.registerLayerDefinition(OINA_KAIPOKU, KaipokuModel::createBodyLayer);
+        event.registerLayerDefinition(OINA_KAWAUSO, KawausoModel::createBodyLayer);
+        event.registerLayerDefinition(OINA_KEMU, KemuModel::createBodyLayer);
+        event.registerLayerDefinition(OINA_MERCHANT, OinaMerchant1Model::createBodyLayer);
+        event.registerLayerDefinition(OINA_MERCHANT2, OinaMerchant2Model::createBodyLayer);
+        event.registerLayerDefinition(OINA_OKIKURUMI, OkikurumiModel::createBodyLayer);
+        event.registerLayerDefinition(OINA_PIRIKO, PirikoModel::createBodyLayer);
+        event.registerLayerDefinition(OINA_RISU, RisuModel::createBodyLayer);
+        event.registerLayerDefinition(OINA_SHAMIKURU, ShamikuruModel::createBodyLayer);
+        event.registerLayerDefinition(OINA_TODO, TodoModel::createBodyLayer);
+        event.registerLayerDefinition(OINA_TUSUKURU, TusukuruModel::createBodyLayer);
+        event.registerLayerDefinition(OINA_WARI, WariModel::createBodyLayer);
+
+        event.registerLayerDefinition(DOG_ARCANINE, ArcanineModel::createBodyLayer);
         event.registerLayerDefinition(DOG_POCHITA, PochitaModel::createBodyLayer);
         event.registerLayerDefinition(DOG_DACHSHUND, DachshundModel::createBodyLayer);
         event.registerLayerDefinition(DOG_DOBERMAN, DobermanModel::createBodyLayer);
