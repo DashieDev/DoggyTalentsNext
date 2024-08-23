@@ -2307,6 +2307,13 @@ public class Dog extends AbstractDog {
     private boolean checkBlockPortal() {
         boolean changeDimensionAuth0 = this.changeDimensionAuthorized;
         this.changeDimensionAuthorized = false;
+        
+        boolean defeated_bypass = 
+            this.isDefeated()
+            && !ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.INJURED_DOG_BLOCK_PORTAL);
+        if (defeated_bypass)
+            return false;
+            
         boolean default_block = 
             !changeDimensionAuth0
             && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.ALL_DOG_BLOCK_PORTAL);
