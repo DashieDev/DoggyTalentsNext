@@ -83,6 +83,7 @@ import doggytalents.client.entity.model.dog.kusa.ShinModel;
 import doggytalents.client.entity.model.dog.kusa.TakeModel;
 import doggytalents.client.entity.model.dog.kusa.TeiModel;
 import doggytalents.client.entity.model.dog.kusa.UmeModel;
+import doggytalents.client.entity.model.dog.oina.*;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -154,6 +155,20 @@ public class DogModelRegistry {
         register("kusa_take", ctx ->  new TakeModel(ctx.bakeLayer(ClientSetup.KUSA_TAKE)).setAccessoryState(AccessoryState.RECOMMENDED));
         register("kusa_tei", ctx ->  new TeiModel(ctx.bakeLayer(ClientSetup.KUSA_TEI)).setAccessoryState(AccessoryState.RECOMMENDED));
         register("kusa_ume", ctx ->  new UmeModel(ctx.bakeLayer(ClientSetup.KUSA_UME)).setAccessoryState(AccessoryState.RECOMMENDED));
+        
+        register("oina_kaipoku", ctx ->  new KaipokuModel(ctx.bakeLayer(ClientSetup.OINA_KAIPOKU)));
+        register("oina_kawauso", ctx ->  new KawausoModel(ctx.bakeLayer(ClientSetup.OINA_KAWAUSO)));
+        register("oina_kemu", ctx ->  new KemuModel(ctx.bakeLayer(ClientSetup.OINA_KEMU)));
+        register("oina_merchant", ctx ->  new OinaMerchant1Model(ctx.bakeLayer(ClientSetup.OINA_MERCHANT)));
+        register("oina_merchant2", ctx ->  new OinaMerchant2Model(ctx.bakeLayer(ClientSetup.OINA_MERCHANT2)));
+        register("oina_okikurumi", ctx ->  new OkikurumiModel(ctx.bakeLayer(ClientSetup.OINA_OKIKURUMI)));
+        register("oina_piriko", ctx ->  new PirikoModel(ctx.bakeLayer(ClientSetup.OINA_PIRIKO)));
+        register("oina_risu", ctx ->  new RisuModel(ctx.bakeLayer(ClientSetup.OINA_RISU)));
+        register("oina_shamikuru", ctx ->  new ShamikuruModel(ctx.bakeLayer(ClientSetup.OINA_SHAMIKURU)));
+        register("oina_todo", ctx ->  new TodoModel(ctx.bakeLayer(ClientSetup.OINA_TODO)));
+        register("oina_tusukuru", ctx ->  new TusukuruModel(ctx.bakeLayer(ClientSetup.OINA_TUSUKURU)));
+        register("oina_wari", ctx ->  new WariModel(ctx.bakeLayer(ClientSetup.OINA_WARI)));
+
         register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
 
         register("pochita", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_POCHITA)));
