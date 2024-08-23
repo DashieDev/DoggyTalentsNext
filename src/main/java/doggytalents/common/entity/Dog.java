@@ -2284,11 +2284,8 @@ public class Dog extends AbstractDog {
 
     @Override
     public Entity changeDimension(ServerLevel worldIn, ITeleporter teleporter) {
-        boolean flag = 
-            !changeDimensionAuthorized
-            && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.ALL_DOG_BLOCK_PORTAL);
-        if (flag) return null;
-        changeDimensionAuthorized = false;
+        if (checkBlockPortal())
+            return null;
         this.DTN_dogChangingDim = true;
         Entity transportedEntity = super.changeDimension(worldIn, teleporter);
         this.DTN_dogChangingDim = false;
@@ -2296,6 +2293,17 @@ public class Dog extends AbstractDog {
             DogLocationStorage.get(this.level).getOrCreateData(this).update((Dog) transportedEntity);
         }
         return transportedEntity;
+    }
+
+    private boolean checkBlockPortal() {
+        boolean changeDimensionAuth0 = this.changeDimensionAuthorized;
+        this.changeDimensionAuthorized = false;
+        boolean default_block = 
+            !changeDimensionAuth0
+            && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.ALL_DOG_BLOCK_PORTAL);
+        if (default_block)
+            return true;
+        return false;
     }
 
     @Override
