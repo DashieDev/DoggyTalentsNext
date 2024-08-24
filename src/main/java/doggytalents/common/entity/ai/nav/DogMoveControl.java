@@ -35,11 +35,16 @@ public class DogMoveControl extends MoveControl {
                 this.dog.setZza(0.0F);
                 return;
             }
-
-            float f9 = (float)(Mth.atan2(dz, dx) * (double)(180F / (float)Math.PI)) - 90.0F;
-            this.dog.setYRot(this.rotlerp(this.dog.getYRot(), f9, 90.0F));
             float speed0 = (float) this.dog.getAttributeValue(Attributes.MOVEMENT_SPEED);
             float speed = speed0;
+            
+            float target_yrot = (float)( Mth.atan2(dz, dx) * Mth.RAD_TO_DEG - 90f );
+            if (speed < 0.39f) {
+                float apporaching_yrot = this.rotlerp(this.dog.getYRot(), target_yrot, 90f);
+                target_yrot = apporaching_yrot;
+            }
+            this.dog.setYRot(target_yrot);
+
             double dy_abs = Math.abs(dy);
             if (dy_abs > 0.75 || dog.isDogCurious()) {
                 float speed_cap = dy_abs > 1.75 ? SNEAK_SPEED_2 : SNEAK_SPEED_1;
