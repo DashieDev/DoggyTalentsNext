@@ -11,7 +11,7 @@ import net.minecraft.world.level.ItemLike;
 public class DyableLocatorOrb extends DoubleDyableAccessory implements IAccessoryHasModel {
     
     public DyableLocatorOrb(Supplier<? extends ItemLike> itemIn) {
-        super(DoggyAccessoryTypes.BAND, itemIn);
+        super(DoggyAccessoryTypes.SCARF, itemIn);
     }
 
     @Override

@@ -100,14 +100,35 @@ public class DogLocationData implements IDogData {
     }
 
     private void updateLocator(Dog dog) {
-        var locatorOptional = dog.getAccessory(DoggyAccessoryTypes.BAND.get());
-        this.hasRadarCollar = locatorOptional.isPresent();
-        if (!this.hasRadarCollar) 
+        this.hasRadarCollar = false;
+        this.locateColor = 0;
+        var locator_optional = checkLocatorOrb(dog);
+        if (locator_optional.isPresent()) {
+            var locator = locator_optional.get();
+            this.hasRadarCollar = true;
+            this.locateColor = locator.getOrbColor();
             return;
-        var locator = locatorOptional.get();
-        if (locator.getAccessory() instanceof LocatorOrbAccessory orb) {
-            this.locateColor = orb.getOrbColor();
         }
+        boolean has_radio = checkLegacyRadioCollar(dog);
+        if (has_radio) {
+            this.hasRadarCollar = true;
+            return;
+        }
+    }
+
+    private Optional<LocatorOrbAccessory> checkLocatorOrb(Dog dog) {
+        var accessory_optional = dog.getAccessory(DoggyAccessoryTypes.SCARF.get());
+        if (!accessory_optional.isPresent())
+            return Optional.empty();
+        var accessory = accessory_optional.get();
+        if (accessory.getAccessory() instanceof LocatorOrbAccessory locator)
+            return Optional.of(locator);
+        return Optional.empty();
+    }
+
+    private boolean checkLegacyRadioCollar(Dog dog) {
+        var accessory_optional = dog.getAccessory(DoggyAccessoryTypes.RADIO_COLLAR_LEGACY.get());
+        return accessory_optional.isPresent();
     }
 
 
