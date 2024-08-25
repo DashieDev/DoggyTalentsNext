@@ -1,6 +1,7 @@
 package doggytalents.common.event;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -175,8 +176,10 @@ public class EventHandler {
         var locStore = DogLocationStorage.get(server);
         var respawnStore = DogRespawnStorage.get(server);
         
-        int locCnt = locStore.getAll().size();
-        int respawnCnt = respawnStore.getAll().size();
+        int locCnt = locStore.getDogs(owner)
+            .collect(Collectors.toList()).size();
+        int respawnCnt = respawnStore.getDogs(owner.getUUID())
+            .collect(Collectors.toList()).size();
         
         int totalTrained = locCnt + respawnCnt;
         if (totalTrained >= limit)
