@@ -15,7 +15,8 @@ public class DoggyAccessoryTypes {
     public static final Supplier<AccessoryType> CLOTHING = register("clothing");
     public static final Supplier<AccessoryType> GLASSES = register("glasses");
     public static final Supplier<AccessoryType> CONTACTS = register("contacts");
-    public static final Supplier<AccessoryType> BAND = register("band");
+    public static final Supplier<AccessoryType> RADIO_COLLAR_LEGACY = register("radio_collar_legacy");
+    public static final Supplier<AccessoryType> SCARF = register("scarf");
     public static final Supplier<AccessoryType> HEAD = register("head");
     public static final Supplier<AccessoryType> FEET = register("feet");
     public static final Supplier<AccessoryType> TAIL = register("tail");
