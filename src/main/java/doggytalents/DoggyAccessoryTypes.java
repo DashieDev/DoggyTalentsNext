@@ -12,16 +12,17 @@ public class DoggyAccessoryTypes {
 
     public static final DeferredRegister<AccessoryType> ACCESSORY_TYPES = DeferredRegister.create(DoggyTalentsAPI.ACCESSORY_TYPE, Constants.MOD_ID);
 
-    public static final RegistryObject<AccessoryType> COLLAR = register("collar");
-    public static final RegistryObject<AccessoryType> BOWTIE = register("bowtie");
-    public static final RegistryObject<AccessoryType> CLOTHING = register("clothing");
-    public static final RegistryObject<AccessoryType> GLASSES = register("glasses");
-    public static final RegistryObject<AccessoryType> CONTACTS = register("contacts");
-    public static final RegistryObject<AccessoryType> BAND = register("band");
-    public static final RegistryObject<AccessoryType> HEAD = register("head");
-    public static final RegistryObject<AccessoryType> FEET = register("feet");
-    public static final RegistryObject<AccessoryType> TAIL = register("tail");
-    public static final RegistryObject<AccessoryType> WINGS = register("wings");
+    public static final Supplier<AccessoryType> COLLAR = register("collar");
+    public static final Supplier<AccessoryType> BOWTIE = register("bowtie");
+    public static final Supplier<AccessoryType> CLOTHING = register("clothing");
+    public static final Supplier<AccessoryType> GLASSES = register("glasses");
+    public static final Supplier<AccessoryType> CONTACTS = register("contacts");
+    public static final Supplier<AccessoryType> RADIO_COLLAR_LEGACY = register("radio_collar_legacy");
+    public static final Supplier<AccessoryType> SCARF = register("scarf");
+    public static final Supplier<AccessoryType> HEAD = register("head");
+    public static final Supplier<AccessoryType> FEET = register("feet");
+    public static final Supplier<AccessoryType> TAIL = register("tail");
+    public static final Supplier<AccessoryType> WINGS = register("wings");
     public static final Supplier<AccessoryType> BODY = register("body");
     public static final Supplier<AccessoryType> UPPER_BODY = register("upper_body");
 

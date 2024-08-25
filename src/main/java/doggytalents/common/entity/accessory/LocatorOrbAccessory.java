@@ -14,7 +14,7 @@ public class LocatorOrbAccessory extends Accessory implements IAccessoryHasModel
     private int color = 0;
 
     public LocatorOrbAccessory(Supplier<? extends ItemLike> itemIn, int color) {
-        super(DoggyAccessoryTypes.BAND, itemIn);
+        super(DoggyAccessoryTypes.SCARF, itemIn);
         this.color = color;
     }
 

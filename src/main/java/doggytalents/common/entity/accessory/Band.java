@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 public class Band extends Accessory {
 
     public Band(Supplier<? extends ItemLike> itemIn) {
-        super(DoggyAccessoryTypes.BAND, itemIn);
+        super(DoggyAccessoryTypes.RADIO_COLLAR_LEGACY, itemIn);
     }
 
     @Override
