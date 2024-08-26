@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "doggytalents:item/striped_scarf_bg",
+    "layer1": "doggytalents:item/striped_scarf_fg"
+  }
+}
