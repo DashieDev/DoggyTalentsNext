@@ -88,12 +88,4 @@ public class AmmyShinModel extends DogModel {
     public boolean useDefaultModelForAccessories() {
         return true;
     }
-
-	@Override
-	public boolean tickClient() { return true; }
-
-	@Override
-    public void doTickClient(Dog dog) {
-	}
-    
 }
