@@ -119,6 +119,7 @@ public class DoggyItems {
     public static final Supplier<AccessoryItem> WITCH_HAT = register("witch_hat", () -> new WitchHatItem(DoggyAccessories.WITCH_HAT, createInitialProp()));
     public static final Supplier<AccessoryItem> PROPELLER_HAT = register("propeller_hat", () -> new Propellar.PropellerHatItem(DoggyAccessories.PROPELLAR, createInitialProp()));
     public static final Supplier<AccessoryItem> DYED_ORB = register("locator_orb_dyable", () -> new DyableOrbItem(DoggyAccessories.DYED_ORB, createInitialProp()));
+    public static final Supplier<AccessoryItem> STRIPED_SCARF = register("striped_scarf", () -> new StripedScarfItem(DoggyAccessories.STRIPED_SCARF, createInitialProp()));
     public static final Supplier<DyeableAccessoryItem> BOWTIE = registerAccessoryDyed("bowtie", DoggyAccessories.BOWTIE);
 
     public static final Supplier<DyeableAccessoryItem> WOOL_COLLAR = registerAccessoryDyed("wool_collar", DoggyAccessories.DYEABLE_COLLAR);
@@ -357,6 +358,15 @@ public class DoggyItems {
                     return ((DyableBirthdayHatItem) stack.getItem()).getFgColor(stack);
                 }
                 return tintIndex > 0 ? -1 : ((DyableBirthdayHatItem) stack.getItem()).getBgColor(stack);
+             }, item);
+        }, DoggyBlocks::logError);
+
+        Util.acceptOrElse(DoggyItems.STRIPED_SCARF, (item) -> {
+            event.register((stack, tintIndex) -> {
+                if (tintIndex == 1) {
+                    return ((StripedScarfItem) stack.getItem()).getFgColor(stack);
+                }
+                return tintIndex > 0 ? -1 : ((StripedScarfItem) stack.getItem()).getBgColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 
