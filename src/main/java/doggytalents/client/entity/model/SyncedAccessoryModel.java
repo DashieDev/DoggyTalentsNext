@@ -40,8 +40,7 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
     protected abstract void populatePart(ModelPart box);
 
     public void sync(DogModel dogModel) {
-        root.copyFrom(dogModel.root);
-
+        syncPart(root, dogModel.root);
         syncPart(this.head, dogModel.head);
         syncPart(this.realHead, dogModel.realHead);
         syncPart(this.body, dogModel.body);
@@ -60,7 +59,11 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
     }
 
     private void syncPart(Optional<ModelPart> part, ModelPart dogPart) {
-        part.ifPresent(p -> p.copyFrom(dogPart));
+        part.ifPresent(p -> syncPart(p, dogPart));
+    }
+
+    private void syncPart(ModelPart part, ModelPart dogPart) {
+        part.copyFrom(dogPart);
     }
 
     @Override
