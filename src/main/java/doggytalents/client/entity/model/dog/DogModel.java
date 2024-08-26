@@ -674,11 +674,6 @@ public class DogModel extends EntityModel<Dog> {
             model.young = false;
     }
 
-    public boolean tickClient() { return false; }
-    public void doTickClient(Dog dog) {}
-    public boolean hasAdditonalRendering() { return false; }
-    public void doAdditonalRendering(Dog dog, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {}
-
     protected float wetShade = 1f;
 
     public void setWetShade(float shade) {

@@ -101,9 +101,6 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         } else
             super.render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
-        if (this.model.hasAdditonalRendering())
-            this.model.doAdditonalRendering(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-    
         this.model = this.nullDogModel;
     }
 
