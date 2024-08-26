@@ -25,7 +25,7 @@ public class StripedScarfModel extends SyncedAccessoryModel {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -3.0F, -7.3F, 8.0F, 7.0F, 11.0F, new CubeDeformation(0.35F)), PartPose.offsetAndRotation(0.0F, 13.5F, -3.0F, 1.5708F, 0.0F, 0.0F));
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -3.0F, -6.8F, 8.0F, 7.0F, 11.0F, new CubeDeformation(0.35F)), PartPose.offsetAndRotation(0.0F, 13.5F, -3.0F, 1.5708F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 32);
 	}
