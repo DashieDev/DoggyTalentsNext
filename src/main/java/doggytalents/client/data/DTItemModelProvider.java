@@ -109,6 +109,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.SHIN_ORB);
         generated(DoggyItems.JIN_ORB);
         dyableOrb(DoggyItems.DYED_ORB);
+        stripedScarf(DoggyItems.STRIPED_SCARF);
 
         generated(DoggyItems.GENDER_BONE);
         generated(DoggyItems.STARTER_BUNDLE);
@@ -240,6 +241,10 @@ public class DTItemModelProvider extends ItemModelProvider {
 
     private ItemModelBuilder dyableOrb(Supplier<? extends ItemLike> item) {
         return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/locator_orb_dyable_bg"), modLoc(ModelProvider.ITEM_FOLDER + "/locator_orb_dyable_fg"));
+    }
+
+    private ItemModelBuilder stripedScarf(Supplier<? extends ItemLike> item) {
+        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/striped_scarf_bg"), modLoc(ModelProvider.ITEM_FOLDER + "/striped_scarf_fg"));
     }
 
     private ItemModelBuilder generated2(Supplier<? extends ItemLike> item, ResourceLocation tex0, ResourceLocation tex1) {
