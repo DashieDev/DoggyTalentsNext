@@ -131,6 +131,7 @@ public class DoggyItems {
     public static final Supplier<AccessoryItem> SPOTTED_COLLAR = registerAccessory("spotted_collar", DoggyAccessories.SPOTTED_COLLAR);
     public static final Supplier<AccessoryItem> MULTICOLOURED_COLLAR = registerAccessory("multicoloured_collar", DoggyAccessories.MULTICOLORED_COLLAR);
     public static final Supplier<AccessoryItem> DEMON_HORNS = register("demon_horns", () -> new DemonHornsItem(DoggyAccessories.DEMON_HORNS, createInitialProp()));
+    public static final Supplier<AccessoryItem> DEER_ANTLERS = register("deer_antlers", () -> new DeerAntlersItem(DoggyAccessories.DEER_ANTLERS, createInitialProp()));
 
     public static final Supplier<Item> EMPTY_LOCATOR_ORB = registerWith("empty_locator_orb", EmptyLocatorOrbItem::new, 64);
     public static final Supplier<AccessoryItem> JIN_ORB = registerLocatorOrb("locator_orb_jin", DoggyAccessories.JIN_ORB);
