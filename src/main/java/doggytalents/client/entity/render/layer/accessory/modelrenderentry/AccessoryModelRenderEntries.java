@@ -41,6 +41,7 @@ public class AccessoryModelRenderEntries {
     public static Entry YETI_GOOSE = new YetiGooseRenderEntry();
     public static Entry MIDI_KEYBOARD = new MidiKeyboardRenderEntry();
     public static Entry STRIPED_SCARF = new StripedScarfRenderEntry();
+    public static Entry DEER_ANTLERS = new DeerAntlersRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -79,6 +80,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(YETI_GOOSE);
         AccessoryModelManager.register(MIDI_KEYBOARD);
         AccessoryModelManager.register(STRIPED_SCARF);
+        AccessoryModelManager.register(DEER_ANTLERS);
     }
 
 }
