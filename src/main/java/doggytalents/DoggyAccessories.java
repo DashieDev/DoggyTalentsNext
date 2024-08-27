@@ -70,6 +70,7 @@ public class DoggyAccessories {
 
     public static final Supplier<TenguMask> TENGU_MASK = register("tengu_mask", () -> new TenguMask(DoggyItems.TENGU_MASK).setModelTexture(Resources.TENGU_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final Supplier<DemonHornsAccessory> DEMON_HORNS = register("demon_horns", () -> new DemonHornsAccessory(DoggyItems.DEMON_HORNS).setModelTexture(Resources.DEMON_HORNS).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final Supplier<Accessory> DEER_ANTLERS = register("deer_antlers", () -> new DeerAntlers(DoggyItems.DEER_ANTLERS).setModelTexture(Resources.DEER_ANTLERS).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final Supplier<KitsuneMask> KITSUNE_MASK = register("kitsune_mask", () -> new KitsuneMask(DoggyItems.KITSUNE_MASK).setModelTexture(Resources.KITSUNE_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final Supplier<WitchHatAccessory> WITCH_HAT = register("witch_hat", () -> new WitchHatAccessory(DoggyItems.WITCH_HAT).setModelTexture(Resources.WITCH_HAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final Supplier<PlagueDoctorMaskAccessory> PLAGUE_DOC_MASK = register("plague_doctor_mask", () -> new PlagueDoctorMaskAccessory(DoggyItems.PLAGUE_DOC_MASK).setModelTexture(Resources.PLAGUE_DOC_MASK).setAccessoryRenderType(AccessoryRenderType.MODEL));
