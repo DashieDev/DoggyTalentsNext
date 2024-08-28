@@ -57,5 +57,12 @@ public class FlatButton extends AbstractButton {
     public interface OnPress {
         void onPress(FlatButton p_93751_);
     }
+    
+
+    //1.19.2-
+    public int getX() { return this.x; }
+    public int getY() { return this.y; }
+    public void setX(int val) { this.x = val; }
+    public void setY(int val) { this.y = val; }
 
 }

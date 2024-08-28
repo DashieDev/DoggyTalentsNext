@@ -37,7 +37,7 @@ public class DoggyBlocks {
     public static final RegistryObject<SoyCropBlock> SOY_CROP = register("soy_crop", SoyCropBlock::new);
 
     private static Item.Properties createInitialProp() {
-        return new Item.Properties().tab(DoggyItemGroups.GENERAL);
+        return new Item.Properties();
     }
 
     private static BlockItem makeItemBlock(Block block) {

@@ -208,7 +208,7 @@ public class DoggyItems {
         () -> new PianoItem(DoggyEntityTypes.UPRIGHT_PIANO_BROWN));
 
     private static Item.Properties createInitialProp() {
-        return new Item.Properties().tab(DoggyItemGroups.GENERAL);
+        return new Item.Properties();
     }
 
     private static RegistryObject<Item> registerThrowBone(final String name) {

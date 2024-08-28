@@ -32,7 +32,7 @@ public class CherryWolfVariant extends DogVariant implements IDogAlteration {
             double d0 = (double)dog.getX() + RandomUtil.nextFloatRemapped(random) * (dog.getBbWidth()/2);
             double d1 = (double)dog.getY() + random.nextFloat() * (dog.getBbHeight() * 0.8);
             double d2 = (double)dog.getZ() + RandomUtil.nextFloatRemapped(random) * (dog.getBbWidth()/2);
-            level.addParticle(ParticleTypes.CHERRY_LEAVES, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+            //level.addParticle(ParticleTypes.CHERRY_LEAVES, d0, d1, d2, 0.0D, 0.0D, 0.0D);
         }
 
         // if (random.nextInt(200) == 0) {

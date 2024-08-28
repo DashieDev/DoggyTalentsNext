@@ -24,7 +24,7 @@ public class ScentTreatItem extends Item {
     public static String SCENT_BLOCK_ID = "DTN_scented_block_id";
     
     public ScentTreatItem() {
-        super((new Properties().stacksTo(1)).tab(DoggyItemGroups.GENERAL));
+        super((new Properties().stacksTo(1)));
     }
 
     @Override

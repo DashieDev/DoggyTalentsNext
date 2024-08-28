@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 public class DroolScentTreatItem extends Item {
 
     public DroolScentTreatItem() {
-        super(new Properties().stacksTo(1).tab(DoggyItemGroups.GENERAL));
+        super(new Properties().stacksTo(1));
     }
 
     @Override

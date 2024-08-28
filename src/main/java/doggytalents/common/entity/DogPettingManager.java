@@ -14,6 +14,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
@@ -100,7 +101,7 @@ public class DogPettingManager {
         var petter = this.getPetterFromDog();
         if (petter == null)
             return;
-        var hurt_result = petter.hurt(petter.damageSources().lava(), 0.1f);
+        var hurt_result = petter.hurt(DamageSource.LAVA, 0.1f);
         if (hurt_result) {
             petter.playSound(SoundEvents.GENERIC_BURN, 0.4F, 2.0F + random.nextFloat() * 0.4F);
             if (dog.level() instanceof ServerLevel) {
@@ -202,7 +203,7 @@ public class DogPettingManager {
     }
 
     private boolean isSelectingDog(Player player, Dog dog) {
-        double pick_range = player.getEntityReach();
+        double pick_range = 3; //1.19.2- hardcode
         var view_vec = player.getViewVector(1);
         var eye_pos = player.getEyePosition(0);
         var from_vec = eye_pos;

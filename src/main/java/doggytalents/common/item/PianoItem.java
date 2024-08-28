@@ -29,7 +29,7 @@ public class PianoItem extends Item {
     private Supplier<EntityType<Piano>> pianoSup;
 
     public PianoItem(Supplier<EntityType<Piano>> pianoSup) {
-        super(new Properties().stacksTo(1).tab(DoggyItemGroups.GENERAL));
+        super(new Properties().stacksTo(1));
         this.pianoSup = pianoSup;
     }
 

@@ -284,7 +284,7 @@ public class WaterHolderTalent extends TalentInstance {
         var targets = new ArrayList<LivingEntity>();
         Predicate<LivingEntity> onFireAndWitness =
             e -> e.isOnFire()
-                && e.onGround()
+                && e.isOnGround()
                 && (dog.getSensing().hasLineOfSight(e));
         
         //Get owner 

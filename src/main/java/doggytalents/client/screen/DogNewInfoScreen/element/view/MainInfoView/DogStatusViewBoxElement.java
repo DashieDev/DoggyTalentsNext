@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.feature.DogSize;
 import doggytalents.api.feature.DogLevel.Type;
+import doggytalents.client.entity.render.RenderUtil;
 import doggytalents.client.screen.PetSelectScreen;
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
@@ -46,7 +47,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
             PetSelectScreen.open();
         }) {
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+            public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
                 // TODO Auto-generated method stub
                 // super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 if (this.isHovered) {
@@ -63,7 +64,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
 
         drawDogLevelKanji(stack, mouseX, mouseY, partialTicks);
 

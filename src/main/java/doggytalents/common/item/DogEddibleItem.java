@@ -56,12 +56,12 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
     }
 
     public DogEddibleItem(FoodProperties foodProperties) {
-        this(new Properties().tab(DoggyItemGroups.GENERAL), foodProperties);
+        this(new Properties(), foodProperties);
     }
 
     public DogEddibleItem(Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
         this(
-            new Properties().tab(DoggyItemGroups.GENERAL), 
+            new Properties(), 
             propsCreator.apply(new FoodProperties.Builder())
                 .build()
         );
@@ -70,7 +70,7 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
     public DogEddibleItem(Function<Item.Properties, Item.Properties> itemPropsCreator,
         Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
     
-        this(itemPropsCreator.apply(new Properties().tab(DoggyItemGroups.GENERAL)),
+        this(itemPropsCreator.apply(new Properties()),
             propsCreator.apply(new FoodProperties.Builder()).build());
     }
 

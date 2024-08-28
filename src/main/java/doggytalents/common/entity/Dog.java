@@ -1322,7 +1322,7 @@ public class Dog extends AbstractDog {
         , true);
     }
 
-    @Override
+    //@Override
     public boolean dismountsUnderwater() {
         if (this.canSwimUnderwater() && this.alterationProps.canBreatheUnderwater())
             return false;
@@ -5245,6 +5245,12 @@ public class Dog extends AbstractDog {
             this.setDeltaMovement(Vec3.ZERO);
             this.calculateEntityAnimation(this, false);
         }
+    }
+    @Override
+    public boolean rideableUnderWater() {
+        if (!this.dismountsUnderwater())
+            return true;
+        return super.rideableUnderWater();
     }
 
     /**

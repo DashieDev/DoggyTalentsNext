@@ -117,7 +117,7 @@ public class TreatItem extends Item implements IDogItem {
             return InteractionResult.CONSUME;
         }
 
-        if (!playerIn.level().isClientSide) {
+        if (!playerIn.level.isClientSide) {
             if (!playerIn.getAbilities().instabuild) {
                 playerIn.getItemInHand(handIn).shrink(1);
             }
