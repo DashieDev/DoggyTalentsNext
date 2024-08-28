@@ -126,7 +126,7 @@ public class EntityUtil {
 
     public static <T extends Entity> Optional<T> getRandomEntityAround(LivingEntity entity, 
         Class<T> entity_class, int radius_xz, int radius_y, Predicate<T> entity_pred) {
-        var level = entity.level();
+        var level = entity.level;
         var bb = entity.getBoundingBox().inflate(radius_xz, radius_y, radius_xz);
         Predicate<T> compound_pred = filter ->
             filter != entity && entity_pred.test(filter);

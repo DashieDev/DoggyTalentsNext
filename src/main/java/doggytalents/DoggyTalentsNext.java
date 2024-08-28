@@ -31,6 +31,7 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.talent.HappyEaterTalent;
+import doggytalents.common.util.forward_imitate.Entry_1_19_2;
 import doggytalents.common.variants_legacy.DTNWolfVariantsProvider;
 import doggytalents.common.variants_legacy.DTNWolfVariantsSpawnOverride;
 import doggytalents.common.variants_legacy.DTNWolfVariantsSpawnPlacements;
@@ -150,6 +151,10 @@ public class DoggyTalentsNext {
             GarbageChunkCollector.init();
             RiceMillBlockEntity.initGrindMap();
             DTNItemCategory.init();
+        
+            
+            //1.19.2-
+            Entry_1_19_2.onCommonSetup();
         });
     }
 

@@ -2,11 +2,10 @@ package doggytalents.client.entity.model;
 
 import java.util.Optional;
 
-import org.joml.Vector3f;
-
 import com.ibm.icu.text.Normalizer.Mode;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.common.entity.Dog;

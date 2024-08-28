@@ -10,7 +10,7 @@ import org.lwjgl.glfw.GLFW;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 
 import doggytalents.client.screen.PetSelectScreen;
 import doggytalents.common.entity.Dog;
@@ -151,17 +151,17 @@ public class DTNClientPettingManager {
         float rotating_x = -15.0F * occill;
         var petting_type = getPettingTypeFor(player);
         if (petting_type == DogPettingType.HUG || petting_type == DogPettingType.BACK_HUG) {        
-            stack.mulPose(Axis.XP.rotationDegrees(-20));
-            stack.mulPose(Axis.ZP.rotationDegrees(0));
-            stack.mulPose(Axis.YP.rotationDegrees(60));
-            stack.mulPose(Axis.XP.rotationDegrees(-10 + rotating_x));
+            stack.mulPose(Vector3f.XP.rotationDegrees(-20));
+            stack.mulPose(Vector3f.ZP.rotationDegrees(0));
+            stack.mulPose(Vector3f.YP.rotationDegrees(60));
+            stack.mulPose(Vector3f.XP.rotationDegrees(-10 + rotating_x));
             stack.translate(.0, 0.2, -.6);
         } else {
             stack.translate(0, 0.4, 0);
-            stack.mulPose(Axis.XP.rotationDegrees(-57));
-            stack.mulPose(Axis.ZP.rotationDegrees(0));
-            stack.mulPose(Axis.YP.rotationDegrees(-30F));
-            stack.mulPose(Axis.XP.rotationDegrees(rotating_x));
+            stack.mulPose(Vector3f.XP.rotationDegrees(-57));
+            stack.mulPose(Vector3f.ZP.rotationDegrees(0));
+            stack.mulPose(Vector3f.YP.rotationDegrees(-30F));
+            stack.mulPose(Vector3f.XP.rotationDegrees(rotating_x));
         }
     }
 

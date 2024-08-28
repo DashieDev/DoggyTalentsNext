@@ -259,7 +259,7 @@ public class HeelByNameScreen extends Screen {
         nextPageButton.active = this.pageNumber < maxPages - 1;
 
         var soft_heel = I18n.get("doggytalents.screen.whistler.heel_by_name.soft_heel");
-        graphics.drawString(font, soft_heel, 3, 52, 0xffffffff);
+        font.draw(stack, soft_heel, 3, 52, 0xffffffff);
     }
 
     private int getHoveredIndex(double x, double y, int entry_size) {

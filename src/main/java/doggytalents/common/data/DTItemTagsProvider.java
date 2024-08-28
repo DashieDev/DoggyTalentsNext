@@ -34,9 +34,9 @@ public class DTItemTagsProvider extends ItemTagsProvider {
         createTag(DoggyTags.BREEDING_ITEMS, DoggyItems.BREEDING_BONE);
         createTag(DoggyTags.PACK_PUPPY_BLACKLIST, DoggyItems.THROW_BONE, DoggyItems.THROW_BONE_WET, DoggyItems.THROW_STICK, DoggyItems.THROW_STICK_WET);
         createTag(DoggyTags.TREATS, DoggyItems.TRAINING_TREAT, DoggyItems.SUPER_TREAT, DoggyItems.MASTER_TREAT, DoggyItems.KAMI_TREAT);
-        tag(ItemTags.MUSIC_DISCS).add(
-            DoggyItems.MUSIC_DISC_CHOPIN_OP64_NO1.get()
-        );
+        // tag(ItemTags.MUSIC_DISCS).add(
+        //     DoggyItems.MUSIC_DISC_CHOPIN_OP64_NO1.get()
+        // );
     }
 
     @SafeVarargs

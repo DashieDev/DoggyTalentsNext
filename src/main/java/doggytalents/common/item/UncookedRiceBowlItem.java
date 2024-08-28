@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 public class UncookedRiceBowlItem extends Item {
 
     public UncookedRiceBowlItem() {
-        super(new Properties().tab(DoggyItemGroups.GENERAL));
+        super(new Properties());
     }
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,

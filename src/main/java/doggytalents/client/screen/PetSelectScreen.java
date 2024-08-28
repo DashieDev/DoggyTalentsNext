@@ -2,11 +2,12 @@ package doggytalents.client.screen;
 
 import java.util.List;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import doggytalents.client.DTNClientPettingManager;
 import doggytalents.common.entity.DogPettingManager.DogPettingType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -71,13 +72,13 @@ public class PetSelectScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
         super.render(graphics, mouseX, mouseY, partialTicks);
         drawHelpStringsLeft(graphics, mouseX, mouseY, partialTicks);
         drawHelpStringsRight(graphics, mouseX, mouseY, partialTicks);
     }
 
-    private void drawHelpStringsLeft(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    private void drawHelpStringsLeft(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
         int mX = this.width/2;
         int mY = this.height/2;
         
@@ -98,12 +99,12 @@ public class PetSelectScreen extends StringEntrySelectScreen {
         int tY = mY - total_height/2;
         
         for (var line : text_lines) {
-            graphics.drawString(font, line, tX, tY, 0xffffffff);
+            font.draw(graphics, line, tX, tY, 0xffffffff);
             tY += font.lineHeight + 2;
         }
     }
 
-    private void drawHelpStringsRight(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    private void drawHelpStringsRight(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
         int mX = this.width/2;
         int mY = this.height/2;
 
@@ -134,10 +135,10 @@ public class PetSelectScreen extends StringEntrySelectScreen {
             + 8;
         int tY = mY - total_height/2;
         
-        graphics.drawString(font, title, tX, tY, 0xffffffff);
+        font.draw(graphics, title, tX, tY, 0xffffffff);
         tY += font.lineHeight + 2;
         for (var line : text_lines) {
-            graphics.drawString(font, line, tX, tY, 0xffffffff);
+            font.draw(graphics, line, tX, tY, 0xffffffff);
             tY += font.lineHeight + 2;
         }
     }
