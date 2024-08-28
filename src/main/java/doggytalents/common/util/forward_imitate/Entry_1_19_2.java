@@ -6,4 +6,8 @@ public class Entry_1_19_2 {
         ItemCategoryResolver_1_19_2.resolve();
     }
 
+    public static void onGatherData() {
+        ItemCategoryResolver_1_19_2.resolve();
+    }
+
 }
