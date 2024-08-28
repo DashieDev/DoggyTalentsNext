@@ -8,7 +8,7 @@ import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class StripedScarfRenderEntry extends DoubleDyableRenderEntry {
     public static final ModelLayerLocation DOG_STRIPED_SCARF = new ModelLayerLocation(Util.getResource("dog_striped_scarf"), "main");
