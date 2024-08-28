@@ -208,5 +208,9 @@ public class DoggyTalentsNext {
         }
 
         //DTNWolfVariantsProvider.start(event);
+
+
+        //1.19.2-
+        Entry_1_19_2.onGatherData();
     }
 }
