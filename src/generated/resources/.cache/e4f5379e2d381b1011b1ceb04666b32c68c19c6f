@@ -1,4 +1,4 @@
-// 1.19.2	2023-12-21T16:53:35.8089005	Global Loot Modifiers : doggytalents
+// 1.19.2	2024-08-28T23:02:50.8780501	Global Loot Modifiers : doggytalents
 3e01a9de2e35d367c560711374276398d094301a data/doggytalents/loot_modifiers/rice_from_grass_modifier.json
-1883a1c5546fd2934abb0539fe4b55cd96db1f7f data/doggytalents/loot_modifiers/soy_from_zombie_modifier.json
+a129ae93662d1951104ac33c7cd7119a3897ec12 data/doggytalents/loot_modifiers/soy_from_zombie_modifier.json
 357ee12b9f6befeff7fda4cc2bfbdf82ed608e48 data/forge/loot_modifiers/global_loot_modifiers.json

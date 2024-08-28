@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "doggytalents:item/disc_bwv_1080_fugue_11"
+    "layer0": "doggytalents:item/angel_wings"
   }
 }

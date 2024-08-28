@@ -1,6 +1,8 @@
-// 1.20.1	2024-06-28T15:58:56.1674357	DoggyTalents Item Models
+// 1.19.2	2024-08-28T23:02:50.8850882	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
+576747e29ded49df195a33e020635920692b8bce assets/doggytalents/models/item/angel_halo.json
+3076176b621d8c30a6a674f946541b7d738ccb08 assets/doggytalents/models/item/angel_wings.json
 5480892d21f3278bbf7957b075183facf8beb253 assets/doggytalents/models/item/bach_wig.json
 b5e90b9e4c73e4e830dfa769f25fa806aa5dab8c assets/doggytalents/models/item/baker_hat.json
 047838cf426f24682c24bdd299ff7e9abbf982c9 assets/doggytalents/models/item/bandaid.json
@@ -20,11 +22,9 @@ d4961b5956ecb514cc73fc4902995ee2dc1e4e76 assets/doggytalents/models/item/conduct
 c32b03263dcdad77d9e68e3140b94f5d71fba4a5 assets/doggytalents/models/item/creative_collar.json
 773f9870103756dae329357172bb4108b438b6f7 assets/doggytalents/models/item/crow_wings.json
 86388a3f26ad0ad39a8943914a87b8bbb9936640 assets/doggytalents/models/item/death_hood.json
+b16b45b9cf59f3e188b579d110c946752e3d37e0 assets/doggytalents/models/item/deer_antlers.json
 a9e58121d02090f9d410e13f06ad832283e4218b assets/doggytalents/models/item/demon_horns.json
-27cfbd51adf771e5e7adc06f79b7d66139b2a7c2 assets/doggytalents/models/item/disc_bwv_1080_fugue_11.json
-9b5c30a93518dc583317b811ecdf0e3dbc1ca61e assets/doggytalents/models/item/disc_bwv_849_fugue.json
 fbe17ada2b6ffe9226a5bbbdd8c745c34b646581 assets/doggytalents/models/item/disc_chopin_op64_no1.json
-2dec9cdd315e206867ecbee0502a488cf6963b7a assets/doggytalents/models/item/disc_okami_ryoshima_coast_arr.json
 cdb690c3c98fba77899a3d74a472c37ebd73ab44 assets/doggytalents/models/item/divine_retribution.json
 ad0c76a4a4a7e72ea4214910a014102656cb3a7a assets/doggytalents/models/item/doggy_charm.json
 e6928e128e709eed661a926a6341052c5dee3952 assets/doggytalents/models/item/doggy_contacts.json
@@ -104,6 +104,7 @@ a75e3c9772beb27a3f0e7e91825cfd70588cadcc assets/doggytalents/models/item/soy_bea
 30c7f96be7a6b132690a56dddd289bdf1b2669e8 assets/doggytalents/models/item/soy_pods_dried.json
 37e58be2f484f704505648796db525c00a615a1f assets/doggytalents/models/item/spotted_collar.json
 c940178a658a57efa71c4e2f657f4383832f15e7 assets/doggytalents/models/item/starter_bundle.json
+2a5285304f89cd412000209f8b22332595434121 assets/doggytalents/models/item/striped_scarf.json
 312d0f2de8dba6bad821639ad26b9c5c8a7347fb assets/doggytalents/models/item/sunglasses.json
 a8bdbfc433a4eb2f4c3788599f58d2c64cd53ca6 assets/doggytalents/models/item/superdog_suit.json
 d49794ca31255fe0e821fd5b5bff9a7312654eda assets/doggytalents/models/item/super_treat.json
