@@ -144,7 +144,6 @@ public class DoggyTalentsNext {
 
         //InteractHandler.registerHandler(new HelmetInteractHandler());
         event.enqueueWork(() -> {
-            Dog.initDataParameters();
             DoggyAdvancementTriggers.registerAll();
             DoggyBrewingRecipes.registerAll();
             ConfigHandler.initTalentConfig();

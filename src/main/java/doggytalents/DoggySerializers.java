@@ -1,37 +1,45 @@
 package doggytalents;
 
+import doggytalents.api.feature.DogLevel;
+import doggytalents.api.feature.DogSize;
+import doggytalents.api.feature.EnumGender;
+import doggytalents.api.feature.EnumMode;
+import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
+import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.serializers.*;
+import doggytalents.common.entity.texture.DogSkinData;
+import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.lib.Constants;
-import net.minecraft.advancements.critereon.SerializationContext;
+import doggytalents.common.variant.DogVariant;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class DoggySerializers {
 
     public static final DeferredRegister<DataSerializerEntry> SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.DATA_SERIALIZERS, Constants.MOD_ID);
 
-    public static final RegistryObject<DataSerializerEntry> DOG_VARIANT_SERIALIZER = register2("dog_variant", DogVariantSerializer::new);
-    //public static final RegistryObject<DataSerializerEntry> COLLAR_TYPE_SERIALIZER = register2("collar", CollarSerializer::new);
-    public static final RegistryObject<DataSerializerEntry> GENDER_SERIALIZER = register2("gender", GenderSerializer::new);
-    public static final RegistryObject<DataSerializerEntry> MODE_SERIALIZER = register2("mode", ModeSerializer::new);
-    public static final RegistryObject<DataSerializerEntry> DOG_LEVEL_SERIALIZER = register2("dog_level", DogLevelSerializer::new);
-    public static final RegistryObject<DataSerializerEntry> BED_LOC_SERIALIZER = register2("dog_bed_location", BedLocationsSerializer::new);
-    public static final RegistryObject<DataSerializerEntry> INCAP_SYNC_SERIALIZER = register2("incap_sync", IncapacitatedSyncSerializer::new);
-    public static final RegistryObject<DataSerializerEntry> ARTIFACTS_SERIALIZER = register2("doggy_artifacts", DoggyArtifactsSerializer::new);
-    public static final RegistryObject<DataSerializerEntry> DOG_SIZE_SERIALIZER = register2("dog_size", DogSizeSerializer::new);
-    public static final RegistryObject<DataSerializerEntry> DOG_SKIN_DATA_SERIALIZER = register2("dog_skin_data", DogSkinDataSerializer::new);
-    public static final RegistryObject<DataSerializerEntry> DOG_PETTING_STATE = register2("dog_petting_state", PettingStateSerializer::new);
+    public static final EntityDataSerializer<DogVariant> DOG_VARIANT_SERIALIZER = register("dog_variant", DogVariantSerializer::new);
+    public static final EntityDataSerializer<EnumGender> GENDER_SERIALIZER = register("gender", GenderSerializer::new);
+    public static final EntityDataSerializer<EnumMode> MODE_SERIALIZER = register("mode", ModeSerializer::new);
+    public static final EntityDataSerializer<DogLevel> DOG_LEVEL_SERIALIZER = register("dog_level", DogLevelSerializer::new);
+    public static final EntityDataSerializer<DimensionDependantArg<Optional<BlockPos>>> BED_LOC_SERIALIZER = register("dog_bed_location", BedLocationsSerializer::new);
+    public static final EntityDataSerializer<IncapacitatedSyncState> INCAP_SYNC_SERIALIZER = register("incap_sync", IncapacitatedSyncSerializer::new);
+    public static final EntityDataSerializer<List<DoggyArtifactItem>> ARTIFACTS_SERIALIZER = register("doggy_artifacts", DoggyArtifactsSerializer::new);
+    public static final EntityDataSerializer<DogSize> DOG_SIZE_SERIALIZER = register("dog_size", DogSizeSerializer::new);
+    public static final EntityDataSerializer<DogSkinData> DOG_SKIN_DATA_SERIALIZER = register("dog_skin_data", DogSkinDataSerializer::new);
+    public static final EntityDataSerializer<DogPettingState> DOG_PETTING_STATE = register("dog_petting_state", PettingStateSerializer::new);
 
-    private static <X extends EntityDataSerializer<?>> RegistryObject<DataSerializerEntry> register2(final String name, final Supplier<X> factory) {
-        return register(name, () -> new DataSerializerEntry(factory.get()));
-    }
-
-    private static RegistryObject<DataSerializerEntry> register(final String name, final Supplier<DataSerializerEntry> sup) {
-        return SERIALIZERS.register(name, sup);
+    private static <T> EntityDataSerializer<T> register(final String name, final Supplier<EntityDataSerializer<T>> sup) {
+        final var captured_value = sup.get();
+        SERIALIZERS.register(name, () -> captured_value);
+        return captured_value;
     }
 }
