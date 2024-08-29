@@ -126,7 +126,7 @@ public class DogPushAvoidManager {
     }
 
     private boolean isDogInFluid(Dog dog) {
-        return !dog.getMaxHeightFluidType().isEmpty();
+        return dog.getMaxHeightFluidType().isPresent();
     }
 
 }

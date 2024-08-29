@@ -5266,8 +5266,26 @@ public class Dog extends AbstractDog {
     }
     //1.18.2-
     public Optional<TagKey<Fluid>> getMaxHeightFluidType() {
-        return this.fluidHeight.object2DoubleEntrySet()
-            .stream().max(java.util.Comparator.comparingDouble(Object2DoubleMap.Entry::getDoubleValue)).map(Object2DoubleMap.Entry::getKey);
+        if (this.fluidHeight.isEmpty())
+            return Optional.empty();
+
+        double max_fluid_height = 0;
+        TagKey<Fluid> max_fluild = null;
+        for (var entry : this.fluidHeight.object2DoubleEntrySet()) {
+            var height = entry.getDoubleValue();
+            if (height <= 0.0)
+                continue;
+            if (max_fluild == null) {
+                max_fluild = entry.getKey();
+                max_fluid_height = height;
+                continue;
+            }
+            if (height > max_fluid_height) {
+                max_fluild = entry.getKey();
+                max_fluid_height = height;
+            }
+        }
+        return Optional.ofNullable(max_fluild);
     }
     public double getFluidTypeHeight(TagKey<Fluid> type) {
         return this.getFluidHeight(type);
