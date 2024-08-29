@@ -148,7 +148,6 @@ public class DoggyTalentsNext {
 
         //InteractHandler.registerHandler(new HelmetInteractHandler());
         event.enqueueWork(() -> {
-            Dog.initDataParameters();
             ConfigHandler.initTalentConfig();
             RiceMillBlockEntity.initGrindMap();
             DTNItemCategory.init();
