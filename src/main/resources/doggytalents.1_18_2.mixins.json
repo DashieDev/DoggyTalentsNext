@@ -1,0 +1,16 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "doggytalents.legacy_mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+        "HumanoidModelMixin_1_18_2"
+    ],
+    "client": [
+    ],
+    "server": [],
+    "injectors": {
+      "defaultRequire": 1
+    },
+    "refmap": "doggytalents.refmap.json"
+} 

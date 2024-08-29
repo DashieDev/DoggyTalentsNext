@@ -108,7 +108,7 @@ public class DogPettingManager {
                 ((ServerLevel) dog.level()).sendParticles(
                     ParticleTypes.CAMPFIRE_COSY_SMOKE, 
                     petter.getX(), petter.getY(), petter.getZ(), 
-                    random.nextIntBetweenInclusive(2, 4), 
+                    EntityUtil.getRandomNumber(dog, 2, 4), 
                     petter.getBbWidth(), 0.8f, petter.getBbWidth(), 
                     0.1
                 );

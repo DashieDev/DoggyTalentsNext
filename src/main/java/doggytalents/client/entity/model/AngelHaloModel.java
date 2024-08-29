@@ -10,11 +10,12 @@ import com.mojang.math.Vector3f;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
-import net.minecraft.client.animation.AnimationChannel;
-import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.client.animation.AnimationDefinition.Builder;
-import net.minecraft.client.animation.Keyframe;
-import net.minecraft.client.animation.KeyframeAnimations;
+import doggytalents.api.enu.forward_imitate.anim.AnimationChannel;
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
+import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition.Builder;
+import doggytalents.api.enu.forward_imitate.anim.Keyframe;
+import doggytalents.api.enu.forward_imitate.anim.KeyframeAnimations;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -25,17 +26,17 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class AngelHaloModel extends AnimatedSyncedAccessoryModel {
 
-	public ModelPart halo;
+	public DogModelPart halo;
 
     public AngelHaloModel(ModelPart root) {
-        super(root);
+        super(DogModelPart.recreateFromModelPart(root));
     }
 
     @Override
     protected void populatePart(ModelPart box) {
         this.head = Optional.of(box.getChild("head"));
         this.realHead = Optional.of(head.get().getChild("real_head"));
-		this.halo = realHead.get().getChild("halo");
+		this.halo = (DogModelPart) realHead.get().getChild("halo");
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public class AngelHaloModel extends AnimatedSyncedAccessoryModel {
 
 	@Override
 	public void resetAllPose() {
-		this.root.resetPose();
+		((DogModelPart)this.root).resetPose();
 		this.halo.resetPose();
 	}
 

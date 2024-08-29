@@ -98,7 +98,7 @@ public class TreatItem extends Item implements IDogItem {
     private InteractionResult handleTreatTrain(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
         if (dog.getAge() < 0) {
             treatFailPrompt(dog, worldIn, playerIn, 
-                Component.translatable("treat."+this.type.getName()+".too_young"));
+                ComponentUtil.translatable("treat."+this.type.getName()+".too_young"));
 
             return InteractionResult.CONSUME;
         }
@@ -106,14 +106,14 @@ public class TreatItem extends Item implements IDogItem {
         var dogLevel = dog.getDogLevel();
         if (!dogLevel.canIncrease(this.type)) {
             treatFailPrompt(dog, worldIn, playerIn, 
-                Component.translatable("treat."+this.type.getName()+".low_level"));
+                ComponentUtil.translatable("treat."+this.type.getName()+".low_level"));
 
             return InteractionResult.CONSUME;
         }
 
         if (dogLevel.getLevel(this.type) >= this.maxLevel) {
             treatFailPrompt(dog, worldIn, playerIn, 
-                Component.translatable("treat."+this.type.getName()+".max_level"));
+                ComponentUtil.translatable("treat."+this.type.getName()+".max_level"));
 
             return InteractionResult.CONSUME;
         }
@@ -135,14 +135,14 @@ public class TreatItem extends Item implements IDogItem {
     private void treatFailPrompt(AbstractDog dog, Level worldIn, Player playerIn, Component msg) {
         if (!worldIn.isClientSide) {
             worldIn.broadcastEntityEvent(dog, Constants.EntityState.WOLF_SMOKE);
-            playerIn.sendSystemMessage(msg);
+            playerIn.sendMessage(msg, net.minecraft.Util.NIL_UUID);
         }
     }
 
     private void treatSuccessPrompt(AbstractDog dog, Level worldIn, Player playerIn) {
         if (!worldIn.isClientSide) {
             worldIn.broadcastEntityEvent(dog, Constants.EntityState.WOLF_HEARTS);
-            playerIn.sendSystemMessage(Component.translatable("treat."+this.type.getName()+".level_up"));
+            playerIn.sendMessage(ComponentUtil.translatable("treat."+this.type.getName()+".level_up"), net.minecraft.Util.NIL_UUID);
         }
     }
 }

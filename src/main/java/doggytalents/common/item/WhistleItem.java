@@ -482,7 +482,7 @@ public class WhistleItem extends Item implements IDogItem {
             dog.setSilentTickLeft(20 * 20);
         }
         if (shh_ed) {
-            player.sendSystemMessage(Component.translatable("dogcommand.ssshhh"));
+            player.sendMessage(ComponentUtil.translatable("dogcommand.ssshhh"), net.minecraft.Util.NIL_UUID);
             level.playSound(null, player.blockPosition(), 
                 DoggySounds.WHISTLE_LONG.get(), 
                 SoundSource.PLAYERS, 
@@ -516,9 +516,9 @@ public class WhistleItem extends Item implements IDogItem {
             dog.setCrossOriginTp(switch_to);
         }
         if (switch_to) {
-            player.sendSystemMessage(Component.translatable("dogcommand.cross_origin.set"));
+            player.sendMessage(ComponentUtil.translatable("dogcommand.cross_origin.set"), net.minecraft.Util.NIL_UUID);
         } else {
-            player.sendSystemMessage(Component.translatable("dogcommand.cross_origin.unset"));
+            player.sendMessage(ComponentUtil.translatable("dogcommand.cross_origin.unset"), net.minecraft.Util.NIL_UUID);
         }
     }
 

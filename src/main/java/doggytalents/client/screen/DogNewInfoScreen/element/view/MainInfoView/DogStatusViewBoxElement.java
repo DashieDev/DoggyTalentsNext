@@ -44,7 +44,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
 
     @Override
     public AbstractElement init() {
-        petButton = new FlatButton(0, 0, 30, 50, Component.empty(), (b) -> {
+        petButton = new FlatButton(0, 0, 30, 50, ComponentUtil.empty(), (b) -> {
             PetSelectScreen.open();
         }) {
             @Override
@@ -53,7 +53,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
                 // super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 if (this.isHovered) {
                     ToolTipOverlayManager.get().setComponents(
-                        List.of(Component.translatable("doggui.home.pet_hint", 
+                        List.of(ComponentUtil.translatable("doggui.home.pet_hint", 
                             dog.getGenderPronoun())));
                 }
             }

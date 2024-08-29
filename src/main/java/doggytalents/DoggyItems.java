@@ -197,7 +197,7 @@ public class DoggyItems {
 
     public static final Supplier<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
         () -> new ChopinRecordItem(13, () -> DoggySounds.CHOPIN_OP64_NO1.get() , 
-        (new Item.Properties()).stacksTo(1).tab(DoggyItemGroups.GENERAL).rarity(Rarity.RARE), 132));
+        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), 132));
     public static final Supplier<PianoItem> GRAND_PIANO_WHITE = register("grand_piano_white_item", 
         () -> new PianoItem(DoggyEntityTypes.GRAND_PIANO_WHITE));
     public static final Supplier<PianoItem> GRAND_PIANO_BLACK = register("grand_piano_black_item", 
@@ -364,7 +364,7 @@ public class DoggyItems {
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.STRIPED_SCARF, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 if (tintIndex == 1) {
                     return ((StripedScarfItem) stack.getItem()).getFgColor(stack);
                 }
@@ -384,13 +384,13 @@ public class DoggyItems {
              }, item);
         }, DoggyBlocks::logError);
         Util.acceptOrElse(DoggyItems.MIDI_KEYBOARD, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex != 1 ? -1 : ItemUtil.getDyeColorForStack(stack);
              }, item);
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.ANGEL_WINGS, (item) -> {
-            event.register((stack, tintIndex) -> {
+            itemColors.register((stack, tintIndex) -> {
                 return tintIndex > 0 ? -1 : ItemUtil.getDyeColorForStack(stack);
              }, item);
         }, DoggyBlocks::logError);

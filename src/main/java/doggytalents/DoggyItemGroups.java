@@ -1,6 +1,7 @@
 package doggytalents;
 
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.block.DogBedBlock;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.item.itemgroup.DTNItemCategory;
@@ -21,7 +22,7 @@ public class DoggyItemGroups {
     // public static final DeferredRegister<CreativeModeTab> ITEM_GROUP = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
     // public static RegistryObject<CreativeModeTab> MAIN
     //     = register("main", () -> CreativeModeTab.builder()
-    //         .title(Component.translatable("doggytalents.item_group.main"))
+    //         .title(ComponentUtil.translatable("doggytalents.item_group.main"))
     //         .icon(() -> {
     //             return new ItemStack(DoggyItems.DOGGY_CHARM.get());
     //         })
@@ -32,7 +33,7 @@ public class DoggyItemGroups {
 
     // public static RegistryObject<CreativeModeTab> AGRI
     //     = register("agri", () -> CreativeModeTab.builder()
-    //         .title(Component.translatable("doggytalents.item_group.agri"))
+    //         .title(ComponentUtil.translatable("doggytalents.item_group.agri"))
     //         .icon(() -> {
     //             return new ItemStack(DoggyItems.RICE_WHEAT.get());
     //         })
@@ -44,7 +45,7 @@ public class DoggyItemGroups {
 
     // public static RegistryObject<CreativeModeTab> STYLE
     //     = register("style", () -> CreativeModeTab.builder()
-    //         .title(Component.translatable("doggytalents.item_group.style"))
+    //         .title(ComponentUtil.translatable("doggytalents.item_group.style"))
     //         .icon(() -> {
     //             return new ItemStack(DoggyItems.DIVINE_RETRIBUTON.get());
     //         })
@@ -56,7 +57,7 @@ public class DoggyItemGroups {
 
     // public static RegistryObject<CreativeModeTab> DOG_BED
     //     = register("dog_bed", () -> CreativeModeTab.builder()
-    //         .title(Component.translatable("doggytalents.item_group.dog_bed"))
+    //         .title(ComponentUtil.translatable("doggytalents.item_group.dog_bed"))
     //         .icon(
     //             DogBedUtil::createRandomBed
     //         )
@@ -67,7 +68,7 @@ public class DoggyItemGroups {
 
     // public static RegistryObject<CreativeModeTab> MISC
     //     = register("misc", () -> CreativeModeTab.builder()
-    //         .title(Component.translatable("doggytalents.item_group.misc"))
+    //         .title(ComponentUtil.translatable("doggytalents.item_group.misc"))
     //         .icon(() -> {
     //             return new ItemStack(DoggyItems.DOG_PLUSHIE_TOY.get());
     //         })
@@ -83,27 +84,27 @@ public class DoggyItemGroups {
     
     //1.19.2-
     public static CreativeModeTab MAIN = CreativeModeTabBuilder.builder()
-        .title(Component.translatable("doggytalents.item_group.main"))
+        .title(ComponentUtil.translatable("doggytalents.item_group.main"))
         .icon(() -> {
             return new ItemStack(DoggyItems.DOGGY_CHARM.get());
         }).build();
     public static CreativeModeTab AGRI = CreativeModeTabBuilder.builder()
-        .title(Component.translatable("doggytalents.item_group.agri"))
+        .title(ComponentUtil.translatable("doggytalents.item_group.agri"))
         .icon(() -> {
             return new ItemStack(DoggyItems.RICE_WHEAT.get());
         }).build();
     public static CreativeModeTab STYLE = CreativeModeTabBuilder.builder()
-        .title(Component.translatable("doggytalents.item_group.style"))
+        .title(ComponentUtil.translatable("doggytalents.item_group.style"))
         .icon(() -> {
             return new ItemStack(DoggyItems.DIVINE_RETRIBUTON.get());
         }).build();
     public static CreativeModeTab DOG_BED = CreativeModeTabBuilder.builder()
-        .title(Component.translatable("doggytalents.item_group.dog_bed"))
+        .title(ComponentUtil.translatable("doggytalents.item_group.dog_bed"))
         .icon(
             DogBedUtil::createRandomBed
         ).build();
     public static CreativeModeTab MISC = CreativeModeTabBuilder.builder()
-        .title(Component.translatable("doggytalents.item_group.misc"))
+        .title(ComponentUtil.translatable("doggytalents.item_group.misc"))
         .icon(() -> {
             return new ItemStack(DoggyItems.DOG_PLUSHIE_TOY.get());
         }).build();

@@ -5,6 +5,7 @@ import java.util.Properties;
 import java.util.function.Supplier;
 
 import doggytalents.DoggyAccessoryTypes;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.api.registry.AccessoryType;
@@ -46,7 +47,7 @@ public class YetiGoose extends Accessory implements IAccessoryHasModel{
         public void appendHoverText(ItemStack stack, Level level, List<Component> components,
                 TooltipFlag flags) {
             var desc_id = this.getDescriptionId(stack) + ".description";
-            components.add(Component.translatable(desc_id).withStyle(
+            components.add(ComponentUtil.translatable(desc_id).withStyle(
                 Style.EMPTY.withItalic(true)
             ));
         }

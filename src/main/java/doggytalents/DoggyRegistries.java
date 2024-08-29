@@ -36,9 +36,9 @@ public class DoggyRegistries {
         return new RegistryBuilder<T>().setName(rl).setType(type);
     }
 
-    private static <T> Supplier<IForgeRegistry<T>> makeRegistry(NewRegistryEvent event, 
+    private static <T extends IForgeRegistryEntry<T>> Supplier<IForgeRegistry<T>> makeRegistry(NewRegistryEvent event, 
         final ResourceLocation key, Class<T> type, ResourceLocation defaultKey) {
-        var builder = new RegistryBuilder<T>().setName(key);
+        var builder = new RegistryBuilder<T>().setName(key).setType(type);
         //builder.sync(true);
         builder.setDefaultKey(defaultKey);
         var ret = event.create(builder);

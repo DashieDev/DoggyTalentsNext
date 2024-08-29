@@ -3,6 +3,7 @@ package doggytalents.common.entity.ai.triggerable;
 import javax.annotation.Nonnull;
 
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.network.chat.Component;
@@ -97,8 +98,8 @@ public class DogWantAttentionAction extends TriggerableAction {
                 whinedToAttention = true;
                 this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
                 int r = this.dog.getRandom().nextInt(3);
-                owner.sendSystemMessage(Component.translatable(
-                    "dog.msg.want_attention." + r, dog.getName().getString()));
+                owner.sendMessage(ComponentUtil.translatable(
+                    "dog.msg.want_attention." + r, dog.getName().getString()), net.minecraft.Util.NIL_UUID);
             }
             checkAndSwitchToAttention();
         }

@@ -61,6 +61,7 @@ import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.util.*;
 import doggytalents.common.variant.DogVariant;
 import doggytalents.common.variant.util.DogVariantUtil;
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -210,7 +211,7 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Integer> ANIM_SYNC_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
 
     // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
-    private static final Cache<EntityDataAccessor<DogVariant>> DOG_VARIANT = Cache.make(() -> (EntityDataAccessor<DogVariant>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_VARIANT_SERIALIZER.get()));
+    private static final Cache<EntityDataAccessor<DogVariant>> DOG_VARIANT = Cache.make(() -> (EntityDataAccessor<DogVariant>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_VARIANT_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<DogLevel>> DOG_LEVEL = Cache.make(() -> (EntityDataAccessor<DogLevel>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<EnumGender>> GENDER = Cache.make(() -> (EntityDataAccessor<EnumGender>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<EnumMode>> MODE = Cache.make(() -> (EntityDataAccessor<EnumMode>) SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER.get().getSerializer()));
@@ -220,7 +221,7 @@ public class Dog extends AbstractDog {
     private static final Cache<EntityDataAccessor<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (EntityDataAccessor<List<DoggyArtifactItem>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<DogSize>> DOG_SIZE = Cache.make(() -> (EntityDataAccessor<DogSize>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER.get().getSerializer()));
     private static final Cache<EntityDataAccessor<DogSkinData>> CUSTOM_SKIN = Cache.make(() -> (EntityDataAccessor<DogSkinData>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER.get().getSerializer()));
-    private static final Cache<EntityDataAccessor<DogPettingState>> DOG_PETTING_STATE = Cache.make(() -> (EntityDataAccessor<DogPettingState>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_PETTING_STATE.get()));
+    private static final Cache<EntityDataAccessor<DogPettingState>> DOG_PETTING_STATE = Cache.make(() -> (EntityDataAccessor<DogPettingState>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_PETTING_STATE.get().getSerializer()));
 
     public static final void initDataParameters() { 
         DOG_VARIANT.get();
@@ -4513,7 +4514,7 @@ public class Dog extends AbstractDog {
     public boolean isPushedByFluid() {
         if (this.fireImmune() && this.isInLava())
             return false;
-        if (this.alterationProps.resistWaterPush() && type == ForgeMod.WATER_TYPE.get())
+        if (this.alterationProps.resistWaterPush())
             return false;
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType();

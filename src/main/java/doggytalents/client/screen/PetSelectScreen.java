@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.DTNClientPettingManager;
 import doggytalents.common.entity.DogPettingManager.DogPettingType;
 import net.minecraft.client.Minecraft;
@@ -18,7 +19,7 @@ public class PetSelectScreen extends StringEntrySelectScreen {
     private Font font;
 
     public PetSelectScreen() {
-        super(Component.empty());
+        super(ComponentUtil.empty());
         this.font = Minecraft.getInstance().font;
     }
 
@@ -88,7 +89,7 @@ public class PetSelectScreen extends StringEntrySelectScreen {
             return;
 
         final int line_spacing = 2;
-        Component text = Component.translatable("doggytalents.screen.pet_select.help.0"); 
+        Component text = ComponentUtil.translatable("doggytalents.screen.pet_select.help.0"); 
         var text_lines = font.split(text, t_width_limit);
         int lines_count = text_lines.size();
 
@@ -117,11 +118,11 @@ public class PetSelectScreen extends StringEntrySelectScreen {
         var current_mode_str = current_mode == DogPettingType.HUG ?
             I18n.get("dog.petmode.hug")
             : I18n.get("dog.petmode.facerub");
-        var title = Component.literal(current_mode_str)
+        var title = ComponentUtil.literal(current_mode_str)
             .withStyle(Style.EMPTY.withBold(true));
 
         final int line_spacing = 2;
-        Component text = Component.translatable("doggytalents.screen.pet_select.help.1"); 
+        Component text = ComponentUtil.translatable("doggytalents.screen.pet_select.help.1"); 
         var text_lines = font.split(text, t_width_limit);
         int lines_count = text_lines.size() + 1;
 

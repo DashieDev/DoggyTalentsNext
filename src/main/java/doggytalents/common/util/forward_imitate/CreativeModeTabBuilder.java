@@ -2,6 +2,7 @@ package doggytalents.common.util.forward_imitate;
 
 import java.util.function.Supplier;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +14,7 @@ public class CreativeModeTabBuilder {
     }
 
     
-    private Component title = Component.empty();
+    private Component title = ComponentUtil.empty();
     private Supplier<ItemStack> icon = () -> ItemStack.EMPTY;
 
     private CreativeModeTabBuilder() {}

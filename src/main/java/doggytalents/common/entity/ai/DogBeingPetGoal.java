@@ -130,7 +130,7 @@ public class DogBeingPetGoal extends Goal {
         this.petEnd = false;
         this.startInterupt = false;
         this.petTick = 0;
-        int r = dog.getRandom().nextIntBetweenInclusive(0, 25);
+        int r = EntityUtil.getRandomNumber(dog, 0, 25);
         this.petTick_ff_threshold = (5 + r) * 20;
         this.sound_cooldown = 0;
         this.triggerCooldown = startTriggerCooldown(dog);

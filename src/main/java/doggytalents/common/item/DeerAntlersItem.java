@@ -3,6 +3,7 @@ package doggytalents.common.item;
 import java.util.List;
 import java.util.function.Supplier;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.registry.Accessory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -20,7 +21,7 @@ public class DeerAntlersItem extends AccessoryItem {
     public void appendHoverText(ItemStack stack, Level context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        components.add(ComponentUtil.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }

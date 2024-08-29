@@ -96,8 +96,8 @@ public class DogSkinElement extends AbstractElement {
         scroll.addChildren(new SkinStrEntry(scroll, getScreen(), ComponentUtil.literal("Desciption: "), 
             ComponentUtil.literal(manifestSkin.getDesc())).init()); 
         if (!manifestSkin.getTags().isEmpty()) 
-        scroll.addChildren(new SkinStrEntry(scroll, getScreen(), Component.literal("Tags: "), 
-            Component.literal(manifestSkin.getTags())).init());
+        scroll.addChildren(new SkinStrEntry(scroll, getScreen(), ComponentUtil.literal("Tags: "), 
+        ComponentUtil.literal(manifestSkin.getTags())).init());
         if (manifestSkin.isCustom()) {
             this.initSha1Button();
             scroll.addChildren((new DivElement(scroll, getScreen()) {
@@ -147,12 +147,12 @@ public class DogSkinElement extends AbstractElement {
 
     
     private void initSha1Button() {
-        var sha1_txt = Component.literal("Copy SHA-1").withStyle(
+        var sha1_txt = ComponentUtil.literal("Copy SHA-1").withStyle(
             Style.EMPTY.withColor(0x696868)
         );
         this.copy_sha1_button = new TextOnlyButton(0, 0, font.width(sha1_txt), 10, sha1_txt, b -> {
             this.copySha1();
-            b.setMessage(Component.literal("SHA-1 Copied!").withStyle(
+            b.setMessage(ComponentUtil.literal("SHA-1 Copied!").withStyle(
                 Style.EMPTY.withColor(0xff1fa800)
             ));
         }, font);

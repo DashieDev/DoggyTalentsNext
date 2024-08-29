@@ -91,10 +91,10 @@ public class ScentTreatItem extends Item {
         var block = NBTUtil.getRegistryValue(tag, SCENT_BLOCK_ID, ForgeRegistries.BLOCKS);
         if (block == null)
             return;
-        components.add(Component.translatable(this.getDescriptionId() + ".scented_block")
+        components.add(ComponentUtil.translatable(this.getDescriptionId() + ".scented_block")
             .withStyle(Style.EMPTY.withColor(0xffffea2e).withBold(true)));
         components.add(
-            Component.translatable(block.asItem().getDescriptionId()).withStyle(
+            ComponentUtil.translatable(block.asItem().getDescriptionId()).withStyle(
                 Style.EMPTY.withItalic(true).withColor(0xff6fe86b)
             )
         );

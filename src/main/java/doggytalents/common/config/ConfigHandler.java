@@ -664,7 +664,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
             if (CONFIG_CUSTOM_SKINS_SPEC.isLoaded()) {
                     return config.get();
             }
-            return config.getDefault();
+            return config.get();
         }
 
         public boolean isBlacklisted(String val) {

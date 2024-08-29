@@ -5,8 +5,9 @@ import java.util.Optional;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class DogVariant {
+public class DogVariant extends ForgeRegistryEntry<DogVariant> {
     
     public static final DogVariant PALE = new DogVariant(DogVariant.propsVanilla("pale")
         .icon(Util.getResource("textures/entity/dog/classical_icon/pale.png"))

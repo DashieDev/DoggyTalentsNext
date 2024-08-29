@@ -1,6 +1,7 @@
 package doggytalents.common.variant.util;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import doggytalents.DogVariants;
@@ -9,7 +10,6 @@ import doggytalents.common.util.Util;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.RandomSource;
 
 public class DogVariantUtil {
     
@@ -43,7 +43,7 @@ public class DogVariantUtil {
         return entries;
     }
 
-    public static DogVariant getRandom(RandomSource random) {
+    public static DogVariant getRandom(Random random) {
         var entries = getAll();
         if (entries.isEmpty())
             return getDefault();
