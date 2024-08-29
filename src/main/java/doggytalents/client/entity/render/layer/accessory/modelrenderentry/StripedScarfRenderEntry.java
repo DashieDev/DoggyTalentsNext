@@ -5,10 +5,10 @@ import doggytalents.client.entity.model.StripedScarfModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLayerDefinitions;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class StripedScarfRenderEntry extends DoubleDyableRenderEntry {
     public static final ModelLayerLocation DOG_STRIPED_SCARF = new ModelLayerLocation(Util.getResource("dog_striped_scarf"), "main");
