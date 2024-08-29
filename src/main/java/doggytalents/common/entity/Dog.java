@@ -209,32 +209,17 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ANIM_SYNC_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
 
-    // Use Cache.make to ensure static fields are not initialised too early (before Serializers have been registered)
-    private static final Cache<EntityDataAccessor<DogVariant>> DOG_VARIANT = Cache.make(() -> (EntityDataAccessor<DogVariant>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_VARIANT_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<DogLevel>> DOG_LEVEL = Cache.make(() -> (EntityDataAccessor<DogLevel>) SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<EnumGender>> GENDER = Cache.make(() -> (EntityDataAccessor<EnumGender>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<EnumMode>> MODE = Cache.make(() -> (EntityDataAccessor<EnumMode>) SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BED_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>> DOG_BOWL_LOCATION = Cache.make(() -> (EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<IncapacitatedSyncState>> DOG_INCAP_SYNC_STATE = Cache.make(() -> (EntityDataAccessor<IncapacitatedSyncState>) SynchedEntityData.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (EntityDataAccessor<List<DoggyArtifactItem>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<DogSize>> DOG_SIZE = Cache.make(() -> (EntityDataAccessor<DogSize>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<DogSkinData>> CUSTOM_SKIN = Cache.make(() -> (EntityDataAccessor<DogSkinData>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER.get()));
-    private static final Cache<EntityDataAccessor<DogPettingState>> DOG_PETTING_STATE = Cache.make(() -> (EntityDataAccessor<DogPettingState>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_PETTING_STATE.get()));
-
-    public static final void initDataParameters() { 
-        DOG_VARIANT.get();
-        DOG_LEVEL.get();
-        GENDER.get();
-        MODE.get();
-        DOG_BED_LOCATION.get();
-        DOG_BOWL_LOCATION.get();
-        DOG_INCAP_SYNC_STATE.get();
-        ARTIFACTS.get();
-        DOG_SIZE.get();
-        CUSTOM_SKIN.get();
-        DOG_PETTING_STATE.get();
-    }
+    private static final EntityDataAccessor<DogVariant> DOG_VARIANT = SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_VARIANT_SERIALIZER);
+    private static final EntityDataAccessor<DogLevel> DOG_LEVEL = SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER);
+    private static final EntityDataAccessor<EnumGender> GENDER = SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER);
+    private static final EntityDataAccessor<EnumMode> MODE = SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER);
+    private static final EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>> DOG_BED_LOCATION = SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER);
+    private static final EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>> DOG_BOWL_LOCATION = SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER);
+    private static final EntityDataAccessor<IncapacitatedSyncState> DOG_INCAP_SYNC_STATE = SynchedEntityData.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER);
+    private static final EntityDataAccessor<List<DoggyArtifactItem>> ARTIFACTS = SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER);
+    private static final EntityDataAccessor<DogSize> DOG_SIZE = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER);
+    private static final EntityDataAccessor<DogSkinData> CUSTOM_SKIN = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER);
+    private static final EntityDataAccessor<DogPettingState> DOG_PETTING_STATE = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_PETTING_STATE);
 
     // Cached values
     private final Cache<Integer> spendablePoints = Cache.make(this::getSpendablePointsInternal);
@@ -338,24 +323,24 @@ public class Dog extends AbstractDog {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DOG_VARIANT.get(), DogVariantUtil.getDefault());
+        this.entityData.define(DOG_VARIANT, DogVariantUtil.getDefault());
         this.entityData.define(LAST_KNOWN_NAME, Optional.empty());
         this.entityData.define(DOG_FLAGS, 0);
-        this.entityData.define(GENDER.get(), EnumGender.UNISEX);
-        this.entityData.define(MODE.get(), EnumMode.DOCILE);
+        this.entityData.define(GENDER, EnumGender.UNISEX);
+        this.entityData.define(MODE, EnumMode.DOCILE);
         this.entityData.define(HUNGER_INT, 60F);
-        this.entityData.define(CUSTOM_SKIN.get(), DogSkinData.NULL);
-        this.entityData.define(DOG_LEVEL.get(), new DogLevel(0, 0));
-        this.entityData.define(DOG_INCAP_SYNC_STATE.get(), IncapacitatedSyncState.NONE);
-        this.entityData.define(DOG_SIZE.get(), DogSize.MODERATO);
+        this.entityData.define(CUSTOM_SKIN, DogSkinData.NULL);
+        this.entityData.define(DOG_LEVEL, new DogLevel(0, 0));
+        this.entityData.define(DOG_INCAP_SYNC_STATE, IncapacitatedSyncState.NONE);
+        this.entityData.define(DOG_SIZE, DogSize.MODERATO);
         this.entityData.define(BONE_VARIANT, ItemStack.EMPTY);
-        this.entityData.define(ARTIFACTS.get(), new ArrayList<DoggyArtifactItem>(3));
-        this.entityData.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
-        this.entityData.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+        this.entityData.define(ARTIFACTS, new ArrayList<DoggyArtifactItem>(3));
+        this.entityData.define(DOG_BED_LOCATION, new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+        this.entityData.define(DOG_BOWL_LOCATION, new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
         this.entityData.define(INCAP_VAL, 0);
         this.entityData.define(ANIMATION, 0);
         this.entityData.define(ANIM_SYNC_TIME, 0);
-        this.entityData.define(DOG_PETTING_STATE.get(), DogPettingState.NULL);
+        this.entityData.define(DOG_PETTING_STATE, DogPettingState.NULL);
     }
 
     @Override
@@ -2670,7 +2655,7 @@ public class Dog extends AbstractDog {
         if (wolf_armor != null && !wolf_armor.isEmpty())
             NBTUtil.writeItemStack(compound, "wolfArmorItem", wolf_armor);
 
-        DimensionDependantArg<Optional<BlockPos>> bedsData = this.entityData.get(DOG_BED_LOCATION.get());
+        DimensionDependantArg<Optional<BlockPos>> bedsData = this.entityData.get(DOG_BED_LOCATION);
 
         if (!bedsData.isEmpty()) {
             ListTag bedsList = new ListTag();
@@ -2685,7 +2670,7 @@ public class Dog extends AbstractDog {
             compound.put("beds", bedsList);
         }
 
-        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.entityData.get(DOG_BOWL_LOCATION.get());
+        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.entityData.get(DOG_BOWL_LOCATION);
 
         if (!bowlsData.isEmpty()) {
             ListTag bowlsList = new ListTag();
@@ -2789,7 +2774,7 @@ public class Dog extends AbstractDog {
             DoggyTalentsNext.LOGGER.error("Failed to load artifacts : " + e);
         }
         
-        this.entityData.set(ARTIFACTS.get(), artifactsList);
+        this.entityData.set(ARTIFACTS, artifactsList);
 
         try {
             this.spendablePoints.markForRefresh();
@@ -2855,13 +2840,13 @@ public class Dog extends AbstractDog {
             else if (compound.contains("level_dire", Tag.TAG_ANY_NUMERIC)) {
                 level_kami = compound.getInt("level_dire");    
             }
-            this.entityData.set(DOG_LEVEL.get(), new DogLevel(level_normal, level_kami));
+            this.entityData.set(DOG_LEVEL, new DogLevel(level_normal, level_kami));
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load levels: " + e.getMessage());
             e.printStackTrace();
         }
 
-        DimensionDependantArg<Optional<BlockPos>> bedsData = this.entityData.get(DOG_BED_LOCATION.get()).copyEmpty();
+        DimensionDependantArg<Optional<BlockPos>> bedsData = this.entityData.get(DOG_BED_LOCATION).copyEmpty();
 
         try {
             if (compound.contains("beds", Tag.TAG_LIST)) {
@@ -2880,9 +2865,9 @@ public class Dog extends AbstractDog {
             e.printStackTrace();
         }
 
-        this.entityData.set(DOG_BED_LOCATION.get(), bedsData);
+        this.entityData.set(DOG_BED_LOCATION, bedsData);
 
-        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.entityData.get(DOG_BOWL_LOCATION.get()).copyEmpty();
+        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.entityData.get(DOG_BOWL_LOCATION).copyEmpty();
 
         try {
             if (compound.contains("bowls", Tag.TAG_LIST)) {
@@ -2901,7 +2886,7 @@ public class Dog extends AbstractDog {
             e.printStackTrace();
         }
 
-        this.entityData.set(DOG_BOWL_LOCATION.get(), bowlsData);
+        this.entityData.set(DOG_BOWL_LOCATION, bowlsData);
 
         try {
             this.statsTracker.readAdditional(compound);
@@ -3175,26 +3160,26 @@ public class Dog extends AbstractDog {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (DOG_VARIANT.get().equals(key)) {
+        if (DOG_VARIANT.equals(key)) {
             this.refreshAlterations();
         }
         
-        if (ARTIFACTS.get().equals(key)) {
+        if (ARTIFACTS.equals(key)) {
             this.refreshAlterations();
         }
 
-        if (DOG_LEVEL.get().equals(key)) {
+        if (DOG_LEVEL.equals(key)) {
             this.spendablePoints.markForRefresh();
             float h = this.getDogLevel().getMaxHealth();
             if (h != this.getMaxHealth())
                 this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(h);
         }
 
-        if (DOG_SIZE.get().equals(key)) {
+        if (DOG_SIZE.equals(key)) {
             this.refreshDimensions();
         }
 
-        if (this.level().isClientSide && CUSTOM_SKIN.get().equals(key)) {
+        if (this.level().isClientSide && CUSTOM_SKIN.equals(key)) {
             this.setClientSkin(
                 DogTextureManager.INSTANCE
                     .getDogSkin(
@@ -3212,7 +3197,7 @@ public class Dog extends AbstractDog {
             this.hungerManager.onHungerUpdated(this.getDogHunger());
         }
 
-        if (!this.level().isClientSide && MODE.get().equals(key)) {
+        if (!this.level().isClientSide && MODE.equals(key)) {
             var mode = getMode();
             this.incapacitatedMananger.onModeUpdate(mode);
             if (mode == EnumMode.INJURED) {
@@ -3221,7 +3206,7 @@ public class Dog extends AbstractDog {
             updateWanderState(mode);
         }
 
-        if (DOG_PETTING_STATE.get().equals(key)) {
+        if (DOG_PETTING_STATE.equals(key)) {
             if (this.level().isClientSide)
                 DTNClientPettingManager.get().onPettingUpdate(this, getPettingState());
         }
@@ -3432,24 +3417,24 @@ public class Dog extends AbstractDog {
     }
 
     public DogVariant dogVariant() {
-        return this.entityData.get(DOG_VARIANT.get());
+        return this.entityData.get(DOG_VARIANT);
     }
 
     public void setDogVariant(DogVariant val) {
-        this.entityData.set(DOG_VARIANT.get(), val);
+        this.entityData.set(DOG_VARIANT, val);
     }
 
     public EnumGender getGender() {
-        return this.entityData.get(GENDER.get());
+        return this.entityData.get(GENDER);
     }
 
     public void setGender(EnumGender collar) {
-        this.entityData.set(GENDER.get(), collar);
+        this.entityData.set(GENDER, collar);
     }
 
     @Override
     public EnumMode getMode() {
-        return this.entityData.get(MODE.get());
+        return this.entityData.get(MODE);
     }
 
     public boolean isMode(EnumMode... modes) {
@@ -3464,7 +3449,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setMode(EnumMode collar) {
-        this.entityData.set(MODE.get(), collar);
+        this.entityData.set(MODE, collar);
     }
 
     public Optional<BlockPos> getBedPos() {
@@ -3472,7 +3457,7 @@ public class Dog extends AbstractDog {
     }
 
     public Optional<BlockPos> getBedPos(ResourceKey<Level> registryKey) {
-        return this.entityData.get(DOG_BED_LOCATION.get()).getOrDefault(registryKey, Optional.empty());
+        return this.entityData.get(DOG_BED_LOCATION).getOrDefault(registryKey, Optional.empty());
     }
 
     public void setBedPos(@Nullable BlockPos pos) {
@@ -3484,7 +3469,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setBedPos(ResourceKey<Level> registryKey, Optional<BlockPos> pos) {
-        this.entityData.set(DOG_BED_LOCATION.get(), this.entityData.get(DOG_BED_LOCATION.get()).copy().set(registryKey, pos));
+        this.entityData.set(DOG_BED_LOCATION, this.entityData.get(DOG_BED_LOCATION).copy().set(registryKey, pos));
     }
 
     public Optional<BlockPos> getBowlPos() {
@@ -3492,7 +3477,7 @@ public class Dog extends AbstractDog {
     }
 
     public Optional<BlockPos> getBowlPos(ResourceKey<Level> registryKey) {
-        return this.entityData.get(DOG_BOWL_LOCATION.get()).getOrDefault(registryKey, Optional.empty());
+        return this.entityData.get(DOG_BOWL_LOCATION).getOrDefault(registryKey, Optional.empty());
     }
 
     public void setBowlPos(@Nullable BlockPos pos) {
@@ -3504,7 +3489,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setBowlPos(ResourceKey<Level> registryKey, Optional<BlockPos> pos) {
-        this.entityData.set(DOG_BOWL_LOCATION.get(), this.entityData.get(DOG_BOWL_LOCATION.get()).copy().set(registryKey, pos));
+        this.entityData.set(DOG_BOWL_LOCATION, this.entityData.get(DOG_BOWL_LOCATION).copy().set(registryKey, pos));
     }
 
     @Override
@@ -3605,7 +3590,7 @@ public class Dog extends AbstractDog {
     }
 
     public DogSkinData getSkinData () {
-        return this.entityData.get(CUSTOM_SKIN.get());
+        return this.entityData.get(CUSTOM_SKIN);
     }
 
     public void setDogSkinData(DogSkinData data) {
@@ -3614,32 +3599,32 @@ public class Dog extends AbstractDog {
         }
         if (!DogUtil.vertifySkinData(data.getHash()))
             data = DogSkinData.NULL;
-        this.entityData.set(CUSTOM_SKIN.get(), data);
+        this.entityData.set(CUSTOM_SKIN, data);
     }
 
     @Override
     public DogLevel getDogLevel() {
-        return this.entityData.get(DOG_LEVEL.get());
+        return this.entityData.get(DOG_LEVEL);
     }
 
     public void setLevel(DogLevel level) {
-        this.entityData.set(DOG_LEVEL.get(), level);
+        this.entityData.set(DOG_LEVEL, level);
     }
 
     public IncapacitatedSyncState getIncapSyncState() {
-        return this.entityData.get(DOG_INCAP_SYNC_STATE.get());
+        return this.entityData.get(DOG_INCAP_SYNC_STATE);
     }
 
     public void setIncapSyncState(IncapacitatedSyncState state) {
-        this.entityData.set(DOG_INCAP_SYNC_STATE.get(), state);
+        this.entityData.set(DOG_INCAP_SYNC_STATE, state);
     }
 
     public DogPettingState getPettingState() {
-        return this.entityData.get(DOG_PETTING_STATE.get());
+        return this.entityData.get(DOG_PETTING_STATE);
     }
 
     public void setPettingState(DogPettingState state) {
-        this.entityData.set(DOG_PETTING_STATE.get(), state);
+        this.entityData.set(DOG_PETTING_STATE, state);
     }
 
     @Override
@@ -3651,12 +3636,12 @@ public class Dog extends AbstractDog {
 
     @Override
     public void setDogSize(DogSize size) {
-        this.entityData.set(DOG_SIZE.get(), size);
+        this.entityData.set(DOG_SIZE, size);
     }
 
     @Override
     public DogSize getDogSize() {
-        return this.entityData.get(DOG_SIZE.get());
+        return this.entityData.get(DOG_SIZE);
     }
 
     @Override
@@ -3914,7 +3899,7 @@ public class Dog extends AbstractDog {
     }
 
     public List<DoggyArtifactItem> getArtifactsList() {
-        var array = this.entityData.get(ARTIFACTS.get());
+        var array = this.entityData.get(ARTIFACTS);
         return array;
     }
 
@@ -3946,7 +3931,7 @@ public class Dog extends AbstractDog {
 
 
     public void modifyArtifact(Consumer<List<DoggyArtifactItem>> modify) {
-        this.modifyListSyncedData(ARTIFACTS.get(), modify);
+        this.modifyListSyncedData(ARTIFACTS, modify);
     }
 
     public <T> void modifyListSyncedData(EntityDataAccessor<List<T>> key, Consumer<List<T>> modify) {
