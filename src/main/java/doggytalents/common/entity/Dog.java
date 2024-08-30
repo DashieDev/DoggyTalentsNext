@@ -4181,10 +4181,7 @@ public class Dog extends AbstractDog {
 
         final double max_XZ_push_len = getDogPushResistXZCap();
         var move = this.getDeltaMovement();
-        if (this.tickCount % 2 == 0) {
-            this.setDeltaMovement(0, move.y, 0);
-            return;
-        }
+
         double moveX = move.x();
         double moveZ = move.z();
         double moveXZ_lSqr = moveX*moveX + moveZ*moveZ;
