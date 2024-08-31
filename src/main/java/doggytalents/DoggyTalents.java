@@ -9,7 +9,7 @@ import doggytalents.common.talent.*;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import doggytalents.common.talent.talentclass.LowCostTalent;
 import doggytalents.common.talent.talentclass.SingleLevelTalent;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.Optional;
 import java.util.function.BiFunction;

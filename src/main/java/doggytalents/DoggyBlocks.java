@@ -14,8 +14,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.registries.DeferredRegister;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;

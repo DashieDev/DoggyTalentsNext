@@ -52,7 +52,7 @@ import net.minecraft.world.level.block.entity.SmokerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class RiceMillBlockEntity extends BlockEntity { 
     

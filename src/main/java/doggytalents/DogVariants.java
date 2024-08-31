@@ -9,7 +9,7 @@ import doggytalents.common.util.Util;
 import doggytalents.common.variant.CherryWolfVariant;
 import doggytalents.common.variant.DogVariant;
 import doggytalents.common.variant.MoltenWolfVariant;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
 
 public class DogVariants {
     

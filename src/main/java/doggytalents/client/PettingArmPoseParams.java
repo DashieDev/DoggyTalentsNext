@@ -1,6 +1,6 @@
 package doggytalents.client;
 
-import net.neoforged.neoforge.client.IArmPoseTransformer;
+import net.minecraftforge.client.IArmPoseTransformer;
 
 public class PettingArmPoseParams {
     

@@ -34,8 +34,8 @@ import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.minecraftforge.common.NeoForgeMod;
+import net.minecraftforge.fluids.FluidType;
 
 public class HellHoundTalent extends TalentInstance {
 

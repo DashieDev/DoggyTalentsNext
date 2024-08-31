@@ -16,11 +16,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.common.world.BiomeModifier;
-import net.neoforged.neoforge.common.world.BiomeModifiers;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
+import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.common.world.BiomeModifiers;
+import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.registries.NeoForgeRegistries;
 
 public class DTNWolfVariantsProvider {
     

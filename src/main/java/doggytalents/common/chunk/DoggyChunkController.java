@@ -2,9 +2,9 @@ package doggytalents.common.chunk;
 
 import doggytalents.common.util.Util;
 import net.minecraft.server.level.ServerLevel;
-import net.neoforged.neoforge.common.world.chunk.RegisterTicketControllersEvent;
-import net.neoforged.neoforge.common.world.chunk.TicketController;
-import net.neoforged.neoforge.common.world.chunk.TicketHelper;
+import net.minecraftforge.common.world.chunk.RegisterTicketControllersEvent;
+import net.minecraftforge.common.world.chunk.TicketController;
+import net.minecraftforge.common.world.chunk.TicketHelper;
 
 public class DoggyChunkController {
 

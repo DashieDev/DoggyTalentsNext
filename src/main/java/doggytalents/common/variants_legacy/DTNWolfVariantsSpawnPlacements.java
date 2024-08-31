@@ -18,9 +18,9 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent.PositionCheck;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent.PositionCheck.Result;
+import net.minecraftforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent.PositionCheck;
+import net.minecraftforge.event.entity.living.MobSpawnEvent.PositionCheck.Result;
 
 public class DTNWolfVariantsSpawnPlacements {
     

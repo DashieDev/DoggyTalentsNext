@@ -25,8 +25,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.event.TagsUpdatedEvent;
-import net.neoforged.neoforge.event.TagsUpdatedEvent.UpdateCause;
+import net.minecraftforge.event.TagsUpdatedEvent;
+import net.minecraftforge.event.TagsUpdatedEvent.UpdateCause;
 
 public class DogBedMaterialManager {
 

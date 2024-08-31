@@ -14,8 +14,8 @@ import doggytalents.common.variant.DogVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.NeoForgeRegistries;
 
 import java.util.List;
 import java.util.Optional;

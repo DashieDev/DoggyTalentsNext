@@ -1,7 +1,7 @@
 plugins {
     id 'eclipse'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.142'
+    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
 }
 
 version = '1.18.29'
@@ -37,32 +37,40 @@ configurations {
     apiRuntimeOnly.extendsFrom(runtimeOnly)
 }
 
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+minecraft {
 
-runs {
-    client {
-        //taskName 'doggytalents_client'
-        workingDirectory file('run')
-        systemProperty 'forge.logging.console.level', 'debug'
-        modSources.add(project.getSourceSets().main)
-        modSources.add(project.getSourceSets().api)
-    }
+    mappings channel: 'official', version: '1.21'
 
-    server {
-        //taskName 'doggytalents_server'
-        workingDirectory file('run-server')
-        systemProperty 'forge.logging.console.level', 'debug'
-        modSources.add(project.getSourceSets().main)
-        modSources.add(project.getSourceSets().api)
-    }
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
-    data {
-        //taskName 'doggytalents_data'
-        workingDirectory file('run')
-        systemProperty 'forge.logging.console.level', 'debug'
-        programArguments.addAll '--mod', 'doggytalents', '--all', '--output', '"' + file('src/generated/resources/') + '"', '--existing', '"' + sourceSets.main.resources.srcDirs[0] + '"'
-        modSources.add(project.getSourceSets().main)
-        modSources.add(project.getSourceSets().api)
+    runs {
+        client {
+            taskName 'doggytalents_client'
+            workingDirectory file('run')
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                doggytalents.sources((SourceSet[]) [sourceSets.main, sourceSets.api])
+            }
+        }
+
+        server {
+            taskName 'doggytalents_server'
+            workingDirectory file('run-server')
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                doggytalents.sources((SourceSet[]) [sourceSets.main, sourceSets.api])
+            }
+        }
+
+        data {
+            taskName 'doggytalents_data'
+            workingDirectory file('run')
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', 'doggytalents', '--all', '--output', '"' + file('src/generated/resources/') + '"', '--existing', '"' + sourceSets.main.resources.srcDirs[0] + '"'
+            mods {
+                doggytalents.sources((SourceSet[]) [sourceSets.main, sourceSets.api])
+            }
+        }
     }
 }
 
@@ -73,8 +81,8 @@ repositories {
 
 dependencies {
 
-    implementation "net.neoforged:neoforge:21.1.1"
-    
+    minecraft 'net.minecraftforge:forge:1.21-51.0.33'
+
 }
 
 jar {
@@ -96,48 +104,4 @@ jar {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
-}
-
-task vscodePrintRunClient {
-    doFirst {
-
-        println("vmArgs:")
-        def vmArgs = "";
-        for (item in runs.client.realiseJvmArguments()) {
-            vmArgs = vmArgs + item + " "
-        }
-        println(vmArgs)
-        println("==================================")
-        println("args:")
-        def args1 = ""
-        for (item in runs.client.getProgramArguments().get()) {
-            args1 = args1 + item + " "
-        }
-        println(args1)
-        println("==================================")
-        println("")
-        println("")
-    }
-}
-
-task vscodePrintRunData {
-    doFirst {
-
-        println("vmArgs:")
-        def vmArgs = "";
-        for (item in runs.data.realiseJvmArguments()) {
-            vmArgs = vmArgs + item + " "
-        }
-        println(vmArgs)
-        println("==================================")
-        println("args:")
-        def args1 = ""
-        for (item in runs.data.getProgramArguments().get()) {
-            args1 = args1 + item + " "
-        }
-        println(args1)
-        println("==================================")
-        println("")
-        println("")
-    }
 }

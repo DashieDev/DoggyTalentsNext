@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.neoforged.neoforge.common.NeoForgeMod;
+import net.minecraftforge.common.NeoForgeMod;
 
 public class DogSwimmingManager {
     

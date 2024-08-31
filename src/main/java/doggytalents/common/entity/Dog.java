@@ -155,10 +155,10 @@ import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.neoforged.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.minecraftforge.common.NeoForgeMod;
+import net.minecraftforge.fluids.FluidType;
 import doggytalents.common.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
