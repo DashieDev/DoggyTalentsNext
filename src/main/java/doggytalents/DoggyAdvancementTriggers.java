@@ -13,12 +13,14 @@ import doggytalents.common.util.Util;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class DoggyAdvancementTriggers {
     
-    public static final DeferredRegister<CriterionTrigger<?>> TRIGGERS = DeferredRegister.create(BuiltInRegistries.TRIGGER_TYPES, Constants.MOD_ID);
+    public static final DeferredRegister<CriterionTrigger<?>> TRIGGERS = DeferredRegister.create(Registries.TRIGGER_TYPE, Constants.MOD_ID);
 ;
     public static final DogDrunkTrigger DOG_DRUNK_TRIGGER = register("get_dog_drunk", new DogDrunkTrigger());
     public static final OokamikazeTrigger OOKAMIKAZE_TRIGGER  = register("ookamikaze_trigger", new OokamikazeTrigger());

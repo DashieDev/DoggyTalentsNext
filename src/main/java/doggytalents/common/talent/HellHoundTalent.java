@@ -34,8 +34,8 @@ import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.fluids.FluidType;
 
 public class HellHoundTalent extends TalentInstance {
 
@@ -108,7 +108,7 @@ public class HellHoundTalent extends TalentInstance {
 
     @Override
     public InteractionResult canResistPushFromFluidType(FluidType type) {
-        if (type != NeoForgeMod.LAVA_TYPE.value())   
+        if (type != ForgeMod.LAVA_TYPE.get())   
             return InteractionResult.PASS;
 
         if (this.level() >= 5) 

@@ -3,12 +3,13 @@ package doggytalents.common.config;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Talent;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.config.ModConfigEvent;
-import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -25,11 +26,11 @@ public class ConfigHandler {
     public static TalentConfig TALENT;
     public static RespawnTagConfig RESPAWN_TAGS;
     public static DogCustomSkinConfig CUSTOM_SKINS;
-    private static ModConfigSpec CONFIG_SERVER_SPEC;
-    private static ModConfigSpec CONFIG_CLIENT_SPEC;
-    private static ModConfigSpec CONFIG_TALENT_SPEC;
-    private static ModConfigSpec CONFIG_RESPAWN_TAG_SPEC;
-    private static ModConfigSpec CONFIG_CUSTOM_SKINS_SPEC;
+    private static ForgeConfigSpec CONFIG_SERVER_SPEC;
+    private static ForgeConfigSpec CONFIG_CLIENT_SPEC;
+    private static ForgeConfigSpec CONFIG_TALENT_SPEC;
+    private static ForgeConfigSpec CONFIG_RESPAWN_TAG_SPEC;
+    private static ForgeConfigSpec CONFIG_CUSTOM_SKINS_SPEC;
 
     public static final boolean ALWAYS_SHOW_DOG_NAME = true;
     public static final float DEFAULT_MAX_HUNGER = 120F;
@@ -38,79 +39,76 @@ public class ConfigHandler {
     public static final boolean WHISTLE_SOUNDS = true;
 
     public static void init(IEventBus modEventBus) {
-        Pair<ServerConfig, ModConfigSpec> commonPair = new ModConfigSpec.Builder().configure(ServerConfig::new);
+        Pair<ServerConfig, ForgeConfigSpec> commonPair = new ForgeConfigSpec.Builder().configure(ServerConfig::new);
         CONFIG_SERVER_SPEC = commonPair.getRight();
         SERVER = commonPair.getLeft();
-        Pair<ClientConfig, ModConfigSpec> clientPair = new ModConfigSpec.Builder().configure(ClientConfig::new);
+        Pair<ClientConfig, ForgeConfigSpec> clientPair = new ForgeConfigSpec.Builder().configure(ClientConfig::new);
         CONFIG_CLIENT_SPEC = clientPair.getRight();
         CLIENT = clientPair.getLeft();
 
-        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.SERVER, CONFIG_SERVER_SPEC);
-ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_SERVER_SPEC);
+ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC);
         initRespawnTagsConfig();
         initCustomSkinsConfig();
         modEventBus.addListener(ConfigHandler::onConfigLoad);
     }
 
     public static void initTalentConfig() {
-        Pair<TalentConfig, ModConfigSpec> talentPair = new ModConfigSpec.Builder().configure(TalentConfig::new);
+        Pair<TalentConfig, ForgeConfigSpec> talentPair = new ForgeConfigSpec.Builder().configure(TalentConfig::new);
         CONFIG_TALENT_SPEC = talentPair.getRight();
         TALENT = talentPair.getLeft();
 
-        ModLoadingContext.get()
-            .getActiveContainer().registerConfig(ModConfig.Type.SERVER, CONFIG_TALENT_SPEC, "doggytalents-talents.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_TALENT_SPEC, "doggytalents-talents.toml");
     }
 
     public static void initRespawnTagsConfig() {
-        var respawnPair = new ModConfigSpec.Builder().configure(RespawnTagConfig::new);
+        var respawnPair = new ForgeConfigSpec.Builder().configure(RespawnTagConfig::new);
         CONFIG_RESPAWN_TAG_SPEC = respawnPair.getRight();
         RESPAWN_TAGS = respawnPair.getLeft();
 
-        ModLoadingContext.get()
-            .getActiveContainer().registerConfig(ModConfig.Type.SERVER, CONFIG_RESPAWN_TAG_SPEC, "doggytalents-respawn_tags_to_remove.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_RESPAWN_TAG_SPEC, "doggytalents-respawn_tags_to_remove.toml");
     }
 
     public static void initCustomSkinsConfig() {
-        var customSkinPair = new ModConfigSpec.Builder().configure(DogCustomSkinConfig::new);
+        var customSkinPair = new ForgeConfigSpec.Builder().configure(DogCustomSkinConfig::new);
         CONFIG_CUSTOM_SKINS_SPEC = customSkinPair.getRight();
         CUSTOM_SKINS = customSkinPair.getLeft();
 
-        ModLoadingContext.get()
-            .getActiveContainer().registerConfig(ModConfig.Type.SERVER, CONFIG_CUSTOM_SKINS_SPEC, "doggytalents-dog_custom_skins.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_CUSTOM_SKINS_SPEC, "doggytalents-dog_custom_skins.toml");
     }
 
     public static class ClientConfig {
 
-        public ModConfigSpec.BooleanValue KAMI_PARTICLES;
-        public ModConfigSpec.BooleanValue RENDER_CHEST;
-        public ModConfigSpec.BooleanValue ALWAYS_RENDER_CLASSICAL;
-        public ModConfigSpec.BooleanValue RENDER_INCAPACITATED_TEXTURE;
-        public ModConfigSpec.BooleanValue RENDER_HEALTH_IN_NAME;
+        public ForgeConfigSpec.BooleanValue KAMI_PARTICLES;
+        public ForgeConfigSpec.BooleanValue RENDER_CHEST;
+        public ForgeConfigSpec.BooleanValue ALWAYS_RENDER_CLASSICAL;
+        public ForgeConfigSpec.BooleanValue RENDER_INCAPACITATED_TEXTURE;
+        public ForgeConfigSpec.BooleanValue RENDER_HEALTH_IN_NAME;
         public ConfigValue<String> DOG_INFO_SEPERATOR;
         public ConfigValue<String> DOG_INFO_HUNGER_FORMAT;
-        public ModConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
-        public ModConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
-        public ModConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
-        public ModConfigSpec.BooleanValue DONT_RENDER_DIFFOWNER_NAME;
-        public ModConfigSpec.BooleanValue ALWAYS_RENDER_DOG_NAME;
-        public ModConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
-        public ModConfigSpec.BooleanValue USE_VANILLA_RES_FOR_CLASSICAL;
-        public ModConfigSpec.BooleanValue WORD_LOAD_ICON;
-        public ModConfigSpec.BooleanValue AMMY_SPINNA;
-        public ModConfigSpec.BooleanValue RENDER_ARMOR;
-        public ModConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
-        public ModConfigSpec.BooleanValue DISPLAY_SMOKE_WHEN_ON_FIRE;
-        public ModConfigSpec.BooleanValue MOUTH_ITEM_FORCE_RENDER;
-        public ModConfigSpec.IntValue MAX_ANIMATION_LATENCY_ALLOWED;
-        public ModConfigSpec.BooleanValue USE_LEGACY_DOG_ARMOR_RENDER;
-        public ModConfigSpec.BooleanValue USE_PLAYER_HELMET_MODEL_BY_DEFAULT;
-        public ModConfigSpec.BooleanValue USE_THIRD_PARTY_PLAYER_HELMET_MODEL;
-        public ModConfigSpec.BooleanValue ENABLE_STARTER_BUNDLE_BY_DEFAULT;
-        public ModConfigSpec.BooleanValue DOG_VARIANT_CLIENT_EFFECT;
-        public ModConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
-        public ModConfigSpec.BooleanValue TRANSLUCENT_ALL_OVERLAY;
+        public ForgeConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
+        public ForgeConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
+        public ForgeConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
+        public ForgeConfigSpec.BooleanValue DONT_RENDER_DIFFOWNER_NAME;
+        public ForgeConfigSpec.BooleanValue ALWAYS_RENDER_DOG_NAME;
+        public ForgeConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
+        public ForgeConfigSpec.BooleanValue USE_VANILLA_RES_FOR_CLASSICAL;
+        public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON;
+        public ForgeConfigSpec.BooleanValue AMMY_SPINNA;
+        public ForgeConfigSpec.BooleanValue RENDER_ARMOR;
+        public ForgeConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
+        public ForgeConfigSpec.BooleanValue DISPLAY_SMOKE_WHEN_ON_FIRE;
+        public ForgeConfigSpec.BooleanValue MOUTH_ITEM_FORCE_RENDER;
+        public ForgeConfigSpec.IntValue MAX_ANIMATION_LATENCY_ALLOWED;
+        public ForgeConfigSpec.BooleanValue USE_LEGACY_DOG_ARMOR_RENDER;
+        public ForgeConfigSpec.BooleanValue USE_PLAYER_HELMET_MODEL_BY_DEFAULT;
+        public ForgeConfigSpec.BooleanValue USE_THIRD_PARTY_PLAYER_HELMET_MODEL;
+        public ForgeConfigSpec.BooleanValue ENABLE_STARTER_BUNDLE_BY_DEFAULT;
+        public ForgeConfigSpec.BooleanValue DOG_VARIANT_CLIENT_EFFECT;
+        public ForgeConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
+        public ForgeConfigSpec.BooleanValue TRANSLUCENT_ALL_OVERLAY;
 
-        public ClientConfig(ModConfigSpec.Builder builder) {
+        public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
 
             builder.pop();
@@ -276,46 +274,46 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
 
     public static class ServerConfig {
 
-        public ModConfigSpec.BooleanValue DISABLE_HUNGER;
-        public ModConfigSpec.BooleanValue STARTING_ITEMS;
-        public ModConfigSpec.BooleanValue DISABLE_GENDER;
-        public ModConfigSpec.BooleanValue PUPS_GET_PARENT_LEVELS;
-        public ModConfigSpec.BooleanValue IMMORTAL_DOGS;
-        public ModConfigSpec.BooleanValue PLAY_TAG_WITH_DOG;
-        public ModConfigSpec.BooleanValue DOG_GREET_OWNER;
-        public ModConfigSpec.IntValue DOG_GREET_OWNER_LIMIT;
-        public ModConfigSpec.BooleanValue MAX_CREEPER_SWEEPER_DONT_GROWL;
-        public ModConfigSpec.BooleanValue ALL_PLAYER_CANNOT_ATTACK_DOG;
-        public ModConfigSpec.BooleanValue ALL_DOG_BLOCK_PORTAL;
-        public ModConfigSpec.IntValue MAX_HEEL_LIMIT;
-        public ModConfigSpec.DoubleValue HUNGER_MODIFIER;
-        public ModConfigSpec.BooleanValue DISABLE_PRESERVE_UUID;
-        public ModConfigSpec.IntValue DUPLICATION_RESOLVE_STRATEGY;
-        public ModConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
-        public ModConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
-        public ModConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
-        public ModConfigSpec.BooleanValue WOLF_MOUNT_PASSENGER_COLLISION;
-        public ModConfigSpec.BooleanValue CONDUCTING_BONE_CROSS_ORIGIN;
-        public ModConfigSpec.BooleanValue INCAP_VAL_RESET_WHEN_HURT;
-        public ModConfigSpec.IntValue TRAIN_WOLF_LIMIT;
-        public ModConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
-        public ModConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
-        public ModConfigSpec.BooleanValue WOLF_VARIANT_OVERRIDE_EXCLUSIVE;
-        public ModConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
-        public ModConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
-        public ModConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
-        public ModConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
-        public ModConfigSpec.BooleanValue DOG_PETTING;
-        public ModConfigSpec.BooleanValue DOG_PETITNG_JEALOUS;
-        public ModConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
-        public ModConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
-        public ModConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
-        public ModConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
-        public ModConfigSpec.BooleanValue INJURED_DOG_BLOCK_PORTAL;
+        public ForgeConfigSpec.BooleanValue DISABLE_HUNGER;
+        public ForgeConfigSpec.BooleanValue STARTING_ITEMS;
+        public ForgeConfigSpec.BooleanValue DISABLE_GENDER;
+        public ForgeConfigSpec.BooleanValue PUPS_GET_PARENT_LEVELS;
+        public ForgeConfigSpec.BooleanValue IMMORTAL_DOGS;
+        public ForgeConfigSpec.BooleanValue PLAY_TAG_WITH_DOG;
+        public ForgeConfigSpec.BooleanValue DOG_GREET_OWNER;
+        public ForgeConfigSpec.IntValue DOG_GREET_OWNER_LIMIT;
+        public ForgeConfigSpec.BooleanValue MAX_CREEPER_SWEEPER_DONT_GROWL;
+        public ForgeConfigSpec.BooleanValue ALL_PLAYER_CANNOT_ATTACK_DOG;
+        public ForgeConfigSpec.BooleanValue ALL_DOG_BLOCK_PORTAL;
+        public ForgeConfigSpec.IntValue MAX_HEEL_LIMIT;
+        public ForgeConfigSpec.DoubleValue HUNGER_MODIFIER;
+        public ForgeConfigSpec.BooleanValue DISABLE_PRESERVE_UUID;
+        public ForgeConfigSpec.IntValue DUPLICATION_RESOLVE_STRATEGY;
+        public ForgeConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
+        public ForgeConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
+        public ForgeConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
+        public ForgeConfigSpec.BooleanValue WOLF_MOUNT_PASSENGER_COLLISION;
+        public ForgeConfigSpec.BooleanValue CONDUCTING_BONE_CROSS_ORIGIN;
+        public ForgeConfigSpec.BooleanValue INCAP_VAL_RESET_WHEN_HURT;
+        public ForgeConfigSpec.IntValue TRAIN_WOLF_LIMIT;
+        public ForgeConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
+        public ForgeConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
+        public ForgeConfigSpec.BooleanValue WOLF_VARIANT_OVERRIDE_EXCLUSIVE;
+        public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
+        public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
+        public ForgeConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
+        public ForgeConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
+        public ForgeConfigSpec.BooleanValue DOG_PETTING;
+        public ForgeConfigSpec.BooleanValue DOG_PETITNG_JEALOUS;
+        public ForgeConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
+        public ForgeConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
+        public ForgeConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
+        public ForgeConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
+        public ForgeConfigSpec.BooleanValue INJURED_DOG_BLOCK_PORTAL;
 
-        public Map<String, ModConfigSpec.BooleanValue> DISABLED_TALENTS;
+        public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
-        public ServerConfig(ModConfigSpec.Builder builder) {
+        public ServerConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
 
             //DEBUG_MODE = builder
@@ -553,9 +551,9 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
     }
 
     public static class TalentConfig {
-        public Map<Talent, ModConfigSpec.BooleanValue> DISABLED_TALENTS;
+        public Map<Talent, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
-        public TalentConfig(ModConfigSpec.Builder builder) {
+        public TalentConfig(ForgeConfigSpec.Builder builder) {
             builder.comment("Here you can disable talents.")
                 .comment("Notice that players with admin privileges can bypass this.").push("Talents");
 
@@ -568,7 +566,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         }
 
         public boolean getFlag(Talent talent) {
-            ModConfigSpec.BooleanValue booleanValue = this.DISABLED_TALENTS.get(talent);
+            ForgeConfigSpec.BooleanValue booleanValue = this.DISABLED_TALENTS.get(talent);
             if (booleanValue == null) {
                 return true;
             }
@@ -586,11 +584,11 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
 
     public static class RespawnTagConfig {
 
-        public ModConfigSpec.IntValue STRATEGY;
+        public ForgeConfigSpec.IntValue STRATEGY;
         public ConfigValue<List<? extends String>> TAGS_TO_REMOVE;
         public ConfigValue<List<? extends String>> TAGS_TO_KEEP;
 
-        public RespawnTagConfig(ModConfigSpec.Builder builder) {
+        public RespawnTagConfig(ForgeConfigSpec.Builder builder) {
             builder.comment("Specify the Strategy to be used when picking which data to keep and remove");
             builder.comment("when a Dog got unloaded into DTN Respawn Storage");
             builder.comment("0: Removes all tags, keeping only the Dog's Owner, the Dog's Age, DTN's saved data");
@@ -628,14 +626,14 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
 
     public static class DogCustomSkinConfig {
 
-        public ModConfigSpec.IntValue STRATEGY;
+        public ForgeConfigSpec.IntValue STRATEGY;
         public ConfigValue<List<? extends String>> WHITELISTED_SHA1;
         public ConfigValue<List<? extends String>> BLACKLISTED_SHA1;
 
         private Set<String> whitelistedSet = Set.of();
         private Set<String> blacklistedSet = Set.of(); 
 
-        public DogCustomSkinConfig(ModConfigSpec.Builder builder) {
+        public DogCustomSkinConfig(ForgeConfigSpec.Builder builder) {
             builder.comment("Specify the Strategy to be used when picking which Dog Custom Skin");
             builder.comment("could be set for a Dog. The texture's Hash Value is required to be");
             builder.comment("the entry for these lists, they can be obtained via the Show Info");

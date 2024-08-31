@@ -25,8 +25,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.event.TagsUpdatedEvent;
-import net.neoforged.neoforge.event.TagsUpdatedEvent.UpdateCause;
+import net.minecraftforge.event.TagsUpdatedEvent;
+import net.minecraftforge.event.TagsUpdatedEvent.UpdateCause;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class DogBedMaterialManager {
 
@@ -134,7 +135,7 @@ public class DogBedMaterialManager {
     private static void populateBedding(UpdateCause cause) {
         var blocks = fetchBeddingBlocks();
         for (var block : blocks) {
-            var id = BuiltInRegistries.BLOCK.getKey(block);
+            var id = ForgeRegistries.BLOCKS.getKey(block);
             var value = (IBeddingMaterial) new BeddingMaterial(() -> block);
             if (cause == UpdateCause.CLIENT_PACKET_RECEIVED) {
                 if (!ClientEventHandler.vertifyBlockTexture(value.getTexture()))
@@ -148,7 +149,7 @@ public class DogBedMaterialManager {
     private static void populateCasing(UpdateCause cause) {
         var blocks = fetchCasingBlocks();
         for (var block : blocks) {
-            var id = BuiltInRegistries.BLOCK.getKey(block);
+            var id = ForgeRegistries.BLOCKS.getKey(block);
             var value = (ICasingMaterial) new CasingMaterial(() -> block);
             if (cause == UpdateCause.CLIENT_PACKET_RECEIVED) {
                 if (!ClientEventHandler.vertifyBlockTexture(value.getTexture()))
@@ -161,9 +162,9 @@ public class DogBedMaterialManager {
 
     private static List<Block> fetchCasingBlocks() {
         var planks = TagUtil.queryAllValuesForTag(
-            BuiltInRegistries.BLOCK, BlockTags.PLANKS);
+            ForgeRegistries.BLOCKS, BlockTags.PLANKS);
         var logs = TagUtil.queryAllValuesForTag(
-            BuiltInRegistries.BLOCK, BlockTags.LOGS);
+            ForgeRegistries.BLOCKS, BlockTags.LOGS);
         var ret = new ArrayList<Block>(planks.size() + logs.size());
         ret.addAll(planks);
         ret.addAll(logs);
@@ -172,7 +173,7 @@ public class DogBedMaterialManager {
 
     private static List<Block> fetchBeddingBlocks() {
         var wools = TagUtil.queryAllValuesForTag(
-            BuiltInRegistries.BLOCK, BlockTags.WOOL);
+            ForgeRegistries.BLOCKS, BlockTags.WOOL);
         var ret = new ArrayList<Block>(wools.size());
         ret.addAll(wools);
         return ret;

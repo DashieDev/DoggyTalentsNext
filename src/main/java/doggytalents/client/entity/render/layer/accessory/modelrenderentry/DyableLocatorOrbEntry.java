@@ -6,7 +6,7 @@ import doggytalents.client.entity.model.dog.kusa.LocatorOrbModel;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class DyableLocatorOrbEntry extends DoubleDyableRenderEntry {
     

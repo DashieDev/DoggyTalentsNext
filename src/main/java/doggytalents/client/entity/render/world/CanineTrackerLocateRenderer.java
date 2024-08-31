@@ -4,6 +4,8 @@ import java.lang.ref.WeakReference;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyItems;
@@ -31,9 +33,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import doggytalents.common.network.PacketDistributor;
 
 public class CanineTrackerLocateRenderer {
@@ -56,9 +58,9 @@ public class CanineTrackerLocateRenderer {
         if (player != null && player.isSpectator()) return;
         Vec3 dog_pos = null;
         if (cachedDog.get() != null) {
-            double d0 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().xOld, cachedDog.get().getX());
-            double d1 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().yOld, cachedDog.get().getY());
-            double d2 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().zOld, cachedDog.get().getZ());
+            double d0 = Mth.lerp((double)event.getPartialTick(), cachedDog.get().xOld, cachedDog.get().getX());
+            double d1 = Mth.lerp((double)event.getPartialTick(), cachedDog.get().yOld, cachedDog.get().getY());
+            double d2 = Mth.lerp((double)event.getPartialTick(), cachedDog.get().zOld, cachedDog.get().getZ());
             dog_pos = new Vec3(d0, d1 + 1, d2);
         } else {
             dog_pos = new Vec3(locatingPos.getX(), locatingPos.getY() + 1, locatingPos.getZ());
@@ -73,14 +75,15 @@ public class CanineTrackerLocateRenderer {
                 .normalize()
                 .scale(5);
         }
-        drawFloatingDistanceText(locatingName, event.getPoseStack(), d_dog_camera, off_txt, camera);
+        drawFloatingDistanceText(locatingName, d_dog_camera, off_txt, camera);
     }
 
-    public static void drawFloatingDistanceText(String name, PoseStack stack, double distance, Vec3 off_from_player, Camera camera) {
-        stack.pushPose();
-        stack.translate(off_from_player.x(), off_from_player.y(), off_from_player.z());
-        stack.mulPose(camera.rotation());
-        stack.scale(0.02F, -0.02F, 0.02F);
+    public static void drawFloatingDistanceText(String name, double distance, Vec3 off_from_player, Camera camera) {
+        //stack.pushPose();
+        var text_mat = new Matrix4f();
+        text_mat.translate((float)off_from_player.x(), (float)off_from_player.y(), (float)off_from_player.z());
+        text_mat.rotate(camera.rotation());
+        text_mat.scale(0.02F, -0.02F, 0.02F);
         var font = Minecraft.getInstance().font;
 
         var dog_name = name;
@@ -118,13 +121,13 @@ public class CanineTrackerLocateRenderer {
 
         float tX = (float)(-font.width(line1) / 2);
         float tY = 0;
-        font.drawInBatch(line1, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, DisplayMode.SEE_THROUGH, 0, 15728880);
+        font.drawInBatch(line1, tX, tY, 0xffffffff, false, text_mat, bufferSource, DisplayMode.SEE_THROUGH, 0, 15728880);
         tX = (float)(-font.width(line2) / 2);
         tY += font.lineHeight + 3;
-        font.drawInBatch(line2, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, DisplayMode.SEE_THROUGH, 0, 15728880);;
+        font.drawInBatch(line2, tX, tY, 0xffffffff, false, text_mat, bufferSource, DisplayMode.SEE_THROUGH, 0, 15728880);;
         bufferSource.endLastBatch();
 
-        stack.popPose();
+        //stack.popPose();
     }
     
     public static int getHighlightColor(double distance) {

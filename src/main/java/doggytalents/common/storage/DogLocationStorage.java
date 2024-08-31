@@ -18,8 +18,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 import net.minecraft.world.level.saveddata.SavedData.Factory;
-import net.neoforged.neoforge.event.server.ServerStoppedEvent;
-import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.minecraftforge.event.server.ServerStoppedEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -210,7 +210,7 @@ public class DogLocationStorage extends SavedData {
     }
 
     private static SavedData.Factory<DogLocationStorage> FACTORY
-        = new SavedData.Factory<>(DogLocationStorage::new, DogLocationStorage::load);
+        = new SavedData.Factory<>(DogLocationStorage::new, DogLocationStorage::load, null);
     public static SavedData.Factory<DogLocationStorage> storageFactory() {
         return FACTORY;
     }

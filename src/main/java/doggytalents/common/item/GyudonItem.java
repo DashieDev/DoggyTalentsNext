@@ -27,10 +27,10 @@ public class GyudonItem extends DogEddibleBowlFoodItem {
             b -> b
                 .nutrition(20)
                 .saturationModifier(1f)
-                .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400, 1), 1)
-                .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 1200, 1), 1)
-                .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 2400, 1), 1)
-                .effect(() -> new MobEffectInstance(MobEffects.HEAL, 1), 1)
+                .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400, 1), 1)
+                .effect(new MobEffectInstance(MobEffects.REGENERATION, 1200, 1), 1)
+                .effect(new MobEffectInstance(MobEffects.ABSORPTION, 2400, 1), 1)
+                .effect(new MobEffectInstance(MobEffects.HEAL, 1), 1)
         );
     }
     @Override
@@ -53,7 +53,7 @@ public class GyudonItem extends DogEddibleBowlFoodItem {
             var newDuration = effectInst.getEffect().value().isInstantenous() ?
                 effectInst.getDuration()
                 : effectInst.mapDuration(x -> x + 2 * 60 * 20);
-            var new_pair = new PossibleEffect(() -> new MobEffectInstance(
+            var new_pair = new PossibleEffect(new MobEffectInstance(
                 effectInst.getEffect(),
                 newDuration,
                 effectInst.getAmplifier()

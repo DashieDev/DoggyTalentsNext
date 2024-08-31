@@ -25,7 +25,7 @@ public class EggSandwichItem extends DogEddibleItem {
             b -> b
                 .nutrition(6)
                 .saturationModifier(0.6F)
-                .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 60, 1), 1)
+                .effect(new MobEffectInstance(MobEffects.REGENERATION, 60, 1), 1)
         );
     }
     @Override

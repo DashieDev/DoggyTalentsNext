@@ -150,7 +150,7 @@ public class DoggyArmorRenderer extends RenderLayer<Dog, DogModel> {
     private Optional<Model> getAlternativeArmorModel(Dog dog, EquipmentSlot slot, PoseStack stack, ItemStack itemStack) {
         if (slot == EquipmentSlot.HEAD && ConfigHandler.CLIENT.USE_THIRD_PARTY_PLAYER_HELMET_MODEL.get()) {
             var dummy = this.helmetAltModel.getDummy();
-            var customHeadModel = net.neoforged.neoforge.client.ClientHooks
+            var customHeadModel = net.minecraftforge.client.ForgeHooksClient
                 .getArmorModel(dog, itemStack, slot, dummy);
             if (customHeadModel != dummy && customHeadModel != null)
                 return Optional.of(customHeadModel);

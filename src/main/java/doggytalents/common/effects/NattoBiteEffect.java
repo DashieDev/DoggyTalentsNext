@@ -8,7 +8,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.neoforge.client.extensions.common.IClientMobEffectExtensions;
+import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
 
 public class NattoBiteEffect extends MobEffect {
     

@@ -39,8 +39,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -48,7 +49,7 @@ import java.util.function.Supplier;
 
 public class DoggyItems {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, Constants.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MOD_ID);
 
     //DTN Main ==========================
     public static final Supplier<Item> STARTER_BUNDLE = registerWith("starter_bundle", StarterBundleItem::new, 1);

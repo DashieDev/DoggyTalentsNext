@@ -2,7 +2,7 @@ package doggytalents;
 
 import doggytalents.api.registry.AccessoryType;
 import doggytalents.common.lib.Constants;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 

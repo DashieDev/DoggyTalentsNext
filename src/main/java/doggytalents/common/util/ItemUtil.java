@@ -7,13 +7,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -155,6 +156,10 @@ public class ItemUtil {
         return Optional.ofNullable(stack.get(DataComponents.TRIM));
     }
 
+    public static FoodProperties food(ItemStack stack) {
+        return stack.get(DataComponents.FOOD);
+    }
+
     public static CustomData getWrappedTag(ItemStack stack) {
         var custom_data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         return custom_data;
@@ -165,6 +170,6 @@ public class ItemUtil {
         var holder = reg.getHolder(key);
         if (!holder.isPresent())
             return 0;
-        return stack.getEnchantmentLevel(holder.get());
+        return stack.getEnchantments().getLevel(holder.get());
     }
 }

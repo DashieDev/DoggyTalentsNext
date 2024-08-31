@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.neoforged.neoforge.common.NeoForgeMod;
+import net.minecraftforge.common.ForgeMod;
 
 public class DogSwimmingManager {
     
@@ -79,13 +79,13 @@ public class DogSwimmingManager {
     }
 
     private void applySwimAttributes(Dog dog){
-        dog.setAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID, (dd, u) -> 
+        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.getHolder().orElseThrow(), SWIM_BOOST_ID, (dd, u) -> 
             new AttributeModifier(u, this.swimSpeedModifierAdd, Operation.ADD_VALUE)
         );
     }
 
     private void removeSwimAttributes(Dog dog) {
-        dog.removeAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID);
+        dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.getHolder().orElseThrow(), SWIM_BOOST_ID);
     }
     
     private void startSwimming(Dog dog) {

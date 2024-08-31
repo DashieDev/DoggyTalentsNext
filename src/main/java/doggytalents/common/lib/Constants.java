@@ -13,7 +13,7 @@ public class Constants {
 
     // Network
     public static final ResourceLocation CHANNEL_NAME = Util.getResource("channel");
-    public static final String PROTOCOL_VERSION = Integer.toString(3);
+    public static final int PROTOCOL_VERSION = 3;
 
     // Storage
     public static final String STORAGE_DOG_RESPAWN = MOD_ID + "DeadDogs";

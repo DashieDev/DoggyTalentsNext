@@ -13,8 +13,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
 
 import java.util.Optional;
 
@@ -23,25 +23,25 @@ public class BedFinderRenderer {
     public static void onWorldRenderLast(RenderLevelStageEvent event) {
         if (event.getStage() != Stage.AFTER_PARTICLES) 
             return;
-        Player player = Minecraft.getInstance().player;
-        for (Entity passenger : player.getPassengers()) {
-            if (passenger instanceof Dog) {
-                Dog dog = (Dog) passenger;
-                Optional<BlockPos> bedPosOpt = dog.getBedPos();
+        // Player player = Minecraft.getInstance().player;
+        // for (Entity passenger : player.getPassengers()) {
+        //     if (passenger instanceof Dog) {
+        //         Dog dog = (Dog) passenger;
+        //         Optional<BlockPos> bedPosOpt = dog.getBedPos();
 
-                if (bedPosOpt.isPresent()) {
-                    BlockPos bedPos = bedPosOpt.get();
-                    int level = dog.getDogLevel(DoggyTalents.BED_FINDER);
-                    double distance = (level * 200D) - Math.sqrt(bedPos.distSqr(dog.blockPosition()));
-                    if (level == 5 || distance >= 0.0D) {
-                        PoseStack stack = event.getPoseStack();
+        //         if (bedPosOpt.isPresent()) {
+        //             BlockPos bedPos = bedPosOpt.get();
+        //             int level = dog.getDogLevel(DoggyTalents.BED_FINDER);
+        //             double distance = (level * 200D) - Math.sqrt(bedPos.distSqr(dog.blockPosition()));
+        //             if (level == 5 || distance >= 0.0D) {
+        //                 PoseStack stack = event.getPoseStack();
 
-                        AABB boundingBox = new AABB(bedPos).inflate(0.5D);
-                        drawSelectionBox(stack, boundingBox);
-                    }
-                }
-            }
-        }
+        //                 AABB boundingBox = new AABB(bedPos).inflate(0.5D);
+        //                 drawSelectionBox(stack, boundingBox);
+        //             }
+        //         }
+        //     }
+        // }
     }
 
     public static void drawSelectionBox(PoseStack stack, AABB boundingBox) {

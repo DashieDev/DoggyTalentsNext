@@ -14,8 +14,8 @@ import doggytalents.common.variant.DogVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 
 public class DoggySerializers {
 
-    public static final DeferredRegister<EntityDataSerializer<?>> SERIALIZERS = DeferredRegister.create(NeoForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, Constants.MOD_ID);
+    public static final DeferredRegister<EntityDataSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, Constants.MOD_ID);
 
     public static final EntityDataSerializer<DogVariant> DOG_VARIANT_SERIALIZER = register("dog_variant", DogVariantSerializer::new);
     public static final EntityDataSerializer<EnumGender> GENDER_SERIALIZER = register("gender", GenderSerializer::new);

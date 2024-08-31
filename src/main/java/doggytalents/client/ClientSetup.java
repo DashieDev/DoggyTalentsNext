@@ -126,12 +126,10 @@ import doggytalents.common.util.Util;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.fml.ModLoader;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.minecraftforge.fml.ModLoader;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 
 public class ClientSetup {
 
@@ -237,14 +235,14 @@ public class ClientSetup {
 
     public static final List<ResourceLocation> OTHER_MOD_SKIN_JSONS = new ArrayList<ResourceLocation>();
 
-    public static void setupScreenManagers(final RegisterMenuScreensEvent event) {
-        event.register(DoggyContainerTypes.FOOD_BOWL.get(), FoodBowlScreen::new);
-        event.register(DoggyContainerTypes.PACK_PUPPY.get(), PackPuppyScreen::new);
-        event.register(DoggyContainerTypes.TREAT_BAG.get(), TreatBagScreen::new);
-        event.register(DoggyContainerTypes.DOG_INVENTORIES.get(), DogInventoriesScreen::new);
-        event.register(DoggyContainerTypes.DOG_ARMOR.get(), DogArmorScreen::new);
-        event.register(DoggyContainerTypes.DOG_TOOLS.get(), DoggyToolsScreen::new);
-        event.register(DoggyContainerTypes.RICE_MILL.get(), RiceMillScreen::new);
+    public static void setupScreenManagers(final FMLClientSetupEvent event) {
+        MenuScreens.register(DoggyContainerTypes.FOOD_BOWL.get(), FoodBowlScreen::new);
+        MenuScreens.register(DoggyContainerTypes.PACK_PUPPY.get(), PackPuppyScreen::new);
+        MenuScreens.register(DoggyContainerTypes.TREAT_BAG.get(), TreatBagScreen::new);
+        MenuScreens.register(DoggyContainerTypes.DOG_INVENTORIES.get(), DogInventoriesScreen::new);
+        MenuScreens.register(DoggyContainerTypes.DOG_ARMOR.get(), DogArmorScreen::new);
+        MenuScreens.register(DoggyContainerTypes.DOG_TOOLS.get(), DoggyToolsScreen::new);
+        MenuScreens.register(DoggyContainerTypes.RICE_MILL.get(), RiceMillScreen::new);
     }
 
     public static void setupEntityRenderers(final EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -361,7 +359,7 @@ public class ClientSetup {
     private static void gatherSkinJsonFromOtherMods() {
         OTHER_MOD_SKIN_JSONS.clear();
         var paths = new ArrayList<ResourceLocation>();
-        ModLoader.postEvent(new RegisterDogSkinJsonPathEvent(paths));
+        ModLoader.get().postEvent(new RegisterDogSkinJsonPathEvent(paths));
         if (paths.isEmpty())
             return;
         OTHER_MOD_SKIN_JSONS.addAll(paths);
@@ -399,9 +397,9 @@ public class ClientSetup {
         CollarRenderManager.registerLayer(FisherDogRenderer::new);
     }
 
-    public static void registerOverlay(RegisterGuiLayersEvent e) {
-        e.registerAboveAll(Util.getResource("dog_food_level"), DogScreenOverlays.FOOD_LEVEL_ELEMENT);
-        e.registerAboveAll(Util.getResource("dog_air_evel"), DogScreenOverlays.AIR_LEVEL_ELEMENT);
+    public static void registerOverlay(FMLClientSetupEvent e) {
+        //e.registerAboveAll(Util.getResource("dog_food_level"), DogScreenOverlays.FOOD_LEVEL_ELEMENT);
+        //e.registerAboveAll(Util.getResource("dog_air_evel"), DogScreenOverlays.AIR_LEVEL_ELEMENT);
     }
 
     public static void addClientReloadListeners(final RegisterClientReloadListenersEvent event) {

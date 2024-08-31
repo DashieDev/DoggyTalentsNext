@@ -68,7 +68,7 @@ public class DTLootTableProvider extends LootTableProvider {
     }
 
     @Override
-    protected void validate(WritableRegistry<LootTable> writableregistry, ValidationContext validationcontext, ProblemReporter.Collector problemreporter$collector) {}
+    protected void validate(net.minecraft.core.Registry<LootTable> writableregistry, ValidationContext validationcontext, ProblemReporter problemreporter$collector) {}
 
     private static class Blocks extends BlockLootSubProvider {
 

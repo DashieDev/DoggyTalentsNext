@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -40,7 +41,7 @@ public class MeatFoodHandler implements IDogFoodHandler {
             if (!dog.level().isClientSide) {
                 var item = stack.getItem();
 
-                var props = stack.getFoodProperties(dog);
+                var props = ItemUtil.food(stack);
 
                 if (props == null) return InteractionResult.FAIL;
                 

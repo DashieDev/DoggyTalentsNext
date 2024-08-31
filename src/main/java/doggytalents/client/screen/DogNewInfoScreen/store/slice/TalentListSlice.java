@@ -17,7 +17,7 @@ public class TalentListSlice implements AbstractSlice {
         // TODO Auto-generated method stub
         return new TalentListData(
             DoggyTalentsAPI.TALENTS.get()
-                .entrySet()
+                .getEntries()
                 .stream().map(entry -> entry.getValue())
                 .sorted(Comparator.comparing((t) -> I18n.get(t.getTranslationKey())))
                 .collect(Collectors.toList())

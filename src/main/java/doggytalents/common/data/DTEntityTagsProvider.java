@@ -16,11 +16,12 @@ import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
-import net.neoforged.neoforge.common.Tags;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class DTEntityTagsProvider extends EntityTypeTagsProvider {
 
-    public DTEntityTagsProvider(PackOutput p_256095_, CompletableFuture<HolderLookup.Provider> p_256572_, @org.jetbrains.annotations.Nullable net.neoforged.neoforge.common.data.ExistingFileHelper existingFileHelper) {
+    public DTEntityTagsProvider(PackOutput p_256095_, CompletableFuture<HolderLookup.Provider> p_256572_, @org.jetbrains.annotations.Nullable ExistingFileHelper existingFileHelper) {
         super(p_256095_, p_256572_, Constants.MOD_ID, existingFileHelper);
         //TODO Auto-generated constructor stub
     }
@@ -43,7 +44,7 @@ public class DTEntityTagsProvider extends EntityTypeTagsProvider {
         createTag(EntityTypeTags.IMPACT_PROJECTILES, 
             DoggyEntityTypes.DOG_ARROW_PROJ, DoggyEntityTypes.DOG_TRIDENT_PROJ);
         createTag(EntityTypeTags.ARROWS, DoggyEntityTypes.DOG_ARROW_PROJ);
-        createTag(Tags.EntityTypes.CAPTURING_NOT_SUPPORTED, DoggyEntityTypes.DOG);
+        //createTag(Tags.EntityTypes.CAPTURING_NOT_SUPPORTED, DoggyEntityTypes.DOG);
     }
 
     @SafeVarargs

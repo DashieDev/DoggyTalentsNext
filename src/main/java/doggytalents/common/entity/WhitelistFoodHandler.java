@@ -6,6 +6,7 @@ import doggytalents.DoggyTags;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -18,7 +19,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
 
     @Override
     public boolean isFood(ItemStack stackIn) {
-        if (stackIn.getFoodProperties(null) == null)
+        if (ItemUtil.food(stackIn) == null)
             return false;
         return isWhiteListFood(stackIn) && !isBlackListFood(stackIn);
     }
@@ -37,7 +38,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
             if (!dog.level().isClientSide) {
                 var item = stack.getItem();
 
-                var props = stack.getFoodProperties(dog);
+                var props = ItemUtil.food(stack);
 
                 if (props == null) return InteractionResult.FAIL;
                 

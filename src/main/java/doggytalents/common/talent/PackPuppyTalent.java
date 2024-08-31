@@ -21,6 +21,7 @@ import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.util.DogFoodUtil;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.InventoryUtil;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -43,7 +44,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,7 +70,7 @@ public class PackPuppyTalent extends TalentInstance {
 
         @Override
         public boolean isFood(ItemStack stack) {
-            var props = stack.getFoodProperties(null);
+            var props = ItemUtil.food(stack);
 
             if (props == null) return false;
             return stack.is(ItemTags.MEAT) && stack.getItem() != Items.ROTTEN_FLESH

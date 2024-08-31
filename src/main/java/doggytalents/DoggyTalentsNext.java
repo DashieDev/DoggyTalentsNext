@@ -35,19 +35,24 @@ import doggytalents.common.variants_legacy.DTNWolfVariantsSpawnPlacements;
 import doggytalents.common.variants_legacy.VSCodeWolfSpawnHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.registration.NetworkRegistry;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.network.Channel.VersionTest;
+import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.SimpleChannel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -66,7 +71,7 @@ public class DoggyTalentsNext {
     
     //TODO AUTOMATION CURSEFORGE !!!
     public DoggyTalentsNext() {
-        var modEventBus = ModLoadingContext.get().getActiveContainer().getEventBus();
+        var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Mod lifecycle
         modEventBus.addListener(this::gatherData);
@@ -97,17 +102,17 @@ public class DoggyTalentsNext {
 
         modEventBus.addListener(DoggyRegistries::newRegistry);
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
-        modEventBus.addListener(DTNNetworkHandler::onRegisterPayloadEvent);
-        modEventBus.addListener(DoggyChunkController::onChunkControllerRegistryEvent);
+        //modEventBus.addListener(DTNNetworkHandler::onRegisterPayloadEvent);
+        //modEventBus.addListener(DoggyChunkController::onChunkControllerRegistryEvent);
         modEventBus.addListener(ClientSetup::setupScreenManagers);
-        modEventBus.addListener(DTNWolfVariantsSpawnPlacements::onRegisterSpawnPlacements);
-
-        var forgeEventBus = NeoForge.EVENT_BUS;
+        //modEventBus.addListener(DTNWolfVariantsSpawnPlacements::onRegisterSpawnPlacements);
+        
+        var forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
         forgeEventBus.addListener(this::registerCommands);
         forgeEventBus.addListener(DoggyBrewingRecipes::onRegisterEvent);
-        forgeEventBus.addListener(DTNWolfVariantsSpawnOverride::onWolfSpawn);
-        forgeEventBus.addListener(DTNWolfVariantsSpawnPlacements::onPositionCheck);
+        //forgeEventBus.addListener(DTNWolfVariantsSpawnOverride::onWolfSpawn);
+        //forgeEventBus.addListener(DTNWolfVariantsSpawnPlacements::onPositionCheck);
         forgeEventBus.addListener(VSCodeWolfSpawnHandler::onRightClickBlock);        
         forgeEventBus.addListener(ChopinRecordItem::onRightClickBlock);
 
@@ -149,6 +154,7 @@ public class DoggyTalentsNext {
         //InteractHandler.registerHandler(new HelmetInteractHandler());
         event.enqueueWork(() -> {
             ConfigHandler.initTalentConfig();
+            DoggyChunkController.init();
             RiceMillBlockEntity.initGrindMap();
             DTNItemCategory.init();
         });

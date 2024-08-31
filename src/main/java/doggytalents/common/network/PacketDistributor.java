@@ -2,6 +2,7 @@ package doggytalents.common.network;
 
 import java.util.function.Supplier;
 
+import doggytalents.DoggyTalentsNext;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -37,7 +38,7 @@ public class PacketDistributor<T> {
         public static enum Type { TO_CLIENT, TO_SERVER }
         protected Type type;
         
-        public abstract void sendPacket(CustomPacketPayload payload);
+        public abstract void sendPacket(Object data);
 
         public Type getType() { return type; }
 
@@ -54,8 +55,8 @@ public class PacketDistributor<T> {
         }
 
         @Override
-        public void sendPacket(CustomPacketPayload payload) {
-            net.neoforged.neoforge.network.PacketDistributor.sendToServer(payload);
+        public void sendPacket(Object payload) {
+            DTNNetworkHandler.HANDLER.send(payload, net.minecraftforge.network.PacketDistributor.SERVER.noArg());
         }
 
         @Override
@@ -73,10 +74,10 @@ public class PacketDistributor<T> {
         }
 
         @Override
-        public void sendPacket(CustomPacketPayload payload) {
+        public void sendPacket(Object payload) {
             if (arg == null)
                 return;
-            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(arg, payload);
+            DTNNetworkHandler.HANDLER.send(payload, net.minecraftforge.network.PacketDistributor.PLAYER.with(arg));
         }
 
         @Override
@@ -97,10 +98,10 @@ public class PacketDistributor<T> {
         }
 
         @Override
-        public void sendPacket(CustomPacketPayload payload) {
+        public void sendPacket(Object payload) {
             if (arg == null)
                 return;
-            net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntity(arg, payload);
+            DTNNetworkHandler.HANDLER.send(payload, net.minecraftforge.network.PacketDistributor.TRACKING_ENTITY.with(arg));
         }
 
         @Override
@@ -121,10 +122,10 @@ public class PacketDistributor<T> {
         }
 
         @Override
-        public void sendPacket(CustomPacketPayload payload) {
+        public void sendPacket(Object payload) {
             if (arg == null)
                 return;
-            net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(arg, payload);
+                DTNNetworkHandler.HANDLER.send(payload, net.minecraftforge.network.PacketDistributor.TRACKING_ENTITY_AND_SELF.with(arg));
         }
 
         @Override

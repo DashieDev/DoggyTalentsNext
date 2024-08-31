@@ -62,23 +62,23 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.event.TagsUpdatedEvent;
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
-import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
-import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.level.LevelEvent;
-import net.neoforged.neoforge.event.server.ServerStoppedEvent;
-import net.neoforged.neoforge.event.server.ServerStoppingEvent;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.event.TagsUpdatedEvent;
+import net.minecraftforge.event.TickEvent.ServerTickEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.event.server.ServerStoppedEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import doggytalents.common.network.PacketDistributor;
 
 public class EventHandler {
@@ -284,21 +284,21 @@ public class EventHandler {
 
         if (isEnableStarterBundle()) {
 
-            Player player = event.getEntity();
+            // Player player = event.getEntity();
 
-            CompoundTag tag = player.getPersistentData();
+            // CompoundTag tag = player.getPersistentData();
 
-            if (!tag.contains(Player.PERSISTED_NBT_TAG)) {
-                tag.put(Player.PERSISTED_NBT_TAG, new CompoundTag());
-            }
+            // if (!tag.contains(Player.PERSISTED_NBT_TAG)) {
+            //     tag.put(Player.PERSISTED_NBT_TAG, new CompoundTag());
+            // }
 
-            CompoundTag persistTag = tag.getCompound(Player.PERSISTED_NBT_TAG);
+            // CompoundTag persistTag = tag.getCompound(Player.PERSISTED_NBT_TAG);
 
-            if (!persistTag.getBoolean("gotDTStartingItems")) {
-                persistTag.putBoolean("gotDTStartingItems", true);
+            // if (!persistTag.getBoolean("gotDTStartingItems")) {
+            //     persistTag.putBoolean("gotDTStartingItems", true);
 
-                player.getInventory().add(new ItemStack(DoggyItems.STARTER_BUNDLE.get()));
-            }
+            //     player.getInventory().add(new ItemStack(DoggyItems.STARTER_BUNDLE.get()));
+            // }
         }
     }
 
@@ -562,7 +562,7 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void onLivingHurt(LivingDamageEvent.Pre event) {
+    public void onLivingHurt(LivingDamageEvent event) {
         onDogPassenegerHurtInWall(event);
         // if (event.isCanceled())
         //     return;
@@ -570,14 +570,14 @@ public class EventHandler {
     }
 
     //Prevent passenger suffocate when riding dog.
-    public void onDogPassenegerHurtInWall(LivingDamageEvent.Pre event) {
+    public void onDogPassenegerHurtInWall(LivingDamageEvent event) {
         var entity = event.getEntity();
         if (entity == null)
             return;
         if (!entity.isPassenger())
             return;
         
-        var source = event.getContainer().getSource();
+        var source = event.getSource();
         if (!source.is(DamageTypes.IN_WALL))
             return;
         
@@ -585,7 +585,7 @@ public class EventHandler {
         if (!(vehicle instanceof Dog dog))
             return;
         
-        event.getContainer().setNewDamage(0);
-        //event.setCanceled(true);
+        //event.getContainer().setNewDamage(0);
+        event.setCanceled(true);
     }
 }
