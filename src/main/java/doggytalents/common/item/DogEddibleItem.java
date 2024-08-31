@@ -74,11 +74,11 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
             propsCreator.apply(new FoodProperties.Builder()).build());
     }
 
-    @Override
-    @Nullable
-    public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
-        return this.currentFoodProps;
-    }
+    // @Override
+    // @Nullable
+    // public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
+    //     return this.currentFoodProps;
+    // }
 
     @Override
     public boolean isFood(ItemStack stack) {

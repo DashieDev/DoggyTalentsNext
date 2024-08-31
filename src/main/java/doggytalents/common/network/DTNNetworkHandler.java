@@ -18,7 +18,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.event.RegisterPayloadHandlersEvent;
+import net.minecraftforge.event.Register;
 import net.minecraftforge.network.handling.IPayloadContext;
 import net.minecraftforge.network.handling.IPayloadHandler;
 import doggytalents.common.lib.Constants;

@@ -36,18 +36,22 @@ import doggytalents.common.variants_legacy.VSCodeWolfSpawnHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
-import net.minecraftforge.common.NeoForge;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.network.Channel.VersionTest;
+import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.registration.NetworkRegistry;
+import net.minecraftforge.network.SimpleChannel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,16 +61,16 @@ public class DoggyTalentsNext {
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID);
 
-    // public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder.named(Constants.CHANNEL_NAME)
-    //         .clientAcceptedVersions(Constants.PROTOCOL_VERSION::equals)
-    //         .serverAcceptedVersions(Constants.PROTOCOL_VERSION::equals)
-    //         .networkProtocolVersion(Constants.PROTOCOL_VERSION::toString)
-    //         .simpleChannel();
+    public static final SimpleChannel HANDLER = ChannelBuilder.named(Constants.CHANNEL_NAME)
+            .acceptedVersions(VersionTest.exact(Constants.PROTOCOL_VERSION))
+            //.serverAcceptedVersions(Constants.PROTOCOL_VERSION::equals)
+            .networkProtocolVersion(Constants.PROTOCOL_VERSION)
+            .simpleChannel();
             
     
     //TODO AUTOMATION CURSEFORGE !!!
     public DoggyTalentsNext() {
-        var modEventBus = ModLoadingContext.get().getActiveContainer().getEventBus();
+        var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Mod lifecycle
         modEventBus.addListener(this::gatherData);
@@ -101,7 +105,7 @@ public class DoggyTalentsNext {
         modEventBus.addListener(DoggyChunkController::onChunkControllerRegistryEvent);
         modEventBus.addListener(ClientSetup::setupScreenManagers);
         modEventBus.addListener(DTNWolfVariantsSpawnPlacements::onRegisterSpawnPlacements);
-
+        
         var forgeEventBus = NeoForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
         forgeEventBus.addListener(this::registerCommands);

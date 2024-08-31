@@ -156,8 +156,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraftforge.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.minecraftforge.common.NeoForgeMod;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
 import doggytalents.common.network.PacketDistributor;
 
