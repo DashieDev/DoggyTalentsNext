@@ -20,13 +20,14 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class DoggyEntityTypes {
 
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, Constants.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Constants.MOD_ID);
 
     public static final Supplier<EntityType<Dog>> DOG = register("dog", Dog::new, MobCategory.CREATURE, (b) -> b
             .sized(0.6F, 0.85F)
@@ -123,9 +124,9 @@ public class DoggyEntityTypes {
                  .add(Attributes.MOVEMENT_SPEED, 0.3D)
                  .add(Attributes.KNOCKBACK_RESISTANCE, 0.25D)
                  .add(Attributes.ATTACK_DAMAGE, 2.0D)
-                 .add(DoggyAttributes.JUMP_POWER, 0.42D)
-                 .add(DoggyAttributes.CRIT_CHANCE, 0.01D)
-                 .add(DoggyAttributes.CRIT_BONUS, 1D)
+                 .add(DoggyAttributes.JUMP_POWER.getHolder().orElseThrow(), 0.42D)
+                 .add(DoggyAttributes.CRIT_CHANCE.getHolder().orElseThrow(), 0.01D)
+                 .add(DoggyAttributes.CRIT_BONUS.getHolder().orElseThrow(), 1D)
                  .add(Attributes.FLYING_SPEED, 0.3D)
                  .build()
          );

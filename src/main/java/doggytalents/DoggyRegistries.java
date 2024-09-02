@@ -9,6 +9,7 @@ import doggytalents.common.variant.DogVariant;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.NewRegistryEvent;
 import net.minecraftforge.registries.RegistryBuilder;
 
@@ -23,7 +24,7 @@ public class DoggyRegistries {
         // public static final ResourceLocation CASING_REGISTRY = regKey("casing");
     }
 
-    public static Supplier<Registry<DogVariant>> DOG_VARIANT;
+    public static Supplier<IForgeRegistry<DogVariant>> DOG_VARIANT;
 
     public static void newRegistry(NewRegistryEvent event) {
         DoggyTalentsAPI.TALENTS = makeRegistry(event, Keys.TALENTS_REGISTRY, Talent.class);
@@ -32,15 +33,15 @@ public class DoggyRegistries {
         DOG_VARIANT = makeRegistry(event, Keys.DOG_VARIANT, DogVariant.class, Util.getVanillaResource("pale"));
     }
 
-    private static <T> Supplier<Registry<T>> makeRegistry(NewRegistryEvent event, 
+    private static <T> Supplier<IForgeRegistry<T>> makeRegistry(NewRegistryEvent event, 
         final ResourceKey<Registry<T>> key, Class<T> type, boolean disableSync) {
-        var builder = new RegistryBuilder<T>(key);
-        builder.sync(!disableSync);
+        var builder = RegistryBuilder.<T>of(key.location());
+        if (disableSync) builder.disableSync();
         var ret = event.create(builder);
-        return () -> ret;
+        return ret;
     }
 
-    private static <T> Supplier<Registry<T>> makeRegistry(NewRegistryEvent event,
+    private static <T> Supplier<IForgeRegistry<T>> makeRegistry(NewRegistryEvent event,
         final ResourceKey<Registry<T>> key, Class<T> type) {
         return makeRegistry(event, key, type, false);
     }
@@ -50,12 +51,12 @@ public class DoggyRegistries {
         return ResourceKey.createRegistryKey(rl);
     }
 
-    private static <T> Supplier<Registry<T>> makeRegistry(NewRegistryEvent event, 
+    private static <T> Supplier<IForgeRegistry<T>> makeRegistry(NewRegistryEvent event, 
         final ResourceKey<Registry<T>> key, Class<T> type, ResourceLocation defaultKey) {
-        var builder = new RegistryBuilder<T>(key);
-        builder.sync(true);
-        builder.defaultKey(defaultKey);
+        var builder = RegistryBuilder.<T>of(key.location());
+        //builder.sync(true);
+        builder.setDefaultKey(defaultKey);
         var ret = event.create(builder);
-        return () -> ret;
+        return ret;
     }
 }

@@ -61,11 +61,11 @@ public class DoggyTalentsNext {
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID);
 
-    public static final SimpleChannel HANDLER = ChannelBuilder.named(Constants.CHANNEL_NAME)
-            .acceptedVersions(VersionTest.exact(Constants.PROTOCOL_VERSION))
-            //.serverAcceptedVersions(Constants.PROTOCOL_VERSION::equals)
-            .networkProtocolVersion(Constants.PROTOCOL_VERSION)
-            .simpleChannel();
+    // public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder.named(Constants.CHANNEL_NAME)
+    //         .clientAcceptedVersions(Constants.PROTOCOL_VERSION::equals)
+    //         .serverAcceptedVersions(Constants.PROTOCOL_VERSION::equals)
+    //         .networkProtocolVersion(Constants.PROTOCOL_VERSION::toString)
+    //         .simpleChannel();
             
     
     //TODO AUTOMATION CURSEFORGE !!!

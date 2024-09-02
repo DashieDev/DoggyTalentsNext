@@ -149,7 +149,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         if (isDiffOwner && ConfigHandler.CLIENT.DONT_RENDER_DIFFOWNER_NAME.get())
             return;
 
-        if (net.neoforged.neoforge.client.ClientHooks.isNameplateInRenderDistance(dog, d0))
+        if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0))
             renderMainName(dog, text, stack, buffer, packedLight, renderDiffOwnerName && isDiffOwner, isDiffOwner);
         if (d0 <= 64 * 64)
             renderExtraInfo(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner, isDiffOwner);

@@ -16,9 +16,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
-import net.minecraftforge.common.extensions.IMenuTypeExtension;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.network.IContainerFactory;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import java.util.function.Supplier;
 
 public class DoggyContainerTypes {
 
-    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(BuiltInRegistries.MENU, Constants.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Constants.MOD_ID);
 
     public static final Supplier<MenuType<FoodBowlContainer>> FOOD_BOWL = register("food_bowl", (windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
@@ -72,7 +73,7 @@ public class DoggyContainerTypes {
     });
 
     private static <X extends AbstractContainerMenu, T extends MenuType<X>> Supplier<MenuType<X>> register(final String name, final IContainerFactory<X> factory) {
-        return register(name, () -> IMenuTypeExtension.create(factory));
+        return register(name, () -> IForgeMenuType.create(factory));
     }
 
     private static <T extends MenuType<?>> Supplier<T> register(final String name, final Supplier<T> sup) {

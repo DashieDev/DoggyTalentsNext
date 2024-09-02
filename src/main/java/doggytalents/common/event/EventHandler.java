@@ -64,8 +64,9 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.event.TagsUpdatedEvent;
+import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
@@ -78,7 +79,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
-import net.minecraftforge.event.tick.ServerTickEvent;
 import doggytalents.common.network.PacketDistributor;
 
 public class EventHandler {
@@ -284,21 +284,21 @@ public class EventHandler {
 
         if (isEnableStarterBundle()) {
 
-            Player player = event.getEntity();
+            // Player player = event.getEntity();
 
-            CompoundTag tag = player.getPersistentData();
+            // CompoundTag tag = player.getPersistentData();
 
-            if (!tag.contains(Player.PERSISTED_NBT_TAG)) {
-                tag.put(Player.PERSISTED_NBT_TAG, new CompoundTag());
-            }
+            // if (!tag.contains(Player.PERSISTED_NBT_TAG)) {
+            //     tag.put(Player.PERSISTED_NBT_TAG, new CompoundTag());
+            // }
 
-            CompoundTag persistTag = tag.getCompound(Player.PERSISTED_NBT_TAG);
+            // CompoundTag persistTag = tag.getCompound(Player.PERSISTED_NBT_TAG);
 
-            if (!persistTag.getBoolean("gotDTStartingItems")) {
-                persistTag.putBoolean("gotDTStartingItems", true);
+            // if (!persistTag.getBoolean("gotDTStartingItems")) {
+            //     persistTag.putBoolean("gotDTStartingItems", true);
 
-                player.getInventory().add(new ItemStack(DoggyItems.STARTER_BUNDLE.get()));
-            }
+            //     player.getInventory().add(new ItemStack(DoggyItems.STARTER_BUNDLE.get()));
+            // }
         }
     }
 

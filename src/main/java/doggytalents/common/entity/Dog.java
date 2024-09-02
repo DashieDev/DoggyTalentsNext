@@ -25,6 +25,7 @@ import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithS
 import doggytalents.common.artifacts.DoggyArtifact;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
+import doggytalents.common.effects.NattoBiteEffect;
 import doggytalents.common.entity.ai.nav.DogBodyRotationControl;
 import doggytalents.common.entity.ai.nav.DogJumpControl;
 import doggytalents.common.entity.ai.nav.DogMoveControl;
@@ -1428,10 +1429,10 @@ public class Dog extends AbstractDog {
         }
 
         // Start: Logic copied from the super call and altered to apply the reduced fall damage to passengers too. #358
-        float[] ret = net.neoforged.neoforge.common.CommonHooks.onLivingFall(this, distance, damageMultiplier);
-        if (ret == null) return false;
-        distance = ret[0];
-        damageMultiplier = ret[1];
+        var ret = net.minecraftforge.event.ForgeEventFactory.onLivingFall(this, distance, damageMultiplier);
+        if (ret.isCanceled()) return false;
+        distance = ret.getDistance();
+        damageMultiplier = ret.getDamageMultiplier();
 
         int i = this.calculateFallDamage(distance, damageMultiplier);
 
@@ -1801,12 +1802,12 @@ public class Dog extends AbstractDog {
         }
 
         var attackDamageInst = this.getAttribute(Attributes.ATTACK_DAMAGE);
-        var critDamageInst = this.getAttribute(DoggyAttributes.CRIT_CHANCE);
+        var critDamageInst = this.getAttribute(DoggyAttributes.CRIT_CHANCE.getHolder().orElseThrow());
 
         Set<AttributeModifier> critModifiers = null;
 
         if (critDamageInst != null && critDamageInst.getValue() > this.getRandom().nextDouble()) {
-            var critBonusInst = this.getAttribute(DoggyAttributes.CRIT_BONUS);
+            var critBonusInst = this.getAttribute(DoggyAttributes.CRIT_BONUS.getHolder().orElseThrow());
             critModifiers = 
                 critBonusInst == null ? null 
                     : critBonusInst.getModifiers();
@@ -1848,9 +1849,9 @@ public class Dog extends AbstractDog {
             alter.doAdditionalAttackEffects(this, target);
         }
 
-        if (this.hasEffect(DoggyEffects.NATTO_BITE)
+        if (this.hasEffect(DoggyEffects.NATTO_BITE.getHolder().orElseThrow())
             && target instanceof LivingEntity living) {
-            DoggyEffects.NATTO_BITE.get().doAdditionalAttackEffects(this, living);
+            ((NattoBiteEffect) DoggyEffects.NATTO_BITE.get()).doAdditionalAttackEffects(this, living);
         }
 
         this.setLastHurtMob(target);
@@ -2307,7 +2308,7 @@ public class Dog extends AbstractDog {
         return false;
     }
 
-    //@Override
+    @Override
     public void onRemovedFromWorld() {
         if (this.level() instanceof ServerLevel serverLevel && this.isAlive()) {
             //Force location update when the dog is about to get untracked from world.
@@ -2316,10 +2317,10 @@ public class Dog extends AbstractDog {
             
             if (data != null) data.update(this);
         }
-        //super.onRemovedFromWorld();
+        super.onRemovedFromWorld();
     }
 
-    //@Override
+    @Override
     public void onAddedToWorld() {
         if (this.level() instanceof ServerLevel serverLevel && this.isAlive()) {
             var storage = DogLocationStorage.get(serverLevel);
@@ -2328,7 +2329,7 @@ public class Dog extends AbstractDog {
             if (data != null) data.update(this);
             storage.getOnlineDogsManager().onDogGoOnline(this);
         }
-        //super.onAddedToWorld();
+        super.onAddedToWorld();
     }
 
     @Override
@@ -3570,7 +3571,7 @@ public class Dog extends AbstractDog {
         //🥴
         if (add <= 0)
             return;
-        var add1 = net.neoforged.neoforge.event.EventHooks.onLivingHeal(this, add);
+        var add1 = net.minecraftforge.event.ForgeEventFactory.onLivingHeal(this, add);
         add = Math.max(add1, add);
         
         float h = this.getHealth();
@@ -4432,7 +4433,7 @@ public class Dog extends AbstractDog {
 
     private void doDogRideJump(double forward) {
         // Calculate jump value based of jump strength, power this jump and jump boosts
-        double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
+        double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER.getHolder().orElseThrow()).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
         if (this.hasEffect(MobEffects.JUMP)) {
             jumpValue += (this.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.1F;
         }
@@ -4492,9 +4493,9 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean isPushedByFluid(FluidType type) {
-        if (this.fireImmune() && type == NeoForgeMod.LAVA_TYPE.value())
+        if (this.fireImmune() && type == ForgeMod.LAVA_TYPE.get())
             return false;
-        if (this.alterationProps.resistWaterPush() && type == NeoForgeMod.WATER_TYPE.value())
+        if (this.alterationProps.resistWaterPush() && type == ForgeMod.WATER_TYPE.get())
             return false;
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType(type);
@@ -5329,18 +5330,18 @@ public class Dog extends AbstractDog {
     }
 
     //Neo
-    @Override
-    public void onAddedToLevel() {
-        super.onAddedToLevel();
-        this.onAddedToWorld();
-    }
-    @Override
-    public void onRemovedFromLevel() {
-        super.onRemovedFromLevel();
-        this.onRemovedFromWorld();
-    }
-    public boolean isAddedToWorld() {
-        return this.isAddedToLevel();
-    }
+    // @Override
+    // public void onAddedToLevel() {
+    //     super.onAddedToLevel();
+    //     this.onAddedToWorld();
+    // }
+    // @Override
+    // public void onRemovedFromLevel() {
+    //     super.onRemovedFromLevel();
+    //     this.onRemovedFromWorld();
+    // }
+    // public boolean isAddedToWorld() {
+    //     return this.isAddedToLevel();
+    // }
 
 }
