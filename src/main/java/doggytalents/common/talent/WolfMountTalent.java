@@ -29,17 +29,17 @@ public class WolfMountTalent extends TalentInstance {
 
     @Override
     public void init(AbstractDog dogIn) {
-        dogIn.setAttributeModifier(DoggyAttributes.JUMP_POWER, WOLF_MOUNT_JUMP, this::createSpeedModifier);
+        dogIn.setAttributeModifier(DoggyAttributes.JUMP_POWER.getHolder().orElseThrow(), WOLF_MOUNT_JUMP, this::createSpeedModifier);
     }
 
     @Override
     public void set(AbstractDog dogIn, int level) {
-        dogIn.setAttributeModifier(DoggyAttributes.JUMP_POWER, WOLF_MOUNT_JUMP, this::createSpeedModifier);
+        dogIn.setAttributeModifier(DoggyAttributes.JUMP_POWER.getHolder().orElseThrow(), WOLF_MOUNT_JUMP, this::createSpeedModifier);
     }
 
     @Override
     public void remove(AbstractDog dog) {
-        dog.removeAttributeModifier(DoggyAttributes.JUMP_POWER, WOLF_MOUNT_JUMP);
+        dog.removeAttributeModifier(DoggyAttributes.JUMP_POWER.getHolder().orElseThrow(), WOLF_MOUNT_JUMP);
     }
 
     public AttributeModifier createSpeedModifier(AbstractDog dogIn, ResourceLocation uuidIn) {

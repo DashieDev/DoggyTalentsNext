@@ -37,22 +37,22 @@ import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.common.loot.LootTableIdCondition;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.NeoForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
-    public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> CODEC = DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Constants.MOD_ID);
+    public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> CODEC = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Constants.MOD_ID);
     public static final Supplier<MapCodec<? extends IGlobalLootModifier>> RICE_FROM_GRASS_CODEC = CODEC.register("rice_from_grass", RiceFromGrass::getCodec);
     public static final Supplier<MapCodec<? extends IGlobalLootModifier>> SOY_FROM_ZOMBIE_CODEC = CODEC.register("soy_from_zombie", SoyFromZombies::getCodec);
 
     public DTLootModifierProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> prov) {
-        super(output, prov, Constants.MOD_ID);
+        super(output, Constants.MOD_ID, prov);
     }
 
     @Override
-    protected void start() {
+    protected void start(HolderLookup.Provider prov) {
         this.add("rice_from_grass_modifier", createGrassRiceModifer());
-        this.add("soy_from_zombie_modifier", createSoyFromZombiesModifier());
+        this.add("soy_from_zombie_modifier", createSoyFromZombiesModifier(prov));
     }
 
     private RiceFromGrass createGrassRiceModifer() {
@@ -74,7 +74,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
         return new RiceFromGrass(conditions);
     }
 
-    private SoyFromZombies createSoyFromZombiesModifier() {
+    private SoyFromZombies createSoyFromZombiesModifier(HolderLookup.Provider prov) {
         var killed_by_dog_condition =
             LootItemEntityPropertyCondition
                 .hasProperties(
@@ -91,7 +91,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
                 )
                 .build();
         var random_condition = 
-            LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.01F, 0.05F)
+            LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(prov, 0.01F, 0.05F)
             .build();
         var conditions = new LootItemCondition[] {
             killed_by_dog_condition,

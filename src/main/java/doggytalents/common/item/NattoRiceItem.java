@@ -42,7 +42,7 @@ public class NattoRiceItem extends DogEddibleBowlFoodItem {
     @Override
     public List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
-        return List.of(new PossibleEffect(() -> new MobEffectInstance(DoggyEffects.NATTO_BITE, 300 * 20, 1), 1f));
+        return List.of(new PossibleEffect(new MobEffectInstance(DoggyEffects.NATTO_BITE.getHolder().orElseThrow(), 300 * 20, 1), 1f));
     }
 
     @Override

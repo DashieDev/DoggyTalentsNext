@@ -24,22 +24,22 @@ public class BlackPeltTalent extends TalentInstance {
     @Override
     public void init(AbstractDog dogIn) {
         dogIn.setAttributeModifier(Attributes.ATTACK_DAMAGE, BLACK_PELT_DAMAGE_ID, this::createPeltModifier);
-        dogIn.setAttributeModifier(DoggyAttributes.CRIT_CHANCE, BLACK_PELT_CRIT_CHANCE_ID, this::createPeltCritChance);
-        dogIn.setAttributeModifier(DoggyAttributes.CRIT_BONUS, BLACK_PELT_CRIT_BONUS_ID, this::createPeltCritBonus);
+        dogIn.setAttributeModifier(DoggyAttributes.CRIT_CHANCE.getHolder().orElseThrow(), BLACK_PELT_CRIT_CHANCE_ID, this::createPeltCritChance);
+        dogIn.setAttributeModifier(DoggyAttributes.CRIT_BONUS.getHolder().orElseThrow(), BLACK_PELT_CRIT_BONUS_ID, this::createPeltCritBonus);
     }
 
     @Override
     public void set(AbstractDog dogIn, int levelBefore) {
         dogIn.setAttributeModifier(Attributes.ATTACK_DAMAGE, BLACK_PELT_DAMAGE_ID, this::createPeltModifier);
-        dogIn.setAttributeModifier(DoggyAttributes.CRIT_CHANCE, BLACK_PELT_CRIT_CHANCE_ID, this::createPeltCritChance);
-        dogIn.setAttributeModifier(DoggyAttributes.CRIT_BONUS, BLACK_PELT_CRIT_BONUS_ID, this::createPeltCritBonus);
+        dogIn.setAttributeModifier(DoggyAttributes.CRIT_CHANCE.getHolder().orElseThrow(), BLACK_PELT_CRIT_CHANCE_ID, this::createPeltCritChance);
+        dogIn.setAttributeModifier(DoggyAttributes.CRIT_BONUS.getHolder().orElseThrow(), BLACK_PELT_CRIT_BONUS_ID, this::createPeltCritBonus);
     }
 
     @Override
     public void remove(AbstractDog dogIn) {
         dogIn.removeAttributeModifier(Attributes.ATTACK_DAMAGE, BLACK_PELT_DAMAGE_ID);
-        dogIn.removeAttributeModifier(DoggyAttributes.CRIT_CHANCE, BLACK_PELT_CRIT_CHANCE_ID);
-        dogIn.removeAttributeModifier(DoggyAttributes.CRIT_BONUS, BLACK_PELT_CRIT_BONUS_ID);
+        dogIn.removeAttributeModifier(DoggyAttributes.CRIT_CHANCE.getHolder().orElseThrow(), BLACK_PELT_CRIT_CHANCE_ID);
+        dogIn.removeAttributeModifier(DoggyAttributes.CRIT_BONUS.getHolder().orElseThrow(), BLACK_PELT_CRIT_BONUS_ID);
     }
 
     public AttributeModifier createPeltModifier(AbstractDog dogIn, ResourceLocation uuidIn) {

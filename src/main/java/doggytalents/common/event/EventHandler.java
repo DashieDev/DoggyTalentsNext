@@ -562,7 +562,7 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void onLivingHurt(LivingDamageEvent.Pre event) {
+    public void onLivingHurt(LivingDamageEvent event) {
         onDogPassenegerHurtInWall(event);
         // if (event.isCanceled())
         //     return;
@@ -570,14 +570,14 @@ public class EventHandler {
     }
 
     //Prevent passenger suffocate when riding dog.
-    public void onDogPassenegerHurtInWall(LivingDamageEvent.Pre event) {
+    public void onDogPassenegerHurtInWall(LivingDamageEvent event) {
         var entity = event.getEntity();
         if (entity == null)
             return;
         if (!entity.isPassenger())
             return;
         
-        var source = event.getContainer().getSource();
+        var source = event.getSource();
         if (!source.is(DamageTypes.IN_WALL))
             return;
         
@@ -585,7 +585,7 @@ public class EventHandler {
         if (!(vehicle instanceof Dog dog))
             return;
         
-        event.getContainer().setNewDamage(0);
-        //event.setCanceled(true);
+        //event.getContainer().setNewDamage(0);
+        event.setCanceled(true);
     }
 }

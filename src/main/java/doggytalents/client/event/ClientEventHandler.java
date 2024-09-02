@@ -67,7 +67,7 @@ public class ClientEventHandler {
         try {
             ResourceLocation resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
             ResourceLocation unbakedModelLoc = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
-            event.register(ModelResourceLocation.standalone(unbakedModelLoc));
+            event.register(new ModelResourceLocation(unbakedModelLoc, ""));
         }
         catch(Exception e) {
             DoggyTalentsNext.LOGGER.warn("Could not get base Dog Bed model. Reverting to default textures...");
@@ -82,9 +82,9 @@ public class ClientEventHandler {
             ResourceLocation resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
             ResourceLocation bakedModelLoc = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
 
-            var model = modelRegistry.get(ModelResourceLocation.standalone(bakedModelLoc));
+            var model = modelRegistry.get(new ModelResourceLocation(bakedModelLoc, ""));
 
-            var modelUnbaked = (BlockModel) event.getModelBakery().topLevelModels.get(ModelResourceLocation.standalone(bakedModelLoc));
+            var modelUnbaked = (BlockModel) event.getModelBakery().topLevelModels.get(new ModelResourceLocation(bakedModelLoc, ""));
 
             BakedModel customModel = new DogBedModel(event.getModelBakery(), modelUnbaked, model);
 

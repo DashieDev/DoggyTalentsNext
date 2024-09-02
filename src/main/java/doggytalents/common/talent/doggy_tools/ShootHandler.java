@@ -168,7 +168,7 @@ public interface ShootHandler {
             if (arrow_proj == null)
                 return Optional.empty();
     
-            arrow_proj = bow.customArrow(arrow_proj, arrowStack, bow_stack);
+            arrow_proj = bow.customArrow(arrow_proj);
             if (power >= 1.0F) {
                 arrow_proj.setCritArrow(true);
             }

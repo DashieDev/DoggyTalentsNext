@@ -18,127 +18,124 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.entity.RegisterSpawnPlacementsEvent;
-import net.minecraftforge.event.entity.living.MobSpawnEvent.PositionCheck;
-import net.minecraftforge.event.entity.living.MobSpawnEvent.PositionCheck.Result;
 
 public class DTNWolfVariantsSpawnPlacements {
     
-    public static void onRegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
-        event.register(EntityType.WOLF, DTNWolfVariantsSpawnPlacements::DTNWolfVariantsSpawnableOn);
-    }
+    // public static void onRegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+    //     event.register(EntityType.WOLF, DTNWolfVariantsSpawnPlacements::DTNWolfVariantsSpawnableOn);
+    // }
 
-    public static boolean DTNWolfVariantsSpawnableOn(EntityType<Wolf> wolf_type, 
-        LevelAccessor level, MobSpawnType spawn_type, 
-        BlockPos spawn_pos, RandomSource rand
-    ) {
-        if (!ConfigHandler.SERVER.EXTENDED_WOLVES_SPAWNABLE_BLOCK.get())
-            return false;
+    // public static boolean DTNWolfVariantsSpawnableOn(EntityType<Wolf> wolf_type, 
+    //     LevelAccessor level, MobSpawnType spawn_type, 
+    //     BlockPos spawn_pos, RandomSource rand
+    // ) {
+    //     if (!ConfigHandler.SERVER.EXTENDED_WOLVES_SPAWNABLE_BLOCK.get())
+    //         return false;
         
-        var spawn_state = level.getBlockState(spawn_pos.below());
-        var spawn_biome = level.getBiome(spawn_pos);
+    //     var spawn_state = level.getBlockState(spawn_pos.below());
+    //     var spawn_biome = level.getBiome(spawn_pos);
 
-        if (checkLemonyLimeWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
-            return true;
+    //     if (checkLemonyLimeWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
+    //         return true;
 
-        if (checkCrimsonWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
-            return true;
+    //     if (checkCrimsonWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
+    //         return true;
 
-        if (checkWarpedWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
-            return true;
+    //     if (checkWarpedWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
+    //         return true;
 
-        if (checkPistachioWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
-            return true;
+    //     if (checkPistachioWolfSpawn(level, spawn_pos, spawn_state, spawn_biome))
+    //         return true;
 
-        return false;
-    }
+    //     return false;
+    // }
 
-    public static boolean checkLemonyLimeWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
-        BlockState spawn_state, Holder<Biome> spawn_biome) {
-        if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.LEMONY_LIME))
-            return false;
-        if (!spawn_state.is(Blocks.SAND))
-            return false;
-        if (!spawn_biome.is(Biomes.BEACH))
-            return false;
+    // public static boolean checkLemonyLimeWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
+    //     BlockState spawn_state, Holder<Biome> spawn_biome) {
+    //     if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.LEMONY_LIME))
+    //         return false;
+    //     if (!spawn_state.is(Blocks.SAND))
+    //         return false;
+    //     if (!spawn_biome.is(Biomes.BEACH))
+    //         return false;
         
-        return true;
-    }
+    //     return true;
+    // }
 
-    public static boolean checkWarpedWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
-        BlockState spawn_state, Holder<Biome> spawn_biome) {
-        if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.WARPED))
-            return false;
+    // public static boolean checkWarpedWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
+    //     BlockState spawn_state, Holder<Biome> spawn_biome) {
+    //     if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.WARPED))
+    //         return false;
         
-        if (!spawn_state.is(Blocks.WARPED_NYLIUM))
-            return false;
-        if (!spawn_biome.is(Biomes.WARPED_FOREST))
-            return false;
+    //     if (!spawn_state.is(Blocks.WARPED_NYLIUM))
+    //         return false;
+    //     if (!spawn_biome.is(Biomes.WARPED_FOREST))
+    //         return false;
         
-        return true;
-    }
+    //     return true;
+    // }
 
-    public static boolean checkCrimsonWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
-        BlockState spawn_state, Holder<Biome> spawn_biome) {
-        if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.CRIMSON))
-            return false;
+    // public static boolean checkCrimsonWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
+    //     BlockState spawn_state, Holder<Biome> spawn_biome) {
+    //     if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.CRIMSON))
+    //         return false;
         
-        if (!spawn_state.is(Blocks.CRIMSON_NYLIUM))
-            return false;
-        if (!spawn_biome.is(Biomes.CRIMSON_FOREST))
-            return false;
+    //     if (!spawn_state.is(Blocks.CRIMSON_NYLIUM))
+    //         return false;
+    //     if (!spawn_biome.is(Biomes.CRIMSON_FOREST))
+    //         return false;
         
-        return true;
-    }
+    //     return true;
+    // }
 
-    public static boolean checkPistachioWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
-        BlockState spawn_state, Holder<Biome> spawn_biome) {
-        if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.PISTACHIO))
-            return false;
+    // public static boolean checkPistachioWolfSpawn(LevelAccessor level, BlockPos spawn_pos,
+    //     BlockState spawn_state, Holder<Biome> spawn_biome) {
+    //     if (!isWolfVariantRegistered(level.registryAccess(), DTNWolfVariants.PISTACHIO))
+    //         return false;
         
-        if (!spawn_state.is(Blocks.MUD))
-            return false;
-        if (!spawn_biome.is(Biomes.MANGROVE_SWAMP))
-            return false;
+    //     if (!spawn_state.is(Blocks.MUD))
+    //         return false;
+    //     if (!spawn_biome.is(Biomes.MANGROVE_SWAMP))
+    //         return false;
         
-        return true;
-    }
+    //     return true;
+    // }
 
-    private static boolean isWolfVariantRegistered(HolderLookup.Provider prov, 
-        ResourceKey<WolfVariant> variant) {
-        var reg = prov.lookupOrThrow(Registries.WOLF_VARIANT);
-        var variantOptional = reg.get(variant);
-        return variantOptional.isPresent();
-    }
+    // private static boolean isWolfVariantRegistered(HolderLookup.Provider prov, 
+    //     ResourceKey<WolfVariant> variant) {
+    //     var reg = prov.lookupOrThrow(Registries.WOLF_VARIANT);
+    //     var variantOptional = reg.get(variant);
+    //     return variantOptional.isPresent();
+    // }
 
-    public static void onPositionCheck(PositionCheck event) {
-        if (!ConfigHandler.SERVER.NETHER_WOLF_SPAWN_BYPASS.get())
-            return;
+    // public static void onPositionCheck(PositionCheck event) {
+    //     if (!ConfigHandler.SERVER.NETHER_WOLF_SPAWN_BYPASS.get())
+    //         return;
         
-        var entity = event.getEntity();
-        if (event.getSpawnType() != MobSpawnType.CHUNK_GENERATION)
-            return;
+    //     var entity = event.getEntity();
+    //     if (event.getSpawnType() != MobSpawnType.CHUNK_GENERATION)
+    //         return;
         
-        if (!(entity instanceof Wolf wolf))
-            return;
+    //     if (!(entity instanceof Wolf wolf))
+    //         return;
         
-        var spawn_level = event.getLevel();
+    //     var spawn_level = event.getLevel();
 
-        if (!isSpawningInNether(spawn_level))
-            return;
+    //     if (!isSpawningInNether(spawn_level))
+    //         return;
         
-        if (wolf.checkSpawnObstruction(spawn_level))
-            event.setResult(Result.SUCCEED);
-    }
+    //     if (wolf.checkSpawnObstruction(spawn_level))
+    //         event.setResult(Result.SUCCEED);
+    // }
 
-    public static boolean isSpawningInNether(ServerLevelAccessor spawn_level) {
-        var inner_level = spawn_level.getLevel();
-        if (inner_level == null)
-            return false;
-        var dim = inner_level.dimension();
-        if (dim == null)
-            return false;
-        return dim.equals(Level.NETHER);
-    }
+    // public static boolean isSpawningInNether(ServerLevelAccessor spawn_level) {
+    //     var inner_level = spawn_level.getLevel();
+    //     if (inner_level == null)
+    //         return false;
+    //     var dim = inner_level.dimension();
+    //     if (dim == null)
+    //         return false;
+    //     return dim.equals(Level.NETHER);
+    // }
 
 }

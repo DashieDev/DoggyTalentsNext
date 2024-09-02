@@ -39,8 +39,8 @@ import net.minecraft.world.entity.animal.WolfVariants;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.data.AdvancementProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeAdvancementProvider;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,7 +53,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class DTAdvancementProvider extends AdvancementProvider {
+public class DTAdvancementProvider extends ForgeAdvancementProvider {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
@@ -69,7 +69,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
     //     return pathIn.resolve("data/" + advancementIn.getId().getNamespace() + "/advancements/" + advancementIn.getId().getPath() + ".json");
     // }
 
-    public static class DoggyAdvancementsSubProvider implements AdvancementProvider.AdvancementGenerator {
+    public static class DoggyAdvancementsSubProvider implements ForgeAdvancementProvider.AdvancementGenerator {
 
         @Override
         public void generate(Provider registries, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {

@@ -18,25 +18,23 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.BiomeModifiers;
 import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.registries.NeoForgeRegistries;
 
 public class DTNWolfVariantsProvider {
     
     public static void start(GatherDataEvent event) {
-        var wolf_variant_set = new RegistrySetBuilder()
-            .add(Registries.WOLF_VARIANT, DTNWolfVariants::bootstrap)
-            .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, DTNWolfVariantsProvider::registerWolfModifier)
-            .add(Registries.JUKEBOX_SONG, DTMusicProvider::bootstrap);;
+        // var wolf_variant_set = new RegistrySetBuilder()
+        //     .add(Registries.WOLF_VARIANT, DTNWolfVariants::bootstrap)
+        //     .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, DTNWolfVariantsProvider::registerWolfModifier)
+        //     .add(Registries.JUKEBOX_SONG, DTMusicProvider::bootstrap);;
             
-        var datagen = event.getGenerator();
-        datagen.addProvider(event.includeServer(),
-            new DatapackBuiltinEntriesProvider(
-                datagen.getPackOutput(), event.getLookupProvider(), 
-                wolf_variant_set, Set.of(Constants.MOD_ID) 
-            )
-        );
+        // var datagen = event.getGenerator();
+        // datagen.addProvider(event.includeServer(),
+        //     new DatapackBuiltinEntriesProvider(
+        //         datagen.getPackOutput(), event.getLookupProvider(), 
+        //         wolf_variant_set, Set.of(Constants.MOD_ID) 
+        //     )
+        // );
     }
 
     private static void registerWolfModifier(BootstrapContext<BiomeModifier> ctx) {
@@ -147,23 +145,23 @@ public class DTNWolfVariantsProvider {
     private static void registerSingleSpawnModifier(BootstrapContext<BiomeModifier> ctx,
         String name, List<ResourceKey<Biome>> biomes, MobSpawnSettings.SpawnerData spawner_data) {
         
-        var spawn_id = ResourceKey.create(
-            NeoForgeRegistries.Keys.BIOME_MODIFIERS, 
-            Util.getResource(name));
+        // var spawn_id = ResourceKey.create(
+        //     NeoForgeRegistries.Keys.BIOME_MODIFIERS, 
+        //     Util.getResource(name));
         
-        var biome_reg = ctx.lookup(Registries.BIOME);
-        var biome_holders = biomes.stream()
-            .map(x -> biome_reg.get(x))
-            .filter(x -> x.isPresent())
-            .map(x -> x.get())
-            .collect(Collectors.toList());
-        if (biome_holders.isEmpty())
-            return;
-        var spawn_biomes = HolderSet.direct(biome_holders);
-        var spawn_modifier = BiomeModifiers.AddSpawnsBiomeModifier
-            .singleSpawn(spawn_biomes, spawner_data);
+        // var biome_reg = ctx.lookup(Registries.BIOME);
+        // var biome_holders = biomes.stream()
+        //     .map(x -> biome_reg.get(x))
+        //     .filter(x -> x.isPresent())
+        //     .map(x -> x.get())
+        //     .collect(Collectors.toList());
+        // if (biome_holders.isEmpty())
+        //     return;
+        // var spawn_biomes = HolderSet.direct(biome_holders);
+        // var spawn_modifier = BiomeModifiers.AddSpawnsBiomeModifier
+        //     .singleSpawn(spawn_biomes, spawner_data);
         
-        ctx.register(spawn_id, spawn_modifier);
+        // ctx.register(spawn_id, spawn_modifier);
     }
 
 }

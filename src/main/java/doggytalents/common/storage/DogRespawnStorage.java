@@ -142,7 +142,7 @@ public class DogRespawnStorage extends SavedData {
     }
 
     private static SavedData.Factory<DogRespawnStorage> FACTORY
-        = new SavedData.Factory<>(DogRespawnStorage::new, DogRespawnStorage::load);
+        = new SavedData.Factory<>(DogRespawnStorage::new, DogRespawnStorage::load, null);
     public static SavedData.Factory<DogRespawnStorage> storageFactory() {
         return FACTORY;
     }

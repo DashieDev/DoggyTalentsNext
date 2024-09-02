@@ -33,7 +33,6 @@ import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
-import net.minecraftforge.common.NeoForgeMod;
 import net.minecraftforge.fluids.FluidType;
 
 public class SwimmerDogTalent extends TalentInstance {

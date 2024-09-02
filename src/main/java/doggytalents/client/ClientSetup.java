@@ -235,7 +235,7 @@ public class ClientSetup {
 
     public static final List<ResourceLocation> OTHER_MOD_SKIN_JSONS = new ArrayList<ResourceLocation>();
 
-    public static void setupScreenManagers(final ClientSetup event) {
+    public static void setupScreenManagers(final FMLClientSetupEvent event) {
         MenuScreens.register(DoggyContainerTypes.FOOD_BOWL.get(), FoodBowlScreen::new);
         MenuScreens.register(DoggyContainerTypes.PACK_PUPPY.get(), PackPuppyScreen::new);
         MenuScreens.register(DoggyContainerTypes.TREAT_BAG.get(), TreatBagScreen::new);
@@ -397,7 +397,7 @@ public class ClientSetup {
         CollarRenderManager.registerLayer(FisherDogRenderer::new);
     }
 
-    public static void registerOverlay(ClientSetup e) {
+    public static void registerOverlay(FMLClientSetupEvent e) {
         //e.registerAboveAll(Util.getResource("dog_food_level"), DogScreenOverlays.FOOD_LEVEL_ELEMENT);
         //e.registerAboveAll(Util.getResource("dog_air_evel"), DogScreenOverlays.AIR_LEVEL_ELEMENT);
     }

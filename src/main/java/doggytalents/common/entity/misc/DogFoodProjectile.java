@@ -22,9 +22,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.entity.IEntityWithComplexSpawn;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 
-public class DogFoodProjectile extends ThrowableProjectile implements IEntityWithComplexSpawn {
+public class DogFoodProjectile extends ThrowableProjectile implements IEntityAdditionalSpawnData {
 
     private ItemStack foodStack = ItemStack.EMPTY;
 
@@ -140,7 +140,7 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityWit
     }   
 
     @Override
-    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
+    public void writeSpawnData(FriendlyByteBuf buffer) {
         boolean hasStack = !this.foodStack.isEmpty();
         buffer.writeBoolean(hasStack);
         if (hasStack) {
@@ -149,7 +149,7 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityWit
     }
 
     @Override
-    public void readSpawnData(RegistryFriendlyByteBuf buffer) {
+    public void readSpawnData(FriendlyByteBuf buffer) {
         boolean hasStack = buffer.readBoolean();
         if (hasStack) {
             this.foodStack = NetworkUtil.readItemFromBuf(buffer);

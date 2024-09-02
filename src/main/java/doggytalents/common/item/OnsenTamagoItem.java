@@ -24,7 +24,7 @@ public class OnsenTamagoItem extends DogEddibleItem{
             b -> b
                 .nutrition(4)
                 .saturationModifier(0.6F)
-                .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 600, 0), 1)
+                .effect(new MobEffectInstance(MobEffects.ABSORPTION, 600, 0), 1)
         );
     }
     @Override

@@ -25,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ticket.ChunkTicketManager;
-import net.minecraftforge.common.world.chunk.ForcedChunkManager;
 
 public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
 

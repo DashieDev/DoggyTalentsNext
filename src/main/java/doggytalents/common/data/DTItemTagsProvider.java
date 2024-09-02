@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +27,7 @@ public class DTItemTagsProvider extends ItemTagsProvider {
         PackOutput p_275204_,
         CompletableFuture<HolderLookup.Provider> p_275194_,
         CompletableFuture<TagsProvider.TagLookup<Block>> p_275634_,
-        @javax.annotation.Nullable net.neoforged.neoforge.common.data.ExistingFileHelper existingFileHelper
+        @javax.annotation.Nullable ExistingFileHelper existingFileHelper
      ) {
         super(p_275204_, p_275194_, p_275634_, Constants.MOD_ID, existingFileHelper);
     }

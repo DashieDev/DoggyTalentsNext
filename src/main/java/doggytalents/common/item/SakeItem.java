@@ -92,11 +92,11 @@ public class SakeItem extends DogEddibleItem {
         return ItemUtils.startUsingInstantly(p_42993_, p_42994_, p_42995_);
     }
 
-    @Override
-    @Nullable
-    public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
-        return null;
-    }
+    // @Override
+    // @Nullable
+    // public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
+    //     return null;
+    // }
 
     @Override
     public SoundEvent getDogEatingSound(AbstractDog dog) {
