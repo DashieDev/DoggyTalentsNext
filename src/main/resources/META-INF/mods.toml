@@ -15,15 +15,15 @@ logoFile="dtn_icon.png"
 
     enumExtensions="META-INF/enumextensions.json"
 [[dependencies.doggytalents]] #optional
-    modId="neoforge"
-    type="required"
+    modId="forge"
+    mandatory=true
     versionRange="${neoforge_version_range}" #mandatory
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.doggytalents]]
     modId="minecraft"
-    type="required"
+    mandatory=true
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
