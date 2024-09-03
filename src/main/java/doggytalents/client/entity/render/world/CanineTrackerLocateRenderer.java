@@ -4,6 +4,8 @@ import java.lang.ref.WeakReference;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyItems;
@@ -72,14 +74,14 @@ public class CanineTrackerLocateRenderer {
                 .normalize()
                 .scale(5);
         }
-        drawFloatingDistanceText(locatingName, event.getPoseStack(), d_dog_camera, off_txt, camera);
+        drawFloatingDistanceText(locatingName, d_dog_camera, off_txt, camera);
     }
 
-    public static void drawFloatingDistanceText(String name, PoseStack stack, double distance, Vec3 off_from_player, Camera camera) {
-        stack.pushPose();
-        stack.translate(off_from_player.x(), off_from_player.y(), off_from_player.z());
-        stack.mulPose(camera.rotation());
-        stack.scale(-0.02F, -0.02F, 0.02F);
+    public static void drawFloatingDistanceText(String name, double distance, Vec3 off_from_player, Camera camera) {
+        var text_mat = new Matrix4f();
+        text_mat.translate((float)off_from_player.x(), (float)off_from_player.y(), (float)off_from_player.z());
+        text_mat.rotate(camera.rotation());
+        text_mat.scale(0.02F, -0.02F, 0.02F);
         var font = Minecraft.getInstance().font;
 
         var dog_name = name;
@@ -117,13 +119,11 @@ public class CanineTrackerLocateRenderer {
 
         float tX = (float)(-font.width(line1) / 2);
         float tY = 0;
-        font.drawInBatch(line1, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, true, 0, 15728880);
+        font.drawInBatch(line1, tX, tY, 0xffffffff, false, text_mat, bufferSource, true, 0, 15728880);
         tX = (float)(-font.width(line2) / 2);
         tY += font.lineHeight + 3;
-        font.drawInBatch(line2, tX, tY, 0xffffffff, false, stack.last().pose(), bufferSource, true, 0, 15728880);;
+        font.drawInBatch(line2, tX, tY, 0xffffffff, false, text_mat, bufferSource, true, 0, 15728880);;
         bufferSource.endLastBatch();
-
-        stack.popPose();
     }
     
     public static int getHighlightColor(double distance) {
