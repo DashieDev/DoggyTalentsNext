@@ -79,7 +79,6 @@ public class CanineTrackerLocateRenderer {
     }
 
     public static void drawFloatingDistanceText(String name, double distance, Vec3 off_from_player, Camera camera) {
-        //stack.pushPose();
         var text_mat = new Matrix4f();
         text_mat.translate((float)off_from_player.x(), (float)off_from_player.y(), (float)off_from_player.z());
         text_mat.rotate(camera.rotation());
@@ -126,8 +125,6 @@ public class CanineTrackerLocateRenderer {
         tY += font.lineHeight + 3;
         font.drawInBatch(line2, tX, tY, 0xffffffff, false, text_mat, bufferSource, DisplayMode.SEE_THROUGH, 0, 15728880);;
         bufferSource.endLastBatch();
-
-        //stack.popPose();
     }
     
     public static int getHighlightColor(double distance) {
