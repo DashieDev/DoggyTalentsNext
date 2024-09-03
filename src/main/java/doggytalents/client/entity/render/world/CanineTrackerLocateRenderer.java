@@ -75,15 +75,15 @@ public class CanineTrackerLocateRenderer {
                 .normalize()
                 .scale(5);
         }
-        drawFloatingDistanceText(locatingName, event.getProjectionMatrix(), d_dog_camera, off_txt, camera);
+        drawFloatingDistanceText(locatingName, d_dog_camera, off_txt, camera);
     }
 
-    public static void drawFloatingDistanceText(String name, Matrix4f stack0, double distance, Vec3 off_from_player, Camera camera) {
+    public static void drawFloatingDistanceText(String name, double distance, Vec3 off_from_player, Camera camera) {
         //stack.pushPose();
-        var stack = new Matrix4f(stack0);
-        stack.translate((float) off_from_player.x(), (float)off_from_player.y(), (float)off_from_player.z());
-        stack.rotation(camera.rotation());
-        stack.scale(0.02F, -0.02F, 0.02F);
+        var text_mat = new Matrix4f();
+        text_mat.translate((float)off_from_player.x(), (float)off_from_player.y(), (float)off_from_player.z());
+        text_mat.rotate(camera.rotation());
+        text_mat.scale(0.02F, -0.02F, 0.02F);
         var font = Minecraft.getInstance().font;
 
         var dog_name = name;
@@ -121,10 +121,10 @@ public class CanineTrackerLocateRenderer {
 
         float tX = (float)(-font.width(line1) / 2);
         float tY = 0;
-        font.drawInBatch(line1, tX, tY, 0xffffffff, false, stack, bufferSource, DisplayMode.SEE_THROUGH, 0, 15728880);
+        font.drawInBatch(line1, tX, tY, 0xffffffff, false, text_mat, bufferSource, DisplayMode.SEE_THROUGH, 0, 15728880);
         tX = (float)(-font.width(line2) / 2);
         tY += font.lineHeight + 3;
-        font.drawInBatch(line2, tX, tY, 0xffffffff, false, stack, bufferSource, DisplayMode.SEE_THROUGH, 0, 15728880);;
+        font.drawInBatch(line2, tX, tY, 0xffffffff, false, text_mat, bufferSource, DisplayMode.SEE_THROUGH, 0, 15728880);;
         bufferSource.endLastBatch();
 
         //stack.popPose();

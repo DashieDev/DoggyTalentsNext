@@ -4,9 +4,9 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
 }
 
-version = '1.18.29'
+version = '1.18.29-indev'
 group = 'com.github.dashiedev'
-archivesBaseName = "DoggyTalentsNext-${project.target_mc_version}"
+archivesBaseName = "DoggyTalentsNext[Forge]-${project.target_mc_version}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
@@ -40,6 +40,7 @@ configurations {
 minecraft {
 
     mappings channel: 'official', version: '1.21'
+    reobf = false
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 

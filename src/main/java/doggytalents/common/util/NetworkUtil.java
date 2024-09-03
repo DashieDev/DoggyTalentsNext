@@ -2,6 +2,7 @@ package doggytalents.common.util;
 
 import doggytalents.DoggyRegistries;
 import doggytalents.DoggyTalents;
+import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.Talent;
 import doggytalents.common.variant.DogVariant;
@@ -13,40 +14,47 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistry;
 
 public class NetworkUtil {
     
-    public static StreamCodec
-        <RegistryFriendlyByteBuf, Talent> 
-        TALENT_STREAM_CODEC = ByteBufCodecs.registry(DoggyRegistries.Keys.TALENTS_REGISTRY);
+    // public static StreamCodec
+    //     <RegistryFriendlyByteBuf, Talent> 
+    //     TALENT_STREAM_CODEC = ByteBufCodecs.registry(DoggyTalentsAPI.TALENTS.get().getRegistryKey());
 
-    public static StreamCodec
-        <RegistryFriendlyByteBuf, Accessory> 
-        ACCESSORY_CODEC = ByteBufCodecs.registry(DoggyRegistries.Keys.ACCESSORIES_REGISTRY);
+    // public static StreamCodec
+    //     <RegistryFriendlyByteBuf, Accessory> 
+    //     ACCESSORY_CODEC = ByteBufCodecs.registry(DoggyTalentsAPI.ACCESSORIES.get().getRegistryKey());
 
-    public static StreamCodec
-        <RegistryFriendlyByteBuf, DogVariant> 
-        DOG_VARIANT_CODEC = ByteBufCodecs.registry(DoggyRegistries.Keys.DOG_VARIANT);
+    // public static StreamCodec
+    //     <RegistryFriendlyByteBuf, DogVariant> 
+    //     DOG_VARIANT_CODEC = ByteBufCodecs.registry(DoggyRegistries.DOG_VARIANT.get().getRegistryKey());
     
 
     public static void writeTalentToBuf(FriendlyByteBuf buf, Talent val) {
-        var reg_buf = (RegistryFriendlyByteBuf) buf;
-        TALENT_STREAM_CODEC.encode(reg_buf, val);
+        // var reg_buf = (RegistryFriendlyByteBuf) buf;
+        // TALENT_STREAM_CODEC.encode(reg_buf, val);
+        buf.writeVarInt(((ForgeRegistry<Talent>)DoggyTalentsAPI.TALENTS.get()).getID(val));
     }
 
     public static Talent readTalentFromBuf(FriendlyByteBuf buf) {
-        var reg_buf = (RegistryFriendlyByteBuf) buf;
-        return TALENT_STREAM_CODEC.decode(reg_buf);
+        // var reg_buf = (RegistryFriendlyByteBuf) buf;
+        // return TALENT_STREAM_CODEC.decode(reg_buf);
+        var raw_id = buf.readVarInt();
+        return ((ForgeRegistry<Talent>)DoggyTalentsAPI.TALENTS.get()).getValue(raw_id);
     }
 
     public static void writeAccessoryToBuf(FriendlyByteBuf buf, Accessory val) {
-        var reg_buf = (RegistryFriendlyByteBuf) buf;
-        ACCESSORY_CODEC.encode(reg_buf, val);
+        // var reg_buf = (RegistryFriendlyByteBuf) buf;
+        // ACCESSORY_CODEC.encode(reg_buf, val);
+        buf.writeVarInt(((ForgeRegistry<Accessory>)DoggyTalentsAPI.ACCESSORIES.get()).getID(val));
     }
 
     public static Accessory readAccessoryFromBuf(FriendlyByteBuf buf) {
-        var reg_buf = (RegistryFriendlyByteBuf) buf;
-        return ACCESSORY_CODEC.decode(reg_buf);
+        //var reg_buf = (RegistryFriendlyByteBuf) buf;
+        //return ACCESSORY_CODEC.decode(reg_buf);
+        var raw_id = buf.readVarInt();
+        return ((ForgeRegistry<Accessory>)DoggyTalentsAPI.ACCESSORIES.get()).getValue(raw_id);
     }
 
     public static void writeItemToBuf(FriendlyByteBuf buf, ItemStack stack) {
@@ -75,13 +83,16 @@ public class NetworkUtil {
     }
 
     public static void writeDogVariantToBuf(FriendlyByteBuf buf, DogVariant val) {
-        var reg_buf = (RegistryFriendlyByteBuf) buf;
-        DOG_VARIANT_CODEC.encode(reg_buf, val);
+        // var reg_buf = (RegistryFriendlyByteBuf) buf;
+        // DOG_VARIANT_CODEC.encode(reg_buf, val);
+        buf.writeVarInt(((ForgeRegistry<DogVariant>)DoggyRegistries.DOG_VARIANT.get()).getID(val));
     }
 
     public static DogVariant readDogVariantFromBuf(FriendlyByteBuf buf) {
-        var reg_buf = (RegistryFriendlyByteBuf) buf;
-        return DOG_VARIANT_CODEC.decode(reg_buf);
+        // var reg_buf = (RegistryFriendlyByteBuf) buf;
+        // return DOG_VARIANT_CODEC.decode(reg_buf);
+        var raw_id = buf.readVarInt();
+        return ((ForgeRegistry<DogVariant>)DoggyRegistries.DOG_VARIANT.get()).getValue(raw_id);
     }
 
 }

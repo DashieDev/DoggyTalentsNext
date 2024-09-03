@@ -16,10 +16,10 @@ import net.minecraftforge.registries.RegistryBuilder;
 public class DoggyRegistries {
 
     public class Keys {
-        public static final ResourceKey<Registry<Talent>> TALENTS_REGISTRY = regKey("talents");
-        public static final ResourceKey<Registry<Accessory>> ACCESSORIES_REGISTRY = regKey("accessories");
-        public static final ResourceKey<Registry<AccessoryType>> ACCESSORY_TYPE_REGISTRY = regKey("accessory_type");
-        public static final ResourceKey<Registry<DogVariant>> DOG_VARIANT = regKey("dog_variant");
+        public static final ResourceLocation TALENTS_REGISTRY = Util.getResource("talents");
+        public static final ResourceLocation ACCESSORIES_REGISTRY = Util.getResource("accessories");
+        public static final ResourceLocation ACCESSORY_TYPE_REGISTRY = Util.getResource("accessory_type");
+        public static final ResourceLocation DOG_VARIANT = Util.getResource("dog_variant");
         // public static final ResourceKey<Registry<Bed>> BEDDING_REGISTRY = regKey("bedding");
         // public static final ResourceLocation CASING_REGISTRY = regKey("casing");
     }
@@ -34,15 +34,15 @@ public class DoggyRegistries {
     }
 
     private static <T> Supplier<IForgeRegistry<T>> makeRegistry(NewRegistryEvent event, 
-        final ResourceKey<Registry<T>> key, Class<T> type, boolean disableSync) {
-        var builder = RegistryBuilder.<T>of(key.location());
+        final ResourceLocation key, Class<T> type, boolean disableSync) {
+        var builder = RegistryBuilder.<T>of(key);
         if (disableSync) builder.disableSync();
         var ret = event.create(builder);
         return ret;
     }
 
     private static <T> Supplier<IForgeRegistry<T>> makeRegistry(NewRegistryEvent event,
-        final ResourceKey<Registry<T>> key, Class<T> type) {
+        final ResourceLocation key, Class<T> type) {
         return makeRegistry(event, key, type, false);
     }
 
@@ -52,8 +52,8 @@ public class DoggyRegistries {
     }
 
     private static <T> Supplier<IForgeRegistry<T>> makeRegistry(NewRegistryEvent event, 
-        final ResourceKey<Registry<T>> key, Class<T> type, ResourceLocation defaultKey) {
-        var builder = RegistryBuilder.<T>of(key.location());
+        final ResourceLocation key, Class<T> type, ResourceLocation defaultKey) {
+        var builder = RegistryBuilder.<T>of(key);
         //builder.sync(true);
         builder.setDefaultKey(defaultKey);
         var ret = event.create(builder);
