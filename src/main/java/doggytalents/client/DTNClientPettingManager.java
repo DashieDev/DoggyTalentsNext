@@ -358,6 +358,9 @@ public class DTNClientPettingManager {
         camera_xRot = Mth.clamp(camera_xRot, -75, 75);
         event.setPitch(camera_xRot);
         event.setYaw(event.getYaw() + (float) Mth.lerp(pTicks, pet_camera_yRot0_add, pet_camera_yRot_add));
+    
+        //1.20 under
+        fixCameraPosition_1_20_under(event.getCamera(), event.getPartialTick(), event.getYaw(), event.getPitch());
     }
 
     @SubscribeEvent
@@ -426,6 +429,25 @@ public class DTNClientPettingManager {
             PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogPettingData(dog.getId(), true, this.selectedType));
         else
             PacketHandler.send(PacketDistributor.SERVER.noArg(), new DogPettingData(dog.getId(), false, null));
+    }
+
+    //1.20 and under
+    private void fixCameraPosition_1_20_under(Camera camera, double pTicks, float new_yRot, float new_xRot) {
+        var mc = Minecraft.getInstance();
+        var camera_entity = mc.getCameraEntity();
+        if (camera_entity == null)
+            camera_entity = mc.player;
+        if (camera_entity == null)
+            return;
+        
+        camera.setRotation(new_yRot, new_xRot);
+        camera.setPosition(
+            Mth.lerp(pTicks, camera_entity.xo, camera_entity.getX()),
+            Mth.lerp(pTicks, camera_entity.yo, camera_entity.getY()) + camera_entity.getEyeHeight(),
+            Mth.lerp(pTicks, camera_entity.zo, camera_entity.getZ())
+        );
+        camera.move(-camera.getMaxZoom(4.0f), 0.0f, 0.0f);
+        
     }
 
 }
