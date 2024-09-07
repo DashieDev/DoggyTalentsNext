@@ -1591,3 +1591,6 @@ otherwise they only tp when owner is in water.
 * Fix Train Wolf Limit apply to the whole server instead of individual players. 
 * Fix Dog dont drop banage when Incap Val reset but drop otherwise. 
 * Fix Dog still standing up when hurt while being a passenger.
+
+**1.18.31 - 8th September 2024**
+*(1.20- only) HOTFIX: Canine Tracker rendering improperly.
