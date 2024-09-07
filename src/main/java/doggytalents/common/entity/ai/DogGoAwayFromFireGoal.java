@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -153,7 +152,7 @@ public class DogGoAwayFromFireGoal extends Goal {
         var pos_below = BlockPos.containing(pos).below();
         var state_below = dog.level().getBlockState(pos_below);
         if (WalkNodeEvaluator.isBurningBlock(state_below)
-            && !state_below.isPathfindable(PathComputationType.LAND))
+            && !state_below.isPathfindable(dog.level(), pos_below, PathComputationType.LAND))
             return 1;
 
         // {
