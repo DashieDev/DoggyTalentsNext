@@ -21,6 +21,7 @@ import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -189,7 +190,7 @@ public class DTBlockstateProvider extends BlockStateProvider {
     }
 
     private String name(Block block) {
-        return BuiltInRegistries.BLOCK.getKey(block).getPath();
+        return ForgeRegistries.BLOCKS.getKey(block).getPath();
     }
 
     private String cropState(DogCropBlock block, int age) {
@@ -201,7 +202,7 @@ public class DTBlockstateProvider extends BlockStateProvider {
     }
 
     public ResourceLocation blockTexture(Block block) {
-        ResourceLocation base = BuiltInRegistries.BLOCK.getKey(block);
+        ResourceLocation base = ForgeRegistries.BLOCKS.getKey(block);
         return prextend(base, ModelProvider.BLOCK_FOLDER + "/");
     }
 

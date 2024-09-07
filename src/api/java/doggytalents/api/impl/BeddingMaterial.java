@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.IBeddingMaterial;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -36,7 +37,7 @@ public class BeddingMaterial extends IBeddingMaterial {
     @Override
     public ResourceLocation getTexture() {
         if (this.texture == null) {
-            ResourceLocation loc = BuiltInRegistries.BLOCK.getKey(this.block.get());
+            ResourceLocation loc = ForgeRegistries.BLOCKS.getKey(this.block.get());
             this.texture = ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), "block/" + loc.getPath());
         }
 
