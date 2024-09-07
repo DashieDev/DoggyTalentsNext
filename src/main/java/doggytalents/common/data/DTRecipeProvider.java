@@ -585,7 +585,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
             .save(consumer);
         
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DEER_ANTLERS.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.DEER_ANTLERS.get(), 1)
             .pattern("SLS")
             .pattern(" T ")
             .define('S', Items.STICK)
@@ -594,7 +594,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.STRIPED_SCARF.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.STRIPED_SCARF.get(), 1)
             .pattern("CW")
             .define('C', Items.WHITE_CARPET)
             .define('W', DoggyItems.WOOL_COLLAR.get())

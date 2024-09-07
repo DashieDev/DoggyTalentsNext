@@ -4,9 +4,8 @@ import java.lang.ref.WeakReference;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.joml.Matrix4f;
-
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Matrix4f;
 
 import doggytalents.DoggyItems;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
@@ -80,9 +79,9 @@ public class CanineTrackerLocateRenderer {
 
     public static void drawFloatingDistanceText(String name, double distance, Vec3 off_from_player, Camera camera) {
         var text_mat = new Matrix4f();
-        text_mat.translate((float)off_from_player.x(), (float)off_from_player.y(), (float)off_from_player.z());
-        text_mat.rotate(camera.rotation());
-        text_mat.scale(0.02F, -0.02F, 0.02F);
+        text_mat.multiplyWithTranslation((float)off_from_player.x(), (float)off_from_player.y(), (float)off_from_player.z());
+        text_mat.multiply(camera.rotation());
+        text_mat.multiply(Matrix4f.createScaleMatrix(0.02F, -0.02F, 0.02F));
         var font = Minecraft.getInstance().font;
 
         var dog_name = name;
