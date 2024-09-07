@@ -1574,3 +1574,17 @@ otherwise they only tp when owner is in water.
 # Improve Dog's Default Navigation, reduce spinna chance.
 *(Fabric 1.21.1 only) Fix newer Fabric API causing Dog Bed to crash.
 *(Fabric only) Fix player unable to dismount Dog in some cases.
+
+**1.18.30 - 7th September 2024**
++ OINA!!!!
++ Stripy Scarf
++ Deer Antlers
+# Improve Dog's Default Navigation
+# Water Holder only find onFire target which are onGround.
+# All Injured Dog no longer block portal
+# Improve Dog Push Resisting
+# Improve Dog Collision Avoid Each Other when Navigating.
+# Dog now go away when directly standing on top of magma block.
+* Fix Train Wolf Limit apply to the whole server instead of individual players. 
+* Fix Dog dont drop banage when Incap Val reset but drop otherwise. 
+* Fix Dog still standing up when hurt while being a passenger.
