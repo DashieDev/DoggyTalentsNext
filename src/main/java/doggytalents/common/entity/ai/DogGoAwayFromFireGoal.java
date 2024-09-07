@@ -13,6 +13,8 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -148,6 +150,12 @@ public class DogGoAwayFromFireGoal extends Goal {
                 return 1;
             }
         }
+
+        var pos_below = BlockPos.containing(pos).below();
+        var state_below = dog.level().getBlockState(pos_below);
+        if (WalkNodeEvaluator.isBurningBlock(state_below)
+            && !state_below.isPathfindable(PathComputationType.LAND))
+            return 1;
 
         // {
         //     var x = new BlockPos(pos.x, pos.y-1, pos.z);
