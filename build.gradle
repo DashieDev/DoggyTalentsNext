@@ -4,7 +4,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
 }
 
-version = '1.18.29-indev'
+version = '1.18.30-beta'
 group = 'com.github.dashiedev'
 archivesBaseName = "DoggyTalentsNext[Forge]-${project.target_mc_version}"
 
