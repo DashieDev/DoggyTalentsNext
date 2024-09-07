@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "item": "minecraft:leather_helmet"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
+    }
+  },
+  "pattern": [
+    "SLS",
+    " T "
+  ],
+  "result": {
+    "item": "doggytalents:deer_antlers"
+  },
+  "show_notification": true
+}
