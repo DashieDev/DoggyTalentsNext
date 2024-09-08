@@ -39,7 +39,7 @@ public class DoggySerializers {
 
     private static <T> EntityDataSerializer<T> register(final String name, final Supplier<EntityDataSerializer<T>> sup) {
         final var captured_value = sup.get();
-        SERIALIZERS.register(name, () -> captured_value);
+        SERIALIZERS.register(name, () -> new DataSerializerEntry(captured_value));
         return captured_value;
     }
 }
