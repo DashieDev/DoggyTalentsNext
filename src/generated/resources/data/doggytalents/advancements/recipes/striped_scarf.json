@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:striped_scarf"
+    ]
+  },
+  "criteria": {
+    "has_dtn_wool_collar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "doggytalents:wool_collar"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:striped_scarf"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dtn_wool_collar",
+      "has_the_recipe"
+    ]
+  ]
+}
