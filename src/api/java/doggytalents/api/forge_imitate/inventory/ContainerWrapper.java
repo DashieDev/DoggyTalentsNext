@@ -74,4 +74,8 @@ public class ContainerWrapper implements IItemHandler {
         return this.container.canPlaceItem(id, stack);
     }
 
+    public static boolean hasTag(ItemStack stack) {
+        return stack.hasTag();
+    }
+
 }

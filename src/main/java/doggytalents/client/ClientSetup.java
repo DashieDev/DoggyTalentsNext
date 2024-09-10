@@ -124,6 +124,7 @@ import doggytalents.client.screen.RiceMillScreen;
 import doggytalents.client.screen.TreatBagScreen;
 import doggytalents.client.tileentity.renderer.DogBedRenderer;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.Util;
 import doggytalents.forge_imitate.client.ForgeGuiOverlayManager.RegisterGuiOverlaysEvent;
 import doggytalents.forge_imitate.event.client.EntityRenderersEvent;
 import doggytalents.forge_imitate.event.client.FMLClientSetupEvent;
