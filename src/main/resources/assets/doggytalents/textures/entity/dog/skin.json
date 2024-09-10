@@ -81,7 +81,7 @@
             "tags" : "okami, kusa, canine warriors, shiba"
         },
         {
-            "skin_name" : "Kaipoku",
+            "skin_name" : "Kaipoku - Kai",
             "skin_id" : "oina_kaipoku",
             "use_model" : "oina_kaipoku",
             "based_on" : "Kaipoku from the Oina Tribe from Okami(2006) by Clover Studio",
@@ -89,7 +89,7 @@
             "tags" : "okami, oina"
         },
         {
-            "skin_name" : "Kawauso",
+            "skin_name" : "Kawauso - Otter Mask",
             "skin_id" : "oina_kawauso",
             "use_model" : "oina_kawauso",
             "based_on" : "Kawauso from the Oina Tribe from Okami(2006) by Clover Studio",
@@ -97,7 +97,7 @@
             "tags" : "okami, oina"
         },
         {
-            "skin_name" : "Kemushiri",
+            "skin_name" : "Kemushiri - Kemu",
             "skin_id" : "oina_kemushiri",
             "use_model" : "oina_kemushiri",
             "based_on" : "Kemushiri from the Oina Tribe from Okami(2006) by Clover Studio",
@@ -121,7 +121,7 @@
             "tags" : "okami, oina"
         },
         {
-            "skin_name" : "Okikurumi",
+            "skin_name" : "Okikurumi - Oki",
             "skin_id" : "oina_okikurumi",
             "use_model" : "oina_okikurumi",
             "based_on" : "Okikurumi from the Oina Tribe from Okami(2006) by Clover Studio",
@@ -129,7 +129,7 @@
             "tags" : "okami, oina"
         },
         {
-            "skin_name" : "Piriko",
+            "skin_name" : "Piriko - Lika",
             "skin_id" : "oina_piriko",
             "use_model" : "oina_piriko",
             "based_on" : "Piriko from the Oina Tribe from Okami(2006) by Clover Studio",
@@ -137,7 +137,7 @@
             "tags" : "okami, oina"
         },
         {
-            "skin_name" : "Risu",
+            "skin_name" : "Risu - Squirrel Mask",
             "skin_id" : "oina_risu",
             "use_model" : "oina_risu",
             "based_on" : "Risu from the Oina Tribe from Okami(2006) by Clover Studio",
@@ -145,7 +145,7 @@
             "tags" : "okami, oina"
         },
         {
-            "skin_name" : "Shamikuru",
+            "skin_name" : "Shamikuru - Shamikle",
             "skin_id" : "oina_shamikuru",
             "use_model" : "oina_shamikuru",
             "based_on" : "Shamikuru from the Oina Tribe from Okami(2006) by Clover Studio",
@@ -153,7 +153,7 @@
             "tags" : "okami, oina"
         },
         {
-            "skin_name" : "Todo",
+            "skin_name" : "Todo - Sea Lion Mask",
             "skin_id" : "oina_todo",
             "use_model" : "oina_todo",
             "based_on" : "Todo from the Oina Tribe from Okami(2006) by Clover Studio",
@@ -161,7 +161,7 @@
             "tags" : "okami, oina"
         },
         {
-            "skin_name" : "Tusukuru",
+            "skin_name" : "Tusukuru - Tuskle",
             "skin_id" : "oina_tusukuru",
             "use_model" : "oina_tusukuru",
             "based_on" : "Tusukuru from the Oina Tribe from Okami(2006) by Clover Studio",
