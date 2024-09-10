@@ -159,7 +159,7 @@ public class DogModelRegistry {
         
         register("oina_kaipoku", ctx ->  new KaipokuModel(ctx.bakeLayer(ClientSetup.OINA_KAIPOKU)));
         register("oina_kawauso", ctx ->  new KawausoModel(ctx.bakeLayer(ClientSetup.OINA_KAWAUSO)));
-        register("oina_kemu", ctx ->  new KemuModel(ctx.bakeLayer(ClientSetup.OINA_KEMU)));
+        register("oina_kemushiri", ctx ->  new KemushiriModel(ctx.bakeLayer(ClientSetup.OINA_KEMUSHIRI)));
         register("oina_merchant", ctx ->  new OinaMerchant1Model(ctx.bakeLayer(ClientSetup.OINA_MERCHANT)));
         register("oina_merchant2", ctx ->  new OinaMerchant2Model(ctx.bakeLayer(ClientSetup.OINA_MERCHANT2)));
         register("oina_okikurumi", ctx ->  new OkikurumiModel(ctx.bakeLayer(ClientSetup.OINA_OKIKURUMI)));

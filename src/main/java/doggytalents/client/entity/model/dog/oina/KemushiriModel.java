@@ -13,9 +13,9 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 
-public class KemuModel extends DogModel {
+public class KemushiriModel extends DogModel {
 
-    public KemuModel(ModelPart box) {
+    public KemushiriModel(ModelPart box) {
 		super(box);
 	}
 
