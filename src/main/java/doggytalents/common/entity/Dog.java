@@ -228,18 +228,6 @@ public class Dog extends AbstractDog {
     // private static final Cache<EntityDataAccessor<List<DoggyArtifactItem>>> ARTIFACTS = Cache.make(() -> (EntityDataAccessor<List<DoggyArtifactItem>>) SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER.get()));
     // private static final Cache<EntityDataAccessor<DogSize>> DOG_SIZE = Cache.make(() -> (EntityDataAccessor<DogSize>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER.get()));
     // private static final Cache<EntityDataAccessor<DogSkinData>> CUSTOM_SKIN = Cache.make(() -> (EntityDataAccessor<DogSkinData>) SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER.get()));
-    
-    public static final void initDataParameters() { 
-        // DOG_LEVEL.get();
-        // GENDER.get();
-        // MODE.get();
-        // DOG_BED_LOCATION.get();
-        // DOG_BOWL_LOCATION.get();
-        // DOG_INCAP_SYNC_STATE.get();
-        // ARTIFACTS.get();
-        // DOG_SIZE.get();
-        // CUSTOM_SKIN.get();
-    }
 
     // Cached values
     private final Cache<Integer> spendablePoints = Cache.make(this::getSpendablePointsInternal);
