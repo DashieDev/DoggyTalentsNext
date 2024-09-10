@@ -17,7 +17,7 @@
             "tags" : "okami, amaterasu, ammy"
         },
         {
-            "skin_name" : "Hayabusa (Kai Ken)",
+            "skin_name" : "Hayabusa (Kai Ken) - Chu",
             "skin_id" : "kusa_hayabusa",
             "use_model" : "kusa_hayabusa",
             "based_on" : "Hayabusa from the Canine Warriors from Okami(2006) by Clover Studio",
@@ -57,7 +57,7 @@
             "tags" : "okami, kusa, canine warriors"
         },
         {
-            "skin_name" : "Take",
+            "skin_name" : "Take - Gi",
             "skin_id" : "kusa_take",
             "use_model" : "kusa_take",
             "based_on" : "Take from the Canine Warriors from Okami(2006) by Clover Studio",
@@ -73,7 +73,7 @@
             "tags" : "okami, kusa, canine warriors"
         },
         {
-            "skin_name" : "Ume",
+            "skin_name" : "Ume - Jin",
             "skin_id" : "kusa_ume",
             "use_model" : "kusa_ume",
             "based_on" : "Ume from the Canine Warriors from Okami(2006) by Clover Studio",
