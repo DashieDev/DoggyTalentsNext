@@ -97,10 +97,10 @@
             "tags" : "okami, oina"
         },
         {
-            "skin_name" : "Kemu",
-            "skin_id" : "oina_kemu",
-            "use_model" : "oina_kemu",
-            "based_on" : "Kemu from the Oina Tribe from Okami(2006) by Clover Studio",
+            "skin_name" : "Kemushiri",
+            "skin_id" : "oina_kemushiri",
+            "use_model" : "oina_kemushiri",
+            "based_on" : "Kemushiri from the Oina Tribe from Okami(2006) by Clover Studio",
             "author" : "MashXP, DashieDev",
             "tags" : "okami, oina"
         },
