@@ -165,7 +165,7 @@ public class ClientSetup {
     
     public static final ModelLayerLocation OINA_KAIPOKU = new ModelLayerLocation(Util.getResource("oina_kaipoku"), "main");
     public static final ModelLayerLocation OINA_KAWAUSO = new ModelLayerLocation(Util.getResource("oina_kawauso"), "main");
-    public static final ModelLayerLocation OINA_KEMU = new ModelLayerLocation(Util.getResource("oina_kemu"), "main");
+    public static final ModelLayerLocation OINA_KEMUSHIRI = new ModelLayerLocation(Util.getResource("oina_kemushiri"), "main");
     public static final ModelLayerLocation OINA_MERCHANT = new ModelLayerLocation(Util.getResource("oina_merchant"), "main");
     public static final ModelLayerLocation OINA_MERCHANT2 = new ModelLayerLocation(Util.getResource("oina_merchant2"), "main");
     public static final ModelLayerLocation OINA_OKIKURUMI = new ModelLayerLocation(Util.getResource("oina_okikurumi"), "main");
@@ -277,7 +277,7 @@ public class ClientSetup {
 
         event.registerLayerDefinition(OINA_KAIPOKU, KaipokuModel::createBodyLayer);
         event.registerLayerDefinition(OINA_KAWAUSO, KawausoModel::createBodyLayer);
-        event.registerLayerDefinition(OINA_KEMU, KemuModel::createBodyLayer);
+        event.registerLayerDefinition(OINA_KEMUSHIRI, KemushiriModel::createBodyLayer);
         event.registerLayerDefinition(OINA_MERCHANT, OinaMerchant1Model::createBodyLayer);
         event.registerLayerDefinition(OINA_MERCHANT2, OinaMerchant2Model::createBodyLayer);
         event.registerLayerDefinition(OINA_OKIKURUMI, OkikurumiModel::createBodyLayer);
