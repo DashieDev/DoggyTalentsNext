@@ -30,3 +30,6 @@ logoFile="dtn_icon.png"
 
 [[accessTransformers]]
     file="META-INF/accesstransformer.cfg"
+
+[[mixins]]
+    config="doggytalents.mixins.json"
