@@ -293,6 +293,8 @@ public class DogArrow extends AbstractArrow {
                 && (custom == null || custom.isEmpty());
             if (empty_condition)
                 return EMPTY;
+            if (potion == null) potion = Potions.EMPTY;
+            if (custom == null) custom = Set.of();
             return new PotionContents(Optional.of(potion), Optional.of(custom));
         }
         
