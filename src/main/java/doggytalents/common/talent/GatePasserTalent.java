@@ -1,6 +1,7 @@
 package doggytalents.common.talent;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -8,12 +9,13 @@ import java.util.function.Predicate;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.TalentsOptions;
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.network.packet.data.GatePasserData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.nbt.CompoundTag;
@@ -301,35 +303,23 @@ public class GatePasserTalent extends TalentInstance {
     }
 
     @Override
-    public void writeToBuf(FriendlyByteBuf buf) {
-        super.writeToBuf(buf);
-        buf.writeBoolean(allowPassingGate);
+    public Object getTalentOption(TalentOption<?> entry) {
+        if (entry == TalentsOptions.GATE_PASSER_ENABLE.get()) {
+            return this.allowPassingGate;
+        }
+        return null;
     }
 
     @Override
-    public void readFromBuf(FriendlyByteBuf buf) {
-        super.readFromBuf(buf);
-        allowPassingGate = buf.readBoolean();
+    public void setTalentOption(TalentOption<?> entry, Object data) {
+        if (entry == TalentsOptions.GATE_PASSER_ENABLE.get()) {
+            this.allowPassingGate = (Boolean) data;
+        }
     }
 
     @Override
-    public void updateOptionsFromServer(TalentInstance fromServer) {
-        if (!(fromServer instanceof GatePasserTalent gate))
-            return;
-        this.allowPassingGate = gate.allowPassingGate; 
-    }
-
-    public void updateFromPacket(GatePasserData data) {
-        this.allowPassingGate = data.allowPassingGate;
-    }
-
-    @Override
-    public TalentInstance copy() {
-        var ret = super.copy();
-        if (!(ret instanceof GatePasserTalent gate))
-            return ret;
-        gate.setAllowPassingGate(this.allowPassingGate);
-        return gate;
+    public Collection<TalentOption<?>> getAllTalentOptions() {
+        return List.of(TalentsOptions.GATE_PASSER_ENABLE.get());
     }
 
     public boolean allowPassingGate() { return this.allowPassingGate; }

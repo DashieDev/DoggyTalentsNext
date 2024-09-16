@@ -108,7 +108,7 @@ public class DogDataSyncManager {
                 var dogInst = dog.getTalent(talent);
                 if (!dogInst.isPresent())
                     continue;
-                dogInst.get().updateOptionsFromServer(inst);
+                dogInst.get().copyTalentOptionFrom(inst);
             }
         }
         dog.onDogSyncedDataUpdated(talents.isPresent(), accessories.isPresent());
