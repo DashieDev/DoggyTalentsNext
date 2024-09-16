@@ -53,6 +53,7 @@ public class DoggyTalentsNextEntry implements ModInitializer {
         DoggyEntityTypes.ENTITIES.initAll();
         DoggyContainerTypes.CONTAINERS.initAll();
         //DoggySerializers.SERIALIZERS.initAll();
+        TalentsOptions.TALENT_OPTIONS.initAll();
         DoggySounds.SOUNDS.initAll();
         DoggyRecipeSerializers.RECIPE_SERIALIZERS.initAll();
         DoggyTalents.TALENTS.initAll();

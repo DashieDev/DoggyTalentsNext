@@ -7,6 +7,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.TalentsOptions;
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Talent;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
@@ -26,15 +27,9 @@ import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
-import doggytalents.common.network.packet.data.CreeperSweeperData;
 import doggytalents.common.network.packet.data.DogTalentData;
-import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
-import doggytalents.common.network.packet.data.DoggyTorchData;
-import doggytalents.common.network.packet.data.FisherDogData;
-import doggytalents.common.network.packet.data.GatePasserData;
+import doggytalents.common.network.packet.data.DogTalentOptionSetData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
-import doggytalents.common.network.packet.data.PackPuppyData;
-import doggytalents.common.network.packet.data.RescueDogRenderData;
 import doggytalents.common.talent.CreeperSweeperTalent;
 import doggytalents.common.talent.DoggyTorchTalent;
 import doggytalents.common.talent.FisherDogTalent;
@@ -162,9 +157,8 @@ public class TalentInfoViewElement extends AbstractElement {
                         : "talent.doggytalents.doggy_tools.placing_torch.set"
                     ));
                     torchTalent.setPlacingTorch(newVal);
-                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new DoggyTorchData(
-                        dog.getId(), newVal
-                    ));
+                    var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.DOGGY_TORCH_ENABLE.get(), newVal);
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                 }
             );
             torchButtonDiv.addChildren(torchButton);
@@ -179,9 +173,8 @@ public class TalentInfoViewElement extends AbstractElement {
                                 Boolean newVal = !torchTalent.renderTorch();
                                 b.setMessage(Component.literal("" + newVal));
                                 torchTalent.setRenderTorch(newVal);
-                                PacketHandler.send(PacketDistributor.SERVER.noArg(), new DoggyTorchData(
-                                    dog.getId(), newVal, DoggyTorchData.Type.RENDER_TORCH
-                                ));
+                                var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.DOGGY_TORCH_RENDER.get(), newVal);
+                                PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                             }     
                         ),
                         I18n.get("talent.doggytalents.doggy_torch.render_torch")
@@ -206,9 +199,8 @@ public class TalentInfoViewElement extends AbstractElement {
                             Boolean newVal = !toolsTalent.pickFirstTool();
                             b.setMessage(Component.literal("" + newVal));
                             toolsTalent.setPickFirstTool(newVal);
-                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new DoggyToolsPickFirstData(
-                                dog.getId(), newVal
-                            ));
+                            var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.DOGGY_TOOLS_EXC.get(), newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
                     ),
                     I18n.get("talent.doggytalents.doggy_tools.pick_first_tool")
@@ -273,9 +265,8 @@ public class TalentInfoViewElement extends AbstractElement {
                             Boolean newVal = !rescue.renderBox();
                             b.setMessage(Component.literal("" + newVal));
                             rescue.setRenderBox(newVal);
-                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new RescueDogRenderData(
-                                dog.getId(), newVal
-                            ));
+                            var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.RESCUE_DOG_RENDER.get(), newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
                     ),
                     I18n.get("talent.doggytalents.rescue_dog.render_box")
@@ -310,9 +301,8 @@ public class TalentInfoViewElement extends AbstractElement {
                         : "talent.doggytalents.gate_passer.pass_gate.set"
                     ));
                     gateTalent.setAllowPassingGate(newVal);
-                    PacketHandler.send(PacketDistributor.SERVER.noArg(), new GatePasserData(
-                        dog.getId(), newVal
-                    ));
+                    var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.GATE_PASSER_ENABLE.get(), newVal);
+                    PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                 }
             );
             gateButtonDiv.addChildren(gateButton);
@@ -332,9 +322,8 @@ public class TalentInfoViewElement extends AbstractElement {
                             Boolean newVal = !sweep.onlyAttackCreeper();
                             b.setMessage(Component.literal("" + newVal));
                             sweep.setOnlyAttackCreeper(newVal);
-                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new CreeperSweeperData(
-                                dog.getId(), newVal
-                            ));
+                            var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.CREEPER_SWEEPER_EXC.get(), newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
                     ),
                     I18n.get("talent.doggytalents.creeper_sweeper.only_attack_creeper")
@@ -357,9 +346,8 @@ public class TalentInfoViewElement extends AbstractElement {
                             Boolean newVal = !fisher.renderHat();
                             b.setMessage(Component.literal("" + newVal));
                             fisher.setRenderHat(newVal);
-                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new FisherDogData(
-                                dog.getId(), newVal
-                            ));
+                            var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.FISHER_DOG_RENDER.get(), newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
                     ),
                     I18n.get("talent.doggytalents.fisher_dog.render_hat")
@@ -385,9 +373,8 @@ public class TalentInfoViewElement extends AbstractElement {
                         Boolean newVal = !packPup.renderChest();
                         b.setMessage(Component.literal("" + newVal));
                         packPup.setRenderChest(newVal);
-                        PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
-                            dog.getId(), PackPuppyData.Type.RENDER_CHEST, newVal
-                        ));
+                        var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.PACK_PUPPY_RENDER.get(), newVal);
+                        PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                     }     
                 ),
                 I18n.get("talent.doggytalents.pack_puppy.render_chest")
@@ -404,9 +391,8 @@ public class TalentInfoViewElement extends AbstractElement {
                             Boolean newVal = !packPup.pickupItems();
                             b.setMessage(Component.literal("" + newVal));
                             packPup.setPickupItems(newVal);
-                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
-                                dog.getId(), PackPuppyData.Type.PICKUP_NEARBY, newVal
-                            ));
+                            var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.PACK_PUPPY_PICKUP.get(), newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
                     ),
                     I18n.get("talent.doggytalents.pack_puppy.pickup_item")
@@ -422,9 +408,8 @@ public class TalentInfoViewElement extends AbstractElement {
                             Boolean newVal = !packPup.collectKillLoot();
                             b.setMessage(Component.literal("" + newVal));
                             packPup.setCollectKillLoot(newVal);
-                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
-                                dog.getId(), PackPuppyData.Type.COLLECT_KILL_LOOT, newVal
-                            ));
+                            var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.PACK_PUPPY_LOOT.get(), newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
                     ) {
                         @Override
@@ -450,9 +435,8 @@ public class TalentInfoViewElement extends AbstractElement {
                             Boolean newVal = !packPup.offerFood();
                             b.setMessage(Component.literal("" + newVal));
                             packPup.setOfferFood(newVal);
-                            PacketHandler.send(PacketDistributor.SERVER.noArg(), new PackPuppyData(
-                                dog.getId(), PackPuppyData.Type.OFFER_FOOD, newVal
-                            ));
+                            var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.PACK_PUPPY_FOOD.get(), newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
                     ),
                     I18n.get("talent.doggytalents.pack_puppy.offer_food")

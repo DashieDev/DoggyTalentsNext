@@ -62,19 +62,13 @@ public final class PacketHandler {
         registerPacket(new PatrolTargetLockPacket(), PatrolTargetLockData.class);
         registerPacket(new HideArmorPacket(), HideArmorData.class);
         registerPacket(new CombatReturnStrategyPacket(), CombatReturnStrategyData.class);
-        registerPacket(new DoggyTorchPacket(), DoggyTorchData.class);
         registerPacket(new DogAutoMountPacket(), DogAutoMountData.class);
-        registerPacket(new DoggyToolsPickFirstPacket(), DoggyToolsPickFirstData.class);
-        registerPacket(new CreeperSweeperPacket(), CreeperSweeperData.class);
         registerPacket(new ForceChangeOwnerPacket(), ForceChangeOwnerData.class);
-        registerPacket(new PackPuppyPacket(), PackPuppyData.class);
-        registerPacket(new RescueDogRenderPacket(), RescueDogRenderData.class);
-        registerPacket(new GatePasserPacket(), GatePasserData.class);
         registerPacket(new DogSyncDataPacket(), DogSyncData.class);
         registerPacket(new DogExplosionPacket(), DogExplosionData.class);
-        registerPacket(new FisherDogPacket(), FisherDogData.class);
         registerPacket(new AllStandSwitchModePacket(), AllStandSwitchModeData.class);
         registerPacket(new DogPettingPacket(), DogPettingData.class);
+        registerPacket(new DogTalentOptionSetPacket(), DogTalentOptionSetData.class);
 
         //Fabric
         registerPacket(new FabricSyncAllPacket(), FabricSyncAllData.class);
