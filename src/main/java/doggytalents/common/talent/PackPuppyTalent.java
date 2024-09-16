@@ -1,11 +1,13 @@
 package doggytalents.common.talent;
 
 import doggytalents.DoggyItems;
+import doggytalents.TalentsOptions;
 import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
+import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.config.ConfigHandler;
@@ -17,7 +19,6 @@ import doggytalents.common.item.DogEddibleItem;
 import doggytalents.common.item.IDogEddible;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.ParticlePackets;
-import doggytalents.common.network.packet.data.PackPuppyData;
 import doggytalents.common.util.DogFoodUtil;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.InventoryUtil;
@@ -46,6 +47,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -406,60 +408,46 @@ public class PackPuppyTalent extends TalentInstance {
     }
 
     @Override
-    public void writeToBuf(FriendlyByteBuf buf) {
-        super.writeToBuf(buf);
-        buf.writeBoolean(this.renderChest);
-        buf.writeBoolean(this.pickupItems);
-        buf.writeBoolean(this.offerFood);
-        buf.writeBoolean(this.collectKillLoot);
+    public Object getTalentOption(TalentOption<?> entry) {
+        if (entry == TalentsOptions.PACK_PUPPY_RENDER.get()) {
+            return this.renderChest;
+        }
+        if (entry == TalentsOptions.PACK_PUPPY_PICKUP.get()) {
+            return this.pickupItems;
+        }
+        if (entry == TalentsOptions.PACK_PUPPY_FOOD.get()) {
+            return this.offerFood;
+        }
+        if (entry == TalentsOptions.PACK_PUPPY_LOOT.get()) {
+            return this.collectKillLoot;
+        }
+        return null;
     }
 
     @Override
-    public void readFromBuf(FriendlyByteBuf buf) {
-        super.readFromBuf(buf);
-        renderChest = buf.readBoolean();
-        pickupItems = buf.readBoolean();
-        offerFood = buf.readBoolean();
-        collectKillLoot = buf.readBoolean();
-    }
-
-    @Override
-    public void updateOptionsFromServer(TalentInstance fromServer) {
-        if (!(fromServer instanceof PackPuppyTalent chest))
-            return;
-        this.setRenderChest(chest.renderChest);
-        this.setPickupItems(chest.pickupItems);
-        this.setOfferFood(chest.offerFood);
-        this.setCollectKillLoot(chest.collectKillLoot);
-    }
-
-    public void updateFromPacket(PackPuppyData data) {
-        switch (data.type) {
-        default:
-            renderChest = data.val;
-            break;    
-        case PICKUP_NEARBY:
-            pickupItems = data.val;
-            break;
-        case OFFER_FOOD:
-            offerFood = data.val;
-            break;
-        case COLLECT_KILL_LOOT:
-            collectKillLoot = data.val;
-            break;
+    public void setTalentOption(TalentOption<?> entry, Object data) {
+        if (entry == TalentsOptions.PACK_PUPPY_RENDER.get()) {
+            this.renderChest = (Boolean) data;
+        }
+        if (entry == TalentsOptions.PACK_PUPPY_PICKUP.get()) {
+            this.pickupItems = (Boolean) data;
+        }
+        if (entry == TalentsOptions.PACK_PUPPY_FOOD.get()) {
+            this.offerFood = (Boolean) data;
+        }
+        if (entry == TalentsOptions.PACK_PUPPY_LOOT.get()) {
+            this.collectKillLoot = (Boolean) data;
         }
     }
 
     @Override
-    public TalentInstance copy() {
-        var ret = super.copy();
-        if (!(ret instanceof PackPuppyTalent packPup))
-            return ret;
-        packPup.setRenderChest(this.renderChest);
-        packPup.setPickupItems(this.pickupItems);
-        packPup.setOfferFood(this.offerFood);
-        packPup.setCollectKillLoot(this.collectKillLoot);
-        return packPup;
+    public Collection<TalentOption<?>> getAllTalentOptions() {
+        return List.of(
+            TalentsOptions.PACK_PUPPY_RENDER.get(),
+            TalentsOptions.PACK_PUPPY_LOOT.get(),
+            TalentsOptions.PACK_PUPPY_PICKUP.get(),
+            TalentsOptions.PACK_PUPPY_FOOD.get()    
+        );
     }
 
     public boolean renderChest() { return this.renderChest; }
