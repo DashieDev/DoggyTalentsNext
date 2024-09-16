@@ -13,10 +13,12 @@ import javax.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 import doggytalents.api.inferface.InferTypeContext;
+import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.DogCustomSkinConfig.DataStrategy;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.network.PacketHandler;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;

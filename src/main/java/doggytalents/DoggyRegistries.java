@@ -21,6 +21,9 @@ public class DoggyRegistries {
         public static final ResourceLocation ACCESSORIES_REGISTRY = Util.getResource("accessories");
         public static final ResourceLocation ACCESSORY_TYPE_REGISTRY = Util.getResource("accessory_type");
         public static final ResourceLocation DOG_VARIANT = Util.getResource("dog_variant");
+        public static final ResourceKey<Registry<TalentOption<?>>> TALENT_OPTION = regKey("talent_options");
+        // public static final ResourceLocation BEDDING_REGISTRY = Util.getResource("bedding");
+        // public static final ResourceLocation CASING_REGISTRY = Util.getResource("casing");
     }
 
     public static Supplier<IForgeRegistry<DogVariant>> DOG_VARIANT;
@@ -29,6 +32,7 @@ public class DoggyRegistries {
         DoggyTalentsAPI.TALENTS = event.create(makeRegistry(Keys.TALENTS_REGISTRY, Talent.class));
         DoggyTalentsAPI.ACCESSORIES = event.create(makeRegistry(Keys.ACCESSORIES_REGISTRY, Accessory.class));
         DoggyTalentsAPI.ACCESSORY_TYPE = event.create(makeRegistry(Keys.ACCESSORY_TYPE_REGISTRY, AccessoryType.class).disableSync());
+        DoggyTalentsAPI.TALENT_OPTIONS = makeDogSyncRegistry(event);
         DOG_VARIANT = makeRegistry(event, Keys.DOG_VARIANT, DogVariant.class, Util.getVanillaResource("pale"));
     }
 
@@ -43,5 +47,12 @@ public class DoggyRegistries {
         builder.setDefaultKey(defaultKey);
         var ret = event.create(builder);
         return ret;
+    }
+
+    private static Supplier<Registry<TalentOption<?>>> makeDogSyncRegistry(NewRegistryEvent event) {
+        var builder = new RegistryBuilder<TalentOption<?>>(Keys.TALENT_OPTION);
+        builder.sync(true);
+        var ret = event.create(builder);
+        return () -> ret;
     }
 }

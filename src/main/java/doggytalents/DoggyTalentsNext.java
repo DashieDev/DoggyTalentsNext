@@ -87,6 +87,7 @@ public class DoggyTalentsNext {
         DoggyEntityTypes.ENTITIES.register(modEventBus);
         DoggyContainerTypes.CONTAINERS.register(modEventBus);
         DoggySerializers.SERIALIZERS.register(modEventBus);
+        TalentsOptions.TALENT_OPTIONS.register(modEventBus);
         DoggySounds.SOUNDS.register(modEventBus);
         DoggyRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         DoggyTalents.TALENTS.register(modEventBus);
