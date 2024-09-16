@@ -2,10 +2,13 @@ package doggytalents.api.registry;
 
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.Collection;
+import java.util.List;
 
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
+import doggytalents.common.util.NetworkUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -58,7 +61,9 @@ public class TalentInstance implements IDogAlteration {
     // }
 
     public TalentInstance copy() {
-        return this.talent.getDefault(this.level);
+        var ret = this.talent.getDefault(this.level);
+        ret.copyTalentOptionFrom(this);
+        return ret;
     }
 
     public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
@@ -79,16 +84,41 @@ public class TalentInstance implements IDogAlteration {
         writeToNBT(dogIn, compound);
     }
 
-    public void writeToBuf(FriendlyByteBuf buf) {
+    public final void writeToBuf(FriendlyByteBuf buf) {
         buf.writeInt(this.level());
+        var talent_options = this.getAllTalentOptions();
+        if (talent_options.isEmpty()) {
+            buf.writeInt(0);
+            return;
+        }
+        buf.writeInt(talent_options.size());
+        for (var entry : talent_options) {
+            NetworkUtil.writeTalentOptionToBuf(buf, entry);
+            this.writeTalentOptionToBuf(buf, entry);
+        }
     }
 
-    public void readFromBuf(FriendlyByteBuf buf) {
+    private <T> void writeTalentOptionToBuf(FriendlyByteBuf buf, TalentOption<T> entry) {
+        T value = this.getTalentOptionOrDefault(entry);
+        entry.encode(buf, value);
+    }
+
+    public final void readFromBuf(FriendlyByteBuf buf) {
         this.setLevel(buf.readInt());
+        var talent_options_size = buf.readInt();
+        if (talent_options_size <= 0)
+            return;
+        for (int i = 0; i < talent_options_size; ++i) {
+            var entry = NetworkUtil.readTalentOptionFromBuf(buf);
+            readTalentOptionFromBuf(buf, entry);
+        }
     }
 
-    public void updateOptionsFromServer(TalentInstance fromServer) {
-
+    private <T> void readTalentOptionFromBuf(FriendlyByteBuf buf, TalentOption<T> entry) {
+        T value = entry.decode(buf);
+        if (value == null)
+            value = entry.getDefault();
+        this.setTalentOption(entry, value);
     }
 
     public final void writeInstance(AbstractDog dogIn, CompoundTag compound) {
@@ -146,6 +176,37 @@ public class TalentInstance implements IDogAlteration {
     public void set(AbstractDog dog, int levelBefore) {
 
     }
+
+    public final <T> T getTalentOptionOrDefault(TalentOption<T> entry) {
+        var val = getTalentOption(entry);
+        if (val == null) val = entry.getDefault();
+        return (T) val;
+    }
+
+    public Object getTalentOption(TalentOption<?> entry) {
+        return null;
+    }
+
+    public void setTalentOption(TalentOption<?> entry, Object data) {
+    }
+
+    public Collection<TalentOption<?>> getAllTalentOptions() {
+        return List.of();
+    }
+
+    public void copyTalentOptionFrom(TalentInstance other) {
+        var entries = this.getAllTalentOptions();
+        if (entries.isEmpty())
+            return;
+        for (var entry : entries) {
+            doCopyTalentOption(other, entry);
+        }
+    }
+
+    private <T> void doCopyTalentOption(TalentInstance other, TalentOption<T> entry) {
+        T val = other.getTalentOptionOrDefault(entry);
+        this.setTalentOption(entry, val);
+    } 
 
     public boolean hasRenderer() {
         return this.getTalent().hasRenderer();

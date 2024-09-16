@@ -1,12 +1,13 @@
 package doggytalents.common.talent;
 
+import doggytalents.TalentsOptions;
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.inventory.PackPuppyItemHandler;
 import doggytalents.common.lib.Constants;
-import doggytalents.common.network.packet.data.DoggyTorchData;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +17,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.Collection;
+import java.util.List;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 public class DoggyTorchTalent extends TalentInstance {
@@ -75,48 +80,29 @@ public class DoggyTorchTalent extends TalentInstance {
     }
 
     @Override
-    public void writeToBuf(FriendlyByteBuf buf) {
-        super.writeToBuf(buf);
-        buf.writeBoolean(placingTorch);
-        buf.writeBoolean(renderTorch);
+    public Object getTalentOption(TalentOption<?> entry) {
+        if (entry == TalentsOptions.DOGGY_TORCH_ENABLE.get()) {
+            return this.placingTorch;
+        }
+        if (entry == TalentsOptions.DOGGY_TORCH_RENDER.get()) {
+            return this.renderTorch;
+        }
+        return null;
     }
 
     @Override
-    public void readFromBuf(FriendlyByteBuf buf) {
-        super.readFromBuf(buf);
-        placingTorch = buf.readBoolean();
-        renderTorch = buf.readBoolean();
-    }
-
-    @Override
-    public void updateOptionsFromServer(TalentInstance fromServer) {
-        if (!(fromServer instanceof DoggyTorchTalent torch))
-            return;
-        this.setPlacingTorch(torch.placingTorch);
-        this.setRenderTorch(torch.renderTorch);
-    }
-
-    public void updateFromPacket(DoggyTorchData data) {
-        switch (data.type) {
-        case ALLOW_PLACING:
-            this.placingTorch = data.val;
-            break;
-        case RENDER_TORCH:
-            this.renderTorch = data.val;
-            break;
-        default:
-            break;   
+    public void setTalentOption(TalentOption<?> entry, Object data) {
+        if (entry == TalentsOptions.DOGGY_TORCH_ENABLE.get()) {
+            this.placingTorch = (Boolean) data;
+        }
+        if (entry == TalentsOptions.DOGGY_TORCH_RENDER.get()) {
+            this.renderTorch = (Boolean) data;
         }
     }
 
     @Override
-    public TalentInstance copy() {
-        var ret = super.copy();
-        if (!(ret instanceof DoggyTorchTalent torch))
-            return ret;
-        torch.setPlacingTorch(this.placingTorch);
-        torch.setRenderTorch(this.renderTorch);
-        return torch;
+    public Collection<TalentOption<?>> getAllTalentOptions() {
+        return List.of(TalentsOptions.DOGGY_TORCH_ENABLE.get(), TalentsOptions.DOGGY_TORCH_RENDER.get());
     }
 
     public boolean placingTorch() { return this.placingTorch; }

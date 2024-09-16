@@ -1,19 +1,22 @@
 package doggytalents.common.talent;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
+import doggytalents.TalentsOptions;
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
-import doggytalents.common.network.packet.data.RescueDogRenderData;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -280,35 +283,23 @@ public class RescueDogTalent extends TalentInstance {
     }
 
     @Override
-    public void writeToBuf(FriendlyByteBuf buf) {
-        super.writeToBuf(buf);
-        buf.writeBoolean(renderBox);
+    public Object getTalentOption(TalentOption<?> entry) {
+        if (entry == TalentsOptions.RESCUE_DOG_RENDER.get()) {
+            return this.renderBox;
+        }
+        return null;
     }
 
     @Override
-    public void readFromBuf(FriendlyByteBuf buf) {
-        super.readFromBuf(buf);
-        renderBox = buf.readBoolean();
+    public void setTalentOption(TalentOption<?> entry, Object data) {
+        if (entry == TalentsOptions.RESCUE_DOG_RENDER.get()) {
+            this.renderBox = (Boolean) data;
+        }
     }
 
     @Override
-    public void updateOptionsFromServer(TalentInstance fromServer) {
-        if (!(fromServer instanceof RescueDogTalent rescue))
-            return;
-        this.renderBox = rescue.renderBox;
-    }
-
-    public void updateFromPacket(RescueDogRenderData data) {
-        renderBox = data.val;
-    }
-
-    @Override
-    public TalentInstance copy() {
-        var ret = super.copy();
-        if (!(ret instanceof RescueDogTalent rescue))
-            return ret;
-        rescue.setRenderBox(this.renderBox);
-        return rescue;
+    public Collection<TalentOption<?>> getAllTalentOptions() {
+        return List.of(TalentsOptions.RESCUE_DOG_RENDER.get());
     }
 
     public boolean renderBox() { return this.renderBox; }
