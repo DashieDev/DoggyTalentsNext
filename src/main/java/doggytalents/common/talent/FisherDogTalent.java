@@ -1,15 +1,18 @@
 package doggytalents.common.talent;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import doggytalents.TalentsOptions;
 import doggytalents.DoggyTalents;
 import doggytalents.api.enu.WetSource;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.network.packet.data.FisherDogData;
+import doggytalents.common.util.TagUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -135,35 +138,23 @@ public class FisherDogTalent extends TalentInstance {
     }
 
     @Override
-    public void writeToBuf(FriendlyByteBuf buf) {
-        super.writeToBuf(buf);
-        buf.writeBoolean(renderHat);
+    public Object getTalentOption(TalentOption<?> entry) {
+        if (entry == TalentsOptions.FISHER_DOG_RENDER.get()) {
+            return this.renderHat;
+        }
+        return null;
     }
 
     @Override
-    public void readFromBuf(FriendlyByteBuf buf) {
-        super.readFromBuf(buf);
-        renderHat = buf.readBoolean();
+    public void setTalentOption(TalentOption<?> entry, Object data) {
+        if (entry == TalentsOptions.FISHER_DOG_RENDER.get()) {
+            this.renderHat = (Boolean) data;
+        }
     }
 
     @Override
-    public void updateOptionsFromServer(TalentInstance fromServer) {
-        if (!(fromServer instanceof FisherDogTalent fish))
-            return;
-        this.setRenderHat(fish.renderHat);
-    }
-
-    public void updateFromPacket(FisherDogData data) {
-        this.renderHat = data.val;
-    }
-
-    @Override
-    public TalentInstance copy() {
-        var ret = super.copy();
-        if (!(ret instanceof FisherDogTalent fish))
-            return ret;
-        fish.setRenderHat(this.renderHat);
-        return fish;
+    public Collection<TalentOption<?>> getAllTalentOptions() {
+        return List.of(TalentsOptions.FISHER_DOG_RENDER.get());
     }
 
     public boolean canRenderHat() { return this.level() >= this.getTalent().getMaxLevel(); }

@@ -1,5 +1,7 @@
 package doggytalents.common.talent.doggy_tools;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -7,12 +9,14 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import doggytalents.TalentsOptions;
 import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
 import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.impl.IDogRangedAttackManager;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.Screens;
@@ -20,7 +24,6 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.inventory.DoggyToolsItemHandler;
-import doggytalents.common.network.packet.data.DoggyToolsPickFirstData;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.talent.doggy_tools.tool_actions.ToolAction;
 import doggytalents.common.util.DogUtil;
@@ -288,35 +291,23 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
 
     @Override
-    public void writeToBuf(FriendlyByteBuf buf) {
-        super.writeToBuf(buf);
-        buf.writeBoolean(this.alwaysPickSlot0);
+    public Object getTalentOption(TalentOption<?> entry) {
+        if (entry == TalentsOptions.DOGGY_TOOLS_EXC.get()) {
+            return this.alwaysPickSlot0;
+        }
+        return null;
     }
 
     @Override
-    public void readFromBuf(FriendlyByteBuf buf) {
-        super.readFromBuf(buf);
-        alwaysPickSlot0 = buf.readBoolean();
+    public void setTalentOption(TalentOption<?> entry, Object data) {
+        if (entry == TalentsOptions.DOGGY_TOOLS_EXC.get()) {
+            this.alwaysPickSlot0 = (Boolean) data;
+        }
     }
 
     @Override
-    public void updateOptionsFromServer(TalentInstance fromServer) {
-        if (!(fromServer instanceof DoggyToolsTalent tools))
-            return;
-        this.alwaysPickSlot0 = tools.alwaysPickSlot0;
-    }
-
-    @Override
-    public TalentInstance copy() {
-        var ret = super.copy();
-        if (!(ret instanceof DoggyToolsTalent tools))
-            return ret;
-        tools.setPickFirstTool(this.alwaysPickSlot0);
-        return tools;
-    }
-
-    public void updateFromPacket(DoggyToolsPickFirstData data) {
-        alwaysPickSlot0 = data.val;
+    public Collection<TalentOption<?>> getAllTalentOptions() {
+        return List.of(TalentsOptions.DOGGY_TOOLS_EXC.get());
     }
 
     public boolean pickFirstTool() { return this.alwaysPickSlot0; }

@@ -1,12 +1,13 @@
 package doggytalents.common.talent;
 
+import doggytalents.TalentsOptions;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.network.packet.data.CreeperSweeperData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 
+import java.util.Collection;
 import java.util.List;
 
 public class CreeperSweeperTalent extends TalentInstance {
@@ -111,35 +113,23 @@ public class CreeperSweeperTalent extends TalentInstance {
     }
 
     @Override
-    public void writeToBuf(FriendlyByteBuf buf) {
-        super.writeToBuf(buf);
-        buf.writeBoolean(this.onlyAttackCreeper);
+    public Object getTalentOption(TalentOption<?> entry) {
+        if (entry == TalentsOptions.CREEPER_SWEEPER_EXC.get()) {
+            return this.onlyAttackCreeper;
+        }
+        return null;
     }
 
     @Override
-    public void readFromBuf(FriendlyByteBuf buf) {
-        super.readFromBuf(buf);
-        this.onlyAttackCreeper = buf.readBoolean();
+    public Collection<TalentOption<?>> getAllTalentOptions() {
+        return List.of(TalentsOptions.CREEPER_SWEEPER_EXC.get());
     }
 
     @Override
-    public void updateOptionsFromServer(TalentInstance fromServer) {
-        if (!(fromServer instanceof CreeperSweeperTalent sweep))
-            return;
-        this.onlyAttackCreeper = sweep.onlyAttackCreeper;
-    }
-
-    public void updateFromPacket(CreeperSweeperData data) {
-        onlyAttackCreeper = data.val;
-    }
-
-    @Override
-    public TalentInstance copy() {
-        var ret = super.copy();
-        if (!(ret instanceof CreeperSweeperTalent sweep))
-            return ret;
-        sweep.setOnlyAttackCreeper(this.onlyAttackCreeper);
-        return sweep;
+    public void setTalentOption(TalentOption<?> entry, Object data) {
+        if (entry == TalentsOptions.CREEPER_SWEEPER_EXC.get()) {
+            this.onlyAttackCreeper = (Boolean) data;
+        }
     }
 
     public boolean onlyAttackCreeper() { return this.onlyAttackCreeper; }

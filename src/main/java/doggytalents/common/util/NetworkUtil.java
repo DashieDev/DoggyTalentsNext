@@ -3,6 +3,7 @@ package doggytalents.common.util;
 import doggytalents.DoggyRegistries;
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Accessory;
+import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.core.Holder;
@@ -28,6 +29,9 @@ public class NetworkUtil {
         <RegistryFriendlyByteBuf, DogVariant> 
         DOG_VARIANT_CODEC = ByteBufCodecs.registry(DoggyRegistries.Keys.DOG_VARIANT);
     
+    public static StreamCodec
+        <RegistryFriendlyByteBuf, TalentOption<?>> 
+        TALENT_OPTION_CODEC = ByteBufCodecs.registry(DoggyRegistries.Keys.TALENT_OPTION);
 
     public static void writeTalentToBuf(FriendlyByteBuf buf, Talent val) {
         var reg_buf = (RegistryFriendlyByteBuf) buf;
@@ -47,6 +51,16 @@ public class NetworkUtil {
     public static Accessory readAccessoryFromBuf(FriendlyByteBuf buf) {
         var reg_buf = (RegistryFriendlyByteBuf) buf;
         return ACCESSORY_CODEC.decode(reg_buf);
+    }
+
+    public static void writeTalentOptionToBuf(FriendlyByteBuf buf, TalentOption<?> val) {
+        var reg_buf = (RegistryFriendlyByteBuf) buf;
+        TALENT_OPTION_CODEC.encode(reg_buf, val);
+    }
+
+    public static TalentOption<?> readTalentOptionFromBuf(FriendlyByteBuf buf) {
+        var reg_buf = (RegistryFriendlyByteBuf) buf;
+        return TALENT_OPTION_CODEC.decode(reg_buf);
     }
 
     public static void writeItemToBuf(FriendlyByteBuf buf, ItemStack stack) {
