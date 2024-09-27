@@ -1,10 +1,13 @@
 package doggytalents.common.util.CachedSearchUtil;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
@@ -24,15 +27,49 @@ public class DogGreedyFireSafeSearchPath extends Path {
     }
     
     public static DogGreedyFireSafeSearchPath create(Dog dog, int maxLength) {
+        var start_node = getStartNode(dog);
+        if (!start_node.isPresent())
+            return null;
         var initNodes = new ArrayList<Node>(maxLength);
-        var dog_b0 = dog.blockPosition();
-        initNodes.add(new Node(dog_b0.getX(), dog_b0.getY(), dog_b0.getZ()));
+        initNodes.add(start_node.get());
         var ret = new DogGreedyFireSafeSearchPath(dog, initNodes, maxLength);
         var pos = scanSurroundingForNextPos(ret);
         if (pos == null) return null;
         initNodes.clear();
         initNodes.add(pos);
         return ret;
+    }
+
+    private static Optional<Node> getStartNode(Dog dog) {
+        var dog_b0 = dog.blockPosition();
+        if (isValidStart(dog, dog_b0))
+            return blockPosToNodeOptional(dog_b0);
+        
+        var dog_bb = dog.getBoundingBox();
+        int min_x = Mth.floor(dog_bb.minX);
+        int min_z = Mth.floor(dog_bb.minZ);
+        int max_x = Mth.floor(dog_bb.maxX);
+        int max_z = Mth.floor(dog_bb.maxZ);
+        for (int i = min_x; i <= max_x; ++i) {
+            for (int j = min_z; j <= max_z; ++j) {
+                var check_b0 = new BlockPos(i, dog_b0.getY(), j);
+                if (isValidStart(dog, check_b0))
+                    return blockPosToNodeOptional(check_b0);
+            }
+        }
+        return Optional.empty();
+    }
+
+    private static boolean isValidStart(Dog dog, BlockPos pos) {
+        var pos_type = WalkNodeEvaluator.getPathTypeStatic(dog, pos);
+        if (pos_type == PathType.OPEN)
+            return false;
+        var malus = dog.getPathfindingMalus(pos_type);
+        return malus >= 0;
+    }
+
+    private static Optional<Node> blockPosToNodeOptional(BlockPos pos) {
+        return Optional.of(new Node(pos.getX(), pos.getY(), pos.getZ()));
     }
 
     @Override
