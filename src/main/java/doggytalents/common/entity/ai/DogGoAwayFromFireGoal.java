@@ -154,7 +154,7 @@ public class DogGoAwayFromFireGoal extends Goal {
         var pos_below = BlockPos.containing(pos).below();
         var state_below = dog.level().getBlockState(pos_below);
         if (WalkNodeEvaluator.isBurningBlock(state_below)
-            && !state_below.isPathfindable(PathComputationType.LAND))
+            && state_below.isCollisionShapeFullBlock(dog.level(), pos_below))
             return 1;
 
         // {
