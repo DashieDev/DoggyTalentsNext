@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.Node;
@@ -122,7 +123,9 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
     }
 
     private boolean checkLand(BlockPos currentPos, BlockState currenState, BlockGetter level, Mob dog) {
-        if (currenState.isPathfindable(PathComputationType.LAND))
+        if (currenState.is(Blocks.WATER))
+            return false;
+        if (currenState.isAir())
             return false;
         var walkType = WalkNodeEvaluator.getPathTypeStatic(dog, currentPos.above().mutable());
         return walkType == PathType.WATER_BORDER
