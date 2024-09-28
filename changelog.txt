@@ -1591,3 +1591,10 @@ otherwise they only tp when owner is in water.
 
 **1.18.31 - 8th September 2024**
 *(1.20- only) HOTFIX: Canine Tracker rendering improperly.
+
+**1.18.32 - 28th September 2024**
+# Some DogVariant nows don't have a Wet Shade (ex: Molten)
+# Update Real Name For Oina(s) and Kusa(s) and English Name for Kusa(s)
+* HOTFIX: Certain unsual case where Dog sometimes go straight in the lava when trying to go Away from it. 
+* Fix Oina Kemu's id causing the skin to not be properly registered.
+* Fix contacts lens weird micro pixel.
