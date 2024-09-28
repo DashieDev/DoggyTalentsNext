@@ -5,7 +5,7 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7.+'
 }
 
-version = '1.18.31'
+version = '1.18.32'
 group = 'com.github.dashiedev'
 archivesBaseName = "DoggyTalentsNext-${project.target_mc_version}"
 
