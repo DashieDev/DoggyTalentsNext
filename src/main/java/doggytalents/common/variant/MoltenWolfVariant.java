@@ -26,6 +26,7 @@ public class MoltenWolfVariant extends DogVariant implements IDogAlteration {
                 Util.getResource("textures/entity/dog/classical/compl/overlay/wolf_molten_injured.png")
             )
             .burnsPetter()
+            .preventWetShade()
         );
     }
 
