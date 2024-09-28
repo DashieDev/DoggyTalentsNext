@@ -1,6 +1,8 @@
 package doggytalents.api.registry;
 
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.Collection;
 import java.util.List;
@@ -8,7 +10,6 @@ import java.util.List;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
-import doggytalents.common.util.NetworkUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -84,7 +85,9 @@ public class TalentInstance implements IDogAlteration {
         writeToNBT(dogIn, compound);
     }
 
-    public final void writeToBuf(FriendlyByteBuf buf) {
+    public final void writeToBuf(FriendlyByteBuf buf, 
+        BiConsumer<FriendlyByteBuf, TalentOption<?>> talent_option_writer) {
+        
         buf.writeInt(this.level());
         var talent_options = this.getAllTalentOptions();
         if (talent_options.isEmpty()) {
@@ -93,7 +96,7 @@ public class TalentInstance implements IDogAlteration {
         }
         buf.writeInt(talent_options.size());
         for (var entry : talent_options) {
-            NetworkUtil.writeTalentOptionToBuf(buf, entry);
+            talent_option_writer.accept(buf, entry);
             this.writeTalentOptionToBuf(buf, entry);
         }
     }
@@ -103,13 +106,15 @@ public class TalentInstance implements IDogAlteration {
         entry.encode(buf, value);
     }
 
-    public final void readFromBuf(FriendlyByteBuf buf) {
+    public final void readFromBuf(FriendlyByteBuf buf, 
+        Function<FriendlyByteBuf, TalentOption<?>> talent_option_reader) {
+        
         this.setLevel(buf.readInt());
         var talent_options_size = buf.readInt();
         if (talent_options_size <= 0)
             return;
         for (int i = 0; i < talent_options_size; ++i) {
-            var entry = NetworkUtil.readTalentOptionFromBuf(buf);
+            var entry = talent_option_reader.apply(buf);
             readTalentOptionFromBuf(buf, entry);
         }
     }

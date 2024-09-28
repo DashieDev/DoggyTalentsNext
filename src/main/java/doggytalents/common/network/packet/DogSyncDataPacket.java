@@ -41,7 +41,7 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
 
         for (TalentInstance inst : talents) {
             NetworkUtil.writeTalentToBuf(buf, inst.getTalent());
-            inst.writeToBuf(buf);
+            inst.writeToBuf(buf, NetworkUtil::writeTalentOptionToBuf);
         }
     }
 
@@ -80,7 +80,7 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
         var newInst = new ArrayList<TalentInstance>(size);
         for (int i = 0; i < size; i++) {
             var inst = NetworkUtil.readTalentFromBuf(buf).getDefault();
-            inst.readFromBuf(buf);
+            inst.readFromBuf(buf, NetworkUtil::readTalentOptionFromBuf);
             newInst.add(inst);
         }
         return newInst;
