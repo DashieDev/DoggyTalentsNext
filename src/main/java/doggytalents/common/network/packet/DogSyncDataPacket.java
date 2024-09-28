@@ -39,8 +39,8 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
         buf.writeInt(talents.size());
 
         for (TalentInstance inst : talents) {
-            buf.writeRegistryIdUnsafe(DoggyTalentsAPI.TALENTS.get(), inst.getTalent());
-            inst.writeToBuf(buf);
+            NetworkUtil.writeTalentToBuf(buf, inst.getTalent());
+            inst.writeToBuf(buf, NetworkUtil::writeTalentOptionToBuf);
         }
     }
 
@@ -78,8 +78,8 @@ public class DogSyncDataPacket implements IPacket<DogSyncData> {
         int size = buf.readInt();
         var newInst = new ArrayList<TalentInstance>(size);
         for (int i = 0; i < size; i++) {
-            var inst = buf.readRegistryIdUnsafe(DoggyTalentsAPI.TALENTS.get()).getDefault();
-            inst.readFromBuf(buf);
+            var inst = NetworkUtil.readTalentFromBuf(buf).getDefault();
+            inst.readFromBuf(buf, NetworkUtil::readTalentOptionFromBuf);
             newInst.add(inst);
         }
         return newInst;
