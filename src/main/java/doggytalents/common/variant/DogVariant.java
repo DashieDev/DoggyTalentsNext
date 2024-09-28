@@ -21,6 +21,7 @@ public class DogVariant {
     private Optional<ResourceLocation> glowingOverlay;
     private Optional<ResourceLocation> customInjuredTexture;
     private final boolean burnsPetter;
+    private final boolean preventWetShade;
 
     public DogVariant(Props props) {
         this.id = props.name;
@@ -31,7 +32,8 @@ public class DogVariant {
         this.guiColor = props.guiColor;
         this.glowingOverlay = props.glowingOverlay;
         this.customInjuredTexture = props.customInjuredTexture;
-        this.burnsPetter = props.burnsPetter; 
+        this.burnsPetter = props.burnsPetter;
+        this.preventWetShade = props.preventWetShade;
     }
 
     private static ResourceLocation createTextureLoc(Props props) {
@@ -87,6 +89,10 @@ public class DogVariant {
         return this.burnsPetter;
     }
 
+    public boolean preventWetShade() {
+        return this.preventWetShade;
+    }
+
     public static Props propsVanilla(String name) {
         return new Props(Util.getVanillaResource(name), NamespaceType.VANILLA);
     }
@@ -114,6 +120,7 @@ public class DogVariant {
         private Optional<ResourceLocation> glowingOverlay = Optional.empty();
         private Optional<ResourceLocation> customInjuredTexture = Optional.empty();
         private boolean burnsPetter = false;
+        private boolean preventWetShade = false;
 
         private Props(ResourceLocation name, NamespaceType namespaceType) {
             this.name = name;
@@ -156,6 +163,11 @@ public class DogVariant {
 
         public Props burnsPetter() {
             this.burnsPetter = true;
+            return this;
+        }
+
+        public Props preventWetShade() {
+            this.preventWetShade = true;
             return this;
         }
 
