@@ -19,7 +19,7 @@ public class DoggyRegistries {
         public static final ResourceLocation ACCESSORIES_REGISTRY = Util.getResource("accessories");
         public static final ResourceLocation ACCESSORY_TYPE_REGISTRY = Util.getResource("accessory_type");
         public static final ResourceLocation DOG_VARIANT = Util.getResource("dog_variant");
-        public static final ResourceKey<Registry<TalentOption<?>>> TALENT_OPTION = regKey("talent_options");
+        public static final ResourceLocation TALENT_OPTION = Util.getResource("talent_options");
         // public static final ResourceLocation BEDDING_REGISTRY = Util.getResource("bedding");
         // public static final ResourceLocation CASING_REGISTRY = Util.getResource("casing");
     }
@@ -49,10 +49,10 @@ public class DoggyRegistries {
         return () -> ret;
     }
 
-    private static Supplier<Registry<TalentOption<?>>> makeDogSyncRegistry(NewRegistryEvent event) {
-        var builder = new RegistryBuilder<TalentOption<?>>(Keys.TALENT_OPTION);
-        builder.sync(true);
+    private static Supplier<IForgeRegistry<TalentOption<?>>> makeDogSyncRegistry(NewRegistryEvent event) {
+        var builder = new RegistryBuilder<TalentOption<?>>().setName(Keys.TALENT_OPTION);
+        //builder.sync(true);
         var ret = event.create(builder);
-        return () -> ret;
+        return ret;
     }
 }

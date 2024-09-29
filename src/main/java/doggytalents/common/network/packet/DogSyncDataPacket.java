@@ -9,6 +9,7 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.DogSyncData;
+import doggytalents.common.util.NetworkUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
 
