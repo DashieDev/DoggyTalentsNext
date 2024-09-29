@@ -3,7 +3,6 @@ package doggytalents.api.registry;
 import java.util.function.Supplier;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 
@@ -26,11 +25,11 @@ public class TalentOption<T> {
     }
 
     public void encode(FriendlyByteBuf buf, T val) {
-        this.serializer.codec().encode((RegistryFriendlyByteBuf) buf, val);
+        this.serializer.write(buf, val);
     }
 
     public T decode(FriendlyByteBuf buf) {
-        return this.serializer.codec().decode((RegistryFriendlyByteBuf) buf);
+        return this.serializer.read(buf);
     }
 
     public static class BooleanOption extends TalentOption<Boolean> {

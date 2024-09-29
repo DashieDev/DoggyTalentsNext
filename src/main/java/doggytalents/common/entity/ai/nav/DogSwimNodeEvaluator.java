@@ -85,7 +85,7 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
 
             boolean checkedWalkable = 
                 checkLand && i == y
-                && checkLand(checking_pos, state, level);
+                && checkLand(checking_pos, state, level, dog);
             if (checkedWalkable)
                 return BlockPathTypes.WALKABLE;
 
