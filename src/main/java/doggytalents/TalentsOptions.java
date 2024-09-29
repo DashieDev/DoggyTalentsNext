@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import doggytalents.api.registry.TalentOption;
 import doggytalents.common.lib.Constants;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
 
 public class TalentsOptions {
     
