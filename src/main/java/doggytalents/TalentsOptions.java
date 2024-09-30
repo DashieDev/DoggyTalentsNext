@@ -2,13 +2,14 @@ package doggytalents;
 
 import java.util.function.Supplier;
 
+import doggytalents.api.enu.forward_imitate.registryfix.v1_18_2.TalentOptionEntry;
 import doggytalents.api.registry.TalentOption;
 import doggytalents.common.lib.Constants;
 import net.minecraftforge.registries.DeferredRegister;
 
 public class TalentsOptions {
     
-    public static final DeferredRegister<TalentOption<?>> TALENT_OPTIONS = DeferredRegister.create(DoggyRegistries.Keys.TALENT_OPTION, Constants.MOD_ID);
+    public static final DeferredRegister<TalentOptionEntry> TALENT_OPTIONS = DeferredRegister.create(DoggyRegistries.Keys.TALENT_OPTION, Constants.MOD_ID);
     
     public static final Supplier<TalentOption<Boolean>> DOGGY_TORCH_ENABLE = registerBool("doggy_torch_0");
     public static final Supplier<TalentOption<Boolean>> GATE_PASSER_ENABLE = registerBool("gate_passer_0");
@@ -27,8 +28,12 @@ public class TalentsOptions {
     }
 
     private static <T> Supplier<TalentOption<T>> register(final String name, final Supplier<TalentOption<T>> sup) {
+        // final var captured_val = sup.get();
+        // return TALENT_OPTIONS.register(name, () -> captured_val);
         final var captured_val = sup.get();
-        return TALENT_OPTIONS.register(name, () -> captured_val);
+        final var captured_register_val = TalentOptionEntry.of(captured_val);
+        TALENT_OPTIONS.register(name, () -> captured_register_val);
+        return () -> captured_val;
     }
 
 }

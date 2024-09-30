@@ -3,6 +3,7 @@ package doggytalents;
 import java.util.function.Supplier;
 
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.enu.forward_imitate.registryfix.v1_18_2.TalentOptionEntry;
 import doggytalents.api.registry.*;
 import doggytalents.common.util.Util;
 import doggytalents.common.variant.DogVariant;
@@ -49,8 +50,8 @@ public class DoggyRegistries {
         return ret;
     }
 
-    private static Supplier<IForgeRegistry<TalentOption<?>>> makeDogSyncRegistry(NewRegistryEvent event) {
-        var builder = new RegistryBuilder<TalentOption<?>>().setName(Keys.TALENT_OPTION);
+    private static Supplier<IForgeRegistry<TalentOptionEntry>> makeDogSyncRegistry(NewRegistryEvent event) {
+        var builder = new RegistryBuilder<TalentOptionEntry>().setName(Keys.TALENT_OPTION).setType(TalentOptionEntry.class);
         //builder.sync(true);
         var ret = event.create(builder);
         return ret;

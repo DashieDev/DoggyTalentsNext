@@ -3,6 +3,7 @@ package doggytalents.common.util;
 import doggytalents.DoggyRegistries;
 import doggytalents.DoggyTalents;
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.enu.forward_imitate.registryfix.v1_18_2.TalentOptionEntry;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
@@ -58,13 +59,13 @@ public class NetworkUtil {
     public static void writeTalentOptionToBuf(FriendlyByteBuf buf, TalentOption<?> val) {
         // var reg_buf = (RegistryFriendlyByteBuf) buf;
         // TALENT_OPTION_CODEC.encode(reg_buf, val);
-        buf.writeRegistryIdUnsafe(DoggyTalentsAPI.TALENT_OPTIONS.get(), val);
+        buf.writeRegistryIdUnsafe(DoggyTalentsAPI.TALENT_OPTIONS.get(), TalentOptionEntry.of(val));
     }
 
     public static TalentOption<?> readTalentOptionFromBuf(FriendlyByteBuf buf) {
         // var reg_buf = (RegistryFriendlyByteBuf) buf;
         // return TALENT_OPTION_CODEC.decode(reg_buf);
-        return buf.readRegistryIdUnsafe(DoggyTalentsAPI.TALENT_OPTIONS.get());
+        return buf.readRegistryIdUnsafe(DoggyTalentsAPI.TALENT_OPTIONS.get()).getVal();
     }
 
     public static void writeItemToBuf(FriendlyByteBuf buf, ItemStack stack) {
