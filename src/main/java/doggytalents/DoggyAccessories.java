@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 public class DoggyAccessories {
 
-    public static final DeferredRegister<Accessory> ACCESSORIES = DeferredRegister.create(DoggyTalentsAPI.ACCESSORIES, Constants.MOD_ID);
+    public static final DeferredRegister<Accessory> ACCESSORIES = DeferredRegister.create(() -> DoggyTalentsAPI.ACCESSORIES.get(), Constants.MOD_ID);
 
     public static final RegistryObject<DyeableAccessory> DYEABLE_COLLAR = register("dyeable_collar", () -> new DyeableAccessory(DoggyAccessoryTypes.COLLAR, DoggyItems.WOOL_COLLAR).setDogStillNakedWhenWear(true).setModelTexture(Resources.COLLAR_DEFAULT).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
     public static final RegistryObject<DyeableAccessory> DYEABLE_COLLAR_THICC = register("dyeable_collar_thicc", () -> new DyeableAccessory(DoggyAccessoryTypes.COLLAR, DoggyItems.WOOL_COLLAR_THICC).setDogStillNakedWhenWear(true).setModelTexture(Resources.COLLAR_THICC).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
