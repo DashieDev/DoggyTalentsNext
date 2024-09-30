@@ -126,7 +126,7 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
         // return blockstate1.isPathfindable(level, checking_pos, PathComputationType.WATER) ? BlockPathTypes.WATER : BlockPathTypes.BLOCKED;
     }
 
-    private boolean checkLand(BlockPos currentPos, BlockState currenState, BlockGetter level, Mob dog) {
+    private boolean checkLand(BlockPos currentPos, BlockState currenState, BlockGetter level, Dog dog) {
         if (currenState.is(Blocks.WATER))
             return false;
         if (currenState.isAir())
