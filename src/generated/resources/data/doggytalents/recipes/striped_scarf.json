@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "minecraft:white_carpet"
+    },
+    "W": {
+      "item": "doggytalents:wool_collar"
+    }
+  },
+  "pattern": [
+    "CW"
+  ],
+  "result": {
+    "item": "doggytalents:striped_scarf"
+  }
+}
