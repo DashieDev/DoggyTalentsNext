@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 
 public class DoggyTalents {
 
-    public static final DeferredRegister<Talent> TALENTS = DeferredRegister.create(DoggyTalentsAPI.TALENTS, Constants.MOD_ID);
+    public static final DeferredRegister<Talent> TALENTS = DeferredRegister.create(() -> DoggyTalentsAPI.TALENTS.get(), Constants.MOD_ID);
 
     public static final RegistryObject<Talent> BED_FINDER = registerInst("bed_finder", BedFinderTalent::new);
     public static final RegistryObject<Talent> BLACK_PELT = registerInst("black_pelt", BlackPeltTalent::new);

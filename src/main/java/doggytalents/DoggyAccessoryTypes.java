@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public class DoggyAccessoryTypes {
 
-    public static final DeferredRegister<AccessoryType> ACCESSORY_TYPES = DeferredRegister.create(DoggyTalentsAPI.ACCESSORY_TYPE, Constants.MOD_ID);
+    public static final DeferredRegister<AccessoryType> ACCESSORY_TYPES = DeferredRegister.create(() -> DoggyTalentsAPI.ACCESSORY_TYPE.get(), Constants.MOD_ID);
 
     public static final Supplier<AccessoryType> COLLAR = register("collar");
     public static final Supplier<AccessoryType> BOWTIE = register("bowtie");

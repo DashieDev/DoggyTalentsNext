@@ -41,10 +41,10 @@ public class DoggyRegistries {
         return () -> ret;
     }
 
-    private static Supplier<Registry<TalentOption<?>>> makeDogSyncRegistry(NewRegistryEvent event) {
-        var builder = new RegistryBuilder<TalentOption<?>>(Keys.TALENT_OPTION);
-        builder.sync(true);
-        var ret = event.create(builder);
+    private static Supplier<Registry<TalentOption<?>>> makeDogSyncRegistry() {
+        var ret = FabricRegistryBuilder.createSimple(Keys.TALENT_OPTION)
+            .attribute(RegistryAttribute.SYNCED)
+            .buildAndRegister();
         return () -> ret;
     }
 

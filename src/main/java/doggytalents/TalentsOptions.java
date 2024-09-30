@@ -2,13 +2,14 @@ package doggytalents;
 
 import java.util.function.Supplier;
 
+import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.TalentOption;
 import doggytalents.common.lib.Constants;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import doggytalents.forge_imitate.registry.DeferredRegister;
 
 public class TalentsOptions {
     
-    public static final DeferredRegister<TalentOption<?>> TALENT_OPTIONS = DeferredRegister.create(DoggyRegistries.Keys.TALENT_OPTION, Constants.MOD_ID);
+    public static final DeferredRegister<TalentOption<?>> TALENT_OPTIONS = DeferredRegister.create(() -> DoggyTalentsAPI.TALENT_OPTIONS.get(), Constants.MOD_ID);
     
     public static final Supplier<TalentOption<Boolean>> DOGGY_TORCH_ENABLE = registerBool("doggy_torch_0");
     public static final Supplier<TalentOption<Boolean>> GATE_PASSER_ENABLE = registerBool("gate_passer_0");
