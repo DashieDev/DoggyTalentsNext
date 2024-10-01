@@ -21,7 +21,7 @@ public class DoggyTalentsAPI {
     public static Supplier<Registry<Talent>> TALENTS;
     public static Supplier<Registry<Accessory>> ACCESSORIES;
     public static Supplier<Registry<AccessoryType>> ACCESSORY_TYPE;
-    public static Supplier<IForgeRegistry<TalentOption<?>>> TALENT_OPTIONS;
+    public static Supplier<Registry<TalentOption<?>>> TALENT_OPTIONS;
     
     public static final Logger LOGGER = LogManager.getLogger("doggytalents");
 }

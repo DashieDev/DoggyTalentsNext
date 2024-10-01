@@ -41,18 +41,6 @@ public class DoggyRegistries {
         return () -> ret;
     }
 
-    private static Supplier<Registry<TalentOption<?>>> makeDogSyncRegistry() {
-        var ret = FabricRegistryBuilder.createSimple(Keys.TALENT_OPTION)
-            .attribute(RegistryAttribute.SYNCED)
-            .buildAndRegister();
-        return () -> ret;
-    }
-
-    private static <T> ResourceKey<Registry<T>> regKey(String key) {
-        var rl = Util.getResource(key);
-        return ResourceKey.createRegistryKey(rl);
-    }
-
     private static <T> Supplier<Registry<T>> makeRegistry(
         final ResourceLocation key, Class<T> type, ResourceLocation defaultKey) {
         var ret =  FabricRegistryBuilder.createDefaulted(ResourceKey.<T>createRegistryKey(key), defaultKey)
@@ -61,10 +49,10 @@ public class DoggyRegistries {
         return () -> ret;
     }
 
-    private static Supplier<IForgeRegistry<TalentOption<?>>> makeDogSyncRegistry(NewRegistryEvent event) {
-        var builder = new RegistryBuilder<TalentOption<?>>().setName(Keys.TALENT_OPTION);
-        //builder.sync(true);
-        var ret = event.create(builder);
-        return ret;
+    private static Supplier<Registry<TalentOption<?>>> makeDogSyncRegistry() {
+        var ret = FabricRegistryBuilder.createSimple(ResourceKey.<TalentOption<?>>createRegistryKey(Keys.TALENT_OPTION))
+            .attribute(RegistryAttribute.SYNCED)
+            .buildAndRegister();
+        return () -> ret;
     }
 }
