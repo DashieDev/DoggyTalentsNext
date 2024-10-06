@@ -634,8 +634,6 @@
    "doggui.cross_origin_tp.help": "Should this Dog automatically teleports to you when you switch dimension or distant teleport?",
    "doggui.patrol_target_lock": "Patrol Target Lock",
    "doggui.patrol_target_lock.help": "By default, patrol dogs will stop attacking target if they left the patrol area. Turning this on will force this dog to keep attacking in that case.",
-   "doggui.no_dog_curious": "No Curious",
-   "doggui.no_dog_curious.help": "By default, dogs are quite curious of their suroundings (Which they should be). They usually become a bit more vulnerable to being pushed into questionable area while sniffing something. It is best to tell them not to when navigating areas which are dangerous to maneuver like The Basalt Areas of the Nether.",
    "doggui.friendlyfire": "Friendly Fire?",
    "doggui.hide_armor": "Hide Armor",
    "doggui.auto_mount": "Auto Mount",
