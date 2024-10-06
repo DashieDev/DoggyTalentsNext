@@ -61,11 +61,9 @@ public class DogGreedyFireSafeSearchPath extends Path {
     }
 
     private static boolean isValidStart(Dog dog, BlockPos pos) {
-        var pos_type = WalkNodeEvaluator.getPathTypeStatic(dog, pos);
-        if (pos_type == PathType.OPEN)
-            return false;
-        var malus = dog.getPathfindingMalus(pos_type);
-        return malus >= 0;
+        var pos_below = pos.below();
+        var state_under = dog.level().getBlockState(pos_below);
+        return state_under.isCollisionShapeFullBlock(dog.level(), pos_below);
     }
 
     private static Optional<Node> blockPosToNodeOptional(BlockPos pos) {
