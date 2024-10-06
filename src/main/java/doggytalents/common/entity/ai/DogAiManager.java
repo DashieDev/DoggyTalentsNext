@@ -99,7 +99,7 @@ public class DogAiManager {
 
         registerTargetGoal(1, new DogOwnerHurtByTargetGoal(this.dog));
         registerTargetGoal(2, new DogOwnerHurtTargetGoal(this.dog));
-        registerTargetGoal(3, (new HurtByTargetGoal(this.dog)).setAlertOthers());
+        registerTargetGoal(3, new DogHurtByTargetGoal(dog));
         registerTargetGoal(6, new BerserkerModeGoal(this.dog));
         registerTargetGoal(6, new GuardModeGoal(this.dog));
         registerTargetGoal(6, new PatrolAssistTargetGoal(this.dog));
