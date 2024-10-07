@@ -1,12 +1,14 @@
 package doggytalents.common.entity.ai.nav;
 
 import doggytalents.common.entity.Dog;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.phys.Vec3;
 
 public class DogSwimMoveControl extends MoveControl {
 
@@ -61,7 +63,7 @@ public class DogSwimMoveControl extends MoveControl {
             this.dog.zza = f6 * speed;
             this.dog.yya = -f4 * speed;
 
-            this.maySwimALittleBitUpToReachLand();
+            mayCheckAndLeapUpObstacle();
         } else {
             this.dog.setSpeed(0.0F);
             this.dog.setXxa(0.0F);
@@ -70,24 +72,30 @@ public class DogSwimMoveControl extends MoveControl {
         }
      }
 
-    private void maySwimALittleBitUpToReachLand() {
-        var path = this.dog.getNavigation().getPath();
-        if (path == null || path.isDone())
-            return;
+    private void mayCheckAndLeapUpObstacle() {
         if (!this.dog.isInWater())
             return;
-        int next_node_id = path.getNextNodeIndex();
-        if (next_node_id >= path.getNodeCount() || next_node_id < 0)
+        double dy = this.getWantedY() - dog.getY();
+        if (dy <= 0.1)
             return;
-        var nextNode = path.getNextNode();
-        boolean reach_land = 
-            nextNode.type == PathType.WALKABLE
-            && nextNode.y - dog.getY() > 0;
-        if (!reach_land)
+        double dx = this.getWantedX() - dog.getX();
+        double dz = this.getWantedZ() - dog.getZ();
+        double l_xz_sqr = dx * dx + dz * dz;
+        if (l_xz_sqr < 1)
             return;
-        final float upward_add = 0.05f;
-        var current_move = dog.getDeltaMovement();
-        dog.setDeltaMovement(current_move.add(0, upward_add, 0));
+
+        var check_pos_offset = new Vec3(dx, 0, dz)
+            .normalize()
+            .scale(dog.getBbWidth()/2 + 0.2);
+        var check_pos = BlockPos.containing(
+            this.dog.position().add(check_pos_offset)   
+        );
+        var state = dog.level().getBlockState(check_pos);
+        if (!state.getCollisionShape(dog.level(), check_pos).isEmpty()) {
+            final float upward_add = 0.05f;
+            var current_move = dog.getDeltaMovement();
+            dog.setDeltaMovement(current_move.add(0, upward_add, 0));
+        }
     }
 
 }
