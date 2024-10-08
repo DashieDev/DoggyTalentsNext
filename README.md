@@ -6,21 +6,33 @@
 **Doggy Talents Next** - The Art of Minecraft Wolf.
 
 
-* 🦴 Enhancements to the experience of having dogs as companions throughout the game 
-* 🦴 Improvements to the Dogs A.I which make them more reliable and refined than vanilla Wolves/Dogs
-* 🦴 Train your dogs with Talents!
-* 🦴 Provide your dogs some style and make him stands out with the Accessory System
-* 🦴 Reduce the fear of losing your beloved dogs with a Tracking System and a Revival System.
+🦴**REFINED-AI!** Your dogs are now SMARTER than ever! Much more RELIABLE and REFINED in many aspects. Navigate terrain with deadly precision? Cliffs? Lava? Underwater? Just a walk in the park. Jumping in lava? A thing of the past!
+
+🦴**IT’S “NOT” OVER!** Say goodbye to heartbreaking…well, goodbyes. Experiencing a bond that TRANSCENDS death itself! When the unthinkable does happen, with good care, your dog will endure any hardship, and  RETURNING to fight another day.
+
+🦴**IMMERSIVE ANIMATIONS!** A fluid and immersive canine experience that introduces “life-like” animations, from playful interactions to in-game mechanics integrations.
+
+🦴**PET YOUR DOG… WITH STYLE!** What do all doggos have in common? They all love some gooooood ol' BELLY RUBZZZZ!!! Finally, you can now immersively give your beloved Wolfies giant petting strokes from SCRATCHIES to HUGGIES!!! 
+
+🦴**FASHIONABLE FURBALLS!** Explore a HUGE bundle of canine costumes with our multicultural range of doggy apparel ranging from a simple bowtie to a majestic Fiery Reflector!
+
+🦴**CULINARY DELIGHTS TO SHARE!** Worrying about your dogs getting hungry? Say no more! We've introduced a wide range of culinary delights featuring premium, sustainable, ingredients and authentic recipes! (and vegan food too). And YES! You can definitely share them with your hungry pals.
+
+🦴**TRAIN YOUR DOGS!** Discover a variety of talents you can give to your Dog to make him a good-er boy. Your doggos can master virtually ANYTHING from UTILITY to COMBAT!!!
+
+🦴**NEVER LOSE YOUR PUPS!** Ride them as mounts, or let them ride you! COMMAND them with a Whistle or TRACK your Canines! Or even TELEPORT them from anywhere! Your furry companion will surely always be by your side!
+
+Not only that, we also offer you tons of ways to make your dog truly one-of-a-kind with our diverse BREED SELECTION, VARIANTS customization (creative-only), and a RANDOM NAME GENERATOR to help you find the perfect fit for your furry companions!
+
 
 A Big Thanks to everyone that has contributed. This includes but is not limited to...
- * ❤️**ProPercivalalb** for the outstanding work of re-coding and perfecting the mod from the old and relatively buggy version and for continuing the developement until 1.18.2
- * ❤️**RaustBlackDragon** for creating the original mod and ideas back in 2013
- * ❤️**NovaViper** for coding help and maintaining order in the DoggyTalents Project until 1.18.2
- * ❤️**SimonMeskens** for some of the textures
-
  * 💚**zNexwr** for Translation in "FR"
  * 💚**Arkathus** for Translation in "ES"
  * 💚**克洛伊** for Translation in "ZN_TW"
+
+ * ❤️**ProPercivalalb** and **NovaViper** for maintaining DoggyTalents before DTN
+ * ❤️**RaustBlackDragon** for creating the original mod and ideas back in 2013
+ * ❤️**SimonMeskens** for some of the textures
     
 **Mod Authors:**
 * 🦴 **DashieDev** - ダシデーブ
