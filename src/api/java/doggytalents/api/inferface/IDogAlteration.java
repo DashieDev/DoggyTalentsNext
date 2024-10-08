@@ -24,12 +24,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-/**
- * Defines objects which may alter the dog's properties or functions.
- * 
- * @author ProPercivalalb
- * compL by DashieDev
- */
 public interface IDogAlteration {
 
     /**
