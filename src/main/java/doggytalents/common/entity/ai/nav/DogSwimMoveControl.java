@@ -81,7 +81,8 @@ public class DogSwimMoveControl extends MoveControl {
         double dx = this.getWantedX() - dog.getX();
         double dz = this.getWantedZ() - dog.getZ();
         double l_xz_sqr = dx * dx + dz * dz;
-        if (l_xz_sqr < 1)
+        double min_lxz = dog.getBbWidth()/2 + 0.5 - 0.1; 
+        if (l_xz_sqr < min_lxz * min_lxz)
             return;
 
         var check_pos_offset = new Vec3(dx, 0, dz)
