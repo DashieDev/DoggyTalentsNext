@@ -26,12 +26,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidType;
 
-/**
- * Defines objects which may alter the dog's properties or functions.
- * 
- * @author ProPercivalalb
- * compL by DashieDev
- */
 public interface IDogAlteration {
 
     /**
