@@ -22,7 +22,7 @@ import net.minecraft.world.level.Level;
 public class LabCoat extends DyeableAccessory implements IAccessoryHasModel{
 
     public LabCoat(Supplier<? extends ItemLike> itemIn) {
-        super(DoggyAccessoryTypes.HEAD, itemIn);
+        super(DoggyAccessoryTypes.CLOTHING, itemIn);
     }
 
     @Override
