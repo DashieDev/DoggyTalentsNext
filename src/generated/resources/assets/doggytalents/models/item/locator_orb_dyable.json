@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "doggytalents:item/locator_orb_dyable_bg",
-    "layer1": "doggytalents:item/locator_orb_dyable_fg"
-  }
-}

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "doggytalents:locator_orb_dyable"
+        "recipe": "doggytalents:locator_orb_dyeable"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "doggytalents:locator_orb_dyable"
+      "doggytalents:locator_orb_dyeable"
     ]
   }
 }
