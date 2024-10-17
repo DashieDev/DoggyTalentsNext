@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
-public class ContactsRenderEntry extends DoubleDyableRenderEntry {
+public class ContactsRenderEntry extends DoubleDyeableRenderEntry {
     public static final ModelLayerLocation DOG_CONTACTS = new ModelLayerLocation(Util.getResource("dog_contacts"), "main");
 
     private ContactsModel model;

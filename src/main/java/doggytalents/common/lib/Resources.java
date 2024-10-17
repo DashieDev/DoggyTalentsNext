@@ -49,7 +49,7 @@ public class Resources {
     public static final ResourceLocation TORCH_DOG = getEntity("dog", "torch_dog");
     public static final ResourceLocation TORCH_DOG_UNLIT = getEntity("dog", "torch_dog_unlit");
     public static final ResourceLocation BOW_TIE = getEntity("dog", "doggy_bowtie");
-    public static final ResourceLocation DYABLE_BOW_TIE = getEntity("dog", "bowtie_coloured");
+    public static final ResourceLocation DYEABLE_BOW_TIE = getEntity("dog", "bowtie_coloured");
     public static final ResourceLocation SMARTY_GLASSES = getEntity("dog", "smarty_glasses");
     public static final ResourceLocation WIG = getEntity("dog", "wig");
     public static final ResourceLocation BACH_WIG = getEntity("dog", "bach_wig");
@@ -60,8 +60,8 @@ public class Resources {
     public static final ResourceLocation KITSUNE_MASK = getEntity("dog", "kitsune_mask");
     public static final ResourceLocation BIRTHDAY_HAT_BG = getEntity("dog", "birthday_hat_bg");
     public static final ResourceLocation BIRTHDAY_HAT_FG = getEntity("dog", "birthday_hat_fg");
-    public static final ResourceLocation DYABLE_ORB_BG = getEntity("dog", "dyable_orb_bg");
-    public static final ResourceLocation DYABLE_ORB_FG = getEntity("dog", "dyable_orb_fg");
+    public static final ResourceLocation DYEABLE_ORB_BG = getEntity("dog", "dyeable_orb_bg");
+    public static final ResourceLocation DYEABLE_ORB_FG = getEntity("dog", "dyeable_orb_fg");
     public static final ResourceLocation STRIPED_SCARF_BG = getEntity("dog", "striped_scarf_bg");
     public static final ResourceLocation STRIPED_SCARF_FG = getEntity("dog", "striped_scarf_fg");
     public static final ResourceLocation DEER_ANTLERS = getEntity("dog", "deer_antlers");

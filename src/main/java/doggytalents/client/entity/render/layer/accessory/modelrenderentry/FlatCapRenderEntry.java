@@ -39,7 +39,7 @@ public class FlatCapRenderEntry extends Entry {
     }
 
     @Override
-    public boolean isDyable() {
+    public boolean isDyeable() {
         return true;
     }
 

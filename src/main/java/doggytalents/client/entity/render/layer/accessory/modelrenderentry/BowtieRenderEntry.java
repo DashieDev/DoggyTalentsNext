@@ -46,11 +46,11 @@ public class BowtieRenderEntry extends AccessoryModelManager.Entry {
 
     @Override
     public ResourceLocation getResources(AccessoryInstance inst) {
-        return Resources.DYABLE_BOW_TIE;
+        return Resources.DYEABLE_BOW_TIE;
     }
 
     @Override
-    public boolean isDyable() {
+    public boolean isDyeable() {
         return true;
     }
     

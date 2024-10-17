@@ -9,12 +9,12 @@ import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.accessory.DoubleDyableAccessory.DoubleDyableAccessoryInstance;
+import doggytalents.common.entity.accessory.DoubleDyeableAccessory.DoubleDyeableAccessoryInstance;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 
-public abstract class DoubleDyableRenderEntry extends Entry {
+public abstract class DoubleDyeableRenderEntry extends Entry {
  
     public void renderAccessory(RenderLayer<Dog, DogModel> layer, 
         PoseStack poseStack, MultiBufferSource buffer, int packedLight, 
@@ -28,7 +28,7 @@ public abstract class DoubleDyableRenderEntry extends Entry {
         model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         model.sync(dogModel);
         
-        if (!(inst instanceof DoubleDyableAccessoryInstance dInst))
+        if (!(inst instanceof DoubleDyeableAccessoryInstance dInst))
             return;
 
         float[] bgColor = dInst.getBgColor();
@@ -52,7 +52,7 @@ public abstract class DoubleDyableRenderEntry extends Entry {
     }
 
     @Override
-    public boolean isDyable() {
+    public boolean isDyeable() {
         return true;
     }
 

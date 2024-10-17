@@ -38,7 +38,7 @@ public class BakerHatRenderEntry extends AccessoryModelManager.Entry{
     }
 
     @Override
-    public boolean isDyable() {
+    public boolean isDyeable() {
         return true;
     }
 }

@@ -65,7 +65,7 @@ public class AccessoryModelManager {
             model.sync(dogModel);
             
             float[] color = new float[]{1.0f, 1.0f, 1.0f};
-            if (this.isDyable() && (inst instanceof IColoredObject coloredObject))
+            if (this.isDyeable() && (inst instanceof IColoredObject coloredObject))
                 color = coloredObject.getColor();
             
             if (isTranslucent()) {
@@ -77,7 +77,7 @@ public class AccessoryModelManager {
         };
         public abstract void registerLayerDef(final EntityRenderersEvent.RegisterLayerDefinitions event);
         public abstract ResourceLocation getResources(AccessoryInstance inst);
-        public boolean isDyable() { return false; }
+        public boolean isDyeable() { return false; }
         public boolean isTranslucent() { return false; }
     }
 

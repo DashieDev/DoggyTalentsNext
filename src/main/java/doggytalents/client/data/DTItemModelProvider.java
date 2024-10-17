@@ -110,7 +110,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.REI_ORB);
         generated(DoggyItems.SHIN_ORB);
         generated(DoggyItems.JIN_ORB);
-        dyableOrb(DoggyItems.DYED_ORB);
+        dyeableOrb(DoggyItems.DYED_ORB);
         stripedScarf(DoggyItems.STRIPED_SCARF);
 
         generated(DoggyItems.GENDER_BONE);
@@ -241,8 +241,8 @@ public class DTItemModelProvider extends ItemModelProvider {
         return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
     }
 
-    private ItemModelBuilder dyableOrb(Supplier<? extends ItemLike> item) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/locator_orb_dyable_bg"), modLoc(ModelProvider.ITEM_FOLDER + "/locator_orb_dyable_fg"));
+    private ItemModelBuilder dyeableOrb(Supplier<? extends ItemLike> item) {
+        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/locator_orb_dyeable_bg"), modLoc(ModelProvider.ITEM_FOLDER + "/locator_orb_dyeable_fg"));
     }
 
     private ItemModelBuilder stripedScarf(Supplier<? extends ItemLike> item) {

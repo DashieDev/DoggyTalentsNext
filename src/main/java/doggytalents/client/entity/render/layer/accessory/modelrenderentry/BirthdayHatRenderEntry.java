@@ -21,7 +21,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
-public class BirthdayHatRenderEntry extends DoubleDyableRenderEntry {
+public class BirthdayHatRenderEntry extends DoubleDyeableRenderEntry {
     public static final ModelLayerLocation DOG_BIRTHDAY_HAT = new ModelLayerLocation(Util.getResource("dog_birthday_hat"), "main");
     
     public BirthdayHatModel model;

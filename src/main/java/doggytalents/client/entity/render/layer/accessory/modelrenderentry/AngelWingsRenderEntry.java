@@ -37,7 +37,7 @@ public class AngelWingsRenderEntry extends Entry{
         event.registerLayerDefinition(ANGEL_WINGS, ElytraCapeModel::angel);
     }
     @Override
-    public boolean isDyable() {
+    public boolean isDyeable() {
         return true;
     }
     

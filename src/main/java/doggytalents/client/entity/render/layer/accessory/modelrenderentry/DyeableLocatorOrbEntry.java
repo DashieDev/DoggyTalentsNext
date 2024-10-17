@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
-public class DyableLocatorOrbEntry extends DoubleDyableRenderEntry {
+public class DyeableLocatorOrbEntry extends DoubleDyeableRenderEntry {
     
     public LocatorOrbModel model;
     @Override
@@ -27,12 +27,12 @@ public class DyableLocatorOrbEntry extends DoubleDyableRenderEntry {
 
     @Override
     protected ResourceLocation getFgResource(AccessoryInstance inst) {
-        return Resources.DYABLE_ORB_FG;
+        return Resources.DYEABLE_ORB_FG;
     }
 
     @Override
     protected ResourceLocation getBgResource(AccessoryInstance inst) {
-        return Resources.DYABLE_ORB_BG;
+        return Resources.DYEABLE_ORB_BG;
     }
 
 }

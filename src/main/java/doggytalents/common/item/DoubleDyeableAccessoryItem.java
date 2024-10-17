@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.common.entity.accessory.DoubleDyableAccessory;
+import doggytalents.common.entity.accessory.DoubleDyeableAccessory;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.nbt.Tag;
@@ -13,11 +13,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
-public class DoubleDyableAccessoryItem extends AccessoryItem {
+public class DoubleDyeableAccessoryItem extends AccessoryItem {
     
-    private Supplier<? extends DoubleDyableAccessory> accessory;
+    private Supplier<? extends DoubleDyeableAccessory> accessory;
 
-    public DoubleDyableAccessoryItem(Supplier<? extends DoubleDyableAccessory> accessoryIn, Properties properties) {
+    public DoubleDyeableAccessoryItem(Supplier<? extends DoubleDyeableAccessory> accessoryIn, Properties properties) {
         super(accessoryIn, properties);
         this.accessory = accessoryIn;
     }
@@ -67,7 +67,7 @@ public class DoubleDyableAccessoryItem extends AccessoryItem {
 
     public static ItemStack copyAndSetColorForStack(ItemStack stack, List<DyeColor> dye, boolean fg_color) {
         var item = stack.getItem();
-        if (!(item instanceof DoubleDyableAccessoryItem accessory))
+        if (!(item instanceof DoubleDyeableAccessoryItem accessory))
             return ItemStack.EMPTY;
         stack = stack.copyWithCount(1);
         int color = Util.colorDye(-1, dye);

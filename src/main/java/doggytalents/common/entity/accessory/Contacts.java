@@ -10,7 +10,7 @@ import doggytalents.client.entity.render.layer.accessory.modelrenderentry.Access
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;
 import net.minecraft.world.level.ItemLike;
 
-public class Contacts extends DoubleDyableAccessory implements IAccessoryHasModel{
+public class Contacts extends DoubleDyeableAccessory implements IAccessoryHasModel{
 
     public Contacts(Supplier<? extends ItemLike> itemIn) {
         super(DoggyAccessoryTypes.CONTACTS, itemIn);

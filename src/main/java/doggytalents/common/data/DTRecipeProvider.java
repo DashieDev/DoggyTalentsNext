@@ -5,7 +5,7 @@ import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyRecipeSerializers;
 import doggytalents.common.inventory.recipe.DogBedRecipe;
-import doggytalents.common.inventory.recipe.DoubleDyableRecipe;
+import doggytalents.common.inventory.recipe.DoubleDyeableRecipe;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
@@ -477,7 +477,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .save(consumer);
 
         SpecialRecipeBuilder.special(DogBedRecipe::new).save(consumer, Util.getResourcePath("dog_bed"));
-        SpecialRecipeBuilder.special(DoubleDyableRecipe::new).save(consumer, Util.getResourcePath("birthday_hat"));
+        SpecialRecipeBuilder.special(DoubleDyeableRecipe::new).save(consumer, Util.getResourcePath("birthday_hat"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.HOT_DOG.get(), 1)
             .pattern("RTY")

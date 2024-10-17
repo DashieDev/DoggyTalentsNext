@@ -1144,7 +1144,7 @@ quicker the more health the dog lost.
 ========
 + Rice Mill now support Smoker directly too!
 + Allow Models to override animation Sequences, meaning that model can provide their own implementation of the Animation that causes too much dissonance with it.
-+ Double Dyable Contact Lens!!!
++ Double Dyeable Contact Lens!!!
 + Option to restrict CreeperSweeper 5 Dogs to only target Creepers.
 + Added es_es! @Arkathus
 + More names.

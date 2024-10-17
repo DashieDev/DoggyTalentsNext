@@ -40,7 +40,7 @@ public class LabCoatRenderEntry extends Entry{
     }
 
     @Override
-    public boolean isDyable() {
+    public boolean isDyeable() {
         return true;
     }
 

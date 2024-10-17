@@ -2,11 +2,11 @@ package doggytalents.common.item;
 
 import java.util.function.Supplier;
 
-import doggytalents.common.entity.accessory.DoubleDyableAccessory;
+import doggytalents.common.entity.accessory.DoubleDyeableAccessory;
 
-public class StripedScarfItem extends DoubleDyableAccessoryItem {
+public class StripedScarfItem extends DoubleDyeableAccessoryItem {
     
-    public StripedScarfItem(Supplier<? extends DoubleDyableAccessory> type, Properties properties) {
+    public StripedScarfItem(Supplier<? extends DoubleDyeableAccessory> type, Properties properties) {
         super(type, properties);
     }
     

@@ -3,7 +3,7 @@ package doggytalents.common.inventory.recipe;
 import java.util.ArrayList;
 
 import doggytalents.DoggyRecipeSerializers;
-import doggytalents.common.item.DoubleDyableAccessoryItem;
+import doggytalents.common.item.DoubleDyeableAccessoryItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
@@ -18,9 +18,9 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
-public class DoubleDyableRecipe extends CustomRecipe {
+public class DoubleDyeableRecipe extends CustomRecipe {
 
-    public DoubleDyableRecipe(CraftingBookCategory p_249010_) {
+    public DoubleDyeableRecipe(CraftingBookCategory p_249010_) {
         super(p_249010_);
     }
 
@@ -39,7 +39,7 @@ public class DoubleDyableRecipe extends CustomRecipe {
                 paperStack = stack;
                 continue;
             }
-            if (stack.getItem() instanceof DoubleDyableAccessoryItem) {
+            if (stack.getItem() instanceof DoubleDyeableAccessoryItem) {
                 if (targetStack != null)
                     return false;
                 targetStack = stack;
@@ -72,7 +72,7 @@ public class DoubleDyableRecipe extends CustomRecipe {
                 fg_color = true;
                 continue;
             }
-            if (stack.getItem() instanceof DoubleDyableAccessoryItem) {
+            if (stack.getItem() instanceof DoubleDyeableAccessoryItem) {
                 if (targetStack != null)
                     return ItemStack.EMPTY;
                 targetStack = stack;
@@ -85,7 +85,7 @@ public class DoubleDyableRecipe extends CustomRecipe {
         }
         if (targetStack == null || dyeList.isEmpty())
             return ItemStack.EMPTY;
-        return DoubleDyableAccessoryItem.copyAndSetColorForStack(targetStack, dyeList, fg_color);
+        return DoubleDyeableAccessoryItem.copyAndSetColorForStack(targetStack, dyeList, fg_color);
     }
 
     @Override
@@ -95,6 +95,6 @@ public class DoubleDyableRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return DoggyRecipeSerializers.DOUBLE_DYABLE.get();
+        return DoggyRecipeSerializers.DOUBLE_DYEABLE.get();
     }
 }

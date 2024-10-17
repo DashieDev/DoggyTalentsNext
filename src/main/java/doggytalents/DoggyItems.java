@@ -109,7 +109,7 @@ public class DoggyItems {
     public static final Supplier<Item> SAUSAGE = register("sausage", SausageItem::new);
 
     //DTN Style ==========================
-    public static final Supplier<AccessoryItem> BIRTHDAY_HAT = register("birthday_hat", () -> new DyableBirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT, createInitialProp()));
+    public static final Supplier<AccessoryItem> BIRTHDAY_HAT = register("birthday_hat", () -> new DyeableBirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT, createInitialProp()));
     public static final Supplier<DyeableAccessoryItem> BAKER_HAT = register("baker_hat", () -> new BakerHat.BakerHatItem(DoggyAccessories.BAKER_HAT, createInitialProp()));
     public static final Supplier<DyeableAccessoryItem> CHEF_HAT = register("chef_hat", () -> new ChefHat.ChefHatItem(DoggyAccessories.CHEF_HAT, createInitialProp()));
     public static final Supplier<DyeableAccessoryItem> FLATCAP = register("flatcap", () -> new FlatCap.FlatCapItem(DoggyAccessories.FLATCAP, createInitialProp()));
@@ -118,7 +118,7 @@ public class DoggyItems {
     public static final Supplier<AccessoryItem> FEDORA = register("fedora", () -> new Fedora.FedoraItem(DoggyAccessories.FEDORA, createInitialProp()));
     public static final Supplier<AccessoryItem> WITCH_HAT = register("witch_hat", () -> new WitchHatItem(DoggyAccessories.WITCH_HAT, createInitialProp()));
     public static final Supplier<AccessoryItem> PROPELLER_HAT = register("propeller_hat", () -> new Propellar.PropellerHatItem(DoggyAccessories.PROPELLAR, createInitialProp()));
-    public static final Supplier<AccessoryItem> DYED_ORB = register("locator_orb_dyable", () -> new DyableOrbItem(DoggyAccessories.DYED_ORB, createInitialProp()));
+    public static final Supplier<AccessoryItem> DYED_ORB = register("locator_orb_dyeable", () -> new DyeableOrbItem(DoggyAccessories.DYED_ORB, createInitialProp()));
     public static final Supplier<AccessoryItem> STRIPED_SCARF = register("striped_scarf", () -> new StripedScarfItem(DoggyAccessories.STRIPED_SCARF, createInitialProp()));
     public static final Supplier<DyeableAccessoryItem> BOWTIE = registerAccessoryDyed("bowtie", DoggyAccessories.BOWTIE);
 
@@ -356,9 +356,9 @@ public class DoggyItems {
         Util.acceptOrElse(DoggyItems.BIRTHDAY_HAT, (item) -> {
             event.register((stack, tintIndex) -> {
                 if (tintIndex == 1) {
-                    return ((DyableBirthdayHatItem) stack.getItem()).getFgColor(stack);
+                    return ((DyeableBirthdayHatItem) stack.getItem()).getFgColor(stack);
                 }
-                return tintIndex > 0 ? -1 : ((DyableBirthdayHatItem) stack.getItem()).getBgColor(stack);
+                return tintIndex > 0 ? -1 : ((DyeableBirthdayHatItem) stack.getItem()).getBgColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 
@@ -402,18 +402,18 @@ public class DoggyItems {
         Util.acceptOrElse(DoggyItems.DOGGY_CONTACTS, (item) -> {
             event.register((stack, tintIndex) -> {
                 if (tintIndex == 1) {
-                    return ((DoubleDyableAccessoryItem) stack.getItem()).getFgColor(stack);
+                    return ((DoubleDyeableAccessoryItem) stack.getItem()).getFgColor(stack);
                 }
-                return tintIndex > 0 ? -1 : ((DoubleDyableAccessoryItem) stack.getItem()).getBgColor(stack);
+                return tintIndex > 0 ? -1 : ((DoubleDyeableAccessoryItem) stack.getItem()).getBgColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 
         Util.acceptOrElse(DoggyItems.DYED_ORB, (item) -> {
             event.register((stack, tintIndex) -> {
                 if (tintIndex == 1) {
-                    return ((DoubleDyableAccessoryItem) stack.getItem()).getFgColor(stack);
+                    return ((DoubleDyeableAccessoryItem) stack.getItem()).getFgColor(stack);
                 }
-                return tintIndex > 0 ? -1 : ((DoubleDyableAccessoryItem) stack.getItem()).getBgColor(stack);
+                return tintIndex > 0 ? -1 : ((DoubleDyeableAccessoryItem) stack.getItem()).getBgColor(stack);
              }, item);
         }, DoggyBlocks::logError);
 

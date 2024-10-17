@@ -64,7 +64,7 @@ public class DyeableAccessory extends Accessory {
         //if (returnStack.getItem() instanceof DyeableLeatherItem) {
             ItemUtil.setDyeColorForStack(returnStack, exact.getColorInteger());
         //} else {
-            //DoggyTalentsNext.LOGGER.info("Unable to set set dyable accessory color.");
+            //DoggyTalentsNext.LOGGER.info("Unable to set set dyeable accessory color.");
         //}
 
         return returnStack;

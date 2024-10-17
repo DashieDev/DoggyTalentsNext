@@ -46,7 +46,7 @@ public class CeremonialGarbRenderEntry extends Entry{
         return Resources.CERE_GARB;
     }
     @Override
-    public boolean isDyable() {
+    public boolean isDyeable() {
         return true;
     }
 

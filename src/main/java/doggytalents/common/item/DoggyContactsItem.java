@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import doggytalents.common.entity.accessory.DoubleDyableAccessory;
+import doggytalents.common.entity.accessory.DoubleDyeableAccessory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
@@ -13,9 +13,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class DoggyContactsItem extends DoubleDyableAccessoryItem {
+public class DoggyContactsItem extends DoubleDyeableAccessoryItem {
 
-    public DoggyContactsItem(Supplier<? extends DoubleDyableAccessory> accessoryIn, Properties properties) {
+    public DoggyContactsItem(Supplier<? extends DoubleDyeableAccessory> accessoryIn, Properties properties) {
         super(accessoryIn, properties);
     }
 

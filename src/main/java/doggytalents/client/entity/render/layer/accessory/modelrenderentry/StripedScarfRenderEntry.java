@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
-public class StripedScarfRenderEntry extends DoubleDyableRenderEntry {
+public class StripedScarfRenderEntry extends DoubleDyeableRenderEntry {
     public static final ModelLayerLocation DOG_STRIPED_SCARF = new ModelLayerLocation(Util.getResource("dog_striped_scarf"), "main");
     
     public StripedScarfModel model;

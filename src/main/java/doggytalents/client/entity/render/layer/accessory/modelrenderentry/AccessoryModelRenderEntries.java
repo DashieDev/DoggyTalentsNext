@@ -36,7 +36,7 @@ public class AccessoryModelRenderEntries {
     public static Entry PROPELLAR = new PropellarRenderEntry();
     public static Entry FEDORA = new FedoraRenderEntry();
     public static Entry FLATCAP = new FlatCapRenderEntry();
-    public static Entry DYABLE_LOCATOR_ORB = new DyableLocatorOrbEntry();
+    public static Entry DYEABLE_LOCATOR_ORB = new DyeableLocatorOrbEntry();
     public static Entry ANGEL_HALO = new AngelHaloRenderEntry();
     public static Entry YETI_GOOSE = new YetiGooseRenderEntry();
     public static Entry MIDI_KEYBOARD = new MidiKeyboardRenderEntry();
@@ -74,7 +74,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(PROPELLAR);
         AccessoryModelManager.register(FEDORA);
         AccessoryModelManager.register(FLATCAP);
-        AccessoryModelManager.register(DYABLE_LOCATOR_ORB);
+        AccessoryModelManager.register(DYEABLE_LOCATOR_ORB);
         AccessoryModelManager.register(ANGEL_WINGS);
         AccessoryModelManager.register(ANGEL_HALO);
         AccessoryModelManager.register(YETI_GOOSE);

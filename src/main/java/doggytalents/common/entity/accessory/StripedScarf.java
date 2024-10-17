@@ -8,7 +8,7 @@ import doggytalents.client.entity.render.layer.accessory.modelrenderentry.Access
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;
 import net.minecraft.world.level.ItemLike;
 
-public class StripedScarf extends DoubleDyableAccessory implements IAccessoryHasModel {
+public class StripedScarf extends DoubleDyeableAccessory implements IAccessoryHasModel {
 
     public StripedScarf(Supplier<? extends ItemLike> itemIn) {
         super(DoggyAccessoryTypes.SCARF, itemIn);

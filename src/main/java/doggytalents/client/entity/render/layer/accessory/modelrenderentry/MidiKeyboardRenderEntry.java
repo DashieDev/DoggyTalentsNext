@@ -47,7 +47,7 @@ public class MidiKeyboardRenderEntry extends Entry{
         return Resources.MIDI_KEYBOARD;
     }
     @Override
-    public boolean isDyable() {
+    public boolean isDyeable() {
         return true;
     }
 
