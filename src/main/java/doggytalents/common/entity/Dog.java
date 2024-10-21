@@ -45,6 +45,7 @@ import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
+import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
 import doggytalents.common.entity.ai.*;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.stats.StatsTracker;
@@ -224,6 +225,7 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<DogSkinData> CUSTOM_SKIN = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER);
     private static final EntityDataAccessor<DogPettingState> DOG_PETTING_STATE = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_PETTING_STATE);
     private static final EntityDataAccessor<DogAnimDebugState> DOG_ANIM_DEBUG_STATE = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_ANIM_DEBUG_STATE);
+    private static final EntityDataAccessor<DogSleepOnState> DOG_SLEEP_ON_STATE = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SLEEP_ON_STATE);
 
     // Cached values
     private final Cache<Integer> spendablePoints = Cache.make(this::getSpendablePointsInternal);
@@ -252,6 +254,8 @@ public class Dog extends AbstractDog {
         = new DogHungerManager(this);
     public final DogPettingManager pettingManager
         = new DogPettingManager(this);
+    public final DogSleepOnManager sleepOnManager
+        = new DogSleepOnManager(this);
     public final DogSwimmingManager dogSwimmingManager
         = new DogSwimmingManager(this);
     public final DogPushAvoidManager dogPushAvoidManager
@@ -349,6 +353,7 @@ public class Dog extends AbstractDog {
         builder.define(ANIM_SYNC_TIME, 0);
         builder.define(DOG_ANIM_DEBUG_STATE, DogAnimDebugState.NONE);
         builder.define(DOG_PETTING_STATE, DogPettingState.NULL);
+        builder.define(DOG_SLEEP_ON_STATE, DogSleepOnState.NULL);
     }
 
     @Override
@@ -623,6 +628,7 @@ public class Dog extends AbstractDog {
         }
 
         this.pettingManager.tick();
+        this.sleepOnManager.tick();
 
         //Client
         if (this.level().isClientSide) {
@@ -905,6 +911,13 @@ public class Dog extends AbstractDog {
         if (this.silentTickLeft > 0)
             --this.silentTickLeft;
 
+        if (!this.level().isClientSide) {
+            var owner = this.getOwner();
+            if (owner != null && owner.isSleeping()) {
+                
+            }
+        }
+
         // if (!this.level().isClientSide && this.getMode().canWander()) {
         //     if (!this.getMode().shouldAttack()) {
         //         updateWanderRestState();
@@ -1033,6 +1046,16 @@ public class Dog extends AbstractDog {
         if (this.isDefeated()) 
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
+
+        if (stack.getItem() == Items.STONE_AXE) {
+            if (!this.level().isClientSide) {
+                if (this.sleepOnManager.isSleepOnReady()) {
+                    this.sleepOnManager.setPlayerSleepOn(player);
+                } else
+                this.sleepOnManager.setRequestedSleepOn(true);
+            }
+            return InteractionResult.SUCCESS;
+        }
         
         if (handleOpenDogScreenDedicated(player, stack).shouldSwing())
             return InteractionResult.SUCCESS;
@@ -3267,6 +3290,9 @@ public class Dog extends AbstractDog {
             }
             this.animationManager.onDebugUpdate(debug_state);
         }
+        if (DOG_SLEEP_ON_STATE.equals(key)) {
+            DogSleepOnManager.onDogSleepOnDataUpdated(this, getSleepOnState());
+        }
     }
 
     public void onDogSyncedDataUpdated(boolean talents, boolean accessories) {
@@ -3680,6 +3706,14 @@ public class Dog extends AbstractDog {
 
     public void setPettingState(DogPettingState state) {
         this.entityData.set(DOG_PETTING_STATE, state);
+    }
+
+    public DogSleepOnState getSleepOnState() {
+        return this.entityData.get(DOG_SLEEP_ON_STATE);
+    }
+
+    public void setSleepOnState(DogSleepOnState state) {
+        this.entityData.set(DOG_SLEEP_ON_STATE, state);
     }
 
     @Override

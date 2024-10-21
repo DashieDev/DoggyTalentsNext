@@ -3,6 +3,7 @@ package doggytalents.client.event;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Axis;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
@@ -49,6 +50,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -334,5 +336,12 @@ public class ClientEventHandler {
             return I18n.get(translation_key);
         return variant.id().toString();
     }
+
+    public static void rotatePlayerToDogWhenSleepOn(Dog sleep_on, Player player, PoseStack stack, float p_115319_, float p_115320_,
+        float p_115321_, float x) {
+        float facing = player.getYRot();
+        stack.mulPose(Axis.YP.rotationDegrees(180 - facing));
+        //stack.mulPose(Axis.XP.rotationDegrees(90));
+    }   
 
 }

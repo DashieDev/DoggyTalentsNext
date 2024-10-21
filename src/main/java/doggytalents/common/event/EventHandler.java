@@ -14,6 +14,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.entity.ai.WolfBegAtTreatGoal;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
@@ -50,6 +51,7 @@ import net.minecraft.world.entity.animal.WolfVariants;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Player.BedSleepingProblem;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.entity.projectile.ThrownEgg;
@@ -65,6 +67,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
@@ -75,6 +78,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.neoforged.neoforge.event.entity.player.CanContinueSleepingEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
@@ -97,6 +101,7 @@ public class EventHandler {
     public void onServerStop(final ServerStoppingEvent event) {
         DogPromiseManager.forceStop();
         DogLocationStorage.get(event.getServer()).onServerStop(event);
+        DogSleepOnManager.onServerStop();
     }
 
     @SubscribeEvent
@@ -603,5 +608,15 @@ public class EventHandler {
             return;
         
         event.setCanceled(true);
+    }
+    public void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
+        if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
+            return;
+        var player = event.getEntity();
+        var dog_optional = DogSleepOnManager.getSleepingOnDog(player);
+        if (!dog_optional.isPresent())
+            return;
+        var dog = dog_optional.get();
+        event.setContinueSleeping(true);
     }
 }
