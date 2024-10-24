@@ -312,6 +312,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
         public ModConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
         public ModConfigSpec.BooleanValue INJURED_DOG_BLOCK_PORTAL;
+        public ModConfigSpec.BooleanValue WANDERING_DOG_WHISTLE;
 
         public Map<String, ModConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -540,6 +541,11 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("to make Injured Dogs still block portals.")
                 .translation("doggytalents.injured_dog_block_portal")
                 .define("injured_dog_block_portal", false);
+            WANDERING_DOG_WHISTLE = builder
+                .comment("By default, Wandering Dogs will not respond to the stay/stand whistle.")
+                .comment("Enable this to make them respond as usual.")
+                .translation("doggytalents.wandering_dog_whistle")
+                .define("wandering_dog_whistle", false);
 
             builder.pop();
         }
