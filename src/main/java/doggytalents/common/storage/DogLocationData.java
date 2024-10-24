@@ -41,7 +41,6 @@ public class DogLocationData implements IDogData {
 
     // Other saved data
     private @Nullable Component name;
-    private @Nullable Component ownerName;
     private @Nullable EnumGender gender;
     private boolean hasRadarCollar;
     private int locateColor;
@@ -77,11 +76,6 @@ public class DogLocationData implements IDogData {
         return this.name == null ? "" : this.name.getString();
     }
 
-    @Override
-    public String getOwnerName() {
-        return this.ownerName == null ? "" : this.ownerName.getString();
-    }
-
     public void populate(Dog dogIn) {
         this.update(dogIn);
     }
@@ -92,7 +86,6 @@ public class DogLocationData implements IDogData {
         this.dimension = dogIn.level().dimension();
 
         this.name = dogIn.getName();
-        this.ownerName = dogIn.getOwnersName().orElse(null);
         this.gender = dogIn.getGender();
 
         updateLocator(dogIn);
