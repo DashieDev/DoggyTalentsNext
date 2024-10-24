@@ -74,12 +74,6 @@ public class DogRespawnData implements IDogData {
         return this.ownerUUID;
     }
 
-    @Override
-    public String getOwnerName() {
-        Component name = NBTUtil.getTextComponent(this.data, "lastKnownOwnerName");
-        return name == null ? "" : name.getString();
-    }
-
     public void populate(Dog dogIn) {
         this.data = new CompoundTag();
         

@@ -49,11 +49,6 @@ public class DogRespawnStorage extends SavedData {
                 .filter(data -> ownerId.equals(data.getOwnerId()));
     }
 
-    public Stream<DogRespawnData> getDogs(@Nonnull String ownerName) {
-        return this.respawnDataMap.values().stream()
-                .filter(data -> ownerName.equals(data.getOwnerName()));
-    }
-
     @Nullable
     public DogRespawnData getData(UUID uuid) {
         if (this.respawnDataMap.containsKey(uuid)) {

@@ -216,12 +216,9 @@ public class DoggyCommands {
 
     public static <S extends SharedSuggestionProvider> CompletableFuture<Suggestions> getOwnerNameSuggestions(Collection<? extends IDogData> possibilities, final CommandContext<S> context, final SuggestionsBuilder builder) {
         if (context.getSource() instanceof CommandSourceStack) {
-            return SharedSuggestionProvider.suggest(possibilities.stream()
-                    .map(IDogData::getOwnerName)
-                    .filter(Objects::nonNull)
-                    .map(Object::toString)
-                    .collect(Collectors.toSet()),
-                   builder);
+            var level = ((CommandSourceStack) context.getSource()).getLevel();
+            var owner_names = getOwnerNames(level, possibilities);
+            return SharedSuggestionProvider.suggest(owner_names, builder);
 
         } else if (context.getSource() instanceof SharedSuggestionProvider) {
             return context.getSource().customSuggestion(context);
@@ -457,5 +454,24 @@ public class DoggyCommands {
             return Optional.empty();
         
         return Optional.ofNullable(found_player.getUUID());
+    }
+
+    public static Set<String> getOwnerNames(ServerLevel level, Collection<? extends IDogData> dog_datas) {
+        var player_id_list = dog_datas.stream()
+            .filter(data -> data.getOwnerId() != null)
+            .map(data -> data.getOwnerId())
+            .collect(Collectors.toList());
+        var player_id_set = new HashSet<>(player_id_list);
+        var ret = new HashSet<String>();
+        for (var owner_id : player_id_set) {
+            var player = level.getPlayerByUUID(owner_id);
+            if (player == null)
+                continue;
+            var name = player.getName().getString();
+            if (name == null || name.isEmpty())
+                continue;
+            ret.add(name);
+        }
+        return ret;
     }
 }
