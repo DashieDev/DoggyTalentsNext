@@ -193,12 +193,14 @@ public class WhistleItem extends Item implements IDogItem {
         case STAND:
             if (world.isClientSide) return;
             for (var dog : dogsList) {
+                boolean wandering_ignore = 
+                    dog.getMode().canWander() 
+                    && !ConfigHandler.SERVER.WANDERING_DOG_WHISTLE.get();
+                if (wandering_ignore)
+                    continue;
                 dog.setOrderedToSit(false);
                 dog.getNavigation().stop();
                 dog.setTarget(null);
-                if (dog.getMode() == EnumMode.WANDERING) {
-                    dog.setMode(EnumMode.DOCILE);
-                }
                 successful = true;
             }
 
@@ -239,12 +241,14 @@ public class WhistleItem extends Item implements IDogItem {
         case STAY:
             if (world.isClientSide) return;
             for (Dog dog : dogsList) {
+                boolean wandering_ignore = 
+                    dog.getMode().canWander() 
+                    && !ConfigHandler.SERVER.WANDERING_DOG_WHISTLE.get();
+                if (wandering_ignore)
+                    continue;
                 dog.setOrderedToSit(true);
                 dog.getNavigation().stop();
                 dog.setTarget(null);
-                if (dog.getMode() == EnumMode.WANDERING) {
-                    dog.setMode(EnumMode.DOCILE);
-                }
                 successful = true;
             }
 
