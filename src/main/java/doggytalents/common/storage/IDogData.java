@@ -9,6 +9,4 @@ public interface IDogData {
     public UUID getOwnerId();
 
     public String getDogName();
-
-    public String getOwnerName();
 }
