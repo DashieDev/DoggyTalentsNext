@@ -309,6 +309,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
         public ForgeConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
         public ForgeConfigSpec.BooleanValue INJURED_DOG_BLOCK_PORTAL;
+        public ModConfigSpec.BooleanValue WANDERING_DOG_WHISTLE;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
@@ -540,6 +541,11 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("to make Injured Dogs still block portals.")
                 .translation("doggytalents.injured_dog_block_portal")
                 .define("injured_dog_block_portal", false);
+            WANDERING_DOG_WHISTLE = builder
+                .comment("By default, Wandering Dogs will not respond to the stay/stand whistle.")
+                .comment("Enable this to make them respond as usual.")
+                .translation("doggytalents.wandering_dog_whistle")
+                .define("wandering_dog_whistle", false);
 
             //(Non 1.20.5+)
             RANDOM_VAR_ON_TRAIN = builder
