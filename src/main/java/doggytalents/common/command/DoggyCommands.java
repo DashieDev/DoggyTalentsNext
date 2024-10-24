@@ -27,6 +27,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.commands.EffectCommands;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -171,16 +172,22 @@ public class DoggyCommands {
                 return Suggestions.empty();
             }
 
+            var level = ((CommandSourceStack) context.getSource()).getLevel();
+            var owner_id_optional = getOwnerIdFromName(level, ownerName);
+            if (!owner_id_optional.isPresent())
+                return Suggestions.empty();
+            var owner_id = owner_id_optional.get();
+
             Predicate<IDogData> filter;
 
             final String dogName2 = dogName;
 
             if (dogName2 == null) {
-                filter = data -> ownerName.equals(data.getOwnerName());
+                filter = data -> owner_id.equals(data.getOwnerId());
             } else {
                 filter = data -> (
                     dogName2.equals(data.getDogName())
-                    && ownerName.equals(data.getOwnerName())
+                    && owner_id.equals(data.getOwnerId())
                 );
                     
             }
@@ -239,13 +246,20 @@ public class DoggyCommands {
                 return Suggestions.empty();
             }
 
-            return SharedSuggestionProvider.suggest(possibilities.stream()
-                    .filter(data -> ownerName.equals(data.getOwnerName()))
-                    .map(IDogData::getDogName)
-                    .filter((str) -> !Strings.isNullOrEmpty(str))
-                    .map(str -> wrapStringInQuoteIfContainsSpace(str))
-                     .collect(Collectors.toList()),
-                     builder);
+            var level = ((CommandSourceStack) context.getSource()).getLevel();
+            var owner_id_optional = getOwnerIdFromName(level, ownerName);
+            if (!owner_id_optional.isPresent())
+                return Suggestions.empty();
+            var owner_id = owner_id_optional.get();
+
+            var suggest_list = possibilities.stream()
+                .filter(data -> owner_id.equals(data.getOwnerId()))
+                .map(IDogData::getDogName)
+                .filter((str) -> !Strings.isNullOrEmpty(str))
+                .map(str -> wrapStringInQuoteIfContainsSpace(str))
+                .collect(Collectors.toList());
+
+            return SharedSuggestionProvider.suggest(suggest_list, builder);
 
         } else if (context.getSource() instanceof SharedSuggestionProvider) {
              return context.getSource().customSuggestion(context);
@@ -299,10 +313,16 @@ public class DoggyCommands {
         ServerLevel world = source.getLevel();
 
         String ownerName = ctx.getArgument("ownerName", String.class);
-
         String dogName = ctx.getArgument("dogName", String.class);
+
+        var owner_id_optional = getOwnerIdFromName(world, ownerName);
+        if (!owner_id_optional.isPresent()) {
+            throw NOTFOUND_EXCEPTION.create(dogName);
+        }
+        var owner_id = owner_id_optional.get();
+
         DogRespawnStorage respawnStorage = DogRespawnStorage.get(world);
-        List<DogRespawnData> respawnData = respawnStorage.getDogs(ownerName).filter((data) -> data.getDogName().equals(dogName)).collect(Collectors.toList());
+        List<DogRespawnData> respawnData = respawnStorage.getDogs(owner_id).filter((data) -> data.getDogName().equals(dogName)).collect(Collectors.toList());
 
         if (respawnData.isEmpty()) {
             throw NOTFOUND_EXCEPTION.create(dogName);
@@ -367,11 +387,17 @@ public class DoggyCommands {
         ServerLevel world = source.getLevel();
 
         String ownerName = ctx.getArgument("ownerName", String.class);
-
         String dogName = ctx.getArgument("dogName", String.class);
+
+        var owner_id_optional = getOwnerIdFromName(world, ownerName);
+        if (!owner_id_optional.isPresent()) {
+            throw NOTFOUND_EXCEPTION.create(dogName);
+        }
+        var owner_id = owner_id_optional.get();
+
         DogLocationStorage locationStorage = DogLocationStorage.get(world);
         List<DogLocationData> locationData = locationStorage.getAll().stream()
-                .filter(data -> ownerName.equals(data.getOwnerName())).filter((data) -> data.getDogName().equals(dogName)).collect(Collectors.toList());
+                .filter(data -> owner_id.equals(data.getOwnerId())).filter((data) -> data.getDogName().equals(dogName)).collect(Collectors.toList());
 
         if (locationData.isEmpty()) {
             throw NOTFOUND_EXCEPTION.create(dogName);
@@ -411,5 +437,25 @@ public class DoggyCommands {
         var dogName = loc.getDogName();
         if (dogName == null) dogName = "noname";
         return Component.translatable("command.doglocate.info", dogName, posStr, dimStr);
+    }
+
+    public static Optional<UUID> getOwnerIdFromName(ServerLevel level, String name) {
+        if (name == null || name.isEmpty())
+            return Optional.empty();
+
+        var player_list = level.players();
+        ServerPlayer found_player = null;
+        for (var player : player_list) {
+            var player_name = player.getName().getString();
+            if (player_name.equals(name)) {
+                found_player = player;
+                break;
+            }
+        }
+        
+        if (found_player == null)
+            return Optional.empty();
+        
+        return Optional.ofNullable(found_player.getUUID());
     }
 }
