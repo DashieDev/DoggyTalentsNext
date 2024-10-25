@@ -100,6 +100,9 @@ public class Resources {
     public static final ResourceLocation REI_ORB = getEntity("dog", "rei_orb");
     public static final ResourceLocation SHIN_ORB = getEntity("dog", "shin_orb");
     public static final ResourceLocation JIN_ORB = getEntity("dog", "jin_orb");
+    public static final ResourceLocation KA_ORB = getEntity("dog", "ka_orb");
+    public static final ResourceLocation SUI_ORB = getEntity("dog", "sui_orb");
+    public static final ResourceLocation MOKU_ORB = getEntity("dog", "moku_orb");
 
     public static final ResourceLocation HOT_DOG = getEntity("dog", "hot_dog");
     public static final ResourceLocation GIANT_STICK = getEntity("dog", "giant_stick");
