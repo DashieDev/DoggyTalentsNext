@@ -110,6 +110,9 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.REI_ORB);
         generated(DoggyItems.SHIN_ORB);
         generated(DoggyItems.JIN_ORB);
+        generated(DoggyItems.KA_ORB);
+        generated(DoggyItems.SUI_ORB);
+        generated(DoggyItems.MOKU_ORB);
         dyableOrb(DoggyItems.DYED_ORB);
         stripedScarf(DoggyItems.STRIPED_SCARF);
 
