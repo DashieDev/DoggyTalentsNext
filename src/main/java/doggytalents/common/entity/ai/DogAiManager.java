@@ -33,6 +33,7 @@ public class DogAiManager {
     private final EnumSet<Goal.Flag> lockedFlags = EnumSet.noneOf(Goal.Flag.class);
 
     private DogSitWhenOrderedGoal sitGoal;
+    private WrappedGoal sitGoalWrapped;
     private DogActionExecutorGoal nonTrivialActionGoal;
     private DogActionExecutorGoal trivialActionGoal;
     private int delayedActionStart = 0;
@@ -118,7 +119,7 @@ public class DogAiManager {
 
     private void initSitGoal(int priority) {
         this.sitGoal = new DogSitWhenOrderedGoal(dog); 
-        registerDogGoal(priority, this.sitGoal);
+        this.sitGoalWrapped = registerDogGoal(priority, this.sitGoal);
     }
 
     private WrappedGoal registerDogGoal(int priority, Goal goal) {
@@ -451,6 +452,12 @@ public class DogAiManager {
             action = this.trivialActionGoal.getAction();
         }
         return Optional.ofNullable(action);
+    }
+
+    public boolean isSitGoalRunning() {
+        if (this.sitGoalWrapped == null)
+            return false;
+        return this.sitGoalWrapped.isRunning();
     }
 
     public static interface IHasTickNonRunning {
