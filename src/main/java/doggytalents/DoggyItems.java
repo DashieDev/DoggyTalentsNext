@@ -143,6 +143,9 @@ public class DoggyItems {
     public static final Supplier<AccessoryItem> GI_ORB = registerLocatorOrb("locator_orb_gi", DoggyAccessories.GI_ORB);
     public static final Supplier<AccessoryItem> KO_ORB = registerLocatorOrb("locator_orb_ko", DoggyAccessories.KO_ORB);
     public static final Supplier<AccessoryItem> CHI_ORB = registerLocatorOrb("locator_orb_chi", DoggyAccessories.CHI_ORB);
+    public static final Supplier<AccessoryItem> KA_ORB = registerLocatorOrb("locator_orb_ka", DoggyAccessories.KA_ORB);
+    public static final Supplier<AccessoryItem> SUI_ORB = registerLocatorOrb("locator_orb_sui", DoggyAccessories.SUI_ORB);
+    public static final Supplier<AccessoryItem> MOKU_ORB = registerLocatorOrb("locator_orb_moku", DoggyAccessories.MOKU_ORB);
 
     public static final Supplier<AccessoryItem> DIVINE_RETRIBUTON = register("divine_retribution", () -> new FieryReflectorItem(DoggyAccessories.DIVINE_RETRIBUTION, createInitialProp()));
     public static final Supplier<AccessoryItem> SOUL_REFLECTOR = register("soul_reflector", () -> new FieryReflectorItem(DoggyAccessories.SOUL_REFLECTOR, createInitialProp()));
