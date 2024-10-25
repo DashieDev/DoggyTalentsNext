@@ -97,9 +97,16 @@ public class DogOwnerDistanceManager {
             ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DOG_GREET_OWNER_LIMIT);
         if (!greetOwnerEnabled) return;
         if (greetOwnerLimit > 0) {
-            if (getGreetCountForOwner(owner) >= greetOwnerLimit) return;
+            if (getGreetCountForOwner(owner) >= greetOwnerLimit) 
+                return;
         }
-        dog.triggerAction(new DogGreetOwnerAction(dog, owner, ownerLeftInterval));
+        if (dog.triggerAction(new DogGreetOwnerAction(dog, owner, ownerLeftInterval))) {
+            DogOwnerDistanceManager.incGreetCountForOwner(owner);
+        }
+    }
+
+    public void onGreetingActionStop(LivingEntity owner) {
+        DogOwnerDistanceManager.decGreetCountForOwner(owner);
     }
 
     public static int getGreetCountForOwner(LivingEntity owner) {
