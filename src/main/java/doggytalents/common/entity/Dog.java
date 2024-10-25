@@ -4586,6 +4586,22 @@ public class Dog extends AbstractDog {
         return this.sitAnim;
     }
 
+    @Override
+    public void setOrderedToSit(boolean val) {
+        super.setOrderedToSit(val);
+        mayDogCorrectSittingPose(val);
+    }
+
+    private void mayDogCorrectSittingPose(boolean sit_ordered) {
+        if (sit_ordered)
+            return;
+        if (this.dogAi == null)
+            return;
+        if (this.dogAi.isSitGoalRunning())
+            return;
+        this.setInSittingPose(false);
+    }
+
     public void setChopinTailFor(int ticks) {
         this.tickChopinTail = ticks;
     }
