@@ -1072,20 +1072,9 @@ public class Dog extends AbstractDog {
             return InteractionResult.FAIL;
         if (this.isProtesting())
             return InteractionResult.FAIL;
-        
 
-        int sit_interval = this.tickCount - this.lastOrderedToSitTick;
-        float r = this.getRandom().nextFloat();
-
-        if (!this.level().isClientSide && this.isOrderedToSit()
-            && this.isInSittingPose()
-            && checkRandomBackflip(r, sit_interval)
-            && this.level().getBlockState(this.blockPosition().above()).isAir()) {
-                
-            this.setStandAnim(DogAnimation.NONE);
-            this.setInSittingPose(false);
-            this.triggerAnimationAction(new DogBackFlipAction(this));
-        }
+        if (!this.level().isClientSide)
+            checkAndDoBackFlip();
 
         if (!this.level().isClientSide && !this.isOrderedToSit()) {
             this.lastOrderedToSitTick = this.tickCount;
@@ -1096,6 +1085,35 @@ public class Dog extends AbstractDog {
         this.navigation.stop();
         this.setTarget(null);
         return InteractionResult.SUCCESS;
+    }
+
+    private void checkAndDoBackFlip() {
+        if (!this.isOrderedToSit())
+            return;
+        if (!this.isInSittingPose())
+            return;
+        int sit_interval = this.tickCount - this.lastOrderedToSitTick;
+        float r = this.getRandom().nextFloat();
+        if (!checkDogBackflipRandom(r, sit_interval))
+            return;
+        if (!checkDogBackflipAreaAbove())
+            return;
+
+        this.setStandAnim(DogAnimation.NONE);
+        this.setInSittingPose(false);
+        this.triggerAnimationAction(new DogBackFlipAction(this));
+    }
+
+    private boolean checkDogBackflipRandom(float r, int sit_interval) {
+        if (sit_interval <= 30) 
+            return false;
+        if (sit_interval >= 1200)
+            return r <= 0.7f;
+        return r <= 0.3f;
+    }
+
+    private boolean checkDogBackflipAreaAbove() {
+        return this.level().getBlockState(this.blockPosition().above()).isAir();
     }
 
     private InteractionResult handleOpenDogScreen(Player player) {
@@ -1295,14 +1313,6 @@ public class Dog extends AbstractDog {
         }
         
         return this.getDogHunger() < this.getMaxHunger();
-    }
-
-    private boolean checkRandomBackflip(float r, int sit_interval) {
-        if (sit_interval <= 30) 
-            return false;
-        if (sit_interval >= 1200)
-            return r <= 0.7f;
-        return r <= 0.3f;
     }
 
     private boolean isProtesting = false;
