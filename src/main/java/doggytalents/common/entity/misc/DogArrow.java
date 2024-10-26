@@ -3,9 +3,11 @@ package doggytalents.common.entity.misc;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalents;
+import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.util.forward_imitate.Util_1_19_2;
@@ -22,6 +24,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -41,26 +44,22 @@ public class DogArrow extends AbstractArrow {
     private static final EntityDataAccessor<Integer> EFFECT_COLOR = SynchedEntityData.defineId(DogArrow.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> IS_SPECTRAL = SynchedEntityData.defineId(DogArrow.class, EntityDataSerializers.BOOLEAN);
 
+    private Optional<UUID> dogOwnerUUID = Optional.empty();
+
     public DogArrow(EntityType<DogArrow> p_36858_, Level p_36859_) {
         super(p_36858_, p_36859_);
     }
 
-    public DogArrow(Level p_36866_, double p_308912_, double p_308958_, double p_309185_, ItemStack stack) {
-        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), p_308912_, p_308958_, p_309185_, p_36866_);
+    public DogArrow(Level p_36861_, AbstractDog dog, ItemStack stack, ItemStack proj_stack) {
+        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), dog, p_36861_, stack, proj_stack);
         this.setEffectsFromItem_1_20_1_and_under(stack);
         this.updateColor();
         if (stack.is(Items.SPECTRAL_ARROW)) {
             this.entityData.set(IS_SPECTRAL, true);
         }
-    }
-
-    public DogArrow(Level p_36861_, LivingEntity p_308924_, ItemStack stack) {
-        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), p_308924_, p_36861_);
-        this.setEffectsFromItem_1_20_1_and_under(stack);
-        this.updateColor();
-        if (stack.is(Items.SPECTRAL_ARROW)) {
-            this.entityData.set(IS_SPECTRAL, true);
-        }
+        var owner = dog.getOwner();
+        if (owner != null)
+            this.dogOwnerUUID = Optional.ofNullable(owner.getUUID());
     }
 
     @Override
@@ -254,6 +253,46 @@ public class DogArrow extends AbstractArrow {
         return EventHandler.isAlliedToDog(target, dog_owner);
     }
 
+    @Override
+    protected boolean tryPickup(Player picker) {
+        if (shouldDogArrowBlockPickup(picker))
+            return false;
+        return super.tryPickup(picker);
+    }
+
+    private boolean shouldDogArrowBlockPickup(Player picker) {
+        if (picker.isCreative())
+            return false;
+        if (!this.dogOwnerUUID.isPresent())
+            return false;
+        if (this.dogOwnerUUID.get().equals(picker.getUUID()))
+            return false;
+        return true;
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        this.dogOwnerUUID.ifPresent(x -> {
+            tag.putUUID("dtn_dog_owner_id", x);
+        });
+
+        //1.20 under
+        this.add_1_20_under_PotionData(tag);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.hasUUID("dtn_dog_owner_id")) {
+            var uuid = tag.getUUID("dtn_dog_owner_id");
+            this.dogOwnerUUID = Optional.ofNullable(uuid);
+        }
+
+        //1.20 under
+        this.read1_20_under_PotionData(tag);
+    }
+
     public void setEffectsFromItem_1_20_1_and_under(ItemStack stack) {
         if (stack.is(Items.TIPPED_ARROW)) {
             var potion = PotionUtils.getPotion(stack);
@@ -317,9 +356,7 @@ public class DogArrow extends AbstractArrow {
         }
     
     }
-    @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
+    private void read1_20_under_PotionData(CompoundTag compound) {
         Potion potion = null;
         if (compound.contains("Potion", 8)) {
             potion = PotionUtils.getPotion(compound);
@@ -333,9 +370,7 @@ public class DogArrow extends AbstractArrow {
         this.potionContents = PotionContents.from(potion, custom_set);
         this.updateColor();
     }
-    @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
+    public void add_1_20_under_PotionData(CompoundTag compound) {
         if (this.potionContents.potion.isPresent()) {
             var potion = this.potionContents.potion.get();
             compound.putString("Potion", ForgeRegistries.POTIONS.getKey(potion).toString());
