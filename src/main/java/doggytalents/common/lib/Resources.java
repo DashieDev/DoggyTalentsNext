@@ -40,6 +40,13 @@ public class Resources {
     public static final ResourceLocation DYEABLE_CAPE = getEntity("dog", "doggy_cape1");
     public static final ResourceLocation PIANIST_SUIT = getEntity("dog", "pianist_suit");
     public static final ResourceLocation CONAN_SUIT = getEntity("dog", "conan_suit");
+    public static final ResourceLocation FIREFIGHTER_SUIT_BLACK = getEntity("dog", "firefighter_suit_black");
+    public static final ResourceLocation FIREFIGHTER_SUIT_KAKI = getEntity("dog", "firefighter_suit_kaki");
+    public static final ResourceLocation FIREFIGHTER_SUIT_RED = getEntity("dog", "firefighter_suit_red");
+    public static final ResourceLocation FIREFIGHTER_SUIT_BLUE = getEntity("dog", "firefighter_suit_blue");
+    public static final ResourceLocation FIREFIGHTER_SUIT_BLACK_LEGLESS = getEntity("dog", "firefighter_suit_black_legless");
+    public static final ResourceLocation FIREFIGHTER_SUIT_KAKI_LEGLESS = getEntity("dog", "firefighter_suit_kaki_legless");
+    public static final ResourceLocation FIREFIGHTER_SUIT_RED_LEGLESS = getEntity("dog", "firefighter_suit_red_legless");
     public static final ResourceLocation DEATH_HOOD = getEntity("dog", "death_hood");
     public static final ResourceLocation RADIO_BAND = getEntity("dog", "doggy_radio_collar");
     
