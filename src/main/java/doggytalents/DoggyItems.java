@@ -183,7 +183,11 @@ public class DoggyItems {
     public static final Supplier<AccessoryItem> BEASTARS_UNIFORM_MALE = registerAccessory("beastars_uniform_male", DoggyAccessories.BEASTARS_UNIFORM_MALE);
     public static final Supplier<AccessoryItem> BEASTARS_UNIFORM_FEMALE = registerAccessory("beastars_uniform_female", DoggyAccessories.BEASTARS_UNIFORM_FEMALE);
     public static final Supplier<AccessoryItem> CONAN_SUIT = registerAccessory("conan_suit", DoggyAccessories.CONAN_SUIT);
-
+    public static final Supplier<AccessoryItem> FIREFIGHTER_SUIT_BLACK = registerDualAccessory("firefighter_suit_black", DoggyAccessories.FIREFIGHTER_SUIT_BLACK, DoggyAccessories.FIREFIGHTER_SUIT_BLACK_LEGLESS);
+    public static final Supplier<AccessoryItem> FIREFIGHTER_SUIT_KAKI = registerDualAccessory("firefighter_suit_kaki", DoggyAccessories.FIREFIGHTER_SUIT_KAKI, DoggyAccessories.FIREFIGHTER_SUIT_KAKI_LEGLESS);
+    public static final Supplier<AccessoryItem> FIREFIGHTER_SUIT_RED = registerDualAccessory("firefighter_suit_red", DoggyAccessories.FIREFIGHTER_SUIT_RED, DoggyAccessories.FIREFIGHTER_SUIT_RED_LEGLESS);
+    public static final Supplier<AccessoryItem> FIREFIGHTER_SUIT_BLUE = registerAccessory("firefighter_suit_blue", DoggyAccessories.FIREFIGHTER_SUIT_BLUE);
+    
     public static final Supplier<AccessoryItem> ANGEL_HALO = register("angel_halo", () -> new AngelHalo.AngelHaloItem(DoggyAccessories.ANGEL_HALO, createInitialProp()));
     public static final Supplier<DyeableAccessoryItem> ANGEL_WINGS = register("angel_wings", () -> new AngelWings.Item(DoggyAccessories.ANGEL_WINGS, createInitialProp()));
     public static final Supplier<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
@@ -260,6 +264,10 @@ public class DoggyItems {
 
     private static RegistryObject<AccessoryItem> registerAccessory(final String name, Supplier<? extends Accessory> type) {
         return register(name, () -> new AccessoryItem(type, createInitialProp()));
+    }
+
+    private static Supplier<AccessoryItem> registerDualAccessory(final String name, Supplier<? extends Accessory> primary, Supplier<? extends Accessory> secondary) {
+        return register(name, () -> new DualAccessoryItem(primary, secondary, createInitialProp()));
     }
 
     private static RegistryObject<AccessoryItem> registerSnorkel(final String name, Supplier<? extends Accessory> type) {
