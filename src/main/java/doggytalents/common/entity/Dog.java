@@ -4594,6 +4594,8 @@ public class Dog extends AbstractDog {
     }
 
     private void mayDogCorrectSittingPose(boolean sit_ordered) {
+        if (this.level().isClientSide)
+            return;
         if (sit_ordered)
             return;
         if (this.dogAi == null)
