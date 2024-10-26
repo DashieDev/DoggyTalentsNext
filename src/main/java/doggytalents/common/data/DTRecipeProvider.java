@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 public class DTRecipeProvider /*extends RecipeProvider*/ {
 
     // public DTRecipeProvider(PackOutput generatorIn) {
-    //     super(generatorIn);x
+    //     super(generatorIn);
     // }
 
     // @Override
