@@ -42,6 +42,9 @@ public class AccessoryModelRenderEntries {
     public static Entry MIDI_KEYBOARD = new MidiKeyboardRenderEntry();
     public static Entry STRIPED_SCARF = new StripedScarfRenderEntry();
     public static Entry DEER_ANTLERS = new DeerAntlersRenderEntry();
+    public static Entry DRAGON_COSTUME_HEAD = new DragonCostumeHeadRenderEntry();
+    public static Entry DRAGON_COSTUME_SUIT = new DragonCostumeSuitRenderEntry();
+    public static Entry DRAGON_COSTUME_WINGS = new DragonCostumeWingsRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -81,6 +84,10 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(MIDI_KEYBOARD);
         AccessoryModelManager.register(STRIPED_SCARF);
         AccessoryModelManager.register(DEER_ANTLERS);
+        AccessoryModelManager.register(DRAGON_COSTUME_HEAD);
+        AccessoryModelManager.register(DRAGON_COSTUME_SUIT);
+        AccessoryModelManager.register(DRAGON_COSTUME_WINGS);
+
     }
 
 }
