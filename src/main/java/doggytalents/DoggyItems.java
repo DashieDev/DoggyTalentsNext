@@ -8,6 +8,10 @@ import doggytalents.common.entity.accessory.AngelWings;
 import doggytalents.common.entity.accessory.BakerHat;
 import doggytalents.common.entity.accessory.CeremonialGarb;
 import doggytalents.common.entity.accessory.ChefHat;
+import doggytalents.common.entity.accessory.DragonCostumeHead;
+import doggytalents.common.entity.accessory.DragonCostumeHead.DragonCostumeHeadItem;
+import doggytalents.common.entity.accessory.DragonCostumeSuit.DragonCostumeSuitItem;
+import doggytalents.common.entity.accessory.DragonCostumeWings.DragonCostumeWingsItem;
 import doggytalents.common.entity.accessory.DyeableAccessory;
 import doggytalents.common.entity.accessory.Fedora;
 import doggytalents.common.entity.accessory.FlatCap;
@@ -165,6 +169,9 @@ public class DoggyItems {
     public static final Supplier<DyeableAccessoryItem> LAB_COAT = register("lab_coat", () -> new LabCoat.LabCoatItem(DoggyAccessories.LAB_COAT, createInitialProp()));
     public static final Supplier<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
     public static final Supplier<AccessoryItem> SUPERDOG_SUIT = registerAccessory("superdog_suit", DoggyAccessories.SUPERDOG_SUIT);
+    public static final Supplier<AccessoryItem> DRAGON_COSTUME_HEAD = register("dragon_costume_head", () -> new DragonCostumeHeadItem(DoggyAccessories.DRAGON_COSTUME_HEAD, createInitialProp()));
+    public static final Supplier<AccessoryItem> DRAGON_COSTUME_SUIT = register("dragon_costume_suit", () -> new DragonCostumeSuitItem(DoggyAccessories.DRAGON_COSTUME_SUIT, createInitialProp()));
+    public static final Supplier<AccessoryItem> DRAGON_COSTUME_WINGS = register("dragon_costume_wings", () -> new DragonCostumeWingsItem(DoggyAccessories.DRAGON_COSTUME_WINGS, createInitialProp()));
 
     public static final Supplier<DyeableAccessoryItem> CAPE_COLOURED = registerAccessoryDyed("cape_coloured", DoggyAccessories.DYEABLE_CAPE);
     public static final Supplier<AccessoryItem> TANTAN_CAPE = registerAccessory("tantan_cape", DoggyAccessories.TANTAN_CAPE);

@@ -167,6 +167,9 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.GYUDON);
         generated(DoggyItems.OYAKODON);
         generated(DoggyItems.SAKE);
+        generated(DoggyItems.DRAGON_COSTUME_HEAD);
+        generated(DoggyItems.DRAGON_COSTUME_SUIT);
+        generated(DoggyItems.DRAGON_COSTUME_WINGS);
 
         generated(DoggyItems.SCENT_TREAT);
         scentTreatDrooled(DoggyItems.DROOL_SCENT_TREAT, DoggyItems.SCENT_TREAT);
