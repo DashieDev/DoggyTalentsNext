@@ -633,7 +633,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("FBF")
             .define('F', Items.FEATHER)
             .define('B', Items.BLACK_DYE)
-            .define('E', Items.ELYTRA)
+            .define('E', Items.PHANTOM_MEMBRANE)
             .unlockedBy("has_elytra", has(Items.ELYTRA))
             .save(consumer);
 
@@ -643,7 +643,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("FBF")
             .define('B', Items.FEATHER)
             .define('F', Items.BLACK_DYE)
-            .define('E', Items.ELYTRA)
+            .define('E', Items.PHANTOM_MEMBRANE)
             .unlockedBy("has_elytra", has(Items.ELYTRA))
             .save(consumer, Util.getResource("crow_wings_alt"));
 
@@ -652,7 +652,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("WEW")
             .pattern(" W ")
             .define('W', ItemTags.WOOL)
-            .define('E', Items.ELYTRA)
+            .define('E', Items.PHANTOM_MEMBRANE)
             .unlockedBy("has_elytra", has(Items.ELYTRA))
             .save(consumer);
 
@@ -671,7 +671,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .pattern("BLB")
             .define('B', Items.BROWN_DYE)
             .define('L', Items.LEATHER)
-            .define('E', Items.ELYTRA)
+            .define('E', Items.PHANTOM_MEMBRANE)
             .unlockedBy("has_elytra", has(Items.ELYTRA))
             .save(consumer);
 
