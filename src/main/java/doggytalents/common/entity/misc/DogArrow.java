@@ -1,12 +1,17 @@
 package doggytalents.common.entity.misc;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalents;
+import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -16,6 +21,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -29,24 +35,21 @@ public class DogArrow extends AbstractArrow {
     private static final EntityDataAccessor<Integer> EFFECT_COLOR = SynchedEntityData.defineId(DogArrow.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> IS_SPECTRAL = SynchedEntityData.defineId(DogArrow.class, EntityDataSerializers.BOOLEAN);
 
+    private Optional<UUID> dogOwnerUUID = Optional.empty();
+
     public DogArrow(EntityType<DogArrow> p_36858_, Level p_36859_) {
         super(p_36858_, p_36859_);
     }
 
-    public DogArrow(Level p_36866_, double p_308912_, double p_308958_, double p_309185_, ItemStack stack, ItemStack proj_stack) {
-        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), p_308912_, p_308958_, p_309185_, p_36866_, stack, proj_stack);
+    public DogArrow(Level p_36861_, AbstractDog dog, ItemStack stack, ItemStack proj_stack) {
+        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), dog, p_36861_, stack, proj_stack);
         this.updateColor();
         if (stack.is(Items.SPECTRAL_ARROW)) {
             this.entityData.set(IS_SPECTRAL, true);
         }
-    }
-
-    public DogArrow(Level p_36861_, LivingEntity p_308924_, ItemStack stack, ItemStack proj_stack) {
-        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), p_308924_, p_36861_, stack, proj_stack);
-        this.updateColor();
-        if (stack.is(Items.SPECTRAL_ARROW)) {
-            this.entityData.set(IS_SPECTRAL, true);
-        }
+        var owner = dog.getOwner();
+        if (owner != null)
+            this.dogOwnerUUID = Optional.ofNullable(owner.getUUID());
     }
 
     @Override
@@ -223,6 +226,40 @@ public class DogArrow extends AbstractArrow {
         if (dog_owner == null)
             return false;
         return EventHandler.isAlliedToDog(target, dog_owner);
+    }
+
+    @Override
+    protected boolean tryPickup(Player picker) {
+        if (shouldDogArrowBlockPickup(picker))
+            return false;
+        return super.tryPickup(picker);
+    }
+
+    private boolean shouldDogArrowBlockPickup(Player picker) {
+        if (picker.isCreative())
+            return false;
+        if (!this.dogOwnerUUID.isPresent())
+            return false;
+        if (this.dogOwnerUUID.get().equals(picker.getUUID()))
+            return false;
+        return true;
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        this.dogOwnerUUID.ifPresent(x -> {
+            tag.putUUID("dtn_dog_owner_id", x);
+        });
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.hasUUID("dtn_dog_owner_id")) {
+            var uuid = tag.getUUID("dtn_dog_owner_id");
+            this.dogOwnerUUID = Optional.ofNullable(uuid);
+        }
     }
 
 }
