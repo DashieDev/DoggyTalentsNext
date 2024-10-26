@@ -282,4 +282,30 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
 		return LayerDefinition.create(meshdefinition, 32, 16);
 	}
 
+	public static LayerDefinition dragon() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
+
+		PartDefinition upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 14.0F, -3.0F, 1.5708F, 0.0F, 0.0F));
+
+		PartDefinition elytra_rot = upper_body.addOrReplaceChild("elytra_rot", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -3.75F, -0.25F, -1.5708F, 0.0F, 0.0F));
+
+		PartDefinition elytra = elytra_rot.addOrReplaceChild("elytra", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+		PartDefinition left_wing = elytra.addOrReplaceChild("left_wing", CubeListBuilder.create(), PartPose.offset(1.0F, 1.0F, 2.0F));
+
+		PartDefinition cube_r1 = left_wing.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(14.745F, 0.8961F, 2.389F, 14.0F, 0.0F, 14.0F, new CubeDeformation(0.002F)).mirror(false)
+		.texOffs(0, 14).mirror().addBox(0.745F, 0.8961F, 2.389F, 14.0F, 0.0F, 14.0F, new CubeDeformation(0.002F)).mirror(false)
+		.texOffs(0, 28).addBox(0.745F, 0.1461F, 0.889F, 14.0F, 2.0F, 2.0F, new CubeDeformation(0.002F))
+		.texOffs(0, 32).addBox(14.745F, 0.4961F, 1.389F, 14.0F, 1.0F, 1.0F, new CubeDeformation(0.002F)), PartPose.offsetAndRotation(2.7227F, -4.875F, -1.3808F, 0.0307F, -0.8099F, 0.1613F));
+
+		PartDefinition right_wing = elytra.addOrReplaceChild("right_wing", CubeListBuilder.create(), PartPose.offset(-1.0F, 1.0F, 2.0F));
+
+		PartDefinition cube_r2 = right_wing.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(0, 0).addBox(-28.745F, 0.8961F, 2.389F, 14.0F, 0.0F, 14.0F, new CubeDeformation(0.002F))
+		.texOffs(0, 14).addBox(-14.745F, 0.8961F, 2.389F, 14.0F, 0.0F, 14.0F, new CubeDeformation(0.002F))
+		.texOffs(0, 28).mirror().addBox(-14.745F, 0.1461F, 0.889F, 14.0F, 2.0F, 2.0F, new CubeDeformation(0.002F)).mirror(false)
+		.texOffs(0, 32).mirror().addBox(-28.745F, 0.4961F, 1.389F, 14.0F, 1.0F, 1.0F, new CubeDeformation(0.002F)).mirror(false), PartPose.offsetAndRotation(-2.7227F, -4.875F, -1.3808F, 0.0307F, 0.8099F, -0.1613F));
+
+		return LayerDefinition.create(meshdefinition, 50, 50);
+	}
 }

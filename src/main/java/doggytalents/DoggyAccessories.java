@@ -84,7 +84,9 @@ public class DoggyAccessories {
     public static final RegistryObject<Accessory> PROPELLAR = register("propeller_hat", () -> new Propellar(DoggyItems.PROPELLER_HAT).setModelTexture(Resources.DOG_PROPELLAR).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<Accessory> FEDORA = register("fedora", () -> new Fedora(DoggyItems.FEDORA).setModelTexture(Resources.DOG_FEDORA).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<DyeableAccessory> FLATCAP = register("flatcap", () -> new FlatCap(DoggyItems.FLATCAP).setModelTexture(Resources.DOG_FLATCAP).setAccessoryRenderType(AccessoryRenderType.MODEL));
-
+    public static final Supplier<DragonCostumeHead> DRAGON_COSTUME_HEAD = register("dragon_costume_head", () -> new DragonCostumeHead(DoggyItems.DRAGON_COSTUME_HEAD).setModelTexture(Resources.DRAGON_COSTUME_HEAD).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final Supplier<DragonCostumeSuit> DRAGON_COSTUME_SUIT = register("dragon_costume_suit", () -> new DragonCostumeSuit(DoggyItems.DRAGON_COSTUME_SUIT).setModelTexture(Resources.DRAGON_COSTUME_SUIT).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final Supplier<DragonCostumeWings> DRAGON_COSTUME_WINGS = register("dragon_costume_wings", () -> new DragonCostumeWings(DoggyItems.DRAGON_COSTUME_WINGS).setModelTexture(Resources.DRAGON_COSTUME_WINGS).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<Contacts> DOGGY_CONTACTS = register("doggy_contacts", () -> new Contacts(DoggyItems.DOGGY_CONTACTS).setModelTexture(Resources.DOGGY_CONTACTS_BG).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
     private static <T extends Accessory> RegistryObject<T> register(final String name, final Supplier<T> sup) {
