@@ -86,6 +86,8 @@ public class Resources {
     public static final ResourceLocation DOG_PROPELLAR = getEntity("dog", "dog_propeller_hat");
     public static final ResourceLocation DOG_FEDORA = getEntity("dog", "dog_fedora");
     public static final ResourceLocation DOG_FLATCAP = getEntity("dog", "dog_flatcap");
+    public static final ResourceLocation FIREFIGHTER_HAT_RED = getEntity("dog", "firefighter_hat_red");
+    public static final ResourceLocation FIREFIGHTER_HAT_BLUE = getEntity("dog", "firefighter_hat_blue");
     public static final ResourceLocation DRAGON_COSTUME_HEAD = getEntity("dog", "dragon_costume_head");
     public static final ResourceLocation DRAGON_COSTUME_SUIT = getEntity("dog", "dragon_costume_suit");
     public static final ResourceLocation DRAGON_COSTUME_WINGS = getEntity("dog", "dragon_costume_wings");

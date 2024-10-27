@@ -120,6 +120,8 @@ public class DoggyItems {
     public static final Supplier<DyeableAccessoryItem> CHEF_HAT = register("chef_hat", () -> new ChefHat.ChefHatItem(DoggyAccessories.CHEF_HAT, createInitialProp()));
     public static final Supplier<DyeableAccessoryItem> FLATCAP = register("flatcap", () -> new FlatCap.FlatCapItem(DoggyAccessories.FLATCAP, createInitialProp()));
     public static final Supplier<AccessoryItem> BACH_WIG = registerAccessory("bach_wig", DoggyAccessories.BACH_WIG);
+    public static final Supplier<AccessoryItem> FIREFIGHTER_HAT_RED = registerAccessory("firefighter_hat_red", DoggyAccessories.FIREFIGHTER_HAT_RED);
+    public static final Supplier<AccessoryItem> FIREFIGHTER_HAT_BLUE = registerAccessory("firefighter_hat_blue", DoggyAccessories.FIREFIGHTER_HAT_BLUE);
     public static final Supplier<DyeableAccessoryItem> WIG = register("wig", () -> new Wig.WigItem(DoggyAccessories.WIG, createInitialProp()));
     public static final Supplier<AccessoryItem> FEDORA = register("fedora", () -> new Fedora.FedoraItem(DoggyAccessories.FEDORA, createInitialProp()));
     public static final Supplier<AccessoryItem> WITCH_HAT = register("witch_hat", () -> new WitchHatItem(DoggyAccessories.WITCH_HAT, createInitialProp()));
