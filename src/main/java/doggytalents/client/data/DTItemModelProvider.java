@@ -145,7 +145,9 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.PROPELLER_HAT);
         generated(DoggyItems.FEDORA);
         generated(DoggyItems.FLATCAP);
-        
+        generated(DoggyItems.FIREFIGHTER_HAT_RED);
+        generated(DoggyItems.FIREFIGHTER_HAT_BLUE);
+
         ceremonialGarb(DoggyItems.CERE_GARB);
         midiKeyboard(DoggyItems.MIDI_KEYBOARD);
 
