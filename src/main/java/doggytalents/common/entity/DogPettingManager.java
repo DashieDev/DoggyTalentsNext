@@ -167,7 +167,7 @@ public class DogPettingManager {
     public static boolean isDogAbleToBePet(Dog dog) {
         if (!dog.isDoingFine())
             return false;
-        if (!dog.isInSittingPose() || dog.getDogPose() != DogPose.SIT)
+        if (!dog.isInSittingPose() || !isDogPoseCanPet(dog.getDogPose()))
             return false;
         if (dog.isOnFire())
             return false;
@@ -178,6 +178,10 @@ public class DogPettingManager {
             return false;
         
         return true;
+    }
+
+    public static boolean isDogPoseCanPet(DogPose dogPose) {
+        return dogPose == DogPose.SIT || dogPose == DogPose.REST_BELLY;
     }
 
     public boolean isInPetDistance(Dog dog, Player player) {
