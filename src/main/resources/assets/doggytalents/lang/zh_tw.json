@@ -660,10 +660,10 @@
    "block.doggytalents.food_bowl.pro_tip.desc": "建議將「箱犬」用作其他狗的共享食物來源，以自動餵食您的狗狗！",
 
    "key.categories.doggy_talents": "天才小狗",
-   "key.whistle.1": "哨子 ＃１",
-   "key.whistle.2": "哨子 ＃２",
-   "key.whistle.3": "哨子 ＃３",
-   "key.whistle.4": "哨子 ＃４",
+   "key.doggytalents.whistle.1": "哨子 ＃１",
+   "key.doggytalents.whistle.2": "哨子 ＃２",
+   "key.doggytalents.whistle.3": "哨子 ＃３",
+   "key.doggytalents.whistle.4": "哨子 ＃４",
 
    "dogradar.north": "**** %s在%d方塊北方 ****",
    "dogradar.north.east": "**** 相對於北東，%s大約%d個方塊 ****",

@@ -692,10 +692,10 @@
    "block.doggytalents.food_bowl.pro_tip.desc": "The recommended way to automatically feed your dog is by utilizing a PackPuppy Dog as a Shared Food Source for all of your other dogs!",
 
    "key.categories.doggy_talents": "Doggy Talents Next",
-   "key.whistle.1": "Whistle #1",
-   "key.whistle.2": "Whistle #2",
-   "key.whistle.3": "Whistle #3",
-   "key.whistle.4": "Whistle #4",
+   "key.doggytalents.whistle.1": "Whistle #1",
+   "key.doggytalents.whistle.2": "Whistle #2",
+   "key.doggytalents.whistle.3": "Whistle #3",
+   "key.doggytalents.whistle.4": "Whistle #4",
 
    "dogradar.north": "**** %s is %d blocks North ****",
    "dogradar.north.east": "**** %s is %d blocks roughly North East ****",
