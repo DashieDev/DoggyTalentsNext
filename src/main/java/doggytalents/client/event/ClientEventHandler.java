@@ -12,6 +12,7 @@ import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
+import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentChangeHandlerSlice;
@@ -314,6 +315,11 @@ public class ClientEventHandler {
         if (infoScr.dog != dog)
             return;
         Store.get(infoScr).dispatch(TalentChangeHandlerSlice.class, new UIAction(UIActionTypes.Talents.TALENT_UPDATE, null));
+    }
+
+    @SubscribeEvent
+    public void onPlayerLoggingOut(LoggingOut event) {
+        CanineTrackerLocateRenderer.onWorldLogOut();
     }
 
 }
