@@ -162,6 +162,10 @@ public class StatsTracker {
         return distanceRidden;
     }
 
+    public void clearAllStatsKill() {
+        this.ENTITY_KILLS.clear();
+    }
+
     public void serializeToBuf(FriendlyByteBuf buf) {
 
         buf.writeFloat(damageDealt);

@@ -36,7 +36,11 @@ public class DogForceMigrateOwnerScreen extends Screen {
 
     @Override
     protected void init() {
-        addForceChangeButton(); 
+        addForceChangeButton();
+        KillStatsClearConfirmScreen.addClearKillStatsButton(dog, font, 
+            this.width/2, this.height/2 + 40, b -> {
+                this.addRenderableWidget(b);
+            });
     }
 
     @Override
