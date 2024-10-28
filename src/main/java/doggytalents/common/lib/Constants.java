@@ -20,6 +20,8 @@ public class Constants {
     public static final String STORAGE_DOG_LOCATION = MOD_ID + "DogLocations";
     public static final String STORAGE_DOG_LOCATION_OLD = "dog_locations";
 
+    public static final int OPERATOR_PERMISSION = 4;
+
     public static class EntityState {
 
         public static final byte DEATH = 3;

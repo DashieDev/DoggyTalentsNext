@@ -63,7 +63,7 @@ public class DoggyCommands {
     public static void register(final CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 literal("dog")
-                    .requires(s -> s.hasPermission(2))
+                    .requires(s -> s.hasPermission(Constants.OPERATOR_PERMISSION))
                     .then(
                         Commands.literal("locate")
                         .then(
