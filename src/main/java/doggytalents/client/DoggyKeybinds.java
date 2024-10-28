@@ -18,7 +18,7 @@ public class DoggyKeybinds {
     public static String CATEGORIES_DT = "key.categories.doggy_talents";
     public static KeyMapping hotkeyWhistle_1 
         = new KeyMapping(
-            "key.whistle.1", 
+            "key.doggytalents.whistle.1", 
             DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE, 
             KeyModifier.SHIFT, 
             InputConstants.Type.KEYSYM, 
@@ -26,7 +26,7 @@ public class DoggyKeybinds {
         );
     public static KeyMapping hotkeyWhistle_2
         = new KeyMapping(
-            "key.whistle.2", 
+            "key.doggytalents.whistle.2", 
             DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE, 
             KeyModifier.SHIFT, 
             InputConstants.Type.KEYSYM, 
@@ -34,7 +34,7 @@ public class DoggyKeybinds {
         );
     public static KeyMapping hotkeyWhistle_3
         = new KeyMapping(
-            "key.whistle.3", 
+            "key.doggytalents.whistle.3", 
             DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE, 
             KeyModifier.SHIFT, 
             InputConstants.Type.KEYSYM, 
@@ -42,7 +42,7 @@ public class DoggyKeybinds {
         );
     public static KeyMapping hotkeyWhistle_4
         = new KeyMapping(
-            "key.whistle.4", 
+            "key.doggytalents.whistle.4", 
             DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE, 
             KeyModifier.SHIFT, 
             InputConstants.Type.KEYSYM, 
