@@ -610,10 +610,10 @@
    "block.doggytalents.food_bowl.pro_tip.desc": "La méthode recommandée pour nourrir automatiquement votre chien consiste à utiliser un chien avec la compétence Inventaire du chien comme source de nourriture partagée pour tous vos autres chiens !",
    
    "key.categories.doggy_talents": "Doggy Talents Next",
-   "key.whistle.1": "Sifflet #1",
-   "key.whistle.2": "Sifflet #2",
-   "key.whistle.3": "Sifflet #3",
-   "key.whistle.4": "Sifflet #4",
+   "key.doggytalents.whistle.1": "Sifflet #1",
+   "key.doggytalents.whistle.2": "Sifflet #2",
+   "key.doggytalents.whistle.3": "Sifflet #3",
+   "key.doggytalents.whistle.4": "Sifflet #4",
 
    "dogradar.north": "**** %s est %d blocs Nord ****",
    "dogradar.north.east": "**** %s est a %d blocs à peu près au nord-est ****",
