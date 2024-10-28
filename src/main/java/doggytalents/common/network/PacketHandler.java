@@ -69,6 +69,7 @@ public final class PacketHandler {
         registerPacket(new AllStandSwitchModePacket(), AllStandSwitchModeData.class);
         registerPacket(new DogPettingPacket(), DogPettingData.class);
         registerPacket(new DogTalentOptionSetPacket(), DogTalentOptionSetData.class);
+        registerPacket(new ForceClearKillStatsPacket(), ForceClearKillStatsData.class);
 
         //Fabric
         registerPacket(new FabricSyncAllPacket(), FabricSyncAllData.class);

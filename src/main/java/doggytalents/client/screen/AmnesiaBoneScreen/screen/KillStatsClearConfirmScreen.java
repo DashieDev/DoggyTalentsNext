@@ -1,45 +1,41 @@
 package doggytalents.client.screen.AmnesiaBoneScreen.screen;
 
-import java.util.List;
+import java.util.function.Consumer;
 
+import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.item.AmnesiaBoneItem;
+import doggytalents.common.network.PacketDistributor;
 import doggytalents.common.network.PacketHandler;
-import doggytalents.common.network.packet.data.ForceChangeOwnerData;
+import doggytalents.common.network.packet.data.ForceClearKillStatsData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
-import doggytalents.forge_imitate.network.PacketDistributor;
 
-public class DogForceMigrateOwnerScreen extends Screen {
+public class KillStatsClearConfirmScreen extends Screen {
 
     Dog dog;
 
-    protected DogForceMigrateOwnerScreen(Dog dog) {
+    protected KillStatsClearConfirmScreen(Dog dog) {
         super(Component.literal(""));
         this.dog = dog;
     }
 
     public static void open(Dog dog) {
         var mc = Minecraft.getInstance();
-        var screen = new DogForceMigrateOwnerScreen(dog);
+        var screen = new KillStatsClearConfirmScreen(dog);
         mc.setScreen(screen);
     }
 
     @Override
     protected void init() {
-        addForceChangeButton();
-        KillStatsClearConfirmScreen.addClearKillStatsButton(dog, font, 
-            this.width/2, this.height/2 + 40, b -> {
-                this.addRenderableWidget(b);
-            });
+        addConfirmButton(); 
     }
 
     @Override
@@ -54,15 +50,15 @@ public class DogForceMigrateOwnerScreen extends Screen {
         int pY = mY - 72;
         Component title;
         String help;
-        title = Component.translatable("doggui.force_migrate_owner.confirm.title")
+        title = Component.translatable("doggui.clear_dog_kill_stats.confirm.title")
         .withStyle(
             Style.EMPTY
             .withBold(true)
             .withColor(ChatFormatting.RED)
         );
         help = I18n.get(
-            "doggui.force_migrate_owner.confirm.subtitle",
-            dog.getGenderPronoun().getString()
+            "doggui.clear_dog_kill_stats.confirm.subtitle",
+            dog.getName().getString()
         );
         var dog_title = I18n.get(
             "doggui.invalid_dog.info.dog",
@@ -93,20 +89,41 @@ public class DogForceMigrateOwnerScreen extends Screen {
         return false;
     }
 
-    private void addForceChangeButton() {
-        var untameButton = new CustomButton(this.width/2 - 25, this.height/2 + 58, 
+    private void addConfirmButton() {
+        var clearButton = new CustomButton(this.width/2 - 25, this.height/2 + 58, 
             50, 20, Component.translatable("doggui.untame.confirm.confirmed"), 
             b -> {
-                requestForceChange();
+                requestClearKillStats();
                 Minecraft.getInstance().setScreen(null);
             }
         );
-
-        this.addRenderableWidget(untameButton);
+        var player = Minecraft.getInstance().player;
+        this.addRenderableWidget(clearButton);
     }
 
-    private void requestForceChange() {
+    private void requestClearKillStats() {
         PacketHandler.send(PacketDistributor.SERVER.noArg(),
-            new ForceChangeOwnerData(this.dog.getId()));
+            new ForceClearKillStatsData(this.dog.getId()));
     }
+
+    public static void addClearKillStatsButton(final Dog dog, Font font,
+        int mid_x, int y, Consumer<TextOnlyButton> button_consumer) {
+        var player = Minecraft.getInstance().player;
+        if (player == null)
+            return;
+        if (!player.hasPermissions(4))
+            return;
+
+        var str = Component.literal("Clear Kill Stats");
+        var str_width = font.width(str);
+        var button_width = str_width + 4;
+        button_consumer.accept(
+            new TextOnlyButton(mid_x - button_width/2, y, button_width, font.lineHeight + 2, 
+                str.withStyle(ChatFormatting.RED)
+            , b -> {
+                KillStatsClearConfirmScreen.open(dog);
+            }, font)
+        );
+    }
+    
 }
