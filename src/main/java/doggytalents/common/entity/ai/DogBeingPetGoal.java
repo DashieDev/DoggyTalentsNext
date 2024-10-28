@@ -77,6 +77,7 @@ public class DogBeingPetGoal extends Goal {
     private int petTick = 0;
     private int sound_cooldown;
     private int triggerCooldown;
+    private boolean startWithBellyRub = false;
 
     public DogBeingPetGoal(Dog dog) {
         this.dog = dog;
@@ -117,6 +118,18 @@ public class DogBeingPetGoal extends Goal {
         return !(this.petEnd && this.petEndTickLeft <= 0);
     }
 
+    public void dogBeingPetGoalPreStart() {
+        var anim = dog.getAnim();
+        currentType = this.dog.getPettingState().type();
+        if (currentType != DogPettingType.BELLY_RUB) {
+            startWithBellyRub = false;
+            return;
+        }
+        startWithBellyRub = 
+            anim == DogAnimation.BELLY_RUB
+            || anim == DogAnimation.REST_BELLY_LOOP; 
+    }
+
     @Override
     public void start() {
         currentType = this.dog.getPettingState().type();
@@ -124,6 +137,8 @@ public class DogBeingPetGoal extends Goal {
         var first_anim = getFirstAnim();
         var end_anim = getEndAnim();
         this.petEndTickLeft = end_anim.getLengthTicks();
+        if (startWithBellyRub)
+            start_anim = first_anim;
         this.dog.setAnimForIdle(start_anim);
         this.currentLoopAnim = first_anim;
         this.tickTillChangeLoop = first_anim.getLengthTicks() * 3;
