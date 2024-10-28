@@ -19,6 +19,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.DogCustomSkinConfig.DataStrategy;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.util.FabricUtil;
+import doggytalents.common.lib.Constants;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
@@ -686,7 +687,7 @@ public class DogUtil {
     }
 
     public static boolean playerCanTrainTalent(Player player, Talent talent) {
-        if (player != null && player.hasPermissions(4))
+        if (player != null && player.hasPermissions(Constants.OPERATOR_PERMISSION))
             return true;
         return (ConfigHandler.TALENT.getFlag(talent));
     }

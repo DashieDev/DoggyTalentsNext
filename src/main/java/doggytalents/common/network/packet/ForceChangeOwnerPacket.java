@@ -6,6 +6,7 @@ import org.apache.commons.lang3.ObjectUtils;
 
 import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.data.ForceChangeOwnerData;
 import net.minecraft.network.FriendlyByteBuf;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
@@ -28,7 +29,7 @@ public class ForceChangeOwnerPacket extends DogPacket<ForceChangeOwnerData> {
         //Only change owner if sender have access to Admin actions and
         //is in creative.
         var sender = ctx.get().getSender();
-        if (!sender.hasPermissions(4))
+        if (!sender.hasPermissions(Constants.OPERATOR_PERMISSION))
             return;
         if (!sender.getAbilities().instabuild)
             return;
