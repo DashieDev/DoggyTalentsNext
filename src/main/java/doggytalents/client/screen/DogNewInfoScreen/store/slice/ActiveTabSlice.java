@@ -8,6 +8,7 @@ import doggytalents.client.screen.framework.AbstractSlice;
 import doggytalents.client.screen.framework.CommonUIActionTypes;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogGroupsData;
@@ -80,6 +81,8 @@ public class ActiveTabSlice implements AbstractSlice {
     }
 
     private static void setupStats(Dog dog) {
+        if (ConfigHandler.SERVER.DISABLE_KILL_STATS.get())
+            return;
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
         new StatsSyncData.Request(dog.getId()));
     }
