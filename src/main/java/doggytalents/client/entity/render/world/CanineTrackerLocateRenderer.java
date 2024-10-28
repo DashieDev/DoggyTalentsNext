@@ -78,6 +78,10 @@ public class CanineTrackerLocateRenderer {
         drawFloatingDistanceText(locatingName, event.getPoseStack(), d_dog_camera, off_txt, camera);
     }
 
+    public static void onWorldLogOut() {
+        stopLocating();
+    }
+    
     public static void drawFloatingDistanceText(String name, PoseStack stack, double distance, Vec3 off_from_player, Camera camera) {
         stack.pushPose();
         stack.translate(off_from_player.x(), off_from_player.y(), off_from_player.z());
