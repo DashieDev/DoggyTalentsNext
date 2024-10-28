@@ -324,7 +324,7 @@ public class ClientEventHandler {
     }
 
     @SubscribeEvent
-    public void onPlayerLoggingOut(LoggingOut event) {
+    public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         CanineTrackerLocateRenderer.onWorldLogOut();
     }
 
