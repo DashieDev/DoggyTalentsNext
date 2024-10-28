@@ -95,7 +95,7 @@ public class DogBeingPetGoal extends Goal {
             return false;
         if (dog.isOnFire())
             return false;
-        if (this.dog.getDogPose() != DogPose.SIT)
+        if (!DogPettingManager.isDogPoseCanPet(dog.getDogPose()))
             return false;
         if (!this.dog.onGround())
             return false;
