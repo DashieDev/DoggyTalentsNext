@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.stats.StatsTracker;
 import net.minecraft.client.gui.Font;
@@ -35,6 +36,8 @@ public class MobKillsView extends AbstractElement {
     private int pageIndex = 0;
     private TextOnlyButton lastPage;
     private TextOnlyButton nextPage;
+
+    private boolean disabledKillStat = false;
 
     public MobKillsView(AbstractElement parent, Screen screen, Dog dog, StatsTracker stats, Font font) {
         super(parent, screen);
@@ -69,6 +72,7 @@ public class MobKillsView extends AbstractElement {
                 if (pageIndex > this.maxPageNum) pageIndex = this.maxPageNum;
             }, font);
         this.addChildren(nextPage);
+        this.disabledKillStat = ConfigHandler.SERVER.DISABLE_KILL_STATS.get();
         return this;
     }
 
@@ -77,6 +81,13 @@ public class MobKillsView extends AbstractElement {
         var mobKillMap = stats.getAllKillCount();
         int startX = this.getRealX() + PADDING_LEFT;
         int pY = this.getRealY() + PADDING_TOP;
+        if (disabledKillStat) {
+            String str = I18n.get("doggui.stats.mob_kills.disabled", dog.getName().getString() );
+            graphics.drawString(font, str, startX, pY, 0xffffffff);
+            this.lastPage.active = false;
+            this.nextPage.active = false;
+            return;
+        }
         if (mobKillMap.isEmpty()) {
             String str = I18n.get("doggui.stats.mob_kills.no_kills", dog.getName().getString() );
             graphics.drawString(font, str, startX, pY, 0xffffffff);
