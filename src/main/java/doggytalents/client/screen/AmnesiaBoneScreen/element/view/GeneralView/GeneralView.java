@@ -9,6 +9,7 @@ import doggytalents.DoggyItems;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.AmnesiaBoneScreen.screen.DogMigrateOwnerScreen;
 import doggytalents.client.screen.AmnesiaBoneScreen.screen.DogUntameConfirmScreen;
+import doggytalents.client.screen.AmnesiaBoneScreen.screen.KillStatsClearConfirmScreen;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.DivElement;
@@ -98,6 +99,10 @@ public class GeneralView extends AbstractElement {
                 }
             }.setTextAlign(Align.LEFT)
         );
+        KillStatsClearConfirmScreen.addClearKillStatsButton(dog, font, 
+            mX, mY + 60, b -> {
+                this.addChildren(b);
+            });
     }
 
     // private void setupPanelView(MainTab tab) {

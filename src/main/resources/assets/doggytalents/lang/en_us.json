@@ -685,6 +685,8 @@
    "doggui.migrate_owner.show_uuid": "Show New Owner UUID",
    "doggui.force_migrate_owner.confirm.title": "Force Migrate Owner?",
    "doggui.force_migrate_owner.confirm.subtitle": "You will now be the Owner of %s, proceed?",
+   "doggui.clear_dog_kill_stats.confirm.title": "Wipe this Dog's Kill Stats?",
+   "doggui.clear_dog_kill_stats.confirm.subtitle": "All of this Dog's kill record will be lost, continue?",
    "block.doggytalents.food_bowl.pro_tip.title": "Pro Tip",
    "block.doggytalents.food_bowl.pro_tip.desc": "The recommended way to automatically feed your dog is by utilizing a PackPuppy Dog as a Shared Food Source for all of your other dogs!",
 
