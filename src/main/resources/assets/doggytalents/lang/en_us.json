@@ -625,6 +625,7 @@
    "doggui.stats.general.distanceWalking" : "Distance Walking",
    "doggui.stats.mob_kills" : "Mob Kills",
    "doggui.stats.mob_kills.no_kills" : "%s did not kill any mobs.",
+   "doggui.stats.mob_kills.disabled" : "This feature is disabled.",
 
    "doggui.invalid_dog.incapacitated.title" : "Dog is Injured!",
    "doggui.invalid_dog.incapacitated.subtitle" : "Don't worry! %s just need some rest. Take good care of %s and %s will get right back on %s paws!",
