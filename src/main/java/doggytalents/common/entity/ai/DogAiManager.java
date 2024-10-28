@@ -33,6 +33,7 @@ public class DogAiManager {
     private final EnumSet<Goal.Flag> lockedFlags = EnumSet.noneOf(Goal.Flag.class);
 
     private DogSitWhenOrderedGoal sitGoal;
+    private DogBeingPetGoal beingPetGoal;
     private WrappedGoal sitGoalWrapped;
     private DogActionExecutorGoal nonTrivialActionGoal;
     private DogActionExecutorGoal trivialActionGoal;
@@ -87,7 +88,7 @@ public class DogAiManager {
         registerDogGoal(p, new DogRandomStandIdleGoal(this.dog));
         registerDogGoal(p, new DogRandomSniffGoal(this.dog));
         registerDogGoal(p, new DogCommonStandIdleGoal(this.dog));
-        registerDogGoal(p, new DogBeingPetGoal(this.dog));
+        initBeingPetGoal(p);
         ++p;
         registerDogGoal(p, new DogBegGoal(this.dog, 8.0F));
         ++p;
@@ -120,6 +121,11 @@ public class DogAiManager {
     private void initSitGoal(int priority) {
         this.sitGoal = new DogSitWhenOrderedGoal(dog); 
         this.sitGoalWrapped = registerDogGoal(priority, this.sitGoal);
+    }
+
+    private void initBeingPetGoal(int priority) {
+        this.beingPetGoal = new DogBeingPetGoal(dog);
+        registerDogGoal(priority, beingPetGoal);
     }
 
     private WrappedGoal registerDogGoal(int priority, Goal goal) {
@@ -247,6 +253,9 @@ public class DogAiManager {
     }
 
     private void startGoal(WrappedGoal goal) {
+        if (goal.getGoal() == this.beingPetGoal) {
+            this.beingPetGoal.dogBeingPetGoalPreStart();
+        }
         for (var flag : goal.getFlags()) {
             var runningGoal = this.runningGoalsWithFlag.get(flag);
             if (runningGoal != null) {
