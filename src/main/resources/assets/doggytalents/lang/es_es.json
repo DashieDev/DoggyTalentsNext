@@ -603,10 +603,10 @@
    "block.doggytalents.food_bowl.pro_tip.desc": "¡La forma recomendada de alimentar automáticamente a tu perro es utilizando un Perro PackPuppy como Fuente de Alimento Compartida para todos tus otros perros!",
 
    "key.categories.doggy_talents": "Doggy Talents Next",
-   "key.whistle.1": "Silbido #1",
-   "key.whistle.2": "Silbido #2",
-   "key.whistle.3": "Silbido #3",
-   "key.whistle.4": "Silbido #4",
+   "key.doggytalents.whistle.1": "Silbido #1",
+   "key.doggytalents.whistle.2": "Silbido #2",
+   "key.doggytalents.whistle.3": "Silbido #3",
+   "key.doggytalents.whistle.4": "Silbido #4",
 
    "dogradar.north": "**** %s está a %d bloques al Norte ****",
    "dogradar.north.east": "**** %s está a aproximadamente %d bloques al Noreste ****",

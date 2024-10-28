@@ -668,10 +668,10 @@
     "block.doggytalents.food_bowl.pro_tip.desc": "愛犬に自動的に餌を与えるには、「箱犬」を他の犬たちの共有フードソースとして利用するのがおすすめです！",
  
     "key.categories.doggy_talents": "狼才能次",
-    "key.whistle.1": "口笛 ＃１",
-    "key.whistle.2": "口笛 ＃２",
-    "key.whistle.3": "口笛 ＃３",
-    "key.whistle.4": "口笛 ＃４",
+    "key.doggytalents.whistle.1": "口笛 ＃１",
+    "key.doggytalents.whistle.2": "口笛 ＃２",
+    "key.doggytalents.whistle.3": "口笛 ＃３",
+    "key.doggytalents.whistle.4": "口笛 ＃４",
  
     "dogradar.north": "**** %sは%dブロック北 ****",
     "dogradar.north.east": "**** %sは北東におおよそ%dブロック ****",
