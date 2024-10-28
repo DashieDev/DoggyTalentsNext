@@ -254,6 +254,7 @@ public class CanineTrackerLocateRenderer {
         locatingName = null;
         locatingPos = null;
         locateColor = 0;
+        cachedDog = new WeakReference<Dog>(null);
     }
 
 }
