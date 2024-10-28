@@ -307,6 +307,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
         public ForgeConfigSpec.BooleanValue INJURED_DOG_BLOCK_PORTAL;
         public ModConfigSpec.BooleanValue WANDERING_DOG_WHISTLE;
+        public ModConfigSpec.BooleanValue DISABLE_KILL_STATS;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
@@ -543,6 +544,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Enable this to make them respond as usual.")
                 .translation("doggytalents.wandering_dog_whistle")
                 .define("wandering_dog_whistle", false);
+            DISABLE_KILL_STATS = builder
+                .comment("Prevent all Dogs' kills from being recorded into its Kill Stats.")
+                .translation("doggytalents.disable_kill_stats")
+                .define("disable_kill_stats", false);
 
             //(Non 1.20.5+)
             RANDOM_VAR_ON_TRAIN = builder

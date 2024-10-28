@@ -1868,7 +1868,8 @@ public class Dog extends AbstractDog {
 
     @Override
     public void killed(ServerLevel level, LivingEntity entity) {
-        this.statsTracker.incrementKillCount(entity);
+        if (!ConfigHandler.SERVER.DISABLE_KILL_STATS.get())
+            this.statsTracker.incrementKillCount(entity);
         return;
     }
 
