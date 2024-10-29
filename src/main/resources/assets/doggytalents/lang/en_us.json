@@ -577,6 +577,8 @@
 
    "amnesia_bone_gui.navbar.general" : "General",
    "amnesia_bone_gui.navbar.talents" : "Talents",
+   "amnesia_bone_gui.general.owner_change" : "Owner Change",
+   "amnesia_bone_gui.general.untame" : "Untame",
 
    "doggui.common.apply" : "Apply",
    "doggui.common.go_back" : "Go back",
