@@ -111,6 +111,16 @@ public class OnlineDogLocationManager {
             : remove_reason.toString();
         var pos = dog.blockPosition();
         var pos_str = pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
+        if (!dog.locationUpdatedUponRemove) {
+            var error_str = "Dog [ "
+                + dog.getName().getString()
+                + " ] failed to update location upon going offline at [ "
+                + pos_str
+                + " ] with type [ "
+                + type_str + " ]";
+            LOGGER.error(error_str);
+            return;
+        }
         var log_str = "Dog [ "
             + dog.getName().getString()
             + " ] has gone Offline at [ "
