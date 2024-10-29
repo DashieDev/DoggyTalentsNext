@@ -9,3 +9,5 @@ accessible method net/minecraft/client/Camera move (DDD)V
 accessible method net/minecraft/client/Camera setPosition (DDD)V
 accessible method net/minecraft/client/Camera getMaxZoom (D)D
 accessible method net/minecraft/client/Camera setRotation (FF)V
+accessible field net/minecraft/world/entity/LivingEntity lastHurtByPlayer Lnet/minecraft/world/entity/player/Player;
+accessible field net/minecraft/world/entity/LivingEntity lastHurtByPlayerTime I
