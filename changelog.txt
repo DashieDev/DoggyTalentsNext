@@ -1589,3 +1589,34 @@ otherwise they only tp when owner is in water.
 * HOTFIX: Certain unsual case where Dog sometimes go straight in the lava when trying to go Away from it. 
 * Fix Oina Kemu's id causing the skin to not be properly registered.
 * Fix contacts lens weird micro pixel.
+
+**1.18.33 - 29th October 2024**
+
+||🦇🎃 Happy Halloween! 🎃🦇||
+========
+## New Accessories!
++ New Locator Orbs! [Ka, Sui, Moku]
++ Dragon Costumes [Dragon Head, Dragon Suit, Dragon Wings]
+
++ Firefighter Suits [4 colors, 2 variants for each]
++ Firefighter Hats [2 variants]
+
+========
+#Smoother Belly Rub anims to Belly Rub pettings transitions.
+#Option to disable Dog's Kill stats tracking per world and wipe Dog's 
+Kill Stats (Operator only, using Amnesia Bone)
+#Only Dog's owner can pickup arrows shot by Dog.
+#(Configurable) Wandering Dogs now don't respond to Sit/Stand whistle.
+#Improve Swimmer Dog movements, they no longer occasionally get stuck trying to swim over a block.
+#Dog now completely dodge lava coming from above if there is safe space next to it.
+#Replace elytra with phantom membrane in some accessories.
+#Config to disable Wolf Armor Protection on DTN Dogs.
+
+=========
+* Fix Dog being able to bypass Greet Owner Limit in some cases.
+* Fix some cases shorty after a Dog joined the world where it is possible that the Dog 
+is still being in SittingPose despite not OrderedToSit.
+* Fix Dog in the middle of Fire Source won't move out despite having safe space nearby.
+* Fix DogBeingHurtByTarget AI causing Docile Doggy Tools to equip its weapon despite not attacking the target
+still.
+* Fix /dog locate command doesn't locate Offline Dogs.
