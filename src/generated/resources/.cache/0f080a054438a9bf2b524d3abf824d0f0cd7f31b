@@ -1,4 +1,4 @@
-// 1.21.1	2024-08-27T16:03:43.4080994	DoggyTalents Item Models
+// 1.21.1	2024-10-27T23:41:35.9722843	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 576747e29ded49df195a33e020635920692b8bce assets/doggytalents/models/item/angel_halo.json
@@ -31,6 +31,9 @@ e6928e128e709eed661a926a6341052c5dee3952 assets/doggytalents/models/item/doggy_c
 d7d1edf4ba2e22a722df08baa0d660f52ab65240 assets/doggytalents/models/item/dog_bath.json
 aa0e5ccc2a5183ecdf5ba2c3fedc832eca34f39f assets/doggytalents/models/item/dog_bed.json
 3e834b3edef3a73ce8751e4c2c1363d7983d72b1 assets/doggytalents/models/item/dog_plushie_toy_item.json
+d4e16dd49b3b9367913eed29f9d7e4c9cb56ff85 assets/doggytalents/models/item/dragon_costume_head.json
+89723e9319ed5a15907d0f1ef04d39c1b6bafd81 assets/doggytalents/models/item/dragon_costume_suit.json
+d38e5e92b7b0677d84b44b0d1e02a8a6867aafb3 assets/doggytalents/models/item/dragon_costume_wings.json
 e573b037300087bb973ec849784125738b482122 assets/doggytalents/models/item/drool_scent_treat.json
 54845463612496361d248445a4e723fdfc0a0529 assets/doggytalents/models/item/edamame.json
 c308c809213ff3393bfd94da560555797d4097cc assets/doggytalents/models/item/edamame_unpodded.json
@@ -39,6 +42,12 @@ c308c809213ff3393bfd94da560555797d4097cc assets/doggytalents/models/item/edamame
 2b241a97c7a75299f0df2a8b38a741693e92e5b2 assets/doggytalents/models/item/energizer_stick.json
 fcce3621bda79bfb2c94031ae8ab9eabef319edc assets/doggytalents/models/item/feathered_mantle.json
 567e3bd3453bd6c927f463931d62c0da0c254443 assets/doggytalents/models/item/fedora.json
+587561d9f646fe75cebaf2dd4a4ad422cf7c0b82 assets/doggytalents/models/item/firefighter_hat_blue.json
+d9176920e51b4a00ab66561bf20fbf6e442e9160 assets/doggytalents/models/item/firefighter_hat_red.json
+a9e76a3ca12634b07b45b85566a88b9569f354aa assets/doggytalents/models/item/firefighter_suit_black.json
+c89fa9979d888ecd06d32f8e9a0cec71b7edefd2 assets/doggytalents/models/item/firefighter_suit_blue.json
+997ed12d98396cf1307449f39ceafcdd12a69912 assets/doggytalents/models/item/firefighter_suit_kaki.json
+c32fcf2897ef1da941ba92415fbf2c651a15bc85 assets/doggytalents/models/item/firefighter_suit_red.json
 a4bc3a31db081fb8923a0112d32bd4650d41c4f9 assets/doggytalents/models/item/flatcap.json
 fd14db626434a2c48c8ee30395f56f64c64879c8 assets/doggytalents/models/item/flying_cape.json
 7cdb64b50b71c47cea28a9126f474fa5795001a3 assets/doggytalents/models/item/food_bowl.json
@@ -66,9 +75,12 @@ c9f1c6aa2c62f96cfd81d4e652589c5207ccf090 assets/doggytalents/models/item/locator
 a55002d7c95cdce2e049e55f1e52ebc24f36be75 assets/doggytalents/models/item/locator_orb_dyable.json
 ef9a22de79db1c3f1c55f5cde8d992315e35ef99 assets/doggytalents/models/item/locator_orb_gi.json
 3ce4c71d2058c42f7164493f8bc7beb5c5bc81aa assets/doggytalents/models/item/locator_orb_jin.json
+3dd3064ff916836c3cde500dde5fc85721b01a4e assets/doggytalents/models/item/locator_orb_ka.json
 84b8ed15b7862292739772a5b9acbf9b4c6c3b6d assets/doggytalents/models/item/locator_orb_ko.json
+32e2d1913a601daa1e459b86ef5d30ff8c7f45f8 assets/doggytalents/models/item/locator_orb_moku.json
 a84fa15e27bd04869ef9f08bc1d902a113e9ec82 assets/doggytalents/models/item/locator_orb_rei.json
 0fdaf53c570eec2db8375f1735de3efcaa43a204 assets/doggytalents/models/item/locator_orb_shin.json
+f7f952a48594dbd1d9f9f640c9c6a3281ee95506 assets/doggytalents/models/item/locator_orb_sui.json
 ad27b58fb356975677ba214fdf0851101b7d1622 assets/doggytalents/models/item/locator_orb_tei.json
 06a0e62363bace2c84c1e53fe38a76af334dddec assets/doggytalents/models/item/magnifying_bone.json
 c78372cc5d3fb956867a2378707fdf0de6287dd0 assets/doggytalents/models/item/master_treat.json

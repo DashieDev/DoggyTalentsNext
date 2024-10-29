@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "doggytalents:training_treat"
+    },
+    {
+      "item": "minecraft:dragon_egg"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "doggytalents:dragon_costume_suit"
+  }
+}
