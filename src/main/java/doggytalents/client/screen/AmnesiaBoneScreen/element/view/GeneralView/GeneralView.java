@@ -70,10 +70,8 @@ public class GeneralView extends AbstractElement {
             //.setBackgroundColor(0xffe39c02)
         );
         this.addChildren(
-            new MultiLineFlatButton(mX + 20, mY - 40, 80, 30, List.of(
-                Component.literal("Ownership"),
-                Component.literal("change")
-            ), b -> {
+            new MultiLineFlatButton(mX + 20, mY - 40, 80, 30, 28, 
+                Component.literal("Ownership Change"), b -> {
                 this.openChangeOwnerScreen();
             }) {
                 @Override
@@ -86,9 +84,8 @@ public class GeneralView extends AbstractElement {
             }.setTextAlign(Align.LEFT)
         );
         this.addChildren(
-            new MultiLineFlatButton(mX + 20, mY + 10, 80, 20, List.of(
-                Component.literal("Untame")
-            ), b -> {
+            new MultiLineFlatButton(mX + 20, mY + 10, 80, 20, 28,
+                Component.literal("Untame"), b -> {
                 DogUntameConfirmScreen.open(dog);
             }) {
                 @Override
