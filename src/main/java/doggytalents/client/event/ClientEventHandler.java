@@ -48,6 +48,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import doggytalents.forge_imitate.event.client.ClientPlayerNetworkEvent;
 import doggytalents.forge_imitate.event.client.InputEvent;
 import doggytalents.forge_imitate.event.client.MovementInputUpdateEvent;
 import doggytalents.forge_imitate.event.client.ScreenEvent;
@@ -321,7 +322,7 @@ public class ClientEventHandler {
         Store.get(infoScr).dispatch(TalentChangeHandlerSlice.class, new UIAction(UIActionTypes.Talents.TALENT_UPDATE, null));
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         CanineTrackerLocateRenderer.onWorldLogOut();
     }

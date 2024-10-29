@@ -6,7 +6,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.client.ClientPlayerNetworkEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
@@ -52,5 +55,9 @@ public class MinecraftMixin {
         if (hit_dog)
             self.hitResult = new EntityHitResult(toDismount);
     }
-
+    
+    @Inject(at = @At("HEAD"),  method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;Z)V")
+    public void dtn_disconnect(Screen screen, boolean isClientTransfering, CallbackInfo info) {
+        EventCallbacksRegistry.postEvent(new ClientPlayerNetworkEvent.LoggingOut());
+    }
 }

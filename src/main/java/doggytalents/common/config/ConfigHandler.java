@@ -309,9 +309,9 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
         public ForgeConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
         public ForgeConfigSpec.BooleanValue INJURED_DOG_BLOCK_PORTAL;
-        public ModConfigSpec.BooleanValue WANDERING_DOG_WHISTLE;
-        public ModConfigSpec.BooleanValue DISABLE_KILL_STATS;
-        public ModConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
+        public ForgeConfigSpec.BooleanValue WANDERING_DOG_WHISTLE;
+        public ForgeConfigSpec.BooleanValue DISABLE_KILL_STATS;
+        public ForgeConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;

@@ -102,6 +102,13 @@ public class ClientEventHandlerRegisterer {
         );
         
         EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<ClientEventHandler, ClientPlayerNetworkEvent.LoggingOut>
+                (INST, ClientPlayerNetworkEvent.LoggingOut.class,
+                    ClientEventHandler::onPlayerLoggingOut
+                )
+        );
+        
+        EventCallbacksRegistry.registerCallback(
             new InstanceEventCallBack<DTNClientPettingManager, ClientTickEvent>
                 (DTNClientPettingManager.get(), ClientTickEvent.class,
                     DTNClientPettingManager::tickClient
