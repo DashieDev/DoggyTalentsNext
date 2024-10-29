@@ -311,6 +311,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue INJURED_DOG_BLOCK_PORTAL;
         public ModConfigSpec.BooleanValue WANDERING_DOG_WHISTLE;
         public ModConfigSpec.BooleanValue DISABLE_KILL_STATS;
+        public ModConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
@@ -551,6 +552,11 @@ public class ConfigHandler {
                 .comment("Prevent all Dogs' kills from being recorded into its Kill Stats.")
                 .translation("doggytalents.disable_kill_stats")
                 .define("disable_kill_stats", false);
+            DISABLE_WOLF_ARMOR_FUNCTION = builder
+                .comment("Disable all Wolf Armor Protection for DTN Dogs. They can still be")
+                .comment("used for Style.")
+                .translation("doggytalents.disable_wolf_armor_protection")
+                .define("disable_wolf_armor_protection", false);
 
             //(Non 1.20.5+)
             RANDOM_VAR_ON_TRAIN = builder

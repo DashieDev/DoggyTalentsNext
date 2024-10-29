@@ -1750,6 +1750,8 @@ public class Dog extends AbstractDog {
     }
 
     // private boolean canWolfArmorAbsorb(DamageSource source) {
+    //     if (ConfigHandler.SERVER.DISABLE_WOLF_ARMOR_FUNCTION.get())
+    //         return false;
     //     return this.hasWolfArmor() && !source.is(DamageTypeTags.BYPASSES_WOLF_ARMOR);
     // }
 
