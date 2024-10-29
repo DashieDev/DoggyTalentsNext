@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.modify.LocalVariableDiscriminator.C
 
 import doggytalents.DoggyAttributes;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.entity.FabricDogKillXPFix;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import doggytalents.forge_imitate.event.LootingLevelEvent;
@@ -72,6 +73,18 @@ public class LivingEntityMixin {
         float current = (Float) args.get(FLOAT_INDX);
         current *= dog.getAttributeValue(ForgeMod.SWIM_SPEED.holder());
         args.set(FLOAT_INDX, current);
+    }
+
+    @Inject(
+        method = "actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V", 
+        at = @At(
+            value = "INVOKE", 
+            target = "Lnet/minecraft/world/entity/LivingEntity;setHealth(F)V"
+        )
+    )
+    public void dtn__actuallyHurt(DamageSource source, float amount, CallbackInfo info) {
+        var self = (LivingEntity)(Object)this;
+        FabricDogKillXPFix.onMobActuallyBeingHurt(self, source);
     }
 
 }
