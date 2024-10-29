@@ -43,6 +43,7 @@
   },
 
   "mixins": [
-    "doggytalents_fabric.mixins.json"
+    "doggytalents_fabric.mixins.json",
+    "doggytalents.mixins.json"
   ]
 }
