@@ -8,18 +8,19 @@ import doggytalents.client.screen.framework.types.TextType;
 import doggytalents.client.screen.framework.types.TextType.Align;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
 
 public class MultiLineFlatButton extends FlatButton {
 
     private final int LINE_SPACING = 2;
     private final int PADDING_LEFT = 6;
 
-    private List<Component> lines;
+    private List<FormattedCharSequence> lines;
     private TextType.Align align = TextType.Align.MIDDLE;
 
-    public MultiLineFlatButton(int x, int y, int width, int height, List<Component> lines, OnPress onPress) {
+    public MultiLineFlatButton(int x, int y, int width, int height, int r_pad, Component text, OnPress onPress) {
         super(x, y, width, height, Component.empty(), onPress);
-        this.lines = lines == null ? List.of() : lines;
+        this.lines = font.split(text, width - r_pad);
     }
 
     public MultiLineFlatButton setTextAlign(TextType.Align align) {
