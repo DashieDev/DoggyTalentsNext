@@ -70,7 +70,7 @@ public class GeneralView extends AbstractElement {
         );
         this.addChildren(
             new MultiLineFlatButton(mX + 20, mY - 40, 80, 30, 28, 
-                Component.literal("Ownership Change"), b -> {
+                Component.translatable("amnesia_bone_gui.general.owner_change"), b -> {
                 this.openChangeOwnerScreen();
             }) {
                 @Override
@@ -84,7 +84,7 @@ public class GeneralView extends AbstractElement {
         );
         this.addChildren(
             new MultiLineFlatButton(mX + 20, mY + 10, 80, 20, 28,
-                Component.literal("Untame"), b -> {
+                Component.translatable("amnesia_bone_gui.general.untame"), b -> {
                 DogUntameConfirmScreen.open(dog);
             }) {
                 @Override
