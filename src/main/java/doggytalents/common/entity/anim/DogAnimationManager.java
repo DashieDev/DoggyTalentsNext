@@ -168,7 +168,9 @@ public class DogAnimationManager {
         public static final DogAnimDebugState NONE = new DogAnimDebugState(-1, 0, 0);
 
         public boolean isNone() {
-            return this.anim_id < 0;
+            if (this == NONE)
+                return true;
+            return this.anim_id < 0 || this.anim_id == DogAnimation.NONE.getId();
         }
 
     }
