@@ -270,6 +270,11 @@
    "item.doggytalents.amnesia_bone.migrate_owner.reject": "Your request to own %s has been rejected.",
    "item.doggytalents.amnesia_bone.migrate_owner.confirmed": "You are now the owner of %s. Take good care of %s.",
 
+   "item.doggytalents.dog_anim_debug_stick": "Dog Animation Debug Stick",
+   "item.doggytalents.dog_anim_debug_stick.mode.0": "Set/Clear",
+   "item.doggytalents.dog_anim_debug_stick.mode.1": "Fine Tune",
+   "item.doggytalents.dog_anim_debug_stick.mode.2": "YRot Lock",
+
    "general.doggytalents.dual_accessories_item_help": "Sneak while applying this on your Dog to give it another variant of the Accessory. ",
 
    "container.doggytalents.pack_puppy": "Pack Puppy",

@@ -222,6 +222,9 @@ public class DoggyItems {
     public static final Supplier<PianoItem> UPRIGHT_PIANO_BROWN = register("upright_piano_brown_item", 
         () -> new PianoItem(DoggyEntityTypes.UPRIGHT_PIANO_BROWN));
 
+    //DTN Debug (Not available via Creative Inventory) ==========================
+    public static final Supplier<Item> DOG_ANIM_DEBUG = register("dog_anim_debug_stick", DogAnimDebugItem::new); 
+
     private static Item.Properties createInitialProp() {
         return new Item.Properties();
     }
