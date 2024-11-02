@@ -73,10 +73,10 @@ public class DogAnimDebugScreen extends StringEntrySelectScreen {
         int mx = this.width/2;
         int my = this.height/2;
         final int modeButton_width = 70;
-        final int modeButton_height = 40;
+        final int modeButton_height = 20;
         var modeButton = new FlatButton(
             mx - this.getSelectAreaSize()/2 -modeButton_width - 2, 
-            my - getSelectAreaSize()/2 + 2, 
+            my - getSelectAreaSize()/2, 
             modeButton_width, modeButton_height, getModeTitle(selectMode),
             b -> {
                 var new_mode = selectMode.cycleMode();
