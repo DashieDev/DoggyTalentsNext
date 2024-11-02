@@ -147,7 +147,7 @@ public class DogAnimationManager {
         int timestamp = debug_tag.getInt("timestamp");
         float yrot = debug_tag.getFloat("yrot");
         var debug_state = new DogAnimDebugState(anim_id, timestamp, yrot);
-        dog.setDogAnimDebugState(debug_state);
+        setDogAnimDebugState(debug_state);
     }
 
     private void tickDebug() {
@@ -161,6 +161,19 @@ public class DogAnimationManager {
 
     public void onDebugUpdate(DogAnimDebugState state) {
         this.isDebug = !state.isNone();
+    }
+
+    public void setDogAnimDebugState(DogAnimDebugState state) {
+        dog.setDogAnimDebugState(state);
+        if (state.isNone())
+            dog.setAnim(DogAnimation.NONE);
+    }
+
+    public DogAnimDebugState getFreezeDebugState(DogAnimation anim) {
+        int timestamp = anim.getLengthTicks() - this.animationTime;
+        timestamp = Mth.clamp(timestamp, 0, anim.getLengthTicks());
+        var current_state = dog.getDogAnimDebugState();
+        return new DogAnimDebugState(anim.getId(), timestamp, current_state.yrot());
     }
 
     public static record DogAnimDebugState(int anim_id, int timestamp, float yrot) {

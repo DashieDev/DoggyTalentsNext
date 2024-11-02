@@ -492,7 +492,7 @@ public class DogModel extends EntityModel<Dog> {
         var pose = dog.getDogPose();
         var animationManager = dog.animationManager;
 
-        if (dog.isDogInAnimDebug()) {
+        if (dog.isDogInAnimDebug() && dog.getAnim().isNone()) {
             setDogUpDebugAnim(dog);
             return;
         }
