@@ -1017,7 +1017,8 @@ public class Dog extends AbstractDog {
     }
 
     public boolean canUpdateDogAi() {
-        return !this.isImmobile() && this.isEffectiveAi();
+        return !this.isImmobile() && this.isEffectiveAi() 
+            && !this.isDogInAnimDebug();
     }
 
     @Override
@@ -3246,10 +3247,7 @@ public class Dog extends AbstractDog {
         if (DOG_ANIM_DEBUG_STATE.equals(key)) {
             var debug_state = getDogAnimDebugState();
             if (!debug_state.isNone() && !this.level().isClientSide) {
-                this.updateControlFlags();
-                this.forceStopAllGoalWithFlag(Goal.Flag.MOVE);
-                this.forceStopAllGoalWithFlag(Goal.Flag.LOOK);
-                this.forceStopAllGoalWithFlag(Goal.Flag.JUMP);
+                this.dogAi.forceStopAllGoal();
             }
             this.animationManager.onDebugUpdate(debug_state);
         }
