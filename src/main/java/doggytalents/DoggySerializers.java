@@ -6,6 +6,7 @@ import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
+import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
 import doggytalents.common.entity.serializers.*;
 import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.item.DoggyArtifactItem;
@@ -35,6 +36,7 @@ public class DoggySerializers {
     public static final EntityDataSerializer<DogSize> DOG_SIZE_SERIALIZER = register("dog_size", DogSizeSerializer::new);
     public static final EntityDataSerializer<DogSkinData> DOG_SKIN_DATA_SERIALIZER = register("dog_skin_data", DogSkinDataSerializer::new);
     public static final EntityDataSerializer<DogPettingState> DOG_PETTING_STATE = register("dog_petting_state", PettingStateSerializer::new);
+    public static final EntityDataSerializer<DogAnimDebugState> DOG_ANIM_DEBUG_STATE = register("dog_anim_debug", AnimDebugStateSerializer::new);
 
     private static <T> EntityDataSerializer<T> register(final String name, final Supplier<EntityDataSerializer<T>> sup) {
         final var captured_value = sup.get();

@@ -37,6 +37,8 @@ public class DogHungerManager {
     private void handleHunger() {
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get())
             return;
+        if (dog.isDogInAnimDebug())
+            return;
 
         this.hungerTick += this.getIncreaseHungerTick();
 

@@ -3,6 +3,8 @@ package doggytalents.common.entity.anim;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.util.Mth;
 
 public class DogAnimationManager {
@@ -23,6 +25,9 @@ public class DogAnimationManager {
     private boolean holdOnLastTick = false;
     private boolean isHolding = false;
     private int tickTillSync = 0;
+
+    //Common - Debug
+    private boolean isDebug = false;
 
     public DogAnimationManager(Dog dog) { this.dog = dog; }
 
@@ -78,6 +83,9 @@ public class DogAnimationManager {
                 --this.animationTime;
             }
         }
+
+        if (isDebug)
+            tickDebug();
     }
 
     public void onSyncTimeUpdated() {
@@ -118,6 +126,51 @@ public class DogAnimationManager {
 
     public boolean isHolding() {
         return this.isHolding;
+    }
+
+    public void save(CompoundTag tag) {
+        var debug_state = dog.getDogAnimDebugState();
+        if (debug_state.isNone())
+            return;
+        var debug_tag = new CompoundTag();
+        debug_tag.putInt("anim_id", debug_state.anim_id());
+        debug_tag.putInt("timestamp", debug_state.timestamp());
+        debug_tag.putFloat("yrot", debug_state.yrot());
+        tag.put("dtnDogAnimDebug", debug_tag);
+    }
+
+    public void load(CompoundTag tag) {
+        if (!tag.contains("dtnDogAnimDebug", Tag.TAG_COMPOUND))
+            return;
+        var debug_tag = tag.getCompound("dtnDogAnimDebug");
+        int anim_id = debug_tag.getInt("anim_id");
+        int timestamp = debug_tag.getInt("timestamp");
+        float yrot = debug_tag.getFloat("yrot");
+        var debug_state = new DogAnimDebugState(anim_id, timestamp, yrot);
+        dog.setDogAnimDebugState(debug_state);
+    }
+
+    private void tickDebug() {
+        dog.yBodyRot = dog.getDogAnimDebugState().yrot();
+        dog.yHeadRot = dog.yBodyRot;
+        dog.setYRot(dog.yBodyRot);
+        dog.yBodyRotO = dog.yBodyRot;
+        dog.yHeadRotO = dog.yHeadRot;
+        dog.yRotO = dog.getYRot();
+    }
+
+    public void onDebugUpdate(DogAnimDebugState state) {
+        this.isDebug = !state.isNone();
+    }
+
+    public static record DogAnimDebugState(int anim_id, int timestamp, float yrot) {
+        
+        public static final DogAnimDebugState NONE = new DogAnimDebugState(-1, 0, 0);
+
+        public boolean isNone() {
+            return this.anim_id < 0;
+        }
+
     }
 
 }
