@@ -26,7 +26,7 @@ public class DogAnimDebugItem extends Item implements IDogItem {
     public static final String ITEM_MODE_ID = "dtn_item_mode";
 
     public DogAnimDebugItem(Properties p_41383_) {
-        super(p_41383_);
+        super(p_41383_.stacksTo(1));
     }
     
     @Override
