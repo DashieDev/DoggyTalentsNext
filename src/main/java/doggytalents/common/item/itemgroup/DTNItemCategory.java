@@ -108,7 +108,13 @@ public class DTNItemCategory {
             return false;
         if (isDogBed(item))
             return false;
+        if (isHidden(item))
+            return false;
         return true;
+    }
+
+    public static boolean isHidden(Item item) {
+        return item == DoggyItems.DOG_ANIM_DEBUG.get();
     }
 
     public static Stream<Item> getAllItemOfCategory(Predicate<Item> pred) {
