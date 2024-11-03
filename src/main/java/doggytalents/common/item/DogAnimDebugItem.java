@@ -71,7 +71,7 @@ public class DogAnimDebugItem extends Item implements IDogItem {
                 return;
             }
             var debug_state = dog.getDogAnimDebugState();
-            if (debug_state.animId() != anim.getId()) {
+            if (debug_state.anim() != anim) {
                 anim_manager.setDogAnimDebugState(DogAnimDebugState.of(anim.getId(), 0, 0f));
                 dog.setAnim(anim);
                 return;
@@ -89,8 +89,7 @@ public class DogAnimDebugItem extends Item implements IDogItem {
             if (!dog.isDogInAnimDebug())
                 return;
             var debug_state = dog.getDogAnimDebugState();
-            int debug_anim_id = debug_state.animId();
-            var anim = DogAnimation.byId(debug_anim_id);
+            var anim = debug_state.anim();
             if (anim.isNone())
                 return;
             int new_timestamp = debug_state.timestamp()
@@ -99,7 +98,7 @@ public class DogAnimDebugItem extends Item implements IDogItem {
                 new_timestamp = 0;
             if (new_timestamp < 0)
                 new_timestamp = 0;
-            anim_manager.setDogAnimDebugState(DogAnimDebugState.of(debug_anim_id, 
+            anim_manager.setDogAnimDebugState(DogAnimDebugState.of(anim, 
                 new_timestamp, debug_state.yRot()));
             return;
         }
