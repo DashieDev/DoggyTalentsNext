@@ -39,6 +39,7 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import doggytalents.common.entity.anim.DogAnimationManager;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
 import doggytalents.common.entity.datasync.DogDataSyncManager;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
@@ -221,6 +222,7 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<DogSize> DOG_SIZE = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER);
     private static final EntityDataAccessor<DogSkinData> CUSTOM_SKIN = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SKIN_DATA_SERIALIZER);
     private static final EntityDataAccessor<DogPettingState> DOG_PETTING_STATE = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_PETTING_STATE);
+    private static final EntityDataAccessor<DogAnimDebugState> DOG_ANIM_DEBUG_STATE = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_ANIM_DEBUG_STATE);
 
     // Cached values
     private final Cache<Integer> spendablePoints = Cache.make(this::getSpendablePointsInternal);
@@ -341,6 +343,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(INCAP_VAL, 0);
         this.entityData.define(ANIMATION, 0);
         this.entityData.define(ANIM_SYNC_TIME, 0);
+        this.entityData.define(DOG_ANIM_DEBUG_STATE, DogAnimDebugState.NONE);
         this.entityData.define(DOG_PETTING_STATE, DogPettingState.NULL);
     }
 
@@ -1011,7 +1014,8 @@ public class Dog extends AbstractDog {
     }
 
     public boolean canUpdateDogAi() {
-        return !this.isImmobile() && this.isEffectiveAi();
+        return !this.isImmobile() && this.isEffectiveAi() 
+            && !this.isDogInAnimDebug();
     }
 
     @Override
@@ -2704,6 +2708,7 @@ public class Dog extends AbstractDog {
         this.statsTracker.writeAdditional(compound);
         this.dogOwnerDistanceManager.save(compound);
         this.pettingManager.save(compound);
+        this.animationManager.save(compound);
 
         this.alterations.forEach((alter) -> alter.onWrite(this, compound));
 
@@ -2919,6 +2924,12 @@ public class Dog extends AbstractDog {
             this.pettingManager.load(compound);
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load dog petting manager: " + e.getMessage());
+            e.printStackTrace();
+        }
+        try {
+            this.animationManager.load(compound);
+        } catch (Exception e) {
+            DoggyTalentsNext.LOGGER.error("Failed to load dog animation manager: " + e.getMessage());
             e.printStackTrace();
         }
         this.alterations.forEach((alter) -> {
@@ -3224,6 +3235,14 @@ public class Dog extends AbstractDog {
         if (DOG_PETTING_STATE.equals(key)) {
             if (this.level().isClientSide)
                 DTNClientPettingManager.get().onPettingUpdate(this, getPettingState());
+        }
+
+        if (DOG_ANIM_DEBUG_STATE.equals(key)) {
+            var debug_state = getDogAnimDebugState();
+            if (!debug_state.isNone() && !this.level().isClientSide) {
+                this.dogAi.forceStopAllGoal();
+            }
+            this.animationManager.onDebugUpdate(debug_state);
         }
     }
 
@@ -5117,6 +5136,20 @@ public class Dog extends AbstractDog {
 
     public DogAnimation getAnim() {
         return DogAnimation.byId(this.entityData.get(ANIMATION));
+    }
+
+    public DogAnimDebugState getDogAnimDebugState() {
+        return this.entityData.get(DOG_ANIM_DEBUG_STATE);
+    }
+
+    public void setDogAnimDebugState(DogAnimDebugState state) {
+        if (state.isNone())
+            state = DogAnimDebugState.NONE;
+        this.entityData.set(DOG_ANIM_DEBUG_STATE, state);
+    }
+
+    public boolean isDogInAnimDebug() {
+        return !getDogAnimDebugState().isNone();
     }
 
     public void setAnimSyncTime(int val) {

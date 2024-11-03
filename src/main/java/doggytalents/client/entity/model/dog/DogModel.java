@@ -22,6 +22,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.Util;
 import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
 import doggytalents.api.enu.forward_imitate.anim.KeyframeAnimations;
 import net.minecraft.client.model.AgeableListModel;
@@ -493,6 +494,11 @@ public class DogModel extends EntityModel<Dog> {
         var pose = dog.getDogPose();
         var animationManager = dog.animationManager;
 
+        if (dog.isDogInAnimDebug() && dog.getAnim().isNone()) {
+            setDogUpDebugAnim(dog);
+            return;
+        }
+
         if (pose.freeHead) {
             this.head.xRot += headPitch * ((float)Math.PI / 180F); 
             this.head.yRot += netHeadYaw * (dog.isInSittingPose() && dog.isLying() ? 0.005F : (float)Math.PI / 180F);
@@ -523,6 +529,17 @@ public class DogModel extends EntityModel<Dog> {
             animState.updateTime(ageInTicks, anim.getSpeedModifier());
             DogKeyframeAnimations.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
         }
+    }
+
+    private void setDogUpDebugAnim(Dog dog) {
+        this.resetAllPose();
+        var debug_state = dog.getDogAnimDebugState();
+        var dog_anim = debug_state.anim();
+        var sequence = DogAnimationRegistry.getSequence(dog_anim);
+        if (sequence == null)
+            return;
+        var timestamp_millis = Util.tickMayWithPartialToMillis(debug_state.timestamp());
+        DogKeyframeAnimations.animate(this, dog, sequence, timestamp_millis, 1.0F, vecObj);
     }
 
     protected AnimationDefinition getAnimationSequence(DogAnimation anim) {
