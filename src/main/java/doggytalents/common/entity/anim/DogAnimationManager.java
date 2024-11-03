@@ -166,8 +166,9 @@ public class DogAnimationManager {
     }
 
     public void setDogAnimDebugState(DogAnimDebugState state) {
+        var old_state = dog.getDogAnimDebugState();
         dog.setDogAnimDebugState(state);
-        if (state.isNone())
+        if (state.isNone() && !old_state.isNone())
             dog.setAnim(DogAnimation.NONE);
     }
 
