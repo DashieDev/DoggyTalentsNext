@@ -38,6 +38,7 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import doggytalents.common.entity.anim.DogAnimationManager;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
 import doggytalents.common.entity.datasync.DogDataSyncManager;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
@@ -1019,7 +1020,8 @@ public class Dog extends AbstractDog {
     }
 
     public boolean canUpdateDogAi() {
-        return !this.isImmobile() && this.isEffectiveAi();
+        return !this.isImmobile() && this.isEffectiveAi() 
+            && !this.isDogInAnimDebug();
     }
 
     @Override
@@ -2712,6 +2714,7 @@ public class Dog extends AbstractDog {
         this.statsTracker.writeAdditional(compound);
         this.dogOwnerDistanceManager.save(compound);
         this.pettingManager.save(compound);
+        this.animationManager.save(compound);
 
         this.alterations.forEach((alter) -> alter.onWrite(this, compound));
 
@@ -2927,6 +2930,12 @@ public class Dog extends AbstractDog {
             this.pettingManager.load(compound);
         } catch (Exception e) {
             DoggyTalentsNext.LOGGER.error("Failed to load dog petting manager: " + e.getMessage());
+            e.printStackTrace();
+        }
+        try {
+            this.animationManager.load(compound);
+        } catch (Exception e) {
+            DoggyTalentsNext.LOGGER.error("Failed to load dog animation manager: " + e.getMessage());
             e.printStackTrace();
         }
         this.alterations.forEach((alter) -> {
@@ -5109,6 +5118,20 @@ public class Dog extends AbstractDog {
         return DogAnimation.byId(this.entityData.get(ANIMATION));
     }
 
+    public DogAnimDebugState getDogAnimDebugState() {
+        return this.entityData.get(DOG_ANIM_DEBUG_STATE);
+    }
+
+    public void setDogAnimDebugState(DogAnimDebugState state) {
+        if (state.isNone())
+            state = DogAnimDebugState.NONE;
+        this.entityData.set(DOG_ANIM_DEBUG_STATE, state);
+    }
+
+    public boolean isDogInAnimDebug() {
+        return !getDogAnimDebugState().isNone();
+    }
+
     public void setAnimSyncTime(int val) {
         this.entityData.set(ANIM_SYNC_TIME, val);
     }
@@ -5397,6 +5420,14 @@ public class Dog extends AbstractDog {
                 this.hungerManager.onBeingIncapacitated();
             }
             updateWanderState(mode);
+        }
+
+        if (type == SyncTypes.DOG_ANIM_DEBUG_STATE) {
+            var debug_state = getDogAnimDebugState();
+            if (!debug_state.isNone() && !this.level().isClientSide) {
+                this.dogAi.forceStopAllGoal();
+            }
+            this.animationManager.onDebugUpdate(debug_state);
         }
     }
 
