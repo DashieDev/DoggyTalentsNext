@@ -135,7 +135,7 @@ public class DogAnimationManager {
         if (debug_state.isNone())
             return;
         var debug_tag = new CompoundTag();
-        debug_tag.putInt("anim_id", debug_state.animId());
+        debug_tag.putInt("anim_id", debug_state.anim().getId());
         debug_tag.putInt("timestamp", debug_state.timestamp());
         debug_tag.putFloat("yrot", debug_state.yRot());
         tag.put("dtnDogAnimDebug", debug_tag);
@@ -173,7 +173,7 @@ public class DogAnimationManager {
 
     public void setDebugFreezeYRot(float yrot) {
         var current_state = dog.getDogAnimDebugState();
-        setDogAnimDebugState(DogAnimDebugState.of(current_state.animId(), 
+        setDogAnimDebugState(DogAnimDebugState.of(current_state.anim(), 
             current_state.timestamp(), yrot));
     }
 
@@ -186,20 +186,33 @@ public class DogAnimationManager {
 
     public static class DogAnimDebugState {
         
-        public static final DogAnimDebugState NONE = new DogAnimDebugState(-1, 0, 0);
+        public static final DogAnimDebugState NONE = new DogAnimDebugState();
 
-        private int animId = 0;
+        private DogAnimation anim = DogAnimation.NONE;
         private int timestamp = 0;
         private float yrot = 0;
     
-        private DogAnimDebugState(int animId, int timestamp, float yrot) {
-            this.animId = animId;
+        private DogAnimDebugState() {
+            this.anim = DogAnimation.NONE;
+            this.timestamp = 0;
+            this.yrot = 0;
+        }
+
+        private DogAnimDebugState(DogAnimation anim, int timestamp, float yrot) {
+            this.anim = anim;
             this.timestamp = timestamp;
             this.yrot = yrot;
         }
 
         public static DogAnimDebugState of(int animId, int timestamp, float yrot) {
-            var ret = new DogAnimDebugState(animId, timestamp, yrot);
+            var anim = DogAnimation.byId(animId);
+            return of(anim, timestamp, yrot);
+        }
+
+        public static DogAnimDebugState of(DogAnimation anim, int timestamp, float yrot) {
+            if (anim == null || anim.isNone())
+                return NONE;
+            var ret = new DogAnimDebugState(anim, timestamp, yrot);
             if (ret.isNone())
                 return NONE;
             return ret;
@@ -208,11 +221,11 @@ public class DogAnimationManager {
         public boolean isNone() {
             if (this == NONE)
                 return true;
-            return this.animId < 0 || this.animId == DogAnimation.NONE.getId();
+            return this.anim.isNone();
         }
 
-        public int animId() {
-            return this.animId;
+        public DogAnimation anim() {
+            return this.anim;
         }
 
         public int timestamp() {
@@ -232,14 +245,14 @@ public class DogAnimationManager {
             if (this.isNone() && other.isNone())
                 return true;
             return
-                this.animId == other.animId
+                this.anim == other.anim
                 && this.timestamp == other.timestamp
                 && this.yrot == other.yrot;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(this.animId, this.timestamp, this.yrot);
+            return Objects.hash(this.anim.getId(), this.timestamp, this.yrot);
         }
 
     }

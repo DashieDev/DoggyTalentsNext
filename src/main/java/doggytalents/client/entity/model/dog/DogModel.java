@@ -532,8 +532,7 @@ public class DogModel extends EntityModel<Dog> {
     private void setDogUpDebugAnim(Dog dog) {
         this.resetAllPose();
         var debug_state = dog.getDogAnimDebugState();
-        int anim_id = debug_state.animId();
-        var dog_anim = DogAnimation.byId(anim_id);
+        var dog_anim = debug_state.anim();
         var sequence = DogAnimationRegistry.getSequence(dog_anim);
         if (sequence == null)
             return;

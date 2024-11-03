@@ -10,7 +10,7 @@ public class AnimDebugStateSerializer extends DogSerializer<DogAnimDebugState> {
         if (value.isNone()) {
             buf.writeInt(-1);
         } else {
-            buf.writeInt(value.animId());
+            buf.writeInt(value.anim().getId());
             buf.writeInt(value.timestamp());
             buf.writeFloat(value.yRot());
         }
@@ -30,7 +30,7 @@ public class AnimDebugStateSerializer extends DogSerializer<DogAnimDebugState> {
     public DogAnimDebugState copy(DogAnimDebugState value) {
         if (value.isNone())
             return DogAnimDebugState.NONE;
-        return DogAnimDebugState.of(value.animId(), value.timestamp(), value.yRot());
+        return DogAnimDebugState.of(value.anim(), value.timestamp(), value.yRot());
     }
 
 }
