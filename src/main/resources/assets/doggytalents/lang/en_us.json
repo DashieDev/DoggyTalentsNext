@@ -16,7 +16,7 @@
    "item.doggytalents.kami_treat": "Kami Treat",
    "item.doggytalents.breeding_bone": "Breeding Bone",
    "item.doggytalents.doggy_charm": "Doggy Charm",
-   "item.doggytalents.doggy_charm.description": "Shift + Right-Click your dog to cycle between all available Classical Variants.",
+   "item.doggytalents.doggy_charm.description": "Sneak + Right-Click your dog to cycle between all available Classical Variants.",
    "item.doggytalents.radio_collar": "Radio Collar",
    "item.doggytalents.wool_collar": "Wool Collar",
    "item.doggytalents.wool_collar_thicc": "Thick Wool Collar",
@@ -276,7 +276,7 @@
    "item.doggytalents.dog_anim_debug_stick.mode.2": "YRot Lock",
    "item.doggytalents.dog_anim_debug_stick.help": "Sneak + Right Click this item while not pointing to any Dogs to configure this item.",
    "item.doggytalents.dog_anim_debug_stick.mode.0.help": "Select an anim to bind to this item. Right Click a Dog with this item in your mainhand to make the dog enter Anim Debug Mode if it has not and Play/Pause the anim. Sneak + Right Click or Right Click with the NONE animation binded to make the Dog exit Anim Debug Mode.",
-   "item.doggytalents.dog_anim_debug_stick.mode.1.help": "Right Click, Shift + Right Click a Dog in Anim Debug Mode to move forward or backward the frozen timestamp of the animation respectively.",
+   "item.doggytalents.dog_anim_debug_stick.mode.1.help": "Right Click, Sneak + Right Click a Dog in Anim Debug Mode to move forward or backward the frozen timestamp of the animation respectively.",
    "item.doggytalents.dog_anim_debug_stick.mode.2.help": "Right Click a Dog in Anim Debug Mode to make it look in the same direction that you are looking.",
 
    "general.doggytalents.dual_accessories_item_help": "Sneak while applying this on your Dog to give it another variant of the Accessory. ",
