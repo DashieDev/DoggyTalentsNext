@@ -1,5 +1,7 @@
 package doggytalents.common.item;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyItems;
@@ -12,12 +14,15 @@ import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 public class DogAnimDebugItem extends Item implements IDogItem {
@@ -147,6 +152,15 @@ public class DogAnimDebugItem extends Item implements IDogItem {
             tag.putInt(ITEM_MODE_ID, mode.getId());
         }
         ItemUtil.putTag(stack, tag);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+            TooltipFlag flags) {
+        var desc_id = "item.doggytalents.dog_anim_debug_stick.help";
+        components.add(Component.translatable(desc_id).withStyle(
+            Style.EMPTY.withItalic(true))
+        );
     }
 
     public static enum ItemMode {
