@@ -16,6 +16,7 @@ import doggytalents.common.util.ItemUtil;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -99,10 +100,7 @@ public class DogAnimDebugItem extends Item implements IDogItem {
                 return;
             int new_timestamp = debug_state.timestamp()
                 + ( player.isShiftKeyDown() ? -1 : 1 );
-            if (new_timestamp >= anim.getLengthTicks())
-                new_timestamp = 0;
-            if (new_timestamp < 0)
-                new_timestamp = 0;
+            new_timestamp = Mth.clamp(new_timestamp, 0, anim.getLengthTicks());
             anim_manager.setDogAnimDebugState(DogAnimDebugState.of(anim, 
                 new_timestamp, debug_state.yRot()));
             return;
