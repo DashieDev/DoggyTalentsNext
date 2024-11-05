@@ -1,7 +1,6 @@
 package doggytalents;
 
 import doggytalents.api.feature.FoodHandler;
-import doggytalents.api.feature.InteractHandler;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogBlockRenderTypeSetup;
 import doggytalents.client.DoggyKeybinds;
