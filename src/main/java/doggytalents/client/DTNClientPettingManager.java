@@ -53,9 +53,9 @@ public class DTNClientPettingManager {
     private float pet_camera_xRot0_add = 0;
     private float pet_camera_yRot0_add = 0;
     
-    private final Map<UUID, Dog> petterMap = Maps.newConcurrentMap();
+    private final Map<UUID, Dog> petterMap = Maps.newHashMap();
 
-    public synchronized void setPetMode(DogPettingType type) {
+    public void setPetMode(DogPettingType type) {
         this.selectedType = type;
     }
 
@@ -63,7 +63,7 @@ public class DTNClientPettingManager {
         return this.selectedType;
     }
 
-    public synchronized void setPetting(Dog dog) {
+    public void setPetting(Dog dog) {
         isPetting = dog != null;
         this.dog = dog;
         if (!isPetting)
