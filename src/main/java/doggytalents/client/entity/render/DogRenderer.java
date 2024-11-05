@@ -308,6 +308,11 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             return text;
         }
 
+        if (dog.isDogInAnimDebug()) {
+            text = createC1WithColor(text, 0xffcda700);
+            return text;
+        }
+
         boolean renderHealthInNameActive = 
                 this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
                 && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
