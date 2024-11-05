@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
@@ -116,32 +117,32 @@ public class HeelByNameScreen extends Screen {
         //this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         this.rect = new Rect2i(0, 0,500, 500);
         
-        Button showUuid = new CustomButton(3, 3, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
+        int mX = this.width/2;
+        int mY = this.height/2;
+        int pY = mY - 100;
+
+        var showUuid = new FlatButton(0, pY, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
             btn.setMessage(Component.translatable("doggytalents.screen.whistler.heel_by_name."
                 + (this.showUuid? "show" : "hide")
                 +"_uuid"));
             this.showUuid = !this.showUuid;
         });
-
-        Button help = new CustomButton(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
-            @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
-                if (!this.isHovered) return;
-                List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
-                    .withStyle(Style.EMPTY.withBold(true)));
-                String str = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
-                list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
-
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
-            }
-        };
-
-        Button softHeel = new CustomButton(3, 52 + this.font.lineHeight + 2, 60, 20, 
-            Component.literal("" + this.softHeel), b -> {
+        showUuid.setX(mX - 100 - showUuid.getWidth() - 2);
+        pY += showUuid.getHeight() + 2;
+        final String soft_heel_title_id = "doggytalents.screen.whistler.heel_by_name.soft_heel";
+        var inital_softHeel_c1 = this.softHeel ? 
+            Component.translatable(soft_heel_title_id)
+                .withStyle(Style.EMPTY.withColor(HLC_HEEL_NO_SIT))
+            : Component.translatable(soft_heel_title_id);
+        var softHeel = new FlatButton(0, pY, 60, 20, 
+            inital_softHeel_c1, b -> {
                 this.softHeel = !this.softHeel;
-                b.setMessage(Component.literal("" + this.softHeel));
+                if (this.softHeel) {
+                    b.setMessage(Component.translatable(soft_heel_title_id)
+                        .withStyle(Style.EMPTY.withColor(HLC_HEEL_NO_SIT)));
+                } else {
+                    b.setMessage(Component.translatable(soft_heel_title_id));
+                }
         }) {
             @Override
             public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
@@ -156,6 +157,23 @@ public class HeelByNameScreen extends Screen {
                 graphics.renderComponentTooltip(font, list, mouseX, mouseY);
             }
         };
+        softHeel.setX(mX - 100 - softHeel.getWidth() - 2);
+        pY += softHeel.getHeight() + 2;
+        var help = new FlatButton(0, pY, 20, 20, Component.literal("?"), b -> {} ) {
+            @Override
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
+                List<Component> list = new ArrayList<>();
+                list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
+                    .withStyle(Style.EMPTY.withBold(true)));
+                String str = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
+                list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
+
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+            }
+        };
+        help.setX(mX - 100 - help.getWidth() - 2);
         
         this.addRenderableWidget(showUuid);
         this.addRenderableWidget(help);
@@ -264,9 +282,6 @@ public class HeelByNameScreen extends Screen {
             half_height - 110, 0xffffffff);
         prevPageButton.active = this.pageNumber > 0;
         nextPageButton.active = this.pageNumber < maxPages - 1;
-
-        var soft_heel = I18n.get("doggytalents.screen.whistler.heel_by_name.soft_heel");
-        graphics.drawString(font, soft_heel, 3, 52, 0xffffffff);
     }
 
     private int getHoveredIndex(double x, double y, int entry_size) {

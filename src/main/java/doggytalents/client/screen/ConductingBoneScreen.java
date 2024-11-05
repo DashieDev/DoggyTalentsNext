@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
@@ -84,15 +85,32 @@ public class ConductingBoneScreen extends Screen {
         //this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 
         this.rect = new Rect2i(0, 0,500, 500);
-        
-        Button showUuid = new CustomButton(3, 3, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
+        int mX = this.width/2;
+        int mY = this.height/2;
+
+        int pY = mY - 100;
+
+        var showUuid = new FlatButton(0, pY, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
             btn.setMessage(Component.translatable("doggytalents.screen.whistler.heel_by_name."
                 + (this.showUuid? "show" : "hide")
                 +"_uuid"));
             this.showUuid = !this.showUuid;
         });
-
-        Button help = new CustomButton(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
+        showUuid.setX(mX - 100 - showUuid.getWidth() - 2);
+        pY += showUuid.getHeight() + 2;
+        
+        var toBedButton = new FlatButton(0, pY, 60, 20, Component.literal(this.toBed? "To Bed" : "To Self"), b -> {
+            if (ConductingBoneScreen.this.toBed) {
+                ConductingBoneScreen.this.toBed = false;
+                b.setMessage(Component.literal("To Self"));
+            } else {
+                ConductingBoneScreen.this.toBed = true;
+                b.setMessage(Component.literal("To Bed"));
+            }
+        } );
+        toBedButton.setX(mX - 100 - toBedButton.getWidth() - 2);
+        pY += toBedButton.getHeight() + 2;
+        var help = new FlatButton(0, pY, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
             public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
                 super.renderWidget(graphics, mouseX, mouseY, pTicks);
@@ -106,15 +124,8 @@ public class ConductingBoneScreen extends Screen {
                 graphics.renderComponentTooltip(font, list, mouseX, mouseY);
             }
         };
-        Button toBedButton = new CustomButton(3, 49, 60, 20, Component.literal(this.toBed? "To Bed" : "To Self"), b -> {
-            if (ConductingBoneScreen.this.toBed) {
-                ConductingBoneScreen.this.toBed = false;
-                b.setMessage(Component.literal("To Self"));
-            } else {
-                ConductingBoneScreen.this.toBed = true;
-                b.setMessage(Component.literal("To Bed"));
-            }
-        } );
+        help.setX(mX - 100 - help.getWidth() - 2);
+        pY += help.getHeight() + 2;
         
         this.addRenderableWidget(showUuid);
         this.addRenderableWidget(help);

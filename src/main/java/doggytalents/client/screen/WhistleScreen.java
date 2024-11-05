@@ -6,6 +6,7 @@ import java.util.List;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;
@@ -72,23 +73,11 @@ public class WhistleScreen extends Screen{
         super.init();
         //this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 
+        int mX = this.width/2;
+        int mY = this.height/2;
+        int pY = mY - 100;
 
-        Button help = new CustomButton(3, 3, 20, 20, Component.literal("?"), b -> {} ) {
-            @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
-                if (!this.isHovered) return;
-                List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
-                    .withStyle(Style.EMPTY.withBold(true)));
-                String str = I18n.get("doggytalents.screen.whistler.screen.help");
-                list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
-
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
-            }
-        };
-
-        var setKey = new CustomButton(3, 23, 60, 20, Component.translatable("doggytalents.screen.whistler.screen.set_hotkey"),
+        var setKey = new FlatButton(mX - 100 - 60 - 2, pY, 60, 20, Component.translatable("doggytalents.screen.whistler.screen.set_hotkey"),
             b -> {
                 if (settingKeysMode) {
                     settingKeysMode = false;
@@ -112,6 +101,24 @@ public class WhistleScreen extends Screen{
                 graphics.renderComponentTooltip(font, list, mouseX, mouseY);
             }
         };
+        pY += setKey.getHeight() + 2;
+
+        var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, Component.literal("?"), b -> {} ) {
+            @Override
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
+                List<Component> list = new ArrayList<>();
+                list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
+                    .withStyle(Style.EMPTY.withBold(true)));
+                String str = I18n.get("doggytalents.screen.whistler.screen.help");
+                list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
+
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+            }
+        };
+
+        
         
         this.addRenderableWidget(help);
         this.addRenderableWidget(setKey);

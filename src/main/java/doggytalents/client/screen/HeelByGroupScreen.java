@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogGroupsManager.DogGroup;
@@ -77,7 +78,10 @@ public class HeelByGroupScreen extends Screen {
         super.init();
         this.rect = new Rect2i(0, 0,500, 500);
 
-        var help = new CustomButton(3, 26, 20, 20, Component.literal("?"), b -> {} ) {
+        int mX = this.width/2;
+        int mY = this.height/2;
+
+        var help = new FlatButton(mX - 100 - 20 - 2, mY - 100, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
             public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
                 super.renderWidget(graphics, mouseX, mouseY, pTicks);
