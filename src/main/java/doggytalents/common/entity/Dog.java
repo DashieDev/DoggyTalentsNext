@@ -13,6 +13,7 @@ import doggytalents.api.impl.IDogRangedAttackManager;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.api.inferface.IDogFoodHandler;
+import doggytalents.api.inferface.IDogItem;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.api.registry.*;
@@ -1231,10 +1232,10 @@ public class Dog extends AbstractDog {
             return Optional.of(foodHandler.get().consume(this, stack, player));
         }
 
-        InteractionResult interactResult = InteractHandler.getMatch(this, stack, player, hand);
+        var dog_item_result = IDogItem.getMatch(this, stack, player, hand);
 
-        if (interactResult != InteractionResult.PASS) {
-            return Optional.of(interactResult);
+        if (dog_item_result != InteractionResult.PASS) {
+            return Optional.of(dog_item_result);
         }
 
         for (IDogAlteration alter : this.alterations) {
