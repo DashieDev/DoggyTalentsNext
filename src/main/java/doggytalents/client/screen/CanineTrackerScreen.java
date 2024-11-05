@@ -12,6 +12,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
+import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
@@ -84,15 +85,19 @@ public class CanineTrackerScreen extends Screen {
         super.init();
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         this.rect = new Rect2i(0, 0,500, 500);
-        
-        Button showUuid = new Button(3, 3, 60, 20, ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
-            btn.setMessage(ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name."
+
+        int mX = this.width/2;
+        int mY = this.height/2;
+        int pY = mY - 100;
+        var showUuid = new FlatButton(mX - 100 - 60 - 2, pY, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
+            btn.setMessage(Component.translatable("doggytalents.screen.whistler.heel_by_name."
                 + (this.showUuid? "show" : "hide")
                 +"_uuid"));
             this.showUuid = !this.showUuid;
         });
-
-        Button help = new Button(3, 26, 20, 20, ComponentUtil.literal("?"), b -> {} ) {
+        pY += showUuid.getHeight() + 2;
+        
+        var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
             public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
                 List<Component> list = new ArrayList<>();
