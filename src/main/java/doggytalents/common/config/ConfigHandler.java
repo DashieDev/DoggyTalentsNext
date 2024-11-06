@@ -704,7 +704,7 @@ public class ConfigHandler {
             return this.whitelistedSet.contains(val);
         }
 
-        public synchronized void reloadSets() {
+        public void reloadSets() {
             var blacklist = DogCustomSkinConfig.getConfig(CUSTOM_SKINS.BLACKLISTED_SHA1);
             var whitelist = DogCustomSkinConfig.getConfig(CUSTOM_SKINS.WHITELISTED_SHA1);
             this.blacklistedSet = new HashSet<>(blacklist);
