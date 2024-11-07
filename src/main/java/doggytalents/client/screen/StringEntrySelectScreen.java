@@ -66,12 +66,16 @@ public class StringEntrySelectScreen extends Screen {
     }
 
     protected void nextPage() {
+        if (this.pageCount <= 0)
+            return;
         this.activePage =
             Mth.clamp(this.activePage + 1, 0, this.pageCount - 1);
         onPageUpdated();
     }
 
     protected void prevPage() {
+        if (this.pageCount <= 0)
+            return;
         this.activePage =
             Mth.clamp(this.activePage - 1, 0, this.pageCount - 1);
         onPageUpdated();
@@ -249,11 +253,19 @@ public class StringEntrySelectScreen extends Screen {
 
         if (keyCode == 264) {
             int currentPageEntries = getCurrentPageEntries() - 1;
+            if (currentPageEntries <= 0) {
+                this.selectedEntryInPage = 0;
+                return true;
+            }
             this.selectedEntryInPage = 
                 Mth.clamp(this.selectedEntryInPage + 1, 0, currentPageEntries);
             return true;
         } else if (keyCode == 265) {
             int currentPageEntries = getCurrentPageEntries() - 1;
+            if (currentPageEntries <= 0) {
+                this.selectedEntryInPage = 0;
+                return true;
+            }
             this.selectedEntryInPage = 
                 Mth.clamp(this.selectedEntryInPage - 1, 0, currentPageEntries);
             return true;
