@@ -244,11 +244,19 @@ public class CanineTrackerScreen extends Screen {
 
         if (keyCode == 264) {
             int currentPageEntries = getCurrentPageEntries() - 1;
+            if (currentPageEntries <= 0) {
+                this.hightLightDogNamePerPage = 0;
+                return true;
+            }
             this.hightLightDogNamePerPage = 
                 Mth.clamp(this.hightLightDogNamePerPage + 1, 0, currentPageEntries);
             return true;
         } else if (keyCode == 265) {
             int currentPageEntries = getCurrentPageEntries() - 1;
+            if (currentPageEntries <= 0) {
+                this.hightLightDogNamePerPage = 0;
+                return true;
+            }
             this.hightLightDogNamePerPage = 
                 Mth.clamp(this.hightLightDogNamePerPage - 1, 0, currentPageEntries);
             return true;

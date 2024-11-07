@@ -192,8 +192,10 @@ public class HeelByGroupScreen extends Screen {
         InputConstants.Key mouseKey = InputConstants.getKey(keyCode, scanCode);
 
         if (keyCode == 264) {
+            if (this.dogGroupFilterList.isEmpty()) return false;
             this.hightlightDogGroup = Mth.clamp(this.hightlightDogGroup +1, 0, this.dogGroupFilterList.size()-1);
         } else if (keyCode == 265) {
+            if (this.dogGroupFilterList.isEmpty()) return false; 
             this.hightlightDogGroup = Mth.clamp(this.hightlightDogGroup -1, 0, this.dogGroupFilterList.size()-1);
         } else if (keyCode == 257) {
             if (this.dogGroupFilterList.isEmpty()) return false; 

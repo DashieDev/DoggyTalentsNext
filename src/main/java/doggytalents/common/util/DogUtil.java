@@ -472,7 +472,7 @@ public class DogUtil {
         
         //Iterate through the next 5 blocks of the path and check if obstruct owner.
         int i0 = p.getNextNodeIndex();
-        int i_end = Mth.clamp(i0+5, i0, p.getNodeCount());
+        int i_end = Mth.clamp(i0+5, 0, p.getNodeCount());
         for (int i = i0; i < i_end; ++i) {
 
             boolean flag = 
