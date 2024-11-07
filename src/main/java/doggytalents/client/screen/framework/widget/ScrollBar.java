@@ -118,10 +118,12 @@ public class ScrollBar extends AbstractWidget {
     }
 
     public int getMaxOffsetValue() {
-        return
+        var ret = 
             this.dir == Direction.VERTICAL ?
             this.height - barSize
             : this.width - barSize;
+        if (ret < 0) ret = 0;
+        return ret;
     }
 
     public double getProgressValue() {
