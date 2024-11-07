@@ -13,6 +13,7 @@ import doggytalents.client.screen.framework.element.ScrollView;
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.FlatButton;
+import doggytalents.client.screen.framework.widget.FlatCheckbox;
 import doggytalents.client.screen.framework.widget.OneLineLimitedTextArea;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
@@ -73,15 +74,13 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
-                new FlatButton(
-                    0, 0, 
-                    40, 20, Component.literal("" + this.dog.canOwnerAttack()), 
+                new FlatCheckbox(0, 0, 0xffcda700,
                     b -> {
                         boolean newVal = !dog.canOwnerAttack();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setValue(newVal);
                         this.requestFriendlyFire(newVal);
                     }
-                ),
+                ).initialValue(this.dog.canOwnerAttack()),
                 I18n.get("doggui.friendlyfire")
             )
             .init()
@@ -89,15 +88,13 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
-                new FlatButton(
-                    0, 0,
-                    40, 20, Component.literal("" + this.dog.willObeyOthers()), 
+                new FlatCheckbox(0, 0, 0xffcda700,
                     b -> {
                         Boolean newVal = !this.dog.willObeyOthers();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setValue(newVal);
                         this.requestObeyOthers(newVal);
                     }     
-                ),
+                ).initialValue(this.dog.willObeyOthers()),
                 I18n.get("doggui.obeyothers")
             )
             .init()
@@ -105,12 +102,10 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
-                new FlatButton(
-                    0, 0,
-                    40, 20, Component.literal("" + this.dog.regardTeamPlayers()), 
+                new FlatCheckbox(0, 0,
                     b -> {
                         Boolean newVal = !this.dog.regardTeamPlayers();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setValue(newVal);
                         this.requestRegardTeamPlayers(newVal);
                     }     
                 ) {
@@ -121,7 +116,7 @@ public class EditInfoView extends AbstractElement {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.regard_team_players.help"), 150, font));
                         }
                     }
-                },
+                }.initialValue(this.dog.regardTeamPlayers()),
                 I18n.get("doggui.regard_team_players")
             )
             .init()
@@ -129,12 +124,10 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
-                new FlatButton(
-                    0, 0,
-                    40, 20, Component.literal("" + this.dog.forceSit()), 
+                new FlatCheckbox(0, 0,
                     b -> {
                         Boolean newVal = !this.dog.forceSit();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setValue(newVal);
                         this.requestForceSit(newVal);
                     }     
                 ) {
@@ -145,7 +138,7 @@ public class EditInfoView extends AbstractElement {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.force_sit.help"), 150, font));
                         }
                     }
-                },
+                }.initialValue(this.dog.forceSit()),
                 I18n.get("doggui.force_sit")
             )
             .init()
@@ -153,12 +146,10 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
-                new FlatButton(
-                    0, 0,
-                    40, 20, Component.literal("" + this.dog.crossOriginTp()), 
+                new FlatCheckbox(0, 0,
                     b -> {
                         Boolean newVal = !this.dog.crossOriginTp();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setValue(newVal);
                         this.requestCrossOriginTp(newVal);
                     }     
                 ) {
@@ -169,7 +160,7 @@ public class EditInfoView extends AbstractElement {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.cross_origin_tp.help"), 150, font));
                         }
                     }
-                },
+                }.initialValue(this.dog.crossOriginTp()),
                 I18n.get("doggui.cross_origin_tp")
             )
             .init()
@@ -177,12 +168,10 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
-                new FlatButton(
-                    0, 0,
-                    40, 20, Component.literal("" + this.dog.patrolTargetLock()), 
+                new FlatCheckbox(0, 0,
                     b -> {
                         Boolean newVal = !this.dog.patrolTargetLock();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setValue(newVal);
                         this.requestPatrolTargetLock(newVal);
                     }     
                 ) {
@@ -193,7 +182,7 @@ public class EditInfoView extends AbstractElement {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.patrol_target_lock.help"), 150, font));
                         }
                     }
-                },
+                }.initialValue(this.dog.patrolTargetLock()),
                 I18n.get("doggui.patrol_target_lock")
             )
             .init()
@@ -201,15 +190,13 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
-                new FlatButton(
-                    0, 0,
-                    40, 20, Component.literal("" + this.dog.hideArmor()), 
+                new FlatCheckbox(0, 0,
                     b -> {
                         Boolean newVal = !this.dog.hideArmor();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setValue(newVal);
                         this.requestShowArmor(newVal);
                     }     
-                ),
+                ).initialValue(this.dog.hideArmor()),
                 I18n.get("doggui.hide_armor")
             )
             .init()
@@ -217,15 +204,13 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
-                new FlatButton(
-                    0, 0,
-                    40, 20, Component.literal("" + this.dog.dogAutoMount()), 
+                new FlatCheckbox(0, 0,
                     b -> {
                         Boolean newVal = !this.dog.dogAutoMount();
-                        b.setMessage(Component.literal("" + newVal));
+                        b.setValue(newVal);
                         this.requestAutoMount(newVal);
                     }     
-                ),
+                ).initialValue(this.dog.dogAutoMount()),
                 I18n.get("doggui.auto_mount")
             )
             .init()
@@ -466,7 +451,7 @@ public class EditInfoView extends AbstractElement {
             this.setPosition(PosType.RELATIVE, 0, 0);
             this.setSize(1f, 20 + LINE_SPACING);
 
-            int buttonX_offset = PADDING_LEFT + 130;
+            int buttonX_offset = PADDING_LEFT + 150;
             int buttonY_offset = this.getSizeY()/2
                 - this.button.getHeight()/2 + 1;
 
