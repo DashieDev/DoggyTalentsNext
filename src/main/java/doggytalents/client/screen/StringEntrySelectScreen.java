@@ -2,6 +2,7 @@ package doggytalents.client.screen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntFunction;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
@@ -20,14 +21,11 @@ public class StringEntrySelectScreen extends Screen {
     private int activePage = 0;
     private int selectedEntryInPage = 0;
 
-    private String searchString = "";
+    private TextField searchField = new TextField(this);
 
     private boolean startedUpdatingMouseMove = false;
     private int mouseX0 = 0;
     private int mouseY0 = 0;
-
-    private long blockCharInputMillis = 0;
-    private long prevMillis = 0;
 
     private TextOnlyButton prevPageButton;
     private TextOnlyButton nextPageButton;
@@ -87,7 +85,7 @@ public class StringEntrySelectScreen extends Screen {
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
-        updateBlockCharInputMillis();
+        this.searchField.updateBlockCharInputMillis();
 
         if (startedUpdatingMouseMove)
             updateMouseMoved(mouseX, mouseY);
@@ -96,22 +94,14 @@ public class StringEntrySelectScreen extends Screen {
 
         super.render(graphics, mouseX, mouseY, partialTicks);
         drawSelectArea(graphics);
-        drawSearchBar(graphics);
+        this.searchField.render(graphics);
         drawPageIndicator(graphics);
         
         this.prevPageButton.active = this.activePage > 0;
         this.nextPageButton.active = this.activePage < pageCount - 1;
     }
 
-    private void updateBlockCharInputMillis() {
-        if (this.blockCharInputMillis <= 0)
-            return;
-        long passed = System.currentTimeMillis() - prevMillis;
-        if (passed > 0) {
-            this.blockCharInputMillis -= passed;
-            prevMillis = System.currentTimeMillis();
-        }
-    }
+    
 
     private void updateMouseMoved(int mouseX, int mouseY) {
         boolean mouse_moved = this.mouseX0 != mouseX || this.mouseY0 != mouseY;
@@ -210,40 +200,19 @@ public class StringEntrySelectScreen extends Screen {
         graphics.drawString(font, text, entry_x, entry_y, color);
     }
 
-    protected void drawSearchBar(GuiGraphics graphics) {
-        int half_width = this.width / 2;
-        int half_height = this.height / 2;
-        
-        int txtorgx = half_width - this.getSelectAreaSize() / 2 + 10;
-        int txtorgy = half_height + this.getSelectAreaSize() / 2 + this.getSearchBarOffset();
-        
-        graphics.fill( half_width - this.getSelectAreaSize() / 2 , 
-            half_height + this.getSelectAreaSize() / 2 + 5, half_width + this.getSelectAreaSize() / 2, 
-            half_height + this.getSelectAreaSize() / 2 + 17, Integer.MIN_VALUE);
-        graphics.drawString(font, this.searchString + "_", txtorgx, txtorgy,  0xffffffff);
-    }
-
     protected void drawPageIndicator(GuiGraphics graphics) {
         int half_width = this.width / 2;
         int half_height = this.height / 2;
         
-        var pageStr = (activePage + 1) + "/" + pageCount;
-        var pageStrWidth = font.width(pageStr);
-        graphics.drawString(font, pageStr, half_width - pageStrWidth/2, 
+        var page_str = (activePage + 1) + "/" + pageCount;
+        var page_str_width = font.width(page_str);
+        graphics.drawString(font, page_str, half_width - page_str_width/2, 
             half_height - this.getSelectAreaSize() / 2 - this.getPageIndicatorOffset(), 0xffffffff);
     }
 
     @Override
     public boolean charTyped(char code, int p_231042_2_) {
-        if (this.blockCharInputMillis > 0)
-            return false;
-        if (StringUtil.isAllowedChatCharacter(code)) {
-            this.insertText(Character.toString(code));
-            return true;
-        } else {
-            return false;
-        }
-        
+        return this.searchField.charTyped(code, p_231042_2_);
     }
 
     @Override
@@ -251,22 +220,10 @@ public class StringEntrySelectScreen extends Screen {
        var mouseKey = InputConstants.getKey(keyCode, scanCode);
 
         if (keyCode == 264) {
-            int currentPageEntries = getCurrentPageEntries() - 1;
-            if (currentPageEntries <= 0) {
-                this.selectedEntryInPage = 0;
-                return true;
-            }
-            this.selectedEntryInPage = 
-                Mth.clamp(this.selectedEntryInPage + 1, 0, currentPageEntries);
+            moveSelectedEntryInPage(x -> x + 1);
             return true;
         } else if (keyCode == 265) {
-            int currentPageEntries = getCurrentPageEntries() - 1;
-            if (currentPageEntries <= 0) {
-                this.selectedEntryInPage = 0;
-                return true;
-            }
-            this.selectedEntryInPage = 
-                Mth.clamp(this.selectedEntryInPage - 1, 0, currentPageEntries);
+            moveSelectedEntryInPage(x -> x - 1);
             return true;
         } else if (keyCode == 263) {
             if (this.prevPageButton.active)
@@ -283,12 +240,26 @@ public class StringEntrySelectScreen extends Screen {
                 onEntrySelected(this.filteredIndexes.get(selectedId));
             }
             return true;
-        } else if (keyCode == 259) {
-            this.popCharInText();
         }
+
+        if (this.searchField.keyPressed(keyCode, scanCode, modifiers))
+            return true;
 
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
+
+    protected final void moveSelectedEntryInPage(IntFunction<Integer> mover) {
+        var current_page_entries = this.getCurrentPageEntries();
+        if (current_page_entries <= 0)
+            return;
+        int new_value = mover.apply(this.selectedEntryInPage);
+        this.selectedEntryInPage = Mth.clamp(new_value, 0, current_page_entries);
+    }
+
+    protected final void resetSelectedEntryInPage() {
+        this.selectedEntryInPage = 0;
+    }
+    
 
     @Override
     public boolean mouseClicked(double x, double y, int p_94697_) {
@@ -308,19 +279,6 @@ public class StringEntrySelectScreen extends Screen {
 
     }
 
-    private void insertText(String x) {
-        if (this.searchString.length() < getMaxSearchBufferSize()) {
-            this.searchString = this.searchString + x;
-        }
-        this.updateFilteredIndexes();
-    }
-
-    private void popCharInText() {
-        if (this.searchString.length() <= 0) return;
-        this.searchString = this.searchString.substring(0, this.searchString.length()-1);
-        this.updateFilteredIndexes();
-    }
-
     protected void updateEntries(List<String> new_entries) {
         if (new_entries == null)
             return;
@@ -328,11 +286,17 @@ public class StringEntrySelectScreen extends Screen {
         updateFilteredIndexes();
     }
 
+    protected void onTextFieldUpdated() {
+        updateFilteredIndexes();
+    }
+
     protected void updateFilteredIndexes() {
         this.filteredIndexes.clear();
         this.selectedEntryInPage = 0;
 
-        if (this.searchString == null || this.searchString.isEmpty()) {
+        final var search_str = this.searchField.getValue(); 
+
+        if (search_str == null || search_str.isEmpty()) {
             for (int i = 0; i < this.entries.size(); ++i) {
                 this.filteredIndexes.add(i);
             }
@@ -342,8 +306,8 @@ public class StringEntrySelectScreen extends Screen {
 
         for (int i = 0; i < this.entries.size(); ++i) {
             var entry = this.entries.get(i);
-            if (entry.length() < searchString.length()) continue; 
-            if (entry.contains(searchString)) {
+            if (entry.length() < search_str.length()) continue; 
+            if (entry.contains(search_str)) {
                 this.filteredIndexes.add(i);
             }
         }
@@ -365,9 +329,8 @@ public class StringEntrySelectScreen extends Screen {
         return this.activePage * getMaxEntriesPerPage() + selected_index_per_page;
     }
 
-    public void setBlockCharInputMillis(int x) {
-        this.blockCharInputMillis = x;
-        this.prevMillis = System.currentTimeMillis();
+    public void setBlockCharInputTime(int millis) {
+        this.searchField.setBlockCharInputTime(millis);
     }
 
     protected int getMaxEntriesPerPage() {
@@ -396,6 +359,85 @@ public class StringEntrySelectScreen extends Screen {
 
     protected int getMaxSearchBufferSize() {
         return 64;
+    }
+
+    private static class TextField {
+        private final StringEntrySelectScreen parent;
+        private long blockCharInputMillis = 0;
+        private long prevMillis = 0;
+        private String searchString = "";
+
+        public TextField(StringEntrySelectScreen parent) {
+            this.parent = parent;
+        }
+
+        public String getValue() {
+            return this.searchString;
+        }
+
+        public void updateBlockCharInputMillis() {
+            if (this.blockCharInputMillis <= 0)
+                return;
+            long passed = System.currentTimeMillis() - prevMillis;
+            if (passed > 0) {
+                this.blockCharInputMillis -= passed;
+                prevMillis = System.currentTimeMillis();
+            }
+        }
+
+        public void render(GuiGraphics graphics) {
+            final int selected_area_size = parent.getSelectAreaSize();
+
+            int half_width = parent.width / 2;
+            int half_height = parent.height / 2;
+            
+            int txtorgx = half_width - selected_area_size / 2 + 10;
+            int txtorgy = half_height + selected_area_size / 2 + parent.getSearchBarOffset();
+            
+            graphics.fill( half_width - selected_area_size / 2 , 
+                half_height + selected_area_size / 2 + 5, half_width + selected_area_size / 2, 
+                half_height + selected_area_size / 2 + 17, Integer.MIN_VALUE);
+            graphics.drawString(parent.font, this.searchString + "_", txtorgx, txtorgy,  0xffffffff);
+        }
+
+        public void insertText(String x) {
+            if (this.searchString.length() < parent.getMaxSearchBufferSize()) {
+                this.searchString = this.searchString + x;
+            }
+            parent.onTextFieldUpdated();
+        }
+    
+        public void popCharInText() {
+            if (this.searchString.length() <= 0) return;
+            this.searchString = this.searchString.substring(0, this.searchString.length()-1);
+            parent.onTextFieldUpdated();
+        }
+
+        public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+            if (keyCode == 259) {
+                this.popCharInText();
+                return true;
+            }
+            return false;
+        }
+
+        public boolean charTyped(char code, int p_231042_2_) {
+            if (this.blockCharInputMillis > 0)
+                return false;
+            if (StringUtil.isAllowedChatCharacter(code)) {
+                this.insertText(Character.toString(code));
+                return true;
+            } else {
+                return false;
+            }
+            
+        }
+
+        public void setBlockCharInputTime(int millis) {
+            this.blockCharInputMillis = millis;
+            this.prevMillis = System.currentTimeMillis();
+        }
+
     }
 
 }
