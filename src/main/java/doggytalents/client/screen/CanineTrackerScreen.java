@@ -120,7 +120,8 @@ public class CanineTrackerScreen extends StringEntrySelectScreen {
         if (this.showUuid) {
             entryText = Component.literal(
                 entryText.getString() +
-                " ( " + this.dogIdList.get(entryId) + " ) ");
+                " ( " + this.dogIdList.get(entryId) + " ) ")
+            .setStyle(entryText.getStyle());
         }
 
         return entryText;
