@@ -381,7 +381,7 @@ public class StringEntrySelectScreen extends Screen {
             if (current_page_entries <= 0)
                 return;
             int new_value = mover.apply(this.selectedEntryInPage);
-            this.selectedEntryInPage = Mth.clamp(new_value, 0, current_page_entries);
+            this.selectedEntryInPage = Mth.clamp(new_value, 0, current_page_entries - 1);
         }
     
         protected final void resetSelectedEntryInPage() {
