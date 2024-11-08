@@ -155,4 +155,9 @@ public class DogAnimDebugScreen extends StringEntrySelectScreen {
         }
     }
 
+    @Override
+    protected boolean matchIgnoreCaseSearch() {
+        return true;
+    }
+
 }
