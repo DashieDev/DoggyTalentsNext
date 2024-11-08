@@ -2,6 +2,7 @@ package doggytalents.client.screen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.IntFunction;
 
 import com.mojang.blaze3d.platform.InputConstants;
@@ -17,12 +18,10 @@ public class StringEntrySelectScreen extends Screen {
     
     private List<String> entries;
     private List<Integer> filteredIndexes;
-    private int pageCount = 1;
-    private int activePage = 0;
-    private int selectedEntryInPage = 0;
 
-    private MouseUpdate mouseUpdate = new MouseUpdate(this);
-    private TextField searchField = new TextField(this);
+    protected MouseUpdate mouseUpdate = new MouseUpdate(this);
+    protected EntryView entryView = new EntryView(this);
+    protected TextField searchField = new TextField(this);
 
     private TextOnlyButton prevPageButton;
     private TextOnlyButton nextPageButton;
@@ -51,8 +50,6 @@ public class StringEntrySelectScreen extends Screen {
             half_height - 10, 20, 20, Component.literal(">"), b -> {
                 this.nextPage();
             }, font);
-        prevPage.active = this.activePage > 0;
-        nextPage.active = this.activePage < pageCount - 1;
         this.prevPageButton = prevPage;
         this.nextPageButton = nextPage;
         this.addRenderableWidget(prevPage);
@@ -60,23 +57,11 @@ public class StringEntrySelectScreen extends Screen {
     }
 
     protected void nextPage() {
-        if (this.pageCount <= 0)
-            return;
-        this.activePage =
-            Mth.clamp(this.activePage + 1, 0, this.pageCount - 1);
-        onPageUpdated();
+        this.entryView.movePage(x -> x + 1);
     }
 
     protected void prevPage() {
-        if (this.pageCount <= 0)
-            return;
-        this.activePage =
-            Mth.clamp(this.activePage - 1, 0, this.pageCount - 1);
-        onPageUpdated();
-    }
-
-    protected void onPageUpdated() {
-        this.resetSelectedEntryInPage();
+        this.entryView.movePage(x -> x - 1);
     }
     
     @Override
@@ -86,46 +71,15 @@ public class StringEntrySelectScreen extends Screen {
         this.searchField.update();
 
         super.render(graphics, mouseX, mouseY, partialTicks);
-        drawSelectArea(graphics);
+        this.entryView.render(graphics);
         this.searchField.render(graphics);
-        drawPageIndicator(graphics);
         
-        this.prevPageButton.active = this.activePage > 0;
-        this.nextPageButton.active = this.activePage < pageCount - 1;
+        this.prevPageButton.active = this.entryView.prevPageActive();
+        this.nextPageButton.active = this.entryView.nextPageActive();
     }
 
     protected void onMouseMoved(double mouseX, double mouseY) {
-        final int newIndx = getHoveredIndex(mouseX, mouseY, getCurrentPageEntries());
-        if (newIndx < 0) return;
-        this.moveSelectedEntryInPage(x -> newIndx);
-    }
-
-    private int getHoveredIndex(double x, double y, int entry_size) {
-        int mX = this.width/2;
-        int mY = this.height/2;
-        int area_size = this.getSelectAreaSize();
-        boolean outside_of_area = 
-            Math.abs(x - mX) > area_size / 2
-            || Math.abs(y - mY) > area_size / 2;
-        if (outside_of_area) return -1;
-        int baseY = mY - area_size / 2;
-        int indx = ( Mth.floor(y - baseY) )/getSpacePerEntry();
-        if (indx >= entry_size) return -1;
-        return indx;
-    }
-
-    private int getCurrentPageEntries() {
-        boolean is_last_page = 
-            this.activePage >= this.pageCount - 1;
-        if (is_last_page) {
-            return this.filteredIndexes.size() % getMaxEntriesPerPage();
-        }
-        return getMaxEntriesPerPage();
-    }
-
-    protected void drawSelectArea(GuiGraphics graphics) {
-        drawSelectAreaBackground(graphics);
-        drawEntries(graphics);
+        this.entryView.onMouseMoved(mouseX, mouseY);
     }
 
     protected void drawSelectAreaBackground(GuiGraphics graphics) {
@@ -136,28 +90,12 @@ public class StringEntrySelectScreen extends Screen {
             half_width + getSelectAreaSize() / 2 , half_height + getSelectAreaSize() / 2 , Integer.MIN_VALUE);
     }
 
-    protected void drawEntries(GuiGraphics graphics) {
-        int half_width = this.width / 2;
-        int half_height = this.height / 2;
-
-        int entry_offset = 0;
-        int entry_start_x = half_width - getSelectAreaSize() / 2 + 2;
-        int entry_start_y = half_height - getSelectAreaSize() / 2 + 2;
-
-        int startIndx = this.activePage * getMaxEntriesPerPage();
-        int drawNo = 0;
-        for (int i = startIndx; i < this.filteredIndexes.size(); ++i) {
-            drawEntry(graphics, entry_start_x, entry_start_y + entry_offset, startIndx, i);
-            entry_offset += getSpacePerEntry();   
-            if (++drawNo >= getMaxEntriesPerPage()) break;
-        }
-    }
-
-    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y, int start_indx, int render_indx) {
+    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y, 
+        int start_indx, int render_indx, int selected_entry_in_page) {
         int color = 0xffffffff;
 
         boolean is_selected_entry =
-            render_indx == start_indx + this.selectedEntryInPage;
+            render_indx == start_indx + selected_entry_in_page;
 
         if (is_selected_entry) 
             color = this.getHightlightSelectedColor();
@@ -167,7 +105,7 @@ public class StringEntrySelectScreen extends Screen {
         graphics.drawString(font, text, entry_x, entry_y, color);
     }
 
-    protected void drawPageIndicator(GuiGraphics graphics) {
+    protected void drawPageIndicator(GuiGraphics graphics, int pageCount, int activePage) {
         int half_width = this.width / 2;
         int half_height = this.height / 2;
         
@@ -186,11 +124,7 @@ public class StringEntrySelectScreen extends Screen {
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
        var mouseKey = InputConstants.getKey(keyCode, scanCode);
 
-        if (keyCode == 264) {
-            moveSelectedEntryInPage(x -> x + 1);
-            return true;
-        } else if (keyCode == 265) {
-            moveSelectedEntryInPage(x -> x - 1);
+        if (this.entryView.keyPressed(keyCode, scanCode, modifiers)) {
             return true;
         } else if (keyCode == 263) {
             if (this.prevPageButton.active)
@@ -201,10 +135,9 @@ public class StringEntrySelectScreen extends Screen {
             this.nextPageButton.onClick(0, 0);
             return true;
         } else if (keyCode == 257) {
-            if (this.filteredIndexes.isEmpty()) return false; 
-            var selectedId = getSelectedFilterId(this.selectedEntryInPage);
-            if (selectedId >= 0 && selectedId < this.filteredIndexes.size()) {
-                onEntrySelected(this.filteredIndexes.get(selectedId));
+            var selected_indx = this.entryView.getSelectedFilterId(this.filteredIndexes);
+            if (selected_indx.isPresent()) {
+                onEntrySelected(selected_indx.get());
             }
             return true;
         }
@@ -214,31 +147,16 @@ public class StringEntrySelectScreen extends Screen {
 
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
-
-    protected final void moveSelectedEntryInPage(IntFunction<Integer> mover) {
-        var current_page_entries = this.getCurrentPageEntries();
-        if (current_page_entries <= 0)
-            return;
-        int new_value = mover.apply(this.selectedEntryInPage);
-        this.selectedEntryInPage = Mth.clamp(new_value, 0, current_page_entries);
-    }
-
-    protected final void resetSelectedEntryInPage() {
-        this.selectedEntryInPage = 0;
-    }
     
     @Override
     public boolean mouseClicked(double x, double y, int p_94697_) {
-        boolean ret = super.mouseClicked(x, y, p_94697_);
-        if (this.filteredIndexes.isEmpty()) return ret; 
-        int indx = getHoveredIndex(x, y, getCurrentPageEntries());
-        if (indx < 0)
-            return ret;
-        int selected_id = this.getSelectedFilterId(indx);
-        if (selected_id >= 0 && selected_id < this.filteredIndexes.size()) {
-            onEntrySelected(this.filteredIndexes.get(selected_id));
+        var clicked_id = this.entryView
+            .getClickedEntry(x, y, filteredIndexes);
+        if (clicked_id.isPresent()) {
+            onEntrySelected(clicked_id.get());
+            return true;
         }
-        return ret;
+        return super.mouseClicked(x, y, p_94697_);
     }
 
     protected void onEntrySelected(int id) {
@@ -258,7 +176,6 @@ public class StringEntrySelectScreen extends Screen {
 
     protected void updateFilteredIndexes() {
         this.filteredIndexes.clear();
-        this.resetSelectedEntryInPage();
 
         final var search_str = this.searchField.getValue(); 
 
@@ -266,7 +183,7 @@ public class StringEntrySelectScreen extends Screen {
             for (int i = 0; i < this.entries.size(); ++i) {
                 this.filteredIndexes.add(i);
             }
-            updatePages();
+            onFilteredIndexesUpdated();
             return;
         }
 
@@ -281,21 +198,11 @@ public class StringEntrySelectScreen extends Screen {
             }
         }
         
-        updatePages();
+        onFilteredIndexesUpdated();
     }
 
-    private void updatePages() {
-        int filter_size = this.filteredIndexes.size();
-        this.activePage = 0;
-        this.pageCount = filter_size / this.getMaxEntriesPerPage();
-        if (filter_size % this.getMaxEntriesPerPage() > 0) {
-            this.pageCount += 1;
-        }
-        onPageUpdated();
-    }
-
-    private int getSelectedFilterId(int selected_index_per_page) {
-        return this.activePage * getMaxEntriesPerPage() + selected_index_per_page;
+    protected void onFilteredIndexesUpdated() {
+        this.entryView.onFilteredIndexesUpdated(filteredIndexes);
     }
 
     public void setBlockCharInputTime(int millis) {
@@ -332,6 +239,154 @@ public class StringEntrySelectScreen extends Screen {
 
     protected boolean matchIgnoreCaseSearch() {
         return false;
+    }
+
+    private static class EntryView {
+        private final StringEntrySelectScreen parent;
+        private int pageCount = 1;
+        private int activePage = 0;
+        private int selectedEntryInPage = 0;
+
+        public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+            var mouseKey = InputConstants.getKey(keyCode, scanCode);
+            
+            if (keyCode == 264) {
+                moveSelectedEntryInPage(x -> x + 1);
+                return true;
+            } else if (keyCode == 265) {
+                moveSelectedEntryInPage(x -> x - 1);
+                return true;
+            }
+
+            return false;
+        }
+        
+        public void onMouseMoved(double mouseX, double mouseY) {
+            Optional<Integer> new_indx_optional = this.getHoveredIndexInPage(mouseX, mouseY);
+            if (!new_indx_optional.isPresent())
+                return;
+            final int new_indx = new_indx_optional.get(); 
+            this.moveSelectedEntryInPage(x -> new_indx);
+        }
+
+        public void onFilteredIndexesUpdated(List<Integer> filtered_indexes) {
+            this.resetSelectedEntryInPage();
+            this.updatePages(filtered_indexes);
+        }
+
+        public Optional<Integer> getClickedEntry(double x, double y,
+            List<Integer> filtered_indexes) {
+            if (filtered_indexes.isEmpty())
+                return Optional.empty();
+            var indx_optional = getHoveredIndexInPage(x, y);
+            if (!indx_optional.isPresent())
+                return Optional.empty();
+            return this.getSelectedFilterId(filtered_indexes);
+        }
+
+        public boolean prevPageActive() {
+            return this.activePage > 0;
+        }
+
+        public boolean nextPageActive() {
+            return this.activePage < pageCount - 1; 
+        }
+        
+        private EntryView(StringEntrySelectScreen parent) {
+            this.parent = parent;
+        }
+
+        private void updatePages(List<Integer> filtered_indexes) {
+            int filter_size = filtered_indexes.size();
+            this.activePage = 0;
+            this.pageCount = filter_size / parent.getMaxEntriesPerPage();
+            if (filter_size % parent.getMaxEntriesPerPage() > 0) {
+                this.pageCount += 1;
+            }
+        }
+
+        protected void render(GuiGraphics graphics) {
+            parent.drawSelectAreaBackground(graphics);
+            drawEntries(graphics);            
+            parent.drawPageIndicator(graphics, pageCount, activePage);
+        }
+
+        protected void drawEntries(GuiGraphics graphics) {
+            int half_width = parent.width / 2;
+            int half_height = parent.height / 2;
+    
+            int entry_offset = 0;
+            int entry_start_x = half_width - parent.getSelectAreaSize() / 2 + 2;
+            int entry_start_y = half_height - parent.getSelectAreaSize() / 2 + 2;
+    
+            int startIndx = this.activePage * parent.getMaxEntriesPerPage();
+            int drawNo = 0;
+            for (int i = startIndx; i < parent.filteredIndexes.size(); ++i) {
+                parent.drawEntry(graphics, entry_start_x, entry_start_y + entry_offset, 
+                    startIndx, i, this.selectedEntryInPage);
+                entry_offset += parent.getSpacePerEntry();   
+                if (++drawNo >= parent.getMaxEntriesPerPage()) break;
+            }
+        }
+
+        public void movePage(IntFunction<Integer> mover) {
+            if (this.pageCount <= 0)
+                return;
+            int new_page = mover.apply(this.activePage);
+            this.activePage =
+                Mth.clamp(new_page, 0, this.pageCount - 1);
+            onPageMove();
+        }
+
+        protected void onPageMove() {
+            this.resetSelectedEntryInPage();
+        }
+
+        public int getCurrentPageEntries() {
+            boolean is_last_page = 
+                this.activePage >= this.pageCount - 1;
+            if (is_last_page) {
+                return parent.filteredIndexes.size() % parent.getMaxEntriesPerPage();
+            }
+            return parent.getMaxEntriesPerPage();
+        }
+
+        public Optional<Integer> getSelectedFilterId(List<Integer> filter_list) {
+            if (filter_list.isEmpty())
+                return Optional.empty();
+            int ret = this.activePage * parent.getMaxEntriesPerPage() + selectedEntryInPage;
+            if (0 <= ret && ret < filter_list.size())
+                return Optional.of(filter_list.get(ret));
+            return Optional.empty();
+        }
+
+        protected final void moveSelectedEntryInPage(IntFunction<Integer> mover) {
+            var current_page_entries = this.getCurrentPageEntries();
+            if (current_page_entries <= 0)
+                return;
+            int new_value = mover.apply(this.selectedEntryInPage);
+            this.selectedEntryInPage = Mth.clamp(new_value, 0, current_page_entries);
+        }
+    
+        protected final void resetSelectedEntryInPage() {
+            this.selectedEntryInPage = 0;
+        }
+
+        public Optional<Integer> getHoveredIndexInPage(double x, double y) {
+            int entry_size = this.getCurrentPageEntries();
+            int mX = parent.width/2;
+            int mY = parent.height/2;
+            int area_size = parent.getSelectAreaSize();
+            boolean outside_of_area = 
+                Math.abs(x - mX) > area_size / 2
+                || Math.abs(y - mY) > area_size / 2;
+            if (outside_of_area) return Optional.empty();
+            int baseY = mY - area_size / 2;
+            int indx = ( Mth.floor(y - baseY) )/parent.getSpacePerEntry();
+            if (indx >= entry_size) return Optional.empty();
+            return Optional.of(indx);
+        }
+
     }
 
     private static class MouseUpdate {
