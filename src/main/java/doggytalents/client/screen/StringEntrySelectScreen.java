@@ -23,11 +23,8 @@ public class StringEntrySelectScreen extends Screen {
     private int activePage = 0;
     private int selectedEntryInPage = 0;
 
+    private MouseUpdate mouseUpdate = new MouseUpdate(this);
     private TextField searchField = new TextField(this);
-
-    private boolean startedUpdatingMouseMove = false;
-    private int mouseX0 = 0;
-    private int mouseY0 = 0;
 
     private TextOnlyButton prevPageButton;
     private TextOnlyButton nextPageButton;
@@ -87,12 +84,8 @@ public class StringEntrySelectScreen extends Screen {
     @Override
     public void render(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
 
-        this.searchField.updateBlockCharInputMillis();
-
-        if (startedUpdatingMouseMove)
-            updateMouseMoved(mouseX, mouseY);
-        else
-            mayStartUpdatingMouseMove(mouseX, mouseY);
+        this.mouseUpdate.update(mouseX, mouseY);
+        this.searchField.update();
 
         super.render(graphics, mouseX, mouseY, partialTicks);
         drawSelectArea(graphics);
@@ -101,32 +94,6 @@ public class StringEntrySelectScreen extends Screen {
         
         this.prevPageButton.active = this.activePage > 0;
         this.nextPageButton.active = this.activePage < pageCount - 1;
-    }
-
-    
-
-    private void updateMouseMoved(int mouseX, int mouseY) {
-        boolean mouse_moved = this.mouseX0 != mouseX || this.mouseY0 != mouseY;
-    
-        if (!mouse_moved)
-            return;
-        
-        this.onMouseMoved(mouseX, mouseY);
-        this.mouseX0 = mouseX;
-        this.mouseY0 = mouseY;
-    }
-
-    private void mayStartUpdatingMouseMove(int mouseX, int mouseY) {
-        int half_width = this.width / 2;
-        int half_height = this.height / 2;
-
-        int dx = Math.abs(mouseX - half_width);
-        int dy = Math.abs(mouseY - half_height);
-        if (dx > 10 || dy > 10) {
-            this.startedUpdatingMouseMove = true;
-            this.mouseX0 = mouseX;
-            this.mouseY0 = mouseY;
-        }
     }
 
     protected void onMouseMoved(double mouseX, double mouseY) {
@@ -370,6 +337,49 @@ public class StringEntrySelectScreen extends Screen {
         return false;
     }
 
+    private static class MouseUpdate {
+        private final StringEntrySelectScreen parent;
+        private boolean startedUpdate = false;
+        private int mouseX0 = 0;
+        private int mouseY0 = 0;
+
+        private MouseUpdate(StringEntrySelectScreen parent) {
+            this.parent = parent;
+        }
+        
+        public void update(int mouseX, int mouseY) {
+            if (startedUpdate)
+                updateMouseMoved(mouseX, mouseY);
+            else
+                mayStartUpdatingMouseMove(mouseX, mouseY);
+        }
+
+        private void updateMouseMoved(int mouseX, int mouseY) {
+            boolean mouse_moved = this.mouseX0 != mouseX || this.mouseY0 != mouseY;
+        
+            if (!mouse_moved)
+                return;
+            
+            parent.onMouseMoved(mouseX, mouseY);
+            this.mouseX0 = mouseX;
+            this.mouseY0 = mouseY;
+        }
+    
+        private void mayStartUpdatingMouseMove(int mouseX, int mouseY) {
+            int half_width = parent.width / 2;
+            int half_height = parent.height / 2;
+    
+            int dx = Math.abs(mouseX - half_width);
+            int dy = Math.abs(mouseY - half_height);
+            if (dx > 10 || dy > 10) {
+                this.startedUpdate = true;
+                this.mouseX0 = mouseX;
+                this.mouseY0 = mouseY;
+            }
+        }
+
+    }
+
     private static class TextField {
         private final StringEntrySelectScreen parent;
         private long blockCharInputMillis = 0;
@@ -384,7 +394,7 @@ public class StringEntrySelectScreen extends Screen {
             return this.searchString;
         }
 
-        public void updateBlockCharInputMillis() {
+        public void update() {
             if (this.blockCharInputMillis <= 0)
                 return;
             long passed = System.currentTimeMillis() - prevMillis;
