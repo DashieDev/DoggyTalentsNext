@@ -185,7 +185,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         rootView.addChildren(navBar);
         var upperView = new DivElement(null, this)
             .setPosition(PosType.FIXED, 0, 0)
-            .setSize(this.width, this.height - 20);
+            .setSize(this.width, this.height - 16);
         rootView.addChildren(upperView);
         var selectedTab = rootView.getStateAndSubscribesTo(
             ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
