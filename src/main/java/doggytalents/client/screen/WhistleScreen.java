@@ -95,24 +95,23 @@ public class WhistleScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y, int start_indx, int render_indx,
-            int selected_entry_in_page) {
+    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y, 
+        int entry_id, boolean is_selected) {
+        
         if (this.settingKeysMode) {
-            drawSetMode(graphics, entry_x, entry_y, start_indx, render_indx, selected_entry_in_page);
+            drawSetMode(graphics, entry_x, entry_y, entry_id, is_selected);
         } else {
-            drawNonSetMode(graphics, entry_x, entry_y, start_indx, render_indx, selected_entry_in_page);
+            drawNonSetMode(graphics, entry_x, entry_y, entry_id, is_selected);
         }
     }
 
-    private void drawNonSetMode(GuiGraphics graphics, int entry_x, int entry_y, int start_indx, int render_indx,
-        int selected_entry_in_page) {
+    private void drawNonSetMode(GuiGraphics graphics, int entry_x, int entry_y, 
+        int entry_id, boolean is_selected) {
         
         int color = 0xffffffff;
-        boolean is_selected_entry =
-            render_indx == start_indx + selected_entry_in_page;
-        if (is_selected_entry) 
+        if (is_selected) 
             color = getHightlightSelectedColor();
-        var text = Component.translatable(this.modeList.get(render_indx).getUnlocalisedTitle());
+        var text = Component.translatable(this.modeList.get(entry_id).getUnlocalisedTitle());
         text.withStyle(
             Style.EMPTY
             .withBold(false)
@@ -121,19 +120,17 @@ public class WhistleScreen extends StringEntrySelectScreen {
         graphics.drawString(font, text, entry_x, entry_y, color);
     }
 
-    private void drawSetMode(GuiGraphics graphics, int entry_x, int entry_y, int start_indx, int render_indx,
-        int selected_entry_in_page) {
+    private void drawSetMode(GuiGraphics graphics, int entry_x, int entry_y, 
+        int entry_id, boolean is_selected) {
             
         int color = 0xffffffff;
-        boolean is_selected_entry =
-            render_indx == start_indx + selected_entry_in_page;
-        if (is_selected_entry) 
+        if (is_selected) 
             color = getHightlightSelectedColor();
-        var mode = this.modeList.get(render_indx);
+        var mode = this.modeList.get(entry_id);
         int hotkey_indx = findHotkeyForMode(mode.getIndex());
         int prefix_color = 0xff6f00;
         MutableComponent text; 
-        if (is_selected_entry) {
+        if (is_selected) {
             boolean remove = false;
             prefix_color = 0x0aff43;
             if (hotkey_indx >= 0) { 
