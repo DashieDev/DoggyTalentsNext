@@ -19,9 +19,9 @@ public class StringEntrySelectScreen extends Screen {
     private List<String> entries;
     private List<Integer> filteredIndexes;
 
-    protected MouseUpdate mouseUpdate = new MouseUpdate(this);
-    protected EntryView entryView = new EntryView(this);
-    protected TextField searchField = new TextField(this);
+    protected final MouseUpdate mouseUpdate = new MouseUpdate(this);
+    protected final EntryView entryView = new EntryView(this);
+    protected final TextField searchField = new TextField(this);
 
     private TextOnlyButton prevPageButton;
     private TextOnlyButton nextPageButton;
@@ -165,7 +165,7 @@ public class StringEntrySelectScreen extends Screen {
     @Override
     public boolean mouseClicked(double x, double y, int p_94697_) {
         var clicked_id = this.entryView
-            .getClickedEntry(x, y, filteredIndexes);
+            .getHoveringEntry(x, y, filteredIndexes);
         if (clicked_id.isPresent()) {
             onEntrySelected(clicked_id.get());
             return true;
@@ -255,7 +255,7 @@ public class StringEntrySelectScreen extends Screen {
         return false;
     }
 
-    private static class EntryView {
+    public static class EntryView {
         private final StringEntrySelectScreen parent;
         private int pageCount = 1;
         private int activePage = 0;
@@ -288,7 +288,7 @@ public class StringEntrySelectScreen extends Screen {
             this.updatePages(filtered_indexes);
         }
 
-        public Optional<Integer> getClickedEntry(double x, double y,
+        public Optional<Integer> getHoveringEntry(double x, double y,
             List<Integer> filtered_indexes) {
             if (filtered_indexes.isEmpty())
                 return Optional.empty();
@@ -407,7 +407,7 @@ public class StringEntrySelectScreen extends Screen {
 
     }
 
-    private static class MouseUpdate {
+    public static class MouseUpdate {
         private final StringEntrySelectScreen parent;
         private boolean startedUpdate = false;
         private int mouseX0 = 0;
@@ -450,13 +450,13 @@ public class StringEntrySelectScreen extends Screen {
 
     }
 
-    private static class TextField {
+    public static class TextField {
         private final StringEntrySelectScreen parent;
         private long blockCharInputMillis = 0;
         private long prevMillis = 0;
         private String searchString = "";
 
-        public TextField(StringEntrySelectScreen parent) {
+        private TextField(StringEntrySelectScreen parent) {
             this.parent = parent;
         }
 
