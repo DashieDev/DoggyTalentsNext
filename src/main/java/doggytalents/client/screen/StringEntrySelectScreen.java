@@ -107,7 +107,12 @@ public class StringEntrySelectScreen extends Screen {
         
         int entry_id = this.filteredIndexes.get(render_indx);
         var text = this.entries.get(entry_id);
+        text = modifyEntryText(text);
         graphics.drawString(font, text, entry_x, entry_y, color);
+    }
+
+    protected String modifyEntryText(String entryText) {
+        return entryText;
     }
 
     protected void drawNoEntryMsg(GuiGraphics graphics, int x, int y) {
