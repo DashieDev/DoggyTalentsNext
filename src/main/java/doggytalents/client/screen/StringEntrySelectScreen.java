@@ -307,7 +307,10 @@ public class StringEntrySelectScreen extends Screen {
         for (int i = 0; i < this.entries.size(); ++i) {
             var entry = this.entries.get(i);
             if (entry.length() < search_str.length()) continue; 
-            if (entry.contains(search_str)) {
+            boolean matched = this.matchIgnoreCaseSearch() ?
+                entry.toLowerCase().contains(search_str.toLowerCase())
+                : entry.contains(search_str);
+            if (matched) {
                 this.filteredIndexes.add(i);
             }
         }
@@ -359,6 +362,10 @@ public class StringEntrySelectScreen extends Screen {
 
     protected int getMaxSearchBufferSize() {
         return 64;
+    }
+
+    protected boolean matchIgnoreCaseSearch() {
+        return false;
     }
 
     private static class TextField {
