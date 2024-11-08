@@ -294,6 +294,8 @@ public class TalentInfoViewElement extends AbstractElement {
             var talentInst = talentInstOptional.get();
             if (!(talentInst instanceof CreeperSweeperTalent sweep))
                 return;
+            if (!sweep.canAttackCreeper())
+                return;
             container.addChildren(
                 new ButtonOptionEntry(container, getScreen(), 
                     new FlatCheckbox(0, 0,
