@@ -97,16 +97,11 @@ public class StringEntrySelectScreen extends Screen {
     }
 
     protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y, 
-        int start_indx, int render_indx, int selected_entry_in_page) {
+        int entry_id, boolean is_selected) {
         int color = 0xffffffff;
 
-        boolean is_selected_entry =
-            render_indx == start_indx + selected_entry_in_page;
-
-        if (is_selected_entry) 
+        if (is_selected) 
             color = this.getHightlightSelectedColor();
-        
-        int entry_id = this.filteredIndexes.get(render_indx);
         Component text = Component.literal(this.entries.get(entry_id))
             .setStyle(Style.EMPTY.withColor(color));
         text = modifyEntryText(text, entry_id);
@@ -343,7 +338,8 @@ public class StringEntrySelectScreen extends Screen {
             }
             for (int i = startIndx; i < parent.filteredIndexes.size(); ++i) {
                 parent.drawEntry(graphics, entry_start_x, entry_start_y + entry_offset, 
-                    startIndx, i, this.selectedEntryInPage);
+                    parent.filteredIndexes.get(i), 
+                    i == startIndx + this.selectedEntryInPage);
                 entry_offset += parent.getSpacePerEntry();   
                 if (++drawNo >= parent.getMaxEntriesPerPage()) break;
             }

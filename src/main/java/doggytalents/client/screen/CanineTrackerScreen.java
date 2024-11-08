@@ -91,19 +91,18 @@ public class CanineTrackerScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y, int start_indx, int render_indx,
-            int selected_entry_in_page) {
-        super.drawEntry(graphics, entry_x, entry_y, start_indx, render_indx, selected_entry_in_page);
+    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y, 
+        int entry_id, boolean is_selected) {
+
+        super.drawEntry(graphics, entry_x, entry_y, entry_id, is_selected);
         int textx1 = this.width/2 + 100 - 35;
-        var dogId = this.dogIdList.get(render_indx);
+        var dogId = this.dogIdList.get(entry_id);
         int dist = this.dogDistanceMap.get(dogId);
         String text1 = 
             this.showUuid ? 
             "" : (dist > 99_999 ? "far" : "" + dist);
         int color = 0xffffffff;
-        boolean is_selected_entry =
-            render_indx == start_indx + selected_entry_in_page;
-        if (is_selected_entry) 
+        if (is_selected) 
             color = this.getHightlightSelectedColor();
         graphics.drawString(font, text1, textx1, entry_y, color);
     }
