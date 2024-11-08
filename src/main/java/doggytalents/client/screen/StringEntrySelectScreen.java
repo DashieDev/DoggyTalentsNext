@@ -78,7 +78,7 @@ public class StringEntrySelectScreen extends Screen {
     }
 
     protected void onPageUpdated() {
-        this.selectedEntryInPage = 0;
+        this.resetSelectedEntryInPage();
     }
     
     @Override
@@ -97,9 +97,9 @@ public class StringEntrySelectScreen extends Screen {
     }
 
     protected void onMouseMoved(double mouseX, double mouseY) {
-        int newIndx = getHoveredIndex(mouseX, mouseY, getCurrentPageEntries());
+        final int newIndx = getHoveredIndex(mouseX, mouseY, getCurrentPageEntries());
         if (newIndx < 0) return;
-        this.selectedEntryInPage = newIndx;
+        this.moveSelectedEntryInPage(x -> newIndx);
     }
 
     private int getHoveredIndex(double x, double y, int entry_size) {
@@ -229,7 +229,6 @@ public class StringEntrySelectScreen extends Screen {
         this.selectedEntryInPage = 0;
     }
     
-
     @Override
     public boolean mouseClicked(double x, double y, int p_94697_) {
         boolean ret = super.mouseClicked(x, y, p_94697_);
@@ -261,7 +260,7 @@ public class StringEntrySelectScreen extends Screen {
 
     protected void updateFilteredIndexes() {
         this.filteredIndexes.clear();
-        this.selectedEntryInPage = 0;
+        this.resetSelectedEntryInPage();
 
         final var search_str = this.searchField.getValue(); 
 
