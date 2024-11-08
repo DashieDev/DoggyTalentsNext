@@ -111,6 +111,10 @@ public class StringEntrySelectScreen extends Screen {
         font.draw(graphics, text, entry_x, entry_y, color);
     }
 
+    protected void drawNoEntryMsg(GuiGraphics graphics, int x, int y) {
+        
+    }
+
     protected void drawPageIndicator(GuiGraphics graphics, int pageCount, int activePage) {
         int half_width = this.width / 2;
         int half_height = this.height / 2;
@@ -327,6 +331,10 @@ public class StringEntrySelectScreen extends Screen {
     
             int startIndx = this.activePage * parent.getMaxEntriesPerPage();
             int drawNo = 0;
+            if (parent.filteredIndexes.isEmpty()) {
+                parent.drawNoEntryMsg(graphics, entry_start_x, entry_start_y);
+                return;
+            }
             for (int i = startIndx; i < parent.filteredIndexes.size(); ++i) {
                 parent.drawEntry(graphics, entry_start_x, entry_start_y + entry_offset, 
                     startIndx, i, this.selectedEntryInPage);
