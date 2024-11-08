@@ -220,6 +220,10 @@ public class StringEntrySelectScreen extends Screen {
         this.searchField.setBlockCharInputTime(millis);
     }
 
+    public Optional<Integer> getHoveredEntry(int mouseX, int mouseY) {
+        return this.entryView.getHoveringEntry(mouseX, mouseY, filteredIndexes);
+    }
+
     protected int getMaxEntriesPerPage() {
         return 19;
     }

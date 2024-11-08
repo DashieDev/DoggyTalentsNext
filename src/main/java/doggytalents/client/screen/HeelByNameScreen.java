@@ -18,6 +18,7 @@ import doggytalents.common.item.WhistleItem;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.HeelByNameData;
 import doggytalents.common.util.ItemUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -158,20 +159,43 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
             entryText = entryText.copy()
                 .withStyle(Style.EMPTY.withColor(HLC_HEEL_AND_SIT));   
         }
-        
+        return entryText;
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(graphics, mouseX, mouseY, partialTicks);
+        mayRenderShowUUID(graphics, mouseX, mouseY, partialTicks);
+    }
+
+    private void mayRenderShowUUID(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         if (!this.showUuid)
-            return entryText;
-        var dog = this.minecraft.level.getEntity(this.dogIdList.get(entryId));
+            return;
+        var hover_entry_optional = this.getHoveredEntry(mouseX, mouseY);
+        if (!hover_entry_optional.isPresent())
+            return;
+        int entry_id = hover_entry_optional.get();
+        var dog_id = this.dogIdList.get(entry_id);
+        var dog = this.minecraft.level.getEntity(dog_id);
         if (dog == null)
-            return entryText;
+            return;
         var uuid = dog.getStringUUID();
         if (uuid == null)
-            return entryText;
+            return;
+        var uuid_c1 = Component.literal(uuid.toString())
+            .withStyle(ChatFormatting.GRAY);
+        if (this.height >= 273) {
+            int mX = this.width/2;
+            int mY = this.height/2;
 
-        entryText = Component.literal(entryText.getString() + (
-            " ( " + uuid + " ) "
-        )).setStyle(entryText.getStyle());
-        return entryText;
+            int uuid_width = font.width(uuid_c1);
+            int tX = mX - uuid_width/2;
+            int tY = mY + getSelectAreaSize()/2 + 23;
+            graphics.drawString(font, uuid_c1, tX, tY, 0xffffffff);
+        } else {
+            graphics.renderComponentTooltip(font, 
+                List.of(uuid_c1), mouseX, mouseY);
+        }
     }
 
     @Override

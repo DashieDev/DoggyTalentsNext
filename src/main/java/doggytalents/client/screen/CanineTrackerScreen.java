@@ -18,6 +18,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.ConductingBoneData;
 import doggytalents.common.network.packet.data.CanineTrackerData;
+import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -98,9 +99,7 @@ public class CanineTrackerScreen extends StringEntrySelectScreen {
         int textx1 = this.width/2 + 100 - 35;
         var dogId = this.dogIdList.get(entry_id);
         int dist = this.dogDistanceMap.get(dogId);
-        String text1 = 
-            this.showUuid ? 
-            "" : (dist > 99_999 ? "far" : "" + dist);
+        String text1 = (dist > 99_999 ? "far" : "" + dist);
         int color = 0xffffffff;
         if (is_selected) 
             color = this.getHightlightSelectedColor();
@@ -115,15 +114,33 @@ public class CanineTrackerScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected Component modifyEntryText(Component entryText, int entryId, boolean is_selected) {
-        if (this.showUuid) {
-            entryText = Component.literal(
-                entryText.getString() +
-                " ( " + this.dogIdList.get(entryId) + " ) ")
-            .setStyle(entryText.getStyle());
-        }
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(graphics, mouseX, mouseY, partialTicks);
+        mayRenderShowUUID(graphics, mouseX, mouseY, partialTicks);
+    }
 
-        return entryText;
+    private void mayRenderShowUUID(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        if (!this.showUuid)
+            return;
+        var hover_entry_optional = this.getHoveredEntry(mouseX, mouseY);
+        if (!hover_entry_optional.isPresent())
+            return;
+        int entry_id = hover_entry_optional.get();
+        var uuid = this.dogIdList.get(entry_id);
+        var uuid_c1 = Component.literal(uuid.toString())
+            .withStyle(ChatFormatting.GRAY);
+        if (this.height >= 273) {
+            int mX = this.width/2;
+            int mY = this.height/2;
+
+            int uuid_width = font.width(uuid_c1);
+            int tX = mX - uuid_width/2;
+            int tY = mY + getSelectAreaSize()/2 + 23;
+            graphics.drawString(font, uuid_c1, tX, tY, 0xffffffff);
+        } else {
+            graphics.renderComponentTooltip(font, 
+                List.of(uuid_c1), mouseX, mouseY);
+        }
     }
 
     @Override
