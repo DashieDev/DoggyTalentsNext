@@ -106,12 +106,12 @@ public class StringEntrySelectScreen extends Screen {
             color = this.getHightlightSelectedColor();
         
         int entry_id = this.filteredIndexes.get(render_indx);
-        var text = this.entries.get(entry_id);
+        Component text = Component.literal(this.entries.get(entry_id));
         text = modifyEntryText(text, entry_id);
         graphics.drawString(font, text, entry_x, entry_y, color);
     }
 
-    protected String modifyEntryText(String entryText, int entryId) {
+    protected Component modifyEntryText(Component entryText, int entryId) {
         return entryText;
     }
 

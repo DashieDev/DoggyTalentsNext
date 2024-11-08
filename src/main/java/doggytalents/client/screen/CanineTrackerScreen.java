@@ -116,10 +116,11 @@ public class CanineTrackerScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected String modifyEntryText(String entryText, int entryId) {
+    protected Component modifyEntryText(Component entryText, int entryId) {
         if (this.showUuid) {
-            entryText = entryText +
-                " ( " + this.dogIdList.get(entryId) + " ) ";
+            entryText = Component.literal(
+                entryText.getString() +
+                " ( " + this.dogIdList.get(entryId) + " ) ");
         }
 
         return entryText;

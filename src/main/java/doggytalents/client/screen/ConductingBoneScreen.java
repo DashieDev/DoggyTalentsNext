@@ -106,11 +106,13 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected String modifyEntryText(String entryText, int entryId) {
+    protected Component modifyEntryText(Component entryText, int entryId) {
         if (this.showUuid) {
-            return entryText +
-                " ( " + this.dogIdList.get(entryId) + " ) ";
+            entryText = Component.literal(
+                entryText.getString() +
+                " ( " + this.dogIdList.get(entryId) + " ) ");
         }
+
         return entryText;
     }
 
