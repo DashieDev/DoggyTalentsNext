@@ -106,7 +106,7 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected Component modifyEntryText(Component entryText, int entryId) {
+    protected Component modifyEntryText(Component entryText, int entryId, boolean is_selected) {
         if (this.showUuid) {
             entryText = Component.literal(
                 entryText.getString() +

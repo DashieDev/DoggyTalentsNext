@@ -104,11 +104,11 @@ public class StringEntrySelectScreen extends Screen {
             color = this.getHightlightSelectedColor();
         Component text = Component.literal(this.entries.get(entry_id))
             .setStyle(Style.EMPTY.withColor(color));
-        text = modifyEntryText(text, entry_id);
+        text = modifyEntryText(text, entry_id, is_selected);
         graphics.drawString(font, text, entry_x, entry_y, 0xffffffff);
     }
 
-    protected Component modifyEntryText(Component entryText, int entryId) {
+    protected Component modifyEntryText(Component entryText, int entryId, boolean is_selected) {
         return entryText;
     }
 
