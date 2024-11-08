@@ -44,7 +44,7 @@ public class CreeperSweeperTalent extends TalentInstance {
             // }
 
             if (
-                this.level() >= this.talent.getMaxLevel()
+                this.canAttackCreeper()
                 && ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.MAX_CREEPER_SWEEPER_DONT_GROWL)
             ) return;
 
@@ -76,23 +76,27 @@ public class CreeperSweeperTalent extends TalentInstance {
 
     @Override
     public InteractionResult canAttack(AbstractDog dog, LivingEntity entity) {
-        if (this.level() >= 5 && onlyAttackCreeper) {
+        if (this.canAttackCreeper() && onlyAttackCreeper) {
             return entity instanceof Creeper ? InteractionResult.SUCCESS : InteractionResult.FAIL;
         }
-        return entity instanceof Creeper && this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        return entity instanceof Creeper && this.canAttackCreeper() ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 
     @Override
     public InteractionResult shouldAttackEntity(AbstractDog dog, LivingEntity target, LivingEntity owner) {
-        if (this.level() >= 5 && onlyAttackCreeper) {
+        if (this.canAttackCreeper() && onlyAttackCreeper) {
             return target instanceof Creeper ? InteractionResult.SUCCESS : InteractionResult.FAIL;
         }
-        return target instanceof Creeper && this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        return target instanceof Creeper && this.canAttackCreeper() ? InteractionResult.SUCCESS : InteractionResult.PASS;
      }
+
+    public boolean canAttackCreeper() {
+        return this.level() >= 5;
+    }
 
     @Override
     public void doAdditionalAttackEffects(AbstractDog dogIn, Entity target) {
-        if (this.level() < 5)
+        if (!this.canAttackCreeper())
             return;
         if (!(target instanceof Creeper creeper))
             return;
