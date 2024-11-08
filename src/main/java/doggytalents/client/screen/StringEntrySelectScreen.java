@@ -39,6 +39,7 @@ public class StringEntrySelectScreen extends Screen {
         super.init();
 
         addPageButtons();
+        addUtilitiesButton();
     }
 
     protected void addPageButtons() {
@@ -56,6 +57,10 @@ public class StringEntrySelectScreen extends Screen {
         this.nextPageButton = nextPage;
         this.addRenderableWidget(prevPage);
         this.addRenderableWidget(nextPage);
+    }
+
+    protected void addUtilitiesButton() {
+
     }
 
     protected void nextPage() {
