@@ -13,6 +13,7 @@ import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
 
@@ -108,9 +109,10 @@ public class StringEntrySelectScreen extends Screen {
             color = this.getHightlightSelectedColor();
         
         int entry_id = this.filteredIndexes.get(render_indx);
-        Component text = Component.literal(this.entries.get(entry_id));
+        Component text = Component.literal(this.entries.get(entry_id))
+            .setStyle(Style.EMPTY.withColor(color));
         text = modifyEntryText(text, entry_id);
-        graphics.drawString(font, text, entry_x, entry_y, color);
+        graphics.drawString(font, text, entry_x, entry_y, 0xffffffff);
     }
 
     protected Component modifyEntryText(Component entryText, int entryId) {
