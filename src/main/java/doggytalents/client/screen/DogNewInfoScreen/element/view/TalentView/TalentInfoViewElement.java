@@ -22,6 +22,7 @@ import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.client.screen.framework.element.ScrollView;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.FlatButton;
+import doggytalents.client.screen.framework.widget.FlatCheckbox;
 import doggytalents.client.screen.framework.widget.OneLineLimitedTextArea;
 import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.common.config.ConfigHandler;
@@ -107,20 +108,6 @@ public class TalentInfoViewElement extends AbstractElement {
     }
 
     private void addTalentSpecificOptions(AbstractElement container, Talent talent) {
-        /*
-         * var dogInvButton = new DogInventoryButton(
-            0, 0, getScreen(), (btn) -> {
-                PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
-                btn.active = false;
-            });
-        int dogInvButtonX = this.getRealX() + PADDING_LEFT;
-        int dogInvButtonY = this.getRealY() + this.getSizeY() - 60;
-
-        dogInvButton.setX(dogInvButtonX);
-        dogInvButton.setY(dogInvButtonY);
-        this.addChildren(dogInvButton);
-         */
-
         if (talent == DoggyTalents.PACK_PUPPY.get()) {
             addRenderPackPuppyButton(dog, container);
 
@@ -166,17 +153,15 @@ public class TalentInfoViewElement extends AbstractElement {
             if (torchTalent.canRenderTorch()) {
                 container.addChildren(
                     new ButtonOptionEntry(container, getScreen(), 
-                        new FlatButton(
-                            0, 0,
-                            40, 20, Component.literal("" + torchTalent.renderTorch()), 
+                        new FlatCheckbox(0, 0,
                             b -> {
-                                Boolean newVal = !torchTalent.renderTorch();
-                                b.setMessage(Component.literal("" + newVal));
+                                boolean newVal = !torchTalent.renderTorch();
+                                b.setValue(newVal);
                                 torchTalent.setRenderTorch(newVal);
                                 var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.DOGGY_TORCH_RENDER.get(), newVal);
                                 PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                             }     
-                        ),
+                        ).initialValue(torchTalent.renderTorch()),
                         I18n.get("talent.doggytalents.doggy_torch.render_torch")
                     )
                     .init()
@@ -192,17 +177,15 @@ public class TalentInfoViewElement extends AbstractElement {
 
             container.addChildren(
                 new ButtonOptionEntry(container, getScreen(), 
-                    new FlatButton(
-                        0, 0,
-                        40, 20, Component.literal("" + toolsTalent.pickFirstTool()), 
+                    new FlatCheckbox(0, 0,
                         b -> {
-                            Boolean newVal = !toolsTalent.pickFirstTool();
-                            b.setMessage(Component.literal("" + newVal));
+                            boolean newVal = !toolsTalent.pickFirstTool();
+                            b.setValue(newVal);
                             toolsTalent.setPickFirstTool(newVal);
                             var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.DOGGY_TOOLS_EXC.get(), newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
-                    ),
+                    ).initialValue(toolsTalent.pickFirstTool()),
                     I18n.get("talent.doggytalents.doggy_tools.pick_first_tool")
                 )
                 .init()
@@ -258,17 +241,15 @@ public class TalentInfoViewElement extends AbstractElement {
                 return;
             container.addChildren(
                 new ButtonOptionEntry(container, getScreen(), 
-                    new FlatButton(
-                        0, 0,
-                        40, 20, Component.literal("" + rescue.renderBox()), 
+                    new FlatCheckbox(0, 0,
                         b -> {
-                            Boolean newVal = !rescue.renderBox();
-                            b.setMessage(Component.literal("" + newVal));
+                            boolean newVal = !rescue.renderBox();
+                            b.setValue(newVal);
                             rescue.setRenderBox(newVal);
                             var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.RESCUE_DOG_RENDER.get(), newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
-                    ),
+                    ).initialValue(rescue.renderBox()),
                     I18n.get("talent.doggytalents.rescue_dog.render_box")
                 )
                 .init()
@@ -315,17 +296,15 @@ public class TalentInfoViewElement extends AbstractElement {
                 return;
             container.addChildren(
                 new ButtonOptionEntry(container, getScreen(), 
-                    new FlatButton(
-                        0, 0,
-                        40, 20, Component.literal("" + sweep.onlyAttackCreeper()), 
+                    new FlatCheckbox(0, 0,
                         b -> {
-                            Boolean newVal = !sweep.onlyAttackCreeper();
-                            b.setMessage(Component.literal("" + newVal));
+                            boolean newVal = !sweep.onlyAttackCreeper();
+                            b.setValue(newVal);
                             sweep.setOnlyAttackCreeper(newVal);
                             var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.CREEPER_SWEEPER_EXC.get(), newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
-                    ),
+                    ).initialValue(sweep.onlyAttackCreeper()),
                     I18n.get("talent.doggytalents.creeper_sweeper.only_attack_creeper")
                 )
                 .init()
@@ -339,17 +318,15 @@ public class TalentInfoViewElement extends AbstractElement {
                 return;
             container.addChildren(
                 new ButtonOptionEntry(container, getScreen(), 
-                    new FlatButton(
-                        0, 0,
-                        40, 20, Component.literal("" + fisher.renderHat()), 
+                    new FlatCheckbox(0, 0,
                         b -> {
-                            Boolean newVal = !fisher.renderHat();
-                            b.setMessage(Component.literal("" + newVal));
+                            boolean newVal = !fisher.renderHat();
+                            b.setValue(newVal);
                             fisher.setRenderHat(newVal);
                             var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.FISHER_DOG_RENDER.get(), newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
-                    ),
+                    ).initialValue(fisher.renderHat()),
                     I18n.get("talent.doggytalents.fisher_dog.render_hat")
                 )
                 .init()
@@ -366,17 +343,15 @@ public class TalentInfoViewElement extends AbstractElement {
             return;
         container.addChildren(
             new ButtonOptionEntry(container, getScreen(), 
-                new FlatButton(
-                    0, 0,
-                    40, 20, Component.literal("" + packPup.renderChest()), 
+                new FlatCheckbox(0, 0,
                     b -> {
-                        Boolean newVal = !packPup.renderChest();
-                        b.setMessage(Component.literal("" + newVal));
+                        boolean newVal = !packPup.renderChest();
+                        b.setValue(newVal);
                         packPup.setRenderChest(newVal);
                         var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.PACK_PUPPY_RENDER.get(), newVal);
                         PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                     }     
-                ),
+                ).initialValue(packPup.renderChest()),
                 I18n.get("talent.doggytalents.pack_puppy.render_chest")
             )
             .init()
@@ -384,29 +359,25 @@ public class TalentInfoViewElement extends AbstractElement {
         if (packPup.canCollectItems()) {
             container.addChildren(
                 new ButtonOptionEntry(container, getScreen(), 
-                    new FlatButton(
-                        0, 0,
-                        40, 20, Component.literal("" + packPup.pickupItems()), 
+                    new FlatCheckbox(0, 0,
                         b -> {
-                            Boolean newVal = !packPup.pickupItems();
-                            b.setMessage(Component.literal("" + newVal));
+                            boolean newVal = !packPup.pickupItems();
+                            b.setValue(newVal);
                             packPup.setPickupItems(newVal);
                             var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.PACK_PUPPY_PICKUP.get(), newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
-                    ),
+                    ).initialValue(packPup.pickupItems()),
                     I18n.get("talent.doggytalents.pack_puppy.pickup_item")
                 )
                 .init()
             );
             container.addChildren(
                 new ButtonOptionEntry(container, getScreen(), 
-                    new FlatButton(
-                        0, 0,
-                        40, 20, Component.literal("" + packPup.collectKillLoot()), 
+                    new FlatCheckbox(0, 0,
                         b -> {
-                            Boolean newVal = !packPup.collectKillLoot();
-                            b.setMessage(Component.literal("" + newVal));
+                            boolean newVal = !packPup.collectKillLoot();
+                            b.setValue(newVal);
                             packPup.setCollectKillLoot(newVal);
                             var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.PACK_PUPPY_LOOT.get(), newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
@@ -419,7 +390,7 @@ public class TalentInfoViewElement extends AbstractElement {
                             var c1 = Component.translatable("talent.doggytalents.pack_puppy.collect_kill_loot.desc");
                             ToolTipOverlayManager.get().setComponents(List.of(c1));
                         }
-                    },
+                    }.initialValue(packPup.collectKillLoot()),
                     I18n.get("talent.doggytalents.pack_puppy.collect_kill_loot")
                 )
                 .init()
@@ -428,17 +399,15 @@ public class TalentInfoViewElement extends AbstractElement {
         if (packPup.canOfferFood()) {
             container.addChildren(
                 new ButtonOptionEntry(container, getScreen(), 
-                    new FlatButton(
-                        0, 0,
-                        40, 20, Component.literal("" + packPup.offerFood()), 
+                    new FlatCheckbox(0, 0,
                         b -> {
-                            Boolean newVal = !packPup.offerFood();
-                            b.setMessage(Component.literal("" + newVal));
+                            boolean newVal = !packPup.offerFood();
+                            b.setValue(newVal);
                             packPup.setOfferFood(newVal);
                             var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.PACK_PUPPY_FOOD.get(), newVal);
                             PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
                         }     
-                    ),
+                    ).initialValue(packPup.offerFood()),
                     I18n.get("talent.doggytalents.pack_puppy.offer_food")
                 )
                 .init()
