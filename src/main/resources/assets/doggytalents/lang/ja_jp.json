@@ -233,7 +233,7 @@
     "item.doggytalents.upright_piano_brown_item": "アップライトピアノ - 茶色 (実験的)",
     "items.doggytalents.piano_item_common.description": "松明を持ったままスニーク＋右クリックで向きを調整。",
     "item.doggytalents.dog_plushie_toy_item": "犬ぬいぐるみ",
-    "item.doggytalents.dog_plushie_toy_item.description": "松明を持ったままスニーク＋右クリックで向きを調整。",
+    "item.doggytalents.dog_plushie_toy_item.description": "松明を持ったままスニーク＋右クリックで向きを調整。このアイテムで犬を右クリックすると、犬のバリアントと首輪がこのアイテムにコピーされます。",
     "item.doggytalents.cape_coloured.tooltip": "色: %s",
     "item.doggytalents.wool_collar.tooltip": "色: %s",
     "item.doggytalents.creative_collar.tooltip": "無制限にポイントが使えます。",
