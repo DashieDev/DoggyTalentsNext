@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Objects;
 
 import doggytalents.DoggyAccessories;
+import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.accessory.DyeableAccessory.DyeableAccessoryInstance;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.variant.DogVariant;
 import doggytalents.common.variant.util.DogVariantUtil;
@@ -154,13 +156,13 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
 
         var stack = playerIn.getItemInHand(handIn);
         
-        if (copyDogToStack(dog, stack))
+        if (copyDogToStack(dog, stack, playerIn.isShiftKeyDown()))
             return InteractionResult.SUCCESS;
 
         return InteractionResult.FAIL;
     }
 
-    private boolean copyDogToStack(Dog dog, ItemStack stack) {
+    private boolean copyDogToStack(Dog dog, ItemStack stack, boolean copy_color) {
         boolean changed = false;
         var variant_dog = dog.dogVariant();
         var variant_stack = getDogVariant(stack);
@@ -180,7 +182,26 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
             changed = true;
         }
 
+        
+        if (copy_color) {
+            if (copyCollarColor(dog, stack))
+                return true;
+        }
+
         return changed;
+    }
+
+    private boolean copyCollarColor(Dog dog, ItemStack stack) {
+        int collar_color_stack = ItemUtil.getDyeColorForStack(stack);
+        int collar_color_dog = dog.getAccessory(DoggyAccessoryTypes.COLLAR.get())
+            .filter(x -> (x instanceof DyeableAccessoryInstance))
+            .map(x -> ((DyeableAccessoryInstance)x).getColorInteger())
+            .orElse(this.getDefaultColor(stack));
+        if (collar_color_dog == collar_color_stack)
+            return false;
+        
+        ItemUtil.setDyeColorForStack(stack, collar_color_dog);
+        return true;
     }
 
     
