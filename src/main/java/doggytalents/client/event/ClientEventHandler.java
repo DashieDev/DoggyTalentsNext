@@ -29,6 +29,9 @@ import doggytalents.common.network.packet.data.DogSyncData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
+import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.Util;
+import doggytalents.common.variant.DogVariant;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -38,6 +41,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.Material;
@@ -301,6 +305,13 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         CanineTrackerLocateRenderer.onWorldLogOut();
+    }
+
+    public static String getTranslatedVariantStr(DogVariant variant) {
+        var translation_key = variant.translation();
+        if (I18n.exists(translation_key))
+            return I18n.get(translation_key);
+        return variant.id().toString();
     }
 
 }
