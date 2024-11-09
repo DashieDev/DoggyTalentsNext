@@ -25,11 +25,13 @@ public class ConfigHandler {
     public static TalentConfig TALENT;
     public static RespawnTagConfig RESPAWN_TAGS;
     public static DogCustomSkinConfig CUSTOM_SKINS;
+    public static DogCustomSkinClientConfig CUSTOM_SKINS_CLIENT;
     private static ForgeConfigSpec CONFIG_SERVER_SPEC;
     private static ForgeConfigSpec CONFIG_CLIENT_SPEC;
     private static ForgeConfigSpec CONFIG_TALENT_SPEC;
     private static ForgeConfigSpec CONFIG_RESPAWN_TAG_SPEC;
     private static ForgeConfigSpec CONFIG_CUSTOM_SKINS_SPEC;
+    private static ModConfigSpec CONFIG_CUSTOM_SKINS_CLIENT_SPEC;
 
     public static final boolean ALWAYS_SHOW_DOG_NAME = true;
     public static final float DEFAULT_MAX_HUNGER = 120F;
@@ -49,6 +51,7 @@ public class ConfigHandler {
         ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC);
         initRespawnTagsConfig();
         initCustomSkinsConfig();
+        initCustomSkinsConfigClient();
         NeoForgeModConfigEvents.loading(Constants.MOD_ID).register(ConfigHandler::onConfigLoad);
     }
 
@@ -74,6 +77,16 @@ public class ConfigHandler {
         CUSTOM_SKINS = customSkinPair.getLeft();
 
         ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_CUSTOM_SKINS_SPEC, "doggytalents-dog_custom_skins.toml");
+    }
+
+    public static void initCustomSkinsConfigClient() {
+        var customSkinPair = new ModConfigSpec.Builder().configure(DogCustomSkinClientConfig::new);
+        CONFIG_CUSTOM_SKINS_CLIENT_SPEC = customSkinPair.getRight();
+        CUSTOM_SKINS_CLIENT = customSkinPair.getLeft();
+
+        ModLoadingContext.get()
+            .getActiveContainer().registerConfig(ModConfig.Type.CLIENT, 
+                CONFIG_CUSTOM_SKINS_CLIENT_SPEC, "doggytalents-dog_custom_skins_client.toml");
     }
 
     public static class ClientConfig {
@@ -738,11 +751,97 @@ public class ConfigHandler {
 
     }
 
+    public static class DogCustomSkinClientConfig {
+
+        public ModConfigSpec.IntValue STRATEGY;
+        public ConfigValue<List<? extends String>> WHITELISTED_ID;
+        public ConfigValue<List<? extends String>> BLACKLISTED_ID;
+
+        private Set<String> whitelistedSet = Set.of();
+        private Set<String> blacklistedSet = Set.of(); 
+
+        public DogCustomSkinClientConfig(ModConfigSpec.Builder builder) {
+            builder.comment("Specify the Strategy to be used when picking which Dog Custom Skin");
+            builder.comment("will not be loaded clientside. The entry for these lists is");
+            builder.comment("required to be the texture's path in ResourceLocation format");
+            builder.comment("(e.g. doggytalents:textures/entity/dog/custom/arcanine_shiro.png).");
+            builder.comment("Your client do need to be restarted for any changes to take places.");
+            builder.comment("0: Allow all");
+            builder.comment("1: Allow all except blacklisted");
+            builder.comment("2: Disallow all except whitelisted");
+            builder.comment("Other: Defaulted to 0");
+
+            STRATEGY = builder.defineInRange("strategy", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            
+            WHITELISTED_ID = builder
+                .translation("doggytalents.whitelisted_id")    
+                .<String>defineList("whitelisted_id", List.of(), 
+                    obj -> {
+                        return obj instanceof String;
+                    }
+                );
+            BLACKLISTED_ID = builder
+            .translation("doggytalents.blacklisted_id")    
+            .<String>defineList("blacklisted_id", List.of(), 
+                obj -> {
+                    return obj instanceof String;
+                }
+            );
+        }
+
+        public static<T> T getConfig(ConfigValue<T> config) {
+            if (CONFIG_CUSTOM_SKINS_CLIENT_SPEC.isLoaded()) {
+                    return config.get();
+            }
+            return config.getDefault();
+        }
+
+        public boolean isBlacklisted(String val) {
+            return this.blacklistedSet.contains(val);
+        }
+
+        public boolean isWhitelisted(String val) {
+            return this.whitelistedSet.contains(val);
+        }
+
+        public void reloadSets() {
+            var blacklist = DogCustomSkinClientConfig.getConfig(CUSTOM_SKINS_CLIENT.BLACKLISTED_ID);
+            var whitelist = DogCustomSkinClientConfig.getConfig(CUSTOM_SKINS_CLIENT.WHITELISTED_ID);
+            this.blacklistedSet = new HashSet<>(blacklist);
+            this.whitelistedSet = new HashSet<>(whitelist);
+        }
+
+        public static DogCustomSkinClientConfig getInstance() {
+            return CUSTOM_SKINS_CLIENT;
+        }
+
+        public static DataStrategy getStrategy() {
+            if (CUSTOM_SKINS_CLIENT == null)
+                return DataStrategy.NONE;
+            if (CUSTOM_SKINS_CLIENT.STRATEGY == null)
+                return DataStrategy.NONE;
+            var id = DogCustomSkinClientConfig.getConfig(CUSTOM_SKINS_CLIENT.STRATEGY);
+            if (id == 1)
+                return DataStrategy.ALLOW_EXCEPT;
+            else if (id == 2)
+                return DataStrategy.DISALLOW_EXCEPT;
+            return DataStrategy.NONE;
+        }
+
+        public enum DataStrategy {
+            ALLOW_EXCEPT, DISALLOW_EXCEPT, NONE
+        }
+
+    }
+
     public static void onConfigLoad(net.neoforged.fml.config.ModConfig config) {
         var loaded_config = config;
         if (loaded_config.getSpec() == CONFIG_CUSTOM_SKINS_SPEC) {
             if (CUSTOM_SKINS != null)
                 CUSTOM_SKINS.reloadSets();
+        } else if (loaded_config.getSpec() == CONFIG_CUSTOM_SKINS_CLIENT_SPEC) {
+            if (CUSTOM_SKINS_CLIENT != null)
+                CUSTOM_SKINS_CLIENT.reloadSets();
         }
             
     }

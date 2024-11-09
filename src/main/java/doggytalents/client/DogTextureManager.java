@@ -262,6 +262,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         this.customSkinLoc.clear();
         this.locToSkinHash.clear();
         this.skinHashToLoc.clear();
+        int skipping_cnt = 0;
 
         var filter_skin_map = Maps.<DogSkin, String>newHashMap();
         var filter_skin_map_1 = Maps.<String, DogSkin>newHashMap();
@@ -269,9 +270,13 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
         skin_list.add(DogSkin.CLASSICAL);
         
-        for (var entry : loadResult.dogSkin2Hash.entrySet()) {
-            var skin = entry.getKey();
-            var hash = entry.getValue();
+        for (var entry : loadResult.dogSkinsAndHash) {
+            var skin = entry.getLeft();
+            var hash = entry.getRight();
+            if (isDogSkinBlacklisted(skin)) {
+                ++skipping_cnt;
+                continue;
+            }
             filter_skin_map.put(skin, hash);
             filter_skin_map_1.put(hash, skin);
             skin_list.add(skin);
@@ -280,6 +285,38 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         this.customSkinLoc.addAll(skin_list);
         this.locToSkinHash.putAll(filter_skin_map);
         this.skinHashToLoc.putAll(filter_skin_map_1);
+
+        
+        if (skipping_cnt > 0) {
+            DogTextureManager.LOGGER.info(
+                "Excluded " + skipping_cnt + " blacklisted dog skins."
+            );
+        }
+    }
+
+    private static boolean isDogSkinBlacklisted(DogSkin dog_skin) {
+        if (dog_skin == null)
+            return false;
+        if (!dog_skin.isCustom())
+            return false;
+        var strategy = ConfigHandler.DogCustomSkinClientConfig.getStrategy();
+        if (strategy == ConfigHandler.DogCustomSkinClientConfig.DataStrategy.NONE)
+            return false;
+        var config = ConfigHandler.DogCustomSkinClientConfig.getInstance();
+        if (config == null)
+            return false;
+        var skin_path = dog_skin.getPath().toString();
+        if (
+            strategy == ConfigHandler.DogCustomSkinClientConfig.DataStrategy.ALLOW_EXCEPT
+            && config.isBlacklisted(skin_path)
+        )
+            return true;
+        if (
+            strategy == ConfigHandler.DogCustomSkinClientConfig.DataStrategy.DISALLOW_EXCEPT
+            && !config.isWhitelisted(skin_path)
+        )
+            return true;
+        return false;
     }
 
     @Override
