@@ -4,14 +4,17 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggySerializers;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.NetworkUtil;
 import doggytalents.common.variant.DogVariant;
 import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.network.syncher.SynchedEntityData.Builder;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,47 +30,44 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntityTypeTest;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 
-public class DogPlushie extends Entity {
+public class DogPlushie extends Entity implements IEntityWithComplexSpawn {
 
-    private static final EntityDataAccessor<Integer> COLLAR_COLOR = SynchedEntityData.defineId(DogPlushie.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<DogVariant> DOG_VARIANT = SynchedEntityData.defineId(DogPlushie.class, DoggySerializers.DOG_VARIANT_SERIALIZER);
-    private static final EntityDataAccessor<Boolean> COLLAR_THICC = SynchedEntityData.defineId(DogPlushie.class, EntityDataSerializers.BOOLEAN);
-    
+    private int collarCollor = 11546150;
+    private DogVariant variant = DogVariantUtil.getDefault();
+    private boolean collarThicc = false;
+
     public DogPlushie(EntityType<?> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
-        //TODO Auto-generated constructor stub
     }
-
+    
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(COLLAR_COLOR, 11546150);
-        builder.define(DOG_VARIANT, DogVariantUtil.getDefault());
-        builder.define(COLLAR_THICC, false);
+    protected void defineSynchedData(Builder p_326003_) {
     }
-
+        
     public void setCollarColor(int val) {
-        this.entityData.set(COLLAR_COLOR, val);
+        this.collarCollor = val;
     }
 
     public int getCollarColor() {
-        return this.entityData.get(COLLAR_COLOR);
+        return this.collarCollor;
     }
 
     public void setDogVariant(DogVariant variant) {
-        this.entityData.set(DOG_VARIANT, variant);
+        this.variant = variant;
     }
 
     public DogVariant getDogVariant() {
-        return this.entityData.get(DOG_VARIANT);
+        return this.variant;
     }
 
     public void setCollarThicc(boolean val) {
-        this.entityData.set(COLLAR_THICC, val);
+        this.collarThicc = val;
     }
 
     public boolean getCollarThicc() {
-        return this.entityData.get(COLLAR_THICC);
+        return this.collarThicc;
     }
 
     @Override
@@ -184,4 +184,20 @@ public class DogPlushie extends Entity {
             e.push(this);
     }
 
+    @Override
+    public void writeSpawnData(RegistryFriendlyByteBuf buf) {
+        buf.writeInt(getCollarColor());
+        NetworkUtil.writeDogVariantToBuf(buf, variant);
+        buf.writeBoolean(getCollarThicc());
+    }
+
+    @Override
+    public void readSpawnData(RegistryFriendlyByteBuf buf) {
+        int collar_color = buf.readInt();
+        var variant = NetworkUtil.readDogVariantFromBuf(buf);
+        boolean thicc = buf.readBoolean();
+        this.setCollarColor(collar_color);
+        this.setDogVariant(variant);
+        this.setCollarThicc(thicc);
+    }
 }
