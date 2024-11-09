@@ -12,6 +12,7 @@ import doggytalents.DoggyItems;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
+import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.variant.DogVariant;
@@ -88,6 +89,24 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
         components.add(ComponentUtil.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
+        var variant = getDogVariant(stack);
+        if (variant != DogVariantUtil.getDefault() && context.level().isClientSide) {
+            var variant_str = Component.translatable("doggui.classical.variant")
+                .getString() + " "
+                + ClientEventHandler.getTranslatedVariantStr(variant);
+            var variant_c1 = Component.literal(variant_str)
+                .withStyle(
+                    Style.EMPTY.withBold(true)
+                    .withColor(variant.guiColor())
+                );
+            components.add(variant_c1);
+        }
+        boolean is_thicc_collar = getCollarThicc(stack);
+        if (is_thicc_collar) {
+            components.add(Component.translatable(
+                DoggyItems.WOOL_COLLAR_THICC.get().getDescriptionId())
+                    .setStyle(Style.EMPTY.withItalic(true)));
+        }
     }
 
     @Override
