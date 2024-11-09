@@ -28,12 +28,15 @@ public class DogPlushieRenderer extends EntityRenderer<DogPlushie> {
 
     @Override
     public ResourceLocation getTextureLocation(DogPlushie plushie) {
-        return Resources.DOG_PLUSHIE_TOY;
+        return plushie.getDogVariant().texture();
     }
     
     private RenderType getRenderType(DogPlushie plushie, boolean overlay) {
         if (overlay) {
-            return RenderType.entityTranslucent(Resources.DOG_PLUSHIE_TOY_OVERLAY);
+            var collar_res =
+                plushie.getCollarThicc() ? Resources.COLLAR_THICC
+                : Resources.COLLAR_DEFAULT;
+            return RenderType.entityTranslucent(collar_res);
         }
         return RenderType.entityTranslucent(getTextureLocation(plushie));
     }

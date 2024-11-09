@@ -1,10 +1,15 @@
 package doggytalents.common.entity.misc;
 
 import doggytalents.DoggyItems;
+import doggytalents.DoggySerializers;
+import doggytalents.common.entity.Dog;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.variant.DogVariant;
+import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.DamageTypeTags;
@@ -26,7 +31,9 @@ import net.minecraft.world.level.entity.EntityTypeTest;
 public class DogPlushie extends Entity {
 
     private static final EntityDataAccessor<Integer> COLLAR_COLOR = SynchedEntityData.defineId(DogPlushie.class, EntityDataSerializers.INT);
-
+    private static final EntityDataAccessor<DogVariant> DOG_VARIANT = SynchedEntityData.defineId(DogPlushie.class, DoggySerializers.DOG_VARIANT_SERIALIZER);
+    private static final EntityDataAccessor<Boolean> COLLAR_THICC = SynchedEntityData.defineId(DogPlushie.class, EntityDataSerializers.BOOLEAN);
+    
     public DogPlushie(EntityType<?> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
         //TODO Auto-generated constructor stub
@@ -35,6 +42,8 @@ public class DogPlushie extends Entity {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         builder.define(COLLAR_COLOR, 11546150);
+        builder.define(DOG_VARIANT, DogVariantUtil.getDefault());
+        builder.define(COLLAR_THICC, false);
     }
 
     public void setCollarColor(int val) {
@@ -45,15 +54,40 @@ public class DogPlushie extends Entity {
         return this.entityData.get(COLLAR_COLOR);
     }
 
+    public void setDogVariant(DogVariant variant) {
+        this.entityData.set(DOG_VARIANT, variant);
+    }
+
+    public DogVariant getDogVariant() {
+        return this.entityData.get(DOG_VARIANT);
+    }
+
+    public void setCollarThicc(boolean val) {
+        this.entityData.set(COLLAR_THICC, val);
+    }
+
+    public boolean getCollarThicc() {
+        return this.entityData.get(COLLAR_THICC);
+    }
+
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
         if (compound.contains("PlushCollarColor", Tag.TAG_INT))
             this.setCollarColor(compound.getInt("PlushCollarColor"));
+        if (compound.contains("classicalVariant", Tag.TAG_STRING)) {
+            this.setDogVariant(DogVariantUtil.fromSaveString(
+                compound.getString("classicalVariant")
+            ));
+        }
+        this.setCollarThicc(compound.getBoolean("collarThicc"));
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
         compound.putInt("PlushCollarColor", this.getCollarColor());
+        compound.putString("classicalVariant", 
+            DogVariantUtil.toSaveString(this.getDogVariant()));
+        compound.putBoolean("collarThicc", this.getCollarThicc());
     }
 
     @Override
