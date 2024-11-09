@@ -248,7 +248,7 @@
    "item.doggytalents.upright_piano_brown_item": "Upright Piano Brown (Experimental)",
    "items.doggytalents.piano_item_common.description": "Sneak + Right Click with a Torch in hand to adjust its orientation.",
    "item.doggytalents.dog_plushie_toy_item": "Dog Plushie Toy",
-   "item.doggytalents.dog_plushie_toy_item.description": "Sneak + Right Click with a Torch in hand to adjust its orientation.", 
+   "item.doggytalents.dog_plushie_toy_item.description": "Sneak + Right Click with a Torch in hand to adjust its orientation. Right Click a Dog with this item to copy the Dog's variant and Collar into this item.", 
 
    "item.doggytalents.cape_coloured.tooltip": "Color: %s",
    "item.doggytalents.wool_collar.tooltip": "Color: %s",
