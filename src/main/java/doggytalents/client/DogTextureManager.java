@@ -20,6 +20,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,7 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DogTextureManager extends SimplePreparableReloadListener<DogTextureManager.Preparations> {
+public class DogTextureManager extends SimplePreparableReloadListener<DogTextureManager.DogSkinLoadResult> {
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID + "/dogSkin");
     public static final DogTextureManager INSTANCE = new DogTextureManager();
@@ -64,7 +65,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
     private static enum RegisterState { SUCCESS, DUPLICATE, FAIL }
 
-    private synchronized RegisterState registerDogSkin(DogTextureManager.Preparations prep, Resource resource, DogSkin dogSkin) {        
+    private synchronized RegisterState registerDogSkin(DogTextureManager.DogSkinLoadResult prep, Resource resource, DogSkin dogSkin) {        
         var state = RegisterState.FAIL;
 
         InputStream inputstream = null;
@@ -72,12 +73,10 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             inputstream = resource.open();
             String hash = computeHash(IOUtils.toByteArray(inputstream));
 
-            if (prep.skinHashToLoc.containsKey(hash)) {
+            if (prep.hashAlreadyRegistered(hash)) {
                 state = RegisterState.DUPLICATE;
             } else {
-                prep.skinHashToLoc.put(hash, dogSkin);
-                prep.locToSkinHash.put(dogSkin, hash);
-                prep.customSkinLoc.add(dogSkin);    
+                prep.addDogSkin(dogSkin, hash);
                 state = RegisterState.SUCCESS;
             }
         } catch (IOException e) {
@@ -93,8 +92,8 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     }
 
     @Override
-    protected DogTextureManager.Preparations prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
-        var prep = new DogTextureManager.Preparations();
+    protected DogTextureManager.DogSkinLoadResult prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
+        var prep = new DogTextureManager.DogSkinLoadResult();
         profiler.startTick();
         this.getSkinFromSkinJsonAllPack(resourceManager, prep);
         profiler.pop();
@@ -102,7 +101,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         return prep;
     }
 
-    public synchronized boolean getSkinFromSkinJsonAllPack(ResourceManager resMan, DogTextureManager.Preparations prep) {
+    public synchronized boolean getSkinFromSkinJsonAllPack(ResourceManager resMan, DogTextureManager.DogSkinLoadResult prep) {
         final var SKIN_JSON_RES = Util.getResource("textures/entity/dog/skin.json");
         var jsonSkinPacks = resMan.listPacks()
             .collect(Collectors.toList());
@@ -140,12 +139,10 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         }
         
         getSkinJsonFromOtherMods(resMan, prep);
-
-        prep.customSkinLoc.add(0, DogSkin.CLASSICAL);
         return true;
     }
 
-    public void getSkinJsonFromOtherMods(ResourceManager resMan, DogTextureManager.Preparations prep) {
+    public void getSkinJsonFromOtherMods(ResourceManager resMan, DogTextureManager.DogSkinLoadResult prep) {
         var paths = ClientSetup.OTHER_MOD_SKIN_JSONS;
         if (paths.isEmpty())
             return;
@@ -186,7 +183,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
     private static record RegsiterResult(int success, int duplicates, int fail) {}
 
-    public RegsiterResult getSkinFromSkinJson(ResourceManager resMan, DogTextureManager.Preparations prep, JsonObject jsonObject) {
+    public RegsiterResult getSkinFromSkinJson(ResourceManager resMan, DogTextureManager.DogSkinLoadResult prep, JsonObject jsonObject) {
         int success_cnt = 0;
         int duplicate_cnt = 0;
         int failed_cnt = 0;
@@ -261,8 +258,28 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     }
 
     @Override
-    protected void apply(DogTextureManager.Preparations prep, ResourceManager resourceManager, ProfilerFiller profiler) {
-        prep.apply(this);
+    protected void apply(DogTextureManager.DogSkinLoadResult loadResult, ResourceManager resourceManager, ProfilerFiller profiler) {
+        this.customSkinLoc.clear();
+        this.locToSkinHash.clear();
+        this.skinHashToLoc.clear();
+
+        var filter_skin_map = Maps.<DogSkin, String>newHashMap();
+        var filter_skin_map_1 = Maps.<String, DogSkin>newHashMap();
+        var skin_list = new ArrayList<DogSkin>();
+
+        skin_list.add(DogSkin.CLASSICAL);
+        
+        for (var entry : loadResult.dogSkin2Hash.entrySet()) {
+            var skin = entry.getKey();
+            var hash = entry.getValue();
+            filter_skin_map.put(skin, hash);
+            filter_skin_map_1.put(hash, skin);
+            skin_list.add(skin);
+        }
+        
+        this.customSkinLoc.addAll(skin_list);
+        this.locToSkinHash.putAll(filter_skin_map);
+        this.skinHashToLoc.putAll(filter_skin_map_1);
     }
 
     @Override
@@ -270,19 +287,23 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         return "DogTextureManager";
     }
 
-    protected static class Preparations {
+    protected static class DogSkinLoadResult {
 
-        private final Map<String, DogSkin> skinHashToLoc = new HashMap<>();
-        private final Map<DogSkin, String> locToSkinHash = new HashMap<>();
-        private final List<DogSkin> customSkinLoc = new ArrayList<>();
+        public final List<Pair<DogSkin, String>> dogSkinsAndHash;
+        private final Set<String> registeredHash;
 
-        public void apply(DogTextureManager dogTextureManager) {
-            dogTextureManager.skinHashToLoc.clear();
-            dogTextureManager.customSkinLoc.clear();
+        public DogSkinLoadResult() {
+            this.dogSkinsAndHash = new ArrayList<>();
+            this.registeredHash = new HashSet<>();
+        }
 
-            dogTextureManager.skinHashToLoc.putAll(this.skinHashToLoc);
-            dogTextureManager.locToSkinHash.putAll(this.locToSkinHash);
-            dogTextureManager.customSkinLoc.addAll(this.customSkinLoc);
+        public void addDogSkin(DogSkin skin, String hash) {
+            this.dogSkinsAndHash.add(Pair.of(skin, hash));
+            registeredHash.add(hash);
+        }
+
+        public boolean hashAlreadyRegistered(String hash) {
+            return this.registeredHash.contains(hash);
         }
     }
 }
