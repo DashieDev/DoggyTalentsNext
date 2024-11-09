@@ -516,17 +516,20 @@ public class DTRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(DoggyItems.SNORKEL.get(), 1)
             .pattern("  B")
             .pattern("GIG")
+            .pattern(" T ")
             .define('I', Items.IRON_INGOT)
             .define('G', Items.GLASS_PANE)
-            .define('B', Items.BAMBOO)            
+            .define('B', Items.BAMBOO)  
+            .define('T', DoggyItems.TRAINING_TREAT.get())          
             .unlockedBy("has_bamboo", has(Items.BAMBOO))
             .save(consumer);
             
         ShapedRecipeBuilder.shaped(DoggyItems.HEAD_BAND_BLANK.get(), 1)
-            .pattern("L")
-            .pattern("P")
+            .pattern("LT")
+            .pattern("P ")
             .define('L', Items.LEAD)
             .define('P', Items.PAPER)
+            .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer);
 
