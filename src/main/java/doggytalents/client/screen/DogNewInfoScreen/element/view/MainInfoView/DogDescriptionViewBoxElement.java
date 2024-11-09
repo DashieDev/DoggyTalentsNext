@@ -2,6 +2,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.event.ClientEventHandler;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.variant.DogVariant;
@@ -75,7 +76,7 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
         pY += this.font.lineHeight + 2;
         var variant = dog.dogVariant();
         var variant_str = I18n.get("doggui.classical.variant") + " "
-        + getTranslatedVariantStr(variant);
+        + ClientEventHandler.getTranslatedVariantStr(variant);
         var variant_c1 = Component.literal(variant_str)
             .withStyle(
                 Style.EMPTY.withBold(true)
@@ -83,13 +84,6 @@ public class DogDescriptionViewBoxElement extends AbstractElement {
             );
         graphics.drawString(font, variant_c1,
             startX, pY, 0xffffffff);
-    }
-
-    private String getTranslatedVariantStr(DogVariant variant) {
-        var translation_key = variant.translation();
-        if (I18n.exists(translation_key))
-            return I18n.get(translation_key);
-        return variant.id().toString();
     }
 
     private Component createDescEntry(String descName, String descVal, int valColor) {
