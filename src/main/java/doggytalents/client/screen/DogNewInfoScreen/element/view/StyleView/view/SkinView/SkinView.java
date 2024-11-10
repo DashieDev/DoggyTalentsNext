@@ -94,7 +94,7 @@ public class SkinView extends AbstractElement {
         skinSelect
             .setPosition(PosType.RELATIVE, 0, 0)
             .setSize(1f, 0.2f)
-            .setBackgroundColor(0xAA595858)
+            .setBackgroundColor(0x40595858)
             .init();
         this.addChildren(skinSelect);
         
