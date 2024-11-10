@@ -42,8 +42,10 @@ public class DogCannotInteractWithScreen extends Screen {
         var mc = Minecraft.getInstance();
         var screen = new DogCannotInteractWithScreen(dog);
         mc.setScreen(screen);
-        PacketHandler.send(PacketDistributor.SERVER.noArg(), 
-            new DogIncapMsgData.Request(dog.getId()));
+        var player = mc.player;
+        if (dog.getOwner() == player)
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), 
+                new DogIncapMsgData.Request(dog.getId()));
     }
 
     @Override
