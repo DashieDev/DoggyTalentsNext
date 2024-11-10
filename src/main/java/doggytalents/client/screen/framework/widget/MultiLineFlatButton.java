@@ -32,7 +32,7 @@ public class MultiLineFlatButton extends FlatButton {
     public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
         if (!this.active) return;
 
-        int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
+        int cl = this.maskColor(this.buttonColor, this.isHovered);
         
         fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, cl);
         
