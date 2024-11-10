@@ -7,14 +7,17 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 
 public class FlatButton extends AbstractButton {
-    static final int DEFAULT_COLOR = 0x485e5d5d;
-    static final int DEFAULT_HLCOLOR = 0x835e5d5d;
-
+    public static final int DEFAULT_COLOR = 0x005e5d5d;
+    public static final int NON_HL_COLOR_MASK = 0x48000000;
+    public static final int HL_COLOR_MASK = 0x83000000;
     Font font;
 
     protected final FlatButton.OnPress onPress;
+    protected boolean visibleWhenNotActive = false;
+    protected int buttonColor = DEFAULT_COLOR;
 
     public FlatButton(int x, int y, int width, int height, 
         Component msg, FlatButton.OnPress onPress) {
@@ -35,12 +38,22 @@ public class FlatButton extends AbstractButton {
         this.onPress.onPress(this);
     }
 
-    @Override
-    public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
+    public FlatButton visibleWhenNotActive() {
+        this.visibleWhenNotActive = true;
+        return this;
+    }
 
-        if (!this.active) return;
+    public FlatButton withButtonColor(int color) {
+        this.buttonColor = color;
+        return this;
+    }
 
-        int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
+    @Override //TODO 1.19.4 ?? 
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+
+        if (!this.active && !visibleWhenNotActive) return;
+
+        int cl = maskColor(buttonColor, this.isHovered && this.active);
         
         fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, cl);
         
@@ -50,8 +63,20 @@ public class FlatButton extends AbstractButton {
         var msg = this.getMessage();
         int tX = mX - font.width(msg)/2;
         int tY = mY - font.lineHeight/2;
+        msg = modifyMessage(msg);
         //TODO if the name is too long, draw it cut off with a ..
         font.draw(stack, msg, tX, tY, 0xffffffff);
+    }
+
+    protected int maskColor(int color, boolean hightlight) {
+        return color | (hightlight ? HL_COLOR_MASK : NON_HL_COLOR_MASK);
+    }
+
+    public Component modifyMessage(Component msg) {
+        if (!this.active) {
+            msg = msg.copy().withStyle(Style.EMPTY.withColor(0xff828282));
+        }
+        return msg;
     }
 
     public interface OnPress {
