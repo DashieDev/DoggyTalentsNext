@@ -15,6 +15,7 @@ import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.framework.element.AbstractElement;
+import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
@@ -34,8 +35,8 @@ public class SkinButtonElement extends AbstractElement {
     Dog dog;
     Font font;
     List<DogSkin> locList;
-    Button showHideInfoButton;
-    Button applyButton;
+    FlatButton showHideInfoButton;
+    FlatButton applyButton;
     int activeSkinId;
     boolean showInfo;
     Consumer<GuiEventListener> leftAction;
@@ -84,7 +85,7 @@ public class SkinButtonElement extends AbstractElement {
             }, this.font);
             nextSkinButton.active = activeSkinId < this.locList.size() - 1;
 
-        showHideInfoButton = applyButton = new CustomButton(
+        showHideInfoButton = applyButton = new FlatButton(
             this.getRealX() + this.getSizeX() - 30 - 30 - 62,
             this.getRealY() + mY - 10, 58, 20,
             Component.literal(!this.showInfo ? "Show Info" : "Hide Info"),
@@ -97,16 +98,16 @@ public class SkinButtonElement extends AbstractElement {
                     ) 
                 );
             }  
-        );
+        ).withButtonColor(0x878787);
 
-        applyButton = new CustomButton(
+        applyButton = new FlatButton(
             this.getRealX() + this.getSizeX() - 30 - 30,
             this.getRealY() + mY - 10, 40, 20,
             Component.literal("Apply"),
             b -> {
                 applyAndRequestSkinChange(activeSkinId);
             }  
-        );
+        ).visibleWhenNotActive().withButtonColor(0x878787);
         applyButton.active = (locList.get(activeSkinId))
             != dog.getClientSkin();
 
