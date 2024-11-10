@@ -32,7 +32,7 @@ public class MultiLineFlatButton extends FlatButton {
     public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         if (!this.active) return;
 
-        int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
+        int cl = this.maskColor(this.buttonColor, this.isHovered);
         
         graphics.fill(this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
         
