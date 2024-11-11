@@ -34,7 +34,7 @@ import net.minecraft.tags.BlockTags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-//@Mod(Constants.MOD_ID)
+//@Mod(Constants.MOD_ID)X
 public class DoggyTalentsNext {
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID);
