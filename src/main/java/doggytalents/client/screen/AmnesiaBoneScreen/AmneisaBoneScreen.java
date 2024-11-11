@@ -33,8 +33,9 @@ public class AmneisaBoneScreen extends StoreConnectedScreen {
     public static void open(Dog dog) {
         var mc = Minecraft.getInstance();
         var screen = new AmneisaBoneScreen(dog);
-        Store.get(screen);
         mc.setScreen(screen);
+        if (mc.screen == screen)
+            Store.get(screen);
     }
 
     @Override
