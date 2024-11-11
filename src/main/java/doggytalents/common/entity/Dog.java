@@ -2660,6 +2660,7 @@ public class Dog extends AbstractDog {
         compound.putBoolean("friendlyFire", this.canOwnerAttack());
         compound.putBoolean("regardTeamPlayers", this.regardTeamPlayers());
         compound.putBoolean("forceSit", this.forceSit());
+        compound.putBoolean("dogAutoMount", this.dogAutoMount());
         compound.putByte("lowHealthStrategy", this.getLowHealthStrategy().getId());
         compound.putByte("combatReturnStrategy", this.getCombatReturnStrategy().getId());
         compound.putBoolean("crossOriginTp", this.crossOriginTp());
@@ -2829,6 +2830,7 @@ public class Dog extends AbstractDog {
             this.setWillObeyOthers(compound.getBoolean("willObey"));
             this.setCanPlayersAttack(compound.getBoolean("friendlyFire"));
             this.setRegardTeamPlayers(compound.getBoolean("regardTeamPlayers"));
+            this.setDogAutoMount(compound.getBoolean("dogAutoMount"));
             this.setForceSit(compound.getBoolean("forceSit"));
             this.setCrossOriginTp(compound.getBoolean("crossOriginTp"));
             this.setPatrolTargetLock(compound.getBoolean("patrolTargetLock")); 
