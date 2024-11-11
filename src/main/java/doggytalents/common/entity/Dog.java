@@ -3629,8 +3629,6 @@ public class Dog extends AbstractDog {
         if (data == null) {
             data = DogSkinData.NULL;
         }
-        if (!DogUtil.vertifySkinData(data.getHash()))
-            data = DogSkinData.NULL;
         this.entityData.set(CUSTOM_SKIN, data);
     }
 
