@@ -458,7 +458,7 @@ public class EditInfoView extends AbstractElement {
             var p = this.getParent();
             if (
                 p != null
-                && buttonX_offset + this.button.getWidth() > p.getSizeX()
+                && buttonX_offset + this.button.getWidth() > p.getSizeX() - 4
             ) {
                 this.newline = true; 
                 buttonX_offset = PADDING_LEFT; 
