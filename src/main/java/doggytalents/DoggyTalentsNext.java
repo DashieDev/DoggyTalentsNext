@@ -45,7 +45,7 @@ public class DoggyTalentsNext {
 
     }
 
-    // //TODO AUTOMATION CURSEFORGE !!!
+    // //TODO AUTOMATION CURSEFORGE !!!x
     // public DoggyTalentsNext() {
     //     IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
