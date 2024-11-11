@@ -7,7 +7,6 @@ import com.google.common.collect.ImmutableMap;
 
 import doggytalents.DogVariants;
 import doggytalents.common.variant.DogVariant;
-import doggytalents.common.variants_legacy.DTNWolfVariants;
 import net.minecraft.resources.ResourceKey;
 public class VanillaToClassicalMapping {
    
