@@ -192,8 +192,6 @@ public class DoggyTalentsNext {
             gen.addProvider(true, new DTEntityTagsProvider(gen, event.getExistingFileHelper()));
         }
 
-        //DTNWolfVariantsProvider.start(event);
-
 
         //1.19.2-
         Entry_1_19_2.onGatherData();
