@@ -111,12 +111,12 @@ public class DogOwnerDistanceManager {
 
     public static int getGreetCountForOwner(LivingEntity owner) {
         var storage = DogLocationStorage.get(owner.getServer());
-        return storage.GREETING_DOG_LIMIT_MAP.getOrDefault(owner.getUUID(), 0);
+        return storage.grettingDogLimitMap.getOrDefault(owner.getUUID(), 0);
     }
 
     public static void incGreetCountForOwner(LivingEntity owner) {
         var storage = DogLocationStorage.get(owner.getServer());
-        storage.GREETING_DOG_LIMIT_MAP.compute(owner.getUUID(), (uuid, old_val)  -> {
+        storage.grettingDogLimitMap.compute(owner.getUUID(), (uuid, old_val)  -> {
             if (old_val == null) {
                 return 1;
             }
@@ -126,7 +126,7 @@ public class DogOwnerDistanceManager {
 
     public static void decGreetCountForOwner(LivingEntity owner) {
         var storage = DogLocationStorage.get(owner.getServer());
-        storage.GREETING_DOG_LIMIT_MAP.computeIfPresent(owner.getUUID(), (uuid, old_val)  -> {
+        storage.grettingDogLimitMap.computeIfPresent(owner.getUUID(), (uuid, old_val)  -> {
             if (old_val == null) {
                 return null;
             }

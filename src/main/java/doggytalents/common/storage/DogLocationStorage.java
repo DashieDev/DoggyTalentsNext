@@ -29,7 +29,7 @@ public class DogLocationStorage extends SavedData {
 
     private final OnlineDogLocationManager onlineDogManager = new OnlineDogLocationManager(this);
 
-    public final Map<UUID, Integer> GREETING_DOG_LIMIT_MAP = Maps.newHashMap();
+    public final Map<UUID, Integer> grettingDogLimitMap = Maps.newHashMap();
 
     public DogLocationStorage() {}
 
@@ -199,7 +199,7 @@ public class DogLocationStorage extends SavedData {
 
     public void onServerStop(ServerStoppingEvent event) {
         this.onlineDogManager.onServerStop();
-        GREETING_DOG_LIMIT_MAP.clear();
+        grettingDogLimitMap.clear();
     }
 
     public void onServerStopped(ServerStoppedEvent event) {
