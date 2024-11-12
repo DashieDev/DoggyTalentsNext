@@ -155,6 +155,10 @@ public class CanineTrackerScreen extends StringEntrySelectScreen {
     }
 
     public void assignResponse(List<Triple<UUID, String, BlockPos>> dogLs) {
+        this.dogNameList.clear();
+        this.dogIdList.clear();
+        this.dogDistanceMap.clear();
+        this.dogPosMap.clear();
         for (var entry : dogLs) {
             this.dogNameList.add(entry.getMiddle());
             this.dogIdList.add(entry.getLeft());

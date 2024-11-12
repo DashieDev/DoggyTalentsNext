@@ -154,6 +154,8 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
     }
 
     public void assignResponse(List<Pair<UUID, String>> dogLs) {
+        this.dogNameList.clear();
+        this.dogIdList.clear();
         for (var entry : dogLs) {
             this.dogNameList.add(entry.getRight());
             this.dogIdList.add(entry.getLeft());
