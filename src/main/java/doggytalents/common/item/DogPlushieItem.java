@@ -85,6 +85,8 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
+        if (context.level() == null)    
+            return;
         var desc_id = "item.doggytalents.dog_plushie_toy_item.description";
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
