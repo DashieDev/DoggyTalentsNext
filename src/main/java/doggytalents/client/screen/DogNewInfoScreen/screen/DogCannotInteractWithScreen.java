@@ -70,7 +70,7 @@ public class DogCannotInteractWithScreen extends Screen {
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         var stack = graphics.pose();
-        this.renderBackground(graphics, mouseX, mouseY, pTicks);
+        //this.renderBackground(graphics, mouseX, mouseY, pTicks);
         super.render(graphics, mouseX, mouseY, pTicks);
         Component title;
         String help;
