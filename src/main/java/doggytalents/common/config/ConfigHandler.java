@@ -119,6 +119,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DOG_VARIANT_CLIENT_EFFECT;
         public ForgeConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
         public ForgeConfigSpec.BooleanValue TRANSLUCENT_ALL_OVERLAY;
+        public ModConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -271,6 +272,9 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Always render Overlay Accessories on Dogs as Translucent ")
                 .comment("This is to prevent Special Variant's overlay to override on the Overlay Accessories")
                 .define("translucent_all_overlay", true);
+            HIDE_WOLF_MOUNT_STATUS = builder
+                .comment("Enable this to hide Wolf Mount Dog's Status Overlay when riding it.")
+                .define("hide_wolf_mount_status", false);
             builder.pop();
         }
 
