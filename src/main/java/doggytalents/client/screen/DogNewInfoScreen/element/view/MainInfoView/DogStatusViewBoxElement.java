@@ -15,6 +15,7 @@ import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.FlatButton;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.gui.Font;
@@ -260,6 +261,8 @@ public class DogStatusViewBoxElement extends AbstractElement {
     }
 
     private void renderHungerStatusStr(GuiGraphics graphics, Dog dog, int x, int y) {
+        if (ConfigHandler.SERVER.DISABLE_HUNGER.get())
+            return;
         graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, x, y, 16 + 36, 27, 9, 9);
         int hunger = (int) dog.getDogHunger();
         graphics.drawString(font, "" + hunger, x + 10, y + 1, 0xffffffff);
