@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.IntFunction;
 
+import javax.annotation.Nullable;
+
 import com.mojang.blaze3d.platform.InputConstants;
 
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -254,6 +257,12 @@ public class StringEntrySelectScreen extends Screen {
 
     protected boolean matchIgnoreCaseSearch() {
         return false;
+    }
+
+    @Override
+    @Nullable
+    public GuiEventListener getFocused() {
+        return null;
     }
 
     public static class EntryView {
