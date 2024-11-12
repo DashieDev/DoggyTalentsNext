@@ -137,15 +137,15 @@ public class StringEntrySelectScreen extends Screen {
 
         if (this.entryView.keyPressed(keyCode, scanCode, modifiers)) {
             return true;
-        } else if (keyCode == 263) {
+        } else if (keyCode == InputConstants.KEY_LEFT) {
             if (this.prevPageButton.active)
             this.prevPageButton.onClick(0, 0);
             return true;
-        } else if (keyCode == 262) {
+        } else if (keyCode == InputConstants.KEY_RIGHT) {
             if (this.nextPageButton.active)
             this.nextPageButton.onClick(0, 0);
             return true;
-        } else if (keyCode == 257) {
+        } else if (keyCode == InputConstants.KEY_RETURN) {
             var selected_indx = this.entryView.getSelectedFilterId(this.filteredIndexes);
             if (selected_indx.isPresent()) {
                 onEntrySelected(selected_indx.get());
@@ -265,10 +265,10 @@ public class StringEntrySelectScreen extends Screen {
         public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
             var mouseKey = InputConstants.getKey(keyCode, scanCode);
             
-            if (keyCode == 264) {
+            if (keyCode == InputConstants.KEY_DOWN) {
                 moveSelectedEntryInPage(x -> x + 1);
                 return true;
-            } else if (keyCode == 265) {
+            } else if (keyCode == InputConstants.KEY_UP) {
                 moveSelectedEntryInPage(x -> x - 1);
                 return true;
             }
@@ -505,7 +505,7 @@ public class StringEntrySelectScreen extends Screen {
         }
 
         public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-            if (keyCode == 259) {
+            if (keyCode == InputConstants.KEY_BACKSPACE) {
                 this.popCharInText();
                 return true;
             }
