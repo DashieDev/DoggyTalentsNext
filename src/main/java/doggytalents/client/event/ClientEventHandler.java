@@ -289,6 +289,8 @@ public class ClientEventHandler {
             return 0f;
         var anim = dog.getAnim();
         var animSeq = DogAnimationRegistry.getSequence(anim);
+        if (animSeq == null)
+            return 0f;
         var animState = dog.animationManager.animationState;
         var ret = DogKeyframeAnimations.getCurrentAnimatedYRot(dog, animSeq, animState.getAccumulatedTimeMillis(), 1);
         if (anim.rootRotation().isPresent()) {
