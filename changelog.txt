@@ -1632,3 +1632,25 @@ is still being in SittingPose despite not OrderedToSit.
 * Fix DogBeingHurtByTarget AI causing Docile Doggy Tools to equip its weapon despite not attacking the target
 still.
 * Fix /dog locate command doesn't locate Offline Dogs.
+
+**1.18.34 - 12th November 2024**
+Added Dog Anim Debug Tool!
+  + Only Accessible via commands.
+  + Allow players to make their Dog freeze in a Pose from a paused Animation.
++ (Configurable) Client can now easily disable certain skin from loading. When a skin is disabled,
+it is inacessible to that client and every dogs having the skin set will renders as classical
+in that side.
++ Option to hide Wolf Mount Dog status when riding him.
+GUI Changes
+  # DogGUI: True/False Buttons now become actual Animated Switches.
+  # DogGUI: Extended the Upper view a bit down.
+
+  # StringEtrySelectScreen(s): Util Buttons now become FlatButton and are closer to
+  the selection view.
+  # StringEtrySelectScreen(s): Changed how the gui shows Dog's UUID.
+  ...
+# Dog Plushies now can copy Variants and Collar from Dogs
+# Fix Hotdog Costume
+# Dog Auto Mount option is now saved.
+- Removed Legacy DTN Wolf Variant Support.
+* Fix Enter Bug on Conducting Bone Screen.
