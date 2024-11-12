@@ -1,6 +1,9 @@
 package doggytalents.client.entity.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import doggytalents.client.screen.ScreenUtil;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.forge_imitate.client.ForgeGuiOverlayManager.IGuiOverlay;
 import net.minecraft.client.Minecraft;
@@ -14,6 +17,8 @@ public class DogScreenOverlays {
     public static final ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation("textures/gui/icons.png");
 
     public static final IGuiOverlay FOOD_LEVEL_ELEMENT = (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+        if (ConfigHandler.CLIENT.HIDE_WOLF_MOUNT_STATUS.get())
+            return;
         Minecraft mc = Minecraft.getInstance();
         boolean isMounted = mc.player.getVehicle() instanceof Dog;
         if (isMounted && !mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
@@ -54,6 +59,8 @@ public class DogScreenOverlays {
     };
 
     public static final IGuiOverlay AIR_LEVEL_ELEMENT = (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+        if (ConfigHandler.CLIENT.HIDE_WOLF_MOUNT_STATUS.get())
+            return;
         Minecraft mc = Minecraft.getInstance();
         boolean isMounted = mc.player.getVehicle() instanceof Dog;
         if (isMounted && !mc.options.hideGui && gui.shouldDrawSurvivalElements()) {

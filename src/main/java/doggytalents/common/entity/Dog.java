@@ -1411,6 +1411,14 @@ public class Dog extends AbstractDog {
         return true;
     }
 
+    @Override
+    public boolean showVehicleHealth() {
+        if (this.level().isClientSide) {
+            return !ConfigHandler.CLIENT.HIDE_WOLF_MOUNT_STATUS.get();
+        }
+        return super.showVehicleHealth();
+    }
+
     //@Override
     public boolean canTrample(BlockState state, BlockPos pos, float fallDistance) {
         //Temporary to avoid wolf mount bug when trampling crops.
