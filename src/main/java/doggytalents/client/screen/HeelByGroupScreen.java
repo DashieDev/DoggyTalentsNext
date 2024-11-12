@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.mojang.blaze3d.platform.InputConstants;
+
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.entity.DogGroupsManager.DogGroup;
 import doggytalents.common.network.PacketHandler;
@@ -86,7 +88,7 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == 340) {
+        if (keyCode == InputConstants.KEY_LSHIFT) {
             this.heelAndSit = true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
@@ -94,7 +96,7 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
 
     @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == 340) {
+        if (keyCode == InputConstants.KEY_LSHIFT) {
             this.heelAndSit = false;
         }
         return super.keyReleased(keyCode, scanCode, modifiers);
