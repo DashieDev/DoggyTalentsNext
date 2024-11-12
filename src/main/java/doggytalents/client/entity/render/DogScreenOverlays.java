@@ -1,6 +1,9 @@
 package doggytalents.client.entity.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import doggytalents.client.screen.ScreenUtil;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tags.FluidTags;
@@ -11,6 +14,8 @@ import net.minecraftforge.client.gui.IIngameOverlay;
 public class DogScreenOverlays {
 
     public static final IIngameOverlay FOOD_LEVEL_ELEMENT = (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+        if (ConfigHandler.CLIENT.HIDE_WOLF_MOUNT_STATUS.get())
+            return;
         Minecraft mc = Minecraft.getInstance();
         boolean isMounted = mc.player.getVehicle() instanceof Dog;
         if (isMounted && !mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
@@ -51,6 +56,8 @@ public class DogScreenOverlays {
     };
 
     public static final IIngameOverlay AIR_LEVEL_ELEMENT = (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+        if (ConfigHandler.CLIENT.HIDE_WOLF_MOUNT_STATUS.get())
+            return;
         Minecraft mc = Minecraft.getInstance();
         boolean isMounted = mc.player.getVehicle() instanceof Dog;
         if (isMounted && !mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
