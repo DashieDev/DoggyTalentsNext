@@ -116,6 +116,7 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
     }
 
     public void assignResponse(List<DogGroup> groups) {
+        this.dogGroupList.clear();
         for (var group : groups) {
             this.dogGroupList.add(group);
         }
