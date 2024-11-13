@@ -48,8 +48,8 @@ public class DogArrow extends AbstractArrow {
         super(p_36858_, p_36859_);
     }
 
-    public DogArrow(Level p_36861_, AbstractDog dog, ItemStack stack, ItemStack proj_stack) {
-        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), dog, p_36861_, stack, proj_stack);
+    public DogArrow(Level p_36861_, AbstractDog dog, ItemStack stack) {
+        super(DoggyEntityTypes.DOG_ARROW_PROJ.get(), dog, p_36861_);
         this.setEffectsFromItem_1_20_1_and_under(stack);
         this.updateColor();
         if (stack.is(Items.SPECTRAL_ARROW)) {

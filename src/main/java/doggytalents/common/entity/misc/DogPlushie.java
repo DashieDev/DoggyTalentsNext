@@ -9,12 +9,11 @@ import doggytalents.common.variant.DogVariant;
 import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.network.syncher.SynchedEntityData.Builder;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -30,9 +29,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntityTypeTest;
-import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 
-public class DogPlushie extends Entity implements IEntityWithComplexSpawn {
+public class DogPlushie extends Entity implements IEntityAdditionalSpawnData {
 
     private int collarCollor = 11546150;
     private DogVariant variant = DogVariantUtil.getDefault();
@@ -43,7 +42,7 @@ public class DogPlushie extends Entity implements IEntityWithComplexSpawn {
     }
     
     @Override
-    protected void defineSynchedData(Builder p_326003_) {
+    protected void defineSynchedData() {
     }
         
     public void setCollarColor(int val) {
@@ -185,14 +184,14 @@ public class DogPlushie extends Entity implements IEntityWithComplexSpawn {
     }
 
     @Override
-    public void writeSpawnData(RegistryFriendlyByteBuf buf) {
+    public void writeSpawnData(FriendlyByteBuf buf) {
         buf.writeInt(getCollarColor());
         NetworkUtil.writeDogVariantToBuf(buf, variant);
         buf.writeBoolean(getCollarThicc());
     }
 
     @Override
-    public void readSpawnData(RegistryFriendlyByteBuf buf) {
+    public void readSpawnData(FriendlyByteBuf buf) {
         int collar_color = buf.readInt();
         var variant = NetworkUtil.readDogVariantFromBuf(buf);
         boolean thicc = buf.readBoolean();

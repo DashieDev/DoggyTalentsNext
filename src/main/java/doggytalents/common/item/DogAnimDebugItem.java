@@ -153,7 +153,7 @@ public class DogAnimDebugItem extends Item implements IDogItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+    public void appendHoverText(ItemStack stack, Level context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = "item.doggytalents.dog_anim_debug_stick.help";
         components.add(Component.translatable(desc_id).withStyle(

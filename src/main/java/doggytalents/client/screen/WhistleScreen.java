@@ -18,7 +18,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import doggytalents.common.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 
 public class WhistleScreen extends StringEntrySelectScreen {
