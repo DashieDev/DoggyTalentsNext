@@ -10,7 +10,7 @@ import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class DragonCostumeWingsRenderEntry extends Entry{
     public static final ModelLayerLocation DRAGON_COSTUME_WINGS = new ModelLayerLocation(Util.getResource("dragon_costume_wings"), "main");

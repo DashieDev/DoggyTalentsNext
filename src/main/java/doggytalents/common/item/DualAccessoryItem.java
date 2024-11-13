@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 public class DualAccessoryItem extends AccessoryItem {
 
@@ -30,7 +31,7 @@ public class DualAccessoryItem extends AccessoryItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack p_41421_, TooltipContext p_339594_, List<Component> list,
+    public void appendHoverText(ItemStack p_41421_, Level p_339594_, List<Component> list,
             TooltipFlag p_41424_) {
         super.appendHoverText(p_41421_, p_339594_, list, p_41424_);
         list.add(Component.translatable("general.doggytalents.dual_accessories_item_help"));
