@@ -15,6 +15,7 @@ import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
+import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
 import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.fabric_helper.entity.DogFabricHelper;
 import doggytalents.common.item.DoggyArtifactItem;
@@ -23,7 +24,7 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 
 public class SyncTypes {
 
-    public static int COUNT = 7;
+    public static int COUNT = 10;
     private static Map<Integer, SyncType<?>> ID_TO_TYPE = Maps.newHashMap();
     private static List<SyncType<?>> ALL = new ArrayList<>(COUNT);
     public static SyncType<DogLevel> DOG_LEVEL = register(new SyncType<DogLevel>(0, DoggySerializers.DOG_LEVEL_SERIALIZER, DogFabricHelper::setDogLevel, DogFabricHelper::getDogLevel));
@@ -35,6 +36,7 @@ public class SyncTypes {
     public static SyncType<DogSkinData> DOG_SKIN = register(new SyncType<DogSkinData>(6, DoggySerializers.DOG_SKIN_DATA_SERIALIZER, DogFabricHelper::setDogSkin, DogFabricHelper::getDogSkin));
     public static SyncType<DogVariant> DOG_VARIANT = register(new SyncType<DogVariant>(7, DoggySerializers.DOG_VARIANT_SERIALIZER, DogFabricHelper::setDogVariant, DogFabricHelper::getDogVariant));
     public static SyncType<DogPettingState> DOG_PETTING_STATE = register(new SyncType<DogPettingState>(8, DoggySerializers.DOG_PETTING_STATE, DogFabricHelper::setDogPettingState, DogFabricHelper::getDogPettingState));
+    public static SyncType<DogAnimDebugState> DOG_ANIM_DEBUG_STATE = register(new SyncType<DogAnimDebugState>(9, DoggySerializers.DOG_ANIM_DEBUG_STATE, DogFabricHelper::setDogAnimDebugState, DogFabricHelper::getDogAnimDebugState));
 
     public static void init() {}
 

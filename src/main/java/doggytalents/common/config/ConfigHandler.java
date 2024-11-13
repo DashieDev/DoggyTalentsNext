@@ -84,8 +84,8 @@ public class ConfigHandler {
         CONFIG_CUSTOM_SKINS_CLIENT_SPEC = customSkinPair.getRight();
         CUSTOM_SKINS_CLIENT = customSkinPair.getLeft();
 
-        ModLoadingContext.get()
-            .registerConfig(ModConfig.Type.CLIENT, 
+        ForgeConfigRegistry.INSTANCE
+            .register(Constants.MOD_ID, ModConfig.Type.CLIENT, 
                 CONFIG_CUSTOM_SKINS_CLIENT_SPEC, "doggytalents-dog_custom_skins_client.toml");
     }
 

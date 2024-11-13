@@ -3,10 +3,13 @@ package doggytalents.common.entity.misc;
 import doggytalents.DoggyItems;
 import doggytalents.DoggySerializers;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.entity.network.FabricPlushieSpawnData;
+import doggytalents.common.network.PacketHandler;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NetworkUtil;
 import doggytalents.common.variant.DogVariant;
 import doggytalents.common.variant.util.DogVariantUtil;
+import doggytalents.forge_imitate.network.PacketDistributor;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,6 +17,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -29,9 +33,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntityTypeTest;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-
-public class DogPlushie extends Entity implements IEntityAdditionalSpawnData {
+public class DogPlushie extends Entity /*implements IEntityWithComplexSpawn*/ {
 
     private int collarCollor = 11546150;
     private DogVariant variant = DogVariantUtil.getDefault();
@@ -183,20 +185,30 @@ public class DogPlushie extends Entity implements IEntityAdditionalSpawnData {
             e.push(this);
     }
 
-    @Override
-    public void writeSpawnData(FriendlyByteBuf buf) {
-        buf.writeInt(getCollarColor());
-        NetworkUtil.writeDogVariantToBuf(buf, variant);
-        buf.writeBoolean(getCollarThicc());
-    }
+    // @Override
+    // public void writeSpawnData(RegistryFriendlyByteBuf buf) {
+    //     buf.writeInt(getCollarColor());
+    //     NetworkUtil.writeDogVariantToBuf(buf, variant);
+    //     buf.writeBoolean(getCollarThicc());
+    // }
 
+    // @Override
+    // public void readSpawnData(RegistryFriendlyByteBuf buf) {
+    //     int collar_color = buf.readInt();
+    //     var variant = NetworkUtil.readDogVariantFromBuf(buf);
+    //     boolean thicc = buf.readBoolean();
+    //     this.setCollarColor(collar_color);
+    //     this.setDogVariant(variant);
+    //     this.setCollarThicc(thicc);
+    // }
+
+
+    //Fabric
     @Override
-    public void readSpawnData(FriendlyByteBuf buf) {
-        int collar_color = buf.readInt();
-        var variant = NetworkUtil.readDogVariantFromBuf(buf);
-        boolean thicc = buf.readBoolean();
-        this.setCollarColor(collar_color);
-        this.setDogVariant(variant);
-        this.setCollarThicc(thicc);
+    public void startSeenByPlayer(ServerPlayer serverPlayer) {
+        super.startSeenByPlayer(serverPlayer);
+        PacketHandler.send(PacketDistributor.PLAYER.with(() -> serverPlayer), 
+            new FabricPlushieSpawnData(this.getId(), this.variant, 
+                this.collarCollor, this.collarThicc));
     }
 }

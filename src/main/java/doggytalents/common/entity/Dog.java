@@ -5128,13 +5128,13 @@ public class Dog extends AbstractDog {
     }
 
     public DogAnimDebugState getDogAnimDebugState() {
-        return this.entityData.get(DOG_ANIM_DEBUG_STATE);
+        return this.dogFabricHelper.getDogAnimDebugState();
     }
 
     public void setDogAnimDebugState(DogAnimDebugState state) {
         if (state.isNone())
             state = DogAnimDebugState.NONE;
-        this.entityData.set(DOG_ANIM_DEBUG_STATE, state);
+        this.dogFabricHelper.setDogAnimDebugState(state);
     }
 
     public boolean isDogInAnimDebug() {

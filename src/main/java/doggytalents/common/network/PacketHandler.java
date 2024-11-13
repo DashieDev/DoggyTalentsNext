@@ -1,6 +1,8 @@
 package doggytalents.common.network;
 
 import doggytalents.DoggyTalentsNext;
+import doggytalents.common.fabric_helper.entity.network.FabricPlushieSpawnData;
+import doggytalents.common.fabric_helper.entity.network.FabricPlushieSpawnPacket;
 import doggytalents.common.fabric_helper.entity.network.FabricSyncAllData;
 import doggytalents.common.fabric_helper.entity.network.FabricSyncAllPacket;
 import doggytalents.common.network.packet.*;
@@ -74,6 +76,7 @@ public final class PacketHandler {
 
         //Fabric
         registerPacket(new FabricSyncAllPacket(), FabricSyncAllData.class);
+        registerPacket(new FabricPlushieSpawnPacket(), FabricPlushieSpawnData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget<?> target, MSG message) {

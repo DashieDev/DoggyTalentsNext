@@ -85,14 +85,14 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
             TooltipFlag flags) {
-        if (level == null)    
-            return;
+        // if (context.level() == null)    
+        //     return;
         var desc_id = "item.doggytalents.dog_plushie_toy_item.description";
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
         var variant = getDogVariant(stack);
-        if (variant != DogVariantUtil.getDefault() && level.isClientSide) {
+        if (variant != DogVariantUtil.getDefault() && /*context.level().isClientSide*/true) {
             var variant_str = Component.translatable("doggui.classical.variant")
                 .getString() + " "
                 + ClientEventHandler.getTranslatedVariantStr(variant);

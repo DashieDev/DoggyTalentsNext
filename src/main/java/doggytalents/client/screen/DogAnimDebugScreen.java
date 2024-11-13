@@ -12,6 +12,7 @@ import doggytalents.common.item.DogAnimDebugItem;
 import doggytalents.common.item.DogAnimDebugItem.ItemMode;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogAnimDebugData.UpdateItemSettingsData;
+import doggytalents.forge_imitate.network.PacketDistributor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
