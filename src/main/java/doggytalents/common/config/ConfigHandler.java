@@ -31,7 +31,7 @@ public class ConfigHandler {
     private static ForgeConfigSpec CONFIG_TALENT_SPEC;
     private static ForgeConfigSpec CONFIG_RESPAWN_TAG_SPEC;
     private static ForgeConfigSpec CONFIG_CUSTOM_SKINS_SPEC;
-    private static ModConfigSpec CONFIG_CUSTOM_SKINS_CLIENT_SPEC;
+    private static ForgeConfigSpec CONFIG_CUSTOM_SKINS_CLIENT_SPEC;
 
     public static final boolean ALWAYS_SHOW_DOG_NAME = true;
     public static final float DEFAULT_MAX_HUNGER = 120F;
@@ -80,12 +80,12 @@ public class ConfigHandler {
     }
 
     public static void initCustomSkinsConfigClient() {
-        var customSkinPair = new ModConfigSpec.Builder().configure(DogCustomSkinClientConfig::new);
+        var customSkinPair = new ForgeConfigSpec.Builder().configure(DogCustomSkinClientConfig::new);
         CONFIG_CUSTOM_SKINS_CLIENT_SPEC = customSkinPair.getRight();
         CUSTOM_SKINS_CLIENT = customSkinPair.getLeft();
 
         ModLoadingContext.get()
-            .getActiveContainer().registerConfig(ModConfig.Type.CLIENT, 
+            .registerConfig(ModConfig.Type.CLIENT, 
                 CONFIG_CUSTOM_SKINS_CLIENT_SPEC, "doggytalents-dog_custom_skins_client.toml");
     }
 
@@ -119,7 +119,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue DOG_VARIANT_CLIENT_EFFECT;
         public ForgeConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
         public ForgeConfigSpec.BooleanValue TRANSLUCENT_ALL_OVERLAY;
-        public ModConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
+        public ForgeConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -753,14 +753,14 @@ public class ConfigHandler {
 
     public static class DogCustomSkinClientConfig {
 
-        public ModConfigSpec.IntValue STRATEGY;
+        public ForgeConfigSpec.IntValue STRATEGY;
         public ConfigValue<List<? extends String>> WHITELISTED_ID;
         public ConfigValue<List<? extends String>> BLACKLISTED_ID;
 
         private Set<String> whitelistedSet = Set.of();
         private Set<String> blacklistedSet = Set.of(); 
 
-        public DogCustomSkinClientConfig(ModConfigSpec.Builder builder) {
+        public DogCustomSkinClientConfig(ForgeConfigSpec.Builder builder) {
             builder.comment("Specify the Strategy to be used when picking which Dog Custom Skin");
             builder.comment("will not be loaded clientside. The entry for these lists is");
             builder.comment("required to be the texture's path in ResourceLocation format");

@@ -16,6 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
 
 public class DragonCostumeWings extends Accessory implements IAccessoryHasModel {
 
@@ -35,7 +36,7 @@ public class DragonCostumeWings extends Accessory implements IAccessoryHasModel 
         }
 
         @Override
-        public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+        public void appendHoverText(ItemStack stack, Level context, List<Component> components,
                 TooltipFlag flags) {
             var desc_id = this.getDescriptionId(stack) + ".description";
             components.add(Component.translatable(desc_id).withStyle(

@@ -2,8 +2,9 @@ package doggytalents.common.entity.serializers;
 
 import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.syncher.EntityDataSerializer;
 
-public class AnimDebugStateSerializer extends DogSerializer<DogAnimDebugState> {
+public class AnimDebugStateSerializer implements EntityDataSerializer<DogAnimDebugState> {
     
     @Override
     public void write(FriendlyByteBuf buf, DogAnimDebugState value) {

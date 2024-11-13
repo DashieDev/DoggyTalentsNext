@@ -17,6 +17,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
+import net.minecraftforge.network.PacketDistributor;
 
 public class KillStatsClearConfirmScreen extends Screen {
 
@@ -40,7 +41,7 @@ public class KillStatsClearConfirmScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-        this.renderBackground(graphics, mouseX, mouseY, pTicks);
+        this.renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, pTicks);
 
         var stack = graphics.pose();
