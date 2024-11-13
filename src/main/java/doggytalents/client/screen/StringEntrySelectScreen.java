@@ -527,7 +527,7 @@ public class StringEntrySelectScreen extends Screen {
         public boolean charTyped(char code, int p_231042_2_) {
             if (this.blockCharInputMillis > 0)
                 return false;
-            if (StringUtil.isAllowedChatCharacter(code)) {
+            if (SharedConstants.isAllowedChatCharacter(code)) {
                 this.insertText(Character.toString(code));
                 return true;
             } else {

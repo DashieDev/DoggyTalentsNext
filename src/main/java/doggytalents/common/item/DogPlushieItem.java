@@ -92,7 +92,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
             Style.EMPTY.withItalic(true)
         ));
         var variant = getDogVariant(stack);
-        if (variant != DogVariantUtil.getDefault() && context.level().isClientSide) {
+        if (variant != DogVariantUtil.getDefault() && level.isClientSide) {
             var variant_str = Component.translatable("doggui.classical.variant")
                 .getString() + " "
                 + ClientEventHandler.getTranslatedVariantStr(variant);

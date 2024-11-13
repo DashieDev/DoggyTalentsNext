@@ -10,7 +10,6 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.item.DogAnimDebugItem;
 import doggytalents.common.item.DogAnimDebugItem.ItemMode;
-import doggytalents.common.network.PacketDistributor;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogAnimDebugData.UpdateItemSettingsData;
 import net.minecraft.client.Minecraft;
@@ -19,6 +18,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.network.PacketDistributor;
 
 public class DogAnimDebugScreen extends StringEntrySelectScreen {
 
