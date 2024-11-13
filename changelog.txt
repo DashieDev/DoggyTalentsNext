@@ -1648,3 +1648,7 @@ GUI Changes
 # Dog Auto Mount option is now saved.
 - Removed Legacy DTN Wolf Variant Support.
 * Fix Enter Bug on Conducting Bone Screen.
+
+**1.18.35 - 13th November 2024**
++ You are now only required to have your mainhand empty to be able to pet Dogs.
+* (1.21+ only) Fix Rendering Background in GUI(s) twice
