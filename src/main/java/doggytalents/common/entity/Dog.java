@@ -350,7 +350,7 @@ public class Dog extends AbstractDog {
         builder.define(INCAP_VAL, 0);
         builder.define(ANIMATION, 0);
         builder.define(ANIM_SYNC_TIME, 0);
-        builder.define(DOG_ANIM_DEBUG_STATE, DogAnimDebugState.NONE);
+        //builder.define(DOG_ANIM_DEBUG_STATE, DogAnimDebugState.NONE);
         //builder.define(DOG_PETTING_STATE.get(), DogPettingState.NULL);
     }
 
@@ -5138,13 +5138,13 @@ public class Dog extends AbstractDog {
     }
 
     public DogAnimDebugState getDogAnimDebugState() {
-        return this.entityData.get(DOG_ANIM_DEBUG_STATE);
+        return this.dogFabricHelper.getDogAnimDebugState();
     }
 
     public void setDogAnimDebugState(DogAnimDebugState state) {
         if (state.isNone())
             state = DogAnimDebugState.NONE;
-        this.entityData.set(DOG_ANIM_DEBUG_STATE, state);
+        this.dogFabricHelper.setDogAnimDebugState(state);
     }
 
     public boolean isDogInAnimDebug() {
