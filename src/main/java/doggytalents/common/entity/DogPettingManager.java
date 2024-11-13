@@ -152,7 +152,8 @@ public class DogPettingManager {
     }
 
     public static boolean isPlayerAbleToPet(Player player) {
-        if (!EntityUtil.allHandEmpty(player))
+        var mainhand_item = player.getMainHandItem();
+        if (mainhand_item != null && !mainhand_item.isEmpty())
             return false;
         if (player.isVehicle() || player.isPassenger())
             return false;
