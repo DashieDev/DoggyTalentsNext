@@ -56,8 +56,8 @@ public class MinecraftMixin {
             self.hitResult = new EntityHitResult(toDismount);
     }
     
-    @Inject(at = @At("HEAD"),  method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;Z)V")
-    public void dtn_disconnect(Screen screen, boolean isClientTransfering, CallbackInfo info) {
+    @Inject(at = @At("HEAD"),  method = "clearLevel(Lnet/minecraft/client/gui/screens/Screen;)V")
+    public void dtn_disconnect(Screen screen, CallbackInfo info) {
         EventCallbacksRegistry.postEvent(new ClientPlayerNetworkEvent.LoggingOut());
     }
 }
