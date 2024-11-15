@@ -2,8 +2,8 @@ package doggytalents.common.fabric_helper.entity.network;
 
 import java.util.function.Supplier;
 
-import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import doggytalents.common.util.NetworkUtil;
+import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
 import doggytalents.common.entity.misc.DogPlushie;
 import doggytalents.common.network.IPacket;
 import net.minecraft.client.Minecraft;

@@ -6,8 +6,8 @@ import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.data.ForceClearKillStatsData;
+import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
 
 public class ForceClearKillStatsPacket extends DogPacket<ForceClearKillStatsData> {
 

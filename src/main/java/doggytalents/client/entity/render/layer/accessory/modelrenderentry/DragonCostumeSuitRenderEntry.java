@@ -11,7 +11,6 @@ import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLaye
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class DragonCostumeSuitRenderEntry extends Entry{
     

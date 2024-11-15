@@ -10,12 +10,12 @@ import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.entity.DogGroupsManager.DogGroup;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.HeelByGroupData;
+import doggytalents.forge_imitate.network.PacketDistributor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraftforge.network.PacketDistributor;
 
 
 

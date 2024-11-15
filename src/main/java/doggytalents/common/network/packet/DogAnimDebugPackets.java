@@ -10,8 +10,8 @@ import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.DogAnimDebugData;
 import doggytalents.common.network.packet.data.DogAnimDebugData.UpdateItemSettingsData;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
 
 public class DogAnimDebugPackets {
     
@@ -37,7 +37,7 @@ public class DogAnimDebugPackets {
             ctx.get().enqueueWork(() -> {
                 //LogicalSide side = ctx.get().getDirection().getReceptionSide();
 
-                if (!ctx.get().getDirection().getReceptionSide().isServer())
+                if (!ctx.get().isServerRecipent())
                     return;
                 var sender = ctx.get().getSender();
                 var stack = sender.getMainHandItem();

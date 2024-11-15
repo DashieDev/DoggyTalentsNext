@@ -12,13 +12,13 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.WhisltleEditHotKeyData;
 import doggytalents.common.network.packet.data.WhistleRequestModeData;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.forge_imitate.network.PacketDistributor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraftforge.network.PacketDistributor;
 
 
 public class WhistleScreen extends StringEntrySelectScreen {
