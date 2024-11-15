@@ -57,6 +57,8 @@ public class HellHoundTalent extends TalentInstance {
 
     @Override
     public InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int second) {
+        if (dogIn.isOnFire())
+            return InteractionResultHolder.pass(second);
         return InteractionResultHolder.success(Mth.floor(second * this.getFireDecreasePercentage()));
     }
 
