@@ -1658,3 +1658,10 @@ GUI Changes
 **1.18.35 - 13th November 2024**
 + You are now only required to have your mainhand empty to be able to pet Dogs.
 * (1.21+ only) Fix Rendering Background in GUI(s) twice
+
+**1.18.36 - 15th November 2024**
+* Fix Hellhound fire decrease logic bug causing the modifier to be applied every tick
+instead of only when the dog begins to catch on fire.
+* Fix totem of undying usage causing other Dogs (other than the one the item is used on) to 
+improperly exit Injured Mode.
+* (1.20.1 Under Only) HOTFIX: Crash on Startup due to improperly registered Mixins.
