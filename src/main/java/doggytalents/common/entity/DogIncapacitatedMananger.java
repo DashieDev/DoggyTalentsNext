@@ -170,7 +170,7 @@ public class DogIncapacitatedMananger {
         
         for (var d : defeatedDogs) {
             d.setDogIncapValue(0);
-            incapacitatedExit();
+            d.incapacitatedMananger.incapacitatedExit();
 
             d.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
             d.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
