@@ -91,10 +91,12 @@ public class DogGoAwayFromFireGoal extends Goal {
         DogUtil.stopAndForceLook(dog, Vec3.atCenterOf(b0));
         this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 
             this.dog.getUrgentSpeedModifier());
+        this.dog.setDogRunningAwayFromFire(true);
     }
 
     @Override
     public void stop() {
+        this.dog.setDogRunningAwayFromFire(false);
         if (this.path == null) return;
         var end_node = this.path.getEndNode();
         if (end_node == null) return;
