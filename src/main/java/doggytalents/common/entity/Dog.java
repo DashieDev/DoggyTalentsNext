@@ -300,6 +300,7 @@ public class Dog extends AbstractDog {
     protected float jumpPower;
 
     protected boolean isDogSwimming;
+    protected boolean isDogRunningAwayFromFire;
 
     public int lastOrderedToSitTick;
     private int tickChopinTail;
@@ -4521,6 +4522,8 @@ public class Dog extends AbstractDog {
             return false;
         if (this.alterationProps.resistWaterPush())
             return false;
+        if (this.isDogRunningAwayFromFire())
+            return false;
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType();
 
@@ -4938,6 +4941,14 @@ public class Dog extends AbstractDog {
 
     public boolean isDogSwimming() {
         return this.isDogSwimming;
+    }
+
+    public void setDogRunningAwayFromFire(boolean val) {
+        this.isDogRunningAwayFromFire = val;
+    }
+
+    public boolean isDogRunningAwayFromFire() {
+        return this.isDogRunningAwayFromFire;
     }
 
     private boolean isDogCurious;
