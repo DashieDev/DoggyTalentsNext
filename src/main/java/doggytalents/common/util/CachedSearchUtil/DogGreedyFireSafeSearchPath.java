@@ -20,6 +20,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
     public boolean finished;
     private int maxLength;
     private Node startNode;
+    private int walkableCount = 0;
 
     private DogGreedyFireSafeSearchPath(Dog dog, ArrayList<Node> nodes, int maxLength) {
         super(nodes, dog.blockPosition(), false);
@@ -81,6 +82,10 @@ public class DogGreedyFireSafeSearchPath extends Path {
         tryAppendPath();
     }
 
+    public int getWalkableCount() {
+        return this.walkableCount;
+    }
+
     @Override
     public boolean isDone() {
         return super.isDone();
@@ -90,6 +95,11 @@ public class DogGreedyFireSafeSearchPath extends Path {
         var node = scanSurroundingForNextPos(this);
         if (node != null) {
             this.nodes.add(node);
+            if (node.type == PathType.WALKABLE) {
+                ++this.walkableCount;
+            }
+            if (node.type != PathType.WALKABLE && this.walkableCount > 0)
+                this.finished = true;
         } 
     }
 
