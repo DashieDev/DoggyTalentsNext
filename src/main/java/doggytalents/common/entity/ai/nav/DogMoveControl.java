@@ -35,26 +35,27 @@ public class DogMoveControl extends MoveControl {
                 this.dog.setZza(0.0F);
                 return;
             }
-            float speed0 = (float) this.dog.getAttributeValue(Attributes.MOVEMENT_SPEED);
-            float speed = speed0;
+            
+            final double base_speed = this.dog.getAttributeValue(Attributes.MOVEMENT_SPEED);
+            double speed = base_speed * this.speedModifier;
+            double dy_abs = Math.abs(dy);
+            if (dy_abs > 0.75) {
+                final double speed_cap = dy_abs > 1.75 ? SNEAK_SPEED_2 : SNEAK_SPEED_1;
+                speed = Math.min(speed, speed_cap);
+            }
+            if (this.dog.isDogCurious()) {
+                speed = Math.min(speed, SNEAK_SPEED_2);
+            }
             
             float target_yrot = (float)( Mth.atan2(dz, dx) * Mth.RAD_TO_DEG - 90f );
             if (speed < 0.39f) {
                 float apporaching_yrot = this.rotlerp(this.dog.getYRot(), target_yrot, 90f);
                 target_yrot = apporaching_yrot;
             }
+            
             this.dog.setYRot(target_yrot);
-
-            double dy_abs = Math.abs(dy);
-            if (dy_abs > 0.75 || dog.isDogCurious()) {
-                float speed_cap = dy_abs > 1.75 ? SNEAK_SPEED_2 : SNEAK_SPEED_1;
-                speed = Math.min(speed_cap, 
-                    (float) (this.speedModifier * speed0));
-                if (this.dog.isDogCurious()) {
-                    speed = (float) speedModifier * SNEAK_SPEED_2;
-                }
-            }
-            this.dog.setSpeed(speed);
+            this.dog.setSpeed((float) speed);
+            
             var b0 = this.dog.blockPosition();
             var b0_state = this.dog.level().getBlockState(b0);
             var b0_collision = b0_state.getCollisionShape(this.dog.level(), b0);
