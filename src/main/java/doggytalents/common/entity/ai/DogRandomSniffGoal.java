@@ -35,6 +35,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
     private boolean shouldMoveSignificantly = false;
     private final int EXPLORE_RADIUS = 6;
     private int stillRememberBeingBurnedTick = 0;
+    private boolean continueEvenWhenChanged = false;
 
     public DogRandomSniffGoal(Dog dog) {
         this.dog = dog;
@@ -69,7 +70,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         if (!dog.canContinueDoIdileAnim()) return false;
         if (dog.getAnim() != currentAnimation) return false;
         validateSniff();
-        if (sniffAtPos == null) 
+        if (sniffAtPos == null && !this.continueEvenWhenChanged) 
             return false;
         return this.dog.tickCount < this.stopTick;
     }
@@ -81,6 +82,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         this.dog.getNavigation().moveTo(moveToPos.getX(),
             moveToPos.getY(), moveToPos.getZ(), 1f);
         this.dog.setDogCurious(true);
+        this.continueEvenWhenChanged = false;
     }
 
     @Override
@@ -133,6 +135,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
                 this.dog.playSound(SoundEvents.WOLF_HURT, 0.6f, this.dog.getVoicePitch());
                 this.dog.playSound(SoundEvents.GENERIC_BURN, 0.3F, 2.0F + this.dog.getRandom().nextFloat() * 0.4F);
                 rememberBeingBurned();
+                this.continueEvenWhenChanged = true;
             }
             ++tickAnim;
             break;
@@ -141,6 +144,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         {
             if (this.tickAnim == 25) {
                 this.dog.playSound(SoundEvents.WOLF_AMBIENT, 1, (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.2F + 1.5F);
+                this.continueEvenWhenChanged = true;
             }
             ++tickAnim;
             break;
@@ -151,6 +155,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
                 this.dog.playSound(SoundEvents.WOLF_HURT, 0.6f, this.dog.getVoicePitch());
                 this.dog.playSound(SoundEvents.GENERIC_BURN, 0.3F, 2.0F + this.dog.getRandom().nextFloat() * 0.4F);
                 rememberBeingBurned();
+                this.continueEvenWhenChanged = true;
             }
             ++tickAnim;
         }
