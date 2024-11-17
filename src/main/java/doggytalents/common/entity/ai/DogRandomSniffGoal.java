@@ -158,6 +158,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
                 this.continueEvenWhenChanged = true;
             }
             ++tickAnim;
+            break;
         }
         case DOWN_THE_HOLE:
         {
