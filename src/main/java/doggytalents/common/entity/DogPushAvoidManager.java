@@ -54,7 +54,10 @@ public class DogPushAvoidManager {
     }
 
     public boolean checkPushAvoidOwner(Entity target) {
-        if (!ConfigHandler.SERVER.DOG_DONT_PUSH_OWNER.get())
+        boolean block_push_owner = 
+            ConfigHandler.SERVER.DOG_DONT_PUSH_OWNER.get()
+            || this.dog.isDogRunningAwayFromFire();
+        if (!block_push_owner)
             return false;
         if (ObjectUtils.notEqual(target.getUUID(), this.dog.getOwnerUUID()))
             return false;
@@ -76,6 +79,8 @@ public class DogPushAvoidManager {
     }
 
     public static boolean shouldDogsNotPushEachOther(Dog dog1, Dog dog2) {
+        if (isAtLeastOneDogRunningFromFire(dog1, dog2))
+            return true;
         if (!atLeastOnePushAvoiding(dog1, dog2))
             return false;
         if (!isTeammateDogs(dog1, dog2))
@@ -91,6 +96,12 @@ public class DogPushAvoidManager {
             return true;
         
         return false;
+    }
+
+    public static boolean isAtLeastOneDogRunningFromFire(Dog dog1, Dog dog2) {
+        return
+            dog1.isDogRunningAwayFromFire()
+            || dog2.isDogRunningAwayFromFire();
     }
     
     private static boolean atLeastOnePushAvoiding(Dog dog1, Dog dog2) {
