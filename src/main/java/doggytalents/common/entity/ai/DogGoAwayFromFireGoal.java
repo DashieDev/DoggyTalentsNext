@@ -97,19 +97,22 @@ public class DogGoAwayFromFireGoal extends Goal {
     @Override
     public void stop() {
         this.dog.setDogRunningAwayFromFire(false);
-        if (this.path == null) return;
+        this.tickUntilSearch = 5;
+        proccessEndNode(); 
+    }
+
+    private void proccessEndNode() {
+        if (this.path == null) 
+            return;
         var end_node = this.path.getEndNode();
-        if (end_node == null) return;
+        if (end_node == null) 
+            return;
         var b0 = end_node.asBlockPos();
         this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 
             this.dog.getUrgentSpeedModifier());
         this.dog.getNavigation().stop();
-        
-        //Penalty
-        if (end_node.type != BlockPathTypes.WALKABLE)
+        if (end_node.type != PathType.WALKABLE)
             this.tickUntilSearch = 20 + dog.getRandom().nextInt(3)*10;
-        else
-            this.tickUntilSearch = 3;
     }
 
     /**
