@@ -37,10 +37,11 @@ public class DogGreedyFireSafeSearchPath extends Path {
         initNodes.add(start_node.get());
         var ret = new DogGreedyFireSafeSearchPath(dog, initNodes, maxLength);
         ret.startNode = start_node.get();
-        var pos = scanSurroundingForNextPos(ret);
-        if (pos == null) return null;
+        var node_optional = scanSurroundingForNextPos(ret);
+        if (!node_optional.isPresent())
+            return null;
         initNodes.clear();
-        initNodes.add(pos);
+        initNodes.add(node_optional.get());
         return ret;
     }
 
@@ -78,8 +79,9 @@ public class DogGreedyFireSafeSearchPath extends Path {
     public void advance() {
         super.advance();
         if (finished) return;
-        if (this.getNextNodeIndex() >= this.maxLength) return;
-        tryAppendPath();
+        boolean append_result = tryAppendPath();
+        if (!append_result)
+            this.finished = true;
     }
 
     public int getWalkableCount() {
@@ -88,19 +90,26 @@ public class DogGreedyFireSafeSearchPath extends Path {
 
     @Override
     public boolean isDone() {
-        return super.isDone();
+        if (this.finished)
+            return true;
+        return this.getNextNodeIndex() >= this.nodes.size();
     }
 
-    public void tryAppendPath() {
-        var node = scanSurroundingForNextPos(this);
-        if (node != null) {
-            this.nodes.add(node);
-            if (node.type == PathType.WALKABLE) {
-                ++this.walkableCount;
-            }
-            if (node.type != PathType.WALKABLE && this.walkableCount > 0)
-                this.finished = true;
-        } 
+    public boolean tryAppendPath() {
+        if (this.getNextNodeIndex() >= this.maxLength)
+            return false;
+        
+        var node_optional = scanSurroundingForNextPos(this);
+        if (node_optional.isPresent())
+            return false;
+        var node = node_optional.get();
+        if (node.type != PathType.WALKABLE && this.walkableCount > 0)
+            return false;
+        
+        this.nodes.add(node);
+        if (node.type == PathType.WALKABLE)
+            ++this.walkableCount;
+        return true;
     }
 
     private boolean containNode(BlockPos node0) {
@@ -111,8 +120,9 @@ public class DogGreedyFireSafeSearchPath extends Path {
         return false;
     }
 
-    private static Node scanSurroundingForNextPos(DogGreedyFireSafeSearchPath path) {
-        if (path.nodes.isEmpty()) return null;
+    private static Optional<Node> scanSurroundingForNextPos(DogGreedyFireSafeSearchPath path) {
+        if (path.nodes.isEmpty()) 
+            return Optional.empty();
         var b0 = path.nodes.get(path.nodes.size()-1).asBlockPos();
         float malus_min = Float.MAX_VALUE;
         Node node_chosen = null;
@@ -145,7 +155,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
                     node.type == PathType.WALKABLE
                     && pathtype_above == PathType.OPEN;
                 if (clear_walkable) {
-                    return node;
+                    return Optional.of(node);
                 }
                 boolean is_last_resort = 
                     node.y > b0.getY() && pathtype_above != PathType.BLOCKED;
@@ -185,7 +195,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
                 boolean is_clearly_walkable =
                     node.type == PathType.WALKABLE && pathtype_above == PathType.OPEN;
                 if (is_clearly_walkable) {
-                    return node;
+                    return Optional.of(node);
                 }
                 boolean is_last_resort = node.y > b0.getY() 
                     && pathtype_above != PathType.BLOCKED;
@@ -202,12 +212,11 @@ public class DogGreedyFireSafeSearchPath extends Path {
             }
         }
         if (node_chosen != null) {
-            return node_chosen;
+            return Optional.of(node_chosen);
         } else if (last_resort != null) {
-            return last_resort;
+            return Optional.of(last_resort);
         } else {
-            path.finished = true;
-            return null;
+            return Optional.empty();
         }
     }
 
