@@ -23,6 +23,8 @@ public class DogGoAwayFromFireGoal extends Goal {
     private Dog dog;
 
     private int tickUntilSearch;
+    private int lastGoAwayTimestamp;
+    private int walkableUntilStop = 1;
 
     private DogGreedyFireSafeSearchPath path;
 
@@ -71,9 +73,14 @@ public class DogGoAwayFromFireGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (isSafePos(this.dog.blockPosition()))
+        if (this.path == null)
             return false;
         if (dog.getNavigation().isDone())
+            return false;
+        boolean is_safe = 
+            this.path.getWalkableCount() >= this.walkableUntilStop
+            && this.checkAboveForFallingLava(this.dog.blockPosition());
+        if (is_safe)
             return false;
         
         return true;
@@ -91,13 +98,16 @@ public class DogGoAwayFromFireGoal extends Goal {
         this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 
             this.dog.getUrgentSpeedModifier());
         this.dog.setDogRunningAwayFromFire(true);
+        int tick_since_last = this.dog.tickCount - this.lastGoAwayTimestamp;
+        this.walkableUntilStop = tick_since_last >= 20 ? 1 : 2;
     }
 
     @Override
     public void stop() {
         this.dog.setDogRunningAwayFromFire(false);
         this.tickUntilSearch = 5;
-        proccessEndNode(); 
+        this.lastGoAwayTimestamp = this.dog.tickCount;
+        proccessEndNode();
     }
 
     private void proccessEndNode() {
@@ -175,13 +185,7 @@ public class DogGoAwayFromFireGoal extends Goal {
         return ret;
     }
 
-    private boolean isSafePos(BlockPos pos) {
-        var blockType = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
-
-        if (blockType != BlockPathTypes.WALKABLE) {
-            return false;
-        }
-
+    private boolean checkAboveForFallingLava(BlockPos pos) {
         var pos_above = pos.above();
         var state_above = dog.level().getBlockState(pos_above);
         if (state_above.is(Blocks.LAVA))
