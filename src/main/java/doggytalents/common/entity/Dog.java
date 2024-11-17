@@ -1792,6 +1792,8 @@ public class Dog extends AbstractDog {
         if (this.isDefeated())
             return;
         if (this.isDeadOrDying()) {
+            this.setOrderedToSit(false);
+            this.setInSittingPose(false);
             this.setAnim(DogAnimation.HURT_1);
             return;
         }
