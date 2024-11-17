@@ -89,7 +89,7 @@ public class DogAnimDebugItem extends Item implements IDogItem {
                 dog.setAnim(DogAnimation.NONE);
             }
             
-
+            return;
         }
         case TIME_SET: {
             if (!dog.isDogInAnimDebug())

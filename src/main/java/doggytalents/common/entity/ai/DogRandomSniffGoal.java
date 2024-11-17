@@ -171,6 +171,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
                 this.dog.getMoveControl().setWantedPosition(sniffAtPos.getX(), this.dog.getY(),
                 sniffAtPos.getZ(), 0.5f);
             }
+            break;
         }
         }
     }
