@@ -14,6 +14,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class DogMoveControl extends MoveControl {
 
+    private final float SNEAK_SPEED_1 = 0.35f;
+    private final float SNEAK_SPEED_2 = 0.25f;
+
     private Dog dog;
 
     public DogMoveControl(Dog dog) {
@@ -23,61 +26,64 @@ public class DogMoveControl extends MoveControl {
 
     @Override
     public void tick() {
-        final float SNEAK_SPEED_1 = 0.35f;
-        final float SNEAK_SPEED_2 = 0.25f;
         if (this.operation == MoveControl.Operation.MOVE_TO) {
             this.operation = MoveControl.Operation.WAIT;
-            double dx = this.wantedX - this.dog.getX();
-            double dz = this.wantedZ - this.dog.getZ();
-            double dy = this.wantedY - this.dog.getY();
-            double l_sqr = dx * dx + dy * dy + dz * dz;
-            if (l_sqr < (double)2.5000003E-7F) {
-                this.dog.setZza(0.0F);
-                return;
-            }
-            
-            final double base_speed = this.dog.getAttributeValue(Attributes.MOVEMENT_SPEED);
-            double speed = base_speed * this.speedModifier;
-            double dy_abs = Math.abs(dy);
-            if (dy_abs > 0.75) {
-                final double speed_cap = dy_abs > 1.75 ? SNEAK_SPEED_2 : SNEAK_SPEED_1;
-                speed = Math.min(speed, speed_cap);
-            }
-            if (this.dog.isDogCurious()) {
-                speed = Math.min(speed, SNEAK_SPEED_2);
-            }
-            
-            float target_yrot = (float)( Mth.atan2(dz, dx) * Mth.RAD_TO_DEG - 90f );
-            if (speed < 0.39f) {
-                float apporaching_yrot = this.rotlerp(this.dog.getYRot(), target_yrot, 90f);
-                target_yrot = apporaching_yrot;
-            }
-            
-            this.dog.setYRot(target_yrot);
-            this.dog.setSpeed((float) speed);
-            
-            var b0 = this.dog.blockPosition();
-            var b0_state = this.dog.level().getBlockState(b0);
-            var b0_collision = b0_state.getCollisionShape(this.dog.level(), b0);
-            boolean dyRequiresJump = 
-                (dy > (double)this.dog.maxUpStep() 
-                && dx * dx + dz * dz < (double)Math.max(1.0F, this.dog.getBbWidth()));
-            boolean collisionRequireJump =
-                !b0_collision.isEmpty() 
-                && this.dog.getY() < b0_collision.max(Direction.Axis.Y) + (double)b0.getY() 
-                && !b0_state.is(BlockTags.DOORS) 
-                && !b0_state.is(BlockTags.FENCES)
-                && !(b0_state.getBlock() instanceof FenceGateBlock);
-            boolean shouldJump =
-                dyRequiresJump
-                || collisionRequireJump;
-            if (shouldJump) {
-                this.dog.getJumpControl().jump();
-                this.operation = MoveControl.Operation.JUMPING;
-            }
+            doDogMoveTo();
             return;
         }
         super.tick();
+    }
+
+    private void doDogMoveTo() {
+        double dx = this.wantedX - this.dog.getX();
+        double dz = this.wantedZ - this.dog.getZ();
+        double dy = this.wantedY - this.dog.getY();
+        double l_sqr = dx * dx + dy * dy + dz * dz;
+        if (l_sqr < (double)2.5000003E-7F) {
+            this.dog.setZza(0.0F);
+            return;
+        }
+        
+        final double base_speed = this.dog.getAttributeValue(Attributes.MOVEMENT_SPEED);
+        double speed = base_speed * this.speedModifier;
+        double dy_abs = Math.abs(dy);
+        if (dy_abs > 0.75) {
+            final double speed_cap = dy_abs > 1.75 ? SNEAK_SPEED_2 : SNEAK_SPEED_1;
+            speed = Math.min(speed, speed_cap);
+        }
+        if (this.dog.isDogCurious()) {
+            speed = Math.min(speed, SNEAK_SPEED_2);
+        }
+        
+        float target_yrot = (float)( Mth.atan2(dz, dx) * Mth.RAD_TO_DEG - 90f );
+        if (speed < 0.39f) {
+            float apporaching_yrot = this.rotlerp(this.dog.getYRot(), target_yrot, 90f);
+            target_yrot = apporaching_yrot;
+        }
+        
+        this.dog.setYRot(target_yrot);
+        this.dog.setSpeed((float) speed);
+        
+        var b0 = this.dog.blockPosition();
+        var b0_state = this.dog.level().getBlockState(b0);
+        var b0_collision = b0_state.getCollisionShape(this.dog.level(), b0);
+        boolean dyRequiresJump = 
+            (dy > (double)this.dog.maxUpStep() 
+            && dx * dx + dz * dz < (double)Math.max(1.0F, this.dog.getBbWidth()));
+        boolean collisionRequireJump =
+            !b0_collision.isEmpty() 
+            && this.dog.getY() < b0_collision.max(Direction.Axis.Y) + (double)b0.getY() 
+            && !b0_state.is(BlockTags.DOORS) 
+            && !b0_state.is(BlockTags.FENCES)
+            && !(b0_state.getBlock() instanceof FenceGateBlock);
+        boolean shouldJump =
+            dyRequiresJump
+            || collisionRequireJump;
+        if (shouldJump) {
+            this.dog.getJumpControl().jump();
+            this.operation = MoveControl.Operation.JUMPING;
+        }
+        return;
     }
 
     // private boolean isMovingDiagonallyDownward() {
