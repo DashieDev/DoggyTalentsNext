@@ -173,6 +173,23 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
             }
             break;
         }
+        case SNIFF_AWW_HAPPY:
+        {
+            final float max_close_dist = 1.2f;
+            var current_center = Vec3.atBottomCenterOf(currentPos);
+            var sniff_center = Vec3.atBottomCenterOf(sniffAtPos);
+            var d_sqr = this.dog.distanceToSqr(sniff_center);
+            if (d_sqr < max_close_dist) {
+                var lookAtPos = Vec3.atBottomCenterOf(sniffAtPos);
+                this.dog.getLookControl().setLookAt(lookAtPos);
+                this.dog.getMoveControl().strafe(-0.25f, 0);
+            }
+            if (this.tickAnim == 40) {
+                this.dog.playSound(SoundEvents.WOLF_WHINE, 0.6f, this.dog.getVoicePitch());
+            }
+            ++tickAnim;
+            break;
+        }
         }
     }
 
@@ -273,8 +290,14 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
             && sniffAtState.isAir())
             return DogAnimation.SNIFF_HOT;
         var atBlock = sniffAtState.getBlock();
-        if (atBlock instanceof FlowerBlock || atBlock instanceof TorchBlock)
+        if (atBlock instanceof TorchBlock)
             return DogAnimation.SNIFF_SNEEZE;
+        if (atBlock instanceof FlowerBlock) {
+            if (this.dog.getRandom().nextBoolean())
+                return DogAnimation.SNIFF_AWW_HAPPY;
+            else
+                return DogAnimation.SNIFF_SNEEZE;
+        }
         if (!fireImmune && 
             WalkNodeEvaluator.isBurningBlock(sniffAtState))
             return DogAnimation.TOUCHY_TOUCH;
