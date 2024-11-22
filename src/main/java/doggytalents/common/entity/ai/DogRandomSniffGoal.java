@@ -70,7 +70,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         if (!dog.canContinueDoIdileAnim()) return false;
         if (dog.getAnim() != currentAnimation) return false;
         validateSniff();
-        if (sniffAtPos == null && !this.continueEvenWhenChanged) 
+        if (sniffAtPos == null) 
             return false;
         return this.dog.tickCount < this.stopTick;
     }
@@ -96,7 +96,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
 
     @Override
     public void stop() {
-        if (dog.getAnim() == currentAnimation && currentAnimation != DogAnimation.NONE)
+        if (!dog.getAnim().interupting())
             dog.setAnim(DogAnimation.NONE);
         dog.setDogCurious(false);
         resetSniffPos();
@@ -317,17 +317,20 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
             invalidated = true;
         
         if (!invalidated) {
-            if (dog.distanceToSqr(Vec3.atBottomCenterOf(sniffAtPos)) > 4)
+            double max_dist = 2;
+            if (this.continueEvenWhenChanged)
+                max_dist = 6;
+            if (dog.distanceToSqr(Vec3.atBottomCenterOf(sniffAtPos)) > max_dist * max_dist)
                 invalidated = true; 
         }
 
-        if (!invalidated) {
+        if (!invalidated && !this.continueEvenWhenChanged) {
             var newAtState = dog.level().getBlockState(sniffAtPos);
             if (newAtState.getBlock() != sniffAtState.getBlock())
                 invalidated = true;
         }
         
-        if (!invalidated) {
+        if (!invalidated && !this.continueEvenWhenChanged) {
             var newUnderState = dog.level().getBlockState(sniffUnderPos);
             if (newUnderState.getBlock() != sniffUnderState.getBlock())
                 invalidated = true;
