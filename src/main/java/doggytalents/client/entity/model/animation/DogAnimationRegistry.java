@@ -111,6 +111,7 @@ public class DogAnimationRegistry {
         register(DogAnimation.BACKHUG_FF2, DogFaceRubAnimationSequences.FACERUB_FF2);
         register(DogAnimation.BACKHUG_END, DogBackHugAnimationSequences.BACKHUG_END);
         register(DogAnimation.DRINK_WATER, DogAnimationSequences3.DRINK_WATER);
+        register(DogAnimation.SPLASH, DogAnimationSequences3.SPLASH);
     }
     
 }
