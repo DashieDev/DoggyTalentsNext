@@ -49,16 +49,16 @@ public class BachWig extends Accessory implements IAccessoryHasModel {
         @Override
         public void doAdditionalAttackEffects(AbstractDog dogIn, Entity target) {
             if (target == null || target.isAlive()) return;
-            mayDropDisc(dogIn, target);
+            //mayDropDisc(dogIn, target);
         }
 
-        public void mayDropDisc(AbstractDog dog, Entity target) {
-            float r = dog.getRandom().nextFloat();
-            final float chance = 0.15f;
-            if (r > chance) return;
-            int indx = dog.getRandom().nextInt(DISC_LIST.size());
-            dog.spawnAtLocation(new ItemStack(DISC_LIST.get(indx).get()), 0.0F);
-        }
+        // public void mayDropDisc(AbstractDog dog, Entity target) {
+        //     float r = dog.getRandom().nextFloat();
+        //     final float chance = 0.15f;
+        //     if (r > chance) return;
+        //     int indx = dog.getRandom().nextInt(DISC_LIST.size());
+        //     dog.spawnAtLocation(new ItemStack(DISC_LIST.get(indx).get()), 0.0F);
+        // }
         
     }
 
