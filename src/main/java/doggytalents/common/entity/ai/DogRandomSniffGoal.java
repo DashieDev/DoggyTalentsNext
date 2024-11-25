@@ -7,6 +7,8 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.DogAiManager.IHasTickNonRunning;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -190,8 +192,50 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
             ++tickAnim;
             break;
         }
+        case SPLASH:
+        {
+            boolean lava_effect = 
+                (tickAnim == 56 || tickAnim == 82 || tickAnim == 104)
+                && dog.isInLava();
+            if (lava_effect) {
+                var random = dog.getRandom();
+                float volume = tickAnim > 90 ? 10f : 4f;
+                dog.playSound(SoundEvents.STRIDER_STEP_LAVA, volume, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
+                ((ServerLevel) dog.level()).sendParticles(
+                    ParticleTypes.LAVA, 
+                    dog.getX(), dog.getY(), dog.getZ(), 
+                    tickAnim > 90 ? 10 : 15, 
+                    dog.getBbWidth(), 1, dog.getBbWidth(), 
+                    0.1
+                );
+            }
+            if (tickAnim == 92) {   
+                dog.getJumpControl().jump();
+                this.continueEvenWhenChanged = true;
+            }
+            ++tickAnim;
+            break;
+        }
         }
     }
+
+    // private BlockState getSplashState(Dog dog) {
+    //     var look_vec = dog.getViewVector(1);
+    //     var dog_half_bbw = dog.getBbWidth()/2;
+    //     double offset_scale = Math.min(0.1, dog_half_bbw - 0.2);
+    //     var check_pos_vec = dog.position().add(
+    //         look_vec.scale(offset_scale)
+    //     );
+        
+    //     var check_pos = BlockPos.containing(check_pos_vec);
+    //     var check_state = dog.level().getBlockState(check_pos);
+    //     if (check_state.isAir()) {
+    //         check_pos = check_pos.below();
+    //         check_state = dog.level().getBlockState(check_pos);
+    //     }
+
+    //     return check_state;
+    // }
 
     private void tickMoveTo() {
         if (this.dog.getNavigation().isDone() || almostOutOfRestrict() || checkMiningCautious()) {
@@ -305,7 +349,10 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
             return DogAnimation.DOWN_THE_HOLE;
         }
         if (fireImmune && atBlock == (Blocks.LAVA)) {
-            return DogAnimation.SNIFF_SNEEZE;
+            if (this.dog.getRandom().nextBoolean())
+                return DogAnimation.SNIFF_SNEEZE;
+            else
+                return DogAnimation.SPLASH;
         }
 
         return DogAnimation.SNIFF_NEUTRAL;
