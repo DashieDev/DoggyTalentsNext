@@ -329,6 +329,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue WANDERING_DOG_WHISTLE;
         public ForgeConfigSpec.BooleanValue DISABLE_KILL_STATS;
         public ForgeConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
+        public ModConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
@@ -574,6 +575,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("used for Style.")
                 .translation("doggytalents.disable_wolf_armor_protection")
                 .define("disable_wolf_armor_protection", false);
+            PREVENT_WILD_WOLVES_ANGRY = builder
+                .comment("Prevent Wild Wolves from being angry when you accidentally hit them.")
+                .translation("doggytalents.prevent_wild_wolves_angry")
+                .define("prevent_wild_wolves_angry", false);
 
             //(Non 1.20.5+)
             RANDOM_VAR_ON_TRAIN = builder
