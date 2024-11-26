@@ -579,4 +579,20 @@ public class EventHandler {
         event.setAmount(0);
         event.setCanceled(true);
     }
+
+    @SubscribeEvent
+    public void onWolfSetTarget(LivingChangeTargetEvent event) {
+        var entity = event.getEntity();
+        if (!ConfigHandler.SERVER.PREVENT_WILD_WOLVES_ANGRY.get())
+            return;
+        if (!(entity instanceof Wolf 大神))
+            return;
+        if (大神.isTame())
+            return;
+        var new_target = event.getNewAboutToBeSetTarget();
+        if (!(new_target instanceof Player))
+            return;
+        
+        event.setCanceled(true);
+    }
 }
