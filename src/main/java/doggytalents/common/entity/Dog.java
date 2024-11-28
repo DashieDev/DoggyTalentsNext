@@ -243,8 +243,8 @@ public class Dog extends AbstractDog {
         = new DogDataSyncManager(this);
     public final DogOwnerDistanceManager dogOwnerDistanceManager 
         = new DogOwnerDistanceManager(this);
-    public final DogMiningCautiousManager dogMiningCautiousManager
-        = new DogMiningCautiousManager(this);
+    public final DogAvoidGoingInFrontOfOwnerManager avoidGoInFrontOfOwnerManager
+        = new DogAvoidGoingInFrontOfOwnerManager(this);
     public final DogGroupsManager dogGroupsManager
         = new DogGroupsManager();
     public final DogIncapacitatedMananger incapacitatedMananger
@@ -840,7 +840,7 @@ public class Dog extends AbstractDog {
             this.hungerManager.tick();
             this.tickDogHealing();
             this.dogOwnerDistanceManager.tick();
-            this.dogMiningCautiousManager.tick();
+            this.avoidGoInFrontOfOwnerManager.tick();
         }
 
         if (!this.level().isClientSide)
@@ -5146,10 +5146,6 @@ public class Dog extends AbstractDog {
 
     public DogGroupsManager getGroups() {
         return this.dogGroupsManager;
-    }
-
-    public boolean isMiningCautious() {
-        return this.dogMiningCautiousManager.isMiningCautious();
     }
 
     public void setAnim(DogAnimation animation) {
