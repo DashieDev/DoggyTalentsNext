@@ -3,30 +3,34 @@ package doggytalents.common.entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.DiggerItem;
 
-public class DogMiningCautiousManager {
+public class DogAvoidGoingInFrontOfOwnerManager {
 
     private Dog dog;
-    private int miningCautiousTime = 0;
+    private int activeTime = 0;
 
-    private static final int MINING_CAUTIOUS_DURATION = 600;
+    private static final int ACTIVE_DURATION = 600;
     
-    public DogMiningCautiousManager(Dog dog) {
+    public DogAvoidGoingInFrontOfOwnerManager(Dog dog) {
         this.dog = dog;
     }
     
     public void tick() {
-        if (miningCautiousTime > 0) --miningCautiousTime;
+        if (activeTime > 0) --activeTime;
         
         if ((dog.tickCount & 1) != 0) return;
         var owner = dog.getOwner();
         if (owner == null) return;
-        if (ownerMayBeMining(owner)) {
-            miningCautiousTime = MINING_CAUTIOUS_DURATION;
+        if (shouldAvoidGoingInfrontOfOwner(owner)) {
+            activeTime = ACTIVE_DURATION;
         }
     }
 
-    public boolean isMiningCautious() {
-        return this.miningCautiousTime > 0;
+    public boolean isActive() {
+        return this.activeTime > 0;
+    }
+
+    private boolean shouldAvoidGoingInfrontOfOwner(LivingEntity owner) {
+        return ownerMayBeMining(owner);
     }
 
     private boolean ownerMayBeMining(LivingEntity owner) {
