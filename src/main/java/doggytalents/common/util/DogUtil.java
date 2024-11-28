@@ -96,7 +96,7 @@ public class DogUtil {
     public static boolean dynamicSearchAndTeleportToOwnwer(Dog dog, LivingEntity owner, int radius) {
         
         BlockPos target;
-        if (owner.isSprinting() || dog.isMiningCautious()) {
+        if (owner.isSprinting() || dog.avoidGoInFrontOfOwnerManager.isActive()) {
             target = CachedSearchUtil
                 .getRandomSafePosUsingPoolExcludeInfrontOfOwner(dog, owner, owner.blockPosition(), radius, 1);
         } else {
@@ -318,7 +318,7 @@ public class DogUtil {
                 // && hasLineOfSightToOwnerAtPos(dog, pos)
 
                 && !(
-                    (owner.isSprinting() || dog.isMiningCautious())
+                    (owner.isSprinting() || dog.avoidGoInFrontOfOwnerManager.isActive())
                     && posWillCollideWithOwnerMovingForward(dog, owner, pos)
                 ); 
         return flag;
@@ -461,7 +461,7 @@ public class DogUtil {
         return d_sqr <= 1 && ( -maxDY_down <= dy && dy <= maxDY_up);
     }
 
-    public static boolean pathObstructOwnerMining(Dog dog) {
+    public static boolean pathGoingInFrontOfOwner(Dog dog) {
 
         var n = dog.getNavigation(); 
         var p = n.getPath();

@@ -262,8 +262,8 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
     }
 
     private boolean checkMiningCautious() {
-        if (this.dog.isMiningCautious()) {
-            if (DogUtil.pathObstructOwnerMining(this.dog)) {
+        if (this.dog.avoidGoInFrontOfOwnerManager.isActive()) {
+            if (DogUtil.pathGoingInFrontOfOwner(this.dog)) {
                 return true;
             }
         }

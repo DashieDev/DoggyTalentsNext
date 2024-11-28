@@ -55,8 +55,8 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
     public void tick() {
         super.tick();
         
-        if (this.dog.isMiningCautious()) {
-            if (DogUtil.pathObstructOwnerMining(this.dog)) {
+        if (this.dog.avoidGoInFrontOfOwnerManager.isActive()) {
+            if (DogUtil.pathGoingInFrontOfOwner(this.dog)) {
                 this.stop();
             }
         }
