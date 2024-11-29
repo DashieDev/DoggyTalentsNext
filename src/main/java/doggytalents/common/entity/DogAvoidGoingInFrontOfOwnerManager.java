@@ -2,6 +2,7 @@ package doggytalents.common.entity;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.ProjectileWeaponItem;
 
 public class DogAvoidGoingInFrontOfOwnerManager {
 
@@ -30,7 +31,14 @@ public class DogAvoidGoingInFrontOfOwnerManager {
     }
 
     private boolean shouldAvoidGoingInfrontOfOwner(LivingEntity owner) {
-        return ownerMayBeMining(owner);
+        return ownerMayBeMining(owner)
+            || ownerIsShooting(owner);
+    }
+
+    private boolean ownerIsShooting(LivingEntity owner) {
+        return
+            owner.isUsingItem() 
+            && owner.getMainHandItem().getItem() instanceof ProjectileWeaponItem;      
     }
 
     private boolean ownerMayBeMining(LivingEntity owner) {
