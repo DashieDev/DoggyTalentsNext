@@ -5006,7 +5006,7 @@ public class Dog extends AbstractDog {
             return;        
         }
         if (this.isVehicle() && !this.hasControllingPassenger())
-            Entity_push(pushTarget);
+            pushDogAsVehicle(pushTarget);
         else
             super.doPush(pushTarget);
     }
@@ -5019,7 +5019,7 @@ public class Dog extends AbstractDog {
         if (this.pettingManager.checkPush(source))
             return;
         if (this.isVehicle() && !this.hasControllingPassenger())
-            Entity_push(source);
+            pushDogAsVehicle(source);
         else {
             if (isDogCurious())
                 setDogCurious(false);
@@ -5027,16 +5027,32 @@ public class Dog extends AbstractDog {
         }
     }
 
-    private void Entity_push(Entity source) {
+    private void pushDogAsVehicle(Entity source) {
+        var push_vec_optional = calcDogPushVec(source);
+        if (!push_vec_optional.isPresent())
+            return;
+        var push_vec = push_vec_optional.get(); 
+
+        if (this.isPushable()) {
+            this.push(-push_vec.x(), 0.0D, -push_vec.z());
+        }
+
+        if (source.isPushable()) {
+            source.push(push_vec.x(), 0.0D, push_vec.z());
+        }
+    }
+
+    public Optional<Vec3> calcDogPushVec(Entity source) {
         if (this.isPassengerOfSameVehicle(source)) 
-            return;
+            return Optional.empty();
         if (source.noPhysics || this.noPhysics)
-            return;
+            return Optional.empty();
+            
         double dx_vec = source.getX() - this.getX();
         double dz_vec = source.getZ() - this.getZ();
         double max_magnitude = Mth.absMax(dx_vec, dz_vec);
         if (max_magnitude < 0.01)
-            return;
+            return Optional.empty();
 
         max_magnitude = Math.sqrt(max_magnitude);
         dx_vec /= max_magnitude;
@@ -5050,13 +5066,7 @@ public class Dog extends AbstractDog {
         dz_vec *= max_magnitude_inv;
         dx_vec *= 0.05;
         dz_vec *= 0.05;
-        if (this.isPushable()) {
-            this.push(-dx_vec, 0.0D, -dz_vec);
-        }
-
-        if (source.isPushable()) {
-            source.push(dx_vec, 0.0D, dz_vec);
-        }
+        return Optional.of(new Vec3(dx_vec, 0, dz_vec));
     }
 
     @Override
