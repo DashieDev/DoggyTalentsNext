@@ -5034,7 +5034,7 @@ public class Dog extends AbstractDog {
         }
     }
 
-    public Optional<Vec3> calcDogPushVec(Entity source) {
+    private Optional<Vec3> calcDogPushVec(Entity source) {
         if (this.isPassengerOfSameVehicle(source)) 
             return Optional.empty();
         if (source.noPhysics || this.noPhysics)
