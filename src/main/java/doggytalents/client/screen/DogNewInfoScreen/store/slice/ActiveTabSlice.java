@@ -3,7 +3,6 @@ package doggytalents.client.screen.DogNewInfoScreen.store.slice;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.payload.ChangeTabPayload;
-import doggytalents.client.screen.DogNewInfoScreen.store.payload.InitSkinIndexPayload;
 import doggytalents.client.screen.framework.AbstractSlice;
 import doggytalents.client.screen.framework.CommonUIActionTypes;
 import doggytalents.client.screen.framework.Store;
@@ -42,7 +41,7 @@ public class ActiveTabSlice implements AbstractSlice {
         if (tab == Tab.STATS) {
             setupStats(dog);
         } else if (tab == Tab.STYLE) {
-            payload = setupSkins(dog);
+            setupSkins(dog);
         } else if (tab == Tab.HOME) {
             setupGroups(dog);
         }
@@ -87,9 +86,8 @@ public class ActiveTabSlice implements AbstractSlice {
         new StatsSyncData.Request(dog.getId()));
     }
 
-    private static InitSkinIndexPayload setupSkins(Dog dog) {
+    private static void setupSkins(Dog dog) {
         ActiveSkinSlice.initLocList();
-        return new InitSkinIndexPayload(Tab.STYLE, dog);
     }
 
     private static void setupGroups(Dog dog) {
