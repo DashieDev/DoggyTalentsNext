@@ -40,8 +40,6 @@ public class ActiveTabSlice implements AbstractSlice {
 
         if (tab == Tab.STATS) {
             setupStats(dog);
-        } else if (tab == Tab.STYLE) {
-            setupSkins(dog);
         } else if (tab == Tab.HOME) {
             setupGroups(dog);
         }
@@ -84,10 +82,6 @@ public class ActiveTabSlice implements AbstractSlice {
             return;
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
         new StatsSyncData.Request(dog.getId()));
-    }
-
-    private static void setupSkins(Dog dog) {
-        ActiveSkinSlice.initLocList();
     }
 
     private static void setupGroups(Dog dog) {

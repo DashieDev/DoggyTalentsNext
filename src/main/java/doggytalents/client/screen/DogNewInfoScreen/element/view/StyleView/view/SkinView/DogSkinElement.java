@@ -38,18 +38,20 @@ public class DogSkinElement extends AbstractElement {
 
     Dog dog;
     List<DogSkin> locList;
+    final Dog dummyDog;
     int activeSkinId;
     Font font;
     boolean showInfo;
 
     private TextOnlyButton copy_sha1_button;
 
-    public DogSkinElement(AbstractElement parent, Screen screen, Dog dog, List<DogSkin> locList, int active_id) {
+    public DogSkinElement(AbstractElement parent, Screen screen, Dog dog, Dog dummy, List<DogSkin> locList, int active_id) {
         super(parent, screen);
         this.dog = dog;
         this.locList = locList;
         this.activeSkinId = active_id;
         this.font = Minecraft.getInstance().font;
+        this.dummyDog = dummy;
     }
 
     @Override
@@ -290,15 +292,15 @@ public class DogSkinElement extends AbstractElement {
         var manifestSkin = this.locList.get(indx);
         if (manifestSkin.mystery()) {
             manifestSkin = DogSkin.MYSTERY;
-            renderMysteriousKanji(stack, e_mX, e_mY);
-            ActiveSkinSlice.DUMMY_DOG_OBJ.setClientSkin(manifestSkin);
-            DogStatusViewBoxElement.renderDogInside(stack, 
-                ActiveSkinSlice.DUMMY_DOG_OBJ, e_mX, e_mY, size, 
+            renderMysteriousKanji(graphics, e_mX, e_mY);
+            dummyDog.setClientSkin(manifestSkin);
+            DogStatusViewBoxElement.renderDogInside(graphics, 
+                dummyDog, e_mX, e_mY, size, 
                 followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
-        } else if (useDummy && ActiveSkinSlice.DUMMY_DOG_OBJ != null) {
-            ActiveSkinSlice.DUMMY_DOG_OBJ.setClientSkin(manifestSkin);
-            DogStatusViewBoxElement.renderDogInside(stack, 
-                ActiveSkinSlice.DUMMY_DOG_OBJ, e_mX, e_mY, size, 
+        } else if (useDummy && dummyDog != null) {
+            dummyDog.setClientSkin(manifestSkin);
+            DogStatusViewBoxElement.renderDogInside(graphics, 
+                dummyDog, e_mX, e_mY, size, 
                 followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
         } else {   
             dog.setClientSkin(manifestSkin);
