@@ -19,7 +19,7 @@ public class Store {
     private IStoreSubscriber subscriber;
 
     private final Map<Class<? extends AbstractSlice>, StoreValue> applicationStates
-        = Maps.newConcurrentMap();
+        = Maps.newHashMap();
 
     private final ArrayList<UIAction> dispatchedAction = new ArrayList<UIAction>();
 
