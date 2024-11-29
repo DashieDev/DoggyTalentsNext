@@ -16,9 +16,7 @@ import doggytalents.client.screen.framework.CommonUIActionTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 
-public class ActiveSkinSlice implements CleanableSlice {
-
-    public static Dog DUMMY_DOG_OBJ;
+public class ActiveSkinSlice implements AbstractSlice {
 
     public boolean showInfo;
 
@@ -43,22 +41,6 @@ public class ActiveSkinSlice implements CleanableSlice {
             }
         }
         return oldData;
-    }
-
-    public static void initLocList() {
-        setupDummyDog();
-    }
-
-    @Override
-    public void cleanUpSlice() {
-        DUMMY_DOG_OBJ = null;
-    }
-
-    public static void setupDummyDog() {
-        if (DUMMY_DOG_OBJ != null) return;
-        var level = Minecraft.getInstance().level;
-        var dog = DoggyEntityTypes.DOG.get().create(level);
-        DUMMY_DOG_OBJ = dog;
     }
     
 }
