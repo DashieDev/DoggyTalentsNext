@@ -135,7 +135,6 @@ public class Store {
     public static void finish() {
         cleanUpStaticCache();
         INSTANCE = null;
-        ToolTipOverlayManager.finish();
     }
 
     private static class StoreValue {
