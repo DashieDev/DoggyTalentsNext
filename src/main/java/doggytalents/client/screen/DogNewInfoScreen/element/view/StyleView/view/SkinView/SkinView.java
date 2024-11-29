@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.DoggyEntityTypes;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.screen.framework.element.AbstractElement;
@@ -34,6 +35,7 @@ public class SkinView extends AbstractElement {
 
     Dog dog;
     List<DogSkin> textureList;
+    Dog dummyDog;
     EditBox filterBox;
     ScrollBar scrollBar;
     FlatButton searchModeButton;
@@ -44,6 +46,7 @@ public class SkinView extends AbstractElement {
     public SkinView(AbstractElement parent, Screen screen, Dog dog) {
         super(parent, screen);
         this.dog = dog;
+        this.dummyDog = createDummyDog();
         filterBox = new EditBox(Minecraft.getInstance().font, 
         0, 0, 100, 16, Component.empty());
         filterBox.setResponder(str -> {
@@ -81,7 +84,7 @@ public class SkinView extends AbstractElement {
 
         this.getPosition().setChildDirection(ChildDirection.COL);
 
-        var dogSkinPreview = new DogSkinElement(this, getScreen(), this.dog, textureList, this.activeSkinId);
+        var dogSkinPreview = new DogSkinElement(this, getScreen(), this.dog, this.dummyDog, textureList, this.activeSkinId);
         dogSkinPreview
             .setPosition(PosType.RELATIVE, 0, 0)
             .setSize(1f, 0.8f)
@@ -213,6 +216,12 @@ public class SkinView extends AbstractElement {
         this.skipReOffset = true;
         this.children().clear();
         this.init();
+    }
+
+    private Dog createDummyDog() {
+        var level = Minecraft.getInstance().level;
+        var dog = DoggyEntityTypes.DOG.get().create(level);
+        return dog;
     }
     
 }
