@@ -9,7 +9,6 @@ import doggytalents.client.screen.DogNewInfoScreen.store.UIActionTypes;
 import doggytalents.client.screen.DogNewInfoScreen.store.payload.interfaces.TabChange;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTabSlice.Tab;
 import doggytalents.client.screen.framework.AbstractSlice;
-import doggytalents.client.screen.framework.CleanableSlice;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.common.entity.Dog;
 import doggytalents.client.screen.framework.CommonUIActionTypes;
