@@ -45,6 +45,7 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     public void removed() {
         super.removed();
         Store.finish();
+        ToolTipOverlayManager.finish();
     }
 
     @Override
