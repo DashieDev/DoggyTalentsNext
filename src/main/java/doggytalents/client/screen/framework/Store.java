@@ -122,18 +122,7 @@ public class Store {
         return INSTANCE;
     }
 
-    private static void cleanUpStaticCache() {
-        if (INSTANCE == null) return;
-        for (var entry : INSTANCE.applicationStates.entrySet()) {
-            var slice = entry.getValue().worker;
-            if (slice instanceof CleanableSlice cSlice) {
-                cSlice.cleanUpSlice();
-            }
-        }
-    }
-
     public static void finish() {
-        cleanUpStaticCache();
         INSTANCE = null;
     }
 
