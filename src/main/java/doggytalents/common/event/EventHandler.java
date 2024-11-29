@@ -242,7 +242,6 @@ public class EventHandler {
         level.addFreshEntity(dog);
 
         dog.triggerAnimationAction(new DogBackFlipAction(dog));
-        dog.getJumpControl().jump();
     }
 
     private static void migrateUUID(UUID uuid, Dog dog, ServerLevel level) {
