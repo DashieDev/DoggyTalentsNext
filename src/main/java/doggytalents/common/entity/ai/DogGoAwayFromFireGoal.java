@@ -109,6 +109,7 @@ public class DogGoAwayFromFireGoal extends Goal {
         this.tickUntilSearch = 5;
         this.lastGoAwayTimestamp = this.dog.tickCount;
         proccessEndNode();
+        this.dog.getNavigation().stop();
     }
 
     private void proccessEndNode() {
@@ -120,7 +121,6 @@ public class DogGoAwayFromFireGoal extends Goal {
         var b0 = end_node.asBlockPos();
         this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 
             this.dog.getUrgentSpeedModifier());
-        this.dog.getNavigation().stop();
         if (end_node.type != PathType.WALKABLE)
             this.tickUntilSearch = 20 + dog.getRandom().nextInt(3)*10;
     }
