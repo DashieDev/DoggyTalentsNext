@@ -1,7 +1,9 @@
 package doggytalents.common.entity;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 
 import doggytalents.DoggyAdvancementTriggers;
 import doggytalents.DoggyBlocks;
@@ -35,6 +37,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -44,6 +47,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
 public class DogIncapacitatedMananger {
@@ -461,6 +465,41 @@ public class DogIncapacitatedMananger {
 
     public boolean canMove() {
         return this.dog.getIncapSyncState().bandaid == BandaidState.FULL;
+    }
+
+    public void customBeingPushed(Entity source, Function<Entity, Optional<Vec3>> push_vec_getter) {
+        var push_vec_optional = push_vec_getter.apply(source);
+        if (!push_vec_optional.isPresent())
+            return;
+        if (!dog.isPushable())
+            return;
+            
+        var push_vec = push_vec_optional.get();
+        dog.push(-push_vec.x(), 0.0D, -push_vec.z());
+
+        //final var move_vec_0 = dog.getDeltaMovement();
+        // var push_vec = push_vec_optional.get();
+        // dog.push(-push_vec.x(), 0.0D, -push_vec.z());
+        
+        // final double move_cap = 0.3;
+        // final var move_vec = dog.getDeltaMovement();
+        // var move_vec_xz = new Vec3(move_vec.x(), 0, move_vec.z());
+        // if (move_vec_xz.lengthSqr() <= move_cap * move_cap)
+        //     return;
+        // move_vec_xz = move_vec_xz.normalize()
+        //     .scale(move_cap);
+        // var move_vec_1 = new Vec3(
+        //     move_vec_xz.x(), move_vec.y(), move_vec_xz.z());
+        // if (move_vec_0.lengthSqr() >= move_vec_1.lengthSqr())
+        //     move_vec_1 = move_vec_0;
+        // dog.setDeltaMovement(move_vec_1);
+    }
+
+    public boolean shouldApplyCustomPushBehaviour(Entity target) {
+        boolean only_normal_when =
+            target instanceof Dog other_dog
+            && other_dog.isDefeated();
+        return !only_normal_when;
     }
 
     public void save(CompoundTag tag) {
