@@ -4993,6 +4993,8 @@ public class Dog extends AbstractDog {
             return;
         if (this.dogPushAvoidManager.shouldBlockPush(pushTarget))
             return;
+        if (this.isDefeated() && this.incapacitatedMananger.shouldApplyCustomPushBehaviour(pushTarget))
+            return;
         if (pushTarget.getVehicle() == this
             || this.getVehicle() == pushTarget) {
             return;        
@@ -5010,6 +5012,10 @@ public class Dog extends AbstractDog {
             return;
         if (this.pettingManager.checkPush(source))
             return;
+        if (this.isDefeated() && this.incapacitatedMananger.shouldApplyCustomPushBehaviour(source)) {
+            this.incapacitatedMananger.customBeingPushed(source, this::calcDogPushVec);
+            return;
+        }
         if (this.isVehicle() && !this.hasControllingPassenger())
             pushDogAsVehicle(source);
         else {
@@ -5066,6 +5072,8 @@ public class Dog extends AbstractDog {
         if (this.dogPushAvoidManager.shouldBlockPush(otherEntity)) {
             return false;
         }
+        if (this.isDefeated() && this.incapacitatedMananger.shouldApplyCustomPushBehaviour(otherEntity))
+            return false;
 
         if (otherEntity.getVehicle() == this
             || this.getVehicle() == otherEntity)
