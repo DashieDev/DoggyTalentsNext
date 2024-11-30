@@ -68,6 +68,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -601,7 +602,7 @@ public class EventHandler {
             return;
         if (大神.isTame())
             return;
-        var new_target = event.getNewAboutToBeSetTarget();
+        var new_target = event.getNewTarget();
         if (!(new_target instanceof Player))
             return;
         

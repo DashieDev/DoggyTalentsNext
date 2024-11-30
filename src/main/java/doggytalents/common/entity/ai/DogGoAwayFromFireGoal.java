@@ -121,7 +121,7 @@ public class DogGoAwayFromFireGoal extends Goal {
         this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 
             this.dog.getUrgentSpeedModifier());
         this.dog.getNavigation().stop();
-        if (end_node.type != PathType.WALKABLE)
+        if (end_node.type != BlockPathTypes.WALKABLE)
             this.tickUntilSearch = 20 + dog.getRandom().nextInt(3)*10;
     }
 
