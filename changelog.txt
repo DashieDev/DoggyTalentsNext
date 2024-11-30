@@ -1653,3 +1653,22 @@ instead of only when the dog begins to catch on fire.
 * Fix totem of undying usage causing other Dogs (other than the one the item is used on) to 
 improperly exit Injured Mode.
 * (1.20.1 Under Only) HOTFIX: Crash on Startup due to improperly registered Mixins.
+
+**1.18.37 - 30th November 2024**
++ Option to prevent wild wolves from being angry when players accidentally hit them.
+# Dogs now won't go in front of you when you are aiming and shooting a Projectile weapon
+e.g Bow, Trident.
+# Improve Dog's lava avoiding logic.
+  + If there is a lava block above the dog, and a walkable block next to the lava block,
+  next to the dog and 1 block higher than the dog, it will find and priortize the neighbour
+  which it can go without hitting the lava block. Only when no such option exists, then
+  the dog will try to go to the aforementioned position, going through the lava block in the proccess,
+  since lava will fall down and hit the Dog anyways.
+  + Dogs don't push and collide each other and its owner when running away from fire.
+  + If fast moving lava detected, the Dog will go a block further away from the lava if possible.
+# Some Sniff Action Variants can continue when the sniff target changes after its animation reached
+# Add 2 new Sniff Action Variants: Sniff Aww Happy and Sniff Splash (Hellhound in Lava only for now)
+a certain timestamp, e.g: Touchy touch will continue playing even when the fire block is put out if
+the Dog has already touched the fire block and is reacting to the burn.  
+# Injured Dogs don't actively push entities other than other Injured Dogs.
+* Potential NPE when a Dog wearing Bach Wig kills an entity.
