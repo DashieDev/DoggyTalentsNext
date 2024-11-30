@@ -588,7 +588,7 @@ public class EventHandler {
             return;
         if (大神.isTame())
             return;
-        var new_target = event.getNewAboutToBeSetTarget();
+        var new_target = event.getNewTarget();
         if (!(new_target instanceof Player))
             return;
         
