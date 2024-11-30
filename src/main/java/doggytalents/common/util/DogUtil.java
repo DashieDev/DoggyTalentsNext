@@ -650,6 +650,7 @@ public class DogUtil {
         if (str.isEmpty())
             return name;
         
+        str = checkFlipName(str);
         str = checkInvalidChar(str);
         str = stripIfNeccessary(str);
 
@@ -696,6 +697,13 @@ public class DogUtil {
 
         return str;
     } 
+
+    public static String checkFlipName(String string) {
+        if ("Dinnerbone".equals(string) || "Grumm".equals(string)) {
+            return "_" + string;
+        }
+        return string;
+    }
 
     public static boolean vertifySkinData(String hash) {
         if (hash == null || hash.isEmpty())
