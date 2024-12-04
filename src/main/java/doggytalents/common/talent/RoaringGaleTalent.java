@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.DataKey;
+import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
@@ -22,10 +23,16 @@ import net.minecraft.world.level.Level;
 
 public class RoaringGaleTalent extends TalentInstance {
 
-    public static DataKey<Integer> COOLDOWN = DataKey.make();
+    private int cooldown = 0;
 
     public RoaringGaleTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
+    }
+
+    @Override
+    public void init(AbstractDog dogIn) {
+        super.init(dogIn);
+        this.cooldown = dogIn.tickCount;
     }
 
     public static int getAffectDuration(int level) {
@@ -103,7 +110,7 @@ public class RoaringGaleTalent extends TalentInstance {
                 roarCooldown += level >= 5 ? 30 : 50;
             }
 
-            dog.setData(RoaringGaleTalent.COOLDOWN, roarCooldown);
+            setRoarCooldownFor(dog, roarCooldown);
         }
 
         if (!anyHits) {
@@ -112,7 +119,23 @@ public class RoaringGaleTalent extends TalentInstance {
     }
 
     private static boolean isNotOnRoarCooldown(Dog dog) {
-        int cooldownDeadline = dog.getDataOrDefault(RoaringGaleTalent.COOLDOWN, dog.tickCount);
+        var inst_optional = dog.getTalent(DoggyTalents.ROARING_GALE.get());
+        if (!inst_optional.isPresent())
+            return false;
+        var inst = inst_optional.get();
+        if (!(inst instanceof RoaringGaleTalent roar))
+            return false;
+        int cooldownDeadline = roar.cooldown;
         return cooldownDeadline <= dog.tickCount;
+    }
+
+    private static void setRoarCooldownFor(Dog dog, int val) {
+        var inst_optional = dog.getTalent(DoggyTalents.ROARING_GALE.get());
+        if (!inst_optional.isPresent())
+            return;
+        var inst = inst_optional.get();
+        if (!(inst instanceof RoaringGaleTalent roar))
+            return;
+        roar.cooldown = val;
     }
 }
