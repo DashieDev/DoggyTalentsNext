@@ -4003,6 +4003,11 @@ public class Dog extends AbstractDog {
         return Optional.empty();
     }
 
+    public <T extends TalentInstance> Optional<T> getTalent(Talent talent, Class<T> type) {
+        var inst_optional = getTalent(talent);
+        return inst_optional.map(x -> x.cast(type));
+    }
+
     @Override
     public int getDogLevel(Talent talentIn) {
         return this.getTalent(talentIn).map(TalentInstance::level).orElse(0);
