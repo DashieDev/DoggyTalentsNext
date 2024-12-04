@@ -72,20 +72,4 @@ public interface IDog {
     public boolean isLying();
 
     public List<IDogFoodHandler> getFoodHandlers();
-
-    @Deprecated
-    public <T> void setData(DataKey<T> key, T value);
-    /**
-     * Tries to put the object in the map, does nothing if the key already exists
-     */
-    @Deprecated
-    public <T> void setDataIfEmpty(DataKey<T> key, T value);
-    @Deprecated
-    public <T> T getData(DataKey<T> key);
-    @Deprecated
-    public <T> T getDataOrGet(DataKey<T> key, Supplier<T> other);
-    @Deprecated
-    public <T> T getDataOrDefault(DataKey<T> key, T other);
-    @Deprecated
-    public <T> boolean hasData(DataKey<T> key);
 }
