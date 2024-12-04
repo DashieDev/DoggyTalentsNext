@@ -279,7 +279,10 @@ public class WhistleItem extends Item implements IDogItem {
             world.addFreshEntity(doggyBeam);
             return;
         case ROAR:
-            RoaringGaleTalent.roar(dogsList, world, player);
+            var cooldown_optional = RoaringGaleTalent.roar(dogsList, world, player);
+            cooldown_optional.ifPresent(x -> {
+                player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), x);
+            });
             return;
         case HEEL_BY_NAME:
             if (world.isClientSide) {
