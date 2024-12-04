@@ -230,7 +230,6 @@ public class Dog extends AbstractDog {
     private final List<IDogAlteration> alterations = new ArrayList<>(4);
     private final List<IDogFoodHandler> foodHandlers = new ArrayList<>(4);
     public final DogAnimationManager animationManager = new DogAnimationManager(this);
-    public final Map<Integer, Object> objects = new HashMap<>();
 
     private DogSkin clientSkin = DogSkin.CLASSICAL;
     private ArrayList<AccessoryInstance> clientAccessories
@@ -4011,51 +4010,6 @@ public class Dog extends AbstractDog {
     @Override
     public int getDogLevel(Talent talentIn) {
         return this.getTalent(talentIn).map(TalentInstance::level).orElse(0);
-    }
-
-    @Override
-    public <T> void setData(DataKey<T> key, T value) {
-        if (key.isFinal() && this.hasData(key)) {
-            throw new RuntimeException("Key is final but was tried to be set again.");
-        }
-        this.objects.put(key.getIndex(), value);
-    }
-
-    /**
-     * Tries to put the object in the map, does nothing if the key already exists
-     */
-    @Override
-    public <T> void setDataIfEmpty(DataKey<T> key, T value) {
-        if (!this.hasData(key)) {
-            this.objects.put(key.getIndex(), value);
-        }
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T getData(DataKey<T> key) {
-        return (T) this.objects.get(key.getIndex());
-    }
-
-    @Override
-    public <T> T getDataOrGet(DataKey<T> key, Supplier<T> other) {
-        if (this.hasData(key)) {
-            return this.getData(key);
-        }
-        return other.get();
-    }
-
-    @Override
-    public <T> T getDataOrDefault(DataKey<T> key, T other) {
-        if (this.hasData(key)) {
-            return this.getData(key);
-        }
-        return other;
-    }
-
-    @Override
-    public <T> boolean hasData(DataKey<T> key) {
-        return this.objects.containsKey(key.getIndex());
     }
 
     public void untame() {
