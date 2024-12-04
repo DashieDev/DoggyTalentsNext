@@ -1,6 +1,7 @@
 package doggytalents.common.talent;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import doggytalents.DoggyTalents;
@@ -60,28 +61,27 @@ public class RoaringGaleTalent extends TalentInstance {
         return level > 4 ? level * 2 : level;
     }
 
-    public static void roar(List<Dog> dogsList, Level world, Player player) {
-        if (world.isClientSide) return;
+    public static Optional<Integer> roar(List<Dog> dogsList, Level world, Player player) {
+        if (world.isClientSide) return Optional.empty();
         var roarDogs = dogsList.stream()
             .filter(dog -> dog.getDogLevel(DoggyTalents.ROARING_GALE) > 0)
             .collect(Collectors.toList());
         if (roarDogs.isEmpty()) {
             player.displayClientMessage(Component.translatable("talent.doggytalents.roaring_gale.level"), true);
-            return;
+            return Optional.empty();
         }
         roarDogs = roarDogs.stream()
             .filter(RoaringGaleTalent::isNotOnRoarCooldown)
             .collect(Collectors.toList());
         if (roarDogs.isEmpty()) {
             player.displayClientMessage(Component.translatable("talent.doggytalents.roaring_gale.cooldown"), true);
-            return;
+            return Optional.empty();
         }
         boolean anyHits = false;
 
+        int whistle_cooldown = 0;
         for (Dog dog : roarDogs) {
             int level = dog.getDogLevel(DoggyTalents.ROARING_GALE);
-            int roarCooldown = dog.tickCount;
-
             int damage = getDamage(level);
             int effectDuration = getAffectDuration(level);
             int knockback = getKnockback(level);
@@ -101,21 +101,28 @@ public class RoaringGaleTalent extends TalentInstance {
                 );
             }
 
+            int cooldown = 0;
             if (hit) {
                 dog.playSound(SoundEvents.WOLF_GROWL, 0.7F, 1.0F);
-                roarCooldown += level >= 5 ? 60 : 100;
+                cooldown = level >= 5 ? 60 : 100;
                 anyHits = true;
             } else {
                 dog.playSound(SoundEvents.WOLF_AMBIENT, 1F, 1.2F);
-                roarCooldown += level >= 5 ? 30 : 50;
+                cooldown = level >= 5 ? 30 : 50;
             }
 
-            setRoarCooldownFor(dog, roarCooldown);
+            setRoarCooldownFor(dog, dog.tickCount + cooldown);
+
+            if (cooldown > whistle_cooldown)
+                whistle_cooldown = cooldown;
         }
 
         if (!anyHits) {
             player.displayClientMessage(Component.translatable("talent.doggytalents.roaring_gale.miss"), true);
         }
+        if (whistle_cooldown <= 0)
+            return Optional.empty();
+        return Optional.of(whistle_cooldown);
     }
 
     private static boolean isNotOnRoarCooldown(Dog dog) {
