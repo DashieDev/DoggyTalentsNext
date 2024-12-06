@@ -107,7 +107,7 @@ public class DogUtil {
         if (target == null) {
             return false;
         }
-        teleportInternal(dog, target);
+        teleportDogAbs(dog, target);
         
         return true;
     }
@@ -131,7 +131,7 @@ public class DogUtil {
    
         for (var dog : dogs) {
             int r_indx = dog.getRandom().nextInt(safePosList.size());
-            teleportInternal(dog, safePosList.get(r_indx));
+            teleportDogAbs(dog, safePosList.get(r_indx));
         }
 
         //long stopTime = System.nanoTime();
@@ -167,7 +167,7 @@ public class DogUtil {
         for (var dog : sorted_dogs) {
             if (safePosList.isEmpty()) break;
             int r_indx = dog.getRandom().nextInt(safePosList.size());
-            teleportInternal(dog, safePosList.get(r_indx));
+            teleportDogAbs(dog, safePosList.get(r_indx));
             int density_count = densityMap.get(r_indx) + 1;
             if (density_count >= max_density) {
                 densityMap.remove(r_indx);
@@ -202,7 +202,7 @@ public class DogUtil {
         if (target == null) {
             return false;
         }
-        teleportInternal(dog, target);
+        teleportDogAbs(dog, target);
         
         return true;
     }
@@ -264,7 +264,7 @@ public class DogUtil {
             var b0 = new BlockPos(randX, randY, randZ);
 
             if (wantToTeleportToThePosition(dog, owner, b0)) {
-                teleportInternal(dog, b0);
+                teleportDogAbs(dog, b0);
                 return true;
             }
         }
@@ -281,7 +281,7 @@ public class DogUtil {
             var b0 = new BlockPos(randX, randY, randZ);
 
             if (isTeleportSafeBlock(dog, b0, null)) {
-                teleportInternal(dog, b0);
+                teleportDogAbs(dog, b0);
                 return true;
             }
         }
@@ -653,7 +653,7 @@ public class DogUtil {
         var owner = dog.getOwner();
         if (dog.level().hasChunk(chunkpos.x, chunkpos.z)) {
             if (isTeleportSafeBlockMidAir(dog, bedPos.get().above())) {
-                teleportInternal(dog, bedPos.get().above());
+                teleportDogAbs(dog, bedPos.get().above());
                 dog.setOrderedToSit(true);
             }
         } else if (owner != null && owner instanceof ServerPlayer sP) {
