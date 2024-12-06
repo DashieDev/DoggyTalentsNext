@@ -25,7 +25,7 @@ public class DogFetchAction extends TriggerableAction {
 
     private float oldWaterCost;
 
-    private double oldRangeSense;
+    private double oldRangeSense = 16;
     private boolean initFetch;
 
     public DogFetchAction(Dog dog, @Nonnull LivingEntity owner, @Nonnull ItemEntity fetchTarget) {
