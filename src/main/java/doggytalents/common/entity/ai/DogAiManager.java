@@ -81,6 +81,7 @@ public class DogAiManager {
         registerDogGoal(p, new DogFollowOwnerGoalDefeated(this.dog));
         registerDogGoal(p, new DogFollowOwnerGoal(this.dog, 1.0D, 10.0F, 2.0F));
         ++p;
+        registerDogGoal(p, new DogGoBackToSitAfterFinishAction(dog));
         registerDogGoal(p, new DogMoveBackToRestrictGoal(this.dog));
         registerDogGoal(p, new DogBreedGoal(this.dog, 1.0D));
         ++p;
@@ -397,11 +398,22 @@ public class DogAiManager {
             && (this.dog.forceSit() || !action.canOverrideSit());
         if (sitBlock)
             return false;
+        maySaveDogSittingPos();
         this.dog.setOrderedToSit(false);
         putActionInExecutor(action);
         this.delayedActionStart = 0;
         this.timeoutPending = 0;
         return true;
+    }
+
+    public void maySaveDogSittingPos() {
+        if (!this.dog.isOrderedToSit())
+            return;
+        if (!this.dog.isInSittingPose())
+            return;
+        if (!this.dog.onGround())
+            return;
+        this.dog.setDogSitOverridePos(this.dog.blockPosition());
     }
     
     private boolean isOtherActionOccupied(TriggerableAction action) {
