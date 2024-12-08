@@ -1,5 +1,6 @@
 package doggytalents.common.entity.ai.nav;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -28,6 +29,7 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
 
     private Dog dog;
     private boolean locked;
+    private boolean moveInTargetNode = false;
 
     public DogPathNavigation(Dog dog, Level level) {
         super(dog, level);
@@ -70,6 +72,7 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
 
         if (isCloseEnough) {
             this.path.advance();
+            this.checkDogAndMoveInTargetNodeWhenReach();
         }
   
         this.doStuckDetection(currentPos);
@@ -138,6 +141,35 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         return false;
     }
 
+    
+    private void checkDogAndMoveInTargetNodeWhenReach() {
+        if (!this.moveInTargetNode)
+            return;
+        var path = this.path;
+        if (path == null)
+            return;
+        if (!path.isDone() || path.getNodeCount() <= 0 
+            || !path.canReach())
+            return;
+        final var target = path.getTarget();
+        final var end_node = path.getEndNode();
+        if (target == null || end_node == null)
+            return;
+        if (end_node.asBlockPos().equals(target))
+            return;
+        final var type = WalkNodeEvaluator.getPathTypeStatic(dog, target);
+        if (dog.getPathfindingMalus(type) < 0)
+            return;
+
+        var node = new Node(target.getX(), target.getY(), target.getZ());
+        node.type = type;
+        this.path = new Path(List.of(node), target, true);
+    }
+
+    public void setDogMoveInTargetNode() {
+        this.moveInTargetNode = true;
+    }
+
     // private boolean shouldTargetNextNodeInDirection(Vec3 current_pos) {
     //     var path = this.path;
     //     if (path == null) return false;
@@ -179,7 +211,13 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         super.recomputePath();
         locked = prevLock;
     }
-    
+
+    @Override
+    public boolean moveTo(@Nullable Path p_26537_, double p_26538_) {
+        this.moveInTargetNode = false;
+        return super.moveTo(p_26537_, p_26538_);
+    }
+
     @Override
     protected boolean hasValidPathType(PathType type) {
         if (dog.fireImmune()) {
