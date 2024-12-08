@@ -52,7 +52,9 @@ public class DogFollowOwnerGoal extends Goal {
             return false;
         } else if (!this.dog.hasBone() && this.dog.distanceToSqr(owner) < this.getMinStartDistanceSq()) {
             return false;
-        } else {
+        } else if (this.dog.getDogSitOverridePos().isPresent()) {
+            return false;
+        } {
             this.owner = owner;
             return true;
         }
