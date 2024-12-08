@@ -270,6 +270,9 @@ public class Dog extends AbstractDog {
     
     protected int switchNavCooldown = 0;
 
+    private Optional<BlockPos> lastSitPos = Optional.empty();
+    private int lastSitPosSaveTimestamp = 0; 
+
     private int healingTick;
     //private int wanderRestTime = 0;
     private int wanderCooldown = 0;
@@ -4654,6 +4657,23 @@ public class Dog extends AbstractDog {
         this.navigationLock = dogPathNav;
         this.navigationLock.lockDogNavigation();
         return dogPathNav;
+    }
+
+    public void setDogSitOverridePos(@Nonnull BlockPos pos) {
+        this.lastSitPos = Optional.of(pos);
+        this.lastSitPosSaveTimestamp = this.tickCount;
+    }
+
+    public void clearDogSitOverridePos() {
+        this.lastSitPos = Optional.empty();
+    }
+
+    public Optional<BlockPos> getDogSitOverridePos() {
+        return this.lastSitPos;
+    }
+
+    public int getDogSitOverridePosTimestamp() {
+        return this.lastSitPosSaveTimestamp;
     }
 
     public float getPathfindingMalus(BlockPathTypes type) {

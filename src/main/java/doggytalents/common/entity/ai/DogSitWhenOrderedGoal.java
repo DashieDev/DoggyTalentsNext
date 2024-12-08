@@ -43,6 +43,8 @@ public class DogSitWhenOrderedGoal extends Goal {
 
         this.dog.getNavigation().stop();
         this.dog.setInSittingPose(true);
+
+        this.dog.clearDogSitOverridePos();
     }
 
     @Override
