@@ -32,6 +32,7 @@ import doggytalents.common.util.dogpromise.promise.DogBatchTeleportToDimensionPr
 import doggytalents.common.util.dogpromise.promise.DogHoldChunkToTeleportPromise;
 import doggytalents.forge_imitate.event.EntityJoinLevelEvent;
 import doggytalents.forge_imitate.event.EntityTravelToDimensionEvent;
+import doggytalents.forge_imitate.event.LivingChangeTargetEvent;
 import doggytalents.forge_imitate.event.LivingHurtEvent;
 import doggytalents.forge_imitate.event.LootingLevelEvent;
 import doggytalents.forge_imitate.event.PlayerInteractEvent;
@@ -579,7 +580,7 @@ public class EventHandler {
         event.setCanceled(true);
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onWolfSetTarget(LivingChangeTargetEvent event) {
         var entity = event.getEntity();
         if (!ConfigHandler.SERVER.PREVENT_WILD_WOLVES_ANGRY.get())
