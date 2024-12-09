@@ -345,7 +345,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue WANDERING_DOG_WHISTLE;
         public ForgeConfigSpec.BooleanValue DISABLE_KILL_STATS;
         public ForgeConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
-        public ModConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
+        public ForgeConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 

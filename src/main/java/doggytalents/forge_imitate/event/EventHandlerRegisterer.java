@@ -73,6 +73,12 @@ public class EventHandlerRegisterer {
                     (x, y) -> x.onLivingHurt(y)
                 )
         );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, LivingChangeTargetEvent>
+                (handlerIst, LivingChangeTargetEvent.class,
+                    (x, y) -> x.onWolfSetTarget(y)
+                )
+        );
         // EventCallbacksRegistry.registerCallback(
         //     new InstanceEventCallBack<EventHandler, LootingLevelEvent>
         //         (handlerIst, LootingLevelEvent.class,
