@@ -10,11 +10,15 @@
     },
     "I": {
       "item": "minecraft:iron_ingot"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
     }
   },
   "pattern": [
     "  B",
-    "GIG"
+    "GIG",
+    " T "
   ],
   "result": {
     "count": 1,

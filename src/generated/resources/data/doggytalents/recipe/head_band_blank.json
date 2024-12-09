@@ -7,11 +7,14 @@
     },
     "P": {
       "item": "minecraft:paper"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
     }
   },
   "pattern": [
-    "L",
-    "P"
+    "LT",
+    "P "
   ],
   "result": {
     "count": 1,

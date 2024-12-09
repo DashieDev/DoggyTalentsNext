@@ -1,4 +1,4 @@
-// 1.21.1	2024-10-26T12:58:22.6562778	Recipes
+// 1.21.1	2024-11-19T10:18:04.8749271	Recipes
 bbca6218af9c6665b272a2b26d607c67d9087527 data/doggytalents/advancement/recipes/building_blocks/dog_bath.json
 06d4b3a9cd262399bbfc6828dc4510f10511ea09 data/doggytalents/advancement/recipes/building_blocks/dog_bed_def.json
 668fa033a5c76698a21e984fa7d3ee54abb9a53a data/doggytalents/advancement/recipes/building_blocks/food_bowl.json
@@ -165,7 +165,7 @@ a2567977e509753e00a69f72cb2e4cc8867a0a89 data/doggytalents/recipe/food_bowl.json
 ebe5e6f88f7f90dc3238f73091aa4c5fffceb003 data/doggytalents/recipe/golden_a_five_wagyu.json
 60c7e04905c96456423b38229357af0ca4584f97 data/doggytalents/recipe/guard_suit.json
 e7c3043ff3c12e4867168eb3e7514ea12b739a36 data/doggytalents/recipe/gyudon.json
-316524c4956a0624e1a9a7f2378c164c366502ba data/doggytalents/recipe/head_band_blank.json
+38936ce5b8456f45759752c4bd3c558528c8f926 data/doggytalents/recipe/head_band_blank.json
 8c45420ca83e6b922975d1e3982a057c288a7cbd data/doggytalents/recipe/hot_dog.json
 0411aee55f8ef040bc8e8855f15725d0d2d0bd6d data/doggytalents/recipe/kami_treat.json
 ade8d8cfc02a35220ca78674e55583f2d250ad06 data/doggytalents/recipe/kitsune_mask.json
@@ -204,7 +204,7 @@ ca1f784e2f2f1f0f89afd5b62a1b727cbf333a47 data/doggytalents/recipe/salmon_sushi.j
 b9732e0b2d535517e999a4e18206dc7533ebf485 data/doggytalents/recipe/scent_treat.json
 87dc8252d3deb30a9cb9094cd98434ff43f03655 data/doggytalents/recipe/shrinking_mallet.json
 9d149169ee2dea8ae380d5d7c22be28449d29406 data/doggytalents/recipe/smarty_glasses.json
-e95f52cdce72697d6a9374358293cd5eafa9cfa9 data/doggytalents/recipe/snorkel.json
+c9482a9710990c8a8be33adc86bb92628891ead2 data/doggytalents/recipe/snorkel.json
 e0e632081e26bf8835f9e7af2cc47f930e5e8677 data/doggytalents/recipe/soul_reflector.json
 804216d8dbb4fee1fabde5711e878bd24a84332a data/doggytalents/recipe/soy_beans_dried_camping.json
 6b2234dccec7b45d59290e6b4f44cf926000a6cc data/doggytalents/recipe/soy_beans_dried_smelting.json
