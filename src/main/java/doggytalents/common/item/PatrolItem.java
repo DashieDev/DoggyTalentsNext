@@ -61,7 +61,7 @@ public class PatrolItem extends Item implements IDogItem  {
     public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
         List<BlockPos> pos = getPos(playerIn.getItemInHand(handIn));
         DoggyTalentsNext.LOGGER.debug("{}", pos);
-        dogIn.setData(POS, pos);
+        //dogIn.setData(POS, pos);
         return InteractionResult.SUCCESS;
     }
 }

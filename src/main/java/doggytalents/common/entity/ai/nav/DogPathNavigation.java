@@ -156,7 +156,7 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
             return;
         if (end_node.asBlockPos().equals(target))
             return;
-        final var type = WalkNodeEvaluator.getPathTypeStatic(dog, target);
+        final var type = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), target.mutable());
         if (dog.getPathfindingMalus(type) < 0)
             return;
 
