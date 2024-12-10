@@ -65,9 +65,15 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
             reRenderRoot();
             this.isResizing = false;
         }
-        // if (doRenderBackground())
-        //     this.renderBackground(graphics, mouseX, mouseY, pTicks);
-        super.render(graphics, mouseX, mouseY, pTicks);
+        if (doRenderBackground())
+            this.renderBackground(graphics, mouseX, mouseY, pTicks);
+
+        // 1.21 only
+        renderDarkBackground_1_21_1_above(graphics);
+        
+        for (var renderable : this.renderables) {
+            renderable.render(graphics, mouseX, mouseY, pTicks);
+        }
     }
 
     
@@ -148,12 +154,7 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     }
 
     //1.21+ only
-    @Override
-    public void renderBackground(GuiGraphics p_283688_, int p_296369_, int p_296477_, float p_294317_) {
-        if (!this.doRenderBackground())
-            return;
-        p_283688_.fill(0, 0, this.width, this.height, 0x40000000);
-        super.renderBackground(p_283688_, p_296369_, p_296477_, p_294317_);
-        //super.renderBackground(p_283688_, p_296369_, p_296477_, p_294317_);
+    private void renderDarkBackground_1_21_1_above(GuiGraphics graphics) {
+        graphics.fill(0, 0, this.width, this.height, 0x40000000);
     }
 }
