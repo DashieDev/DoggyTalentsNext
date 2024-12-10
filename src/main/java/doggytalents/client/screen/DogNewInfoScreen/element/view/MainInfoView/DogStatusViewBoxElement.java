@@ -260,12 +260,12 @@ public class DogStatusViewBoxElement extends AbstractElement {
         // this.minecraft.getProfiler().pop();
     }
 
-    private void renderHungerStatusStr(GuiGraphics graphics, Dog dog, int x, int y) {
+    private void renderHungerStatusStr(PoseStack graphics, Dog dog, int x, int y) {
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get())
             return;
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, x, y, 16 + 36, 27, 9, 9);
+        RenderUtil.blit_for_1_19_2below(this, graphics, Screen.GUI_ICONS_LOCATION, x, y, 16 + 36, 27, 9, 9);
         int hunger = (int) dog.getDogHunger();
-        font.draw(stack, "" + hunger, x + 10, y + 1, 0xffffffff);
+        font.draw(graphics, "" + hunger, x + 10, y + 1, 0xffffffff);
     }
 
     private void renderVariantIcon(PoseStack graphics, Dog dog, int x, int y) {

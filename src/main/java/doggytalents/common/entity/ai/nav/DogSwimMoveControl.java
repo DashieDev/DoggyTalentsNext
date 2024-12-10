@@ -88,7 +88,7 @@ public class DogSwimMoveControl extends MoveControl {
         var check_pos_offset = new Vec3(dx, 0, dz)
             .normalize()
             .scale(dog.getBbWidth()/2 + 0.2);
-        var check_pos = BlockPos.containing(
+        var check_pos = new BlockPos(
             this.dog.position().add(check_pos_offset)   
         );
         var state = dog.level().getBlockState(check_pos);

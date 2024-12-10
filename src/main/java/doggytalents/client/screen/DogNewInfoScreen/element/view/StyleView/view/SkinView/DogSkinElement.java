@@ -292,14 +292,14 @@ public class DogSkinElement extends AbstractElement {
         var manifestSkin = this.locList.get(indx);
         if (manifestSkin.mystery()) {
             manifestSkin = DogSkin.MYSTERY;
-            renderMysteriousKanji(graphics, e_mX, e_mY);
+            renderMysteriousKanji(stack, e_mX, e_mY);
             dummyDog.setClientSkin(manifestSkin);
-            DogStatusViewBoxElement.renderDogInside(graphics, 
+            DogStatusViewBoxElement.renderDogInside(stack, 
                 dummyDog, e_mX, e_mY, size, 
                 followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
         } else if (useDummy && dummyDog != null) {
             dummyDog.setClientSkin(manifestSkin);
-            DogStatusViewBoxElement.renderDogInside(graphics, 
+            DogStatusViewBoxElement.renderDogInside(stack, 
                 dummyDog, e_mX, e_mY, size, 
                 followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
         } else {   

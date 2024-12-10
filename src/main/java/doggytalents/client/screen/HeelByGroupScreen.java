@@ -14,7 +14,6 @@ import doggytalents.common.entity.DogGroupsManager.DogGroup;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.HeelByGroupData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -63,8 +62,8 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected void drawNoEntryMsg(GuiGraphics graphics, int x, int y) {
-        graphics.drawString(font, 
+    protected void drawNoEntryMsg(PoseStack graphics, int x, int y) {
+        font.draw(graphics, 
             I18n.get("doggytalents.screen.heel_by_group.no_group_found"), 
             x, y, 0xf50a0a);
     }
@@ -79,12 +78,12 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y,
+    protected void drawEntry(PoseStack graphics, int entry_x, int entry_y,
         int entry_id, boolean is_selected) {
 
         super.drawEntry(graphics, entry_x + 12, entry_y, entry_id, is_selected);
         var group = this.dogGroupList.get(entry_id);
-        graphics.fill(entry_x, entry_y -1, entry_x + 9, entry_y -1 + 9, group.color);
+        fill(graphics, entry_x, entry_y -1, entry_x + 9, entry_y -1 + 9, group.color);
     }
 
     @Override

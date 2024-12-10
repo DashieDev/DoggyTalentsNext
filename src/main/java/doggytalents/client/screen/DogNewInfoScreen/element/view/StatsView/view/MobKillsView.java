@@ -83,7 +83,7 @@ public class MobKillsView extends AbstractElement {
         int pY = this.getRealY() + PADDING_TOP;
         if (disabledKillStat) {
             String str = I18n.get("doggui.stats.mob_kills.disabled", dog.getName().getString() );
-            graphics.drawString(font, str, startX, pY, 0xffffffff);
+            font.draw(stack, str, startX, pY, 0xffffffff);
             this.lastPage.active = false;
             this.nextPage.active = false;
             return;

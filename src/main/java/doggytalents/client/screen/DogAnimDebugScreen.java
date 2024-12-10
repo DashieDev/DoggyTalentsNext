@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.screen.framework.widget.FlatButton;
@@ -14,8 +16,6 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogAnimDebugData.UpdateItemSettingsData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.PacketDistributor;
@@ -87,14 +87,14 @@ public class DogAnimDebugScreen extends StringEntrySelectScreen {
                 selectMode = new_mode;
                 b.setMessage(getModeTitle(selectMode));
                 sendItemChangeRequest();
-                if (!help_render_below_view) {
-                    b.setTooltip(Tooltip.create(getModeHelp(selectMode)));
-                } 
             }    
-        );
-        if (!help_render_below_view) {
-            modeButton.setTooltip(Tooltip.create(getModeHelp(selectMode)));
-        }
+        ) {
+            @Override
+            public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
+                if (!help_render_below_view)
+                DogAnimDebugScreen.this.renderTooltip(stack, getModeHelp(selectMode), mouseX, mouseY);
+            }
+        };
         this.addRenderableWidget(modeButton);
     }
 
@@ -130,7 +130,7 @@ public class DogAnimDebugScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
         super.render(graphics, mouseX, mouseY, partialTicks);
         renderHelp(graphics, selectMode);
     }
@@ -139,7 +139,7 @@ public class DogAnimDebugScreen extends StringEntrySelectScreen {
         return this.height > 353;
     }
 
-    private void renderHelp(GuiGraphics graphics, ItemMode mode) {
+    private void renderHelp(PoseStack graphics, ItemMode mode) {
         if (!shouldRenderHelpBelow())
             return;
         int mX = this.width / 2;
@@ -150,7 +150,7 @@ public class DogAnimDebugScreen extends StringEntrySelectScreen {
         int tY = this.height/2 + this.getSelectAreaSize()/2 + 20;
         for (var line : desc_lines) {
             tX = mX - font.width(line)/2;
-            graphics.drawString(font, line, tX, tY, 0xffffffff);
+            font.draw(graphics, line, tX, tY, 0xffffffff);
             tY += font.lineHeight + 2;
         }
     }

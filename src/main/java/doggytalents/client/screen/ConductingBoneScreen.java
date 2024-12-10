@@ -103,12 +103,12 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
         super.render(graphics, mouseX, mouseY, partialTicks);
         mayRenderShowUUID(graphics, mouseX, mouseY, partialTicks);
     }
 
-    private void mayRenderShowUUID(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    private void mayRenderShowUUID(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
         if (!this.showUuid)
             return;
         var hover_entry_optional = this.getHoveredEntry(mouseX, mouseY);
@@ -125,16 +125,16 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
             int uuid_width = font.width(uuid_c1);
             int tX = mX - uuid_width/2;
             int tY = mY + getSelectAreaSize()/2 + 23;
-            graphics.drawString(font, uuid_c1, tX, tY, 0xffffffff);
+            font.draw(graphics, uuid_c1, tX, tY, 0xffffffff);
         } else {
-            graphics.renderComponentTooltip(font, 
+            this.renderComponentTooltip(graphics, 
                 List.of(uuid_c1), mouseX, mouseY);
         }
     }
 
     @Override
-    protected void drawNoEntryMsg(GuiGraphics graphics, int x, int y) {
-        graphics.drawString(font,
+    protected void drawNoEntryMsg(PoseStack graphics, int x, int y) {
+        font.draw(graphics,
             I18n.get("doggytalents.screen.conducting_bone.no_dog_found"), 
             x, y, 0xf50a0a);
     }

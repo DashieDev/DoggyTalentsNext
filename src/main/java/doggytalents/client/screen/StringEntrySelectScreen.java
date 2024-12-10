@@ -13,7 +13,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import net.minecraft.SharedConstants;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -102,7 +101,7 @@ public class StringEntrySelectScreen extends Screen {
             half_width + getSelectAreaSize() / 2 , half_height + getSelectAreaSize() / 2 , Integer.MIN_VALUE);
     }
 
-    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y, 
+    protected void drawEntry(PoseStack graphics, int entry_x, int entry_y, 
         int entry_id, boolean is_selected) {
         int color = 0xffffffff;
 
@@ -111,24 +110,24 @@ public class StringEntrySelectScreen extends Screen {
         Component text = Component.literal(this.entries.get(entry_id))
             .setStyle(Style.EMPTY.withColor(color));
         text = modifyEntryText(text, entry_id, is_selected);
-        graphics.drawString(font, text, entry_x, entry_y, 0xffffffff);
+        font.draw(graphics, text, entry_x, entry_y, 0xffffffff);
     }
 
     protected Component modifyEntryText(Component entryText, int entryId, boolean is_selected) {
         return entryText;
     }
 
-    protected void drawNoEntryMsg(GuiGraphics graphics, int x, int y) {
+    protected void drawNoEntryMsg(PoseStack graphics, int x, int y) {
         
     }
 
-    protected void drawPageIndicator(GuiGraphics graphics, int pageCount, int activePage) {
+    protected void drawPageIndicator(PoseStack graphics, int pageCount, int activePage) {
         int half_width = this.width / 2;
         int half_height = this.height / 2;
         
         var page_str = (activePage + 1) + "/" + pageCount;
         var page_str_width = font.width(page_str);
-        graphics.drawString(font, page_str, half_width - page_str_width/2, 
+        font.draw(graphics, page_str, half_width - page_str_width/2, 
             half_height - this.getSelectAreaSize() / 2 - this.getPageIndicatorOffset(), 0xffffffff);
     }
 
@@ -332,13 +331,13 @@ public class StringEntrySelectScreen extends Screen {
             }
         }
 
-        protected void render(GuiGraphics graphics) {
+        protected void render(PoseStack graphics) {
             parent.drawSelectAreaBackground(graphics);
             drawEntries(graphics);            
             parent.drawPageIndicator(graphics, pageCount, activePage);
         }
 
-        protected void drawEntries(GuiGraphics graphics) {
+        protected void drawEntries(PoseStack graphics) {
             int half_width = parent.width / 2;
             int half_height = parent.height / 2;
     
@@ -488,7 +487,7 @@ public class StringEntrySelectScreen extends Screen {
             }
         }
 
-        public void render(GuiGraphics graphics) {
+        public void render(PoseStack graphics) {
             final int selected_area_size = parent.getSelectAreaSize();
 
             int half_width = parent.width / 2;
@@ -497,10 +496,10 @@ public class StringEntrySelectScreen extends Screen {
             int txtorgx = half_width - selected_area_size / 2 + 10;
             int txtorgy = half_height + selected_area_size / 2 + parent.getSearchBarOffset();
             
-            graphics.fill( half_width - selected_area_size / 2 , 
+            fill(graphics, half_width - selected_area_size / 2 , 
                 half_height + selected_area_size / 2 + 5, half_width + selected_area_size / 2, 
                 half_height + selected_area_size / 2 + 17, Integer.MIN_VALUE);
-            graphics.drawString(parent.font, this.searchString + "_", txtorgx, txtorgy,  0xffffffff);
+            parent.font.draw(graphics, this.searchString + "_", txtorgx, txtorgy,  0xffffffff);
         }
 
         public void insertText(String x) {
