@@ -1678,3 +1678,12 @@ a certain timestamp, e.g: Touchy touch will continue playing even when the fire 
 the Dog has already touched the fire block and is reacting to the burn.  
 # Injured Dogs don't actively push entities other than other Injured Dogs.
 * Potential NPE when a Dog wearing Bach Wig kills an entity.
+
+**1.18.38 - 10th December 2024**
+# Dogs whom an action causes them, when sitting, to stand up will remember its sitting position and
+will return to it to sit if possible after finishing the action. Although, dogs will forget the sitting
+position after a certain amount of time or if the sitting position is no longer reachable or no longer
+safe.
+*(1.21+ Neoforge only) Fix Chopin Disc doesn't play
+*(1.21+ Neoforge only) Workaround for a Dog Menu bug caused by third party which leads to
+nothing being rendered beside the blur background when players access their Dogs' menu.
