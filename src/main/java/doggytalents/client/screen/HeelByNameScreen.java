@@ -122,8 +122,8 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
         pY += softHeel.getHeight() + 2;
         var help = new FlatButton(0, pY, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+            public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderButton(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
@@ -131,7 +131,7 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                HeelByNameScreen.this.renderComponentTooltip(graphics, list, mouseX, mouseY);
             }
         };
         help.setX(mX - 100 - help.getWidth() - 2);
@@ -142,8 +142,8 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected void drawNoEntryMsg(GuiGraphics graphics, int x, int y) {
-        graphics.drawString(font, 
+    protected void drawNoEntryMsg(PoseStack graphics, int x, int y) {
+        font.draw(graphics,  
             I18n.get("doggytalents.screen.whistler.heel_by_name.no_dog_found"), 
             x, y, 0xf50a0a);
     }
@@ -158,12 +158,12 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
         super.render(graphics, mouseX, mouseY, partialTicks);
         mayRenderShowUUID(graphics, mouseX, mouseY, partialTicks);
     }
 
-    private void mayRenderShowUUID(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    private void mayRenderShowUUID(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
         if (!this.showUuid)
             return;
         var hover_entry_optional = this.getHoveredEntry(mouseX, mouseY);
@@ -186,9 +186,9 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
             int uuid_width = font.width(uuid_c1);
             int tX = mX - uuid_width/2;
             int tY = mY + getSelectAreaSize()/2 + 23;
-            graphics.drawString(font, uuid_c1, tX, tY, 0xffffffff);
+            font.draw(graphics, uuid_c1, tX, tY, 0xffffffff);
         } else {
-            graphics.renderComponentTooltip(font, 
+            this.renderComponentTooltip(graphics,  
                 List.of(uuid_c1), mouseX, mouseY);
         }
     }

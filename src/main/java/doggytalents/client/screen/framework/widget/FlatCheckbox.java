@@ -1,10 +1,11 @@
 package doggytalents.client.screen.framework.widget;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import doggytalents.client.entity.render.RenderUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -46,7 +47,7 @@ public class FlatCheckbox extends AbstractButton {
     }
 
     @Override //TODO 1.19.4 ?? 
-    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
 
         if (!this.active) {
             this.animTimeline = 0;
@@ -58,7 +59,7 @@ public class FlatCheckbox extends AbstractButton {
 
         int bg_color = maskColorHovered(this.colorLerp(DEFAULT_COLOR, activeColor, this.animTimeline));
         //background
-        graphics.fill( 
+        fill(graphics,
             this.getX(), this.getY(), 
             this.getX()+this.width, 
             this.getY()+this.height, bg_color);
@@ -69,13 +70,13 @@ public class FlatCheckbox extends AbstractButton {
         final int nob_y = this.getY() + nob_spacing;
 
         if (this.value) {
-            graphics.fill( 
+            fill(graphics,
                 nob_x, 
                 nob_y, 
                 nob_x + nob_size, 
                 nob_y + nob_size, 0xffffffff);
         } else {
-            graphics.fill( 
+            fill(graphics,
                 nob_x, 
                 nob_y, 
                 nob_x + nob_size, 
@@ -150,8 +151,13 @@ public class FlatCheckbox extends AbstractButton {
     }
 
     @Override
-    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
+    public void updateNarration(NarrationElementOutput p_259858_) {
         // TODO Auto-generated method stub
         
     }
+
+    
+    //1.19.2-
+    public int getX() { return this.x; }
+    public int getY() { return this.y; }
 }

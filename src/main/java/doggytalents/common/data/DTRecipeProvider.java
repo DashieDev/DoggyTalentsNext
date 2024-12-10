@@ -687,19 +687,19 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_potion", has(Items.POTION))
             .save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_HEAD.get(), 1)
+        ShapelessRecipeBuilder.shapeless(DoggyItems.DRAGON_COSTUME_HEAD.get(), 1)
             .requires(DoggyItems.TRAINING_TREAT.get())
             .requires(Items.DRAGON_HEAD)
             .unlockedBy("has_dragon_head", has(Items.DRAGON_HEAD))
             .save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_SUIT.get(), 1)
+        ShapelessRecipeBuilder.shapeless(DoggyItems.DRAGON_COSTUME_SUIT.get(), 1)
             .requires(DoggyItems.TRAINING_TREAT.get())
             .requires(Items.DRAGON_EGG)
             .unlockedBy("has_dragon_egg", has(Items.DRAGON_EGG))
             .save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_WINGS.get(), 1)
+        ShapelessRecipeBuilder.shapeless(DoggyItems.DRAGON_COSTUME_WINGS.get(), 1)
             .requires(DoggyItems.TRAINING_TREAT.get())
             .requires(Items.ELYTRA)
             .unlockedBy("has_elytra", has(Items.ELYTRA))

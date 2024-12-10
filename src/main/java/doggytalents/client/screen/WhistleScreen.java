@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.DoggyItems;
 import doggytalents.common.item.WhistleItem.WhistleMode;
@@ -13,7 +15,6 @@ import doggytalents.common.network.packet.data.WhisltleEditHotKeyData;
 import doggytalents.common.network.packet.data.WhistleRequestModeData;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -75,8 +76,8 @@ public class WhistleScreen extends StringEntrySelectScreen {
 
         var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+            public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderButton(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
@@ -84,7 +85,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.whistler.screen.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                WhistleScreen.this.renderComponentTooltip(graphics, list, mouseX, mouseY);
             }
         };
 
@@ -93,7 +94,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y, 
+    protected void drawEntry(PoseStack graphics, int entry_x, int entry_y, 
         int entry_id, boolean is_selected) {
         
         if (this.settingKeysMode) {
@@ -103,7 +104,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
         }
     }
 
-    private void drawNonSetMode(GuiGraphics graphics, int entry_x, int entry_y, 
+    private void drawNonSetMode(PoseStack graphics, int entry_x, int entry_y, 
         int entry_id, boolean is_selected) {
         
         int color = 0xffffffff;
@@ -115,10 +116,10 @@ public class WhistleScreen extends StringEntrySelectScreen {
             .withBold(false)
             .withColor(color)
         );
-        graphics.drawString(font, text, entry_x, entry_y, color);
+        font.draw(graphics, text, entry_x, entry_y, color);
     }
 
-    private void drawSetMode(GuiGraphics graphics, int entry_x, int entry_y, 
+    private void drawSetMode(PoseStack graphics, int entry_x, int entry_y, 
         int entry_id, boolean is_selected) {
             
         int color = 0xffffffff;
@@ -156,7 +157,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
             .withColor(color)
         );
         text.append(title);
-        graphics.drawString(font, text, entry_x, entry_y, color);
+        font.draw(graphics, text, entry_x, entry_y, color);
     }
 
     public void tick() {

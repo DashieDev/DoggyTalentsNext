@@ -49,13 +49,13 @@ public class FlatButton extends AbstractButton {
     }
 
     @Override //TODO 1.19.4 ?? 
-    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
 
         if (!this.active && !visibleWhenNotActive) return;
 
         int cl = maskColor(buttonColor, this.isHovered && this.active);
         
-        fill(stack, this.x, this.y, this.x+this.width, this.y+this.height, cl);
+        fill(graphics, this.x, this.y, this.x+this.width, this.y+this.height, cl);
         
         //draw text
         int mX = this.x + this.width/2;
@@ -65,7 +65,7 @@ public class FlatButton extends AbstractButton {
         int tY = mY - font.lineHeight/2;
         msg = modifyMessage(msg);
         //TODO if the name is too long, draw it cut off with a ..
-        font.draw(stack, msg, tX, tY, 0xffffffff);
+        font.draw(graphics, msg, tX, tY, 0xffffffff);
     }
 
     protected int maskColor(int color, boolean hightlight) {
