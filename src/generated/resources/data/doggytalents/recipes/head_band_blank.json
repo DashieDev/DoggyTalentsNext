@@ -6,11 +6,14 @@
     },
     "P": {
       "item": "minecraft:paper"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
     }
   },
   "pattern": [
-    "L",
-    "P"
+    "LT",
+    "P "
   ],
   "result": {
     "item": "doggytalents:head_band_blank"
