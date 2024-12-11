@@ -95,10 +95,10 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
         ));
         var variant = getDogVariant(stack);
         if (variant != DogVariantUtil.getDefault() && level.isClientSide) {
-            var variant_str = Component.translatable("doggui.classical.variant")
+            var variant_str = ComponentUtil.translatable("doggui.classical.variant")
                 .getString() + " "
                 + ClientEventHandler.getTranslatedVariantStr(variant);
-            var variant_c1 = Component.literal(variant_str)
+            var variant_c1 = ComponentUtil.literal(variant_str)
                 .withStyle(
                     Style.EMPTY.withBold(true)
                     .withColor(variant.guiColor())
@@ -107,7 +107,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
         }
         boolean is_thicc_collar = getCollarThicc(stack);
         if (is_thicc_collar) {
-            components.add(Component.translatable(
+            components.add(ComponentUtil.translatable(
                 DoggyItems.WOOL_COLLAR_THICC.get().getDescriptionId())
                     .setStyle(Style.EMPTY.withItalic(true)));
         }

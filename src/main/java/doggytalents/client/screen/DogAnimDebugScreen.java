@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.item.DogAnimDebugItem;
 import doggytalents.common.item.DogAnimDebugItem.ItemMode;
@@ -28,7 +29,7 @@ public class DogAnimDebugScreen extends StringEntrySelectScreen {
     private DogAnimation selectAnim = DogAnimation.NONE;
 
     public DogAnimDebugScreen(Player player) {
-        super(Component.empty());
+        super(ComponentUtil.empty());
         this.font = Minecraft.getInstance().font;
         this.animList = Arrays.stream(DogAnimation.values())
             .collect(Collectors.toList());
@@ -105,12 +106,12 @@ public class DogAnimDebugScreen extends StringEntrySelectScreen {
     }
 
     private Component getModeTitle(ItemMode mode) {
-        return Component.translatable("item.doggytalents.dog_anim_debug_stick.mode." 
+        return ComponentUtil.translatable("item.doggytalents.dog_anim_debug_stick.mode." 
             + mode.getId());
     }
 
     private Component getModeHelp(ItemMode mode) {
-        return Component.translatable("item.doggytalents.dog_anim_debug_stick.mode." 
+        return ComponentUtil.translatable("item.doggytalents.dog_anim_debug_stick.mode." 
             + mode.getId() + ".help");
     }
 

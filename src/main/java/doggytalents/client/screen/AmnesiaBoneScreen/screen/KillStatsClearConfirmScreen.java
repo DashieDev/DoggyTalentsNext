@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
@@ -24,7 +25,7 @@ public class KillStatsClearConfirmScreen extends Screen {
     Dog dog;
 
     protected KillStatsClearConfirmScreen(Dog dog) {
-        super(Component.literal(""));
+        super(ComponentUtil.literal(""));
         this.dog = dog;
     }
 
@@ -51,7 +52,7 @@ public class KillStatsClearConfirmScreen extends Screen {
         int pY = mY - 72;
         Component title;
         String help;
-        title = Component.translatable("doggui.clear_dog_kill_stats.confirm.title")
+        title = ComponentUtil.translatable("doggui.clear_dog_kill_stats.confirm.title")
         .withStyle(
             Style.EMPTY
             .withBold(true)
@@ -67,7 +68,7 @@ public class KillStatsClearConfirmScreen extends Screen {
         );
         var owner_title = I18n.get(
             "doggui.invalid_dog.info.owner",
-            this.dog.getOwnersName().orElse(Component.literal("")).getString()
+            this.dog.getOwnersName().orElse(ComponentUtil.literal("")).getString()
         );
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
         stack.pushPose();
@@ -92,7 +93,7 @@ public class KillStatsClearConfirmScreen extends Screen {
 
     private void addConfirmButton() {
         var clearButton = new Button(this.width/2 - 25, this.height/2 + 58, 
-            50, 20, Component.translatable("doggui.untame.confirm.confirmed"), 
+            50, 20, ComponentUtil.translatable("doggui.untame.confirm.confirmed"), 
             b -> {
                 requestClearKillStats();
                 Minecraft.getInstance().setScreen(null);
@@ -115,7 +116,7 @@ public class KillStatsClearConfirmScreen extends Screen {
         if (!player.hasPermissions(4))
             return;
 
-        var str = Component.literal("Clear Kill Stats");
+        var str = ComponentUtil.literal("Clear Kill Stats");
         var str_width = font.width(str);
         var button_width = str_width + 4;
         button_consumer.accept(

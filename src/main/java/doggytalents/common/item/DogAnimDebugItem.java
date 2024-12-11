@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.screen.DogAnimDebugScreen;
@@ -156,7 +157,7 @@ public class DogAnimDebugItem extends Item implements IDogItem {
     public void appendHoverText(ItemStack stack, Level context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = "item.doggytalents.dog_anim_debug_stick.help";
-        components.add(Component.translatable(desc_id).withStyle(
+        components.add(ComponentUtil.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true))
         );
     }

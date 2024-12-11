@@ -34,7 +34,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
     private int[] hotkeysModeArr = {-1, -1, -1, -1};
 
     public WhistleScreen() {
-        super(Component.translatable("doggytalents.screen.whistler.title"));
+        super(ComponentUtil.translatable("doggytalents.screen.whistler.title"));
         this.modeList = Arrays.stream(WhistleMode.VALUES)
             .collect(Collectors.toList());
         this.updateEntries(this.modeList.stream()
@@ -53,7 +53,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
         int mY = this.height/2;
         int pY = mY - 100;
 
-        var setKey = new FlatButton(mX - 100 - 60 - 2, pY, 60, 20, Component.translatable("doggytalents.screen.whistler.screen.set_hotkey"),
+        var setKey = new FlatButton(mX - 100 - 60 - 2, pY, 60, 20, ComponentUtil.translatable("doggytalents.screen.whistler.screen.set_hotkey"),
             b -> {
                 if (settingKeysMode) {
                     settingKeysMode = false;
@@ -77,13 +77,13 @@ public class WhistleScreen extends StringEntrySelectScreen {
         };
         pY += setKey.getHeight() + 2;
 
-        var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, Component.literal("?"), b -> {} ) {
+        var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, ComponentUtil.literal("?"), b -> {} ) {
             @Override
             public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
                 super.renderButton(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
+                list.add(ComponentUtil.translatable("doggytalents.screen.whistler.screen.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
                 String str = I18n.get("doggytalents.screen.whistler.screen.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
@@ -113,7 +113,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
         int color = 0xffffffff;
         if (is_selected) 
             color = getHightlightSelectedColor();
-        var text = Component.translatable(this.modeList.get(entry_id).getUnlocalisedTitle());
+        var text = ComponentUtil.translatable(this.modeList.get(entry_id).getUnlocalisedTitle());
         text.withStyle(
             Style.EMPTY
             .withBold(false)
@@ -139,21 +139,21 @@ public class WhistleScreen extends StringEntrySelectScreen {
                 prefix_color = 0xff3636;
                 remove = true;
             }
-            text = Component.literal(
+            text = ComponentUtil.literal(
                 remove ? "- " : pKey + " "
             );
         } else if (hotkey_indx >= 0) {
             prefix_color = 0xff6f00;
-            text = Component.literal(hotkey_indx + " ");
+            text = ComponentUtil.literal(hotkey_indx + " ");
         } else {
-            text = Component.literal("  ");
+            text = ComponentUtil.literal("  ");
         }
         text.withStyle(
             Style.EMPTY
                 .withBold(true)
                 .withColor(prefix_color)
         );
-        var title = Component.translatable(mode.getUnlocalisedTitle());
+        var title = ComponentUtil.translatable(mode.getUnlocalisedTitle());
         title.withStyle(
             Style.EMPTY
             .withBold(false)

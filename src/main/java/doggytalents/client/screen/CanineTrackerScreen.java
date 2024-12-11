@@ -46,7 +46,7 @@ public class CanineTrackerScreen extends StringEntrySelectScreen {
     private boolean showUuid = false;
 
     public CanineTrackerScreen(Player player) {
-        super(Component.translatable("doggytalents.screen.conducting_bone"));
+        super(ComponentUtil.translatable("doggytalents.screen.conducting_bone"));
         this.player = player;
     }
 
@@ -62,15 +62,15 @@ public class CanineTrackerScreen extends StringEntrySelectScreen {
         int mX = this.width/2;
         int mY = this.height/2;
         int pY = mY - 100;
-        var showUuid = new FlatButton(mX - 100 - 60 - 2, pY, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
-            btn.setMessage(Component.translatable("doggytalents.screen.whistler.heel_by_name."
+        var showUuid = new FlatButton(mX - 100 - 60 - 2, pY, 60, 20, ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
+            btn.setMessage(ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name."
                 + (this.showUuid? "show" : "hide")
                 +"_uuid"));
             this.showUuid = !this.showUuid;
         });
         pY += showUuid.getHeight() + 2;
         
-        var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, Component.literal("?"), b -> {} ) {
+        var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, ComponentUtil.literal("?"), b -> {} ) {
             @Override
             public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
                 List<Component> list = new ArrayList<>();
@@ -123,7 +123,7 @@ public class CanineTrackerScreen extends StringEntrySelectScreen {
             return;
         int entry_id = hover_entry_optional.get();
         var uuid = this.dogIdList.get(entry_id);
-        var uuid_c1 = Component.literal(uuid.toString())
+        var uuid_c1 = ComponentUtil.literal(uuid.toString())
             .withStyle(ChatFormatting.GRAY);
         if (this.height >= 273) {
             int mX = this.width/2;

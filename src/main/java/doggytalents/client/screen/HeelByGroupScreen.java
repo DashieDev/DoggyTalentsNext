@@ -30,7 +30,7 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
     private final int HLC_HEEL_AND_SIT = 0xff6f00;
 
     public HeelByGroupScreen() {
-        super(Component.translatable("doggytalents.screen.heel_by_group"));
+        super(ComponentUtil.translatable("doggytalents.screen.heel_by_group"));
     }
 
     public static void open() { 
@@ -45,7 +45,7 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
         int mX = this.width/2;
         int mY = this.height/2;
 
-        var help = new FlatButton(mX - 100 - 20 - 2, mY - 100, 20, 20, Component.literal("?"), b -> {} ) {
+        var help = new FlatButton(mX - 100 - 20 - 2, mY - 100, 20, 20, ComponentUtil.literal("?"), b -> {} ) {
             @Override
             public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
                 List<Component> list = new ArrayList<>();

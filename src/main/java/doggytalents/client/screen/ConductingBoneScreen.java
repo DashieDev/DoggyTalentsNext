@@ -41,7 +41,7 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
     private boolean toBed = false;
 
     public ConductingBoneScreen() {
-        super(Component.translatable("doggytalents.screen.conducting_bone"));
+        super(ComponentUtil.translatable("doggytalents.screen.conducting_bone"));
         this.font = Minecraft.getInstance().font;
     }
 
@@ -62,8 +62,8 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
 
         int pY = mY - 100;
 
-        var showUuid = new FlatButton(0, pY, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
-            btn.setMessage(Component.translatable("doggytalents.screen.whistler.heel_by_name."
+        var showUuid = new FlatButton(0, pY, 60, 20, ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
+            btn.setMessage(ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name."
                 + (this.showUuid? "show" : "hide")
                 +"_uuid"));
             this.showUuid = !this.showUuid;
@@ -71,18 +71,18 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
         showUuid.setX(mX - 100 - showUuid.getWidth() - 2);
         pY += showUuid.getHeight() + 2;
         
-        var toBedButton = new FlatButton(0, pY, 60, 20, Component.literal(this.toBed? "To Bed" : "To Self"), b -> {
+        var toBedButton = new FlatButton(0, pY, 60, 20, ComponentUtil.literal(this.toBed? "To Bed" : "To Self"), b -> {
             if (ConductingBoneScreen.this.toBed) {
                 ConductingBoneScreen.this.toBed = false;
-                b.setMessage(Component.literal("To Self"));
+                b.setMessage(ComponentUtil.literal("To Self"));
             } else {
                 ConductingBoneScreen.this.toBed = true;
-                b.setMessage(Component.literal("To Bed"));
+                b.setMessage(ComponentUtil.literal("To Bed"));
             }
         } );
         toBedButton.setX(mX - 100 - toBedButton.getWidth() - 2);
         pY += toBedButton.getHeight() + 2;
-        var help = new FlatButton(0, pY, 20, 20, Component.literal("?"), b -> {} ) {
+        var help = new FlatButton(0, pY, 20, 20, ComponentUtil.literal("?"), b -> {} ) {
             @Override
             public void renderToolTip(PoseStack stack, int mouseX, int mouseY) {
                 List<Component> list = new ArrayList<>();
@@ -116,7 +116,7 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
             return;
         int entry_id = hover_entry_optional.get();
         var uuid = this.dogIdList.get(entry_id);
-        var uuid_c1 = Component.literal(uuid.toString())
+        var uuid_c1 = ComponentUtil.literal(uuid.toString())
             .withStyle(ChatFormatting.GRAY);
         if (this.height >= 273) {
             int mX = this.width/2;

@@ -2,6 +2,7 @@ package doggytalents.client.screen.framework.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.entity.render.RenderUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
@@ -29,7 +30,7 @@ public class FlatCheckbox extends AbstractButton {
     
 
     public FlatCheckbox(int x, int y, int activeColor, FlatCheckbox.OnChange onPress) {
-        super(x, y, 28, 14, Component.empty());
+        super(x, y, 28, 14, ComponentUtil.empty());
         //TODO Auto-generated constructor stub
         this.font = Minecraft.getInstance().font;
         this.onPress = onPress;

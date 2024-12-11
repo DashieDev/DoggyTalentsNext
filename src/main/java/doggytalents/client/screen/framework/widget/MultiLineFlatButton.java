@@ -19,7 +19,7 @@ public class MultiLineFlatButton extends FlatButton {
     private TextType.Align align = TextType.Align.MIDDLE;
 
     public MultiLineFlatButton(int x, int y, int width, int height, int r_pad, Component text, OnPress onPress) {
-        super(x, y, width, height, Component.empty(), onPress);
+        super(x, y, width, height, ComponentUtil.empty(), onPress);
         this.lines = font.split(text, width - r_pad);
     }
 

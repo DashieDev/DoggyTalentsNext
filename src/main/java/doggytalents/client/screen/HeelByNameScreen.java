@@ -49,7 +49,7 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
     private final int HLC_HEEL_AND_SIT = 0xff6f00; 
 
     public HeelByNameScreen(Player player, boolean softHeel) {
-        super(Component.translatable("doggytalents.screen.whistler.heel_by_name"));
+        super(ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name"));
         this.player = player;
         this.softHeel = softHeel;
         List<Dog> dogsList = Minecraft.getInstance().level.getEntitiesOfClass(Dog.class, this.player.getBoundingBox().inflate(100D, 50D, 100D), d -> d.isOwnedBy(player));
@@ -85,8 +85,8 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
         int mY = this.height/2;
         int pY = mY - 100;
 
-        var showUuid = new FlatButton(0, pY, 60, 20, Component.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
-            btn.setMessage(Component.translatable("doggytalents.screen.whistler.heel_by_name."
+        var showUuid = new FlatButton(0, pY, 60, 20, ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name.show_uuid"), (btn) -> {
+            btn.setMessage(ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name."
                 + (this.showUuid? "show" : "hide")
                 +"_uuid"));
             this.showUuid = !this.showUuid;
@@ -95,17 +95,17 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
         pY += showUuid.getHeight() + 2;
         final String soft_heel_title_id = "doggytalents.screen.whistler.heel_by_name.soft_heel";
         var inital_softHeel_c1 = this.softHeel ? 
-            Component.translatable(soft_heel_title_id)
+            ComponentUtil.translatable(soft_heel_title_id)
                 .withStyle(Style.EMPTY.withColor(this.getHightlightSelectedColor()))
-            : Component.translatable(soft_heel_title_id);
+            : ComponentUtil.translatable(soft_heel_title_id);
         var softHeel = new FlatButton(0, pY, 60, 20, 
             inital_softHeel_c1, b -> {
                 this.softHeel = !this.softHeel;
                 if (this.softHeel) {
-                    b.setMessage(Component.translatable(soft_heel_title_id)
+                    b.setMessage(ComponentUtil.translatable(soft_heel_title_id)
                         .withStyle(Style.EMPTY.withColor(this.getHightlightSelectedColor())));
                 } else {
-                    b.setMessage(Component.translatable(soft_heel_title_id));
+                    b.setMessage(ComponentUtil.translatable(soft_heel_title_id));
                 }
         }) {
             @Override
@@ -121,13 +121,13 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
         };
         softHeel.setX(mX - 100 - softHeel.getWidth() - 2);
         pY += softHeel.getHeight() + 2;
-        var help = new FlatButton(0, pY, 20, 20, Component.literal("?"), b -> {} ) {
+        var help = new FlatButton(0, pY, 20, 20, ComponentUtil.literal("?"), b -> {} ) {
             @Override
             public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
                 super.renderButton(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
+                list.add(ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
                 String str = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
@@ -178,7 +178,7 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
         var uuid = dog.getStringUUID();
         if (uuid == null)
             return;
-        var uuid_c1 = Component.literal(uuid.toString())
+        var uuid_c1 = ComponentUtil.literal(uuid.toString())
             .withStyle(ChatFormatting.GRAY);
         if (this.height >= 273) {
             int mX = this.width/2;
