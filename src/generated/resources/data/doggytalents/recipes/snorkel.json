@@ -2,7 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "  B",
-    "GIG"
+    "GIG",
+    " T "
   ],
   "key": {
     "I": {
@@ -13,6 +14,9 @@
     },
     "B": {
       "item": "minecraft:bamboo"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
     }
   },
   "result": {

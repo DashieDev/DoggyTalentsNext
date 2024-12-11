@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "L",
-    "P"
+    "LT",
+    "P "
   ],
   "key": {
     "L": {
@@ -10,6 +10,9 @@
     },
     "P": {
       "item": "minecraft:paper"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
     }
   },
   "result": {
