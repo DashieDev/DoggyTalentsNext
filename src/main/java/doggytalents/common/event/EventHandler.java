@@ -609,6 +609,8 @@ public class EventHandler {
         
         event.setCanceled(true);
     }
+
+    @SubscribeEvent
     public void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
         if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
             return;

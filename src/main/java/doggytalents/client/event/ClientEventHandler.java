@@ -339,9 +339,18 @@ public class ClientEventHandler {
 
     public static void rotatePlayerToDogWhenSleepOn(Dog sleep_on, Player player, PoseStack stack, float p_115319_, float p_115320_,
         float p_115321_, float x) {
-        float facing = player.getYRot();
+        float facing = rotatePlayerToDog(player, sleep_on);
         stack.mulPose(Axis.YP.rotationDegrees(180 - facing));
-        //stack.mulPose(Axis.XP.rotationDegrees(90));
-    }   
+        stack.mulPose(Axis.XP.rotationDegrees(90));
+    }
+
+    private static float rotatePlayerToDog(Player player, Dog dog) {
+        double dx = dog.getX() - player.getX();
+        double dz = dog.getZ() - player.getZ();
+        float target_yrot = (float)( Mth.atan2(dz, dx) * Mth.RAD_TO_DEG - 90f );
+        // player.setYBodyRot(target_yrot);
+        // player.setYRot(target_yrot);
+        return target_yrot - 180f;
+    }
 
 }
