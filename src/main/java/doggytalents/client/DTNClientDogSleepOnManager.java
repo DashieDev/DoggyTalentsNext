@@ -41,7 +41,7 @@ public class DTNClientDogSleepOnManager {
         if (!player_optional.isPresent())
             return false;
         var player = player_optional.get();
-        float facing = player.getYRot();
+        float facing = player.getYRot() - 180;
         stack.mulPose(Axis.YP.rotationDegrees(180 - facing));
         stack.mulPose(Axis.XP.rotationDegrees(90));
         return true;
