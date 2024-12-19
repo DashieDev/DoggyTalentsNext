@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -69,7 +70,7 @@ public class DogAllowSleepOnGoal extends Goal {
         if (!anim.interupting()) {
             this.dog.setAnim(DogAnimation.NONE);
         }
-        this.dog.sleepOnManager.onSleepOnGoalStop();
+        DogSleepOnManager.getServer(dog.level()).onSleepGoalStop(dog);
     }
 
     @Override
@@ -88,12 +89,24 @@ public class DogAllowSleepOnGoal extends Goal {
             --this.sitUpTime;
         }
         if (this.isRestingPeriod) {
-            if (--this.timeout <= 0) {
-                this.isRestingPeriod = false;
-                this.dog.setAnim(DogAnimation.LIE_SIDEWAY_END);
-                this.dog.sleepOnManager.onSleepOnGoalStop();
-                return;
-            }
+            updateRestingPeriod();
+        }
+    }
+
+    private void updateRestingPeriod() {
+        boolean is_sleeping_on = 
+            this.dog.getSleepOnState().is_sleeping();
+        if (!is_sleeping_on) {
+            timeout = Math.max(0, timeout - 1);
+        } else {
+            timeout = 60;
+        }
+        boolean finished = !is_sleeping_on && this.timeout <= 0;  
+        if (finished) {
+            this.isRestingPeriod = false;
+            this.dog.setAnim(DogAnimation.LIE_SIDEWAY_END);
+            this.dog.sleepOnManager.onSleepOnGoalStop();
+            return;
         }
     }
 

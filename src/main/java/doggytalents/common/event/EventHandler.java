@@ -95,13 +95,14 @@ public class EventHandler {
 
         DogPromiseManager.tick();
         DogLocationStorage.get(event.getServer()).getOnlineDogsManager().tick();
+        DogSleepOnManager.getServer(event.getServer()).tickServer();
     }
 
     @SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
         DogPromiseManager.forceStop();
         DogLocationStorage.get(event.getServer()).onServerStop(event);
-        DogSleepOnManager.onServerStop();
+        DogSleepOnManager.getServer(event.getServer()).onServerStop();
     }
 
     @SubscribeEvent
@@ -615,7 +616,7 @@ public class EventHandler {
         if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
             return;
         var player = event.getEntity();
-        var dog_optional = DogSleepOnManager.getSleepingOnDog(player);
+        var dog_optional = DogSleepOnManager.getServer(player.getServer()).getSleepingOnDog(player);
         if (!dog_optional.isPresent())
             return;
         var dog = dog_optional.get();

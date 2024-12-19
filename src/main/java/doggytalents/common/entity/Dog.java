@@ -254,8 +254,8 @@ public class Dog extends AbstractDog {
         = new DogHungerManager(this);
     public final DogPettingManager pettingManager
         = new DogPettingManager(this);
-    public final DogSleepOnManager sleepOnManager
-        = new DogSleepOnManager(this);
+    public final DogSleepOnManager.PerDog sleepOnManager
+        = new DogSleepOnManager.PerDog(this);
     public final DogSwimmingManager dogSwimmingManager
         = new DogSwimmingManager(this);
     public final DogPushAvoidManager dogPushAvoidManager
@@ -1050,7 +1050,7 @@ public class Dog extends AbstractDog {
         if (stack.getItem() == Items.STONE_AXE) {
             if (!this.level().isClientSide) {
                 if (this.sleepOnManager.isSleepOnReady()) {
-                    this.sleepOnManager.setPlayerSleepOn(player);
+                    DogSleepOnManager.getServer(this.level().getServer()).setPlayerSleepOn(this, player);
                 } else
                 this.sleepOnManager.setRequestedSleepOn(true);
             }

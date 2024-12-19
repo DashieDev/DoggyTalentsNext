@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 
+import doggytalents.ChopinLogger;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTalentsNext;
@@ -23,6 +24,7 @@ import doggytalents.client.screen.widget.DogInventoryButton;
 import doggytalents.client.screen.widget.DoggySpin;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.item.WhistleItem.WhistleMode;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogMountData;
@@ -51,11 +53,13 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
@@ -336,21 +340,4 @@ public class ClientEventHandler {
             return I18n.get(translation_key);
         return variant.id().toString();
     }
-
-    public static void rotatePlayerToDogWhenSleepOn(Dog sleep_on, Player player, PoseStack stack, float p_115319_, float p_115320_,
-        float p_115321_, float x) {
-        float facing = rotatePlayerToDog(player, sleep_on);
-        stack.mulPose(Axis.YP.rotationDegrees(180 - facing));
-        stack.mulPose(Axis.XP.rotationDegrees(90));
-    }
-
-    private static float rotatePlayerToDog(Player player, Dog dog) {
-        double dx = dog.getX() - player.getX();
-        double dz = dog.getZ() - player.getZ();
-        float target_yrot = (float)( Mth.atan2(dz, dx) * Mth.RAD_TO_DEG - 90f );
-        // player.setYBodyRot(target_yrot);
-        // player.setYRot(target_yrot);
-        return target_yrot - 180f;
-    }
-
 }
