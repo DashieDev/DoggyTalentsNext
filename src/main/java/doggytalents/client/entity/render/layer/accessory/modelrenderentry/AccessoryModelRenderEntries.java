@@ -7,6 +7,7 @@ import doggytalents.common.entity.accessory.BirthdayHatAccessory;
 public class AccessoryModelRenderEntries {
     
     public static Entry BOWTIE = new BowtieRenderEntry();
+    public static Entry HEAD_BOW = new HeadBowRenderEntry();
     public static Entry SMARTY_GLASSES = new SmartyGlassesRenderEntry();
     public static Entry WIG = new WigRenderEntry();
     public static Entry BACH_WIG = new BachWigRenderEntry();
@@ -50,6 +51,7 @@ public class AccessoryModelRenderEntries {
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
+        AccessoryModelManager.register(HEAD_BOW);
         AccessoryModelManager.register(CONTACTS);
         AccessoryModelManager.register(SMARTY_GLASSES);
         AccessoryModelManager.register(WIG);

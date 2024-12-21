@@ -30,6 +30,7 @@ public class DoggyAccessories {
     public static final Supplier<DyeableAccessory> DYEABLE_CAPE = register("dyeable_cape", () -> new DyeableAccessory(DoggyAccessoryTypes.CLOTHING, DoggyItems.CAPE_COLOURED).setModelTexture(Resources.DYEABLE_CAPE).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
     public static final Supplier<Clothing> PIANIST_SUIT = register("pianist_suit", () -> new Clothing(DoggyItems.PIANIST_SUIT).setModelTexture(Resources.PIANIST_SUIT).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
     public static final Supplier<Clothing> DEATH_HOOD = register("death_hood", () -> new Clothing(DoggyItems.DEATH_HOOD).setModelTexture(Resources.DEATH_HOOD).setRenderTranslucent(true).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
+    public static final Supplier<HeadBow> HEAD_BOW = register("head_bow", () -> new HeadBow(DoggyItems.BOWTIE).setModelTexture(Resources.BOW_TIE).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final Supplier<BowTie> BOWTIE = register("bowtie", () -> new BowTie(DoggyItems.BOWTIE).setModelTexture(Resources.BOW_TIE).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final Supplier<SmartyGlasses> SMARTY_GLASSES = register("smarty_glasses", () -> new SmartyGlasses(DoggyItems.SMARTY_GLASSES).setModelTexture(Resources.SMARTY_GLASSES).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final Supplier<Wig> WIG = register("wig", () -> new Wig(DoggyItems.WIG).setModelTexture(Resources.WIG).setAccessoryRenderType(AccessoryRenderType.MODEL));
