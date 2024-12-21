@@ -46,6 +46,7 @@ public class AccessoryModelRenderEntries {
     public static Entry DRAGON_COSTUME_SUIT = new DragonCostumeSuitRenderEntry();
     public static Entry DRAGON_COSTUME_WINGS = new DragonCostumeWingsRenderEntry();
     public static Entry FIREFIGHTER_HAT = new FIreFighterHatRenderEntry();
+    public static Entry CHRISTMAS_HAT = new ChristmasHatRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -89,6 +90,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(DRAGON_COSTUME_SUIT);
         AccessoryModelManager.register(DRAGON_COSTUME_WINGS);
         AccessoryModelManager.register(FIREFIGHTER_HAT);
+        AccessoryModelManager.register(CHRISTMAS_HAT);
     }
 
 }

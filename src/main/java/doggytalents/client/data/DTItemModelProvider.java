@@ -176,6 +176,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.DRAGON_COSTUME_HEAD);
         generated(DoggyItems.DRAGON_COSTUME_SUIT);
         generated(DoggyItems.DRAGON_COSTUME_WINGS);
+        generated(DoggyItems.CHRISTMAS_HAT);
 
         generated(DoggyItems.SCENT_TREAT);
         scentTreatDrooled(DoggyItems.DROOL_SCENT_TREAT, DoggyItems.SCENT_TREAT);
