@@ -32,6 +32,7 @@ public class DoggyAccessories {
     public static final RegistryObject<Clothing> PIANIST_SUIT = register("pianist_suit", () -> new Clothing(DoggyItems.PIANIST_SUIT).setModelTexture(Resources.PIANIST_SUIT).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
     public static final RegistryObject<Clothing> DEATH_HOOD = register("death_hood", () -> new Clothing(DoggyItems.DEATH_HOOD).setModelTexture(Resources.DEATH_HOOD).setRenderTranslucent(true).setAccessoryRenderType(AccessoryRenderType.OVERLAY));
     public static final RegistryObject<BowTie> BOWTIE = register("bowtie", () -> new BowTie(DoggyItems.BOWTIE).setModelTexture(Resources.BOW_TIE).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final Supplier<HeadBow> HEAD_BOW = register("head_bow", () -> new HeadBow(DoggyItems.BOWTIE).setModelTexture(Resources.BOW_TIE).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<SmartyGlasses> SMARTY_GLASSES = register("smarty_glasses", () -> new SmartyGlasses(DoggyItems.SMARTY_GLASSES).setModelTexture(Resources.SMARTY_GLASSES).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<Wig> WIG = register("wig", () -> new Wig(DoggyItems.WIG).setModelTexture(Resources.WIG).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<BachWig> BACH_WIG = register("bach_wig", () -> new BachWig(DoggyItems.BACH_WIG).setModelTexture(Resources.BACH_WIG).setAccessoryRenderType(AccessoryRenderType.MODEL));
