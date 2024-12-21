@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.google.common.collect.Maps;
 
 import doggytalents.ChopinLogger;
@@ -40,16 +42,18 @@ public class DogSleepOnManager {
     public void setPlayerSleepOn(Dog dog, Player player) {
         if (!canPlayerSleepOn(player))
             return;
-        var sleep_pos_optional = findSleepPos(dog);
-        if (!sleep_pos_optional.isPresent())
+        var sleep_pair_optional = findSleepRot(dog, player);
+        if (!sleep_pair_optional.isPresent())
             return;
-        
+        var sleep_pair = sleep_pair_optional.get();
+        final float sleep_yrot = sleep_pair.getLeft();
+
         player.startSleeping(dog.blockPosition());
-        player.moveTo(sleep_pos_optional.get());
-        rotatePlayerYRotToDog(dog, player, sleep_pos_optional.get());
-        rotateDogPerpenToOwner(dog, player);
+        player.moveTo(sleep_pair.getRight());
+        rotateDogPerpenToSleepYRot(dog, sleep_yrot);
+        rotatePlayerYRotToDog(dog, player, sleep_yrot);
         
-        dog.setSleepOnState(new DogSleepOnState(player.getUUID(), true, sleep_pos_optional.get()));
+        dog.setSleepOnState(new DogSleepOnState(player.getUUID(), true, sleep_yrot));
         addDogSleepOnPair(player, dog);
 
         ((ServerLevel) player.level()).updateSleepingPlayerList();
@@ -64,32 +68,32 @@ public class DogSleepOnManager {
         return true;
     }
 
-    private Optional<Vec3> findSleepPos(Dog dog) {
-        var dog_pos = dog.position();
-        var dog_view_vec = dog.getViewVector(1);
-        final double distance_to_dog = 1.8;
-        var check_vec = 
-            new Vec3(dog_view_vec.x, 0, dog_view_vec.z).normalize()
-                .scale(distance_to_dog);
+    private Optional<Pair<Float, Vec3>> findSleepRot(Dog dog, Player player) {
+        //First candidate
+        float check_yrot1 = player.getYRot() + 180;
+        var check_pos1 = getPlayerSleepPos(dog, check_yrot1);
+        var check_b01 = BlockPos.containing(check_pos1);
+        var type1 = WalkNodeEvaluator.getPathTypeStatic(dog, check_b01.mutable());
+        if (type1 == PathType.WALKABLE)
+            return Optional.of(Pair.of(check_yrot1, check_pos1));
+
+        final float dog_yrot = dog.getYRot();
         for (int i = 0; i < 8; ++i) {
-            var check_pos = check_vec
-                .yRot(i * 45f * Mth.DEG_TO_RAD)
-                .add(dog_pos);
+            float check_yrot = dog_yrot + i * 45f;
+            var check_pos = getPlayerSleepPos(dog, check_yrot);
             var check_b0 = BlockPos.containing(check_pos);
             var type = WalkNodeEvaluator.getPathTypeStatic(dog, check_b0.mutable());
             if (type == PathType.WALKABLE)
-                return Optional.of(check_pos);
+                return Optional.of(Pair.of(check_yrot, check_pos));
         }
         return Optional.empty();
     }
 
-    private void rotateDogPerpenToOwner(Dog dog, Player player) {
-        double dx = player.getX() - dog.getX();
-        double dz = player.getZ() - dog.getZ();
-        var rotate_yrot = (float)( Mth.atan2(dz, dx) * Mth.RAD_TO_DEG );
+    private void rotateDogPerpenToSleepYRot(Dog dog, float dog_sleep_yrot) {
+        var rotate_yrot = Mth.wrapDegrees(dog_sleep_yrot + 90);
         dog.setYRot(rotate_yrot);
         dog.yBodyRot = dog.getYRot();
-        dog.yHeadRot = dog.getYRot();
+        dog.yHeadRot = dog.yBodyRot;
     }
 
     public void stopPlayerSleepOn(Dog dog) {
@@ -97,10 +101,8 @@ public class DogSleepOnManager {
         clearPlayerSleepOnFor(dog);
     }
 
-    public static void rotatePlayerYRotToDog(Dog dog, Player player, Vec3 sleep_pos) {
-        double dx = dog.getX() - sleep_pos.x();
-        double dz = dog.getZ() - sleep_pos.z();
-        var rotate_yrot = (float)( Mth.atan2(dz, dx) * Mth.RAD_TO_DEG - 90f );
+    public static void rotatePlayerYRotToDog(Dog dog, Player player, float dog_sleep_yrot) {
+        var rotate_yrot = Mth.wrapDegrees(dog_sleep_yrot - 180);
         player.setYRot(rotate_yrot);
         player.yBodyRot = player.getYRot();
         player.yHeadRot = player.yBodyRot;
@@ -117,6 +119,10 @@ public class DogSleepOnManager {
     public void onSleepGoalStop(Dog dog) {
         dog.sleepOnManager.onSleepOnGoalStop();
         this.stopPlayerSleepOn(dog);
+    }
+
+    public static boolean shouldBlockPush(Dog dog) {
+        return dog.getSleepOnState().is_sleeping();
     }
     
     private final Map<UUID, SleepOnPair> sleepingOnPairs = Maps.newHashMap();
@@ -192,6 +198,24 @@ public class DogSleepOnManager {
         return Optional.ofNullable(sleeper);
     }
 
+    public static Vec3 getPlayerSleepPos(Dog dog, float dog_sleep_rot) {
+        var sleep_on_pos = getSleepOnHeadPos(dog, dog_sleep_rot);
+        var dog_view_vec = dog.calculateViewVector(0, dog_sleep_rot);
+        final double distance_to_dog = 1.8;
+        return
+            new Vec3(dog_view_vec.x, 0, dog_view_vec.z).normalize()
+                .scale(distance_to_dog)
+                .add(sleep_on_pos);
+    }
+
+    public static Vec3 getSleepOnHeadPos(Dog dog, float dog_sleep_rot) {
+        final float side_translate = -0.3f;
+        float translate_rot = dog_sleep_rot + 90;
+        var translate_vec = dog.calculateViewVector(0, translate_rot)
+            .scale(side_translate);
+        return dog.position().add(translate_vec);
+    }
+
     public static void onDogSleepOnDataUpdated(Dog dog, DogSleepOnState state) {
         if (dog.level().isClientSide)
             DTNClientDogSleepOnManager.get().onDogSleepOnDataUpdated(dog, state);
@@ -199,8 +223,8 @@ public class DogSleepOnManager {
 
     private static record SleepOnPair(Dog dog, Player player) {} 
 
-    public static record DogSleepOnState(UUID sleeper, boolean is_sleeping, Vec3 sleep_pos) {
-        public static DogSleepOnState NULL = new DogSleepOnState(net.minecraft.Util.NIL_UUID, false, Vec3.ZERO);
+    public static record DogSleepOnState(UUID sleeper, boolean is_sleeping, float sleep_yrot) {
+        public static DogSleepOnState NULL = new DogSleepOnState(net.minecraft.Util.NIL_UUID, false, 0);
     }
 
     public static class PerDog {

@@ -53,7 +53,7 @@ public class DTNClientDogSleepOnManager {
         if (!player_optional.isPresent())
             return;
         
-        model.head.xRot += 20 * Mth.DEG_TO_RAD; 
+        model.head.xRot += 40 * Mth.DEG_TO_RAD; 
     }
 
     private Optional<Player> checkIsSleepingOnDog(LivingEntity living) {
@@ -102,7 +102,7 @@ public class DTNClientDogSleepOnManager {
             return;
         var sleeper = sleeper_optional.get();
         if (sleeper == Minecraft.getInstance().player)
-            DogSleepOnManager.rotatePlayerYRotToDog(dog, sleeper, state.sleep_pos());
+            DogSleepOnManager.rotatePlayerYRotToDog(dog, sleeper, state.sleep_yrot());
     }
 
     public void clearPlayerSleepOnFor(Dog dog) {
