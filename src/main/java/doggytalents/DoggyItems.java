@@ -128,7 +128,7 @@ public class DoggyItems {
     public static final Supplier<AccessoryItem> PROPELLER_HAT = register("propeller_hat", () -> new Propellar.PropellerHatItem(DoggyAccessories.PROPELLAR, createInitialProp()));
     public static final Supplier<AccessoryItem> DYED_ORB = register("locator_orb_dyable", () -> new DyableOrbItem(DoggyAccessories.DYED_ORB, createInitialProp()));
     public static final Supplier<AccessoryItem> STRIPED_SCARF = register("striped_scarf", () -> new StripedScarfItem(DoggyAccessories.STRIPED_SCARF, createInitialProp()));
-    public static final Supplier<DyeableAccessoryItem> BOWTIE = registerAccessoryDyed("bowtie", DoggyAccessories.BOWTIE);
+    public static final Supplier<DyeableAccessoryItem> BOWTIE = register("bowtie", () -> new DualDyableAccessoryItem(DoggyAccessories.BOWTIE, DoggyAccessories.HEAD_BOW, createInitialProp()));
 
     public static final Supplier<DyeableAccessoryItem> WOOL_COLLAR = registerAccessoryDyed("wool_collar", DoggyAccessories.DYEABLE_COLLAR);
     public static final Supplier<DyeableAccessoryItem> WOOL_COLLAR_THICC = registerAccessoryDyed("wool_collar_thicc", DoggyAccessories.DYEABLE_COLLAR_THICC);
