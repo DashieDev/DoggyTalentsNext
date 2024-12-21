@@ -119,7 +119,8 @@ public class Resources {
     public static final ResourceLocation HOT_DOG = getEntity("dog", "hot_dog");
     public static final ResourceLocation GIANT_STICK = getEntity("dog", "giant_stick");
     public static final ResourceLocation SNORKEL = getEntity("dog", "snorkel");
-    
+    public static final ResourceLocation CHRISTMAS_HAT = getEntity("dog", "christmas_hat");
+
     public static final ResourceLocation HEAD_BAND_BLANK = getEntity("dog", "head_band_blank");
     public static final ResourceLocation HEAD_BAND_MYSTERY = getEntity("dog", "head_band_mystery");
     public static final ResourceLocation HEAD_BAND_HIGHHH = getEntity("dog", "head_band_highhh");
