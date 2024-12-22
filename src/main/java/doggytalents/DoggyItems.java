@@ -198,6 +198,7 @@ public class DoggyItems {
 
     public static final Supplier<AccessoryItem> CHRISTMAS_HAT = register("christmas_hat", () -> new ChristmasHatItem(DoggyAccessories.CHRISTMAS_HAT, createInitialProp()));
     public static final Supplier<AccessoryItem> DOG_CHRISTMAS_TREE = registerAccessory("dog_christmas_tree", DoggyAccessories.DOG_CHRISTMAS_TREE);
+    public static final Supplier<AccessoryItem> DOG_CHRISTMAS_STAR = registerAccessory("dog_christmas_star", DoggyAccessories.DOG_CHRISTMAS_STAR);
     public static final Supplier<AccessoryItem> DOG_GIFT_COSTUME = register("dog_gift_costume", () -> new DogPresentCostumeItem(DoggyAccessories.DOG_GIFT_COSTUME, createInitialProp()));
 
     //DTN Misc ==========================

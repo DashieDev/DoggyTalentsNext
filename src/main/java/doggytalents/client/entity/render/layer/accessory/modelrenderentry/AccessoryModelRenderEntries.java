@@ -49,6 +49,7 @@ public class AccessoryModelRenderEntries {
     public static Entry FIREFIGHTER_HAT = new FIreFighterHatRenderEntry();
     public static Entry CHRISTMAS_HAT = new ChristmasHatRenderEntry();
     public static Entry CHRISTMAS_TREE = new ChristmasTreeRenderEntry();
+    public static Entry CHRISTMAS_STAR = new ChristmasStarRenderEntry();
     public static Entry PRESENT_COSTUME = new PresentCostumeRenderEntry();
 
     public static void registerEntries() {
@@ -96,6 +97,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(FIREFIGHTER_HAT);
         AccessoryModelManager.register(CHRISTMAS_HAT);
         AccessoryModelManager.register(CHRISTMAS_TREE);
+        AccessoryModelManager.register(CHRISTMAS_STAR);
         AccessoryModelManager.register(PRESENT_COSTUME);
     }
 
