@@ -177,7 +177,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.DRAGON_COSTUME_SUIT);
         generated(DoggyItems.DRAGON_COSTUME_WINGS);
         generated(DoggyItems.CHRISTMAS_HAT);
-        dogPresentCostume(DoggyItems.DOG_PRESENT_COSTUME);
+        dogPresentCostume(DoggyItems.DOG_GIFT_COSTUME);
 
         generated(DoggyItems.SCENT_TREAT);
         scentTreatDrooled(DoggyItems.DROOL_SCENT_TREAT, DoggyItems.SCENT_TREAT);
@@ -262,7 +262,7 @@ public class DTItemModelProvider extends ItemModelProvider {
     }
     
     private ItemModelBuilder dogPresentCostume(Supplier<? extends ItemLike> item) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/dog_present_costume"), modLoc(ModelProvider.ITEM_FOLDER + "/dog_present_costume_overlay"));
+        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/dog_gift_costume"), modLoc(ModelProvider.ITEM_FOLDER + "/dog_gift_costume_overlay"));
     }
 
     private ItemModelBuilder stripedScarf(Supplier<? extends ItemLike> item) {
