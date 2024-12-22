@@ -197,6 +197,9 @@ public class DoggyItems {
     public static final Supplier<AccessoryItem> HEAD_BAND_HIGHHH = registerHeadBand("head_band_highhh", DoggyAccessories.HEAD_BAND_HIGHHH);
 
     public static final Supplier<AccessoryItem> CHRISTMAS_HAT = register("christmas_hat", () -> new ChristmasHatItem(DoggyAccessories.CHRISTMAS_HAT, createInitialProp()));
+    public static final Supplier<AccessoryItem> DOG_CHRISTMAS_TREE = registerAccessory("dog_christmas_tree", DoggyAccessories.DOG_CHRISTMAS_TREE);
+    public static final Supplier<AccessoryItem> DOG_PRESENT_COSTUME = registerAccessory("dog_present_costume", DoggyAccessories.DOG_PRESENT_COSTUME);
+
     //DTN Misc ==========================
     public static final Supplier<Item> THROW_BONE_WET = registerThrowBoneWet("throw_bone_wet");
     public static final Supplier<Item> THROW_STICK_WET = registerThrowStickWet("throw_stick_wet");
