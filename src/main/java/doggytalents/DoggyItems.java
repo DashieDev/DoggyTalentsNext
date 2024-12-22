@@ -199,7 +199,7 @@ public class DoggyItems {
 
     public static final Supplier<AccessoryItem> CHRISTMAS_HAT = register("christmas_hat", () -> new ChristmasHatItem(DoggyAccessories.CHRISTMAS_HAT, createInitialProp()));
     public static final Supplier<AccessoryItem> DOG_CHRISTMAS_TREE = registerAccessory("dog_christmas_tree", DoggyAccessories.DOG_CHRISTMAS_TREE);
-    public static final Supplier<AccessoryItem> DOG_PRESENT_COSTUME = register("dog_present_costume", () -> new DogPresentCostumeItem(DoggyAccessories.DOG_PRESENT_COSTUME, createInitialProp()));
+    public static final Supplier<AccessoryItem> DOG_GIFT_COSTUME = register("dog_gift_costume", () -> new DogPresentCostumeItem(DoggyAccessories.DOG_GIFT_COSTUME, createInitialProp()));
 
     //DTN Misc ==========================
     public static final Supplier<Item> THROW_BONE_WET = registerThrowBoneWet("throw_bone_wet");
@@ -446,7 +446,7 @@ public class DoggyItems {
              }, item);
         }, DoggyBlocks::logError);
 
-        Util.acceptOrElse(DoggyItems.DOG_PRESENT_COSTUME, (item) -> {
+        Util.acceptOrElse(DoggyItems.DOG_GIFT_COSTUME, (item) -> {
             event.register((stack, tintIndex) -> {
                 if (tintIndex == 1) {
                     return ((DoubleDyableAccessoryItem) stack.getItem()).getFgColor(stack);
