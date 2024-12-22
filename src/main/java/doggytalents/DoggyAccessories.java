@@ -98,10 +98,11 @@ public class DoggyAccessories {
     public static final Supplier<DragonCostumeWings> DRAGON_COSTUME_WINGS = register("dragon_costume_wings", () -> new DragonCostumeWings(DoggyItems.DRAGON_COSTUME_WINGS).setModelTexture(Resources.DRAGON_COSTUME_WINGS).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final RegistryObject<Contacts> DOGGY_CONTACTS = register("doggy_contacts", () -> new Contacts(DoggyItems.DOGGY_CONTACTS).setModelTexture(Resources.DOGGY_CONTACTS_BG).setAccessoryRenderType(AccessoryRenderType.MODEL));
 
-    
     public static final Supplier<ChristmasHat> CHRISTMAS_HAT = register("christmas_hat", () -> new ChristmasHat(DoggyItems.CHRISTMAS_HAT).setModelTexture(Resources.CHRISTMAS_HAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
     public static final Supplier<ChristmasTreeAccessory> DOG_CHRISTMAS_TREE = register("dog_christmas_tree", () -> new ChristmasTreeAccessory(DoggyItems.DOG_CHRISTMAS_TREE).setModelTexture(Resources.DOG_CHRISTMAS_TREE).setAccessoryRenderType(AccessoryRenderType.MODEL));
-    public static final Supplier<PresentCostumeAccessory> DOG_PRESENT_COSTUME = register("dog_present_costume", () -> new PresentCostumeAccessory(DoggyItems.DOG_PRESENT_COSTUME).setModelTexture(Resources.DOG_PRESENT_COSTUME).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final Supplier<PresentCostumeAccessory> DOG_GIFT_COSTUME = register("dog_gift_costume", () -> new PresentCostumeAccessory(DoggyItems.DOG_GIFT_COSTUME).setModelTexture(Resources.DOG_GIFT_COSTUME).setAccessoryRenderType(AccessoryRenderType.MODEL));
+
+    
     private static <T extends Accessory> RegistryObject<T> register(final String name, final Supplier<T> sup) {
         return ACCESSORIES.register(name, sup);
     }
