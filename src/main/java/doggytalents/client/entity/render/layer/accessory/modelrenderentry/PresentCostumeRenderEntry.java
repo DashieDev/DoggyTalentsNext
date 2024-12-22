@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
-public class PresentCostumeRenderEntry extends AccessoryModelManager.Entry {
+public class PresentCostumeRenderEntry extends DoubleDyableRenderEntry {
     public static final ModelLayerLocation PRESENT_COSTUME = new ModelLayerLocation(Util.getResource("dog_present_costume"), "main");
     
     public PresentCostumeModel model;
@@ -35,9 +35,14 @@ public class PresentCostumeRenderEntry extends AccessoryModelManager.Entry {
         event.registerLayerDefinition(PRESENT_COSTUME, PresentCostumeModel::createBodyLayer);
     }
 
+    
     @Override
-    public ResourceLocation getResources(AccessoryInstance inst) {
+    protected ResourceLocation getFgResource(AccessoryInstance inst) {
+        return Resources.DOG_PRESENT_COSTUME_OVERLAY;
+    }
+
+    @Override
+    protected ResourceLocation getBgResource(AccessoryInstance inst) {
         return Resources.DOG_PRESENT_COSTUME;
     }
-    
 }
