@@ -101,6 +101,8 @@ public class DoggyAccessories {
 
     
     public static final Supplier<ChristmasHat> CHRISTMAS_HAT = register("christmas_hat", () -> new ChristmasHat(DoggyItems.CHRISTMAS_HAT).setModelTexture(Resources.CHRISTMAS_HAT).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final Supplier<ChristmasTreeAccessory> DOG_CHRISTMAS_TREE = register("dog_christmas_tree", () -> new ChristmasTreeAccessory(DoggyItems.DOG_CHRISTMAS_TREE).setModelTexture(Resources.DOG_CHRISTMAS_TREE).setAccessoryRenderType(AccessoryRenderType.MODEL));
+    public static final Supplier<PresentCostumeAccessory> DOG_PRESENT_COSTUME = register("dog_present_costume", () -> new PresentCostumeAccessory(DoggyItems.DOG_PRESENT_COSTUME).setModelTexture(Resources.DOG_PRESENT_COSTUME).setAccessoryRenderType(AccessoryRenderType.MODEL));
     private static <T extends Accessory> RegistryObject<T> register(final String name, final Supplier<T> sup) {
         return ACCESSORIES.register(name, sup);
     }
