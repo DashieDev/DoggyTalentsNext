@@ -104,6 +104,7 @@ public class Resources {
     public static final ResourceLocation MIDI_KEYBOARD = getEntity("dog", "midi_keyboard");
     public static final ResourceLocation MIDI_KEYBOARD_OVERLAY = getEntity("dog", "midi_keyboard_overlay");
     public static final ResourceLocation DOG_CHRISTMAS_TREE = getEntity("dog", "dog_christmas_tree");
+    public static final ResourceLocation DOG_CHRISTMAS_STAR = getEntity("dog", "dog_christmas_star");
     public static final ResourceLocation DOG_GIFT_COSTUME = getEntity("dog", "dog_gift_costume");
     public static final ResourceLocation DOG_GIFT_COSTUME_OVERLAY = getEntity("dog", "dog_gift_costume_overlay");
 
