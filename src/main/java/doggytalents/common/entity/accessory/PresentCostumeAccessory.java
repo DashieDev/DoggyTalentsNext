@@ -9,7 +9,7 @@ import doggytalents.client.entity.render.layer.accessory.modelrenderentry.Access
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;
 import net.minecraft.world.level.ItemLike;
 
-public class PresentCostumeAccessory extends Accessory implements IAccessoryHasModel {
+public class PresentCostumeAccessory extends DoubleDyableAccessory implements IAccessoryHasModel {
 
     public PresentCostumeAccessory(Supplier<? extends ItemLike> itemIn) {
         super(DoggyAccessoryTypes.CLOTHING, itemIn);
