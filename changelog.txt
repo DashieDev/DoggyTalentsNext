@@ -1681,3 +1681,15 @@ safe.
 *(1.21+ Neoforge only) Fix Chopin Disc doesn't play
 *(1.21+ Neoforge only) Workaround for a Dog Menu bug caused by third party which leads to
 nothing being rendered beside the blur background when players access their Dogs' menu.
+
+**1.18.39 - 10th December 2024**
+**❄️🎄Merry Christmas🎄❄️!**
++ Added another variant of the bowtie: Head Bow (can be equipped to a Dog by sneak + right clicking
+the Dog with the bowtie in hand)
++ New Christmas Themed Accessories:
+  + Christmas Hat
+  + Christmas Tree
+  + Christmas Star
+  + Gift Costume (Double Dyable)
+# Demonhorns/Deer Antlers now have their own Accessory Type and can now be equipped alongside the head accessories.
+* Workaround for Fiery Reflector unwanted behaviour with Anim Debug Mode.   
