@@ -17,15 +17,20 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,6 +84,9 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
 
         private final ArrayList<Pair<Item, ResourceLocation>> recipeCache = new ArrayList<>(5);
 
+        //Anim Debug workaround, clientside
+        public boolean debugForceLowFlameRender = false;
+
         public Inst(Accessory typeIn, Type type) {
             super(typeIn);
             this.type = type;
@@ -91,6 +99,18 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
 
             tickReflectorEffect(dogIn);
             tickDoingCooking(dogIn);
+        }
+
+        @Override
+        public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
+                InteractionHand handIn) {
+            if (dogIn.level().isClientSide)
+            if (playerIn.getItemInHand(handIn).getItem() == Items.STRING
+                && ((dogIn instanceof Dog dog) && dog.isDogInAnimDebug())) {
+                this.debugForceLowFlameRender = !this.debugForceLowFlameRender;
+            }
+
+            return InteractionResult.PASS;
         }
 
         private void tickReflectorEffect(AbstractDog dogIn) {
@@ -117,7 +137,10 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
         private void addFlameParticles(Dog dog) {
             float offsetY = 0.24f;
             var pose = dog.getDogPose();
-            if (pose == DogPose.STAND || pose == DogPose.FLYING)
+            final boolean higher_flame = 
+                (pose == DogPose.STAND || pose == DogPose.FLYING)
+                && !(debugForceLowFlameRender && dog.isDogInAnimDebug());
+            if (higher_flame)
                 offsetY += dog.getDogVisualBbHeight();
             var a1 = dog.getClientAnimatedYBodyRotInRadians();
             var dx1 = -Mth.sin(a1);
