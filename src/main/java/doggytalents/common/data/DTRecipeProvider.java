@@ -943,6 +943,44 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('D', DoggyItems.RICE_WHEAT.get())
             .unlockedBy("has_paddy_rice_dtn", has(DoggyItems.RICE_WHEAT.get()))
             .save(consumer);
+            
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CHRISTMAS_HAT.get(), 1)
+            .pattern(" W ")
+            .pattern("RTR")
+            .pattern("WWW")
+            .define('W', Items.WHITE_WOOL)
+            .define('R', Items.RED_CARPET)
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .unlockedBy("has_training_treat_dtn", has(DoggyItems.TRAINING_TREAT.get()))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_CHRISTMAS_TREE.get(), 1)
+            .pattern(" G ")
+            .pattern("GSG")
+            .pattern(" T ")
+            .define('G', Items.GREEN_WOOL)
+            .define('S', Items.SPRUCE_SAPLING)
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .unlockedBy("has_training_treat_dtn", has(DoggyItems.TRAINING_TREAT.get()))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_CHRISTMAS_STAR.get(), 1)
+            .pattern(" G ")
+            .pattern("GTG")
+            .pattern(" G ")
+            .define('G', Items.GOLD_NUGGET)
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .unlockedBy("has_training_treat_dtn", has(DoggyItems.TRAINING_TREAT.get()))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_GIFT_COSTUME.get(), 1)
+            .pattern(" B ")
+            .pattern("PP ")
+            .pattern("PP ")
+            .define('B', DoggyItems.BOWTIE.get())
+            .define('P', Items.PAPER)
+            .unlockedBy("has_paper", has(Items.PAPER))
+            .save(consumer);
     }
 
     private void registerTripleCooking(Consumer<FinishedRecipe> consumer, Ingredient input, Item output,
