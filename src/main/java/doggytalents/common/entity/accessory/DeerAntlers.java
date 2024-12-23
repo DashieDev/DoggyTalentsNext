@@ -12,7 +12,7 @@ import net.minecraft.world.level.ItemLike;
 public class DeerAntlers extends Accessory implements IAccessoryHasModel {
     
     public DeerAntlers(Supplier<? extends ItemLike> itemIn) {
-        super(DoggyAccessoryTypes.HEAD, itemIn);
+        super(DoggyAccessoryTypes.HORN, itemIn);
     }
 
     @Override
