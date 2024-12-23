@@ -27,7 +27,10 @@ public class DogPresentCostumeItem extends DoubleDyableAccessoryItem {
 
     @Override
     public int getDefaultBgColor() {
-        return 0xffffffff;
+        return 0xffAA0000;
     }
-    
+    @Override
+    public int getDefaultFgColor() {
+        return 0xffFFFF55;
+    }
 }
