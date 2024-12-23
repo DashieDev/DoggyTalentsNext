@@ -12,7 +12,7 @@ import net.minecraft.world.level.ItemLike;
 public class DemonHornsAccessory extends Accessory implements IAccessoryHasModel {
 
     public DemonHornsAccessory(Supplier<? extends ItemLike> itemIn) {
-        super(DoggyAccessoryTypes.HEAD, itemIn);
+        super(DoggyAccessoryTypes.HORN, itemIn);
     }
 
     @Override
