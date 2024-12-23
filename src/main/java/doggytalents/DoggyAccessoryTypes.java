@@ -14,6 +14,7 @@ public class DoggyAccessoryTypes {
     public static final Supplier<AccessoryType> COLLAR = register("collar");
     public static final Supplier<AccessoryType> BOWTIE = register("bowtie");
     public static final Supplier<AccessoryType> HEAD_BOW = register("head_bow");
+    public static final Supplier<AccessoryType> HORN = register("horn");
     public static final Supplier<AccessoryType> CLOTHING = register("clothing");
     public static final Supplier<AccessoryType> GLASSES = register("glasses");
     public static final Supplier<AccessoryType> CONTACTS = register("contacts");
