@@ -13,7 +13,7 @@ import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class ChristmasTreeRenderEntry extends AccessoryModelManager.Entry {
     public static final ModelLayerLocation CHRISTMAS_TREE = new ModelLayerLocation(Util.getResource("dog_christmas_tree"), "main");
