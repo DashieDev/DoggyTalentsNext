@@ -29,6 +29,7 @@ import doggytalents.common.item.*;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.Util;
+import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -48,6 +49,11 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.IdentityHashMap;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -322,138 +328,49 @@ public class DoggyItems {
 
     public static void registerItemColours(final ColorHandlerEvent.Item event) {
         ItemColors itemColors = event.getItemColors();
-        Util.acceptOrElse(DoggyItems.WOOL_COLLAR, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
+        var all_dtn_items = ITEMS.getEntries();
 
-        Util.acceptOrElse(DoggyItems.WOOL_COLLAR_THICC, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
+        final var dye_layer_override = new IdentityHashMap<Item, Integer>();
+        dye_layer_override.put(CERE_GARB.get(), 1);
+        dye_layer_override.put(MIDI_KEYBOARD.get(), 1);
+        dye_layer_override.put(DOG_PLUSHIE_TOY.get(), 1);
 
-        Util.acceptOrElse(DoggyItems.CAPE_COLOURED, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.BOWTIE, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.WIG, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.FRISBEE, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.BAKER_HAT, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.CHEF_HAT, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.LAB_COAT, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.FRISBEE_WET, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.BIRTHDAY_HAT, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                if (tintIndex == 1) {
-                    return ((DyableBirthdayHatItem) stack.getItem()).getFgColor(stack);
+        final var double_dye_layer_override = new IdentityHashMap<Item, Pair<Integer, Integer>>();
+        
+        final Function<Integer, ItemColor> for_single_dyable = 
+            dye_layer -> (stack, layer_indx) -> {
+                return layer_indx != dye_layer ? -1 : ItemUtil.getDyeColorForStack(stack);
+            };
+        final BiFunction<Integer, Integer, ItemColor> for_double_dyable = 
+            (dye_layer_fg, dye_layer_bg) -> (stack, layer_indx) -> {
+                var double_dyeable_item = ((DoubleDyableAccessoryItem) stack.getItem());
+                if (layer_indx == dye_layer_fg) {
+                    return double_dyeable_item.getFgColor(stack);
+                } else if (layer_indx == dye_layer_bg) {
+                    return double_dyeable_item.getBgColor(stack);
                 }
-                return tintIndex > 0 ? -1 : ((DyableBirthdayHatItem) stack.getItem()).getBgColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
+                return -1;
+            };
 
-        Util.acceptOrElse(DoggyItems.STRIPED_SCARF, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                if (tintIndex == 1) {
-                    return ((StripedScarfItem) stack.getItem()).getFgColor(stack);
-                }
-                return tintIndex > 0 ? -1 : ((StripedScarfItem) stack.getItem()).getBgColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
+        final var default_single_dyable = for_single_dyable.apply(0); 
+        final var default_double_dyable = for_double_dyable.apply(1, 0);
 
-        Util.acceptOrElse(DoggyItems.FLYING_CAPE, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.CERE_GARB, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex != 1 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-        Util.acceptOrElse(DoggyItems.MIDI_KEYBOARD, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex != 1 ? -1 : ItemUtil.getDyeColorForStack(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.ANGEL_WINGS, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex > 0 ? -1 : ItemUtil.getDyeColorForStack(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.DOG_PLUSHIE_TOY, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return tintIndex != 1 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-        Util.acceptOrElse(DoggyItems.DOGGY_CONTACTS, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                if (tintIndex == 1) {
-                    return ((DoubleDyableAccessoryItem) stack.getItem()).getFgColor(stack);
-                }
-                return tintIndex > 0 ? -1 : ((DoubleDyableAccessoryItem) stack.getItem()).getBgColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.DYED_ORB, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                if (tintIndex == 1) {
-                    return ((DoubleDyableAccessoryItem) stack.getItem()).getFgColor(stack);
-                }
-                return tintIndex > 0 ? -1 : ((DoubleDyableAccessoryItem) stack.getItem()).getBgColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
-
-        Util.acceptOrElse(DoggyItems.DOG_GIFT_COSTUME, (item) -> {
-            event.register((stack, tintIndex) -> {
-                if (tintIndex == 1) {
-                    return ((DoubleDyableAccessoryItem) stack.getItem()).getFgColor(stack);
-                }
-                return tintIndex > 0 ? -1 : ((DoubleDyableAccessoryItem) stack.getItem()).getBgColor(stack);
-             }, item);
-        }, DoggyBlocks::logError);
+        for (var item_holder : all_dtn_items) {
+            var item = item_holder.get();
+            if (item instanceof IDyeableArmorItem) {
+                var item_color = default_single_dyable;
+                var override = dye_layer_override.get(item);
+                if (override != null)
+                    item_color = for_single_dyable.apply(override);
+                event.register(item_color, item);
+            } else if (item instanceof DoubleDyableAccessoryItem) {
+                var item_color = default_double_dyable;
+                var override = double_dye_layer_override.get(item);
+                if (override != null)
+                    item_color = for_double_dyable.apply(override.getLeft(), override.getRight());
+                event.register(item_color, item);
+            }
+        }
 
         Util.acceptOrElse(DoggyBlocks.DOG_BATH, (item) -> {
             itemColors.register((stack, tintIndex) -> {
