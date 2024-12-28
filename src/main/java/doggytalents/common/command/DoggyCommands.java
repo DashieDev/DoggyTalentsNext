@@ -115,31 +115,6 @@ public class DoggyCommands {
 
     }
 
-    private static <S extends SharedSuggestionProvider> SuggestionProvider<S> getOwnerIdSuggestionsLocate() {
-        return (context, builder) -> getOwnerIdSuggestions(DogLocationStorage.get(((CommandSourceStack)context.getSource()).getLevel()).getAll(), context, builder);
-    }
-
-    private static <S extends SharedSuggestionProvider> SuggestionProvider<S> getOwnerIdSuggestionsRevive() {
-        return (context, builder) -> getOwnerIdSuggestions(DogRespawnStorage.get(((CommandSourceStack)context.getSource()).getLevel()).getAll(), context, builder);
-    }
-
-    private static <S extends SharedSuggestionProvider> CompletableFuture<Suggestions> getOwnerIdSuggestions(Collection<? extends IDogData> possibilities, final CommandContext<S> context, final SuggestionsBuilder builder) {
-        if (context.getSource() instanceof CommandSourceStack) {
-
-            return SharedSuggestionProvider.suggest(possibilities.stream()
-                    .map(IDogData::getOwnerId)
-                    .filter(Objects::nonNull)
-                    .map(Object::toString)
-                    .collect(Collectors.toSet()),
-                   builder);
-
-        } else if (context.getSource() instanceof SharedSuggestionProvider) {
-            return context.getSource().customSuggestion(context);
-        } else {
-            return Suggestions.empty();
-        }
-    }
-
     private static <S extends SharedSuggestionProvider> SuggestionProvider<S> getDogIdSuggestionsLocate() {
         return (context, builder) -> getDogIdSuggestions(DogLocationStorage.get(((CommandSourceStack)context.getSource()).getLevel()).getAll(), context, builder);
     }
