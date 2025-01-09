@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,6 +41,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -777,6 +779,30 @@ public class DogUtil {
         dog.setSpeed(0);
         dog.setZza(0);
         dog.lookAt(Anchor.EYES, target);
+    }
+
+    public static Optional<Dog> getLookingAtDog(Player player, int reach_range) {
+        return getLookingAtDog(player, reach_range, filter_dog -> true);
+    }
+
+    public static Optional<Dog> getLookingAtDog(Player player, int reach_range, Predicate<Dog> filter) {
+        var eye_pos = player.getEyePosition();
+        var view_vec = player.getViewVector(1);
+        var max_reach_vec = view_vec.scale(reach_range);
+        var max_pos = eye_pos.add(max_reach_vec);
+        var search_area = player.getBoundingBox().expandTowards(max_reach_vec).inflate(1.0D, 1.0D, 1.0D);
+        var hitResult = ProjectileUtil.getEntityHitResult(
+            player, eye_pos, max_pos, search_area, e -> {
+                return (e instanceof Dog dog) && filter.test(dog);
+            }, reach_range*reach_range);
+        if (hitResult == null)
+            return Optional.empty();
+        var entity = hitResult.getEntity();
+        if (entity == null)
+            return Optional.empty();
+        if (!(entity instanceof Dog dog))
+            return Optional.empty();
+        return Optional.of(dog);
     }
 
     // public static Optional<Holder<WolfVariant>> getWolfVariantHolderIfLoaded(
