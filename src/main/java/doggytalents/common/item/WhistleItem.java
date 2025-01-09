@@ -389,22 +389,11 @@ public class WhistleItem extends Item implements IDogItem {
         if (level.isClientSide)
             return;
         final int reach_range = 30;
-        var eye_pos = player.getEyePosition();
-        var view_vec = player.getViewVector(1);
-        var max_reach_vec = view_vec.scale(reach_range);
-        var max_pos = eye_pos.add(max_reach_vec);
-        var search_area = player.getBoundingBox().expandTowards(max_reach_vec).inflate(1.0D, 1.0D, 1.0D);
-        var hitResult = ProjectileUtil.getEntityHitResult(
-            player, eye_pos, max_pos, search_area, e -> {
-                return (e instanceof Dog);
-            }, reach_range*reach_range);
-        if (hitResult == null)
+        var dog_optional = DogUtil.getLookingAtDog(player, reach_range, 
+            filter_dog -> filter_dog.isDoingFine());
+        if (!dog_optional.isPresent())
             return;
-        var entity = hitResult.getEntity();
-        if (entity == null)
-            return;
-        if (!(entity instanceof Dog dog))
-            return;
+        var dog = dog_optional.get();
         
         if (dog.isPassenger()) {
             dog.unRide();
@@ -425,22 +414,11 @@ public class WhistleItem extends Item implements IDogItem {
         if (level.isClientSide)
             return;
         final int reach_range = 30;
-        var eye_pos = player.getEyePosition();
-        var view_vec = player.getViewVector(1);
-        var max_reach_vec = view_vec.scale(reach_range);
-        var max_pos = eye_pos.add(max_reach_vec);
-        var search_area = player.getBoundingBox().expandTowards(max_reach_vec).inflate(1.0D, 1.0D, 1.0D);
-        var hitResult = ProjectileUtil.getEntityHitResult(
-            player, eye_pos, max_pos, search_area, e -> {
-                return (e instanceof Dog dog) && dog.isDoingFine();
-            }, reach_range*reach_range);
-        if (hitResult == null)
+        var dog_optional = DogUtil.getLookingAtDog(player, reach_range, 
+            filter_dog -> filter_dog.isDoingFine());
+        if (!dog_optional.isPresent())
             return;
-        var entity = hitResult.getEntity();
-        if (entity == null)
-            return;
-        if (!(entity instanceof Dog dog))
-            return;
+        var dog = dog_optional.get();
         DogUtil.dynamicSearchAndTeleportToOwnwer(dog, player, 2);
         player.sendSystemMessage(Component.translatable("dogcommand.heel_by_name", dog.getName().getString()));
         dog.setOrderedToSit(false);
@@ -450,22 +428,10 @@ public class WhistleItem extends Item implements IDogItem {
         if (level.isClientSide)
             return;
         final int reach_range = 30;
-        var eye_pos = player.getEyePosition();
-        var view_vec = player.getViewVector(1);
-        var max_reach_vec = view_vec.scale(reach_range);
-        var max_pos = eye_pos.add(max_reach_vec);
-        var search_area = player.getBoundingBox().expandTowards(max_reach_vec).inflate(1.0D, 1.0D, 1.0D);
-        var hitResult = ProjectileUtil.getEntityHitResult(
-            player, eye_pos, max_pos, search_area, e -> {
-                return (e instanceof Dog);
-            }, reach_range*reach_range);
-        if (hitResult == null)
+        var dog_optional = DogUtil.getLookingAtDog(player, reach_range);
+        if (!dog_optional.isPresent())
             return;
-        var entity = hitResult.getEntity();
-        if (entity == null)
-            return;
-        if (!(entity instanceof Dog dog))
-            return;
+        var dog = dog_optional.get();
         if (!dog.readyForNonTrivialAction())
             return;
         dog.triggerAction(new DogHowlAction(dog));
