@@ -36,6 +36,7 @@ import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.Util;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.InBedChatScreen;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;

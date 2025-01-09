@@ -382,6 +382,9 @@ public class WhistleItem extends Item implements IDogItem {
         case CROSS_ORIGIN_TP:
             crossOriginTpForDogs(world, player, dogsList);
             return;
+        case BED_DOG_WHISTLE:
+            BedDogTalent.useBedDog(world, player);
+            return;
         }
     }
 

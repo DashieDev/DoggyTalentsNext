@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
+
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -13,12 +16,15 @@ import com.mojang.math.Axis;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 
@@ -42,9 +48,24 @@ public class DTNClientDogSleepOnManager {
             return false;
         var player = player_optional.get();
         float facing = player.getYRot() - 180;
+        var translate = calclateSleepTranslate(player);
+        stack.translate(translate.x, 0, translate.z);
         stack.mulPose(Axis.YP.rotationDegrees(180 - facing));
         stack.mulPose(Axis.XP.rotationDegrees(90));
         return true;
+    }
+
+    private Vec3 calclateSleepTranslate(Player player) {
+        var uuid = player.getUUID();
+        var dog = this.sleeperMap.get(uuid);
+        if (dog == null)    
+            return Vec3.ZERO;
+        
+        var view_vec = player.getViewVector(1);
+        
+        float translate_amount = player.getEyeHeight(Pose.STANDING) - 0.1F;
+
+        return view_vec.normalize().scale(-translate_amount);
     }
 
     public void afterPlayerModelSetupAnim(LivingEntity living, float limbSwing, 
@@ -56,18 +77,29 @@ public class DTNClientDogSleepOnManager {
         model.head.xRot += 40 * Mth.DEG_TO_RAD; 
     }
 
-    private Optional<Player> checkIsSleepingOnDog(LivingEntity living) {
-        if (!living.hasPose(Pose.SLEEPING))
+    private Optional<Player> checkIsSleepingOnDog(Entity entity) {
+        if (!entity.hasPose(Pose.SLEEPING))
             return Optional.empty();
         if (sleeperMap.isEmpty())
             return Optional.empty();
-        if (!(living instanceof Player player))
+        if (!(entity instanceof Player player))
             return Optional.empty();
         var sleep_on = sleeperMap.get(player.getUUID());
         if (sleep_on == null)
             return Optional.empty();
         
         return Optional.of(player);
+    }
+
+    public void afterCameraSetup(Camera camera, Entity entity) {
+        if (sleeperMap.isEmpty())
+            return;
+        var player_optional = checkIsSleepingOnDog(entity);
+        if (!player_optional.isPresent())
+            return;
+        var player = player_optional.get();
+        var dog = sleeperMap.get(player.getUUID());
+        camera.setRotation(dog.getSleepOnState().sleep_yrot(), 0.0F);
     }
 
     @SubscribeEvent

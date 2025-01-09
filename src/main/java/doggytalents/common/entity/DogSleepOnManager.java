@@ -130,6 +130,7 @@ public class DogSleepOnManager {
 
     public void tickServer() {
         invalidateSleepers();
+        
     }
 
     public void onServerStop() {
@@ -160,6 +161,11 @@ public class DogSleepOnManager {
         var dog_sleeping_state = dog.getSleepOnState();
         if (!dog_sleeping_state.is_sleeping())
             return false;
+
+        var sleep_pos = getPlayerSleepPos(dog, dog_sleeping_state.sleep_yrot());
+        if (player.distanceToSqr(sleep_pos) > 0.1 * 0.1)
+            return false;
+        
         return true;
     }
 
@@ -201,7 +207,7 @@ public class DogSleepOnManager {
     public static Vec3 getPlayerSleepPos(Dog dog, float dog_sleep_rot) {
         var sleep_on_pos = getSleepOnHeadPos(dog, dog_sleep_rot);
         var dog_view_vec = dog.calculateViewVector(0, dog_sleep_rot);
-        final double distance_to_dog = 1.8;
+        final double distance_to_dog = 0.2;
         return
             new Vec3(dog_view_vec.x, 0, dog_view_vec.z).normalize()
                 .scale(distance_to_dog)
