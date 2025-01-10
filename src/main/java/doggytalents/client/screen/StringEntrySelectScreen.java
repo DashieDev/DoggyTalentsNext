@@ -374,10 +374,11 @@ public class StringEntrySelectScreen extends Screen {
         public int getCurrentPageEntries() {
             boolean is_last_page = 
                 this.activePage >= this.pageCount - 1;
-            if (is_last_page) {
-                return parent.filteredIndexes.size() % parent.getMaxEntriesPerPage();
+            if (!is_last_page) {
+                return parent.getMaxEntriesPerPage();
             }
-            return parent.getMaxEntriesPerPage();
+            int exccess = parent.filteredIndexes.size() % parent.getMaxEntriesPerPage();
+            return exccess != 0 ? exccess : parent.filteredIndexes.size();
         }
 
         public Optional<Integer> getSelectedFilterId(List<Integer> filter_list) {
