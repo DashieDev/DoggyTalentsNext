@@ -1046,16 +1046,6 @@ public class Dog extends AbstractDog {
         if (this.isDefeated()) 
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
-
-        if (stack.getItem() == Items.STONE_AXE) {
-            if (!this.level().isClientSide) {
-                if (this.sleepOnManager.isSleepOnReady()) {
-                    DogSleepOnManager.getServer(this.level().getServer()).setPlayerSleepOn(this, player);
-                } else
-                this.sleepOnManager.setRequestedSleepOn(true);
-            }
-            return InteractionResult.SUCCESS;
-        }
         
         if (handleOpenDogScreenDedicated(player, stack).shouldSwing())
             return InteractionResult.SUCCESS;
