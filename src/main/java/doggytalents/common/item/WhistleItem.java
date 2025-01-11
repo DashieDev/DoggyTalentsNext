@@ -128,7 +128,8 @@ public class WhistleItem extends Item implements IDogItem {
 
         return mode == WhistleMode.MOB_RETRIEVER
             || mode == WhistleMode.RIDE_WITH_ME 
-            || mode == WhistleMode.HOWL ? 
+            || mode == WhistleMode.HOWL 
+            || mode == WhistleMode.BED_DOG_WHISTLE? 
             InteractionResult.FAIL : InteractionResult.PASS;
     }
 
