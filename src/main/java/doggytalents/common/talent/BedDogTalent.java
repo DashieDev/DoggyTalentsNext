@@ -28,10 +28,7 @@ public class BedDogTalent extends TalentInstance {
         if (dog.getDogLevel(DoggyTalents.BED_DOG) <= 0)
             return;
         
-        if (dog.sleepOnManager.isSleepOnReady()) {
-            DogSleepOnManager.getServer(level.getServer()).setPlayerSleepOn(dog, player);
-        } else
-        dog.sleepOnManager.setRequestedSleepOn(true);
+        DogSleepOnManager.getServer(level.getServer()).setOrRequestSleepOn(dog, player);
     }
 
 }

@@ -18,10 +18,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Player.BedSleepingProblem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.entity.player.CanContinueSleepingEvent;
 
 public class DogSleepOnManager {
     
@@ -38,13 +40,21 @@ public class DogSleepOnManager {
             throw new IllegalStateException("Only access this class's instance from the Logical Server.");
         return SERVER_INSTANCE;
     }
+
+    public void setOrRequestSleepOn(Dog dog, Player player) {
+        if (dog.sleepOnManager.isSleepOnReady()) {
+            setPlayerSleepOn(dog, player);
+        } else {
+            dog.sleepOnManager.setRequestedSleepOn(true);
+        }
+    }
     
-    public void setPlayerSleepOn(Dog dog, Player player) {
-        if (!canPlayerSleepOn(player))
-            return;
+    public boolean setPlayerSleepOn(Dog dog, Player player) {
+        if (!canPlayerSleepOn(dog, player))
+            return false;
         var sleep_pair_optional = findSleepRot(dog, player);
         if (!sleep_pair_optional.isPresent())
-            return;
+            return false;
         var sleep_pair = sleep_pair_optional.get();
         final float sleep_yrot = sleep_pair.getLeft();
 
@@ -57,13 +67,16 @@ public class DogSleepOnManager {
         addDogSleepOnPair(player, dog);
 
         ((ServerLevel) player.level()).updateSleepingPlayerList();
+        return true;
     }
 
-    private boolean canPlayerSleepOn(Player player) {
+    private boolean canPlayerSleepOn(Dog dog, Player player) {
         var level = (ServerLevel) player.level();
         if (level.isDay())
             return false;
         if (!level.canSleepThroughNights())
+            return false;
+        if (!dog.sleepOnManager.sleepOnReady)
             return false;
         return true;
     }
@@ -130,7 +143,6 @@ public class DogSleepOnManager {
 
     public void tickServer() {
         invalidateSleepers();
-        
     }
 
     public void onServerStop() {
@@ -167,6 +179,17 @@ public class DogSleepOnManager {
             return false;
         
         return true;
+    }
+
+    public void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
+        if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
+            return;
+        var player = event.getEntity();
+        var dog_optional = DogSleepOnManager.getServer(player.getServer()).getSleepingOnDog(player);
+        if (!dog_optional.isPresent())
+            return;
+        var dog = dog_optional.get();
+        event.setContinueSleeping(true);
     }
 
     private void addDogSleepOnPair(Player player, Dog dog) {
@@ -225,7 +248,7 @@ public class DogSleepOnManager {
     public static void onDogSleepOnDataUpdated(Dog dog, DogSleepOnState state) {
         if (dog.level().isClientSide)
             DTNClientDogSleepOnManager.get().onDogSleepOnDataUpdated(dog, state);
-    } 
+    }
 
     private static record SleepOnPair(Dog dog, Player player) {} 
 

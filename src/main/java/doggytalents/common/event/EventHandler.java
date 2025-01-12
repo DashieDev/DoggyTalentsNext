@@ -613,13 +613,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
-        if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
-            return;
-        var player = event.getEntity();
-        var dog_optional = DogSleepOnManager.getServer(player.getServer()).getSleepingOnDog(player);
-        if (!dog_optional.isPresent())
-            return;
-        var dog = dog_optional.get();
-        event.setContinueSleeping(true);
+        DogSleepOnManager.getServer(event.getEntity().level())
+            .canPlayerContinueSleeping(event);
     }
 }
