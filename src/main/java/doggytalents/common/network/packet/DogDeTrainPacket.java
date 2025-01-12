@@ -37,8 +37,14 @@ public class DogDeTrainPacket extends DogPacket<DogDeTrainData> {
         if (ownerUUID == null) return;
         if (!ownerUUID.equals(sender.getUUID())) return;
         var talent = data.talent;
-        var dog_level = dog.getDogLevel(talent);
+        var talent_inst_optional = dog.getTalent(talent);
+        if (!talent_inst_optional.isPresent())
+            return;
+        var talent_inst = talent_inst_optional.get();
+        var dog_level = talent_inst.level();
         if (dog_level <= 0) return;
+        if (!talent_inst.allowDetrain(dog))
+            return;
         var xp_cost = talent.getDeTrainXPCost(dog_level);
         if (sender.experienceLevel < xp_cost) return;
         dog.setTalentLevel(talent, 0);
