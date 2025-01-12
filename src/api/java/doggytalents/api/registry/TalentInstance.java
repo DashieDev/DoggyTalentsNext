@@ -216,4 +216,8 @@ public class TalentInstance implements IDogAlteration {
     public boolean hasRenderer() {
         return this.getTalent().hasRenderer();
     }
+
+    public boolean allowDetrain(AbstractDog dog) {
+        return true;
+    }
 }
