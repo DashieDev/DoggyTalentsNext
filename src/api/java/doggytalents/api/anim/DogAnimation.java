@@ -97,7 +97,10 @@ public enum DogAnimation {
     BACKHUG_FF2(87, 60, p -> p.looping().rootRotation(180)),
     BACKHUG_END(88, 60),
     DRINK_WATER(89, 60),
-    SPLASH(90, 140);
+    SPLASH(90, 140),
+    LIE_SIDEWAY_START(91, 40, p -> p.holdOnLastTick()),
+    LIE_SIDEWAY_LOOP(92, 40, p -> p.looping()),
+    LIE_SIDEWAY_END(93, 80);
 
     private final int id;
     private final int lengthTicks;
