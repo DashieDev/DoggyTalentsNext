@@ -112,6 +112,9 @@ public class DogAnimationRegistry {
         register(DogAnimation.BACKHUG_END, DogBackHugAnimationSequences.BACKHUG_END);
         register(DogAnimation.DRINK_WATER, DogAnimationSequences3.DRINK_WATER);
         register(DogAnimation.SPLASH, DogAnimationSequences3.SPLASH);
+        register(DogAnimation.LIE_SIDEWAY_START, DogLieSideWayAnimationSequences.LIE_SIDEWAY_START);
+        register(DogAnimation.LIE_SIDEWAY_LOOP, DogLieSideWayAnimationSequences.LIE_SIDEWAY_LOOP);
+        register(DogAnimation.LIE_SIDEWAY_END, DogLieSideWayAnimationSequences.LIE_SIDEWAY_END);
     }
     
 }
