@@ -61,6 +61,7 @@ public class DogAiManager {
         registerDogGoal(p, new DogLowHealthGoal.StickToOwner(this.dog));
         registerDogGoal(p, new DogLowHealthGoal.RunAway(this.dog));
         //registerDogGoal(4, new DogLeapAtTargetGoal(this.dog, 0.4F));
+        registerDogGoal(p, new DogAllowSleepOnGoal(this.dog));
         ++p;
         initTriggerableActionGoals(false, p);
         ++p; //Prioritize Talent Action

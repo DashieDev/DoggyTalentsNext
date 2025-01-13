@@ -14,6 +14,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.entity.ai.WolfBegAtTreatGoal;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.entity.ai.triggerable.DogPlayTagAction;
@@ -93,12 +94,14 @@ public class EventHandler {
 
         DogPromiseManager.tick();
         DogLocationStorage.get(event.getServer()).getOnlineDogsManager().tick();
+        DogSleepOnManager.tickServer(event.getServer());
     }
 
     @SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
         DogPromiseManager.forceStop();
         DogLocationStorage.get(event.getServer()).onServerStop(event);
+        DogSleepOnManager.onServerStop(event.getServer());
     }
 
     @SubscribeEvent
@@ -606,5 +609,10 @@ public class EventHandler {
             return;
         
         event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
+        DogSleepOnManager.canPlayerContinueSleeping(event);
     }
 }
