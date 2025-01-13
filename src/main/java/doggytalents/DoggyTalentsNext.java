@@ -2,6 +2,7 @@ package doggytalents;
 
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.DTNClientDogSleepOnManager;
 import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.DTNClientPettingManager;
 import doggytalents.client.data.DTBlockstateProvider;
@@ -42,7 +43,7 @@ public class DoggyTalentsNext {
             
     
     public static void init() {
-
+        
     }
 
     // //TODO AUTOMATION CURSEFORGE !!!x

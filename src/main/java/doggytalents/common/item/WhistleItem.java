@@ -15,6 +15,7 @@ import doggytalents.common.entity.ai.triggerable.DogGoBehindOwnerAction;
 import doggytalents.common.entity.ai.triggerable.DogHowlAction;
 import doggytalents.common.entity.ai.triggerable.DogMoveToBedAction;
 import doggytalents.common.entity.misc.DoggyBeamEntity;
+import doggytalents.common.talent.BedDogTalent;
 import doggytalents.common.talent.MobRetrieverTalent;
 import doggytalents.common.talent.RoaringGaleTalent;
 import doggytalents.common.util.DogUtil;
@@ -74,7 +75,8 @@ public class WhistleItem extends Item implements IDogItem {
         HOWL(14, WhistleSound.NONE),
         ALL_STAND_SWITCH_MODE(15, WhistleSound.NONE),
         SSSSSHHHH(16, WhistleSound.NONE),
-        CROSS_ORIGIN_TP(17, WhistleSound.SHORT);
+        CROSS_ORIGIN_TP(17, WhistleSound.SHORT),
+        BED_DOG_WHISTLE(18, WhistleSound.NONE);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -126,7 +128,8 @@ public class WhistleItem extends Item implements IDogItem {
 
         return mode == WhistleMode.MOB_RETRIEVER
             || mode == WhistleMode.RIDE_WITH_ME 
-            || mode == WhistleMode.HOWL ? 
+            || mode == WhistleMode.HOWL 
+            || mode == WhistleMode.BED_DOG_WHISTLE? 
             InteractionResult.FAIL : InteractionResult.PASS;
     }
 
@@ -381,6 +384,9 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         case CROSS_ORIGIN_TP:
             crossOriginTpForDogs(world, player, dogsList);
+            return;
+        case BED_DOG_WHISTLE:
+            BedDogTalent.useBedDog(world, player);
             return;
         }
     }

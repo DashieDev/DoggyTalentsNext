@@ -113,6 +113,7 @@ public class DoggyTalents {
             return Optional.of(DoggyTalents.FLYING_FURBALL.get().getTranslationKey() + ".dog_not_kami");
         }
     });
+    public static final Supplier<Talent> BED_DOG = registerInst("bed_dog", BedDogTalent::new);
 
     private static <T extends Talent> RegistryObject<Talent> registerInst(final String name, final BiFunction<Talent, Integer, TalentInstance> sup) {
         return register(name, () -> new Talent(sup));
