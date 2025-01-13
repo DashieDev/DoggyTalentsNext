@@ -3,6 +3,7 @@ package doggytalents;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogBlockRenderTypeSetup;
+import doggytalents.client.DTNClientDogSleepOnManager;
 import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.PettingArmPose;
 import doggytalents.client.DTNClientPettingManager;
@@ -119,6 +120,7 @@ public class DoggyTalentsNext {
             forgeEventBus.addListener(CanineTrackerLocateRenderer::onWorldRenderLast);
             forgeEventBus.addListener(CanineTrackerLocateRenderer::tickUpdate);
             forgeEventBus.register(DTNClientPettingManager.get());
+            forgeEventBus.register(DTNClientDogSleepOnManager.get());
         });
 
         ConfigHandler.init(modEventBus);
