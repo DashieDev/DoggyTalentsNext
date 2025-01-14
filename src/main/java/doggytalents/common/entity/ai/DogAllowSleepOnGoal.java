@@ -37,7 +37,7 @@ public class DogAllowSleepOnGoal extends Goal {
         var sleep_on_manger = dog.sleepOnManager;
         if (!sleep_on_manger.isSleepOnRequested())
             return false;
-        if (!DogSleepOnManager.getServer(dog.level()).isSleepCondition(dog))
+        if (!DogSleepOnManager.getServer(dog.level()).isSleepCondition(dog).ok())
             return false;
         return true;
     }
@@ -54,7 +54,7 @@ public class DogAllowSleepOnGoal extends Goal {
             return false;
         if (!this.dog.onGround())
             return false;
-        if (!DogSleepOnManager.getServer(dog.level()).isSleepCondition(dog))
+        if (!DogSleepOnManager.getServer(dog.level()).isSleepCondition(dog).ok())
             return false;
         return sitUpTime >= 0;
     }
