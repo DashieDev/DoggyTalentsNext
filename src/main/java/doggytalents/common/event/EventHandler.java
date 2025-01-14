@@ -615,4 +615,9 @@ public class EventHandler {
     public void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
         DogSleepOnManager.canPlayerContinueSleeping(event);
     }
+
+    @SubscribeEvent
+    public void beforeAllPlayerWakeUp(SleepFinishedTimeEvent event) {
+        DogSleepOnManager.beforeSleepFinishedForAllPlayer(event);
+    }
 }

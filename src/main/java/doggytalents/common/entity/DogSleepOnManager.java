@@ -10,7 +10,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.DoggyTalents;
 import doggytalents.client.DTNClientDogSleepOnManager;
+import doggytalents.common.talent.BedDogTalent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -23,6 +25,7 @@ import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.player.CanContinueSleepingEvent;
+import net.neoforged.neoforge.event.level.SleepFinishedTimeEvent;
 
 public class DogSleepOnManager {
     
@@ -88,6 +91,11 @@ public class DogSleepOnManager {
         if (level.isDay())
             return false;
         if (!level.canSleepThroughNights())
+            return false;
+        var inst = dog.getTalent(DoggyTalents.BED_DOG.get(), BedDogTalent.class);
+        if (!inst.isPresent())
+            return false;
+        if (!BedDogTalent.isSleepCondition(dog, inst.get()))
             return false;
         return true;
     }
@@ -221,6 +229,26 @@ public class DogSleepOnManager {
         }
     }
 
+    private void notifySleepSuccesAllDogAndStopSleeping(ServerLevel level) {
+        invalidateSleepers();
+        for (var x : sleepingOnPairs.entrySet()) {
+            var pair = x.getValue();
+            var dog = pair.dog();
+            if (!stillValidSleepingPair(dog, pair.player()))
+                continue;
+            if (dog.level() != level)
+                continue;
+            notifySleepSuccessDog(dog);
+        }
+    }
+
+    private void notifySleepSuccessDog(Dog dog) {
+        var inst = dog.getTalent(DoggyTalents.BED_DOG.get(), BedDogTalent.class);
+        if (!inst.isPresent())
+            return;
+        inst.get().onSuccessfulSleep(dog);
+    }
+
 
 
     public static void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
@@ -231,6 +259,11 @@ public class DogSleepOnManager {
         if (!dog_optional.isPresent())
             return;
         event.setContinueSleeping(true);
+    }
+
+    public static void beforeSleepFinishedForAllPlayer(SleepFinishedTimeEvent event) {
+        var level = (ServerLevel) event.getLevel();
+        DogSleepOnManager.getServer(level).notifySleepSuccesAllDogAndStopSleeping(level);
     }
 
     public static void onDogSleepOnDataUpdated(Dog dog, DogSleepOnState state) {
