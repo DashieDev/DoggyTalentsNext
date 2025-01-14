@@ -417,6 +417,11 @@
    "talent.doggytalents.gate_passer.pass_gate.set": "Allow Passing Gates",
    "talent.doggytalents.gate_passer.pass_gate.unset": "Stop Passing Gates",
    "talent.doggytalents.creeper_sweeper.only_attack_creeper": "Only Target Creeper",
+   "talent.doggytalents.bed_dog.fail.not_sleep_time": "You can only sleep on %s at night.",
+   "talent.doggytalents.bed_dog.fail.cant_sleep_thru_night": "You cannot use Bed Dog in this world because Sleeping-through-night is disabled.",
+   "talent.doggytalents.bed_dog.fail.low_hunger": "%s refused to be slept on! Perhaps %s wants something to eat?",
+   "talent.doggytalents.bed_dog.fail.cooldown": "%s refused to be slept on! Bed Dog is on cooldown.",
+   "talent.doggytalents.bed_dog.fail.no_pos": "%s refused to be slept on as %s is not in a good location!",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",
 

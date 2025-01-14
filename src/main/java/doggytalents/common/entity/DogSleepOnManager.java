@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.BiFunction;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -14,6 +15,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.client.DTNClientDogSleepOnManager;
 import doggytalents.common.talent.BedDogTalent;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -47,22 +49,26 @@ public class DogSleepOnManager {
 
 
 
-    public void setOrRequestSleepOn(Dog dog, Player player) {
-        if (!this.isSleepCondition(dog))
-            return;
+    public StartSleepOnDogResult setOrRequestSleepOn(Dog dog, Player player) {
+        var sleep_condition = this.isSleepCondition(dog);
+        if (!sleep_condition.ok())
+            return sleep_condition;
+        
         if (dog.sleepOnManager.isSleepOnReady()) {
-            setPlayerSleepOn(dog, player);
-        } else {
-            dog.sleepOnManager.setRequestedSleepOn(true);
+            return setPlayerSleepOn(dog, player);
         }
+        
+        dog.sleepOnManager.setRequestedSleepOn(true);
+        return StartSleepOnDogResult.OK;
     }
     
-    public boolean setPlayerSleepOn(Dog dog, Player player) {
-        if (!canPlayerStartSleepOnDog(dog, player))
-            return false;
+    public StartSleepOnDogResult setPlayerSleepOn(Dog dog, Player player) {
+        var can_start = canPlayerStartSleepOnDog(dog, player);
+        if (!can_start.ok())
+            return can_start;
         var sleep_pair_optional = findSleepRot(dog, player);
         if (!sleep_pair_optional.isPresent())
-            return false;
+            return DogSleepOnFailMessage.NO_POS.asResult();
         var sleep_pair = sleep_pair_optional.get();
         final float sleep_yrot = sleep_pair.getLeft();
 
@@ -75,29 +81,31 @@ public class DogSleepOnManager {
         addDogSleepOnPair(player, dog);
 
         ((ServerLevel) player.level()).updateSleepingPlayerList();
-        return true;
+        return StartSleepOnDogResult.OK;
     }
 
-    public boolean canPlayerStartSleepOnDog(Dog dog, Player player) {
-        if (!isSleepCondition(dog))
-            return false;
+    public StartSleepOnDogResult canPlayerStartSleepOnDog(Dog dog, Player player) {
+        var sleep_condition = isSleepCondition(dog);
+        if (!sleep_condition.ok())
+            return sleep_condition;
         if (!dog.sleepOnManager.sleepOnReady)
-            return false;
-        return true;
+            return DogSleepOnFailMessage.OTHER.asResult();
+        return StartSleepOnDogResult.OK;
     }
     
-    public boolean isSleepCondition(Dog dog) {
+    public StartSleepOnDogResult isSleepCondition(Dog dog) {
         var level = (ServerLevel) dog.level();
         if (level.isDay())
-            return false;
+            return DogSleepOnFailMessage.NOT_SLEEP_TIME.asResult();
         if (!level.canSleepThroughNights())
-            return false;
+            return DogSleepOnFailMessage.CANT_SLEEP_THROUGH_NIGHT.asResult();
         var inst = dog.getTalent(DoggyTalents.BED_DOG.get(), BedDogTalent.class);
         if (!inst.isPresent())
-            return false;
-        if (!BedDogTalent.isSleepCondition(dog, inst.get()))
-            return false;
-        return true;
+            return DogSleepOnFailMessage.OTHER.asResult();
+        var inst_result = BedDogTalent.isSleepCondition(dog, inst.get());
+        if (!inst_result.ok())
+            return inst_result;
+        return StartSleepOnDogResult.OK;
     }
 
     private Optional<Pair<Float, Vec3>> findSleepRot(Dog dog, Player player) {
@@ -340,6 +348,62 @@ public class DogSleepOnManager {
 
     public static record DogSleepOnState(UUID sleeper, boolean is_sleeping, float sleep_yrot) {
         public static DogSleepOnState NULL = new DogSleepOnState(net.minecraft.Util.NIL_UUID, false, 0);
+    }
+
+    public static class StartSleepOnDogResult {
+        public static StartSleepOnDogResult OK = new StartSleepOnDogResult(Optional.empty());
+
+        private Optional<DogSleepOnFailMessage> failMsg = Optional.empty();
+
+        public StartSleepOnDogResult(Optional<DogSleepOnFailMessage> failMsg) {
+            this.failMsg = failMsg;
+        }
+
+        public boolean ok() {
+            return !this.failMsg.isPresent();
+        }
+
+        public boolean other() {
+            return this.failMsg.isPresent() && this.failMsg.get() == DogSleepOnFailMessage.OTHER;
+        }
+
+        public DogSleepOnFailMessage failMsg() {
+            return this.failMsg.get();
+        }
+
+    }
+
+    public static enum DogSleepOnFailMessage {
+        NOT_SLEEP_TIME("not_sleep_time", 
+            (dog, locId) -> Component.translatable(locId, dog.getName().getString())),
+        OTHER("other",
+            (dog, locId) -> Component.translatable(locId)),
+        CANT_SLEEP_THROUGH_NIGHT("cant_sleep_thru_night",
+            (dog, locId) -> Component.translatable(locId)),
+        DOG_LOW_HUNGER("low_hunger",
+            (dog, locId) -> Component.translatable(locId, 
+                dog.getName().getString(), dog.getGenderSubject())),
+        COOLDOWN("cooldown",
+            (dog, locId) -> Component.translatable(locId, dog.getName().getString())),
+        NO_POS("no_pos",
+            (dog, locId) -> Component.translatable(locId, 
+                dog.getName().getString(), dog.getGenderSubject()));
+
+        private final String locId;
+        private final BiFunction<Dog, String, Component> msgGetter;
+        
+        private DogSleepOnFailMessage(String locId, BiFunction<Dog, String, Component> msgGetter) {
+            this.locId = "talent.doggytalents.bed_dog.fail." + locId;
+            this.msgGetter = msgGetter;
+        }
+
+        public Component getMsg(Dog dog) {
+            return msgGetter.apply(dog, locId);
+        }
+
+        public StartSleepOnDogResult asResult() {
+            return new StartSleepOnDogResult(Optional.of(this));
+        }
     }
 
     public static class PerDog {
