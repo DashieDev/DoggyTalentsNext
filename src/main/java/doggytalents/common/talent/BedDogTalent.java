@@ -1,17 +1,54 @@
 package doggytalents.common.talent;
 
 import doggytalents.DoggyTalents;
+import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.util.DogUtil;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class BedDogTalent extends TalentInstance {
+
+    //Calc based on level.getDayTime instead of dog.tickCount
+    private long cooldownDealine = 0;
     
     public BedDogTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
+    }
+
+    public void onSuccessfulSleep(AbstractDog dog) {
+        var level = dog.level();
+        this.cooldownDealine = level.getDayTime() + getCooldownTicks();
+        float set_hunger = dog.getDogHunger();
+        final float base_threshold = getBaseMinHungerForSleep();
+        if (set_hunger > base_threshold) {
+            set_hunger -= getHungerCostPerSleep();
+            if (set_hunger < base_threshold)
+                set_hunger = base_threshold; 
+        }
+
+        dog.setDogHunger(set_hunger);
+    }
+
+    public boolean isOnCooldown(AbstractDog dog) {
+        var level = dog.level();
+        return level.getDayTime() < this.cooldownDealine;
+    }
+
+    @Override
+    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.readFromNBT(dogIn, compound);
+        this.cooldownDealine = compound.getLong("cooldown_end");
+    }
+
+    @Override
+    public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.writeToNBT(dogIn, compound);
+        compound.putLong("cooldown_end", this.cooldownDealine);
     }
 
     public static void useBedDog(Level level, Player player) {
@@ -29,5 +66,39 @@ public class BedDogTalent extends TalentInstance {
         
         DogSleepOnManager.getServer(level.getServer()).setOrRequestSleepOn(dog, player);
     }
+    
+    public static boolean isSleepCondition(Dog dog, BedDogTalent inst) {
+        if (dog.getDogHunger() < inst.getMinHungerForSleep())
+            return false;
+        if (inst.isOnCooldown(dog))
+            return false;
+        return true;
+    }
 
+    public int getHungerCostPerSleep() {
+        var level = this.level();
+        if (level <= 3)
+            return 40;
+        if (level == 4)
+            return 30;
+        return 0;
+    }
+    
+    public int getMinHungerForSleep() {
+        return getHungerCostPerSleep() + getBaseMinHungerForSleep();
+    }
+
+    public int getBaseMinHungerForSleep() {
+        return 20;
+    }
+
+    public int getCooldownTicks() {
+        var level = this.level();
+        //24000
+        if (level <= 3)
+            return 3 * 24000;
+        if (level == 4)
+            return 2 * 24000;
+        return 0;
+    }
 }
