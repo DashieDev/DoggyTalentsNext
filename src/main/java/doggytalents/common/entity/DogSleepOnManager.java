@@ -250,6 +250,15 @@ public class DogSleepOnManager {
         }
     }
 
+    private void checkAndClearWhenPlayerWakeUp(Player player) {
+        if (this.sleepingOnPairs.isEmpty())
+            return;
+        var pair = this.sleepingOnPairs.get(player.getUUID());
+        if (pair == null)
+            return;
+        this.stopPlayerSleepOn(pair.dog());
+    }
+
     private void notifySleepSuccesAllDogAndStopSleeping(ServerLevel level) {
         invalidateSleepers();
         for (var x : sleepingOnPairs.entrySet()) {
@@ -285,6 +294,11 @@ public class DogSleepOnManager {
     public static void beforeSleepFinishedForAllPlayer(SleepFinishedTimeEvent event) {
         var level = (ServerLevel) event.getLevel();
         DogSleepOnManager.getServer(level).notifySleepSuccesAllDogAndStopSleeping(level);
+    }
+
+    public static void onPlayerWakeUp(Player player) {
+        var level = (ServerLevel) player.level();
+        DogSleepOnManager.getServer(level).checkAndClearWhenPlayerWakeUp(player);
     }
 
     public static void onDogSleepOnDataUpdated(Dog dog, DogSleepOnState state) {
