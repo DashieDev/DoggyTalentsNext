@@ -211,6 +211,9 @@ public class DogSleepOnManager {
             toRemove.add(pair);
         }
 
+        if (toRemove.isEmpty())
+            return;
+
         for (var x : toRemove) {
             stopPlayerSleepOn(x.dog());
         }
