@@ -104,21 +104,42 @@ public class DogSleepOnManager {
         //First candidate
         float check_yrot1 = player.getYRot() + 180;
         var check_pos1 = getPlayerSleepPos(dog, check_yrot1);
-        var check_b01 = BlockPos.containing(check_pos1);
-        var type1 = WalkNodeEvaluator.getPathTypeStatic(dog, check_b01.mutable());
-        if (type1 == PathType.WALKABLE)
+        if (checkIfSleepPosIsEligible(dog, check_pos1))
             return Optional.of(Pair.of(check_yrot1, check_pos1));
 
         final float dog_yrot = dog.getYRot();
         for (int i = 0; i < 8; ++i) {
             float check_yrot = dog_yrot + i * 45f;
             var check_pos = getPlayerSleepPos(dog, check_yrot);
-            var check_b0 = BlockPos.containing(check_pos);
-            var type = WalkNodeEvaluator.getPathTypeStatic(dog, check_b0.mutable());
-            if (type == PathType.WALKABLE)
-                return Optional.of(Pair.of(check_yrot, check_pos));
+            if (!checkIfSleepPosIsEligible(dog, check_pos))
+                continue;
+            return Optional.of(Pair.of(check_yrot, check_pos));
         }
         return Optional.empty();
+    }
+
+    private boolean checkIfSleepPosIsEligible(Dog dog, Vec3 check_pos) {
+        var air_iterater = 
+            BlockPos.betweenClosed(
+                BlockPos.containing(check_pos.add(-1, 0, -1)),
+                BlockPos.containing(check_pos.add(1, 0, 1)));
+        for (var pos : air_iterater) {
+            var state = dog.level().getBlockState(pos);
+            if (!state.isAir()) {
+                return false;
+            }
+        }
+        var solid_iterater = 
+            BlockPos.betweenClosed(
+                BlockPos.containing(check_pos.add(-1, -1, -1)),
+                BlockPos.containing(check_pos.add(1, -1, 1)));
+        for (var pos : solid_iterater) {
+            var state = dog.level().getBlockState(pos);
+            if (!state.isCollisionShapeFullBlock(dog.level(), pos)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private Vec3 getPlayerSleepPos(Dog dog, float dog_sleep_rot) {
