@@ -1,11 +1,14 @@
 package doggytalents.common.talent;
 
+import doggytalents.DoggyItems;
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogSleepOnManager;
+import doggytalents.common.entity.DogSleepOnManager.DogSleepOnFailMessage;
+import doggytalents.common.entity.DogSleepOnManager.StartSleepOnDogResult;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
@@ -64,15 +67,25 @@ public class BedDogTalent extends TalentInstance {
         if (dog.getDogLevel(DoggyTalents.BED_DOG) <= 0)
             return;
         
-        DogSleepOnManager.getServer(level.getServer()).setOrRequestSleepOn(dog, player);
+        var result = DogSleepOnManager.getServer(level.getServer()).setOrRequestSleepOn(dog, player);
+        proccessResult(result, dog, player);
+        if (result.failMsg() == DogSleepOnFailMessage.NO_POS) {
+            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 10);
+        }
+    }
+
+    private static void proccessResult(StartSleepOnDogResult result, Dog dog, Player player) {
+        if (result.ok() || result.other())
+            return;
+        player.sendSystemMessage(result.failMsg().getMsg(dog));
     }
     
-    public static boolean isSleepCondition(Dog dog, BedDogTalent inst) {
+    public static StartSleepOnDogResult isSleepCondition(Dog dog, BedDogTalent inst) {
         if (dog.getDogHunger() < inst.getMinHungerForSleep())
-            return false;
+            return DogSleepOnFailMessage.DOG_LOW_HUNGER.asResult();
         if (inst.isOnCooldown(dog))
-            return false;
-        return true;
+            return DogSleepOnFailMessage.COOLDOWN.asResult();
+        return StartSleepOnDogResult.OK;
     }
 
     public int getHungerCostPerSleep() {
