@@ -621,4 +621,10 @@ public class EventHandler {
     public void beforeAllPlayerWakeUp(SleepFinishedTimeEvent event) {
         DogSleepOnManager.beforeSleepFinishedForAllPlayer(event);
     }
+
+    @SubscribeEvent
+    public void playerWakeUpEvent(PlayerWakeUpEvent event) {
+        if (!event.getEntity().level().isClientSide)
+            DogSleepOnManager.onPlayerWakeUp(event.getEntity());
+    }
 }
