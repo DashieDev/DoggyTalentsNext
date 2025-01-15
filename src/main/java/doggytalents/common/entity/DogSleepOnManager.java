@@ -387,7 +387,7 @@ public class DogSleepOnManager {
             (dog, locId) -> Component.translatable(locId, 
                 dog.getName().getString(), dog.getGenderSubject())),
         COOLDOWN("cooldown",
-            (dog, locId) -> Component.translatable(locId, dog.getName().getString())),
+            (dog, locId) -> Component.empty()),
         NO_POS("no_pos",
             (dog, locId) -> Component.translatable(locId, 
                 dog.getName().getString(), dog.getGenderSubject()));
