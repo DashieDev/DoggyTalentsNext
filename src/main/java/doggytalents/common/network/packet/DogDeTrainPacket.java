@@ -6,6 +6,7 @@ import doggytalents.DoggyItems;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Talent;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.data.DogDeTrainData;
 import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.util.NetworkUtil;
@@ -43,7 +44,10 @@ public class DogDeTrainPacket extends DogPacket<DogDeTrainData> {
         var talent_inst = talent_inst_optional.get();
         var dog_level = talent_inst.level();
         if (dog_level <= 0) return;
-        if (!talent_inst.allowDetrain(dog))
+        boolean talent_allow_detrain = 
+            sender.hasPermissions(Constants.OPERATOR_PERMISSION)
+            || talent_inst.allowDetrain(dog);
+        if (!talent_allow_detrain)
             return;
         var xp_cost = talent.getDeTrainXPCost(dog_level);
         if (sender.experienceLevel < xp_cost) return;
