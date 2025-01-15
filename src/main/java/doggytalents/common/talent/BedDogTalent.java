@@ -54,6 +54,11 @@ public class BedDogTalent extends TalentInstance {
         compound.putLong("cooldown_end", this.cooldownDealine);
     }
 
+    @Override
+    public boolean allowDetrain(AbstractDog dog) {
+        return !this.isOnCooldown(dog);
+    }
+
     public static void useBedDog(Level level, Player player) {
         if (level.isClientSide)
             return;
