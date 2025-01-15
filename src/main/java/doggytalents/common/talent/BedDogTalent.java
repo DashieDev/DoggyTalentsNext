@@ -11,6 +11,8 @@ import doggytalents.common.entity.DogSleepOnManager.DogSleepOnFailMessage;
 import doggytalents.common.entity.DogSleepOnManager.StartSleepOnDogResult;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
@@ -40,6 +42,14 @@ public class BedDogTalent extends TalentInstance {
     public boolean isOnCooldown(AbstractDog dog) {
         var level = dog.level();
         return level.getDayTime() < this.cooldownDealine;
+    }
+
+    public int getCooldownDaysLeft(AbstractDog dog) {
+        var level = dog.level();
+        long time_till = this.cooldownDealine - level.getDayTime();
+        if (time_till <= 0)
+            return 0;
+        return Mth.ceil(time_till / 24000.0f);
     }
 
     @Override
@@ -82,7 +92,20 @@ public class BedDogTalent extends TalentInstance {
     private static void proccessResult(StartSleepOnDogResult result, Dog dog, Player player) {
         if (result.ok() || result.other())
             return;
+        if (result.failMsg() == DogSleepOnFailMessage.COOLDOWN) {
+            sendCooldownMsg(dog, player);
+            return;
+        }
         player.sendSystemMessage(result.failMsg().getMsg(dog));
+    }
+
+    private static void sendCooldownMsg(Dog dog, Player player) {
+        var inst_optional = dog.getTalent(DoggyTalents.BED_DOG.get(), BedDogTalent.class);
+        if (!inst_optional.isPresent())
+            return;
+        var inst = inst_optional.get();
+        player.sendSystemMessage(Component.translatable("talent.doggytalents.bed_dog.fail.cooldown",
+            dog.getName().getString(), Integer.toString(inst.getCooldownDaysLeft(dog))));
     }
     
     public static StartSleepOnDogResult isSleepCondition(Dog dog, BedDogTalent inst) {
