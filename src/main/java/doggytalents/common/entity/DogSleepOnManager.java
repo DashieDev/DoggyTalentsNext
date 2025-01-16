@@ -324,6 +324,14 @@ public class DogSleepOnManager {
         getServer(dog.level()).stopPlayerSleepOn(dog);
     }
 
+    public static void onHurt(Dog dog) {
+        if (dog.level().isClientSide)
+            return;
+        if (!dog.getSleepOnState().is_sleeping())
+            return;
+        getServer(dog.level()).stopPlayerSleepOn(dog);
+    }
+
     public static boolean shouldBlockPush(Dog dog) {
         return dog.getSleepOnState().is_sleeping();
     }

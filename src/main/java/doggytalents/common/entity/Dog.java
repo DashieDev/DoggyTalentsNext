@@ -1731,7 +1731,8 @@ public class Dog extends AbstractDog {
 
         if (!this.level().isClientSide) {
             mayStandUpAndPlayHurtAnim(source, actual_hurt_amount, health0);   
-            
+            if (actual_hurt_amount > 0)
+                DogSleepOnManager.onHurt(this);            
         }
 
         if (this.level().isClientSide
