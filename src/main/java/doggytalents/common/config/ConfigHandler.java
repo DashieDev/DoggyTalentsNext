@@ -99,6 +99,8 @@ public class ConfigHandler {
         public ConfigValue<String> DOG_INFO_SEPERATOR;
         public ConfigValue<String> DOG_INFO_HUNGER_FORMAT;
         public ForgeConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
+        public ModConfigSpec.IntValue DOG_INV_IN_INV_BUTTON_X;
+        public ModConfigSpec.IntValue DOG_INV_IN_INV_BUTTON_Y;
         public ForgeConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
         public ForgeConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
         public ForgeConfigSpec.BooleanValue DONT_RENDER_DIFFOWNER_NAME;
@@ -169,6 +171,19 @@ public class ConfigHandler {
                 .comment("GUI in Talents > Pack Puppy.")
                 .translation("doggytalents.config.client.dog_inv_button_in_inv")
                 .define("dog_inv_button_in_inv", true);
+            builder
+                .comment("Set a custom position for the universal dog inventory access button here.")
+                .comment("Can be utilizedwhen the button overlaps with another mod's GUI feature or you ")
+                .comment("simply prefer it being in a different position.")
+                .comment("This option only affects the Survival inventory screen.")
+                .comment("The position is the offset of the button is the offset from the top left corner")
+                .comment("of the box wrapping the whole inventory gui.");
+            DOG_INV_IN_INV_BUTTON_X = builder
+                .translation("doggytalents.config.client.dog_inv_button_in_inv_x")
+                .defineInRange("dog_inv_button_in_inv_x", 78, -500, 500);
+            DOG_INV_IN_INV_BUTTON_Y = builder
+                .translation("doggytalents.config.client.dog_inv_button_in_inv_y")
+                .defineInRange("dog_inv_button_in_inv_y", 48, -500, 500);
             RENDER_INCAP_TXT_LESS_GRAPHIC = builder
                 .comment("If the default incapacitated texture proof too many graphics.")
                 .comment("You can substitute this friendlier texture instead.")
