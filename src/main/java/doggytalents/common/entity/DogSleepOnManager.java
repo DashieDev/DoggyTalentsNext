@@ -94,6 +94,8 @@ public class DogSleepOnManager {
     }
     
     public StartSleepOnDogResult isSleepCondition(Dog dog) {
+        if (!dog.isDoingFine())
+            return DogSleepOnFailMessage.OTHER.asResult();
         var level = (ServerLevel) dog.level();
         if (level.isDay())
             return DogSleepOnFailMessage.NOT_SLEEP_TIME.asResult();
