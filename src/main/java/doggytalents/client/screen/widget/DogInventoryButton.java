@@ -155,21 +155,20 @@ public class DogInventoryButton extends AbstractButton {
             return;
         var screen = event.getScreen();
         boolean is_survival = (screen instanceof InventoryScreen);
-        boolean is_creative = (screen instanceof CreativeModeInventoryScreen);
-        if (!is_survival && !is_creative)
+        if (!is_survival)
             return;
         
         var mc = Minecraft.getInstance();
     
         int screen_w = mc.getWindow().getGuiScaledWidth();
         int screen_h = mc.getWindow().getGuiScaledHeight(); 
-        int inv_w = is_creative ? 195 : 176;
-        int inv_h = is_creative ? 136 : 166;
+        int inv_w = 176;
+        int inv_h = 166;
         int inv_x = (screen_w - inv_w) / 2;
         int inv_y = (screen_h - inv_h) / 2;
 
-        int button_x = inv_x + (is_creative ? 36 : inv_w / 2 - 10);
-        int button_y = inv_y + (is_creative ? 7 : 48);
+        int button_x = inv_x + inv_w / 2 - 10;
+        int button_y = inv_y + 48;
         
         inventoryButton = new DogInventoryButton(button_x, button_y, screen);
         event.addListener(inventoryButton);
