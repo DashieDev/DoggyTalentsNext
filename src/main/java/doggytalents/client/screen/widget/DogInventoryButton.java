@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
@@ -147,6 +148,38 @@ public class DogInventoryButton extends AbstractButton {
     public void keyGlobalReleased(int keyCode, int scanCode, int modifier) {
         this.openSingle = false;
     }
+
+    private static DogInventoryButton inventoryButton;
+
+    public static void onScreenInit(final ScreenEvent.Init.Post event) {
+        if (!ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV.get()) 
+            return;
+        var screen = event.getScreen();
+        boolean is_survival = (screen instanceof InventoryScreen);
+        boolean is_creative = (screen instanceof CreativeModeInventoryScreen);
+        if (!is_survival && !is_creative)
+            return;
+        
+        var mc = Minecraft.getInstance();
+    
+        int screen_w = mc.getWindow().getGuiScaledWidth();
+        int screen_h = mc.getWindow().getGuiScaledHeight(); 
+        int inv_w = is_creative ? 195 : 176;
+        int inv_h = is_creative ? 136 : 166;
+        int inv_x = (screen_w - inv_w) / 2;
+        int inv_y = (screen_h - inv_h) / 2;
+
+        int button_x = inv_x + (is_creative ? 36 : inv_w / 2 - 10);
+        int button_y = inv_y + (is_creative ? 7 : 48);
+        
+        inventoryButton = new DogInventoryButton(button_x, button_y, screen);
+        event.addListener(inventoryButton);
+    }
+
+    public static void onScreenRenderForeground(final ScreenEvent.Render.Post event) {
+        
+    }
+
 
     private int getX() {return this.x;}
     private int getY() {return this.y;}
