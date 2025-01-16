@@ -422,6 +422,8 @@
    "talent.doggytalents.bed_dog.fail.low_hunger": "%s refused to be slept on! Perhaps %s wants something to eat?",
    "talent.doggytalents.bed_dog.fail.cooldown": "%s refused to be slept on! Check back in about %s days.",
    "talent.doggytalents.bed_dog.fail.no_pos": "%s refused to be slept on as %s is not in a good location!",
+   "talent.doggytalents.bed_dog.fail.to_smol": "%s refused to be slept on! %s is too smol!",
+   "talent.doggytalents.bed_dog.fail.to_big": "%s refused to be slept on! %s is too big!",
 
    "talent.doggytalents.bed_finder.dog_mount": "Click to make %s dismount",
 
