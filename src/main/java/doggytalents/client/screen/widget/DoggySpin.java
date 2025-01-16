@@ -10,8 +10,10 @@ import doggytalents.common.lib.Resources;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.neoforged.neoforge.client.event.ScreenEvent;
 
 public class DoggySpin extends AbstractWidget {
 
@@ -143,4 +145,21 @@ public class DoggySpin extends AbstractWidget {
         lastRender = System.currentTimeMillis();
     }
     
+    private static final DoggySpin spinWidget = new DoggySpin(0, 0, 128);
+
+    public static void onScreenInit(final ScreenEvent.Init.Post event) {
+        if (event.getScreen() instanceof LevelLoadingScreen) {
+            spinWidget.chooseStyle();
+        }
+    }
+
+    public static void onScreenRenderForeground(final ScreenEvent.Render.Post event) {
+        if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
+            return;
+        if (!(event.getScreen() instanceof LevelLoadingScreen))
+            return;
+        spinWidget.setY(event.getScreen().height - 128);
+        spinWidget.render(event.getGuiGraphics(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
+    }
+
 }

@@ -62,8 +62,6 @@ import java.util.List;
 
 public class ClientEventHandler {
 
-    DogInventoryButton activeInventoryButton;
-    
     //Handled seperately on Fabric
     // public static void registerModelForBaking(final ModelEvent.RegisterAdditional event) {
 
@@ -126,41 +124,14 @@ public class ClientEventHandler {
 
     //@SubscribeEvent
     public void onScreenInit(final ScreenEvent.Init.Post event) {
-        if (!ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV)) 
-            return;
-        Screen screen = event.getScreen();
-        if (screen instanceof InventoryScreen || screen instanceof CreativeModeInventoryScreen) {
-            boolean creative = screen instanceof CreativeModeInventoryScreen;
-            Minecraft mc = Minecraft.getInstance();
-            int width = mc.getWindow().getGuiScaledWidth();
-            int height = mc.getWindow().getGuiScaledHeight();
-            int sizeX = creative ? 195 : 176;
-            int sizeY = creative ? 136 : 166;
-            int guiLeft = (width - sizeX) / 2;
-            int guiTop = (height - sizeY) / 2;
-
-            int x = guiLeft + (creative ? 36 : sizeX / 2 - 10);
-            int y = guiTop + (creative ? 7 : 48);
-
-            this.activeInventoryButton = new DogInventoryButton(x, y, screen);
-
-            event.addListener(this.activeInventoryButton);
-        }
-        if (event.getScreen() instanceof LevelLoadingScreen) {
-            spinWidget.chooseStyle();
-        }
-            
+        DogInventoryButton.onScreenInit(event);
+        DoggySpin.onScreenInit(event);
     }
 
-    private DoggySpin spinWidget = new DoggySpin(0, 0, 128);
+    
     //@SubscribeEvent
     public void onScreenDrawForeground(final ScreenEvent.Render.Post event) {
-        if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
-            return;
-        if (!(event.getScreen() instanceof LevelLoadingScreen))
-            return;
-        spinWidget.setY(event.getScreen().height - 128);
-        spinWidget.render(event.getGuiGraphics(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
+        DoggySpin.onScreenRenderForeground(event);
     }
 
     //@SubscribeEvent
