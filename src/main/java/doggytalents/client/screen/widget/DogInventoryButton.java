@@ -167,8 +167,10 @@ public class DogInventoryButton extends AbstractButton {
         int inv_x = (screen_w - inv_w) / 2;
         int inv_y = (screen_h - inv_h) / 2;
 
-        int button_x = inv_x + inv_w / 2 - 10;
-        int button_y = inv_y + 48;
+        final int button_x_offset = ConfigHandler.CLIENT.DOG_INV_IN_INV_BUTTON_X.get(); 
+        final int button_y_offset = ConfigHandler.CLIENT.DOG_INV_IN_INV_BUTTON_Y.get();
+        int button_x = inv_x + button_x_offset;
+        int button_y = inv_y + button_y_offset;
         
         inventoryButton = new DogInventoryButton(button_x, button_y, screen);
         event.addListener(inventoryButton);
