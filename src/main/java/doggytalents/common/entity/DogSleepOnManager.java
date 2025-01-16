@@ -12,6 +12,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.collect.Maps;
 
 import doggytalents.DoggyTalents;
+import doggytalents.api.feature.DogSize;
 import doggytalents.client.DTNClientDogSleepOnManager;
 import doggytalents.common.talent.BedDogTalent;
 import net.minecraft.core.BlockPos;
@@ -101,6 +102,10 @@ public class DogSleepOnManager {
             return DogSleepOnFailMessage.NOT_SLEEP_TIME.asResult();
         if (!level.canSleepThroughNights())
             return DogSleepOnFailMessage.CANT_SLEEP_THROUGH_NIGHT.asResult();
+        if (!dog.getDogSize().largerOrEquals(DogSize.MODERATO))
+            return DogSleepOnFailMessage.TOO_SMOL.asResult();
+        if (dog.getDogSize().largerOrEquals(DogSize.FORTE))
+            return DogSleepOnFailMessage.TOO_BIG.asResult();
         var inst = dog.getTalent(DoggyTalents.BED_DOG.get(), BedDogTalent.class);
         if (!inst.isPresent())
             return DogSleepOnFailMessage.OTHER.asResult();
@@ -401,6 +406,12 @@ public class DogSleepOnManager {
         COOLDOWN("cooldown",
             (dog, locId) -> Component.empty()),
         NO_POS("no_pos",
+            (dog, locId) -> Component.translatable(locId, 
+                dog.getName().getString(), dog.getGenderSubject())),
+        TOO_SMOL("to_smol",
+            (dog, locId) -> Component.translatable(locId, 
+                dog.getName().getString(), dog.getGenderSubject())),
+        TOO_BIG("to_big",
             (dog, locId) -> Component.translatable(locId, 
                 dog.getName().getString(), dog.getGenderSubject()));
 
