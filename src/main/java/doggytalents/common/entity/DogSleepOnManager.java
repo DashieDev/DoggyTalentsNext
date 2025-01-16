@@ -228,6 +228,8 @@ public class DogSleepOnManager {
         var dog_sleeping_state = dog.getSleepOnState();
         if (!dog_sleeping_state.is_sleeping())
             return false;
+        if (!this.isSleepCondition(dog).ok())
+            return false;
 
         var sleep_pos = getPlayerSleepPos(dog, dog_sleeping_state.sleep_yrot());
         if (player.distanceToSqr(sleep_pos) > 0.1 * 0.1)
