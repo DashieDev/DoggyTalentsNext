@@ -33,6 +33,8 @@ public class DogGoBackToSitAfterFinishAction extends Goal {
         var sit_pos_optional = checkAndInvalidateSitPos();
         if (!sit_pos_optional.isPresent())
             return false;
+        if (dog.dogAi.getActiveAction().isPresent())
+            return false;
         
         return true;
     }
