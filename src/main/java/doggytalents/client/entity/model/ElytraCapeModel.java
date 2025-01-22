@@ -40,12 +40,7 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
 
     @Override
     public Optional<ModelPart> searchForPartWithName(String name) {
-        if (this.flyingParts.hasChild(name)) 
-            return Optional.of(this.flyingParts.getChild(name));
-        var partOptional = this.flyingParts.getAllParts()
-            .filter(part -> part.hasChild(name))
-            .findFirst();
-        return partOptional.map(part -> part.getChild(name));
+        return DogKeyframeAnimations.searchForPartWithName(this.flyingParts, name);
     }
 
     @Override
