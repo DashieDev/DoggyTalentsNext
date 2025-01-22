@@ -601,14 +601,7 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public Optional<ModelPart> searchForPartWithName(String name) {
-        if (this.root.hasChild(name)) 
-            return Optional.of(this.root.getChild(name));
-        if (name.equals("root"))
-            return Optional.of(this.root);
-        var partOptional = this.root.getAllParts()
-            .filter(part -> part.hasChild(name))
-            .findFirst();
-        return partOptional.map(part -> part.getChild(name));
+        return DogKeyframeAnimations.searchForPartWithName(this.root, name);
     }
 
     protected void correctInitalPose() {

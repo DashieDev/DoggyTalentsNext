@@ -157,4 +157,15 @@ public class DogKeyframeAnimations {
         float f = (float)raw_millis / 1000.0F;
         return animation.looping() ? f % animation.lengthInSeconds() : f;
     }
+
+    public static Optional<ModelPart> searchForPartWithName(ModelPart root, String name) {
+        if (root.hasChild(name)) 
+            return Optional.of(root.getChild(name));
+        if (name.equals("root"))
+            return Optional.of(root);
+        var partOptional = root.getAllParts()
+            .filter(part -> part.hasChild(name))
+            .findFirst();
+        return partOptional.map(part -> part.getChild(name));
+    }
 }
