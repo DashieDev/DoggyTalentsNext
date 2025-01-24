@@ -159,9 +159,13 @@ public class DogKeyframeAnimations {
     }
 
     public static Optional<ModelPart> searchForPartWithName(ModelPart root, String name) {
+        return searchForPartWithName(root, name, true);
+    }
+
+    public static Optional<ModelPart> searchForPartWithName(ModelPart root, String name, boolean check_root) {
         if (root.hasChild(name)) 
             return Optional.of(root.getChild(name));
-        if (name.equals("root"))
+        if (check_root && name.equals("root"))
             return Optional.of(root);
         var partOptional = root.getAllParts()
             .filter(part -> part.hasChild(name))
