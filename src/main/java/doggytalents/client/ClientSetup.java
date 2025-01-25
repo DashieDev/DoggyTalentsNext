@@ -121,6 +121,7 @@ import doggytalents.client.screen.FoodBowlScreen;
 import doggytalents.client.screen.PackPuppyScreen;
 import doggytalents.client.screen.RiceMillScreen;
 import doggytalents.client.screen.TreatBagScreen;
+import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.client.tileentity.renderer.DogBedRenderer;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;

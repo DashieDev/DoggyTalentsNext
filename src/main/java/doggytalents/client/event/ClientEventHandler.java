@@ -19,7 +19,7 @@ import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentChangeHandl
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.widget.DogInventoryButton;
-import doggytalents.client.screen.widget.DoggySpin;
+import doggytalents.client.screen.widget.DoggySpin.DoggySpin;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem.WhistleMode;
