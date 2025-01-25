@@ -255,6 +255,17 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         if (tags != null) skin.setTags(tags.getAsString());
         var mystery = skinJsonObject.get("mystery");
         if (mystery != null) skin.setMystery(mystery.getAsBoolean());
+        var glow_path = skinJsonObject.get("glowing_overlay");
+        if (glow_path != null) {
+            var raw_path = skinJsonObject.get("glowing_overlay").getAsString();
+            ResourceLocation glow_rl;
+            if (raw_path.indexOf(':') >= 0) {
+                glow_rl = ResourceLocation.parse(raw_path + ".png");
+            } else {
+                glow_rl = Util.getResource("textures/entity/dog/custom/" + raw_path + ".png");
+            }
+            skin.setGlowingOverlay(glow_rl);
+        }
     }
 
     @Override
