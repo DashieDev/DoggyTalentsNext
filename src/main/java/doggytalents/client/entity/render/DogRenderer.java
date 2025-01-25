@@ -20,6 +20,7 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
 import doggytalents.client.entity.model.dog.NullDogModel;
 import doggytalents.client.entity.render.layer.LayerFactory;
+import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.ChatFormatting;
@@ -64,6 +65,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
 //        this.addLayer(new DogTalentLayer(this, ctx));
 //        this.addLayer(new DogAccessoryLayer(this, ctx));
         DogModelRegistry.resolve(ctx);
+        DoggySpinModel.init(ctx);
         this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
         for (LayerFactory<Dog, DogModel> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
