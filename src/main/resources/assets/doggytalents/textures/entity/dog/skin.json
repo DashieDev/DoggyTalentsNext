@@ -175,7 +175,17 @@
             "based_on" : "Wari from the Oina Tribe from Okami(2006) by Clover Studio",
             "author" : "MashXP, DashieDev",
             "tags" : "okami, oina"
-        },        
+        },
+        {
+            "skin_name" : "Hope",
+            "skin_id" : "sol_hope",
+            "glowing_overlay": "sol_hope_overlay",
+            "use_model" : "sol_hope",
+            "description" : "Dedicated to Akela Morse.",
+            "based_on" : "Hope from Seed of Life by Ki3 Games",
+            "author" : "MashXP, DashieDev",
+            "tags" : "hope, sol, seedoflife"
+        },    
         {
             "skin_name" : "Windie (Arcanine)",
             "skin_id" : "arcanine_shiro",
