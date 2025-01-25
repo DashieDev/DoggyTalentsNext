@@ -162,7 +162,6 @@ public class ClientSetup {
     public static final ModelLayerLocation KUSA_TAKE = new ModelLayerLocation(Util.getResource("kusa_take"), "main");   
     public static final ModelLayerLocation KUSA_TEI = new ModelLayerLocation(Util.getResource("kusa_tei"), "main");   
     public static final ModelLayerLocation KUSA_UME = new ModelLayerLocation(Util.getResource("kusa_ume"), "main");   
-    public static final ModelLayerLocation DOG_ARCANINE = new ModelLayerLocation(Util.getResource("dog_arcanine"), "main");
     
     public static final ModelLayerLocation OINA_KAIPOKU = new ModelLayerLocation(Util.getResource("oina_kaipoku"), "main");
     public static final ModelLayerLocation OINA_KAWAUSO = new ModelLayerLocation(Util.getResource("oina_kawauso"), "main");
@@ -177,6 +176,8 @@ public class ClientSetup {
     public static final ModelLayerLocation OINA_TUSUKURU = new ModelLayerLocation(Util.getResource("oina_tusukuru"), "main");
     public static final ModelLayerLocation OINA_WARI = new ModelLayerLocation(Util.getResource("oina_wari"), "main");
 
+    public static final ModelLayerLocation DOG_SOL_HOPE = new ModelLayerLocation(Util.getResource("sol_hope"), "main");
+    public static final ModelLayerLocation DOG_ARCANINE = new ModelLayerLocation(Util.getResource("dog_arcanine"), "main");
     public static final ModelLayerLocation DOG_POCHITA = new ModelLayerLocation(Util.getResource("pochita"), "main");   
     public static final ModelLayerLocation DOG_DACHSHUND = new ModelLayerLocation(Util.getResource("dachshund"), "main");
     public static final ModelLayerLocation DOG_DOBERMAN = new ModelLayerLocation(Util.getResource("doberman"), "main");
@@ -195,7 +196,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_COLLIE_SMOOTH = new ModelLayerLocation(Util.getResource("collie_smooth"), "main");
     public static final ModelLayerLocation DOG_COLLIE_ROUGH = new ModelLayerLocation(Util.getResource("collie_rough"), "main");
     public static final ModelLayerLocation DOG_COLLIE_BORDER = new ModelLayerLocation(Util.getResource("collie_border"), "main");
-    public static final ModelLayerLocation DOG_COLLIE_BORDER_SHORT = new ModelLayerLocation(new ResourceLocation("collie_border_short"), "main");
+    public static final ModelLayerLocation DOG_COLLIE_BORDER_SHORT = new ModelLayerLocation(Util.getResource("collie_border_short"), "main");
     public static final ModelLayerLocation DOG_BICHON_MALTAIS = new ModelLayerLocation(Util.getResource("bichon_maltais"), "main");
     public static final ModelLayerLocation DOG_BELGIAN_MALINOIS = new ModelLayerLocation(Util.getResource("belgian_malinois"), "main");
     public static final ModelLayerLocation DOG_GERMAN_SHEPHERD = new ModelLayerLocation(Util.getResource("german_shepherd"), "main");
@@ -217,7 +218,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_NORFOLK_TERRIER = new ModelLayerLocation(Util.getResource("norfolk_terrier"), "main");
     public static final ModelLayerLocation DOG_AUSTRALIAN_KELPIE = new ModelLayerLocation(Util.getResource("australian_kelpie"), "main");
     public static final ModelLayerLocation NA = new ModelLayerLocation(Util.getResource("na"), "main");
-    public static final ModelLayerLocation DOG_NEWFOUNDLAND = new ModelLayerLocation(new ResourceLocation("newfoundland"), "main");
+    public static final ModelLayerLocation DOG_NEWFOUNDLAND = new ModelLayerLocation(Util.getResource("newfoundland"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(Util.getResource("dog"), "armor");
     public static final ModelLayerLocation DOG_ARMOR_LEGACY = new ModelLayerLocation(Util.getResource("dog"), "armor_legacy");
@@ -288,6 +289,7 @@ public class ClientSetup {
         event.registerLayerDefinition(OINA_TODO, TodoModel::createBodyLayer);
         event.registerLayerDefinition(OINA_TUSUKURU, TusukuruModel::createBodyLayer);
         event.registerLayerDefinition(OINA_WARI, WariModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_SOL_HOPE, HopeModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARCANINE, ArcanineModel::createBodyLayer);
         event.registerLayerDefinition(DOG_POCHITA, PochitaModel::createBodyLayer);
