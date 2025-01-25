@@ -169,6 +169,7 @@ public class DogModelRegistry {
         register("oina_tusukuru", ctx ->  new TusukuruModel(ctx.bakeLayer(ClientSetup.OINA_TUSUKURU)));
         register("oina_wari", ctx ->  new WariModel(ctx.bakeLayer(ClientSetup.OINA_WARI)));
 
+        register("sol_hope", ctx ->  new HopeModel(ctx.bakeLayer(ClientSetup.DOG_SOL_HOPE)));
         register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
 
         register("pochita", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_POCHITA)));
