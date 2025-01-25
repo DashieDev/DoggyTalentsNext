@@ -1,5 +1,7 @@
 package doggytalents.client.entity.skin;
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Supplier;
@@ -49,6 +51,7 @@ public class DogSkin {
 
     private String name = "";
     private ResourceLocation texturePath;
+    private Optional<ResourceLocation> glowingOverlay = Optional.empty();
     private boolean useCustomModel;
     private DogModelHolder customModelHolder;
     private byte tail = 0, ear = 0;
@@ -145,12 +148,18 @@ public class DogSkin {
         this.mystery = val;
     }
 
+    public void setGlowingOverlay(ResourceLocation glow) {
+        this.glowingOverlay = Optional.ofNullable(glow);
+    }
+
     public boolean hasExtraInfo() { return this.hasExtraInfo; }
     public String getBasedOn() { return this.basedOn; }
     public String getAuthor() { return this.author; }
     public String getPack() { return this.fromPack; }
     public String getDesc() { return this.description; }
     public String getTags() { return this.tags; }
+    public Optional<ResourceLocation> getGlowingOverlay() { return this.glowingOverlay; }
+    public boolean hasGlowingOverlay() { return this.glowingOverlay.isPresent(); }
     public boolean mystery() { return this.mystery; }
     public boolean isCustom() {
         return this != MISSING && this != CLASSICAL;
