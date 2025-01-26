@@ -54,15 +54,15 @@ public class DogBedModel implements BakedModel {
     private static final ResourceLocation MISSING_TEXTURE = Util.getVanillaResource("missingno");
 
     private ModelBakery modelLoader;
-private BlockModel model;
-    private BakedModel bakedModel;
+    private BlockModel unbakedModel;
+    private BakedModel defaultModelVariant;
 
     private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BakedModel> cache = Maps.newConcurrentMap();
 
     public DogBedModel(ModelBakery modelLoader, BlockModel model, BakedModel bakedModel) {
         this.modelLoader = modelLoader;
-        this.model = model;
-        this.bakedModel = bakedModel;
+        this.unbakedModel = model;
+        this.defaultModelVariant = bakedModel;
         
     }
 
@@ -72,9 +72,11 @@ private BlockModel model;
 
     public BakedModel getModelVariant(ICasingMaterial casing, IBeddingMaterial bedding, Direction facing) {
         if (casing == null || bedding == null)
-            return bakedModel;
-        Triple<ICasingMaterial, IBeddingMaterial, Direction> key =
-                ImmutableTriple.of(casing != null ? casing : null, bedding != null ? bedding : null, facing != null ? facing : Direction.NORTH);
+            return defaultModelVariant;
+        
+        if (facing == null)
+            facing = Direction.NORTH;
+        var key = ImmutableTriple.of(casing, bedding, facing);
 
         return this.cache.computeIfAbsent(key, (k) -> bakeModelVariant(k.getLeft(), k.getMiddle(), k.getRight()));
     }
@@ -101,17 +103,17 @@ private BlockModel model;
     // }
 
     public BakedModel bakeModelVariant(@Nullable ICasingMaterial casingResource, @Nullable IBeddingMaterial beddingResource, @Nonnull Direction facing) {
-        List<BlockElement> parts = this.model.getElements();
+        List<BlockElement> parts = this.unbakedModel.getElements();
         List<BlockElement> elements = new ArrayList<>(parts.size()); //We have to duplicate this so we can edit it below.
         for (BlockElement part : parts) {
             elements.add(new BlockElement(part.from, part.to, Maps.newHashMap(part.faces), part.rotation, part.shade));
         }
 
-        BlockModel newModel = new BlockModel(this.model.parentLocation, elements,
-            Maps.newHashMap(this.model.textureMap), this.model.hasAmbientOcclusion(), this.model.getGuiLight(),
-            this.model.getTransforms(), new ArrayList<>(this.model.getOverrides()));
-        newModel.name = this.model.name;
-        newModel.parent = this.model.parent;
+        BlockModel newModel = new BlockModel(this.unbakedModel.parentLocation, elements,
+            Maps.newHashMap(this.unbakedModel.textureMap), this.unbakedModel.hasAmbientOcclusion(), this.unbakedModel.getGuiLight(),
+            this.unbakedModel.getTransforms(), new ArrayList<>(this.unbakedModel.getOverrides()));
+        newModel.name = this.unbakedModel.name;
+        newModel.parent = this.unbakedModel.parent;
 
 
         Either<Material, String> casingTexture = findCasingTexture(casingResource);
@@ -204,32 +206,32 @@ private BlockModel model;
 
     @Override
     public boolean useAmbientOcclusion() {
-        return this.bakedModel.useAmbientOcclusion();
+        return this.defaultModelVariant.useAmbientOcclusion();
     }
 
     @Override
     public boolean isGui3d() {
-        return this.bakedModel.isGui3d();
+        return this.defaultModelVariant.isGui3d();
     }
 
     @Override
     public boolean usesBlockLight() {
-        return this.bakedModel.usesBlockLight();
+        return this.defaultModelVariant.usesBlockLight();
     }
 
     @Override
     public boolean isCustomRenderer() {
-        return this.bakedModel.isCustomRenderer();
+        return this.defaultModelVariant.isCustomRenderer();
     }
 
     @Override
     public TextureAtlasSprite getParticleIcon() {
-        return this.bakedModel.getParticleIcon();
+        return this.defaultModelVariant.getParticleIcon();
     }
 
     @Override
     public ItemTransforms getTransforms() {
-        return this.bakedModel.getTransforms();
+        return this.defaultModelVariant.getTransforms();
     }
 
     @Override
