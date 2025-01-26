@@ -58,6 +58,8 @@ public class DogBedModel implements BakedModel {
     }
 
     public BakedModel getModelVariant(ICasingMaterial casing, IBeddingMaterial bedding, Direction facing) {
+        if (casing == null || bedding == null)
+            return bakedModel;
         Triple<ICasingMaterial, IBeddingMaterial, Direction> key =
                 ImmutableTriple.of(casing != null ? casing : null, bedding != null ? bedding : null, facing != null ? facing : Direction.NORTH);
 
