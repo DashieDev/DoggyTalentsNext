@@ -55,6 +55,7 @@ public class DogBedModel implements BakedModel {
     private BakedModel defaultModelVariant;
 
     private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BakedModel> cache = Maps.newConcurrentMap();
+    private final int maxCacheSize = 
 
     public DogBedModel(ModelBakery modelLoader, BlockModel model, BakedModel bakedModel) {
         this.modelLoader = modelLoader;
