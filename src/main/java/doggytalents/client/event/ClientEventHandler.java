@@ -89,7 +89,7 @@ public class ClientEventHandler {
 
             var modelUnbaked = (BlockModel) event.getModelBakery().getModel(bakedModelLoc);
 
-            BakedModel customModel = new DogBedModel(event.getModelBakery(), modelUnbaked, model);
+            BakedModel customModel = new DogBedModel(event.getModelBakery(), modelUnbaked, model, ConfigHandler.CLIENT.MAX_DOG_BED_MODEL_CACHE.get());
 
             // Replace all valid block states
             DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {

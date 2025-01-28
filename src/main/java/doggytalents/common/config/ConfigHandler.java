@@ -122,6 +122,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
         public ForgeConfigSpec.BooleanValue TRANSLUCENT_ALL_OVERLAY;
         public ForgeConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
+        public ForgeConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -290,6 +291,12 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
             HIDE_WOLF_MOUNT_STATUS = builder
                 .comment("Enable this to hide Wolf Mount Dog's Status Overlay when riding it.")
                 .define("hide_wolf_mount_status", false);
+            MAX_DOG_BED_MODEL_CACHE = builder
+                .comment("Configure the maximum value of Dog Bed variants that will be rendered per session.")
+                .comment("If the amount of Dog Bed variants rendered exceeds this limit,")
+                .comment("other variants will be rendered as the default variant.")
+                .comment("Set this option to any value less than zero to remove the limit.")
+                .defineInRange("max_dog_bed_model_cache", 16384, Integer.MIN_VALUE, Integer.MAX_VALUE);
             builder.pop();
         }
 
