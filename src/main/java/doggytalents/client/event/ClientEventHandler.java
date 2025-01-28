@@ -78,8 +78,12 @@ public class ClientEventHandler {
             ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(DoggyBlocks.DOG_BED.get());
             ResourceLocation unbakedModelLoc = new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
 
-            BlockModel model = (BlockModel) event.getModelLoader().getModel(unbakedModelLoc);
-            BakedModel customModel = new DogBedModel(event.getModelLoader(), model, model.bake(event.getModelLoader(), model, ForgeModelBakery.defaultTextureGetter(), BlockModelRotation.X180_Y180, unbakedModelLoc, true));
+
+            //var model = modelRegistry.get(bakedModelLoc);
+
+            var modelUnbaked = (BlockModel) event.getModelLoader().getModel(unbakedModelLoc);
+
+            BakedModel customModel = new DogBedModel(event.getModelLoader(), modelUnbaked, modelUnbaked.bake(event.getModelBakery(), modelUnbaked, ForgeModelBakery.defaultTextureGetter(), BlockModelRotation.X180_Y180, unbakedModelLoc, true), ConfigHandler.CLIENT.MAX_DOG_BED_MODEL_CACHE.get());
 
             // Replace all valid block states
             DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {
