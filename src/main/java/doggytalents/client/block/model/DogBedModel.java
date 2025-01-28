@@ -58,12 +58,13 @@ public class DogBedModel implements BakedModel {
     private BakedModel defaultModelVariant;
 
     private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BakedModel> cache = Maps.newConcurrentMap();
+    private final int maxCacheSize;
 
-    public DogBedModel(ModelBakery modelLoader, BlockModel model, BakedModel bakedModel) {
+    public DogBedModel(ModelBakery modelLoader, BlockModel model, BakedModel bakedModel, int maxCacheSize) {
         this.modelLoader = modelLoader;
         this.unbakedModel = model;
         this.defaultModelVariant = bakedModel;
-        
+        this.maxCacheSize = maxCacheSize;
     }
 
     public BakedModel getModelVariant(@Nonnull DogBedModelData data) {
@@ -77,8 +78,16 @@ public class DogBedModel implements BakedModel {
         if (facing == null)
             facing = Direction.NORTH;
         var key = ImmutableTriple.of(casing, bedding, facing);
+        var model_variant = this.cache.get(key);
+        if (model_variant != null)
+            return model_variant;
+        
+        if (this.cache.size() >= this.maxCacheSize)
+            return defaultModelVariant;
 
-        return this.cache.computeIfAbsent(key, (k) -> bakeModelVariant(k.getLeft(), k.getMiddle(), k.getRight()));
+        model_variant = bakeModelVariant(casing, bedding, facing);
+        this.cache.put(key, model_variant);
+        return model_variant;
     }
 
     @Override

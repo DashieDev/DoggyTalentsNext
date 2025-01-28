@@ -72,7 +72,7 @@ public class RegisterAndModifyBakingManager {
                 return current_model;
 
             var modedBaked = current_model;
-            var dogBedModel = new DogBedModel(bakery, block_modelUnbaked, modedBaked);
+            var dogBedModel = new DogBedModel(bakery, block_modelUnbaked, modedBaked, ConfigHandler.CLIENT.MAX_DOG_BED_MODEL_CACHE.get());
             return dogBedModel;
         }
 
