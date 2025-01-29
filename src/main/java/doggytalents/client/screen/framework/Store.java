@@ -1,8 +1,10 @@
 package doggytalents.client.screen.framework;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
@@ -21,7 +23,7 @@ public class Store {
     private final Map<Class<? extends AbstractSlice>, StoreValue> applicationStates
         = Maps.newHashMap();
 
-    private final ArrayList<UIAction> dispatchedAction = new ArrayList<UIAction>();
+    private final Set<Class<? extends AbstractSlice>> changedSlices = new HashSet()<>();
 
     private Store(Screen screen) {
         this.screen = screen;
@@ -55,28 +57,22 @@ public class Store {
 
     public <T extends AbstractSlice> void dispatch(Class<T> slice, UIAction action) {
         action.targetSlice = slice;
-        this.dispatchedAction.add(action);
+        this.processUIAction(action);
     }
 
     public <T extends AbstractSlice> void dispatchAll(UIAction action) {
         action.targetSlice = null;
-        this.dispatchedAction.add(action);
+        this.processUIAction(action);
     } 
 
     public void update() {
-        if (this.dispatchedAction.isEmpty())
-            return;
-        var changedSlices = new ArrayList<Class<? extends AbstractSlice>>();
-        for (var action : this.dispatchedAction) {
-            processUIAction(action, changedSlices);
-        }
-        this.dispatchedAction.clear();
         if (!changedSlices.isEmpty()) {
-            this.subscriber.onStoreUpdated(changedSlices);
+            this.subscriber.onStoreUpdated(List.copyOf(this.changedSlices));
+            changedSlices.clear();
         }
     }
 
-    private void processUIAction(UIAction action, ArrayList<Class<? extends AbstractSlice>> changedSlices) {
+    private void processUIAction(UIAction action) {
         var targetSlice = action.targetSlice;
         if (targetSlice == null) {
             for (var entry : this.applicationStates.entrySet()) {
@@ -85,7 +81,7 @@ public class Store {
                 var oldState = storeValue.state;
                 storeValue.state = storeValue.worker.reducer(storeValue.state, action);
                 if (oldState != storeValue.state) {
-                    changedSlices.add(entry.getKey());
+                    this.changedSlices.add(entry.getKey());
                 }
             }
             return;
@@ -95,7 +91,7 @@ public class Store {
         var oldState = storeValue.state;
         storeValue.state = storeValue.worker.reducer(storeValue.state, action);
         if (oldState != storeValue.state) {
-            changedSlices.add(targetSlice);
+            this.changedSlices.add(targetSlice);
         }
     }
 
