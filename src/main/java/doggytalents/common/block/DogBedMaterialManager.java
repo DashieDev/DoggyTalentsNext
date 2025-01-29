@@ -219,6 +219,11 @@ public class DogBedMaterialManager {
         public Optional<ResourceLocation> missingLoc() {
             return this.missingLoc;
         }
+
+        @Override
+        public boolean isNani() {
+            return true;
+        }
         
     }
 
@@ -257,6 +262,11 @@ public class DogBedMaterialManager {
 
         public Optional<ResourceLocation> missingLoc() {
             return this.missingLoc;
+        }
+
+        @Override
+        public boolean isNani() {
+            return true;
         }
         
     }

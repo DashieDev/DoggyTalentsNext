@@ -8,6 +8,8 @@ import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.DogBedBlock;
 import doggytalents.common.block.DogBedMaterialManager;
+import doggytalents.common.block.DogBedMaterialManager.NaniBedding;
+import doggytalents.common.block.DogBedMaterialManager.NaniCasing;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
 import doggytalents.common.lib.Constants;
 import net.minecraft.client.particle.TerrainParticle;
@@ -39,6 +41,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 @OnlyIn(Dist.CLIENT)
 public class DogBedModel implements BakedModel {
@@ -49,6 +53,7 @@ public class DogBedModel implements BakedModel {
     private ModelBakery modelLoader;
     private BlockModel unbakedModel;
     private BakedModel defaultModelVariant;
+    private final Map<Direction, BakedModel> missingModelVariant = new ConcurrentHashMap<>(Direction.values().length);
 
     private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BakedModel> cache = Maps.newConcurrentMap();
     private final int maxCacheSize;
@@ -58,6 +63,14 @@ public class DogBedModel implements BakedModel {
         this.unbakedModel = model;
         this.defaultModelVariant = bakedModel;
         this.maxCacheSize = maxCacheSize;
+        bakeMissingVariants();
+    }
+
+    private void bakeMissingVariants() {
+        for (var dir : Direction.values()) {
+            var model = bakeModelVariant(NaniCasing.NULL, NaniBedding.NULL, dir);
+            this.missingModelVariant.put(dir, model);
+        }
     }
 
     public BakedModel getModelVariant(@Nonnull ModelData data) {
@@ -67,6 +80,8 @@ public class DogBedModel implements BakedModel {
     public BakedModel getModelVariant(ICasingMaterial casing, IBeddingMaterial bedding, Direction facing) {
         if (casing == null || bedding == null)
             return defaultModelVariant;
+        if (casing.isNani() || bedding.isNani())
+            return missingModelVariant.get(facing);
         
         if (facing == null)
             facing = Direction.NORTH;
