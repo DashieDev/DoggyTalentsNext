@@ -23,7 +23,7 @@ public class Store {
     private final Map<Class<? extends AbstractSlice>, StoreValue> applicationStates
         = Maps.newHashMap();
 
-    private final Set<Class<? extends AbstractSlice>> changedSlices = new HashSet()<>();
+    private final Set<Class<? extends AbstractSlice>> changedSlices = new HashSet<>();
 
     private Store(Screen screen) {
         this.screen = screen;
