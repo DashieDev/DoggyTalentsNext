@@ -20,4 +20,8 @@ public abstract class ICasingMaterial{
      * The ingredient used in the crafting recipe of the bed
      */
     public abstract Ingredient getIngredient();
+
+    public boolean isNani() {
+        return false;
+    }
 }
