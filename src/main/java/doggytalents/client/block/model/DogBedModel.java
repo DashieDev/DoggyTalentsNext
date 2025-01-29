@@ -2,17 +2,13 @@ package doggytalents.client.block.model;
 
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Either;
-import doggytalents.DoggyTalentsNext;
-import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
-import doggytalents.common.block.DogBedBlock;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.block.DogBedMaterialManager.NaniBedding;
 import doggytalents.common.block.DogBedMaterialManager.NaniCasing;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
-import doggytalents.common.lib.Constants;
-import net.minecraft.client.particle.TerrainParticle;
+import doggytalents.common.util.Util;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -22,12 +18,12 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.client.resources.model.ModelState;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -50,18 +46,18 @@ public class DogBedModel implements BakedModel {
     public static DogBedItemOverride ITEM_OVERIDE = new DogBedItemOverride();
     private static final ResourceLocation MISSING_TEXTURE = new ResourceLocation("missingno");
 
-    private ModelBakery modelLoader;
-    private BlockModel unbakedModel;
-    private BakedModel defaultModelVariant;
+    private final ModelBakery modelLoader;
+    private final BlockModel unbakedModel;
+    private final BakedModel defaultModelVariant;
     private final Map<Direction, BakedModel> missingModelVariant = new ConcurrentHashMap<>(Direction.values().length);
 
     private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BakedModel> cache = Maps.newConcurrentMap();
     private final int maxCacheSize;
 
-    public DogBedModel(ModelBakery modelLoader, BlockModel model, BakedModel bakedModel, int maxCacheSize) {
+    public DogBedModel(ModelBakery modelLoader, BlockModel model, BakedModel defaultModelVariant, int maxCacheSize) {
         this.modelLoader = modelLoader;
         this.unbakedModel = model;
-        this.defaultModelVariant = bakedModel;
+        this.defaultModelVariant = defaultModelVariant;
         this.maxCacheSize = maxCacheSize;
     }
 
@@ -70,13 +66,14 @@ public class DogBedModel implements BakedModel {
     }
 
     public BakedModel getModelVariant(ICasingMaterial casing, IBeddingMaterial bedding, Direction facing) {
+        if (facing == null)
+            facing = Direction.NORTH;
+        
         if (casing == null || bedding == null)
             return defaultModelVariant;
         if (casing.isNani() || bedding.isNani())
             return getMissingVariant(facing);
         
-        if (facing == null)
-            facing = Direction.NORTH;
         var key = ImmutableTriple.of(casing, bedding, facing);
         var model_variant = this.cache.get(key);
         if (model_variant != null)
@@ -120,61 +117,92 @@ public class DogBedModel implements BakedModel {
         return this.getModelVariant(data).getParticleIcon(data);
     }
 
-    public BakedModel bakeModelVariant(@Nullable ICasingMaterial casingResource, @Nullable IBeddingMaterial beddingResource, @Nonnull Direction facing) {
-        List<BlockElement> parts = this.unbakedModel.getElements();
-        List<BlockElement> elements = new ArrayList<>(parts.size()); //We have to duplicate this so we can edit it below.
-        for (BlockElement part : parts) {
-            elements.add(new BlockElement(part.from, part.to, Maps.newHashMap(part.faces), part.rotation, part.shade));
+    public BakedModel bakeModelVariant(@Nullable ICasingMaterial casing, @Nullable IBeddingMaterial bedding, @Nonnull Direction facing) {
+        var new_model = deepCopyBlockModel(this.unbakedModel);
+
+        var casing_texture = findCasingTexture(casing);
+        var bedding_texture = findBeddingTexture(bedding);
+        new_model.textureMap.put("bedding", bedding_texture);
+        new_model.textureMap.put("casing", casing_texture);
+        new_model.textureMap.put("particle", casing_texture);
+
+        var ret = bakeModel(new_model, facing);
+        return ret;
+    }
+
+    private static BlockModel deepCopyBlockModel(BlockModel model) {
+        var elements_old = model.getElements();
+        var elements_new = new ArrayList<BlockElement>(elements_old.size());
+        for (var element : elements_old) {
+            var element_copy = new BlockElement(element.from, element.to, 
+                Maps.newHashMap(element.faces), element.rotation, element.shade);
+            elements_new.add(element_copy);
         }
 
-        BlockModel newModel = new BlockModel(this.unbakedModel.getParentLocation(), elements,
-            Maps.newHashMap(this.unbakedModel.textureMap), this.unbakedModel.hasAmbientOcclusion(), this.unbakedModel.getGuiLight(),
-            this.unbakedModel.getTransforms(), new ArrayList<>(this.unbakedModel.getOverrides()));
-        newModel.name = this.unbakedModel.name;
-        newModel.parent = this.unbakedModel.parent;
-
-
-        Either<Material, String> casingTexture = findCasingTexture(casingResource);
-        newModel.textureMap.put("bedding", findBeddingTexture(beddingResource));
-        newModel.textureMap.put("casing", casingTexture);
-        newModel.textureMap.put("particle", casingTexture);
-
-        return newModel.bake(this.modelLoader, newModel, Material::sprite, getModelRotation(facing), createResourceVariant(casingResource, beddingResource, facing), true);
+        var ret = new BlockModel(model.getParentLocation(), elements_new,
+            Maps.newHashMap(model.textureMap), model.hasAmbientOcclusion(), model.getGuiLight(),
+            model.getTransforms(), new ArrayList<>(model.getOverrides()));
+        ret.name = model.name;
+        ret.parent = model.parent;
+        return ret;
     }
 
-    private ResourceLocation createResourceVariant(@Nonnull ICasingMaterial casingResource, @Nonnull IBeddingMaterial beddingResource, @Nonnull Direction facing) {
-        String beddingKey = beddingResource != null
-                ? DogBedMaterialManager.getKey(beddingResource).toString().replace(':', '.')
-                : "doggytalents.dogbed.bedding.missing";
-        String casingKey = beddingResource != null
-                ? DogBedMaterialManager.getKey(casingResource).toString().replace(':', '.')
-                : "doggytalents.dogbed.casing.missing";
-        return new ModelResourceLocation(Constants.MOD_ID, "block/dog_bed#bedding=" + beddingKey + ",casing=" + casingKey + ",facing=" + facing.getName());
+    private static BakedModel bakeModel(BlockModel to_bake, Direction dir) {
+        var baker = (new ModelBaker() {
+
+            @Override
+            public @Nullable BakedModel bake(ResourceLocation location, ModelState state,
+                    Function<Material, TextureAtlasSprite> sprites) {
+                return to_bake.bake(this, to_bake, Material::sprite, 
+                    getModelRotation(dir),
+                    createResourceVariant_1_20_1_under(casingResource, beddingResource, facing), 
+                    true
+                );
+            }
+
+            @Override
+            public Function<Material, TextureAtlasSprite> getModelTextureGetter() {
+                return Material::sprite;
+            }
+
+            @Override
+            public UnbakedModel getModel(ResourceLocation p_252194_) {
+                return to_bake;
+            }
+
+            @Override
+            @javax.annotation.Nullable
+            public BakedModel bake(ResourceLocation p_250776_, ModelState p_251280_) {
+                return this.bake(p_250776_, p_251280_, getModelTextureGetter());
+            }
+            
+        });
+        return baker.bake(null, null, null);
     }
 
-    private Either<Material, String> findCasingTexture(@Nullable ICasingMaterial resource) {
+    private static BlockModelRotation getModelRotation(@Nonnull Direction dir) {
+        switch (dir) {
+        default:    return BlockModelRotation.X0_Y0;
+        case EAST:  return BlockModelRotation.X0_Y90;
+        case SOUTH: return BlockModelRotation.X0_Y180;
+        case WEST:  return BlockModelRotation.X0_Y270;
+        }
+    }
+
+    private static Either<Material, String> findCasingTexture(@Nullable ICasingMaterial resource) {
         return findTexture(resource != null ? resource.getTexture() : null);
     }
 
-    private Either<Material, String> findBeddingTexture(@Nullable IBeddingMaterial resource) {
+    private static Either<Material, String> findBeddingTexture(@Nullable IBeddingMaterial resource) {
         return findTexture(resource != null ? resource.getTexture() : null);
     }
 
-    private Either<Material, String> findTexture(@Nullable ResourceLocation resource) {
+    private static Either<Material, String> findTexture(ResourceLocation resource) {
         if (resource == null) {
             resource = MISSING_TEXTURE;
         }
 
         return Either.left(new Material(InventoryMenu.BLOCK_ATLAS, resource));
-    }
-
-    private BlockModelRotation getModelRotation(@Nonnull Direction dir) {
-        switch (dir) {
-        default:    return BlockModelRotation.X0_Y0; // North
-        case EAST:  return BlockModelRotation.X0_Y90;
-        case SOUTH: return BlockModelRotation.X0_Y180;
-        case WEST:  return BlockModelRotation.X0_Y270;
-        }
     }
 
     @Override
@@ -211,4 +239,17 @@ public class DogBedModel implements BakedModel {
     public ItemOverrides getOverrides() {
         return ITEM_OVERIDE;
     }
+
+
+    //1.20.1 under
+    private ResourceLocation createResourceVariant_1_20_1_under(@Nonnull ICasingMaterial casingResource, @Nonnull IBeddingMaterial beddingResource, @Nonnull Direction facing) {
+        String beddingKey = beddingResource != null
+                ? DogBedMaterialManager.getKey(beddingResource).toString().replace(':', '.')
+                : "doggytalents.dogbed.bedding.missing";
+        String casingKey = beddingResource != null
+                ? DogBedMaterialManager.getKey(casingResource).toString().replace(':', '.')
+                : "doggytalents.dogbed.casing.missing";
+        return new ModelResourceLocation(Util.getResource("block/dog_bed"),"#bedding=" + beddingKey + ",casing=" + casingKey + ",facing=" + facing.getName());
+    }
+
 }
