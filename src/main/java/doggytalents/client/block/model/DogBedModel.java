@@ -63,14 +63,6 @@ public class DogBedModel implements BakedModel {
         this.unbakedModel = model;
         this.defaultModelVariant = bakedModel;
         this.maxCacheSize = maxCacheSize;
-        bakeMissingVariants();
-    }
-
-    private void bakeMissingVariants() {
-        for (var dir : Direction.values()) {
-            var model = bakeModelVariant(NaniCasing.NULL, NaniBedding.NULL, dir);
-            this.missingModelVariant.put(dir, model);
-        }
     }
 
     public BakedModel getModelVariant(@Nonnull ModelData data) {
@@ -81,7 +73,7 @@ public class DogBedModel implements BakedModel {
         if (casing == null || bedding == null)
             return defaultModelVariant;
         if (casing.isNani() || bedding.isNani())
-            return missingModelVariant.get(facing);
+            return getMissingVariant(facing);
         
         if (facing == null)
             facing = Direction.NORTH;
@@ -96,6 +88,15 @@ public class DogBedModel implements BakedModel {
         model_variant = bakeModelVariant(casing, bedding, facing);
         this.cache.put(key, model_variant);
         return model_variant;
+    }
+
+    private BakedModel getMissingVariant(Direction dir) {
+        var missing = this.missingModelVariant.get(dir);
+        if (missing != null)
+            return missing;
+        missing = bakeModelVariant(NaniCasing.NULL, NaniBedding.NULL, dir);
+        this.missingModelVariant.put(dir, missing);
+        return missing;
     }
 
     @Override
