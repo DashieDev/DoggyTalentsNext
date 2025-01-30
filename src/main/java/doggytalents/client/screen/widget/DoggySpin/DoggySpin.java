@@ -37,7 +37,7 @@ public class DoggySpin extends AbstractWidget {
         long current_time = System.currentTimeMillis();
         long time_since = current_time - this.lastAccumulate;
         if (time_since > 0) {
-            this.accumulatedTime += Mth.clamp(time_since * 0.9, 0, 70);
+            this.accumulatedTime += Mth.clamp(time_since * 0.9, 0, 34);
             this.lastAccumulate = current_time;
         }
     }
