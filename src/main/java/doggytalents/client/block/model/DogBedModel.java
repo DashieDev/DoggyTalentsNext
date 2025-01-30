@@ -55,6 +55,7 @@ public class DogBedModel implements BakedModel {
     private final ModelBakery modelLoader;
     private final BlockModel unbakedModel;
     private final BakedModel defaultModelVariant;
+    private final Map<Direction, BakedModel> defaultModelVariants = new ConcurrentHashMap<>(Direction.values().length);
     private final Map<Direction, BakedModel> missingModelVariant = new ConcurrentHashMap<>(Direction.values().length);
 
     private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BakedModel> cache = Maps.newConcurrentMap();
@@ -76,7 +77,7 @@ public class DogBedModel implements BakedModel {
             facing = Direction.NORTH;
         
         if (casing == null || bedding == null)
-            return defaultModelVariant;
+            return getDefaultVariant(facing);
         if (casing.isNani() || bedding.isNani())
             return getMissingVariant(facing);
         
@@ -86,7 +87,7 @@ public class DogBedModel implements BakedModel {
             return model_variant;
         
         if (this.cache.size() >= this.maxCacheSize)
-            return defaultModelVariant;
+            return getDefaultVariant(facing);
 
         model_variant = bakeModelVariant(casing, bedding, facing);
         this.cache.put(key, model_variant);
@@ -100,6 +101,16 @@ public class DogBedModel implements BakedModel {
         missing = bakeModelVariant(NaniCasing.NULL, NaniBedding.NULL, dir);
         this.missingModelVariant.put(dir, missing);
         return missing;
+    }
+
+    private BakedModel getDefaultVariant(Direction dir) {
+        var default_variant = this.defaultModelVariants.get(dir);
+        if (default_variant != null)
+            return default_variant;
+        
+        default_variant = bakeModel(unbakedModel, dir);
+        this.defaultModelVariants.put(dir, default_variant);
+        return default_variant;
     }
 
     @Override
