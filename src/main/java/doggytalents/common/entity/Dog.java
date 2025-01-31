@@ -5451,4 +5451,9 @@ public class Dog extends AbstractDog {
         }
     }
 
+
+    //1.20.1 under
+    public Vec3 calcDogViewVec(float xrot, float yrot) {
+        return this.calculateViewVector(xrot, yrot);
+    }
 }
