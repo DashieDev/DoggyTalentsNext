@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.apache.commons.lang3.function.Consumers;
 import org.joml.Vector3f;
 
 import net.fabricmc.api.EnvType;
@@ -75,7 +74,7 @@ public class DogKeyframeAnimations {
             Function<String, Optional<ModelPart>> partGetter,
             Consumer<ModelPart> partReset
         ) {
-            return of(partGetter, partReset, Consumers.nop());
+            return of(partGetter, partReset, $ -> {});
         }
 
         public static AnimationContext of(

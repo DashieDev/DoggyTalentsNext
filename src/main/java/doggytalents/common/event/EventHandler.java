@@ -600,7 +600,7 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
+    public void canPlayerContinueSleeping(SleepingLocationCheckEvent event) {
         DogSleepOnManager.canPlayerContinueSleeping(event);
     }
 

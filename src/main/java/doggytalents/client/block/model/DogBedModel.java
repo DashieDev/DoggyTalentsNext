@@ -171,7 +171,7 @@ public class DogBedModel implements BakedModel {
             //         Function<Material, TextureAtlasSprite> sprites) {
             //     return to_bake.bake(this, to_bake, Material::sprite, 
             //         getModelRotation(dir),
-            //         createResourceVariant_1_20_1_under(casingResource, beddingResource, facing), 
+            //         createResourceVariant_1_20_1_under(dir), 
             //         true
             //     );
             // }
@@ -292,14 +292,8 @@ public class DogBedModel implements BakedModel {
 
 
     //1.20.1 under
-    private ResourceLocation createResourceVariant_1_20_1_under(@Nonnull ICasingMaterial casingResource, @Nonnull IBeddingMaterial beddingResource, @Nonnull Direction facing) {
-        String beddingKey = beddingResource != null
-                ? DogBedMaterialManager.getKey(beddingResource).toString().replace(':', '.')
-                : "doggytalents.dogbed.bedding.missing";
-        String casingKey = beddingResource != null
-                ? DogBedMaterialManager.getKey(casingResource).toString().replace(':', '.')
-                : "doggytalents.dogbed.casing.missing";
-        return new ModelResourceLocation(Util.getResource("block/dog_bed"),"#bedding=" + beddingKey + ",casing=" + casingKey + ",facing=" + facing.getName());
+    private static ResourceLocation createResourceVariant_1_20_1_under(Direction facing) {
+        return new ModelResourceLocation(Util.getResource("block/dog_bed"),"#bedding=" + "doggytalents.dogbed.bedding.baking" + ",casing=" + "doggytalents.dogbed.casing.baking"  + ",facing=" + facing.getName());
     }
 
 }

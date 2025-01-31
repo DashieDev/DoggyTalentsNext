@@ -15,9 +15,9 @@ public class LivingEntityRendererMixin {
 
     @Inject(at = @At("HEAD"),  method = "setupRotations", cancellable = true)
     protected void dtn__setupRotation(LivingEntity living, PoseStack p_115318_, float p_115319_, float p_115320_,
-        float p_115321_, float x, CallbackInfo info) {
+        float p_115321_, CallbackInfo info) {
         boolean result = DTNClientDogSleepOnManager.get()
-            .onLivingModelSetupRotation(living, p_115318_, p_115319_, p_115320_, p_115321_, x);
+            .onLivingModelSetupRotation(living, p_115318_, p_115319_, p_115320_, p_115321_);
         if (result) 
             info.cancel();
     }

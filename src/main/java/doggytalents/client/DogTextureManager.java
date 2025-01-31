@@ -260,7 +260,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             var raw_path = skinJsonObject.get("glowing_overlay").getAsString();
             ResourceLocation glow_rl;
             if (raw_path.indexOf(':') >= 0) {
-                glow_rl = ResourceLocation.parse(raw_path + ".png");
+                glow_rl = ResourceLocation.tryParse(raw_path + ".png");
             } else {
                 glow_rl = Util.getResource("textures/entity/dog/custom/" + raw_path + ".png");
             }
