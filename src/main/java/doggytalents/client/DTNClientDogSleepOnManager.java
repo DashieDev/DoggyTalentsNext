@@ -22,8 +22,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
+import net.minecraftforge.event.TickEvent.Phase;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class DTNClientDogSleepOnManager {
     
@@ -40,7 +41,9 @@ public class DTNClientDogSleepOnManager {
     private final List<UUID> toRemove = new ArrayList<>();
 
     @SubscribeEvent
-    public void tickClient(ClientTickEvent.Post event) {
+    public void tickClient(ClientTickEvent event) {
+        if (event.phase != Phase.END)
+            return;
         invalidateSleeperCache();
     }
 
@@ -90,7 +93,7 @@ public class DTNClientDogSleepOnManager {
     
 
     public boolean onLivingModelSetupRotation(LivingEntity living, PoseStack stack, 
-        float anim_timeline, float yrot, float pticks, float scale) {
+        float anim_timeline, float yrot, float pticks) {
         var player_optional = checkIsSleepingOnDog(living);
         if (!player_optional.isPresent())
             return false;

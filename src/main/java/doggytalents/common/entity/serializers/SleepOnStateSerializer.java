@@ -2,8 +2,9 @@ package doggytalents.common.entity.serializers;
 
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.syncher.EntityDataSerializer;
 
-public class SleepOnStateSerializer extends DogSerializer<DogSleepOnState> {
+public class SleepOnStateSerializer implements EntityDataSerializer<DogSleepOnState> {
 
     @Override
     public void write(FriendlyByteBuf buf, DogSleepOnState value) {
