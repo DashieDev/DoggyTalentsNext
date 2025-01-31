@@ -22,6 +22,9 @@ public class DogAllowSleepOnGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        var sleep_on_manger = dog.sleepOnManager;
+        if (!sleep_on_manger.isSleepOnRequested())
+            return false;
         if (this.dog.isDefeated())
             return false;
         if (!this.dog.isOrderedToSit())
@@ -33,9 +36,6 @@ public class DogAllowSleepOnGoal extends Goal {
         if (this.dog.getDogPose() != DogPose.SIT)
             return false;
         if (!this.dog.onGround())
-            return false;
-        var sleep_on_manger = dog.sleepOnManager;
-        if (!sleep_on_manger.isSleepOnRequested())
             return false;
         if (!DogSleepOnManager.getServer(dog.level()).isSleepCondition(dog).ok())
             return false;
