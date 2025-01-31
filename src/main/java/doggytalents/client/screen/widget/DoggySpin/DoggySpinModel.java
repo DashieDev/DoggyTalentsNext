@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
+import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import com.mojang.blaze3d.platform.Lighting;
@@ -32,6 +33,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 
 public class DoggySpinModel {
@@ -207,7 +209,7 @@ public class DoggySpinModel {
         
         graphics.pose().pushPose();
         graphics.pose().translate((double)mid_x, (double)mid_y, 50.0);
-        graphics.pose().scale(scale, scale, -scale);
+        graphics.pose().mulPoseMatrix((new Matrix4f()).scaling(scale, scale, -scale));
         graphics.pose().translate(offset.x, offset.y, offset.z);
         graphics.pose().mulPose(rot);
         graphics.pose().translate(0.0F, -1.501F, 0.0F);
@@ -260,7 +262,7 @@ public class DoggySpinModel {
         root.x = 0; root.y = 0; root.z = 0;
         stack.pushPose();
         stack.translate((double)(-pivot.x / 16.0F), (double)(-pivot.y / 16.0F), (double)(-pivot.z / 16.0F));
-        root.render(stack, consumer, light, overlay_coord, color_overlay);
+        root.render(stack, consumer, light, overlay_coord, FastColor.ARGB32.red(color_overlay)/255f, FastColor.ARGB32.green(color_overlay)/255f, FastColor.ARGB32.blue(color_overlay)/255f, FastColor.ARGB32.alpha(color_overlay)/255f);
         stack.popPose();
         stack.popPose();
         root.xRot = xRot0; root.yRot = yRot0; root.zRot = zRot0;

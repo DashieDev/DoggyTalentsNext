@@ -24,11 +24,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Player.BedSleepingProblem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.entity.player.CanContinueSleepingEvent;
-import net.neoforged.neoforge.event.level.SleepFinishedTimeEvent;
+import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
+import net.minecraftforge.event.level.SleepFinishedTimeEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
 
 public class DogSleepOnManager {
     
@@ -159,7 +159,7 @@ public class DogSleepOnManager {
 
     private Vec3 getPlayerSleepPos(Dog dog, float dog_sleep_rot) {
         var sleep_on_pos = getSleepOnHeadPos(dog, dog_sleep_rot);
-        var dog_view_vec = dog.calculateViewVector(0, dog_sleep_rot);
+        var dog_view_vec = dog.calcDogViewVec(0, dog_sleep_rot);
         final double distance_to_dog = 0.2;
         return
             new Vec3(dog_view_vec.x, 0, dog_view_vec.z).normalize()
@@ -170,7 +170,7 @@ public class DogSleepOnManager {
     private Vec3 getSleepOnHeadPos(Dog dog, float dog_sleep_rot) {
         final float side_translate = -0.3f;
         float translate_rot = dog_sleep_rot + 90;
-        var translate_vec = dog.calculateViewVector(0, translate_rot)
+        var translate_vec = dog.calcDogViewVec(0, translate_rot)
             .scale(side_translate);
         return dog.position().add(translate_vec);
     }
@@ -301,14 +301,14 @@ public class DogSleepOnManager {
 
 
 
-    public static void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
-        if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
-            return;
+    public static void canPlayerContinueSleeping(SleepingLocationCheckEvent event) {
+        // if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
+        //     return;
         var player = event.getEntity();
         var dog_optional = DogSleepOnManager.getServer(player.getServer()).getSleepingOnDog(player);
         if (!dog_optional.isPresent())
             return;
-        event.setContinueSleeping(true);
+        event.setResult(Result.ALLOW);
     }
 
     public static void beforeSleepFinishedForAllPlayer(SleepFinishedTimeEvent event) {
