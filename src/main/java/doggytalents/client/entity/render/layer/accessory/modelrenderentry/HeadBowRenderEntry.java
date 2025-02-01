@@ -22,7 +22,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class HeadBowRenderEntry extends AccessoryModelManager.Entry {
 

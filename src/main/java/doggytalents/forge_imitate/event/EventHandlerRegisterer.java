@@ -127,6 +127,24 @@ public class EventHandlerRegisterer {
                 ChopinRecordItem::onRightClickBlock
             )
         );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, CanContinueSleepingEvent>
+                (handlerIst, CanContinueSleepingEvent.class,
+                    (x, y) -> x.canPlayerContinueSleeping(y)
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, SleepFinishedTimeEvent>
+                (handlerIst, SleepFinishedTimeEvent.class,
+                    (x, y) -> x.beforeAllPlayerWakeUp(y)
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, PlayerWakeUpEvent>
+                (handlerIst, PlayerWakeUpEvent.class,
+                    (x, y) -> x.playerWakeUpEvent(y)
+                )
+        );
     }
 
 }

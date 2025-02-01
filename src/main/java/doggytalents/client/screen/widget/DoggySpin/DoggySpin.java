@@ -1,13 +1,13 @@
 package doggytalents.client.screen.widget.DoggySpin;
 
 import doggytalents.common.config.ConfigHandler;
+import doggytalents.forge_imitate.event.client.ScreenEvent;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.client.event.ScreenEvent;
 
 public class DoggySpin extends AbstractWidget {
 

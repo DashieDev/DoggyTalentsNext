@@ -99,8 +99,8 @@ public class ConfigHandler {
         public ConfigValue<String> DOG_INFO_SEPERATOR;
         public ConfigValue<String> DOG_INFO_HUNGER_FORMAT;
         public ForgeConfigSpec.BooleanValue DOG_INV_BUTTON_IN_INV;
-        public ModConfigSpec.IntValue DOG_INV_IN_INV_BUTTON_X;
-        public ModConfigSpec.IntValue DOG_INV_IN_INV_BUTTON_Y;
+        public ForgeConfigSpec.IntValue DOG_INV_IN_INV_BUTTON_X;
+        public ForgeConfigSpec.IntValue DOG_INV_IN_INV_BUTTON_Y;
         public ForgeConfigSpec.BooleanValue RENDER_INCAP_TXT_LESS_GRAPHIC;
         public ForgeConfigSpec.BooleanValue RENDER_DIFFOWNER_NAME_DIFFERENT;
         public ForgeConfigSpec.BooleanValue DONT_RENDER_DIFFOWNER_NAME;
@@ -122,7 +122,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
         public ForgeConfigSpec.BooleanValue TRANSLUCENT_ALL_OVERLAY;
         public ForgeConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
-        public ModConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
+        public ForgeConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
 
         //Fabric only
         public ForgeConfigSpec.BooleanValue DOGBED_FORCE_DEFAULT_MODEL;

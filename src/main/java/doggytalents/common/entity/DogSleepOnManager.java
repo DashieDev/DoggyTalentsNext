@@ -15,6 +15,8 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.feature.DogSize;
 import doggytalents.client.DTNClientDogSleepOnManager;
 import doggytalents.common.talent.BedDogTalent;
+import doggytalents.forge_imitate.event.CanContinueSleepingEvent;
+import doggytalents.forge_imitate.event.SleepFinishedTimeEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -27,8 +29,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.entity.player.CanContinueSleepingEvent;
-import net.neoforged.neoforge.event.level.SleepFinishedTimeEvent;
 
 public class DogSleepOnManager {
     

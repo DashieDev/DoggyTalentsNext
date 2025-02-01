@@ -13,6 +13,8 @@ import com.mojang.math.Axis;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
+import doggytalents.forge_imitate.event.client.ClientTickEvent;
+import doggytalents.forge_imitate.event.client.ClientTickEvent.Phase;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
@@ -22,8 +24,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 public class DTNClientDogSleepOnManager {
     
@@ -39,8 +39,10 @@ public class DTNClientDogSleepOnManager {
     private final Map<UUID, Dog> sleeperMap = Maps.newHashMap();
     private final List<UUID> toRemove = new ArrayList<>();
 
-    @SubscribeEvent
-    public void tickClient(ClientTickEvent.Post event) {
+    //@SubscribeEvent
+    public void tickClient(ClientTickEvent event) {
+        if (event.phase != Phase.END)
+            return;
         invalidateSleeperCache();
     }
 

@@ -15,6 +15,7 @@ import doggytalents.api.feature.EnumGender;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
+import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
 import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.fabric_helper.entity.DogFabricHelper;
@@ -37,6 +38,7 @@ public class SyncTypes {
     public static SyncType<DogVariant> DOG_VARIANT = register(new SyncType<DogVariant>(7, DoggySerializers.DOG_VARIANT_SERIALIZER, DogFabricHelper::setDogVariant, DogFabricHelper::getDogVariant));
     public static SyncType<DogPettingState> DOG_PETTING_STATE = register(new SyncType<DogPettingState>(8, DoggySerializers.DOG_PETTING_STATE, DogFabricHelper::setDogPettingState, DogFabricHelper::getDogPettingState));
     public static SyncType<DogAnimDebugState> DOG_ANIM_DEBUG_STATE = register(new SyncType<DogAnimDebugState>(9, DoggySerializers.DOG_ANIM_DEBUG_STATE, DogFabricHelper::setDogAnimDebugState, DogFabricHelper::getDogAnimDebugState));
+    public static SyncType<DogSleepOnState> DOG_SLEEP_ON_STATE = register(new SyncType<DogSleepOnState>(10, DoggySerializers.DOG_SLEEP_ON_STATE, DogFabricHelper::setDogSleepOnState, DogFabricHelper::getDogSleepOnState));
 
     public static void init() {}
 

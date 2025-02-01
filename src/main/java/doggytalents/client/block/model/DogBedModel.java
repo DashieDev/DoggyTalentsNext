@@ -27,6 +27,7 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -167,7 +168,7 @@ public class DogBedModel implements BakedModel {
     private static BakedModel bakeModel(BlockModel to_bake, Direction dir) {
         var baker = (new ModelBaker() {
 
-            @Override
+            //@Override
             public @Nullable BakedModel bake(ResourceLocation location, ModelState state,
                     Function<Material, TextureAtlasSprite> sprites) {
                 return to_bake.bake(this, to_bake, Material::sprite, 
@@ -176,7 +177,7 @@ public class DogBedModel implements BakedModel {
                 );
             }
 
-            @Override
+            //@Override
             public Function<Material, TextureAtlasSprite> getModelTextureGetter() {
                 return Material::sprite;
             }
@@ -192,17 +193,17 @@ public class DogBedModel implements BakedModel {
                 return this.bake(p_250776_, p_251280_, getModelTextureGetter());
             }
 
-            @Override
-            public @org.jetbrains.annotations.Nullable UnbakedModel getTopLevelModel(ModelResourceLocation location) {
-                // TODO Auto-generated method stub
-                return null;
-            }
+            // @Override
+            // public @org.jetbrains.annotations.Nullable UnbakedModel getTopLevelModel(ModelResourceLocation location) {
+            //     // TODO Auto-generated method stub
+            //     return null;
+            // }
 
-            @Override
-            public @org.jetbrains.annotations.Nullable BakedModel bakeUncached(UnbakedModel model, ModelState state,
-                    Function<Material, TextureAtlasSprite> sprites) {
-                return null;
-            }
+            // @Override
+            // public @org.jetbrains.annotations.Nullable BakedModel bakeUncached(UnbakedModel model, ModelState state,
+            //         Function<Material, TextureAtlasSprite> sprites) {
+            //     return null;
+            // }
             
         });
         return baker.bake(null, null, null);
@@ -265,7 +266,7 @@ public class DogBedModel implements BakedModel {
 
     @Override
     public ItemOverrides getOverrides() {
-        return this.bakedModel.getOverrides();
+        return this.defaultModelVariant.getOverrides();
     }
 
     

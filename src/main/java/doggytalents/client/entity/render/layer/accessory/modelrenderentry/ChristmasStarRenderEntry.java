@@ -11,10 +11,10 @@ import doggytalents.common.entity.accessory.DemonHornsAccessory;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLayerDefinitions;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class ChristmasStarRenderEntry extends AccessoryModelManager.Entry {
     public static final ModelLayerLocation CHRISTMAS_STAR = new ModelLayerLocation(Util.getResource("dog_christmas_star"), "main");
