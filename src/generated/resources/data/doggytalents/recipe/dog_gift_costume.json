@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "doggytalents:bowtie"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    " B ",
+    "PP ",
+    "PP "
+  ],
+  "result": {
+    "count": 1,
+    "id": "doggytalents:dog_gift_costume"
+  }
+}

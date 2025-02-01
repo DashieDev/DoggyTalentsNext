@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:green_wool"
+    },
+    "S": {
+      "item": "minecraft:spruce_sapling"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
+    }
+  },
+  "pattern": [
+    " G ",
+    "GSG",
+    " T "
+  ],
+  "result": {
+    "count": 1,
+    "id": "doggytalents:dog_christmas_tree"
+  }
+}
