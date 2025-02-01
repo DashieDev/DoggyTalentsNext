@@ -11,6 +11,7 @@ import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
+import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
 import doggytalents.common.entity.serializers.DimensionDependantArg;
 import doggytalents.common.entity.texture.DogSkinData;
@@ -41,6 +42,7 @@ public class DogFabricHelper {
     private DogSkinData dogSkin = DogSkinData.NULL;
     private DogPettingState dogPettingState = DogPettingState.NULL;
     private DogAnimDebugState dogAnimDebugState = DogAnimDebugState.NONE;
+    private DogSleepOnState dogSleepOnState = DogSleepOnState.NULL;
 
     private final ArrayList<SyncType<?>> dirtyEntries = new ArrayList<>();
 
@@ -223,6 +225,20 @@ public class DogFabricHelper {
         }
         this.dogAnimDebugState = data;
         dog.onFabricDataUpdated(SyncTypes.DOG_ANIM_DEBUG_STATE);
+    }
+
+    public DogSleepOnState getDogSleepOnState() {
+        return this.dogSleepOnState;
+    }
+
+    public void setDogSleepOnState(DogSleepOnState data) {
+        if (this.dogSleepOnState.equals(data))
+            return;
+        if (!dog.level().isClientSide) {
+            this.setDirty(SyncTypes.DOG_SLEEP_ON_STATE);
+        }
+        this.dogSleepOnState = data;
+        dog.onFabricDataUpdated(SyncTypes.DOG_SLEEP_ON_STATE);
     }
 
     public void onStartBeingSeenBy(ServerPlayer player) {

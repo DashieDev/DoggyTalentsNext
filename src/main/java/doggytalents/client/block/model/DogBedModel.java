@@ -26,6 +26,7 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -257,7 +258,7 @@ public class DogBedModel implements BakedModel {
 
     @Override
     public ItemOverrides getOverrides() {
-        return this.bakedModel.getOverrides();
+        return this.defaultModelVariant.getOverrides();
     }
 
     

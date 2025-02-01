@@ -102,6 +102,48 @@ public class EventHandlerRegisterer {
                 DoggyEntityTypes::addEntityAttributes
             )
         );
+        // EventCallbacksRegistry.registerCallback(
+        //     new SingleEventCallBack<MobSpawnEvent.FinalizeSpawn>(
+        //         MobSpawnEvent.FinalizeSpawn.class,
+        //         DTNWolfVariantsSpawnOverride::onWolfSpawn
+        //     )
+        // );
+        // EventCallbacksRegistry.registerCallback(
+        //     new SingleEventCallBack<MobSpawnEvent.PositionCheck>(
+        //         MobSpawnEvent.PositionCheck.class,
+        //         DTNWolfVariantsSpawnPlacements::onPositionCheck
+        //     )
+        // );
+        // EventCallbacksRegistry.registerCallback(
+        //     new SingleEventCallBack<PlayerInteractEvent.RightClickBlock>(
+        //         PlayerInteractEvent.RightClickBlock.class,
+        //         VSCodeWolfSpawnHandler::onRightClickBlock
+        //     )
+        // );
+        // EventCallbacksRegistry.registerCallback(
+        //     new SingleEventCallBack<PlayerInteractEvent.RightClickBlock>(
+        //         PlayerInteractEvent.RightClickBlock.class,
+        //         ChopinRecordItem::onRightClickBlock
+        //     )
+        // );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, CanContinueSleepingEvent>
+                (handlerIst, CanContinueSleepingEvent.class,
+                    (x, y) -> x.canPlayerContinueSleeping(y)
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, SleepFinishedTimeEvent>
+                (handlerIst, SleepFinishedTimeEvent.class,
+                    (x, y) -> x.beforeAllPlayerWakeUp(y)
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, PlayerWakeUpEvent>
+                (handlerIst, PlayerWakeUpEvent.class,
+                    (x, y) -> x.playerWakeUpEvent(y)
+                )
+        );
     }
 
 }

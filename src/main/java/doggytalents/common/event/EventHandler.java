@@ -31,6 +31,7 @@ import doggytalents.common.util.Util;
 import doggytalents.common.util.dogpromise.DogPromiseManager;
 import doggytalents.common.util.dogpromise.promise.DogBatchTeleportToDimensionPromise;
 import doggytalents.common.util.dogpromise.promise.DogHoldChunkToTeleportPromise;
+import doggytalents.forge_imitate.event.CanContinueSleepingEvent;
 import doggytalents.forge_imitate.event.EntityJoinLevelEvent;
 import doggytalents.forge_imitate.event.EntityTravelToDimensionEvent;
 import doggytalents.forge_imitate.event.LivingChangeTargetEvent;
@@ -38,12 +39,14 @@ import doggytalents.forge_imitate.event.LivingHurtEvent;
 import doggytalents.forge_imitate.event.LootingLevelEvent;
 import doggytalents.forge_imitate.event.PlayerInteractEvent;
 import doggytalents.forge_imitate.event.PlayerLoggedInEvent;
+import doggytalents.forge_imitate.event.PlayerWakeUpEvent;
 import doggytalents.forge_imitate.event.ProjectileImpactEvent;
 import doggytalents.forge_imitate.event.ServerStoppedEvent;
 import doggytalents.forge_imitate.event.ServerStoppingEvent;
 import doggytalents.forge_imitate.event.ServerTickEvent;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent;
 import doggytalents.forge_imitate.event.ServerTickEvent.Phase;
+import doggytalents.forge_imitate.event.SleepFinishedTimeEvent;
 import doggytalents.forge_imitate.network.PacketDistributor;
 import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.core.Direction;
@@ -599,17 +602,17 @@ public class EventHandler {
         event.setCanceled(true);
     }
 
-    @SubscribeEvent
-    public void canPlayerContinueSleeping(SleepingLocationCheckEvent event) {
+    //@SubscribeEvent
+    public void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
         DogSleepOnManager.canPlayerContinueSleeping(event);
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void beforeAllPlayerWakeUp(SleepFinishedTimeEvent event) {
         DogSleepOnManager.beforeSleepFinishedForAllPlayer(event);
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void playerWakeUpEvent(PlayerWakeUpEvent event) {
         if (!event.getEntity().level().isClientSide)
             DogSleepOnManager.onPlayerWakeUp(event.getEntity());

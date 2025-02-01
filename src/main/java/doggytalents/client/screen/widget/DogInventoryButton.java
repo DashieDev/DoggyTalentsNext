@@ -30,6 +30,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
+import doggytalents.forge_imitate.event.client.ScreenEvent;
 import doggytalents.forge_imitate.network.PacketDistributor;
 
 import java.util.List;

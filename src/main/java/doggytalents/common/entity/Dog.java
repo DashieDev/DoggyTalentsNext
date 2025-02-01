@@ -3670,11 +3670,11 @@ public class Dog extends AbstractDog {
     }
 
     public DogSleepOnState getSleepOnState() {
-        return this.entityData.get(DOG_SLEEP_ON_STATE);
+        return this.dogFabricHelper.getDogSleepOnState();
     }
 
     public void setSleepOnState(DogSleepOnState state) {
-        this.entityData.set(DOG_SLEEP_ON_STATE, state);
+        this.dogFabricHelper.setDogSleepOnState(state);
     }
 
     @Override
@@ -5467,6 +5467,10 @@ public class Dog extends AbstractDog {
                 this.dogAi.forceStopAllGoal();
             }
             this.animationManager.onDebugUpdate(debug_state);
+        }
+
+        if (type == SyncTypes.DOG_SLEEP_ON_STATE) {
+            DogSleepOnManager.onDogSleepOnDataUpdated(this, getSleepOnState());
         }
     }
 

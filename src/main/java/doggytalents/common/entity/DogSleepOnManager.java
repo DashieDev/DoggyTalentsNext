@@ -15,6 +15,8 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.feature.DogSize;
 import doggytalents.client.DTNClientDogSleepOnManager;
 import doggytalents.common.talent.BedDogTalent;
+import doggytalents.forge_imitate.event.CanContinueSleepingEvent;
+import doggytalents.forge_imitate.event.SleepFinishedTimeEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -26,9 +28,6 @@ import net.minecraft.world.entity.player.Player.BedSleepingProblem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
-import net.minecraftforge.event.level.SleepFinishedTimeEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
 
 public class DogSleepOnManager {
     
@@ -301,14 +300,14 @@ public class DogSleepOnManager {
 
 
 
-    public static void canPlayerContinueSleeping(SleepingLocationCheckEvent event) {
+    public static void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
         // if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
         //     return;
         var player = event.getEntity();
         var dog_optional = DogSleepOnManager.getServer(player.getServer()).getSleepingOnDog(player);
         if (!dog_optional.isPresent())
             return;
-        event.setResult(Result.ALLOW);
+        event.setContinueSleeping(true);
     }
 
     public static void beforeSleepFinishedForAllPlayer(SleepFinishedTimeEvent event) {

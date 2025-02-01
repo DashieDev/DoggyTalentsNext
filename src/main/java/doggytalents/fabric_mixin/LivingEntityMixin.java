@@ -7,16 +7,19 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import org.spongepowered.asm.mixin.injection.modify.LocalVariableDiscriminator.Context.Local;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.entity.FabricDogKillXPFix;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
+import doggytalents.forge_imitate.event.CanContinueSleepingEvent;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import doggytalents.forge_imitate.event.LootingLevelEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player.BedSleepingProblem;
 import net.minecraft.world.phys.Vec3;
 
 @Mixin(LivingEntity.class)
@@ -84,6 +87,19 @@ public class LivingEntityMixin {
     public void dtn__actuallyHurt(DamageSource source, float amount, CallbackInfo info) {
         var self = (LivingEntity)(Object)this;
         FabricDogKillXPFix.onMobActuallyBeingHurt(self, source);
+    }
+
+    @Inject(method = "checkBedExists()Z", at = @At("RETURN"), cancellable = true)
+    public void dtn__checkBedExists(CallbackInfoReturnable<Boolean> info) {
+        boolean bed_exist = info.getReturnValue();
+        if (bed_exist)
+            return;
+        
+        var self = (LivingEntity)(Object)this;
+        var event = new CanContinueSleepingEvent(self, BedSleepingProblem.NOT_POSSIBLE_HERE);
+        EventCallbacksRegistry.postEvent(event);
+        if (event.canContinueSleeping())
+            info.setReturnValue(true);
     }
 
 }

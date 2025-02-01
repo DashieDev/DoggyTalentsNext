@@ -124,6 +124,9 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
         public ForgeConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
 
+        //Fabric only
+        public ForgeConfigSpec.BooleanValue DOGBED_FORCE_DEFAULT_MODEL;
+
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("General");
 

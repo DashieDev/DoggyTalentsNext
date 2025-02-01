@@ -1,6 +1,7 @@
 package doggytalents.forge_imitate.event.client;
 
 import doggytalents.client.ClientSetup;
+import doggytalents.client.DTNClientDogSleepOnManager;
 import doggytalents.client.DTNClientPettingManager;
 import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.entity.render.world.BedFinderRenderer;
@@ -142,6 +143,12 @@ public class ClientEventHandlerRegisterer {
             new InstanceEventCallBack<DTNClientPettingManager, MovementInputUpdateEvent>
                 (DTNClientPettingManager.get(), MovementInputUpdateEvent.class,
                     DTNClientPettingManager::onMovementInput
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<DTNClientDogSleepOnManager, ClientTickEvent>
+                (DTNClientDogSleepOnManager.get(), ClientTickEvent.class,
+                    DTNClientDogSleepOnManager::tickClient
                 )
         );
     }

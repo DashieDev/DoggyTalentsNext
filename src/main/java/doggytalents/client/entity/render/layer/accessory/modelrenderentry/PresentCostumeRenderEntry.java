@@ -14,7 +14,7 @@ import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class PresentCostumeRenderEntry extends DoubleDyableRenderEntry {
     public static final ModelLayerLocation PRESENT_COSTUME = new ModelLayerLocation(Util.getResource("dog_gift_costume"), "main");
