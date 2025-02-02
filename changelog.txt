@@ -1694,7 +1694,7 @@ safe.
 *(1.21+ Neoforge only) Workaround for a Dog Menu bug caused by third party which leads to
 nothing being rendered beside the blur background when players access their Dogs' menu.
 
-**1.18.39 - 10th December 2024**
+**1.18.39 - 23th December 2024**
 **❄️🎄Merry Christmas🎄❄️!**
 + Added another variant of the bowtie: Head Bow (can be equipped to a Dog by sneak + right clicking
 the Dog with the bowtie in hand)
@@ -1705,3 +1705,29 @@ the Dog with the bowtie in hand)
   + Gift Costume (Double Dyable)
 # Demonhorns/Deer Antlers now have their own Accessory Type and can now be equipped alongside the head accessories.
 * Workaround for Fiery Reflector unwanted behaviour with Anim Debug Mode.   
+
+**1.18.40 - 2 February 2024**
++ New Talent: Bed Dog 🛌🐶
+  You can now Sleep on your Dog!
++ New skin: Hope 🐺
+  The main character of the indie game "Seed of Life" by Ki3 Games.
+  Dedicated to Akela Morse
++ You can now manually specify the position of the Dog Inventory Button located in your Survival Inventory
+via config.
++ Talents can now block Amnesia Bone from detraining it. Certain cases resulting in them blocking include being
+on a long cooldown. However, it is worth noting that players with Operator Permission can bypass this.
+# New DoggySpin system, instead of relying on awfully large spritesheet to render the spinning Dog, DTN now make uses of
+of the Dog Model itself and the Animation to programmatically render the icon. This allow the icon to be render
+at full framerate and with greater flexiblity (e.g rendering with different wolf variants, collars) 
+without creating more wasteful spritesheet. This also fixed the problem that some user have been experiencing
+about another mod attempting to "stitch" the spritesheet causing an Exception to be thrown due to it being too
+big.
+# Dog Bed no longer show missing texture on its particles.
+# You can now limit how many Dog Bed Variants can be rendered via config. When this limit is exceed,
+Dog Beds will render with the default variant instead. Note that the cache can be reset by doing a resource reload
+(F3+T). 
+# Dog Inventory Button no longer display in Creative Inventory Screen.
+* Fix every StringEntrySelectScreen (Conducting Bone, Whistle Screen, Heel By name, Dog Anim Debug Screen...)
+bug where you cannot select any entries if the number of entries happens to be fully divisible by the
+number of page and you are on the last page.
+* Fix a race condition in Dog Go Back to Sitting Position after Action AI.
