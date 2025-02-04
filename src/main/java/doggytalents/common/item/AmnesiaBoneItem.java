@@ -97,7 +97,7 @@ public class AmnesiaBoneItem extends Item implements IDogItem  {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flag) {
-        var desc_id = this.getDescriptionId(stack) + ".description";
+        var desc_id = this.getDescriptionId() + ".description";
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));

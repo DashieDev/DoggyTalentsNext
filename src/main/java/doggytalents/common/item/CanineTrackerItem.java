@@ -58,7 +58,7 @@ public class CanineTrackerItem extends Item {
             var text = getStatusText(ItemUtil.getTag(stack));
             if (text != null) return text; 
         }
-        return Component.translatable(this.getDescriptionId(stack));
+        return Component.translatable(this.getDescriptionId());
     }
 
     private @Nullable Component getStatusText(CompoundTag tag) {
@@ -79,7 +79,7 @@ public class CanineTrackerItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
-        var desc_id = this.getDescriptionId(stack) + ".description";
+        var desc_id = this.getDescriptionId() + ".description";
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));

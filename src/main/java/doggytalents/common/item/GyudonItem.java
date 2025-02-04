@@ -36,7 +36,7 @@ public class GyudonItem extends DogEddibleBowlFoodItem {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
-        var desc_id = this.getDescriptionId(stack) + ".description";
+        var desc_id = this.getDescriptionId() + ".description";
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
