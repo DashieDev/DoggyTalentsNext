@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import doggytalents.*;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HurtSuperCall;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.enu.WetSource;
 import doggytalents.api.feature.*;
@@ -168,7 +169,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -1242,7 +1243,7 @@ public class Dog extends AbstractDog {
 
         var wolf_armor0 = this.wolfArmor();
         this.setWolfArmor(ItemStack.EMPTY);
-        this.spawnAtLocation(wolf_armor0);
+        this.spawnAtLocation((ServerLevel)this.level(), wolf_armor0);
         return DogInteractionResult.SUCCESS;
     }
 
@@ -1434,14 +1435,14 @@ public class Dog extends AbstractDog {
     }
 
     //@Override
-    public boolean canTrample(BlockState state, BlockPos pos, float fallDistance) {
+    public boolean canTrample(ServerLevel level, BlockState state, BlockPos pos, float fallDistance) {
         //Temporary to avoid wolf mount bug when trampling crops.
         return false;
     }
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_332775_, 
-        DifficultyInstance p_332793_, MobSpawnType p_332761_, @Nullable SpawnGroupData p_332782_) {
+        DifficultyInstance p_332793_, EntitySpawnReason p_332761_, @Nullable SpawnGroupData p_332782_) {
         return null;
     }
 
@@ -1684,8 +1685,8 @@ public class Dog extends AbstractDog {
         return false;
     }
 
-    @Override
-    public boolean hurt(DamageSource source, float amount) {
+    //@Override
+    public boolean hurtDog(Optional<ServerLevel> level, DamageSource source, Optional<Float> amount, HurtSuperCall super_call) {
 
         var attacker = source.getEntity();
 
@@ -1703,18 +1704,21 @@ public class Dog extends AbstractDog {
             return false;
         }
 
+        if (amount.isPresent()) {
         for (IDogAlteration alter : this.alterations) {
-            InteractionResultHolder<Float> result = alter.gettingAttackedFrom(this, source, amount);
+                
+            InteractionResultHolder<Float> result = alter.gettingAttackedFrom(this, source, amount.get());
 
             // TODO
-            if (result.getResult() == InteractionResult.FAIL) {
+            if (result.getResult() == DogInteractionResult.FAIL) {
                 return false;
             } else {
-                amount = result.getObject();
+                amount = Optional.of(result.getObject());
             }
         }
+        }
 
-        if (this.isInvulnerableTo(source)) {
+        if (level.isPresent() && this.isInvulnerableTo(level.get(), source)) {
             return false;
         }
 
@@ -1736,7 +1740,7 @@ public class Dog extends AbstractDog {
 
         float health0 = this.getHealth();
 
-        boolean ret = super.hurt(source, amount);
+        boolean ret = super_call.hurt(source, amount);
 
         float actual_hurt_amount = health0 - this.getHealth();
 
@@ -1755,10 +1759,10 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    protected void actuallyHurt(DamageSource source, float amount) {
+    protected void actuallyHurt(ServerLevel level, DamageSource source, float amount) {
         if (mayWolfArmorAbsorb(source, amount))
             return;
-        super.actuallyHurt(source, amount);
+        super.actuallyHurt(level, source, amount);
     }
 
     private boolean mayWolfArmorAbsorb(DamageSource source, float amount) {
@@ -1842,7 +1846,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean doHurtTarget(Entity target) {
+    public boolean doHurtTarget(ServerLevel level, Entity target) {
         
         for (IDogAlteration alter : this.alterations) {
             alter.doInitialAttackEffects(this, target);
@@ -1878,7 +1882,7 @@ public class Dog extends AbstractDog {
 
         this.doInitialEnchantDamageEffects(this, target);
 
-        boolean flag = target.hurt(this.damageSources().mobAttack(this), damage);
+        boolean flag = target.hurtServer(level, this.damageSources().mobAttack(this), damage);
         if (!flag) return false;
 
         if (this.level() instanceof ServerLevel serverlevel1) {
@@ -1989,7 +1993,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean isInvulnerableToBase(DamageSource source) {
+    public boolean isInvulnerableTo(ServerLevel level, DamageSource source) {
         for (IDogAlteration alter : this.alterations) {
             var result = alter.isInvulnerableTo(this, source);
 
@@ -2000,7 +2004,7 @@ public class Dog extends AbstractDog {
             }
         }
 
-        return super.isInvulnerableToBase(source);
+        return super.isInvulnerableTo(level, source);
     }
 
     @Override
@@ -2261,7 +2265,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel worldIn, AgeableMob partner) {
-        Dog child = DoggyEntityTypes.DOG.get().create(worldIn);
+        Dog child = DoggyEntityTypes.DOG.get().create(worldIn, EntitySpawnReason.BREEDING);
         UUID uuid = this.getOwnerUUID();
 
         if (uuid != null) {
@@ -2325,12 +2329,12 @@ public class Dog extends AbstractDog {
         changeDimensionAuthorized = true;
     }
 
-    @Override
-    public Entity changeDimension(DimensionTransition tansition) {
+    //@Override
+    public Entity changeDimension(TeleportTransition tansition) {
         if (checkBlockPortal())
             return null;
         this.DTN_dogChangingDim = true;
-        Entity transportedEntity = super.changeDimension(tansition);
+        Entity transportedEntity = super.teleport(tansition);
         this.DTN_dogChangingDim = false;
         if (transportedEntity instanceof Dog) {
             DogLocationStorage.get(this.level()).getOrCreateData(this).update((Dog) transportedEntity);
@@ -4905,12 +4909,12 @@ public class Dog extends AbstractDog {
         super.onEquipItem(slot, oldStack, newStack);
     }
     
-    @Override
-    public boolean canTakeItem(ItemStack stack) {
-        if (checkEligibleArmorItemAndAvailableSlot(stack))
-            return true;
-        return false;
-    }
+    // @Override
+    // public boolean canTakeItem(ItemStack stack) {
+    //     if (checkEligibleArmorItemAndAvailableSlot(stack))
+    //         return true;
+    //     return false;
+    // }
 
     private boolean checkEligibleArmorItemAndAvailableSlot(ItemStack stack) {
         if (!this.canDogWearArmor())
@@ -5480,6 +5484,32 @@ public class Dog extends AbstractDog {
             DogSleepOnManager.onDogSleepOnDataUpdated(this, getSleepOnState());
         }
     }
+
+
+
+    //1.21.3+
+    @Nullable
+    public Entity teleport(TeleportTransition transition) {
+        boolean is_change_dim = 
+            transition.newLevel() != this.level();
+        if (is_change_dim)
+            return this.changeDimension(transition);
+        return super.teleport(transition);
+    }
+    @Override
+    public boolean hurtServer(ServerLevel server_level, DamageSource source, float amount) {
+        return hurtDog(Optional.of(server_level), source, Optional.of(amount), 
+            (source_1, amount_1) -> super.hurtServer(server_level, source_1, amount_1.get())
+        );
+    }
+    @Override
+    public boolean hurtClient(DamageSource source) {
+        return hurtDog(Optional.empty(), source, Optional.empty(), 
+            (source_1, amount_1) -> super.hurtClient(source_1)
+        );
+    }
+
+
 
     private boolean isAddedToWorld = false;
     public boolean isAddedToWorld() {
