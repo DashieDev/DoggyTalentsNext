@@ -508,14 +508,14 @@ public class WhistleItem extends Item implements IDogItem {
     }
 
     @Override
-    public String getDescriptionId(ItemStack stack) {
+    public Component getName(ItemStack stack) {
         byte mode = 0;
 
         var tag = ItemUtil.getTag(stack);
         if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
             mode = tag.getByte("mode");
         }
-        return this.getDescriptionId() + "." + mode;
+        return Component.translatable(this.getDescriptionId() + "." + mode);
 
     }
 
