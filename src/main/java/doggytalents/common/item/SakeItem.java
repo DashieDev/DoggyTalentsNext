@@ -8,6 +8,7 @@ import doggytalents.DoggyAdvancementTriggers;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,7 +44,7 @@ public class SakeItem extends DogEddibleItem {
             return false;
         if (!(entityIn instanceof Player player))
             return false;
-        if (player.getCooldowns().isOnCooldown(this))
+        if (PlayerUtil.isOnCooldown(player, this))
             return false;
         if (dog.getOwner() != player)
             return false;
@@ -55,7 +56,7 @@ public class SakeItem extends DogEddibleItem {
         var ret = super.consume(dog, stack, entityIn);
         mayBoostOrDrunkEntity(dog, entityIn);
         if (entityIn instanceof Player player) {
-            player.getCooldowns().addCooldown(this, 40);
+            PlayerUtil.addCooldown(player, this, 40);
         }
         return ret;
     }
@@ -68,7 +69,7 @@ public class SakeItem extends DogEddibleItem {
 
         if (!player.level().isClientSide) {
             mayBoostOrDrunkEntity(player, null);
-            player.getCooldowns().addCooldown(this, 40);
+            PlayerUtil.addCooldown(player, this, 40);
         }
 
         if (!player.getAbilities().instabuild)

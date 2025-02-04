@@ -9,6 +9,7 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.data.DogUntameData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,7 +27,7 @@ public class DogUntamePacket extends DogPacket<DogUntameData> {
         var sender = ctx.get().getSender();
         var stack = sender.getMainHandItem();
         if (stack.getItem() != DoggyItems.AMNESIA_BONE.get()) return;
-        if (sender.getCooldowns().isOnCooldown(DoggyItems.AMNESIA_BONE.get())) return;
+        if (PlayerUtil.isOnCooldown(sender, DoggyItems.AMNESIA_BONE.get())) return;
         var ownerUUID = dog.getOwnerUUID();
         if (ownerUUID == null) return;
         if (!ownerUUID.equals(sender.getUUID())) return;
@@ -48,7 +49,7 @@ public class DogUntamePacket extends DogPacket<DogUntameData> {
 
         tag.putInt("amnesia_bone_used_time", usedTime);
 
-        sender.getCooldowns().addCooldown(DoggyItems.AMNESIA_BONE.get(), 60);
+        PlayerUtil.addCooldown(sender, DoggyItems.AMNESIA_BONE.get(), 60);
         ItemUtil.putTag(stack, tag);
     }
     

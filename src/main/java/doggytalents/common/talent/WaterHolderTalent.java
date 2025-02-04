@@ -14,6 +14,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -155,7 +156,7 @@ public class WaterHolderTalent extends TalentInstance {
                         ));
                     }
                     
-                    player.sendSystemMessage(c1);
+                    PlayerUtil.sendSystemMessage(player, c1);
                     return DogInteractionResult.SUCCESS;
                 }
             }

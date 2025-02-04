@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyTags;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -32,7 +33,7 @@ public class WolfBegAtTreatGoal extends Goal {
    }
 
    public boolean canUse() {
-      this.player = this.level.getNearestPlayer(this.begTargeting, this.wolf);
+      this.player = ((ServerLevel)this.level).getNearestPlayer(this.begTargeting, this.wolf);
       return this.player == null ? false : this.playerHoldingInteresting(this.player);
    }
 

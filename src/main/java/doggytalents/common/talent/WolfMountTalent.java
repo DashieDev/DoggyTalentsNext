@@ -6,6 +6,7 @@ import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.util.PlayerUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -92,7 +93,7 @@ public class WolfMountTalent extends TalentInstance {
         if (dog.isVehicle() && dog.getDogHunger() < 1) {
             var control = dog.getControllingPassenger();
             if (control != null)
-                control.sendSystemMessage(Component.translatable("talent.doggytalents.wolf_mount.exhausted", dog.getName()));
+                PlayerUtil.sendSystemMessage(control, Component.translatable("talent.doggytalents.wolf_mount.exhausted", dog.getName()));
 
             dog.ejectPassengers();
         }

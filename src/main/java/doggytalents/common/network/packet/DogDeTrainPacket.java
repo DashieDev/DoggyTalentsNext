@@ -10,6 +10,7 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.data.DogDeTrainData;
 import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.util.NetworkUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
@@ -33,7 +34,7 @@ public class DogDeTrainPacket extends DogPacket<DogDeTrainData> {
         var sender = ctx.get().getSender();
         var stack = sender.getMainHandItem();
         if (stack.getItem() != DoggyItems.AMNESIA_BONE.get()) return;
-        if (sender.getCooldowns().isOnCooldown(DoggyItems.AMNESIA_BONE.get())) return;
+        if (PlayerUtil.isOnCooldown(sender, DoggyItems.AMNESIA_BONE.get())) return;
         var ownerUUID = dog.getOwnerUUID();
         if (ownerUUID == null) return;
         if (!ownerUUID.equals(sender.getUUID())) return;
@@ -53,7 +54,7 @@ public class DogDeTrainPacket extends DogPacket<DogDeTrainData> {
         if (sender.experienceLevel < xp_cost) return;
         dog.setTalentLevel(talent, 0);
         dog.clearTriggerableAction();
-        sender.getCooldowns().addCooldown(DoggyItems.AMNESIA_BONE.get(), 20);
+        PlayerUtil.addCooldown(sender, DoggyItems.AMNESIA_BONE.get(), 20);
         sender.giveExperienceLevels(-xp_cost);
     }
     

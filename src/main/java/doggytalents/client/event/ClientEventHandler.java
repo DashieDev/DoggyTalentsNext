@@ -31,6 +31,7 @@ import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.PlayerUtil;
 import doggytalents.common.util.Util;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.client.Minecraft;
@@ -161,7 +162,7 @@ public class ClientEventHandler {
         // }
         if (hotkey_use < 0) return;
 
-        if (player.getCooldowns().isOnCooldown(whistle)) return;
+        if (PlayerUtil.isOnCooldown(player, whistle)) return;
         
         var tag = ItemUtil.getTag(whistle_stack);
         if (tag == null) return;

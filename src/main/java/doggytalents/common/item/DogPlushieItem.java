@@ -16,6 +16,7 @@ import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.accessory.DyeableAccessory.DyeableAccessoryInstance;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.PlayerUtil;
 import doggytalents.common.variant.DogVariant;
 import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.core.BlockPos;
@@ -78,7 +79,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
             stack.shrink(1);
 
         if (player != null)
-            player.getCooldowns().addCooldown(this, 20);
+            PlayerUtil.addCooldown(player, this, 20);
 
         return InteractionResult.SUCCESS;
     }

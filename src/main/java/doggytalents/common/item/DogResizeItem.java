@@ -4,6 +4,7 @@ import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.feature.DogSize;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,7 +44,7 @@ public class DogResizeItem extends Item implements IDogItem {
         if (dog.getAge() < 0) {
 
             if (!playerIn.level().isClientSide){
-                playerIn.sendSystemMessage(Component.translatable("treat."+this.type.getName()+".too_young"));
+                PlayerUtil.sendSystemMessage(playerIn, Component.translatable("treat."+this.type.getName()+".too_young"));
             }
 
             return DogInteractionResult.FAIL;

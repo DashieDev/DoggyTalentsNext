@@ -9,6 +9,7 @@ import doggytalents.api.inferface.IDogItem;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.talent.OokamiKazeTalent;
+import doggytalents.common.util.PlayerUtil;
 import doggytalents.common.util.RandomUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -135,14 +136,14 @@ public class TreatItem extends Item implements IDogItem {
     private void treatFailPrompt(AbstractDog dog, Level worldIn, Player playerIn, Component msg) {
         if (!worldIn.isClientSide) {
             worldIn.broadcastEntityEvent(dog, Constants.EntityState.WOLF_SMOKE);
-            playerIn.sendSystemMessage(msg);
+            PlayerUtil.sendSystemMessage(playerIn, msg);
         }
     }
 
     private void treatSuccessPrompt(AbstractDog dog, Level worldIn, Player playerIn) {
         if (!worldIn.isClientSide) {
             worldIn.broadcastEntityEvent(dog, Constants.EntityState.WOLF_HEARTS);
-            playerIn.sendSystemMessage(Component.translatable("treat."+this.type.getName()+".level_up"));
+            PlayerUtil.sendSystemMessage(playerIn, Component.translatable("treat."+this.type.getName()+".level_up"));
         }
     }
 }

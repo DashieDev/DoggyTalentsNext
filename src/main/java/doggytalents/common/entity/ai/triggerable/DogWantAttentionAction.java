@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
@@ -97,7 +98,7 @@ public class DogWantAttentionAction extends TriggerableAction {
                 whinedToAttention = true;
                 this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
                 int r = this.dog.getRandom().nextInt(3);
-                owner.sendSystemMessage(Component.translatable(
+                PlayerUtil.sendSystemMessage(owner, Component.translatable(
                     "dog.msg.want_attention." + r, dog.getName().getString()));
             }
             checkAndSwitchToAttention();

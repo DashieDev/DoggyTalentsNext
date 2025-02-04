@@ -7,6 +7,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AmnesiaBoneItem;
 import doggytalents.common.network.packet.data.DogMigrateOwnerData;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -37,7 +38,7 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
         if (stack.getItem() != DoggyItems.AMNESIA_BONE.get()) return;
 
         //And not in cooldown
-        if (sender.getCooldowns().isOnCooldown(DoggyItems.AMNESIA_BONE.get())) return;
+        if (PlayerUtil.isOnCooldown(sender, DoggyItems.AMNESIA_BONE.get())) return;
 
         //And is dog's owner.
         var ownerUUID = dog.getOwnerUUID();
@@ -71,7 +72,7 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
 
         //If reject then send the requester reject msg and return;
         if (!data.confirmed) {
-            requester.sendSystemMessage(
+            PlayerUtil.sendSystemMessage(requester, 
                 Component.translatable("item.doggytalents.amnesia_bone.migrate_owner.reject",
                     dog.getName().getString()
                 ).withStyle(ChatFormatting.RED)
@@ -91,7 +92,7 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
         
         //Proccess sender
         sender.giveExperienceLevels(-AmnesiaBoneItem.getMigrateOwnerXPCost());
-        sender.getCooldowns().addCooldown(DoggyItems.AMNESIA_BONE.get(), 60);
+        PlayerUtil.addCooldown(sender, DoggyItems.AMNESIA_BONE.get(), 60);
         int usedTime = tag.getInt("amnesia_bone_used_time");
         ++usedTime;
         if (usedTime >= AmnesiaBoneItem.getUseCap()) {
@@ -101,7 +102,7 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
         tag.putInt("amnesia_bone_used_time", usedTime);
 
         //Proccess requester
-        requester.sendSystemMessage(
+        PlayerUtil.sendSystemMessage(requester, 
             Component.translatable("item.doggytalents.amnesia_bone.migrate_owner.confirmed",
                 dog.getName().getString(), dog.getGenderPronoun()
             )
