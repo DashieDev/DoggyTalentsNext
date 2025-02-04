@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Accessory;
 import net.minecraft.network.chat.Component;
@@ -32,8 +33,8 @@ public class GiantStickAccessoryItem extends AccessoryItem{
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
+    public DogInteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
             InteractionHand handIn) {
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 }

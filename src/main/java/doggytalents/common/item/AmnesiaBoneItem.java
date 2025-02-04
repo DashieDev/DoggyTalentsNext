@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.screen.AmnesiaBoneScreen.AmneisaBoneScreen;
@@ -17,7 +18,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,18 +35,18 @@ public class AmnesiaBoneItem extends Item implements IDogItem  {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dog, Level level, Player player,
+    public DogInteractionResult processInteract(AbstractDog dog, Level level, Player player,
         InteractionHand hand) {
         var ownerUUID = dog.getOwnerUUID();
         if (ownerUUID == null) {
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         }
         if (level.isClientSide) {
             handleOpenScreenOnClient(level, dog, player, hand, ownerUUID);
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
         requestOwnership(level, ownerUUID, player, hand, dog);
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     private void handleOpenScreenOnClient(Level level, AbstractDog dogIn, Player player,

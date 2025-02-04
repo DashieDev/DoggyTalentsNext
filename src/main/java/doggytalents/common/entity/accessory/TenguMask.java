@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.api.registry.Accessory;
@@ -50,7 +51,7 @@ public class TenguMask extends Glasses implements IAccessoryHasModel {
         }
 
         @Override
-        public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
+        public DogInteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
                 InteractionHand handIn) {
 
             if (dogIn.level().isClientSide)
@@ -58,7 +59,7 @@ public class TenguMask extends Glasses implements IAccessoryHasModel {
                 unwear = !unwear;
             }
 
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         }
 
     }

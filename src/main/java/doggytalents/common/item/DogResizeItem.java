@@ -1,11 +1,11 @@
 package doggytalents.common.item;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.feature.DogSize;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -36,9 +36,9 @@ public class DogResizeItem extends Item implements IDogItem {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
+    public DogInteractionResult processInteract(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
         if (!dog.canInteract(playerIn))
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         
         if (dog.getAge() < 0) {
 
@@ -46,7 +46,7 @@ public class DogResizeItem extends Item implements IDogItem {
                 playerIn.sendSystemMessage(Component.translatable("treat."+this.type.getName()+".too_young"));
             }
 
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         }
         else {
             var itemInHand = playerIn.getItemInHand(handIn);
@@ -58,7 +58,7 @@ public class DogResizeItem extends Item implements IDogItem {
                 if (!playerIn.getAbilities().instabuild && size0 != size1)
                 itemInHand.hurtAndBreak(1, playerIn, LivingEntity.getSlotForHand(handIn));
             }
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
     }
 }

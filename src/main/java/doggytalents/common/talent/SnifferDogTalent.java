@@ -8,6 +8,7 @@ import java.util.Random;
 
 import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -157,14 +158,14 @@ public class SnifferDogTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dog, Level worldIn, Player playerIn,
+    public DogInteractionResult processInteract(AbstractDog dog, Level worldIn, Player playerIn,
             InteractionHand handIn) {
         var stack = playerIn.getItemInHand(handIn);
         if (!stack.is(DoggyItems.SCENT_TREAT.get()))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         if (dog.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
         if (playerIn.isShiftKeyDown()) {
             if (this.detectingBlock == null)
@@ -178,7 +179,7 @@ public class SnifferDogTalent extends TalentInstance {
                 )
             );
             playerIn.sendSystemMessage(c1);
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
 
         var tag = ItemUtil.getTag(stack);;
@@ -187,7 +188,7 @@ public class SnifferDogTalent extends TalentInstance {
         } else {
             var block = NBTUtil.getRegistryValue(tag, ScentTreatItem.SCENT_BLOCK_ID, BuiltInRegistries.BLOCK);
             if (block == null)
-                return InteractionResult.SUCCESS;
+                return DogInteractionResult.SUCCESS;
             
             this.setDetectBlock(block);
         }
@@ -204,7 +205,7 @@ public class SnifferDogTalent extends TalentInstance {
 
         stack.shrink(1);
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     public void validateSuspiciousPos(Dog dog) {

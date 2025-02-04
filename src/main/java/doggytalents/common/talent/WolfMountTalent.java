@@ -1,6 +1,8 @@
 package doggytalents.common.talent;
 
 import doggytalents.DoggyAttributes;
+import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -9,7 +11,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -57,24 +58,24 @@ public class WolfMountTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dog, Level level, Player player, InteractionHand hand) {
+    public DogInteractionResult processInteract(AbstractDog dog, Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!stack.isEmpty())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (this.level() <= 0)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (dog.isVehicle() || dog.isPassenger())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!dog.canInteract(player))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (player.isPassenger())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         int lastClickTick0 = this.lastClickTick;
         lastClickTick = player.tickCount;
         if (lastClickTick - lastClickTick0 > 5) {
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         }
 
         if (!dog.level().isClientSide) {
@@ -83,7 +84,7 @@ public class WolfMountTalent extends TalentInstance {
             player.setXRot(dog.getXRot());
             player.startRiding(dog);
         }
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     @Override
@@ -117,8 +118,8 @@ public class WolfMountTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult shouldSkipAttackFrom(AbstractDog dogIn, Entity entity) {
+    public DogInteractionResult shouldSkipAttackFrom(AbstractDog dogIn, Entity entity) {
         // If the attacking entity is riding block
-        return dogIn.isPassengerOfSameVehicle(entity) ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        return dogIn.isPassengerOfSameVehicle(entity) ? DogInteractionResult.SUCCESS : DogInteractionResult.PASS;
     }
 }

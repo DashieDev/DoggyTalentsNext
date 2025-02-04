@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyAdvancementTriggers;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import net.minecraft.network.chat.Component;
@@ -14,7 +15,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -51,7 +51,7 @@ public class SakeItem extends DogEddibleItem {
     }
 
     @Override
-    public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
+    public DogInteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
         var ret = super.consume(dog, stack, entityIn);
         mayBoostOrDrunkEntity(dog, entityIn);
         if (entityIn instanceof Player player) {
@@ -88,7 +88,7 @@ public class SakeItem extends DogEddibleItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level p_42993_, Player p_42994_, InteractionHand p_42995_) {
+    public InteractionResult use(Level p_42993_, Player p_42994_, InteractionHand p_42995_) {
         return ItemUtils.startUsingInstantly(p_42993_, p_42994_, p_42995_);
     }
 

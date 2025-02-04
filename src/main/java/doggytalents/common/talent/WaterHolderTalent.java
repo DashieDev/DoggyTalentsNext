@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -131,7 +132,7 @@ public class WaterHolderTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dog, Level level, Player player, InteractionHand hand) {
+    public DogInteractionResult processInteract(AbstractDog dog, Level level, Player player, InteractionHand hand) {
         
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() instanceof BucketItem) {
@@ -155,7 +156,7 @@ public class WaterHolderTalent extends TalentInstance {
                     }
                     
                     player.sendSystemMessage(c1);
-                    return InteractionResult.SUCCESS;
+                    return DogInteractionResult.SUCCESS;
                 }
             }
         }
@@ -164,7 +165,7 @@ public class WaterHolderTalent extends TalentInstance {
 
             if (!dog.level().isClientSide) {
                 
-                if (this.getWaterUnitleft() >= this.getMaxWaterHold()) return InteractionResult.PASS;
+                if (this.getWaterUnitleft() >= this.getMaxWaterHold()) return DogInteractionResult.PASS;
 
                 this.setWaterUnitLeft(this.getMaxWaterHold());
 
@@ -182,11 +183,11 @@ public class WaterHolderTalent extends TalentInstance {
             }
             //Already max'ed
             
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
             
         } 
         
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 
     @Override

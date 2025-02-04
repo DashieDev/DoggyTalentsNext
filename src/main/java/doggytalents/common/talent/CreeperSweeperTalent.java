@@ -1,6 +1,7 @@
 package doggytalents.common.talent;
 
 import doggytalents.TalentsOptions;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.TalentOption;
@@ -75,19 +76,19 @@ public class CreeperSweeperTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult canAttack(AbstractDog dog, LivingEntity entity) {
+    public DogInteractionResult canAttack(AbstractDog dog, LivingEntity entity) {
         if (this.canAttackCreeper() && onlyAttackCreeper) {
-            return entity instanceof Creeper ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+            return entity instanceof Creeper ? DogInteractionResult.SUCCESS : DogInteractionResult.FAIL;
         }
-        return entity instanceof Creeper && this.canAttackCreeper() ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        return entity instanceof Creeper && this.canAttackCreeper() ? DogInteractionResult.SUCCESS : DogInteractionResult.PASS;
     }
 
     @Override
-    public InteractionResult shouldAttackEntity(AbstractDog dog, LivingEntity target, LivingEntity owner) {
+    public DogInteractionResult shouldAttackEntity(AbstractDog dog, LivingEntity target, LivingEntity owner) {
         if (this.canAttackCreeper() && onlyAttackCreeper) {
-            return target instanceof Creeper ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+            return target instanceof Creeper ? DogInteractionResult.SUCCESS : DogInteractionResult.FAIL;
         }
-        return target instanceof Creeper && this.canAttackCreeper() ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        return target instanceof Creeper && this.canAttackCreeper() ? DogInteractionResult.SUCCESS : DogInteractionResult.PASS;
      }
 
     public boolean canAttackCreeper() {

@@ -1,6 +1,7 @@
 package doggytalents.common.talent;
 
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -95,10 +96,10 @@ public class FireDrillTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult stillIdleOrSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
+    public DogInteractionResult stillIdleOrSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
         if (isRolling && source.is(DamageTypes.ON_FIRE))
-            return InteractionResult.SUCCESS;
-        return InteractionResult.PASS;    
+            return DogInteractionResult.SUCCESS;
+        return DogInteractionResult.PASS;    
     }
 
     public static class DogStopDropRollAction extends TriggerableAction {

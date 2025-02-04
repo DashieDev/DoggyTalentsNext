@@ -2,6 +2,7 @@ package doggytalents.common.entity;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import net.minecraft.sounds.SoundEvents;
@@ -25,7 +26,7 @@ public class DogDrinkMilkHandler implements IDogFoodHandler {
     }
 
     @Override
-    public InteractionResult consume(AbstractDog dog, ItemStack stackIn, @Nullable Entity entityIn) {
+    public DogInteractionResult consume(AbstractDog dog, ItemStack stackIn, @Nullable Entity entityIn) {
         if (!dog.level().isClientSide) {
             
             dog.removeAllEffects();
@@ -41,7 +42,7 @@ public class DogDrinkMilkHandler implements IDogFoodHandler {
             );
         }
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     private void consumeMilkFromPlayer(Player player, ItemStack stack) {

@@ -1,6 +1,7 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.feature.EnumGender;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
@@ -26,17 +27,17 @@ public class GenderBoneItem extends Item implements IDogItem{
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
+    public DogInteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
             InteractionHand handIn) {
         if (!(dogIn instanceof Dog dog))
-            return InteractionResult.CONSUME;
+            return DogInteractionResult.CONSUME;
         if (!dog.canInteract(playerIn))
-            return InteractionResult.CONSUME;
+            return DogInteractionResult.CONSUME;
         if (playerIn.getCooldowns().isOnCooldown(DoggyItems.GENDER_BONE.get()))
-            return InteractionResult.CONSUME;
+            return DogInteractionResult.CONSUME;
             
         if (dog.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         
         dog.setGender(dog.getGender() == EnumGender.MALE ?
             EnumGender.FEMALE
@@ -56,7 +57,7 @@ public class GenderBoneItem extends Item implements IDogItem{
         }
         var stack = playerIn.getItemInHand(handIn);
         stack.hurtAndBreak(1, playerIn, LivingEntity.getSlotForHand(handIn));
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
     
 }

@@ -2,9 +2,9 @@ package doggytalents.api.inferface;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResult;
 
 public interface IDogFoodHandler extends IDogFoodPredicate {
 
@@ -25,5 +25,5 @@ public interface IDogFoodHandler extends IDogFoodPredicate {
      * @param entityIn The entity who fed the dog, usually the player. Can be null probably meaning the dog ate on its own
      * @return
      */
-    public InteractionResult consume(AbstractDog dogIn, ItemStack stackIn, @Nullable Entity entityIn);
+    public DogInteractionResult consume(AbstractDog dogIn, ItemStack stackIn, @Nullable Entity entityIn);
 }

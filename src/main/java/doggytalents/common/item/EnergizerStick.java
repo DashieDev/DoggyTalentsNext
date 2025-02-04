@@ -1,6 +1,7 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
@@ -30,7 +31,7 @@ public class EnergizerStick extends Item implements IDogFoodHandler {
     }
 
     @Override
-    public InteractionResult consume(AbstractDog dog, ItemStack stack, Entity entityIn) {
+    public DogInteractionResult consume(AbstractDog dog, ItemStack stack, Entity entityIn) {
         if (!dog.level().isClientSide) {
             dog.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100, 1, false, true));
             dog.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200, 6, false, true));
@@ -48,7 +49,7 @@ public class EnergizerStick extends Item implements IDogFoodHandler {
             );
         }
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
 }

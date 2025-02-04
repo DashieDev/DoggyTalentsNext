@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -279,14 +280,14 @@ public class ChemiCanineTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult isPotionApplicable(AbstractDog dogIn, MobEffectInstance effectIn) {
+    public DogInteractionResult isPotionApplicable(AbstractDog dogIn, MobEffectInstance effectIn) {
         if (
             this.level() >= 5
             && effectIn.getEffect().value().getCategory() == MobEffectCategory.HARMFUL
         ) {
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         }
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 
     @Override

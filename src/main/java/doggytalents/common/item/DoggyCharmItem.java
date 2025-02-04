@@ -1,6 +1,8 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.common.config.ConfigHandler;
@@ -18,7 +20,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
@@ -97,24 +98,24 @@ public class DoggyCharmItem extends Item implements IDogItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
         if (playerIn.isShiftKeyDown())
-            return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
+            return InteractionResult.PASS;
         
         if (worldIn.isClientSide || !(worldIn instanceof ServerLevel)) {
-            return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
+            return InteractionResult.PASS;
         } else {
             if (playerIn == null)
-                return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);;
+                return InteractionResult.PASS;
             if (!EventHandler.isWithinTrainWolfLimit(playerIn))
-                return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
+                return InteractionResult.PASS;
             
             HitResult raytraceresult = Item.getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.SOURCE_ONLY);
             if (raytraceresult != null && raytraceresult.getType() == HitResult.Type.BLOCK) {
                 BlockPos blockpos = ((BlockHitResult)raytraceresult).getBlockPos();
                 if (!(worldIn.getBlockState(blockpos).getBlock() instanceof LiquidBlock)) {
-                    return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
+                    return InteractionResult.PASS;
                 } else if (worldIn.mayInteract(playerIn, blockpos) && playerIn.mayUseItemAt(blockpos, ((BlockHitResult)raytraceresult).getDirection(), itemstack)) {
                     Entity entity = DoggyEntityTypes.DOG.get().spawn((ServerLevel) worldIn, itemstack, playerIn, blockpos, MobSpawnType.SPAWN_EGG, false, false);
                     if (entity instanceof Dog) {
@@ -132,38 +133,38 @@ public class DoggyCharmItem extends Item implements IDogItem {
                         playerIn.awardStat(Stats.ITEM_USED.get(this));
                         
                         playerIn.getCooldowns().addCooldown(this, 30);
-                        return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+                        return InteractionResult.SUCCESS;
                     } else {
-                        return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
+                        return InteractionResult.PASS;
                     }
                 } else {
-                    return new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
+                    return InteractionResult.FAIL;
                 }
             } else {
-                return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
+                return InteractionResult.PASS;
             }
         }
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player player,
+    public DogInteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player player,
             InteractionHand handIn) {
         if (!(dogIn instanceof Dog dog))
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         if (!player.isCreative())
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         if (!player.isShiftKeyDown())
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         if (!dog.canInteract(player))
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         
         if (dog.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         
         var current_variant = dog.dogVariant();
         var next_variant = DogVariantUtil.cycle(current_variant);
         dog.setDogVariant(next_variant);
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     @Override

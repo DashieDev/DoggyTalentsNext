@@ -1,5 +1,6 @@
 package doggytalents.common.talent;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -21,10 +22,10 @@ public class PoisonFangTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
+    public DogInteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
         if (dogIn.isTame()) {
             if (this.level() < 5) {
-                return InteractionResult.PASS;
+                return DogInteractionResult.PASS;
             }
 
             ItemStack stack = playerIn.getItemInHand(handIn);
@@ -32,7 +33,7 @@ public class PoisonFangTalent extends TalentInstance {
             if (stack.getItem() == Items.SPIDER_EYE) {
 
                 if (playerIn.getEffect(MobEffects.POISON) == null || dogIn.getDogHunger() < 30) {
-                    return InteractionResult.FAIL;
+                    return DogInteractionResult.FAIL;
                 }
 
                 if (!worldIn.isClientSide) {
@@ -41,22 +42,22 @@ public class PoisonFangTalent extends TalentInstance {
                     dogIn.consumeItemFromStack(playerIn, stack);
                 }
 
-                return InteractionResult.SUCCESS;
+                return DogInteractionResult.SUCCESS;
             }
         }
 
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 
     @Override
-    public InteractionResult isPotionApplicable(AbstractDog dogIn, MobEffectInstance effectIn) {
+    public DogInteractionResult isPotionApplicable(AbstractDog dogIn, MobEffectInstance effectIn) {
         if (this.level() >= 3) {
             if (effectIn.getEffect() == MobEffects.POISON) {
-                return InteractionResult.FAIL;
+                return DogInteractionResult.FAIL;
             }
         }
 
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 
     @Override
