@@ -38,7 +38,7 @@ public class CanineTrackerItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
         var stack = playerIn.getItemInHand(handIn);
 
         if (!worldIn.isClientSide) {
@@ -49,7 +49,7 @@ public class CanineTrackerItem extends Item {
             if (!ItemUtil.hasTag(stack))
                 CanineTrackerScreen.open();
         }
-        return new InteractionResultHolder<ItemStack>(InteractionResult.FAIL, stack);
+        return InteractionResult.FAIL;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package doggytalents.common.talent;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.inferface.IDogFoodPredicate;
@@ -9,7 +11,6 @@ import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -50,9 +51,9 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
     }
 
     @Override
-    public InteractionResult consume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
+    public DogInteractionResult consume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
         if (dogIn.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
         Item item = stackIn.getItem();
 
@@ -60,9 +61,9 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
         if (this.level() >= 2 && food_comp != null && stackIn.is(ItemTags.FISHES)) {
             dogIn.addHunger(food_comp.nutrition() * 5);
             dogIn.consumeItemFromStack(entityIn, stackIn);
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
 
-        return InteractionResult.FAIL;
+        return DogInteractionResult.FAIL;
     }
 }

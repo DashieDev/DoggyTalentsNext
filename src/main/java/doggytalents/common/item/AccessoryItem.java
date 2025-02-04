@@ -1,5 +1,6 @@
 package doggytalents.common.item;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.api.registry.Accessory;
@@ -23,13 +24,13 @@ public class AccessoryItem extends Item implements IDogItem {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
+    public DogInteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
         if (dogIn.canInteract(playerIn) && dogIn.addAccessory(this.createInstance(dogIn, playerIn.getItemInHand(handIn), playerIn))) {
             dogIn.consumeItemFromStack(playerIn, playerIn.getItemInHand(handIn));
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
 
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 
     public AccessoryInstance createInstance(AbstractDog dogIn, ItemStack stack, Player playerIn) {

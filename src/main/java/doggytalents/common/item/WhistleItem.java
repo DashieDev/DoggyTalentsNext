@@ -3,6 +3,7 @@ package doggytalents.common.item;
 import doggytalents.DoggyItems;
 import doggytalents.DoggySounds;
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.screen.AllStandSwitchModeScreen;
@@ -31,7 +32,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -114,7 +114,7 @@ public class WhistleItem extends Item implements IDogItem {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player player,
+    public DogInteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player player,
             InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);  
         byte id_mode = 0;
@@ -130,11 +130,11 @@ public class WhistleItem extends Item implements IDogItem {
             || mode == WhistleMode.RIDE_WITH_ME 
             || mode == WhistleMode.HOWL 
             || mode == WhistleMode.BED_DOG_WHISTLE? 
-            InteractionResult.FAIL : InteractionResult.PASS;
+            DogInteractionResult.FAIL : DogInteractionResult.PASS;
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
         if (player.isShiftKeyDown()) {
@@ -142,7 +142,7 @@ public class WhistleItem extends Item implements IDogItem {
                 WhistleScreen.open();
             }
 
-            return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS;
         }
         else {
             byte id_mode = 0;
@@ -162,7 +162,7 @@ public class WhistleItem extends Item implements IDogItem {
             var mode = WhistleMode.VALUES[id_mode];
 
             useMode(mode, dogsList, world, player, hand, false);
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+            return InteractionResult.SUCCESS;
         }
     }
 

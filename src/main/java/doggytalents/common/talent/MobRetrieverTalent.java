@@ -6,6 +6,8 @@ import org.apache.commons.lang3.ObjectUtils;
 
 import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -13,7 +15,6 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -213,11 +214,11 @@ public class MobRetrieverTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult blockIdleAnim(AbstractDog dogIn) {
+    public DogInteractionResult blockIdleAnim(AbstractDog dogIn) {
         if (dogIn.isVehicle()) {
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 
     public static int getSelectTargetRange() {

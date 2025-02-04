@@ -1,6 +1,7 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
@@ -21,7 +22,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -53,11 +53,11 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
 
         if (worldIn.isClientSide) {
-            return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS;
         }
         else {
             if (!playerIn.isShiftKeyDown()) {
@@ -65,7 +65,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
                     findFoodAndShootOut(sP, stack);
                 }
 
-                return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+                return InteractionResult.SUCCESS;
             }
             if (playerIn instanceof ServerPlayer) {
                 ServerPlayer serverPlayer = (ServerPlayer) playerIn;
@@ -73,7 +73,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
                 Screens.openTreatBagScreen(serverPlayer, stack, playerIn.getInventory().selected);
             }
 
-            return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS;
         }
     }
 
@@ -202,9 +202,9 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     }
 
     @Override
-    public InteractionResult consume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
+    public DogInteractionResult consume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
         if (dogIn.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
         IItemHandlerModifiable treatBag = new TreatBagItemHandler(stackIn);
         return DogFoodUtil.tryFeedAny(dogIn, entityIn, treatBag);

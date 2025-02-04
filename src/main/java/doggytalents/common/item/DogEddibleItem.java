@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 
 import com.mojang.datafixers.util.Pair;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.network.packet.ParticlePackets;
 import net.minecraft.server.level.ServerLevel;
@@ -91,14 +92,14 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
     }
 
     @Override
-    public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
+    public DogInteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
         if (dog.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         
         var dogEddible = this;
         
         if (!dogEddible.alwaysEatWhenDogConsume(dog) && !dog.canStillEat()) {
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         }
 
         if (!dog.level().isClientSide) {    
@@ -129,7 +130,7 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
             }
         }
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     @Override

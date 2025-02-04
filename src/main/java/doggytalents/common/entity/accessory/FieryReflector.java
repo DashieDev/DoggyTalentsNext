@@ -1,6 +1,7 @@
 package doggytalents.common.entity.accessory;
 
 import doggytalents.DoggyAccessoryTypes;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import doggytalents.api.registry.Accessory;
@@ -102,7 +103,7 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
         }
 
         @Override
-        public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
+        public DogInteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
                 InteractionHand handIn) {
             if (dogIn.level().isClientSide)
             if (playerIn.getItemInHand(handIn).getItem() == Items.STRING
@@ -110,7 +111,7 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
                 this.debugForceLowFlameRender = !this.debugForceLowFlameRender;
             }
 
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         }
 
         private void tickReflectorEffect(AbstractDog dogIn) {

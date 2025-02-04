@@ -9,6 +9,7 @@ import doggytalents.DoggyAccessories;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.event.ClientEventHandler;
@@ -150,18 +151,18 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, 
+    public DogInteractionResult processInteract(AbstractDog dogIn, Level worldIn, 
         Player playerIn, InteractionHand handIn) {
         
         if (!(dogIn instanceof Dog dog))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         var stack = playerIn.getItemInHand(handIn);
         
         if (copyDogToStack(dog, stack, playerIn.isShiftKeyDown()))
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
-        return InteractionResult.FAIL;
+        return DogInteractionResult.FAIL;
     }
 
     private boolean copyDogToStack(Dog dog, ItemStack stack, boolean copy_color) {

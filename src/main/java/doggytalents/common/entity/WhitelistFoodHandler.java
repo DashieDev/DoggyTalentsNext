@@ -3,6 +3,7 @@ package doggytalents.common.entity;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyTags;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
@@ -29,9 +30,9 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
     }
 
     @Override
-    public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
+    public DogInteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
         if (dog.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
         if (dog.canStillEat()) {
             if (!dog.level().isClientSide) {
@@ -39,7 +40,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
 
                 var props = stack.getFoodProperties(dog);
 
-                if (props == null) return InteractionResult.FAIL;
+                if (props == null) return DogInteractionResult.FAIL;
                 
                 int heal = Mth.floor(props.nutrition() * 2.5);
 
@@ -57,10 +58,10 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
                 );
             }
 
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
 
-        return InteractionResult.FAIL;
+        return DogInteractionResult.FAIL;
 
     }
     

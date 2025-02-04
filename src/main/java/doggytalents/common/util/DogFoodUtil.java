@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
@@ -12,7 +13,6 @@ import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.item.DogEddibleItem;
 import doggytalents.common.item.IDogEddible;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -134,7 +134,7 @@ public class DogFoodUtil {
         return true;
     }
 
-    public static InteractionResult tryFeedAny(
+    public static DogInteractionResult tryFeedAny(
         AbstractDog dog, @Nullable Entity feeder, IItemHandlerModifiable inv) {
 
         int found_food_id = -1;
@@ -151,7 +151,7 @@ public class DogFoodUtil {
         }
 
         if (found_food_id < 0 || found_food == null)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         var feed_stack = inv.getStackInSlot(found_food_id).copy();
         var response = found_food.consume(dog, feed_stack, feeder);

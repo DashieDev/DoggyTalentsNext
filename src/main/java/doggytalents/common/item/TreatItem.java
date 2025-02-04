@@ -2,6 +2,7 @@ package doggytalents.common.item;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.feature.DogLevel;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
@@ -32,28 +33,28 @@ public class TreatItem extends Item implements IDogItem {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
+    public DogInteractionResult processInteract(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
         if (!dog.isTame() || !dog.canInteract(playerIn)) {
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         }
 
         if (handleKamiBypass(dog, worldIn, playerIn, handIn).shouldSwing())
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
         return handleTreatTrain(dog, worldIn, playerIn, handIn);   
     }
 
-    private InteractionResult handleKamiBypass(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
+    private DogInteractionResult handleKamiBypass(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
         if (this.type != DogLevel.Type.KAMI)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!playerIn.isCreative())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         var dog_level = dog.getDogLevel();
         if (dog_level.canIncrease(DogLevel.Type.KAMI))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
         if (!(dog instanceof Dog actual_dog))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
         if (!dog.level().isClientSide) {
             actual_dog.setLevel(DogLevel.kamiReady());
@@ -62,7 +63,7 @@ public class TreatItem extends Item implements IDogItem {
             
         playKamiBypassEffect(actual_dog);
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     } 
 
     private void playKamiBypassEffect(Dog dog) {
@@ -94,12 +95,12 @@ public class TreatItem extends Item implements IDogItem {
         
     }
 
-    private InteractionResult handleTreatTrain(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
+    private DogInteractionResult handleTreatTrain(AbstractDog dog, Level worldIn, Player playerIn, InteractionHand handIn) {
         if (dog.getAge() < 0) {
             treatFailPrompt(dog, worldIn, playerIn, 
                 Component.translatable("treat."+this.type.getName()+".too_young"));
 
-            return InteractionResult.CONSUME;
+            return DogInteractionResult.CONSUME;
         }
         
         var dogLevel = dog.getDogLevel();
@@ -107,14 +108,14 @@ public class TreatItem extends Item implements IDogItem {
             treatFailPrompt(dog, worldIn, playerIn, 
                 Component.translatable("treat."+this.type.getName()+".low_level"));
 
-            return InteractionResult.CONSUME;
+            return DogInteractionResult.CONSUME;
         }
 
         if (dogLevel.getLevel(this.type) >= this.maxLevel) {
             treatFailPrompt(dog, worldIn, playerIn, 
                 Component.translatable("treat."+this.type.getName()+".max_level"));
 
-            return InteractionResult.CONSUME;
+            return DogInteractionResult.CONSUME;
         }
 
         if (!playerIn.level().isClientSide) {
@@ -128,7 +129,7 @@ public class TreatItem extends Item implements IDogItem {
 
         treatSuccessPrompt(dog, worldIn, playerIn);
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     private void treatFailPrompt(AbstractDog dog, Level worldIn, Player playerIn, Component msg) {

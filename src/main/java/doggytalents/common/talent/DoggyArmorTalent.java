@@ -2,6 +2,7 @@ package doggytalents.common.talent;
 
 import java.util.Map;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -111,20 +112,20 @@ public class DoggyArmorTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
+    public DogInteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
             InteractionHand handIn) {
         if (playerIn.getMainHandItem().getItem() instanceof ArmorItem) {
-            if (!(dogIn instanceof Dog)) return InteractionResult.PASS;
+            if (!(dogIn instanceof Dog)) return DogInteractionResult.PASS;
             if (!worldIn.isClientSide) {
                 var owner = dogIn.getOwner();
                 if (owner instanceof ServerPlayer sOwner) {
                     Screens.openArmorScreen(sOwner, (Dog) dogIn);
                 }
             }
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
 
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 
     @Override

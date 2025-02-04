@@ -4,6 +4,7 @@ import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
@@ -209,14 +210,14 @@ public class DogBedBlock extends BaseEntityBlock {
         return InteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleDogRandomRespawn(Player player, Level level, 
+    private DogInteractionResult handleDogRandomRespawn(Player player, Level level, 
         BlockState state, BlockPos pos, DogBedTileEntity tile, ItemStack stack) {
         if (tile.getOwnerUUID() != null)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!stack.is(Items.TOTEM_OF_UNDYING))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (player.getCooldowns().isOnCooldown(Items.TOTEM_OF_UNDYING))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
         var storage = DogRespawnStorage.get(level);
         Predicate<DogRespawnData> isFromOwner =
@@ -230,7 +231,7 @@ public class DogBedBlock extends BaseEntityBlock {
             .filter(isFromOwner)
             .collect(Collectors.toList());
         if (dataList.isEmpty())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
         
         int dataListSize = dataList.size();
@@ -238,11 +239,11 @@ public class DogBedBlock extends BaseEntityBlock {
         var rUUID = dataList.get(rIndx).getDogId();
         var dogData = storage.remove(rUUID);
         if (dogData == null)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         
         var dog = dogData.respawn((ServerLevel) level, player, pos.above());
         if (dog == null)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         
         tile.setOwner(dog);
         dog.setBedPos(dog.level().dimension(), pos);
@@ -253,53 +254,53 @@ public class DogBedBlock extends BaseEntityBlock {
 
         player.getCooldowns().addCooldown(Items.TOTEM_OF_UNDYING, 60);
         
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleDogReclaim(Player player, Level level, 
+    private DogInteractionResult handleDogReclaim(Player player, Level level, 
         BlockState state, BlockPos pos, DogBedTileEntity tile, ItemStack stack) {
         var owner_id = tile.getOwnerUUID();
         if (owner_id == null)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
         if (!player.isShiftKeyDown())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         reclaimBed(player, (ServerLevel) level, tile, pos);  
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleDogRespawn(Player player, Level level, 
+    private DogInteractionResult handleDogRespawn(Player player, Level level, 
         BlockState state, BlockPos pos, DogBedTileEntity tile, ItemStack stack) {
         var owner_id = tile.getOwnerUUID();
         if (owner_id == null)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
         var storage = DogRespawnStorage.get(level);
         var data = storage.remove(owner_id);
         if (data == null)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         var dog = data.respawn((ServerLevel) level, player, pos.above());
         if (dog == null)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
         tile.setOwner(dog);
         dog.setBedPos(dog.level().dimension(), pos);
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleDogClaimBed(Player player, Level level, 
+    private DogInteractionResult handleDogClaimBed(Player player, Level level, 
         BlockState state, BlockPos pos, DogBedTileEntity tile, ItemStack stack) {
         if (tile.getOwnerUUID() != null)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         boolean isAssign = 
             player.isShiftKeyDown() 
             || stack.is(Items.BONE)
             || stack.is(DoggyItems.TRAINING_TREAT.get());
         if (!isAssign)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
         Predicate<Dog> isValidDog = valid_dog -> 
             valid_dog.isDoingFine()
@@ -318,15 +319,15 @@ public class DogBedBlock extends BaseEntityBlock {
             closest.triggerAction(new DogMoveToBedAction(closest, pos, true));
         }
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleNameTagBed(Player player, Level level, 
+    private DogInteractionResult handleNameTagBed(Player player, Level level, 
         BlockState state, BlockPos pos, DogBedTileEntity tile, ItemStack stack) {
         if (!stack.is(Items.NAME_TAG))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!ItemUtil.hasCustomHoverName(stack))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
         tile.setBedName(stack.getHoverName());
 
@@ -336,7 +337,7 @@ public class DogBedBlock extends BaseEntityBlock {
 
         level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
         
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     private boolean reclaimBed(Player player, ServerLevel level, DogBedTileEntity bedEntity, BlockPos pos) {

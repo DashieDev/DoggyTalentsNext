@@ -4,6 +4,8 @@ import com.google.common.base.Function;
 import com.google.common.base.Strings;
 import doggytalents.*;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.enu.WetSource;
 import doggytalents.api.feature.*;
 import doggytalents.api.feature.DogLevel.Type;
@@ -95,13 +97,12 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -327,7 +328,7 @@ public class Dog extends AbstractDog {
         this.defaultNavigation = this.navigation;
         this.defaultMoveControl = this.moveControl;
 
-        this.dogAi = new DogAiManager(this, this.level().getProfilerSupplier());
+        this.dogAi = new DogAiManager(this, Profiler::get);
         this.dogAi.init();
     }
 
@@ -1038,7 +1039,7 @@ public class Dog extends AbstractDog {
         
         if (this.isDefeated()) 
             return this.incapacitatedMananger
-                .interact(stack, player, hand);
+                .interact(stack, player, hand).toVanilla();
         
         if (handleOpenDogScreenDedicated(player, stack).shouldSwing())
             return InteractionResult.SUCCESS;
@@ -1057,7 +1058,7 @@ public class Dog extends AbstractDog {
         var otherHandlerResult = 
             handleAlterationsAndOtherHandlers(player, stack, hand);
         if (otherHandlerResult.isPresent())
-            return otherHandlerResult.get();
+            return otherHandlerResult.get().toVanilla();
 
         if (handleBreeding(player, hand, stack).shouldSwing())
             return InteractionResult.SUCCESS;
@@ -1076,11 +1077,11 @@ public class Dog extends AbstractDog {
         return InteractionResult.PASS;
     }
 
-    private InteractionResult handleDogSitStand(Player player) {
+    private DogInteractionResult handleDogSitStand(Player player) {
         if (!this.canInteract(player))
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         if (this.isProtesting())
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
 
         if (!this.level().isClientSide)
             checkAndDoBackFlip();
@@ -1093,7 +1094,7 @@ public class Dog extends AbstractDog {
         this.jumping = false;
         this.navigation.stop();
         this.setTarget(null);
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     private void checkAndDoBackFlip() {
@@ -1125,48 +1126,48 @@ public class Dog extends AbstractDog {
         return this.level().getBlockState(this.blockPosition().above()).isAir();
     }
 
-    private InteractionResult handleOpenDogScreen(Player player) {
+    private DogInteractionResult handleOpenDogScreen(Player player) {
         if (!player.isShiftKeyDown())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!this.canInteract(player))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         if (this.level().isClientSide)
             DogNewInfoScreen.open(this);
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleOpenDogScreenDedicated(Player player, ItemStack stack) {
+    private DogInteractionResult handleOpenDogScreenDedicated(Player player, ItemStack stack) {
         if (stack.getItem() != Items.STICK)
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         if (!this.isTame())
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
 
         if (!this.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         
         if (this.canInteract(player))
             DogNewInfoScreen.open(this);
         else 
             DogCannotInteractWithScreen.open(this);
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult dogCheckAndRidePlayer(Player player, ItemStack stack) {
+    private DogInteractionResult dogCheckAndRidePlayer(Player player, ItemStack stack) {
         if (player.hasPassenger(this)) {
             if (!this.level().isClientSide)
                 this.unRide();
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
         if (stack.getItem() != Items.BONE)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!player.isShiftKeyDown())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (this.isVehicle())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!this.canInteract(player))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!this.level().isClientSide) {
             if (this.startRiding(player))
             player.displayClientMessage(
@@ -1174,68 +1175,68 @@ public class Dog extends AbstractDog {
                     "talent.doggytalents.bed_finder.dog_mount", 
                     this.getGenderPronoun()), true);
         }
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleSetWolfArmor(Player player, ItemStack stack) {
+    private DogInteractionResult handleSetWolfArmor(Player player, ItemStack stack) {
         if (!stack.is(Items.WOLF_ARMOR))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (this.hasWolfArmor())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!this.canInteract(player))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         if (this.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         this.setWolfArmor(stack.copyWithCount(1));
         stack.consume(1, player);
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleRepairWolfArmor(Player player, ItemStack stack) {
+    private DogInteractionResult handleRepairWolfArmor(Player player, ItemStack stack) {
         if (!DogUtil.isScute(stack))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!this.hasWolfArmor())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!this.canInteract(player))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
         var wolf_armor = wolfArmor();
         if (!wolf_armor.isDamaged())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         
         if (this.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         stack.shrink(1);
         this.playSound(SoundEvents.WOLF_ARMOR_REPAIR);
         int repair_val = DogUtil.getWolfArmorRepairVal(wolf_armor);
         int new_damage_val = wolf_armor.getDamageValue() - repair_val;
         if (new_damage_val < 0) new_damage_val = 0;
         wolf_armor.setDamageValue(new_damage_val);
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleUnsetWolfArmor(Player player, ItemStack stack, InteractionHand hand) {
+    private DogInteractionResult handleUnsetWolfArmor(Player player, ItemStack stack, InteractionHand hand) {
         if (!stack.is(Items.SHEARS))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!this.hasWolfArmor())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!this.canInteract(player))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         if (this.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         stack.hurtAndBreak(1, player, getSlotForHand(hand));
         this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
 
         var wolf_armor0 = this.wolfArmor();
         this.setWolfArmor(ItemStack.EMPTY);
         this.spawnAtLocation(wolf_armor0);
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private Optional<InteractionResult> handleAlterationsAndOtherHandlers(
+    private Optional<DogInteractionResult> handleAlterationsAndOtherHandlers(
         Player player, ItemStack stack, InteractionHand hand) {
         
         Optional<IDogFoodHandler> foodHandler = FoodHandler.getMatch(this, stack, player);
@@ -1246,28 +1247,28 @@ public class Dog extends AbstractDog {
 
         var dog_item_result = IDogItem.getMatch(this, stack, player, hand);
 
-        if (dog_item_result != InteractionResult.PASS) {
+        if (dog_item_result != DogInteractionResult.PASS) {
             return Optional.of(dog_item_result);
         }
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.processInteract(this, this.level(), player, hand);
-            if (result != InteractionResult.PASS) {
+            DogInteractionResult result = alter.processInteract(this, this.level(), player, hand);
+            if (result != DogInteractionResult.PASS) {
                 return Optional.of(result);
             }
         }
         return Optional.empty();
     }
 
-    private InteractionResult handleBreeding(Player player, InteractionHand hand, ItemStack stack) {
+    private DogInteractionResult handleBreeding(Player player, InteractionHand hand, ItemStack stack) {
         if (!stack.is(DoggyItems.BREEDING_BONE.get()))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!canInteract(player))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
 
         if (this.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
         int age = this.getAge();
         if (age == 0 && this.canFallInLove()) {
@@ -1277,16 +1278,16 @@ public class Dog extends AbstractDog {
             this.usePlayerItem(player, hand, stack);
             this.ageUp(getSpeedUpSecondsWhenFeeding(-age), true);
         }
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleTameDogIfNotTamed(Player player, ItemStack stack, InteractionHand hand) {
+    private DogInteractionResult handleTameDogIfNotTamed(Player player, ItemStack stack, InteractionHand hand) {
         if (this.isTame())
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         if (!isDogTameItem(stack))
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
         if (this.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         
         this.usePlayerItem(player, hand, stack);
         boolean alwaysTame = stack.getItem() == DoggyItems.TRAINING_TREAT.get();
@@ -1301,7 +1302,7 @@ public class Dog extends AbstractDog {
             this.level().broadcastEntityEvent(this, doggytalents.common.lib.Constants.EntityState.WOLF_SMOKE);
         }
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     private boolean isDogTameItem(ItemStack stack) {
@@ -1340,11 +1341,11 @@ public class Dog extends AbstractDog {
             return false;
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.canBeRiddenInWater(this);
+            DogInteractionResult result = alter.canBeRiddenInWater(this);
 
             if (result.shouldSwing()) {
                 return false;
-            } else if (result == InteractionResult.FAIL) {
+            } else if (result == DogInteractionResult.FAIL) {
                 return true;
             }
         }
@@ -1450,11 +1451,11 @@ public class Dog extends AbstractDog {
             return false;
         }
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.onLivingFall(this, distance, damageMultiplier); // TODO pass source
+            var result = alter.onLivingFall(this, distance, damageMultiplier); // TODO pass source
 
             if (result.shouldSwing()) {
                 return true;
-            } else if (result == InteractionResult.FAIL) {
+            } else if (result == DogInteractionResult.FAIL) {
                 return false;
             }
         }
@@ -1586,11 +1587,11 @@ public class Dog extends AbstractDog {
         }
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.canAttack(this, target);
+            var result = alter.canAttack(this, target);
 
             if (result.shouldSwing()) {
                 return true;
-            } else if (result == InteractionResult.FAIL) {
+            } else if (result == DogInteractionResult.FAIL) {
                 return false;
             }
         }
@@ -1639,11 +1640,11 @@ public class Dog extends AbstractDog {
         }
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.shouldAttackEntity(this, target, owner);
+            var result = alter.shouldAttackEntity(this, target, owner);
 
             if (result.shouldSwing()) {
                 return true;
-            } else if (result == InteractionResult.FAIL) {
+            } else if (result == DogInteractionResult.FAIL) {
                 return false;
             }
         }
@@ -1925,11 +1926,11 @@ public class Dog extends AbstractDog {
     @Override
     public boolean isDamageSourceBlocked(DamageSource source) {
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.canBlockDamageSource(this, source);
+            var result = alter.canBlockDamageSource(this, source);
 
             if (result.shouldSwing()) {
                 return true;
-            } else if (result == InteractionResult.FAIL) {
+            } else if (result == DogInteractionResult.FAIL) {
                 return false;
             }
         }
@@ -1978,28 +1979,28 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource source) {
+    public boolean isInvulnerableToBase(DamageSource source) {
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.isInvulnerableTo(this, source);
+            var result = alter.isInvulnerableTo(this, source);
 
             if (result.shouldSwing()) {
                 return true;
-            } else if (result == InteractionResult.FAIL) {
+            } else if (result == DogInteractionResult.FAIL) {
                 return false;
             }
         }
 
-        return super.isInvulnerableTo(source);
+        return super.isInvulnerableToBase(source);
     }
 
     @Override
     public boolean isInvulnerable() {
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.isInvulnerable(this);
+            var result = alter.isInvulnerable(this);
 
             if (result.shouldSwing()) {
                 return true;
-            } else if (result == InteractionResult.FAIL) {
+            } else if (result == DogInteractionResult.FAIL) {
                 return false;
             }
         }
@@ -2026,11 +2027,11 @@ public class Dog extends AbstractDog {
         if (this.isDefeated())
             return false;
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.isPotionApplicable(this, effectIn);
+            var result = alter.isPotionApplicable(this, effectIn);
 
             if (result.shouldSwing()) {
                 return true;
-            } else if (result == InteractionResult.FAIL) {
+            } else if (result == DogInteractionResult.FAIL) {
                 return false;
             }
         }
@@ -2201,11 +2202,11 @@ public class Dog extends AbstractDog {
         }
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.shouldSkipAttackFrom(this, entityIn);
+            var result = alter.shouldSkipAttackFrom(this, entityIn);
 
             if (result.shouldSwing()) {
                 return true;
-            } else if (result == InteractionResult.FAIL) {
+            } else if (result == DogInteractionResult.FAIL) {
                 return false;
             }
         }
@@ -4525,7 +4526,7 @@ public class Dog extends AbstractDog {
         if (this.isDogRunningAwayFromFire())
             return false;
         for (var alter : this.alterations) {
-            InteractionResult result = alter.canResistPushFromFluidType(type);
+            var result = alter.canResistPushFromFluidType(type);
 
             if (result.shouldSwing()) {
                 return false;

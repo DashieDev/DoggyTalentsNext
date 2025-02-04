@@ -2,6 +2,7 @@ package doggytalents.common.entity;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
@@ -27,14 +28,14 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
     }
 
     @Override
-    public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
+    public DogInteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
         if (!dog.level().isClientSide) {
             
             var item = stack.getItem();
 
             var props = stack.getFoodProperties(dog);
             
-            if (props == null) return InteractionResult.FAIL;
+            if (props == null) return DogInteractionResult.FAIL;
 
             int heal = props.nutrition() * 5;
 
@@ -58,7 +59,7 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
             );
         }
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     private boolean isBoostingFood(ItemStack stack) {

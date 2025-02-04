@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 
 import doggytalents.TalentsOptions;
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
@@ -24,7 +25,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -284,10 +284,10 @@ public class GatePasserTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult canDogPassGate(AbstractDog dogIn) {
+    public DogInteractionResult canDogPassGate(AbstractDog dogIn) {
         if (this.allowPassingGate)
-            return InteractionResult.SUCCESS;
-        return InteractionResult.PASS;
+            return DogInteractionResult.SUCCESS;
+        return DogInteractionResult.PASS;
     }
 
     @Override

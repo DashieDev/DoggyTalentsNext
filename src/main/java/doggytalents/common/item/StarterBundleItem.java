@@ -10,7 +10,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,10 +34,10 @@ public class StarterBundleItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         var stack = player.getItemInHand(hand);
         if (level.isClientSide)
-            return InteractionResultHolder.success(stack);
+            return InteractionResult.SUCCESS;
         
         var inv = player.getInventory();
         var items = inv.items;
@@ -56,7 +56,7 @@ public class StarterBundleItem extends Item {
                 Component.translatable("item.doggytalents.starter_bundle.fail")
                     .withStyle(ChatFormatting.RED) 
                 , true);
-            return InteractionResultHolder.success(stack);
+            return InteractionResult.SUCCESS;
         }
            
         
@@ -66,7 +66,7 @@ public class StarterBundleItem extends Item {
         }
         player.setItemInHand(hand, ItemStack.EMPTY);
 
-        return InteractionResultHolder.success(stack);
+        return InteractionResult.SUCCESS;
     }
     
     @Override

@@ -12,7 +12,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -68,12 +67,12 @@ public class DogBathBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemInteractionResult useItemOn(
+    public InteractionResult useItemOn(
         ItemStack stack, BlockState state, Level level, 
         BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 
         if (stack.isEmpty()) {
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
             if (stack.getItem() == Items.GLASS_BOTTLE) {
                 if (!level.isClientSide) {
@@ -90,9 +89,9 @@ public class DogBathBlock extends BaseEntityBlock {
                     level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                 }
 
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             } else {
-                return ItemInteractionResult.FAIL;
+                return InteractionResult.FAIL;
             }
         }
     }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -41,34 +42,34 @@ public class ScentTreatItem extends Item {
         return InteractionResult.FAIL;
     }
 
-    private InteractionResult handleClearScent(BlockState state, UseOnContext context) {
+    private DogInteractionResult handleClearScent(BlockState state, UseOnContext context) {
         if (!state.is(Blocks.WATER_CAULDRON))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
         var stack = context.getItemInHand();
         var tag = ItemUtil.getTag(stack);
         if (!tag.contains(SCENT_BLOCK_ID))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         if (context.getLevel().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         
         ItemUtil.clearTag(stack);
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleAddScent(BlockState state, UseOnContext context) {
+    private DogInteractionResult handleAddScent(BlockState state, UseOnContext context) {
         if (state.is(Blocks.WATER_CAULDRON))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         
         var stack = context.getItemInHand();
         var tag = ItemUtil.getTag(stack);
         if (tag.contains(SCENT_BLOCK_ID))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         if (context.getLevel().isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
         var block = state.getBlock();
         var id = BuiltInRegistries.BLOCK.getKey(block);
@@ -76,7 +77,7 @@ public class ScentTreatItem extends Item {
 
         ItemUtil.putTag(stack, tag);
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     @Override

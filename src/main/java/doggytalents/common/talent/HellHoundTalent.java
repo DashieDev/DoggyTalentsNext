@@ -2,6 +2,8 @@ package doggytalents.common.talent;
 
 import java.util.UUID;
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -17,7 +19,6 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
@@ -88,15 +89,15 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult isInvulnerableTo(AbstractDog dogIn, DamageSource source) {
+    public DogInteractionResult isInvulnerableTo(AbstractDog dogIn, DamageSource source) {
         if (source.is(DamageTypeTags.IS_FIRE)) {
-            return this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
+            return this.level() >= 5 ? DogInteractionResult.SUCCESS : DogInteractionResult.PASS;
         }
         if (source.is(DamageTypeTags.IS_FREEZING)) {
-            return this.level() >= 5 ? InteractionResult.SUCCESS : InteractionResult.PASS;
+            return this.level() >= 5 ? DogInteractionResult.SUCCESS : DogInteractionResult.PASS;
         }
 
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 
     @Override
@@ -109,14 +110,14 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult canResistPushFromFluidType(FluidType type) {
+    public DogInteractionResult canResistPushFromFluidType(FluidType type) {
         if (type != NeoForgeMod.LAVA_TYPE.value())   
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
 
         if (this.level() >= 5) 
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 
     @Override
@@ -171,20 +172,20 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult shouldNotAfraidOfFire(AbstractDog dog) {
+    public DogInteractionResult shouldNotAfraidOfFire(AbstractDog dog) {
         if (this.level() < 3)
-            return InteractionResult.PASS;
-        return InteractionResult.SUCCESS;
+            return DogInteractionResult.PASS;
+        return DogInteractionResult.SUCCESS;
     }
 
     @Override
-    public InteractionResult stillIdleOrSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
+    public DogInteractionResult stillIdleOrSitWhenHurt(AbstractDog dog, DamageSource source, float amount) {
         if (this.level() >= 4 && source.is(DamageTypeTags.IS_FIRE)) {
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
         if (source.is(DamageTypes.ON_FIRE))
-            return InteractionResult.SUCCESS;
-        return InteractionResult.PASS;    
+            return DogInteractionResult.SUCCESS;
+        return DogInteractionResult.PASS;    
     }
 
     @Override

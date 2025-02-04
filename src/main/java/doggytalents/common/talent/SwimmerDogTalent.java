@@ -3,6 +3,7 @@ import java.util.EnumSet;
 import java.util.UUID;
 
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
@@ -18,7 +19,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;

@@ -9,6 +9,7 @@ import doggytalents.DoggyAdvancementTriggers;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
@@ -34,7 +35,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -108,37 +108,37 @@ public class DogIncapacitatedMananger {
             incapacitatedTick();
     }
 
-    public InteractionResult interact(ItemStack stack, Player player, InteractionHand hand) {
+    public DogInteractionResult interact(ItemStack stack, Player player, InteractionHand hand) {
         
         if (proccessBandage(stack, player).shouldSwing())
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
         var item = stack.getItem();
         if (item == Items.TOTEM_OF_UNDYING) {
             useTotem(stack, player);
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
         
         if (handleOwnerRide(stack, player).shouldSwing())
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         if (proccessSitStandOrder(player).shouldSwing())
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
 
         if (this.dog.level().isClientSide && player == this.dog.getOwner())
             DogCannotInteractWithScreen.open(this.dog);
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult proccessBandage(ItemStack stack, Player player) {
+    private DogInteractionResult proccessBandage(ItemStack stack, Player player) {
         boolean wagyu = needWagyu();
         boolean isBandage =
             (wagyu && stack.getItem() == DoggyItems.GOLDEN_A_FIVE_WAGYU.get())
             || (!wagyu && stack.getItem() == DoggyItems.BANDAID.get());
         if (isBandage) {
             useBandage(stack, player);
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 
     private void useBandage(ItemStack stack, Player player) {
@@ -185,19 +185,19 @@ public class DogIncapacitatedMananger {
         this.dog.level().broadcastEntityEvent(this.dog, (byte)35);
     }
 
-    private InteractionResult handleOwnerRide(ItemStack stack, Player player) {
+    private DogInteractionResult handleOwnerRide(ItemStack stack, Player player) {
         if (player.hasPassenger(dog)) {
             if (!dog.level().isClientSide)
                 dog.unRide();
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
         var item = stack.getItem();
         if (item != Items.BONE)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (dog.isVehicle())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (dog.getOwner() != player)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!dog.level().isClientSide) {
             if (dog.startRiding(player))
             player.displayClientMessage(
@@ -205,20 +205,20 @@ public class DogIncapacitatedMananger {
                     "talent.doggytalents.bed_finder.dog_mount", 
                     dog.getGenderPronoun()), true);
         }
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
-    private InteractionResult proccessSitStandOrder(Player player) {
+    private DogInteractionResult proccessSitStandOrder(Player player) {
         if (!this.canMove())
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         var owner_uuid = this.dog.getOwnerUUID();
         if (owner_uuid == null)
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!owner_uuid.equals(player.getUUID()))
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         this.dog.setOrderedToSit(!this.dog.isOrderedToSit());
         this.dog.getNavigation().stop();
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     public void onHurt() {

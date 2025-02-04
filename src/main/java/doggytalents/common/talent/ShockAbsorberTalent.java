@@ -1,12 +1,13 @@
 package doggytalents.common.talent;
 
 
+import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -42,11 +43,11 @@ public class ShockAbsorberTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult negateExplosion(AbstractDog dog) {
+    public DogInteractionResult negateExplosion(AbstractDog dog) {
         if (this.level() >= this.talent.getMaxLevel()) {
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return DogInteractionResult.PASS;
     }
 
     @Override

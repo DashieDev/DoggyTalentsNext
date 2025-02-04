@@ -12,6 +12,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import doggytalents.TalentsOptions;
 import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.impl.IDogRangedAttackManager;
 import doggytalents.api.inferface.AbstractDog;
@@ -208,17 +209,17 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
 
     @Override
-    public InteractionResult processInteract(AbstractDog d, Level levek, Player player,
+    public DogInteractionResult processInteract(AbstractDog d, Level levek, Player player,
             InteractionHand hand) {
         var stack = player.getItemInHand(hand);
         if (!(stack.getItem() instanceof PickaxeItem)) 
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!(d instanceof Dog dog)) 
-            return InteractionResult.PASS;
+            return DogInteractionResult.PASS;
         if (!dog.level().isClientSide && player instanceof ServerPlayer sP) {
             Screens.openDoggyToolsScreen(sP, dog);
         }
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
 
     @Override
