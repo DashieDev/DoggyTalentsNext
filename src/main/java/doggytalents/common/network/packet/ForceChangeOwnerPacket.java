@@ -8,6 +8,7 @@ import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.data.ForceChangeOwnerData;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
@@ -37,7 +38,7 @@ public class ForceChangeOwnerPacket extends DogPacket<ForceChangeOwnerData> {
         var stack = sender.getMainHandItem();
         if (!stack.is(DoggyItems.AMNESIA_BONE.get()))
             return;
-        if (sender.getCooldowns().isOnCooldown(DoggyItems.AMNESIA_BONE.get()))
+        if (PlayerUtil.isOnCooldown(sender, DoggyItems.AMNESIA_BONE.get()))
             return;
 
         var currentOwnerUUID = dog.getOwnerUUID();
@@ -49,7 +50,7 @@ public class ForceChangeOwnerPacket extends DogPacket<ForceChangeOwnerData> {
         
         dog.migrateOwner(newOwnerUUID);
         
-        sender.getCooldowns().addCooldown(DoggyItems.AMNESIA_BONE.get(), 40);
+        PlayerUtil.addCooldown(sender, DoggyItems.AMNESIA_BONE.get(), 40);
     }
 
 }

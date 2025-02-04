@@ -2494,8 +2494,8 @@ public class Dog extends AbstractDog {
         }
         
         var owner = this.getOwner();
-        if (!this.level().isClientSide && this.level().getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && owner instanceof ServerPlayer) {
-            owner.sendSystemMessage(deathMessage);
+        if (!this.level().isClientSide && ((ServerLevel)this.level()).getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && owner instanceof ServerPlayer) {
+            PlayerUtil.sendSystemMessage(owner, deathMessage);
         }
     }
 
@@ -2588,7 +2588,7 @@ public class Dog extends AbstractDog {
         );
     
         msg.append(msg01);
-        owner.sendSystemMessage(msg);
+        PlayerUtil.sendSystemMessage(owner, msg);
     }
 
     public IncapacitatedSyncState createIncapSyncState(DamageSource source) {
@@ -2631,7 +2631,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public void dropEquipment() {
+    public void dropEquipment(ServerLevel level) {
         this.alterations.forEach((alter) -> alter.dropInventory(this));
     }
 
@@ -4944,7 +4944,7 @@ public class Dog extends AbstractDog {
     //Dog dont drop from Lootables.
     @Override
     protected void dropAllDeathLoot(ServerLevel p_348524_, DamageSource source) {
-        this.dropEquipment();
+        this.dropEquipment(p_348524_);
     }
 
     public boolean isLowAirSupply() {

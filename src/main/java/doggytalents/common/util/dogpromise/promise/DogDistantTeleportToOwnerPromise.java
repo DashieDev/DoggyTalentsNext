@@ -9,6 +9,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -87,7 +88,7 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
     @Override
     public void onFulfilled() {
         if (this.owner != null && this.teleportedDog != null)
-            this.owner.sendSystemMessage(
+            PlayerUtil.sendSystemMessage(this.owner, 
                 Component.translatable(
                     "item.doggytalents.conducting_bone.fulfilled.tp_self", 
                     this.teleportedDog.getName().getString()  
@@ -107,7 +108,7 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
     @Override
     public void onRejected() {
         if (this.owner != null)
-            this.owner.sendSystemMessage(
+            PlayerUtil.sendSystemMessage(this.owner, 
                 Component.translatable(
                     "item.doggytalents.conducting_bone.rejected",
                     Component.literal(this.rejectedMsg).withStyle(

@@ -20,6 +20,7 @@ import doggytalents.common.entity.ai.triggerable.DogFaintStandAction;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.PlayerUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -150,7 +151,7 @@ public class DogIncapacitatedMananger {
             return;
 
         this.bandageCooldown = 10;
-        player.getCooldowns().addCooldown(stack.getItem(), 11);
+        PlayerUtil.addCooldown(player, stack.getItem(), 11);
         ++this.bandagesCount;
         if (!player.getAbilities().instabuild) {
             stack.shrink(1);

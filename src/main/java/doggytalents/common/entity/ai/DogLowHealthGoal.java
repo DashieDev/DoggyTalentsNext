@@ -9,6 +9,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.LowHealthStrategy;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -129,7 +130,7 @@ public class DogLowHealthGoal {
             }  else {
                 if (this.whine && this.tickTillInitWhine <= 0) {
                     this.whine = false;
-                    this.owner.sendSystemMessage(Component.translatable("dog.msg.low_health." + this.dog.getRandom().nextInt(4), this.dog.getName()));
+                    PlayerUtil.sendSystemMessage(this.owner, Component.translatable("dog.msg.low_health." + this.dog.getRandom().nextInt(4), this.dog.getName()));
                     this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
                     this.tickTillInitWhine = 40;
                 }

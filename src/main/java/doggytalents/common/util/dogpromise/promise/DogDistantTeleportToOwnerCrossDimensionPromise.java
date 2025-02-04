@@ -11,6 +11,7 @@ import doggytalents.common.chunk.DoggyChunkController;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.PlayerUtil;
 import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -100,7 +101,7 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
     @Override
     public void onFulfilled() {
         if (this.owner != null && this.teleportedDog != null)
-            this.owner.sendSystemMessage(
+            PlayerUtil.sendSystemMessage(this.owner, 
                 Component.translatable(
                     "item.doggytalents.conducting_bone.fulfilled.tp_self", 
                     this.teleportedDog.getName().getString()  
@@ -120,7 +121,7 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
     @Override
     public void onRejected() {
         if (this.owner != null)
-            this.owner.sendSystemMessage(
+            PlayerUtil.sendSystemMessage(this.owner, 
                 Component.translatable(
                     "item.doggytalents.conducting_bone.rejected",
                     Component.literal(this.rejectedMsg).withStyle(

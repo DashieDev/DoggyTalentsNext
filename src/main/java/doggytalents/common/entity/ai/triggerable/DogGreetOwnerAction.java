@@ -7,6 +7,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogOwnerDistanceManager;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -108,7 +109,7 @@ public class DogGreetOwnerAction extends TriggerableAction {
         float msg_id_step = (MSG_CHANCE / ((float)MSG_COUNT));
         int msg_id = Mth.floor(r / msg_id_step);
         msg_id = Mth.clamp(msg_id, 0, MSG_COUNT - 1);
-        this.owner.sendSystemMessage(Component.translatable("dog.msg.greet_owner." + msg_id, this.dog.getName().getString()));
+        PlayerUtil.sendSystemMessage(this.owner, Component.translatable("dog.msg.greet_owner." + msg_id, this.dog.getName().getString()));
     }
 
     private void doGreet() {

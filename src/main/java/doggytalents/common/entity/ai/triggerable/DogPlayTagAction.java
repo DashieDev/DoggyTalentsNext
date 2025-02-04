@@ -1,6 +1,7 @@
 package doggytalents.common.entity.ai.triggerable;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
@@ -51,10 +52,10 @@ public class DogPlayTagAction extends TriggerableAction {
         if (dog.distanceToSqr(owner) > RUN_AWAY_RADIUS*RUN_AWAY_RADIUS || timeLeft <= 0) {
             this.setState(ActionState.FINISHED);
             if (this.ownerBeenTagged) {
-                owner.sendSystemMessage(Component.translatable("dog.msg.play_tag.dog_win", dog.getName().getString()));
+                PlayerUtil.sendSystemMessage(owner, Component.translatable("dog.msg.play_tag.dog_win", dog.getName().getString()));
                 dog.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
             } else {
-                owner.sendSystemMessage(Component.translatable("dog.msg.play_tag.you_win", dog.getName().getString()));
+                PlayerUtil.sendSystemMessage(owner, Component.translatable("dog.msg.play_tag.you_win", dog.getName().getString()));
                 owner.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
             }
             return;
@@ -95,7 +96,7 @@ public class DogPlayTagAction extends TriggerableAction {
         }
         if (checkAndTag(dog, owner)) {
             n.stop();
-            owner.sendSystemMessage(Component.translatable("dog.msg.play_tag.gotcha", dog.getName().getString() ));
+            PlayerUtil.sendSystemMessage(owner, Component.translatable("dog.msg.play_tag.gotcha", dog.getName().getString() ));
             this.dog.playSound(SoundEvents.WOLF_AMBIENT, 1, 1);
             this.ownerBeenTagged = true;
             this.cooldownChase = 30;

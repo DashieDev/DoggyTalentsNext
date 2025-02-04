@@ -16,6 +16,7 @@ import doggytalents.common.util.DogBedUtil;
 import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NBTUtil;
+import doggytalents.common.util.PlayerUtil;
 import doggytalents.common.util.WorldUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -203,9 +204,9 @@ public class DogBedBlock extends BaseEntityBlock {
         
         if (tile.getOwnerUUID() != null) {
             var name = tile.getOwnerName();
-            player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.owner", name != null ? name : "someone"));
+            PlayerUtil.sendSystemMessage(player, Component.translatable("block.doggytalents.dog_bed.owner", name != null ? name : "someone"));
         } else { 
-            player.sendSystemMessage(Component.translatable("block.doggytalents.dog_bed.set_owner_help"));
+            PlayerUtil.sendSystemMessage(player, Component.translatable("block.doggytalents.dog_bed.set_owner_help"));
         }   
         return InteractionResult.SUCCESS;
     }
@@ -216,7 +217,7 @@ public class DogBedBlock extends BaseEntityBlock {
             return DogInteractionResult.PASS;
         if (!stack.is(Items.TOTEM_OF_UNDYING))
             return DogInteractionResult.PASS;
-        if (player.getCooldowns().isOnCooldown(Items.TOTEM_OF_UNDYING))
+        if (PlayerUtil.isOnCooldown(player, Items.TOTEM_OF_UNDYING))
             return DogInteractionResult.PASS;
         
         var storage = DogRespawnStorage.get(level);
@@ -252,7 +253,7 @@ public class DogBedBlock extends BaseEntityBlock {
         if (!player.getAbilities().instabuild)
             stack.shrink(1);
 
-        player.getCooldowns().addCooldown(Items.TOTEM_OF_UNDYING, 60);
+        PlayerUtil.addCooldown(player, Items.TOTEM_OF_UNDYING, 60);
         
         return DogInteractionResult.SUCCESS;
     }
@@ -352,7 +353,7 @@ public class DogBedBlock extends BaseEntityBlock {
             return false;
         
         dog.setBedPos(pos);
-        player.sendSystemMessage(
+        PlayerUtil.sendSystemMessage(player, 
             Component.translatable("block.doggytalents.dog_bed.reclaim", 
                 dog.getName().getString(), 
                 dog.getGenderPossessiveAdj()));

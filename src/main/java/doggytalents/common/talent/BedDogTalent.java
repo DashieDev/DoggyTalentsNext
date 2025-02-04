@@ -10,6 +10,7 @@ import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnFailMessage;
 import doggytalents.common.entity.DogSleepOnManager.StartSleepOnDogResult;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -85,7 +86,7 @@ public class BedDogTalent extends TalentInstance {
         var result = DogSleepOnManager.getServer(level.getServer()).setOrRequestSleepOn(dog, player);
         proccessResult(result, dog, player);
         if (result.failMsg() == DogSleepOnFailMessage.NO_POS) {
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 10);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 10);
         }
     }
 
@@ -96,7 +97,7 @@ public class BedDogTalent extends TalentInstance {
             sendCooldownMsg(dog, player);
             return;
         }
-        player.sendSystemMessage(result.failMsg().getMsg(dog));
+        PlayerUtil.sendSystemMessage(player, result.failMsg().getMsg(dog));
     }
 
     private static void sendCooldownMsg(Dog dog, Player player) {
@@ -104,7 +105,7 @@ public class BedDogTalent extends TalentInstance {
         if (!inst_optional.isPresent())
             return;
         var inst = inst_optional.get();
-        player.sendSystemMessage(Component.translatable("talent.doggytalents.bed_dog.fail.cooldown",
+        PlayerUtil.sendSystemMessage(player, Component.translatable("talent.doggytalents.bed_dog.fail.cooldown",
             dog.getName().getString(), Integer.toString(inst.getCooldownDaysLeft(dog))));
     }
     

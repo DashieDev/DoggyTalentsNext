@@ -18,6 +18,7 @@ import doggytalents.common.network.packet.data.ConductingBoneData.RequestDogsDat
 import doggytalents.common.network.packet.data.ConductingBoneData.ResponseDogsData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.PlayerUtil;
 
 import static doggytalents.common.network.packet.data.ConductingBoneData.*;
 
@@ -155,7 +156,7 @@ public class ConductingBonePackets {
                     if (item != DoggyItems.CONDUCTING_BONE.get()) return;
 
                     //And is not on cooldown
-                    if (sender.getCooldowns().isOnCooldown(DoggyItems.CONDUCTING_BONE.get())) return;
+                    if (PlayerUtil.isOnCooldown(sender, DoggyItems.CONDUCTING_BONE.get())) return;
 
                     var uuid = data.dogUUID;
                     if (uuid == null) return; 
@@ -178,7 +179,7 @@ public class ConductingBonePackets {
                         }
                     }
 
-                    sender.getCooldowns().addCooldown(DoggyItems.CONDUCTING_BONE.get(), 20);
+                    PlayerUtil.addCooldown(sender, DoggyItems.CONDUCTING_BONE.get(), 20);
 
                 }
 

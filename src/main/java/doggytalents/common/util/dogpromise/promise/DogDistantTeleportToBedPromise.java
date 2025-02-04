@@ -5,6 +5,7 @@ import doggytalents.common.chunk.DoggyChunkController;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -94,7 +95,7 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
     public void onFulfilled() {
         var owner = this.dog.getOwner();
         if (owner != null) {
-            owner.sendSystemMessage(
+            PlayerUtil.sendSystemMessage(owner, 
                 Component.translatable(
                     "item.doggytalents.conducting_bone.fulfilled.tp_bed", 
                     this.dog.getName().getString(), this.dog.getGenderPossessiveAdj()
@@ -107,7 +108,7 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
     public void onRejected() {
         var owner = this.dog.getOwner();
         if (owner != null) {
-            owner.sendSystemMessage(
+            PlayerUtil.sendSystemMessage(owner,
                 Component.translatable(
                     "item.doggytalents.conducting_bone.rejected",
                     Component.literal(this.rejectedMsg).withStyle(

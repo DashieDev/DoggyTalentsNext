@@ -13,6 +13,7 @@ import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.AllStandSwitchModeData;
 import doggytalents.common.util.EntityUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -38,7 +39,7 @@ public class AllStandSwitchModePacket implements IPacket<AllStandSwitchModeData>
             //var side = ctx.get().getDirection().getReceptionSide();
             if (!ctx.get().isServerRecipent()) return;
             var sender = ctx.get().getSender();
-            if (sender.getCooldowns().isOnCooldown(DoggyItems.WHISTLE.get())) return;
+            if (PlayerUtil.isOnCooldown(sender, DoggyItems.WHISTLE.get())) return;
 
             var target_mode = data.mode;
             if (target_mode.canWander())
@@ -62,14 +63,14 @@ public class AllStandSwitchModePacket implements IPacket<AllStandSwitchModeData>
 
             if (ConfigHandler.WHISTLE_SOUNDS)
             sender.level().playSound(null, sender.blockPosition(), DoggySounds.WHISTLE_LONG.get(), SoundSource.PLAYERS, 0.6F + sender.level().random.nextFloat() * 0.1F, 0.4F + sender.level().random.nextFloat() * 0.2F);
-            sender.sendSystemMessage(Component.translatable("dogcommand.all_stand_switch_mode", 
+            PlayerUtil.sendSystemMessage(sender, Component.translatable("dogcommand.all_stand_switch_mode", 
                 Component.translatable(data.mode.getUnlocalisedName())
                 .withStyle(
                     Style.EMPTY
                     .withBold(true)
                 )
             ));
-            sender.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 40);    
+            PlayerUtil.addCooldown(sender, DoggyItems.WHISTLE.get(), 40);    
         });
 
         ctx.get().setPacketHandled(true);

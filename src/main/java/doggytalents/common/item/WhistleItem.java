@@ -22,6 +22,7 @@ import doggytalents.common.talent.RoaringGaleTalent;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -208,13 +209,13 @@ public class WhistleItem extends Item implements IDogItem {
             }
 
             if (successful) {
-                player.sendSystemMessage(Component.translatable("dogcommand.come"));
+                PlayerUtil.sendSystemMessage(player, Component.translatable("dogcommand.come"));
             }
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
             return;
         case HEEL:
             if (world.isClientSide) return;
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
             int max_heel_count = ConfigHandler.ServerConfig.getConfig(
                 ConfigHandler.SERVER.MAX_HEEL_LIMIT
             );
@@ -239,7 +240,7 @@ public class WhistleItem extends Item implements IDogItem {
             DogUtil.dynamicSearchAndTeleportToOwnwerInBatch(
                 world, heel_list, player, 3);
 
-            player.sendSystemMessage(Component.translatable("dogcommand.heel"));
+            PlayerUtil.sendSystemMessage(player, Component.translatable("dogcommand.heel"));
             return;
         case STAY:
             if (world.isClientSide) return;
@@ -256,9 +257,9 @@ public class WhistleItem extends Item implements IDogItem {
             }
 
             if (successful) {
-                player.sendSystemMessage(Component.translatable("dogcommand.stay"));
+                PlayerUtil.sendSystemMessage(player, Component.translatable("dogcommand.stay"));
             }
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
             return;
         case STOP_ATTACKING:
             if (world.isClientSide) return;
@@ -267,12 +268,12 @@ public class WhistleItem extends Item implements IDogItem {
                 dog.setTarget(null);
             }
             if (successful) {
-                player.sendSystemMessage(Component.translatable("dogcommand.stop_attacking"));
+                PlayerUtil.sendSystemMessage(player, Component.translatable("dogcommand.stop_attacking"));
             }
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
             return;
         case SHELPERD:
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
             return;
         case TACTICAL:
             if (world.isClientSide) return;
@@ -284,7 +285,7 @@ public class WhistleItem extends Item implements IDogItem {
         case ROAR:
             var cooldown_optional = RoaringGaleTalent.roar(dogsList, world, player);
             cooldown_optional.ifPresent(x -> {
-                player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), x);
+                PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), x);
             });
             return;
         case HEEL_BY_NAME:
@@ -294,7 +295,7 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         case TO_BED: 
         {
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
             if (dogsList.isEmpty()) return;
             if (player.level().isClientSide) return;
             boolean noDogs = true;
@@ -325,7 +326,7 @@ public class WhistleItem extends Item implements IDogItem {
                 dog.triggerAction(new DogGoBehindOwnerAction(dog, owner));
                 noDogs = false;
             }
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
             return;
         }
         case HEEL_BY_GROUP:
@@ -335,7 +336,7 @@ public class WhistleItem extends Item implements IDogItem {
         case MOB_RETRIEVER:
             if (world.isClientSide)
                 return;
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
             var retrieverOptional = MobRetrieverTalent.chooseNearestDog(player, world);
             if (retrieverOptional.isEmpty())
                 return;
@@ -366,11 +367,11 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         case HEEL_BY_LOOK:
             heelByLook(world, player);
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
             return;
         case RIDE_WITH_ME:
             rideWithMe(world, player);
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
             return;
         case HOWL:
             howl(world, player);
@@ -413,7 +414,7 @@ public class WhistleItem extends Item implements IDogItem {
         dog.authorizeRiding();
         var result = dog.startRiding(vehicle);
         if (result)
-        player.sendSystemMessage(Component.translatable("dogcommand.ride_with_me", dog.getName().getString()));
+        PlayerUtil.sendSystemMessage(player, Component.translatable("dogcommand.ride_with_me", dog.getName().getString()));
     }
 
     private void heelByLook(Level level, Player player) {
@@ -426,7 +427,7 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         var dog = dog_optional.get();
         DogUtil.dynamicSearchAndTeleportToOwnwer(dog, player, 2);
-        player.sendSystemMessage(Component.translatable("dogcommand.heel_by_name", dog.getName().getString()));
+        PlayerUtil.sendSystemMessage(player, Component.translatable("dogcommand.heel_by_name", dog.getName().getString()));
         dog.setOrderedToSit(false);
     }
 
@@ -452,7 +453,7 @@ public class WhistleItem extends Item implements IDogItem {
     private void sssshhhh(Level level, Player player, List<Dog> dogs) {
         if (level.isClientSide)
             return;
-        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+        PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
         boolean shh_ed = false;
         for (var dog : dogs) {
             if (!canShh(player, dog))
@@ -461,7 +462,7 @@ public class WhistleItem extends Item implements IDogItem {
             dog.setSilentTickLeft(20 * 20);
         }
         if (shh_ed) {
-            player.sendSystemMessage(Component.translatable("dogcommand.ssshhh"));
+            PlayerUtil.sendSystemMessage(player, Component.translatable("dogcommand.ssshhh"));
             level.playSound(null, player.blockPosition(), 
                 DoggySounds.WHISTLE_LONG.get(), 
                 SoundSource.PLAYERS, 
@@ -474,7 +475,7 @@ public class WhistleItem extends Item implements IDogItem {
     private void crossOriginTpForDogs(Level level, Player player, List<Dog> dogs) {
         if (level.isClientSide)
             return;
-        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+        PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
 
         dogs = dogs.stream().filter(x -> !x.isInSittingPose())
             .collect(Collectors.toList());
@@ -495,9 +496,9 @@ public class WhistleItem extends Item implements IDogItem {
             dog.setCrossOriginTp(switch_to);
         }
         if (switch_to) {
-            player.sendSystemMessage(Component.translatable("dogcommand.cross_origin.set"));
+            PlayerUtil.sendSystemMessage(player, Component.translatable("dogcommand.cross_origin.set"));
         } else {
-            player.sendSystemMessage(Component.translatable("dogcommand.cross_origin.unset"));
+            PlayerUtil.sendSystemMessage(player, Component.translatable("dogcommand.cross_origin.unset"));
         }
     }
 

@@ -19,6 +19,7 @@ import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NBTUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -178,7 +179,7 @@ public class SnifferDogTalent extends TalentInstance {
                     Style.EMPTY.withItalic(true)
                 )
             );
-            playerIn.sendSystemMessage(c1);
+            PlayerUtil.sendSystemMessage(playerIn, c1);
             return DogInteractionResult.SUCCESS;
         }
 
@@ -396,7 +397,7 @@ public class SnifferDogTalent extends TalentInstance {
         private void notifyOwner(Dog dog, LivingEntity owner, double distanceAwaySqr) {
             var c1 = Component.translatable(getStringStatus(dog, distanceAwaySqr),
                 dog.getName().getString());
-            owner.sendSystemMessage(c1);
+            PlayerUtil.sendSystemMessage(owner, c1);
             dog.playSound(SoundEvents.WOLF_AMBIENT, 1f, 1.5f);
         }
 

@@ -9,6 +9,7 @@ import doggytalents.common.item.WhistleItem.WhistleMode;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.WhistleUseData;
 import doggytalents.common.util.InventoryUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
@@ -36,7 +37,7 @@ public class WhistleUsePacket implements IPacket<WhistleUseData> {
             var whistle_stack = 
                 InventoryUtil.findStackWithItemFromHands(player, whistle);
             if (whistle_stack == null) return;
-            if (player.getCooldowns().isOnCooldown(whistle)) return;
+            if (PlayerUtil.isOnCooldown(player, whistle)) return;
             var whistle_modes = WhistleMode.VALUES;
             if (data.mode_id >= whistle_modes.length) return;
             if (data.mode_id < 0) return;

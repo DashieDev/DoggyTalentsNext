@@ -13,6 +13,7 @@ import doggytalents.common.util.Cache;
 import doggytalents.common.util.DogFoodUtil;
 import doggytalents.common.util.InventoryUtil;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
@@ -95,7 +96,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         foodStack.shrink(1);
         itemHandler.setStackInSlot(foodStackId, foodStack);
 
-        player.getCooldowns().addCooldown(this, 20);
+        PlayerUtil.addCooldown(player, this, 20);
     }
 
     private void throwFood(Player player, Item item) {
