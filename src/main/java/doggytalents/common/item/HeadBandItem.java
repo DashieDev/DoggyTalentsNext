@@ -25,7 +25,7 @@ public class HeadBandItem extends AccessoryItem{
             TooltipFlag flags) {
         if (this == DoggyItems.HEAD_BAND_BLANK.get())
             return;
-        var desc_id = this.getDescriptionId(stack) + ".description";
+        var desc_id = this.getDescriptionId() + ".description";
         components.add(Component.translatable(desc_id));
     }
 
