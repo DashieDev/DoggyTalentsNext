@@ -18,8 +18,8 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.backward_imitate.DogRenderState_20_3;
-import doggytalents.client.backward_imitate.IBaseDogModel_20_3;
+import doggytalents.client.backward_imitate.DogRenderState_21_3;
+import doggytalents.client.backward_imitate.IBaseDogModel_21_3;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.common.entity.Dog;
@@ -36,7 +36,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 
-public class DogModel extends EntityModel<DogRenderState_20_3> implements IBaseDogModel_20_3 {
+public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseDogModel_21_3 {
 
     public static final float[] MANE_LYING_OFF = {0f, 6f, 1f};
     public static final float[] MANE_SITTING_OFF = {0f, 2f, 0f};
@@ -679,8 +679,8 @@ public class DogModel extends EntityModel<DogRenderState_20_3> implements IBaseD
     }
 
     @Override
-    public void copyPropertiesTo(IBaseDogModel_20_3 model) {
-        IBaseDogModel_20_3.super.copyPropertiesTo(model);
+    public void copyPropertiesTo(IBaseDogModel_21_3 model) {
+        IBaseDogModel_21_3.super.copyPropertiesTo(model);
         if (!this.scaleBabyDog())
             model.setDogYoung(false);
     }
@@ -763,7 +763,7 @@ public class DogModel extends EntityModel<DogRenderState_20_3> implements IBaseD
     //1.21.3+
     public boolean young;
     @Override
-    public void setupAnim(DogRenderState_20_3 render_state) {
+    public void setupAnim(DogRenderState_21_3 render_state) {
         var dog = render_state.dog;
         var walk_anim_time = render_state.walkAnimationPos;
         var walk_anim_speed = render_state.walkAnimationSpeed;
