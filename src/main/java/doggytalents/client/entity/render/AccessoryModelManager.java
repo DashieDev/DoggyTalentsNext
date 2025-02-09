@@ -9,7 +9,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.backward_imitate.DogRenderState_20_3;
+import doggytalents.client.backward_imitate.DogRenderState_21_3;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
@@ -52,7 +52,7 @@ public class AccessoryModelManager {
         
         public abstract void initModel(EntityRendererProvider.Context ctx);
         public abstract SyncedAccessoryModel getModel();
-        public void renderAccessory(RenderLayer<DogRenderState_20_3, DogModel> layer, 
+        public void renderAccessory(RenderLayer<DogRenderState_21_3, DogModel> layer, 
             PoseStack poseStack, MultiBufferSource buffer, int packedLight, 
             Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, 
             float ageInTicks, float netHeadYaw, float headPitch, AccessoryInstance inst) {

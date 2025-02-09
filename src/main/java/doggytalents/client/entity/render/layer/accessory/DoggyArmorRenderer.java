@@ -11,8 +11,8 @@ import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.ClientSetup;
-import doggytalents.client.backward_imitate.BaseModel_20_3;
-import doggytalents.client.backward_imitate.DogRenderLayer_20_3;
+import doggytalents.client.backward_imitate.BaseModel_21_3;
+import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
 import doggytalents.client.entity.model.DogArmorModel;
 import doggytalents.client.entity.model.SyncedRenderFunctionWithHeadModel;
 import doggytalents.client.entity.model.dog.DogModel;
@@ -49,7 +49,7 @@ import net.minecraft.world.item.equipment.EquipmentModel;
 import net.minecraft.world.item.equipment.EquipmentModel.LayerType;
 import net.minecraft.world.item.equipment.trim.ArmorTrim;
 
-public class DoggyArmorRenderer extends DogRenderLayer_20_3 {
+public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
 
     private DogArmorModel model;
     private DogArmorModel newModel;
@@ -178,11 +178,11 @@ public class DoggyArmorRenderer extends DogRenderLayer_20_3 {
 
             var trim = ItemUtil.getTrim(itemStack);
             if (trim.isPresent()) {
-                renderTrim(stack, buffer, light, trim.get(), BaseModel_20_3.wrap(model), ItemUtil.getEquippableModelUnsafe_1_21_3(itemStack));
+                renderTrim(stack, buffer, light, trim.get(), BaseModel_21_3.wrap(model), ItemUtil.getEquippableModelUnsafe_1_21_3(itemStack));
             }
 
             if (itemStack.hasFoil())
-                renderGlint(stack, buffer, light, BaseModel_20_3.wrap(model));
+                renderGlint(stack, buffer, light, BaseModel_21_3.wrap(model));
 
             stack1.popPose();
         });
@@ -199,13 +199,13 @@ public class DoggyArmorRenderer extends DogRenderLayer_20_3 {
         model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, ARGB.colorFromFloat(1, red, green, blue));
     }
 
-    private void renderTrim(PoseStack stack, MultiBufferSource buffer, int light, ArmorTrim trim, BaseModel_20_3 model, ResourceLocation armor_model) {
+    private void renderTrim(PoseStack stack, MultiBufferSource buffer, int light, ArmorTrim trim, BaseModel_21_3 model, ResourceLocation armor_model) {
         var textureatlassprite = this.trimSpriteLookup.apply(new TrimSpriteKey(trim, LayerType.HUMANOID, armor_model));
         var vertexconsumer = textureatlassprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet(trim.pattern().value().decal())));
         model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 
-    private void renderGlint(PoseStack stack, MultiBufferSource buffer, int light, BaseModel_20_3 model) {
+    private void renderGlint(PoseStack stack, MultiBufferSource buffer, int light, BaseModel_21_3 model) {
         model.renderToBuffer(stack, buffer.getBuffer(RenderType.armorEntityGlint()), light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 

@@ -8,14 +8,14 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
-public abstract class DogRenderLayer_20_3 extends RenderLayer<DogRenderState_20_3, DogModel> {
+public abstract class DogRenderLayer_21_3 extends RenderLayer<DogRenderState_21_3, DogModel> {
 
-    public DogRenderLayer_20_3(RenderLayerParent<DogRenderState_20_3, DogModel> p_117346_) {
+    public DogRenderLayer_21_3(RenderLayerParent<DogRenderState_21_3, DogModel> p_117346_) {
         super(p_117346_);
     }
 
     @Override
-    public void render(PoseStack stack, MultiBufferSource buffer, int light, DogRenderState_20_3 render_state,
+    public void render(PoseStack stack, MultiBufferSource buffer, int light, DogRenderState_21_3 render_state,
             float yrot, float xrot) {
         var dog = render_state.dog;
         var walk_anim_time = render_state.walkAnimationPos;

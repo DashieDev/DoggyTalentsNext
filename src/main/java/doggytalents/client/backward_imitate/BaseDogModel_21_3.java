@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
-public abstract class BaseDogModel_20_3 extends BaseEntityModel_20_3<Dog> implements IBaseDogModel_20_3 {
+public abstract class BaseDogModel_21_3 extends BaseEntityModel_21_3<Dog> implements IBaseDogModel_21_3 {
     
     public boolean young = false;
 
@@ -24,7 +24,7 @@ public abstract class BaseDogModel_20_3 extends BaseEntityModel_20_3<Dog> implem
     }
 
     public static void renderColoredCutoutModel(
-        BaseModel_20_3 model,
+        BaseModel_21_3 model,
         ResourceLocation texture,
         PoseStack stack,
         MultiBufferSource buffer,
@@ -45,6 +45,6 @@ public abstract class BaseDogModel_20_3 extends BaseEntityModel_20_3<Dog> implem
         Dog dog,
         int color_overlay
     ) {
-        renderColoredCutoutModel(BaseModel_20_3.wrap(model), texture, stack, buffer, light, dog, color_overlay);
+        renderColoredCutoutModel(BaseModel_21_3.wrap(model), texture, stack, buffer, light, dog, color_overlay);
     }
 }

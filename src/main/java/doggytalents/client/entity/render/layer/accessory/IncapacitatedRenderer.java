@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.backward_imitate.DogRenderLayer_20_3;
+import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
@@ -28,7 +28,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 
-public class IncapacitatedRenderer extends DogRenderLayer_20_3 {
+public class IncapacitatedRenderer extends DogRenderLayer_21_3 {
 
     private DogModel defaultModel;
 

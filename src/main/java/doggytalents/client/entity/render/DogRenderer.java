@@ -15,7 +15,7 @@ import com.mojang.math.Axis;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
-import doggytalents.client.backward_imitate.DogRenderState_20_3;
+import doggytalents.client.backward_imitate.DogRenderState_21_3;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
@@ -49,7 +49,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
-public class DogRenderer extends MobRenderer<Dog, DogRenderState_20_3, DogModel> {
+public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel> {
 
     private static final int TXTCLR_DIFFOWNER = 0x574a4a4a;
     
@@ -70,7 +70,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_20_3, DogModel>
         DogModelRegistry.resolve(ctx);
         DoggySpinModel.init(ctx);
         this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
-        for (LayerFactory<DogRenderState_20_3, DogModel> layer : CollarRenderManager.getLayers()) {
+        for (LayerFactory<DogRenderState_21_3, DogModel> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
         }
         this.originalDogLayers = new ArrayList<>(this.layers);
@@ -85,7 +85,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_20_3, DogModel>
     // }
 
     @Override
-    public void render(DogRenderState_20_3 dog_render_state, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+    public void render(DogRenderState_21_3 dog_render_state, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         var dog = dog_render_state.dog; var partialTicks = dog_render_state.partialTick;
 
         var skin = dog.getClientSkin();
@@ -115,12 +115,12 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_20_3, DogModel>
     }
 
     @Override
-    public ResourceLocation getTextureLocation(DogRenderState_20_3 render_state) {
+    public ResourceLocation getTextureLocation(DogRenderState_21_3 render_state) {
         return DogTextureManager.INSTANCE.getTexture(render_state.dog);
     }
 
     //@Override
-    protected void scaleDog(Dog dogIn, DogRenderState_20_3 state, float partialTickTime) {
+    protected void scaleDog(Dog dogIn, DogRenderState_21_3 state, float partialTickTime) {
         float size = dogIn.isBaby() ? 0.5f 
             : dogIn.getDogSize().getScale();
         this.shadowRadius = size * 0.5F;
@@ -142,7 +142,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_20_3, DogModel>
     }
 
     @Override
-    protected void renderNameTag(DogRenderState_20_3 render_state, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight) {
+    protected void renderNameTag(DogRenderState_21_3 render_state, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight) {
         var dog = render_state.dog;
         double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
 
@@ -367,7 +367,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_20_3, DogModel>
     //Super call Inlined without broastcasting any render event as an attempt to resolve render conflict, 
     //if users opt for it.
 
-    private List<RenderLayer<DogRenderState_20_3, DogModel>> originalDogLayers = List.of();
+    private List<RenderLayer<DogRenderState_21_3, DogModel>> originalDogLayers = List.of();
 
     //  public void MobRenderer_render(Dog p_115455_, float p_115456_, float p_115457_, PoseStack p_115458_, MultiBufferSource p_115459_, int p_115460_) {
     //     LivingEntityRenderer_render(p_115455_, p_115456_, p_115457_, p_115458_, p_115459_, p_115460_);
@@ -488,18 +488,18 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_20_3, DogModel>
 
     //1.21.3 above
     @Override
-    public DogRenderState_20_3 createRenderState() {
-        return new DogRenderState_20_3();
+    public DogRenderState_21_3 createRenderState() {
+        return new DogRenderState_21_3();
     }
     @Override
-    public void extractRenderState(Dog dog, DogRenderState_20_3 extract_to, float p_ticks) {
+    public void extractRenderState(Dog dog, DogRenderState_21_3 extract_to, float p_ticks) {
         // TODO Auto-generated method stub
         super.extractRenderState(dog, extract_to, p_ticks);
         extract_to.dog = dog;
         scaleDog(dog, extract_to, p_ticks);
     }
     @Override
-    protected float getShadowRadius(DogRenderState_20_3 p_365066_) {
+    protected float getShadowRadius(DogRenderState_21_3 p_365066_) {
         return this.shadowRadius;
     }
     public static int getOverlayCoords(Dog dog, float p_115340_) {
