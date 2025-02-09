@@ -24,7 +24,7 @@ public abstract class BaseDogModel_20_3 extends BaseEntityModel_20_3<Dog> implem
     }
 
     public static void renderColoredCutoutModel(
-        RenderToBufferCallback_20_3 render_callback,
+        BaseModel_20_3 model,
         ResourceLocation texture,
         PoseStack stack,
         MultiBufferSource buffer,
@@ -33,7 +33,7 @@ public abstract class BaseDogModel_20_3 extends BaseEntityModel_20_3<Dog> implem
         int color_overlay
     ) {
         VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(texture));
-        render_callback.acceptRender(stack, vertexconsumer, light, DogRenderer.getOverlayCoords(dog, 0.0F), color_overlay);
+        model.renderToBuffer(stack, vertexconsumer, light, DogRenderer.getOverlayCoords(dog, 0.0F), color_overlay);
     }
 
     public static void renderColoredCutoutModel(
@@ -45,21 +45,6 @@ public abstract class BaseDogModel_20_3 extends BaseEntityModel_20_3<Dog> implem
         Dog dog,
         int color_overlay
     ) {
-        renderColoredCutoutModel(model::renderToBuffer, texture, stack, buffer, light, dog, color_overlay);
+        renderColoredCutoutModel(BaseModel_20_3.wrap(model), texture, stack, buffer, light, dog, color_overlay);
     }
-
-    public static void renderColoredCutoutModel(
-        BaseModel_20_3 model,
-        ResourceLocation texture,
-        PoseStack stack,
-        MultiBufferSource buffer,
-        int light,
-        Dog dog,
-        int color_overlay
-    ) {
-        renderColoredCutoutModel(model::renderToBuffer, texture, stack, buffer, light, dog, color_overlay);
-    }
-
-    
-
 }

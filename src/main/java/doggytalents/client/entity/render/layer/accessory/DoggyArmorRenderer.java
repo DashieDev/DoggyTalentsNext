@@ -11,6 +11,7 @@ import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.BaseModel_20_3;
 import doggytalents.client.backward_imitate.DogRenderLayer_20_3;
 import doggytalents.client.entity.model.DogArmorModel;
 import doggytalents.client.entity.model.SyncedRenderFunctionWithHeadModel;
@@ -38,6 +39,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -157,7 +159,7 @@ public class DoggyArmorRenderer extends DogRenderLayer_20_3 {
         if (slot == EquipmentSlot.HEAD && ConfigHandler.CLIENT.USE_THIRD_PARTY_PLAYER_HELMET_MODEL.get()) {
             var dummy = this.helmetAltModel.getDummy();
             var customHeadModel = net.neoforged.neoforge.client.ClientHooks
-                .getArmorModel(dog, itemStack, slot, dummy);
+                .getArmorModel(itemStack, EquipmentModel.LayerType.HUMANOID, dummy);
             if (customHeadModel != dummy && customHeadModel != null)
                 return Optional.of(customHeadModel);
         }
@@ -176,11 +178,11 @@ public class DoggyArmorRenderer extends DogRenderLayer_20_3 {
 
             var trim = ItemUtil.getTrim(itemStack);
             if (trim.isPresent()) {
-                renderTrim(stack, buffer, light, trim.get(), model, ItemUtil.getEquippableModelUnsafe_1_21_3(itemStack));
+                renderTrim(stack, buffer, light, trim.get(), BaseModel_20_3.wrap(model), ItemUtil.getEquippableModelUnsafe_1_21_3(itemStack));
             }
 
             if (itemStack.hasFoil())
-                renderGlint(stack, buffer, light, model);
+                renderGlint(stack, buffer, light, BaseModel_20_3.wrap(model));
 
             stack1.popPose();
         });
@@ -194,16 +196,16 @@ public class DoggyArmorRenderer extends DogRenderLayer_20_3 {
 
     private void renderArmorCutout(DogArmorModel model, ResourceLocation textureLocationIn, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, Dog entityIn, float red, float green, float blue) {
         VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderType.armorCutoutNoCull(textureLocationIn));
-        model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.colorFromFloat(1, red, green, blue));
+        model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, ARGB.colorFromFloat(1, red, green, blue));
     }
 
-    private void renderTrim(PoseStack stack, MultiBufferSource buffer, int light, ArmorTrim trim, Model model, ResourceLocation armor_model) {
+    private void renderTrim(PoseStack stack, MultiBufferSource buffer, int light, ArmorTrim trim, BaseModel_20_3 model, ResourceLocation armor_model) {
         var textureatlassprite = this.trimSpriteLookup.apply(new TrimSpriteKey(trim, LayerType.HUMANOID, armor_model));
         var vertexconsumer = textureatlassprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet(trim.pattern().value().decal())));
         model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 
-    private void renderGlint(PoseStack stack, MultiBufferSource buffer, int light, Model model) {
+    private void renderGlint(PoseStack stack, MultiBufferSource buffer, int light, BaseModel_20_3 model) {
         model.renderToBuffer(stack, buffer.getBuffer(RenderType.armorEntityGlint()), light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 
