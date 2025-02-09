@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.DogRenderLayer_20_3;
 import doggytalents.client.entity.model.BowTieModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
@@ -17,7 +18,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
-public class AccessoryModelRenderer extends RenderLayer<Dog, DogModel>  {
+public class AccessoryModelRenderer extends DogRenderLayer_20_3  {
 
     public AccessoryModelRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);

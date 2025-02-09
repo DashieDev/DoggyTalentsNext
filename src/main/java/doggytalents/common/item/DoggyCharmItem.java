@@ -9,6 +9,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.PlayerUtil;
 import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -21,7 +22,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -88,7 +88,7 @@ public class DoggyCharmItem extends Item implements IDogItem {
                itemstack.shrink(1);
                if (player instanceof ServerPlayer sP) {
                    CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(sP, blockpos1, itemstack);
-                   sP.getCooldowns().addCooldown(this, 30);
+                   PlayerUtil.addCooldown(sP, this, 30);
                }
             
            }
@@ -132,7 +132,7 @@ public class DoggyCharmItem extends Item implements IDogItem {
                             CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(sP, blockpos, itemstack);
                         playerIn.awardStat(Stats.ITEM_USED.get(this));
                         
-                        playerIn.getCooldowns().addCooldown(this, 30);
+                        PlayerUtil.addCooldown(playerIn, this, 30);
                         return InteractionResult.SUCCESS;
                     } else {
                         return InteractionResult.PASS;

@@ -3,6 +3,7 @@ package doggytalents.api.impl;
 import org.jetbrains.annotations.NotNull;
 
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -60,7 +61,7 @@ public class DogArmorItemHandler extends ItemStackHandler {
         var item = stack.getItem();
         if (!(item instanceof ArmorItem armor))
             return;
-        var slot = armor.getType().getSlot();
+        var slot = ItemUtil.getEquipmentSlot(stack);
         setArmorInSlot(stack, slot);
     }
 
@@ -95,7 +96,7 @@ public class DogArmorItemHandler extends ItemStackHandler {
         var item = stack.getItem();
         if (!(item instanceof ArmorItem armor))
             return false;
-        var wantSlot = armor.getType().getSlot();
+        var wantSlot = ItemUtil.getEquipmentSlot(stack);
 
         return wantSlot == equip;
     }

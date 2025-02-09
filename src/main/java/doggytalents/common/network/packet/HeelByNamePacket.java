@@ -43,7 +43,7 @@ import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
     public void handleDog(Dog dog, HeelByNameData data, Supplier<Context> ctx) {
         var owner = ctx.get().getSender();
         if (!dog.canInteract(owner)) return;
-        if (owner.getCooldowns().isOnCooldown(DoggyItems.WHISTLE.get())) return;
+        if (PlayerUtil.isOnCooldown(owner, DoggyItems.WHISTLE.get())) return;
         if (dog.isPassenger()) dog.stopRiding();
         dog.clearTriggerableAction();
 

@@ -7,12 +7,18 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.Equippable;
+import net.minecraft.world.item.equipment.trim.ArmorTrim;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.HashMap;
@@ -150,7 +156,7 @@ public class ItemUtil {
     }
 
     public static Optional<ArmorTrim> getTrim(ItemStack stack) {
-        if (!stack.has(DataComponents.TRIM))
+        if (!stack.has(DataComponents.TRIM) || !isValidTrim_1_21_3(stack))
             return Optional.empty();
         return Optional.ofNullable(stack.get(DataComponents.TRIM));
     }
@@ -161,10 +167,35 @@ public class ItemUtil {
     }
 
     public static int getEnchantmentLevelForItem(ResourceKey<Enchantment> key, RegistryAccess prov, ItemStack stack) {
-        var reg = prov.registryOrThrow(Registries.ENCHANTMENT);
-        var holder = reg.getHolder(key);
+        var reg = prov.lookupOrThrow(Registries.ENCHANTMENT);
+        var holder = reg.get(key);
         if (!holder.isPresent())
             return 0;
         return stack.getEnchantmentLevel(holder.get());
+    }
+
+    public static EquipmentSlot getEquipmentSlot(ItemStack stack) {
+        var data = getEquippable(stack);
+        if (data == null)
+            return null;
+        return data.slot();
+    }
+
+
+    
+    //1.21.3+
+    public static Equippable getEquippable(ItemStack stack) {
+        return stack.get(DataComponents.EQUIPPABLE);
+    }
+    public static boolean isValidTrim_1_21_3(ItemStack stack) {
+        var equip = getEquippable(stack);
+        if (equip == null)
+            return false;
+        if (!equip.model().isPresent())
+            return false;
+        return true;
+    }
+    public static ResourceLocation getEquippableModelUnsafe_1_21_3(ItemStack stack) {
+        return getEquippable(stack).model().get();
     }
 }

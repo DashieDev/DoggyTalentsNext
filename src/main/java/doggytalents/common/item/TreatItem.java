@@ -59,7 +59,7 @@ public class TreatItem extends Item implements IDogItem {
         
         if (!dog.level().isClientSide) {
             actual_dog.setLevel(DogLevel.kamiReady());
-            playerIn.getCooldowns().addCooldown(this, 40);
+            PlayerUtil.addCooldown(playerIn, this, 40);
         }
             
         playKamiBypassEffect(actual_dog);

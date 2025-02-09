@@ -9,20 +9,20 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.client.backward_imitate.DogRenderState_20_3;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.ListModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
@@ -52,7 +52,7 @@ public class AccessoryModelManager {
         
         public abstract void initModel(EntityRendererProvider.Context ctx);
         public abstract SyncedAccessoryModel getModel();
-        public void renderAccessory(RenderLayer<Dog, DogModel> layer, 
+        public void renderAccessory(RenderLayer<DogRenderState_20_3, DogModel> layer, 
             PoseStack poseStack, MultiBufferSource buffer, int packedLight, 
             Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, 
             float ageInTicks, float netHeadYaw, float headPitch, AccessoryInstance inst) {
@@ -83,7 +83,7 @@ public class AccessoryModelManager {
 
     public static void renderColoredCutoutModel(SyncedAccessoryModel p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, Dog p_117382_, float p_117383_, float p_117384_, float p_117385_) {
         VertexConsumer vertexconsumer = p_117380_.getBuffer(RenderType.entityCutoutNoCull(p_117378_));
-        p_117377_.renderToBuffer(p_117379_, vertexconsumer, p_117381_, LivingEntityRenderer.getOverlayCoords(p_117382_, 0.0F), FastColor.ARGB32.colorFromFloat(1, p_117383_, p_117384_, p_117385_));
+        p_117377_.renderToBuffer(p_117379_, vertexconsumer, p_117381_, LivingEntityRenderer.getOverlayCoords(p_117382_, 0.0F), ARGB.colorFromFloat(1, p_117383_, p_117384_, p_117385_));
     }
 
 }

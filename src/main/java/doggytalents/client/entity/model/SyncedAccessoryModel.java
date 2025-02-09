@@ -10,13 +10,13 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.client.backward_imitate.BaseDogModel_20_3;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
 
-public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
+public abstract class SyncedAccessoryModel extends BaseDogModel_20_3 {
 
     public final ModelPart root;
     private Vector3f pivot = DogModel.DEFAULT_ROOT_PIVOT;

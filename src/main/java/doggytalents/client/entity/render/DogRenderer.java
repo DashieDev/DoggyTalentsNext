@@ -15,6 +15,7 @@ import com.mojang.math.Axis;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.backward_imitate.DogRenderState_20_3;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
@@ -34,6 +35,8 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -46,7 +49,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
-public class DogRenderer extends MobRenderer<Dog, DogModel> {
+public class DogRenderer extends MobRenderer<Dog, DogRenderState_20_3, DogModel> {
 
     private static final int TXTCLR_DIFFOWNER = 0x574a4a4a;
     
@@ -67,7 +70,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         DogModelRegistry.resolve(ctx);
         DoggySpinModel.init(ctx);
         this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
-        for (LayerFactory<Dog, DogModel> layer : CollarRenderManager.getLayers()) {
+        for (LayerFactory<DogRenderState_20_3, DogModel> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
         }
         this.originalDogLayers = new ArrayList<>(this.layers);
@@ -76,14 +79,15 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         this.model = this.nullDogModel;
     }
 
-    @Override
-    protected float getBob(Dog livingBase, float partialTicks) {
-        return super.getBob(livingBase, partialTicks);
-    }
+    // @Override
+    // protected float getBob(Dog livingBase, float partialTicks) {
+    //     return super.getBob(livingBase, partialTicks);
+    // }
 
     @Override
-    public void render(Dog dog, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-        
+    public void render(DogRenderState_20_3 dog_render_state, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+        var dog = dog_render_state.dog; var partialTicks = dog_render_state.partialTick;
+
         var skin = dog.getClientSkin();
 
         if (skin.useCustomModel()) {
@@ -98,10 +102,10 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             this.model.setWetShade(f);
         }
 
-        if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
-            MobRenderer_render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-        } else
-            super.render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+        // if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
+        //     MobRenderer_render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+        // } else
+            super.render(dog_render_state, matrixStackIn, bufferIn, packedLightIn);
 
         this.model = this.nullDogModel;
     }
@@ -111,12 +115,12 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Dog dogIn) {
-        return DogTextureManager.INSTANCE.getTexture(dogIn);
+    public ResourceLocation getTextureLocation(DogRenderState_20_3 render_state) {
+        return DogTextureManager.INSTANCE.getTexture(render_state.dog);
     }
 
-    @Override
-    protected void scale(Dog dogIn, PoseStack matrixStackIn, float partialTickTime) {
+    //@Override
+    protected void scaleDog(Dog dogIn, DogRenderState_20_3 state, float partialTickTime) {
         float size = dogIn.isBaby() ? 0.5f 
             : dogIn.getDogSize().getScale();
         this.shadowRadius = size * 0.5F;
@@ -125,20 +129,21 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             var model = skin.getCustomModel().getValue();
             if (model.hasDefaultScale()) {
                 var default_scale = model.getDefaultScale();
-                matrixStackIn.scale(default_scale, default_scale, default_scale);
+                state.scale *= default_scale;
                 this.shadowRadius *= default_scale;
             }
         }
     }
 
     @Override
-    protected boolean shouldShowName(Dog p_115506_) {
+    protected boolean shouldShowName(Dog p_115506_, double distance_to_camera_sqr) {
         return ConfigHandler.CLIENT.ALWAYS_RENDER_DOG_NAME.get()
-            || super.shouldShowName(p_115506_);
+            || super.shouldShowName(p_115506_, distance_to_camera_sqr);
     }
 
     @Override
-    protected void renderNameTag(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight, float pTicks) {
+    protected void renderNameTag(DogRenderState_20_3 render_state, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight) {
+        var dog = render_state.dog;
         double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
 
         var player = Minecraft.getInstance().player;
@@ -362,120 +367,143 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     //Super call Inlined without broastcasting any render event as an attempt to resolve render conflict, 
     //if users opt for it.
 
-    private List<RenderLayer<Dog, DogModel>> originalDogLayers = List.of();
+    private List<RenderLayer<DogRenderState_20_3, DogModel>> originalDogLayers = List.of();
 
-     public void MobRenderer_render(Dog p_115455_, float p_115456_, float p_115457_, PoseStack p_115458_, MultiBufferSource p_115459_, int p_115460_) {
-        LivingEntityRenderer_render(p_115455_, p_115456_, p_115457_, p_115458_, p_115459_, p_115460_);
-    }
+    //  public void MobRenderer_render(Dog p_115455_, float p_115456_, float p_115457_, PoseStack p_115458_, MultiBufferSource p_115459_, int p_115460_) {
+    //     LivingEntityRenderer_render(p_115455_, p_115456_, p_115457_, p_115458_, p_115459_, p_115460_);
+    // }
     
-    public void LivingEntityRenderer_render(Dog p_115308_, float p_115309_, float p_115310_, PoseStack p_115311_, MultiBufferSource p_115312_, int p_115313_) {
-        //if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Pre<T, M>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_))) return;
-        p_115311_.pushPose();
-        this.model.attackTime = this.getAttackAnim(p_115308_, p_115310_);
+    // public void LivingEntityRenderer_render(Dog p_115308_, float p_115309_, float p_115310_, PoseStack p_115311_, MultiBufferSource p_115312_, int p_115313_) {
+    //     //if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Pre<T, M>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_))) return;
+    //     p_115311_.pushPose();
+    //     this.model.attackTime = this.getAttackAnim(p_115308_, p_115310_);
   
-        boolean shouldSit = p_115308_.isPassenger() && (p_115308_.getVehicle() != null && p_115308_.getVehicle().shouldRiderSit());
-        this.model.riding = shouldSit;
-        this.model.young = p_115308_.isBaby();
-        float f = Mth.rotLerp(p_115310_, p_115308_.yBodyRotO, p_115308_.yBodyRot);
-        float f1 = Mth.rotLerp(p_115310_, p_115308_.yHeadRotO, p_115308_.yHeadRot);
-        float f2 = f1 - f;
-        if (shouldSit && p_115308_.getVehicle() instanceof LivingEntity) {
-           LivingEntity livingentity = (LivingEntity)p_115308_.getVehicle();
-           f = Mth.rotLerp(p_115310_, livingentity.yBodyRotO, livingentity.yBodyRot);
-           f2 = f1 - f;
-           float f3 = Mth.wrapDegrees(f2);
-           if (f3 < -85.0F) {
-              f3 = -85.0F;
-           }
+    //     boolean shouldSit = p_115308_.isPassenger() && (p_115308_.getVehicle() != null && p_115308_.getVehicle().shouldRiderSit());
+    //     this.model.riding = shouldSit;
+    //     this.model.young = p_115308_.isBaby();
+    //     float f = Mth.rotLerp(p_115310_, p_115308_.yBodyRotO, p_115308_.yBodyRot);
+    //     float f1 = Mth.rotLerp(p_115310_, p_115308_.yHeadRotO, p_115308_.yHeadRot);
+    //     float f2 = f1 - f;
+    //     if (shouldSit && p_115308_.getVehicle() instanceof LivingEntity) {
+    //        LivingEntity livingentity = (LivingEntity)p_115308_.getVehicle();
+    //        f = Mth.rotLerp(p_115310_, livingentity.yBodyRotO, livingentity.yBodyRot);
+    //        f2 = f1 - f;
+    //        float f3 = Mth.wrapDegrees(f2);
+    //        if (f3 < -85.0F) {
+    //           f3 = -85.0F;
+    //        }
   
-           if (f3 >= 85.0F) {
-              f3 = 85.0F;
-           }
+    //        if (f3 >= 85.0F) {
+    //           f3 = 85.0F;
+    //        }
   
-           f = f1 - f3;
-           if (f3 * f3 > 2500.0F) {
-              f += f3 * 0.2F;
-           }
+    //        f = f1 - f3;
+    //        if (f3 * f3 > 2500.0F) {
+    //           f += f3 * 0.2F;
+    //        }
   
-           f2 = f1 - f;
-        }
+    //        f2 = f1 - f;
+    //     }
   
-        float f6 = Mth.lerp(p_115310_, p_115308_.xRotO, p_115308_.getXRot());
-        // if (isEntityUpsideDown(p_115308_)) {
-        //    f6 *= -1.0F;
-        //    f2 *= -1.0F;
-        // }
+    //     float f6 = Mth.lerp(p_115310_, p_115308_.xRotO, p_115308_.getXRot());
+    //     // if (isEntityUpsideDown(p_115308_)) {
+    //     //    f6 *= -1.0F;
+    //     //    f2 *= -1.0F;
+    //     // }
   
-        // if (p_115308_.hasPose(Pose.SLEEPING)) {
-        //    Direction direction = p_115308_.getBedOrientation();
-        //    if (direction != null) {
-        //       float f4 = p_115308_.getEyeHeight(Pose.STANDING) - 0.1F;
-        //       p_115311_.translate((float)(-direction.getStepX()) * f4, 0.0F, (float)(-direction.getStepZ()) * f4);
-        //    }
-        // }
+    //     // if (p_115308_.hasPose(Pose.SLEEPING)) {
+    //     //    Direction direction = p_115308_.getBedOrientation();
+    //     //    if (direction != null) {
+    //     //       float f4 = p_115308_.getEyeHeight(Pose.STANDING) - 0.1F;
+    //     //       p_115311_.translate((float)(-direction.getStepX()) * f4, 0.0F, (float)(-direction.getStepZ()) * f4);
+    //     //    }
+    //     // }
   
-        float f7 = this.getBob(p_115308_, p_115310_);
-        this.setupRotations(p_115308_, p_115311_, f7, f, p_115310_, p_115308_.getScale());
-        p_115311_.scale(-1.0F, -1.0F, 1.0F);
-        this.scale(p_115308_, p_115311_, p_115310_);
-        p_115311_.translate(0.0F, -1.501F, 0.0F);
-        float f8 = 0.0F;
-        float f5 = 0.0F;
-        if (!shouldSit && p_115308_.isAlive()) {
-           f8 = p_115308_.walkAnimation.speed(p_115310_);
-           f5 = p_115308_.walkAnimation.position(p_115310_);
-           if (p_115308_.isBaby()) {
-              f5 *= 3.0F;
-           }
+    //     float f7 = this.getBob(p_115308_, p_115310_);
+    //     this.setupRotations(p_115308_, p_115311_, f7, f, p_115310_, p_115308_.getScale());
+    //     p_115311_.scale(-1.0F, -1.0F, 1.0F);
+    //     this.scale(p_115308_, p_115311_, p_115310_);
+    //     p_115311_.translate(0.0F, -1.501F, 0.0F);
+    //     float f8 = 0.0F;
+    //     float f5 = 0.0F;
+    //     if (!shouldSit && p_115308_.isAlive()) {
+    //        f8 = p_115308_.walkAnimation.speed(p_115310_);
+    //        f5 = p_115308_.walkAnimation.position(p_115310_);
+    //        if (p_115308_.isBaby()) {
+    //           f5 *= 3.0F;
+    //        }
   
-           if (f8 > 1.0F) {
-              f8 = 1.0F;
-           }
-        }
+    //        if (f8 > 1.0F) {
+    //           f8 = 1.0F;
+    //        }
+    //     }
   
-        this.model.prepareMobModel(p_115308_, f5, f8, p_115310_);
-        this.model.setupAnim(p_115308_, f5, f8, f7, f2, f6);
-        Minecraft minecraft = Minecraft.getInstance();
-        boolean flag = this.isBodyVisible(p_115308_);
-        boolean flag1 = !flag && !p_115308_.isInvisibleTo(minecraft.player);
-        boolean flag2 = minecraft.shouldEntityAppearGlowing(p_115308_);
-        RenderType rendertype = this.getRenderType(p_115308_, flag, flag1, flag2);
-        if (rendertype != null) {
-           VertexConsumer vertexconsumer = p_115312_.getBuffer(rendertype);
-           int i = getOverlayCoords(p_115308_, this.getWhiteOverlayProgress(p_115308_, p_115310_));
-           this.model.renderToBuffer(p_115311_, vertexconsumer, p_115313_, i, flag1 ? 654311423 : -1);
-        }
+    //     this.model.prepareMobModel(p_115308_, f5, f8, p_115310_);
+    //     this.model.setupAnim(p_115308_, f5, f8, f7, f2, f6);
+    //     Minecraft minecraft = Minecraft.getInstance();
+    //     boolean flag = this.isBodyVisible(p_115308_);
+    //     boolean flag1 = !flag && !p_115308_.isInvisibleTo(minecraft.player);
+    //     boolean flag2 = minecraft.shouldEntityAppearGlowing(p_115308_);
+    //     RenderType rendertype = this.getRenderType(p_115308_, flag, flag1, flag2);
+    //     if (rendertype != null) {
+    //        VertexConsumer vertexconsumer = p_115312_.getBuffer(rendertype);
+    //        int i = getOverlayCoords(p_115308_, this.getWhiteOverlayProgress(p_115308_, p_115310_));
+    //        this.model.renderToBuffer(p_115311_, vertexconsumer, p_115313_, i, flag1 ? 654311423 : -1);
+    //     }
   
-        if (!p_115308_.isSpectator()) {
-           for(var renderlayer : this.originalDogLayers) {
-              renderlayer.render(p_115311_, p_115312_, p_115313_, p_115308_, f5, f8, p_115310_, f7, f2, f6);
-           }
-        }
+    //     if (!p_115308_.isSpectator()) {
+    //        for(var renderlayer : this.originalDogLayers) {
+    //           renderlayer.render(p_115311_, p_115312_, p_115313_, p_115308_, f5, f8, p_115310_, f7, f2, f6);
+    //        }
+    //     }
   
-        p_115311_.popPose();
-        if (this.shouldShowName(p_115308_)) {
-            this.renderNameTag(p_115308_, p_115308_.getDisplayName(), p_115311_, p_115312_, p_115313_, p_115310_);
-         }
-        //net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Post<T, M>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_));
-    }
+    //     p_115311_.popPose();
+    //     if (this.shouldShowName(p_115308_)) {
+    //         this.renderNameTag(p_115308_, p_115308_.getDisplayName(), p_115311_, p_115312_, p_115313_, p_115310_);
+    //      }
+    //     //net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Post<T, M>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_));
+    // }
 
-    @Override
-    protected void setupRotations(Dog p_115317_, PoseStack p_115318_, float p_115319_, float p_115320_,
-            float p_115321_, float x) {
-        if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
-            if (p_115317_.deathTime > 0) {
-                float f = ((float)p_115317_.deathTime + p_115321_ - 1.0F) / 20.0F * 1.6F;
-                f = Mth.sqrt(f);
-                if (f > 1.0F) {
-                   f = 1.0F;
-                }
+    // @Override
+    // protected void setupRotations(Dog p_115317_, PoseStack p_115318_, float p_115319_, float p_115320_,
+    //         float p_115321_, float x) {
+    //     if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
+    //         if (p_115317_.deathTime > 0) {
+    //             float f = ((float)p_115317_.deathTime + p_115321_ - 1.0F) / 20.0F * 1.6F;
+    //             f = Mth.sqrt(f);
+    //             if (f > 1.0F) {
+    //                f = 1.0F;
+    //             }
        
-                p_115318_.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees(p_115317_)));
-            } else
-            p_115318_.mulPose(Axis.YP.rotationDegrees(180.0F - p_115320_));
-            return;
-        }
-        super.setupRotations(p_115317_, p_115318_, p_115319_, p_115320_, p_115321_, x);
+    //             p_115318_.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees(p_115317_)));
+    //         } else
+    //         p_115318_.mulPose(Axis.YP.rotationDegrees(180.0F - p_115320_));
+    //         return;
+    //     }
+    //     super.setupRotations(p_115317_, p_115318_, p_115319_, p_115320_, p_115321_, x);
+    // }
+
+
+
+
+    //1_20_3 above
+    @Override
+    public DogRenderState_20_3 createRenderState() {
+        return new DogRenderState_20_3();
+    }
+    @Override
+    public void extractRenderState(Dog dog, DogRenderState_20_3 extract_to, float p_ticks) {
+        // TODO Auto-generated method stub
+        super.extractRenderState(dog, extract_to, p_ticks);
+        extract_to.dog = dog;
+        scaleDog(dog, extract_to, p_ticks);
+    }
+    @Override
+    protected float getShadowRadius(DogRenderState_20_3 p_365066_) {
+        return this.shadowRadius;
+    }
+    public static int getOverlayCoords(Dog dog, float p_115340_) {
+        return OverlayTexture.pack(OverlayTexture.u(p_115340_), OverlayTexture.v(dog.hurtTime > 0 || dog.deathTime > 0;));
     }
 
 
