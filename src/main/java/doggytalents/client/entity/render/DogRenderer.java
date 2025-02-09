@@ -486,7 +486,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_20_3, DogModel>
 
 
 
-    //1_20_3 above
+    //1.21.3 above
     @Override
     public DogRenderState_20_3 createRenderState() {
         return new DogRenderState_20_3();
@@ -503,7 +503,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_20_3, DogModel>
         return this.shadowRadius;
     }
     public static int getOverlayCoords(Dog dog, float p_115340_) {
-        return OverlayTexture.pack(OverlayTexture.u(p_115340_), OverlayTexture.v(dog.hurtTime > 0 || dog.deathTime > 0;));
+        return OverlayTexture.pack(OverlayTexture.u(p_115340_), OverlayTexture.v(dog.hurtTime > 0 || dog.deathTime > 0));
     }
 
 

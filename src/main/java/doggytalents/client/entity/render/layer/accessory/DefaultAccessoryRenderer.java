@@ -13,7 +13,6 @@ import doggytalents.client.backward_imitate.BaseEntityModel_20_3;
 import doggytalents.client.backward_imitate.BaseModel_20_3;
 import doggytalents.client.backward_imitate.DogRenderLayer_20_3;
 import doggytalents.client.backward_imitate.DogRenderState_20_3;
-import doggytalents.client.backward_imitate.RenderToBufferCallback_20_3;
 import doggytalents.client.entity.model.DogFrontLegsSeperate;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
@@ -175,18 +174,15 @@ public class DefaultAccessoryRenderer extends DogRenderLayer_20_3 {
         return accessory.renderTranslucent();
     }
 
-    public static void renderTranslucentModel(RenderToBufferCallback_20_3 p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, Dog p_117382_, float p_117383_, float p_117384_, float p_117385_, float opascity) {
+    public static void renderTranslucentModel(BaseModel_20_3 p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, Dog p_117382_, float p_117383_, float p_117384_, float p_117385_, float opascity) {
         VertexConsumer vertexconsumer = p_117380_.getBuffer(RenderType.entityTranslucent(p_117378_));
-        p_117377_.acceptRender(p_117379_, vertexconsumer, p_117381_, DogRenderer.getOverlayCoords(p_117382_, 0.0F), ARGB.colorFromFloat(opascity, p_117383_, p_117384_, p_117385_));
+        p_117377_.renderToBuffer(p_117379_, vertexconsumer, p_117381_, DogRenderer.getOverlayCoords(p_117382_, 0.0F), ARGB.colorFromFloat(opascity, p_117383_, p_117384_, p_117385_));
     }
 
 
 
     //1.21.3+
-    public static void renderTranslucentModel(BaseModel_20_3 p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, Dog p_117382_, float p_117383_, float p_117384_, float p_117385_, float opascity) {
-        renderTranslucentModel(p_117377_::renderToBuffer, p_117378_, p_117379_, p_117380_, p_117381_, p_117382_, p_117383_, p_117384_, p_117385_, opascity);
-    }
     public static void renderTranslucentModel(DogModel p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, Dog p_117382_, float p_117383_, float p_117384_, float p_117385_, float opascity) {
-        renderTranslucentModel(p_117377_::renderToBuffer, p_117378_, p_117379_, p_117380_, p_117381_, p_117382_, p_117383_, p_117384_, p_117385_, opascity);
+        renderTranslucentModel(BaseModel_20_3.wrap(p_117377_), p_117378_, p_117379_, p_117380_, p_117381_, p_117382_, p_117383_, p_117384_, p_117385_, opascity);
     }
 }
