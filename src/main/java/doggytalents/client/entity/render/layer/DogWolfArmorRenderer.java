@@ -7,6 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.backward_imitate.DogRenderLayer_20_3;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
@@ -20,7 +21,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.layers.WolfArmorLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.Crackiness;
 import net.minecraft.world.item.AnimalArmorItem;
 import net.minecraft.world.item.Item;
@@ -28,7 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
 
-public class DogWolfArmorRenderer extends RenderLayer<Dog, DogModel> {
+public class DogWolfArmorRenderer extends DogRenderLayer_20_3 {
 
     private static final Map<Crackiness.Level, ResourceLocation> ARMOR_CRACK_LOCATIONS = Map.of(
         Crackiness.Level.LOW,

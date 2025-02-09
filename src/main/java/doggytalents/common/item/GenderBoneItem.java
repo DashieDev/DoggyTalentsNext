@@ -6,6 +6,7 @@ import doggytalents.api.feature.EnumGender;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -42,7 +43,7 @@ public class GenderBoneItem extends Item implements IDogItem{
         dog.setGender(dog.getGender() == EnumGender.MALE ?
             EnumGender.FEMALE
             : EnumGender.MALE);
-        playerIn.getCooldowns().addCooldown(DoggyItems.GENDER_BONE.get(), 40);
+        PlayerUtil.addCooldown(playerIn, DoggyItems.GENDER_BONE.get(), 40);
         dog.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
         if (dog.level() instanceof ServerLevel sL) {
             var item = dog.getGender() == EnumGender.MALE ? 

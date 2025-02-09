@@ -18,7 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
@@ -187,7 +187,7 @@ public class DogRespawnData implements IDogData {
 
     @Nullable
     public Dog respawn(ServerLevel worldIn, Player playerIn, BlockPos pos) {
-        Dog dog = DoggyEntityTypes.DOG.get().create(worldIn);
+        Dog dog = DoggyEntityTypes.DOG.get().create(worldIn, EntitySpawnReason.LOAD);
 
         // Failed for some reason
         if (dog == null) {
