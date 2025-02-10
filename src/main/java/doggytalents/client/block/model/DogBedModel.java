@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Either;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
+import doggytalents.client.backward_imitate.WrappedDogBedItemOverride_21_3;
 import doggytalents.common.block.DogBedMaterialManager.NaniBedding;
 import doggytalents.common.block.DogBedMaterialManager.NaniCasing;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
@@ -58,6 +59,7 @@ public class DogBedModel implements BakedModel {
         this.unbakedModel = model;
         this.defaultModelVariant = defaultModelVariant;
         this.maxCacheSize = maxCacheSize;
+        this.initItemOverride_21_3();
     }
 
     public BakedModel getModelVariant(@Nonnull ModelData data) {
@@ -144,7 +146,7 @@ public class DogBedModel implements BakedModel {
         var elements_new = new ArrayList<BlockElement>(elements_old.size());
         for (var element : elements_old) {
             var element_copy = new BlockElement(element.from, element.to, 
-                Maps.newHashMap(element.faces), element.rotation, element.shade);
+                Maps.newHashMap(element.faces), element.rotation, element.shade, element.lightEmission);
             elements_new.add(element_copy);
         }
 
@@ -162,7 +164,7 @@ public class DogBedModel implements BakedModel {
             @Override
             public @Nullable BakedModel bake(ResourceLocation location, ModelState state,
                     Function<Material, TextureAtlasSprite> sprites) {
-                return to_bake.bake(this, to_bake, Material::sprite, 
+                return to_bake.bake(Material::sprite, 
                     getModelRotation(dir),
                     true
                 );
@@ -173,10 +175,10 @@ public class DogBedModel implements BakedModel {
                 return Material::sprite;
             }
 
-            @Override
-            public UnbakedModel getModel(ResourceLocation p_252194_) {
-                return to_bake;
-            }
+            // @Override
+            // public UnbakedModel getModel(ResourceLocation p_252194_) {
+            //     return to_bake;
+            // }
 
             @Override
             @javax.annotation.Nullable
@@ -256,7 +258,16 @@ public class DogBedModel implements BakedModel {
     }
 
     @Override
-    public ItemOverrides getOverrides() {
-        return ITEM_OVERIDE;
+    public BakedOverrides overrides() {
+        return override_21_3;
+    }
+
+
+
+
+    //1.20.3+
+    private WrappedDogBedItemOverride_21_3 override_21_3;
+    private void initItemOverride_21_3() {
+        this.override_21_3 = new WrappedDogBedItemOverride_21_3(this);
     }
 }

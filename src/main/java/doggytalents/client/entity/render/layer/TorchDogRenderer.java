@@ -4,6 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyTalents;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.BaseDogModel_21_3;
+import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
 import doggytalents.client.entity.model.TorchDogModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
@@ -15,7 +17,7 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 
-public class TorchDogRenderer extends RenderLayer<Dog, DogModel>  {
+public class TorchDogRenderer extends DogRenderLayer_21_3  {
     
     private TorchDogModel model;
 
@@ -48,7 +50,7 @@ public class TorchDogRenderer extends RenderLayer<Dog, DogModel>  {
             res = Resources.TORCH_DOG_UNLIT;
             renderLight = packedLight;
         }
-        RenderLayer.renderColoredCutoutModel(this.model, res, poseStack, buffer, renderLight, dog, 0xffffffff);
+        BaseDogModel_21_3.renderColoredCutoutModel(this.model, res, poseStack, buffer, renderLight, dog, 0xffffffff);
 
     }
 

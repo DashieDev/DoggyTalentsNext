@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.client.backward_imitate.DogRenderState_21_3;
 import doggytalents.client.entity.model.CeremonialGarbModel;
 import doggytalents.client.entity.model.LabCoatModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
@@ -51,7 +52,7 @@ public class CeremonialGarbRenderEntry extends Entry{
     }
 
     @Override
-    public void renderAccessory(RenderLayer<Dog, DogModel> layer, PoseStack poseStack, MultiBufferSource buffer,
+    public void renderAccessory(RenderLayer<DogRenderState_21_3, DogModel> layer, PoseStack poseStack, MultiBufferSource buffer,
             int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks,
             float netHeadYaw, float headPitch, AccessoryInstance inst) {
         

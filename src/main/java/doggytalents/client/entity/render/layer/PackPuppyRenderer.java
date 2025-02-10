@@ -4,6 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.BaseDogModel_21_3;
+import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
 import doggytalents.client.entity.model.DogBackpackModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
@@ -17,7 +19,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
 import java.util.Optional;
 
-public class PackPuppyRenderer extends RenderLayer<Dog, DogModel> {
+public class PackPuppyRenderer extends DogRenderLayer_21_3 {
 
     private DogBackpackModel model;
 
@@ -50,7 +52,7 @@ public class PackPuppyRenderer extends RenderLayer<Dog, DogModel> {
             this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
             this.model.sync(getParentModel());
 
-            RenderLayer.renderColoredCutoutModel(this.model, Resources.TALENT_CHEST, poseStack, buffer, packedLight, dog, 0xffffffff);
+            BaseDogModel_21_3.renderColoredCutoutModel(this.model, Resources.TALENT_CHEST, poseStack, buffer, packedLight, dog, 0xffffffff);
         }
 
     }

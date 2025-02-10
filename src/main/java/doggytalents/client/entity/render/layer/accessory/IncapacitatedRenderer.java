@@ -11,6 +11,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.Dog;
@@ -25,6 +26,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -136,8 +138,8 @@ public class IncapacitatedRenderer extends DogRenderLayer_21_3 {
         return Mth.clamp(ret, 0, 1);
     }
 
-    public static <T extends LivingEntity> void renderTranslucentModel(EntityModel<T> p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, T p_117382_, float p_117383_, float p_117384_, float p_117385_, float opascity) {
+    public static void renderTranslucentModel(DogModel p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, Dog p_117382_, float p_117383_, float p_117384_, float p_117385_, float opascity) {
         VertexConsumer vertexconsumer = p_117380_.getBuffer(RenderType.entityTranslucent(p_117378_));
-        p_117377_.renderToBuffer(p_117379_, vertexconsumer, p_117381_, LivingEntityRenderer.getOverlayCoords(p_117382_, 0.0F), FastColor.ARGB32.colorFromFloat(opascity, p_117383_, p_117384_, p_117385_));
+        p_117377_.renderToBuffer(p_117379_, vertexconsumer, p_117381_, DogRenderer.getOverlayCoords(p_117382_, 0.0F), ARGB.colorFromFloat(opascity, p_117383_, p_117384_, p_117385_));
     }
 }

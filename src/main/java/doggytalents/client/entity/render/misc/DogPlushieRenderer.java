@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import doggytalents.client.entity.model.misc.DogPlushieModel;
 import doggytalents.common.entity.misc.DogPlushie;
 import doggytalents.common.lib.Resources;
@@ -14,10 +15,10 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 
-public class DogPlushieRenderer extends EntityRenderer<DogPlushie> {
+public class DogPlushieRenderer extends EntityRenderer_21_3<DogPlushie> {
 
     private DogPlushieModel model;
 
@@ -53,7 +54,7 @@ public class DogPlushieRenderer extends EntityRenderer<DogPlushie> {
         int color = piano.getCollarColor();
         var arr = Util.rgbIntToFloatArray(color);
         consumer = bufferSource.getBuffer(getRenderType(piano, true));
-        this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.colorFromFloat(1, arr[0], arr[1], arr[2]));
+        this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, ARGB.colorFromFloat(1, arr[0], arr[1], arr[2]));
 
         stack.popPose();
     }

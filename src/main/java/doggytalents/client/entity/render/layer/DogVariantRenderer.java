@@ -3,6 +3,7 @@ package doggytalents.client.entity.render.layer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -12,7 +13,7 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
-public class DogVariantRenderer extends RenderLayer<Dog, DogModel> {
+public class DogVariantRenderer extends DogRenderLayer_21_3 {
     
     public DogVariantRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);

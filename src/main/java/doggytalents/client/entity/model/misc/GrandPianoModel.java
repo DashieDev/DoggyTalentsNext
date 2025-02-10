@@ -3,6 +3,7 @@ package doggytalents.client.entity.model.misc;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import doggytalents.client.backward_imitate.BaseEntityModel_21_3;
 import doggytalents.common.entity.misc.Piano;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -13,7 +14,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class GrandPianoModel extends EntityModel<Piano> {
+public class GrandPianoModel extends BaseEntityModel_21_3<Piano> {
 
     public ModelPart piano;
 	public ModelPart fallBoard;

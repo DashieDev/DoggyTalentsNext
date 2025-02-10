@@ -6,6 +6,8 @@ import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.BaseDogModel_21_3;
+import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
 import doggytalents.client.entity.model.DogRescueModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
@@ -18,7 +20,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
 import java.util.Optional;
 
-public class RescueDogRenderer extends RenderLayer<Dog, DogModel> {
+public class RescueDogRenderer extends DogRenderLayer_21_3 {
 
     private DogRescueModel model;
 
@@ -55,7 +57,7 @@ public class RescueDogRenderer extends RenderLayer<Dog, DogModel> {
             dogModel.copyPropertiesTo(this.model);
             this.model.sync(dogModel);
 
-            RenderLayer.renderColoredCutoutModel(this.model, Resources.TALENT_RESCUE, poseStack, buffer, packedLight, dog, 0xffffffff);
+            BaseDogModel_21_3.renderColoredCutoutModel(this.model, Resources.TALENT_RESCUE, poseStack, buffer, packedLight, dog, 0xffffffff);
         }
 
     }
