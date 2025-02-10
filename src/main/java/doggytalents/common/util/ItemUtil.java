@@ -175,7 +175,7 @@ public class ItemUtil {
     }
 
     public static EquipmentSlot getEquipmentSlot(ItemStack stack) {
-        var data = getEquippable(stack);
+        var data = getEquippable_1_21_3(stack);
         if (data == null)
             return null;
         return data.slot();
@@ -184,11 +184,11 @@ public class ItemUtil {
 
     
     //1.21.3+
-    public static Equippable getEquippable(ItemStack stack) {
+    public static Equippable getEquippable_1_21_3(ItemStack stack) {
         return stack.get(DataComponents.EQUIPPABLE);
     }
     public static boolean isValidTrim_1_21_3(ItemStack stack) {
-        var equip = getEquippable(stack);
+        var equip = getEquippable_1_21_3(stack);
         if (equip == null)
             return false;
         if (!equip.model().isPresent())
@@ -196,6 +196,6 @@ public class ItemUtil {
         return true;
     }
     public static ResourceLocation getEquippableModelUnsafe_1_21_3(ItemStack stack) {
-        return getEquippable(stack).model().get();
+        return getEquippable_1_21_3(stack).model().get();
     }
 }
