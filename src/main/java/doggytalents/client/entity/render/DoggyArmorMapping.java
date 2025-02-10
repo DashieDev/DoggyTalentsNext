@@ -66,7 +66,7 @@ public class DoggyArmorMapping {
         var preferedLocOptional = computePreferedArmorLoc(item, dog, stack, armor);
         if (preferedLocOptional.isPresent())
             return preferedLocOptional.get();
-
+        
         if (armor.getMaterial().value().layers().isEmpty())
             return Resources.DEFAULT_DOG_ARMOR; 
 

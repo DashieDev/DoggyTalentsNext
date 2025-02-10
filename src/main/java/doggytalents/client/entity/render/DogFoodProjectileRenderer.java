@@ -3,6 +3,7 @@ package doggytalents.client.entity.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
+import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import doggytalents.common.entity.misc.DogFoodProjectile;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class DogFoodProjectileRenderer extends EntityRenderer<DogFoodProjectile> {
+public class DogFoodProjectileRenderer extends EntityRenderer_21_3<DogFoodProjectile> {
 
     private ItemRenderer itemRenderer;
     private ItemStack placeholder;
