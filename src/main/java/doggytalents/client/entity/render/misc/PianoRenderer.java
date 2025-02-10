@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import doggytalents.client.entity.model.misc.GrandPianoModel;
 import doggytalents.client.entity.model.misc.UprightPianoModel;
 import doggytalents.common.entity.misc.Piano;
@@ -18,7 +19,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class PianoRenderer extends EntityRenderer<Piano> {
+public class PianoRenderer extends EntityRenderer_21_3<Piano> {
 
     private GrandPianoModel model;
     private UprightPianoModel modelUpright;

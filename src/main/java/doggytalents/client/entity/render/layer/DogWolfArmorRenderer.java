@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.layers.WolfArmorLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.Crackiness;
 import net.minecraft.world.item.AnimalArmorItem;
 import net.minecraft.world.item.Item;
@@ -91,13 +92,13 @@ public class DogWolfArmorRenderer extends DogRenderLayer_21_3 {
         var wolf_armor_stack = dog.wolfArmor();
         if (!(wolf_armor_stack.getItem() instanceof AnimalArmorItem wolfArmorItem))
             return Optional.empty();
-        if (wolfArmorItem.getBodyType() != AnimalArmorItem.BodyType.CANINE)
-            return Optional.empty();
+        // if (wolfArmorItem.getBodyType() != AnimalArmorItem.BodyType.CANINE)
+        //     return Optional.empty();
         return Optional.of(Pair.of(wolf_armor_stack, wolfArmorItem));
     }
 
     private void renderWolfArmorLayerMain(DogModel model, PoseStack poseStack, MultiBufferSource buffer, int light, AnimalArmorItem item) {
-        var vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(item.getTexture()));
+        var vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(WOLF_ARMOR_MAIN_21_3));
         model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 
@@ -106,21 +107,21 @@ public class DogWolfArmorRenderer extends DogRenderLayer_21_3 {
         if (item != Items.WOLF_ARMOR)
             return;
         int i = DyedItemColor.getOrDefault(itemStack, 0);
-        if (FastColor.ARGB32.alpha(i) == 0)
+        if (ARGB.alpha(i) == 0)
             return;
 
-        var armor_overlay = item.getOverlayTexture();
+        var armor_overlay = WOLF_ARMOR_DYE_21_3;
         if (armor_overlay == null)
             return;
             
-        float r = (float)FastColor.ARGB32.red(i) / 255.0F;
-        float g = (float)FastColor.ARGB32.green(i) / 255.0F;
-        float b = (float)FastColor.ARGB32.blue(i) / 255.0F;
+        float r = (float)ARGB.red(i) / 255.0F;
+        float g = (float)ARGB.green(i) / 255.0F;
+        float b = (float)ARGB.blue(i) / 255.0F;
         
         model
             .renderToBuffer(
                 stack, buffer.getBuffer(RenderType.entityCutoutNoCull(armor_overlay)), light, 
-                OverlayTexture.NO_OVERLAY, FastColor.ARGB32.colorFromFloat(1, r, g, b)
+                OverlayTexture.NO_OVERLAY, ARGB.colorFromFloat(1, r, g, b)
             );
     }
 
@@ -134,4 +135,9 @@ public class DogWolfArmorRenderer extends DogRenderLayer_21_3 {
         model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
     
+
+
+    //1.21.3+
+    private static final ResourceLocation WOLF_ARMOR_MAIN_21_3 = Util.getVanillaResource("textures/entity/wolf/wolf_armor.png");
+    private static final ResourceLocation WOLF_ARMOR_DYE_21_3 = Util.getVanillaResource("textures/entity/wolf/wolf_armor_overlay.png");
 }

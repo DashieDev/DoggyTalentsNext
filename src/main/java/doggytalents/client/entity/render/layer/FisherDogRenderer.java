@@ -7,6 +7,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyTalents;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.BaseDogModel_21_3;
+import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
 import doggytalents.client.entity.model.DogRescueModel;
 import doggytalents.client.entity.model.FisherDogModel;
 import doggytalents.client.entity.model.dog.DogModel;
@@ -19,7 +21,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
-public class FisherDogRenderer extends RenderLayer<Dog, DogModel> {
+public class FisherDogRenderer extends DogRenderLayer_21_3 {
 
     private FisherDogModel model;
 
@@ -56,7 +58,7 @@ public class FisherDogRenderer extends RenderLayer<Dog, DogModel> {
             dogModel.copyPropertiesTo(this.model);
             this.model.sync(dogModel);
 
-            RenderLayer.renderColoredCutoutModel(this.model, Resources.FISHER_HAT, poseStack, buffer, packedLight, dog, 0xffffffff);
+            BaseDogModel_21_3.renderColoredCutoutModel(this.model, Resources.FISHER_HAT, poseStack, buffer, packedLight, dog, 0xffffffff);
         }
 
     }

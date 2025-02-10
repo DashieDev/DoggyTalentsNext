@@ -6,6 +6,9 @@ import com.mojang.math.Axis;
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.DogRenderLayerWithRenderState_21_3;
+import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
+import doggytalents.client.backward_imitate.DogRenderState_21_3;
 import doggytalents.client.entity.model.SyncedRenderFunctionWithHeadModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.DogRenderer;
@@ -15,8 +18,10 @@ import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
@@ -26,19 +31,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
 
-public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
+public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
     
-    private ItemInHandRenderer itemInHandRenderer;
+    private ItemRenderer itemInHandRenderer;
     private SyncedRenderFunctionWithHeadModel itemSyncer;
 
     public DogMouthItemRenderer(RenderLayerParent dogRendererIn, EntityRendererProvider.Context ctx) {
         super(dogRendererIn);
-        this.itemInHandRenderer = ctx.getItemInHandRenderer();
+        this.itemInHandRenderer = ctx.getItemRenderer();
         itemSyncer = new SyncedRenderFunctionWithHeadModel(ctx.bakeLayer(ClientSetup.DOG_SYNCED_FUNCTION_WITH_HEAD));
     }
 
     @Override
-    public void render(PoseStack matrixStack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack matrixStack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, DogRenderState_21_3 render_state) {
         if (!ConfigHandler.CLIENT.MOUTH_ITEM_FORCE_RENDER.get()) {
             var skin = dog.getClientSkin();
             if (skin.useCustomModel()) {
@@ -58,11 +63,11 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
         model.copyPropertiesTo(itemSyncer);
         itemSyncer.sync(model);
         itemSyncer.startRenderFromRoot(matrixStack, matrixStack1 -> {
-            renderItem(matrixStack1, bufferSource, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
+            renderItem(matrixStack1, bufferSource, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack, render_state);
         });
     }
 
-    public void renderItem(PoseStack stack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack itemStack) {
+    public void renderItem(PoseStack stack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack itemStack, DogRenderState_21_3 render_state) {
         stack.pushPose();
         stack.translate(-0.025F, 0.125F, -0.32F);
         var item = itemStack.getItem();
@@ -78,7 +83,7 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
         stack.mulPose(Axis.YP.rotationDegrees(45.0F));
         stack.mulPose(Axis.XP.rotationDegrees(90.0F));
 
-        this.itemInHandRenderer.renderItem(dog, itemStack, ItemDisplayContext.GROUND, false, stack, bufferSource, packedLight);
+        this.itemInHandRenderer.render(itemStack, ItemDisplayContext.GROUND, false, stack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY, render_state.getMainHandItemModel());
         stack.popPose();
     }
 }
