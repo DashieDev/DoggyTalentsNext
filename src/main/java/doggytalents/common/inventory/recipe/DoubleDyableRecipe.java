@@ -88,13 +88,13 @@ public class DoubleDyableRecipe extends CustomRecipe {
         return DoubleDyableAccessoryItem.copyAndSetColorForStack(targetStack, dyeList, fg_color);
     }
 
-    @Override
-    public boolean canCraftInDimensions(int p_43759_, int p_43760_) {
-        return p_43759_ * p_43760_ >= 2;
-    }
+    // @Override
+    // public boolean canCraftInDimensions(int p_43759_, int p_43760_) {
+    //     return p_43759_ * p_43760_ >= 2;
+    // }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return DoggyRecipeSerializers.DOUBLE_DYABLE.get();
     }
 }
