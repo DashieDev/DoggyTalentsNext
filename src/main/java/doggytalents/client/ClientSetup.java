@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import doggytalents.DoggyContainerTypes;
+import doggytalents.DoggyEffects;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.api.events.RegisterDogSkinJsonPathEvent;
@@ -125,6 +126,7 @@ import doggytalents.client.screen.RiceMillScreen;
 import doggytalents.client.screen.TreatBagScreen;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.client.tileentity.renderer.DogBedRenderer;
+import doggytalents.common.effects.NattoBiteEffect;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import doggytalents.forge_imitate.client.ForgeGuiOverlayManager.RegisterGuiOverlaysEvent;
@@ -428,4 +430,11 @@ public class ClientSetup {
             return;
         OTHER_MOD_SKIN_JSONS.addAll(paths);
     }
+
+
+
+    //1_21_3+
+    // public static void onRegisterClientExtension_21_3(RegisterClientExtensionsEvent event) {
+    //     event.registerMobEffect(NattoBiteEffect.initializeClient(), DoggyEffects.NATTO_BITE.get());
+    // }
 }

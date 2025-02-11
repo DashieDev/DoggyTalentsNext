@@ -16,13 +16,13 @@ import net.minecraft.world.entity.Entity;
 
 public class RenderUtil {
 
-    public static <T extends Entity> void renderLabelWithScale(T entity, EntityRenderer<T> renderer, EntityRenderDispatcher entityRenderDispatcher, Component text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yChange, boolean renderBkg) {
-        renderLabelWithScale(!entity.isDiscrete(), renderer, entityRenderDispatcher, text, stack, buffer, packedLightIn, scale, yChange + entity.getBbHeight() + 0.5F, renderBkg);
-    }
+    // public static <T extends Entity> void renderLabelWithScale(T entity, EntityRenderer<T> renderer, EntityRenderDispatcher entityRenderDispatcher, Component text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yChange, boolean renderBkg) {
+    //     renderLabelWithScale(!entity.isDiscrete(), renderer, entityRenderDispatcher, text, stack, buffer, packedLightIn, scale, yChange + entity.getBbHeight() + 0.5F, renderBkg);
+    // }
 
-    public static <T extends Entity> void renderLabelWithScale(T entity, EntityRenderer<T> renderer, EntityRenderDispatcher entityRenderDispatcher, String text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yChange, boolean renderBkg) {
-        renderLabelWithScale(!entity.isDiscrete(), renderer, entityRenderDispatcher, Component.literal(text), stack, buffer, packedLightIn, scale, yChange + entity.getBbHeight() + 0.5F, renderBkg);
-    }
+    // public static <T extends Entity> void renderLabelWithScale(T entity, EntityRenderer<T> renderer, EntityRenderDispatcher entityRenderDispatcher, String text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yChange, boolean renderBkg) {
+    //     renderLabelWithScale(!entity.isDiscrete(), renderer, entityRenderDispatcher, Component.literal(text), stack, buffer, packedLightIn, scale, yChange + entity.getBbHeight() + 0.5F, renderBkg);
+    // }
 
     // public static void renderLabelWithScale(boolean flag, EntityRenderer renderer, EntityRenderDispatcher entityRenderDispatcher, Component text, PoseStack stack, MultiBufferSource buffer, int packedLightIn, float scale, float yOffset) {
     //     renderLabelWithScale(flag, renderer, entityRenderDispatcher, text.getString(), stack, buffer, packedLightIn, scale, yOffset);

@@ -111,7 +111,7 @@ public class ClientEventHandler {
 
     //@SubscribeEvent
     public void onInputEvent(final MovementInputUpdateEvent event) {
-        if (!event.getInput().jumping)
+        if (!event.getInput().keyPresses.jump())
             return;
         var entity = event.getEntity();
         var vehicle = entity.getVehicle();

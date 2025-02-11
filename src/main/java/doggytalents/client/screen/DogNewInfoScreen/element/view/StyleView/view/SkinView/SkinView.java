@@ -30,6 +30,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntitySpawnReason;
 
 public class SkinView extends AbstractElement {
 
@@ -220,7 +221,7 @@ public class SkinView extends AbstractElement {
 
     private Dog createDummyDog() {
         var level = Minecraft.getInstance().level;
-        var dog = DoggyEntityTypes.DOG.get().create(level);
+        var dog = DoggyEntityTypes.DOG.get().create(level, EntitySpawnReason.TRIGGERED);
         return dog;
     }
     

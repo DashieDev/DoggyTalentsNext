@@ -27,6 +27,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -202,7 +203,7 @@ public class SnifferDogTalent extends TalentInstance {
         if (ItemUtil.hasTag(stack)) {
             ItemUtil.copyTag(stack, retItem);
         }
-        dog.spawnAtLocation(retItem);
+        dog.spawnAtLocation((ServerLevel)dog.level(), retItem);
 
         stack.shrink(1);
 

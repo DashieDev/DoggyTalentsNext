@@ -77,7 +77,7 @@ public class DogInventoryButton extends AbstractButton {
         }
 
         if (this.parent instanceof InventoryScreen) {
-            RecipeBookComponent recipeBook = ((InventoryScreen) this.parent).getRecipeBookComponent();
+            RecipeBookComponent recipeBook = ((InventoryScreen) this.parent).recipeBookComponent;
             if (recipeBook.isVisible()) {
                 this.setX(this.baseX + 77);
             } else {
