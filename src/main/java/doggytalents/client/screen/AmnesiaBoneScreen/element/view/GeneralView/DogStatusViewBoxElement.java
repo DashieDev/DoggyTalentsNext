@@ -84,8 +84,8 @@ public class DogStatusViewBoxElement extends AbstractElement {
             + StatFormatter.DECIMAL_FORMAT.format(dog.getHealth()) + "/" 
             + ((int)dog.getMaxHealth());
         pX += (80 - (8 + font.width(healthStr)))/2; 
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
+        ScreenUtil.blit_21_3(graphics, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
+        ScreenUtil.blit_21_3(graphics, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
         pX += 9;
         pY += 1;
         graphics.drawString(font, healthStr, pX, pY, 0xffffffff);

@@ -19,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -186,7 +187,7 @@ public class DogCannotInteractWithScreen extends Screen {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = size;
-        graphics.blit(getDefeatedKanji(this.dog), x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
+        graphics.blit(RenderType::guiTextured, getDefeatedKanji(this.dog), x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         RenderSystem.disableBlend();
     }
 

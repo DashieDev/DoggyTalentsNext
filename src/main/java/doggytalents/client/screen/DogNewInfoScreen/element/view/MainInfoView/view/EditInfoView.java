@@ -358,7 +358,7 @@ public class EditInfoView extends AbstractElement {
                     if (this.isHovered) {
                         graphics.fill( this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, 0x835e5d5d);
                     }
-                    graphics.blit(Resources.HAMBURGER, this.getX(), this.getY(), 20, 0, 20, 20);
+                    ScreenUtil.blit_21_3(graphics, Resources.HAMBURGER, this.getX(), this.getY(), 20, 0, 20, 20);
                 }
             };
             this.randomButton.setTooltip(Tooltip.create(Component.translatable("doggui.newname.random.tooltip")));

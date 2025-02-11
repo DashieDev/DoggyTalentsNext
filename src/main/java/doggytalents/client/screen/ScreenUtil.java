@@ -4,7 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,4 +55,10 @@ public class ScreenUtil {
         return mc.gameMode.canHurtPlayer();
     }
 
+
+
+    //1.21.3+
+    public static void blit_21_3(GuiGraphics graphics, ResourceLocation texture, int x, int y, int tex_from_x, int tex_from_y, int tex_to_x, int tex_to_y) {
+        graphics.blit(RenderType::guiTextured, texture, x, y, tex_from_x, tex_from_y, tex_to_x, tex_to_y, 256, 256);
+    }
 }

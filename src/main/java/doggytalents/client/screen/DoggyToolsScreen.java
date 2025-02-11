@@ -38,7 +38,7 @@ public class DoggyToolsScreen extends AbstractContainerScreen<DoggyToolsMenu> {
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        graphics.blit(Resources.DOGGY_TOOLS_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
+        ScreenUtil.blit_21_3(graphics, Resources.DOGGY_TOOLS_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
         
         //blit slots
         int slotTexX = 1, slotTexY = 128;
@@ -49,7 +49,7 @@ public class DoggyToolsScreen extends AbstractContainerScreen<DoggyToolsMenu> {
         int pX = mX - toolsSlotsOffsetX;
         
         for (int i = 0; i < toolsSize; ++i) {
-            graphics.blit(Resources.DOGGY_TOOLS_GUI, pX, aY, slotTexX, slotTexY, 18, 18);
+            ScreenUtil.blit_21_3(graphics, Resources.DOGGY_TOOLS_GUI, pX, aY, slotTexX, slotTexY, 18, 18);
             pX += 18;
         }
     }

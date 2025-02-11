@@ -23,6 +23,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
@@ -91,7 +92,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = 128;
-        graphics.blit(getKanjiDogLevel(this.dog), this.getRealX() + this.getSizeX()/2 - imgeSize/2, 
+        graphics.blit(RenderType::guiTextured, getKanjiDogLevel(this.dog), this.getRealX() + this.getSizeX()/2 - imgeSize/2, 
             this.getRealY() + this.getSizeY()/2 - imgeSize/2, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         RenderSystem.disableBlend();
     }
@@ -167,8 +168,8 @@ public class DogStatusViewBoxElement extends AbstractElement {
         }
         
         pX += (80 - (8 + font.width(health_c0)))/2; 
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
+        ScreenUtil.blit_21_3(graphics, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
+        ScreenUtil.blit_21_3(graphics, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
         pX += 9;
         pY += 1;
         graphics.drawString(font, health_c0, pX, pY, 0xffffffff);
@@ -263,7 +264,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
     private void renderHungerStatusStr(GuiGraphics graphics, Dog dog, int x, int y) {
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get())
             return;
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, x, y, 16 + 36, 27, 9, 9);
+        ScreenUtil.blit_21_3(graphics, DogScreenOverlays.GUI_ICONS_LOCATION, x, y, 16 + 36, 27, 9, 9);
         int hunger = (int) dog.getDogHunger();
         graphics.drawString(font, "" + hunger, x + 10, y + 1, 0xffffffff);
     }
@@ -277,7 +278,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = 16;
-        graphics.blit(iconLoc, x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
+        graphics.blit(RenderType::guiTextured, iconLoc, x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         RenderSystem.disableBlend();
     }
     

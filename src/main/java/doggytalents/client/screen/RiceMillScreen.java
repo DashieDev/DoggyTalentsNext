@@ -32,7 +32,7 @@ public class RiceMillScreen extends AbstractContainerScreen<RiceMillMenu> {
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        graphics.blit(Resources.RICE_MILL_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
+        ScreenUtil.blit_21_3(graphics, Resources.RICE_MILL_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
         blitProgressArrow(graphics);
         blitWaterBucket(graphics);
     }
@@ -42,7 +42,7 @@ public class RiceMillScreen extends AbstractContainerScreen<RiceMillMenu> {
         int y = (this.height - this.imageHeight) / 2;
         var grindProg = this.menu.getGrindProgress();
         var filledArrow = getFilledArrow(grindProg);
-        graphics.blit(Resources.RICE_MILL_GUI, x + 79, y + 34, 
+        ScreenUtil.blit_21_3(graphics, Resources.RICE_MILL_GUI, x + 79, y + 34, 
             176, 14, filledArrow, 17);
     }
 
@@ -62,7 +62,7 @@ public class RiceMillScreen extends AbstractContainerScreen<RiceMillMenu> {
         var isSpinning = clientMill.isSpinning();
         if (!isSpinning)
             return;
-        graphics.blit(Resources.RICE_MILL_GUI, x + 82, y + 29, 
+        ScreenUtil.blit_21_3(graphics, Resources.RICE_MILL_GUI, x + 82, y + 29, 
             176, 31, 11, 10);
     }
     
