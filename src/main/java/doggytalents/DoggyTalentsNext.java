@@ -130,6 +130,13 @@ public class DoggyTalentsNext {
         ConfigHandler.init(modEventBus);
 
         //AddonManager.init();
+
+        
+
+        //1.21.3+
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            modEventBus.addListener(ClientSetup::onRegisterClientExtension_21_3);
+        }
     }
 
     public void commonSetup(final FMLCommonSetupEvent event) {

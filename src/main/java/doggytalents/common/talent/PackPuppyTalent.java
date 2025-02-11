@@ -22,6 +22,7 @@ import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.util.DogFoodUtil;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.InventoryUtil;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -71,7 +72,7 @@ public class PackPuppyTalent extends TalentInstance {
 
         @Override
         public boolean isFood(ItemStack stack) {
-            var props = stack.getFoodProperties(null);
+            var props = ItemUtil.food_1_21_3(stack);
 
             if (props == null) return false;
             return stack.is(ItemTags.MEAT) && stack.getItem() != Items.ROTTEN_FLESH

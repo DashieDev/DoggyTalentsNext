@@ -212,7 +212,7 @@ public class DoggySpinModel {
         graphics.pose().mulPose(rot);
         graphics.pose().translate(0.0F, -1.501F, 0.0F);
         Lighting.setupForEntityInInventory();
-        RenderSystem.runAsFancy(() -> this.doRenderModel(graphics.pose(), graphics.bufferSource()));
+        graphics.drawSpecial(buf -> this.doRenderModel(graphics.pose(), buf));
         graphics.flush();
         graphics.pose().popPose();
         Lighting.setupFor3DItems();

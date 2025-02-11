@@ -14,6 +14,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
@@ -83,7 +85,7 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
         private int tickTillRefresh = 0;
         private final Type type;
 
-        private final ArrayList<Pair<Item, ResourceLocation>> recipeCache = new ArrayList<>(5);
+        private final ArrayList<Pair<Item, RecipeHolder<SmeltingRecipe>>> recipeCache = new ArrayList<>(5);
 
         //Anim Debug workaround, clientside
         public boolean debugForceLowFlameRender = false;
@@ -186,7 +188,7 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
                 var recipe = getCookedRecipe(dog, item);
                 if (recipe == null)
                     continue;
-                this.cooking.put(e, recipe.getCookingTime());
+                this.cooking.put(e, recipe.cookingTime());
             }
         }
 
@@ -268,7 +270,7 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
             if (recipe == null)
                 return;
             var cookedItem = recipe
-                .getResultItem(dog.level().registryAccess()).copy();
+                .assemble(new SingleRecipeInput(uncookedItem.copy()), dog.level().registryAccess()).copy();
             var cookedItemEntity = new ItemEntity(dog.level(), 
                 e.getX(), e.getY(), e.getZ(), cookedItem);
             cookedItemEntity.setDefaultPickUpDelay();
@@ -294,7 +296,7 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
             var firstCheck = getCachedRecipeLoc(item);
             
             var pairOptional = 
-                dog.level().getRecipeManager().getRecipeFor(RecipeType.SMELTING, 
+                ((ServerLevel)dog.level()).recipeAccess().getRecipeFor(RecipeType.SMELTING, 
                     new SingleRecipeInput(stack), dog.level(), firstCheck);
             if (!pairOptional.isPresent())
                 return null;
@@ -305,7 +307,7 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
             if (res == null || recipe == null)
                 return null;
             
-            cacheResult(item, res);
+            cacheResult(item, pair);
             return recipe;
         }
 
@@ -323,13 +325,13 @@ public class FieryReflector extends Accessory implements IAccessoryHasModel {
             this.recipeCache.clear();
         }
 
-        private void cacheResult(Item item, ResourceLocation res) {
+        private void cacheResult(Item item, RecipeHolder<SmeltingRecipe> res) {
             if (item == null || res == null)
                 return;
             this.recipeCache.add(Pair.of(item, res));
         }
 
-        private @Nullable ResourceLocation getCachedRecipeLoc(Item item) {
+        private @Nullable RecipeHolder<SmeltingRecipe> getCachedRecipeLoc(Item item) {
             for (var pair : this.recipeCache) {
                 if (pair.getLeft() == item)
                     return pair.getRight();

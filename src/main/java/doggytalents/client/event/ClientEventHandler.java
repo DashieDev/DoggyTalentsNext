@@ -87,7 +87,7 @@ public class ClientEventHandler {
 
             var model = modelRegistry.get(ModelResourceLocation.standalone(bakedModelLoc));
 
-            var modelUnbaked = (BlockModel) event.getModelBakery().topLevelModels.get(ModelResourceLocation.standalone(bakedModelLoc));
+            var modelUnbaked = (BlockModel) event.getModelBakery().unbakedModels.get(ModelResourceLocation.standalone(bakedModelLoc));
 
             BakedModel customModel = new DogBedModel(event.getModelBakery(), modelUnbaked, model, ConfigHandler.CLIENT.MAX_DOG_BED_MODEL_CACHE.get());
 
@@ -110,7 +110,7 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onInputEvent(final MovementInputUpdateEvent event) {
-        if (!event.getInput().jumping)
+        if (!event.getInput().keyPresses.jump())
             return;
         var entity = event.getEntity();
         var vehicle = entity.getVehicle();

@@ -111,13 +111,13 @@ public class FisherDogTalent extends TalentInstance {
     }
 
     private ItemStack tryCookFish(AbstractDog dog, ItemStack fish_raw) {
-        var recipeMan = dog.level().getRecipeManager();
+        var recipeMan = ((ServerLevel)dog.level()).recipeAccess();
         var recipeOptional = recipeMan.getRecipeFor(RecipeType.SMELTING, 
             new SingleRecipeInput(fish_raw.copy()), dog.level());
         if (!recipeOptional.isPresent())
             return fish_raw;
         var recipe = recipeOptional.get();
-        var resultStack = recipe.value().getResultItem(dog.level().registryAccess());
+        var resultStack = recipe.value().assemble(new SingleRecipeInput(fish_raw.copy()), dog.level().registryAccess());
         if (resultStack == null || resultStack.isEmpty())
             return fish_raw;
         return resultStack.copy();

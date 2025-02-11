@@ -13,6 +13,7 @@ import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.AccessoryModelRenderEntries;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;
 import doggytalents.common.item.DyeableAccessoryItem;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -54,7 +55,7 @@ public class Wig extends DyeableAccessory implements IAccessoryHasModel {
             final float chance = 0.15f;
             if (r > chance) return;
             int indx = dog.getRandom().nextInt(DISC_LIST.size());
-            dog.spawnAtLocation(new ItemStack(DISC_LIST.get(indx).get()), 0.0F);
+            dog.spawnAtLocation((ServerLevel)dog.level(),new ItemStack(DISC_LIST.get(indx).get()), 0.0F);
         }
         
     }

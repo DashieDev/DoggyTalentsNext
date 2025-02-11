@@ -3,6 +3,7 @@ import java.util.EnumSet;
 import java.util.UUID;
 
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.impl.DogAlterationProps;
@@ -65,8 +66,8 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResult canBeRiddenInWater(AbstractDog dogIn) {
-        return this.level() >= 2 ? InteractionResult.SUCCESS : InteractionResult.PASS;
+    public DogInteractionResult canBeRiddenInWater(AbstractDog dogIn) {
+        return this.level() >= 2 ? DogInteractionResult.SUCCESS : DogInteractionResult.PASS;
     }
 
     @Override

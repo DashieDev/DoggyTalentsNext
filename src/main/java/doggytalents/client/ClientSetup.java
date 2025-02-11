@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import doggytalents.DoggyContainerTypes;
+import doggytalents.DoggyEffects;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.api.events.RegisterDogSkinJsonPathEvent;
@@ -123,6 +124,7 @@ import doggytalents.client.screen.RiceMillScreen;
 import doggytalents.client.screen.TreatBagScreen;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.client.tileentity.renderer.DogBedRenderer;
+import doggytalents.common.effects.NattoBiteEffect;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -134,6 +136,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 public class ClientSetup {
 
@@ -412,5 +415,12 @@ public class ClientSetup {
     public static void addClientReloadListeners(final RegisterClientReloadListenersEvent event) {
         event.registerReloadListener(DogTextureManager.INSTANCE);
         event.registerReloadListener(DogRandomNameRegistry.getInstance());
+    }
+
+
+
+    //1_21_3+
+    public static void onRegisterClientExtension_21_3(RegisterClientExtensionsEvent event) {
+        event.registerMobEffect(NattoBiteEffect.initializeClient(), DoggyEffects.NATTO_BITE.get());
     }
 }

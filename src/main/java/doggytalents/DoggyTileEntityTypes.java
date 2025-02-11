@@ -23,7 +23,7 @@ public class DoggyTileEntityTypes {
     public static final Supplier<BlockEntityType<DogBathBlockEntity>> DOG_BATH = register("dog_bath", DogBathBlockEntity::new, DoggyBlocks.DOG_BATH);
 
     private static <T extends BlockEntity> Supplier<BlockEntityType<T>> register(final String name, final BlockEntityType.BlockEntitySupplier<T> sup, Supplier<? extends Block> validBlock) {
-        return register(name, () -> BlockEntityType.Builder.of(sup, validBlock.get()).build(null));
+        return register(name, () -> new BlockEntityType<T>(sup, validBlock.get()));
     }
 
     private static <T extends BlockEntityType<?>> Supplier<T> register(final String name, final Supplier<T> sup) {

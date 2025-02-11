@@ -32,6 +32,7 @@ import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ServerExplosion;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -350,7 +351,7 @@ public class OokamiKazeTalent extends TalentInstance {
             if (far_percent > 1)
                 return -1;
             var close_percent = 1 - far_percent;
-            var seen_percent = Explosion.getSeenPercent(dog_pos, e);
+            var seen_percent = ServerExplosion.getSeenPercent(dog_pos, e);
             var impact_value = seen_percent * close_percent;
             return impact_value;
         }

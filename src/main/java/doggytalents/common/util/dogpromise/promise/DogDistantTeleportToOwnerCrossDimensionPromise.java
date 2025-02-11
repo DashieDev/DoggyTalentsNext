@@ -1,6 +1,7 @@
 package doggytalents.common.util.dogpromise.promise;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -23,6 +24,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
 
 public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractPromise {
@@ -187,13 +189,13 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
         this.dogChunkForced = loaded;
     }
 
-    private static DimensionTransition getDogTransition(ServerLevel level, Dog dog, BlockPos safePos) {
-        return new DimensionTransition(level, 
+    private static TeleportTransition getDogTransition(ServerLevel level, Dog dog, BlockPos safePos) {
+        return new TeleportTransition(level, 
             Vec3.atBottomCenterOf(safePos), 
             Vec3.ZERO, 
             dog.getYRot(), dog.getXRot(),
-            false,
-            DimensionTransition.DO_NOTHING);
+            Set.of(),
+            TeleportTransition.DO_NOTHING);
     }
     
     // private static class DogTeleporter implements ITeleporter {

@@ -3,6 +3,7 @@ package doggytalents.common.effects;
 import java.util.function.Consumer;
 
 import doggytalents.common.entity.Dog;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -17,7 +18,7 @@ public class NattoBiteEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {
         return true;
     }
 
@@ -25,9 +26,9 @@ public class NattoBiteEffect extends MobEffect {
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30 * 20, 3));
     }
 
-    @Override
-    public void initializeClient(Consumer<IClientMobEffectExtensions> consumer) {
-        consumer.accept(new IClientMobEffectExtensions() {
+    //@Override
+    public static IClientMobEffectExtensions initializeClient() {
+        return (new IClientMobEffectExtensions() {
             @Override
             public boolean isVisibleInGui(MobEffectInstance instance) {
                 return false;

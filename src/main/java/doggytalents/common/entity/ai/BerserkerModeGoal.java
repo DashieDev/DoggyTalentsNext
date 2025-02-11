@@ -19,7 +19,7 @@ public class BerserkerModeGoal extends NearestAttackableTargetGoal<Mob> {
     private final Dog dog;
 
     public BerserkerModeGoal(Dog dog) {
-        super(dog, Mob.class, false , (e) -> {
+        super(dog, Mob.class, false , (e, level) -> {
             if (targetingOwnerCheck(dog, e))
                 return true;
             if (!(e instanceof Enemy)) return false;
