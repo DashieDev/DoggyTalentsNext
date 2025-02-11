@@ -26,7 +26,7 @@ public class DogScreenOverlays {
             Dog dog = (Dog) mc.player.getVehicle();
             gui.setupOverlayRenderState(true, false);
 
-            mc.getProfiler().push("food_dog");
+            //mc.getProfiler().push("food_dog");
 
             RenderSystem.enableBlend();
             int left = screenWidth / 2 + 91;
@@ -47,15 +47,15 @@ public class DogScreenOverlays {
                     background = 13;
                 }
 
-                mStack.blit(GUI_ICONS_LOCATION, x, y, 16 + background * 9, 27, 9, 9);
+                ScreenUtil.blit_21_3(mStack, GUI_ICONS_LOCATION, x, y, 16 + background * 9, 27, 9, 9);
 
                 if (idx < level)
-                    mStack.blit(GUI_ICONS_LOCATION, x, y, icon + 36, 27, 9, 9);
+                    ScreenUtil.blit_21_3(mStack, GUI_ICONS_LOCATION, x, y, icon + 36, 27, 9, 9);
                 else if (idx == level)
-                    mStack.blit(GUI_ICONS_LOCATION, x, y, icon + 45, 27, 9, 9);
+                    ScreenUtil.blit_21_3(mStack, GUI_ICONS_LOCATION, x, y, icon + 45, 27, 9, 9);
             }
             RenderSystem.disableBlend();
-            mc.getProfiler().pop();
+            //mc.getProfiler().pop();
         }
     };
 
@@ -67,8 +67,8 @@ public class DogScreenOverlays {
         if (isMounted && !mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
             Dog dog = (Dog) mc.player.getVehicle();
 
-            gui.setupOverlayRenderState(true, false);
-            mc.getProfiler().push("air_dog");
+            //gui.setupOverlayRenderState(true, false);
+            //mc.getProfiler().push("air_dog");
             RenderSystem.enableBlend();
             int left = screenWidth / 2 + 91;
             int top = screenHeight - gui.rightHeight;
@@ -83,13 +83,13 @@ public class DogScreenOverlays {
                     int x = left - i * 8 - 9;
                     int y = top;
 
-                    mStack.blit(GUI_ICONS_LOCATION, x, y, (i < full ? 16 : 25), 18, 9, 9);
+                    ScreenUtil.blit_21_3(mStack, GUI_ICONS_LOCATION, x, y, (i < full ? 16 : 25), 18, 9, 9);
                 }
                 gui.rightHeight += 10;
             }
 
             RenderSystem.disableBlend();
-            mc.getProfiler().pop();
+            //mc.getProfiler().pop();
         }
     };
 }

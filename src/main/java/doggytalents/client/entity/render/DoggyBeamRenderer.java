@@ -2,6 +2,8 @@ package doggytalents.client.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+
+import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -15,7 +17,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class DoggyBeamRenderer<T extends Entity> extends EntityRenderer<T> {
+public class DoggyBeamRenderer<T extends Entity> extends EntityRenderer_21_3<T> {
 
     private final net.minecraft.client.renderer.entity.ItemRenderer itemRenderer;
     private final float scale;

@@ -12,6 +12,8 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
 import com.mojang.math.Axis;
 
+import doggytalents.client.backward_imitate.EntityRenderer_21_3;
+import doggytalents.client.backward_imitate.PlayerRenderPrep_21_3;
 import doggytalents.client.screen.PetSelectScreen;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogPettingManager;
@@ -35,6 +37,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Input;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.EntityHitResult;
 
@@ -142,7 +145,6 @@ public class DTNClientPettingManager {
         //configurable
         var stack = event.getPoseStack();
         var mc = Minecraft.getInstance();
-
         var pTicks = FabricUtil.getPartialTick(mc);
         
         var player = event.getPlayer();
@@ -263,7 +265,10 @@ public class DTNClientPettingManager {
 
     //@SubscribeEvent
     public void onPlayerRender(RenderPlayerEvent.Pre event) {
-        if (!isPettingPlayer(event.getEntity()))
+        //1_21_3+ check
+        if (PlayerRenderPrep_21_3.player == null) return;
+        
+        if (!isPettingPlayer(PlayerRenderPrep_21_3.player))
             return;
         
         //var renderer = event.getRenderer();
@@ -284,7 +289,6 @@ public class DTNClientPettingManager {
 
     public void applyTransform(HumanoidModel<?> model, LivingEntity player, HumanoidArm arm) {
         var mc = Minecraft.getInstance();
-
         var pTicks = FabricUtil.getPartialTick(mc);
         float anim_timeline = (float)(player.getId() + player.tickCount + pTicks ) * 0.04f;
         float occill, rotating_x;
@@ -383,10 +387,11 @@ public class DTNClientPettingManager {
         var input = event.getInput();
         input.forwardImpulse = 0;
         input.leftImpulse = 0;
-        input.up = false;
-        input.down = false;
-        input.left = false;
-        input.right = false;
+        // input.up = false;
+        // input.down = false;
+        // input.left = false;
+        // input.right = false;
+        input.keyPresses = Input.EMPTY;
     }
 
     public void onPettingUpdate(Dog dog, DogPettingState state) {

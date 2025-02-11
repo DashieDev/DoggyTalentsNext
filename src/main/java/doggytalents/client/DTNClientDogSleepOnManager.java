@@ -18,6 +18,7 @@ import doggytalents.forge_imitate.event.client.ClientTickEvent.Phase;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -92,7 +93,7 @@ public class DTNClientDogSleepOnManager {
     
 
     public boolean onLivingModelSetupRotation(LivingEntity living, PoseStack stack, 
-        float anim_timeline, float yrot, float pticks, float scale) {
+        float yrot, float scale) {
         var player_optional = checkIsSleepingOnDog(living);
         if (!player_optional.isPresent())
             return false;
@@ -118,8 +119,7 @@ public class DTNClientDogSleepOnManager {
         return view_vec.normalize().scale(-translate_amount);
     }
 
-    public void afterPlayerModelSetupAnim(LivingEntity living, float limbSwing, 
-        float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, PlayerModel<?> model) {
+    public void afterPlayerModelSetupAnim(LivingEntity living, PlayerRenderState state, PlayerModel model) {
         var player_optional = checkIsSleepingOnDog(living);
         if (!player_optional.isPresent())
             return;
