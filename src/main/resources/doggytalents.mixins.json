@@ -6,7 +6,9 @@
     "mixins": [
         "LivingEntityRendererMixin",
         "PlayerModelMixin",
-        "CameraMixin"
+        "CameraMixin",
+
+        "PlayerRendererMixin_1_21_3"
     ],
     "client": [
     ],
