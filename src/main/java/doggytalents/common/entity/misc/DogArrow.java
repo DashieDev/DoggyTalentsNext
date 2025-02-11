@@ -104,7 +104,7 @@ public class DogArrow extends AbstractArrow {
 
     private void makeClientArrowParticle() {
         int color = this.getColor();
-        if (this.inGround) {
+        if (this.isInGround()) {
             if (this.inGroundTime % 5 == 0) {
                 this.makeParticle(1, color);
             }
@@ -115,7 +115,7 @@ public class DogArrow extends AbstractArrow {
 
     private void updateEffectTimeout() {
         boolean effect_expired = 
-            this.inGround && this.inGroundTime >= 600
+            this.isInGround() && this.inGroundTime >= 600
             && this.hasPotionContents();
         if (effect_expired) {
             this.clearPotionContents();
@@ -123,7 +123,7 @@ public class DogArrow extends AbstractArrow {
     }
 
     private void updateSpectralArrow() {
-        if (this.level().isClientSide && !this.inGround) {
+        if (this.level().isClientSide && !this.isInGround()) {
             this.level().addParticle(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
         }
     }

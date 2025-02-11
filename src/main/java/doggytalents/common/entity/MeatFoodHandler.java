@@ -6,13 +6,13 @@ import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.DogInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -41,7 +41,7 @@ public class MeatFoodHandler implements IDogFoodHandler {
             if (!dog.level().isClientSide) {
                 var item = stack.getItem();
 
-                var props = stack.getFoodProperties(dog);
+                var props = ItemUtil.food_1_21_3(stack);
 
                 if (props == null) return DogInteractionResult.FAIL;
                 
@@ -55,7 +55,7 @@ public class MeatFoodHandler implements IDogFoodHandler {
                         dog, new ItemStack(item));
                 }
                 dog.playSound(
-                    SoundEvents.GENERIC_EAT, 
+                    SoundEvents.GENERIC_EAT.value(), 
                     dog.getSoundVolume(), 
                     (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
                 );

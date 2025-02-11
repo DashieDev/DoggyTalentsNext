@@ -13,6 +13,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,7 +34,7 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityWit
     }
 
     public DogFoodProjectile(Level worldIn, LivingEntity livingEntityIn) {
-        super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), livingEntityIn, worldIn);
+        super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), livingEntityIn.getX(), livingEntityIn.getEyeY() - 0.1F, livingEntityIn.getZ(), worldIn);
     }
 
     // public DogFoodProjectile(PlayMessages.SpawnEntity packet, Level worldIn) {
@@ -43,7 +44,7 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityWit
     @Override
     protected void onHit(HitResult hitResult) {
         if (!this.level().isClientSide && !this.foodStack.isEmpty()) {
-            this.spawnAtLocation(foodStack);
+            this.spawnAtLocation((ServerLevel)this.level(), foodStack);
         }
         if (!this.level().isClientSide)
             this.discard();

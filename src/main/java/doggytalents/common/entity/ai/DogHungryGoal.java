@@ -5,6 +5,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.PlayerUtil;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -91,7 +92,7 @@ public class DogHungryGoal extends Goal {
                 IThrowableItem throwableItem = this.dog.getThrowableItem();
                 ItemStack fetchItem = throwableItem != null ? throwableItem.getReturnStack(this.dog.getBoneVariant()) : this.dog.getBoneVariant();
 
-                this.dog.spawnAtLocation(fetchItem, 0.0F);
+                this.dog.spawnAtLocation((ServerLevel)dog.level(), fetchItem, 0.0F);
                 this.dog.setBoneVariant(ItemStack.EMPTY);
             }
         }

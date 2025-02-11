@@ -7,6 +7,7 @@ import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -19,7 +20,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
 
     @Override
     public boolean isFood(ItemStack stackIn) {
-        if (stackIn.getFoodProperties(null) == null)
+        if (ItemUtil.food_1_21_3(stackIn) == null)
             return false;
         return isWhiteListFood(stackIn) && !isBlackListFood(stackIn);
     }
@@ -38,7 +39,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
             if (!dog.level().isClientSide) {
                 var item = stack.getItem();
 
-                var props = stack.getFoodProperties(dog);
+                var props = ItemUtil.food_1_21_3(stack);
 
                 if (props == null) return DogInteractionResult.FAIL;
                 
@@ -52,7 +53,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
                         dog, new ItemStack(item));
                 }
                 dog.playSound(
-                    SoundEvents.GENERIC_EAT, 
+                    SoundEvents.GENERIC_EAT.value(), 
                     dog.getSoundVolume(), 
                     (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
                 );

@@ -203,7 +203,7 @@ public class StatsTracker {
         for (int i = 0; i < mapSize; ++i) {
             var typeId = buf.readResourceLocation();
             var killCount = buf.readInt();
-            var type = BuiltInRegistries.ENTITY_TYPE.get(typeId);
+            var type = BuiltInRegistries.ENTITY_TYPE.getValue(typeId);
             this.ENTITY_KILLS.put(type, killCount);
         }
     }

@@ -61,7 +61,7 @@ public class FisherDogTalent extends TalentInstance {
         var fishItem = getRandomFishingLoot(dogIn);
         var fishStack = getFishedStack(dogIn, fishItem);
 
-        dogIn.spawnAtLocation(fishStack);
+        dogIn.spawnAtLocation((ServerLevel)dogIn.level(), fishStack);
     }
 
     private ItemStack getRandomFishingLoot(AbstractDog dog) {

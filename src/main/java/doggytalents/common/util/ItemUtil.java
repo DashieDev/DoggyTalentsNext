@@ -9,13 +9,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
+import net.minecraft.world.item.consume_effects.ConsumeEffect;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
@@ -23,7 +27,9 @@ import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.item.equipment.trim.ArmorTrim;
 import net.neoforged.neoforge.items.IItemHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -202,5 +208,22 @@ public class ItemUtil {
     }
     public static FoodProperties food_1_21_3(ItemStack stack) {
         return stack.get(DataComponents.FOOD);
+    }
+    public static Consumable consumable_1_21_3(ItemStack stack) {
+        return stack.get(DataComponents.CONSUMABLE);
+    }
+    public static List<MobEffectInstance> foodEffect_1_21_3(ItemStack stack) {
+        var consumable = consumable_1_21_3(stack);
+        if (consumable == null)
+            return List.of();
+        var effects = consumable.onConsumeEffects();
+        if (effects == null)
+            return List.of();
+        var mob_add_effects_list = new ArrayList<MobEffectInstance>();
+        for (var x : effects) {
+            if (x instanceof ApplyStatusEffectsConsumeEffect apply_status)
+                mob_add_effects_list.addAll(apply_status.effects());
+        }
+        return mob_add_effects_list;
     }
 }

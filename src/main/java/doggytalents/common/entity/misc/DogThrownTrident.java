@@ -21,6 +21,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
@@ -189,7 +190,7 @@ public class DogThrownTrident extends AbstractArrow {
         if (this.isOnFire()) {
             EntityUtil.setSecondsOnFire(target, 5);
         }
-        var result = target.hurt(trident_source, damage);
+        var result = target.hurtServer((ServerLevel)this.level(), trident_source, damage);
         if (!result)
             return false;
 
@@ -222,7 +223,7 @@ public class DogThrownTrident extends AbstractArrow {
     }
 
     public boolean isChanneling() {
-        var channel = this.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(Enchantments.CHANNELING);
+        var channel = this.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(Enchantments.CHANNELING);
         if (!channel.isPresent())
             return false;
         return this.getPickupItemStackOrigin().getEnchantmentLevel(channel.get()) > 0;
@@ -240,7 +241,7 @@ public class DogThrownTrident extends AbstractArrow {
         if (!this.level().canSeeSky(target_b0))
             return false;
         
-        var lightningbolt = EntityType.LIGHTNING_BOLT.create(this.level());
+        var lightningbolt = EntityType.LIGHTNING_BOLT.create(this.level(), EntitySpawnReason.TRIGGERED);
         if (lightningbolt == null)
             return false;
 

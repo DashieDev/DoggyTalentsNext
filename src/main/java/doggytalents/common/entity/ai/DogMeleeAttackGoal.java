@@ -13,6 +13,7 @@ import doggytalents.common.entity.ai.nav.DogFlyingNavigation;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySelector;
@@ -297,7 +298,7 @@ public class DogMeleeAttackGoal extends Goal {
          this.resetAttackCooldown();
 
          this.dog.swing(InteractionHand.MAIN_HAND);
-         this.dog.doHurtTarget(target);
+         this.dog.doHurtTarget((ServerLevel)this.dog.level(), target);
          return true;
       }
       return false;

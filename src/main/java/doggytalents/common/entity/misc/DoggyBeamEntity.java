@@ -28,7 +28,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
     }
 
     public DoggyBeamEntity(Level worldIn, LivingEntity livingEntityIn) {
-        super(DoggyEntityTypes.DOG_BEAM.get(), livingEntityIn, worldIn);
+        super(DoggyEntityTypes.DOG_BEAM.get(), livingEntityIn.getX(), livingEntityIn.getEyeY() - 0.1F, livingEntityIn.getZ(), worldIn);
     }
 
     // public DoggyBeamEntity(PlayMessages.SpawnEntity packet, Level worldIn) {

@@ -8,6 +8,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -35,7 +36,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
     private static final int GUARD_DISTANCE = 5;
 
     public GuardModeGoal(Dog dog) {
-        super(dog, Mob.class, 3, false, false, (e) -> {
+        super(dog, Mob.class, 3, false, false, (e, level) -> {
             if (!(e instanceof Enemy)) return false;
             return true;
         });
@@ -63,7 +64,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
 
     @Override
     protected void findTarget() {
-       this.target = this.dog.level().getNearestEntity(this.targetType, this.targetConditions, this.dog, this.owner.getX(), this.owner.getEyeY(), this.owner.getZ(), this.getTargetSearchArea(this.getFollowDistance()));
+       this.target = ((ServerLevel)this.dog.level()).getNearestEntity(this.targetType, this.targetConditions, this.dog, this.owner.getX(), this.owner.getEyeY(), this.owner.getZ(), this.getTargetSearchArea(this.getFollowDistance()));
     }
 
     @Override
@@ -160,10 +161,10 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
                 //guard dogs' HEALTH instead
                 return;
             }
-            this.nearestDanger = this.dog.level()
+            this.nearestDanger = ((ServerLevel)this.dog.level())
                 .getNearestEntity(
                     Mob.class,
-                    TargetingConditions.forCombat().selector( target -> {
+                    TargetingConditions.forCombat().selector( (target, level) -> {
                         if (dog.getDogLevel(DoggyTalents.CREEPER_SWEEPER) > 0) {
                             //Creeper Sweeper dog only detect creeper in this mode
                             return (target instanceof Creeper);

@@ -41,6 +41,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
@@ -210,7 +211,7 @@ public class EventHandler {
     }
 
     public static void trainWolf(Wolf wolf, Player owner, Level level) {
-        Dog dog = DoggyEntityTypes.DOG.get().create(level);
+        Dog dog = DoggyEntityTypes.DOG.get().create(level, EntitySpawnReason.LOAD);
         if (dog == null) {
             throw new IllegalStateException("Creator function for the dog returned \"null\"");
         }
@@ -262,7 +263,7 @@ public class EventHandler {
     }
 
     private static void migrateWolfArmor(Wolf wolf, Dog dog) {
-        if (!wolf.hasArmor())
+        if (!(!wolf.getBodyArmorItem().isEmpty()))
             return;
         var armor_stack = wolf.getBodyArmorItem().copyWithCount(1);
         dog.setWolfArmor(armor_stack);
