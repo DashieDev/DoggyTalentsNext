@@ -13,8 +13,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -51,7 +51,7 @@ public class PianoItem extends Item {
         }
         var piano = pianoSup.get().create(
             (ServerLevel) level, null, spawnAt, 
-            MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
+            EntitySpawnReason.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 
         if (piano != null) {

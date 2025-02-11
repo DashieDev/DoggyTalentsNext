@@ -8,6 +8,7 @@ import com.mojang.datafixers.util.Pair;
 
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
+import doggytalents.common.backward_imitate.DogFoodProperties_21_3.PossibleEffect_1_21_3;
 import doggytalents.common.network.packet.ParticlePackets;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -15,7 +16,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.food.FoodProperties.PossibleEffect;
 import net.minecraft.world.item.ItemStack;
 
 public interface IDogEddible extends IDogFoodHandler {
@@ -26,7 +26,7 @@ public interface IDogEddible extends IDogFoodHandler {
 
     public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog);
 
-    default List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack, AbstractDog dog) {
+    default List<PossibleEffect_1_21_3> getAdditionalEffectsWhenDogConsume(ItemStack useStack, AbstractDog dog) {
         return List.of();
     }
 
@@ -35,6 +35,6 @@ public interface IDogEddible extends IDogFoodHandler {
     };
 
     default SoundEvent getDogEatingSound(AbstractDog dog) {
-        return SoundEvents.GENERIC_EAT;
+        return SoundEvents.GENERIC_EAT.value();
     }
 }

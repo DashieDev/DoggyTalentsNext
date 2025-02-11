@@ -11,6 +11,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.util.PlayerUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -23,10 +24,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 public class SakeItem extends DogEddibleItem {
@@ -84,7 +85,7 @@ public class SakeItem extends DogEddibleItem {
         if (freeSlot >= 0)
             inv.add(bonusReturnStack);
         else
-            player.spawnAtLocation(bonusReturnStack);
+            player.spawnAtLocation((ServerLevel)level, bonusReturnStack);
         return ret;
     }
 
@@ -94,18 +95,19 @@ public class SakeItem extends DogEddibleItem {
     }
 
     // @Override
-    // public boolean isEdible() {
-    //     return false;
+    // @Nullable
+    // public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
+    //     return null;
     // }
 
     @Override
     public SoundEvent getDogEatingSound(AbstractDog dog) {
-        return SoundEvents.GENERIC_DRINK;
+        return SoundEvents.GENERIC_DRINK.value();
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack p_41452_) {
-        return UseAnim.DRINK;
+    public ItemUseAnimation getUseAnimation(ItemStack p_41452_) {
+        return ItemUseAnimation.DRINK;
     }
 
     @Override

@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import doggytalents.DoggyItems;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -44,7 +45,7 @@ public class EdamameItem extends Item{
         if (freeSlot >= 0) {
             inv.add(retStack);
         } else {
-            player.spawnAtLocation(retStack);
+            player.spawnAtLocation((ServerLevel)level, retStack);
         }
 
         if (!player.getAbilities().instabuild) {

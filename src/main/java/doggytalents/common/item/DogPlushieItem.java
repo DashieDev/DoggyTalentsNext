@@ -27,7 +27,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
@@ -61,7 +61,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
         }
         var plush = DoggyEntityTypes.DOG_PLUSHIE_TOY.get().create(
             (ServerLevel) level, null, spawnAt, 
-            MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
+            EntitySpawnReason.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 
         if (plush != null) {

@@ -1,5 +1,6 @@
 package doggytalents;
 
+import doggytalents.common.backward_imitate.EntityHelper_21_3;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.misc.DogArrow;
 import doggytalents.common.entity.misc.DogFoodProjectile;
@@ -113,7 +114,7 @@ public class DoggyEntityTypes {
     );
 
     private static <E extends Entity, T extends EntityType<E>> RegistryObject<EntityType<E>> register(final String name, final EntityType.EntityFactory<E> sup, final MobCategory classification, final Function<EntityType.Builder<E>, EntityType.Builder<E>> builder) {
-         return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(Util.getResourcePath(name)));
+         return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(EntityHelper_21_3.entityKey(name)));
     }
 
     private static <E extends Entity, T extends EntityType<E>> RegistryObject<T> register(final String name, final Supplier<T> sup) {

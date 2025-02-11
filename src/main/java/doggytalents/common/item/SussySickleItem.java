@@ -15,15 +15,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 public class SussySickleItem extends SwordItem {
 
     public SussySickleItem(Properties p_43272_) {
-        super(Tiers.IRON, p_43272_.attributes(SwordItem.createAttributes(Tiers.IRON, 3, 0F)));
+        super(ToolMaterial.IRON,  3, 0F, p_43272_);
     }
 
     @Override

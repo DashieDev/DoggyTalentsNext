@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.DogInteractionResult;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
@@ -32,7 +33,7 @@ public class RiceGrainsItem extends BlockItem{
         return super.useOn(context);
     }
 
-    private InteractionResult handleGrindStoneUsage(UseOnContext context) {
+    private DogInteractionResult handleGrindStoneUsage(UseOnContext context) {
         var level = context.getLevel();
         var pos = context.getClickedPos();
         var state = level.getBlockState(pos);
@@ -41,13 +42,13 @@ public class RiceGrainsItem extends BlockItem{
         var player = context.getPlayer();
 
         if (!state.is(Blocks.GRINDSTONE))
-            return InteractionResult.FAIL;
+            return DogInteractionResult.FAIL;
 
         level.playSound(player, pos, SoundEvents.GRINDSTONE_USE, 
             SoundSource.BLOCKS, 1.0F, 1.0F);
 
         if (level.isClientSide)
-            return InteractionResult.SUCCESS;
+            return DogInteractionResult.SUCCESS;
         
         var resultStack = new ItemStack(
             DoggyItems.UNCOOKED_RICE.get(), 
@@ -64,7 +65,7 @@ public class RiceGrainsItem extends BlockItem{
         if (player != null)
             player.setItemInHand(hand, ItemStack.EMPTY);
 
-        return InteractionResult.SUCCESS;
+        return DogInteractionResult.SUCCESS;
     }
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
