@@ -71,6 +71,6 @@ public class DogBreedGoal extends Goal {
     }
 
     private boolean filterEntities(Dog dog) {
-        return breedPredicate.test(this.dog, dog) && this.dog.canMate(dog);
+        return breedPredicate.test((ServerLevel)dog.level(), this.dog, dog) && this.dog.canMate(dog);
     }
 }

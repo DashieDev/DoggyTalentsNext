@@ -26,7 +26,7 @@ public class DogGunpowderProjectile extends ThrowableProjectile {
     }
 
     public DogGunpowderProjectile(Level worldIn, LivingEntity livingEntityIn) {
-        super(DoggyEntityTypes.DOG_GUNPOWDER_PROJ.get(), livingEntityIn, worldIn);
+        super(DoggyEntityTypes.DOG_GUNPOWDER_PROJ.get(), livingEntityIn.getX(), livingEntityIn.getEyeY() - 0.1F, livingEntityIn.getZ(), worldIn);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class DogGunpowderProjectile extends ThrowableProjectile {
             return;
         } 
         if (!this.level().isClientSide) {
-            this.spawnAtLocation(new ItemStack(Items.GUNPOWDER));
+            this.spawnAtLocation((ServerLevel)this.level(), new ItemStack(Items.GUNPOWDER));
         }
         if (!this.level().isClientSide)
             this.discard();
@@ -141,7 +141,7 @@ public class DogGunpowderProjectile extends ThrowableProjectile {
                 dog, new ItemStack(Items.GUNPOWDER));
         }
         dog.playSound(
-            SoundEvents.GENERIC_EAT, 
+            SoundEvents.GENERIC_EAT.value(), 
             dog.getSoundVolume(), 
             (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
         );

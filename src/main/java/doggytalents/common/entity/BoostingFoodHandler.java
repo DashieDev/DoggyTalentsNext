@@ -34,7 +34,7 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
             
             var item = stack.getItem();
 
-            var props = ItemUtil.food(stack);
+            var props = ItemUtil.food_1_21_3(stack);
             
             if (props == null) return DogInteractionResult.FAIL;
 
@@ -43,9 +43,9 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
             dog.addHunger(heal);
             dog.consumeItemFromStack(entityIn, stack);
 
-            for(var pair : props.effects()) {
-                if (dog.getRandom().nextFloat() < pair.probability()) {
-                   dog.addEffect(pair.effect());
+            for(var pair : ItemUtil.foodEffect_1_21_3(stack)) {
+                if (true) {
+                   dog.addEffect(pair);
                 }
              }
 
@@ -54,7 +54,7 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
                     dog, new ItemStack(item));
             }
             dog.playSound(
-                SoundEvents.GENERIC_EAT, 
+                SoundEvents.GENERIC_EAT.value(), 
                 dog.getSoundVolume(), 
                 (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
             );

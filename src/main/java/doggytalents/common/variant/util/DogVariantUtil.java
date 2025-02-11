@@ -26,7 +26,7 @@ public class DogVariantUtil {
         }
         if (id == null)
             return getDefault();
-        var variant = DoggyRegistries.DOG_VARIANT.get().get(id);
+        var variant = DoggyRegistries.DOG_VARIANT.get().getValue(id);
         if (variant == null)
             return getDefault();
         return variant;

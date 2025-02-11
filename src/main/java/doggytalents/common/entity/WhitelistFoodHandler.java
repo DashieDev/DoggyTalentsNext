@@ -20,7 +20,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
 
     @Override
     public boolean isFood(ItemStack stackIn) {
-        if (!ItemUtil.isEddible(stackIn))
+        if (ItemUtil.food_1_21_3(stackIn) == null)
             return false;
         return isWhiteListFood(stackIn) && !isBlackListFood(stackIn);
     }
@@ -39,7 +39,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
             if (!dog.level().isClientSide) {
                 var item = stack.getItem();
 
-                var props = ItemUtil.food(stack);
+                var props = ItemUtil.food_1_21_3(stack);
 
                 if (props == null) return DogInteractionResult.FAIL;
                 
@@ -53,7 +53,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
                         dog, new ItemStack(item));
                 }
                 dog.playSound(
-                    SoundEvents.GENERIC_EAT, 
+                    SoundEvents.GENERIC_EAT.value(), 
                     dog.getSoundVolume(), 
                     (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
                 );

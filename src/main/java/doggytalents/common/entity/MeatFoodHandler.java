@@ -13,7 +13,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.DogInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -42,7 +41,7 @@ public class MeatFoodHandler implements IDogFoodHandler {
             if (!dog.level().isClientSide) {
                 var item = stack.getItem();
 
-                var props = ItemUtil.food(stack);
+                var props = ItemUtil.food_1_21_3(stack);
 
                 if (props == null) return DogInteractionResult.FAIL;
                 
@@ -56,7 +55,7 @@ public class MeatFoodHandler implements IDogFoodHandler {
                         dog, new ItemStack(item));
                 }
                 dog.playSound(
-                    SoundEvents.GENERIC_EAT, 
+                    SoundEvents.GENERIC_EAT.value(), 
                     dog.getSoundVolume(), 
                     (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
                 );

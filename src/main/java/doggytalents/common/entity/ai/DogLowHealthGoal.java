@@ -12,6 +12,7 @@ import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -95,7 +96,7 @@ public class DogLowHealthGoal {
                     IThrowableItem throwableItem = this.dog.getThrowableItem();
                     ItemStack fetchItem = throwableItem != null ? throwableItem.getReturnStack(this.dog.getBoneVariant()) : this.dog.getBoneVariant();
 
-                    this.dog.spawnAtLocation(fetchItem, 0.0F);
+                    this.dog.spawnAtLocation((ServerLevel)dog.level(), fetchItem, 0.0F);
                     this.dog.setBoneVariant(ItemStack.EMPTY);
                 }
             }

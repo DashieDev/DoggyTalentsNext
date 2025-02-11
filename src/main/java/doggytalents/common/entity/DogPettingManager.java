@@ -100,7 +100,7 @@ public class DogPettingManager {
         var petter = this.getPetterFromDog();
         if (petter == null)
             return;
-        var hurt_result = petter.hurt(petter.damageSources().lava(), 0.1f);
+        var hurt_result = petter.hurtServer((ServerLevel)dog.level(), petter.damageSources().lava(), 0.1f);
         if (hurt_result) {
             petter.playSound(SoundEvents.GENERIC_BURN, 0.4F, 2.0F + random.nextFloat() * 0.4F);
             if (dog.level() instanceof ServerLevel) {

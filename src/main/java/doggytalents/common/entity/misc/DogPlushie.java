@@ -18,7 +18,7 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.network.syncher.SynchedEntityData.Builder;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -111,7 +111,7 @@ public class DogPlushie extends Entity /*implements IEntityWithComplexSpawn*/ {
         return true;
     }
     
-    @Override
+    //@Override
     public boolean isInvulnerableTo(DamageSource source) {
         if (this.isRemoved())
             return true;
@@ -138,7 +138,7 @@ public class DogPlushie extends Entity /*implements IEntityWithComplexSpawn*/ {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float damage) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
         if (this.isInvulnerableTo(source))
             return false;
         mayDropSelf(source);
@@ -155,7 +155,7 @@ public class DogPlushie extends Entity /*implements IEntityWithComplexSpawn*/ {
         
         var drop = this.getDogPlusieItemDrop();
         if (!drop.isEmpty()) {
-            this.spawnAtLocation(drop);
+            this.spawnAtLocation((ServerLevel)this.level(), drop);
         }
     }
 

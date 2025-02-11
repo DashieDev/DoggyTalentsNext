@@ -36,7 +36,7 @@ public class DogDrinkMilkHandler implements IDogFoodHandler {
             }
 
             dog.playSound(
-                SoundEvents.GENERIC_DRINK, 
+                SoundEvents.GENERIC_DRINK.value(), 
                 dog.getSoundVolume(), 
                 (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
             );

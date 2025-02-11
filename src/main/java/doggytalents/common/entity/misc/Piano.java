@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -72,7 +73,7 @@ public class Piano extends Entity {
         this.setPianoFlag(1, val);
     }
 
-    @Override
+    //@Override
     public boolean isInvulnerableTo(DamageSource source) {
         if (this.isRemoved())
             return true;
@@ -97,7 +98,7 @@ public class Piano extends Entity {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float damage) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
         if (this.isInvulnerableTo(source))
             return false;
         var killer = source.getDirectEntity();
@@ -106,7 +107,7 @@ public class Piano extends Entity {
             && player.getAbilities().instabuild;
         var drop = this.getPianoDrop();
         if (!drop.isEmpty() && !killedByCreative) {
-            this.spawnAtLocation(drop);
+            this.spawnAtLocation(level, drop);
         }
         this.discard();
         return true;

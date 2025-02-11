@@ -6,6 +6,7 @@ import doggytalents.api.feature.EnumMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.EntityUtil;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -139,7 +140,7 @@ public class DogFetchAction extends TriggerableAction {
             var throwableItem = this.dog.getThrowableItem();
             var fetchItem = throwableItem != null ? throwableItem.getReturnStack(this.dog.getBoneVariant()) : this.dog.getBoneVariant();
 
-            this.dog.spawnAtLocation(fetchItem, 0.0F);
+            this.dog.spawnAtLocation((ServerLevel)dog.level(), fetchItem, 0.0F);
             this.dog.setBoneVariant(ItemStack.EMPTY);
         }
     }
