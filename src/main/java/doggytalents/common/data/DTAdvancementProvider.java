@@ -26,6 +26,7 @@ import net.minecraft.advancements.critereon.PlayerInteractTrigger;
 import net.minecraft.advancements.critereon.TameAnimalTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -88,7 +89,7 @@ public class DTAdvancementProvider extends AdvancementProvider {
                             .itemUsedOnBlock(
                                 LocationPredicate.Builder.location(),
                                 ItemPredicate.Builder.item()
-                                    .of(DoggyItems.DOGGY_CHARM.get())
+                                    .of(registries.lookupOrThrow(Registries.ITEM), DoggyItems.DOGGY_CHARM.get())
                             )
                     )
                     .save(consumer, Util.getResourcePath("dtn_core/summon_dog"));
@@ -108,10 +109,10 @@ public class DTAdvancementProvider extends AdvancementProvider {
                         PlayerInteractTrigger.TriggerInstance
                             .itemUsedOnEntity(
                                 ItemPredicate.Builder.item()
-                                    .of(DoggyItems.TRAINING_TREAT.get()),
+                                    .of(registries.lookupOrThrow(Registries.ITEM), DoggyItems.TRAINING_TREAT.get()),
                                 Optional.of(EntityPredicate.wrap(
                                     EntityPredicate.Builder.entity()
-                                        .of(EntityType.WOLF)
+                                        .of(registries.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.WOLF)
                                         .build())
                                 )                              
                             )

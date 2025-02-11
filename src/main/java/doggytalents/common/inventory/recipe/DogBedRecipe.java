@@ -79,13 +79,13 @@ public class DogBedRecipe extends CustomRecipe /*implements IShapedRecipe<Crafti
     // }
 
     //Is on a 3x3 grid or bigger
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width >= 3 && height >= 3;
-    }
+    // @Override
+    // public boolean canCraftInDimensions(int width, int height) {
+    //     return width >= 3 && height >= 3;
+    // }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return DoggyRecipeSerializers.DOG_BED.get();
     }
 

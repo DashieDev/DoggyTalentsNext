@@ -6,9 +6,9 @@ import doggytalents.common.lib.Constants;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Function;
@@ -23,8 +23,8 @@ public class DoggyRecipeSerializers {
 //    public static final Supplier<SpecialRecipeSerializer<DogCollarRecipe>> COLLAR_COLOURING = register("collar_colouring", DogCollarRecipe::new);
 //    public static final Supplier<SpecialRecipeSerializer<DogCapeRecipe>> CAPE_COLOURING = register("cape_colouring", DogCapeRecipe::new);
 
-    private static <R extends CraftingRecipe, T extends RecipeSerializer<R>> Supplier<RecipeSerializer<R>> register(final String name, SimpleCraftingRecipeSerializer.Factory<R> factory) {
-        return register(name, () -> new SimpleCraftingRecipeSerializer<R>(factory));
+    private static <R extends CraftingRecipe, T extends RecipeSerializer<R>> Supplier<RecipeSerializer<R>> register(final String name, CustomRecipe.Serializer.Factory<R> factory) {
+        return register(name, () -> new CustomRecipe.Serializer<R>(factory));
     }
 
     private static <T extends RecipeSerializer<?>> Supplier<T> register(final String name, final Supplier<T> sup) {

@@ -17,6 +17,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -57,10 +58,10 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
     private RiceFromGrass createGrassRiceModifer() {
         var correct_id_codition = 
-            LootTableIdCondition.builder(Blocks.SHORT_GRASS.getLootTable().location())
+            LootTableIdCondition.builder(Blocks.SHORT_GRASS.getLootTable().get().location())
             .build();
         var not_shear_condtion = 
-            MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
+            MatchTool.toolMatches(ItemPredicate.Builder.item().of(this.registries.lookupOrThrow(Registries.ITEM), Items.SHEARS))
             .invert()
             .build();
         var random_condition =
@@ -80,14 +81,14 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
                 .hasProperties(
                     EntityTarget.ATTACKER, 
                     EntityPredicate.Builder.entity().of(
-                        DoggyEntityTypes.DOG.get())
+                        this.registries.lookupOrThrow(Registries.ENTITY_TYPE), DoggyEntityTypes.DOG.get())
                 )
                 .build();
         var drop_soy_condition =
             LootItemEntityPropertyCondition
                 .hasProperties(
                     EntityTarget.THIS, 
-                    EntityPredicate.Builder.entity().of(DoggyTags.DROP_SOY_WHEN_DOG_KILL)
+                    EntityPredicate.Builder.entity().of(this.registries.lookupOrThrow(Registries.ENTITY_TYPE), DoggyTags.DROP_SOY_WHEN_DOG_KILL)
                 )
                 .build();
         var random_condition = 

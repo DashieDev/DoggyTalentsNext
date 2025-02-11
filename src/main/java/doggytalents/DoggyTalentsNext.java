@@ -11,6 +11,7 @@ import doggytalents.client.entity.render.DoggyArmorMapping;
 import doggytalents.client.entity.render.world.BedFinderRenderer;
 import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
 import doggytalents.client.event.ClientEventHandler;
+import doggytalents.common.backward_imitate.DTNRecipeProvider_21_3;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import doggytalents.common.chunk.DoggyChunkController;
 //import doggytalents.common.addon.AddonManager;
@@ -187,7 +188,7 @@ public class DoggyTalentsNext {
             DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(packOutput, lookup, event.getExistingFileHelper());
             gen.addProvider(true, blockTagProvider);
             gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider.contentsGetter(), event.getExistingFileHelper()));
-            gen.addProvider(true, new DTRecipeProvider(packOutput, lookup));
+            gen.addProvider(true, new DTNRecipeProvider_21_3(packOutput, lookup));
             gen.addProvider(true, new DTLootTableProvider(packOutput, lookup));
             gen.addProvider(true, new DTLootModifierProvider(packOutput, lookup));
             gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup, event.getExistingFileHelper()));
