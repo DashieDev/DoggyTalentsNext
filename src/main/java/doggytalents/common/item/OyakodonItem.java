@@ -7,13 +7,13 @@ import java.util.List;
 import com.mojang.datafixers.util.Pair;
 
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.common.backward_imitate.DogFoodProperties_21_3.PossibleEffect_1_21_3;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.food.FoodProperties.PossibleEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.ItemStack;
@@ -43,16 +43,16 @@ public class OyakodonItem extends DogEddibleBowlFoodItem {
     }
 
     @Override
-    public List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+    public List<PossibleEffect_1_21_3> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
         var ret = super.getAdditionalEffectsWhenDogConsume(useStack, dog);
-        var newRet = new ArrayList<PossibleEffect>(ret.size());
+        var newRet = new ArrayList<PossibleEffect_1_21_3>(ret.size());
         for (var pair : ret) {
             var effect = pair.effect();
             var newDuration = effect.getEffect().value().isInstantenous() ?
                 effect.getDuration()
                 : effect.mapDuration(x -> x + 2 * 60 * 20);
-            var newPair = new PossibleEffect(() -> new MobEffectInstance(
+            var newPair = new PossibleEffect_1_21_3(() -> new MobEffectInstance(
                 effect.getEffect(),
                 newDuration,
                 effect.getAmplifier()

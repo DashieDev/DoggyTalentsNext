@@ -9,7 +9,7 @@ import net.minecraft.tags.TagKey;
 public class TagUtil {
     
     public static <T> List<T> queryAllValuesForTag(Registry<T> reg, TagKey<T> key) {
-        var tag = reg.getTag(key).orElse(null);
+        var tag = reg.get(key).orElse(null);
         if (tag == null)
             return List.of();
         var ret = tag.stream()

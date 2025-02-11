@@ -22,6 +22,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -74,7 +75,7 @@ public class DoggyCharmItem extends Item implements IDogItem {
             }
 
 
-            Entity entity = DoggyEntityTypes.DOG.get().spawn((ServerLevel) world, itemstack, context.getPlayer(), blockpos1, MobSpawnType.SPAWN_EGG, !Objects.equals(blockpos, blockpos1) && enumfacing == Direction.UP, false);
+            Entity entity = DoggyEntityTypes.DOG.get().spawn((ServerLevel) world, itemstack, context.getPlayer(), blockpos1, EntitySpawnReason.SPAWN_ITEM_USE, !Objects.equals(blockpos, blockpos1) && enumfacing == Direction.UP, false);
             if (entity instanceof Dog) {
                Dog dog = (Dog)entity;
                if (player != null) {
@@ -117,7 +118,7 @@ public class DoggyCharmItem extends Item implements IDogItem {
                 if (!(worldIn.getBlockState(blockpos).getBlock() instanceof LiquidBlock)) {
                     return InteractionResult.PASS;
                 } else if (worldIn.mayInteract(playerIn, blockpos) && playerIn.mayUseItemAt(blockpos, ((BlockHitResult)raytraceresult).getDirection(), itemstack)) {
-                    Entity entity = DoggyEntityTypes.DOG.get().spawn((ServerLevel) worldIn, itemstack, playerIn, blockpos, MobSpawnType.SPAWN_EGG, false, false);
+                    Entity entity = DoggyEntityTypes.DOG.get().spawn((ServerLevel) worldIn, itemstack, playerIn, blockpos, EntitySpawnReason.SPAWN_ITEM_USE, false, false);
                     if (entity instanceof Dog) {
                         Dog dog = (Dog)entity;
                            dog.setTame(true, true);

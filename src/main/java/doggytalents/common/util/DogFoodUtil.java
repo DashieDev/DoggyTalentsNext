@@ -26,7 +26,7 @@ public class DogFoodUtil {
 
         @Override
         public boolean isFood(ItemStack stack) {
-            var props = stack.getFoodProperties(null);
+            var props = ItemUtil.food_1_21_3(stack);
 
             if (props == null) return false;
             return stack.is(ItemTags.MEAT) && stack.getItem() != Items.ROTTEN_FLESH

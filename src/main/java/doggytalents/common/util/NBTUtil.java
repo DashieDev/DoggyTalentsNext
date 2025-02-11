@@ -147,7 +147,7 @@ public class NBTUtil {
         ResourceLocation rl = NBTUtil.getResourceLocation(compound, key);
         if (rl != null) {
             if (registry.containsKey(rl)) {
-                return registry.get(rl);
+                return registry.getValue(rl);
             } else {
                 DoggyTalentsNext.LOGGER.warn("Unable to load registry value in registry {} with resource location {}", registry.key(), rl);
             }

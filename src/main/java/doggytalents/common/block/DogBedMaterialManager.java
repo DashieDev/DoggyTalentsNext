@@ -212,7 +212,7 @@ public class DogBedMaterialManager {
 
         @Override
         public Ingredient getIngredient() {
-            return Ingredient.EMPTY;
+            return null;
         }
 
         public Optional<ResourceLocation> missingLoc() {

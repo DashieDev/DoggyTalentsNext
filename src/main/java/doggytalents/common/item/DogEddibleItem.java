@@ -10,6 +10,8 @@ import com.mojang.datafixers.util.Pair;
 
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.common.backward_imitate.DogFoodProperties_21_3;
+import doggytalents.common.backward_imitate.DogFoodProperties_21_3.PossibleEffect_1_21_3;
 import doggytalents.common.network.packet.ParticlePackets;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
@@ -18,68 +20,68 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.food.FoodProperties.PossibleEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public abstract class DogEddibleItem extends Item implements IDogEddible {
 
-    private static FoodProperties NULL_PROPS = 
-        (new FoodProperties.Builder())
-            .nutrition(0)
-            .build();
+    // private static FoodProperties NULL_PROPS = 
+    //     (new FoodProperties.Builder())
+    //         .nutrition(0)
+    //         .build();
 
-    private final FoodProperties nullProps;
-    private final FoodProperties actualFoodProps;
-    private FoodProperties currentFoodProps;
+    // private final FoodProperties nullProps;
+    // private final FoodProperties actualFoodProps;
+    //private FoodProperties currentFoodProps;
 
-    public DogEddibleItem(Properties itemProps, FoodProperties foodProps) {
-        super(itemProps.food(NULL_PROPS));
-        if (foodProps != null)
-            actualFoodProps = foodProps;
-        else 
-            actualFoodProps = NULL_PROPS;
+    public DogEddibleItem(Properties itemProps, DogFoodProperties_21_3 foodProps) {
+        super(itemProps.food(foodProps.getVanillaProps().build()));
+        // if (foodProps != null)
+        //     actualFoodProps = foodProps;
+        // else 
+        //     actualFoodProps = NULL_PROPS;
 
-        var nullPropsBuilder = (new FoodProperties.Builder())
-            .nutrition(0);
-        boolean changed = false;
-        if (actualFoodProps.canAlwaysEat()) {
-            changed = true;
-            nullPropsBuilder.alwaysEdible();
-        }
-        if (changed)
-            nullProps = nullPropsBuilder.build();
-        else
-            nullProps = NULL_PROPS;
+        // var nullPropsBuilder = (new FoodProperties.Builder())
+        //     .nutrition(0);
+        // boolean changed = false;
+        // if (actualFoodProps.canAlwaysEat()) {
+        //     changed = true;
+        //     nullPropsBuilder.alwaysEdible();
+        // }
+        // if (changed)
+        //     nullProps = nullPropsBuilder.build();
+        // else
+        //     nullProps = NULL_PROPS;
             
-        currentFoodProps = nullProps;
+        //currentFoodProps = foodProps;
+        init_1_21_3(foodProps);
     }
 
-    public DogEddibleItem(FoodProperties foodProperties) {
+    public DogEddibleItem(DogFoodProperties_21_3 foodProperties) {
         this(new Properties(), foodProperties);
     }
 
-    public DogEddibleItem(Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
+    public DogEddibleItem(Function<DogFoodProperties_21_3, DogFoodProperties_21_3> propsCreator) {
         this(
             new Properties(), 
-            propsCreator.apply(new FoodProperties.Builder())
-                .build()
+            propsCreator.apply(new DogFoodProperties_21_3())
+                //.build()
         );
     }
 
     public DogEddibleItem(Function<Item.Properties, Item.Properties> itemPropsCreator,
-        Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
+        Function<DogFoodProperties_21_3, DogFoodProperties_21_3> propsCreator) {
     
         this(itemPropsCreator.apply(new Properties()),
-            propsCreator.apply(new FoodProperties.Builder()).build());
+            propsCreator.apply(new DogFoodProperties_21_3()));
     }
 
-    @Override
-    @Nullable
-    public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
-        return this.currentFoodProps;
-    }
+    // @Override
+    // @Nullable
+    // public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
+    //     return this.currentFoodProps;
+    // }
 
     @Override
     public boolean isFood(ItemStack stack) {
@@ -126,7 +128,7 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
 
             var returnStack = dogEddible.getReturnStackAfterDogConsume(stack, dog);
             if (!returnStack.isEmpty()) {
-                dog.spawnAtLocation(returnStack);
+                dog.spawnAtLocation((ServerLevel)dog.level(), returnStack);
             }
         }
 
@@ -135,22 +137,32 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
 
     @Override
     public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return actualFoodProps.nutrition() * 5;
+        return this.vanillaDogProps_21_3.nutrition() * 5;
     }
 
     @Override
-    public List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+    public List<PossibleEffect_1_21_3> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
-        return actualFoodProps.effects();
+        return this.dogEffects_21_3;
     }
 
-    @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        if (entity instanceof Player)
-            currentFoodProps = actualFoodProps;
-        var ret = super.finishUsingItem(stack, level, entity);
-        currentFoodProps = nullProps;
-        return ret;
+    // @Override
+    // public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+    //     if (entity instanceof Player)
+    //         currentFoodProps = actualFoodProps;
+    //     var ret = super.finishUsingItem(stack, level, entity);
+    //     currentFoodProps = nullProps;
+    //     return ret;
+    // }
+
+
+
+    //1_21_3+
+    private List<PossibleEffect_1_21_3> dogEffects_21_3;
+    private FoodProperties vanillaDogProps_21_3;
+    public void init_1_21_3(DogFoodProperties_21_3 props) {
+        this.dogEffects_21_3 = props.dogEffects();
+        this.vanillaDogProps_21_3 = props.getVanillaProps().build();
     }
     
 }

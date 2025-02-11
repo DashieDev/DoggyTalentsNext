@@ -8,11 +8,11 @@ import com.mojang.datafixers.util.Pair;
 
 import doggytalents.DoggyEffects;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.common.backward_imitate.DogFoodProperties_21_3.PossibleEffect_1_21_3;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.food.FoodProperties.PossibleEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -38,9 +38,9 @@ public class NattoItem extends DogEddibleItem {
     }
 
     @Override
-    public List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
+    public List<PossibleEffect_1_21_3> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
-        return List.of(new PossibleEffect(() -> new MobEffectInstance(DoggyEffects.NATTO_BITE, 180 * 20, 1), 1f));
+        return List.of(new PossibleEffect_1_21_3(() -> new MobEffectInstance(DoggyEffects.NATTO_BITE, 180 * 20, 1), 1f));
     }
 
     @Override

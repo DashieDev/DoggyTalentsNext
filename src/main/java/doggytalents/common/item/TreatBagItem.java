@@ -155,7 +155,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
         tooltip.add(Component.translatable("item.doggytalents.treat_bag.contents"));
         for (var entry : contentsMap.entrySet()) {
             var c1 = Component.translatable("item.doggytalents.starter_bundle.contains",
-                entry.getValue(), entry.getKey().getDescription()).withStyle(
+                entry.getValue(), entry.getKey().getName()).withStyle(
                     Style.EMPTY.withColor(0xffa3a3a3)
                 );
             tooltip.add(c1);

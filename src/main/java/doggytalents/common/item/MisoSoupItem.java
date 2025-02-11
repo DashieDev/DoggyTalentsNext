@@ -50,7 +50,7 @@ public class MisoSoupItem extends DogEddibleBowlFoodItem {
     
     @Override
     public SoundEvent getDogEatingSound(AbstractDog dog) {
-        return SoundEvents.GENERIC_DRINK;
+        return SoundEvents.GENERIC_DRINK.value();
     }
     
 }

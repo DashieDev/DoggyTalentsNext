@@ -31,7 +31,7 @@ public class DoggyArtifactItem extends Item {
 
     public static DoggyArtifactItem readCompound(CompoundTag tag) {
         var id_str = tag.getString("type");
-        var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id_str));
+        var item = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(id_str));
         if (item == null) return null;
         if (!(item instanceof DoggyArtifactItem artifactItem))
             return null;

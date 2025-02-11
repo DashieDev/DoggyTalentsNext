@@ -8,7 +8,9 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -118,7 +120,7 @@ public class ItemUtil {
     }
 
     public static boolean fireResistant(ItemStack stack) {
-        return stack.has(DataComponents.FIRE_RESISTANT);
+        return stack.has(DataComponents.DAMAGE_RESISTANT) && DamageTypeTags.IS_FIRE.equals(stack.get(DataComponents.DAMAGE_RESISTANT).types());
     }
 
     public static boolean isEddible(ItemStack stack) {
@@ -197,5 +199,8 @@ public class ItemUtil {
     }
     public static ResourceLocation getEquippableModelUnsafe_1_21_3(ItemStack stack) {
         return getEquippable_1_21_3(stack).model().get();
+    }
+    public static FoodProperties food_1_21_3(ItemStack stack) {
+        return stack.get(DataComponents.FOOD);
     }
 }

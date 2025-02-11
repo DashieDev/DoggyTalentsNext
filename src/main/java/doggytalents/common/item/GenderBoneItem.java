@@ -34,7 +34,7 @@ public class GenderBoneItem extends Item implements IDogItem{
             return DogInteractionResult.CONSUME;
         if (!dog.canInteract(playerIn))
             return DogInteractionResult.CONSUME;
-        if (playerIn.getCooldowns().isOnCooldown(DoggyItems.GENDER_BONE.get()))
+        if (PlayerUtil.isOnCooldown(playerIn, DoggyItems.GENDER_BONE.get()))
             return DogInteractionResult.CONSUME;
             
         if (dog.level().isClientSide)

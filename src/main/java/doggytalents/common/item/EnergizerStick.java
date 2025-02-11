@@ -43,7 +43,7 @@ public class EnergizerStick extends Item implements IDogFoodHandler {
                     dog, new ItemStack(DoggyItems.ENERGIZER_STICK.get()));
             }
             dog.playSound(
-                SoundEvents.GENERIC_EAT, 
+                SoundEvents.GENERIC_EAT.value(), 
                 dog.getSoundVolume(), 
                 (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
             );

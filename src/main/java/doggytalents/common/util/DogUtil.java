@@ -44,7 +44,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.WolfVariant;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
@@ -768,8 +767,8 @@ public class DogUtil {
     }
 
     public static boolean isScute(ItemStack stack) {
-        return ArmorMaterials.ARMADILLO.value().repairIngredient()
-            .get().test(stack);
+        return stack.getItem() == Items.ARMADILLO_SCUTE;
+            //.get().test(stack);
     }
 
     public static int getWolfArmorRepairVal(ItemStack stack) {
