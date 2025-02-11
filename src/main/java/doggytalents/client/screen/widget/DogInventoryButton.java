@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
@@ -102,14 +103,14 @@ public class DogInventoryButton extends AbstractButton {
 
     //@Override
     public void renderWidget2(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
        Minecraft mc = Minecraft.getInstance();
        int i = this.getTextureY();
        RenderSystem.enableBlend();
        RenderSystem.defaultBlendFunc();
        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-       graphics.blit(Resources.SMALL_WIDGETS, this.getX(), this.getY(), 0, 36 + i * 10, this.width, this.height);
+       ScreenUtil.blit_21_3(graphics, Resources.SMALL_WIDGETS, this.getX(), this.getY(), 0, 36 + i * 10, this.width, this.height);
        //TODO : 1.19.4 ???
        //this.renderBg(stack, mc, mouseX, mouseY);
        if (this.openSingle) {

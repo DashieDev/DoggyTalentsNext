@@ -6,6 +6,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
@@ -50,13 +51,13 @@ public class ArtifactHolder extends AbstractWidget {
         }
         
         graphics.renderItem(itemStack, this.getX()+1, this.getY()+1);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        //enderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int iX = ICON_ADD_X;
-        graphics.blit(Resources.STYLE_ADD_REMOVE, getX()+14, getY()+14, iX, 0, 9, 9);
+        ScreenUtil.blit_21_3(graphics, Resources.STYLE_ADD_REMOVE, getX()+14, getY()+14, iX, 0, 9, 9);
     }
 
     @Override

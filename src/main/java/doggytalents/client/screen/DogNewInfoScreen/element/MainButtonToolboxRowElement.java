@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice.MainTab;
 import doggytalents.client.screen.DogNewInfoScreen.widget.ModeSwitch;
@@ -55,12 +56,12 @@ public class MainButtonToolboxRowElement extends AbstractElement {
                 int mX = this.getX() + this.width/2;
                 int mY = this.getY() + this.height/2;
 
-                RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                //RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
                 RenderSystem.enableBlend();
                 RenderSystem.defaultBlendFunc();
                 RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-                graphics.blit(Resources.HAMBURGER, mX - 10, mY - 10, 0, 0, 20, 20);
+                ScreenUtil.blit_21_3(graphics, Resources.HAMBURGER, mX - 10, mY - 10, 0, 0, 20, 20);
             }
         };
         totalWidth += editInfoButton.getWidth();

@@ -33,11 +33,11 @@ public class DogArmorScreen extends AbstractContainerScreen<DogArmorContainer> {
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        graphics.blit(Resources.DOGGY_ARMOR_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
+        ScreenUtil.blit_21_3(graphics, Resources.DOGGY_ARMOR_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
         //TODO 1.19.4 ??
         ScreenUtil.renderEntityInInventoryFollowsMouse(graphics, x + 85, y + 62, 30, x + 85 - mouseX,
             y + 65 - mouseY, this.container.getDog());
@@ -48,7 +48,7 @@ public class DogArmorScreen extends AbstractContainerScreen<DogArmorContainer> {
 
     public void renderArmorBar(GuiGraphics graphics, int x, int y) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
         var i3 = this.menu.getDog().getArmorValue();
         
@@ -56,15 +56,15 @@ public class DogArmorScreen extends AbstractContainerScreen<DogArmorContainer> {
             if (i3 > 0) {
                int l3 = x + k3 * 8;
                if (k3 * 2 + 1 < i3) {
-                  graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, l3, y, 34, 9, 9, 9);
+                  ScreenUtil.blit_21_3(graphics, DogScreenOverlays.GUI_ICONS_LOCATION, l3, y, 34, 9, 9, 9);
                }
 
                if (k3 * 2 + 1 == i3) {
-                  graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION,  l3, y, 25, 9, 9, 9);
+                  ScreenUtil.blit_21_3(graphics, DogScreenOverlays.GUI_ICONS_LOCATION,  l3, y, 25, 9, 9, 9);
                }
 
                if (k3 * 2 + 1 > i3) {
-                  graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION,  l3, y, 16, 9, 9, 9);
+                  ScreenUtil.blit_21_3(graphics, DogScreenOverlays.GUI_ICONS_LOCATION,  l3, y, 16, 9, 9, 9);
                }
             }
          }

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.dropdown.AddGroupMenu.AddGroupMenu;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.GroupChangeHandlerSlice;
 import doggytalents.client.screen.framework.DropdownMenuManager;
@@ -173,13 +174,13 @@ public class GroupsListElement extends AbstractElement {
         }
 
         private void drawRemoveIcon(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            //RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             int iX = ICON_REM_X;
-            graphics.blit(Resources.STYLE_ADD_REMOVE, this.getX()+this.getWidth() - 4, getY()+this.getHeight() - 4, iX, 0, 9, 9);
+            ScreenUtil.blit_21_3(graphics, Resources.STYLE_ADD_REMOVE, this.getX()+this.getWidth() - 4, getY()+this.getHeight() - 4, iX, 0, 9, 9);
         }
 
         

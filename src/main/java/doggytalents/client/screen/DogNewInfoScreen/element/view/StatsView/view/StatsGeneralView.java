@@ -3,6 +3,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StatsView.view;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.entity.render.DogScreenOverlays;
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.stats.StatsTracker;
 import net.minecraft.client.gui.Font;
@@ -36,9 +37,9 @@ public class StatsGeneralView extends AbstractElement {
         String draw;
         draw = I18n.get(i18nPrefix + "damageDealt") + ": " + formatHealth(stats.getDamageDealt()) + " ";
         graphics.drawString(font, draw, startX, pY, 0xffffffff);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, startX
+        ScreenUtil.blit_21_3(graphics, DogScreenOverlays.GUI_ICONS_LOCATION, startX
             + font.width(draw), pY - 1, 16, 0 ,9, 9);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, startX
+        ScreenUtil.blit_21_3(graphics, DogScreenOverlays.GUI_ICONS_LOCATION, startX
             + font.width(draw), pY - 1, 16 + 45, 0 ,9, 9);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceInWater") + ": " + formatDistance(stats.getDistanceInWater());

@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import doggytalents.DoggyItems;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.gui.GuiGraphics;
@@ -40,7 +41,7 @@ public class AccessoryStatusHover extends AbstractWidget {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        graphics.blit(Resources.STYLE_ADD_REMOVE, getX()+11, getY()+11, iX, 0, 9, 9);
+        ScreenUtil.blit_21_3(graphics, Resources.STYLE_ADD_REMOVE, getX()+11, getY()+11, iX, 0, 9, 9);
     }
 
     private int getIconXState() {

@@ -79,11 +79,11 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int xMouse, int yMouse) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int l = (this.width - this.imageWidth) / 2;
         int i1 = (this.height - this.imageHeight) / 2;
-        graphics.blit(Resources.DOG_INVENTORY, l, i1, 0, 0, this.imageWidth, this.imageHeight);
+        ScreenUtil.blit_21_3(graphics, Resources.DOG_INVENTORY, l, i1, 0, 0, this.imageWidth, this.imageHeight);
 
         for (DogInventorySlot slot : this.getMenu().getSlots()) {
             if (!slot.isActive()) {
@@ -98,7 +98,7 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
                 RenderSystem.setShaderColor(1, 1, 1, 1);
             }
 
-            graphics.blit(Resources.DOG_INVENTORY, l + slot.x - 1, i1 + slot.y - 1, 197, 2, 18, 18);
+            ScreenUtil.blit_21_3(graphics, Resources.DOG_INVENTORY, l + slot.x - 1, i1 + slot.y - 1, 197, 2, 18, 18);
         }
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
