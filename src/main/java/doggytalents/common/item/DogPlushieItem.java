@@ -36,8 +36,8 @@ import net.minecraft.world.level.Level;
 
 public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem {
 
-    public DogPlushieItem() {
-        super(new Properties().stacksTo(1));
+    public DogPlushieItem(Properties itemProps) {
+        super(itemProps.stacksTo(1));
     }
 
     @Override
