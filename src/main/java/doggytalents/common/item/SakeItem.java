@@ -30,8 +30,8 @@ import net.minecraft.world.level.Level;
 
 public class SakeItem extends DogEddibleItem {
     
-    public SakeItem() {
-        super(b -> b
+    public SakeItem(Properties itemProps) {
+        super(itemProps, b -> b
             .stacksTo(8).craftRemainder(Items.GLASS_BOTTLE),
         b -> b
             .alwaysEdible());

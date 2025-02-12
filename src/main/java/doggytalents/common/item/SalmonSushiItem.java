@@ -7,8 +7,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class SalmonSushiItem extends DogEddibleItem {
 
-    public SalmonSushiItem() {
-        super(
+    public SalmonSushiItem(Properties itemProps) {
+        super(itemProps,
             b -> b
                 .nutrition(8)
                 .saturationModifier(0.6F)
