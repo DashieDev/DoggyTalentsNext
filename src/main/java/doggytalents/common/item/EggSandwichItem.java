@@ -20,8 +20,8 @@ import net.minecraft.world.level.Level;
 
 public class EggSandwichItem extends DogEddibleItem {
 
-    public EggSandwichItem() {
-        super(
+    public EggSandwichItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(6)
                 .saturationModifier(0.6F)

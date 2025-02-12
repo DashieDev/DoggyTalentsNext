@@ -84,9 +84,9 @@ public class DoggyItems {
 
     //DTN Agriculture ==========================
     public static final Supplier<Item> RICE_WHEAT = register("rice_wheat",
-        () -> new RiceWheatItem(createInitialProp()));
+        (props) -> new RiceWheatItem(props));
     public static final Supplier<Item> RICE_GRAINS = register("rice_grains", 
-        () -> new RiceGrainsItem(DoggyBlocks.RICE_CROP.get(), createInitialProp()));
+        (props) -> new RiceGrainsItem(DoggyBlocks.RICE_CROP.get(), props));
     public static final Supplier<Item> UNCOOKED_RICE = register("uncooked_rice");
     public static final Supplier<Item> KOJI = register("koji", KojiItem::new);
     public static final Supplier<Item> SAKE = register("sake", SakeItem::new);
@@ -96,9 +96,9 @@ public class DoggyItems {
     public static final Supplier<Item> SALMON_SUSHI = register("salmon_sushi", SalmonSushiItem::new);
 
     public static final Supplier<Item> SOY_PODS = register("soy_pods", 
-        () -> new SoyPodsItem(createInitialProp()));
+        (props) -> new SoyPodsItem(props));
     public static final Supplier<Item> SOY_BEANS = register("soy_beans", 
-        () -> new BlockItem(DoggyBlocks.SOY_CROP.get(), createInitialProp()));
+        (props) -> new BlockItem(DoggyBlocks.SOY_CROP.get(), props));
     public static final Supplier<Item> SOY_PODS_DRIED = register("soy_pods_dried",  SoyPodsDriedItem::new);
     public static final Supplier<Item> SOY_BEANS_DRIED = register("soy_beans_dried");
     public static final Supplier<Item> EDAMAME = register("edamame", EdamameItem::new);
@@ -119,30 +119,30 @@ public class DoggyItems {
     public static final Supplier<Item> SAUSAGE = register("sausage", SausageItem::new);
 
     //DTN Style ==========================
-    public static final Supplier<AccessoryItem> BIRTHDAY_HAT = register("birthday_hat", () -> new DyableBirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT, createInitialProp()));
-    public static final Supplier<DyeableAccessoryItem> BAKER_HAT = register("baker_hat", () -> new BakerHat.BakerHatItem(DoggyAccessories.BAKER_HAT, createInitialProp()));
-    public static final Supplier<DyeableAccessoryItem> CHEF_HAT = register("chef_hat", () -> new ChefHat.ChefHatItem(DoggyAccessories.CHEF_HAT, createInitialProp()));
-    public static final Supplier<DyeableAccessoryItem> FLATCAP = register("flatcap", () -> new FlatCap.FlatCapItem(DoggyAccessories.FLATCAP, createInitialProp()));
+    public static final Supplier<AccessoryItem> BIRTHDAY_HAT = register("birthday_hat", (props) -> new DyableBirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT, props));
+    public static final Supplier<DyeableAccessoryItem> BAKER_HAT = register("baker_hat", (props) -> new BakerHat.BakerHatItem(DoggyAccessories.BAKER_HAT, props));
+    public static final Supplier<DyeableAccessoryItem> CHEF_HAT = register("chef_hat", (props) -> new ChefHat.ChefHatItem(DoggyAccessories.CHEF_HAT, props));
+    public static final Supplier<DyeableAccessoryItem> FLATCAP = register("flatcap", (props) -> new FlatCap.FlatCapItem(DoggyAccessories.FLATCAP, props));
     public static final Supplier<AccessoryItem> BACH_WIG = registerAccessory("bach_wig", DoggyAccessories.BACH_WIG);
     public static final Supplier<AccessoryItem> FIREFIGHTER_HAT_RED = registerAccessory("firefighter_hat_red", DoggyAccessories.FIREFIGHTER_HAT_RED);
     public static final Supplier<AccessoryItem> FIREFIGHTER_HAT_BLUE = registerAccessory("firefighter_hat_blue", DoggyAccessories.FIREFIGHTER_HAT_BLUE);
-    public static final Supplier<DyeableAccessoryItem> WIG = register("wig", () -> new Wig.WigItem(DoggyAccessories.WIG, createInitialProp()));
-    public static final Supplier<AccessoryItem> FEDORA = register("fedora", () -> new Fedora.FedoraItem(DoggyAccessories.FEDORA, createInitialProp()));
-    public static final Supplier<AccessoryItem> WITCH_HAT = register("witch_hat", () -> new WitchHatItem(DoggyAccessories.WITCH_HAT, createInitialProp()));
-    public static final Supplier<AccessoryItem> PROPELLER_HAT = register("propeller_hat", () -> new Propellar.PropellerHatItem(DoggyAccessories.PROPELLAR, createInitialProp()));
-    public static final Supplier<AccessoryItem> DYED_ORB = register("locator_orb_dyable", () -> new DyableOrbItem(DoggyAccessories.DYED_ORB, createInitialProp()));
-    public static final Supplier<AccessoryItem> STRIPED_SCARF = register("striped_scarf", () -> new StripedScarfItem(DoggyAccessories.STRIPED_SCARF, createInitialProp()));
-    public static final Supplier<DyeableAccessoryItem> BOWTIE = register("bowtie", () -> new DualDyableAccessoryItem(DoggyAccessories.BOWTIE, DoggyAccessories.HEAD_BOW, createInitialProp()));
+    public static final Supplier<DyeableAccessoryItem> WIG = register("wig", (props) -> new Wig.WigItem(DoggyAccessories.WIG, props));
+    public static final Supplier<AccessoryItem> FEDORA = register("fedora", (props) -> new Fedora.FedoraItem(DoggyAccessories.FEDORA, props));
+    public static final Supplier<AccessoryItem> WITCH_HAT = register("witch_hat", (props) -> new WitchHatItem(DoggyAccessories.WITCH_HAT, props));
+    public static final Supplier<AccessoryItem> PROPELLER_HAT = register("propeller_hat", (props) -> new Propellar.PropellerHatItem(DoggyAccessories.PROPELLAR, props));
+    public static final Supplier<AccessoryItem> DYED_ORB = register("locator_orb_dyable", (props) -> new DyableOrbItem(DoggyAccessories.DYED_ORB, props));
+    public static final Supplier<AccessoryItem> STRIPED_SCARF = register("striped_scarf", (props) -> new StripedScarfItem(DoggyAccessories.STRIPED_SCARF, props));
+    public static final Supplier<DyeableAccessoryItem> BOWTIE = register("bowtie", (props) -> new DualDyableAccessoryItem(DoggyAccessories.BOWTIE, DoggyAccessories.HEAD_BOW, props));
 
     public static final Supplier<DyeableAccessoryItem> WOOL_COLLAR = registerAccessoryDyed("wool_collar", DoggyAccessories.DYEABLE_COLLAR);
     public static final Supplier<DyeableAccessoryItem> WOOL_COLLAR_THICC = registerAccessoryDyed("wool_collar_thicc", DoggyAccessories.DYEABLE_COLLAR_THICC);
     public static final Supplier<AccessoryItem> RADIO_COLLAR = registerAccessory("radio_collar", DoggyAccessories.RADIO_BAND);
-    public static final Supplier<AccessoryItem> CREATIVE_COLLAR = register("creative_collar",  () -> new AccessoryItem(DoggyAccessories.GOLDEN_COLLAR, createInitialProp()) 
+    public static final Supplier<AccessoryItem> CREATIVE_COLLAR = register("creative_collar",  (props) -> new AccessoryItem(DoggyAccessories.GOLDEN_COLLAR, props) 
         { @Override public boolean isFoil(ItemStack stack) { return true; } } );
     public static final Supplier<AccessoryItem> SPOTTED_COLLAR = registerAccessory("spotted_collar", DoggyAccessories.SPOTTED_COLLAR);
     public static final Supplier<AccessoryItem> MULTICOLOURED_COLLAR = registerAccessory("multicoloured_collar", DoggyAccessories.MULTICOLORED_COLLAR);
-    public static final Supplier<AccessoryItem> DEMON_HORNS = register("demon_horns", () -> new DemonHornsItem(DoggyAccessories.DEMON_HORNS, createInitialProp()));
-    public static final Supplier<AccessoryItem> DEER_ANTLERS = register("deer_antlers", () -> new DeerAntlersItem(DoggyAccessories.DEER_ANTLERS, createInitialProp()));
+    public static final Supplier<AccessoryItem> DEMON_HORNS = register("demon_horns", (props) -> new DemonHornsItem(DoggyAccessories.DEMON_HORNS, props));
+    public static final Supplier<AccessoryItem> DEER_ANTLERS = register("deer_antlers", (props) -> new DeerAntlersItem(DoggyAccessories.DEER_ANTLERS, props));
 
     public static final Supplier<Item> EMPTY_LOCATOR_ORB = registerWith("empty_locator_orb", EmptyLocatorOrbItem::new, 64);
     public static final Supplier<AccessoryItem> JIN_ORB = registerLocatorOrb("locator_orb_jin", DoggyAccessories.JIN_ORB);
@@ -157,28 +157,28 @@ public class DoggyItems {
     public static final Supplier<AccessoryItem> SUI_ORB = registerLocatorOrb("locator_orb_sui", DoggyAccessories.SUI_ORB);
     public static final Supplier<AccessoryItem> MOKU_ORB = registerLocatorOrb("locator_orb_moku", DoggyAccessories.MOKU_ORB);
 
-    public static final Supplier<AccessoryItem> DIVINE_RETRIBUTON = register("divine_retribution", () -> new FieryReflectorItem(DoggyAccessories.DIVINE_RETRIBUTION, createInitialProp()));
-    public static final Supplier<AccessoryItem> SOUL_REFLECTOR = register("soul_reflector", () -> new FieryReflectorItem(DoggyAccessories.SOUL_REFLECTOR, createInitialProp()));
-    public static final Supplier<DyeableAccessoryItem> CERE_GARB = register("ceremonial_garb", () -> new CeremonialGarb.Item(DoggyAccessories.CERE_GARB, createInitialProp()));
-    public static final Supplier<AccessoryItem> DOGGY_CONTACTS = register("doggy_contacts", () -> new DoggyContactsItem(DoggyAccessories.DOGGY_CONTACTS, createInitialProp()));
+    public static final Supplier<AccessoryItem> DIVINE_RETRIBUTON = register("divine_retribution", (props) -> new FieryReflectorItem(DoggyAccessories.DIVINE_RETRIBUTION, props));
+    public static final Supplier<AccessoryItem> SOUL_REFLECTOR = register("soul_reflector", (props) -> new FieryReflectorItem(DoggyAccessories.SOUL_REFLECTOR, props));
+    public static final Supplier<DyeableAccessoryItem> CERE_GARB = register("ceremonial_garb", (props) -> new CeremonialGarb.Item(DoggyAccessories.CERE_GARB, props));
+    public static final Supplier<AccessoryItem> DOGGY_CONTACTS = register("doggy_contacts", (props) -> new DoggyContactsItem(DoggyAccessories.DOGGY_CONTACTS, props));
     public static final Supplier<AccessoryItem> SUNGLASSES = registerAccessory("sunglasses", DoggyAccessories.SUNGLASSES);
     public static final Supplier<AccessoryItem> SMARTY_GLASSES = registerAccessory("smarty_glasses", DoggyAccessories.SMARTY_GLASSES);
     public static final Supplier<AccessoryItem> SNORKEL = registerSnorkel("snorkel", DoggyAccessories.SNORKEL);
     public static final Supplier<AccessoryItem> HEAD_BAND_BLANK = registerHeadBand("head_band_blank", DoggyAccessories.HEAD_BAND_BlANK);
     public static final Supplier<AccessoryItem> HEAD_BAND_MYSTERY = registerHeadBand("head_band_mystery", DoggyAccessories.HEAD_BAND_MYSTERY);
 
-    public static final Supplier<AccessoryItem> KITSUNE_MASK = register("kitsune_mask", () -> new KitsuneMaskItem(DoggyAccessories.KITSUNE_MASK, createInitialProp()));
-    public static final Supplier<AccessoryItem> TENGU_MASK = register("tengu_mask", () -> new TenguMaskItem(DoggyAccessories.TENGU_MASK, createInitialProp()));
-    public static final Supplier<AccessoryItem> PLAGUE_DOC_MASK = register("plague_doctor_mask", () -> new PlagueDoctorMaskItem(DoggyAccessories.PLAGUE_DOC_MASK, createInitialProp()));
+    public static final Supplier<AccessoryItem> KITSUNE_MASK = register("kitsune_mask", (props) -> new KitsuneMaskItem(DoggyAccessories.KITSUNE_MASK, props));
+    public static final Supplier<AccessoryItem> TENGU_MASK = register("tengu_mask", (props) -> new TenguMaskItem(DoggyAccessories.TENGU_MASK, props));
+    public static final Supplier<AccessoryItem> PLAGUE_DOC_MASK = register("plague_doctor_mask", (props) -> new PlagueDoctorMaskItem(DoggyAccessories.PLAGUE_DOC_MASK, props));
     public static final Supplier<AccessoryItem> CROW_WINGS = registerAccessory("crow_wings", DoggyAccessories.CROW_WINGS);
     public static final Supplier<AccessoryItem> BAT_WINGS = registerAccessory("bat_wings", DoggyAccessories.BAT_WINGS);
     public static final Supplier<DyeableAccessoryItem> FLYING_CAPE = registerAccessoryDyed("flying_cape", DoggyAccessories.FLYING_CAPE);
-    public static final Supplier<DyeableAccessoryItem> LAB_COAT = register("lab_coat", () -> new LabCoat.LabCoatItem(DoggyAccessories.LAB_COAT, createInitialProp()));
-    public static final Supplier<AccessoryItem> HOT_DOG = register("hot_dog",() -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, createInitialProp()));
+    public static final Supplier<DyeableAccessoryItem> LAB_COAT = register("lab_coat", (props) -> new LabCoat.LabCoatItem(DoggyAccessories.LAB_COAT, props));
+    public static final Supplier<AccessoryItem> HOT_DOG = register("hot_dog",(props) -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, props));
     public static final Supplier<AccessoryItem> SUPERDOG_SUIT = registerAccessory("superdog_suit", DoggyAccessories.SUPERDOG_SUIT);
-    public static final Supplier<AccessoryItem> DRAGON_COSTUME_HEAD = register("dragon_costume_head", () -> new DragonCostumeHeadItem(DoggyAccessories.DRAGON_COSTUME_HEAD, createInitialProp()));
-    public static final Supplier<AccessoryItem> DRAGON_COSTUME_SUIT = register("dragon_costume_suit", () -> new DragonCostumeSuitItem(DoggyAccessories.DRAGON_COSTUME_SUIT, createInitialProp()));
-    public static final Supplier<AccessoryItem> DRAGON_COSTUME_WINGS = register("dragon_costume_wings", () -> new DragonCostumeWingsItem(DoggyAccessories.DRAGON_COSTUME_WINGS, createInitialProp()));
+    public static final Supplier<AccessoryItem> DRAGON_COSTUME_HEAD = register("dragon_costume_head", (props) -> new DragonCostumeHeadItem(DoggyAccessories.DRAGON_COSTUME_HEAD, props));
+    public static final Supplier<AccessoryItem> DRAGON_COSTUME_SUIT = register("dragon_costume_suit", (props) -> new DragonCostumeSuitItem(DoggyAccessories.DRAGON_COSTUME_SUIT, props));
+    public static final Supplier<AccessoryItem> DRAGON_COSTUME_WINGS = register("dragon_costume_wings", (props) -> new DragonCostumeWingsItem(DoggyAccessories.DRAGON_COSTUME_WINGS, props));
 
     public static final Supplier<DyeableAccessoryItem> CAPE_COLOURED = registerAccessoryDyed("cape_coloured", DoggyAccessories.DYEABLE_CAPE);
     public static final Supplier<AccessoryItem> TANTAN_CAPE = registerAccessory("tantan_cape", DoggyAccessories.TANTAN_CAPE);
@@ -194,17 +194,17 @@ public class DoggyItems {
     public static final Supplier<AccessoryItem> FIREFIGHTER_SUIT_RED = registerDualAccessory("firefighter_suit_red", DoggyAccessories.FIREFIGHTER_SUIT_RED, DoggyAccessories.FIREFIGHTER_SUIT_RED_LEGLESS);
     public static final Supplier<AccessoryItem> FIREFIGHTER_SUIT_BLUE = registerAccessory("firefighter_suit_blue", DoggyAccessories.FIREFIGHTER_SUIT_BLUE);
     
-    public static final Supplier<AccessoryItem> ANGEL_HALO = register("angel_halo", () -> new AngelHalo.AngelHaloItem(DoggyAccessories.ANGEL_HALO, createInitialProp()));
-    public static final Supplier<DyeableAccessoryItem> ANGEL_WINGS = register("angel_wings", () -> new AngelWings.Item(DoggyAccessories.ANGEL_WINGS, createInitialProp()));
-    public static final Supplier<AccessoryItem> GIANT_STICK = register("giant_stick",() -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, createInitialProp()));
-    public static final Supplier<DyeableAccessoryItem> MIDI_KEYBOARD = register("midi_keyboard", () -> new MidiKeyboard.Item(DoggyAccessories.MIDI_KEYBOARD, createInitialProp()));
-    public static final Supplier<AccessoryItem> YETI_GOOSE = register("goose", () -> new YetiGoose.YetiGooseItem(DoggyAccessories.YETI_GOOSE, createInitialProp()));
+    public static final Supplier<AccessoryItem> ANGEL_HALO = register("angel_halo", (props) -> new AngelHalo.AngelHaloItem(DoggyAccessories.ANGEL_HALO, props));
+    public static final Supplier<DyeableAccessoryItem> ANGEL_WINGS = register("angel_wings", (props) -> new AngelWings.Item(DoggyAccessories.ANGEL_WINGS, props));
+    public static final Supplier<AccessoryItem> GIANT_STICK = register("giant_stick",(props) -> new GiantStickAccessoryItem(DoggyAccessories.GIANT_STICK, props));
+    public static final Supplier<DyeableAccessoryItem> MIDI_KEYBOARD = register("midi_keyboard", (props) -> new MidiKeyboard.Item(DoggyAccessories.MIDI_KEYBOARD, props));
+    public static final Supplier<AccessoryItem> YETI_GOOSE = register("goose", (props) -> new YetiGoose.YetiGooseItem(DoggyAccessories.YETI_GOOSE, props));
     public static final Supplier<AccessoryItem> HEAD_BAND_HIGHHH = registerHeadBand("head_band_highhh", DoggyAccessories.HEAD_BAND_HIGHHH);
 
-    public static final Supplier<AccessoryItem> CHRISTMAS_HAT = register("christmas_hat", () -> new ChristmasHatItem(DoggyAccessories.CHRISTMAS_HAT, createInitialProp()));
+    public static final Supplier<AccessoryItem> CHRISTMAS_HAT = register("christmas_hat", (props) -> new ChristmasHatItem(DoggyAccessories.CHRISTMAS_HAT, props));
     public static final Supplier<AccessoryItem> DOG_CHRISTMAS_TREE = registerAccessory("dog_christmas_tree", DoggyAccessories.DOG_CHRISTMAS_TREE);
     public static final Supplier<AccessoryItem> DOG_CHRISTMAS_STAR = registerAccessory("dog_christmas_star", DoggyAccessories.DOG_CHRISTMAS_STAR);
-    public static final Supplier<AccessoryItem> DOG_GIFT_COSTUME = register("dog_gift_costume", () -> new DogPresentCostumeItem(DoggyAccessories.DOG_GIFT_COSTUME, createInitialProp()));
+    public static final Supplier<AccessoryItem> DOG_GIFT_COSTUME = register("dog_gift_costume", (props) -> new DogPresentCostumeItem(DoggyAccessories.DOG_GIFT_COSTUME, props));
 
     //DTN Misc ==========================
     public static final Supplier<Item> THROW_BONE_WET = registerThrowBoneWet("throw_bone_wet");
@@ -219,19 +219,19 @@ public class DoggyItems {
         { @Override public boolean isFoil(ItemStack stack) { return true; } }, 1);
     public static final Supplier<SwordItem> SUSSY_SICKLE = register("sussy_sickle", SussySickleItem::new);
     public static final Supplier<DogPlushieItem> DOG_PLUSHIE_TOY = register("dog_plushie_toy_item", 
-        () -> new DogPlushieItem());
+        (props) -> new DogPlushieItem(props));
 
     public static final Supplier<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
-        () -> new ChopinRecordItem(
-        (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.CHOPIN_OP64_NO_1), 132*20));
+        (props) -> new ChopinRecordItem(
+        props.stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(DTMusicProvider.CHOPIN_OP64_NO_1), 132*20));
     public static final Supplier<PianoItem> GRAND_PIANO_WHITE = register("grand_piano_white_item", 
-        () -> new PianoItem(DoggyEntityTypes.GRAND_PIANO_WHITE));
+        (props) -> new PianoItem(props, DoggyEntityTypes.GRAND_PIANO_WHITE));
     public static final Supplier<PianoItem> GRAND_PIANO_BLACK = register("grand_piano_black_item", 
-        () -> new PianoItem(DoggyEntityTypes.GRAND_PIANO_BLACK));
+        (props) -> new PianoItem(props, DoggyEntityTypes.GRAND_PIANO_BLACK));
     public static final Supplier<PianoItem> UPRIGHT_PIANO_BLACK = register("upright_piano_black_item", 
-        () -> new PianoItem(DoggyEntityTypes.UPRIGHT_PIANO_BLACK));
+        (props) -> new PianoItem(props, DoggyEntityTypes.UPRIGHT_PIANO_BLACK));
     public static final Supplier<PianoItem> UPRIGHT_PIANO_BROWN = register("upright_piano_brown_item", 
-        () -> new PianoItem(DoggyEntityTypes.UPRIGHT_PIANO_BROWN));
+        (props) -> new PianoItem(props, DoggyEntityTypes.UPRIGHT_PIANO_BROWN));
 
     //DTN Debug (Not available via Creative Inventory) ==========================
     public static final Supplier<Item> DOG_ANIM_DEBUG = register("dog_anim_debug_stick", DogAnimDebugItem::new); 
@@ -241,88 +241,92 @@ public class DoggyItems {
     }
 
     private static Supplier<Item> registerThrowBone(final String name) {
-        return register(name, () -> new ThrowableItem(THROW_BONE_WET, () -> Items.BONE, createInitialProp().stacksTo(2)));
+        return register(name, (props) -> new ThrowableItem(THROW_BONE_WET, () -> Items.BONE, props.stacksTo(2)));
     }
 
     private static Supplier<Item> registerThrowStick(final String name) {
-        return register(name, () -> new ThrowableItem(THROW_STICK_WET, THROW_STICK, createInitialProp().stacksTo(8)));
+        return register(name, (props) -> new ThrowableItem(THROW_STICK_WET, THROW_STICK, props.stacksTo(8)));
     }
 
     private static Supplier<Item> registerFrisbee(final String name) {
-        return register(name, () -> new FrisbeeItem(FRISBEE_WET, FRISBEE, createInitialProp().stacksTo(1)));
+        return register(name, (props) -> new FrisbeeItem(FRISBEE_WET, FRISBEE, props.stacksTo(1)));
     }
 
     private static Supplier<Item> registerThrowBoneWet(final String name) {
-        return register(name, () -> new DroolBoneItem(THROW_BONE, createInitialProp().stacksTo(1)));
+        return register(name, (props) -> new DroolBoneItem(THROW_BONE, props.stacksTo(1)));
     }
 
     private static Supplier<Item> registerThrowStickWet(final String name) {
-        return register(name, () -> new DroolBoneItem(THROW_STICK, createInitialProp().stacksTo(1)));
+        return register(name, (props) -> new DroolBoneItem(THROW_STICK, props.stacksTo(1)));
     }
 
     private static Supplier<Item> registerFrisbeeWet(final String name) {
-        return register(name, () -> new FrisbeeDroolItem(FRISBEE, createInitialProp().stacksTo(1)));
+        return register(name, (props) -> new FrisbeeDroolItem(FRISBEE, props.stacksTo(1)));
     }
 
     private static Supplier<Item> registerSizeBone(final String name, final DogResizeItem.Type typeIn) {
-        return register(name, () -> new DogResizeItem(typeIn, createInitialProp().stacksTo(1).durability(10)));
+        return register(name, (props) -> new DogResizeItem(typeIn, props.stacksTo(1).durability(10)));
     }
 
     private static Supplier<Item> registerTreat(final String name, final DogLevel.Type typeIn, int maxLevel) {
-        return register(name, () -> new TreatItem(maxLevel, typeIn, createInitialProp()));
+        return register(name, (props) -> new TreatItem(maxLevel, typeIn, props));
     }
 
     private static Supplier<DyeableAccessoryItem> registerAccessoryDyed(final String name, Supplier<? extends DyeableAccessory> type) {
-        return register(name, () -> new DyeableAccessoryItem(type, createInitialProp()));
+        return register(name, (props) -> new DyeableAccessoryItem(type, props));
     }
 
     private static Supplier<AccessoryItem> registerAccessory(final String name, Supplier<? extends Accessory> type) {
-        return register(name, () -> new AccessoryItem(type, createInitialProp()));
+        return register(name, (props) -> new AccessoryItem(type, props));
     }
 
     private static Supplier<AccessoryItem> registerDualAccessory(final String name, Supplier<? extends Accessory> primary, Supplier<? extends Accessory> secondary) {
-        return register(name, () -> new DualAccessoryItem(primary, secondary, createInitialProp()));
+        return register(name, (props) -> new DualAccessoryItem(primary, secondary, props));
     }
 
     private static Supplier<AccessoryItem> registerSnorkel(final String name, Supplier<? extends Accessory> type) {
-        return register(name, () -> new SnorkelAccessoryItem(type, createInitialProp()));
+        return register(name, (props) -> new SnorkelAccessoryItem(type, props));
     }
 
     private static Supplier<AccessoryItem> registerLocatorOrb(final String name, Supplier<? extends LocatorOrbAccessory> type) {
-        return register(name, () -> new LocatorOrbItem(type, createInitialProp()));
+        return register(name, (props) -> new LocatorOrbItem(type, props));
     }
 
     private static Supplier<AccessoryItem> registerHeadBand(final String name, Supplier<? extends HeadBandAccessory> type) {
-        return register(name, () -> new HeadBandItem(type, createInitialProp()));
+        return register(name, props -> new HeadBandItem(type, props));
     }
 
     private static <T extends Item> Supplier<T> registerWith(final String name, Function<Item.Properties, T> itemConstructor, int maxStackSize) {
-        return register(name, () -> itemConstructor.apply(createInitialProp().stacksTo(maxStackSize)));
+        return register(name, (props) -> itemConstructor.apply(props.stacksTo(maxStackSize)));
     }
     
     private static <T extends Item> Supplier<T> registerWithFireResistant(final String name, Function<Item.Properties, T> itemConstructor, int maxStackSize) {
-        return register(name, () -> itemConstructor.apply(createInitialProp().stacksTo(maxStackSize).fireResistant()));
+        return register(name, (props) -> itemConstructor.apply(props.stacksTo(maxStackSize).fireResistant()));
     }
 
     private static <T extends Item> Supplier<T> registerTool(final String name, Function<Item.Properties, T> itemConstructor, int durability) {
-        return register(name, () -> itemConstructor.apply(createInitialProp().stacksTo(1).durability(durability)));
+        return register(name, (props) -> itemConstructor.apply(props.stacksTo(1).durability(durability)));
     }
 
-    private static <T extends Item> Supplier<T> register(final String name, Function<Item.Properties, T> itemConstructor) {
-        return register(name, () -> itemConstructor.apply(createInitialProp()));
-    }
+    // private static <T extends Item> Supplier<T> register(final String name, Function<Item.Properties, T> itemConstructor) {
+    //     return registerLegacy(name, () -> itemConstructor.apply(createInitialProp()));
+    // }
 
     private static Supplier<Item> register(final String name) {
         return registerWith(name, (Function<Item.Properties, Item.Properties>) null);
     }
 
     private static Supplier<Item> registerWith(final String name, @Nullable Function<Item.Properties, Item.Properties> extraPropFunc) {
-        Item.Properties prop = createInitialProp();
-        return register(name, () -> new Item(extraPropFunc != null ? extraPropFunc.apply(prop) : prop));
+        //Item.Properties prop = createInitialProp();
+        return register(name, (props) -> new Item(extraPropFunc != null ? extraPropFunc.apply(props) : props));
     }
 
-    private static <T extends Item> Supplier<T> register(final String name, final Supplier<T> sup) {
-        return ITEMS.register(name, sup);
+    // private static <T extends Item> Supplier<T> registerLegacy(final String name, final Supplier<T> sup) {
+    //     return ITEMS.register(name, sup);
+    // }
+
+    private static <T extends Item> Supplier<T> register(final String name, final Function<Item.Properties, T> sup) {
+        return ITEMS.register(name, () -> sup.apply(createInitialProp()));
     }
 
     public static void registerItemColours(final RegisterColorHandlersEvent.Item event) {

@@ -9,8 +9,8 @@ import net.minecraft.world.item.Items;
 
 public class SoyMilkItem extends DogEddibleBowlFoodItem  {
 
-    public SoyMilkItem() {
-        super(
+    public SoyMilkItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(6)
                 .saturationModifier(0.5F)

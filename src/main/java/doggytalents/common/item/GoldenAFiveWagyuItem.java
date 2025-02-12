@@ -21,8 +21,8 @@ import net.minecraft.world.level.Level;
 
 public class GoldenAFiveWagyuItem extends DogEddibleItem {
 
-    public GoldenAFiveWagyuItem() {
-        super(
+    public GoldenAFiveWagyuItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .rarity(Rarity.UNCOMMON),
             b -> b
