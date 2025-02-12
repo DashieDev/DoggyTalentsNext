@@ -6,6 +6,7 @@ import com.mojang.serialization.MapCodec;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyTileEntityTypes;
+import doggytalents.common.backward_imitate.ResourceKeyHelper_21_3;
 import doggytalents.common.block.tileentity.FoodBowlTileEntity;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -46,7 +47,7 @@ public class RiceMillBlock extends BaseEntityBlock implements WorldlyContainerHo
     protected static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
 
     public RiceMillBlock() {
-        super(Block.Properties.of().mapColor(MapColor.WOOD).strength(1.0F, 5.0F).sound(SoundType.WOOD));
+        super(Block.Properties.of().setId(ResourceKeyHelper_21_3.blockKey("rice_mill")).mapColor(MapColor.WOOD).strength(1.0F, 5.0F).sound(SoundType.WOOD));
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     
     }

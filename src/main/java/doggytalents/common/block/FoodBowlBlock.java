@@ -3,6 +3,7 @@ package doggytalents.common.block;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.common.Screens;
+import doggytalents.common.backward_imitate.ResourceKeyHelper_21_3;
 import doggytalents.common.block.tileentity.FoodBowlTileEntity;
 import doggytalents.common.util.InventoryUtil;
 import doggytalents.common.util.WorldUtil;
@@ -52,7 +53,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
     protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D);
 
     public FoodBowlBlock() {
-        super(Block.Properties.of().mapColor(MapColor.METAL).strength(1.0F, 5.0F).sound(SoundType.METAL));
+        super(Block.Properties.of().setId(ResourceKeyHelper_21_3.blockKey("food_bowl")).mapColor(MapColor.METAL).strength(1.0F, 5.0F).sound(SoundType.METAL));
     }
 
     public FoodBowlBlock(BlockBehaviour.Properties props) {
