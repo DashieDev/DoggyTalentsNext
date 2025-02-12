@@ -15,8 +15,8 @@ import net.minecraft.world.level.Level;
 
 public class AburaageItem extends DogEddibleItem {
 
-    public AburaageItem() {
-        super(
+    public AburaageItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
             .nutrition(10)
             .saturationModifier(0.8F)

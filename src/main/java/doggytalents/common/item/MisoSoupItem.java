@@ -22,8 +22,8 @@ import net.minecraft.world.level.Level;
 
 public class MisoSoupItem extends DogEddibleBowlFoodItem {
 
-    public MisoSoupItem() {
-        super(
+    public MisoSoupItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(10)
                 .saturationModifier(0.8F)

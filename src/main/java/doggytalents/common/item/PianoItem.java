@@ -27,8 +27,8 @@ public class PianoItem extends Item {
 
     private Supplier<EntityType<Piano>> pianoSup;
 
-    public PianoItem(Supplier<EntityType<Piano>> pianoSup) {
-        super(new Properties().stacksTo(1));
+    public PianoItem(Properties itemProps, Supplier<EntityType<Piano>> pianoSup) {
+        super(itemProps.stacksTo(1));
         this.pianoSup = pianoSup;
     }
 

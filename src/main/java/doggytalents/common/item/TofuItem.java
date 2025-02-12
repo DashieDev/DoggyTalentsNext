@@ -16,8 +16,8 @@ import net.minecraft.world.level.Level;
 
 public class TofuItem extends DogEddibleItem {
 
-    public TofuItem() {
-        super(
+    public TofuItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .stacksTo(8),
             b -> b

@@ -19,8 +19,8 @@ import net.minecraft.world.level.Level;
 
 public class OnsenTamagoItem extends DogEddibleItem{
 
-    public OnsenTamagoItem() {
-        super(
+    public OnsenTamagoItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(4)
                 .saturationModifier(0.6F)

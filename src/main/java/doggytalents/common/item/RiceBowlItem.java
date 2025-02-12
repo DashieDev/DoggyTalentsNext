@@ -18,8 +18,8 @@ import net.minecraft.world.level.Level;
 
 public class RiceBowlItem extends DogEddibleBowlFoodItem {
     
-    public RiceBowlItem() {
-        super(
+    public RiceBowlItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(5)
                 .saturationModifier(0.5F)

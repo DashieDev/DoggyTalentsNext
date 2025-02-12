@@ -21,8 +21,8 @@ import net.minecraft.world.level.Level;
 
 public class NattoItem extends DogEddibleItem {
 
-    public NattoItem() {
-        super(
+    public NattoItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(6)
                 .saturationModifier(0.6F)

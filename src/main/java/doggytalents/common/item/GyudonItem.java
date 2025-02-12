@@ -22,8 +22,9 @@ import net.minecraft.world.level.Level;
 
 public class GyudonItem extends DogEddibleBowlFoodItem {
 
-    public GyudonItem() {
+    public GyudonItem(Properties itemProps) {
         super(
+            itemProps,
             b -> b
                 .nutrition(20)
                 .saturationModifier(1f)

@@ -23,8 +23,8 @@ import net.minecraft.world.level.Level;
 
 public class OyakodonItem extends DogEddibleBowlFoodItem {
 
-    public OyakodonItem() {
-        super(
+    public OyakodonItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(14)
                 .saturationModifier(1f)

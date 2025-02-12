@@ -15,8 +15,8 @@ import net.minecraft.world.level.Level;
 
 public class EdamameUnpoddedItem extends DogEddibleItem {
 
-    public EdamameUnpoddedItem() {
-        super(
+    public EdamameUnpoddedItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(1)
                 .saturationModifier(0.3F)
