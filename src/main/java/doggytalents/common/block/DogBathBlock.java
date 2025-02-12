@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.mojang.serialization.MapCodec;
 
 import doggytalents.DoggyTileEntityTypes;
+import doggytalents.common.backward_imitate.ResourceKeyHelper_21_3;
 import doggytalents.common.block.tileentity.DogBathBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -51,7 +52,7 @@ public class DogBathBlock extends BaseEntityBlock {
     protected static final VoxelShape SHAPE_COLLISION = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D);
 
     public DogBathBlock() {
-        super(Block.Properties.of().mapColor(MapColor.METAL).strength(1F, 5.0F).sound(SoundType.METAL));
+        super(Block.Properties.of().setId(ResourceKeyHelper_21_3.blockKey("dog_bath")).mapColor(MapColor.METAL).strength(1F, 5.0F).sound(SoundType.METAL));
     }
 
     public DogBathBlock(BlockBehaviour.Properties props) {
