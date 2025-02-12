@@ -3,6 +3,7 @@ package doggytalents;
 import doggytalents.api.feature.DogLevel;
 import doggytalents.api.registry.Accessory;
 import doggytalents.common.artifacts.FeatheredMantleArtifact;
+import doggytalents.common.backward_imitate.ResourceKeyHelper_21_3;
 import doggytalents.common.data.DTMusicProvider;
 import doggytalents.common.entity.accessory.AngelHalo;
 import doggytalents.common.entity.accessory.AngelWings;
@@ -326,7 +327,7 @@ public class DoggyItems {
     // }
 
     private static <T extends Item> Supplier<T> register(final String name, final Function<Item.Properties, T> sup) {
-        return ITEMS.register(name, () -> sup.apply(createInitialProp()));
+        return ITEMS.register(name, () -> sup.apply(createInitialProp().setId(ResourceKeyHelper_21_3.itemKey(name))));
     }
 
     public static void registerItemColours(final RegisterColorHandlersEvent.Item event) {

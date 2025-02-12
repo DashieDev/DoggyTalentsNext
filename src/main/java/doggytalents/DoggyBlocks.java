@@ -1,5 +1,6 @@
 package doggytalents;
 
+import doggytalents.common.backward_imitate.ResourceKeyHelper_21_3;
 import doggytalents.common.block.DogBathBlock;
 import doggytalents.common.block.DogBedBlock;
 import doggytalents.common.block.FoodBowlBlock;
@@ -38,21 +39,21 @@ public class DoggyBlocks {
         return new Item.Properties();
     }
 
-    private static BlockItem makeItemBlock(Block block) {
-        return makeItemBlock(block, null);
+    private static BlockItem makeItemBlock(String name, Block block) {
+        return makeItemBlock(name, block, null);
     }
 
-    private static BlockItem makeItemBlock(Block block, @Nullable Function<Item.Properties, Item.Properties> extraPropFunc) {
-        Item.Properties prop = createInitialProp();
+    private static BlockItem makeItemBlock(String name, Block block, @Nullable Function<Item.Properties, Item.Properties> extraPropFunc) {
+        Item.Properties prop = createInitialProp().setId(ResourceKeyHelper_21_3.itemKey(name));
         return new BlockItem(block, extraPropFunc != null ? extraPropFunc.apply(prop) : prop);
     }
 
     private static <T extends Block> Supplier<T> registerWithItem(final String name, final Supplier<T> blockSupplier, @Nullable Function<Item.Properties, Item.Properties> extraPropFunc) {
-        return register(name, blockSupplier, (b) -> makeItemBlock(b.get(), extraPropFunc));
+        return register(name, blockSupplier, (b) -> makeItemBlock(name, b.get(), extraPropFunc));
     }
 
     private static <T extends Block> Supplier<T> registerWithItem(final String name, final Supplier<T> blockSupplier) {
-        return register(name, blockSupplier, (b) -> makeItemBlock(b.get()));
+        return register(name, blockSupplier, (b) -> makeItemBlock(name, b.get()));
     }
 
     private static <T extends Block> Supplier<T> register(final String name, final Supplier<T> blockSupplier, final Function<Supplier<T>, Item> itemFunction) {
