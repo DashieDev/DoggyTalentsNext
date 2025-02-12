@@ -23,8 +23,8 @@ public class ScentTreatItem extends Item {
 
     public static String SCENT_BLOCK_ID = "DTN_scented_block_id";
     
-    public ScentTreatItem() {
-        super((new Properties().stacksTo(1)));
+    public ScentTreatItem(Properties itemProps) {
+        super((itemProps.stacksTo(1)));
     }
 
     @Override
