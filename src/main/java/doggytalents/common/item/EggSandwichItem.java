@@ -21,8 +21,8 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class EggSandwichItem extends DogEddibleItem {
 
-    public EggSandwichItem() {
-        super(
+    public EggSandwichItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(6)
                 .saturationMod(0.6F)

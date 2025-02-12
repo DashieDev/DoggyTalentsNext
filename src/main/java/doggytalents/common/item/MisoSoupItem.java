@@ -23,8 +23,8 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class MisoSoupItem extends DogEddibleBowlFoodItem {
 
-    public MisoSoupItem() {
-        super(
+    public MisoSoupItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(10)
                 .saturationMod(0.8F)

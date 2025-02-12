@@ -20,8 +20,8 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class OnsenTamagoItem extends DogEddibleItem{
 
-    public OnsenTamagoItem() {
-        super(
+    public OnsenTamagoItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(4)
                 .saturationMod(0.6F)

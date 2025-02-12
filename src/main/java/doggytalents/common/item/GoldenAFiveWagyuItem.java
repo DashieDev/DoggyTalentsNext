@@ -22,8 +22,8 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class GoldenAFiveWagyuItem extends DogEddibleItem {
 
-    public GoldenAFiveWagyuItem() {
-        super(
+    public GoldenAFiveWagyuItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(8)
                 .saturationMod(10F)

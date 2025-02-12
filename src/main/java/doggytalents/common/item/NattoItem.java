@@ -22,8 +22,8 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class NattoItem extends DogEddibleItem {
 
-    public NattoItem() {
-        super(
+    public NattoItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(6)
                 .saturationMod(0.6F)

@@ -13,8 +13,8 @@ import net.minecraft.world.level.Level;
 
 public class DroolScentTreatItem extends Item {
 
-    public DroolScentTreatItem() {
-        super(new Properties().stacksTo(1));
+    public DroolScentTreatItem(Properties itemProps) {
+        super(itemProps.stacksTo(1));
     }
 
     @Override

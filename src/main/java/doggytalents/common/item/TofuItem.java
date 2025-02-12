@@ -17,8 +17,8 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class TofuItem extends DogEddibleItem {
 
-    public TofuItem() {
-        super(
+    public TofuItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .stacksTo(8),
             b -> b

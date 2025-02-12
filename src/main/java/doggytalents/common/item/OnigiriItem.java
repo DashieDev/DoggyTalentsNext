@@ -16,8 +16,8 @@ import net.minecraft.world.level.Level;
 
 public class OnigiriItem extends DogEddibleItem {
 
-    public OnigiriItem() {
-        super(
+    public OnigiriItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(7)
                 .saturationMod(0.5F)

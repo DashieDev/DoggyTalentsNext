@@ -25,8 +25,8 @@ import doggytalents.api.enu.forward_imitate.ComponentUtil;
 
 public class OyakodonItem extends DogEddibleBowlFoodItem {
 
-    public OyakodonItem() {
-        super(
+    public OyakodonItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(14)
                 .saturationMod(1f)
