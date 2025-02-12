@@ -22,8 +22,8 @@ import net.minecraft.world.level.Level;
 
 public class NattoRiceItem extends DogEddibleBowlFoodItem {
 
-    public NattoRiceItem() {
-        super(
+    public NattoRiceItem(Properties itemProps) {
+        super(itemProps, 
             b -> b
                 .nutrition(8)
                 .saturationMod(0.8f)
