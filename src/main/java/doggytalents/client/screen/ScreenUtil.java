@@ -61,4 +61,7 @@ public class ScreenUtil {
     public static void blit_21_3(GuiGraphics graphics, ResourceLocation texture, int x, int y, int tex_from_x, int tex_from_y, int tex_to_x, int tex_to_y) {
         graphics.blit(RenderType::guiTextured, texture, x, y, tex_from_x, tex_from_y, tex_to_x, tex_to_y, 256, 256);
     }
+    public static void blit_21_3(GuiGraphics graphics, ResourceLocation texture, int x, int y, int a, float tex_from_x, float tex_from_y, int tex_to_x, int tex_to_y, int tex_size_x, int tex_size_y) {
+        graphics.blit(RenderType::guiTextured, texture, x, y, tex_from_x, tex_from_y, tex_to_x, tex_to_y, tex_size_x, tex_size_y);
+    }
 }

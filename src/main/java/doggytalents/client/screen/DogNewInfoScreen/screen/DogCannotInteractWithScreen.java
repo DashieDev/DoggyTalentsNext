@@ -187,7 +187,7 @@ public class DogCannotInteractWithScreen extends Screen {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = size;
-        graphics.blit(RenderType::guiTextured, getDefeatedKanji(this.dog), x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
+        ScreenUtil.blit_21_3(graphics, getDefeatedKanji(this.dog), x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         RenderSystem.disableBlend();
     }
 

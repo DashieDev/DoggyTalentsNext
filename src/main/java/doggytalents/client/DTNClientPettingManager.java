@@ -274,8 +274,8 @@ public class DTNClientPettingManager {
         //var renderer = event.getRenderer();
         //var model = renderer.getModel();
         
-        // model.leftArmPose = PettingArmPose.VALUE;
-        // model.rightArmPose = PettingArmPose.VALUE;
+        //model.leftArmPose = PettingArmPose.VALUE;
+        //model.rightArmPose = PettingArmPose.VALUE;
         PettingArmPose.activateLeft = true;
         PettingArmPose.activateRight = true;
     }
@@ -391,7 +391,8 @@ public class DTNClientPettingManager {
         // input.down = false;
         // input.left = false;
         // input.right = false;
-        input.keyPresses = Input.EMPTY;
+        var input_21_3_old = input.keyPresses;
+        input.keyPresses = new Input(false, false, false, false, input_21_3_old.jump(), input_21_3_old.shift(), input_21_3_old.sprint());
     }
 
     public void onPettingUpdate(Dog dog, DogPettingState state) {
