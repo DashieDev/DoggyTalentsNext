@@ -100,7 +100,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
             return false;
         
         var node_optional = scanSurroundingForNextPos(this);
-        if (node_optional.isPresent())
+        if (!node_optional.isPresent())
             return false;
         var node = node_optional.get();
         if (node.type != PathType.WALKABLE && this.walkableCount > 0)
