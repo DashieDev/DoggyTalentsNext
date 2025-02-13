@@ -384,11 +384,15 @@ public class DogSleepOnManager {
         }
 
         public boolean other() {
-            return this.failMsg.isPresent() && this.failMsg.get() == DogSleepOnFailMessage.OTHER;
+            return isFailMsg(DogSleepOnFailMessage.OTHER);
         }
 
         public DogSleepOnFailMessage failMsg() {
-            return this.failMsg.get();
+            return this.failMsg.orElse(null);
+        }
+
+        public boolean isFailMsg(DogSleepOnFailMessage msg) {
+            return this.failMsg.isPresent() && this.failMsg.get() == msg;
         }
 
     }
