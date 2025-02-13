@@ -84,7 +84,7 @@ public class BedDogTalent extends TalentInstance {
         
         var result = DogSleepOnManager.getServer(level.getServer()).setOrRequestSleepOn(dog, player);
         proccessResult(result, dog, player);
-        if (result.failMsg() == DogSleepOnFailMessage.NO_POS) {
+        if (result.isFailMsg(DogSleepOnFailMessage.NO_POS)) {
             player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 10);
         }
     }
@@ -92,7 +92,7 @@ public class BedDogTalent extends TalentInstance {
     private static void proccessResult(StartSleepOnDogResult result, Dog dog, Player player) {
         if (result.ok() || result.other())
             return;
-        if (result.failMsg() == DogSleepOnFailMessage.COOLDOWN) {
+        if (result.isFailMsg(DogSleepOnFailMessage.COOLDOWN)) {
             sendCooldownMsg(dog, player);
             return;
         }
