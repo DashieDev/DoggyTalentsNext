@@ -92,7 +92,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = 128;
-        graphics.blit(RenderType::guiTextured, getKanjiDogLevel(this.dog), this.getRealX() + this.getSizeX()/2 - imgeSize/2, 
+        ScreenUtil.blit_21_3(graphics, getKanjiDogLevel(this.dog), this.getRealX() + this.getSizeX()/2 - imgeSize/2, 
             this.getRealY() + this.getSizeY()/2 - imgeSize/2, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         RenderSystem.disableBlend();
     }
@@ -278,7 +278,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = 16;
-        graphics.blit(RenderType::guiTextured, iconLoc, x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
+        ScreenUtil.blit_21_3(graphics, iconLoc, x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         RenderSystem.disableBlend();
     }
     

@@ -7,7 +7,7 @@ public class PettingArmPoseParams {
     public static Object declareParameter(int param_index, Class<?> param_type) {
         switch (param_index) {
         case 0:
-            return Boolean.valueOf(true);
+            return Boolean.valueOf(false);
         case 1:
             IArmPoseTransformer ret = (x, y, z) -> {
                 PettingArmPose.applyTransform(x, y, z);

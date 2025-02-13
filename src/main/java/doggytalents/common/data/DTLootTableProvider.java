@@ -41,6 +41,7 @@ import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -172,7 +173,7 @@ public class DTLootTableProvider extends LootTableProvider {
 
         @Override
         protected java.util.stream.Stream<EntityType<?>> getKnownEntityTypes() {
-            return DoggyEntityTypes.ENTITIES.getEntries().stream().map(Supplier::get);
+            return new ArrayList<EntityType<?>>(List.of(DoggyEntityTypes.DOG.get())).stream();
         }
 
         @Override
