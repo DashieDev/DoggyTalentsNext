@@ -272,8 +272,8 @@ public class DTNClientPettingManager {
         
         //model.leftArmPose = PettingArmPose.VALUE;
         //model.rightArmPose = PettingArmPose.VALUE;
-        event.getRenderState().mainHandState.customArmPose = PettingArmPose.VALUE;
-        event.getRenderState().offhandState.customArmPose = PettingArmPose.VALUE;
+        event.getRenderState().mainHandState.customArmPose = PettingArmPose.VALUE; event.getRenderState().mainHandState.isEmpty = false;
+        event.getRenderState().offhandState.customArmPose = PettingArmPose.VALUE; event.getRenderState().offhandState.isEmpty = false;
     }
 
     private boolean isPettingPlayer(Player player) {
@@ -384,7 +384,8 @@ public class DTNClientPettingManager {
         // input.down = false;
         // input.left = false;
         // input.right = false;
-        input.keyPresses = Input.EMPTY;
+        var input_21_3_old = input.keyPresses;
+        input.keyPresses = new Input(false, false, false, false, input_21_3_old.jump(), input_21_3_old.shift(), input_21_3_old.sprint());
     }
 
     public void onPettingUpdate(Dog dog, DogPettingState state) {

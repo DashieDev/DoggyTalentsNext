@@ -10,6 +10,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.TalentsOptions;
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Talent;
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.TalentChangeHandlerSlice;
@@ -596,7 +597,7 @@ public class TalentInfoViewElement extends AbstractElement {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = size;
-        graphics.blit(RenderType::guiTextured, DogStatusViewBoxElement.getKanjiDogLevel(this.dog), x, 
+        ScreenUtil.blit_21_3(graphics, DogStatusViewBoxElement.getKanjiDogLevel(this.dog), x, 
             y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         RenderSystem.disableBlend();
     }
