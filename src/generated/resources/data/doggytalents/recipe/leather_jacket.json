@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "L": {
-      "item": "minecraft:leather"
-    },
-    "W": {
-      "tag": "minecraft:wool"
-    }
+    "L": "minecraft:leather",
+    "W": "#minecraft:wool"
   },
   "pattern": [
     "L L",

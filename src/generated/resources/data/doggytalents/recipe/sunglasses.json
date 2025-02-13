@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "minecraft:black_stained_glass_pane"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "G": "minecraft:black_stained_glass_pane",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "S S",

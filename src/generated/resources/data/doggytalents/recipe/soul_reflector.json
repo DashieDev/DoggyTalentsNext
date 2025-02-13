@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "S": {
-      "item": "minecraft:soul_sand"
-    },
-    "X": {
-      "item": "doggytalents:divine_retribution"
-    }
+    "S": "minecraft:soul_sand",
+    "X": "doggytalents:divine_retribution"
   },
   "pattern": [
     " S ",

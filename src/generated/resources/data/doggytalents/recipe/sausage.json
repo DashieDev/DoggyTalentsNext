@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "S": {
-      "item": "minecraft:cooked_porkchop"
-    }
+    "S": "minecraft:cooked_porkchop"
   },
   "pattern": [
     "SSS"

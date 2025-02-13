@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:bread"
-    },
-    "C": {
-      "item": "doggytalents:sausage"
-    },
-    "R": {
-      "item": "minecraft:red_dye"
-    },
-    "T": {
-      "item": "doggytalents:training_treat"
-    },
-    "Y": {
-      "item": "minecraft:yellow_dye"
-    }
+    "B": "minecraft:bread",
+    "C": "doggytalents:sausage",
+    "R": "minecraft:red_dye",
+    "T": "doggytalents:training_treat",
+    "Y": "minecraft:yellow_dye"
   },
   "pattern": [
     "RTY",

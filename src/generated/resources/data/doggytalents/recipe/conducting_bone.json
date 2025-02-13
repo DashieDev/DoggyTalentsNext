@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": {
-      "item": "minecraft:bone"
-    },
-    "E": {
-      "item": "minecraft:end_crystal"
-    },
-    "P": {
-      "item": "minecraft:shulker_shell"
-    },
-    "R": {
-      "item": "minecraft:netherite_ingot"
-    }
+    "B": "minecraft:bone",
+    "E": "minecraft:end_crystal",
+    "P": "minecraft:shulker_shell",
+    "R": "minecraft:netherite_ingot"
   },
   "pattern": [
     " B ",

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "F": {
-      "item": "minecraft:feather"
-    },
-    "P": {
-      "item": "minecraft:phantom_membrane"
-    },
-    "T": {
-      "item": "doggytalents:super_treat"
-    }
+    "F": "minecraft:feather",
+    "P": "minecraft:phantom_membrane",
+    "T": "doggytalents:super_treat"
   },
   "pattern": [
     " FP",

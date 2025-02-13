@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:empty_locator_orb"
-    },
-    {
-      "item": "minecraft:paper"
-    }
+    "doggytalents:empty_locator_orb",
+    "minecraft:paper"
   ],
   "result": {
     "count": 1,

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:rice_wheat"
-    }
+    "doggytalents:rice_wheat"
   ],
   "result": {
     "count": 3,

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:wool_collar"
-    },
-    {
-      "item": "doggytalents:wool_collar"
-    }
+    "doggytalents:wool_collar",
+    "doggytalents:wool_collar"
   ],
   "result": {
     "count": 1,

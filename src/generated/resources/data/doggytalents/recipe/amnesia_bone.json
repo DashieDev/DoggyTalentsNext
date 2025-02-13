@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:bone"
-    },
-    "N": {
-      "item": "minecraft:netherite_ingot"
-    },
-    "R": {
-      "item": "minecraft:blaze_rod"
-    },
-    "S": {
-      "item": "minecraft:soul_soil"
-    },
-    "W": {
-      "item": "minecraft:nether_wart"
-    }
+    "B": "minecraft:bone",
+    "N": "minecraft:netherite_ingot",
+    "R": "minecraft:blaze_rod",
+    "S": "minecraft:soul_soil",
+    "W": "minecraft:nether_wart"
   },
   "pattern": [
     " RN",

@@ -2,30 +2,14 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:wool_collar"
-    },
-    {
-      "item": "minecraft:string"
-    },
-    {
-      "item": "minecraft:blue_dye"
-    },
-    {
-      "item": "minecraft:lime_dye"
-    },
-    {
-      "item": "minecraft:yellow_dye"
-    },
-    {
-      "item": "minecraft:orange_dye"
-    },
-    {
-      "item": "minecraft:red_dye"
-    },
-    {
-      "item": "minecraft:purple_dye"
-    }
+    "doggytalents:wool_collar",
+    "minecraft:string",
+    "minecraft:blue_dye",
+    "minecraft:lime_dye",
+    "minecraft:yellow_dye",
+    "minecraft:orange_dye",
+    "minecraft:red_dye",
+    "minecraft:purple_dye"
   ],
   "result": {
     "count": 1,

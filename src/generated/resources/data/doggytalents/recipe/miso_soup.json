@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:miso_paste"
-    },
-    {
-      "item": "doggytalents:tofu"
-    },
-    {
-      "item": "minecraft:bowl"
-    },
-    {
-      "item": "minecraft:dried_kelp"
-    }
+    "doggytalents:miso_paste",
+    "doggytalents:tofu",
+    "minecraft:bowl",
+    "minecraft:dried_kelp"
   ],
   "result": {
     "count": 1,

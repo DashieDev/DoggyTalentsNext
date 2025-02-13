@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "minecraft:green_wool"
-    },
-    "S": {
-      "item": "minecraft:spruce_sapling"
-    },
-    "T": {
-      "item": "doggytalents:training_treat"
-    }
+    "G": "minecraft:green_wool",
+    "S": "minecraft:spruce_sapling",
+    "T": "doggytalents:training_treat"
   },
   "pattern": [
     " G ",

@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:bamboo"
-    },
-    "G": {
-      "item": "minecraft:glass_pane"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "T": {
-      "item": "doggytalents:training_treat"
-    }
+    "B": "minecraft:bamboo",
+    "G": "minecraft:glass_pane",
+    "I": "minecraft:iron_ingot",
+    "T": "doggytalents:training_treat"
   },
   "pattern": [
     "  B",

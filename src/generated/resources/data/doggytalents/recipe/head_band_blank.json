@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "L": {
-      "item": "minecraft:lead"
-    },
-    "P": {
-      "item": "minecraft:paper"
-    },
-    "T": {
-      "item": "doggytalents:training_treat"
-    }
+    "L": "minecraft:lead",
+    "P": "minecraft:paper",
+    "T": "doggytalents:training_treat"
   },
   "pattern": [
     "LT",

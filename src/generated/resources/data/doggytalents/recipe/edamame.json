@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:soy_pods"
-    },
-    {
-      "item": "doggytalents:soy_pods"
-    },
-    {
-      "item": "doggytalents:soy_pods"
-    },
-    {
-      "item": "minecraft:sugar"
-    }
+    "doggytalents:soy_pods",
+    "doggytalents:soy_pods",
+    "doggytalents:soy_pods",
+    "minecraft:sugar"
   ],
   "result": {
     "count": 3,

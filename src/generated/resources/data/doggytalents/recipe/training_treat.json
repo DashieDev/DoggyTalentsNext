@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:string"
-    },
-    {
-      "item": "minecraft:bone"
-    },
-    {
-      "item": "minecraft:gunpowder"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "doggytalents:rice_bowl"
-    }
+    "minecraft:string",
+    "minecraft:bone",
+    "minecraft:gunpowder",
+    "minecraft:sugar",
+    "doggytalents:rice_bowl"
   ],
   "result": {
     "count": 3,

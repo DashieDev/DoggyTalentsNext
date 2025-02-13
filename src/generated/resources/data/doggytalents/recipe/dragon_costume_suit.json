@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:training_treat"
-    },
-    {
-      "item": "minecraft:dragon_egg"
-    }
+    "doggytalents:training_treat",
+    "minecraft:dragon_egg"
   ],
   "result": {
     "count": 1,
