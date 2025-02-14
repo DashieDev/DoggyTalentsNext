@@ -14,6 +14,7 @@ import doggytalents.api.impl.CasingMaterial;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.client.event.ClientEventHandler;
+import doggytalents.common.backward_imitate.DogBedHelper_21_3;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.Util;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent;
@@ -159,11 +160,10 @@ public class DogBedMaterialManager {
     }
 
     private static List<Block> fetchCasingBlocks() {
-        var tags = BuiltInRegistries.BLOCK;
-        var planks = tags.getTag(BlockTags.PLANKS).map(x -> x
-            .stream().map(y -> y.value()).collect(Collectors.toList())).orElse(List.of());
-        var logs = tags.getTag(BlockTags.LOGS).map(x -> x
-            .stream().map(y -> y.value()).collect(Collectors.toList())).orElse(List.of());
+        var planks = TagUtil.queryAllValuesForTag(
+            BuiltInRegistries.BLOCK, BlockTags.PLANKS);
+        var logs = DogBedHelper_21_3.excludeWoodBlocksFromList(TagUtil.queryAllValuesForTag(
+            BuiltInRegistries.BLOCK, BlockTags.LOGS));
         var ret = new ArrayList<Block>(planks.size() + logs.size());
         ret.addAll(planks);
         ret.addAll(logs);
