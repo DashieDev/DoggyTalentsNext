@@ -44,7 +44,7 @@ public class DoggyBlocks {
     }
 
     private static BlockItem makeItemBlock(String name, Block block, @Nullable Function<Item.Properties, Item.Properties> extraPropFunc) {
-        Item.Properties prop = createInitialProp().setId(ResourceKeyHelper_21_3.itemKey(name));
+        Item.Properties prop = createInitialProp().setId(ResourceKeyHelper_21_3.itemKey(name)).overrideDescription("block.doggytalents." + name);
         return new BlockItem(block, extraPropFunc != null ? extraPropFunc.apply(prop) : prop);
     }
 
