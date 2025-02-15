@@ -3,9 +3,7 @@
   "category": "food",
   "cookingtime": 100,
   "experience": 0.1,
-  "ingredient": {
-    "item": "doggytalents:tofu"
-  },
+  "ingredient": "doggytalents:tofu",
   "result": {
     "count": 1,
     "id": "doggytalents:aburaage"

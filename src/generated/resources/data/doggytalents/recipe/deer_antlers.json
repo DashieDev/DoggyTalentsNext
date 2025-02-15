@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "L": {
-      "item": "minecraft:leather_helmet"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "T": {
-      "item": "doggytalents:training_treat"
-    }
+    "L": "minecraft:leather_helmet",
+    "S": "minecraft:stick",
+    "T": "doggytalents:training_treat"
   },
   "pattern": [
     "SLS",

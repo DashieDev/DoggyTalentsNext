@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:cape_coloured"
-    },
-    {
-      "item": "minecraft:soul_torch"
-    },
-    {
-      "item": "minecraft:nether_wart"
-    }
+    "doggytalents:cape_coloured",
+    "minecraft:soul_torch",
+    "minecraft:nether_wart"
   ],
   "result": {
     "count": 1,

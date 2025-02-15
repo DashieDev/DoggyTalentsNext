@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:blaze_powder"
-    },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "M": {
-      "item": "minecraft:magma_cream"
-    },
-    "P": {
-      "item": "minecraft:phantom_membrane"
-    },
-    "X": {
-      "item": "doggytalents:sake"
-    }
+    "B": "minecraft:blaze_powder",
+    "C": "minecraft:copper_ingot",
+    "M": "minecraft:magma_cream",
+    "P": "minecraft:phantom_membrane",
+    "X": "doggytalents:sake"
   },
   "pattern": [
     "MPM",

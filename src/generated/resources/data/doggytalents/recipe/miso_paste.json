@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:soy_beans"
-    },
-    {
-      "item": "doggytalents:koji"
-    },
-    {
-      "item": "minecraft:red_mushroom"
-    }
+    "doggytalents:soy_beans",
+    "doggytalents:koji",
+    "minecraft:red_mushroom"
   ],
   "result": {
     "count": 1,

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": {
-      "item": "minecraft:bone"
-    },
-    "F": {
-      "item": "minecraft:redstone_block"
-    },
-    "G": {
-      "item": "minecraft:gold_ingot"
-    }
+    "B": "minecraft:bone",
+    "F": "minecraft:redstone_block",
+    "G": "minecraft:gold_ingot"
   },
   "pattern": [
     "GGG",

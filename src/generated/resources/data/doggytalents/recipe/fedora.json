@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:black_wool"
-    },
-    "C": {
-      "item": "minecraft:leather_helmet"
-    },
-    "T": {
-      "item": "doggytalents:training_treat"
-    },
-    "W": {
-      "item": "minecraft:brown_wool"
-    }
+    "B": "minecraft:black_wool",
+    "C": "minecraft:leather_helmet",
+    "T": "doggytalents:training_treat",
+    "W": "minecraft:brown_wool"
   },
   "pattern": [
     " BW",

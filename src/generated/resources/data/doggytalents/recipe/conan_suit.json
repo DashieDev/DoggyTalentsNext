@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:blue_wool"
-    },
-    "C": {
-      "item": "doggytalents:cape_coloured"
-    },
-    "L": {
-      "item": "minecraft:light_blue_wool"
-    },
-    "R": {
-      "item": "minecraft:red_wool"
-    },
-    "Z": {
-      "item": "doggytalents:bowtie"
-    }
+    "B": "minecraft:blue_wool",
+    "C": "doggytalents:cape_coloured",
+    "L": "minecraft:light_blue_wool",
+    "R": "minecraft:red_wool",
+    "Z": "doggytalents:bowtie"
   },
   "pattern": [
     "BZB",

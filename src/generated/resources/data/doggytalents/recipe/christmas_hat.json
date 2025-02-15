@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "R": {
-      "item": "minecraft:red_carpet"
-    },
-    "T": {
-      "item": "doggytalents:training_treat"
-    },
-    "W": {
-      "item": "minecraft:white_wool"
-    }
+    "R": "minecraft:red_carpet",
+    "T": "doggytalents:training_treat",
+    "W": "minecraft:white_wool"
   },
   "pattern": [
     " W ",
