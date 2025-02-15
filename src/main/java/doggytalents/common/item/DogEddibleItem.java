@@ -36,7 +36,7 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
     //private FoodProperties currentFoodProps;
 
     public DogEddibleItem(Properties itemProps, DogFoodProperties_21_3 foodProps) {
-        super(itemProps.food(foodProps.getVanillaProps().build()));
+        super(itemProps.food(foodProps.getVanillaProps().build(), foodProps.getVanillaEffects()));
         // if (foodProps != null)
         //     actualFoodProps = foodProps;
         // else 

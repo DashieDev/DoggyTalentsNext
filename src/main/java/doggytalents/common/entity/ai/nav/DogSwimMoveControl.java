@@ -1,5 +1,6 @@
 package doggytalents.common.entity.ai.nav;
 
+import doggytalents.common.backward_imitate.EntityHelper_21_3;
 import doggytalents.common.entity.Dog;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
 import net.minecraft.core.BlockPos;
@@ -55,7 +56,7 @@ public class DogSwimMoveControl extends MoveControl {
                 float wantedXRot = -((float)(Mth.atan2(dy, l_xz) * (double)(180F / (float)Math.PI)));
                 float maxTurnX = dog.getMaxHeadXRot();
                 wantedXRot = Mth.clamp(Mth.wrapDegrees(wantedXRot), -maxTurnX, maxTurnX);
-                float approachingXRot = this.rotlerp(this.dog.getXRot(), wantedXRot, 5.0F);
+                float approachingXRot = EntityHelper_21_3.fixDegreeClamping(this.rotlerp(this.dog.getXRot(), wantedXRot, 5.0F));
                 this.dog.setXRot(approachingXRot);
             }
 

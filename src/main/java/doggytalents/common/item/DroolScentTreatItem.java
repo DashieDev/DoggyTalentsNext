@@ -31,6 +31,6 @@ public class DroolScentTreatItem extends Item {
 
         playerIn.swing(handIn);
         playerIn.playSound(SoundEvents.INK_SAC_USE, 1f , 1f);
-        return InteractionResult.SUCCESS;
+        playerIn.setItemInHand(handIn, returnStack); return InteractionResult.SUCCESS;
     }
 }
