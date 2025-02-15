@@ -1703,7 +1703,7 @@ the Dog with the bowtie in hand)
 # Demonhorns/Deer Antlers now have their own Accessory Type and can now be equipped alongside the head accessories.
 * Workaround for Fiery Reflector unwanted behaviour with Anim Debug Mode.   
 
-**1.18.40 - 2 February 2024**
+**1.18.40 - 2 February 2025**
 + New Talent: Bed Dog 🛌🐶
   You can now Sleep on your Dog!
 + New skin: Hope 🐺
@@ -1728,3 +1728,9 @@ Dog Beds will render with the default variant instead. Note that the cache can b
 bug where you cannot select any entries if the number of entries happens to be fully divisible by the
 number of page and you are on the last page.
 * Fix a race condition in Dog Go Back to Sitting Position after Action AI.
+
+**1.18.41 - 15th February 2025**
+* HOTFIX: Inverted logic cause Dog going away from fire logic to fail.
+* Fix Bed Dog System throwing NPE when handling its packets.  
+* Mixin configuration fix, no longer spamming mixin error message in the Dedicated Server console
+upon start.
