@@ -313,7 +313,7 @@ public class DoggyItems {
     //     return registerLegacy(name, () -> itemConstructor.apply(createInitialProp()));
     // }
 
-    private static RegistryObject<Item> register(final String name) {
+    private static Supplier<Item> register(final String name) {
         return registerWith(name, (Function<Item.Properties, Item.Properties>) null);
     }
 
