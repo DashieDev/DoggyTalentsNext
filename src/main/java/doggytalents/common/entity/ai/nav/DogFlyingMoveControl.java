@@ -1,6 +1,7 @@
 package doggytalents.common.entity.ai.nav;
 
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.common.backward_imitate.EntityHelper_21_3;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.talent.FlyingFurballTalent;
 import net.minecraft.util.Mth;
@@ -63,7 +64,7 @@ public class DogFlyingMoveControl extends FlyingMoveControl {
 
             if (Math.abs(dy) > (double)1.0E-5F || Math.abs(l_xz) > (double)1.0E-5F) {
                float wantedXRot = (float)(-(Mth.atan2(dy, l_xz) * (double)(180F / (float)Math.PI)));
-               float approachingXRot = this.rotlerp(this.dog.getXRot(), wantedXRot, this.dog.getMaxHeadXRot());
+               float approachingXRot = EntityHelper_21_3.fixDegreeClamping(this.rotlerp(this.dog.getXRot(), wantedXRot, this.dog.getMaxHeadXRot()));
                this.dog.setXRot(approachingXRot);
                
                float zAngleMod = Mth.cos(this.dog.getXRot() * Mth.DEG_TO_RAD);
