@@ -8,7 +8,8 @@
         "PlayerModelMixin",
         "CameraMixin",
 
-        "PlayerRendererMixin_1_21_3"
+        "PlayerRendererMixin_1_21_3",
+        "EntityMixin_1_21_3"
     ],
     "client": [
     ],

@@ -68,6 +68,10 @@ public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
     }
 
     public void renderItem(PoseStack stack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack itemStack, DogRenderState_21_3 render_state) {
+        //1.21.3+ check
+        var item_model_1_21_3 = render_state.getMainHandItemModel();
+        if (item_model_1_21_3 == null) return;
+        
         stack.pushPose();
         stack.translate(-0.025F, 0.125F, -0.32F);
         var item = itemStack.getItem();
@@ -83,7 +87,7 @@ public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
         stack.mulPose(Axis.YP.rotationDegrees(45.0F));
         stack.mulPose(Axis.XP.rotationDegrees(90.0F));
 
-        this.itemInHandRenderer.render(itemStack, ItemDisplayContext.GROUND, false, stack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY, render_state.getMainHandItemModel());
+        this.itemInHandRenderer.render(itemStack, ItemDisplayContext.GROUND, false, stack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY, item_model_1_21_3);
         stack.popPose();
     }
 }

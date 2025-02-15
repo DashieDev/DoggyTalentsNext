@@ -46,6 +46,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
@@ -497,7 +498,18 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
         super.extractRenderState(dog, extract_to, p_ticks);
         extract_to.dog = dog;
         scaleDog(dog, extract_to, p_ticks);
+        extractRightHandItemModelForDog(dog, extract_to);
     }
+    private void extractRightHandItemModelForDog(Dog dog, DogRenderState_21_3 extract_to) {
+        if (extract_to.rightHandItemModel != null)
+            return;
+        var mouth_stack_optional = dog.getMouthItemForRender();
+        if (!mouth_stack_optional.isPresent())
+            return;
+        var mouth_stack = mouth_stack_optional.get();
+        extract_to.rightHandItem = mouth_stack;
+        extract_to.rightHandItemModel = itemRenderer.resolveItemModel(mouth_stack, dog, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND);
+    } 
     @Override
     protected float getShadowRadius(DogRenderState_21_3 p_365066_) {
         return this.shadowRadius;
