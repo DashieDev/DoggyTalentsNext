@@ -65,7 +65,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
 //        this.addLayer(new DogTalentLayer(this, ctx));
 //        this.addLayer(new DogAccessoryLayer(this, ctx));
         DogModelRegistry.resolve(ctx);
-        DoggySpinModel.init(ctx);
+        //DoggySpinModel.init(ctx); //Fabric initialized this in ClientEntry. We needs to be extra careful wWhen porting a change here.
         this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
         for (LayerFactory<Dog, DogModel> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
