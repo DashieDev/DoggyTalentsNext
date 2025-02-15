@@ -4,14 +4,17 @@
     "package": "doggytalents.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-        "LivingEntityRendererMixin",
-        "PlayerModelMixin",
-        "CameraMixin",
 
-        "PlayerRendererMixin_1_21_3",
+        
         "EntityMixin_1_21_3"
     ],
     "client": [
+      "LivingEntityRendererMixin",
+      "PlayerModelMixin",
+      "CameraMixin",
+
+
+      "PlayerRendererMixin_1_21_3"
     ],
     "server": [],
     "injectors": {
