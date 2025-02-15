@@ -58,22 +58,22 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
         init_1_21_3(foodProps);
     }
 
-    public DogEddibleItem(DogFoodProperties_21_3 foodProperties) {
-        this(new Properties(), foodProperties);
-    }
+    // public DogEddibleItem(DogFoodProperties_21_3 foodProperties) {
+    //     this(new Properties(), foodProperties);
+    // }
 
-    public DogEddibleItem(Function<DogFoodProperties_21_3, DogFoodProperties_21_3> propsCreator) {
+    public DogEddibleItem(Properties itemProps, Function<DogFoodProperties_21_3, DogFoodProperties_21_3> propsCreator) {
         this(
-            new Properties(), 
+            itemProps, 
             propsCreator.apply(new DogFoodProperties_21_3())
                 //.build()
         );
     }
 
-    public DogEddibleItem(Function<Item.Properties, Item.Properties> itemPropsCreator,
+    public DogEddibleItem(Properties itemProps, Function<Item.Properties, Item.Properties> itemPropsCreator,
         Function<DogFoodProperties_21_3, DogFoodProperties_21_3> propsCreator) {
     
-        this(itemPropsCreator.apply(new Properties()),
+        this(itemPropsCreator.apply(itemProps),
             propsCreator.apply(new DogFoodProperties_21_3()));
     }
 
