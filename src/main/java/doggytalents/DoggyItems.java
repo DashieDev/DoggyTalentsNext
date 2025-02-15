@@ -223,7 +223,7 @@ public class DoggyItems {
         (props) -> new DogPlushieItem(props));
 
     public static final Supplier<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
-        () -> new ChopinRecordItem(13, (props) -> DoggySounds.CHOPIN_OP64_NO1.get() , 
+        (props) -> new ChopinRecordItem(13, () -> DoggySounds.CHOPIN_OP64_NO1.get() , 
         props.stacksTo(1).rarity(Rarity.RARE), 132));
     public static final Supplier<PianoItem> GRAND_PIANO_WHITE = register("grand_piano_white_item", 
         (props) -> new PianoItem(props, DoggyEntityTypes.GRAND_PIANO_WHITE));
@@ -313,7 +313,7 @@ public class DoggyItems {
     //     return registerLegacy(name, () -> itemConstructor.apply(createInitialProp()));
     // }
 
-    private static RegistryObject<Item> register(final String name) {
+    private static Supplier<Item> register(final String name) {
         return registerWith(name, (Function<Item.Properties, Item.Properties>) null);
     }
 
