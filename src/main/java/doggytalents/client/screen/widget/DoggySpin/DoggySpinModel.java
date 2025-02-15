@@ -17,6 +17,7 @@ import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.animation.DogAnimationSequences;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations.AnimationContext;
+import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Resources;
@@ -43,8 +44,8 @@ public class DoggySpinModel {
         return INSTANCE;
     }
 
-    public static void init(EntityRendererProvider.Context ctx) {
-        INSTANCE = new DoggySpinModel(ctx);
+    public static void init() {
+        INSTANCE = new DoggySpinModel();
     }
 
 
@@ -78,9 +79,9 @@ public class DoggySpinModel {
     private ModelPart rootAmmy;
     private ModelPart tailAmmy;
     
-    private DoggySpinModel(EntityRendererProvider.Context ctx) {
-        this.root = ctx.bakeLayer(ClientSetup.DOG);
-        this.rootAmmy = ctx.bakeLayer(ClientSetup.OKAMI_AMATERASU);
+    private DoggySpinModel() {
+        this.root = DogModel.createBodyLayer().bakeRoot();
+        this.rootAmmy = AmaterasuModel.createBodyLayer().bakeRoot();
         this.tail = root.getChild("tail");
         this.tailAmmy = rootAmmy.getChild("tail");
     }
