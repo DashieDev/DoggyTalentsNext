@@ -21,22 +21,22 @@ public abstract class DogEddibleBowlFoodItem extends DogEddibleItem {
         );
     }
 
-    public DogEddibleBowlFoodItem(FoodProperties foodProperties) {
-        this(new Properties(), foodProperties);
-    }
+    // public DogEddibleBowlFoodItem(FoodProperties foodProperties) {
+    //     this(new Properties(), foodProperties);
+    // }
 
-    public DogEddibleBowlFoodItem(Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
+    public DogEddibleBowlFoodItem(Properties itemProps, Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
         this(
-            new Properties(), 
+            itemProps, 
             propsCreator.apply(new FoodProperties.Builder())
                 .build()
         );
     }
 
-    public DogEddibleBowlFoodItem(Function<Item.Properties, Item.Properties> itemPropsCreator,
+    public DogEddibleBowlFoodItem(Properties itemProps, Function<Item.Properties, Item.Properties> itemPropsCreator,
         Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
     
-        this(itemPropsCreator.apply(new Properties()),
+        this(itemPropsCreator.apply(itemProps),
             propsCreator.apply(new FoodProperties.Builder()).build());
     }
 
