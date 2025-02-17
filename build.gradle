@@ -130,6 +130,22 @@ task vscodePrintRunData {
     }
 }
 
+task vscodePrintRunServer {
+    doFirst {
+        println("vmArgs:")
+        def vmArgs = vscodeFetchJVMArguments({ runs.server.realiseJvmArguments() })
+        println(vmArgs)
+        println("==================================")
+        println("args:")
+        def programArgs = vscodeFetchProgramArguments({ runs.server.getProgramArguments().get() })
+        println(programArgs)
+        println("==================================")
+        println("")
+        println("")
+    }
+}
+
+
 import groovy.json.StringEscapeUtils;
 
 String vscodeFetchJVMArguments(Closure vmArgsGetter) {
