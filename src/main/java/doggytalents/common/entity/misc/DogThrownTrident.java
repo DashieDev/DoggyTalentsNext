@@ -8,6 +8,7 @@ import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalents;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogAllyCheck;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
@@ -300,10 +301,7 @@ public class DogThrownTrident extends AbstractArrow {
         if (!(owner instanceof Dog dog)) {
             return false;
         }
-        var dog_owner = dog.getOwner();
-        if (dog_owner == null)
-            return false;
-        return EventHandler.isAlliedToDog(target, dog_owner);
+        return DogAllyCheck.isAlliedToDog(dog, target);
     }
 
     @Override

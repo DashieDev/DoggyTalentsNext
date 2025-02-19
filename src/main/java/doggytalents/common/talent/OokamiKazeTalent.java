@@ -14,6 +14,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogAllyCheck;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.misc.DogGunpowderProjectile;
 import doggytalents.common.event.EventHandler;
@@ -337,7 +338,7 @@ public class OokamiKazeTalent extends TalentInstance {
                     continue;
                 // if (e.ignoreExplosion())
                 //     continue;
-                if (e instanceof LivingEntity living && EventHandler.isAlliedToDog(living, owner)) {
+                if (e instanceof LivingEntity living && DogAllyCheck.isAlliedToDog(dog, living, owner)) {
                     lightlyKnockback(owner, e, ext_radius);
                     continue;
                 }

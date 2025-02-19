@@ -1,7 +1,10 @@
 package doggytalents.common.event;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -14,6 +17,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogAllyCheck;
 import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.entity.ai.WolfBegAtTreatGoal;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
@@ -352,33 +356,11 @@ public class EventHandler {
             return false;
         if (!(hitEntity instanceof LivingEntity living))
             return false;
-        var owner = dog.getOwner();
-        if (owner == null)
-            return false;
-        if (!isAlliedToDog(living, owner))
+        if (!DogAllyCheck.isAlliedToDog(dog, living))
             return false;
         projectile.discard();
         event.setCanceled(true);
         return true;
-    }
-
-    public static boolean isAlliedToDog(LivingEntity entity, LivingEntity owner) {
-        if (owner == null || entity == null)
-            return false;
-        if (entity instanceof TamableAnimal otherDog) {
-            entity = otherDog.getOwner();
-        }
-        if (entity == null)
-            return false;
-        if (owner == entity)
-            return true;
-        if (owner.isAlliedTo(entity))
-            return true;
-        if (entity instanceof Player) {
-            if (ConfigHandler.SERVER.ALL_PLAYER_CANNOT_ATTACK_DOG.get())
-                return true;
-        }
-        return false;
     }
 
     private void proccessDogProjectileHitEvent(final ProjectileImpactEvent event, EntityHitResult hit, Dog dog) {
@@ -453,7 +435,7 @@ public class EventHandler {
             return true;
         } 
         
-        if (!dog.canOwnerAttack() && dog.checkIfAttackedFromOwnerOrTeam(dogOwner, projectileOnwer)) {
+        if (!dog.canOwnerAttack() && DogAllyCheck.isAlliedToDog(dog, projectileOnwer, dogOwner)) {
             return true;
         }
 

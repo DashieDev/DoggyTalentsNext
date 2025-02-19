@@ -1662,7 +1662,7 @@ public class Dog extends AbstractDog {
             return false;
         }
 
-        return !EventHandler.isAlliedToDog(target, owner);
+        return !DogAllyCheck.isAlliedToDog(this, target, owner);
     }
 
     // TODO
@@ -1727,9 +1727,8 @@ public class Dog extends AbstractDog {
         // Must be checked here too as hitByEntity only applies to when the dog is
         // directly hit not indirect damage like sweeping effect etc
         if (!this.canOwnerAttack()) {
-            var owner = this.getOwner();
             boolean flag = 
-                this.checkIfAttackedFromOwnerOrTeam(owner, attacker);
+                DogAllyCheck.isAlliedToDog(this, attacker);
             if (flag) return false;
         }
 
@@ -1828,16 +1827,6 @@ public class Dog extends AbstractDog {
             this.setAnim(DogAnimation.HURT_2);
             return;
         }
-    }
-
-    public boolean checkIfAttackedFromOwnerOrTeam(LivingEntity owner, Entity attacker) {
-        if (owner == null || attacker == null) 
-            return false;
-        if (owner == attacker) 
-            return true;
-        if (attacker.isAlliedTo(owner))
-            return true;
-        return false;
     }
 
     @Override
@@ -2206,7 +2195,7 @@ public class Dog extends AbstractDog {
         } 
 
         if (!this.canOwnerAttack() 
-            && this.checkIfAttackedFromOwnerOrTeam(this.getOwner(), entityIn)) {
+            && DogAllyCheck.isAlliedToDog(this, entityIn)) {
             return true;
         }
 
