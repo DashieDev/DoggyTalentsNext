@@ -7,6 +7,7 @@ import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogAllyCheck;
 import doggytalents.common.event.EventHandler;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ColorParticleOption;
@@ -222,10 +223,7 @@ public class DogArrow extends AbstractArrow {
         if (!(owner instanceof Dog dog)) {
             return false;
         }
-        var dog_owner = dog.getOwner();
-        if (dog_owner == null)
-            return false;
-        return EventHandler.isAlliedToDog(target, dog_owner);
+        return DogAllyCheck.isAlliedToDog(dog, target);
     }
 
     @Override
