@@ -300,7 +300,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("other variants will be rendered as the default variant.")
                 .comment("To reset the cache, do a resource reload (F3+T).")
                 .comment("Set this option to any value less than zero to remove the limit.")
-                .defineInRange("max_dog_bed_model_cache", 16384, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                .defineInRange("max_dog_bed_model_cache", 65536, Integer.MIN_VALUE, Integer.MAX_VALUE);
             builder.pop();
         }
 
