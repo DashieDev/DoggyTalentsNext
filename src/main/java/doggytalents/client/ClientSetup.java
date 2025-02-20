@@ -78,6 +78,7 @@ import doggytalents.client.entity.model.dog.ShikokuModel;
 import doggytalents.client.entity.model.dog.SparkyModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
 import doggytalents.client.entity.model.dog.VariantDogModel;
+import doggytalents.client.entity.model.dog.WolfLinkModel;
 import doggytalents.client.entity.model.dog.ZeroModel;
 import doggytalents.client.entity.model.dog.kusa.ChiModel;
 import doggytalents.client.entity.model.dog.kusa.HayabusaModel;
@@ -182,6 +183,7 @@ public class ClientSetup {
     public static final ModelLayerLocation OINA_WARI = new ModelLayerLocation(Util.getResource("oina_wari"), "main");
 
     public static final ModelLayerLocation DOG_SOL_HOPE = new ModelLayerLocation(Util.getResource("sol_hope"), "main");
+    public static final ModelLayerLocation DOG_WOLF_LINK = new ModelLayerLocation(Util.getResource("wolf_link"), "main");
     public static final ModelLayerLocation DOG_ARCANINE = new ModelLayerLocation(Util.getResource("dog_arcanine"), "main");
     public static final ModelLayerLocation DOG_POCHITA = new ModelLayerLocation(Util.getResource("pochita"), "main");   
     public static final ModelLayerLocation DOG_DACHSHUND = new ModelLayerLocation(Util.getResource("dachshund"), "main");
@@ -295,6 +297,7 @@ public class ClientSetup {
         event.registerLayerDefinition(OINA_TUSUKURU, TusukuruModel::createBodyLayer);
         event.registerLayerDefinition(OINA_WARI, WariModel::createBodyLayer);
         event.registerLayerDefinition(DOG_SOL_HOPE, HopeModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_WOLF_LINK, WolfLinkModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARCANINE, ArcanineModel::createBodyLayer);
         event.registerLayerDefinition(DOG_POCHITA, PochitaModel::createBodyLayer);

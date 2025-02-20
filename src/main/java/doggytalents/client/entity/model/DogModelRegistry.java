@@ -73,6 +73,7 @@ import doggytalents.client.entity.model.dog.ShikokuModel;
 import doggytalents.client.entity.model.dog.SparkyModel;
 import doggytalents.client.entity.model.dog.StBernardModel;
 import doggytalents.client.entity.model.dog.VariantDogModel;
+import doggytalents.client.entity.model.dog.WolfLinkModel;
 import doggytalents.client.entity.model.dog.ZeroModel;
 import doggytalents.client.entity.model.dog.DogModel.AccessoryState;
 import doggytalents.client.entity.model.dog.kusa.ChiModel;
@@ -171,6 +172,7 @@ public class DogModelRegistry {
         register("oina_wari", ctx ->  new WariModel(ctx.bakeLayer(ClientSetup.OINA_WARI)));
 
         register("sol_hope", ctx ->  new HopeModel(ctx.bakeLayer(ClientSetup.DOG_SOL_HOPE)));
+        register("wolf_link", ctx ->  new WolfLinkModel(ctx.bakeLayer(ClientSetup.DOG_WOLF_LINK)));
         register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
 
         register("pochita", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_POCHITA)));
