@@ -17,17 +17,20 @@ public class BeddingMaterial extends IBeddingMaterial {
 
     private final Supplier<Block> block;
     protected ResourceLocation texture;
+    protected final ResourceLocation id;
 
     @Nullable
     private String translationKey;
 
-    public BeddingMaterial(Supplier<Block> blockIn) {
+    public BeddingMaterial(ResourceLocation id, Supplier<Block> blockIn) {
         this.block = blockIn;
+        this.id = id;
     }
 
-    public BeddingMaterial(Supplier<Block> blockIn, ResourceLocation texture) {
+    public BeddingMaterial(ResourceLocation id, Supplier<Block> blockIn, ResourceLocation texture) {
         this.block = blockIn;
         this.texture = texture;
+        this.id = id;
     }
 
     /**
@@ -64,5 +67,10 @@ public class BeddingMaterial extends IBeddingMaterial {
     @Override
     public Ingredient getIngredient() {
         return Ingredient.of(this.block.get());
+    }
+
+    @Override
+    public ResourceLocation getSaveKey() {
+        return this.id;
     }
 }

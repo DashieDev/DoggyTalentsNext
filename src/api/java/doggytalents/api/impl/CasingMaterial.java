@@ -17,17 +17,20 @@ public class CasingMaterial extends ICasingMaterial {
 
     private final Supplier<Block> block;
     protected ResourceLocation texture;
+    protected final ResourceLocation id;
 
     @Nullable
     private String translationKey;
 
-    public CasingMaterial(Supplier<Block> blockIn) {
+    public CasingMaterial(ResourceLocation id, Supplier<Block> blockIn) {
         this.block = blockIn;
+        this.id = id;
     }
 
-    public CasingMaterial(Supplier<Block> blockIn, ResourceLocation texture) {
+    public CasingMaterial(ResourceLocation id, Supplier<Block> blockIn, ResourceLocation texture) {
         this.block = blockIn;
         this.texture = texture;
+        this.id = id;
     }
 
     /**
@@ -64,5 +67,10 @@ public class CasingMaterial extends ICasingMaterial {
     @Override
     public Ingredient getIngredient() {
         return Ingredient.of(this.block.get());
+    }
+
+    @Override
+    public ResourceLocation getSaveKey() {
+        return this.id;
     }
 }
