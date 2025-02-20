@@ -185,6 +185,14 @@
             "based_on" : "Hope from Seed of Life by Ki3 Games",
             "author" : "MashXP, DashieDev",
             "tags" : "hope, sol, seedoflife"
+        },
+        {
+            "skin_name" : "Wolf Link",
+            "skin_id" : "wolf_link",
+            "use_model" : "wolf_link",
+            "based_on" : "Wolf Link from The Legend of Zelda: Twilight Princess.",
+            "author" : "MashXP, DashieDev",
+            "tags" : "zelda, link"
         },    
         {
             "skin_name" : "Windie (Arcanine)",
