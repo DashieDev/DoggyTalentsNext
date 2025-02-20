@@ -1734,3 +1734,11 @@ number of page and you are on the last page.
 * Fix Bed Dog System throwing NPE when handling its packets.  
 * Mixin configuration fix, no longer spamming mixin error message in the Dedicated Server console
 upon start.
+
+**1.18.42 - 21th February 2025**
++ New skin: Wolf Link
+# Refine Dog's Ally Check Logic, allow detecting and blocking damages from allied players evem when
+owner is offline or in different dimension.
+# Allow players to specify exactly which materials can be used to make dog bed variants via 2 data tags.
+When values is present in both tags, DTN will specifically use those values 
+instead of automatically gather materials to create Dog Bed Variants.
