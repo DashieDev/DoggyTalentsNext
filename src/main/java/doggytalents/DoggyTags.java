@@ -7,6 +7,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITagManager;
+import net.minecraft.world.level.block.Block;
 
 public class DoggyTags {
 
@@ -22,6 +23,9 @@ public class DoggyTags {
     public static final TagKey<EntityType<?>> DROP_SOY_WHEN_DOG_KILL = tagEntity("drop_soy_when_dog_kill");
     public static final TagKey<EntityType<?>> MOB_RETRIEVER_MUST_IGNORE = tagEntity("mob_retriever_must_ignore");
 
+    public static final TagKey<Block> DOG_BED_CASINGS = tagBlock("dog_bed_casings");
+    public static final TagKey<Block> DOG_BED_BEDDINGS =  tagBlock("dog_bed_beddings");
+
     private static TagKey<Item> tag(String name) {
         return ItemTags.create(Util.getResource(name));
     }
@@ -29,5 +33,9 @@ public class DoggyTags {
     private static TagKey<EntityType<?>> tagEntity(String name) {
         return ForgeRegistries.ENTITIES.tags()
             .createTagKey(Util.getResource(name));
+    }
+
+    private static TagKey<Block> tagBlock(String name) {
+        return TagKey.create(Registries.BLOCK, (Util.getResource(name)));
     }
 }

@@ -23,6 +23,8 @@ public abstract class IBeddingMaterial {
      */
     public abstract Ingredient getIngredient();
 
+    public abstract ResourceLocation getSaveKey();
+
     public boolean isNani() {
         return false;
     }
