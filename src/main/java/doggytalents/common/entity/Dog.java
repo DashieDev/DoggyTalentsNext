@@ -261,6 +261,8 @@ public class Dog extends AbstractDog {
     public final DogPushAvoidManager dogPushAvoidManager
         = new DogPushAvoidManager(this);
     public final DogAiManager dogAi;
+    public final DogSoundManager dogSoundManager
+        = new DogSoundManager(this);
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
     private IDogRangedAttackManager dogRangedAttackManager
@@ -369,6 +371,8 @@ public class Dog extends AbstractDog {
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (this.dogSoundManager.isAmbientLocked())
+            return null;
         if (this.isDefeated()) {
             if (this.getDogIncapValue() > 20) {
                 int chance_window = 
@@ -626,6 +630,7 @@ public class Dog extends AbstractDog {
 
         this.pettingManager.tick();
         this.sleepOnManager.tick();
+        this.dogSoundManager.tick();
 
         //Client
         if (this.level().isClientSide) {
