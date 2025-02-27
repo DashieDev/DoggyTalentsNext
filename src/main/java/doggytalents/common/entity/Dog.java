@@ -478,6 +478,9 @@ public class Dog extends AbstractDog {
             this.finishShaking();
             break;
         }
+        if (this.level().isClientSide) {
+            this.dogSoundManager.interuptPlaying();
+        }
     }
 
     public float getTailRotation() {
@@ -733,8 +736,8 @@ public class Dog extends AbstractDog {
         if (!this.isShaking)
             return;
 
-        if (this.timeWolfIsShaking == 0.0F) {
-            if (!this.shakeFire) this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+        if (this.timeWolfIsShaking == 0.0F && this.level().isClientSide) {
+            if (!this.shakeFire) this.dogSoundManager.playInterruptible(SoundEvents.WOLF_SHAKE, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
         }
 
         this.prevTimeWolfIsShaking = this.timeWolfIsShaking;
