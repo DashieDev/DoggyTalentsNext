@@ -18,6 +18,7 @@ public class DogHowlAction extends TriggerableAction {
     public void onStart() {
         this.stopTick = dog.tickCount + DogAnimation.HOWL.getLengthTicks();
         this.dog.setAnim(DogAnimation.HOWL);
+        dog.dogSoundManager.setAmbientLocked(true);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class DogHowlAction extends TriggerableAction {
         }
         --tickTillHowl;
         if (tickTillHowl == 0) {
-            dog.howl();
+            dog.dogSoundManager.playInterruptible(SoundEvents.WOLF_HOWL, 1, dog.getVoicePitch());
         } else if (tickTillHowl == 30) {
             this.dog.playSound(SoundEvents.WOLF_GROWL, 0.3F, dog.getVoicePitch());
         }
@@ -42,6 +43,10 @@ public class DogHowlAction extends TriggerableAction {
     public void onStop() {
         if (dog.getAnim() == DogAnimation.HOWL) {
             dog.setAnim(DogAnimation.NONE);
+        }
+        if (this.isStarted()) {
+            dog.dogSoundManager.setAmbientLocked(false);
+            dog.dogSoundManager.interuptPlaying();
         }
     }
 
