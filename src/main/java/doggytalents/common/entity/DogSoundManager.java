@@ -28,9 +28,7 @@ public class DogSoundManager {
     }
 
     public void tick() {
-        if (dog.level().isClientSide) {
-            dog.level();
-        }
+        
     }
 
     public void playInterruptible(SoundEvent event, float volume, float pitch) {
