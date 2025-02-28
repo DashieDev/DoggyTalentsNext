@@ -36,6 +36,6 @@ public class DoggyTags {
     }
 
     private static TagKey<Block> tagBlock(String name) {
-        return TagKey.create(Registries.BLOCK, (Util.getResource(name)));
+        return ForgeRegistries.BLOCKS.tags().createTagKey(Util.getResource(name));
     }
 }
