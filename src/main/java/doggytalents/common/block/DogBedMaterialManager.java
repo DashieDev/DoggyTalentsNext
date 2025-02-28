@@ -16,6 +16,7 @@ import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.util.NBTUtil;
+import doggytalents.common.util.TagUtil;
 import doggytalents.common.util.Util;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent.UpdateCause;
