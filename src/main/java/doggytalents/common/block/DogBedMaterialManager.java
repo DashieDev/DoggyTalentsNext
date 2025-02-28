@@ -17,6 +17,7 @@ import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.util.NBTUtil;
+import doggytalents.common.util.TagUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -109,9 +110,9 @@ public class DogBedMaterialManager {
         casingMap.clear();
 
         var specific_beddings = TagUtil.queryAllValuesForTag(
-            BuiltInRegistries.BLOCK, DoggyTags.DOG_BED_BEDDINGS);
+            ForgeRegistries.BLOCKS, DoggyTags.DOG_BED_BEDDINGS);
         var specific_casings = TagUtil.queryAllValuesForTag(
-            BuiltInRegistries.BLOCK, DoggyTags.DOG_BED_CASINGS);
+            ForgeRegistries.BLOCKS, DoggyTags.DOG_BED_CASINGS);
         boolean specific_mode = !specific_beddings.isEmpty() && !specific_casings.isEmpty();
 
         populateBedding(cause, specific_mode ? 
