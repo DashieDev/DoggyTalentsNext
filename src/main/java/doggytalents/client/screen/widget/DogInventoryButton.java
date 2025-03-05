@@ -169,11 +169,13 @@ public class DogInventoryButton extends AbstractButton {
     private static DogInventoryButton inventoryButton;
 
     public static void onScreenInit(final ScreenEvent.Init.Post event) {
-        if (!ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV.get()) 
-            return;
         var screen = event.getScreen();
-        boolean is_survival = (screen instanceof InventoryScreen);
+        boolean is_survival = screen != null 
+            && screen.getClass() == InventoryScreen.class;
         if (!is_survival)
+            return;
+
+        if (!ConfigHandler.CLIENT.DOG_INV_BUTTON_IN_INV.get()) 
             return;
         
         var mc = Minecraft.getInstance();
