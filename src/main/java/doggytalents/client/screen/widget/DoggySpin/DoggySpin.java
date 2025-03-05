@@ -55,18 +55,25 @@ public class DoggySpin extends AbstractWidget {
     private static final DoggySpin spinWidget = new DoggySpin(0, 0, 128);
 
     public static void onScreenInit(final ScreenEvent.Init.Post event) {
-        if (event.getScreen() instanceof LevelLoadingScreen) {
+        if (isLevelLoadingScreen(event)) {
             spinWidget.chooseStyle();
         }
     }
 
     public static void onScreenRenderForeground(final ScreenEvent.Render.Post event) {
-        if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
+        if (!isLevelLoadingScreen(event))
             return;
-        if (!(event.getScreen() instanceof LevelLoadingScreen))
+        if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
             return;
         spinWidget.setY(event.getScreen().height - spinWidget.getHeight());
         spinWidget.render(event.getGuiGraphics(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
+    }
+
+    private static boolean isLevelLoadingScreen(ScreenEvent event) {
+        var screen = event.getScreen();
+        if (screen == null)
+            return false;
+        return screen.getClass() == LevelLoadingScreen.class;
     }
 
 }
