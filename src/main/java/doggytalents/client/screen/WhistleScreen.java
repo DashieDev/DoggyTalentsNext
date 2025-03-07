@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.DoggyItems;
+import doggytalents.common.item.WhistleItem;
 import doggytalents.common.item.WhistleItem.WhistleMode;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.WhisltleEditHotKeyData;
@@ -18,6 +19,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.ItemStack;
 import doggytalents.common.network.PacketDistributor;
 
 
@@ -29,6 +31,8 @@ public class WhistleScreen extends StringEntrySelectScreen {
     private int pKey = 0;
     private int[] hotkeysModeArr = {-1, -1, -1, -1};
 
+    private boolean dogOnDutyOnly;
+
     public WhistleScreen() {
         super(Component.translatable("doggytalents.screen.whistler.title"));
         this.modeList = Arrays.stream(WhistleMode.VALUES)
@@ -38,9 +42,11 @@ public class WhistleScreen extends StringEntrySelectScreen {
             .collect(Collectors.toList()));
     }
 
-    public static void open() { 
+    public static void open(ItemStack whistle_stack) { 
         Minecraft mc = Minecraft.getInstance();
-        mc.setScreen(new WhistleScreen());
+        var screen = new WhistleScreen();
+        screen.dogOnDutyOnly = WhistleItem.isDogOnDutyOnly(whistle_stack);
+        mc.setScreen(screen);
     }
 
     @Override
@@ -90,8 +96,40 @@ public class WhistleScreen extends StringEntrySelectScreen {
             }
         };
 
+        pY += help.getHeight() + 2;
+
+
+        var onDuty = new FlatButton(mX - 100 - 60 - 2, pY, 60, 20, dogOnDutyOnly ? 
+            Component.translatable("doggytalents.screen.whistler.target.on_duty") 
+            : Component.translatable("doggytalents.screen.whistler.target.all"), 
+            b -> {
+                if (dogOnDutyOnly) {
+                    dogOnDutyOnly = false;
+                    b.setMessage(Component.translatable("doggytalents.screen.whistler.target.all"));
+                } else {
+                    dogOnDutyOnly = true;
+                    b.setMessage(Component.translatable("doggytalents.screen.whistler.target.on_duty"));
+                }
+            } 
+        ) {
+            @Override
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
+                List<Component> list = new ArrayList<>();
+                var title = Component.translatable("doggytalents.screen.whistler.target.title")
+                    .withStyle(Style.EMPTY.withBold(true));
+                list.add(title);
+                String str = I18n.get("doggytalents.screen.whistler.target.help");
+                list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
+
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+            }
+        };
+
         this.addRenderableWidget(help);
         this.addRenderableWidget(setKey);
+        this.addRenderableWidget(onDuty);
     }
 
     @Override
@@ -230,7 +268,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
     }
 
     private void requestMode(int id) {
-        PacketHandler.send(PacketDistributor.SERVER.noArg(), new WhistleRequestModeData(id));
+        PacketHandler.send(PacketDistributor.SERVER.noArg(), new WhistleRequestModeData(id, this.dogOnDutyOnly));
     }
 
     @Override

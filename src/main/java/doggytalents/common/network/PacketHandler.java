@@ -68,6 +68,7 @@ public final class PacketHandler {
         registerPacket(new ForceClearKillStatsPacket(), ForceClearKillStatsData.class);
         registerPacket(new DogAnimDebugPackets.UpdateItemSettings(), DogAnimDebugData.UpdateItemSettingsData.class);
         registerPacket(new DogInterruptibleSoundPacket(), DogInterruptibleSoundData.class);
+        registerPacket(new DogOnDutyPacket(), DogOnDutyData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget<?> target, MSG message) {
