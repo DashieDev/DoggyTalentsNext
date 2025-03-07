@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.item.WhistleItem;
 import doggytalents.common.item.WhistleItem.WhistleMode;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.WhistleUseData;
@@ -46,7 +47,7 @@ public class WhistleUsePacket implements IPacket<WhistleUseData> {
                 player.getBoundingBox().inflate(100D, 50D, 100D), 
                 dog -> dog.isDoingFine() && dog.isOwnedBy(player)
             );
-            whistle.useMode(useMode, dogsList, 
+            whistle.useMode(useMode, WhistleItem.isDogOnDutyOnly(whistle_stack), dogsList, 
                 player.level(), player, InteractionHand.MAIN_HAND, true);
         });
 
