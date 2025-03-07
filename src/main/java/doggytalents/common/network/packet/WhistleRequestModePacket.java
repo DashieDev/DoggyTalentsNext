@@ -14,11 +14,14 @@ public class WhistleRequestModePacket implements IPacket<WhistleRequestModeData>
     @Override
     public void encode(WhistleRequestModeData data, FriendlyByteBuf buf) {
         buf.writeInt(data.id);
+        buf.writeBoolean(data.dogOnDutyOnly);
     }
 
     @Override
     public WhistleRequestModeData decode(FriendlyByteBuf buf) {
-        return new WhistleRequestModeData(buf.readInt());
+        int id = buf.readInt();
+        boolean on_duty_only = buf.readBoolean();
+        return new WhistleRequestModeData(id, on_duty_only);
     }
 
     @Override
@@ -32,6 +35,7 @@ public class WhistleRequestModePacket implements IPacket<WhistleRequestModeData>
             if (!(stack.getItem() instanceof WhistleItem)) return;
             var tag = ItemUtil.getTag(stack);
             tag.putByte("mode", (byte)data.id);
+            tag.putBoolean("dog_on_duty_only", data.dogOnDutyOnly);
             ItemUtil.putTag(stack, tag);
         });
 

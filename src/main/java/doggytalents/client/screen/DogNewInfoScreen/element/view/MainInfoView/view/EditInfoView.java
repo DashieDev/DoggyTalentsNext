@@ -24,6 +24,7 @@ import doggytalents.common.network.packet.data.DogForceSitData;
 import doggytalents.common.network.packet.data.DogNameData;
 import doggytalents.common.network.packet.data.DogObeyData;
 import doggytalents.common.network.packet.data.DogRegardTeamPlayersData;
+import doggytalents.common.network.packet.data.DogOnDutyData;
 import doggytalents.common.network.packet.data.FriendlyFireData;
 import doggytalents.common.network.packet.data.PatrolTargetLockData;
 import doggytalents.common.util.DogUtil;
@@ -218,6 +219,28 @@ public class EditInfoView extends AbstractElement {
 
         scroll.addChildren(
             new ButtonOptionEntry(scroll, getScreen(), 
+                new FlatCheckbox(0, 0,
+                    b -> {
+                        Boolean newVal = !this.dog.dogOnDuty();
+                        b.setValue(newVal);
+                        this.requestDogOnDuty(newVal);
+                    }     
+                ) {
+                    @Override
+                    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                        super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                        if (this.isHovered) {
+                            ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.on_duty.help"), 150, font));
+                        }
+                    }
+                }.initialValue(this.dog.dogOnDuty()),
+                I18n.get("doggui.on_duty")
+            )
+            .init()
+        );
+
+        scroll.addChildren(
+            new ButtonOptionEntry(scroll, getScreen(), 
                 new LowHealthStrategySwitch(
                     0, 0, 
                     100, 20, dog, font, getScreen()
@@ -302,6 +325,12 @@ public class EditInfoView extends AbstractElement {
         PacketHandler
             .send(PacketDistributor.SERVER.noArg(), 
             new DogAutoMountData(this.dog.getId(), val));
+    }
+
+    private void requestDogOnDuty(boolean val) {
+        PacketHandler
+            .send(PacketDistributor.SERVER.noArg(), 
+            new DogOnDutyData(this.dog.getId(), val));
     }
 
     private static class NewnameEntry extends AbstractElement {
