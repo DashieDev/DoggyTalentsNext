@@ -179,7 +179,7 @@ public class ClientEventHandler {
             player.getBoundingBox().inflate(100D, 50D, 100D), 
             dog -> dog.isDoingFine() && dog.isOwnedBy(player)
         );
-        whistle.useMode(useMode, dogsList, 
+        whistle.useMode(useMode, false, dogsList, 
             player.level(), player, InteractionHand.MAIN_HAND, true);
         PacketHandler.send(PacketDistributor.SERVER.noArg(), 
             new WhistleUseData(mode_id));
