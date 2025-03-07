@@ -189,7 +189,7 @@ public class Dog extends AbstractDog {
      *     5               32                  LOW_HEALTH_STRATEGY_MSB
      *     6               64                  CROSS_ORIGIN_TP
      *     7               128                 REGARD_TEAM_PLAYERS
-     *     8               256                 <Reserved>
+     *     8               256                 ON_DUTY
      *     9               512                 PATROL_TARGET_LOCK
      *     10              1024                FLYING
      *     11              2048                SHOW_ARMOR
@@ -2686,6 +2686,7 @@ public class Dog extends AbstractDog {
         compound.putBoolean("crossOriginTp", this.crossOriginTp());
         compound.putBoolean("patrolTargetLock", this.patrolTargetLock());
         compound.putBoolean("hideDogArmor", this.hideArmor());
+        compound.putBoolean("dogOnDuty", this.dogOnDuty());
         compound.putInt("dogSize", this.getDogSize().getId());
         compound.putInt("level_normal", this.getDogLevel().getLevel(Type.NORMAL));
         compound.putInt("level_kami", this.getDogLevel().getLevel(Type.KAMI));
@@ -2855,6 +2856,7 @@ public class Dog extends AbstractDog {
             this.setCrossOriginTp(compound.getBoolean("crossOriginTp"));
             this.setPatrolTargetLock(compound.getBoolean("patrolTargetLock")); 
             this.setHideArmor(compound.getBoolean("hideDogArmor"));
+            this.setDogOnDuty(compound.getBoolean("dogOnDuty"));
             var low_health_strategy_id = compound.getByte("lowHealthStrategy");
             this.setLowHealthStrategy(LowHealthStrategy.fromId(low_health_strategy_id));
             var combat_return_strategy_id = compound.getByte("combatReturnStrategy");
@@ -3867,6 +3869,14 @@ public class Dog extends AbstractDog {
 
     public boolean forcedWhenNoneAnim() {
         return getDogFlag(262144);
+    }
+
+    public void setDogOnDuty(boolean val) {
+        this.setDogFlag(256, val);
+    }
+
+    public boolean dogOnDuty() {
+        return getDogFlag(256);
     }
 
     public void setDrunkTicks(int ticks) {

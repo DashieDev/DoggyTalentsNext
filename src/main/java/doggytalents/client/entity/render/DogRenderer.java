@@ -24,6 +24,7 @@ import doggytalents.client.entity.render.layer.LayerFactory;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.item.WhistleItem;
 import net.minecraft.ChatFormatting;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
@@ -150,16 +151,16 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             return;
 
         if (net.minecraftforge.client.ForgeHooksClient.isNameplateInRenderDistance(dog, d0))
-            renderMainName(dog, text, stack, buffer, packedLight, renderDiffOwnerName && isDiffOwner, isDiffOwner);
+            renderMainName(dog, text, stack, buffer, packedLight, renderDiffOwnerName && isDiffOwner, isDiffOwner, !isDiffOwner && WhistleItem.isHoldingDutyWhistle(player));
         if (d0 <= 64 * 64)
             renderExtraInfo(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner, isDiffOwner);
         
     }
 
     private void renderMainName(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int light, boolean diffOwnerRender, boolean isDiffOwner) {
+        int light, boolean diffOwnerRender, boolean isDiffOwner, boolean renderDogOnDuty) {
 
-        text = modifyMainText(dog, text, diffOwnerRender);
+        text = modifyMainText(dog, text, diffOwnerRender, renderDogOnDuty);
 
         renderDogText(dog, text, 0, 0.025f, stack, buffer, light, diffOwnerRender, isDiffOwner);
     }
@@ -302,11 +303,17 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         return Optional.of(ret);
     }
 
-    private Component modifyMainText(Dog dog, Component text, boolean diffOwnerRender) {
+    private Component modifyMainText(Dog dog, Component text, boolean diffOwnerRender, boolean renderDogOnDuty) {
         if (diffOwnerRender) {
             text = createC1WithColor(text, TXTCLR_DIFFOWNER);
             return text;
         }
+
+        if (renderDogOnDuty) {
+            if (dog.dogOnDuty())
+                text = createC1WithColor(text, 0xffcda700);
+            return text;
+        } 
 
         if (dog.isDogInAnimDebug()) {
             text = createC1WithColor(text, 0xffcda700);
