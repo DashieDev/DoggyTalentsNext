@@ -92,7 +92,7 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.conducting_bone.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
-                String str = I18n.get("doggytalents.screen.conducting_bone.help");
+                String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, ConductingBoneScreen.this.font));
 
                 graphics.renderComponentTooltip(font, list, mouseX, mouseY);
