@@ -119,7 +119,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
-                String str = I18n.get("doggytalents.screen.whistler.screen.help");
+                String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
                 graphics.renderComponentTooltip(font, list, mouseX, mouseY);
