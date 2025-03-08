@@ -49,7 +49,7 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.heel_by_group.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
-                String str = I18n.get("doggytalents.screen.heel_by_group.help");
+                String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, HeelByGroupScreen.this.font));
 
                 HeelByGroupScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
