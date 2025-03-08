@@ -129,8 +129,10 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
                 List<Component> list = new ArrayList<>();
                 list.add(ComponentUtil.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
-                String str = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
-                list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
+                String base_help = I18n.get("doggytalents.screen.general.entry_select.help");
+                list.addAll(ScreenUtil.splitInto(base_help, 150, HeelByNameScreen.this.font));
+                String additional_help = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
+                list.addAll(ScreenUtil.splitInto(additional_help, 150, HeelByNameScreen.this.font));
 
                 HeelByNameScreen.this.renderComponentTooltip(graphics, list, mouseX, mouseY);
             }
