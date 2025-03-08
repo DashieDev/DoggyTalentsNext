@@ -9,7 +9,9 @@ import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
+import doggytalents.client.screen.StringEntrySelectScreen.TextField.FocusState;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
@@ -29,6 +31,8 @@ public class StringEntrySelectScreen extends Screen {
 
     private TextOnlyButton prevPageButton;
     private TextOnlyButton nextPageButton;
+
+    private boolean isSneakPressed = false;
 
     public StringEntrySelectScreen(Component title) {
         super(title);
@@ -136,23 +140,41 @@ public class StringEntrySelectScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-       var mouseKey = InputConstants.getKey(keyCode, scanCode);
+        var mc = Minecraft.getInstance();
+        boolean text_field_focused = 
+            this.searchField.focusState() == TextField.FocusState.FOCUS;
+        
+        if (keyCode == mc.options.keyShift.getKey().getValue())
+            this.isSneakPressed = true;
 
-        if (this.entryView.keyPressed(keyCode, scanCode, modifiers)) {
+        if (this.entryView.keyPressed(text_field_focused, keyCode, scanCode, modifiers)) {
             return true;
-        } else if (keyCode == InputConstants.KEY_LEFT) {
+        }
+        
+        boolean focus_search_field = 
+            keyCode == mc.options.keyJump.getKey().getValue()
+            && isSneakPressed
+            && this.searchField.focusState() == TextField.FocusState.NONE;
+        if (focus_search_field) {
+            this.searchField.setFocusState(TextField.FocusState.READY);
+            return true;
+        }
+        boolean move_left = !text_field_focused && (
+            keyCode == InputConstants.KEY_LEFT
+            || keyCode == mc.options.keyLeft.getKey().getValue()
+        );
+        if (move_left) {
             if (this.prevPageButton.active)
             this.prevPageButton.onClick(0, 0);
             return true;
-        } else if (keyCode == InputConstants.KEY_RIGHT) {
+        }
+        boolean move_right = !text_field_focused && (
+            keyCode == InputConstants.KEY_RIGHT
+            || keyCode == mc.options.keyRight.getKey().getValue()
+        );
+        if (move_right) {
             if (this.nextPageButton.active)
             this.nextPageButton.onClick(0, 0);
-            return true;
-        } else if (keyCode == InputConstants.KEY_RETURN) {
-            var selected_indx = this.entryView.getSelectedFilterId(this.filteredIndexes);
-            if (selected_indx.isPresent()) {
-                onEntrySelected(selected_indx.get());
-            }
             return true;
         }
 
@@ -161,9 +183,43 @@ public class StringEntrySelectScreen extends Screen {
 
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
+
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        var mc = Minecraft.getInstance();
+        boolean text_field_focus_ready = 
+            this.searchField.focusState() == TextField.FocusState.READY
+            && keyCode == mc.options.keyJump.getKey().getValue();
+        if (text_field_focus_ready)
+            this.searchField.setFocusState(TextField.FocusState.FOCUS);
+        
+        if (keyCode == mc.options.keyShift.getKey().getValue())
+            this.isSneakPressed = false;
+
+        //Confirm when key released instead of pressed to avoid propagating
+        //the key press outside of the screen lifetime.
+        boolean is_confirm = 
+            keyCode == InputConstants.KEY_RETURN || (
+                keyCode == mc.options.keyJump.getKey().getValue()
+                && !isSneakPressed
+                && this.searchField.focusState() == TextField.FocusState.NONE
+            );
+        if (is_confirm) {
+            var selected_indx = this.entryView.getSelectedFilterId(this.filteredIndexes);
+            if (selected_indx.isPresent()) {
+                onEntrySelected(selected_indx.get());
+            }
+            
+            return true;
+        }
+        return super.keyReleased(keyCode, scanCode, modifiers);
+    }
     
     @Override
     public boolean mouseClicked(double x, double y, int p_94697_) {
+        
+        this.searchField.setFocusState(TextField.FocusState.NONE);
+        
         var clicked_id = this.entryView
             .getHoveringEntry(x, y, filteredIndexes);
         if (clicked_id.isPresent()) {
@@ -271,13 +327,25 @@ public class StringEntrySelectScreen extends Screen {
         private int activePage = 0;
         private int selectedEntryInPage = 0;
 
-        public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        public boolean keyPressed(boolean textFieldFocused, int keyCode, int scanCode, int modifiers) {
+            var mc = Minecraft.getInstance();
             var mouseKey = InputConstants.getKey(keyCode, scanCode);
             
-            if (keyCode == InputConstants.KEY_DOWN) {
+            boolean is_down = 
+                keyCode == InputConstants.KEY_DOWN || (
+                    !textFieldFocused 
+                    && keyCode == mc.options.keyDown.getKey().getValue()
+                );
+            if (is_down) {
                 moveSelectedEntryInPage(x -> x + 1);
                 return true;
-            } else if (keyCode == InputConstants.KEY_UP) {
+            }
+            boolean is_up = 
+                keyCode == InputConstants.KEY_UP || (
+                    !textFieldFocused 
+                    && keyCode == mc.options.keyUp.getKey().getValue()
+                );
+            if (is_up) {
                 moveSelectedEntryInPage(x -> x - 1);
                 return true;
             }
@@ -467,6 +535,7 @@ public class StringEntrySelectScreen extends Screen {
         private long blockCharInputMillis = 0;
         private long prevMillis = 0;
         private String searchString = "";
+        private FocusState focusState = FocusState.NONE;
 
         private TextField(StringEntrySelectScreen parent) {
             this.parent = parent;
@@ -498,7 +567,8 @@ public class StringEntrySelectScreen extends Screen {
             graphics.fill( half_width - selected_area_size / 2 , 
                 half_height + selected_area_size / 2 + 5, half_width + selected_area_size / 2, 
                 half_height + selected_area_size / 2 + 17, Integer.MIN_VALUE);
-            graphics.drawString(parent.font, this.searchString + "_", txtorgx, txtorgy,  0xffffffff);
+            if (this.isActive())
+                graphics.drawString(parent.font, this.searchString + "_", txtorgx, txtorgy,  0xffffffff);
         }
 
         public void insertText(String x) {
@@ -515,6 +585,8 @@ public class StringEntrySelectScreen extends Screen {
         }
 
         public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+            if (!this.isActive())
+                return false;
             if (keyCode == InputConstants.KEY_BACKSPACE) {
                 this.popCharInText();
                 return true;
@@ -523,7 +595,7 @@ public class StringEntrySelectScreen extends Screen {
         }
 
         public boolean charTyped(char code, int p_231042_2_) {
-            if (this.blockCharInputMillis > 0)
+            if (!this.isActive())
                 return false;
             if (StringUtil.isAllowedChatCharacter(code)) {
                 this.insertText(Character.toString(code));
@@ -538,6 +610,20 @@ public class StringEntrySelectScreen extends Screen {
             this.blockCharInputMillis = millis;
             this.prevMillis = System.currentTimeMillis();
         }
+
+        public boolean isActive() {
+            return this.focusState == FocusState.FOCUS && !(this.blockCharInputMillis > 0);
+        }
+
+        public FocusState focusState() {
+            return this.focusState;
+        }
+
+        public void setFocusState(FocusState focusState) {
+            this.focusState = focusState;
+        }
+
+        public static enum FocusState { NONE, READY, FOCUS }
 
     }
 
