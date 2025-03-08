@@ -81,24 +81,6 @@ public class WhistleScreen extends StringEntrySelectScreen {
         };
         pY += setKey.getHeight() + 2;
 
-        var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, Component.literal("?"), b -> {} ) {
-            @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
-                if (!this.isHovered) return;
-                List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
-                    .withStyle(Style.EMPTY.withBold(true)));
-                String str = I18n.get("doggytalents.screen.whistler.screen.help");
-                list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
-
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
-            }
-        };
-
-        pY += help.getHeight() + 2;
-
-
         var onDuty = new FlatButton(mX - 100 - 60 - 2, pY, 60, 20, dogOnDutyOnly ? 
             Component.translatable("doggytalents.screen.whistler.target.on_duty") 
             : Component.translatable("doggytalents.screen.whistler.target.all"), 
@@ -121,6 +103,23 @@ public class WhistleScreen extends StringEntrySelectScreen {
                     .withStyle(Style.EMPTY.withBold(true));
                 list.add(title);
                 String str = I18n.get("doggytalents.screen.whistler.target.help");
+                list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
+
+                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+            }
+        };
+
+        pY += onDuty.getHeight() + 2;
+
+        var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, Component.literal("?"), b -> {} ) {
+            @Override
+            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                if (!this.isHovered) return;
+                List<Component> list = new ArrayList<>();
+                list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
+                    .withStyle(Style.EMPTY.withBold(true)));
+                String str = I18n.get("doggytalents.screen.whistler.screen.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
                 graphics.renderComponentTooltip(font, list, mouseX, mouseY);
