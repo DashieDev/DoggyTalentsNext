@@ -31,6 +31,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
     private int pKey = 0;
     private int[] hotkeysModeArr = {-1, -1, -1, -1};
 
+    private boolean showModeHelp;
     private boolean dogOnDutyOnly;
 
     public WhistleScreen() {
@@ -129,6 +130,62 @@ public class WhistleScreen extends StringEntrySelectScreen {
         this.addRenderableWidget(help);
         this.addRenderableWidget(setKey);
         this.addRenderableWidget(onDuty);
+
+        int pY_right = mY - 100;
+        var mode_help_str_id = "doggytalents.screen.whistler.mode_help";
+        var initial_mode_help_str = this.showModeHelp ? 
+            Component.translatable(mode_help_str_id)
+                .withStyle(Style.EMPTY.withColor(this.getHightlightSelectedColor()))
+            : Component.translatable(mode_help_str_id);
+        var show_whistle_help = new FlatButton(mX + 100 + 2, pY_right, 60, 20,initial_mode_help_str, 
+            b -> {
+                this.showModeHelp = !this.showModeHelp;
+                if (this.showModeHelp) {
+                    b.setMessage(Component.translatable(mode_help_str_id)
+                        .withStyle(Style.EMPTY.withColor(this.getHightlightSelectedColor())));
+                } else {
+                    b.setMessage(Component.translatable(mode_help_str_id));
+                }
+            }
+        );
+        this.addRenderableWidget(show_whistle_help);
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(graphics, mouseX, mouseY, partialTicks);
+        mayRenderModeHelp(graphics, mouseX, mouseY, partialTicks);
+    }
+
+    private void mayRenderModeHelp(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        if (!this.showModeHelp)
+            return;
+        var hover_entry_optional = this.getHoveredEntry(mouseX, mouseY);
+        if (!hover_entry_optional.isPresent())
+            return;
+        int entry_id = hover_entry_optional.get();
+        var mode = this.modeList.get(entry_id);
+        var mode_help_c1 = Component.translatable(mode.getHelpMsg());
+        if (this.height >= 338) {
+            int mX = this.width/2;
+            int mY = this.height/2;
+
+            var splited_c1 = this.font.split(mode_help_c1, 300);
+            int tY = mY + getSelectAreaSize()/2 + 23;
+            for (var str : splited_c1) {
+                int uuid_width = font.width(str);
+                int tX = mX - uuid_width/2;
+                
+                graphics.drawString(font, str, tX, tY, 0xffffffff);
+                tY += font.lineHeight + 2;
+            }
+            
+        } else {
+            var mode_name = Component.translatable(mode.getUnlocalisedTitle())
+                .withStyle(Style.EMPTY.withBold(true));
+            graphics.renderComponentTooltip(font, 
+                List.of(mode_name, mode_help_c1), mouseX, mouseY);
+        }
     }
 
     @Override
