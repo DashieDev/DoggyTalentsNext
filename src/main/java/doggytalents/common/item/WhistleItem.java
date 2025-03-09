@@ -106,6 +106,10 @@ public class WhistleItem extends Item implements IDogItem {
         public String getUnlocalisedTitle() {
             return "item.doggytalents.whistle." + this.getIndex();
         }
+
+        public String getHelpMsg() {
+            return getUnlocalisedTitle() + ".help";
+        }
     }
 
     public static enum WhistleSound { NONE, SHORT, LONG }
