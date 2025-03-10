@@ -9,6 +9,7 @@ import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.CombatReturnStrategy;
 import doggytalents.common.entity.Dog.LowHealthStrategy;
+import doggytalents.common.entity.ai.DogAiManager.IHasTickNonRunning;
 import doggytalents.common.entity.ai.nav.DogFlyingNavigation;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
@@ -30,7 +31,7 @@ import net.minecraft.world.phys.Vec3;
 /**
  * @author DashieDev
  */
-public class DogMeleeAttackGoal extends Goal {
+public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
    protected final Dog dog;
    private final double speedModifier;
    private int ticksUntilPathRecalc = 10;
@@ -92,7 +93,7 @@ public class DogMeleeAttackGoal extends Goal {
          return false;
       }
 
-      if (--this.detectReachPenalty > 0) return false;
+      if (this.detectReachPenalty > 0) return false;
 
       double d0 = dog.distanceToSqr(target);
       
@@ -108,6 +109,12 @@ public class DogMeleeAttackGoal extends Goal {
       } 
       
       return true;
+   }
+
+   @Override
+   public void tickDogWhenNotRunning() {
+      if (this.detectReachPenalty > 0)
+         --this.detectReachPenalty;
    }
 
    public boolean canContinueToUse() {
