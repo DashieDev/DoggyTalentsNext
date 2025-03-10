@@ -41,6 +41,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
    private int waitingTick;
    private BlockPos.MutableBlockPos dogPos0;
 
+   private Path initialPath = null; 
    private int detectReachPenalty = 0;
 
    //Tuning : START_DIS must be as low as possible to increase the attacking accuracy, while still keeping it noticable. 
@@ -107,6 +108,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
          this.dog.setTarget(null);
          return false;
       } 
+      this.initialPath = p;
       
       return true;
    }
@@ -154,16 +156,17 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
    }
 
    public void start() {
-      this.dog.getNavigation().moveTo(this.dog.getTarget(), this.speedModifier);
+      if (this.initialPath != null)
+         this.dog.getNavigation().moveTo(this.initialPath, this.speedModifier);
       this.dog.setAggressive(true);
-      this.ticksUntilPathRecalc = 0;
+      this.ticksUntilPathRecalc = 10;
       this.ticksUntilNextAttack = 0;
       this.waitingTick = 0;
       this.dogPos0 = this.dog.blockPosition().mutable();
    }
 
    public void stop() {
-      LivingEntity livingentity = this.dog.getTarget();
+      this.initialPath = null;
       
       //The goal now runs continuously from when the dog start attacking to when 
       //the dog stop attacking for practical reasons, (used to be impractically
