@@ -313,7 +313,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
 
         if (renderDogOnDuty) {
             if (dog.dogOnDuty())
-                text = createC1WithColor(text, 0xffcda700);
+                text = createC1WithColor(text, 0xFFFF10F9);
             return text;
         } 
 
