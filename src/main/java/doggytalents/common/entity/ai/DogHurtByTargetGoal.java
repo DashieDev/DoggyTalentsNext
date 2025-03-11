@@ -29,11 +29,14 @@ public class DogHurtByTargetGoal extends HurtByTargetGoal {
         var target = dog.getLastHurtByMob();
         if (target == null) 
             return;
+        var owner = dog.getOwner();
+        if (owner == null)
+            return;
         double alert_radius = this.getFollowDistance();
         var alert_bb = AABB.unitCubeFromLowerCorner(dog.position())
             .inflate(alert_radius, 10, alert_radius);
         var alert_dogs = dog.level().getEntitiesOfClass(Dog.class, alert_bb,
-            filter_dog -> isDogAlertTarget(filter_dog, target));
+            filter_dog -> isDogAlertTarget(filter_dog, target, owner));
         if (alert_dogs.isEmpty())
             return;
         for (var alert_dog : alert_dogs) {
@@ -41,21 +44,26 @@ public class DogHurtByTargetGoal extends HurtByTargetGoal {
         }
     }
 
-    private boolean isDogAlertTarget(Dog other_dog, LivingEntity target) {
+    private boolean isDogAlertTarget(Dog other_dog, LivingEntity target, LivingEntity owner) {
         if (other_dog == dog)
             return false;
         var other_owner_id = other_dog.getOwnerUUID();
         if (other_owner_id == null)
             return false;
-        if (ObjectUtils.notEqual(dog.getOwnerUUID(), other_owner_id))
-            return false;
-        if (!other_dog.getMode().shouldAttack())
+        if (ObjectUtils.notEqual(owner.getUUID(), other_owner_id))
             return false;
         if (other_dog.getTarget() != null)
             return false;
-        if (other_dog.isAlliedTo(target))
+        if (!other_dog.wantsToAttack(target, owner))
             return false;
 
         return true;
+    }
+
+    @Override
+    public void start() {
+        super.start();
+        //Avoid keeping the target after the Dog subsequently cleared its target. 
+        this.targetMob = null;
     }
 }
