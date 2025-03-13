@@ -122,6 +122,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
         public ForgeConfigSpec.BooleanValue TRANSLUCENT_ALL_OVERLAY;
         public ForgeConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
+        public ForgeConfigSpec.BooleanValue SHOW_DOG_NAME_THRU_WALL;
         public ForgeConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
@@ -298,6 +299,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("To reset the cache, do a resource reload (F3+T).")
                 .comment("Set this option to any value less than zero to remove the limit.")
                 .defineInRange("max_dog_bed_model_cache", 65536, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            SHOW_DOG_NAME_THRU_WALL = builder
+                .comment("By default, DTN will render your Dogs' Names through walls. Disable")
+                .comment("this to make Owned Dogs' Names no longer visible through walls.")
+                .define("show_dog_name_thru_wall", true);
             builder.pop();
         }
 
