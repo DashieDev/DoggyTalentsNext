@@ -339,12 +339,8 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue INCAP_VAL_RESET_WHEN_HURT;
         public ModConfigSpec.IntValue TRAIN_WOLF_LIMIT;
         public ModConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
-        public ModConfigSpec.BooleanValue EXTENDED_WOLVES_SPAWNABLE_BLOCK;
-        public ModConfigSpec.BooleanValue WOLF_VARIANT_OVERRIDE_EXCLUSIVE;
         public ModConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
         public ModConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
-        public ModConfigSpec.BooleanValue NETHER_WOLF_SPAWN_BYPASS;
-        public ModConfigSpec.BooleanValue VSCODE_WOLF_SPAWN_EGG;
         public ModConfigSpec.BooleanValue DOG_PETTING;
         public ModConfigSpec.BooleanValue DOG_PETITNG_JEALOUS;
         public ModConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
@@ -505,40 +501,6 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("random Classical Variants instead of always being summoned as Pale.")
                 .translation("doggytalents.random_var_with_charm")
                 .define("random_var_with_charm", true);
-            EXTENDED_WOLVES_SPAWNABLE_BLOCK = builder
-                .comment("Some DTN's Wolf Variants are required to spawn on Biomes")
-                .comment("which does not contains the current Wolves_Spawnable_On Blocks.")
-                .comment("This option allows wolves to spawn on those block (if spawning in one")
-                .comment("of the biomes in question, this settings have no effect on the rest of")
-                .comment("the usual biomes.")
-                .translation("doggytalents.extended_wolves_spawnable_block")
-                .define("extended_wolves_spawnable_block", true);
-            WOLF_VARIANT_OVERRIDE_EXCLUSIVE = builder
-                .comment("Some vanilla Wolf Variants are bound to not one but a family of biome")
-                .comment("in which some of them they don't actually chunk-generated spawn on")
-                .comment("Allowing some of the DTN Wolf Variants in theory to override")
-                .comment("those biome without affecting the spawn chance of vanilla.")
-                .comment("For instance, Bamboo would override Rusty's chunk-generated/")
-                .comment("spawn-egg/summon spawn if the spawn happened specifically in the")
-                .comment("Bamboo Jungle Biome and because Rusty doesn't actually chunk-generated")
-                .comment("there (they only generate in Sparse Jungle), Bamboo wouldn't affect Rusty's")
-                .comment("spawn chance.")
-                .comment("Disable this if you prefer to keep the vanilla Wolf Variants bouned")
-                .comment("in those biomes previously mentioned instead of being overriden by DTN.")
-                .translation("doggytalents.wolf_variant_override_exclusive")
-                .define("wolf_variant_override_exclusive", true);
-            NETHER_WOLF_SPAWN_BYPASS = builder
-                .comment("Some DTN Wolf Variants are required to spawn in the Nether. This option")
-                .comment("enables them to bypass the Default animal spawn rule which make them unable")
-                .comment("to spawn in darker place such as the Nether. This bypass only applies when")
-                .comment("the wolf in question chunk-generated spawns in the Nether.")
-                .translation("doggytalents.nether_wolf_spawn_bypass")
-                .define("nether_wolf_spawn_bypass", true);
-            VSCODE_WOLF_SPAWN_EGG = builder
-                .comment("Using a Wolf Spawn Egg with a special custom name on a block")
-                .comment("will spawn a special DTN wolf variant.")
-                .translation("doggytalents.vscode_wolf_spawn_egg")
-                .define("vscode_wolf_spawn_egg", true);
             DOGGY_TOOLS_USE_TRIDENT = builder
                 .comment("Allow Doggy Tools Dogs to use Trident")
                 .translation("doggytalents.doggy_tools_trident")
