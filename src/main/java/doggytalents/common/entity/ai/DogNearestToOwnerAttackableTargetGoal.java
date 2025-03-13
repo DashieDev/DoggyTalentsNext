@@ -1,6 +1,6 @@
 package doggytalents.common.entity.ai;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.Dog;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,7 +18,7 @@ public class DogNearestToOwnerAttackableTargetGoal<T extends LivingEntity> exten
 
     @Override
     public boolean canUse() {
-        if (dog.getMode() != EnumMode.AGGRESIVE)
+        if (dog.getMode() != DogMode.AGGRESIVE)
             return false;
         return super.canUse();
     }

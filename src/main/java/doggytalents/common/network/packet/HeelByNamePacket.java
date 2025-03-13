@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import doggytalents.DoggyItems;
 import doggytalents.DoggySounds;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.DogSoftHeelAction;
@@ -48,7 +48,7 @@ import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Conte
         var mode = dog.getMode();
         if (mode.canWander()) {
             dog.setMode(mode.shouldAttack() ? 
-                EnumMode.AGGRESIVE : EnumMode.DOCILE);
+                DogMode.AGGRESIVE : DogMode.DOCILE);
         }
         
         if (data.softHeel) {

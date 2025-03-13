@@ -4,7 +4,7 @@ import java.util.EnumSet;
 
 import org.jetbrains.annotations.NotNull;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.CombatReturnStrategy;
