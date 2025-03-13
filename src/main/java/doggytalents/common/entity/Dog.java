@@ -2534,7 +2534,7 @@ public class Dog extends AbstractDog {
      */
     private void handleIncapacitated(DamageSource source) {
         this.setHealth(1);
-        this.setMode(EnumMode.INJURED);
+        this.setMode(DogMode.INJURED);
         this.setDogHunger(0);
         this.removeAllEffects();
         this.setDogIncapValue(this.getInitalDogIncapVal(source));
@@ -2590,7 +2590,7 @@ public class Dog extends AbstractDog {
         var msg01 = Component.translatable(
             "dog.mode.incapacitated.msg.partition1",
             Component.literal(msg005),
-            Component.translatable(EnumMode.INJURED.getUnlocalisedName())
+            Component.translatable(DogMode.INJURED.getUnlocalisedName())
             .withStyle(
                 Style.EMPTY
                 .withBold(true)
@@ -2852,7 +2852,7 @@ public class Dog extends AbstractDog {
             this.setGender(EnumGender.bySaveName(compound.getString("dogGender")));
 
             if (compound.contains("mode", Tag.TAG_STRING)) {
-            this.setMode(EnumMode.bySaveName(compound.getString("mode")));
+            this.setMode(DogMode.bySaveName(compound.getString("mode")));
             }
 
             var dogSkinData = DogSkinData.readFromTag(compound);
@@ -3299,7 +3299,7 @@ public class Dog extends AbstractDog {
         getDogFabricHelper().onStartBeingSeenBy(player);
     }
 
-    private void updateWanderState(EnumMode mode) {
+    private void updateWanderState(DogMode mode) {
         if (!mode.canWander()) {
             this.clearRestriction();
             return;
@@ -3497,13 +3497,13 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public EnumMode getMode() {
+    public DogMode getMode() {
         return this.dogFabricHelper.getDogMode();
     }
 
-    public boolean isMode(EnumMode... modes) {
-        EnumMode mode = this.getMode();
-        for (EnumMode test : modes) {
+    public boolean isMode(DogMode... modes) {
+        DogMode mode = this.getMode();
+        for (DogMode test : modes) {
             if (mode == test) {
                 return true;
             }
@@ -3512,7 +3512,7 @@ public class Dog extends AbstractDog {
         return false;
     }
 
-    public void setMode(EnumMode collar) {
+    public void setMode(DogMode collar) {
         this.dogFabricHelper.setDogMode(collar);
     }
 
@@ -4065,7 +4065,7 @@ public class Dog extends AbstractDog {
         this.setOwnerUUID(null);
         this.setWillObeyOthers(false);
         this.setCanPlayersAttack(true);
-        this.setMode(EnumMode.DOCILE);
+        this.setMode(DogMode.DOCILE);
         this.authorizedChangingOwner = false;
     }
 
@@ -4074,7 +4074,7 @@ public class Dog extends AbstractDog {
         this.clearTriggerableAction();
         this.dogAi.forceStopAllGoal();
         
-        this.setMode(EnumMode.DOCILE);
+        this.setMode(DogMode.DOCILE);
         this.authorizedChangingOwner = true;
         this.setOwnerUUID(newOwnerUUID);
         this.authorizedChangingOwner = false;

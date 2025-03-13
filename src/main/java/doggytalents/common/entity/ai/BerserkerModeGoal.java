@@ -1,7 +1,7 @@
 package doggytalents.common.entity.ai;
 
 import doggytalents.DoggyTags;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.util.FabricUtil;
@@ -42,7 +42,7 @@ public class BerserkerModeGoal extends NearestAttackableTargetGoal<Mob> {
     @Override
     public boolean canUse() {
         return (
-            this.dog.isMode(EnumMode.BERSERKER, EnumMode.BERSERKER_MINOR, EnumMode.PATROL)
+            this.dog.isMode(DogMode.BERSERKER, DogMode.BERSERKER_MINOR, DogMode.PATROL)
         ) && super.canUse();
     }
 }

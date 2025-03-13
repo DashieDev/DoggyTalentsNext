@@ -1,6 +1,6 @@
 package doggytalents.common.item;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.DogFetchAction;
@@ -96,7 +96,7 @@ public class ThrowableItem extends Item implements IThrowableItem {
                     && !d.isBusy()
                     && !d.hasBone()
                     && !d.isOrderedToSit()
-                    && d.getMode() == EnumMode.DOCILE
+                    && d.getMode() == DogMode.DOCILE
             );
         for (var dog : dogs) {
             dog.triggerAction(new DogFetchAction(dog, player, entityitem));

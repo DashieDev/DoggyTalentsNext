@@ -18,7 +18,7 @@ public interface IDog {
 
     public boolean canInteract(LivingEntity playerIn);
 
-    public EnumMode getMode();
+    public DogMode getMode();
 
     public DogLevel getDogLevel();
     public void increaseLevel(DogLevel.Type typeIn);

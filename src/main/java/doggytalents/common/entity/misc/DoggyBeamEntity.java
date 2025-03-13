@@ -3,7 +3,7 @@ package doggytalents.common.entity.misc;
 import com.google.common.base.Predicates;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
@@ -104,7 +104,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
         var attack_manager = dog.dogAttackManager;
         final double range_far = attack_manager.getFarFollowRange();
         boolean tactical_condition =
-            dog.getMode() == EnumMode.TACTICAL
+            dog.getMode() == DogMode.TACTICAL
             && target_dist_sqr < range_far * range_far;
         return tactical_condition;
     }

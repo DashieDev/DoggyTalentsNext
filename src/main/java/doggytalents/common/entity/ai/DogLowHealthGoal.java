@@ -3,7 +3,7 @@ package doggytalents.common.entity.ai;
 import java.util.EnumSet;
 import java.util.List;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.LowHealthStrategy;
@@ -176,7 +176,7 @@ public class DogLowHealthGoal {
                 return false;
             }
 
-            if (this.dog.isMode(EnumMode.GUARD, EnumMode.GUARD_FLAT, EnumMode.GUARD_MINOR))
+            if (this.dog.isMode(DogMode.GUARD, DogMode.GUARD_FLAT, DogMode.GUARD_MINOR))
                 return false;
 
             if (this.dog.getMode().shouldFollowOwner()) {

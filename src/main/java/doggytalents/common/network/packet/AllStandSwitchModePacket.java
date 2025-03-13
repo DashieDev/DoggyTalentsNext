@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 import doggytalents.DoggyItems;
 import doggytalents.DoggySounds;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
@@ -28,7 +28,7 @@ public class AllStandSwitchModePacket implements IPacket<AllStandSwitchModeData>
     @Override
     public AllStandSwitchModeData decode(FriendlyByteBuf buf) {
         var mode_id = buf.readInt();
-        var mode = EnumMode.byIndex(mode_id);
+        var mode = DogMode.byIndex(mode_id);
         return new AllStandSwitchModeData(mode);
     }
 
