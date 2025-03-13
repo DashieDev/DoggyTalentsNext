@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.common.entity.Dog;
@@ -38,7 +38,7 @@ public class ModeSwitch extends AbstractWidget {
     boolean hoveredLeft = false;
     boolean hoveredRight = false;
     boolean isHolding = false;
-    EnumMode holdMode = null;
+    DogMode holdMode = null;
 
     int timeHoveredWithoutClick = 0;
     boolean stillHovered;
@@ -56,7 +56,7 @@ public class ModeSwitch extends AbstractWidget {
 
         this.timeHoveredWithoutClick = 0;
 
-        EnumMode mode;
+        DogMode mode;
         if (hoveredLeft) {
             mode = this.dog.getMode().previousMode();
         } else {
@@ -136,7 +136,7 @@ public class ModeSwitch extends AbstractWidget {
         int mode_tX = mX - this.font.width(mode_c1)/2;
         int mode_tY = mY - this.font.lineHeight/2;
         var mode = this.dog.getMode();
-        if (mode == EnumMode.WANDERING && !this.dog.getBowlPos().isPresent()) {
+        if (mode == DogMode.WANDERING && !this.dog.getBowlPos().isPresent()) {
             mode_c1 = mode_c1.copy().withStyle(
                 Style.EMPTY.withColor(0xffcda700)
             );
@@ -192,7 +192,7 @@ public class ModeSwitch extends AbstractWidget {
         }
         String str = I18n.get(dog.getMode().getUnlocalisedInfo());
         list.addAll(ScreenUtil.splitInto(str, 150, this.font));
-        if (this.dog.getMode() == EnumMode.WANDERING) {
+        if (this.dog.getMode() == DogMode.WANDERING) {
 
             if (this.dog.getBowlPos().isPresent()) {
                 double distance = this.dog.blockPosition().distSqr(this.dog.getBowlPos().get());

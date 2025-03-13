@@ -4,7 +4,7 @@ import doggytalents.DoggyItems;
 import doggytalents.TalentsOptions;
 import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.api.registry.TalentOption;

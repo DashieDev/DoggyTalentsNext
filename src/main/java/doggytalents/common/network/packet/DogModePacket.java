@@ -1,6 +1,6 @@
 package doggytalents.common.network.packet;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.packet.data.DogModeData;
 import net.minecraft.network.FriendlyByteBuf;
@@ -20,7 +20,7 @@ public class DogModePacket extends DogPacket<DogModeData> {
     public DogModeData decode(FriendlyByteBuf buf) {
         int entityId = buf.readInt();
         int modeIndex = buf.readInt();
-        return new DogModeData(entityId, EnumMode.byIndex(modeIndex));
+        return new DogModeData(entityId, DogMode.byIndex(modeIndex));
     }
 
     @Override

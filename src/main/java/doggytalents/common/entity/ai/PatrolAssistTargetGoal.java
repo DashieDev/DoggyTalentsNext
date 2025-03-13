@@ -2,7 +2,7 @@ package doggytalents.common.entity.ai;
 
 import org.apache.commons.lang3.ObjectUtils;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.Dog;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -23,7 +23,7 @@ public class PatrolAssistTargetGoal extends NearestAttackableTargetGoal<Mob> {
                 return false;
             if (ObjectUtils.notEqual(dog.getOwnerUUID(), targetOwnerUUID))
                 return false;
-            if (targetDog.getMode() != EnumMode.PATROL)
+            if (targetDog.getMode() != DogMode.PATROL)
                 return false;
             if (targetDog.patrolTargetLock())
                 return false;
@@ -34,7 +34,7 @@ public class PatrolAssistTargetGoal extends NearestAttackableTargetGoal<Mob> {
 
     @Override
     public boolean canUse() {
-        if (this.dog.getMode() != EnumMode.PATROL)
+        if (this.dog.getMode() != DogMode.PATROL)
             return false;
         if (!this.dog.patrolTargetLock())
             return false;

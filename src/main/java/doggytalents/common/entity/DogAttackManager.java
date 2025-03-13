@@ -1,6 +1,6 @@
 package doggytalents.common.entity;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import net.minecraft.world.entity.LivingEntity;
 
 public class DogAttackManager {
@@ -51,7 +51,7 @@ public class DogAttackManager {
     public boolean setDogTaticalTarget(LivingEntity target) {
         if (target == null)
             return false;
-        if (dog.getMode() != EnumMode.TACTICAL)
+        if (dog.getMode() != DogMode.TACTICAL)
             return false;
         // if (dog.getTarget() != null)
         //     return false;

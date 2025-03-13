@@ -2,7 +2,7 @@ package doggytalents.common.talent;
 
 import doggytalents.TalentsOptions;
 import doggytalents.api.backward_imitate.DogInteractionResult;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;
@@ -68,7 +68,7 @@ public class CreeperSweeperTalent extends TalentInstance {
 
     private int getSearchRange(AbstractDog dog) {
         if ((dog instanceof Dog d)) {
-            if (d.isMode(EnumMode.GUARD, EnumMode.GUARD_FLAT, EnumMode.GUARD_MINOR)) {
+            if (d.isMode(DogMode.GUARD, DogMode.GUARD_FLAT, DogMode.GUARD_MINOR)) {
                 return Math.min(this.level()*5, 8);
             }
         }

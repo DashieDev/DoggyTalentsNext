@@ -2,7 +2,7 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.Dog;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
@@ -19,7 +19,7 @@ public class DogTacticalTargetGoal extends TargetGoal {
 
     @Override
     public boolean canUse() {
-        if (dog.getMode() != EnumMode.TACTICAL)
+        if (dog.getMode() != DogMode.TACTICAL)
             return false;
         return dog.dogAttackManager.hasTaticalTarget();
     }

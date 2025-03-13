@@ -1,23 +1,23 @@
 package doggytalents.common.entity.serializers;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
-public class ModeSerializer extends DogSerializer<EnumMode> {
+public class ModeSerializer extends DogSerializer<DogMode> {
 
     @Override
-    public void write(FriendlyByteBuf buf, EnumMode value) {
+    public void write(FriendlyByteBuf buf, DogMode value) {
         buf.writeByte(value.getIndex());
     }
 
     @Override
-    public EnumMode read(FriendlyByteBuf buf) {
-        return EnumMode.byIndex(buf.readByte());
+    public DogMode read(FriendlyByteBuf buf) {
+        return DogMode.byIndex(buf.readByte());
     }
 
     @Override
-    public EnumMode copy(EnumMode value) {
+    public DogMode copy(DogMode value) {
         return value;
     }
 
