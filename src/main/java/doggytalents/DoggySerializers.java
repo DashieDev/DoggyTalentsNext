@@ -2,7 +2,7 @@ package doggytalents;
 
 import doggytalents.api.feature.DogLevel;
 import doggytalents.api.feature.DogSize;
-import doggytalents.api.feature.EnumGender;
+import doggytalents.api.feature.DogGender;
 import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
@@ -28,7 +28,7 @@ public class DoggySerializers {
     public static final DeferredRegister<EntityDataSerializer<?>> SERIALIZERS = DeferredRegister.create(NeoForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, Constants.MOD_ID);
 
     public static final EntityDataSerializer<DogVariant> DOG_VARIANT_SERIALIZER = register("dog_variant", DogVariantSerializer::new);
-    public static final EntityDataSerializer<EnumGender> GENDER_SERIALIZER = register("gender", GenderSerializer::new);
+    public static final EntityDataSerializer<DogGender> GENDER_SERIALIZER = register("gender", GenderSerializer::new);
     public static final EntityDataSerializer<DogMode> MODE_SERIALIZER = register("mode", ModeSerializer::new);
     public static final EntityDataSerializer<DogLevel> DOG_LEVEL_SERIALIZER = register("dog_level", DogLevelSerializer::new);
     public static final EntityDataSerializer<DimensionDependantArg<Optional<BlockPos>>> BED_LOC_SERIALIZER = register("dog_bed_location", BedLocationsSerializer::new);

@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import com.google.common.base.Function;
 
 import doggytalents.api.anim.DogAnimation;
-import doggytalents.api.feature.EnumGender;
+import doggytalents.api.feature.DogGender;
 import doggytalents.api.feature.DogMode;
 import doggytalents.api.feature.IDog;
 import doggytalents.api.impl.DogArmorItemHandler;
@@ -91,30 +91,30 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         }
     }
 
-    public abstract Component getTranslationKey(Function<EnumGender, String> function);
+    public abstract Component getTranslationKey(Function<DogGender, String> function);
 
     public Component getGenderPronoun() {
-        return this.getTranslationKey(EnumGender::getUnlocalisedPronoun);
+        return this.getTranslationKey(DogGender::getUnlocalisedPronoun);
     }
 
     public Component getGenderSubject() {
-        return this.getTranslationKey(EnumGender::getUnlocalisedSubject);
+        return this.getTranslationKey(DogGender::getUnlocalisedSubject);
     }
 
     public Component getGenderPossessiveAdj() {
-        return this.getTranslationKey(EnumGender::getUnlocalisedPossessiveAdj);
+        return this.getTranslationKey(DogGender::getUnlocalisedPossessiveAdj);
     }
 
     public Component getGenderTitle() {
-        return this.getTranslationKey(EnumGender::getUnlocalisedTitle);
+        return this.getTranslationKey(DogGender::getUnlocalisedTitle);
     }
 
     public Component getGenderTip() {
-        return this.getTranslationKey(EnumGender::getUnlocalisedTip);
+        return this.getTranslationKey(DogGender::getUnlocalisedTip);
     }
 
     public Component getGenderName() {
-        return this.getTranslationKey(EnumGender::getUnlocalisedName);
+        return this.getTranslationKey(DogGender::getUnlocalisedName);
     }
 
     public void setNavigation(PathNavigation p) {

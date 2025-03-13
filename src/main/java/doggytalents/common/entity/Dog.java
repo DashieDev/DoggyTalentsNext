@@ -217,7 +217,7 @@ public class Dog extends AbstractDog {
 
     private static final EntityDataAccessor<DogVariant> DOG_VARIANT = SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_VARIANT_SERIALIZER);
     private static final EntityDataAccessor<DogLevel> DOG_LEVEL = SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER);
-    private static final EntityDataAccessor<EnumGender> GENDER = SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER);
+    private static final EntityDataAccessor<DogGender> GENDER = SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER);
     private static final EntityDataAccessor<DogMode> MODE = SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER);
     private static final EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>> DOG_BED_LOCATION = SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER);
     private static final EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>> DOG_BOWL_LOCATION = SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER);
@@ -320,7 +320,7 @@ public class Dog extends AbstractDog {
     public Dog(EntityType<? extends Dog> type, Level worldIn) {
         super(type, worldIn);
         this.setTame(false, true);
-        this.setGender(EnumGender.random(this.getRandom()));
+        this.setGender(DogGender.random(this.getRandom()));
         this.setLowHealthStrategy(LowHealthStrategy.STICK_TO_OWNER);
         this.authorizedChangingOwner = true;
         this.setOwnerUUID(null); //Just to be sure
@@ -343,7 +343,7 @@ public class Dog extends AbstractDog {
         builder.define(DOG_VARIANT, DogVariantUtil.getDefault());
         builder.define(LAST_KNOWN_NAME, Optional.empty());
         builder.define(DOG_FLAGS, 0);
-        builder.define(GENDER, EnumGender.UNISEX);
+        builder.define(GENDER, DogGender.UNISEX);
         builder.define(MODE, DogMode.DOCILE);
         builder.define(HUNGER_INT, 60F);
         builder.define(CUSTOM_SKIN, DogSkinData.NULL);
@@ -2845,7 +2845,7 @@ public class Dog extends AbstractDog {
 		}
 
         try {
-            this.setGender(EnumGender.bySaveName(compound.getString("dogGender")));
+            this.setGender(DogGender.bySaveName(compound.getString("dogGender")));
 
             if (compound.contains("mode", Tag.TAG_STRING)) {
             this.setMode(DogMode.bySaveName(compound.getString("mode")));
@@ -3504,11 +3504,11 @@ public class Dog extends AbstractDog {
         this.entityData.set(DOG_VARIANT, val);
     }
 
-    public EnumGender getGender() {
+    public DogGender getGender() {
         return this.entityData.get(GENDER);
     }
 
-    public void setGender(EnumGender collar) {
+    public void setGender(DogGender collar) {
         this.entityData.set(GENDER, collar);
     }
 
@@ -4560,8 +4560,8 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public MutableComponent getTranslationKey(Function<EnumGender, String> function) {
-        return Component.translatable(function.apply(!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER) ? this.getGender() : EnumGender.UNISEX));
+    public MutableComponent getTranslationKey(Function<DogGender, String> function) {
+        return Component.translatable(function.apply(!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER) ? this.getGender() : DogGender.UNISEX));
     }
 
     @Override
