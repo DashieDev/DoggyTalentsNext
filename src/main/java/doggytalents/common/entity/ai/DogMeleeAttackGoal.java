@@ -100,6 +100,20 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       this.detectReachPenalty = 5;
       this.detectReachPenalty += (d0 > 256 ? 10 : 5);
       
+      var attack_manager = this.dog.dogAttackManager;
+      if (attack_manager.hasTaticalTarget()) {
+         this.detectReachPenalty = 25;
+         
+         attack_manager.setDogFarChasingTarget(true);
+         this.initialPath = dog.getNavigation().createPath(target, 1);
+         attack_manager.setDogFarChasingTarget(false);
+         
+         if (this.initialPath == null)
+            return false;
+
+         return true;
+      }
+
       var p = dog.getNavigation().createPath(target, 1);
       if (p == null) return false;
 
@@ -157,11 +171,15 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
    public void start() {
       if (this.initialPath != null)
          this.dog.getNavigation().moveTo(this.initialPath, this.speedModifier);
-      this.dog.setAggressive(true);
       this.ticksUntilPathRecalc = 10;
       this.ticksUntilNextAttack = 0;
       this.waitingTick = 0;
       this.dogPos0 = this.dog.blockPosition().mutable();
+
+      var attack_manager = this.dog.dogAttackManager;
+      attack_manager.attacking = true;
+      if (attack_manager.hasTaticalTarget())
+         attack_manager.setDogFarChasingTarget(true);
    }
 
    public void stop() {
@@ -173,8 +191,11 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       //That's why dog now always discard the target when stop attacking.
       this.dog.setTarget((LivingEntity) null); 
       
-      this.dog.setAggressive(false);
       this.dog.getNavigation().stop();
+      
+      var attack_manager = this.dog.dogAttackManager;
+      attack_manager.attacking = false;
+      attack_manager.setDogFarChasingTarget(false);
    }
 
    public boolean requiresUpdateEveryTick() {
@@ -192,6 +213,14 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       var n = this.dog.getNavigation();
       var dog_bp = this.dog.blockPosition();
       var target_bp = e.blockPosition();
+      var attack_manager = this.dog.dogAttackManager;
+      
+      if (attack_manager.isDogFarChasingTarget()) {
+         double d0 = this.dog.distanceToSqr(e.getX(), e.getY(), e.getZ());
+         double min_dist = attack_manager.getStandardFollowRange() / 2 + 1;
+         if (d0 < min_dist * min_dist)
+            attack_manager.setDogFarChasingTarget(false);
+      }
 
       if (this.dog.isDogFlying()) {
          if (flyingDogDashToTargetIfNeeded(e))
@@ -209,6 +238,8 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       double d0 = this.dog.distanceToSqr(e.getX(), e.getY(), e.getZ());
       if (this.ticksUntilPathRecalc <= 0) {
          this.ticksUntilPathRecalc = 10;
+         if (attack_manager.isDogFarChasingTarget())
+            this.ticksUntilPathRecalc = 20; 
          n.moveTo(e, this.speedModifier);
       }
 
@@ -224,7 +255,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       ) {
          dog.getMoveControl().setWantedPosition(e.getX(), e.getY(), e.getZ(), this.speedModifier);
       }
-      if(n.isDone() && dog.tickCount % 2 != 0 && !this.canReachTarget(e, d0)) {
+      if(!attack_manager.isDogFarChasingTarget() && n.isDone() && dog.tickCount % 2 != 0 && !this.canReachTarget(e, d0)) {
          this.ticksUntilPathRecalc = 0;
       }
       if (this.checkAndPerformAttack(e, d0)) this.waitingTick = 0;
@@ -343,8 +374,13 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
    }
 
    protected double getMaxDistanceAwayFromOwner() {
+      double ret = 20*20;
       if (this.dog.getCombatReturnStrategy() == CombatReturnStrategy.FAR)
-         return 32*32;
-      return 20*20;
+         ret = 32*32;
+      
+      boolean has_tatical = dog.dogAttackManager.hasTaticalTarget();
+      if (has_tatical)
+         ret +=10;
+      return ret;
    }
 }
