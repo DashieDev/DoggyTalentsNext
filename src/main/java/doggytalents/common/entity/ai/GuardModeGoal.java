@@ -5,7 +5,7 @@ import java.util.List;
 
 import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.sounds.SoundEvents;
@@ -48,7 +48,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
         
         if (this.owner == null) return false;
 
-        if (!this.dog.isMode(EnumMode.GUARD, EnumMode.GUARD_FLAT))
+        if (!this.dog.isMode(DogMode.GUARD, DogMode.GUARD_FLAT))
             return false;
 
         if (!super.canUse()) return false;
@@ -93,7 +93,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
         @Override
         public boolean canUse() {
 
-            if (!this.dog.isMode(EnumMode.GUARD_MINOR))
+            if (!this.dog.isMode(DogMode.GUARD_MINOR))
                 return false;
 
             this.owner = this.dog.getOwner();
@@ -208,7 +208,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
         public boolean canUse() {
 
             
-            if (!this.dog.isMode(EnumMode.GUARD, EnumMode.GUARD_FLAT))
+            if (!this.dog.isMode(DogMode.GUARD, DogMode.GUARD_FLAT))
                 return false;
 
             this.owner = this.dog.getOwner();

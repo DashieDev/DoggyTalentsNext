@@ -215,7 +215,7 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<DogVariant> DOG_VARIANT = SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_VARIANT_SERIALIZER);
     private static final EntityDataAccessor<DogLevel> DOG_LEVEL = SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER);
     private static final EntityDataAccessor<EnumGender> GENDER = SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER);
-    private static final EntityDataAccessor<EnumMode> MODE = SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER);
+    private static final EntityDataAccessor<DogMode> MODE = SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER);
     private static final EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>> DOG_BED_LOCATION = SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER);
     private static final EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>> DOG_BOWL_LOCATION = SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER);
     private static final EntityDataAccessor<IncapacitatedSyncState> DOG_INCAP_SYNC_STATE = SynchedEntityData.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER);
@@ -341,7 +341,7 @@ public class Dog extends AbstractDog {
         this.entityData.define(LAST_KNOWN_NAME, Optional.empty());
         this.entityData.define(DOG_FLAGS, 0);
         this.entityData.define(GENDER, EnumGender.UNISEX);
-        this.entityData.define(MODE, EnumMode.DOCILE);
+        this.entityData.define(MODE, DogMode.DOCILE);
         this.entityData.define(HUNGER_INT, 60F);
         this.entityData.define(CUSTOM_SKIN, DogSkinData.NULL);
         this.entityData.define(DOG_LEVEL, new DogLevel(0, 0));
@@ -2517,7 +2517,7 @@ public class Dog extends AbstractDog {
      */
     private void handleIncapacitated(DamageSource source) {
         this.setHealth(1);
-        this.setMode(EnumMode.INJURED);
+        this.setMode(DogMode.INJURED);
         this.setDogHunger(0);
         this.removeAllEffects();
         this.setDogIncapValue(this.getInitalDogIncapVal(source));
@@ -2573,7 +2573,7 @@ public class Dog extends AbstractDog {
         var msg01 = Component.translatable(
             "dog.mode.incapacitated.msg.partition1",
             Component.literal(msg005),
-            Component.translatable(EnumMode.INJURED.getUnlocalisedName())
+            Component.translatable(DogMode.INJURED.getUnlocalisedName())
             .withStyle(
                 Style.EMPTY
                 .withBold(true)
@@ -2836,7 +2836,7 @@ public class Dog extends AbstractDog {
             this.setGender(EnumGender.bySaveName(compound.getString("dogGender")));
 
             if (compound.contains("mode", Tag.TAG_STRING)) {
-            this.setMode(EnumMode.bySaveName(compound.getString("mode")));
+            this.setMode(DogMode.bySaveName(compound.getString("mode")));
             }
 
             var dogSkinData = DogSkinData.readFromTag(compound);
@@ -3257,7 +3257,7 @@ public class Dog extends AbstractDog {
         if (!this.level().isClientSide && MODE.equals(key)) {
             var mode = getMode();
             this.incapacitatedMananger.onModeUpdate(mode);
-            if (mode == EnumMode.INJURED) {
+            if (mode == DogMode.INJURED) {
                 this.hungerManager.onBeingIncapacitated();
             }
             updateWanderState(mode);
@@ -3303,7 +3303,7 @@ public class Dog extends AbstractDog {
         this.dogSyncedDataManager.onStartBeingSeenBy(player);
     }
 
-    private void updateWanderState(EnumMode mode) {
+    private void updateWanderState(DogMode mode) {
         if (!mode.canWander()) {
             this.clearRestriction();
             return;
@@ -3501,13 +3501,13 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public EnumMode getMode() {
+    public DogMode getMode() {
         return this.entityData.get(MODE);
     }
 
-    public boolean isMode(EnumMode... modes) {
-        EnumMode mode = this.getMode();
-        for (EnumMode test : modes) {
+    public boolean isMode(DogMode... modes) {
+        DogMode mode = this.getMode();
+        for (DogMode test : modes) {
             if (mode == test) {
                 return true;
             }
@@ -3516,7 +3516,7 @@ public class Dog extends AbstractDog {
         return false;
     }
 
-    public void setMode(EnumMode collar) {
+    public void setMode(DogMode collar) {
         this.entityData.set(MODE, collar);
     }
 
@@ -4069,7 +4069,7 @@ public class Dog extends AbstractDog {
         this.setOwnerUUID(null);
         this.setWillObeyOthers(false);
         this.setCanPlayersAttack(true);
-        this.setMode(EnumMode.DOCILE);
+        this.setMode(DogMode.DOCILE);
         this.authorizedChangingOwner = false;
     }
 
@@ -4078,7 +4078,7 @@ public class Dog extends AbstractDog {
         this.clearTriggerableAction();
         this.dogAi.forceStopAllGoal();
         
-        this.setMode(EnumMode.DOCILE);
+        this.setMode(DogMode.DOCILE);
         this.authorizedChangingOwner = true;
         this.setOwnerUUID(newOwnerUUID);
         this.authorizedChangingOwner = false;
