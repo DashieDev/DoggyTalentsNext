@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 
-public enum EnumGender {
+public enum DogGender {
 
     MALE(1, "male"),
     FEMALE(2, "female"),
@@ -19,11 +19,11 @@ public enum EnumGender {
     private String unlocalisedPossessiveAdj;
     private String unlocalisedTitle;
 
-    public static final EnumGender[] VALUES = Arrays.stream(EnumGender.values()).sorted(Comparator.comparingInt(EnumGender::getIndex)).toArray(size -> {
-        return new EnumGender[size];
+    public static final DogGender[] VALUES = Arrays.stream(DogGender.values()).sorted(Comparator.comparingInt(DogGender::getIndex)).toArray(size -> {
+        return new DogGender[size];
     });
 
-    private EnumGender(int index, String name) {
+    private DogGender(int index, String name) {
         this.index = index;
         this.saveName = name;
         this.unlocalisedName = "dog.gender." + name;
@@ -66,20 +66,20 @@ public enum EnumGender {
         return this.unlocalisedPossessiveAdj;
     }
 
-    public boolean canMateWith(EnumGender gender) {
+    public boolean canMateWith(DogGender gender) {
         boolean equalGenders = this == gender;
-        return (equalGenders && this == EnumGender.UNISEX) || !equalGenders;
+        return (equalGenders && this == DogGender.UNISEX) || !equalGenders;
     }
 
-    public static EnumGender byIndex(int i) {
+    public static DogGender byIndex(int i) {
         if (i < 0 | i >= VALUES.length) {
-            i = EnumGender.UNISEX.getIndex();
+            i = DogGender.UNISEX.getIndex();
         }
         return VALUES[i];
     }
 
-    public static EnumGender bySaveName(String saveName) {
-        for (EnumGender gender : EnumGender.values()) {
+    public static DogGender bySaveName(String saveName) {
+        for (DogGender gender : DogGender.values()) {
             if (gender.getSaveName().equals(saveName)) {
                 return gender;
             }
@@ -88,7 +88,7 @@ public enum EnumGender {
         return UNISEX;
     }
 
-    public static EnumGender random(Random rng) {
+    public static DogGender random(Random rng) {
         return rng.nextBoolean() ? MALE : FEMALE;
     }   
 

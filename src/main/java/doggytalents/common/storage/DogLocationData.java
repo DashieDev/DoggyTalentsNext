@@ -4,7 +4,7 @@ import doggytalents.DoggyAccessories;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyItems;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
-import doggytalents.api.feature.EnumGender;
+import doggytalents.api.feature.DogGender;
 import doggytalents.api.registry.AccessoryType;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -41,7 +41,7 @@ public class DogLocationData implements IDogData {
 
     // Other saved data
     private @Nullable Component name;
-    private @Nullable EnumGender gender;
+    private @Nullable DogGender gender;
     private boolean hasRadarCollar;
     private int locateColor;
 
@@ -132,7 +132,7 @@ public class DogLocationData implements IDogData {
         this.dimension = ResourceKey.create(Registry.DIMENSION_REGISTRY, NBTUtil.getResourceLocation(compound, "dimension"));
         this.name = NBTUtil.getTextComponent(compound, "name_text_component");
         if (compound.contains("gender", Tag.TAG_STRING)) {
-            this.gender = EnumGender.bySaveName(compound.getString("gender"));
+            this.gender = DogGender.bySaveName(compound.getString("gender"));
         }
         this.hasRadarCollar = compound.getBoolean("collar");
         if (compound.hasUUID("sessionUUID")) {
