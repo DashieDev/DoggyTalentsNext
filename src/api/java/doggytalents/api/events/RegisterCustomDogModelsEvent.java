@@ -38,17 +38,19 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
         public final ModelLayerLocation layer;
         public final boolean shouldRenderAccessories;
         public final boolean shouldRenderIncapacitated;
+        public final boolean renderModelAccessoriesOnly;
         public final boolean hasDefaultScale;
         public final Vector3f customRootPivot;
         public final float defaultScale;
         public final boolean glowingEyes;
         private Map<DogAnimation, AnimationDefinition> aninationOverride = Maps.newConcurrentMap();
 
-        private DogModelProps(ResourceLocation id, ModelLayerLocation layer, boolean accessory, boolean incap,
+        private DogModelProps(ResourceLocation id, ModelLayerLocation layer, boolean accessory, boolean model_accessories, boolean incap,
             Vector3f customPivot, float defaulScale, boolean glowingEyes) {
             this.id = id;
             this.layer = layer;
             this.shouldRenderAccessories = accessory;
+            this.renderModelAccessoriesOnly = model_accessories;
             this.shouldRenderIncapacitated = incap;
             this.defaultScale = defaulScale;
             this.hasDefaultScale = this.defaultScale != 1f;
@@ -63,7 +65,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
         public static class Builder {
             public final ResourceLocation id;
             public final ModelLayerLocation layer;
-            private boolean accessory = false, incap = false;
+            private boolean accessory = false, incap = false, model_accessory = false;
             private Vector3f customRootPivot = null;
             private float defaultScale = 1f;
             private boolean glowingEyes = false;
@@ -76,6 +78,13 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
 
             public Builder withAccessory() {
                 this.accessory = true;
+                this.model_accessory = false;
+                return this;
+            }
+
+            public Builder modelAccessoryOnly() {
+                this.accessory = false;
+                this.model_accessory = true;
                 return this;
             }
 
@@ -105,7 +114,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
             }
 
             public DogModelProps build() {
-                var ret =  new DogModelProps(id, layer, accessory, incap, customRootPivot, defaultScale, glowingEyes);
+                var ret =  new DogModelProps(id, layer, accessory, model_accessory, incap, customRootPivot, defaultScale, glowingEyes);
                 ret.aninationOverride = this.animationOverride;
                 return ret;
             }
