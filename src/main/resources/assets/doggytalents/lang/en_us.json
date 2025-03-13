@@ -54,7 +54,7 @@
    "item.doggytalents.whistle.2.help": "Command All (only On Duty if opted in) Following Standing Dogs to Sit if Standing.",
    "item.doggytalents.whistle.3.help": "Command All Dogs to stop attacking their targets.",
    "item.doggytalents.whistle.4.help": "Whistle for the Shepherd Dog Talent. See the talent page for help.",
-   "item.doggytalents.whistle.5.help": "Upon use, a projectile will be shot out from this whistle. The entity that this projectile hit will be the target for All Standing Dogs.",
+   "item.doggytalents.whistle.5.help": "Upon use, a projectile will be shot out from this whistle. The entity that this projectile hit will be the target for All Standing Tactical Dogs.",
    "item.doggytalents.whistle.6.help": "Whistle for the Roaring Gale Talent. See the talent page for help.",
    "item.doggytalents.whistle.7.help": "Command a certain Dog by its name to teleport near you.",
    "item.doggytalents.whistle.8.help": "Command All Standing Dogs to go to and Sit on their Claimed Dog Beds if available and close by.",
@@ -473,7 +473,7 @@
    "dog.mode.incapacitated.indicator": "I",
 
    "dog.mode.wandering.description": "Your Dog wanders around a certain point. That point will be the bowl if one is nearby, otherwise the location the dog is at upon entering this mode. To set your Dog's bowl, bring your Dog within a few blocks of it.",
-   "dog.mode.tactical.description": "Your Dog follows you but refrains from attacking anything unless you use the Tactical Whistle.",
+   "dog.mode.tactical.description": "Same as Aggressive Mode but you can command your Dog to attack something far away using the Tactical Whistle.",
    "dog.mode.aggressive.description": "Your Dog follows you and attacks anything tries to hurt you. This behaviour is the same as vanilla wolves'.",
    "dog.mode.berserker.description": "Your Dog follows you and automatically attacks nearby enemies.",
    "dog.mode.berserker_minor.description": "Berserker Minor - Same as Berserker Mode, but they ignore Piglins (If you are wearing any Gold Armor Pieces) and Endermen",
