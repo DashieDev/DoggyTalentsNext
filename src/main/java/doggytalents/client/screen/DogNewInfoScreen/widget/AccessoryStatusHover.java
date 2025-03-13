@@ -9,7 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.DoggyItems;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.entity.model.dog.DogModel;
-import doggytalents.client.screen.framework.ToolTipOverlayManager;
+import doggytalents.client.entity.model.dog.DogModel.AccessoryState;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -22,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 public class AccessoryStatusHover extends AbstractWidget {
 
     private ItemStack logoIcon = ItemStack.EMPTY;
+    private ItemStack modelIcon = ItemStack.EMPTY;
     private DogModel.AccessoryState state;
     private Component statusTooltip = ComponentUtil.empty();
     private ItemRenderer itemRenderer;
@@ -29,8 +30,10 @@ public class AccessoryStatusHover extends AbstractWidget {
     public AccessoryStatusHover(int x, int y, DogModel.AccessoryState state) {
         super(x, y, 20, 20, ComponentUtil.empty());
         var collar = DoggyItems.WOOL_COLLAR.get();
+        var reflector = DoggyItems.DIVINE_RETRIBUTON.get();
         logoIcon = new ItemStack(collar);
-        collar.setColor(logoIcon, 0xFFB02E26);
+        modelIcon = new ItemStack(reflector);
+        ItemUtil.setDyeColorForStack(logoIcon, 0xFFB02E26);
         if (state == null)
             state = DogModel.AccessoryState.HAVE_NOT_TESTED;
         else
@@ -41,12 +44,13 @@ public class AccessoryStatusHover extends AbstractWidget {
 
     @Override
     public void renderButton(PoseStack stack, int mouseX, int mouseY, float pTicks) {
-        if (this.isHovered) {
-            ToolTipOverlayManager.get().setComponents(List.of(this.statusTooltip));
-        }
-        if (this.logoIcon == ItemStack.EMPTY)
+        var render_icon = this.logoIcon;
+        if (state == AccessoryState.MODEL_ONLY)
+            render_icon = this.modelIcon;    
+
+        if (render_icon == ItemStack.EMPTY)
             return;
-        itemRenderer.renderGuiItem(logoIcon, this.getX()+1, this.getY()+1);
+        itemRenderer.renderGuiItem(render_icon, this.getX()+1, this.getY()+1);
         int iX = getIconXState();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
@@ -65,7 +69,7 @@ public class AccessoryStatusHover extends AbstractWidget {
                 return 44;
             case RECOMMENDED:
                 return 55;
-            case SOME_WILL_FIT:
+            case SOME_WILL_FIT, MODEL_ONLY:
                 return 22;
             default:
                 return 33;
@@ -91,6 +95,9 @@ public class AccessoryStatusHover extends AbstractWidget {
                 break;
             case SOME_WILL_FIT:
                 id = 3;
+                break;
+            case MODEL_ONLY:
+                id = 4;
                 break;
             default:
                 break;
