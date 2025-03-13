@@ -11,6 +11,7 @@ import com.mojang.math.Axis;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.events.RegisterCustomDogModelsEvent.DogModelProps;
 import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.api.registry.Accessory.AccessoryRenderType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelPart;
@@ -36,6 +37,9 @@ public class CustomDogModel extends DogModel {
 
     @Override
     public boolean acessoryShouldRender(Dog dog, AccessoryInstance inst) {
+        if (props.renderModelAccessoriesOnly) {
+            return inst.getAccessory().getAccessoryRenderType() == AccessoryRenderType.MODEL;
+        }
         return props.shouldRenderAccessories;
     }
 
@@ -71,9 +75,11 @@ public class CustomDogModel extends DogModel {
 
     @Override
     public AccessoryState getAccessoryState() {
-        return this.props.shouldRenderAccessories ? 
-            AccessoryState.HAVE_NOT_TESTED
-            : AccessoryState.NON_COMPATIBLE;
+        if (this.props.shouldRenderAccessories)
+            return AccessoryState.HAVE_NOT_TESTED;
+        if (this.props.renderModelAccessoriesOnly)
+            return AccessoryState.MODEL_ONLY;
+        return AccessoryState.NON_COMPATIBLE;
     }
 
     @Override
