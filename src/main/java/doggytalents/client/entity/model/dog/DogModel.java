@@ -652,7 +652,8 @@ public class DogModel extends EntityModel<Dog> {
         NON_COMPATIBLE,
         SOME_WILL_FIT,
         HAVE_NOT_TESTED,
-        RECOMMENDED
+        RECOMMENDED,
+        MODEL_ONLY
     }
 
     private AccessoryState accessoryState = AccessoryState.HAVE_NOT_TESTED;

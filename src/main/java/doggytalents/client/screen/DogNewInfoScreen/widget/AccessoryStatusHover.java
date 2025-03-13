@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import doggytalents.DoggyItems;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.model.dog.DogModel.AccessoryState;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.gui.GuiGraphics;
@@ -17,12 +18,15 @@ import net.minecraft.world.item.ItemStack;
 public class AccessoryStatusHover extends AbstractWidget {
 
     private ItemStack logoIcon = ItemStack.EMPTY;
+    private ItemStack modelIcon = ItemStack.EMPTY;
     private DogModel.AccessoryState state;
 
     public AccessoryStatusHover(int x, int y, DogModel.AccessoryState state) {
         super(x, y, 20, 20, Component.empty());
         var collar = DoggyItems.WOOL_COLLAR.get();
+        var reflector = DoggyItems.DIVINE_RETRIBUTON.get();
         logoIcon = new ItemStack(collar);
+        modelIcon = new ItemStack(reflector);
         ItemUtil.setDyeColorForStack(logoIcon, 0xFFB02E26);
         if (state == null)
             state = DogModel.AccessoryState.HAVE_NOT_TESTED;
@@ -33,9 +37,13 @@ public class AccessoryStatusHover extends AbstractWidget {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-        if (this.logoIcon == ItemStack.EMPTY)
+        var render_icon = this.logoIcon;
+        if (state == AccessoryState.MODEL_ONLY)
+            render_icon = this.modelIcon;    
+
+        if (render_icon == ItemStack.EMPTY)
             return;
-        graphics.renderItem(logoIcon, this.getX()+1, this.getY()+1);
+        graphics.renderItem(render_icon, this.getX()+1, this.getY()+1);
         int iX = getIconXState();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
@@ -51,7 +59,7 @@ public class AccessoryStatusHover extends AbstractWidget {
                 return 44;
             case RECOMMENDED:
                 return 55;
-            case SOME_WILL_FIT:
+            case SOME_WILL_FIT, MODEL_ONLY:
                 return 22;
             default:
                 return 33;
@@ -77,6 +85,9 @@ public class AccessoryStatusHover extends AbstractWidget {
                 break;
             case SOME_WILL_FIT:
                 id = 3;
+                break;
+            case MODEL_ONLY:
+                id = 4;
                 break;
             default:
                 break;
