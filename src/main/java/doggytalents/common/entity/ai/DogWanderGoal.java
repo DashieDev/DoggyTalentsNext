@@ -1,6 +1,6 @@
 package doggytalents.common.entity.ai;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -32,7 +32,7 @@ public class DogWanderGoal extends Goal {
             return false;
         }
 
-        if (!this.dog.isMode(EnumMode.WANDERING)) {
+        if (!this.dog.isMode(DogMode.WANDERING)) {
             return false;
         }
 

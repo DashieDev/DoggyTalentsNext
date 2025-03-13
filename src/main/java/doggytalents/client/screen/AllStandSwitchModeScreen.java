@@ -6,7 +6,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.AllStandSwitchModeData;
 import net.minecraft.client.Minecraft;
@@ -17,7 +17,7 @@ import net.minecraftforge.network.PacketDistributor;
 
 public class AllStandSwitchModeScreen extends StringEntrySelectScreen {
 
-    private List<EnumMode> modeList = List.of();
+    private List<DogMode> modeList = List.of();
     private Player player;
 
     protected AllStandSwitchModeScreen(Player player) {
@@ -26,7 +26,7 @@ public class AllStandSwitchModeScreen extends StringEntrySelectScreen {
     }
 
     public static void open(Player user) {
-        var modeList = Arrays.stream(EnumMode.VALUES)
+        var modeList = Arrays.stream(DogMode.VALUES)
             .filter(x -> !x.canWander())
             .collect(Collectors.toList());
         var mc = Minecraft.getInstance();
@@ -35,11 +35,11 @@ public class AllStandSwitchModeScreen extends StringEntrySelectScreen {
         screen.setModeList(modeList);
     }
 
-    public void setModeList(List<EnumMode> modeList) {
+    public void setModeList(List<DogMode> modeList) {
         if (modeList == null)
             return;
         this.modeList = modeList;
-        Function<EnumMode, String> str_getter = mode_to_get -> {
+        Function<DogMode, String> str_getter = mode_to_get -> {
             var unloc = mode_to_get.getUnlocalisedName();
             return I18n.get(unloc);
         };

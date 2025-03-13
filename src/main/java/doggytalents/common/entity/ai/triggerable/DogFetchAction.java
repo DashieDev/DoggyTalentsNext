@@ -2,7 +2,7 @@ package doggytalents.common.entity.ai.triggerable;
 
 import javax.annotation.Nonnull;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.EntityUtil;
@@ -36,7 +36,7 @@ public class DogFetchAction extends TriggerableAction {
 
     @Override
     public void onStart() {
-        if (dog.hasBone() || dog.getMode() != EnumMode.DOCILE) {
+        if (dog.hasBone() || dog.getMode() != DogMode.DOCILE) {
             this.setState(ActionState.FINISHED); return;
         }
 
