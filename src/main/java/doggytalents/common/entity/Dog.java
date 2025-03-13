@@ -323,7 +323,7 @@ public class Dog extends AbstractDog {
     public Dog(EntityType<? extends Dog> type, Level worldIn) {
         super(type, worldIn);
         this.setTame(false, true);
-        this.setGender(EnumGender.random(this.getRandom()));
+        this.setGender(DogGender.random(this.getRandom()));
         this.setLowHealthStrategy(LowHealthStrategy.STICK_TO_OWNER);
         this.authorizedChangingOwner = true;
         this.setOwnerUUID(null); //Just to be sure
@@ -2849,7 +2849,7 @@ public class Dog extends AbstractDog {
 		}
 
         try {
-            this.setGender(EnumGender.bySaveName(compound.getString("dogGender")));
+            this.setGender(DogGender.bySaveName(compound.getString("dogGender")));
 
             if (compound.contains("mode", Tag.TAG_STRING)) {
             this.setMode(DogMode.bySaveName(compound.getString("mode")));
@@ -3488,11 +3488,11 @@ public class Dog extends AbstractDog {
         this.dogFabricHelper.setDogVariant(val);
     }
 
-    public EnumGender getGender() {
+    public DogGender getGender() {
         return this.dogFabricHelper.getDogGender();
     }
 
-    public void setGender(EnumGender collar) {
+    public void setGender(DogGender collar) {
         this.dogFabricHelper.setDogGender(collar);
     }
 
@@ -4544,8 +4544,8 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public MutableComponent getTranslationKey(Function<EnumGender, String> function) {
-        return Component.translatable(function.apply(!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER) ? this.getGender() : EnumGender.UNISEX));
+    public MutableComponent getTranslationKey(Function<DogGender, String> function) {
+        return Component.translatable(function.apply(!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.DISABLE_GENDER) ? this.getGender() : DogGender.UNISEX));
     }
 
     @Override

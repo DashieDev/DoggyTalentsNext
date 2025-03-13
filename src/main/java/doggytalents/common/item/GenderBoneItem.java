@@ -1,7 +1,7 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyItems;
-import doggytalents.api.feature.EnumGender;
+import doggytalents.api.feature.DogGender;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.common.entity.Dog;
@@ -38,13 +38,13 @@ public class GenderBoneItem extends Item implements IDogItem{
         if (dog.level().isClientSide)
             return InteractionResult.SUCCESS;
         
-        dog.setGender(dog.getGender() == EnumGender.MALE ?
-            EnumGender.FEMALE
-            : EnumGender.MALE);
+        dog.setGender(dog.getGender() == DogGender.MALE ?
+            DogGender.FEMALE
+            : DogGender.MALE);
         playerIn.getCooldowns().addCooldown(DoggyItems.GENDER_BONE.get(), 40);
         dog.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
         if (dog.level() instanceof ServerLevel sL) {
-            var item = dog.getGender() == EnumGender.MALE ? 
+            var item = dog.getGender() == DogGender.MALE ? 
                 Items.LIGHT_BLUE_WOOL : Items.PINK_WOOL;
             sL.sendParticles(
                 new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(item)), 
