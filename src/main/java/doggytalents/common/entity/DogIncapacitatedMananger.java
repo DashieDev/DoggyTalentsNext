@@ -10,7 +10,7 @@ import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.backward_imitate.DogInteractionResult;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
 import doggytalents.common.config.ConfigHandler;
@@ -74,12 +74,12 @@ public class DogIncapacitatedMananger {
     }
 
 
-    public void onModeUpdate(EnumMode mode) {
-        if (mode != EnumMode.INJURED
+    public void onModeUpdate(DogMode mode) {
+        if (mode != DogMode.INJURED
             && this.appliedIncapChanges) {
             this.appliedIncapChanges = false;
             this.onExitingIncapMode();
-        } else if (mode == EnumMode.INJURED
+        } else if (mode == DogMode.INJURED
             && !this.appliedIncapChanges) {
             this.appliedIncapChanges = true;
             this.onEnteringIncapMode();
@@ -391,7 +391,7 @@ public class DogIncapacitatedMananger {
     private void incapacitatedExit() {
         int bandaid_count0 = this.bandagesCount;
         this.dog.maxHealth();
-        this.dog.setMode(EnumMode.DOCILE);
+        this.dog.setMode(DogMode.DOCILE);
         this.dog.setDogHunger(this.dog.getMaxHunger());
         this.dog.setDogIncapValue(0);
         this.dog.setOrderedToSit(true);

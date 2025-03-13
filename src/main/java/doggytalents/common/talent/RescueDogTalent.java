@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 
 import doggytalents.TalentsOptions;
 import doggytalents.api.feature.DataKey;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.TalentOption;
 import doggytalents.api.registry.Talent;

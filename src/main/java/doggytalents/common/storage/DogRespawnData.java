@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.anim.DogAnimation;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
@@ -210,7 +210,7 @@ public class DogRespawnData implements IDogData {
             if (dog.getDogIncapValue() <= 0)
                 dog.setDogIncapValue(dog.getDefaultInitIncapVal());
             dog.setDogHunger(0);
-            dog.setMode(EnumMode.INJURED);
+            dog.setMode(DogMode.INJURED);
             dog.setHealth(1);
             dog.setIncapSyncState(killedBy);
             if (dog.isInWater() || dog.isInLava()) {
@@ -218,7 +218,7 @@ public class DogRespawnData implements IDogData {
             } else
             dog.setAnim(dog.incapacitatedMananger.getAnim());
         } else {
-            dog.setMode(EnumMode.DOCILE);
+            dog.setMode(DogMode.DOCILE);
             dog.setAnim(DogAnimation.STAND_QUICK);
             dog.maxHealth();
         }

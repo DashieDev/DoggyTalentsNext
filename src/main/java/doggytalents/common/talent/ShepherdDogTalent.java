@@ -3,7 +3,7 @@ package doggytalents.common.talent;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.DataKey;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -76,7 +76,7 @@ public class ShepherdDogTalent extends TalentInstance {
 
         if (
             dog.readyForNonTrivialAction() 
-            && (dog.getMode() == EnumMode.DOCILE)
+            && (dog.getMode() == DogMode.DOCILE)
             && !dog.isOrderedToSit()
             && --this.tickTillSearch <= 0
         ) {
@@ -173,7 +173,7 @@ public class ShepherdDogTalent extends TalentInstance {
 
         @Override
         public void tick() {
-            if (dog.getMode() != EnumMode.DOCILE) {
+            if (dog.getMode() != DogMode.DOCILE) {
                 this.setState(ActionState.FINISHED);
                 return;
             }

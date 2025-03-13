@@ -3,7 +3,7 @@ package doggytalents.common.item;
 import java.util.function.Supplier;
 
 import doggytalents.DoggyItems;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -52,7 +52,7 @@ public class ChopinRecordItem extends Item {
     private boolean canDoChopinTail(Dog dog) {
         if (!dog.isDoingFine())
             return false;
-        if (!dog.isMode(EnumMode.DOCILE, EnumMode.WANDERING))
+        if (!dog.isMode(DogMode.DOCILE, DogMode.WANDERING))
             return false;
         return true;
     }

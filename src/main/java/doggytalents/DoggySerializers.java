@@ -3,7 +3,7 @@ package doggytalents;
 import doggytalents.api.feature.DogLevel;
 import doggytalents.api.feature.DogSize;
 import doggytalents.api.feature.EnumGender;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
@@ -29,7 +29,7 @@ public class DoggySerializers {
 
     public static final EntityDataSerializer<DogVariant> DOG_VARIANT_SERIALIZER = register("dog_variant", DogVariantSerializer::new);
     public static final EntityDataSerializer<EnumGender> GENDER_SERIALIZER = register("gender", GenderSerializer::new);
-    public static final EntityDataSerializer<EnumMode> MODE_SERIALIZER = register("mode", ModeSerializer::new);
+    public static final EntityDataSerializer<DogMode> MODE_SERIALIZER = register("mode", ModeSerializer::new);
     public static final EntityDataSerializer<DogLevel> DOG_LEVEL_SERIALIZER = register("dog_level", DogLevelSerializer::new);
     public static final EntityDataSerializer<DimensionDependantArg<Optional<BlockPos>>> BED_LOC_SERIALIZER = register("dog_bed_location", BedLocationsSerializer::new);
     public static final EntityDataSerializer<IncapacitatedSyncState> INCAP_SYNC_SERIALIZER = register("incap_sync", IncapacitatedSyncSerializer::new);

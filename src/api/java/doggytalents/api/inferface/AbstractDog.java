@@ -9,7 +9,7 @@ import com.google.common.base.Function;
 
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.feature.EnumGender;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.feature.IDog;
 import doggytalents.api.impl.DogArmorItemHandler;
 import net.minecraft.core.Holder;
@@ -194,7 +194,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     //End : Re-adjust armor behaviour
 
     public boolean isDefeated() {
-        return this.getMode() == EnumMode.INJURED;
+        return this.getMode() == DogMode.INJURED;
     }
 
     public boolean isDoingFine() {
