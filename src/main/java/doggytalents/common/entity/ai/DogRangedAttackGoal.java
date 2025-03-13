@@ -151,6 +151,11 @@ public class DogRangedAttackGoal extends Goal {
         this.waitingTick = 0;
         this.dogPos0 = this.dog.blockPosition().mutable();
         this.dog.getDogRangedAttack().onStart(dog);
+        
+        var attack_manager = this.dog.dogAttackManager;
+        attack_manager.attacking = true;
+        if (attack_manager.hasTaticalTarget())
+            attack_manager.setDogFarChasingTarget(true);
     }
     
     @Override
@@ -160,6 +165,10 @@ public class DogRangedAttackGoal extends Goal {
         this.dog.getDogRangedAttack().onStop(dog);
         this.dog.getNavigation().stop();
         this.dog.setTarget(null);
+
+        var attack_manager = this.dog.dogAttackManager;
+        attack_manager.attacking = false;
+        attack_manager.setDogFarChasingTarget(false);
     }
 
     @Override
@@ -167,6 +176,14 @@ public class DogRangedAttackGoal extends Goal {
         var target = this.dog.getTarget();
         if (target == null)
             return;
+
+        var attack_manager = this.dog.dogAttackManager;
+        if (attack_manager.isDogFarChasingTarget()) {
+            double d0 = this.dog.distanceToSqr(target.getX(), target.getY(), target.getZ());
+            double min_dist = attack_manager.getStandardFollowRange() / 2 + 1;
+            if (d0 < min_dist * min_dist)
+                attack_manager.setDogFarChasingTarget(false);
+        }
         
         double d_dog_target_sqr = this.dog.distanceToSqr(target.getX(), target.getY(), target.getZ());
         boolean can_see_target = this.dog.getSensing().hasLineOfSight(target);

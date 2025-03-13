@@ -101,6 +101,7 @@ public class DogAiManager {
         registerDogGoal(p, new DogCommonSitIdleGoal(this.dog));
         registerDogGoal(p, new DogRestWhenSitGoal(this.dog));
 
+        registerTargetGoal(1, new DogTacticalTargetGoal(this.dog));
         registerTargetGoal(1, new DogOwnerHurtByTargetGoal(this.dog));
         registerTargetGoal(2, new DogOwnerHurtTargetGoal(this.dog));
         registerTargetGoal(3, new DogHurtByTargetGoal(dog));

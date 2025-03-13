@@ -369,6 +369,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue DISABLE_KILL_STATS;
         public ForgeConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
         public ForgeConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
+        public ForgeConfigSpec.IntValue TACTICAL_LIMIT;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -615,6 +616,13 @@ public class ConfigHandler {
                 .comment("Prevent Wild Wolves from being angry when you accidentally hit them.")
                 .translation("doggytalents.prevent_wild_wolves_angry")
                 .define("prevent_wild_wolves_angry", false);
+            TACTICAL_LIMIT = builder
+                .comment("Set the maxmium number of Tactical Dogs that will reponse")
+                .comment("when a their owner issues a Tactical Command via the Tactical Whistle.")
+                .comment("Set this to a value greater than Zero to activate this cap, other value")
+                .comment("will disable the cap.")
+                .translation("doggytalents.tactical_limit")
+                .defineInRange("tactical_limit", 8, -1, 32);
 
             builder.pop();
         }
