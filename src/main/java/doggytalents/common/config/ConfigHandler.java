@@ -356,6 +356,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue DISABLE_KILL_STATS;
         public ModConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
         public ModConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
+        public ModConfigSpec.IntValue TACTICAL_LIMIT;
 
         public Map<String, ModConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -602,6 +603,13 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("Prevent Wild Wolves from being angry when you accidentally hit them.")
                 .translation("doggytalents.prevent_wild_wolves_angry")
                 .define("prevent_wild_wolves_angry", false);
+            TACTICAL_LIMIT = builder
+                .comment("Set the maxmium number of Tactical Dogs that will reponse")
+                .comment("when a their owner issues a Tactical Command via the Tactical Whistle.")
+                .comment("Set this to a value greater than Zero to activate this cap, other value")
+                .comment("will disable the cap.")
+                .translation("doggytalents.tactical_limit")
+                .defineInRange("tactical_limit", 8, -1, 32);
 
             builder.pop();
         }

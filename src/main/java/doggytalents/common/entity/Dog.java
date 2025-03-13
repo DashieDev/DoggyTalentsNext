@@ -262,6 +262,8 @@ public class Dog extends AbstractDog {
         = new DogSwimmingManager(this);
     public final DogPushAvoidManager dogPushAvoidManager
         = new DogPushAvoidManager(this);
+    public final DogAttackManager dogAttackManager
+        = new DogAttackManager(this);
     public final DogAiManager dogAi;
     public final DogSoundManager dogSoundManager
         = new DogSoundManager(this);
@@ -864,8 +866,10 @@ public class Dog extends AbstractDog {
             this.avoidGoInFrontOfOwnerManager.tick();
         }
 
-        if (!this.level().isClientSide)
+        if (!this.level().isClientSide) {
             this.dogPushAvoidManager.tickServer();
+            this.dogAttackManager.tickServer();
+        }
 
         if (this.level().isClientSide && this.getDogLevel().isFullKami() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.KAMI_PARTICLES)) {
             for (int i = 0; i < 2; i++) {
@@ -1447,6 +1451,11 @@ public class Dog extends AbstractDog {
     @Override
     public double getAttributeValue(Holder<Attribute> attrib) {
         if (attrib == Attributes.FOLLOW_RANGE) {
+            var attack_manager = this.dogAttackManager; 
+            if (attack_manager != null) {
+                if (attack_manager.isDogFarChasingTarget())
+                    return 32;
+            }
             var ranged_attack = this.getDogRangedAttack();
             if (ranged_attack != null && ranged_attack.isApplicable(this))
                 return 20;
@@ -3653,6 +3662,7 @@ public class Dog extends AbstractDog {
             for (var alt : this.alterations) {
                 alt.onDogSetTarget(this, newTarget, oldTarget);
             }
+            this.dogAttackManager.onTargetChange();
         }
     }
 
