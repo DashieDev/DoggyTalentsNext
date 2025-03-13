@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 import doggytalents.api.inferface.AbstractDog;
 
-public enum EnumMode {
+public enum DogMode {
 
     INJURED(-1, "incapacitated", false, false),
     DOCILE(0, "docile", true, false),
@@ -28,28 +28,28 @@ public enum EnumMode {
     private String unlocalisedName;
     private String unlocalisedInfo;
 
-    public static final EnumMode[] VALUES = 
-        Arrays.stream(EnumMode.values())
+    public static final DogMode[] VALUES = 
+        Arrays.stream(DogMode.values())
         .filter(x ->x.getIndex() >= 0)
-        .sorted(Comparator.comparingInt(EnumMode::getIndex))
+        .sorted(Comparator.comparingInt(DogMode::getIndex))
         .toArray(size -> {
-            return new EnumMode[size];
+            return new DogMode[size];
         });
 
-    private EnumMode(int index, String name) {
+    private DogMode(int index, String name) {
         this(index, name, true, true);
     }
     
-    private EnumMode(int index, String name, boolean shouldFollowOwner, boolean shouldAttack) {
+    private DogMode(int index, String name, boolean shouldFollowOwner, boolean shouldAttack) {
         this(index, name, "dog.mode." + name, "dog.mode." + name + ".indicator", "dog.mode." + name + ".description", shouldFollowOwner, shouldAttack);
     }
 
-    private EnumMode(int index, String name, boolean shouldFollowOwner, boolean shouldAttack, boolean canWander) {
+    private DogMode(int index, String name, boolean shouldFollowOwner, boolean shouldAttack, boolean canWander) {
         this(index, name, "dog.mode." + name, "dog.mode." + name + ".indicator", "dog.mode." + name + ".description", shouldFollowOwner, shouldAttack);
         this.canWander = canWander;
     }
 
-    private EnumMode(int index, String mode, String unlocalisedName, String tip, String info, boolean shouldFollowOwner, boolean shouldAttack) {
+    private DogMode(int index, String mode, String unlocalisedName, String tip, String info, boolean shouldFollowOwner, boolean shouldAttack) {
         this.index = index;
         this.saveName = mode;
         this.unlocalisedName = unlocalisedName;
@@ -79,7 +79,7 @@ public enum EnumMode {
         return this.unlocalisedInfo;
     }
 
-    public void onModeSet(AbstractDog dog, EnumMode prev) {
+    public void onModeSet(AbstractDog dog, DogMode prev) {
         switch(prev) {
         default:
             dog.getNavigation().stop();
@@ -89,7 +89,7 @@ public enum EnumMode {
         }
     }
 
-    public EnumMode previousMode() {
+    public DogMode previousMode() {
         int i = this.getIndex() - 1;
         if (i < 0) {
             i = VALUES.length - 1;
@@ -97,7 +97,7 @@ public enum EnumMode {
         return VALUES[i];
     }
 
-    public EnumMode nextMode() {
+    public DogMode nextMode() {
         int i = this.getIndex() + 1;
         if (i >= VALUES.length) {
             i = 0;
@@ -121,18 +121,18 @@ public enum EnumMode {
         return canWander;
     }
 
-    public static EnumMode byIndex(int i) {
+    public static DogMode byIndex(int i) {
         if (i == -1) {
-            return EnumMode.INJURED;
+            return DogMode.INJURED;
         }
         if (i < 0 || i >= VALUES.length) {
-            i = EnumMode.DOCILE.getIndex();
+            i = DogMode.DOCILE.getIndex();
         }
         return VALUES[i];
     }
 
-    public static EnumMode bySaveName(String saveName) {
-        for (EnumMode gender : EnumMode.values()) {
+    public static DogMode bySaveName(String saveName) {
+        for (DogMode gender : DogMode.values()) {
             if (gender.saveName.equals(saveName)) {
                 return gender;
             }

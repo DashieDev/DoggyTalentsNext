@@ -1,6 +1,6 @@
 package doggytalents.common.entity.ai;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +23,7 @@ public class FetchGoal extends MoveToClosestItemGoal {
             return false;
         }
 
-        return this.dog.getMode() == EnumMode.DOCILE && super.canUse();
+        return this.dog.getMode() == DogMode.DOCILE && super.canUse();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class FetchGoal extends MoveToClosestItemGoal {
             return false;
         }
 
-        return this.dog.getMode() == EnumMode.DOCILE && super.canContinueToUse();
+        return this.dog.getMode() == DogMode.DOCILE && super.canContinueToUse();
     }
 
     @Override

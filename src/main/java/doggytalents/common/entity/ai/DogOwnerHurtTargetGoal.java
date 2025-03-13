@@ -1,6 +1,6 @@
 package doggytalents.common.entity.ai;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.Dog;
 
 public class DogOwnerHurtTargetGoal extends net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal {
@@ -14,6 +14,6 @@ public class DogOwnerHurtTargetGoal extends net.minecraft.world.entity.ai.goal.t
 
     @Override
     public boolean canUse() {
-         return this.dog.isMode(EnumMode.AGGRESIVE, EnumMode.BERSERKER, EnumMode.TACTICAL) && super.canUse();
+         return this.dog.isMode(DogMode.AGGRESIVE, DogMode.BERSERKER, DogMode.TACTICAL) && super.canUse();
     }
 }

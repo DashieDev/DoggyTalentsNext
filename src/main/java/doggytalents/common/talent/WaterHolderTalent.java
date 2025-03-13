@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;

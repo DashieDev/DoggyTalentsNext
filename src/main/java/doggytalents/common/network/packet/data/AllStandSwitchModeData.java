@@ -1,13 +1,13 @@
 package doggytalents.common.network.packet.data;
 
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogMode;
 
 public class AllStandSwitchModeData {
     
-    public final EnumMode mode;
+    public final DogMode mode;
 
-    public AllStandSwitchModeData(EnumMode mode) {
-        this.mode = mode == null ? EnumMode.DOCILE : mode;
+    public AllStandSwitchModeData(DogMode mode) {
+        this.mode = mode == null ? DogMode.DOCILE : mode;
     }
 
 }
