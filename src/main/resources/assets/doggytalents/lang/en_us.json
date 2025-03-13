@@ -665,6 +665,7 @@
    "doggui.style.skins.accessory_state.1" : "This model is not compatible with Accessories.",
    "doggui.style.skins.accessory_state.2" : "This model is recommended for Accessories!",
    "doggui.style.skins.accessory_state.3" : "This model is compatible with some Accessories.",
+   "doggui.style.skins.accessory_state.4" : "This model is only compatible with Model Only Accessories.",
 
    "doggui.stats.general" : "General",
    "doggui.stats.general.damageDealt" : "Damage dealt",
