@@ -2,23 +2,29 @@ package doggytalents.common.entity.misc;
 
 import com.google.common.base.Predicates;
 import doggytalents.DoggyEntityTypes;
+import doggytalents.DoggyItems;
 import doggytalents.api.feature.EnumMode;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
+import java.util.Collections;
 import java.util.UUID;
 
 public class DoggyBeamEntity extends ThrowableProjectile {
@@ -39,22 +45,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
     protected void onHit(HitResult result) {
         if (result.getType() == HitResult.Type.ENTITY) {
             if (!this.level().isClientSide) {
-                Entity entityHit = ((EntityHitResult) result).getEntity();
-
-                Entity thrower = this.getOwner();
-
-                if (thrower instanceof LivingEntity && entityHit instanceof LivingEntity) {
-                    LivingEntity livingThrower = (LivingEntity) thrower;
-                    LivingEntity livingEntity = (LivingEntity) entityHit;
-
-                    this.level().getEntitiesOfClass(Dog.class, this.getBoundingBox().inflate(64D, 16D, 64D)).stream()
-                        .filter(Predicates.not(Dog::isInSittingPose))
-                        .filter(d -> d.isMode(EnumMode.AGGRESIVE, EnumMode.TACTICAL, EnumMode.BERSERKER))
-                        .filter(d -> d.canInteract(livingThrower))
-                        .filter(d -> d != livingEntity && d.wantsToAttack(livingEntity, d.getOwner()))
-                        .filter(d -> d.distanceTo(entityHit) < EntityUtil.getFollowRange(d))
-                        .forEach(d -> d.setTarget(livingEntity));
-                }
+                mayTriggerNearbyDogs((EntityHitResult)result);
             } else {
                 for (int j = 0; j < 8; ++j) {
                     this.level().addParticle(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
@@ -63,9 +54,79 @@ public class DoggyBeamEntity extends ThrowableProjectile {
         }
 
         if (!this.level().isClientSide) {
-            this.level().broadcastEntityEvent(this, Constants.EntityState.DEATH);
             this.discard();
         }
+    }
+
+    private void mayTriggerNearbyDogs(EntityHitResult hitResult) {
+        if (!(hitResult.getEntity() instanceof LivingEntity hit))
+            return;
+        if (!(this.getOwner() instanceof Player thrower))
+            return;
+
+        boolean do_cooldown = false;
+
+        var trigger_bb = thrower.getBoundingBox().inflate(16, 8, 16);
+        var trigger_list = 
+            this.level().getEntitiesOfClass(Dog.class, trigger_bb,
+                filter_dog -> isEligibleDog(filter_dog, hit, thrower));
+        do_cooldown = !trigger_list.isEmpty();
+
+        int trigger_limit = ConfigHandler.SERVER.TACTICAL_LIMIT.get();
+        if (trigger_limit > 0 && trigger_list.size() > trigger_limit) {
+            Collections.shuffle(trigger_list);
+            trigger_list = trigger_list.subList(0, trigger_limit);
+        }
+        for (var dog : trigger_list) {
+            var attack_manager = dog.dogAttackManager;
+            attack_manager.setDogTaticalTarget(hit);
+        }
+
+        if (do_cooldown)
+            thrower.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 40);
+    }
+
+    private boolean isEligibleDog(Dog dog, LivingEntity target, LivingEntity thrower) {
+        if (dog == target)
+            return false;
+        if (dog.isOrderedToSit())
+            return false;
+        var dog_owner_id = dog.getOwnerUUID();
+        var thrower_id = thrower.getUUID();
+        if (dog_owner_id == null)
+            return false;
+        if (!dog_owner_id.equals(thrower_id))
+            return false;
+        if (!dog.wantsToAttack(target, thrower))
+            return false;
+
+        double target_dist_sqr = dog.distanceToSqr(target);
+        var attack_manager = dog.dogAttackManager;
+        final double range_far = attack_manager.getFarFollowRange();
+        boolean tactical_condition =
+            dog.getMode() == EnumMode.TACTICAL
+            && target_dist_sqr < range_far * range_far;
+        return tactical_condition;
+    }
+
+    @Override
+    protected boolean canHitEntity(Entity entity) {
+        if (checkAllyToOwner(entity))
+            return false;
+        return super.canHitEntity(entity);
+    }
+
+    private boolean checkAllyToOwner(Entity entity) {
+        var owner = this.getOwner();
+        if (owner == null)
+            return false;
+        if (entity instanceof TamableAnimal other_dog) {
+            var other_owner_id = other_dog.getOwnerUUID();
+            var owner_id = owner.getUUID();
+            if (owner_id != null && owner_id.equals(other_owner_id))
+                return true;
+        }
+        return owner.isAlliedTo(entity);
     }
 
     @Override

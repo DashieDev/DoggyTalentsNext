@@ -14,6 +14,6 @@ public class DogOwnerHurtByTargetGoal extends net.minecraft.world.entity.ai.goal
 
     @Override
     public boolean canUse() {
-         return this.dog.isMode(EnumMode.AGGRESIVE, EnumMode.BERSERKER) && super.canUse();
+         return this.dog.isMode(EnumMode.AGGRESIVE, EnumMode.BERSERKER, EnumMode.TACTICAL) && super.canUse();
     }
 }
