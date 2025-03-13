@@ -119,7 +119,7 @@ public class DogFetchAction extends TriggerableAction {
     }
 
     private boolean checkAndGetFetchItem() {
-        if (!this.dog.hasBone() && this.dog.distanceTo(this.fetchTarget) < this.MIN_DIST * this.MIN_DIST) {
+        if (!this.dog.hasBone() && this.dog.distanceToSqr(this.fetchTarget) < this.MIN_DIST * this.MIN_DIST) {
             if (this.fetchTarget.isAlive() && !this.fetchTarget.hasPickUpDelay()) {
 
                 this.dog.setBoneVariant(this.fetchTarget.getItem());
@@ -146,7 +146,8 @@ public class DogFetchAction extends TriggerableAction {
 
     private boolean canFetchStack(ItemEntity e) {
         if (!e.isAlive() || e.isInvisible()) return false;
-        if (e.distanceTo(this.dog) > EntityUtil.getFollowRange(this.dog)) return false;
+        double follow_range = dog.getAttributeValue(Attributes.FOLLOW_RANGE);
+        if (e.distanceToSqr(this.dog) > follow_range * follow_range) return false;
         return e.getItem().getItem() instanceof IThrowableItem;
     }
     
