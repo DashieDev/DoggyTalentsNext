@@ -145,8 +145,11 @@ public class DogAiManager {
     }
 
     public void tickServer() {
-        if (!dog.canUpdateDogAi())
+        if (!dog.canUpdateDogAi()) {
+            if (this.getActiveAction().isPresent())
+                this.clearTriggerableAction();
             return;
+        }
 
         var profiler = this.profilerSup.get();
         profiler.push(PROFILER_STR);
