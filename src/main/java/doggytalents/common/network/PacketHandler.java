@@ -75,6 +75,7 @@ public final class PacketHandler {
         registerPacket(new DogAnimDebugPackets.UpdateItemSettings(), DogAnimDebugData.UpdateItemSettingsData.class);
         registerPacket(new DogInterruptibleSoundPacket(), DogInterruptibleSoundData.class);
         registerPacket(new DogOnDutyPacket(), DogOnDutyData.class);
+        registerPacket(new CarryMePacket(), CarryMeData.class);
 
         //Fabric
         registerPacket(new FabricSyncAllPacket(), FabricSyncAllData.class);
