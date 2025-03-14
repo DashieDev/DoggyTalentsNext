@@ -2,15 +2,18 @@ package doggytalents.common.talent;
 
 import doggytalents.DoggyAttributes;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
+import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
-import net.minecraft.Util;
+import doggytalents.common.entity.Dog;
+import doggytalents.common.util.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -120,5 +123,24 @@ public class WolfMountTalent extends TalentInstance {
     public InteractionResult shouldSkipAttackFrom(AbstractDog dogIn, Entity entity) {
         // If the attacking entity is riding block
         return dogIn.isPassengerOfSameVehicle(entity) ? InteractionResult.SUCCESS : InteractionResult.PASS;
+    }
+
+    public static boolean isValidCarryMeDog(Dog dog) {
+        if (!dog.isAlive())
+            return false;
+        if (dog.isVehicle() || dog.isPassenger())
+            return false;
+        return dog.getDogLevel(DoggyTalents.WOLF_MOUNT) > 0;
+    }
+
+    public static boolean isValidCarryMeTarget(LivingEntity target) {
+        if (!(target instanceof Player))
+            return false;
+        if (!target.isAlive() || target.isSpectator())
+            return false;
+        if (target.isVehicle() || target.isPassenger())
+            return false;
+        
+        return true;
     }
 }
