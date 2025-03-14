@@ -802,16 +802,4 @@ public class DogUtil {
             return Optional.empty();
         return Optional.of(dog);
     }
-
-    // public static Optional<Holder<WolfVariant>> getWolfVariantHolderIfLoaded(
-    //         HolderLookup.Provider prov, ResourceKey<WolfVariant> key) {
-    //     var wolf_variant_reg = prov.lookupOrThrow(Registries.WOLF_VARIANT);
-    //     var holder_optional = wolf_variant_reg.get(key);
-    //     if (holder_optional.isEmpty())
-    //         return Optional.empty();
-        
-    //     var holder = holder_optional.get();
-    //     return Optional.of(holder);
-    // }
-
 }
