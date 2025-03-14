@@ -805,4 +805,14 @@ public class DogUtil {
             return Optional.empty();
         return Optional.of(dog);
     }
+
+    public static boolean checkOwnerByUUID(Dog dog, LivingEntity to_check) {
+        if (dog == null || to_check == null)
+            return false;
+        var dog_owner_id = dog.getOwnerUUID();
+        var to_check_id = to_check.getUUID();
+        if (dog_owner_id == null || to_check_id == null)
+            return false;
+        return dog_owner_id.equals(to_check_id);
+    }
 }
