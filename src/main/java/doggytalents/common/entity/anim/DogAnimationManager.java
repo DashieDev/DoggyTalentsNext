@@ -170,6 +170,8 @@ public class DogAnimationManager {
         dog.setDogAnimDebugState(state);
         if (state.isNone() && !old_state.isNone())
             dog.setAnim(DogAnimation.NONE);
+        if (!state.isNone() && old_state.isNone())
+            dog.dogAi.forceStopAllGoal();
     }
 
     public void setDebugFreezeYRot(float yrot) {
