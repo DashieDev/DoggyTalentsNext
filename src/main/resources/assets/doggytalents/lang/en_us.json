@@ -49,6 +49,7 @@
    "item.doggytalents.whistle.17": "All Stand Cross Origin TP",
    "item.doggytalents.whistle.18": "Bed Dog Whistle",
    "item.doggytalents.whistle.19": "Duty Whistle",
+   "item.doggytalents.whistle.20": "Carry Me Whistle",
    "item.doggytalents.whistle.0.help": "Command All (only On Duty if opted in) Following Sitting Dogs to Stand.",
    "item.doggytalents.whistle.1.help": "Command All (only On Duty if opted in) Follwing Standing Dogs to teleport near you.",
    "item.doggytalents.whistle.2.help": "Command All (only On Duty if opted in) Following Standing Dogs to Sit if Standing.",
@@ -69,6 +70,7 @@
    "item.doggytalents.whistle.17.help": "Allow/Deny All Following Standing Dogs to/from Cross Origin Teleport.",
    "item.doggytalents.whistle.18.help": "Whistle for the Bed Dog Talent. See the talent page for help.",
    "item.doggytalents.whistle.19.help": "Set All Dogs who are Standing to be On Duty and vice versa.",
+   "item.doggytalents.whistle.20.help": "Command a nearby Wolf Mount Dog to come and force you on its back.",
 
    "item.doggytalents.treat_bag": "Treat Bag",
    "item.doggytalents.energizer_stick": "Energizer Stick",
@@ -590,6 +592,7 @@
    "dogcommand.stop_attacking": "All Stop Attacking!",
    "dogcommand.heel": "Heel!",
    "dogcommand.heel_by_name": "%s, Heel!",
+   "dogcommand.carry_me": "%s, Carry Me!",
    "dogcommand.heel_by_group": "%s, Heel!",
    "dogcommand.ride_with_me": "%s, Get on Buddy!",
    "dogcommand.all_stand_switch_mode": "All standing Dogs switch to %s!",
