@@ -6,6 +6,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.screen.AllStandSwitchModeScreen;
+import doggytalents.client.screen.CarryMeScreen;
 import doggytalents.client.screen.HeelByGroupScreen;
 import doggytalents.client.screen.HeelByNameScreen;
 import doggytalents.client.screen.WhistleScreen;
@@ -77,7 +78,8 @@ public class WhistleItem extends Item implements IDogItem {
         SSSSSHHHH(16, WhistleSound.NONE),
         CROSS_ORIGIN_TP(17, WhistleSound.SHORT),
         BED_DOG_WHISTLE(18, WhistleSound.NONE),
-        DUTY_WHISTLE(19, WhistleSound.SHORT);
+        DUTY_WHISTLE(19, WhistleSound.SHORT),
+        CARRY_ME(20, WhistleSound.NONE);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -406,6 +408,10 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         case DUTY_WHISTLE:
             allStandOnDuty(world, player, dogsList);
+            return;
+        case CARRY_ME:
+            if (world.isClientSide) 
+                CarryMeScreen.open(player);
             return;
         }
     }

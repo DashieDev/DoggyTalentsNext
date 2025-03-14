@@ -371,6 +371,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
         public ForgeConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
         public ForgeConfigSpec.IntValue TACTICAL_LIMIT;
+        public ModConfigSpec.BooleanValue CARRY_ME_WHISTLE;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -590,6 +591,10 @@ public class ConfigHandler {
                 .comment("will disable the cap.")
                 .translation("doggytalents.tactical_limit")
                 .defineInRange("tactical_limit", 8, -1, 32);
+            CARRY_ME_WHISTLE = builder
+                .comment("Set to false to disable the Carry Me Whistle.")
+                .translation("doggytalents.carry_me_whistle")
+                .define("carry_me_whistle", true);
 
             builder.pop();
         }
