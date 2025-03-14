@@ -62,8 +62,8 @@ public abstract class TriggerableAction {
         return false;
     }
 
-    public boolean shouldPersistAfterSit() {
-        return false;
+    public boolean goBackToSitPosWhenFinished() {
+        return true;
     }
 
     public final boolean canPause() {
