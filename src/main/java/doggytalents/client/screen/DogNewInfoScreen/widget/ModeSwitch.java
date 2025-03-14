@@ -184,11 +184,9 @@ public class ModeSwitch extends AbstractWidget {
 
     public void setOverlayToolTip(PoseStack stack, int mouseX, int mouseY, boolean showMsg) {
         List<Component> list = new ArrayList<>();
-        if (showMsg) {
-            var msg = this.getMessage();
-            if (msg != null)
-                list.add(msg);
-        }
+        var msg = this.getMessage();
+        if (msg != null)
+            list.add(msg.copy().withStyle(Style.EMPTY.withBold(true)));
         String str = I18n.get(dog.getMode().getUnlocalisedInfo());
         list.addAll(ScreenUtil.splitInto(str, 150, this.font));
         if (this.dog.getMode() == DogMode.WANDERING) {
