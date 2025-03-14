@@ -400,7 +400,8 @@ public class DogAiManager {
             && (this.dog.forceSit() || !action.canOverrideSit());
         if (sitBlock)
             return false;
-        maySaveDogSittingPos();
+        if (action.goBackToSitPosWhenFinished())
+            maySaveDogSittingPos();
         this.dog.setOrderedToSit(false);
         putActionInExecutor(action);
         this.delayedActionStart = 0;
