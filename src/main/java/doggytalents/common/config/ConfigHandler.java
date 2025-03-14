@@ -358,6 +358,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
         public ModConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
         public ModConfigSpec.IntValue TACTICAL_LIMIT;
+        public ModConfigSpec.BooleanValue CARRY_ME_WHISTLE;
 
         public Map<String, ModConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -577,6 +578,10 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("will disable the cap.")
                 .translation("doggytalents.tactical_limit")
                 .defineInRange("tactical_limit", 8, -1, 32);
+            CARRY_ME_WHISTLE = builder
+                .comment("Set to false to disable the Carry Me Whistle.")
+                .translation("doggytalents.carry_me_whistle")
+                .define("carry_me_whistle", true);
 
             builder.pop();
         }
