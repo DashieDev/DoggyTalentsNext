@@ -88,6 +88,8 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       } else if (!target.isAlive()) {
          this.dog.setTarget(null); // Disacrd dead target no matter what
          return false;
+      } else if (target.getY() >= dog.level().getMaxBuildHeight()) {
+         return false;
       } else if (this.dog.getDogRangedAttack().isApplicable(this.dog)) { 
          return false; 
       } else if (restriction && !this.dog.isWithinRestriction(target.blockPosition())) {
@@ -160,6 +162,8 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       if (livingentity == null) {
          return false;
       } else if (!livingentity.isAlive()) {
+         return false;
+      } else if (livingentity.getY() >= dog.level().getMaxBuildHeight()) {
          return false;
       } else if (restriction && !this.dog.isWithinRestriction(livingentity.blockPosition())) {
          return false;

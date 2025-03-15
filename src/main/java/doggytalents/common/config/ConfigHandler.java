@@ -372,6 +372,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
         public ForgeConfigSpec.IntValue TACTICAL_LIMIT;
         public ModConfigSpec.BooleanValue CARRY_ME_WHISTLE;
+        public ModConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -595,7 +596,10 @@ public class ConfigHandler {
                 .comment("Set to false to disable the Carry Me Whistle.")
                 .translation("doggytalents.carry_me_whistle")
                 .define("carry_me_whistle", true);
-
+            DOG_MAX_BUILD_Y_CAP = builder
+                .comment("Prevent Dog from going over the MaxBuildHeight of the world.")
+                .translation("doggytalents.dog_max_build_y_cap")
+                .define("dog_max_build_y_cap", true);
             builder.pop();
         }
 
@@ -604,6 +608,15 @@ public class ConfigHandler {
                         return config.get();
                 }
                 return config.getDefault();
+        }
+
+        public static<T> T getConfigOrDefault(ConfigValue<T> config, T default_val) {
+            if (CONFIG_SERVER_SPEC == null || config == null)
+                return default_val;
+            if (CONFIG_SERVER_SPEC.isLoaded()) {
+                    return config.get();
+            }
+            return default_val;
         }
     }
 
