@@ -28,7 +28,9 @@ Not only that, we also offer you tons of ways to make your dog truly one-of-a-ki
 A Big Thanks to everyone that has contributed. This includes but is not limited to...
  * 💚**zNexwr** for Translation in "FR"
  * 💚**Arkathus** for Translation in "ES"
- * 💚**克洛伊** for Translation in "ZN_TW"
+ * 💚**克洛伊** for Translation in "ZH_TW"
+ * 💚**shenyx110** for Translation in "ZH_CN"
+ * 💚**Lunna Light** for Translation in "RU_RU"
 
  * ❤️**ProPercivalalb** and **NovaViper** for maintaining DoggyTalents before DTN
  * ❤️**RaustBlackDragon** for creating the original mod and ideas back in 2013
