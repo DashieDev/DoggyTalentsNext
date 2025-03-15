@@ -69,6 +69,8 @@ public class DogRangedAttackGoal extends Goal {
         } else if (!target.isAlive()) {
             this.dog.setTarget(null); // Disacrd dead target no matter what
             return false;
+        } else if (target.getY() >= dog.level().getMaxBuildHeight()) {
+            return false;
         } else if (!this.dog.getDogRangedAttack().isApplicable(this.dog)) { 
             return false; 
         } else if (restriction && checkRestriction(target, dog)) {
@@ -109,6 +111,8 @@ public class DogRangedAttackGoal extends Goal {
         if (livingentity == null) {
             return false;
         } else if (!livingentity.isAlive()) {
+            return false;
+        } else if (livingentity.getY() >= dog.level().getMaxBuildHeight()) {
             return false;
         } else if (!this.dog.getDogRangedAttack().isApplicable(this.dog)) { 
             return false; 
