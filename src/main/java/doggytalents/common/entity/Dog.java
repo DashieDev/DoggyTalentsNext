@@ -2384,6 +2384,19 @@ public class Dog extends AbstractDog {
             x.remove(this);
         }
     }
+
+    @Override
+    public void setPos(double x, double y, double z) {
+        boolean max_build_height_check =
+            ConfigHandler.ServerConfig.getConfigOrDefault(
+                ConfigHandler.SERVER.DOG_MAX_BUILD_Y_CAP, false);
+        if (max_build_height_check) {
+            int y_cap = this.level().getMaxBuildHeight();
+            if (y > y_cap) y = y_cap;
+        }
+        
+        super.setPos(x, y, z);
+    }
     
     private void startShaking() {
         if (this.isShaking) return; // don't shake if already shaking
