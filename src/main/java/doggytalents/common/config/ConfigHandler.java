@@ -356,6 +356,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
         public ForgeConfigSpec.IntValue TACTICAL_LIMIT;
         public ModConfigSpec.BooleanValue CARRY_ME_WHISTLE;
+        public ModConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
@@ -582,6 +583,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Set to false to disable the Carry Me Whistle.")
                 .translation("doggytalents.carry_me_whistle")
                 .define("carry_me_whistle", true);
+            DOG_MAX_BUILD_Y_CAP = builder
+                .comment("Prevent Dog from going over the MaxBuildHeight of the world.")
+                .translation("doggytalents.dog_max_build_y_cap")
+                .define("dog_max_build_y_cap", true);
 
             //(Non 1.20.5+)
             RANDOM_VAR_ON_TRAIN = builder
@@ -600,6 +605,15 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                         return config.get();
                 }
                 return config.getDefault();
+        }
+
+        public static<T> T getConfigOrDefault(ConfigValue<T> config, T default_val) {
+            if (CONFIG_SERVER_SPEC == null || config == null)
+                return default_val;
+            if (CONFIG_SERVER_SPEC.isLoaded()) {
+                    return config.get();
+            }
+            return default_val;
         }
     }
 
