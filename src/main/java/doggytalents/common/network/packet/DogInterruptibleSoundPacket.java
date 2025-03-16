@@ -3,13 +3,13 @@ package doggytalents.common.network.packet;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.DogInterruptibleSoundData;
 import doggytalents.common.util.NetworkUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent.Context;
 
 public class DogInterruptibleSoundPacket implements IPacket<DogInterruptibleSoundData> {
 
@@ -42,7 +42,7 @@ public class DogInterruptibleSoundPacket implements IPacket<DogInterruptibleSoun
     @Override
     public void handle(DogInterruptibleSoundData data, Supplier<Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            if (!ctx.get().isClientRecipent())
+            if (!ctx.get().getDirection().getReceptionSide().isClient())
                 return;
             var mc = Minecraft.getInstance();
             var e = mc.level.getEntity(data.dogId());

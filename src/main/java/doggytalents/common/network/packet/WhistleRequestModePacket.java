@@ -4,6 +4,7 @@ import doggytalents.common.item.WhistleItem;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.WhistleRequestModeData;
 import doggytalents.forge_imitate.network.ForgeNetworkHandler.NetworkEvent.Context;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.function.Supplier;
