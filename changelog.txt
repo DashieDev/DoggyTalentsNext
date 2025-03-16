@@ -1742,3 +1742,58 @@ owner is offline or in different dimension.
 # Allow players to specify exactly which materials can be used to make dog bed variants via 2 data tags.
 When values is present in both tags, DTN will specifically use those values 
 instead of automatically gather materials to create Dog Bed Variants.
+
+**1.18.43 - 16th March 2025**
+Implemented Interruptible Sound System for Dog. In other words, dogs can now play interruptible sounds which are sounds that can be interrupted by the dog. Currently, upon being interrupted, the playing sound's volume will be instantly halved and followed with a subtle fade out before the sound completely stops.
+
+  + Utilized the Interruptible Sound System for Shaking and Howling dogs: Dogs will now play those action's sounds as interruptible and interrupt when the action itself is interrupt.
+
+On Duty System:
+
+  + Allow Whistle to only target dogs who are "On Duty" for certain modes (e.g Stand, Sit, .....). 
+  + You can configure the whistle anytime to either target all dogs in radius or only Dogs who are "On Duty".
+  + Dogs can be set "On Duty" via its Dog Menu or using the "Duty Whistle".
+  + "Duty Whistle" : Whistle mode that will, upon use, set every dog in radius who are standing to be "On Duty" and vice versa. When you hold this whistle, Dogs who are "On Duty" will have their name highlighted.
+
+Added New Translations:
+
+  + Simplified Chinese (shenyx110)
+  + Russian (Lunna Light)
+
+New Control System for StringEntrySelectScreen (Heel By Name, Whistle Screen, Conducting Bone Screen...)
+
+  + The search bar is no longer focused by default, instead, you need to focus it first by pressing the Jump key while holding sneak and then start typing as usual. 
+  + To unfocus, left click anywhere with your mouse. When the text field is not being focused, Movement Keys (WASD by default) now can be used to both move the highlighted entry up/down and navigate between pages. 
+  + The Jump key can also be used (without holding the Sneak key) to select the highlighted entry.
+
+Added in-game help for every Whistle Modes which can be viewed in the Whistle Screen.
+
+
+Revamped and formally defined Tactical Mode:
+
+  The formal definition for Tactical Mode is the following: Your dog behaves like in Aggressive Mode but wil respond when being commanded it to attack something far away (which it won't in other modes), currently via the Tactical Whistle. When the dog is in Tactical Mode targets a target far away:
+  + It will focus on the target and any Aggressive mode behaviour that cause the Dog to change target will not affect it. 
+  + The target can, however, be changed with another target when you issues another tactical command on another target or invalidated if the player interupts the Dog.
+  + Its MaxDistAwayFromOwner will be increased by 10 as long as it is still targeting it.
+  + Its follow range will be 32 instead of 16 until it gets close enough to the target.
+  + Change to Tactical Whistle projectile: They can now pass through allies.
+  + (Configurable) There is now a limit on how many Tactical dogs will responds each time it hit a target.
+  + It now have a 0.5 second cooldown every use and every successful hit will have an additional 2 second.
+
+Added Carry Me Whistle: Allow you to command one of your nearby Wolf Mount dog to come and force you on its back.
+Option to disable Dog's name being visible through walls.
+Option (Enabled by default) to hard prevent Dogs from going above the world's build limit. 
+
+
+======================================================
+
+#Dogs now refuse to attack targets if they are above the world's build limit.
+#Improved Dog's Attack Reaction Time significantly.
+#Removed some Obselete Config Options
+#Custom Dog Models now have the option to only render Model Only Accessories.   
+#API Change: EnumMode -> DogMode
+#API Change: EnumGender -> DogGender
+
+======================================================
+*Fixed a bug causing Dogs Attack Reaction Time to be relatively slow.
+*Avoid bugs related to Early Config Access when initializing Screens.
