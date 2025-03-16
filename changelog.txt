@@ -1797,3 +1797,6 @@ Option (Enabled by default) to hard prevent Dogs from going above the world's bu
 ======================================================
 *Fixed a bug causing Dogs Attack Reaction Time to be relatively slow.
 *Avoid bugs related to Early Config Access when initializing Screens.
+
+**1.18.44 - 16th March 2025**
+* HOTFIX: All StringEntrySelectScreen now don't freeze the name like Pause Screen does.
