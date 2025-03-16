@@ -7,12 +7,12 @@ import doggytalents.DoggySounds;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.DogGoAndCarryPlayerAction;
-import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import doggytalents.common.network.packet.data.CarryMeData;
 import doggytalents.common.talent.WolfMountTalent;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
+import net.minecraftforge.network.NetworkEvent.Context;
 
 public class CarryMePacket extends DogPacket<CarryMeData> {
 

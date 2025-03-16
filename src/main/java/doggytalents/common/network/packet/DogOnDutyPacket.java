@@ -3,9 +3,9 @@ package doggytalents.common.network.packet;
 import java.util.function.Supplier;
 
 import doggytalents.common.entity.Dog;
-import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import doggytalents.common.network.packet.data.DogOnDutyData;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent.Context;
 
 public class DogOnDutyPacket extends DogPacket<DogOnDutyData> {
     

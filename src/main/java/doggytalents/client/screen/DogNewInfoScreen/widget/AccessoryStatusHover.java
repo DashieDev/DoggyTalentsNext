@@ -11,6 +11,7 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.DogModel.AccessoryState;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.Minecraft;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.GameRenderer;

@@ -14,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class NetworkUtil {
     
@@ -33,9 +34,9 @@ public class NetworkUtil {
     //     <RegistryFriendlyByteBuf, TalentOption<?>> 
     //     TALENT_OPTION_CODEC = ByteBufCodecs.registry(DoggyRegistries.Keys.TALENT_OPTION);
 
-    public static StreamCodec
-        <RegistryFriendlyByteBuf, SoundEvent> 
-        SOUND_EVENT_CODEC = ByteBufCodecs.registry(Registries.SOUND_EVENT);
+    // public static StreamCodec
+    //     <RegistryFriendlyByteBuf, SoundEvent> 
+    //     SOUND_EVENT_CODEC = ByteBufCodecs.registry(Registries.SOUND_EVENT);
 
     public static void writeTalentToBuf(FriendlyByteBuf buf, Talent val) {
         // var reg_buf = (RegistryFriendlyByteBuf) buf;
@@ -113,12 +114,14 @@ public class NetworkUtil {
     }
 
     public static void writeSoundEventToBuf(FriendlyByteBuf buf, SoundEvent val) {
-        var reg_buf = (RegistryFriendlyByteBuf) buf;
-        SOUND_EVENT_CODEC.encode(reg_buf, val);
+        // var reg_buf = (RegistryFriendlyByteBuf) buf;
+        // SOUND_EVENT_CODEC.encode(reg_buf, val);
+        buf.writeRegistryIdUnsafe(ForgeRegistries.SOUND_EVENTS, val);
     }
 
     public static SoundEvent readSoundEventFromBuf(FriendlyByteBuf buf) {
-        var reg_buf = (RegistryFriendlyByteBuf) buf;
-        return SOUND_EVENT_CODEC.decode(reg_buf);
+        // var reg_buf = (RegistryFriendlyByteBuf) buf;
+        // return SOUND_EVENT_CODEC.decode(reg_buf);
+        return buf.readRegistryIdUnsafe(ForgeRegistries.SOUND_EVENTS);
     }
 }
