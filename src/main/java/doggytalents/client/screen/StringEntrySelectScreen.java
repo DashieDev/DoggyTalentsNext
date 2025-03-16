@@ -145,7 +145,7 @@ public class StringEntrySelectScreen extends Screen {
         boolean text_field_focused = 
             this.searchField.focusState() == TextField.FocusState.FOCUS;
         
-        if (keyCode == mc.options.keyShift.getKey().getValue())
+        if (mc.options.keyShift.matches(keyCode, scanCode))
             this.isSneakPressed = true;
 
         if (this.entryView.keyPressed(text_field_focused, keyCode, scanCode, modifiers)) {
@@ -153,7 +153,7 @@ public class StringEntrySelectScreen extends Screen {
         }
         
         boolean focus_search_field = 
-            keyCode == mc.options.keyJump.getKey().getValue()
+            mc.options.keyJump.matches(keyCode, scanCode)
             && isSneakPressed
             && this.searchField.focusState() == TextField.FocusState.NONE;
         if (focus_search_field) {
@@ -162,7 +162,7 @@ public class StringEntrySelectScreen extends Screen {
         }
         boolean move_left = !text_field_focused && (
             keyCode == InputConstants.KEY_LEFT
-            || keyCode == mc.options.keyLeft.getKey().getValue()
+            || mc.options.keyLeft.matches(keyCode, scanCode)
         );
         if (move_left) {
             if (this.prevPageButton.active)
@@ -171,7 +171,7 @@ public class StringEntrySelectScreen extends Screen {
         }
         boolean move_right = !text_field_focused && (
             keyCode == InputConstants.KEY_RIGHT
-            || keyCode == mc.options.keyRight.getKey().getValue()
+            || mc.options.keyRight.matches(keyCode, scanCode)
         );
         if (move_right) {
             if (this.nextPageButton.active)
@@ -190,18 +190,18 @@ public class StringEntrySelectScreen extends Screen {
         var mc = Minecraft.getInstance();
         boolean text_field_focus_ready = 
             this.searchField.focusState() == TextField.FocusState.READY
-            && keyCode == mc.options.keyJump.getKey().getValue();
+            && mc.options.keyJump.matches(keyCode, scanCode);
         if (text_field_focus_ready)
             this.searchField.setFocusState(TextField.FocusState.FOCUS);
         
-        if (keyCode == mc.options.keyShift.getKey().getValue())
+        if (mc.options.keyShift.matches(keyCode, scanCode))
             this.isSneakPressed = false;
 
         //Confirm when key released instead of pressed to avoid propagating
         //the key press outside of the screen lifetime.
         boolean is_confirm = 
             keyCode == InputConstants.KEY_RETURN || (
-                keyCode == mc.options.keyJump.getKey().getValue()
+                mc.options.keyJump.matches(keyCode, scanCode)
                 && !isSneakPressed
                 && this.searchField.focusState() == TextField.FocusState.NONE
             );
@@ -340,7 +340,7 @@ public class StringEntrySelectScreen extends Screen {
             boolean is_down = 
                 keyCode == InputConstants.KEY_DOWN || (
                     !textFieldFocused 
-                    && keyCode == mc.options.keyDown.getKey().getValue()
+                    && mc.options.keyDown.matches(keyCode, scanCode)
                 );
             if (is_down) {
                 moveSelectedEntryInPage(x -> x + 1);
@@ -349,7 +349,7 @@ public class StringEntrySelectScreen extends Screen {
             boolean is_up = 
                 keyCode == InputConstants.KEY_UP || (
                     !textFieldFocused 
-                    && keyCode == mc.options.keyUp.getKey().getValue()
+                    && mc.options.keyUp.matches(keyCode, scanCode)
                 );
             if (is_up) {
                 moveSelectedEntryInPage(x -> x - 1);

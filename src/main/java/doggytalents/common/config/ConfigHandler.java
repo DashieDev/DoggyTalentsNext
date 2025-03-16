@@ -361,9 +361,6 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue CARRY_ME_WHISTLE;
         public ForgeConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
 
-        //(Non 1.20.5+)
-        public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
-
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
         public ServerConfig(ForgeConfigSpec.Builder builder) {

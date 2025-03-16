@@ -5488,7 +5488,7 @@ public class Dog extends AbstractDog {
         if (!this.level().isClientSide && type == SyncTypes.DOG_MODE) {
             var mode = getMode();
             this.incapacitatedMananger.onModeUpdate(mode);
-            if (mode == EnumMode.INJURED) {
+            if (mode == DogMode.INJURED) {
                 this.hungerManager.onBeingIncapacitated();
             }
             updateWanderState(mode);

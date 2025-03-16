@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import doggytalents.api.feature.DogLevel;
 import doggytalents.api.feature.DogSize;
-import doggytalents.api.feature.EnumGender;
-import doggytalents.api.feature.EnumMode;
+import doggytalents.api.feature.DogGender;
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
@@ -32,8 +32,8 @@ public class DogFabricHelper {
     private final Dog dog;
     private DogLevel dogLevel = new DogLevel(0, 0);
     private DogVariant dogVariant = DogVariantUtil.getDefault();
-    private EnumGender dogGender = EnumGender.MALE;
-    private EnumMode dogMode = EnumMode.DOCILE;
+    private DogGender dogGender = DogGender.MALE;
+    private DogMode dogMode = DogMode.DOCILE;
     private DimensionDependantArg<Optional<BlockPos>> bowlPos = new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS);    
     private DimensionDependantArg<Optional<BlockPos>> bedPos = new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS);
     private IncapacitatedSyncState incapSyncState = IncapacitatedSyncState.NONE;
@@ -101,11 +101,11 @@ public class DogFabricHelper {
         this.dog.onFabricDataUpdated(SyncTypes.DOG_VARIANT);
     }
 
-    public EnumGender getDogGender() {
+    public DogGender getDogGender() {
         return dogGender;
     }
 
-    public void setDogGender(EnumGender dogGender) {
+    public void setDogGender(DogGender dogGender) {
         if (dogGender == this.dogGender)
             return;
         if (!dog.level().isClientSide) {
@@ -114,11 +114,11 @@ public class DogFabricHelper {
         this.dogGender = dogGender;
     }
 
-    public EnumMode getDogMode() {
+    public DogMode getDogMode() {
         return dogMode;
     }
 
-    public void setDogMode(EnumMode dogMode) {
+    public void setDogMode(DogMode dogMode) {
         if (dogMode == this.dogMode)
             return;
         if (!dog.level().isClientSide) {
