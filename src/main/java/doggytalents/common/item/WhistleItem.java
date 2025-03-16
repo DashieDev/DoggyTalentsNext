@@ -158,7 +158,7 @@ public class WhistleItem extends Item implements IDogItem {
             if (stack.hasTag() && stack.getTag().contains("mode", Tag.TAG_ANY_NUMERIC)) {
                 id_mode = stack.getTag().getByte("mode");
             }
-            on_duty_only = stack.getTag().getBoolean("dog_on_duty_only");
+            if (stack.hasTag()) on_duty_only = stack.getTag().getBoolean("dog_on_duty_only");
 
             List<Dog> dogsList = world.getEntitiesOfClass(
                 Dog.class, 
