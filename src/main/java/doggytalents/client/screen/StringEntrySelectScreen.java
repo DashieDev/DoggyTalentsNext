@@ -13,6 +13,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.StringEntrySelectScreen.TextField.FocusState;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
+import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;

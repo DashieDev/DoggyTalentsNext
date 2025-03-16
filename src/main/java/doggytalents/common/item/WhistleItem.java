@@ -23,6 +23,7 @@ import doggytalents.common.talent.MobRetrieverTalent;
 import doggytalents.common.talent.RoaringGaleTalent;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -159,7 +160,7 @@ public class WhistleItem extends Item implements IDogItem {
             if (stack.hasTag() && stack.getTag().contains("mode", Tag.TAG_ANY_NUMERIC)) {
                 id_mode = stack.getTag().getByte("mode");
             }
-            on_duty_only = tag.getBoolean("dog_on_duty_only");
+            on_duty_only = stack.getTag().getBoolean("dog_on_duty_only");
 
             List<Dog> dogsList = world.getEntitiesOfClass(
                 Dog.class, 
