@@ -40,6 +40,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
    private final int timeOutTick = 40;
    private int waitingTick;
    private BlockPos.MutableBlockPos dogPos0;
+   private boolean immediatelyPathRecalcWhenStop = false;
 
    private Path initialPath = null; 
    private int detectReachPenalty = 0;
@@ -180,6 +181,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       this.ticksUntilNextAttack = 0;
       this.waitingTick = 0;
       this.dogPos0 = this.dog.blockPosition().mutable();
+      this.immediatelyPathRecalcWhenStop = checkCurrentPathIfCanDoImmediateRecalc();
 
       var attack_manager = this.dog.dogAttackManager;
       attack_manager.attacking = true;
@@ -246,6 +248,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
          if (attack_manager.isDogFarChasingTarget())
             this.ticksUntilPathRecalc = 20; 
          n.moveTo(e, this.speedModifier);
+         this.immediatelyPathRecalcWhenStop = checkCurrentPathIfCanDoImmediateRecalc();
       }
 
       --this.ticksUntilPathRecalc;
@@ -260,7 +263,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       ) {
          dog.getMoveControl().setWantedPosition(e.getX(), e.getY(), e.getZ(), this.speedModifier);
       }
-      if(!attack_manager.isDogFarChasingTarget() && n.isDone() && dog.tickCount % 2 != 0 && !this.canReachTarget(e, d0)) {
+      if(!attack_manager.isDogFarChasingTarget() && immediatelyPathRecalcWhenStop && n.isDone() && dog.tickCount % 2 != 0 && !this.canReachTarget(e, d0)) {
          this.ticksUntilPathRecalc = 0;
       }
       if (this.checkAndPerformAttack(e, d0)) this.waitingTick = 0;
@@ -334,6 +337,17 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       
       return true;   
       
+   }
+
+   private boolean checkCurrentPathIfCanDoImmediateRecalc() {
+      var path = dog.getNavigation().getPath();
+      final boolean ground_nav_cannot_update = 
+         dog.isDefaultNavigation() && !dog.onGround();
+      if (path == null && !ground_nav_cannot_update)
+         return false;
+      if (path != null && path.getNodeCount() > 5)
+         return false;
+      return true;
    }
 
    //TODO make dog be able to attack in the air
