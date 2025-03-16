@@ -5,9 +5,9 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import doggytalents.client.entity.sound.DogInterruptibleSoundInstance;
-import doggytalents.common.network.PacketDistributor;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogInterruptibleSoundData;
+import doggytalents.forge_imitate.network.PacketDistributor;
 import net.minecraft.sounds.SoundEvent;
 
 public class DogSoundManager {

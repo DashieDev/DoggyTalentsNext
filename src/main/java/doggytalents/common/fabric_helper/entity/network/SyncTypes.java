@@ -9,10 +9,10 @@ import java.util.function.Function;
 import com.google.common.collect.Maps;
 
 import doggytalents.DoggySerializers;
+import doggytalents.api.feature.DogGender;
 import doggytalents.api.feature.DogLevel;
+import doggytalents.api.feature.DogMode;
 import doggytalents.api.feature.DogSize;
-import doggytalents.api.feature.EnumGender;
-import doggytalents.api.feature.EnumMode;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
@@ -29,8 +29,8 @@ public class SyncTypes {
     private static Map<Integer, SyncType<?>> ID_TO_TYPE = Maps.newHashMap();
     private static List<SyncType<?>> ALL = new ArrayList<>(COUNT);
     public static SyncType<DogLevel> DOG_LEVEL = register(new SyncType<DogLevel>(0, DoggySerializers.DOG_LEVEL_SERIALIZER, DogFabricHelper::setDogLevel, DogFabricHelper::getDogLevel));
-    public static SyncType<EnumGender> DOG_GENDER = register(new SyncType<EnumGender>(1, DoggySerializers.GENDER_SERIALIZER, DogFabricHelper::setDogGender, DogFabricHelper::getDogGender));
-    public static SyncType<EnumMode> DOG_MODE = register(new SyncType<EnumMode>(2, DoggySerializers.MODE_SERIALIZER, DogFabricHelper::setDogMode, DogFabricHelper::getDogMode));
+    public static SyncType<DogGender> DOG_GENDER = register(new SyncType<DogGender>(1, DoggySerializers.GENDER_SERIALIZER, DogFabricHelper::setDogGender, DogFabricHelper::getDogGender));
+    public static SyncType<DogMode> DOG_MODE = register(new SyncType<DogMode>(2, DoggySerializers.MODE_SERIALIZER, DogFabricHelper::setDogMode, DogFabricHelper::getDogMode));
     public static SyncType<IncapacitatedSyncState> INCAP_SYNC_STATE = register(new SyncType<IncapacitatedSyncState>(3, DoggySerializers.INCAP_SYNC_SERIALIZER, DogFabricHelper::setIncapSyncState, DogFabricHelper::getIncapSyncState));
     public static SyncType<List<DoggyArtifactItem>> ARTIFACTS = register(new SyncType<List<DoggyArtifactItem>>(4, DoggySerializers.ARTIFACTS_SERIALIZER, DogFabricHelper::setArtifacts, DogFabricHelper::getArtifacts));
     public static SyncType<DogSize> DOG_SIZE = register(new SyncType<DogSize>(5, DoggySerializers.DOG_SIZE_SERIALIZER, DogFabricHelper::setDogSize, DogFabricHelper::getDogSize));

@@ -5,10 +5,10 @@ import java.util.List;
 
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.network.PacketDistributor;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.CarryMeData;
 import doggytalents.common.talent.WolfMountTalent;
+import doggytalents.forge_imitate.network.PacketDistributor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
