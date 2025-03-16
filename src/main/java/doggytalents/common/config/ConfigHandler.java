@@ -355,8 +355,8 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
         public ForgeConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
         public ForgeConfigSpec.IntValue TACTICAL_LIMIT;
-        public ModConfigSpec.BooleanValue CARRY_ME_WHISTLE;
-        public ModConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
+        public ForgeConfigSpec.BooleanValue CARRY_ME_WHISTLE;
+        public ForgeConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
 
         //(Non 1.20.5+)
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
