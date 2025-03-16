@@ -321,6 +321,11 @@ public class StringEntrySelectScreen extends Screen {
         return null;
     }
 
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
+
     public static class EntryView {
         private final StringEntrySelectScreen parent;
         private int pageCount = 1;
