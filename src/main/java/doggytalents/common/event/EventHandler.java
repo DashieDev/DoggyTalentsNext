@@ -1,5 +1,6 @@
 package doggytalents.common.event;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
+import doggytalents.DogVariants;
 import doggytalents.DoggyAccessories;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
@@ -30,10 +32,12 @@ import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.talent.HunterDogTalent;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.util.DogLocationStorageMigration;
+import doggytalents.common.util.LangUtil;
 import doggytalents.common.util.Util;
 import doggytalents.common.util.dogpromise.DogPromiseManager;
 import doggytalents.common.util.dogpromise.promise.DogBatchTeleportToDimensionPromise;
 import doggytalents.common.util.dogpromise.promise.DogHoldChunkToTeleportPromise;
+import doggytalents.common.variant.DogVariant;
 import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -265,6 +269,16 @@ public class EventHandler {
     private static void migrateWolfVariant(Wolf wolf, Dog dog) {
         // var dog_variant = DogVariantUtil.fromVanila(wolf.getVariant().unwrapKey().orElse(WolfVariants.PALE));
         // dog.setDogVariant(dog_variant);
+        //1.20.5 under 
+        if (ConfigHandler.SERVER.RANDOM_VAR_ON_TRAIN.get()) {
+            var variants = List.of(DogVariants.PALE.get(), DogVariants.RUSTY.get(), 
+                DogVariants.WOOD.get(), DogVariants.CHESTNUT.get(), DogVariants.STRIPED.get(), 
+                DogVariants.ASHEN.get(), DogVariants.SNOWY.get(), DogVariants.SPOTTED.get(), 
+                DogVariants.BLACK.get());
+            var variant = LangUtil.getRandomItem(dog.getRandom(), variants)
+                .orElse(DogVariant.PALE);
+            dog.setDogVariant(variant);
+        }
     }
 
     private static void migrateWolfArmor(Wolf wolf, Dog dog) {
