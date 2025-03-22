@@ -1,5 +1,6 @@
 package doggytalents.common.inventory;
 
+import doggytalents.common.talent.PackPuppyTalent;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -9,8 +10,11 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class PackPuppyItemHandler extends ItemStackHandler {
 
-    public PackPuppyItemHandler() {
+    private PackPuppyTalent inst;
+
+    public PackPuppyItemHandler(PackPuppyTalent inst) {
         super(15);
+        this.inst = inst;
     }
 
     @Override
@@ -61,5 +65,12 @@ public class PackPuppyItemHandler extends ItemStackHandler {
             }
             this.onLoad();
         }
+    }
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+        if (slot >= inst.level() * 3)
+            return false;
+        return super.isItemValid(slot, stack);
     }
 }
