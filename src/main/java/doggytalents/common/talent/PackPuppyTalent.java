@@ -81,7 +81,7 @@ public class PackPuppyTalent extends TalentInstance {
 
     public PackPuppyTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
-        PackPuppyItemHandler handler = new PackPuppyItemHandler();
+        PackPuppyItemHandler handler = new PackPuppyItemHandler(this);
         this.packPuppyHandler = handler;
     }
 
