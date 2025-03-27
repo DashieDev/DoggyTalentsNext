@@ -117,8 +117,9 @@ public class DogWantAttentionAction extends TriggerableAction {
     private void tickBegForAttention() {
         this.dog.getLookControl().setLookAt(owner);
         ++tickAnim;
-        if (this.tickAnim == 54) {
-            this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
+        if (this.tickAnim == 30) {
+            var sound = dog.dogMood.getJealousSound();
+            this.dog.playSound(sound, this.dog.getSoundVolume(), this.dog.getVoicePitch());
         }
     }
 
