@@ -8,6 +8,367 @@
     "sounds": [ "doggytalents:whistle/long" ]
   },
 
+  "dog_angry_bark1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_bark1" ]
+  },
+  "dog_angry_bark2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_bark2" ]
+  },
+  "dog_angry_bark3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_bark3" ]
+  },
+  "dog_angry_death" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_death" ]
+  },
+  "dog_angry_growl1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_growl1" ]
+  },
+  "dog_angry_growl2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_growl2" ]
+  },
+  "dog_angry_growl3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_growl3" ]
+  },
+  "dog_angry_hurt1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_hurt1" ]
+  },
+  "dog_angry_hurt2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_hurt2" ]
+  },
+  "dog_angry_hurt3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_hurt3" ]
+  },
+  "dog_angry_panting" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_panting" ]
+  },
+  "dog_angry_whine" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/angry_whine" ]
+  },
+  "dog_big_bark1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_bark1" ]
+  },
+  "dog_big_bark2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_bark2" ]
+  },
+  "dog_big_bark3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_bark3" ]
+  },
+  "dog_big_death" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_death" ]
+  },
+  "dog_big_growl1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_growl1" ]
+  },
+  "dog_big_growl2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_growl2" ]
+  },
+  "dog_big_growl3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_growl3" ]
+  },
+  "dog_big_hurt1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_hurt1" ]
+  },
+  "dog_big_hurt2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_hurt2" ]
+  },
+  "dog_big_hurt3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_hurt3" ]
+  },
+  "dog_big_panting" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_panting" ]
+  },
+  "dog_big_whine" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/big_whine" ]
+  },
+  "dog_classic_bark1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_bark1" ]
+  },
+  "dog_classic_bark2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_bark2" ]
+  },
+  "dog_classic_bark3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_bark3" ]
+  },
+  "dog_classic_death" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_death" ]
+  },
+  "dog_classic_growl1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_growl1" ]
+  },
+  "dog_classic_growl2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_growl2" ]
+  },
+  "dog_classic_growl3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_growl3" ]
+  },
+  "dog_classic_hurt1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_hurt1" ]
+  },
+  "dog_classic_hurt2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_hurt2" ]
+  },
+  "dog_classic_hurt3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_hurt3" ]
+  },
+  "dog_classic_panting" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_panting" ]
+  },
+  "dog_classic_whine" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_whine" ]
+  },
+  "dog_cute_bark1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_bark1" ]
+  },
+  "dog_cute_bark2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_bark2" ]
+  },
+  "dog_cute_bark3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_bark3" ]
+  },
+  "dog_cute_death" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_death" ]
+  },
+  "dog_cute_growl1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_growl1" ]
+  },
+  "dog_cute_growl2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_growl2" ]
+  },
+  "dog_cute_growl3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_growl3" ]
+  },
+  "dog_cute_hurt1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_hurt1" ]
+  },
+  "dog_cute_hurt2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_hurt2" ]
+  },
+  "dog_cute_hurt3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_hurt3" ]
+  },
+  "dog_cute_panting" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_panting" ]
+  },
+  "dog_cute_whine" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_whine" ]
+  },
+  "dog_grumpy_bark1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_bark1" ]
+  },
+  "dog_grumpy_bark2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_bark2" ]
+  },
+  "dog_grumpy_bark3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_bark3" ]
+  },
+  "dog_grumpy_death" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_death" ]
+  },
+  "dog_grumpy_growl1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_growl1" ]
+  },
+  "dog_grumpy_growl2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_growl2" ]
+  },
+  "dog_grumpy_growl3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_growl3" ]
+  },
+  "dog_grumpy_hurt1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_hurt1" ]
+  },
+  "dog_grumpy_hurt2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_hurt2" ]
+  },
+  "dog_grumpy_hurt3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_hurt3" ]
+  },
+  "dog_grumpy_panting" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_panting" ]
+  },
+  "dog_grumpy_whine" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_whine" ]
+  },
+  "dog_puglin_bark1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_bark1" ]
+  },
+  "dog_puglin_bark2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_bark2" ]
+  },
+  "dog_puglin_bark3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_bark3" ]
+  },
+  "dog_puglin_death" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_death" ]
+  },
+  "dog_puglin_growl1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_growl1" ]
+  },
+  "dog_puglin_growl2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_growl2" ]
+  },
+  "dog_puglin_growl3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_growl3" ]
+  },
+  "dog_puglin_hurt1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_hurt1" ]
+  },
+  "dog_puglin_hurt2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_hurt2" ]
+  },
+  "dog_puglin_hurt3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_hurt3" ]
+  },
+  "dog_puglin_panting" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_panting" ]
+  },
+  "dog_puglin_whine" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_whine" ]
+  },
+  "dog_sad_bark1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_bark1" ]
+  },
+  "dog_sad_bark2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_bark2" ]
+  },
+  "dog_sad_bark3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_bark3" ]
+  },
+  "dog_sad_death" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_death" ]
+  },
+  "dog_sad_growl1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_growl1" ]
+  },
+  "dog_sad_growl2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_growl2" ]
+  },
+  "dog_sad_growl3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_growl3" ]
+  },
+  "dog_sad_hurt1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_hurt1" ]
+  },
+  "dog_sad_hurt2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_hurt2" ]
+  },
+  "dog_sad_hurt3" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_hurt3" ]
+  },
+  "dog_sad_panting" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_panting" ]
+  },
+  "dog_sad_whine" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_whine" ]
+  },
+  "dog_grumpy_death_alt" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_death_alt" ]
+  },
+  "dog_cute_hurt1_alt" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/cute_hurt1_alt" ]
+  },
+  "dog_grumpy_hurt2_alt" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/grumpy_hurt2_alt" ]
+  },
+  "dog_puglin_hurt2_alt" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/puglin_hurt2_alt" ]
+  },
+  "dog_sad_hurt2_alt" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_hurt2_alt" ]
+  },
+  "dog_sad_hurt3_alt" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/sad_hurt3_alt" ]
+  },
+
   "chopin_op64_no1" : {
     "subtitle": "doggytalents.music.chopin_op64_no1",
     "sounds": [ "doggytalents:music/chopin_op64_no_1_dashiedev" ]
