@@ -126,7 +126,8 @@ public class DogGreetOwnerAction extends TriggerableAction {
         if (--tickTillWhine <= 0) {
             tickTillWhine = WHINE_BASE_INTERVAL
                 + dog.getRandom().nextInt(3) *20;
-            this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
+            var sound = dog.dogMood.getGreetWhine();
+            this.dog.playSound(sound, this.dog.getSoundVolume(), this.dog.getVoicePitch());
         }
         if (dog.getRandom().nextInt(HEART_CHANCE_WINDOW) == 0) {
             if (dog.level() instanceof ServerLevel sLevel) {
