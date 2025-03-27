@@ -265,6 +265,7 @@ public class Dog extends AbstractDog {
     public final DogAttackManager dogAttackManager
         = new DogAttackManager(this);
     public final DogAiManager dogAi;
+    public final DogMoodManager dogMood = new DogMoodManager(this);
     public final DogSoundManager dogSoundManager
         = new DogSoundManager(this);
     private DogAlterationProps alterationProps
@@ -381,7 +382,7 @@ public class Dog extends AbstractDog {
             if (this.getDogIncapValue() > 20) {
                 int chance_window = 
                     this.incapacitatedMananger.canMove() ? 5 : 8; 
-                return this.random.nextInt(chance_window) == 0 ? SoundEvents.WOLF_WHINE : null;
+                return this.random.nextInt(chance_window) == 0 ? this.dogMood.getInjuredAmbient() : null;
             } else {
                 return SoundEvents.WOLF_PANT;
             }
@@ -389,11 +390,11 @@ public class Dog extends AbstractDog {
         if (this.pettingManager.isPetting() || this.isDogSilent()) {
             return null;
         }
-        if (this.random.nextInt(3) == 0) {
-            return this.isTame() && this.getHealth() < 10.0F ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
-        } else {
-            return SoundEvents.WOLF_AMBIENT;
-        }
+        boolean whine_health = this.isTame() && this.getHealth() < 10
+            && this.random.nextInt(3) == 0;
+        if (whine_health)
+            return this.dogMood.getLowHealthWhine();
+        return this.dogMood.getAmbientSound();
     }
 
     @Override
@@ -414,12 +415,12 @@ public class Dog extends AbstractDog {
             return SoundEvents.WOLF_ARMOR_DAMAGE;
         }
         
-        return SoundEvents.WOLF_HURT;
+        return this.dogMood.getHurtSound(damageSourceIn);
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.WOLF_DEATH;
+        return dogMood.getDeathSound();
     }
 
     protected SoundEvent getHowlSound() {
@@ -867,6 +868,7 @@ public class Dog extends AbstractDog {
         }
 
         if (!this.level().isClientSide) {
+            this.dogMood.tickServer();
             this.dogPushAvoidManager.tickServer();
             this.dogAttackManager.tickServer();
         }
@@ -1745,7 +1747,8 @@ public class Dog extends AbstractDog {
         }
 
         float health0 = this.getHealth();
-
+        
+        this.dogMood.onStartHurting(health0);
         boolean ret = super_call.hurt(source, amount);
 
         float actual_hurt_amount = health0 - this.getHealth();
