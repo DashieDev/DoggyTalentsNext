@@ -24,6 +24,10 @@ public class DoggySounds {
     */
     public static final Supplier<SoundEvent> CHOPIN_OP64_NO1 = register("chopin_op64_no1");
 
+    static {
+        DogSounds.bootstrap();
+    }
+
     private static Supplier<SoundEvent> register(final String name) {
         //TODO 1.19.3 ??
         return register(name, () -> SoundEvent.createVariableRangeEvent(Util.getResource(name)));
