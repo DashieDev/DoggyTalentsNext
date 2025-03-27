@@ -57,7 +57,7 @@ public class CreeperSweeperTalent extends TalentInstance {
                 List<Creeper> list = dog.level().getEntitiesOfClass(Creeper.class, dog.getBoundingBox().inflate(this.getSearchRange(dog), this.level() * 2, this.getSearchRange(dog)));
 
                 if (!list.isEmpty()) {
-                    dog.playSound(SoundEvents.WOLF_GROWL, dog.getSoundVolume(), (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F);
+                    dog.playSound(((Dog)dog).dogMood.getSeriousGrowl(), dog.getSoundVolume(), (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F);
                     this.cooldown = dog.tickCount + 60 + dog.getRandom().nextInt(40);
                 }
             }
