@@ -103,6 +103,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
             dog.setAnim(DogAnimation.NONE);
         dog.setDogCurious(false);
         resetSniffPos();
+        dog.dogSoundManager.interuptPlaying();
         dog.getNavigation().stop();
     }
 
@@ -119,6 +120,11 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         this.dog.getLookControl().setLookAt(Vec3.atBottomCenterOf(sniffAtPos));
         switch (this.currentAnimation) {
         default:
+            if (tickAnim == 3) {
+                var sniff_sound = dog.dogMood.getSniffSound();
+                dog.dogSoundManager.playInterruptible(sniff_sound, 1, dog.getVoicePitch());
+            }
+            ++tickAnim;
             break;
         case SNIFF_HOT: 
         {
@@ -146,7 +152,8 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         case SNIFF_SNEEZE:
         {
             if (this.tickAnim == 25) {
-                this.dog.playSound(SoundEvents.WOLF_AMBIENT, 1, (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.2F + 1.5F);
+                var sneeze_sound = dog.dogMood.getSneezeSound();
+                this.dog.playSound(sneeze_sound, 1, this.dog.getVoicePitch());
                 this.continueEvenWhenChanged = true;
             }
             ++tickAnim;
@@ -174,6 +181,11 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
                 this.dog.getMoveControl().setWantedPosition(sniffAtPos.getX(), this.dog.getY(),
                 sniffAtPos.getZ(), 0.5f);
             }
+            if (tickAnim == 30) {
+                var sound = dog.dogMood.getDownTheHoleSound();
+                dog.playSound(sound, 1, dog.getVoicePitch());
+            }
+            ++tickAnim;
             break;
         }
         case SNIFF_AWW_HAPPY:

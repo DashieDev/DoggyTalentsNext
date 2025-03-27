@@ -140,8 +140,9 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
             if (this.nearestDanger != null) {
                 if (--this.tickUntilGrowl <= 0) {
                     this.tickUntilGrowl = 25;
+                    var sound = dog.dogMood.getSeriousGrowl();
                     dog.playSound(
-                        SoundEvents.WOLF_GROWL, 
+                        sound, 
                         // Scream for owner in case he can't hear him because 
                         // he is listening to some intense RACHMANINOV
                         1, 
