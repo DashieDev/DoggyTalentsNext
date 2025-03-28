@@ -32,7 +32,7 @@ public class ClientEventHandlerRegisterer {
         EventCallbacksRegistry.registerCallback(
             new SingleEventCallBack<FMLClientSetupEvent>
                 (FMLClientSetupEvent.class,
-                    ClientSetup::setupCollarRenderers
+                    ClientSetup::onClientSetup
                 )
         );
         EventCallbacksRegistry.registerCallback(
