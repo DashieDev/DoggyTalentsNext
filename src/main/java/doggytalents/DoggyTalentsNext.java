@@ -167,8 +167,7 @@ public class DoggyTalentsNext {
     public void clientSetup(final FMLClientSetupEvent event) {
         //ClientSetup.setupScreenManagers(event);
 
-        ClientSetup.setupCollarRenderers(event);
-        DoggySpinModel.init();
+        ClientSetup.onClientSetup(event);
     }
 
     // protected void interModProcess(final InterModProcessEvent event) {
