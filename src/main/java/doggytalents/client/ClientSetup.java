@@ -359,10 +359,8 @@ public class ClientSetup {
 
         DogAnimationRegistry.init();
         DogModelRegistry.init();
-
         //gatherSkinJsonFromOtherMods();
-        // TODO: RenderingRegistry.registerEntityRenderingHandler(DoggyEntityTypes.DOG_BEAM.get(), manager -> new DoggyBeamRenderer<>(manager, event.getMinecraftSupplier().get().getItemRenderer()));
-    
+        
 
         //Fabric
         DogModelConfiguationRegistry.doGatherFromOtherMods();
@@ -396,7 +394,12 @@ public class ClientSetup {
         event.registerEntityRenderer(DoggyEntityTypes.DOG_PLUSHIE_TOY.get(), DogPlushieRenderer::new);
     }
 
-    public static void setupCollarRenderers(final FMLClientSetupEvent event) {
+    public static void onClientSetup(FMLClientSetupEvent event) {
+        setupCollarRenderers();
+        DoggySpinModel.init();
+    }
+
+    public static void setupCollarRenderers() {
         
         CollarRenderManager.registerLayer(DogVariantRenderer::new);
         CollarRenderManager.registerLayer(DogCustomGlowingOverlayRenderer::new);
