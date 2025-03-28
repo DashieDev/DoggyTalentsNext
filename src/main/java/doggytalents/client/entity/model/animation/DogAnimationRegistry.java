@@ -10,7 +10,7 @@ import net.minecraft.client.animation.AnimationDefinition;
 public class DogAnimationRegistry {
 
     private static Map<DogAnimation, AnimationDefinition> DEFINITION_MAP
-         = Maps.newConcurrentMap();
+         = Maps.newHashMap();
     
     public static void register(DogAnimation animation, AnimationDefinition sequence) {
         DEFINITION_MAP.putIfAbsent(animation, sequence);
@@ -21,7 +21,7 @@ public class DogAnimationRegistry {
     }
 
     public static void init() {
-        DEFINITION_MAP = Maps.newConcurrentMap();
+        DEFINITION_MAP = Maps.newHashMap();
         register(DogAnimation.STRETCH, DogAnimationSequences.STRETCH);
         register(DogAnimation.FAINT, DogAnimationSequences.FAINT);
         register(DogAnimation.FAINT_2, DogAnimationSequences.FAINT2);
