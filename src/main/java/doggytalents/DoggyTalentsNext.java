@@ -13,6 +13,7 @@ import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.backward_imitate.DTNRecipeProvider_21_3;
 import doggytalents.common.backward_imitate.EventRegister_21_3;
+import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import doggytalents.common.chunk.DoggyChunkController;
 //import doggytalents.common.addon.AddonManager;
@@ -167,6 +168,7 @@ public class DoggyTalentsNext {
         //ClientSetup.setupScreenManagers(event);
 
         ClientSetup.setupCollarRenderers(event);
+        DoggySpinModel.init();
     }
 
     // protected void interModProcess(final InterModProcessEvent event) {

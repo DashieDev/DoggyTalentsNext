@@ -70,7 +70,6 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
 //        this.addLayer(new DogTalentLayer(this, ctx));
 //        this.addLayer(new DogAccessoryLayer(this, ctx));
         DogModelRegistry.resolve(ctx);
-        DoggySpinModel.init(ctx);
         this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
         for (LayerFactory<DogRenderState_21_3, DogModel> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
