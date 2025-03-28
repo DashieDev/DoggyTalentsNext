@@ -160,11 +160,10 @@ public class DoggyTalentsNext {
 
     @OnlyIn(Dist.CLIENT)
     public void clientSetup(final FMLClientSetupEvent event) {
+        ClientSetup.onClientSetup(event);
+
+        //1.20.1 under
         ClientSetup.setupScreenManagers(event);
-
-        ClientSetup.setupCollarRenderers(event);
-        DoggySpinModel.init();
-
         PettingArmPose.init();
     }
 
