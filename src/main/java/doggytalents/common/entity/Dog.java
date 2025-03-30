@@ -31,6 +31,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.effects.NattoBiteEffect;
 import doggytalents.common.entity.ai.nav.DogBodyRotationControl;
+import doggytalents.common.entity.ai.nav.DogFlyingNavigation;
 import doggytalents.common.entity.ai.nav.DogJumpControl;
 import doggytalents.common.entity.ai.nav.DogMoveControl;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
@@ -4292,7 +4293,7 @@ public class Dog extends AbstractDog {
     }
 
     public boolean canDogFly() {
-        return alterationProps.canFly();
+        return alterationProps.canFly() && this.getNavigation() instanceof DogFlyingNavigation;
     }
 
     // @Override
