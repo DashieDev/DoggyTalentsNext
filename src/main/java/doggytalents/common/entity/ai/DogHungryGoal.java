@@ -100,6 +100,7 @@ public class DogHungryGoal extends Goal {
         this.dog.setDogFollowingSomeone(false);
         this.dog.setBegging(false);
         this.remindtime = 200 + dog.getRandom().nextInt(40) * 20;
+        this.dog.dogSoundManager.interuptPlaying();
     }
 
     @Override
@@ -120,7 +121,8 @@ public class DogHungryGoal extends Goal {
             this.dog.setBegging(true);
             if (this.looktime == 0) {
                 this.owner.sendSystemMessage(Component.translatable("dog.msg.low_hunger." + this.dog.getRandom().nextInt(5), this.dog.getName()));
-                this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
+                var sound = dog.dogMood.getWhineAttentionSound();
+                this.dog.dogSoundManager.playInterruptible(sound, this.dog.getSoundVolume(), this.dog.getVoicePitch());
             }
             this.dog.getLookControl().setLookAt(this.owner);
             ++this.looktime;

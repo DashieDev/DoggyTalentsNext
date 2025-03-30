@@ -36,6 +36,7 @@ public class DogWantAttentionAction extends TriggerableAction {
         this.goToOwnerTimeout = 200;
         this.whinedToAttention = false;
         tickAnim = 0;
+        this.dog.dogSoundManager.setAmbientLocked(true);
     }
 
     @Override
@@ -95,7 +96,9 @@ public class DogWantAttentionAction extends TriggerableAction {
             }
             if (!whinedToAttention) {
                 whinedToAttention = true;
-                this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
+                var sound = this.dog.dogMood.getWhineAttentionSound();
+                this.dog.dogSoundManager.playInterruptible(sound, 
+                    this.dog.getSoundVolume() + 0.2f, this.dog.getVoicePitch());
                 int r = this.dog.getRandom().nextInt(3);
                 owner.sendSystemMessage(Component.translatable(
                     "dog.msg.want_attention." + r, dog.getName().getString()));
@@ -128,6 +131,8 @@ public class DogWantAttentionAction extends TriggerableAction {
         if (this.dog.getAnim() == DogAnimation.PLAY_WITH_MEH) {
             this.dog.setAnim(DogAnimation.NONE);
         }
+        this.dog.dogSoundManager.interuptPlaying();
+        this.dog.dogSoundManager.setAmbientLocked(false);
     }
 
     @Override
