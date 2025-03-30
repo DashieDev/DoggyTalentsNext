@@ -15,6 +15,7 @@ public class DogProtestSitOrderGoal extends Goal {
     private int spamTime = 0;
     private int spamTimeMax = MIN_TOLERABLE_SPAM_TIME;
     private int stopAnimTick;
+    private int animTick = 0;
 
     public DogProtestSitOrderGoal(Dog dog) {
         this.dog = dog;
@@ -46,6 +47,7 @@ public class DogProtestSitOrderGoal extends Goal {
         this.dog.setProtesting(true);
         this.dog.setOrderedToSit(true);
         this.stopAnimTick = dog.tickCount + DogAnimation.PROTEST.getLengthTicks();
+        this.animTick = 0;
     }
 
     @Override
@@ -54,6 +56,11 @@ public class DogProtestSitOrderGoal extends Goal {
         if (owner == null) return;
         if (owner.distanceToSqr(dog) > 25) return;
         this.dog.getLookControl().setLookAt(owner, 10.0F, this.dog.getMaxHeadXRot());
+        ++this.animTick;
+        if (animTick == 32) {
+            var sound = this.dog.dogMood.getProtestSound();
+            this.dog.dogSoundManager.playInterruptible(sound, dog.getSoundVolume(), dog.getVoicePitch());
+        }
     }
 
     @Override
@@ -65,6 +72,7 @@ public class DogProtestSitOrderGoal extends Goal {
             this.dog.setSitAnim(null); 
         this.dog.setProtesting(false);
         this.spamTimeMax = MIN_TOLERABLE_SPAM_TIME + dog.getRandom().nextInt(4);
+        this.dog.dogSoundManager.interuptPlaying();
     }
 
     @Override
@@ -85,6 +93,11 @@ public class DogProtestSitOrderGoal extends Goal {
     }
 
     private int getSpamInterval() {return 45;}
+
+    @Override
+    public boolean requiresUpdateEveryTick() {
+        return true;
+    }
 
     
 }

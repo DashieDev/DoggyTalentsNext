@@ -63,6 +63,7 @@ public class DogGreetOwnerAction extends TriggerableAction {
         this.greetTime = 0;
         this.tickTillWhine = this.dog.getRandom().nextInt(5)*10;
         this.tellOwner = true;
+        this.dog.dogSoundManager.setAmbientLocked(true);
     }
 
     @Override
@@ -128,7 +129,8 @@ public class DogGreetOwnerAction extends TriggerableAction {
             tickTillWhine = WHINE_BASE_INTERVAL
                 + dog.getRandom().nextInt(3) *20;
             var sound = dog.dogMood.getGreetWhine();
-            this.dog.playSound(sound, this.dog.getSoundVolume(), this.dog.getVoicePitch());
+            this.dog.dogSoundManager.playInterruptible(sound, 
+                this.dog.getSoundVolume(), this.dog.getVoicePitch());
         }
         if (dog.getRandom().nextInt(HEART_CHANCE_WINDOW) == 0) {
             if (dog.level() instanceof ServerLevel sLevel) {
@@ -206,6 +208,7 @@ public class DogGreetOwnerAction extends TriggerableAction {
             }
         }
         dog.dogOwnerDistanceManager.onGreetingActionStop(owner);
+        this.dog.dogSoundManager.setAmbientLocked(false);
     }
 
     @Override

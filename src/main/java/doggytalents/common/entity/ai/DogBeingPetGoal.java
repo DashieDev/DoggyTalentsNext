@@ -149,6 +149,7 @@ public class DogBeingPetGoal extends Goal {
         this.petTick_ff_threshold = (5 + r) * 20;
         this.sound_cooldown = 0;
         this.triggerCooldown = startTriggerCooldown(dog);
+        this.dog.dogSoundManager.setAmbientLocked(true);
     }
 
     private void resetLoopAnim() {
@@ -181,6 +182,7 @@ public class DogBeingPetGoal extends Goal {
             if (this.dog.getAnim() != end_anim)
                 this.dog.setAnim(end_anim);
             this.dog.pettingManager.setLocked(true);
+            this.dog.dogSoundManager.interuptPlaying();
             return;
         }
         if (this.dog.getAnim() == DogAnimation.NONE 
@@ -233,23 +235,20 @@ public class DogBeingPetGoal extends Goal {
         float r = dog.getRandom().nextFloat();
         if (r >= 0.1)
             return;
-        float r2 = dog.getRandom().nextFloat();
-        float sound = dog.getSoundVolume();
-        if (r2 <= 0.2) {
-            selectedEvent = SoundEvents.WOLF_WHINE;
-            this.sound_cooldown = 20;   
-        } else {
-            selectedEvent = SoundEvents.WOLF_PANT;
-            this.sound_cooldown = 10;
-            sound = 1.5f;
-        }
+        var pair = dog.dogMood.getPettingAmbient();
+        selectedEvent = pair.getLeft();
+        boolean is_classic = pair.getRight();
+        this.sound_cooldown = is_classic ? 20 : 40;
 
         if (this.petTick < this.petTick_ff_threshold) {
             this.sound_cooldown = 50;
         }
 
         if (selectedEvent != null) {
-            dog.playSound(selectedEvent, sound, dog.getVoicePitch());
+            if (!is_classic) {
+                dog.dogSoundManager.playInterruptible(selectedEvent, dog.getSoundVolume(), dog.getVoicePitch());
+            } else
+                dog.playSound(selectedEvent, dog.getSoundVolume(), dog.getVoicePitch());
         }
     }
 
@@ -327,6 +326,8 @@ public class DogBeingPetGoal extends Goal {
         //On interupt
         dog.pettingManager.stopPetting();
         this.dog.pettingManager.setLocked(false);
+        dog.dogSoundManager.interuptPlaying();
+        this.dog.dogSoundManager.setAmbientLocked(false);
     }
 
     @Override
