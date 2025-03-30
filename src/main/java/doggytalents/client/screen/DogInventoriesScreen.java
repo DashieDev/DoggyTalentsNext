@@ -4,14 +4,18 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.DoggyAccessories;
+import doggytalents.DoggyAccessoryTypes;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.screen.widget.SmallButton;
+import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.accessory.LocatorOrbAccessory;
 import doggytalents.common.entity.accessory.DyeableAccessory.DyeableAccessoryInstance;
 import doggytalents.common.inventory.container.DogInventoriesContainer;
 import doggytalents.common.inventory.container.slot.DogInventorySlot;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogInventoryPageData;
+import doggytalents.common.util.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -90,17 +94,27 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
                 continue;
             }
 
-            Optional<AccessoryInstance> inst = slot.getDog().getAccessory(DoggyAccessories.DYEABLE_COLLAR.get());
-            if (inst.isPresent()) {
-                float[] color = inst.get().cast(DyeableAccessoryInstance.class).getColor();
-                RenderSystem.setShaderColor(color[0], color[1], color[2], 1.0F);
-            } else {
-                RenderSystem.setShaderColor(1, 1, 1, 1);
-            }
+            var slot_color = getSlotShaderColor(slot.getDog());
+            RenderSystem.setShaderColor(slot_color[0], slot_color[1], slot_color[2], 1);
 
             graphics.blit(Resources.DOG_INVENTORY, l + slot.x - 1, i1 + slot.y - 1, 197, 2, 18, 18);
         }
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    public float[] getSlotShaderColor(Dog dog) {
+        if (dog == null) {
+            return new float[]{1, 1, 1};
+        }
+        var inst = dog.getAccessory(DoggyAccessoryTypes.SCARF.get());
+        if (inst.isPresent() && inst.get().getAccessory() instanceof LocatorOrbAccessory orb) {
+            return Util.rgbIntToFloatArray(orb.getOrbColor());
+        }
+        inst = dog.getAccessory(DoggyAccessoryTypes.COLLAR.get());
+        if (inst.isPresent() && inst.get() instanceof DyeableAccessoryInstance dyable_inst) {
+            return dyable_inst.getColor();
+        }
+        return new float[]{1, 1, 1};
     }
 
     @Override
