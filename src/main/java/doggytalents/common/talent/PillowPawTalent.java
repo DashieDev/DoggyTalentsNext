@@ -41,7 +41,8 @@ public class PillowPawTalent extends TalentInstance {
 
     @Override
     public void props(AbstractDog dog, DogAlterationProps props) {
-        props.setFallImmune();
+        if (this.level() >= 5)
+            props.setFallImmune();
     }
 
     public static boolean isDogEligible(AbstractDog dog) {
