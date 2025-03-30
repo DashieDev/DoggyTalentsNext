@@ -3,6 +3,8 @@ package doggytalents.common.entity;
 import java.util.List;
 import java.util.function.Supplier;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import doggytalents.DogSounds;
 import doggytalents.common.util.LangUtil;
 import net.minecraft.network.chat.Component;
@@ -249,4 +251,66 @@ public class DogMoodManager {
     public SoundEvent getDownTheHoleSound() {
         return LangUtil.getRandomItem(dog.getRandom(), down_the_hole).get().get();
     }
+
+    private static final List<Supplier<SoundEvent>> aww_sound = List.of(
+        DogSounds.CUTE_HURT1_ALT,
+        DogSounds.CLASSIC_WHINE,
+        DogSounds.SAD_HURT2_ALT
+    ); 
+    public SoundEvent getAwwSound() {
+        return LangUtil.getRandomItem(dog.getRandom(), aww_sound).get().get();
+    }
+
+    private static final List<Supplier<SoundEvent>> bark_attention = List.of(
+        DogSounds.CUTE_BARK1,
+        DogSounds.CUTE_BARK2,
+        DogSounds.GRUMPY_BARK1,
+        DogSounds.SAD_BARK1,
+        DogSounds.SAD_GROWL2,
+        DogSounds.GRUMPY_HURT2_ALT
+    );
+    public SoundEvent getBarkAttentionSound() {
+        return LangUtil.getRandomItem(dog.getRandom(), bark_attention).get().get();
+    }
+
+    private static final List<Supplier<SoundEvent>> whine_attention = List.of(
+        DogSounds.PUGLIN_WHINE,
+        DogSounds.SAD_WHINE,
+        DogSounds.ANGRY_WHINE
+    );
+    public SoundEvent getWhineAttentionSound() {
+        return LangUtil.getRandomItem(dog.getRandom(), whine_attention).get().get();
+    }
+
+    private static final List<Supplier<SoundEvent>> protest_sound = List.of(
+        DogSounds.GRUMPY_GROWL1,
+        DogSounds.CUTE_GROWL2,
+        DogSounds.GRUMPY_WHINE,
+        DogSounds.CUTE_WHINE
+    );
+    public SoundEvent getProtestSound() {
+        return LangUtil.getRandomItem(dog.getRandom(), protest_sound).get().get();
+    }
+
+    private static final List<Supplier<SoundEvent>> petting_ambient = List.of(
+        DogSounds.BIG_WHINE,
+        DogSounds.BIG_PANTING,
+        DogSounds.ANGRY_PANTING,
+        DogSounds.CLASSIC_PANTING,
+        DogSounds.GRUMPY_PANTING
+    );
+    public Pair<SoundEvent, Boolean> getPettingAmbient() {
+        float r = this.dog.getRandom().nextFloat();
+        SoundEvent sound = null;
+        if (r <= 0.2f) {
+            sound = DogSounds.CLASSIC_WHINE.get();
+        } else {
+            sound = LangUtil.getRandomItem(dog.getRandom(), petting_ambient).get().get();
+        }
+        boolean is_classic =    
+            sound == DogSounds.CLASSIC_PANTING.get()
+            || sound == DogSounds.CLASSIC_WHINE.get();
+        return Pair.of(sound, is_classic);
+    }
+
 }

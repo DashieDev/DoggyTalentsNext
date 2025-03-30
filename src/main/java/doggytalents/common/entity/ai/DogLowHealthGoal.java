@@ -103,6 +103,7 @@ public class DogLowHealthGoal {
             this.dog.getNavigation().stop();
             this.dog.setDogFollowingSomeone(false);
             this.dog.setBegging(false);
+            this.dog.dogSoundManager.interuptPlaying();
         }
 
         //TODO : Group the msg when dog msg owner about him being hurt based on how the dog was previously hurt, 
@@ -130,7 +131,8 @@ public class DogLowHealthGoal {
                 if (this.whine && this.tickTillInitWhine <= 0) {
                     this.whine = false;
                     this.owner.sendSystemMessage(Component.translatable("dog.msg.low_health." + this.dog.getRandom().nextInt(4), this.dog.getName()));
-                    this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
+                    var sound = this.dog.dogMood.getWhineAttentionSound();
+                    this.dog.dogSoundManager.playInterruptible(sound, this.dog.getSoundVolume(), this.dog.getVoicePitch());
                     this.tickTillInitWhine = 40;
                 }
                 this.dog.getLookControl().setLookAt(this.owner);
