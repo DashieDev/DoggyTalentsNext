@@ -1,20 +1,25 @@
 package doggytalents.common.talent;
 
+import doggytalents.TalentsOptions;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.api.registry.TalentOption;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogFlyingMoveControl;
 import doggytalents.common.entity.ai.nav.DogFlyingNavigation;
 import doggytalents.common.util.Util;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.neoforge.common.NeoForgeMod;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 public class FlyingFurballTalent extends TalentInstance {
@@ -25,8 +30,11 @@ public class FlyingFurballTalent extends TalentInstance {
     private DogFlyingMoveControl moveControl;
     private DogFlyingNavigation navigation;
     
+    private boolean startedGliding = false;
     private boolean wasFlying = false;
     private int flyHoldTick = 0;
+
+    private boolean allowFlying = true;
     
     public FlyingFurballTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
@@ -43,7 +51,6 @@ public class FlyingFurballTalent extends TalentInstance {
             new DogFlyingMoveControl(d, this);
         this.navigation = 
             new DogFlyingNavigation(d, dog.level());
-        startGliding(dog);
     }
 
     @Override
@@ -81,6 +88,11 @@ public class FlyingFurballTalent extends TalentInstance {
         if (dog.getNavigation() != navigation && shouldSwitchToFlying(dog)) {
             dog.setMoveControl(moveControl);
             dog.setNavigation(navigation);
+            this.startGliding(dog);
+        } else if (dog.getNavigation() == navigation && shouldSwitchAwayFromFlying(dog)) {
+            dog.resetMoveControl();
+            dog.resetNavigation();
+            this.stopGliding(dog);
         }
 
         if (isDogFlying && shouldStopFlying(dog))  {
@@ -129,14 +141,18 @@ public class FlyingFurballTalent extends TalentInstance {
             return false;
         }
 
-        return !dog.onGround() && !dog.isInSittingPose() && !dog.isPassenger()
+        return this.allowFlying() && !dog.onGround() && !dog.isInSittingPose() && !dog.isPassenger()
             && !dog.isInWater() && dog.getNavigation() == this.navigation;
     }
 
     private boolean shouldSwitchToFlying(AbstractDog dog) {
-        return !dog.isInSittingPose() && !dog.isPassenger()
+        return this.allowFlying() && !dog.isInSittingPose() && !dog.isPassenger()
             //To avoid conflict with SwimmerDog, may changes in future
             && !dog.isInWater();
+    }
+
+    private boolean shouldSwitchAwayFromFlying(AbstractDog dog) {
+        return !this.allowFlying();
     }
 
     public AttributeModifier createSpeedModifier(AbstractDog dogIn, ResourceLocation uuidIn) {
@@ -155,15 +171,59 @@ public class FlyingFurballTalent extends TalentInstance {
     }
 
     public void startGliding(AbstractDog dog) {
+        this.startedGliding = true;
         dog.setAttributeModifier(Attributes.GRAVITY, FLYING_FURBALL_GRAVITY_UUID, this::createGravityModifier);
     }
 
     public void stopGliding(AbstractDog dog) {
+        if (!startedGliding)
+            return;
+        this.startedGliding = false;
         dog.removeAttributeModifier(Attributes.GRAVITY, FLYING_FURBALL_GRAVITY_UUID);
     }
 
     public AttributeModifier createGravityModifier(AbstractDog dogIn, ResourceLocation uuidIn) {
         return new AttributeModifier(uuidIn, -0.8, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     }
+
+    @Override
+    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.readFromNBT(dogIn, compound);
+        this.allowFlying = compound.getBoolean("allowFlying");
+    }
+
+    @Override
+    public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
+        super.writeToNBT(dogIn, compound);
+        compound.putBoolean("allowFlying", allowFlying);
+    }
+
+    @Override
+    public Object getTalentOption(TalentOption<?> entry) {
+        if (entry == TalentsOptions.FLYING_FURBALL_ALLOW.get()) {
+            return this.allowFlying;
+        }
+        return null;
+    }
+
+    @Override
+    public void setTalentOption(TalentOption<?> entry, Object data) {
+        if (entry == TalentsOptions.FLYING_FURBALL_ALLOW.get()) {
+            this.allowFlying = (Boolean) data;
+        }
+    }
+
+    @Override
+    public Collection<TalentOption<?>> getAllTalentOptions() {
+        return List.of(TalentsOptions.FLYING_FURBALL_ALLOW.get());
+    }
+
+    public boolean allowFlying() {
+        return this.allowFlying;
+    }
+
+    public void setAllowFlying(boolean val) {
+        this.allowFlying = val;
+    } 
 
 }
