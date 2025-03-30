@@ -34,6 +34,7 @@ import doggytalents.common.network.packet.data.OpenDogScreenData;
 import doggytalents.common.talent.CreeperSweeperTalent;
 import doggytalents.common.talent.DoggyTorchTalent;
 import doggytalents.common.talent.FisherDogTalent;
+import doggytalents.common.talent.FlyingFurballTalent;
 import doggytalents.common.talent.GatePasserTalent;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.talent.RescueDogTalent;
@@ -330,6 +331,28 @@ public class TalentInfoViewElement extends AbstractElement {
                         }     
                     ).initialValue(fisher.renderHat()),
                     I18n.get("talent.doggytalents.fisher_dog.render_hat")
+                )
+                .init()
+            );
+        } else if (talent == DoggyTalents.FLYING_FURBALL.get()) {
+            var talentInstOptional = dog.getTalent(DoggyTalents.FLYING_FURBALL);
+            if (!talentInstOptional.isPresent())
+                return;
+            var talentInst = talentInstOptional.get();
+            if (!(talentInst instanceof FlyingFurballTalent flying))
+                return;
+            container.addChildren(
+                new ButtonOptionEntry(container, getScreen(), 
+                    new FlatCheckbox(0, 0,
+                        b -> {
+                            boolean newVal = !flying.allowFlying();
+                            b.setValue(newVal);
+                            flying.setAllowFlying(newVal);
+                            var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.FLYING_FURBALL_ALLOW.get(), newVal);
+                            PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
+                        }     
+                    ).initialValue(flying.allowFlying()),
+                    I18n.get("talent.doggytalents.flying_furbal.allow")
                 )
                 .init()
             );
