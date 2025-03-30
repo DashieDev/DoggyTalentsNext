@@ -32,6 +32,8 @@ public class DogSoundManager {
     }
 
     public void playInterruptible(SoundEvent event, float volume, float pitch) {
+        if (dog.isSilent())
+            return; 
         var data = new DogInterruptibleSoundData(dog.getId(), Optional.of(event), volume, pitch);
         if (dog.level().isClientSide) {
             onDogInterruptableSoundUpdate(data);
