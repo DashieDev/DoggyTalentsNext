@@ -320,11 +320,9 @@ public class DogMoodManager {
     public boolean isForceInteruptibleSound(SoundEvent sound) {
         if (force_interruptible_sounds == null) {
             force_interruptible_sounds = new HashSet<>(List.of(
-                DogSounds.CUTE_PANTING.get(), DogSounds.PUGLIN_GROWL3.get(),
+                DogSounds.CUTE_PANTING.get(),
                 DogSounds.SAD_WHINE.get()
             ));
-            force_interruptible_sounds.addAll(death_sounds.stream().map(x -> x.get())
-                .collect(Collectors.toList()));
         }
         return force_interruptible_sounds.contains(sound);
     }
