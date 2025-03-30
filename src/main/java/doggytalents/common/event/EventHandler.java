@@ -103,13 +103,17 @@ public class EventHandler {
     //@SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
         DogPromiseManager.forceStop();
-        DogLocationStorage.get(event.getServer()).onServerStop(event);
+        var overworld = event.getServer().getLevel(Level.OVERWORLD);
+        if (overworld != null)
+            DogLocationStorage.get(overworld).onServerStop(event);
         DogSleepOnManager.onServerStop(event.getServer());
     }
 
     //@SubscribeEvent
     public void onServerStopped(final ServerStoppedEvent event) {
-        DogLocationStorage.get(event.getServer()).onServerStopped(event);
+        var overworld = event.getServer().getLevel(Level.OVERWORLD);
+        if (overworld != null)
+            DogLocationStorage.get(overworld).onServerStopped(event);
     }
 
     //@SubscribeEvent
