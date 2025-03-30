@@ -85,6 +85,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
             moveToPos.getY(), moveToPos.getZ(), 1f);
         this.dog.setDogCurious(true);
         this.continueEvenWhenChanged = false;
+        this.dog.dogSoundManager.setAmbientLocked(true);
     }
 
     @Override
@@ -104,6 +105,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         resetSniffPos();
         dog.dogSoundManager.interuptPlaying();
         dog.getNavigation().stop();
+        this.dog.dogSoundManager.setAmbientLocked(false);
     }
 
     private void startDoingAnim() {
@@ -199,7 +201,8 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
                 this.dog.getMoveControl().strafe(-0.25f, 0);
             }
             if (this.tickAnim == 40) {
-                this.dog.playSound(SoundEvents.WOLF_WHINE, 0.6f, this.dog.getVoicePitch());
+                var sound = this.dog.dogMood.getAwwSound();
+                this.dog.dogSoundManager.playInterruptible(sound, 0.6f, this.dog.getVoicePitch());
             }
             ++tickAnim;
             break;
