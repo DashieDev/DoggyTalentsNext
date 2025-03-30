@@ -38,7 +38,7 @@ public class DogLocationStorage extends SavedData {
 
     public static DogLocationStorage get(Level world) {
         if (!(world instanceof ServerLevel)) {
-            throw new RuntimeException("Tried to access dog location data from the client. This should not happen...");
+            throw new IllegalStateException("DogLocationStorage is being accessed from the Client Side. Please report to the DTN Team.");
         }
 
         ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
