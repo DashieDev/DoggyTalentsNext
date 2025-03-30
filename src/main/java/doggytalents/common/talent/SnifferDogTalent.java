@@ -397,7 +397,13 @@ public class SnifferDogTalent extends TalentInstance {
             var c1 = ComponentUtil.translatable(getStringStatus(dog, distanceAwaySqr),
                 dog.getName().getString());
             owner.sendMessage(c1, Util.NIL_UUID);
-            dog.playSound(SoundEvents.WOLF_AMBIENT, 1f, 1.5f);
+            if (distanceAwaySqr <= 8 * 8) {
+                var sound = dog.dogMood.getSnifferDogForteSound();
+                dog.playSound(sound, 1f, 1f);
+            } else {
+                var sound = dog.dogMood.getSnifferDogPianoSound();
+                dog.playSound(sound, 1f, 1.5f);
+            }
         }
 
         private String getStringStatus(Dog dog, double distanceAwaySqr) {
