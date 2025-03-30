@@ -9,6 +9,7 @@ import doggytalents.common.network.PacketDistributor;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogInterruptibleSoundData;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 
 public class DogSoundManager {
     
@@ -40,6 +41,14 @@ public class DogSoundManager {
         } else {
             PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> dog), data);
         }
+    }
+
+    public void playNonInterruptible(SoundEvent event, float volume, float pitch) {
+        if (dog.isSilent())
+            return;
+        if (dog.level().isClientSide)
+            return;
+        dog.level().playSound(null, dog, event, SoundSource.AMBIENT, volume, pitch);
     }
 
     public void interuptPlaying() {
