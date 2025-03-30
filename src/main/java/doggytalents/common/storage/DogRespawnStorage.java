@@ -28,7 +28,7 @@ public class DogRespawnStorage extends SavedData {
 
     public static DogRespawnStorage get(Level world) {
         if (!(world instanceof ServerLevel)) {
-            throw new RuntimeException("Tried to access dog respawn data from the client. This should not happen...");
+            throw new IllegalStateException("DogRespawnStorage is being accessed from the Client Side. Please report to the DTN Team.");
         }
 
         ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
