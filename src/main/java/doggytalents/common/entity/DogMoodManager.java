@@ -1,7 +1,10 @@
 package doggytalents.common.entity;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -313,4 +316,16 @@ public class DogMoodManager {
         return Pair.of(sound, is_classic);
     }
 
+    private static Set<SoundEvent> force_interruptible_sounds = null;
+    public boolean isForceInteruptibleSound(SoundEvent sound) {
+        if (force_interruptible_sounds == null) {
+            force_interruptible_sounds = new HashSet<>(List.of(
+                DogSounds.CUTE_PANTING.get(), DogSounds.PUGLIN_GROWL3.get(),
+                DogSounds.SAD_WHINE.get()
+            ));
+            force_interruptible_sounds.addAll(death_sounds.stream().map(x -> x.get())
+                .collect(Collectors.toList()));
+        }
+        return force_interruptible_sounds.contains(sound);
+    }
 }
