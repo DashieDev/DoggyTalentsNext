@@ -396,6 +396,15 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public void playSound(SoundEvent sound, float vol, float pitch) {
+        if (dogMood.isForceInteruptibleSound(sound)) {
+            dogSoundManager.playInterruptible(sound, vol, pitch);
+            return;
+        }
+        super.playSound(sound, vol, pitch);
+    }
+
+    @Override
     public float getSoundVolume() {
         float default_val = 0.4f;
         if (this.isDefeated()) {
@@ -414,6 +423,12 @@ public class Dog extends AbstractDog {
         // }
         
         return this.dogMood.getHurtSound(damageSourceIn);
+    }
+
+    @Override
+    protected void playHurtSound(DamageSource source) {
+        this.ambientSoundTime = -this.getAmbientSoundInterval();
+        this.dogSoundManager.playInterruptible(getHurtSound(source), this.getSoundVolume(), this.getVoicePitch());
     }
 
     @Override
