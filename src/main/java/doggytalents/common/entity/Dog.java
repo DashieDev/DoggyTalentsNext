@@ -428,7 +428,7 @@ public class Dog extends AbstractDog {
     @Override
     protected void playHurtSound(DamageSource source) {
         this.ambientSoundTime = -this.getAmbientSoundInterval();
-        this.dogSoundManager.playInterruptible(getHurtSound(source), this.getSoundVolume(), this.getVoicePitch());
+        this.dogSoundManager.playNonInterruptible(getHurtSound(source), this.getSoundVolume(), this.getVoicePitch());
     }
 
     @Override
