@@ -21,6 +21,7 @@ public class TalentsOptions {
     public static final Supplier<TalentOption<Boolean>> PACK_PUPPY_PICKUP = registerBool("pack_puppy_1");
     public static final Supplier<TalentOption<Boolean>> PACK_PUPPY_FOOD = registerBool("pack_puppy_2");
     public static final Supplier<TalentOption<Boolean>> PACK_PUPPY_LOOT = registerBool("pack_puppy_3");
+    public static final Supplier<TalentOption<Boolean>> FLYING_FURBALL_ALLOW = registerBool("flying_furbal_1");
 
     private static Supplier<TalentOption<Boolean>> registerBool(String name) {
         return register(name, () -> new TalentOption.BooleanOption());
