@@ -264,18 +264,6 @@ public class DogMoodManager {
         return LangUtil.getRandomItem(dog.getRandom(), aww_sound).get().get();
     }
 
-    private static final List<Supplier<SoundEvent>> bark_attention = List.of(
-        DogSounds.CUTE_BARK1,
-        DogSounds.CUTE_BARK2,
-        DogSounds.GRUMPY_BARK1,
-        DogSounds.SAD_BARK1,
-        DogSounds.SAD_GROWL2,
-        DogSounds.GRUMPY_HURT2_ALT
-    );
-    public SoundEvent getBarkAttentionSound() {
-        return LangUtil.getRandomItem(dog.getRandom(), bark_attention).get().get();
-    }
-
     private static final List<Supplier<SoundEvent>> whine_attention = List.of(
         DogSounds.PUGLIN_WHINE,
         DogSounds.SAD_WHINE,
@@ -314,6 +302,22 @@ public class DogMoodManager {
             sound == DogSounds.CLASSIC_PANTING.get()
             || sound == DogSounds.CLASSIC_WHINE.get();
         return Pair.of(sound, is_classic);
+    }
+
+    private static final List<Supplier<SoundEvent>> sniffer_dog_forte = List.of(
+        DogSounds.SAD_GROWL2,
+        DogSounds.GRUMPY_HURT2_ALT
+    );
+    private static final List<Supplier<SoundEvent>> sniffer_dog_piano = List.of(
+        DogSounds.CLASSIC_BARK1,
+        DogSounds.CLASSIC_BARK2,
+        DogSounds.CLASSIC_BARK3
+    );
+    public SoundEvent getSnifferDogForteSound() {
+        return LangUtil.getRandomItem(dog.getRandom(), sniffer_dog_forte).get().get();
+    }
+    public SoundEvent getSnifferDogPianoSound() {
+        return LangUtil.getRandomItem(dog.getRandom(), sniffer_dog_piano).get().get();
     }
 
     private static Set<SoundEvent> force_interruptible_sounds = null;
