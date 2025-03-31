@@ -1800,3 +1800,41 @@ Option (Enabled by default) to hard prevent Dogs from going above the world's bu
 
 **1.18.44 - 16th March 2025**
 * HOTFIX: All StringEntrySelectScreen now don't freeze the name like Pause Screen does.
+
+**1.18.45 - 31th March 2025**
+
+DogMood and the new Vanilla Dog Sounds initial implementation and interpretations
+
+DogMood:
++ Dog currently will have three mood state: Happy, Sad and Neutral
++ Dog will mostly be in the neutral state.
++ They will occasionally and randomly enter the other state for a random
+amount of time. The time will mostly be around a normal amount but have
+a relatively small chance to be significantly longer.
+
+New Vanilla Dog Sounds Interpretation:
++ We decided to not go with vanilla's static personality implementation and provided our own
+interpretation.
+Ambient Sound:
++ influenced by dog's mood.
++ Perfect Neutral/ Augmented Neutral/ Sad/ Happy
+Hurt Sound: Chain Hurt Sound/ Light Hurt/ Heavy Hurt.
+Other sounds: Death Sounds, Injured Ambient, Serious Growl, Sniff, Sneeze, Greet Whine,
+Jealous, Down The Hole,...
++ Config Option to assign a random Vanilla Dog Variant to a newly trained DTN Dog upon being trained from
+a Vanilla Pale Wolf instead of the Pale one only.
+
+======================================================
+
+# DogHurtSounds now follow Dogs when being played.
+# DogInventoryScreen now also gets Slots' Color from Locator Orbs (Non-dyeable) and Thicc Collars.
+Locator Orbs will be prioritized.
+# You can now Allow/Disallow Flying on Flying Furball dogs.
+# Dogs now go back to where they previously sit after Begging Owner for Attention (Petting) 
+
+======================================================
+* Avoid Crashes when trying access DogLocationStorage upon ServerStopped.
+* Avoid Crashes related to uninitialized DoggySpinModel. 
+* HOTFIX: PackPuppy Dogs having access to locked inventory slots (unlocked at higher level) when
+collecting nearby items.  
+* HOTFIX: Pillow Paw Dogs already got fall immune at level 1
