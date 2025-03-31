@@ -262,6 +262,12 @@ public class EventHandler {
 
     private static void migrateWolfVariant(Wolf wolf, Dog dog) {
         var dog_variant = DogVariantUtil.fromVanila(wolf.getVariant().unwrapKey().orElse(WolfVariants.PALE));
+        boolean random_var_on_pale = 
+            dog_variant == DogVariantUtil.getDefault()
+            && ConfigHandler.SERVER.RANDOM_VAR_ON_PALE.get();
+        if (random_var_on_pale) {
+            dog_variant = DogVariantUtil.getRandom(wolf.getRandom());
+        }
         dog.setDogVariant(dog_variant);
     }
 
