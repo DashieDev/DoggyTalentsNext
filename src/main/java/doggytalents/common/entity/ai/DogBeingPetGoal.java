@@ -273,7 +273,7 @@ public class DogBeingPetGoal extends Goal {
         if (owner == null)
             return;
         target.triggerAction(new DogWantAttentionAction(target, 
-            owner, target.isOrderedToSit()));
+            owner));
     }
 
     private void rejuvinateDog() {
