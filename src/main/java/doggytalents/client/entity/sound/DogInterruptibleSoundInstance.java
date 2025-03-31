@@ -21,6 +21,10 @@ public class DogInterruptibleSoundInstance extends AbstractTickableSoundInstance
         this.dog = dog;
         this.volume = vol;
         this.pitch = pitch;
+        
+        this.x = (double)((float)dog.getX());
+        this.y = (double)((float)dog.getY());
+        this.z = (double)((float)dog.getZ());
     }
 
     public void dogInterupt() {
@@ -43,9 +47,9 @@ public class DogInterruptibleSoundInstance extends AbstractTickableSoundInstance
             dogInterupt();
             return;
         }
-        this.x = dog.getX();
-        this.y = dog.getY();
-        this.z = dog.getZ();
+        this.x = (double)((float)dog.getX());
+        this.y = (double)((float)dog.getY());
+        this.z = (double)((float)dog.getZ());
     }
 
     private void tickStop() {
