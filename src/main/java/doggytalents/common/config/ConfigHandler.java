@@ -354,9 +354,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.IntValue TACTICAL_LIMIT;
         public ForgeConfigSpec.BooleanValue CARRY_ME_WHISTLE;
         public ForgeConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
-
-        //(Non 1.20.5+)
-        public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_TRAIN;
+        public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_PALE;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -584,16 +582,13 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Prevent Dog from going over the MaxBuildHeight of the world.")
                 .translation("doggytalents.dog_max_build_y_cap")
                 .define("dog_max_build_y_cap", true);
+            RANDOM_VAR_ON_PALE = builder
+                .comment("Upon training a Vanilla Pale Wolf, if this option is enabled, a random")
+                .comment("Dog Variant will be assigned to the newly trained DTN Dog instead of")
+                .comment("the Pale one only.")
+                .translation("doggytalents.random_var_on_pale")
+                .define("random_var_on_pale", false);
 
-            //(Non 1.20.5+)
-            RANDOM_VAR_ON_TRAIN = builder
-                .comment("For Minecraft version below 1.20.5")
-                .comment("When this option is enabled, upon training a vanilla wolf")
-                .comment("to DTN Wolf, DTN will asign a random Classical Variant")
-                .comment("(DTN and Armored Paw) instead of sticking with default.")
-                .translation("doggytalents.random_var_on_train")
-                .define("random_var_on_train", false);
-            
             builder.pop();
         }
 
