@@ -12,7 +12,6 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class DogWantAttentionAction extends TriggerableAction {
     
-    private boolean prevIsOrderedToSit;
     private static enum Phase { GO_TO_OWNER, BEG_FOR_ATTENTION }
     private Phase phase = Phase.GO_TO_OWNER;
     private final @Nonnull LivingEntity owner;
@@ -24,10 +23,9 @@ public class DogWantAttentionAction extends TriggerableAction {
     private int tickAnim;
     private int stopTick;
 
-    public DogWantAttentionAction(Dog dog, @Nonnull LivingEntity owner, boolean prevIsOrderedToSit) {
+    public DogWantAttentionAction(Dog dog, @Nonnull LivingEntity owner) {
         super(dog, true, false);
         this.owner = owner;
-        this.prevIsOrderedToSit = prevIsOrderedToSit;
     }
 
     @Override
@@ -71,8 +69,6 @@ public class DogWantAttentionAction extends TriggerableAction {
 
     private void stopAndMaySitDown() {
         this.setState(ActionState.FINISHED);
-        if (this.prevIsOrderedToSit)
-            this.dog.setOrderedToSit(true);
     }
 
     private void tickGoToOwner() {
