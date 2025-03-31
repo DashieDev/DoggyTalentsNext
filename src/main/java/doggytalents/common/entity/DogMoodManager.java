@@ -128,7 +128,7 @@ public class DogMoodManager {
         boolean is_aug = selected_list == perfect_neutral_ambient
             && dog.getRandom().nextFloat() <= aug_chance;
         if (is_aug)
-            return augmented_neutral_ambient.getRandom(dog.getRandom()).get().data().get();
+            return augmented_neutral_ambient.getRandom(dog.getRandom()).get().getData().get();
         else 
             return LangUtil.getRandomItem(dog.getRandom(), selected_list).get().get();
     }
@@ -234,7 +234,7 @@ public class DogMoodManager {
             WeightedEntry.wrap(DogSounds.CUTE_WHINE, 1)
         );
     public SoundEvent getGreetWhine() {
-        return greet_whine.getRandom(dog.getRandom()).get().data().get();
+        return greet_whine.getRandom(dog.getRandom()).get().getData().get();
     }
 
     private static final List<Supplier<SoundEvent>> jealous_sound = List.of(
