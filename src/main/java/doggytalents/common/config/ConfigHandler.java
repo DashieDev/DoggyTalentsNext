@@ -373,6 +373,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.IntValue TACTICAL_LIMIT;
         public ForgeConfigSpec.BooleanValue CARRY_ME_WHISTLE;
         public ForgeConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
+        public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_PALE;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -600,6 +601,13 @@ public class ConfigHandler {
                 .comment("Prevent Dog from going over the MaxBuildHeight of the world.")
                 .translation("doggytalents.dog_max_build_y_cap")
                 .define("dog_max_build_y_cap", true);
+            RANDOM_VAR_ON_PALE = builder
+                .comment("Upon training a Vanilla Pale Wolf, if this option is enabled, a random")
+                .comment("Dog Variant will be assigned to the newly trained DTN Dog instead of")
+                .comment("the Pale one only.")
+                .translation("doggytalents.random_var_on_pale")
+                .define("random_var_on_pale", false);
+
             builder.pop();
         }
 
