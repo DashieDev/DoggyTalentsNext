@@ -590,7 +590,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .define("dog_max_build_y_cap", true);
             RANDOM_VAR_ON_PALE = builder
                 .comment("Upon training a Vanilla Pale Wolf, if this option is enabled, a random")
-                .comment("Dog Variant will be assigned to the newly trained DTN Dog instead of")
+                .comment("Vanilla Dog Variant will be assigned to the newly trained DTN Dog instead of")
                 .comment("the Pale one only.")
                 .translation("doggytalents.random_var_on_pale")
                 .define("random_var_on_pale", false);

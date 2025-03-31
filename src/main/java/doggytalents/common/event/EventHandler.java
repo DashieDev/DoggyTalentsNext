@@ -1,5 +1,6 @@
 package doggytalents.common.event;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
+import doggytalents.DogVariants;
 import doggytalents.DoggyAccessories;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
@@ -30,6 +32,7 @@ import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.talent.HunterDogTalent;
 import doggytalents.common.talent.PackPuppyTalent;
 import doggytalents.common.util.DogLocationStorageMigration;
+import doggytalents.common.util.LangUtil;
 import doggytalents.common.util.Util;
 import doggytalents.common.util.dogpromise.DogPromiseManager;
 import doggytalents.common.util.dogpromise.promise.DogBatchTeleportToDimensionPromise;
@@ -271,7 +274,12 @@ public class EventHandler {
             dog_variant == DogVariantUtil.getDefault()
             && ConfigHandler.SERVER.RANDOM_VAR_ON_PALE.get();
         if (random_var_on_pale) {
-            dog_variant = DogVariantUtil.getRandom(wolf.getRandom());
+            var vanilla_variants = List.of(
+                DogVariants.PALE.get(), DogVariants.RUSTY.get(), DogVariants.WOOD.get(), 
+                DogVariants.CHESTNUT.get(), DogVariants.STRIPED.get(), DogVariants.ASHEN.get(), 
+                DogVariants.SNOWY.get(), DogVariants.SPOTTED.get(), DogVariants.BLACK.get());
+            dog_variant = LangUtil.getRandomItem(
+                wolf.getRandom(), vanilla_variants).get();
         }
         dog.setDogVariant(dog_variant);
     }
