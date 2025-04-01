@@ -2176,7 +2176,7 @@ public class Dog extends AbstractDog {
             return;
         }
 
-        super.setOwnerUUID(uuid);
+        setOwnerUUID_1_21_3_Under_SuperCall(uuid);
 
         if (uuid == null) {
             this.setOwnersName((Component) null);
@@ -5589,4 +5589,30 @@ public class Dog extends AbstractDog {
     //     var destPos = serverLevel.getWorldBorder().clampToBounds(this.getX() * tpScale, this.getY(), this.getZ() * tpScale);
     //     return new PortalInfo(Vec3.atBottomCenterOf(destPos), this.getDeltaMovement(), this.getYRot(), this.getXRot());
     // }
+
+
+    
+    //1.21.5+
+    @Override
+    public UUID getOwnerUUID() {
+        var owner_ref = this.getOwnerReference();
+        if (owner_ref == null)
+            return null;
+        return owner_ref.getUUID();
+    }
+    public void setOwnerUUID_1_21_3_Under_SuperCall(UUID uuid) {
+        super.setOwnerReference(new EntityReference<>(uuid));
+    }
+    @Override
+    public void setOwnerReference(@Nullable EntityReference<LivingEntity> owner_ref) {
+        var uuid = owner_ref != null ? owner_ref.getUUID() : null;
+        this.setOwnerUUID(uuid);
+    }
+    @Override
+    public void setOwner(@Nullable LivingEntity entity) {
+        var uuid = entity != null ? entity.getUUID() : null;
+        this.setOwnerUUID(uuid);
+    }
+
+
 }
