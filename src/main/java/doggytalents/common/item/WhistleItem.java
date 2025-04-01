@@ -296,7 +296,7 @@ public class WhistleItem extends Item implements IDogItem {
             doggyBeam.shootFromRotation(player, 
                 player.getXRot(), player.getYRot(), 0.0F, 2.0F, 1.0F);
             world.addFreshEntity(doggyBeam);
-            player.getCooldowns().addCooldown(this, 10);
+            PlayerUtil.addCooldown(player, this, 10);
             return;
         case ROAR:
             var cooldown_optional = RoaringGaleTalent.roar(dogsList, world, player);
@@ -530,7 +530,7 @@ public class WhistleItem extends Item implements IDogItem {
     private void allStandOnDuty(Level level, Player player, List<Dog> dogs) {
         if (level.isClientSide)
             return;
-        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+        PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
 
         for (var dog : dogs) {
             dog.setDogOnDuty(!dog.isOrderedToSit());
