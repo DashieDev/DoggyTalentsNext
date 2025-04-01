@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.ObjectUtils;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.feature.DogSize;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.util.EntityUtil;
@@ -257,7 +258,7 @@ public class DogPettingManager {
         tag.put("dogPettingManager", tag0);
     }
 
-    public void load(CompoundTag tag) {
+    public void load(CompoundTag_1_21_5 tag) {
         this.lastPetTimestamp = 0;
         if (tag.contains("dogPettingManager", Tag.TAG_COMPOUND)) {
             var tag0 = tag.getCompound("dogPettingManager");

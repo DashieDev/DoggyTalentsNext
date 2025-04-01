@@ -3,6 +3,7 @@ package doggytalents.common.entity.texture;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 
@@ -37,7 +38,7 @@ public class DogSkinData {
         tag.put("doggytalents_dog_skin", tag0);
     }
     
-    public static DogSkinData readFromTag(CompoundTag compound) {
+    public static DogSkinData readFromTag(CompoundTag_1_21_5 compound) {
         if (compound.contains("doggytalents_dog_skin", Tag.TAG_COMPOUND)) {
             return readNewer(compound.getCompound("doggytalents_dog_skin"));    
         }
@@ -47,7 +48,7 @@ public class DogSkinData {
         return DogSkinData.NULL;
     }
 
-    private static DogSkinData readNewer(CompoundTag tag) {
+    private static DogSkinData readNewer(CompoundTag_1_21_5 tag) {
         int version_int = tag.getInt("version");
         String hash = tag.getString("hash");
         return new DogSkinData(hash, Version.fromId(version_int));

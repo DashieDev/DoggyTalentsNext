@@ -4,9 +4,11 @@ import com.google.common.base.Function;
 import com.google.common.base.Strings;
 import doggytalents.*;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.backward_imitate.HurtSuperCall;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
+import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.api.enu.WetSource;
 import doggytalents.api.feature.*;
 import doggytalents.api.feature.DogLevel.Type;
@@ -2832,8 +2834,9 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
+    public void readAdditionalSaveData(CompoundTag compound_1_21_5) {
+        super.readAdditionalSaveData(compound_1_21_5);
+        var compound = CompoundTag_1_21_5.wrap(compound_1_21_5); // 1.21.5+
 
         var newTlInstLs = new ArrayList<TalentInstance>();
 
@@ -2913,7 +2916,7 @@ public class Dog extends AbstractDog {
             this.setLowHealthStrategy(LowHealthStrategy.fromId(low_health_strategy_id));
             var combat_return_strategy_id = compound.getByte("combatReturnStrategy");
             this.setCombatReturnStrategy(CombatReturnStrategy.fromId(combat_return_strategy_id));
-            if (compound.contains("dogSize", Tag.TAG_ANY_NUMERIC)) {
+            if (compound.containsAnyNumeric("dogSize")) {
                 this.setDogSize(DogSize.fromId(compound.getInt("dogSize")));
             }
         } catch (Exception e) {
@@ -2925,14 +2928,14 @@ public class Dog extends AbstractDog {
         try {
             int level_normal = 0;
             int level_kami = 0;
-            if (compound.contains("level_normal", Tag.TAG_ANY_NUMERIC)) {
+            if (compound.containsAnyNumeric("level_normal")) {
                 level_normal = compound.getInt("level_normal");
             }
-            if (compound.contains("level_kami", Tag.TAG_ANY_NUMERIC)) {
+            if (compound.containsAnyNumeric("level_kami")) {
                 level_kami = compound.getInt("level_kami");          
             } 
             //Old
-            else if (compound.contains("level_dire", Tag.TAG_ANY_NUMERIC)) {
+            else if (compound.containsAnyNumeric("level_dire")) {
                 level_kami = compound.getInt("level_dire");    
             }
             this.entityData.set(DOG_LEVEL, new DogLevel(level_normal, level_kami));
@@ -2945,10 +2948,10 @@ public class Dog extends AbstractDog {
 
         try {
             if (compound.contains("beds", Tag.TAG_LIST)) {
-                ListTag bedsList = compound.getList("beds", Tag.TAG_COMPOUND);
+                ListTag_1_21_5 bedsList = compound.getList("beds", Tag.TAG_COMPOUND);
 
                 for (int i = 0; i < bedsList.size(); i++) {
-                    CompoundTag bedNBT = bedsList.getCompound(i);
+                    CompoundTag_1_21_5 bedNBT = bedsList.getCompound(i);
                     ResourceLocation loc = NBTUtil.getResourceLocation(bedNBT, "dim");
                     ResourceKey<Level> type = ResourceKey.create(Registries.DIMENSION, loc);
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bedNBT, "pos");
@@ -2966,10 +2969,10 @@ public class Dog extends AbstractDog {
 
         try {
             if (compound.contains("bowls", Tag.TAG_LIST)) {
-                ListTag bowlsList = compound.getList("bowls", Tag.TAG_COMPOUND);
+                ListTag_1_21_5 bowlsList = compound.getList("bowls", Tag.TAG_COMPOUND);
 
                 for (int i = 0; i < bowlsList.size(); i++) {
-                    CompoundTag bowlsNBT = bowlsList.getCompound(i);
+                    CompoundTag_1_21_5 bowlsNBT = bowlsList.getCompound(i);
                     ResourceLocation loc = NBTUtil.getResourceLocation(bowlsNBT, "dim");
                     ResourceKey<Level> type = ResourceKey.create(Registries.DIMENSION, loc);
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bowlsNBT, "pos");
@@ -3086,10 +3089,10 @@ public class Dog extends AbstractDog {
         }
     }
 
-    private void tryReadAllTalents(CompoundTag compound, ArrayList<TalentInstance> target) {
+    private void tryReadAllTalents(CompoundTag_1_21_5 compound, ArrayList<TalentInstance> target) {
         try {
             if (compound.contains("talents", Tag.TAG_LIST)) {
-                ListTag talentList = compound.getList("talents", Tag.TAG_COMPOUND);
+                ListTag_1_21_5 talentList = compound.getList("talents", Tag.TAG_COMPOUND);
     
                 for (int i = 0; i < talentList.size(); ++i) {
                     try {
@@ -3104,10 +3107,10 @@ public class Dog extends AbstractDog {
         }
     }
 
-    private void tryReadAllAccessories(CompoundTag compound, ArrayList<AccessoryInstance> target) {
+    private void tryReadAllAccessories(CompoundTag_1_21_5 compound, ArrayList<AccessoryInstance> target) {
         try {
             if (compound.contains("accessories", Tag.TAG_LIST)) {
-                ListTag accessoryList = compound.getList("accessories", Tag.TAG_COMPOUND);
+                ListTag_1_21_5 accessoryList = compound.getList("accessories", Tag.TAG_COMPOUND);
     
                 for (int i = 0; i < accessoryList.size(); ++i) {
                     try {
@@ -3124,7 +3127,7 @@ public class Dog extends AbstractDog {
 
     private boolean detectedDuplicateVertified = false;
     private boolean DTN_dogChangingDim = false;
-    private boolean detectDuplicate(CompoundTag tag) {
+    private boolean detectDuplicate(CompoundTag_1_21_5 tag) {
         if (detectedDuplicateVertified)
             return false; 
         if (ConfigHandler.SERVER.DISABLE_PRESERVE_UUID.get())

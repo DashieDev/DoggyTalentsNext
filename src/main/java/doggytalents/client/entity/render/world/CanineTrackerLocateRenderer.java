@@ -9,6 +9,7 @@ import org.joml.Matrix4f;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.client.entity.render.RenderUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.CanineTrackerItem;
@@ -193,7 +194,7 @@ public class CanineTrackerLocateRenderer {
         }
     }
 
-    private static Optional<CompoundTag> getRadarTagIfHoldingAndExist(Player player) {
+    private static Optional<CompoundTag_1_21_5> getRadarTagIfHoldingAndExist(Player player) {
         var item_main = player.getItemInHand(InteractionHand.MAIN_HAND);
         var item_off = player.getItemInHand(InteractionHand.OFF_HAND);
         ItemStack radar = null;
@@ -225,7 +226,7 @@ public class CanineTrackerLocateRenderer {
         locatingPos = pos;
     }
 
-    public static void setLocating(CompoundTag tag) {
+    public static void setLocating(CompoundTag_1_21_5 tag) {
         var uuid = tag.getUUID("uuid");
         var name = tag.getString("name");
         var posX = tag.getInt("posX");

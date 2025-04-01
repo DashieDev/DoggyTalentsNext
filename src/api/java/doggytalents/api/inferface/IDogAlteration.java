@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.enu.WetSource;
@@ -51,11 +52,11 @@ public interface IDogAlteration {
 
     }
 
-    default void onWrite(AbstractDog dogIn, CompoundTag compound) {
+    default void onWrite(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
 
     }
 
-    default void onRead(AbstractDog dogIn, CompoundTag compound) {
+    default void onRead(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
 
     }
 

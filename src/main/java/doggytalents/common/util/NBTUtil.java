@@ -1,6 +1,7 @@
 package doggytalents.common.util;
 
 import doggytalents.DoggyTalentsNext;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
@@ -29,7 +30,7 @@ public class NBTUtil {
     /**
      * Writes the UUID to the CompoundNBT under the given key if it is not null
      */
-    public static void putUniqueId(CompoundTag compound, String key, @Nullable UUID uuid) {
+    public static void putUniqueId(CompoundTag_1_21_5 compound, String key, @Nullable UUID uuid) {
         if (uuid != null) {
             compound.putUUID(key, uuid);
         }
@@ -39,7 +40,7 @@ public class NBTUtil {
      * Reads the UUID from the CompoundNBT if it exists returns null otherwise
      */
     @Nullable
-    public static UUID getUniqueId(CompoundTag compound, String key) {
+    public static UUID getUniqueId(CompoundTag_1_21_5 compound, String key) {
         if (compound.hasUUID(key)) {
             return compound.getUUID(key);
         } else if (NBTUtil.hasOldUniqueId(compound, key)) {
@@ -49,27 +50,27 @@ public class NBTUtil {
         return null;
     }
 
-    public static UUID getOldUniqueId(CompoundTag compound, String key) {
+    public static UUID getOldUniqueId(CompoundTag_1_21_5 compound, String key) {
         return new UUID(compound.getLong(key + "Most"), compound.getLong(key + "Least"));
     }
 
-    public static boolean hasOldUniqueId(CompoundTag compound, String key) {
-        return compound.contains(key + "Most", Tag.TAG_ANY_NUMERIC) && compound.contains(key + "Least", Tag.TAG_ANY_NUMERIC);
+    public static boolean hasOldUniqueId(CompoundTag_1_21_5 compound, String key) {
+        return compound.containsAnyNumeric(key + "Most") && compound.containsAnyNumeric(key + "Least");
     }
 
-    public static void removeOldUniqueId(CompoundTag compound, String key) {
+    public static void removeOldUniqueId(CompoundTag_1_21_5 compound, String key) {
         compound.remove(key + "Most");
         compound.remove(key + "Least");
     }
 
-    public static void putResourceLocation(CompoundTag compound, String key, @Nullable ResourceLocation rl) {
+    public static void putResourceLocation(CompoundTag_1_21_5 compound, String key, @Nullable ResourceLocation rl) {
         if (rl != null) {
             compound.putString(key, rl.toString());
         }
     }
 
     @Nullable
-    public static ResourceLocation getResourceLocation(CompoundTag compound, String key) {
+    public static ResourceLocation getResourceLocation(CompoundTag_1_21_5 compound, String key) {
         if (compound.contains(key, Tag.TAG_STRING)) {
             return ResourceLocation.tryParse(compound.getString(key));
         }
@@ -77,7 +78,7 @@ public class NBTUtil {
         return null;
     }
 
-    public static void putVector3d(CompoundTag compound, @Nullable Vec3 vec3d) {
+    public static void putVector3d(CompoundTag_1_21_5 compound, @Nullable Vec3 vec3d) {
         if (vec3d != null) {
             compound.putDouble("x", vec3d.x());
             compound.putDouble("y", vec3d.y());
@@ -86,8 +87,8 @@ public class NBTUtil {
     }
 
     @Nullable
-    public static Vec3 getVector3d(CompoundTag compound) {
-        if (compound.contains("x", Tag.TAG_ANY_NUMERIC) && compound.contains("y", Tag.TAG_ANY_NUMERIC) && compound.contains("z", Tag.TAG_ANY_NUMERIC)) {
+    public static Vec3 getVector3d(CompoundTag_1_21_5 compound) {
+        if (compound.containsAnyNumeric("x") && compound.containsAnyNumeric("y") && compound.containsAnyNumeric("z")) {
             return new Vec3(compound.getDouble("x"), compound.getDouble("y"), compound.getDouble("z"));
         }
 
@@ -95,14 +96,14 @@ public class NBTUtil {
     }
 
 
-    public static void putTextComponent(CompoundTag compound, String key, @Nullable Component component) {
+    public static void putTextComponent(CompoundTag_1_21_5 compound, String key, @Nullable Component component) {
         if (component != null) {
             compound.putString(key, serializeComponentToJsonStr(component));
         }
     }
 
     @Nullable
-    public static Component getTextComponent(CompoundTag compound, String key) {
+    public static Component getTextComponent(CompoundTag_1_21_5 compound, String key) {
         
         if (compound.contains(key, Tag.TAG_STRING)) { 
             return parseComponentJsonStr(compound.getString(key));
@@ -143,7 +144,7 @@ public class NBTUtil {
     }
 
     @Nullable
-    public static <T> T getRegistryValue(CompoundTag compound, String key, Registry<T> registry) {
+    public static <T> T getRegistryValue(CompoundTag_1_21_5 compound, String key, Registry<T> registry) {
         ResourceLocation rl = NBTUtil.getResourceLocation(compound, key);
         if (rl != null) {
             if (registry.containsKey(rl)) {
@@ -158,13 +159,13 @@ public class NBTUtil {
         return null;
     }
 
-    public static void putRegistryValue(CompoundTag compound, String key, ResourceLocation value) {
+    public static void putRegistryValue(CompoundTag_1_21_5 compound, String key, ResourceLocation value) {
         if (value != null) {
             NBTUtil.putResourceLocation(compound, key, value);
         }
     }
 
-    public static void putBlockPos(CompoundTag compound, @Nullable BlockPos vec3d) {
+    public static void putBlockPos(CompoundTag_1_21_5 compound, @Nullable BlockPos vec3d) {
         if (vec3d != null) {
             compound.putInt("x", vec3d.getX());
             compound.putInt("y", vec3d.getY());
@@ -173,8 +174,8 @@ public class NBTUtil {
     }
 
     @Nullable
-    public static BlockPos getBlockPos(CompoundTag compound) {
-        if (compound.contains("x", Tag.TAG_ANY_NUMERIC) && compound.contains("y", Tag.TAG_ANY_NUMERIC) && compound.contains("z", Tag.TAG_ANY_NUMERIC)) {
+    public static BlockPos getBlockPos(CompoundTag_1_21_5 compound) {
+        if (compound.containsAnyNumeric("x") && compound.containsAnyNumeric("y") && compound.containsAnyNumeric("z")) {
             return new BlockPos(compound.getInt("x"), compound.getInt("y"), compound.getInt("z"));
         }
 
@@ -182,15 +183,15 @@ public class NBTUtil {
     }
 
 
-    public static void putBlockPos(CompoundTag compound, String key, Optional<BlockPos> vec3d) {
+    public static void putBlockPos(CompoundTag_1_21_5 compound, String key, Optional<BlockPos> vec3d) {
         if (vec3d.isPresent()) {
-            CompoundTag posNBT = new CompoundTag();
+            CompoundTag_1_21_5 posNBT = CompoundTag_1_21_5.createEmpty();
             putBlockPos(posNBT, vec3d.get());
-            compound.put(key, posNBT);
+            compound.put(key, posNBT.wrapped());
         }
     }
 
-    public static Optional<BlockPos> getBlockPos(CompoundTag compound, String key) {
+    public static Optional<BlockPos> getBlockPos(CompoundTag_1_21_5 compound, String key) {
         if (compound.contains(key, Tag.TAG_COMPOUND)) {
             return Optional.of(getBlockPos(compound.getCompound(key)));
         }
@@ -198,11 +199,11 @@ public class NBTUtil {
         return Optional.empty();
     }
 
-    public static void putBlockPos(CompoundTag compound, String key, @Nullable BlockPos vec3d) {
+    public static void putBlockPos(CompoundTag_1_21_5 compound, String key, @Nullable BlockPos vec3d) {
         if (vec3d != null) {
-            CompoundTag posNBT = new CompoundTag();
+            CompoundTag_1_21_5 posNBT = CompoundTag_1_21_5.createEmpty();
             putBlockPos(posNBT, vec3d);
-            compound.put(key, posNBT);
+            compound.put(key, posNBT.wrapped());
         }
     }
 
@@ -222,9 +223,9 @@ public class NBTUtil {
     }
 
     @Nonnull
-    public static ItemStack readItemStack(HolderLookup.Provider prov, CompoundTag compound, String key) {
+    public static ItemStack readItemStack(HolderLookup.Provider prov, CompoundTag_1_21_5 compound, String key) {
         if (compound.contains(key, Tag.TAG_COMPOUND)) {
-            return ItemStack.parse(prov, compound.getCompound(key)).orElse(ItemStack.EMPTY);
+            return ItemStack.parse(prov, compound.getCompound(key).wrapped()).orElse(ItemStack.EMPTY);
         }
 
         return ItemStack.EMPTY;

@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.ai.triggerable.DogGreetOwnerAction;
 import doggytalents.common.storage.DogLocationStorage;
@@ -78,7 +79,7 @@ public class DogOwnerDistanceManager {
         tag.put("ownerDistanceManager", tg0);
     }
 
-    public void load(CompoundTag tag) {
+    public void load(CompoundTag_1_21_5 tag) {
         if (tag.contains("ownerDistanceManager", Tag.TAG_COMPOUND)) {
             var tg0 = tag.getCompound("ownerDistanceManager");
             this.lastWithOwnerTime = tg0.getLong("lastWithOwnerTime");

@@ -2,6 +2,7 @@ package doggytalents.common.item;
 
 import java.util.function.Supplier;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.common.artifacts.DoggyArtifact;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -29,7 +30,7 @@ public class DoggyArtifactItem extends Item {
         return artifactTag;
     }
 
-    public static DoggyArtifactItem readCompound(CompoundTag tag) {
+    public static DoggyArtifactItem readCompound(CompoundTag_1_21_5 tag) {
         var id_str = tag.getString("type");
         var item = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(id_str));
         if (item == null) return null;

@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import net.minecraft.nbt.CompoundTag;
@@ -67,20 +68,20 @@ public class TalentInstance implements IDogAlteration {
         return ret;
     }
 
-    public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
+    public void writeToNBT(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         
     }
 
-    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+    public void readFromNBT(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         
     }
 
-    public final void doReadFromNBT(AbstractDog dogIn, CompoundTag compound) {
+    public final void doReadFromNBT(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         this.setLevel(compound.getInt("level"));
         readFromNBT(dogIn, compound);
     }
 
-    public final void doWriteToNBT(AbstractDog dogIn, CompoundTag compound) {
+    public final void doWriteToNBT(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         compound.putInt("level", this.level());
         writeToNBT(dogIn, compound);
     }
@@ -126,7 +127,7 @@ public class TalentInstance implements IDogAlteration {
         this.setTalentOption(entry, value);
     }
 
-    public final void writeInstance(AbstractDog dogIn, CompoundTag compound) {
+    public final void writeInstance(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         ResourceLocation rl = DoggyTalentsAPI.TALENTS.get().getKey(this.talent);
         if (rl != null) {
             compound.putString("type", rl.toString());
@@ -135,7 +136,7 @@ public class TalentInstance implements IDogAlteration {
         this.doWriteToNBT(dogIn, compound);
     }
 
-    public static Optional<TalentInstance> readInstance(AbstractDog dogIn, CompoundTag compound) {
+    public static Optional<TalentInstance> readInstance(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         ResourceLocation rl = ResourceLocation.tryParse(compound.getString("type"));
         if (DoggyTalentsAPI.TALENTS.get().containsKey(rl)) {
             TalentInstance inst = DoggyTalentsAPI.TALENTS.get().getValue(rl).getDefault();

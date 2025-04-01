@@ -36,6 +36,7 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.common.item.IDyeableArmorItem;
 
 public class ItemUtil {
@@ -83,31 +84,31 @@ public class ItemUtil {
 
     }
 
-    public static CompoundTag getTag(ItemStack stack) {
+    public static CompoundTag_1_21_5 getTag(ItemStack stack) {
         var custom_data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         if (custom_data == CustomData.EMPTY)
-            return new CompoundTag();
-        return custom_data.copyTag();
+            return CompoundTag_1_21_5.createEmpty();
+        return CompoundTag_1_21_5.wrap(custom_data.copyTag());
     }
 
     public static void clearTag(ItemStack stack) {
         stack.set(DataComponents.CUSTOM_DATA, null);
     }
 
-    public static void putTag(ItemStack stack, CompoundTag tag) {
-        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+    public static void putTag(ItemStack stack, CompoundTag_1_21_5 tag) {
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.wrapped()));
     }
 
-    public static void modifyTag(ItemStack stack, Consumer<CompoundTag> tag_modifier) {
+    public static void modifyTag(ItemStack stack, Consumer<CompoundTag_1_21_5> tag_modifier) {
         var custom_data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-        var current_tag = new CompoundTag();
+        var current_tag = CompoundTag_1_21_5.createEmpty();
         if (custom_data != CustomData.EMPTY)
-            current_tag = custom_data.copyTag();
+            current_tag = CompoundTag_1_21_5.wrap(custom_data.copyTag());
         tag_modifier.accept(current_tag);
-        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(current_tag));
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(current_tag.wrapped()));
     }
 
-    public static CompoundTag getTagElement(ItemStack stack, String id) {
+    public static CompoundTag_1_21_5 getTagElement(ItemStack stack, String id) {
         var tag = getTag(stack);
         if (!tag.contains(id, Tag.TAG_COMPOUND))
             return null;

@@ -2,7 +2,9 @@ package doggytalents.api.impl;
 
 import org.jetbrains.annotations.NotNull;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.ItemUtil_1_21_3;
+import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -42,14 +44,16 @@ public class DogArmorItemHandler extends ItemStackHandler {
     }
 
     @Override
-    public void deserializeNBT(HolderLookup.Provider prov, CompoundTag compound) {
+    public void deserializeNBT(HolderLookup.Provider prov, CompoundTag compound_1_21_5) {
+        var compound = CompoundTag_1_21_5.wrap(compound_1_21_5); // 1.21.5+
+
         if (compound.contains("dogArmors", Tag.TAG_LIST)) {
-            ListTag tagList = compound.getList("dogArmors", Tag.TAG_COMPOUND);
+            ListTag_1_21_5 tagList = compound.getList("dogArmors", Tag.TAG_COMPOUND);
             for (int i = 0; i < tagList.size(); i++) {
-                CompoundTag itemTag = tagList.getCompound(i);
+                CompoundTag_1_21_5 itemTag = tagList.getCompound(i);
                 int slot = itemTag.getInt("Slot");
 
-                var stack = ItemStack.parse(prov, itemTag).orElse(ItemStack.EMPTY);
+                var stack = ItemStack.parse(prov, itemTag.wrapped()).orElse(ItemStack.EMPTY);
                 setArmorInSlot(stack);
                 
             }

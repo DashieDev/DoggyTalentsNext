@@ -4,6 +4,7 @@ import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
@@ -137,7 +138,7 @@ public class DogBedBlock extends BaseEntityBlock {
             DogBedUtil.setBedVariant(dogBedTileEntity, stack);
 
             dogBedTileEntity.setPlacer(placer);
-            CompoundTag tag = ItemUtil.getTagElement(stack, "doggytalents");
+            CompoundTag_1_21_5 tag = ItemUtil.getTagElement(stack, "doggytalents");
             if (tag != null) {
                 Component name = NBTUtil.getTextComponent(tag, "name");
                 UUID ownerId = NBTUtil.getUniqueId(tag, "ownerId");
@@ -383,7 +384,7 @@ public class DogBedBlock extends BaseEntityBlock {
             tooltip.add(Component.translatable("dogbed.explain.missing").withStyle(ChatFormatting.ITALIC));
         }
 
-        CompoundTag tag = ItemUtil.getTagElement(stack, "doggytalents");
+        CompoundTag_1_21_5 tag = ItemUtil.getTagElement(stack, "doggytalents");
         if (tag != null) {
             UUID ownerId = NBTUtil.getUniqueId(tag, "ownerId");
             Component name = NBTUtil.getTextComponent(tag, "name");
